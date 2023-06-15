@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899/12/30 00.00.00.000.541,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.551,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.717,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeSreen.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.761,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDataModule.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.803,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.846,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.796,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.122,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UFakturPajak.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.728,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeLogin.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.123,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UFakturPajak.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.541,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.551,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.717,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeSreen.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.717,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeSreen.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.639,C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UMainMenu.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.761,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDataModule.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.573,C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\PMainMenuLoadDB.dproj</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.253,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDashboard.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.728,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeLogin.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.761,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDataModule.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.686,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.050,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.071,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.753,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.639,C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UMainMenu.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.728,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeLogin.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.717,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeSreen.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.253,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDashboard.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.728,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeLogin.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.761,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDataModule.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.253,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDashboard.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.639,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UMainMenu.dfm=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.122,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UFakturPajak.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.573,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\PMainMenuLoadDB.dproj=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.123,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UFakturPajak.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.936,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.317,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.464,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.972,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.819,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.680,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.253,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDashboard.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.802,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.468,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.686,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.050,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.071,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.753,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.545,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.464,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2023/05/29 09.04.15.344,D:\DATA HPS\Development\BOA GABUNGAN\Smart_BOA\Smart_BOA.dproj=D:\DATA HPS\Development\BOA GABUNGAN\Smart_BOA\PMainMenuLoadDB.dproj</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.639,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UMainMenu.pas=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.344,D:\DATA HPS\Development\BOA GABUNGAN\Smart_BOA\PMainMenuLoadDB.dproj=D:\DATA HPS\Development\BOA GABUNGAN\Smart_BOA\Smart_BOA.dproj</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.819,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.680,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.802,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.468,=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

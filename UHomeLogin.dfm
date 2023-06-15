@@ -22,9 +22,6 @@ object FHomeLogin: TFHomeLogin
     Color = 15987699
     TabOrder = 0
     Transparent = True
-    ExplicitLeft = 417
-    ExplicitWidth = 100
-    ExplicitHeight = 121
     object ImgApproval: TImage
       Left = 0
       Top = 0
@@ -4358,8 +4355,8 @@ object FHomeLogin: TFHomeLogin
         BC31F7F839146CB4D996D5C4F70BF80404414C8DDDD4FF07215EEC0C4FCF1420
         0000000049454E44AE426082}
       Proportional = True
-      ExplicitLeft = 280
-      ExplicitTop = 168
+      ExplicitLeft = 48
+      ExplicitTop = 311
     end
     object ImgTransaksi: TImage
       Left = 48
@@ -4602,7 +4599,7 @@ object FHomeLogin: TFHomeLogin
     end
     object Edit3: TEdit
       Left = 96
-      Top = 103
+      Top = 63
       Width = 311
       Height = 34
       BevelInner = bvNone
@@ -4618,11 +4615,12 @@ object FHomeLogin: TFHomeLogin
       PasswordChar = '*'
       TabOrder = 2
       TextHint = 'ID SBU'
+      Visible = False
     end
     object ComboBox1: TComboBox
-      Left = 190
-      Top = 131
-      Width = 145
+      Left = 96
+      Top = 127
+      Width = 297
       Height = 23
       BevelInner = bvNone
       BevelOuter = bvNone

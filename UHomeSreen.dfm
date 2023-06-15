@@ -16,7 +16,7 @@ object FHomeSreen: TFHomeSreen
   object Label1: TRzLabel
     Left = 314
     Top = 224
-    Width = 63
+    Width = 9
     Height = 15
     Caption = '   '
     TextStyle = tsRaised
@@ -6263,9 +6263,9 @@ object FHomeSreen: TFHomeSreen
     Top = 260
     Width = 774
     Height = 15
-    ParentShowHint = False
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
     Step = 5
-    ShowHint = False
     TabOrder = 0
   end
   object Timer1: TTimer

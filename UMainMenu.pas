@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Tabs, Vcl.ComCtrls,
   Vcl.Menus, Vcl.ToolWin, Vcl.WinXCalendars, System.Actions, Vcl.ActnList,
   Vcl.WinXCtrls, Vcl.StdCtrls, RzPanel, RzButton, RzStatus, RzDBStat,
-  System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs;
+  System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs, Vcl.OleCtrls,
+  SHDocVw;
 
 type
   TFMainMenu = class(TForm)
@@ -49,7 +50,7 @@ type
     PageControl1: TRzPageControl;
     TabForm: TRzTabSheet;
     PanelParent: TPanel;
-    Image1: TImage;
+    WebBrowser1: TWebBrowser;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -415,6 +416,7 @@ end;
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
   //CreateMenu('admin');
+ // WebBrowser1.Navigate('https://www.bing.com/search?pglt=43&q=google+translate&cvid=022899e0df8d413e987348bc38c2d664&aqs=edge.0.69i59j46j69i57j46l4j69i60l2.1894j0j1&FORM=ANNTA1&PC=HCTS');
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

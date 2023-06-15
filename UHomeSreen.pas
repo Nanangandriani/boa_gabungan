@@ -37,7 +37,7 @@ begin
   if ProgressBar1.Position=100 then
   begin
     Timer1.Enabled:=false;
-    FHomeLogin.show;
+   // FHomeLogin.show;
     Self.Hide;
 
   end

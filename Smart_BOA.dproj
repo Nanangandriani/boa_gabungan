@@ -146,9 +146,9 @@
                     <Source Name="MainSource">Smart_BOA.dpr</Source>
                 </Source>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\FastReports\LibD28\dclfrxtee28.bpl">FastReport VCL Tee Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k280.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp280.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\FastReports\LibD28\dclfrxtee28.bpl">FastReport VCL Tee Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="4">
