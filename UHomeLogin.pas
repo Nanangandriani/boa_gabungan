@@ -46,7 +46,7 @@ end;
 
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
-   FMainMenu.show;
+   FMainMenu.showmodal;
    FHomeLogin.Close;
 end;
 
