@@ -8,7 +8,7 @@ uses
   Vcl.Menus, Vcl.ToolWin, Vcl.WinXCalendars, System.Actions, Vcl.ActnList,
   Vcl.WinXCtrls, Vcl.StdCtrls, RzPanel, RzButton, RzStatus, RzDBStat,
   System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs, Vcl.OleCtrls,
-  SHDocVw;
+  SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge,MSHTML, ShellAPI;
 
 type
   TFMainMenu = class(TForm)
@@ -50,6 +50,7 @@ type
     PageControl1: TRzPageControl;
     TabForm: TRzTabSheet;
     PanelParent: TPanel;
+    EdgeBrowser1: TEdgeBrowser;
     WebBrowser1: TWebBrowser;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
@@ -77,6 +78,7 @@ type
     Procedure ClearCategoryPanelGroup;
     Procedure GetSubMenu(Sender: TObject);
     Procedure btnApplyClick(Sender: TObject);
+    Procedure CallFoo(S: string; I: Integer);
   end;
 
 var
@@ -92,11 +94,90 @@ var
   FormAktif,I:Integer;
   HakAkses : String;
   vCaptionButton, vNamaButton :string;
+
+
+  Doc: IHTMLDocument2;      // current HTML document
+  HTMLWindow: IHTMLWindow2; // parent window of current HTML document
+  JSFn: string;
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UDashboard, UFakturPajak;
+
+
+function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
+var
+  win: IHTMLWindow2;
+  Olelanguage: Olevariant;
+begin
+  if doc <> nil then
+  begin
+    try
+      win := doc.parentWindow;
+      if win <> nil then
+      begin
+        try
+          Olelanguage := language;
+          win.ExecScript(script, Olelanguage);
+        finally
+          win := nil;
+        end;
+      end;
+    finally
+      doc := nil;
+    end;
+  end;
+end;
+
+function GetElementIdValue(WebBrowser: TWebBrowser;
+  TagName, TagId, TagAttrib: string):string;
+var
+  Document: IHTMLDocument2;
+  Body: IHTMLElement2;
+  Tags: IHTMLElementCollection;
+  Tag: IHTMLElement;
+  I: Integer;
+begin
+   Result:='';
+   if not Supports(WebBrowser.Document, IHTMLDocument2, Document) then
+    raise Exception.Create('Invalid HTML document');
+   if not Supports(Document.body, IHTMLElement2, Body) then
+     raise Exception.Create('Can''t find <body> element');
+   Tags := Body.getElementsByTagName(UpperCase(TagName));
+   for I := 0 to Pred(Tags.length) do begin
+     Tag:=Tags.item(I, EmptyParam) as IHTMLElement;
+     if Tag.id=TagId then Result := Tag.getAttribute(TagAttrib, 0);
+   end;
+end;
+
+procedure TFMainMenu.CallFoo(S: string; I: Integer);
+   { Calls JavaScript foo() function }
+var
+  Doc: IHTMLDocument2;      // current HTML document
+  HTMLWindow: IHTMLWindow2; // parent window of current HTML document
+  JSFn: string;
+  result:integer;             // stores JavaScipt function call
+begin
+  //Result:='';
+  // Get reference to current document
+   Doc := WebBrowser1.Document as IHTMLDocument2;
+   if not Assigned(Doc) then
+     Exit;
+   // Get parent window of current document
+   HTMLWindow := Doc.parentWindow;
+   if not Assigned(HTMLWindow) then
+     Exit;
+   // Run JavaScript
+   try
+     JSFn := Format('foo("%s",%d)', [S, I]);  // build function call
+     HTMLWindow.execScript(JSFn, 'JavaScript'); // execute function
+     // get result
+     //Result := GetElementIdValue(WebBrowser1, 'input', 'result', 'value')
+   except
+     // handle exception in case JavaScript fails to run
+   end;
+end;
 
 procedure TFMainMenu.CloseTabs;
 var
@@ -415,8 +496,11 @@ end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
+
   //CreateMenu('admin');
- // WebBrowser1.Navigate('https://www.bing.com/search?pglt=43&q=google+translate&cvid=022899e0df8d413e987348bc38c2d664&aqs=edge.0.69i59j46j69i57j46l4j69i60l2.1894j0j1&FORM=ANNTA1&PC=HCTS');
+   webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
+  //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
+  //Edgebrowser1.Navigate('http://www.google.com');
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

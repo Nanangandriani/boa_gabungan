@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Tabs, Vcl.ComCtrls,
   Vcl.Menus, Vcl.ToolWin, Vcl.WinXCalendars, System.Actions, Vcl.ActnList,
   Vcl.WinXCtrls, Vcl.StdCtrls, RzPanel, RzButton, RzStatus, RzDBStat,
-  System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs;
+  System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs, Vcl.OleCtrls,
+  SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge,MSHTML, ShellAPI;
 
 type
   TFMainMenu = class(TForm)
@@ -49,7 +50,8 @@ type
     PageControl1: TRzPageControl;
     TabForm: TRzTabSheet;
     PanelParent: TPanel;
-    Image1: TImage;
+    EdgeBrowser1: TEdgeBrowser;
+    WebBrowser1: TWebBrowser;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -76,6 +78,7 @@ type
     Procedure ClearCategoryPanelGroup;
     Procedure GetSubMenu(Sender: TObject);
     Procedure btnApplyClick(Sender: TObject);
+    Procedure CallFoo(S: string; I: Integer);
   end;
 
 var
@@ -91,11 +94,66 @@ var
   FormAktif,I:Integer;
   HakAkses : String;
   vCaptionButton, vNamaButton :string;
+
+
+  Doc: IHTMLDocument2;      // current HTML document
+  HTMLWindow: IHTMLWindow2; // parent window of current HTML document
+  JSFn: string;
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UDashboard, UFakturPajak;
+
+
+function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
+var
+  win: IHTMLWindow2;
+  Olelanguage: Olevariant;
+begin
+  if doc <> nil then
+  begin
+    try
+      win := doc.parentWindow;
+      if win <> nil then
+      begin
+        try
+          Olelanguage := language;
+          win.ExecScript(script, Olelanguage);
+        finally
+          win := nil;
+        end;
+      end;
+    finally
+      doc := nil;
+    end;
+  end;
+end;
+
+procedure TFMainMenu.CallFoo;
+//procedure TFMainMenu.CallFoo(S: string; I: Integer);
+   { Calls JavaScript foo() function }
+var
+  Doc: IHTMLDocument2;      // current HTML document
+  HTMLWindow: IHTMLWindow2; // parent window of current HTML document
+  JSFn: string;             // stores JavaScipt function call
+begin
+  // Get reference to current document
+   Doc := WebBrowser1.Document as IHTMLDocument2;
+   if not Assigned(Doc) then
+     Exit;
+   // Get parent window of current document
+   HTMLWindow := Doc.parentWindow;
+   if not Assigned(HTMLWindow) then
+     Exit;
+   // Run JavaScript
+   try
+     JSFn := Format('foo("%s",%d)', [S, I]);  // build function call
+     HTMLWindow.execScript(JSFn, 'JavaScript'); // execute function
+   except
+     // handle exception in case JavaScript fails to run
+   end;
+end;
 
 procedure TFMainMenu.CloseTabs;
 var
@@ -414,7 +472,11 @@ end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
+
   //CreateMenu('admin');
+   webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
+  //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
+  //Edgebrowser1.Navigate('http://www.google.com');
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);
