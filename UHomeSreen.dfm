@@ -3,8 +3,8 @@ object FHomeSreen: TFHomeSreen
   Top = 0
   BorderIcons = []
   BorderStyle = bsNone
-  ClientHeight = 323
-  ClientWidth = 774
+  ClientHeight = 286
+  ClientWidth = 524
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,8 +24,8 @@ object FHomeSreen: TFHomeSreen
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 774
-    Height = 323
+    Width = 524
+    Height = 286
     Align = alClient
     ParentShowHint = False
     Picture.Data = {
@@ -6253,15 +6253,13 @@ object FHomeSreen: TFHomeSreen
       A2A069C20000000049454E44AE426082}
     ShowHint = False
     Stretch = True
-    ExplicitLeft = -215
-    ExplicitTop = -325
-    ExplicitWidth = 920
-    ExplicitHeight = 596
+    ExplicitWidth = 537
+    ExplicitHeight = 323
   end
   object ProgressBar1: TProgressBar
-    Left = 0
-    Top = 260
-    Width = 774
+    Left = 8
+    Top = 224
+    Width = 505
     Height = 15
     DoubleBuffered = True
     ParentDoubleBuffered = False

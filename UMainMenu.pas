@@ -8,7 +8,8 @@ uses
   Vcl.Menus, Vcl.ToolWin, Vcl.WinXCalendars, System.Actions, Vcl.ActnList,
   Vcl.WinXCtrls, Vcl.StdCtrls, RzPanel, RzButton, RzStatus, RzDBStat,
   System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs, Vcl.OleCtrls,
-  SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge,MSHTML, ShellAPI;
+  SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge,MSHTML, ShellAPI, frxClass,
+  Vcl.Buttons;
 
 type
   TFMainMenu = class(TForm)
@@ -52,6 +53,8 @@ type
     PanelParent: TPanel;
     EdgeBrowser1: TEdgeBrowser;
     WebBrowser1: TWebBrowser;
+    frxReport1: TfrxReport;
+    BitBtn1: TBitBtn;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -64,6 +67,7 @@ type
     procedure ImgApprovalClick(Sender: TObject);
     procedure ImgUtilityClick(Sender: TObject);
     procedure PageControl1Close(Sender: TObject; var AllowClose: Boolean);
+    procedure BitBtn1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -265,6 +269,11 @@ begin
       TRzTabSheet(Sender).TabVisible:=false;
       //ANewTabs.Free;
     end;
+end;
+
+procedure TFMainMenu.BitBtn1Click(Sender: TObject);
+begin
+  frxReport1.ShowReport()
 end;
 
 procedure TFMainMenu.btnApplyClick(Sender: TObject);
@@ -498,7 +507,7 @@ procedure TFMainMenu.FormShow(Sender: TObject);
 begin
 
   //CreateMenu('admin');
-   webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
+  // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('http://www.google.com');
 end;

@@ -27,7 +27,7 @@ object FMainMenu: TFMainMenu
     GradientDirection = gdVerticalEnd
     TabOrder = 0
     VisualStyle = vsGradient
-    ExplicitWidth = 1037
+    ExplicitWidth = 1039
     object pnPengaturan: TRzPanel
       Left = 100
       Top = 0
@@ -4688,7 +4688,7 @@ object FMainMenu: TFMainMenu
       Transparent = True
       OnClick = ImgFileClick
       object ImgFile: TImage
-        Left = 8
+        Left = 9
         Top = 4
         Width = 85
         Height = 90
@@ -4803,7 +4803,7 @@ object FMainMenu: TFMainMenu
       TabOrder = 7
       Transparent = True
       OnClick = ImgUtilityClick
-      ExplicitLeft = 787
+      ExplicitLeft = 789
       object ImgUser: TImage
         Left = 165
         Top = 0
@@ -5226,8 +5226,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 599
-    ExplicitWidth = 1037
+    ExplicitTop = 607
+    ExplicitWidth = 1039
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -5284,7 +5284,7 @@ object FMainMenu: TFMainMenu
     HeaderFont.Name = 'Segoe UI'
     HeaderFont.Style = []
     TabOrder = 2
-    ExplicitHeight = 478
+    ExplicitHeight = 486
   end
   object PageControl1: TRzPageControl
     Left = 200
@@ -5298,13 +5298,13 @@ object FMainMenu: TFMainMenu
     TabIndex = 0
     TabOrder = 3
     OnClose = PageControl1Close
-    ExplicitWidth = 837
-    ExplicitHeight = 478
+    ExplicitWidth = 839
+    ExplicitHeight = 486
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Caption = 'Dashboard'
-      ExplicitWidth = 833
-      ExplicitHeight = 453
+      ExplicitWidth = 835
+      ExplicitHeight = 461
       object PanelParent: TPanel
         Left = 0
         Top = 0
@@ -5312,8 +5312,8 @@ object FMainMenu: TFMainMenu
         Height = 462
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 833
-        ExplicitHeight = 453
+        ExplicitWidth = 835
+        ExplicitHeight = 461
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 1
@@ -5322,8 +5322,8 @@ object FMainMenu: TFMainMenu
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 831
-          ExplicitHeight = 451
+          ExplicitWidth = 833
+          ExplicitHeight = 459
         end
         object WebBrowser1: TWebBrowser
           Left = 1
@@ -5332,14 +5332,23 @@ object FMainMenu: TFMainMenu
           Height = 460
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 831
-          ExplicitHeight = 451
+          ExplicitWidth = 833
+          ExplicitHeight = 459
           ControlData = {
-            4C00000035450000092600000000000000000000000000000000000000000000
+            4C000000825600008B2F00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
             00000000000000000100000000000000000000000000000000000000}
+        end
+        object BitBtn1: TBitBtn
+          Left = 74
+          Top = 32
+          Width = 225
+          Height = 89
+          Caption = 'BitBtn1'
+          TabOrder = 2
+          OnClick = BitBtn1Click
         end
       end
     end
@@ -5486,5 +5495,72 @@ object FMainMenu: TFMainMenu
       00000000000000000000003F0000000000000061000000000000006300000000
       00000067000000000000807F0000000000000000000000000000000000000000
       000000000000}
+  end
+  object frxReport1: TfrxReport
+    Version = '2022.2.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45096.618494004600000000
+    ReportOptions.LastChange = 45096.618494004600000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 352
+    Top = 88
+    Datasets = <>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 98.267780000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 26.456710000000000000
+          Top = 3.779530000000000000
+          Width = 90.708720000000000000
+          Height = 22.677180000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'test')
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 340.157700000000000000
+          Top = 56.692950000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Test 2')
+        end
+      end
+    end
   end
 end

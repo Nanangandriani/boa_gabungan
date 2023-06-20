@@ -9,7 +9,7 @@ uses
 type
   TFDashboard = class(TForm)
     BitBtn1: TBitBtn;
-    frxReport1: TfrxReport;
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -22,5 +22,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFDashboard.BitBtn1Click(Sender: TObject);
+begin
+//  frxReport1.ShowReport()
+end;
 
 end.
