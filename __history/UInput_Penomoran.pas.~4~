@@ -1,0 +1,86 @@
+unit UInput_Penomoran;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, RzCmboBx,
+  Vcl.Mask, RzEdit, Vcl.ExtCtrls, RzPanel, RzBtnEdt;
+
+type
+  TFInput_Penomoran = class(TForm)
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    LabelHasil: TLabel;
+    RzEdit1: TRzEdit;
+    RzEdit2: TRzEdit;
+    RzEdit4: TRzEdit;
+    RzComboBox1: TRzComboBox;
+    CBKomponen_No: TRzComboBox;
+    btnplus: TRzBitBtn;
+    ListBox1: TListBox;
+    RzPanel2: TRzPanel;
+    RzBitBtn4: TRzBitBtn;
+    RzBitBtn5: TRzBitBtn;
+    btnplus2: TRzBitBtn;
+    Ed_Komp: TRzButtonEdit;
+    procedure RzBitBtn5Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure CBKomponen_NoSelect(Sender: TObject);
+    procedure Ed_KompButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FInput_Penomoran: TFInput_Penomoran;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFInput_Penomoran.Ed_KompButtonClick(Sender: TObject);
+begin
+  btnplus.Visible:=true;
+  Ed_Komp.Visible:=false;
+  btnplus2.Visible:=false;
+end;
+
+procedure TFInput_Penomoran.FormShow(Sender: TObject);
+begin
+   LabelHasil.Caption:='';
+   Ed_Komp.Visible:=false;
+   btnplus2.Visible:=false;
+   btnplus.Visible:=true;
+end;
+
+procedure TFInput_Penomoran.RzBitBtn5Click(Sender: TObject);
+begin
+   Close;
+end;
+
+procedure TFInput_Penomoran.CBKomponen_NoSelect(Sender: TObject);
+begin
+   if CBKomponen_No.ItemIndex=4 then
+   begin
+     btnplus.Visible:=false;
+     Ed_Komp.Visible:=true;
+     btnplus2.Visible:=true;
+   end
+   else
+   begin
+      btnplus.Visible:=true;
+      Ed_Komp.Visible:=false;
+      btnplus2.Visible:=false;
+   end;
+
+end;
+
+end.

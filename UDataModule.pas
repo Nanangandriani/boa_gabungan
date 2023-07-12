@@ -15,7 +15,7 @@ uses
 
 type
   Tdm = class(TDataModule)
-    UniCon: TUniConnection;
+    Koneksi: TUniConnection;
     PostgreSQLUniProvider1: TPostgreSQLUniProvider;
     Qtemp: TUniQuery;
     dsQtemp: TDataSource;
@@ -24,6 +24,8 @@ type
     dsQtemp2: TDataSource;
     Qtemp2: TUniQuery;
     UniSQLMonitor1: TUniSQLMonitor;
+    dsQtemp3: TDataSource;
+    Qtemp3: TUniQuery;
   private
     { Private declarations }
   public

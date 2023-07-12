@@ -1,8 +1,8 @@
 object dm: Tdm
-  Height = 750
-  Width = 1000
+  Height = 479
+  Width = 591
   PixelsPerInch = 120
-  object UniCon: TUniConnection
+  object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
     Database = 'boa_hps'
@@ -14,11 +14,11 @@ object dm: Tdm
     EncryptedPassword = 'BBFFBDFF9BFF9AFF89FF9AFF93FFBFFFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
-    Left = 488
+    Left = 464
     Top = 16
   end
   object Qtemp: TUniQuery
-    Connection = UniCon
+    Connection = Koneksi
     Left = 72
     Top = 8
   end
@@ -33,7 +33,7 @@ object dm: Tdm
     Top = 104
   end
   object Qtemp1: TUniQuery
-    Connection = UniCon
+    Connection = Koneksi
     Left = 72
     Top = 104
   end
@@ -43,12 +43,22 @@ object dm: Tdm
     Top = 208
   end
   object Qtemp2: TUniQuery
-    Connection = UniCon
+    Connection = Koneksi
     Left = 72
     Top = 208
   end
   object UniSQLMonitor1: TUniSQLMonitor
     Left = 376
     Top = 80
+  end
+  object dsQtemp3: TDataSource
+    DataSet = Qtemp3
+    Left = 144
+    Top = 320
+  end
+  object Qtemp3: TUniQuery
+    Connection = Koneksi
+    Left = 72
+    Top = 320
   end
 end

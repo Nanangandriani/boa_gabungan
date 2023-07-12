@@ -1,0 +1,48 @@
+unit UNewFakturPajak;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, Vcl.StdCtrls, RzCmboBx,
+  RzButton, Vcl.ExtCtrls, Vcl.Samples.Gauges, RzPanel, MemTableEh, EhLibVCL,
+  GridsEh, DBAxisGridsEh, DBGridEh;
+
+type
+  TFinput_faktur_pajak = class(TForm)
+    DBGridEh1: TDBGridEh;
+    Memfaktur: TMemTableEh;
+    Memfakturno_faktur_pajak: TStringField;
+    panel_loader: TRzPanel;
+    progress: TGauge;
+    Panel1: TPanel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    RzBitBtn1: TRzBitBtn;
+    eddari: TEdit;
+    edsampai: TEdit;
+    ednoawal_fak: TEdit;
+    pninput: TPanel;
+    Label11: TLabel;
+    Label13: TLabel;
+    CBtahun: TRzComboBox;
+    RzPanel1: TRzPanel;
+    BSimpan: TRzBitBtn;
+    BBatal: TRzBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Finput_faktur_pajak: TFinput_faktur_pajak;
+
+implementation
+
+{$R *.dfm}
+
+end.

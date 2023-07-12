@@ -1,0 +1,31 @@
+unit Uupdate_faktur;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzLabel, RzButton,
+  Vcl.ExtCtrls, Vcl.Mask, RzEdit;
+
+type
+  TFupdate_faktur = class(TForm)
+    edfaktur: TRzEdit;
+    edid: TEdit;
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    RzLabel1: TRzLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fupdate_faktur: TFupdate_faktur;
+
+implementation
+
+{$R *.dfm}
+
+end.
