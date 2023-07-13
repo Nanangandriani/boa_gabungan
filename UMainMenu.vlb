@@ -22,13 +22,10 @@ Coordinates=95,248,88,36
 [RzProgressStatus1]
 Coordinates=92,78,125,36
 
-[PenelHeader]
-Coordinates=114,10,89,58
-
 [ImageList1]
 Coordinates=184,248,77,36
 
 []
-Coordinates=141,170,57,36
+Coordinates=114,10,89,58
 Visible=True
 

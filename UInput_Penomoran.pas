@@ -59,6 +59,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+     function convbulanrom(nobulan:Integer):string;
+     function conv_terbilang(nilai:string):string;
   end;
 
 var
@@ -70,6 +72,69 @@ implementation
 
 uses UDataModule;
 
+function TFInput_Penomoran.conv_terbilang(nilai:string):string;
+var temu,titik,i:integer;
+    hasil,hasil2,sisa_koma,huruf_awal,terbilang,temp,dpnkoma,blkkoma:string;
+    adakoma:boolean;
+begin
+   temu:=pos(',',nilai);
+    titik:=pos('.',nilai);
+   // dpnkoma:=LowerCase(UraikanAngka(copy(nilai,1,temu-1)));
+   //blkkoma:=LowerCase(UraikanAngka(copy(nilai,temu+1,length(nilai))));
+    terbilang:=UpperCase(huruf_awal)+copy(hasil,2,length(hasil)-1);
+    if (temu<>0) or (titik<>0) then
+    begin
+      adaKoma:= true;
+      if temu= 0 then
+      begin
+         temu:= Titik;
+      end
+      else
+      begin
+          adakoma:= False;
+          DpnKoma:= nilai;
+      end;
+    end;
+
+    // Jika ada Koma
+    if adakoma then
+    begin
+      dpnkoma:= copy(nilai,1,temu-1);
+      blkKoma:= Copy(nilai,temu+1,length(nilai)-temu);
+      if trim(DpnKoma)='0' then
+      begin
+         //temp:= 'Nol'+ ' Koma ' + terbilang(blkKoma);
+      end
+      else
+      begin
+        //temp:= Terbilang(dpnKoma)+ ' Koma ' +terbilang(blkKoma);
+      end;
+  // Jika Tidak ada Koma
+    end
+    else
+    begin
+     //temp:=Terbilang(dpnKoma);
+    end;
+    result:=temp;
+end;
+
+function TFInput_Penomoran.convbulanrom(nobulan: Integer): string;
+begin
+  case nobulan of
+    1:Result:='I';
+    2:Result:='II';
+    3:Result:='III';
+    4:Result:='IV';
+    5:Result:='V';
+    6:Result:='VI';
+    7:Result:='VII';
+    8:Result:='VIII';
+    9:Result:='IX';
+    10:Result:='X';
+    11:Result:='XI';
+    12:Result:='XII';
+  end;
+end;
 
 function buttonCreate(onClickEvent: TProcedure;
   left: integer; top: integer; width: integer; height: integer;

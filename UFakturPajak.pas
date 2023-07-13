@@ -47,10 +47,12 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DsFaktur: TDataSource;
     Qfaktur: TUniQuery;
+    dxBarManager1Bar2: TdxBar;
     procedure dxBarLargeBaruClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarDeleteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -90,6 +92,11 @@ begin
       end;
       Fupdate_faktur.Show;
     end;
+end;
+
+procedure TFFakturPajak.FormShow(Sender: TObject);
+begin
+   dxBarRefreshClick(sender);
 end;
 
 procedure TFFakturPajak.Refresh;

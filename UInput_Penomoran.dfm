@@ -21,7 +21,7 @@ object FInput_Penomoran: TFInput_Penomoran
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 615
+    ExplicitWidth = 601
     object Label1: TLabel
       Left = 25
       Top = 25
@@ -367,8 +367,8 @@ object FInput_Penomoran: TFInput_Penomoran
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 439
-    ExplicitWidth = 805
+    ExplicitTop = 243
+    ExplicitWidth = 601
     object RzBitBtn4: TRzBitBtn
       Left = 455
       Top = 2
@@ -428,8 +428,7 @@ object FInput_Penomoran: TFInput_Penomoran
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 653
-      ExplicitHeight = 31
+      ExplicitLeft = 449
     end
     object RzBitBtn5: TRzBitBtn
       Left = 530
@@ -491,12 +490,10 @@ object FInput_Penomoran: TFInput_Penomoran
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 732
-      ExplicitHeight = 31
+      ExplicitLeft = 524
     end
   end
   object UniQuery1: TUniQuery
-    Connection = dm.UniCon
     Left = 480
     Top = 88
   end
