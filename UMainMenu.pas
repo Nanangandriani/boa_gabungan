@@ -87,12 +87,13 @@ type
 
   private
     { Private declarations }
-    Procedure ShowForm;
-    Procedure TampilTabForm;
-    Procedure AksesSub(Form: TForm; Akses,Sub:String);
 
   public
     { Public declarations }
+    Procedure ShowForm;
+    Procedure TampilTabForm;
+    Procedure TampilTabForm2;
+    Procedure AksesSub(Form: TForm; Akses,Sub:String);
     Procedure CreateMenu(Role:String);
     Procedure CreateSubMenu(Role,Menu:String);
     Procedure CloseTabs(Sender: TObject);
@@ -126,13 +127,15 @@ var
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
   JSFn: string;
+  nm,loksbu,kdsbu,id_dept:string;
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Material,
-  UListKonversi_Produk, UList_Gudang, UListBank_perusahaan;
+  UListKonversi_Produk, UList_Gudang, UListBank_perusahaan, UBarang_Stok,
+  UItem_Type;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -305,7 +308,7 @@ end;
 procedure TFMainMenu.PageControl1Close(Sender: TObject;
   var AllowClose: Boolean);
 begin  
-   //showmessage('Test'); 
+   //showmessage('Test');
     if PageControl1.TabIndex<>0 then
     begin
       //showmessage(TRzTabSheet(Sender).Name); 
@@ -340,12 +343,12 @@ begin
 
     if dm.Qtemp.RecordCount<>1 then
     begin
-    ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
-    exit;
+      ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+      exit;
     end;
 
     if dm.Qtemp.RecordCount=1 then
-    begin              
+    begin
        //create new Tabsheet
         ANewTabs := TRzTabSheet.Create(nil);
         ANewTabs.Name := 'Tab'+vNamaButton;
@@ -353,7 +356,7 @@ begin
         ANewTabs.PageControl := PageControl1; 
         PageControl1.ActivePage := ANewTabs;
 
-        {//Create Close Tab  
+        {//Create Close Tab
         CloseButton := TButton.Create(ANewTabs);
         CloseButton.Parent := ANewTabs;
         CloseButton.Caption := 'X';
@@ -381,6 +384,36 @@ begin
 end;
 
 
+procedure TFMainMenu.TampilTabForm2;
+begin
+   with dm.Qtemp do
+     begin
+      SQL.Clear;
+      SQL.Text := 'select * from t_submenu2 where submenu2=' +
+                  QuotedStr(vCaptionButton);
+      open;
+     end;
+
+    if dm.Qtemp.RecordCount<>1 then
+      begin
+        ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+        exit;
+      end;
+
+    if dm.Qtemp.RecordCount=1 then
+      begin
+          //Create Form Dalam Panel
+          AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
+          AFormClass := TFormClass(AClass);
+          AForm := AFormClass.Create(Application.MainForm);
+          AForm.Parent:=ApnTabs;
+          AForm.Align:=Alclient;
+          AForm.BorderStyle:=BsNone;
+          AksesSub(AForm,HakAkses,vCaptionButton);
+          AForm.Show;
+      end;
+end;
+
 procedure TFMainMenu.ShowForm;
 begin
 end;
@@ -405,15 +438,12 @@ begin
    ClearCategoryPanelGroup;
    //CategoryPanelUtama.Parent := SplitView1;
    CategoryPanelUtama.Width:=250;
-
    TRzTreeView.Create(nil);
    Treeview1.Create(nil);
    Cleartreview;
    Treeview1.Width:=250;
-
    while not dm.Qtemp1.Eof do
    begin
-
     //Create Category Panel
       CategoryPanelUtama.HeaderFont.Style:=[fsBold];
       ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
@@ -473,14 +503,14 @@ begin
     with dm.Qtemp1 do
    begin
        SQL.Clear;
-       SQL.Text := 'SELECT DISTINCT e.id, e.submenu menu FROM t_akses aa '+
+       SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.submenu menu FROM t_akses aa '+
        ' INNER JOIN t_submenu2 bb ON aa.submenu = bb.submenu2 '+
        ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
        ' INNER JOIN t_submenu e on bb.kodemenu=e.kodemenu '+
        ' INNER JOIN t_menu cc ON e.kodemaster = cc.kodemaster '+
        ' WHERE dd.akses='+QuotedStr('Admin')+' and cc.menu='+QuotedStr(Menu)+
-       ' group by e.id, e.submenu'+
-       ' Order by e.id asc';
+       ' group by e.created_at,e.id, e.submenu'+
+       ' Order by e.created_at asc';
       open;
        First;
    end;
@@ -491,12 +521,10 @@ begin
    //CategoryPanelUtama.Parent := SplitView1;
    CategoryPanelUtama.Width:=300;
    CategoryPanelUtama.HeaderFont.style:=[fsbold];
-
    //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
 
    while not dm.Qtemp1.Eof do
    begin
-
     //Create Category Panel
       ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
       ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
@@ -508,13 +536,13 @@ begin
      with dm.Qtemp2 do
      begin
           SQL.Clear;
-          SQL.Text := 'SELECT DISTINCT bb.id,b.submenu menu,bb.submenu2 submenu FROM t_akses aa  '+
+          SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.submenu menu,bb.submenu2 submenu FROM t_akses aa  '+
           ' INNER JOIN t_submenu2 bb ON aa.submenu=bb.submenu2 INNER JOIN t_submenu b '+
           ' ON b.kodemenu = bb.kodemenu  INNER JOIN t_menu cc ON b.kodemaster=cc.kodemaster '+
           ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
           ' WHERE dd.akses='+QuotedStr('Admin')+
           ' and b.submenu='+QuotedStr(dm.qtemp1['menu'])+
-          ' Order by bb.id  DESC ' ;
+          ' Order by bb.created_at DESC ' ;
           open;
           First;
       end;
@@ -547,7 +575,6 @@ begin
       ACategoryPanel.Collapsed:=True;
       dm.Qtemp1.Next;
     end;
-
 end;
 
 
@@ -713,5 +740,6 @@ begin
 end;
 
 Initialization
-  RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,TFListKonvProduk,TFListGudang,TFListBank]);
+  RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type]);
 end.

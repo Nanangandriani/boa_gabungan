@@ -153,12 +153,12 @@
             <Form>FInput_Pelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UInput_Material.pas">
-            <Form>FInput_Material</Form>
+        <DCCReference Include="UNew_Barang.pas">
+            <Form>FNew_Barang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UKategori_Material.pas">
-            <Form>FKategori_Material</Form>
+        <DCCReference Include="UKategori_Barang.pas">
+            <Form>FKategori_Barang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListProduk.pas">
@@ -221,6 +221,34 @@
             <Form>Fupdate_faktur</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UBarang_Stok.pas">
+            <Form>FBarang_Stok</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Barang_Stok.pas">
+            <Form>FNew_Barang_stok</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCari_Barang.pas">
+            <Form>FCari_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBonPermt_Barang.pas">
+            <Form>FBonPermt_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_BonPermtBarang.pas">
+            <Form>FNew_BonPermtBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UItem_Type.pas">
+            <Form>FItem_Type</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_ItemType.pas">
+            <Form>FNew_ItemType</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -249,6 +277,12 @@
             </Delphi.Personality>
             <Deployment Version="4">
                 <DeployFile LocalName="Win32\Debug\Smart_BOA.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>Smart_BOA.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\Smart_BOA.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Smart_BOA.exe</RemoteName>
                         <Overwrite>true</Overwrite>

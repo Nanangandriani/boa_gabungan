@@ -17,8 +17,8 @@ uses
   UListSupplier in 'UListSupplier.pas' {FListSupplier},
   UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
   UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
-  UInput_Material in 'UInput_Material.pas' {FInput_Material},
-  UKategori_Material in 'UKategori_Material.pas' {FKategori_Material},
+  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
   UListProduk in 'UListProduk.pas' {FListProduk},
   UInput_Produk in 'UInput_Produk.pas' {FInput_Produk},
   UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
@@ -33,7 +33,14 @@ uses
   UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
   UAkun_Perkiraan_TerimaMat in 'UAkun_Perkiraan_TerimaMat.pas' {FAkun_Perkiraan_TerimaMat},
   Udafperkiraan in 'Udafperkiraan.pas' {Fdafperkiraan},
-  Uupdate_faktur in 'Uupdate_faktur.pas' {Fupdate_faktur};
+  Uupdate_faktur in 'Uupdate_faktur.pas' {Fupdate_faktur},
+  UBarang_Stok in 'UBarang_Stok.pas' {FBarang_Stok},
+  UNew_Barang_Stok in 'UNew_Barang_Stok.pas' {FNew_Barang_stok},
+  UCari_Barang in 'UCari_Barang.pas' {FCari_Barang},
+  UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
+  UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
+  UItem_Type in 'UItem_Type.pas' {FItem_Type},
+  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType};
 
 {$R *.res}
 
@@ -58,8 +65,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListSupplier, FListSupplier);
   Application.CreateForm(TFInput_Supplier, FInput_Supplier);
   Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
-  Application.CreateForm(TFInput_Material, FInput_Material);
-  Application.CreateForm(TFKategori_Material, FKategori_Material);
+  Application.CreateForm(TFNew_Barang, FNew_Barang);
+  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
   Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
@@ -75,6 +82,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
+  Application.CreateForm(TFItem_Type, FItem_Type);
+  Application.CreateForm(TFNew_ItemType, FNew_ItemType);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

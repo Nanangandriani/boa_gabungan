@@ -67,17 +67,17 @@ implementation
 
 {$R *.dfm}
 
-uses UInput_Material, UDataModule;
+uses UNew_Barang, UDataModule;
 
 procedure TFListBarang.clear;
 begin
-   FInput_Material.Edno.Text:='';
-   FInput_Material.Edkd.Text:='';
-   FInput_Material.Ednm.Text:='';
-   FInput_Material.EdCategory.Text:='';
-   FInput_Material.Edjenis.Text:='';
-   FInput_Material.Edkd_akun.Text:='';
-   FInput_Material.EdNm_akun.Text:='';
+   FNew_barang.Edno.Text:='';
+   FNew_barang.Edkd.Text:='';
+   FNew_barang.Ednm.Text:='';
+   FNew_barang.EdCategory.Text:='';
+   FNew_barang.Edjenis.Text:='';
+   FNew_barang.Edkd_akun.Text:='';
+   FNew_barang.EdNm_akun.Text:='';
 end;
 
 procedure TFListBarang.dxBarDeleteClick(Sender: TObject);
@@ -98,7 +98,7 @@ end;
 
 procedure TFListBarang.dxBarUpdateClick(Sender: TObject);
 begin
-    with FInput_Material do
+    with FNew_barang do
     begin
       Show;
       BEdit.Visible:=true;
@@ -134,7 +134,7 @@ end;
 
 procedure TFListBarang.dxBarBaruClick(Sender: TObject);
 begin
-  {with FInput_Material do
+  {with FNew_barang do
   begin
     Show;
     Self.clear;
@@ -143,7 +143,7 @@ begin
     BEdit.Visible:=False;
     Caption:='New Material';
   end;}
-  FInput_Material.ShowModal;
+  FNew_barang.ShowModal;
 
 end;
 

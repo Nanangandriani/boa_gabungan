@@ -4560,7 +4560,7 @@ object FHomeLogin: TFHomeLogin
       Proportional = True
       OnClick = Image1Click
     end
-    object Edit1: TEdit
+    object EdPass: TEdit
       Left = 96
       Top = 311
       Width = 255
@@ -4579,7 +4579,7 @@ object FHomeLogin: TFHomeLogin
       TabOrder = 0
       TextHint = 'PASSWORD'
     end
-    object Edit2: TEdit
+    object Eduser: TEdit
       Left = 152
       Top = 218
       Width = 255
@@ -4595,6 +4595,7 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      Text = 'Admin'
       TextHint = 'USERNAME'
     end
     object Edit3: TEdit

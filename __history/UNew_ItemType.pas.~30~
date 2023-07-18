@@ -1,0 +1,88 @@
+unit UNew_ItemType;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls;
+
+type
+  TFNew_ItemType = class(TForm)
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    EdType: TEdit;
+    Label2: TLabel;
+    procedure BBatalClick(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FNew_ItemType: TFNew_ItemType;
+  id:string;
+  statustr:integer;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule, UMainMenu, UItem_Type;
+
+procedure TFNew_ItemType.BBatalClick(Sender: TObject);
+begin
+  FItem_Type.QType.Close;
+  FItem_Type.QType.Open;
+  close;
+  FItem_Type.Show;
+end;
+
+procedure TFNew_ItemType.BSimpanClick(Sender: TObject);
+begin
+  if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+  if not dm.koneksi.InTransaction then
+    if statustr=0 then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert into master_data.t_item_type(type,created_by)values(:type,:created_by)';
+                  ParamByName('type').Value:=EdType.Text;
+                  ParamByName('created_by').value:=nm;
+                  Execute;
+      end;
+    end;
+    if statustr=1 then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='update master_data.t_item_type set type=:type,updated_by=:updated_by,updated_at=now() '+
+                  ' where "id"=:id ';
+                  ParamByName('type').Value:=EdType.Text;
+                  ParamByName('updated_by').value:=nm;
+                  ParamByName('id').Value:=id;
+                  ExecSQL;
+      end;
+    end;
+  //  BBatalClick(sender);
+    ShowMessage('Data Berhasil di Simpan');
+  end;
+end;
+
+procedure TFNew_ItemType.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FItem_Type.QType.Close;
+  FItem_Type.QType.Open;
+//  close;
+//  FItem_Type.Show;
+end;
+
+end.

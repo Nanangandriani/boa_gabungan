@@ -12,8 +12,8 @@ type
   TFHomeLogin = class(TForm)
     pnApproval: TRzPanel;
     ImgApproval: TImage;
-    Edit1: TEdit;
-    Edit2: TEdit;
+    EdPass: TEdit;
+    Eduser: TEdit;
     ImgTransaksi: TImage;
     Image1: TImage;
     Edit3: TEdit;
@@ -47,6 +47,7 @@ end;
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
    FMainMenu.showmodal;
+   nm:=Eduser.Text;
    FHomeLogin.Close;
 end;
 
