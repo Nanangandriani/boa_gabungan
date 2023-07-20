@@ -32,6 +32,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Barang_stok, UNew_BonPermtBarang;
+
 var
   realfCari_barang: TFCari_Barang;
 // implementasi function
@@ -42,6 +43,7 @@ begin
   else
     Application.CreateForm(TFCari_Barang, Result);
 end;
+
 procedure TFCari_Barang.DBGridEh1DblClick(Sender: TObject);
 begin
 if status_tr='MatStok' then

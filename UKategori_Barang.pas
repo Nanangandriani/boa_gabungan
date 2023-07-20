@@ -4,73 +4,145 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, RzEdit,
-  RzBtnEdt, RzButton, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBasic, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
+  dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
+  dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
+  DynVarsEh, Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses, EhLibVCL,
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
 
 type
   TFKategori_Barang = class(TForm)
-    EdKd: TEdit;
-    Panel1: TPanel;
-    BBatal: TRzBitBtn;
-    BSimpan: TRzBitBtn;
-    EdNm_akun: TRzButtonEdit;
-    Edkd_akun: TRzEdit;
-    EdJenis: TEdit;
-    EdKategori: TEdit;
-    Label20: TLabel;
-    Label19: TLabel;
-    Label10: TLabel;
-    Label9: TLabel;
-    Label5: TLabel;
-    Label2: TLabel;
-    Label4: TLabel;
-    Label6: TLabel;
-    procedure BBatalClick(Sender: TObject);
-    procedure EdNm_akunButtonClick(Sender: TObject);
-    procedure BSimpanClick(Sender: TObject);
+    dxRibbon1: TdxRibbon;
+    dxRibbon1Tab1: TdxRibbonTab;
+    DBGridEh7: TDBGridEh;
+    dxBarManager1: TdxBarManager;
+    dxBarMb1: TdxBar;
+    dxBarMb2: TdxBar;
+    dxBarMB3: TdxBar;
+    dxBarManager1Bar1: TdxBar;
+    dxbarmb4: TdxBar;
+    dxBupdate: TdxBarButton;
+    dxbarRefresh: TdxBarButton;
+    dxBdelete: TdxBarButton;
+    dxBarKimiaUpdate: TdxBarButton;
+    dxBbaru: TdxBarLargeButton;
+    dxBarKimiaBaru: TdxBarLargeButton;
+    dxBarKimiaRefresh: TdxBarButton;
+    dxBarKimiaDelete: TdxBarButton;
+    BarKmsBaru: TdxBarLargeButton;
+    BarKmsUpdate: TdxBarButton;
+    BarKmsRefresh: TdxBarButton;
+    BarKmsDelete: TdxBarButton;
+    dxBarButton1: TdxBarButton;
+    dxBarPenolong: TdxBarButton;
+    dxBarButton3: TdxBarButton;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarButton4: TdxBarButton;
+    dxBarlain: TdxBarButton;
+    dxBarButton6: TdxBarButton;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
+    Qkategori: TUniQuery;
+    Dskategori: TDataSource;
+    procedure ActBaruExecute(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FKategori_Barang: TFKategori_Barang;
+Function FKategori_Barang: TFKategori_Barang;
 
 implementation
 
 {$R *.dfm}
 
-uses Udafperkiraan, UDataModule, UNew_Barang;
+uses UNew_KategoriBarang;
 
-procedure TFKategori_Barang.BBatalClick(Sender: TObject);
+var RealFKategori_Barang: TFKategori_Barang;
+function FKategori_Barang: TFKategori_Barang;
 begin
-  Close;
+  if RealFKategori_Barang <> nil then FKategori_Barang:= RealFKategori_Barang
+  else  Application.CreateForm(TFKategori_Barang, Result);
 end;
 
-procedure TFKategori_Barang.BSimpanClick(Sender: TObject);
+procedure TFKategori_Barang.ActBaruExecute(Sender: TObject);
 begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='insert into t_category_material(category,jenis,kd_akun,no_urut)values'+
-                '(:parct,:parjn,:parkd_akun,:parno)';
-                ParamByName('parct').Value:=EdKategori.Text;
-                ParamByName('parjn').Value:=EdJenis.Text;
-                ParamByName('parkd_akun').Value:=Edkd_akun.Text;
-                ParamByName('parno').Value:=EdKd.Text;
-      ExecSQL;
-    end;
-      ShowMessage('Data Berhasil Ditambahkan');
-      Close;
-      FNew_Barang.Load;
+with FNew_KategoriBarang do
+begin
+  Show;
+  clear;
+  EdKd.SetFocus;
+end;
 end;
 
-procedure TFKategori_Barang.EdNm_akunButtonClick(Sender: TObject);
+procedure TFKategori_Barang.ActROExecute(Sender: TObject);
 begin
-   Fdafperkiraan.Show;
-   Fdafperkiraan.vpanggil:='kategorimaterial';
+  DBGridEh7.StartLoadingStatus();
+  DBGridEh7.FinishLoadingStatus();
+  Qkategori.Close;
+  Qkategori.Open;
+end;
+
+procedure TFKategori_Barang.ActUpdateExecute(Sender: TObject);
+begin
+  with FNew_KategoriBarang do
+  begin
+    show;
+    statustr:=1;
+    id:=Qkategori['id'];
+    EdKd.Text:=Qkategori['type'];
+    EdJenis.Text:=Qkategori['type'];
+    id_type:=Qkategori['id_type'];
+    EdKategori.Text:=Qkategori['category'];
+    Edkd_akun.Text:=Qkategori['akun_code'];
+  end;
+end;
+
+procedure TFKategori_Barang.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFKategori_Barang.FormCreate(Sender: TObject);
+begin
+  RealFKategori_Barang:=self;
+end;
+
+procedure TFKategori_Barang.FormDestroy(Sender: TObject);
+begin
+  RealFKategori_Barang:=nil;
 end;
 
 end.

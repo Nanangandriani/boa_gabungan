@@ -74,14 +74,17 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
+function FItem_Type: TFItem_Type;
 var
-  FItem_Type: TFItem_Type;
   nm_form:string;
 
 implementation
@@ -89,6 +92,17 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UNew_ItemType, UMainMenu;
+
+var
+  realFItem_Type: TFItem_Type;
+// implementasi function
+function FItem_Type: TFItem_Type;
+begin
+  if RealFItem_Type <> nil then
+    Fitem_type:= RealFItem_Type
+  else
+    Application.CreateForm(TFItem_Type, Result);
+end;
 
 procedure TFItem_Type.ActBaruExecute(Sender: TObject);
 begin
@@ -121,10 +135,10 @@ end;
 
 procedure TFItem_Type.ActROExecute(Sender: TObject);
 begin
-//  DBGridEh7.StartLoadingStatus();
+  DBGridEh7.StartLoadingStatus();
     QType.Close;
     QType.Open;
-//  DBGridEh7.FinishLoadingStatus();
+  DBGridEh7.FinishLoadingStatus();
 end;
 
 procedure TFItem_Type.ActUpdateExecute(Sender: TObject);
@@ -136,6 +150,21 @@ begin
     id:=QType['id'];
     EdType.Text:=QType['type'];
   end;
+end;
+
+procedure TFItem_Type.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFItem_Type.FormCreate(Sender: TObject);
+begin
+  realFItem_Type:=self;
+end;
+
+procedure TFItem_Type.FormDestroy(Sender: TObject);
+begin
+  realFItem_Type:=nil;
 end;
 
 procedure TFItem_Type.FormShow(Sender: TObject);

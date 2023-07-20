@@ -135,7 +135,7 @@ implementation
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Material,
   UListKonversi_Produk, UList_Gudang, UListBank_perusahaan, UBarang_Stok,
-  UItem_Type;
+  UItem_Type, UKategori_Barang;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -741,5 +741,6 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
-  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type]);
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
+  ,TFKategori_Barang]);
 end.

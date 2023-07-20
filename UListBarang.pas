@@ -4,9 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
-  cxLookAndFeelPainters, dxSkinsCore, dxSkinBasic, dxSkinBlack, dxSkinBlue,
-  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.ComCtrls,
+  DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, Vcl.StdCtrls,
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Data.DB, MemDS, DBAccess, Uni,
+  Vcl.Mask, Vcl.DBCtrls, RzCmboBx, MemTableDataEh, DataDriverEh, MemTableEh,
+  RzTabs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  dxRibbonSkins, dxRibbonCustomizationForm, cxClasses, dxRibbon, dxBar,
+  dxBarExtItems, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
   dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
@@ -14,137 +19,287 @@ uses
   dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
   dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
   dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
+  dxSkinsdxRibbonPainter, dxSkinsdxBarPainter, dxSkinsForm, System.Actions,
+  Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, frxClass,
+  frxDBSet, dxSkinBasic, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
   dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
-  dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
-  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust,
-  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
-  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
-  dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
-  DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxBar, cxClasses,
-  dxRibbon, MemTableDataEh, Data.DB, MemDS, DBAccess, Uni, MemTableEh,
-  DataDriverEh;
+  dxSkinOffice2019White, dxSkinTheBezier, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore;
 
 type
-  TFListBarang = class(TForm)
-    dxRibbon1: TdxRibbon;
-    dxRibbon1Tab1: TdxRibbonTab;
-    dxBarManager1: TdxBarManager;
-    dxBarManager1Bar1: TdxBar;
-    dxBarButton2: TdxBarButton;
-    dxBarButton1: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarButton4: TdxBarButton;
-    dxBarButton5: TdxBarButton;
-    dxBarButton6: TdxBarButton;
-    dxBarButton7: TdxBarButton;
-    DBGridMaterial: TDBGridEh;
-    dxBarBaru: TdxBarLargeButton;
-    dxBarUpdate: TdxBarButton;
-    dxBarRefresh: TdxBarButton;
-    dxBarDelete: TdxBarButton;
-    DataSetDriverEh1: TDataSetDriverEh;
+  TFlistBarang = class(TForm)
+    QMaterial: TUniQuery;
     dsmaterial: TDataSource;
     MemMaterial: TMemTableEh;
-    QMaterial: TUniQuery;
-    procedure dxBarBaruClick(Sender: TObject);
-    procedure dxBarUpdateClick(Sender: TObject);
-    procedure dxBarRefreshClick(Sender: TObject);
-    procedure dxBarDeleteClick(Sender: TObject);
+    DataSetDriverEh1: TDataSetDriverEh;
+    dxBarManager1: TdxBarManager;
+    dxRibbon1Tab1: TdxRibbonTab;
+    dxRibbon1: TdxRibbon;
+    dxBarManager1Bar1: TdxBar;
+    DxBarUpdate: TdxBarButton;
+    DxBarRefresh: TdxBarButton;
+    dxBDelete: TdxBarButton;
+    DxbEdit1: TdxBarLargeButton;
+    dxBarBaru: TdxBarLargeButton;
+    DBGridMaterial: TDBGridEh;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRo: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
+    Rpt: TfrxReport;
+    DBBarang: TfrxDBDataset;
+    Qrpt_Material: TUniQuery;
+    dxBarButton1: TdxBarButton;
+    procedure EdCategorySelect(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure DxbEdit1Click(Sender: TObject);
+    procedure dxBDeleteClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActRoExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure DBGridMaterialCellClick(Column: TColumnEh);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
+    procedure clear;
   public
     { Public declarations }
-      procedure clear;
   end;
 
+function FlistBarang:TFlistBarang;
 var
-  FListBarang: TFListBarang;
+//  FMaterial: TFMaterial;
+  Urut:integer;
+  Kode:string;
 
 implementation
 
 {$R *.dfm}
 
-uses UNew_Barang, UDataModule;
+uses UMainmenu, UNew_Barang, UDataModule;
+var
+  RealFlistBarang: TFlistBarang;
 
-procedure TFListBarang.clear;
+// implementasi function
+function FlistBarang: TFlistBarang;
 begin
-   FNew_barang.Edno.Text:='';
-   FNew_barang.Edkd.Text:='';
-   FNew_barang.Ednm.Text:='';
-   FNew_barang.EdCategory.Text:='';
-   FNew_barang.Edjenis.Text:='';
-   FNew_barang.Edkd_akun.Text:='';
-   FNew_barang.EdNm_akun.Text:='';
+  if RealFlistBarang <> nil then
+    FlistBarang := RealFlistBarang
+  else
+    Application.CreateForm(TFlistBarang, Result);
 end;
 
-procedure TFListBarang.dxBarDeleteClick(Sender: TObject);
+procedure TFlistBarang.ActBaruExecute(Sender: TObject);
 begin
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-    then begin
-    with dm.Qtemp do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text:='Delete From t_material where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
-      Execute;
-    end;
-    dxbarRefreshClick(sender);
-    ShowMessage('Data Berhasil di Hapus');
-    end;
-end;
-
-procedure TFListBarang.dxBarUpdateClick(Sender: TObject);
-begin
-    with FNew_barang do
-    begin
-      Show;
-      BEdit.Visible:=true;
-      BSimpan.Visible:=False;
-      Caption:='Update Material';
-    with MemMaterial do
-    begin
-      Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
-      Edno.Text:=MemMaterial.FieldByName('no_material').AsString;
-      EdKd.Text:=MemMaterial.FieldByName('kd_material').AsString;
-      EdNm.Text:=MemMaterial.FieldByName('nm_material').AsString;
-      EdCategory.Text:=MemMaterial.FieldByName('Category').AsString;
-      EdSatuan.Text:=MemMaterial.FieldByName('satuan').AsString;
-      Edjenis.Text:=MemMaterial.FieldByName('jenis').AsString;
-      EdMerk.Text:=MemMaterial.FieldByName('merk').AsString;
-      Edkd_akun.Text:=MemMaterial.FieldByName('kd_akun').AsString;
-      EdNm_akun.Text:=MemMaterial.FieldByName('nama_perkiraan').AsString;
-      idmaterial:=MemMaterial.FieldByName('id').AsString;
-
-    end;
-    end;
-end;
-
-procedure TFListBarang.dxBarRefreshClick(Sender: TObject);
-begin
-    Dm.Koneksi.Close;
-    DBGridMaterial.StartLoadingStatus();
-    DBGridMaterial.FinishLoadingStatus();
-    MemMaterial.Close;
-    if QMaterial.Active=False then QMaterial.Active:=True;
-    if MemMaterial.Active=False then MemMaterial.Active:=True;
-end;
-
-procedure TFListBarang.dxBarBaruClick(Sender: TObject);
-begin
-  {with FNew_barang do
+  with FNew_barang do
   begin
-    Show;
-    Self.clear;
-    EdCategory.SetFocus;
-    BSimpan.Visible:=true;
-    BEdit.Visible:=False;
-    Caption:='New Material';
-  end;}
-  FNew_barang.ShowModal;
+  Show;
+  Self.clear;
+  EdCategory.SetFocus;
+  BSimpan.Visible:=true;
+  BEdit.Visible:=False;
+  Caption:='New Barang';
+  end;
+end;
 
+procedure TFlistBarang.ActDelExecute(Sender: TObject);
+begin
+{  Self.Refresh;
+  Self.clear;
+  DBGridMaterial.Visible:=true;   }
+   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+then begin
+with dm.Qtemp do
+begin
+  Close;
+  sql.Clear;
+  sql.Text:='Delete From t_material where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
+  Execute;
+end;
+ActRoExecute(sender);
+ShowMessage('Data Berhasil di Hapus');
+end;
+end;
+
+procedure TFlistBarang.ActPrintExecute(Sender: TObject);
+begin
+{with FRpt_material do
+begin
+  show;
+  cbcategory.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_category_material order by category asc';
+    ExecSQL;
+  end;
+  DM.Qtemp.First;
+  while not DM.Qtemp.eof do
+  begin
+    cbcategory.Items.Add(DM.Qtemp['category']);
+    DM.Qtemp.Next;
+  end;
+end;}
+end;
+
+procedure TFlistBarang.ActRoExecute(Sender: TObject);
+begin
+
+  Dm.Koneksi.Close;
+  DBGridMaterial.StartLoadingStatus();
+  DBGridMaterial.FinishLoadingStatus();
+  QMaterial.Close;
+  MemMaterial.Close;
+  if QMaterial.Active=False then QMaterial.Active:=True;
+  if MemMaterial.Active=False then MemMaterial.Active:=True;
+end;
+
+procedure TFlistBarang.ActUpdateExecute(Sender: TObject);
+begin
+with FNew_barang do
+begin
+  Show;
+  BEdit.Visible:=true;
+  BSimpan.Visible:=False;
+  Caption:='Update Material';
+with MemMaterial do
+begin
+ { Close;
+  sql.clear;
+  sql.Text:='select * from t_material where category='+QuotedStr(DBGridEh1.Fields[0].AsString)+''+
+            ' and no_material='+QuotedStr(DBGridEh1.Fields[1].AsString);
+  ExecSQL;}
+  Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
+  Edno.Text:=MemMaterial.FieldByName('no_material').AsString;
+  EdKd.Text:=MemMaterial.FieldByName('kd_material').AsString;
+  EdNm.Text:=MemMaterial.FieldByName('nm_material').AsString;
+  EdCategory.Text:=MemMaterial.FieldByName('Category').AsString;
+  EdSatuan.Text:=MemMaterial.FieldByName('satuan').AsString;
+  Edjenis.Text:=MemMaterial.FieldByName('jenis').AsString;
+  EdMerk.Text:=MemMaterial.FieldByName('merk').AsString;
+  Edkd_akun.Text:=MemMaterial.FieldByName('kd_akun').AsString;
+  EdNm_akun.Text:=MemMaterial.FieldByName('nama_perkiraan').AsString;
+  idmaterial:=MemMaterial.FieldByName('id').AsString;
+ // FNew_barang.DBGridEh1.Visible:=false;
+  //DxBedit1.Visible:=ivAlways;
+  //DXBsimpan1.Visible:=ivNever;
+end;
+end;
+end;
+
+procedure TFlistBarang.clear;
+begin
+  FNew_barang.Edno.Text:='';
+  FNew_barang.Edkd.Text:='';
+  FNew_barang.Ednm.Text:='';
+  FNew_barang.EdCategory.Text:='';
+  FNew_barang.Edjenis.Text:='';
+  FNew_barang.Edkd_akun.Text:='';
+  FNew_barang.EdNm_akun.Text:='';
+end;
+
+procedure TFlistBarang.DBGridMaterialCellClick(Column: TColumnEh);
+begin
+if DBGridMaterial.Fields[8].AsString='1' then
+BEGIN
+  ActUpdate.Enabled:=True;
+END else
+  ActUpdate.Enabled:=False;
+end;
+
+procedure TFlistBarang.DxbEdit1Click(Sender: TObject);
+begin
+ with dm.Qtemp do
+begin
+  close;
+  sql.clear;
+  sql.Text:='Select * from t_material';
+  ExecSQL;
+end;
+ with dm.Qtemp do
+begin
+  close;
+  sql.clear;
+//  sql.Text:='Update t_material set no_urut='+QuotedStr(Edno1.Text)+', kd_material='+QuotedStr(Edkd.Text)+ ' ,nm_material='+QuotedStr(Ednm.Text)+''+
+//            ' ,category='+QuotedStr(EdCategory.Text)+' Where no_material='+QuotedStr(Edno.Text);
+  ExecSQL;
+  end;
+  ShowMessage('Data Berhasil di Update');
+  ActRoExecute(sender);
+end;
+
+procedure TFlistBarang.dxBDeleteClick(Sender: TObject);
+begin
+ if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+then begin
+with dm.Qtemp do
+begin
+  Close;
+  sql.Clear;
+  sql.Text:='Delete From t_material where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
+  Execute;
+end;
+ActRoExecute(sender);
+ShowMessage('Data Berhasil di Hapus');
+end;
+end;
+
+procedure TFlistBarang.EdCategorySelect(Sender: TObject);
+begin
+with dm.Qtemp do
+begin
+  Close;
+  SQL.clear;
+//  sql.Text:=' SELECT * FROM t_material '+
+//            ' WHERE t_material.category='+QuotedStr(EdCategory.Text);
+  Open;
+end;
+if dm.Qtemp.RecordCount =0 then urut:=1 else
+if dm.Qtemp.RecordCount >0 then
+begin
+with dm.Qtemp do
+begin
+  Close;
+  SQL.clear;
+//  sql.Text:=' SELECT max(t_material.no_urut)AS urut FROM t_material '+
+    //        ' WHERE t_material.category='+QuotedStr(EdCategory.Text);
+  Open;
+end;
+  urut:= Dm.Qtemp.FieldByName('urut').AsInteger +1;
+end;
+ // Edno1.Text:=FloatToStr(urut);
+//  Edno.Text:='0'+(Edno1.Text);
+end;
+
+procedure TFlistBarang.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFlistBarang.FormCreate(Sender: TObject);
+begin
+{FMainMenu.parent:=FMaterial.Panel1;
+FMainMenu.Visible:=True;
+FMainMenu.WindowState:=wsMaximized;}
+  RealFlistBarang:=self;
+end;
+
+procedure TFlistBarang.FormDestroy(Sender: TObject);
+begin
+  RealFlistBarang:=nil;
 end;
 
 end.
