@@ -74,7 +74,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
-  Application.CreateForm(TFListPelanggan, FListPelanggan);
+ // Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFMainMenu, FMainMenu);
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFPenomoran, FPenomoran);
