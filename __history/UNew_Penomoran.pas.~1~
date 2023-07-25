@@ -1,0 +1,284 @@
+unit UInput_Penomoran;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, RzCmboBx,
+  Vcl.Mask, RzEdit, Vcl.ExtCtrls, RzPanel, RzBtnEdt, Data.DB, MemDS, DBAccess,
+  Uni, RzLstBox;
+
+type
+  TFInput_Penomoran = class(TForm)
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    LabelHasil: TLabel;
+    RzEdit1: TRzEdit;
+    RzEdit2: TRzEdit;
+    eddigit_count: TRzEdit;
+    RzComboBox1: TRzComboBox;
+    CBKomponen_No: TRzComboBox;
+    btnplus: TRzBitBtn;
+    RzPanel2: TRzPanel;
+    RzBitBtn4: TRzBitBtn;
+    RzBitBtn5: TRzBitBtn;
+    btnplus2: TRzBitBtn;
+    Ed_Komp: TRzButtonEdit;
+    UniQuery1: TUniQuery;
+    Edbut_th: TRzButtonEdit;
+    Edbut_bln: TRzButtonEdit;
+    Edbut_tgl: TRzButtonEdit;
+    Edbut_counter: TRzButtonEdit;
+    Edbut_pemisah: TRzButtonEdit;
+    ListBox1: TRzListBox;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    procedure RzBitBtn5Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure CBKomponen_NoSelect(Sender: TObject);
+    procedure Ed_KompButtonClick(Sender: TObject);
+    procedure Edbut_thButtonClick(Sender: TObject);
+    procedure Edbut_blnButtonClick(Sender: TObject);
+    procedure Edbut_tglButtonClick(Sender: TObject);
+    procedure Edbut_counterButtonClick(Sender: TObject);
+    procedure Edbut_pemisahButtonClick(Sender: TObject);
+    procedure Edbut_thChange(Sender: TObject);
+    procedure Edbut_pemisahChange(Sender: TObject);
+
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     function convbulanrom(nobulan:Integer):string;
+     function conv_terbilang(nilai:string):string;
+  end;
+
+var
+  FInput_Penomoran: TFInput_Penomoran;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule;
+
+function TFInput_Penomoran.conv_terbilang(nilai:string):string;
+var temu,titik,i:integer;
+    hasil,hasil2,sisa_koma,huruf_awal,terbilang,temp,dpnkoma,blkkoma:string;
+    adakoma:boolean;
+begin
+   temu:=pos(',',nilai);
+    titik:=pos('.',nilai);
+   // dpnkoma:=LowerCase(UraikanAngka(copy(nilai,1,temu-1)));
+   //blkkoma:=LowerCase(UraikanAngka(copy(nilai,temu+1,length(nilai))));
+    terbilang:=UpperCase(huruf_awal)+copy(hasil,2,length(hasil)-1);
+    if (temu<>0) or (titik<>0) then
+    begin
+      adaKoma:= true;
+      if temu= 0 then
+      begin
+         temu:= Titik;
+      end
+      else
+      begin
+          adakoma:= False;
+          DpnKoma:= nilai;
+      end;
+    end;
+
+    // Jika ada Koma
+    if adakoma then
+    begin
+      dpnkoma:= copy(nilai,1,temu-1);
+      blkKoma:= Copy(nilai,temu+1,length(nilai)-temu);
+      if trim(DpnKoma)='0' then
+      begin
+         //temp:= 'Nol'+ ' Koma ' + terbilang(blkKoma);
+      end
+      else
+      begin
+        //temp:= Terbilang(dpnKoma)+ ' Koma ' +terbilang(blkKoma);
+      end;
+  // Jika Tidak ada Koma
+    end
+    else
+    begin
+     //temp:=Terbilang(dpnKoma);
+    end;
+    result:=temp;
+end;
+
+function TFInput_Penomoran.convbulanrom(nobulan: Integer): string;
+begin
+  case nobulan of
+    1:Result:='I';
+    2:Result:='II';
+    3:Result:='III';
+    4:Result:='IV';
+    5:Result:='V';
+    6:Result:='VI';
+    7:Result:='VII';
+    8:Result:='VIII';
+    9:Result:='IX';
+    10:Result:='X';
+    11:Result:='XI';
+    12:Result:='XII';
+  end;
+end;
+
+function buttonCreate(onClickEvent: TProcedure;
+  left: integer; top: integer; width: integer; height: integer;
+  anchors: TAnchors; caption: string; parent: TWinControl; form: TForm): TButton;
+var
+  theButton: TButton;
+begin
+  theButton := TButton.Create(form);
+  theButton.width := width;
+  theButton.height := height;
+  theButton.left := left;
+  theButton.top := top;
+  theButton.parent := parent;
+  theButton.anchors := anchors;
+  //theButton.OnClick := onClickEvent;
+  theButton.Caption := caption;
+  result := theButton;
+end;
+
+procedure TFInput_Penomoran.Ed_KompButtonClick(Sender: TObject);
+begin
+  btnplus.Visible:=true;
+  Ed_Komp.Visible:=false;
+  btnplus2.Visible:=false;
+end;
+
+procedure TFInput_Penomoran.FormShow(Sender: TObject);
+begin
+   LabelHasil.Caption:='';
+   Ed_Komp.Visible:=false;
+   btnplus2.Visible:=false;
+   btnplus.Visible:=true;
+end;
+
+procedure TFInput_Penomoran.RzBitBtn5Click(Sender: TObject);
+begin
+   Close;
+end;
+
+procedure TFInput_Penomoran.Edbut_blnButtonClick(Sender: TObject);
+begin
+   Edbut_bln.Clear;
+   Edbut_bln.visible:=false;
+end;
+
+procedure TFInput_Penomoran.Edbut_counterButtonClick(Sender: TObject);
+begin
+   Edbut_counter.Clear;
+   Edbut_counter.visible:=false;
+end;
+
+procedure TFInput_Penomoran.Edbut_pemisahButtonClick(Sender: TObject);
+begin
+   Edbut_pemisah.Clear;
+   Edbut_pemisah.visible:=false;
+end;
+
+procedure TFInput_Penomoran.Edbut_pemisahChange(Sender: TObject);
+begin
+   Edbut_pemisah.Text:=Ed_Komp.Text;
+end;
+
+procedure TFInput_Penomoran.Edbut_tglButtonClick(Sender: TObject);
+begin
+   Edbut_tgl.Clear;
+   Edbut_tgl.visible:=false;
+end;
+
+procedure TFInput_Penomoran.Edbut_thButtonClick(Sender: TObject);
+begin
+  Edbut_th.Clear;
+  Edbut_th.visible:=false;
+end;
+
+procedure TFInput_Penomoran.Edbut_thChange(Sender: TObject);
+begin
+  LabelHasil.Caption:=(Edbut_th.text)+(Edbut_bln.Text)+(Edbut_tgl.Text)+(Edbut_counter.text)+(Edbut_pemisah.text);
+end;
+
+procedure TFInput_Penomoran.CBKomponen_NoSelect(Sender: TObject);
+begin
+   if CBKomponen_No.ItemIndex=0 then
+   begin
+      with uniquery1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Create.Add(' SELECT date_part(''year'', now()) Tahun ');
+        Open;
+      end;
+      Edbut_th.Text:=uniquery1.FieldByName('tahun').AsString;
+      ListBox1.Items.Add(Edbut_th.Text);
+
+   end
+   else
+   if CBKomponen_No.ItemIndex=1 then
+   begin
+      with uniquery1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Create.Add(' SELECT date_part(''month'', now()) bulan ');
+        Open;
+      end;
+      Edbut_bln.Text:=uniquery1.FieldByName('bulan').AsString;
+      ListBox1.Items.Add(Edbut_bln.Text);
+
+   end
+   else
+   if CBKomponen_No.ItemIndex=2 then
+   begin
+      with uniquery1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Create.Add(' SELECT date_part(''day'', now()) tgl ');
+        Open;
+      end;
+      Edbut_tgl.Text:=uniquery1.FieldByName('tgl').AsString;
+      ListBox1.Items.Add(Edbut_tgl.Text);
+
+   end
+   else
+   if CBKomponen_No.ItemIndex=3 then
+   begin
+      Edbut_counter.Text:=eddigit_count.Text;
+      ListBox1.Items.Add(Edbut_counter.Text);
+
+   end
+   else
+   if CBKomponen_No.ItemIndex=4 then
+   begin
+     btnplus.Visible:=false;
+     Ed_Komp.Visible:=true;
+     btnplus2.Visible:=true;
+   end
+   else
+   begin
+      btnplus.Visible:=true;
+      Ed_Komp.Visible:=false;
+      btnplus2.Visible:=false;
+   end;
+
+
+end;
+
+end.

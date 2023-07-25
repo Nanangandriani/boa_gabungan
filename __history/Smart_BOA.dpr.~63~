@@ -1,0 +1,85 @@
+program Smart_BOA;
+
+uses
+  Vcl.Forms,
+  UMainMenu in 'UMainMenu.pas' {FMainMenu},
+  UDataModule in 'UDataModule.pas' {dm: TDataModule},
+  UDashboard in 'UDashboard.pas' {FDashboard},
+  UHomeSreen in 'UHomeSreen.pas' {FHomeSreen},
+  UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
+  UFakturPajak in 'UFakturPajak.pas' {FFakturPajak},
+  UPenomoran in 'UPenomoran.pas' {FPenomoran},
+  UInput_Penomoran in 'UInput_Penomoran.pas' {FInput_Penomoran},
+  Vcl.Themes,
+  Vcl.Styles,
+  UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+  UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
+  UListProduk in 'UListProduk.pas' {FListProduk},
+  UInput_Produk in 'UInput_Produk.pas' {FInput_Produk},
+  UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
+  UNewKonv_Material in 'UNewKonv_Material.pas' {FNewKonv_Material},
+  USearchMaterial in 'USearchMaterial.pas' {FSearchMaterial},
+  UListKonversi_Produk in 'UListKonversi_Produk.pas' {FListKonvProduk},
+  UNewKonv_Produk in 'UNewKonv_Produk.pas' {FNewKonv_produk},
+  UList_Gudang in 'UList_Gudang.pas' {FListGudang},
+  UNew_Gudang in 'UNew_Gudang.pas' {FNew_Gudang},
+  UListBank_perusahaan in 'UListBank_perusahaan.pas' {FListBank},
+  UNewBank in 'UNewBank.pas' {FNewBank},
+  UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
+  UAkun_Perkiraan_TerimaMat in 'UAkun_Perkiraan_TerimaMat.pas' {FAkun_Perkiraan_TerimaMat},
+  Udafperkiraan in 'Udafperkiraan.pas' {Fdafperkiraan},
+  Uupdate_faktur in 'Uupdate_faktur.pas' {Fupdate_faktur},
+  UBarang_Stok in 'UBarang_Stok.pas' {FBarang_Stok},
+  UNew_Barang_Stok in 'UNew_Barang_Stok.pas' {FNew_Barang_stok},
+  UCari_Barang in 'UCari_Barang.pas' {FCari_Barang},
+  UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
+  UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
+  UItem_Type in 'UItem_Type.pas' {FItem_Type},
+  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+  UNew_KategoriBarang in 'UNew_KategoriBarang.pas' {FNew_KategoriBarang},
+  UListBarang in 'UListBarang.pas' {FlistBarang},
+  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang};
+
+{$R *.res}
+
+begin
+FHomeSreen :=TFHomeSreen.Create(Application);
+FHomeSreen.Show;
+FHomeSreen.Update;
+
+while FHomeSreen.Timer1.Enabled do
+  Application.ProcessMessages;
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFHomeLogin, FHomeLogin);
+  Application.CreateForm(TFHomeSreen, FHomeSreen);
+  Application.CreateForm(Tdm, dm);
+  Application.CreateForm(TFMainMenu, FMainMenu);
+  Application.CreateForm(TFFakturPajak, FFakturPajak);
+  Application.CreateForm(TFPenomoran, FPenomoran);
+  Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
+  Application.CreateForm(TFListPelanggan, FListPelanggan);
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
+  Application.CreateForm(TFListProduk, FListProduk);
+  Application.CreateForm(TFInput_Produk, FInput_Produk);
+  Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
+  Application.CreateForm(TFNewKonv_Material, FNewKonv_Material);
+  Application.CreateForm(TFSearchMaterial, FSearchMaterial);
+  Application.CreateForm(TFListKonvProduk, FListKonvProduk);
+  Application.CreateForm(TFNewKonv_produk, FNewKonv_produk);
+  Application.CreateForm(TFListGudang, FListGudang);
+  Application.CreateForm(TFNew_Gudang, FNew_Gudang);
+  Application.CreateForm(TFListBank, FListBank);
+  Application.CreateForm(TFNewBank, FNewBank);
+  Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
+  Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
+  Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
+  Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
+  //  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+  FHomeSreen.Hide;
+  FHomeSreen.Free;
+  Application.Run;
+end.

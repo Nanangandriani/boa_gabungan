@@ -1,0 +1,39 @@
+unit UPenomoran;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, RzPanel,
+  Vcl.StdCtrls, RzCmboBx, Vcl.Mask, RzEdit, Data.DB, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFPenomoran = class(TForm)
+    RzPanel1: TRzPanel;
+    RzBitBtn1: TRzBitBtn;
+    RzBitBtn2: TRzBitBtn;
+    RzBitBtn3: TRzBitBtn;
+    RzBitBtn4: TRzBitBtn;
+    DBGrid1: TDBGrid;
+    procedure RzBitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FPenomoran: TFPenomoran;
+
+implementation
+
+{$R *.dfm}
+
+uses UInput_Penomoran;
+
+procedure TFPenomoran.RzBitBtn1Click(Sender: TObject);
+begin
+  FInput_Penomoran.ShowModal;
+end;
+
+end.
