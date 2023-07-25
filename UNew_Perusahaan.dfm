@@ -1,9 +1,18 @@
+<<<<<<<< Updated upstream:UNew_Perusahaan.dfm
 object FNewPerusahaan: TFNewPerusahaan
   Left = 0
   Top = 0
   Caption = 'Form New Perusahaan'
   ClientHeight = 350
   ClientWidth = 514
+========
+object FNew_ItemType: TFNew_ItemType
+  Left = 0
+  Top = 0
+  Caption = 'Form New Jenis Barang'
+  ClientHeight = 142
+  ClientWidth = 464
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~17~
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,15 +20,32 @@ object FNewPerusahaan: TFNewPerusahaan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnShow = FormShow
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
+<<<<<<<< Updated upstream:UNew_Perusahaan.dfm
   object Label19: TLabel
     Left = 24
     Top = 234
     Width = 63
+========
+  object Label2: TLabel
+    Left = 21
+    Top = 25
+    Width = 32
+    Height = 15
+    Caption = 'Nama'
+  end
+  object Label19: TLabel
+    Left = 21
+    Top = 68
+    Width = 80
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~17~
     Height = 15
     Caption = 'Status Pajak'
   end
+<<<<<<<< Updated upstream:UNew_Perusahaan.dfm
   object Label20: TLabel
     Left = 126
     Top = 234
@@ -150,11 +176,24 @@ object FNewPerusahaan: TFNewPerusahaan
     ExplicitWidth = 435
     object BBatal: TRzBitBtn
       Left = 438
+========
+  object Panel1: TPanel
+    Left = 0
+    Top = 110
+    Width = 464
+    Height = 32
+    Align = alBottom
+    TabOrder = 0
+    ExplicitTop = 109
+    ExplicitWidth = 460
+    object BBatal: TRzBitBtn
+      Left = 388
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~17~
       Top = 1
-      Height = 39
+      Height = 30
       Align = alRight
       Caption = 'Batal'
-      TabOrder = 2
+      TabOrder = 0
       OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -208,16 +247,22 @@ object FNewPerusahaan: TFNewPerusahaan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<<< Updated upstream:UNew_Perusahaan.dfm
       ExplicitLeft = 444
     end
     object BSimpan: TRzBitBtn
       Left = 288
+========
+      ExplicitLeft = 384
+    end
+    object BSimpan: TRzBitBtn
+      Left = 313
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~17~
       Top = 1
-      Height = 39
+      Height = 30
       Align = alRight
       Caption = 'Simpan'
-      TabOrder = 0
-      Visible = False
+      TabOrder = 1
       OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -271,17 +316,24 @@ object FNewPerusahaan: TFNewPerusahaan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<<< Updated upstream:UNew_Perusahaan.dfm
       ExplicitLeft = 215
     end
     object BEdit: TRzBitBtn
       Left = 363
+========
+      ExplicitLeft = 309
+    end
+    object BCari: TRzBitBtn
+      Left = 1
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~17~
       Top = 1
-      Height = 39
-      Align = alRight
-      Caption = 'Simpan'
-      TabOrder = 1
-      Visible = False
-      OnClick = BEditClick
+      Width = 100
+      Height = 30
+      Align = alLeft
+      Caption = 'Cari'
+      TabOrder = 2
+      OnClick = BCariClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830E0000830E00000001000000000000000000003300
@@ -316,24 +368,25 @@ object FNewPerusahaan: TFNewPerusahaan
         4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8090909
-        09090909090909090909E8E8E881818181818181818181818181E8E809101009
-        E31009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E80909101009
-        E31009E3E3E309101009E88181ACAC81E3AC81E3E3E381ACAC81091009101009
-        E31009E3E3E30910100981AC81ACAC81E3AC81E3E3E381ACAC81091009101009
-        E3E3E3E3E3E30910100981AC81ACAC81E3E3E3E3E3E381ACAC81091009101010
-        0909090909091010100981AC81ACACAC818181818181ACACAC81091009101010
-        1010101010101010100981AC81ACACACACACACACACACACACAC81091009101009
-        0909090909090910100981AC81ACAC8181818181818181ACAC810910091009D7
-        D7D7D7D7D7D7D709100981AC81AC81D7D7D7D7D7D7D7D781AC810910091009D7
-        090909090909D709100981AC81AC81D7818181818181D781AC810910091009D7
-        D7D7D7D7D7D7D709100981AC81AC81D7D7D7D7D7D7D7D781AC81091009E309D7
-        090909090909D709090981AC81E381D7818181818181D78181810910091009D7
-        D7D7D7D7D7D7D709100981AC81AC81D7D7D7D7D7D7D7D781AC8109E309090909
-        0909090909090909090981E38181818181818181818181818181091009D7D7D7
-        D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
-        0909090909090909E8E88181818181818181818181818181E8E8}
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E80909E80909E80909E8E8E8E8E8E8E8E88181E88181E88181E8E8E8E8E8E8
+        E8E81009E81009E81009E8E8E8E8E8E8E8E8E281E8E281E8E281E8E8E8E8E8E8
+        E8B4D8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E281E8E8E8E8E8E8E8E8E8E8E8E8E8
+        B46C6CD8E8E8E8E8E8E8E8E8E8E8E8E8E2818181E8E8E8E8E8E8E8E8E8E8E8E8
+        B46CD86CD8E8E8E8E8E8E8E8E8E8E8E8E281818181E8E8E8E8E8E8E8E8E8E8E8
+        B46C6CD86CD8E8E8E8E8E8E8E8E8E8E8E28181818181E8E8E8E8E8E8E8E8E8D7
+        5E6C6C6CB46CD8E8E8E8E8E8E8E8E8D781818181E28181E8E8E8E8E8E8E8E8D7
+        89896CB4B4B46CD8E8E8E8E8E8E8E8D7ACAC81E2E2E28181E8E8E8E8E8E8D789
+        89D7D7B4C7C7C76CE8E8E8E8E8E8D7ACACD7D7E2ACACAC81E8E8E8E8E8D78989
+        D7D7D7D76C6C6CE8E8E8E8E8E8D7ACACD7D7D7D7818181E8E8E8E8E8D78989D7
+        D7D75E5EE8E8E8E8E8E8E8E8D7ACACD7D7D78181E8E8E8E8E8E8E8D78989D7D7
+        D75EE8E8E8E8E8E8E8E8E8D7ACACD7D7D781E8E8E8E8E8E8E8E8D78989D7D7D7
+        5EB4E8E8E8E8E8E8E8E8D7ACACD7D7D781E2E8E8E8E8E8E8E8E85E89D7D7D75E
+        B4E8E8E8E8E8E8E8E8E881ACD7D7D781E2E8E8E8E8E8E8E8E8E8E85ED7D75EE8
+        E8E8E8E8E8E8E8E8E8E8E881D7D781E8E8E8E8E8E8E8E8E8E8E8E8E85E5EE8E8
+        E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<<< Updated upstream:UNew_Perusahaan.dfm
       ExplicitLeft = 290
     end
   end
@@ -399,5 +452,38 @@ object FNewPerusahaan: TFNewPerusahaan
     Width = 145
     Height = 23
     TabOrder = 9
+========
+    end
+  end
+  object EdType: TEdit
+    Left = 107
+    Top = 22
+    Width = 329
+    Height = 23
+    CharCase = ecUpperCase
+    TabOrder = 1
+  end
+  object Edkd_akun: TRzEdit
+    Left = 107
+    Top = 65
+    Width = 110
+    Height = 23
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 2
+  end
+  object EdNm_akun: TRzButtonEdit
+    Left = 223
+    Top = 65
+    Width = 213
+    Height = 23
+    Text = ''
+    CharCase = ecUpperCase
+    ReadOnlyColorOnFocus = True
+    TabOrder = 3
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~17~
   end
 end
