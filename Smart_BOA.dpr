@@ -14,9 +14,7 @@ uses
   Vcl.Styles,
   UListBarang in 'UListBarang.pas' {FListBarang},
   UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
-  UListSupplier in 'UListSupplier.pas' {FListSupplier},
-  UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
-  UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
+  UNew_Pelanggan in 'UNew_Pelanggan.pas' {FNew_Pelanggan},
   UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
   UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
   UListProduk in 'UListProduk.pas' {FListProduk},
@@ -40,7 +38,11 @@ uses
   UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
   UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
   UItem_Type in 'UItem_Type.pas' {FItem_Type},
-  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType};
+  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+  UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
+  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
+  UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan};
 
 {$R *.res}
 
@@ -62,9 +64,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
   Application.CreateForm(TFListBarang, FListBarang);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
-  Application.CreateForm(TFListSupplier, FListSupplier);
-  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
-  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
+  Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   Application.CreateForm(TFNew_Barang, FNew_Barang);
   Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   Application.CreateForm(TFListProduk, FListProduk);
@@ -84,6 +84,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
   Application.CreateForm(TFItem_Type, FItem_Type);
   Application.CreateForm(TFNew_ItemType, FNew_ItemType);
+  //Application.CreateForm(TFInput_Supplier, FInput_Supplier);
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFListPerusahaan, FListPerusahaan);
+  Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

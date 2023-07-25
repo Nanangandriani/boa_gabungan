@@ -141,16 +141,8 @@
             <Form>FListPelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListSupplier.pas">
-            <Form>FListSupplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UInput_Supplier.pas">
-            <Form>FInput_Supplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UInput_Pelanggan.pas">
-            <Form>FInput_Pelanggan</Form>
+        <DCCReference Include="UNew_Pelanggan.pas">
+            <Form>FNew_Pelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_Barang.pas">
@@ -247,6 +239,22 @@
         </DCCReference>
         <DCCReference Include="UNew_ItemType.pas">
             <Form>FNew_ItemType</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Supplier.pas">
+            <Form>FNew_Supplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSupplier.pas">
+            <Form>FListSupplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Perusahaan.pas">
+            <Form>FNewPerusahaan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

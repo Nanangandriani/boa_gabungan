@@ -19,6 +19,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
     Width = 546
     Height = 417
     Align = alClient
+    DataSource = DataSource1
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
@@ -61,7 +62,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
     Align = alTop
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 536
+    ExplicitWidth = 540
     object Label8: TLabel
       Left = 8
       Top = 9
@@ -99,7 +100,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
     end
     object eddari: TEdit
       Left = 249
-      Top = 6
+      Top = 5
       Width = 91
       Height = 23
       NumbersOnly = True
@@ -129,7 +130,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
     Align = alTop
     ParentBackground = False
     TabOrder = 3
-    ExplicitWidth = 536
+    ExplicitWidth = 540
     object Label11: TLabel
       Left = 8
       Top = 13
@@ -168,7 +169,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
     Color = 15987699
     TabOrder = 4
     ExplicitTop = 481
-    ExplicitWidth = 536
+    ExplicitWidth = 540
     object BSimpan: TRzBitBtn
       Left = 394
       Top = 2
@@ -229,7 +230,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 384
+      ExplicitLeft = 388
     end
     object BBatal: TRzBitBtn
       Left = 469
@@ -291,7 +292,7 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 459
+      ExplicitLeft = 463
     end
   end
   object Memfaktur: TMemTableEh
@@ -314,5 +315,10 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object DataSource1: TDataSource
+    DataSet = Memfaktur
+    Left = 392
+    Top = 312
   end
 end

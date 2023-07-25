@@ -32,6 +32,7 @@ type
     RzPanel1: TRzPanel;
     BSimpan: TRzBitBtn;
     BBatal: TRzBitBtn;
+    DataSource1: TDataSource;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -130,7 +131,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select no_faktur from t_faktur where no_faktur='+QuotedStr(cek_faktur);
+      Sql.Text:='select no_faktur from master_data.t_faktur where no_faktur='+QuotedStr(cek_faktur);
       open;
     end;
 
@@ -163,7 +164,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select periode from t_faktur where tahun='+QuotedStr(CBtahun.Text);
+      Sql.Text:='select periode from master_data.t_faktur where tahun='+QuotedStr(CBtahun.Text);
       Open;
     end;
 
@@ -174,7 +175,7 @@ begin
         begin
           Close;
           Sql.Clear;
-          Sql.Text := 'select max(periode) as periode from t_faktur where tahun='+QuotedStr(CBtahun.Text);
+          Sql.Text := 'select max(periode) as periode from master_data.t_faktur where tahun='+QuotedStr(CBtahun.Text);
           Open;
         end;
         Urut := dm.Qtemp2.FieldByName('periode').AsInteger + 1;
@@ -192,12 +193,13 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Insert Into t_faktur(tahun,periode,no_faktur,status) '+
-        'Values (:partahun,:parperiode,:parnofaktur, :parstatus)';
+        sql.Text:='Insert Into master_data.t_faktur(tahun,periode,no_faktur,status,created_at,created_by) '+
+        'Values (:partahun,:parperiode,:parnofaktur, :parstatus,:created_at,:created_at)';
         parambyname('partahun').Value:=CBtahun.Text;
         parambyname('parperiode').Value:=urut;
         parambyname('parnofaktur').Value:=Memfaktur['no_faktur_pajak'];
         parambyname('parstatus').Value:='Non Aktif';
+
         execsql;
       end;
       progress.Progress:= progress.Progress+1;

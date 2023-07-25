@@ -11,8 +11,9 @@ object FListPelanggan: TFListPelanggan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
-  object DBGridEh1: TDBGridEh
+  object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 127
     Width = 832
@@ -27,7 +28,7 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kode_pelanggan'
+        FieldName = 'customer_code'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Kode Pelanggan'
@@ -37,7 +38,7 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nama_pelanggan'
+        FieldName = 'customer_name'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
@@ -47,10 +48,10 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'telpon'
+        FieldName = 'telp'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'Telpon'
+        Title.Caption = 'Telepon'
         Width = 100
       end
       item
@@ -67,7 +68,7 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'alamat'
+        FieldName = 'address'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Alamat'
@@ -77,7 +78,7 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tempo_pembayaran'
+        FieldName = 'payment_term'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Tempo Pembayaran'
@@ -135,19 +136,19 @@ object FListPelanggan: TFListPelanggan
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'dxBarLargeNew'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton8'
+          ItemName = 'dxBarUpdate'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton9'
+          ItemName = 'dxBarRefresh'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton10'
+          ItemName = 'dxBarDelete'
         end>
       OneOnRow = True
       Row = 0
@@ -387,11 +388,9 @@ object FListPelanggan: TFListPelanggan
         A27DAF95ADEB22B15CD883808984208E209A8F859A9C6F6078F0145684BF98E8
         BFC080A205F60000000049454E44AE426082}
     end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'New'
+    object dxBarLargeNew: TdxBarLargeButton
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -524,13 +523,10 @@ object FListPelanggan: TFListPelanggan
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
     end
-    object dxBarButton8: TdxBarButton
-      Caption = 'Update'
+    object dxBarUpdate: TdxBarButton
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -565,13 +561,10 @@ object FListPelanggan: TFListPelanggan
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarButton8Click
     end
-    object dxBarButton9: TdxBarButton
-      Caption = 'Refresh'
+    object dxBarRefresh: TdxBarButton
+      Action = ActRO
       Category = 0
-      Hint = 'Refresh'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -602,13 +595,10 @@ object FListPelanggan: TFListPelanggan
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxBarButton9Click
     end
-    object dxBarButton10: TdxBarButton
-      Caption = 'Delete'
+    object dxBarDelete: TdxBarButton
+      Action = ActDel
       Category = 0
-      Hint = 'Delete'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -646,19 +636,108 @@ object FListPelanggan: TFListPelanggan
         DA8CD6E1B4ABA77376F3CD9987FBB0596FF0DBF6A78FD5E81DB6219848F3BFFB
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
-      OnClick = dxBarButton10Click
     end
   end
   object QPelanggan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_pelanggan')
+      'select * from master_data.t_customer')
     Left = 428
     Top = 56
+    object QPelanggancustomer_code: TStringField
+      FieldName = 'customer_code'
+      Required = True
+    end
+    object QPelanggancustomer_name: TStringField
+      FieldName = 'customer_name'
+      Size = 255
+    end
+    object QPelanggantelp: TStringField
+      FieldName = 'telp'
+      Size = 14
+    end
+    object QPelangganemail: TStringField
+      FieldName = 'email'
+      Size = 50
+    end
+    object QPelangganaddress: TMemoField
+      FieldName = 'address'
+      OnGetText = QPelangganaddressGetText
+      BlobType = ftMemo
+    end
+    object QPelanggannpwp: TStringField
+      FieldName = 'npwp'
+      Size = 100
+    end
+    object QPelangganid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object QPelanggancreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QPelanggancreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object QPelangganupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QPelangganupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QPelanggandeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QPelanggandeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QPelangganpayment_term: TSmallintField
+      FieldName = 'payment_term'
+    end
   end
   object DsPelanggan: TDataSource
     DataSet = QPelanggan
     Left = 553
     Top = 40
+  end
+  object ActMenu: TActionManager
+    Left = 616
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = dxBarLargeNewClick
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = dxBarUpdateClick
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = dxBarRefreshClick
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+      OnExecute = dxBarDeleteClick
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
+    end
   end
 end

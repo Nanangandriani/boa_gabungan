@@ -2,7 +2,7 @@ object FInput_Penomoran: TFInput_Penomoran
   Left = 0
   Top = 0
   Caption = 'Input Penomoran'
-  ClientHeight = 288
+  ClientHeight = 289
   ClientWidth = 607
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,11 +17,11 @@ object FInput_Penomoran: TFInput_Penomoran
     Left = 0
     Top = 0
     Width = 607
-    Height = 449
-    Align = alTop
+    Height = 253
+    Align = alClient
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 601
+    ExplicitHeight = 225
     object Label1: TLabel
       Left = 25
       Top = 25
@@ -59,16 +59,17 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Label6: TLabel
       Left = 25
-      Top = 223
+      Top = 189
       Width = 134
       Height = 15
       Caption = 'Contoh Hasil Penomoran'
     end
     object LabelHasil: TLabel
       Left = 185
-      Top = 223
-      Width = 54
+      Top = 189
+      Width = 237
       Height = 15
+      AutoSize = False
       Caption = 'LabelHasil'
     end
     object Label7: TLabel
@@ -108,10 +109,24 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Label12: TLabel
       Left = 163
-      Top = 223
+      Top = 190
       Width = 3
       Height = 15
       Caption = ':'
+    end
+    object LabelA: TLabel
+      Left = 88
+      Top = 416
+      Width = 36
+      Height = 15
+      Caption = 'LabelA'
+    end
+    object LabelB: TLabel
+      Left = 88
+      Top = 450
+      Width = 35
+      Height = 15
+      Caption = 'LabelB'
     end
     object RzEdit1: TRzEdit
       Left = 170
@@ -136,6 +151,7 @@ object FInput_Penomoran: TFInput_Penomoran
       Height = 23
       Text = ''
       TabOrder = 2
+      OnChange = eddigit_countChange
     end
     object RzComboBox1: TRzComboBox
       Left = 170
@@ -161,10 +177,12 @@ object FInput_Penomoran: TFInput_Penomoran
         'Teks / Pemisah')
     end
     object btnplus: TRzBitBtn
-      Left = 384
+      Left = 514
       Top = 149
-      Width = 28
+      Width = 29
+      Height = 24
       TabOrder = 5
+      OnClick = btnplusClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830B0000830B00000001000000000000000000003300
@@ -220,9 +238,10 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object btnplus2: TRzBitBtn
       Left = 515
-      Top = 149
+      Top = 255
       Width = 28
       TabOrder = 6
+      OnClick = btnplus2Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830B0000830B00000001000000000000000000003300
@@ -278,11 +297,12 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Ed_Komp: TRzButtonEdit
       Left = 387
-      Top = 150
+      Top = 256
       Width = 121
       Height = 23
       Text = ''
       TabOrder = 7
+      OnChange = Ed_KompChange
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       ButtonKind = bkReject
@@ -290,7 +310,7 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Edbut_th: TRzButtonEdit
       Left = 170
-      Top = 183
+      Top = 289
       Width = 80
       Height = 23
       Text = ''
@@ -303,7 +323,7 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Edbut_bln: TRzButtonEdit
       Left = 256
-      Top = 183
+      Top = 289
       Width = 80
       Height = 23
       Text = ''
@@ -315,7 +335,7 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Edbut_tgl: TRzButtonEdit
       Left = 342
-      Top = 183
+      Top = 289
       Width = 80
       Height = 23
       Text = ''
@@ -327,7 +347,7 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Edbut_counter: TRzButtonEdit
       Left = 428
-      Top = 183
+      Top = 289
       Width = 80
       Height = 23
       Text = ''
@@ -339,7 +359,7 @@ object FInput_Penomoran: TFInput_Penomoran
     end
     object Edbut_pemisah: TRzButtonEdit
       Left = 514
-      Top = 183
+      Top = 289
       Width = 80
       Height = 23
       Text = ''
@@ -350,24 +370,62 @@ object FInput_Penomoran: TFInput_Penomoran
       ButtonKind = bkReject
       OnButtonClick = Edbut_pemisahButtonClick
     end
-    object ListBox1: TRzListBox
-      Left = 171
-      Top = 254
-      Width = 424
-      Height = 31
-      ItemHeight = 15
+    object Edit1: TEdit
+      Left = 73
+      Top = 328
+      Width = 121
+      Height = 23
       TabOrder = 13
+    end
+    object Edit2: TEdit
+      Left = 73
+      Top = 368
+      Width = 121
+      Height = 23
+      TabOrder = 14
+    end
+    object Button1: TButton
+      Left = 240
+      Top = 327
+      Width = 75
+      Height = 25
+      Caption = 'Konversi'
+      TabOrder = 15
+      OnClick = Button1Click
+    end
+    object Button2: TButton
+      Left = 240
+      Top = 368
+      Width = 75
+      Height = 25
+      Caption = 'Konversi'
+      TabOrder = 16
+      OnClick = Button2Click
+    end
+    object Edhasil: TEdit
+      Left = 280
+      Top = 185
+      Width = 121
+      Height = 23
+      TabOrder = 17
+    end
+    object Ed_comp: TEdit
+      Left = 387
+      Top = 150
+      Width = 121
+      Height = 23
+      TabOrder = 18
     end
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 252
+    Top = 253
     Width = 607
     Height = 36
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 243
+    ExplicitTop = 252
     ExplicitWidth = 601
     object RzBitBtn4: TRzBitBtn
       Left = 455
@@ -494,7 +552,8 @@ object FInput_Penomoran: TFInput_Penomoran
     end
   end
   object UniQuery1: TUniQuery
-    Left = 480
-    Top = 88
+    Connection = dm.Koneksi
+    Left = 456
+    Top = 56
   end
 end

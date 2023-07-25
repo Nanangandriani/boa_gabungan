@@ -42,6 +42,7 @@ begin
   else
     Application.CreateForm(TFCari_Barang, Result);
 end;
+
 procedure TFCari_Barang.DBGridEh1DblClick(Sender: TObject);
 begin
 if status_tr='MatStok' then
