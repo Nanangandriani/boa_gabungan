@@ -45,15 +45,15 @@ uses
   UItem_Type in 'UItem_Type.pas' {FItem_Type},
   UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
 <<<<<<< HEAD
-  UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
-  UListSupplier in 'UListSupplier.pas' {FListSupplier},
-  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
-  UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan};
+//  UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
+//  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+ // UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
+//  UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan};
 =======
   UNew_KategoriBarang in 'UNew_KategoriBarang.pas' {FNew_KategoriBarang},
   UListBarang in 'UListBarang.pas' {FlistBarang},
-  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
-  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang};
+//  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+ // UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang};
 >>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
 
 {$R *.res}
@@ -75,15 +75,14 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
-<<<<<<< HEAD
-  // Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
-  // Application.CreateForm(TFNew_Barang, FNew_Barang);
-  // Application.CreateForm(TFKategori_Barang, FKategori_Barang);
-=======
-//  Application.CreateForm(TFListSupplier, FListSupplier);
- //  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
-//  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
->>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
+  Application.CreateForm(TFMainMenu, FMainMenu);
+  Application.CreateForm(TFFakturPajak, FFakturPajak);
+  Application.CreateForm(TFPenomoran, FPenomoran);
+  Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
+  Application.CreateForm(TFListPelanggan, FListPelanggan);
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
+  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
   Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
