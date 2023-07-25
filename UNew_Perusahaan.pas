@@ -66,7 +66,11 @@ begin
    With dm.qtemp do
    begin
      sql.Clear;
+<<<<<<< HEAD
      sql.Text:=' select business_name FROM t_business_type ';
+=======
+     sql.Text:=' select business_name FROM master_data.t_business_type ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
      Open;
    end;
    Cb_jenis_usaha.Items.Clear;
@@ -167,7 +171,11 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Select * from t_company Order by company_code ASC ';
+=======
+        sql.Text:='Select * from master_data.t_company Order by company_code ASC ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         ExecSQL;
       end;
 
@@ -175,7 +183,11 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:=' Update t_company set company_name='+QuotedStr(Ed_nama.Text)+ ' ,type_of_business='+QuotedStr(cb_jenis_usaha.Text)+', address='+QuotedStr(Ed_Alamat.Text)+' ,telp='+QuotedStr(Ed_telp.Text)+''+
+=======
+        sql.Text:=' Update master_data.t_company set company_name='+QuotedStr(Ed_nama.Text)+ ' ,type_of_business='+QuotedStr(cb_jenis_usaha.Text)+', address='+QuotedStr(Ed_Alamat.Text)+' ,telp='+QuotedStr(Ed_telp.Text)+''+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                   ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status='+QuotedStr(cb_status_pajak.Text)+',currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
                   ' Where company_code='+QuotedStr(Ed_kode.Text);
         parambyname('updated_at').AsDateTime:=Now;
@@ -193,7 +205,11 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
+<<<<<<< HEAD
  //   FMainMenu.ShowInForm;
+=======
+    FMainMenu.ShowInForm;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     BBatalClick(sender);
 
 end;
@@ -263,7 +279,11 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Select * from t_company order by company_code ASC ';
+=======
+        sql.Text:='Select * from master_data.t_company order by company_code ASC ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         ExecSQL;
       end;
 
@@ -271,7 +291,11 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Insert into t_company (company_code,company_name,type_of_business,address,Telp,email,npwp,tax_status,currency,created_at,created_by) values'+
+=======
+        sql.Text:='Insert into master_data.t_company (company_code,company_name,type_of_business,address,Telp,email,npwp,tax_status,currency,created_at,created_by) values'+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                   '('+QuotedStr(Ed_kode.Text)+','+QuotedStr(Ed_Nama.Text)+','+QuotedStr(cb_jenis_usaha.Text)+','+QuotedStr(Ed_Alamat.Text)+','+
                   //''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+','+QuotedStr(cb_status_pajak.Text)+','+QuotedStr(cb_mata_uang.Text)+' ,now(),''Admin''  )';
                   ''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+','+QuotedStr(cb_status_pajak.Text)+','+QuotedStr(cb_mata_uang.Text)+' ,:created_at,:created_by )';
@@ -289,7 +313,11 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
+<<<<<<< HEAD
     FMainMenu.TampilTabForm2;
+=======
+    FMainMenu.ShowInForm;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     BBatalClick(sender);
 end;
 

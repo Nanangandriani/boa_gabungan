@@ -10,6 +10,20 @@ uses
   UPenomoran in 'UPenomoran.pas' {FPenomoran},
   Vcl.Themes,
   Vcl.Styles,
+<<<<<<< HEAD:__history/Smart_BOA.dpr.~69~
+=======
+<<<<<<< HEAD
+  UListBarang in 'UListBarang.pas' {FListBarang},
+  UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+  UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
+  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+=======
+  UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+  UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
+  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/Smart_BOA.dpr.~53~
   UListProduk in 'UListProduk.pas' {FListProduk},
   Unew_produk in 'Unew_produk.pas' {FInput_Produk},
   UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
@@ -31,6 +45,7 @@ uses
   UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
   UItem_Type in 'UItem_Type.pas' {FItem_Type},
   UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+<<<<<<< HEAD:__history/Smart_BOA.dpr.~69~
   UNew_KategoriBarang in 'UNew_KategoriBarang.pas' {FNew_KategoriBarang},
   UListBarang in 'UListBarang.pas' {FlistBarang},
   UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
@@ -44,6 +59,20 @@ uses
   UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
   UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
   UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan};
+=======
+<<<<<<< HEAD
+  UNew_Supplier in 'UNew_Supplier.pas' {FInput_Supplier},
+  UListSupplier in 'UListSupplier.pas' {FListSupplier};
+=======
+<<<<<<<< HEAD:__history/Smart_BOA.dpr.~52~
+  UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
+  UListSupplier in 'UListSupplier.pas' {FListSupplier};
+========
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+  UListBarang in 'UListBarang.pas' {FListBarang};
+>>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c:__history/Smart_BOA.dpr.~53~
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/Smart_BOA.dpr.~53~
 
 {$R *.res}
 
@@ -61,6 +90,21 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFMainMenu, FMainMenu);
   Application.CreateForm(TFPenomoran, FPenomoran);
+<<<<<<< HEAD:__history/Smart_BOA.dpr.~69~
+=======
+  Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
+<<<<<<< HEAD
+  Application.CreateForm(TFListBarang, FListBarang);
+  Application.CreateForm(TFListPelanggan, FListPelanggan);
+  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
+  Application.CreateForm(TFNew_Barang, FNew_Barang);
+  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+=======
+  Application.CreateForm(TFListPelanggan, FListPelanggan);
+  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
+  Application.CreateForm(TFNew_Barang, FNew_Barang);
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/Smart_BOA.dpr.~53~
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
   Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
@@ -75,6 +119,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
+<<<<<<< HEAD:__history/Smart_BOA.dpr.~69~
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
@@ -84,6 +129,24 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListPerusahaan, FListPerusahaan);
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
   //  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+=======
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:__history/Smart_BOA.dpr.~52~
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
+  Application.CreateForm(TFItem_Type, FItem_Type);
+  Application.CreateForm(TFNew_ItemType, FNew_ItemType);
+  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
+  Application.CreateForm(TFListSupplier, FListSupplier);
+<<<<<<< HEAD
+=======
+========
+ /// Application.CreateForm(TFItem_Type, FItem_Type);
+//  Application.CreateForm(TFNew_ItemType, FNew_ItemType);
+  Application.CreateForm(TFListBarang, FListBarang);
+>>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c:__history/Smart_BOA.dpr.~53~
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/Smart_BOA.dpr.~53~
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

@@ -2,8 +2,13 @@ object FListSupplier: TFListSupplier
   Left = 0
   Top = 0
   Caption = 'FListSupplier'
+<<<<<<< HEAD
   ClientHeight = 432
   ClientWidth = 822
+=======
+  ClientHeight = 433
+  ClientWidth = 826
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +22,13 @@ object FListSupplier: TFListSupplier
   object DBGridSupplier: TDBGridEh
     Left = 0
     Top = 127
+<<<<<<< HEAD
     Width = 822
     Height = 305
+=======
+    Width = 826
+    Height = 306
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Align = alClient
     DataSource = DsSupplier
     DynProps = <>
@@ -76,7 +86,11 @@ object FListSupplier: TFListSupplier
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
+<<<<<<< HEAD
     Width = 822
+=======
+    Width = 826
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -84,7 +98,11 @@ object FListSupplier: TFListSupplier
     Contexts = <>
     TabOrder = 1
     TabStop = False
+<<<<<<< HEAD
     ExplicitWidth = 826
+=======
+    ExplicitWidth = 832
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -645,7 +663,11 @@ object FListSupplier: TFListSupplier
   object QSupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+<<<<<<< HEAD
       'select * from master_data.T_Supplier order by created_at Desc')
+=======
+      'select * from master_data.T_Supplier order by Supplier_code Desc')
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Left = 484
     Top = 72
   end

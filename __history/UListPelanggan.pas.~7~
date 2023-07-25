@@ -1,11 +1,26 @@
+<<<<<<< HEAD
 unit UListPelanggan;
+=======
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
+unit UPenomoran;
+========
+unit UListPelanggan;
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+<<<<<<< HEAD
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, dxSkinsCore, dxSkinBasic, dxSkinBlack,
+=======
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, RzPanel,
+  Vcl.StdCtrls, RzCmboBx, Vcl.Mask, RzEdit, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
+  GridsEh, DBAxisGridsEh, DBGridEh, dxSkinsCore, dxSkinBasic, dxSkinBlack,
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -23,11 +38,21 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
+  cxClasses, dxRibbon, dxBar;
+
+type
+  TFPenomoran = class(TForm)
+========
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   Data.DB, MemDS, DBAccess, Uni;
 
 type
   TFListPelanggan = class(TForm)
+<<<<<<< HEAD
     DBGridEh1: TDBGridEh;
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
@@ -35,6 +60,18 @@ type
     dxBarButton1: TdxBarButton;
     dxBarButton3: TdxBarButton;
     dxBarButton4: TdxBarButton;
+=======
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
+    DBGridEh1: TDBGridEh;
+    dxBarManager1: TdxBarManager;
+    dxRibbon1Tab1: TdxRibbonTab;
+    dxRibbon1: TdxRibbon;
+    dxBarManager1Bar1: TdxBar;
+    dxBarButton1: TdxBarButton;
+    dxBarButton3: TdxBarButton;
+    dxBarButton4: TdxBarButton;
+    dxBarButton2: TdxBarButton;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     dxBarButton5: TdxBarButton;
     dxBarButton6: TdxBarButton;
     dxBarButton7: TdxBarButton;
@@ -42,6 +79,13 @@ type
     dxBarButton8: TdxBarButton;
     dxBarButton9: TdxBarButton;
     dxBarButton10: TdxBarButton;
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
+    procedure dxBarButton1Click(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+========
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
     QPelanggan: TUniQuery;
@@ -50,6 +94,10 @@ type
     procedure dxBarButton8Click(Sender: TObject);
     procedure dxBarButton9Click(Sender: TObject);
     procedure dxBarButton10Click(Sender: TObject);
+<<<<<<< HEAD
+=======
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   private
     { Private declarations }
   public
@@ -59,12 +107,35 @@ type
   end;
 
 var
+<<<<<<< HEAD
   FListPelanggan: TFListPelanggan;
+=======
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
+  FPenomoran: TFPenomoran;
+========
+  FListPelanggan: TFListPelanggan;
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 implementation
 
 {$R *.dfm}
 
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
+uses UNew_Penomoran;
+
+procedure TFPenomoran.dxBarButton1Click(Sender: TObject);
+begin
+  FInput_Penomoran.ShowModal;
+end;
+
+procedure TFPenomoran.dxBarLargeButton1Click(Sender: TObject);
+begin
+   FInput_Penomoran.ShowModal;
+========
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 uses UNew_Pelanggan, UDataModule;
 
 procedure TFListPelanggan.Refresh;
@@ -98,6 +169,7 @@ procedure TFListPelanggan.dxBarButton8Click(Sender: TObject);
 begin
   with QPelanggan do
   begin
+<<<<<<< HEAD
     FInput_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('kode_pelanggan').AsString;
     FInput_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('nama_pelanggan').AsString;
     FInput_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('alamat').AsString;
@@ -107,6 +179,17 @@ begin
   end;
   FInput_Pelanggan.Edkode.Enabled:=false;
   FInput_Pelanggan.Show;
+=======
+    FNew_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('kode_pelanggan').AsString;
+    FNew_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('nama_pelanggan').AsString;
+    FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('alamat').AsString;
+    FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telpon').AsString;
+    FNew_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
+    FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('tempo_pembayaran').AsString;
+  end;
+  FNew_Pelanggan.Edkode.Enabled:=false;
+  FNew_Pelanggan.Show;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   Status := 1;
 end;
 
@@ -117,10 +200,18 @@ end;
 
 procedure TFListPelanggan.dxBarLargeButton1Click(Sender: TObject);
 begin
+<<<<<<< HEAD
   Finput_Pelanggan.ShowModal;
   Finput_Pelanggan.Clear;
   Finput_Pelanggan.Edkode.Enabled:=true;
   Status:=0;
+=======
+  FNew_Pelanggan.ShowModal;
+  FNew_Pelanggan.Clear;
+  FNew_Pelanggan.Edkode.Enabled:=true;
+  Status:=0;
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 end.

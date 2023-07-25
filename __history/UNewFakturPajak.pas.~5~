@@ -32,7 +32,10 @@ type
     RzPanel1: TRzPanel;
     BSimpan: TRzBitBtn;
     BBatal: TRzBitBtn;
+<<<<<<< HEAD
     DataSource1: TDataSource;
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -193,13 +196,21 @@ begin
       begin
         close;
         sql.Clear;
+<<<<<<< HEAD
         sql.Text:='Insert Into master_data.t_faktur(tahun,periode,no_faktur,status,created_at,created_by) '+
         'Values (:partahun,:parperiode,:parnofaktur, :parstatus,:created_at,:created_at)';
+=======
+        sql.Text:='Insert Into master_data.t_faktur(tahun,periode,no_faktur,status) '+
+        'Values (:partahun,:parperiode,:parnofaktur, :parstatus)';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         parambyname('partahun').Value:=CBtahun.Text;
         parambyname('parperiode').Value:=urut;
         parambyname('parnofaktur').Value:=Memfaktur['no_faktur_pajak'];
         parambyname('parstatus').Value:='Non Aktif';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         execsql;
       end;
       progress.Progress:= progress.Progress+1;

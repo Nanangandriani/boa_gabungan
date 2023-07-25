@@ -104,7 +104,7 @@ type
     Procedure CallFoo(S: string; I: Integer);
 
     procedure Getsubmenutree(Sender: TObject);
-
+    Procedure ShowInForm;
   end;
 
 var
@@ -135,8 +135,42 @@ implementation
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Material,
   UListKonversi_Produk, UList_Gudang, UListBank_perusahaan, UBarang_Stok,
+<<<<<<< HEAD
   UItem_Type, UKategori_Barang, UListPerusahaan;
+=======
+  UItem_Type, UListPerusahaan, UKategori_Barang;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
+
+procedure TFMainMenu.ShowInForm;
+begin
+    with dm.Qtemp do
+    begin
+      SQL.Clear;
+      SQL.Text := 'select * from t_submenu2 where submenu2=' +
+                  QuotedStr(vCaptionButton);
+      open;
+    end;
+
+    if dm.Qtemp.RecordCount<>1 then
+    begin
+    ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+    exit;
+    end;
+
+    if dm.Qtemp.RecordCount=1 then
+    begin
+        //Create Form Dalam Panel
+        AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
+        AFormClass := TFormClass(AClass);
+        AForm := AFormClass.Create(Application.MainForm);
+        AForm.Parent:=ApnTabs;
+        AForm.Align:=Alclient;
+        AForm.BorderStyle:=BsNone;
+        AksesSub(AForm,HakAkses,vCaptionButton);
+        AForm.Show;
+    end;
+end;
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
 var
@@ -741,6 +775,10 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
+<<<<<<< HEAD
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
   ,TFKategori_Barang,TFPenomoran,TFListPerusahaan]);
+=======
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFlistPerusahaan,TFKategori_Barang]);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end.

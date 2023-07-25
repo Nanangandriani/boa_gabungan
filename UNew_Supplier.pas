@@ -118,14 +118,22 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Select * from t_supplier';
+=======
+        sql.Text:='Select * from master_data.t_supplier';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         ExecSQL;
       end;
       with dm.Qtemp do
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
+=======
+        sql.Text:='Update master_data.t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                   ' ,npwp='+QuotedStr(EdNPWP.Text)+''+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
         ExecSQL;
@@ -140,7 +148,11 @@ begin
         dm.koneksi.Rollback;
       end;
     end;
+<<<<<<< HEAD
  //   FMainMenu.ShowInForm;
+=======
+    FMainMenu.ShowInForm;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     BBatalClick(sender);;
 end;
 
@@ -178,7 +190,11 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Select * from t_supplier';
+=======
+        sql.Text:='Select * from master_data.t_supplier';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         ExecSQL;
       end;
 
@@ -186,7 +202,11 @@ begin
       begin
         close;
         sql.clear;
+<<<<<<< HEAD
         sql.Text:='Insert into t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
+=======
+        sql.Text:='Insert into master_data.t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
                   ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:created_at,:created_by )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
@@ -205,7 +225,11 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
+<<<<<<< HEAD
     FMainMenu.TampilTabForm2;
+=======
+    FMainMenu.ShowInForm;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     //FListSupplier.dxbarRefreshClick(sender);
     BBatalClick(sender);
 end;

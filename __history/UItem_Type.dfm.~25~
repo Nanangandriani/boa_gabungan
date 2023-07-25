@@ -1,9 +1,15 @@
-object FItem_Type: TFItem_Type
+object FKategori_Barang: TFKategori_Barang
   Left = 0
   Top = 0
+<<<<<<<< HEAD:__history/UItem_Type.dfm.~25~
   Caption = 'Form Jenis Barang'
   ClientHeight = 403
   ClientWidth = 509
+========
+  Caption = 'FKategori_Barang'
+  ClientHeight = 344
+  ClientWidth = 599
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UKategori_Barang.dfm.~13~
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,12 +20,19 @@ object FItem_Type: TFItem_Type
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+<<<<<<<< HEAD:__history/UItem_Type.dfm.~25~
   OnShow = FormShow
+========
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UKategori_Barang.dfm.~13~
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
+<<<<<<<< HEAD:__history/UItem_Type.dfm.~25~
     Width = 509
+========
+    Width = 599
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UKategori_Barang.dfm.~13~
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -27,7 +40,10 @@ object FItem_Type: TFItem_Type
     Contexts = <>
     TabOrder = 0
     TabStop = False
+<<<<<<<< HEAD:__history/UItem_Type.dfm.~25~
     ExplicitWidth = 614
+========
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UKategori_Barang.dfm.~13~
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -53,10 +69,15 @@ object FItem_Type: TFItem_Type
   object DBGridEh7: TDBGridEh
     Left = 0
     Top = 127
+<<<<<<<< HEAD:__history/UItem_Type.dfm.~25~
     Width = 509
     Height = 276
+========
+    Width = 599
+    Height = 217
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UKategori_Barang.dfm.~13~
     Align = alClient
-    DataSource = DsType
+    DataSource = Dskategori
     DynProps = <>
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
@@ -79,7 +100,25 @@ object FItem_Type: TFItem_Type
         FieldName = 'type'
         Footers = <>
         Title.Caption = 'Jenis'
+        Width = 137
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'category'
+        Footers = <>
+        Title.Caption = 'Kategori'
         Width = 215
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'akun_code'
+        Footers = <>
+        Title.Caption = 'Kode Perkiraan'
+        Width = 121
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -98,8 +137,8 @@ object FItem_Type: TFItem_Type
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 232
-    Top = 56
+    Left = 240
+    Top = 48
     PixelsPerInch = 96
     object dxBarMb1: TdxBar
       Caption = 'Proses'
@@ -1457,18 +1496,26 @@ object FItem_Type: TFItem_Type
       Enabled = False
     end
   end
-  object QType: TUniQuery
+  object Qkategori: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
+<<<<<<<< HEAD:__history/UItem_Type.dfm.~25~
         'select * from master_data.t_item_type where deleted_at isnull or' +
         'der by created_at ')
     Left = 232
     Top = 120
+========
+        'select a.*,b.type from master_data.t_item_category a inner join ' +
+        'master_data.t_item_type b on a.id_type=b."id" where a.deleted_at' +
+        ' isnull order by a.created_at ')
+    Left = 240
+    Top = 104
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UKategori_Barang.dfm.~13~
   end
-  object DsType: TDataSource
-    DataSet = QType
-    Left = 304
-    Top = 128
+  object Dskategori: TDataSource
+    DataSet = Qkategori
+    Left = 336
+    Top = 112
   end
 end

@@ -96,7 +96,11 @@ begin
    begin
        close;
        sql.Clear;
+<<<<<<< HEAD
        sql.Text:='select * from T_Supplier where deleted_at is null order by created_at Desc ';
+=======
+       sql.Text:='select * from master_data.T_Supplier where deleted_at is null order by created_at Desc ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
        open;
    end;
    QSupplier.Active:=False;
@@ -112,7 +116,11 @@ begin
     begin
       close;
       sql.Clear;
+<<<<<<< HEAD
       sql.Text:=' SELECT max(t_supplier.supplier_no)AS urut FROM t_supplier';
+=======
+      sql.Text:=' SELECT max(master_data.t_supplier.supplier_no)AS urut FROM t_supplier';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       execsql;
     end;
     urut:=Dm.Qtemp.FieldByName('urut').AsInteger+1;
@@ -142,7 +150,11 @@ begin
    begin
        close;
        sql.Clear;
+<<<<<<< HEAD
        sql.Text:='select * from T_Supplier ';
+=======
+       sql.Text:='select * from master_data.T_Supplier ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
        open;
    end;
    Qsupplier.Close;
@@ -170,8 +182,13 @@ begin
       begin
         Close;
         sql.Clear;
+<<<<<<< HEAD
         //sql.Text:='Delete From t_supplier where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
         sql.Text:=' Update t_supplier set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+=======
+        //sql.Text:='Delete From master_data.t_supplier where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
+        sql.Text:=' Update master_data.t_supplier set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                   ' where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
         parambyname('deleted_at').AsDateTime:=Now;
         parambyname('deleted_by').AsString:='Admin';

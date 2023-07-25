@@ -1,9 +1,15 @@
 object FKategori_Barang: TFKategori_Barang
   Left = 0
   Top = 0
+<<<<<<<< HEAD:__history/UKategori_Barang.dfm.~13~
   Caption = 'FKategori_Barang'
   ClientHeight = 344
   ClientWidth = 599
+========
+  Caption = 'Form Jenis Barang'
+  ClientHeight = 403
+  ClientWidth = 509
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UItem_Type.dfm.~25~
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,11 +20,19 @@ object FKategori_Barang: TFKategori_Barang
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+<<<<<<<< HEAD:__history/UKategori_Barang.dfm.~13~
+========
+  OnShow = FormShow
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UItem_Type.dfm.~25~
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
+<<<<<<<< HEAD:__history/UKategori_Barang.dfm.~13~
     Width = 599
+========
+    Width = 509
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UItem_Type.dfm.~25~
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,6 +40,10 @@ object FKategori_Barang: TFKategori_Barang
     Contexts = <>
     TabOrder = 0
     TabStop = False
+<<<<<<<< HEAD:__history/UKategori_Barang.dfm.~13~
+========
+    ExplicitWidth = 614
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UItem_Type.dfm.~25~
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -51,8 +69,13 @@ object FKategori_Barang: TFKategori_Barang
   object DBGridEh7: TDBGridEh
     Left = 0
     Top = 127
+<<<<<<<< HEAD:__history/UKategori_Barang.dfm.~13~
     Width = 599
     Height = 217
+========
+    Width = 509
+    Height = 276
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UItem_Type.dfm.~25~
     Align = alClient
     DataSource = Dskategori
     DynProps = <>
@@ -1454,6 +1477,7 @@ object FKategori_Barang: TFKategori_Barang
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -1476,11 +1500,18 @@ object FKategori_Barang: TFKategori_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
+<<<<<<<< HEAD:__history/UKategori_Barang.dfm.~13~
         'select a.*,b.type from master_data.t_item_category a inner join ' +
         'master_data.t_item_type b on a.id_type=b."id" where a.deleted_at' +
         ' isnull order by a.created_at ')
     Left = 240
     Top = 104
+========
+        'select * from master_data.t_item_type where deleted_at isnull or' +
+        'der by created_at ')
+    Left = 232
+    Top = 120
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UItem_Type.dfm.~25~
   end
   object Dskategori: TDataSource
     DataSet = Qkategori

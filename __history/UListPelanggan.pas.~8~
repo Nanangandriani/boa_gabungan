@@ -29,7 +29,11 @@ uses
 
 type
   TFListPelanggan = class(TForm)
+<<<<<<< HEAD
     DBGridCustomer: TDBGridEh;
+=======
+    DBGridEh1: TDBGridEh;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
     dxBarButton2: TdxBarButton;
@@ -56,6 +60,7 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
+<<<<<<< HEAD
     QPelanggancustomer_code: TStringField;
     QPelanggancustomer_name: TStringField;
     QPelanggantelp: TStringField;
@@ -70,13 +75,18 @@ type
     QPelanggandeleted_at: TDateTimeField;
     QPelanggandeleted_by: TStringField;
     QPelangganpayment_term: TSmallintField;
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarDeleteClick(Sender: TObject);
+<<<<<<< HEAD
     procedure FormShow(Sender: TObject);
     procedure QPelangganaddressGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   private
     { Private declarations }
   public
@@ -96,6 +106,7 @@ uses UNew_Pelanggan, UDataModule;
 
 procedure TFListPelanggan.Refresh;
 begin
+<<<<<<< HEAD
    with QPelanggan do
    begin
        close;
@@ -111,6 +122,8 @@ end;
 
 {procedure TFListPelanggan.Refresh;
 begin
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   DBGridEh1.StartLoadingStatus();
   try
     Qpelanggan.Close;
@@ -118,7 +131,11 @@ begin
   finally
   DBGridEh1.FinishLoadingStatus();
   end;
+<<<<<<< HEAD
 end;}
+=======
+end;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 procedure TFListPelanggan.dxBarDeleteClick(Sender: TObject);
 begin
@@ -128,11 +145,15 @@ begin
     begin
       close;
       sql.Clear;
+<<<<<<< HEAD
       //sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
       sql.Text:=' Update master_data.t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                 ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
       parambyname('deleted_at').AsDateTime:=Now;
       parambyname('deleted_by').AsString:='Admin';
+=======
+      sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       execsql;
     end;
     MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
@@ -149,13 +170,18 @@ begin
     FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('address').AsString;
     FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telp').AsString;
     FNew_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
+<<<<<<< HEAD
     FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('payment_term').AsString;
+=======
+    FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('payment term').AsString;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   end;
   FNew_Pelanggan.Edkode.Enabled:=false;
   FNew_Pelanggan.Show;
   Status := 1;
 end;
 
+<<<<<<< HEAD
 procedure TFListPelanggan.FormShow(Sender: TObject);
 begin
   Refresh;
@@ -176,6 +202,11 @@ begin
   finally
   DBGridcustomer.FinishLoadingStatus();
   end;
+=======
+procedure TFListPelanggan.dxBarRefreshClick(Sender: TObject);
+begin
+  self.Refresh;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);

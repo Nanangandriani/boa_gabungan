@@ -35,12 +35,17 @@ type
     Edbut_tgl: TRzButtonEdit;
     Edbut_counter: TRzButtonEdit;
     Edbut_pemisah: TRzButtonEdit;
+<<<<<<< HEAD
+=======
+    ListBox1: TRzListBox;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+<<<<<<< HEAD
     Edit1: TEdit;
     Edit2: TEdit;
     Button1: TButton;
@@ -49,6 +54,8 @@ type
     LabelB: TLabel;
     Edhasil: TEdit;
     Ed_comp: TEdit;
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     procedure RzBitBtn5Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CBKomponen_NoSelect(Sender: TObject);
@@ -60,12 +67,15 @@ type
     procedure Edbut_pemisahButtonClick(Sender: TObject);
     procedure Edbut_thChange(Sender: TObject);
     procedure Edbut_pemisahChange(Sender: TObject);
+<<<<<<< HEAD
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure btnplus2Click(Sender: TObject);
     procedure btnplusClick(Sender: TObject);
     procedure Ed_KompChange(Sender: TObject);
     procedure eddigit_countChange(Sender: TObject);
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 
   private
@@ -74,9 +84,12 @@ type
     { Public declarations }
      function convbulanrom(nobulan:Integer):string;
      function conv_terbilang(nilai:string):string;
+<<<<<<< HEAD
      function Terbilang(sValue: string):string;
      function ConvKeHuruf(inp: string): string;
      function GiveZero(const aNumber, aMaxDigit: Integer): String;
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   end;
 
 var
@@ -88,6 +101,7 @@ implementation
 
 uses UDataModule;
 
+<<<<<<< HEAD
 
 function TFInput_Penomoran.GiveZero(const aNumber, aMaxDigit: Integer): String;
 var
@@ -225,6 +239,8 @@ if adakoma then
 end;
 
 
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 function TFInput_Penomoran.conv_terbilang(nilai:string):string;
 var temu,titik,i:integer;
     hasil,hasil2,sisa_koma,huruf_awal,terbilang,temp,dpnkoma,blkkoma:string;
@@ -271,7 +287,10 @@ begin
     result:=temp;
 end;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 function TFInput_Penomoran.convbulanrom(nobulan: Integer): string;
 begin
   case nobulan of
@@ -313,6 +332,7 @@ begin
   btnplus.Visible:=true;
   Ed_Komp.Visible:=false;
   btnplus2.Visible:=false;
+<<<<<<< HEAD
 
 
 end;
@@ -320,14 +340,23 @@ end;
 procedure TFInput_Penomoran.Ed_KompChange(Sender: TObject);
 begin
    Edbut_pemisah.Text:=Ed_Komp.Text;
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFInput_Penomoran.FormShow(Sender: TObject);
 begin
+<<<<<<< HEAD
    //LabelHasil.Caption:='';
    //Ed_Komp.Visible:=false;
    //btnplus2.Visible:=false;
    //btnplus.Visible:=true;
+=======
+   LabelHasil.Caption:='';
+   Ed_Komp.Visible:=false;
+   btnplus2.Visible:=false;
+   btnplus.Visible:=true;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFInput_Penomoran.RzBitBtn5Click(Sender: TObject);
@@ -368,12 +397,16 @@ procedure TFInput_Penomoran.Edbut_thButtonClick(Sender: TObject);
 begin
   Edbut_th.Clear;
   Edbut_th.visible:=false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFInput_Penomoran.Edbut_thChange(Sender: TObject);
 begin
   LabelHasil.Caption:=(Edbut_th.text)+(Edbut_bln.Text)+(Edbut_tgl.Text)+(Edbut_counter.text)+(Edbut_pemisah.text);
+<<<<<<< HEAD
   //Edhasil.Text:= (Edbut_th.text)+(Edbut_bln.Text)+(Edbut_tgl.Text)+(Edbut_counter.text)+(Edbut_pemisah.text)
 end;
 
@@ -436,6 +469,8 @@ end;
 procedure TFInput_Penomoran.Button2Click(Sender: TObject);
 begin
    LabelB.Caption:=ConvKeHuruf(Edit2.Text);
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFInput_Penomoran.CBKomponen_NoSelect(Sender: TObject);
@@ -447,12 +482,19 @@ begin
         close;
         sql.Clear;
         sql.Create.Add(' SELECT date_part(''year'', now()) Tahun ');
+<<<<<<< HEAD
         //sql.Create.Add(' SELECT TO_CHAR(NOW() :: DATE, ''yy'') Tahun '); //th 2 digit
         Open;
       end;
       Ed_comp.Text:=uniquery1.FieldByName('tahun').AsString;
       //Edbut_th.Text:=uniquery1.FieldByName('tahun').AsString;
       //ListBox1.Items.Add(Edbut_th.Text);
+=======
+        Open;
+      end;
+      Edbut_th.Text:=uniquery1.FieldByName('tahun').AsString;
+      ListBox1.Items.Add(Edbut_th.Text);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
    end
    else
@@ -465,9 +507,14 @@ begin
         sql.Create.Add(' SELECT date_part(''month'', now()) bulan ');
         Open;
       end;
+<<<<<<< HEAD
       Ed_comp.Text:=uniquery1.FieldByName('bulan').AsString;
       //Edbut_bln.Text:=uniquery1.FieldByName('bulan').AsString;
       //ListBox1.Items.Add(Edbut_bln.Text);
+=======
+      Edbut_bln.Text:=uniquery1.FieldByName('bulan').AsString;
+      ListBox1.Items.Add(Edbut_bln.Text);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
    end
    else
@@ -480,21 +527,33 @@ begin
         sql.Create.Add(' SELECT date_part(''day'', now()) tgl ');
         Open;
       end;
+<<<<<<< HEAD
       Ed_comp.Text:=uniquery1.FieldByName('tgl').AsString;
       Edbut_tgl.Text:=uniquery1.FieldByName('tgl').AsString;
       //ListBox1.Items.Add(Edbut_tgl.Text);
+=======
+      Edbut_tgl.Text:=uniquery1.FieldByName('tgl').AsString;
+      ListBox1.Items.Add(Edbut_tgl.Text);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
    end
    else
    if CBKomponen_No.ItemIndex=3 then
    begin
+<<<<<<< HEAD
       Ed_comp.Text:=eddigit_count.Text;
       //Edbut_counter.Text:=eddigit_count.Text;
       //ListBox1.Items.Add(Edbut_counter.Text);
+=======
+      Edbut_counter.Text:=eddigit_count.Text;
+      ListBox1.Items.Add(Edbut_counter.Text);
+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
    end
    else
    if CBKomponen_No.ItemIndex=4 then
    begin
+<<<<<<< HEAD
        Ed_comp.Text:='';
      //btnplus.Visible:=true;
      //Ed_Komp.Visible:=true;
@@ -506,6 +565,18 @@ begin
       Ed_Komp.Visible:=true;
       btnplus2.Visible:=true;
    end;}
+=======
+     btnplus.Visible:=false;
+     Ed_Komp.Visible:=true;
+     btnplus2.Visible:=true;
+   end
+   else
+   begin
+      btnplus.Visible:=true;
+      Ed_Komp.Visible:=false;
+      btnplus2.Visible:=false;
+   end;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 
 end;

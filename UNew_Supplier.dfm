@@ -1,9 +1,32 @@
+<<<<<<< HEAD
+<<<<<<<< HEAD:UNew_Supplier.dfm
 object FNew_Supplier: TFNew_Supplier
   Left = 0
   Top = 0
   Caption = 'New Supplier'
   ClientHeight = 250
+========
+object FInput_Supplier: TFInput_Supplier
+  Left = 0
+  Top = 0
+  Caption = 'New Supplier'
+  ClientHeight = 260
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
   ClientWidth = 507
+=======
+object FNew_Supplier: TFNew_Supplier
+  Left = 0
+  Top = 0
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
+  Caption = 'New Supplier'
+  ClientHeight = 251
+  ClientWidth = 511
+========
+  Caption = 'Form New Jenis Barang'
+  ClientHeight = 142
+  ClientWidth = 464
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,18 +34,42 @@ object FNew_Supplier: TFNew_Supplier
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+<<<<<<< HEAD
+<<<<<<<< HEAD:UNew_Supplier.dfm
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+========
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
+=======
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   OnShow = FormShow
   TextHeight = 15
   object Label1: TLabel
     Left = 24
     Top = 29
     Width = 73
+<<<<<<< HEAD
     Height = 15
     Caption = 'Kode Supplier'
   end
+=======
+========
+  TextHeight = 15
+  object Label2: TLabel
+    Left = 21
+    Top = 25
+    Width = 32
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+    Height = 15
+    Caption = 'Kode Supplier'
+  end
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   object Label2: TLabel
     Left = 24
     Top = 66
@@ -123,15 +170,56 @@ object FNew_Supplier: TFNew_Supplier
   end
   object Panel2: TPanel
     Left = 0
+<<<<<<< HEAD
+<<<<<<<< HEAD:UNew_Supplier.dfm
     Top = 218
+========
+    Top = 228
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
     Width = 507
     Height = 32
     Align = alBottom
     TabOrder = 5
+<<<<<<<< HEAD:UNew_Supplier.dfm
+=======
+    Top = 219
+    Width = 511
+    Height = 32
+    Align = alBottom
+    TabOrder = 5
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     ExplicitTop = 210
     ExplicitWidth = 505
     object BBatal: TRzBitBtn
       Left = 435
+========
+<<<<<<< HEAD
+    ExplicitTop = 219
+    ExplicitWidth = 501
+    object BBatal: TRzBitBtn
+      Left = 431
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
+=======
+  object Label19: TLabel
+    Left = 21
+    Top = 68
+    Width = 80
+    Height = 15
+    Caption = 'Akun Perkiraan'
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 110
+    Width = 464
+    Height = 32
+    Align = alBottom
+    TabOrder = 0
+    ExplicitTop = 109
+    ExplicitWidth = 460
+    object BBatal: TRzBitBtn
+      Left = 388
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       Top = 1
       Height = 30
       Align = alRight
@@ -190,10 +278,29 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:UNew_Supplier.dfm
+=======
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       ExplicitLeft = 429
     end
     object BSimpan: TRzBitBtn
       Left = 360
+========
+<<<<<<< HEAD
+      ExplicitLeft = 425
+    end
+    object BSimpan: TRzBitBtn
+      Left = 356
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
+=======
+      ExplicitLeft = 384
+    end
+    object BSimpan: TRzBitBtn
+      Left = 313
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       Top = 1
       Height = 30
       Align = alRight
@@ -252,20 +359,55 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:UNew_Supplier.dfm
+=======
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       ExplicitLeft = 354
     end
     object BEdit: TRzBitBtn
       Left = 285
+========
+<<<<<<< HEAD
+      ExplicitLeft = 350
+    end
+    object BEdit: TRzBitBtn
+      Left = 281
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
       Top = 1
       Height = 30
+=======
+      ExplicitLeft = 309
+    end
+    object BCari: TRzBitBtn
+      Left = 1
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+      Top = 1
+      Width = 100
+      Height = 30
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 0
       Visible = False
       OnClick = BEditClick
+<<<<<<< HEAD
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
+=======
+========
+      Align = alLeft
+      Caption = 'Cari'
+      TabOrder = 2
+      OnClick = BCariClick
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000830E0000830E00000001000000000000000000003300
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -298,6 +440,7 @@ object FNew_Supplier: TFNew_Supplier
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+<<<<<<< HEAD
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
         090909090909090909E8E8E881818181818181818181818181E8E809101009E3
         1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
@@ -315,7 +458,68 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<<< HEAD:UNew_Supplier.dfm
+      ExplicitLeft = 279
+========
+      ExplicitLeft = 275
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:Uneww_Supplier.dfm
+    end
+  end
+=======
+        E8E80909E80909E80909E8E8E8E8E8E8E8E88181E88181E88181E8E8E8E8E8E8
+        E8E81009E81009E81009E8E8E8E8E8E8E8E8E281E8E281E8E281E8E8E8E8E8E8
+        E8B4D8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E281E8E8E8E8E8E8E8E8E8E8E8E8E8
+        B46C6CD8E8E8E8E8E8E8E8E8E8E8E8E8E2818181E8E8E8E8E8E8E8E8E8E8E8E8
+        B46CD86CD8E8E8E8E8E8E8E8E8E8E8E8E281818181E8E8E8E8E8E8E8E8E8E8E8
+        B46C6CD86CD8E8E8E8E8E8E8E8E8E8E8E28181818181E8E8E8E8E8E8E8E8E8D7
+        5E6C6C6CB46CD8E8E8E8E8E8E8E8E8D781818181E28181E8E8E8E8E8E8E8E8D7
+        89896CB4B4B46CD8E8E8E8E8E8E8E8D7ACAC81E2E2E28181E8E8E8E8E8E8D789
+        89D7D7B4C7C7C76CE8E8E8E8E8E8D7ACACD7D7E2ACACAC81E8E8E8E8E8D78989
+        D7D7D7D76C6C6CE8E8E8E8E8E8D7ACACD7D7D7D7818181E8E8E8E8E8D78989D7
+        D7D75E5EE8E8E8E8E8E8E8E8D7ACACD7D7D78181E8E8E8E8E8E8E8D78989D7D7
+        D75EE8E8E8E8E8E8E8E8E8D7ACACD7D7D781E8E8E8E8E8E8E8E8D78989D7D7D7
+        5EB4E8E8E8E8E8E8E8E8D7ACACD7D7D781E2E8E8E8E8E8E8E8E85E89D7D7D75E
+        B4E8E8E8E8E8E8E8E8E881ACD7D7D781E2E8E8E8E8E8E8E8E8E8E85ED7D75EE8
+        E8E8E8E8E8E8E8E8E8E8E881D7D781E8E8E8E8E8E8E8E8E8E8E8E8E85E5EE8E8
+        E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+<<<<<<<< Updated upstream:UNew_Supplier.dfm
       ExplicitLeft = 279
     end
   end
+========
+    end
+  end
+  object EdType: TEdit
+    Left = 107
+    Top = 22
+    Width = 329
+    Height = 23
+    CharCase = ecUpperCase
+    TabOrder = 1
+  end
+  object Edkd_akun: TRzEdit
+    Left = 107
+    Top = 65
+    Width = 110
+    Height = 23
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 2
+  end
+  object EdNm_akun: TRzButtonEdit
+    Left = 223
+    Top = 65
+    Width = 213
+    Height = 23
+    Text = ''
+    CharCase = ecUpperCase
+    ReadOnlyColorOnFocus = True
+    TabOrder = 3
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+  end
+>>>>>>>> Stashed changes:__history/UNew_ItemType.dfm.~16~
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end

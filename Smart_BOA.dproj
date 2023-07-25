@@ -121,6 +121,43 @@
             <Form>FHomeLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< HEAD
+=======
+        <DCCReference Include="UFakturPajak.pas">
+            <Form>FFakturPajak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPenomoran.pas">
+            <Form>FPenomoran</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UInput_Penomoran.pas">
+            <Form>FInput_Penomoran</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPelanggan.pas">
+            <Form>FListPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+ <DCCReference Include="UInput_Supplier.pas">
+            <Form>FNew_Supplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSupplier.pas">
+            <Form>FListSupplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Perusahaan.pas">
+            <Form>FNewPerusahaan</Form>												  
+        <DCCReference Include="UInput_Pelanggan.pas">
+            <Form>FInput_Pelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         <DCCReference Include="UListProduk.pas">
             <Form>FListProduk</Form>
             <FormType>dfm</FormType>
@@ -272,7 +309,7 @@
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
         </BuildConfiguration>
-    </ItemGroup>
+   // </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Delphi.Personality.12</Borland.Personality>
         <Borland.ProjectType>Application</Borland.ProjectType>

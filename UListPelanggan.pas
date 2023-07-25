@@ -100,7 +100,11 @@ begin
    begin
        close;
        sql.Clear;
+<<<<<<< HEAD
        sql.Text:='select * from T_customer where deleted_at is null order by created_at Desc ';
+=======
+       sql.Text:='select * from master_data.T_customer where deleted_at is null order by created_at Desc ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
        open;
    end;
    QPelanggan.Active:=False;
@@ -129,7 +133,11 @@ begin
       close;
       sql.Clear;
       //sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+<<<<<<< HEAD
       sql.Text:=' Update t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+=======
+      sql.Text:=' Update master_data.t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                 ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
       parambyname('deleted_at').AsDateTime:=Now;
       parambyname('deleted_by').AsString:='Admin';

@@ -130,6 +130,10 @@ object Finput_faktur_pajak: TFinput_faktur_pajak
     Align = alTop
     ParentBackground = False
     TabOrder = 3
+<<<<<<< HEAD
+=======
+    ExplicitWidth = 540
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     object Label11: TLabel
       Left = 8
       Top = 13

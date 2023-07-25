@@ -68,7 +68,11 @@ begin
   begin
     Close;
     SQL.Clear;
+<<<<<<< HEAD
     Sql.Text := 'select * from t_customer  ';
+=======
+    Sql.Text := 'select * from master_data.t_customer  ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     open;
   end;
 
@@ -79,7 +83,11 @@ begin
       begin
         Close;
         Sql.Clear;
+<<<<<<< HEAD
         Sql.Text := 'select max(right(customer_code, 5)) as kode from t_customer ';
+=======
+        Sql.Text := 'select max(right(customer_code, 5)) as kode from master_data.t_customer ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         Open;
       end;
       Urut := dm.Qtemp.FieldByName('kode').AsInteger + 1;
@@ -147,7 +155,11 @@ begin
     begin
       close;
       sql.clear;
+<<<<<<< HEAD
       Sql.Text := 'Update t_customer set customer_name=:parnama_pelanggan,'+
+=======
+      Sql.Text := 'Update master_data.t_customer set customer_name=:parnama_pelanggan,'+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
                   'address=:paralamat,telp=:partelpon,email=:paremail,payment_term=:partempo_pembayaran,updated_at=:updated_at,updated_by=:updated_by '+
                   'Where customer_code=:parkode_pelanggan';
       parambyname('parkode_pelanggan').Value:=Edkode.Text;
@@ -172,7 +184,11 @@ begin
   begin
     close;
     sql.clear;
+<<<<<<< HEAD
     sql.Text:='Insert into t_customer(customer_code,customer_name, '+
+=======
+    sql.Text:='Insert into master_data.t_customer(customer_code,customer_name, '+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
               'address,telp,email,payment_term,created_at,created_by ) '+
               'Values(:parkode_pelanggan,:parnama_pelanggan,'+
               ':paralamat,:partelpon,:paremail,:partempo_pembayaran,:created_at,:created_by)';
@@ -235,7 +251,11 @@ begin
           end;
         end;
       end;
+<<<<<<< HEAD
       FMainMenu.TampilTabForm2;
+=======
+      FMainMenu.ShowInForm;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 end;
 

@@ -8,7 +8,11 @@ uses
   Vcl.StdCtrls;
 
 type
+<<<<<<< HEAD
   TFNew_Supplier = class(TForm)
+=======
+  TFInput_Supplier = class(TForm)
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Edno: TEdit;
     EdNm: TEdit;
     EdAlamat: TEdit;
@@ -33,13 +37,17 @@ type
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+<<<<<<< HEAD
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   private
     { Private declarations }
   public
     { Public declarations }
     Procedure Clear;
+<<<<<<< HEAD
 
   end;
 
@@ -47,6 +55,12 @@ type
   //FInput_Supplier: TFInput_Supplier;
 
 Function  FNew_Supplier: TFNew_Supplier;
+=======
+  end;
+
+var
+  FInput_Supplier: TFInput_Supplier;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 implementation
 
@@ -54,6 +68,7 @@ implementation
 
 uses UDataModule, UListSupplier, UMainMenu;
 
+<<<<<<< HEAD
 var
     RealFNew_Supplier: TFNew_Supplier;
 
@@ -66,6 +81,10 @@ begin
 end;
 
 procedure TFNew_Supplier.Clear;
+=======
+
+procedure TFInput_Supplier.Clear;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 begin
    Edno.Text:='';
    EdNm.Text:='';
@@ -74,7 +93,11 @@ begin
    EdNPWP.Text:='';
 end;
 
+<<<<<<< HEAD
 procedure TFNew_Supplier.BBatalClick(Sender: TObject);
+=======
+procedure TFInput_Supplier.BBatalClick(Sender: TObject);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 begin
   self.Refresh;
   Close;
@@ -82,7 +105,11 @@ begin
 
 end;
 
+<<<<<<< HEAD
 procedure TFNew_Supplier.BEditClick(Sender: TObject);
+=======
+procedure TFInput_Supplier.BEditClick(Sender: TObject);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 begin
     BEdit.Visible:=false;
     BSimpan.Visible:=true;
@@ -114,6 +141,7 @@ begin
     dm.koneksi.StartTransaction;
     try
     begin
+<<<<<<< HEAD
       with dm.Qtemp do
       begin
         close;
@@ -145,6 +173,38 @@ begin
 end;
 
 procedure TFNew_Supplier.BSimpanClick(Sender: TObject);
+=======
+     with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='Select * from t_supplier';
+      ExecSQL;
+    end;
+     with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='Update t_supplier set nm_supplier='+QuotedStr(Ednm.Text)+ ' , Alamat='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
+                ' ,npwp='+QuotedStr(EdNPWP.Text)+''+
+                ' Where kd_supplier='+QuotedStr(Edno.Text);
+      ExecSQL;
+      end;
+    dm.koneksi.Commit;
+    Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+    end
+    Except
+    on E :Exception do
+    begin
+    MessageDlg(E.Message,mtError,[MBok],0);
+    dm.koneksi.Rollback;
+    end;
+    end;
+      BBatalClick(sender);;
+end;
+
+procedure TFInput_Supplier.BSimpanClick(Sender: TObject);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 begin
     if Edno.Text='' then
     begin
@@ -188,11 +248,18 @@ begin
         sql.clear;
         sql.Text:='Insert into master_data.t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
+<<<<<<< HEAD
                   ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:created_at,:created_by )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
                   //:created_at,:created_by';
                   parambyname('created_at').AsDateTime:=Now;
                   parambyname('created_by').AsString:='Admin';
+=======
+                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
+                  //:created_at,:created_by';
+                  //parambyname('created_at').AsDateTime:=Now;
+                  //parambyname('created_by').AsString:='Admmin';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         ExecSQL;
       end;
       dm.koneksi.Commit;
@@ -205,17 +272,27 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
+<<<<<<< HEAD
     FMainMenu.TampilTabForm2;
     //FListSupplier.dxbarRefreshClick(sender);
     BBatalClick(sender);
 end;
 
 procedure TFNew_Supplier.FormClose(Sender: TObject; var Action: TCloseAction);
+=======
+    FMainMenu.ShowInForm;
+    FListSupplier.dxbarRefreshClick(sender);
+    BBatalClick(sender);
+end;
+
+procedure TFInput_Supplier.FormClose(Sender: TObject; var Action: TCloseAction);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 begin
 
   //FListSupplier.Refresh;
 end;
 
+<<<<<<< HEAD
 procedure TFNew_Supplier.FormCreate(Sender: TObject);
 begin
     //RealFInput_Supplier:=self;
@@ -229,6 +306,12 @@ end;
 procedure TFNew_Supplier.FormShow(Sender: TObject);
 begin
     Clear;
+=======
+procedure TFInput_Supplier.FormShow(Sender: TObject);
+begin
+    Clear;
+    Edno.SetFocus;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     BSimpan.Visible:=True;
     BEdit.Visible:=False;
 end;

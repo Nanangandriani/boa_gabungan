@@ -118,6 +118,10 @@ object FListPerusahaan: TFListPerusahaan
     Contexts = <>
     TabOrder = 1
     TabStop = False
+<<<<<<< HEAD
+=======
+    ExplicitLeft = -32
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -698,8 +702,13 @@ object FListPerusahaan: TFListPerusahaan
     Connection = dm.Koneksi
     SQL.Strings = (
       
+<<<<<<< HEAD
         'select * from t_company where deleted_at is null Order by compan' +
         'y_code')
+=======
+        'select * from master_data.t_company where deleted_at is null Ord' +
+        'er by company_code')
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Left = 380
     Top = 56
   end

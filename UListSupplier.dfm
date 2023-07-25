@@ -644,7 +644,11 @@ object FListSupplier: TFListSupplier
   object QSupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+<<<<<<< HEAD
       'select * from T_Supplier order by created_at Desc')
+=======
+      'select * from master_data.T_Supplier order by created_at Desc')
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Left = 484
     Top = 72
   end

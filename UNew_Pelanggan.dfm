@@ -2,8 +2,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
   Left = 145
   Top = 65
   Caption = 'New Pelanggan'
+<<<<<<< HEAD
   ClientHeight = 295
   ClientWidth = 465
+=======
+  ClientHeight = 296
+  ClientWidth = 469
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -155,8 +160,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
   end
   object Panel2: TPanel
     Left = 0
+<<<<<<< HEAD
     Top = 263
     Width = 465
+=======
+    Top = 264
+    Width = 469
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     Height = 32
     Align = alBottom
     TabOrder = 6

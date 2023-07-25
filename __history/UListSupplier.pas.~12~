@@ -69,17 +69,25 @@ type
 
     Procedure Refresh;
     Procedure Autonumber;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   end;
 
 var
   FListSupplier: TFListSupplier;
+<<<<<<< HEAD
   //RealListSupplier: TFListSupplier;
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
   urut:integer;
 
 implementation
 
 {$R *.dfm}
 
+<<<<<<< HEAD
 uses UNew_Supplier, UDataModule, UMainMenu;
 
 {function FListSupplier: TFListSupplier;
@@ -89,6 +97,10 @@ begin
    else
      Application.CreateForm(TFListSupplier, Result);
 end;}
+=======
+uses UInput_Supplier, UDataModule, UMainMenu;
+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 procedure TFListSupplier.Refresh;
 begin
@@ -96,7 +108,11 @@ begin
    begin
        close;
        sql.Clear;
+<<<<<<< HEAD
        sql.Text:='select * from master_data.T_Supplier where deleted_at is null order by created_at Desc ';
+=======
+       sql.Text:='select * from master_data.T_Supplier ';
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
        open;
    end;
    QSupplier.Active:=False;
@@ -116,11 +132,16 @@ begin
       execsql;
     end;
     urut:=Dm.Qtemp.FieldByName('urut').AsInteger+1;
+<<<<<<< HEAD
     FNew_Supplier.Edno.Text:=FloatToStr(urut);
+=======
+    FInput_Supplier.Edno.Text:=FloatToStr(urut);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFListSupplier.dxBarUpdateClick(Sender: TObject);
 begin
+<<<<<<< HEAD
     FNew_Supplier.Show;
     FNew_Supplier.BSimpan.Visible:=False;
     FNew_Supplier.BEdit.Visible:=True;
@@ -133,6 +154,20 @@ begin
       FNew_Supplier.Edalamat.Text:=QSupplier.FieldByName('address').AsString;
       FNew_Supplier.Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
       FNew_Supplier.EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
+=======
+    FInput_Supplier.Show;
+    FInput_Supplier.BSimpan.Visible:=False;
+    FInput_Supplier.BEdit.Visible:=True;
+    FInput_Supplier.Caption:='Update Supplier';
+    FInput_Supplier.Edno.Enabled:=False;
+    with QSupplier do
+    begin
+      FInput_Supplier.Edno.Text:=QSupplier.FieldByName('supplier_code').AsString;
+      FInput_Supplier.EdNm.Text:=QSupplier.FieldByName('supplier_name').AsString;
+      FInput_Supplier.Edalamat.Text:=QSupplier.FieldByName('a').AsString;
+      FInput_Supplier.Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
+      FInput_Supplier.EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     end;
 end;
 
@@ -158,8 +193,13 @@ end;
 
 procedure TFListSupplier.dxBarBaruClick(Sender: TObject);
 begin
+<<<<<<< HEAD
     FNew_Supplier.Caption:='New Supplier';
     FNew_Supplier.show;
+=======
+    FInput_Supplier.Caption:='New Supplier';
+    FInput_Supplier.showmodal;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFListSupplier.dxBarDeleteClick(Sender: TObject);
@@ -170,11 +210,15 @@ begin
       begin
         Close;
         sql.Clear;
+<<<<<<< HEAD
         //sql.Text:='Delete From master_data.t_supplier where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
         sql.Text:=' Update master_data.t_supplier set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                   ' where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
         parambyname('deleted_at').AsDateTime:=Now;
         parambyname('deleted_by').AsString:='Admin';
+=======
+        sql.Text:='Delete From master_data.t_supplier where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
         Execute;
       end;
       dxbarRefreshClick(sender);

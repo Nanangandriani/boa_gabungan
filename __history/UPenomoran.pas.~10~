@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
 unit UPenomoran;
+========
+unit UListPelanggan;
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
 
 interface
 
@@ -25,10 +29,18 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
   cxClasses, dxRibbon, dxBar;
 
 type
   TFPenomoran = class(TForm)
+========
+  dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
+  Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TFListPelanggan = class(TForm)
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
     DBGridEh1: TDBGridEh;
     dxBarManager1: TdxBarManager;
     dxRibbon1Tab1: TdxRibbonTab;
@@ -45,21 +57,39 @@ type
     dxBarButton8: TdxBarButton;
     dxBarButton9: TdxBarButton;
     dxBarButton10: TdxBarButton;
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
     procedure dxBarButton1Click(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+========
+    dxRibbon1: TdxRibbon;
+    dxRibbon1Tab1: TdxRibbonTab;
+    QPelanggan: TUniQuery;
+    DsPelanggan: TDataSource;
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarButton8Click(Sender: TObject);
+    procedure dxBarButton9Click(Sender: TObject);
+    procedure dxBarButton10Click(Sender: TObject);
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure Refresh;
+
   end;
 
 var
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
   FPenomoran: TFPenomoran;
+========
+  FListPelanggan: TFListPelanggan;
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
 
 implementation
 
 {$R *.dfm}
 
+<<<<<<<< HEAD:__history/UPenomoran.pas.~10~
 uses UNew_Penomoran;
 
 procedure TFPenomoran.dxBarButton1Click(Sender: TObject);
@@ -70,6 +100,64 @@ end;
 procedure TFPenomoran.dxBarLargeButton1Click(Sender: TObject);
 begin
    FInput_Penomoran.ShowModal;
+========
+uses UNew_Pelanggan, UDataModule;
+
+procedure TFListPelanggan.Refresh;
+begin
+  DBGridEh1.StartLoadingStatus();
+  try
+    Qpelanggan.Close;
+    Qpelanggan.Open;
+  finally
+  DBGridEh1.FinishLoadingStatus();
+  end;
+end;
+
+procedure TFListPelanggan.dxBarButton10Click(Sender: TObject);
+begin
+  if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+      execsql;
+    end;
+    MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
+    Refresh;
+  end;
+end;
+
+procedure TFListPelanggan.dxBarButton8Click(Sender: TObject);
+begin
+  with QPelanggan do
+  begin
+    FNew_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('kode_pelanggan').AsString;
+    FNew_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('nama_pelanggan').AsString;
+    FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('alamat').AsString;
+    FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telpon').AsString;
+    FNew_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
+    FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('tempo_pembayaran').AsString;
+  end;
+  FNew_Pelanggan.Edkode.Enabled:=false;
+  FNew_Pelanggan.Show;
+  Status := 1;
+end;
+
+procedure TFListPelanggan.dxBarButton9Click(Sender: TObject);
+begin
+  self.Refresh;
+end;
+
+procedure TFListPelanggan.dxBarLargeButton1Click(Sender: TObject);
+begin
+  FNew_Pelanggan.ShowModal;
+  FNew_Pelanggan.Clear;
+  FNew_Pelanggan.Edkode.Enabled:=true;
+  Status:=0;
+>>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938:__history/UListPelanggan.pas.~7~
 end;
 
 end.

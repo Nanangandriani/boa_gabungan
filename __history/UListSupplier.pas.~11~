@@ -67,7 +67,13 @@ implementation
 
 {$R *.dfm}
 
+<<<<<<< HEAD
 uses UNew_Supplier, UDataModule;
+=======
+uses UNew_Supplier, UDataModule, UInput_Supplier;
+
+
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 
 
 procedure TFListSupplier.Refresh;
@@ -75,7 +81,10 @@ begin
    QSupplier.Active:=False;
    QSupplier.Active:=True;
 end;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 procedure TFListSupplier.Autonumber;
 begin
     with dm.Qtemp do
@@ -86,16 +95,28 @@ begin
       execsql;
     end;
     urut:=Dm.Qtemp.FieldByName('urut').AsInteger+1;
+<<<<<<< HEAD
     FInput_Supplier.Edno.Text:=FloatToStr(urut);
+=======
+    FNew_Supplier.Edno.Text:=FloatToStr(urut);
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
 end;
 
 procedure TFListSupplier.dxBarUpdateClick(Sender: TObject);
 begin
+<<<<<<< HEAD
     FInput_Supplier.Show;
     FInput_Supplier.BSimpan.Visible:=False;
     FInput_Supplier.BEdit.Visible:=True;
     FInput_Supplier.Caption:='Update Supplier';
     FInput_Supplier.Edno.Enabled:=False;
+=======
+    FNew_Supplier.Show;
+    FNew_Supplier.BSimpan.Visible:=False;
+    FNew_Supplier.BEdit.Visible:=True;
+    FNew_Supplier.Caption:='Update Supplier';
+    FNew_Supplier.Edno.Enabled:=False;
+>>>>>>> 8f4a1c83bd26b538d93f7e8791f7a4a22a612938
     with QSupplier do
     begin
       FInput_Supplier.Edno.Text:=QSupplier.FieldByName('kd_supplier').AsString;
