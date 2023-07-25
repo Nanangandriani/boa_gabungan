@@ -2,6 +2,7 @@
 <BorlandProject>
 	<Transactions>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <Transaction>1899/12/30 00.00.00.000.890,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\Udafperkiraan.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.740,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UListBarang.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.427,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UNewBank.dfm</Transaction>
@@ -186,6 +187,37 @@
     <Transaction>1899/12/30 00.00.00.000.565,D:\back_office_automation\UNew_KategoriBarang.dfm=D:\back_office_automation\Unit1.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.435,=D:\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.551,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
+=======
+    <Transaction>1899/12/30 00.00.00.000.830,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UInput_Supplier.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.408,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UInput_Material.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.597,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UListKonversi_Material.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.379,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UInput_Produk.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.238,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UListKonversi_Produk.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.758,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UNewKonv_Produk.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.132,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UInput_Pelanggan.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.763,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UListProduk.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.954,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\UKategori_Material.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.890,D:\Project Gabungan\back_office_automation\Udafperkiraan.dfm=D:\Project Gabungan\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.486,D:\back_office_automation\UItem_Type.pas=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.728,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeLogin.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.253,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDashboard.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.761,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.dfm=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDataModule.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.247,D:\back_office_automation\UKategoriBarang.dfm=D:\back_office_automation\UNew_KategoriBarang.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.076,D:\Project Gabungan\back_office_automation\UListSupplier.dfm=D:\Project Gabungan\back_office_automation\Unit2.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.886,D:\back_office_automation\UNew_BonPermtBarang.pas=C:\BOA_Gabungan\UNew_BonPermtBarang.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.196,D:\back_office_automation\UBonPermt_Barang.dfm=C:\BOA_Gabungan\UBonPermt_Barang.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.573,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\PMainMenuLoadDB.dproj=C:\Users\LENOVO\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.320,D:\back_office_automation\UKategori_Barang.dfm=D:\back_office_automation\UKategoriBarang.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.009,D:\back_office_automation\UKategori_Barang.dfm=D:\back_office_automation\UKategori_Material.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.969,D:\back_office_automation\UKategori_Barang.dfm=D:\GitBOA\MLB\BOA MLB\UKategori_Material.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.796,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.520,=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.367,=C:\BOA_Gabungan\UNew_Barang_Stok.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.485,D:\back_office_automation\UNew_KategoriBarang.dfm=D:\back_office_automation\UKategori_Barang.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.565,D:\back_office_automation\UNew_KategoriBarang.dfm=D:\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.435,=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.551,=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas</Transaction>
+>>>>>>> Stashed changes
     <Transaction>1899/12/30 00.00.00.000.253,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UDashboard.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.717,D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\Unit1.pas=D:\DATA RUDY\tutor delphi 11\MainMenu Load DB\UHomeSreen.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.740,D:\Project Gabungan\back_office_automation\UListBarang.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
@@ -311,6 +343,9 @@
     <Transaction>1899/12/30 00.00.00.000.943,D:\Project Gabungan\back_office_automation\Uupdate_faktur.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.488,D:\Project Gabungan\back_office_automation\UListPelanggan.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.427,D:\Project Gabungan\back_office_automation\UNewBank.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   </Transactions>
 </BorlandProject>
