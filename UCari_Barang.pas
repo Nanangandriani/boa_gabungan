@@ -32,6 +32,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Barang_stok, UNew_BonPermtBarang;
+
 var
   realfCari_barang: TFCari_Barang;
 // implementasi function

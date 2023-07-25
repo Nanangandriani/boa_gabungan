@@ -135,7 +135,11 @@ implementation
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Material,
   UListKonversi_Produk, UList_Gudang, UListBank_perusahaan, UBarang_Stok,
+<<<<<<< HEAD
   UItem_Type, UListPerusahaan;
+=======
+  UItem_Type, UKategori_Barang;
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
 
 
 procedure TFMainMenu.ShowInForm;
@@ -771,5 +775,10 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
+<<<<<<< HEAD
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFlistPerusahaan]);
+=======
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
+  ,TFKategori_Barang]);
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
 end.

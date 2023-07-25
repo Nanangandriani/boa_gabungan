@@ -34,15 +34,15 @@ implementation
 
 {$R *.dfm}
 
-uses UKategori_Barang;
+uses UNew_KategoriBarang;
 
 procedure TFdafperkiraan.Button1Click(Sender: TObject);
 begin
 
     if (vpanggil = 'kategorimaterial')then
     begin
-      FKategori_Barang.Edkd_akun.Text:=query1.fieldbyname('kode').AsString;
-      FKategori_Barang.EdNm_akun.Text:=query1.fieldbyname('nama_perkiraan').AsString;
+      FNew_KategoriBarang.Edkd_akun.Text:=query1.fieldbyname('kode').AsString;
+      FNew_KategoriBarang.EdNm_akun.Text:=query1.fieldbyname('nama_perkiraan').AsString;
       query1.Close;
       fdafperkiraan.Close;
     end

@@ -12,11 +12,16 @@ uses
   UInput_Penomoran in 'UInput_Penomoran.pas' {FInput_Penomoran},
   Vcl.Themes,
   Vcl.Styles,
-  UListBarang in 'UListBarang.pas' {FListBarang},
   UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+<<<<<<< HEAD
   UNew_Pelanggan in 'UNew_Pelanggan.pas' {FNew_Pelanggan},
   UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
   UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+=======
+  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+  UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
+  UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
   UListProduk in 'UListProduk.pas' {FListProduk},
   UInput_Produk in 'UInput_Produk.pas' {FInput_Produk},
   UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
@@ -39,10 +44,17 @@ uses
   UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
   UItem_Type in 'UItem_Type.pas' {FItem_Type},
   UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+<<<<<<< HEAD
   UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
   UListSupplier in 'UListSupplier.pas' {FListSupplier},
   UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
   UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan};
+=======
+  UNew_KategoriBarang in 'UNew_KategoriBarang.pas' {FNew_KategoriBarang},
+  UListBarang in 'UListBarang.pas' {FlistBarang},
+  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang};
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
 
 {$R *.res}
 
@@ -62,11 +74,16 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
-  Application.CreateForm(TFListBarang, FListBarang);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
+<<<<<<< HEAD
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   Application.CreateForm(TFNew_Barang, FNew_Barang);
   Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+=======
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
+  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
   Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
@@ -82,12 +99,16 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
+<<<<<<< HEAD
   Application.CreateForm(TFItem_Type, FItem_Type);
   Application.CreateForm(TFNew_ItemType, FNew_ItemType);
   //Application.CreateForm(TFInput_Supplier, FInput_Supplier);
   Application.CreateForm(TFListSupplier, FListSupplier);
   Application.CreateForm(TFListPerusahaan, FListPerusahaan);
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
+=======
+//  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

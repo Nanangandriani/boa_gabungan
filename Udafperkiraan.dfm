@@ -2,8 +2,8 @@ object Fdafperkiraan: TFdafperkiraan
   Left = 0
   Top = 0
   Caption = 'Daftar Perkiraan'
-  ClientHeight = 418
-  ClientWidth = 448
+  ClientHeight = 417
+  ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -38,8 +38,8 @@ object Fdafperkiraan: TFdafperkiraan
   object DBGridDaftar_Perk: TDBGridEh
     Left = 0
     Top = 0
-    Width = 448
-    Height = 418
+    Width = 444
+    Height = 417
     Align = alClient
     DynProps = <>
     ReadOnly = True
@@ -69,7 +69,7 @@ object Fdafperkiraan: TFdafperkiraan
   end
   object Edit1: TEdit
     Left = 138
-    Top = 36
+    Top = 92
     Width = 290
     Height = 21
     Ctl3D = False

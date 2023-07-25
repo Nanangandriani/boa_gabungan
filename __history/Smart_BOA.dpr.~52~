@@ -12,11 +12,14 @@ uses
   UInput_Penomoran in 'UInput_Penomoran.pas' {FInput_Penomoran},
   Vcl.Themes,
   Vcl.Styles,
-  UListBarang in 'UListBarang.pas' {FListBarang},
   UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+<<<<<<< HEAD
+=======
+  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+  UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
   UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
   UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
-  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
   UListProduk in 'UListProduk.pas' {FListProduk},
   UInput_Produk in 'UInput_Produk.pas' {FInput_Produk},
   UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
@@ -38,9 +41,24 @@ uses
   UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
   UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
   UItem_Type in 'UItem_Type.pas' {FItem_Type},
+<<<<<<< HEAD
   UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+<<<<<<<< HEAD:__history/Smart_BOA.dpr.~52~
   UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
   UListSupplier in 'UListSupplier.pas' {FListSupplier};
+========
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+  UListBarang in 'UListBarang.pas' {FListBarang};
+>>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c:__history/Smart_BOA.dpr.~53~
+=======
+<<<<<<<< HEAD:__history/Smart_BOA.dpr.~48~
+  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType};
+========
+  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+  UListBarang in 'UListBarang.pas' {FListBarang};
+>>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c:__history/Smart_BOA.dpr.~52~
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
 
 {$R *.res}
 
@@ -60,11 +78,14 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
-  Application.CreateForm(TFListBarang, FListBarang);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
+<<<<<<< HEAD
+=======
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
   Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
   Application.CreateForm(TFNew_Barang, FNew_Barang);
-  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
   Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
@@ -80,10 +101,27 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
+<<<<<<< HEAD
+<<<<<<<< HEAD:__history/Smart_BOA.dpr.~52~
   Application.CreateForm(TFItem_Type, FItem_Type);
   Application.CreateForm(TFNew_ItemType, FNew_ItemType);
   Application.CreateForm(TFInput_Supplier, FInput_Supplier);
   Application.CreateForm(TFListSupplier, FListSupplier);
+========
+ /// Application.CreateForm(TFItem_Type, FItem_Type);
+//  Application.CreateForm(TFNew_ItemType, FNew_ItemType);
+  Application.CreateForm(TFListBarang, FListBarang);
+>>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c:__history/Smart_BOA.dpr.~53~
+=======
+<<<<<<<< HEAD:__history/Smart_BOA.dpr.~48~
+  Application.CreateForm(TFItem_Type, FItem_Type);
+  Application.CreateForm(TFNew_ItemType, FNew_ItemType);
+========
+ /// Application.CreateForm(TFItem_Type, FItem_Type);
+  Application.CreateForm(TFNew_ItemType, FNew_ItemType);
+  Application.CreateForm(TFListBarang, FListBarang);
+>>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c:__history/Smart_BOA.dpr.~52~
+>>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

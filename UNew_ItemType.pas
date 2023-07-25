@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls,
+  RzBtnEdt, Vcl.Mask, RzEdit;
 
 type
   TFNew_ItemType = class(TForm)
@@ -13,31 +14,60 @@ type
     BSimpan: TRzBitBtn;
     EdType: TEdit;
     Label2: TLabel;
+    Label19: TLabel;
+    Edkd_akun: TRzEdit;
+    EdNm_akun: TRzButtonEdit;
+    BCari: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure BCariClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    id:string;
+    statustr:integer;
   end;
 
-var
-  FNew_ItemType: TFNew_ItemType;
-  id:string;
-  statustr:integer;
+Function FNew_ItemType: TFNew_ItemType;
 
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UMainMenu, UItem_Type;
+var
+  RealFNew_ItemType: TFNew_ItemType;
+// implementasi function
+function FNew_ItemType: TFNew_ItemType;
+begin
+  if RealFNew_ItemType <> nil then
+    FNew_ItemType:= RealFNew_ItemType
+  else
+    Application.CreateForm(TFNew_ItemType, Result);
+end;
 
 procedure TFNew_ItemType.BBatalClick(Sender: TObject);
 begin
+if statustr=3 then
+begin
   close;
-  FMainMenu.TampilTabForm2;
-  end;
+end;
+if statustr<>3 then
+begin
+  close;
+  FItem_Type.Show;
+  FItem_Type.ActROExecute(sender);
+end;
+end;
+
+procedure TFNew_ItemType.BCariClick(Sender: TObject);
+begin
+  FItem_Type.Show;
+end;
 
 procedure TFNew_ItemType.BSimpanClick(Sender: TObject);
 begin
@@ -77,10 +107,17 @@ end;
 
 procedure TFNew_ItemType.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  FItem_Type.QType.Close;
-  FItem_Type.QType.Open;
-//  close;
-//  FItem_Type.Show;
+  Action:=cafree;
+end;
+
+procedure TFNew_ItemType.FormCreate(Sender: TObject);
+begin
+  RealFNew_ItemType:=self;
+end;
+
+procedure TFNew_ItemType.FormDestroy(Sender: TObject);
+begin
+  RealFNew_ItemType:=nil;
 end;
 
 end.
