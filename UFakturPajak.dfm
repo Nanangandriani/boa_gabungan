@@ -2,8 +2,8 @@ object FFakturPajak: TFFakturPajak
   Left = 0
   Top = 0
   Caption = 'FFakturPajak'
-  ClientHeight = 442
-  ClientWidth = 832
+  ClientHeight = 441
+  ClientWidth = 828
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object FFakturPajak: TFFakturPajak
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 832
-    Height = 315
+    Width = 828
+    Height = 314
     Align = alClient
     DataSource = DsFaktur
     DynProps = <>
@@ -73,7 +73,7 @@ object FFakturPajak: TFFakturPajak
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 832
+    Width = 828
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -81,6 +81,7 @@ object FFakturPajak: TFFakturPajak
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 832
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -137,7 +138,7 @@ object FFakturPajak: TFFakturPajak
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = True
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -145,6 +146,7 @@ object FFakturPajak: TFFakturPajak
     object dxBarManager1Bar2: TdxBar
       Caption = 'Action2'
       CaptionButtons = <>
+      DockedDockingStyle = dsTop
       DockedLeft = 119
       DockedTop = 0
       FloatLeft = 856
@@ -738,8 +740,7 @@ object FFakturPajak: TFFakturPajak
   object Qfaktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_faktur'
-      'order by id Asc')
+      'select * from master_data.t_faktur order by id Asc')
     Left = 324
     Top = 48
   end

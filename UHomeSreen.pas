@@ -39,11 +39,10 @@ begin
     Timer1.Enabled:=false;
    // FHomeLogin.show;
     Self.Hide;
-
   end
   else
   begin
-    ProgressBar1.Position:=ProgressBar1.Position+5;
+    ProgressBar1.Position:=ProgressBar1.Position+10;
   end;
 end;
 

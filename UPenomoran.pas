@@ -60,16 +60,16 @@ implementation
 
 {$R *.dfm}
 
-uses UInput_Penomoran;
+uses Unew_Penomoran;
 
 procedure TFPenomoran.dxBarButton1Click(Sender: TObject);
 begin
-  FInput_Penomoran.ShowModal;
+  FNew_Penomoran.ShowModal;
 end;
 
 procedure TFPenomoran.dxBarLargeButton1Click(Sender: TObject);
 begin
-   FInput_Penomoran.ShowModal;
+   FNew_Penomoran.ShowModal;
 end;
 
 end.

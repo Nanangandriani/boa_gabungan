@@ -24,11 +24,12 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Data.DB, MemDS, DBAccess, Uni;
+  Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFListPelanggan = class(TForm)
-    DBGridEh1: TDBGridEh;
+    DBGridCustomer: TDBGridEh;
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
     dxBarButton2: TdxBarButton;
@@ -38,18 +39,44 @@ type
     dxBarButton5: TdxBarButton;
     dxBarButton6: TdxBarButton;
     dxBarButton7: TdxBarButton;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarButton8: TdxBarButton;
-    dxBarButton9: TdxBarButton;
-    dxBarButton10: TdxBarButton;
+    dxBarLargeNew: TdxBarLargeButton;
+    dxBarUpdate: TdxBarButton;
+    dxBarRefresh: TdxBarButton;
+    dxBarDelete: TdxBarButton;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
     QPelanggan: TUniQuery;
     DsPelanggan: TDataSource;
-    procedure dxBarLargeButton1Click(Sender: TObject);
-    procedure dxBarButton8Click(Sender: TObject);
-    procedure dxBarButton9Click(Sender: TObject);
-    procedure dxBarButton10Click(Sender: TObject);
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
+    QPelanggancustomer_code: TStringField;
+    QPelanggancustomer_name: TStringField;
+    QPelanggantelp: TStringField;
+    QPelangganemail: TStringField;
+    QPelangganaddress: TMemoField;
+    QPelanggannpwp: TStringField;
+    QPelangganid: TGuidField;
+    QPelanggancreated_at: TDateTimeField;
+    QPelanggancreated_by: TStringField;
+    QPelangganupdated_at: TDateTimeField;
+    QPelangganupdated_by: TStringField;
+    QPelanggandeleted_at: TDateTimeField;
+    QPelanggandeleted_by: TStringField;
+    QPelangganpayment_term: TSmallintField;
+    procedure dxBarLargeNewClick(Sender: TObject);
+    procedure dxBarUpdateClick(Sender: TObject);
+    procedure dxBarRefreshClick(Sender: TObject);
+    procedure dxBarDeleteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure QPelangganaddressGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -65,9 +92,24 @@ implementation
 
 {$R *.dfm}
 
-uses UInput_Pelanggan, UDataModule;
+uses UNew_Pelanggan, UDataModule;
 
 procedure TFListPelanggan.Refresh;
+begin
+   with QPelanggan do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from T_customer where deleted_at is null order by created_at Desc ';
+       open;
+   end;
+   QPelanggan.Active:=False;
+   QPelanggan.Active:=True;
+   QPelanggan.Close;
+   QPelanggan.Open;
+end;
+
+{procedure TFListPelanggan.Refresh;
 begin
   DBGridEh1.StartLoadingStatus();
   try
@@ -76,9 +118,9 @@ begin
   finally
   DBGridEh1.FinishLoadingStatus();
   end;
-end;
+end;}
 
-procedure TFListPelanggan.dxBarButton10Click(Sender: TObject);
+procedure TFListPelanggan.dxBarDeleteClick(Sender: TObject);
 begin
   if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
   begin
@@ -86,7 +128,11 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+      //sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+      sql.Text:=' Update t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
+      parambyname('deleted_at').AsDateTime:=Now;
+      parambyname('deleted_by').AsString:='Admin';
       execsql;
     end;
     MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
@@ -94,32 +140,49 @@ begin
   end;
 end;
 
-procedure TFListPelanggan.dxBarButton8Click(Sender: TObject);
+procedure TFListPelanggan.dxBarUpdateClick(Sender: TObject);
 begin
   with QPelanggan do
   begin
-    FInput_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('kode_pelanggan').AsString;
-    FInput_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('nama_pelanggan').AsString;
-    FInput_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('alamat').AsString;
-    FInput_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telpon').AsString;
-    FInput_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
-    FInput_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('tempo_pembayaran').AsString;
+    FNew_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('customer_code').AsString;
+    FNew_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('customer_name').AsString;
+    FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('address').AsString;
+    FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telp').AsString;
+    FNew_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
+    FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('payment_term').AsString;
   end;
-  FInput_Pelanggan.Edkode.Enabled:=false;
-  FInput_Pelanggan.Show;
+  FNew_Pelanggan.Edkode.Enabled:=false;
+  FNew_Pelanggan.Show;
   Status := 1;
 end;
 
-procedure TFListPelanggan.dxBarButton9Click(Sender: TObject);
+procedure TFListPelanggan.FormShow(Sender: TObject);
 begin
-  self.Refresh;
+  Refresh;
 end;
 
-procedure TFListPelanggan.dxBarLargeButton1Click(Sender: TObject);
+procedure TFListPelanggan.QPelangganaddressGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
 begin
-  Finput_Pelanggan.ShowModal;
-  Finput_Pelanggan.Clear;
-  Finput_Pelanggan.Edkode.Enabled:=true;
+   Text := Copy(QPelangganaddress.AsString, 1, 200);
+end;
+
+procedure TFListPelanggan.dxBarRefreshClick(Sender: TObject);
+begin
+  DBGridcustomer.StartLoadingStatus();
+  try
+    Qpelanggan.Close;
+    Qpelanggan.Open;
+  finally
+  DBGridcustomer.FinishLoadingStatus();
+  end;
+end;
+
+procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);
+begin
+  FNew_Pelanggan.ShowModal;
+  FNew_Pelanggan.Clear;
+  FNew_Pelanggan.Edkode.Enabled:=true;
   Status:=0;
 end;
 

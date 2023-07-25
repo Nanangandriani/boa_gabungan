@@ -80,7 +80,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Insert into master_data.t_item_type(type,created_by)values(:type,:created_by)';
+        sql.Text:='Insert into t_item_type(type,created_by)values(:type,:created_by)';
                   ParamByName('type').Value:=EdType.Text;
                   ParamByName('created_by').value:=nm;
                   Execute;
@@ -92,7 +92,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='update master_data.t_item_type set type=:type,updated_by=:updated_by,updated_at=now() '+
+        sql.Text:='update t_item_type set type=:type,updated_by=:updated_by,updated_at=now() '+
                   ' where "id"=:id ';
                   ParamByName('type').Value:=EdType.Text;
                   ParamByName('updated_by').value:=nm;

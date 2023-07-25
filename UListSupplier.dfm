@@ -2,8 +2,8 @@ object FListSupplier: TFListSupplier
   Left = 0
   Top = 0
   Caption = 'FListSupplier'
-  ClientHeight = 442
-  ClientWidth = 832
+  ClientHeight = 433
+  ClientWidth = 826
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,12 +11,14 @@ object FListSupplier: TFListSupplier
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object DBGridSupplier: TDBGridEh
     Left = 0
     Top = 127
-    Width = 832
-    Height = 315
+    Width = 826
+    Height = 306
     Align = alClient
     DataSource = DsSupplier
     DynProps = <>
@@ -27,7 +29,7 @@ object FListSupplier: TFListSupplier
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_supplier'
+        FieldName = 'supplier_code'
         Footers = <>
         Title.Caption = 'Kode Supplier'
         Width = 100
@@ -36,7 +38,7 @@ object FListSupplier: TFListSupplier
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_supplier'
+        FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Nama Supplier'
         Width = 250
@@ -45,7 +47,7 @@ object FListSupplier: TFListSupplier
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'alamat'
+        FieldName = 'address'
         Footers = <>
         Title.Caption = 'Alamat'
         Width = 300
@@ -74,7 +76,7 @@ object FListSupplier: TFListSupplier
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 832
+    Width = 826
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -642,8 +644,44 @@ object FListSupplier: TFListSupplier
   object QSupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from T_Supplier order by kd_Supplier Desc')
+      'select * from T_Supplier order by created_at Desc')
     Left = 484
     Top = 72
+  end
+  object ActMenu: TActionManager
+    Left = 616
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = dxBarBaruClick
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = dxBarUpdateClick
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = dxbarRefreshClick
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+      OnExecute = dxBarDeleteClick
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
+    end
   end
 end

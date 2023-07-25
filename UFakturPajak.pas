@@ -72,7 +72,14 @@ uses UNewFakturPajak, Uupdate_faktur, UDataModule;
 
 procedure TFFakturPajak.dxBarRefreshClick(Sender: TObject);
 begin
-   Refresh;
+    DBGridEh1.StartLoadingStatus();
+    try
+      Qfaktur.Close;
+      Qfaktur.Open;
+    finally
+    DBGridEh1.FinishLoadingStatus();
+    end;
+    Refresh;
 end;
 
 procedure TFFakturPajak.dxBarUpdateClick(Sender: TObject);
@@ -101,13 +108,25 @@ end;
 
 procedure TFFakturPajak.Refresh;
 begin
-    DBGridEh1.StartLoadingStatus();
+    with QFaktur do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from master_data.T_Faktur where deleted_at is null order by created_at Desc ';
+       open;
+   end;
+   QFaktur.Active:=False;
+   QFaktur.Active:=True;
+   QFaktur.Close;
+   QFaktur.Open;
+
+    {DBGridEh1.StartLoadingStatus();
     try
       Qfaktur.Close;
       Qfaktur.Open;
     finally
     DBGridEh1.FinishLoadingStatus();
-    end;
+    end;}
 end;
 
 procedure TFFakturPajak.dxBarDeleteClick(Sender: TObject);
@@ -129,7 +148,11 @@ begin
               begin
                 Close;
                 Sql.Clear;
-                Sql.Text:='Delete from t_faktur where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
+                //Sql.Text:='Delete from master_data.t_faktur where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
+                Sql.Text:='Update master_data.t_faktur set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                          'where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
+                parambyname('deleted_at').AsDateTime:=Now;
+                parambyname('deleted_by').AsString:='Admin';
                 ExecSQL;
               end;
             end;

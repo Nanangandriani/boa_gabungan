@@ -46,7 +46,6 @@ type
     SpeedButton2: TSpeedButton;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
-    procedure BEditClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
     procedure EdjenisSelect(Sender: TObject);
     procedure EdNm_akunButtonClick(Sender: TObject);
@@ -60,11 +59,12 @@ type
     { Private declarations }
   public
     { Public declarations }
+    id_ct,idmaterial,no_urut,kode:string;
+    status_tr:integer;
     Procedure Load;
   end;
 
 Function FNew_Barang: TFNew_Barang;
-var  idmaterial:string;
 
 implementation
 
@@ -87,7 +87,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select type from master_data.t_item_type where deleted_at isnull';
+    sql.Text:='select type from t_item_type where deleted_at isnull';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -117,317 +117,146 @@ begin
   Close;
 end;
 
-procedure TFNew_Barang.BEditClick(Sender: TObject);
-begin
-if Edjenis.Text='' then
-begin
-  MessageDlg('jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  Edjenis.SetFocus;
-  Exit;
-end;
-if EdCategory.Text='' then
-begin
-  MessageDlg('Category Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdCategory.SetFocus;
-  Exit;
-end;
-if EdKd.Text='' then
-begin
-  MessageDlg('Kode Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdKd.SetFocus;
-  Exit;
-end;
-if EdNm.Text='' then
-begin
-  MessageDlg('Nama Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNm.SetFocus;
-  Exit;
-end;
-if EdSatuan.Text='' then
-begin
-  MessageDlg('Satuan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdSatuan.SetFocus;
-  Exit;
-end;
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:='Select * from t_material';
-  ExecSQL;
-end;
-if not dm.koneksi.InTransaction then
-dm.koneksi.StartTransaction;
-try
-begin
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:=' Update t_material set no_urut=:parno_urut,kd_material=:parkd_material,nm_material=:parnm_material,'+
-  ' satuan=:parsatuan,merk=:parmerk,jenis=:parjenis,kd_akun=:parkd_akun,no_material=:parno_material,category=:parcategory, '+
-  ' picupdate=:parpic2,dateupdate=:pardateup where id=:parid';
-            ParamByName('parno_urut').Value:=Edno1.Text;
-            ParamByName('parkd_material').Value:=EdKd.Text;
-            ParamByName('parnm_material').Value:=EdNm.Text;
-            ParamByName('parsatuan').Value:=EdSatuan.Text;
-            ParamByName('parmerk').Value:=EdMerk.Text;
-            ParamByName('parjenis').Value:=Edjenis.Text;
-            ParamByName('parkd_akun').Value:=Edkd_akun.Text;
-            ParamByName('parno_material').Value:=Edno.Text;
-            ParamByName('parcategory').Value:=EdCategory.Text;
-            ParamByName('parid').Value:=idmaterial;
-          //  ParamByName('parpic').Value:=nm;
-            ParamByName('parpic2').Value:=nm;
-            ParamByName('pardateup').asdate:=now;
-  ExecSQL;
-  end;
-dm.koneksi.Commit;
-Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-  BBatalClick(sender);
-end
-Except
-on E :Exception do
-begin
-MessageDlg(E.Message,mtError,[MBok],0);
-dm.koneksi.Rollback;
-end;
-end;
-end;
-
 procedure TFNew_Barang.BSimpanClick(Sender: TObject);
 begin
-if Edjenis.Text='' then
-begin
-  MessageDlg('jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  Edjenis.SetFocus;
-  Exit;
-end;
-if EdCategory.Text='' then
-begin
-  MessageDlg('Category Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdCategory.SetFocus;
-  Exit;
-end;
-if EdKd.Text='' then
-begin
-  MessageDlg('Kode Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdKd.SetFocus;
-  Exit;
-end;
-if EdNm.Text='' then
-begin
-  MessageDlg('Nama Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNm.SetFocus;
-  Exit;
-end;
-if EdSatuan.Text='' then
-begin
-  MessageDlg('Satuan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdSatuan.SetFocus;
-  Exit;
-end;
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:='Select * from t_material';
-  ExecSQL;
-end;
-if not dm.koneksi.InTransaction then
-dm.koneksi.StartTransaction;
-try
-begin
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:='insert into t_material(no_urut,no_material,kd_material,nm_material,category,satuan,merk,jenis,'+
-  ' kd_akun,status_koreksi,pic)values(:parno_urut,:parno_material,:parkd_material,:parnm_material,:parcategory,'+
-  ' :parsatuan,:parmerk,:parjenis,:parkd_akun,:parsk,:parpic)';
-            ParamByName('parno_urut').Value:=Edno1.Text;
-            ParamByName('parno_material').Value:=Edno.Text;
-            ParamByName('parkd_material').Value:=EdKd.Text;
-            ParamByName('parnm_material').Value:=EdNm.Text;
-            ParamByName('parcategory').Value:=EdCategory.Text;
-            ParamByName('parsatuan').Value:=EdSatuan.Text;
-            ParamByName('parmerk').Value:=EdMerk.Text;
-            ParamByName('parjenis').Value:=EdJenis.Text;
-            ParamByName('parkd_akun').Value:=edkd_akun.text;
-            ParamByName('parsk').Value:='0';
-            ParamByName('parpic').Value:=Nm;
-  ExecSQL;
+  if Edjenis.Text='' then
+  begin
+    MessageDlg('jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Edjenis.SetFocus;
+    Exit;
   end;
-  dm.koneksi.Commit;
-  Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-  BBatalClick(sender);
-end
-Except
-on E :Exception do
-begin
-MessageDlg(E.Message,mtError,[MBok],0);
-dm.koneksi.Rollback;
-end;
-end;
+  if EdCategory.Text='' then
+  begin
+    MessageDlg('Category Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdCategory.SetFocus;
+    Exit;
+  end;
+  if EdKd.Text='' then
+  begin
+    MessageDlg('Kode Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdKd.SetFocus;
+    Exit;
+  end;
+  if EdNm.Text='' then
+  begin
+    MessageDlg('Nama Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNm.SetFocus;
+    Exit;
+  end;
+  if EdSatuan.Text='' then
+  begin
+    MessageDlg('Satuan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdSatuan.SetFocus;
+    Exit;
+  end;
+   with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Text:='Select * from t_item';
+    ExecSQL;
+  end;
+  if not dm.koneksi.InTransaction then
+  dm.koneksi.StartTransaction;
+  try
+    begin
+      if status_tr=0 then
+      begin
+       with dm.Qtemp do
+       begin
+       close;
+       sql.clear;
+       sql.Text:='insert into t_item(order_no,item_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
+       ' values(:order_no,:item_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
+         ParamByName('order_no').Value:=Edno.Text;
+         ParamByName('item_no').Value:=Edno.Text;
+         ParamByName('item_cd').Value:=EdKd.Text;
+         ParamByName('item_nm').Value:=EdNm.Text;
+         ParamByName('id_ct').Value:=id_ct;
+         ParamByName('unit').Value:=EdSatuan.Text;
+         ParamByName('merk').Value:=EdMerk.Text;
+         ParamByName('akun_cd').Value:=edkd_akun.text;
+         ParamByName('pic').Value:=Nm;
+       ExecSQL;
+       end;
+      end;
+      if status_tr=1 then
+      begin
+       with dm.Qtemp do
+       begin
+       close;
+       sql.clear;
+       sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
+       ' unit=:unit,merk=:merk,akun_code=:akun_code,item_no=:item_no,category_id=:ct_id,updated_at=now(), '+
+       ' updated_by=:pic where "id"=:id';
+         ParamByName('order_no').Value:=Edno.Text;
+         ParamByName('item_code').Value:=EdKd.Text;
+         ParamByName('item_name').Value:=EdNm.Text;
+         ParamByName('unit').Value:=EdSatuan.Text;
+         ParamByName('merk').Value:=EdMerk.Text;
+         ParamByName('akun_code').Value:=Edkd_akun.Text;
+         ParamByName('item_no').Value:=Edno.Text;
+         ParamByName('ct_id').Value:=id_ct;
+         ParamByName('id').Value:=idmaterial;
+         ParamByName('pic').Value:=nm;
+       ExecSQL;
+       end;
+      end;
+      dm.koneksi.Commit;
+      Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+      BBatalClick(sender);
+    end
+    Except
+    on E :Exception do
+    begin
+      MessageDlg(E.Message,mtError,[MBok],0);
+      dm.koneksi.Rollback;
+    end;
+  end;
 end;
 
 procedure TFNew_Barang.EdCategorySelect(Sender: TObject);
-var no_urut:string;
+var i:integer;
 begin
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='Select * from master_data.t_item_category where category='+QuotedStr(EdCategory.Text);
-  ExecSQL;
-end;
-  Cbkdtr.Text:=DM.Qtemp['kdtr'];
-if Cbkdtr.Text='1' then
-begin
-with dm.Qtemp3 do
-begin
-  Close;
-  SQL.clear;
-  sql.Text:=' SELECT * FROM master_data.t_item_category '+
-            ' WHERE category='+QuotedStr(EdCategory.Text);
-  Open;
-end;
-if DM.QTemp3['no_urut']='' then
-begin
-   ShowMessage('Kode Barang Kosong');
-   EdKd.Text:='';
-   Edno.Text:='';
-   Edno1.Text:='';
-end else
-if DM.QTemp3['no_urut']<>'' then
-begin
-with dm.Qtemp do
-begin
-  Close;
-  SQL.clear;
-  sql.Text:=' SELECT * FROM t_material '+
-            ' WHERE t_material.category='+QuotedStr(EdCategory.Text);
-  Open;
-end;
-if dm.Qtemp.RecordCount =0 then
-begin
-  with dm.Qtemp2 do
-  begin
-    Close;
-    SQL.clear;
-    sql.Text:=' SELECT *,"left"(no_URUT,3)as kode FROM master_data.t_item_category '+
-              ' WHERE category='+QuotedStr(EdCategory.Text);
-    Open;
-  end;
-  //Urut:=DM.QTemp2['no_urut'];
-  no_urut:=DM.QTemp2['no_urut'];
-end else
-if dm.Qtemp.RecordCount >0 then
-begin
-//if EdCategory.Text='PROMOSI' then
-//BEGIN
-  with dm.Qtemp2 do
-  begin
-    Close;
-    SQL.clear;
-    sql.Text:=' SELECT *,"left"(no_URUT,3)as kode FROM master_data.t_item_category '+
-              ' WHERE category='+QuotedStr(EdCategory.Text);
-    Open;
-  end;
-with dm.Qtemp do
-begin
-  Close;
-  SQL.clear;
-  sql.Text:=' SELECT "max"("right"(no_material,3))AS urut FROM t_material '+
-            ' WHERE category='+QuotedStr(EdCategory.Text);
-  Open;
-end;
-// urut:= Dm.Qtemp.FieldByName('urut').AsInteger +1;
-   no_urut:=FloatToStr(Dm.Qtemp.FieldByName('urut').AsInteger +1);
-end;
-  Edno1.Text:=no_urut;
-  edno.text:=Copy('000'+edno1.Text,length('000'+edno1.Text)-2,3);
-///  if EdCategory.Text='PROMOSI' then
-//  begin
-//   EdKd.text:=DM.QTemp2['kode']+edno.Text;
- // end else
-  EdKd.text:=Copy('000'+edno1.Text,length('000'+edno1.Text)-2,3);
-  //Edno.Text:=no_urut;
-  if EdCategory.Text='BAHAN KEMASAN' then EdMerk.Enabled:=True else EdMerk.Enabled:=False;
-end;
-end;
-if Cbkdtr.Text='2' then
-begin
-  with dm.Qtemp3 do
-  begin
-    Close;
-    SQL.clear;
-    sql.Text:=' SELECT * FROM master_data.t_item_category '+
-              ' WHERE category='+QuotedStr(EdCategory.Text);
-    Open;
-  end;
-  if DM.QTemp3['no_urut']='' then
-  begin
-     ShowMessage('Kode Barang Kosong');
-     EdKd.Text:='';
-     Edno.Text:='';
-     Edno1.Text:='';
-  end else
-  if DM.QTemp3['no_urut']<>'' then
-  begin
   with dm.Qtemp do
   begin
-    Close;
-    SQL.clear;
-    sql.Text:=' SELECT * FROM t_material '+
-              ' WHERE t_material.category='+QuotedStr(EdCategory.Text);
-    Open;
+    close;
+    sql.Clear;
+    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)) kode,a.code from t_item_category a INNER join '+
+    ' t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
+    ' and b.deleted_at isnull group by a."id",a.category,a.code ';
+    Execute;
   end;
-      if dm.Qtemp.RecordCount =0 then
-      begin
-        with dm.Qtemp2 do
-        begin
-          Close;
-          SQL.clear;
-          sql.Text:=' SELECT *,"right"(no_urut,3)as urut, left(no_urut,4)as kd FROM master_data.t_item_category '+
-                    ' WHERE category='+QuotedStr(EdCategory.Text);
-          Open;
-        end;
-        //Urut:=DM.QTemp2['no_urut'];
-        no_urut:=DM.QTemp2['urut'];
-        EdKd.Text:=DM.QTemp2['no_urut'];
-      end else
-      if dm.Qtemp.RecordCount >0 then
-      begin
-      //if EdCategory.Text='PROMOSI' then
-      //BEGIN
-        with dm.Qtemp2 do
-        begin
-          Close;
-          SQL.clear;
-          sql.Text:=' SELECT *,"right"(no_URUT,3)as kode, left(no_urut,4)as kd FROM master_data.t_item_category '+
-                    ' WHERE category='+QuotedStr(EdCategory.Text);
-          Open;
-        end;
-      with dm.Qtemp do
-      begin
-        Close;
-        SQL.clear;
-        sql.Text:=' SELECT "max"("right"(no_material,3))AS urut FROM t_material '+
-                  ' WHERE category='+QuotedStr(EdCategory.Text);
-        Open;
-      end;
-         no_urut:=FloatToStr(Dm.Qtemp.FieldByName('urut').AsInteger +1);
-      end;
-        Edno1.Text:=no_urut;
-        edno.text:=Copy('000'+edno1.Text,length('000'+edno1.Text)-2,3);
-      ///  if EdCategory.Text='PROMOSI' then
-      //  begin
-      //   EdKd.text:=DM.QTemp2['kode']+edno.Text;
-       // end else
-      EdKd.text:=dm.QTemp2['kd']+Copy('000'+edno1.Text,length('000'+edno1.Text)-2,3);
+  if dm.Qtemp.RecordCount=0 then
+  begin
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='Select "id",category,code,order_no from t_item_category where category='+QuotedStr(EdCategory.Text);
+      ExecSQL;
+    end;
+  //   edkd.Text:=DM.Qtemp2['code'];
+     Edno.Text:=dm.Qtemp2['order_no'];
+     id_ct:=dm.Qtemp2['id'];
+   //  Edit1.Text:=dm.Qtemp2['id'];
+     no_urut:='00001';
+     kode:=DM.Qtemp2['code'];
   end;
-end;
+  //
+  if dm.Qtemp.RecordCount<>0 then
+    begin
+     id_ct:=dm.Qtemp['id'];
+     kode:=DM.Qtemp['code'];
+     no_urut:=IntToStr(dm.Qtemp.FieldByName('kode').AsInteger+1);
+     if length(No_urut) < 5 then
+      begin
+        for i := length(No_urut) to 4 do
+          No_urut := '0' + No_urut;
+      end;
+    end;
+    Edno.Text:=no_urut;
+    EdKd.Text:=kode + No_urut;
 end;
 
 procedure TFNew_Barang.EdjenisSelect(Sender: TObject);
@@ -437,7 +266,7 @@ EdCategory.Clear;
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.* from master_data.t_item_category a inner join master_data.t_item_type b on a.id_type=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
+    sql.Text:='select a.* from t_item_category a inner join t_item_type b on a.type_id=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;

@@ -7,17 +7,10 @@ uses
   UDashboard in 'UDashboard.pas' {FDashboard},
   UHomeSreen in 'UHomeSreen.pas' {FHomeSreen},
   UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
-  UFakturPajak in 'UFakturPajak.pas' {FFakturPajak},
-  UPenomoran in 'UPenomoran.pas' {FPenomoran},
-  UInput_Penomoran in 'UInput_Penomoran.pas' {FInput_Penomoran},
   Vcl.Themes,
   Vcl.Styles,
-  UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
-  UListSupplier in 'UListSupplier.pas' {FListSupplier},
-  UInput_Supplier in 'UInput_Supplier.pas' {FInput_Supplier},
-  UInput_Pelanggan in 'UInput_Pelanggan.pas' {FInput_Pelanggan},
   UListProduk in 'UListProduk.pas' {FListProduk},
-  UInput_Produk in 'UInput_Produk.pas' {FInput_Produk},
+  Unew_produk in 'Unew_produk.pas' {FInput_Produk},
   UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
   UNewKonv_Material in 'UNewKonv_Material.pas' {FNewKonv_Material},
   USearchMaterial in 'USearchMaterial.pas' {FSearchMaterial},
@@ -27,7 +20,6 @@ uses
   UNew_Gudang in 'UNew_Gudang.pas' {FNew_Gudang},
   UListBank_perusahaan in 'UListBank_perusahaan.pas' {FListBank},
   UNewBank in 'UNewBank.pas' {FNewBank},
-  UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
   UAkun_Perkiraan_TerimaMat in 'UAkun_Perkiraan_TerimaMat.pas' {FAkun_Perkiraan_TerimaMat},
   Udafperkiraan in 'Udafperkiraan.pas' {Fdafperkiraan},
   Uupdate_faktur in 'Uupdate_faktur.pas' {Fupdate_faktur},
@@ -41,7 +33,17 @@ uses
   UNew_KategoriBarang in 'UNew_KategoriBarang.pas' {FNew_KategoriBarang},
   UListBarang in 'UListBarang.pas' {FlistBarang},
   UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
-  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang};
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+  UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+  UNew_Pelanggan in 'UNew_Pelanggan.pas' {FNew_Pelanggan},
+  UFakturPajak in 'UFakturPajak.pas' {FFakturPajak},
+  UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
+  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+  UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
+  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
+  UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan},
+  UPenomoran in 'UPenomoran.pas' {FPenomoran},
+  UNew_Penomoran in 'UNew_Penomoran.pas' {FNew_Penomoran};
 
 {$R *.res}
 
@@ -58,13 +60,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFHomeSreen, FHomeSreen);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFMainMenu, FMainMenu);
-  Application.CreateForm(TFFakturPajak, FFakturPajak);
-  Application.CreateForm(TFPenomoran, FPenomoran);
-  Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
-  Application.CreateForm(TFListPelanggan, FListPelanggan);
-  Application.CreateForm(TFListSupplier, FListSupplier);
-  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
-  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
   Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
@@ -76,11 +71,19 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Gudang, FNew_Gudang);
   Application.CreateForm(TFListBank, FListBank);
   Application.CreateForm(TFNewBank, FNewBank);
-  Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
-//  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+  Application.CreateForm(TFListPelanggan, FListPelanggan);
+  Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
+  Application.CreateForm(TFFakturPajak, FFakturPajak);
+  Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFListPerusahaan, FListPerusahaan);
+  Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
+  Application.CreateForm(TFPenomoran, FPenomoran);
+  Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
+  //  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

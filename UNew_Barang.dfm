@@ -2,8 +2,8 @@ object FNew_Barang: TFNew_Barang
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'New Barang'
-  ClientHeight = 284
+  Caption = 'Form New Barang'
+  ClientHeight = 294
   ClientWidth = 454
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -26,7 +26,7 @@ object FNew_Barang: TFNew_Barang
   end
   object Label3: TLabel
     Left = 330
-    Top = 88
+    Top = 84
     Width = 4
     Height = 13
     Caption = ':'
@@ -62,7 +62,7 @@ object FNew_Barang: TFNew_Barang
   end
   object Label1: TLabel
     Left = 296
-    Top = 88
+    Top = 84
     Width = 17
     Height = 13
     Caption = 'No.'
@@ -166,7 +166,7 @@ object FNew_Barang: TFNew_Barang
   end
   object Edno1: TEdit
     Left = 304
-    Top = 58
+    Top = 50
     Width = 121
     Height = 21
     TabOrder = 3
@@ -175,7 +175,7 @@ object FNew_Barang: TFNew_Barang
   end
   object Edno: TEdit
     Left = 352
-    Top = 85
+    Top = 81
     Width = 73
     Height = 21
     CharCase = ecUpperCase
@@ -199,12 +199,12 @@ object FNew_Barang: TFNew_Barang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 243
+    Top = 253
     Width = 454
     Height = 41
     Align = alBottom
     TabOrder = 5
-    ExplicitTop = 242
+    ExplicitTop = 252
     ExplicitWidth = 450
     object BBatal: TRzBitBtn
       Left = 378
@@ -269,13 +269,12 @@ object FNew_Barang: TFNew_Barang
       ExplicitLeft = 374
     end
     object BSimpan: TRzBitBtn
-      Left = 228
+      Left = 303
       Top = 1
       Height = 39
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 0
-      Visible = False
       OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -329,17 +328,16 @@ object FNew_Barang: TFNew_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 224
+      ExplicitLeft = 299
     end
     object BEdit: TRzBitBtn
-      Left = 303
+      Left = 1
       Top = 1
       Height = 39
-      Align = alRight
+      Align = alLeft
       Caption = 'Simpan'
       TabOrder = 1
       Visible = False
-      OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830E0000830E00000001000000000000000000003300
@@ -392,7 +390,6 @@ object FNew_Barang: TFNew_Barang
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 299
     end
   end
   object EdSatuan: TEdit
@@ -464,6 +461,7 @@ object FNew_Barang: TFNew_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_material')
-    Left = 384
+    Left = 304
+    Top = 144
   end
 end

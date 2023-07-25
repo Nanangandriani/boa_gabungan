@@ -121,39 +121,11 @@
             <Form>FHomeLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UFakturPajak.pas">
-            <Form>FFakturPajak</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UPenomoran.pas">
-            <Form>FPenomoran</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UInput_Penomoran.pas">
-            <Form>FInput_Penomoran</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPelanggan.pas">
-            <Form>FListPelanggan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListSupplier.pas">
-            <Form>FListSupplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UInput_Supplier.pas">
-            <Form>FInput_Supplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UInput_Pelanggan.pas">
-            <Form>FInput_Pelanggan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UListProduk.pas">
             <Form>FListProduk</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UInput_Produk.pas">
+        <DCCReference Include="Unew_produk.pas">
             <Form>FInput_Produk</Form>
             <FormType>dfm</FormType>
         </DCCReference>
@@ -191,10 +163,6 @@
         </DCCReference>
         <DCCReference Include="UNewBank.pas">
             <Form>FNewBank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNewFakturPajak.pas">
-            <Form>Finput_faktur_pajak</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UAkun_Perkiraan_TerimaMat.pas">
@@ -251,6 +219,46 @@
         </DCCReference>
         <DCCReference Include="UKategori_Barang.pas">
             <Form>FKategori_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPelanggan.pas">
+            <Form>FListPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Pelanggan.pas">
+            <Form>FNew_Pelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UFakturPajak.pas">
+            <Form>FFakturPajak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNewFakturPajak.pas">
+            <Form>Finput_faktur_pajak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSupplier.pas">
+            <Form>FListSupplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Supplier.pas">
+            <Form>FNew_Supplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Perusahaan.pas">
+            <Form>FNewPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPenomoran.pas">
+            <Form>FPenomoran</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Penomoran.pas">
+            <Form>FNew_Penomoran</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

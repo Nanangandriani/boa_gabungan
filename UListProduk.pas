@@ -67,7 +67,7 @@ implementation
 
 {$R *.dfm}
 
-uses UInput_Produk, UDataModule;
+uses Unew_Produk, UDataModule;
 
 procedure TFListProduk.refresh;
 begin

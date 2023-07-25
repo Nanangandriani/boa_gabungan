@@ -24,7 +24,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Data.DB, MemDS, DBAccess, Uni;
+  Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFListSupplier = class(TForm)
@@ -46,10 +47,21 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DsSupplier: TDataSource;
     QSupplier: TUniQuery;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarBaruClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
     procedure dxBarDeleteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,56 +73,93 @@ type
 
 var
   FListSupplier: TFListSupplier;
+  //RealListSupplier: TFListSupplier;
   urut:integer;
 
 implementation
 
 {$R *.dfm}
 
-uses UInput_Supplier, UDataModule;
+uses UNew_Supplier, UDataModule, UMainMenu;
 
-
-
+{function FListSupplier: TFListSupplier;
+begin
+   if RealListSupplier <> nil then
+      FListSupplier:= RealListSupplier
+   else
+     Application.CreateForm(TFListSupplier, Result);
+end;}
 
 procedure TFListSupplier.Refresh;
 begin
+   with QSupplier do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from T_Supplier where deleted_at is null order by created_at Desc ';
+       open;
+   end;
    QSupplier.Active:=False;
    QSupplier.Active:=True;
+   QSupplier.Close;
+   QSupplier.Open;
 end;
+
+
 procedure TFListSupplier.Autonumber;
 begin
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:=' SELECT max(t_supplier.no_supplier)AS urut FROM t_supplier';
+      sql.Text:=' SELECT max(t_supplier.supplier_no)AS urut FROM t_supplier';
       execsql;
     end;
     urut:=Dm.Qtemp.FieldByName('urut').AsInteger+1;
-    FInput_Supplier.Edno.Text:=FloatToStr(urut);
+    FNew_Supplier.Edno.Text:=FloatToStr(urut);
 end;
 
 procedure TFListSupplier.dxBarUpdateClick(Sender: TObject);
 begin
-    FInput_Supplier.Show;
-    FInput_Supplier.BSimpan.Visible:=False;
-    FInput_Supplier.BEdit.Visible:=True;
-    FInput_Supplier.Caption:='Update Supplier';
-    FInput_Supplier.Edno.Enabled:=False;
+    FNew_Supplier.Show;
+    FNew_Supplier.BSimpan.Visible:=False;
+    FNew_Supplier.BEdit.Visible:=True;
+    FNew_Supplier.Caption:='Update Supplier';
+    FNew_Supplier.Edno.Enabled:=False;
     with QSupplier do
     begin
-      FInput_Supplier.Edno.Text:=QSupplier.FieldByName('kd_supplier').AsString;
-      FInput_Supplier.EdNm.Text:=QSupplier.FieldByName('nm_supplier').AsString;
-      FInput_Supplier.Edalamat.Text:=QSupplier.FieldByName('alamat').AsString;
-      FInput_Supplier.Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
-      FInput_Supplier.EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
+      FNew_Supplier.Edno.Text:=QSupplier.FieldByName('supplier_code').AsString;
+      FNew_Supplier.EdNm.Text:=QSupplier.FieldByName('supplier_name').AsString;
+      FNew_Supplier.Edalamat.Text:=QSupplier.FieldByName('address').AsString;
+      FNew_Supplier.Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
+      FNew_Supplier.EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
     end;
+end;
+
+procedure TFListSupplier.FormCreate(Sender: TObject);
+begin
+   with QSupplier do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from T_Supplier ';
+       open;
+   end;
+   Qsupplier.Close;
+   Qsupplier.Open;
+end;
+
+procedure TFListSupplier.FormShow(Sender: TObject);
+begin
+  refresh;
+  Qsupplier.Close;
+  Qsupplier.Open;
 end;
 
 procedure TFListSupplier.dxBarBaruClick(Sender: TObject);
 begin
-    FInput_Supplier.Caption:='New Supplier';
-    FInput_Supplier.showmodal;
+    FNew_Supplier.Caption:='New Supplier';
+    FNew_Supplier.show;
 end;
 
 procedure TFListSupplier.dxBarDeleteClick(Sender: TObject);
@@ -121,7 +170,11 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:='Delete From t_supplier where kd_supplier='+QuotedStr(DBGridSupplier.Fields[0].AsString);
+        //sql.Text:='Delete From t_supplier where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
+        sql.Text:=' Update t_supplier set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                  ' where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
+        parambyname('deleted_at').AsDateTime:=Now;
+        parambyname('deleted_by').AsString:='Admin';
         Execute;
       end;
       dxbarRefreshClick(sender);
