@@ -635,7 +635,7 @@ object FListProduk: TFListProduk
   object QProduk: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_produk order by kd_produk Desc')
+      'select *  from master_data.t_product order by product_code Desc')
     Left = 180
     Top = 24
   end
