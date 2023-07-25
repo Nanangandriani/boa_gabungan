@@ -243,8 +243,6 @@
             <Form>FNew_ItemType</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-
-
         <DCCReference Include="UNew_KategoriBarang.pas">
             <Form>FNew_KategoriBarang</Form>
             <FormType>dfm</FormType>

@@ -137,8 +137,22 @@
             <Form>FListPelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UNew_Pelanggan.pas">
-            <Form>FNew_Pelanggan</Form>
+ <DCCReference Include="UInput_Supplier.pas">
+            <Form>FNew_Supplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSupplier.pas">
+            <Form>FListSupplier</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Perusahaan.pas">
+            <Form>FNewPerusahaan</Form>												  
+        <DCCReference Include="UInput_Pelanggan.pas">
+            <Form>FInput_Pelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListProduk.pas">
@@ -229,22 +243,8 @@
             <Form>FNew_ItemType</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-// <<<<<<< HEAD
-        <DCCReference Include="UNew_Supplier.pas">
-            <Form>FNew_Supplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListSupplier.pas">
-            <Form>FListSupplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNew_Perusahaan.pas">
-            <Form>FNewPerusahaan</Form>
-// =======}
+
+
         <DCCReference Include="UNew_KategoriBarang.pas">
             <Form>FNew_KategoriBarang</Form>
             <FormType>dfm</FormType>
@@ -259,7 +259,6 @@
         </DCCReference>
         <DCCReference Include="UKategori_Barang.pas">
             <Form>FKategori_Barang</Form>
->>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
