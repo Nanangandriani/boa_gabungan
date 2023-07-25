@@ -13,7 +13,7 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
-// <<<<<<< HEAD
+/// <<<<<<< HEAD
   UNew_Pelanggan in 'UNew_Pelanggan.pas' {FNew_Pelanggan},
   UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
   UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
