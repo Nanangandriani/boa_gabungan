@@ -165,12 +165,9 @@ object FlistBarang: TFlistBarang
         'SELECT'#9'"a".category,"c"."type",b.order_no,b.item_code,b.item_nam' +
         'e,b.category_id,b.unit,b.merk,b.item_no,b.akun_code,b.correction' +
         '_status,b."id" FROM '
-      'master_data.t_item_category AS "a"'#9
-      'INNER JOIN master_data.t_item AS b ON "a"."id" = b.category_id'#9
-      
-        'INNER JOIN master_data.t_item_type AS "c" ON "a".type_id = "c"."' +
-        'id"')
-    Active = True
+      't_item_category AS "a"'#9
+      'INNER JOIN t_item AS b ON "a"."id" = b.category_id'#9
+      'INNER JOIN t_item_type AS "c" ON "a".type_id = "c"."id"')
     Left = 44
     Top = 240
   end
@@ -180,7 +177,6 @@ object FlistBarang: TFlistBarang
     Top = 296
   end
   object MemMaterial: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1

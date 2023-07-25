@@ -17,7 +17,6 @@ object FlistBarang: TFlistBarang
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   TextHeight = 13
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -55,7 +54,7 @@ object FlistBarang: TFlistBarang
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_0_jenis'
+        ColumnName = 'Column_0_type'
       end
       item
         ColumnName = 'Column_1_category'
@@ -71,7 +70,7 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jenis'
+        FieldName = 'type'
         Footers = <>
         Title.Caption = 'Jenis'
         Width = 100
@@ -89,7 +88,7 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_material'
+        FieldName = 'item_no'
         Footers = <>
         Title.Caption = 'No.'
         Visible = False
@@ -99,7 +98,7 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_material'
+        FieldName = 'item_code'
         Footers = <>
         Title.Caption = 'Kode'
         Width = 79
@@ -108,7 +107,7 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'item_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
         Width = 267
@@ -117,7 +116,7 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'satuan'
+        FieldName = 'unit'
         Footers = <>
         Title.Caption = 'Satuan'
         Width = 70
@@ -135,7 +134,7 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_akun'
+        FieldName = 'akun_code'
         Footers = <>
         Title.Caption = 'Akun Perkiraan'
         Width = 100
@@ -144,7 +143,15 @@ object FlistBarang: TFlistBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'status_koreksi'
+        FieldName = 'correction_status'
+        Footers = <>
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id'
         Footers = <>
         Visible = False
       end>
@@ -155,12 +162,15 @@ object FlistBarang: TFlistBarang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*, B.nama_perkiraan -- no_urut,no_material,kd_material,' +
-        'nm_material,Category,satuan,jenis'
+        'SELECT'#9'"a".category,"c"."type",b.order_no,b.item_code,b.item_nam' +
+        'e,b.category_id,b.unit,b.merk,b.item_no,b.akun_code,b.correction' +
+        '_status,b."id" FROM '
+      'master_data.t_item_category AS "a"'#9
+      'INNER JOIN master_data.t_item AS b ON "a"."id" = b.category_id'#9
       
-        'from t_material a left join t_daftar_perkiraan b on a.kd_akun=b.' +
-        'kode'
-      'order by a.jenis,a.category,a.no_material Asc')
+        'INNER JOIN master_data.t_item_type AS "c" ON "a".type_id = "c"."' +
+        'id"')
+    Active = True
     Left = 44
     Top = 240
   end
@@ -170,6 +180,7 @@ object FlistBarang: TFlistBarang
     Top = 296
   end
   object MemMaterial: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1
@@ -208,10 +219,6 @@ object FlistBarang: TFlistBarang
       FloatClientWidth = 0
       FloatClientHeight = 0
       ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'DxbEdit1'
-        end
         item
           Visible = True
           ItemName = 'dxBarBaru'
@@ -411,68 +418,6 @@ object FlistBarang: TFlistBarang
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-    end
-    object DxbEdit1: TdxBarLargeButton
-      Caption = 'Update'
-      Category = 0
-      Hint = 'Update'
-      Visible = ivNever
-      LargeGlyph.SourceDPI = 96
-      LargeGlyph.Data = {
-        424D960600000000000036000000280000001800000011000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFE5D5BBFFBD8734FFBC7E20FFCDCDCEFFCBC7C0FFCBC7C0FFCBC7C0FFCBC7
-        C0FFCBC7C0FFCBC7C0FFCBC7C0FFCBC7C0FFCBC7C0FFCBC7C0FFCDCDCEFFBC7E
-        20FFBD8734FFE6D5BBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFC57C0EFFDE982FFFDA8E1DFFF7FDFFFFF4F4F0FFF8F7F4FFF8F7F4FFF8F7
-        F4FFF8F7F4FFF8F7F4FFF8F7F4FFF8F7F4FFF8F7F4FFF4F4F0FFF7FDFFFFDA8E
-        1DFFDE982FFFC57C0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD78D1DFFDB9733FFD88E1FFFF3F9FFFFF4F4F0FFC9C5C0FFCDC9C4FFCDC9
-        C4FFCDC9C4FFCDC9C4FFCDC9C4FFCDC9C4FFC9C5C0FFF4F4F0FFF3F9FFFFD88E
-        1FFFDB9733FFD78C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFD88E1FFFF3FAFFFFF2F2EEFFE3E1DCFFE5E3DEFFE5E3
-        DEFFE5E3DEFFE5E3DEFFE5E3DEFFE5E3DEFFE3E1DCFFF2F2EEFFF3FAFFFFD88E
-        1FFFDB9733FFD68C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFD88E1FFFF4FCFFFFF3F5F5FFDDDDDAFFDFDFDCFFDFDF
-        DCFFDFDFDCFFDFDFDCFFDFDFDCFFDFDFDCFFDDDDDAFFF3F5F5FFF4FCFFFFD88E
-        1FFFDB9733FFD68C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFDA942DFFDFAB5BFFEDE1CDFFEFE6D7FFEFE6D5FFEFE6
-        D5FFEFE6D5FFEFE6D5FFEFE6D5FFEFE6D5FFEFE6D7FFEDE1CDFFDFAB5BFFDA94
-        2DFFDB9733FFD68C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFDB9834FFDA942DFFD88F23FFD88F21FFD88F21FFD88F
-        21FFD88F21FFD88F21FFD88F21FFD88F21FFD88F21FFD88F23FFDA942DFFDB98
-        34FFDB9733FFD68C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFDB9834FFDB9834FFDC9834FFDC9934FFDC9934FFDC99
-        34FFDC9934FFDC9934FFDC9934FFDC9934FFDC9934FFDC9834FFDB9834FFDB98
-        34FFDB9733FFD68C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFDB9834FFDD9934FFCF8E2CFFCA8721FFCA861FFFCA86
-        1FFFCA861FFFCA861FFFCA861FFFCA861FFFCA8721FFCF8E2CFFDD9934FFDB98
-        34FFDB9733FFD68C1DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1DFFDB9733FFDE9A35FFBA7E25FFBA883AFFE3D1B3FFE7D7BEFFE6D6
-        BCFFE5D4BAFFDECDB2FFDDCDB2FFDECEB3FFDCC9ABFFBA883AFFBA7E25FFDE9A
-        35FFDB9733FFD68B1CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD68C1CFFDB9833FFDD9935FFAF7112FFFEFFFFFFACAEA3FFA1A295FFA1A2
-        94FFACADA1FFF9FBFBFFF3F4F4FFF3F4F4FFF4F6F7FFF6FBFFFFAF7112FFDD99
-        35FFD9942DFFD58814FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD58814FFDA952EFFDD9731FFAF7111FFFFFFFFFF969583FFA1A08FFFA0A0
-        8FFF999885FFF7F6F3FFF1F0EBFFF0EFEBFFF0F0ECFFF6FBFFFFAF7111FFDA90
-        23FFDEA045FFFEFEFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFF3DEBFFFDD9E3FFFDE9B39FFB3781EFFFBFFFFFFC1BDB7FFC6C2BCFFC6C2
-        BCFFC2BEB7FFF5F4F0FFF1F0ECFFF1F0ECFFF1F0ECFFF6F9FCFFB17315FFEEC8
-        90FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      OnClick = DxbEdit1Click
     end
     object dxBarBaru: TdxBarLargeButton
       Action = ActBaru

@@ -59,7 +59,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    id_ct,idmaterial:string;
+    id_ct,idmaterial,no_urut,kode:string;
     status_tr:integer;
     Procedure Load;
   end;
@@ -216,16 +216,15 @@ begin
 end;
 
 procedure TFNew_Barang.EdCategorySelect(Sender: TObject);
-var no_urut:string;
-i:integer;
+var i:integer;
 begin
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)+1) kode,a.code from master_data.t_item_category a INNER join '+
+    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)) kode,a.code from master_data.t_item_category a INNER join '+
     ' master_data.t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
-    ' group by a."id",a.category,a.code ';
+    ' and b.deleted_at isnull group by a."id",a.category,a.code ';
     Execute;
   end;
   if dm.Qtemp.RecordCount=0 then
@@ -234,28 +233,30 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Select "id",category,concat(code,order_no) kode,order_no from master_data.t_item_category where category='+QuotedStr(EdCategory.Text);
+      sql.Text:='Select "id",category,code,order_no from master_data.t_item_category where category='+QuotedStr(EdCategory.Text);
       ExecSQL;
     end;
-     edkd.Text:=DM.Qtemp2['kode'];
+  //   edkd.Text:=DM.Qtemp2['code'];
      Edno.Text:=dm.Qtemp2['order_no'];
      id_ct:=dm.Qtemp2['id'];
    //  Edit1.Text:=dm.Qtemp2['id'];
      no_urut:='00001';
+     kode:=DM.Qtemp2['code'];
   end;
   //
   if dm.Qtemp.RecordCount<>0 then
     begin
      id_ct:=dm.Qtemp['id'];
+     kode:=DM.Qtemp['code'];
      no_urut:=IntToStr(dm.Qtemp.FieldByName('kode').AsInteger+1);
-     if length(No_urut) < 4 then
+     if length(No_urut) < 5 then
       begin
-        for i := length(No_urut) to 3 do
+        for i := length(No_urut) to 4 do
           No_urut := '0' + No_urut;
       end;
     end;
     Edno.Text:=no_urut;
-    EdKd.Text := DM.Qtemp['code'] + No_urut;
+    EdKd.Text:=kode + No_urut;
 end;
 
 procedure TFNew_Barang.EdjenisSelect(Sender: TObject);

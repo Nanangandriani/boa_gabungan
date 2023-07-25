@@ -87,7 +87,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select type from master_data.t_item_type where deleted_at isnull';
+    sql.Text:='select type from t_item_type where deleted_at isnull';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -153,7 +153,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.Text:='Select * from master_data.t_item';
+    sql.Text:='Select * from t_item';
     ExecSQL;
   end;
   if not dm.koneksi.InTransaction then
@@ -166,7 +166,7 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into master_data.t_item(order_no,item_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
+       sql.Text:='insert into t_item(order_no,item_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
        ' values(:order_no,:item_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_no').Value:=Edno.Text;
@@ -186,7 +186,7 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:=' Update master_data.t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
+       sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
        ' unit=:unit,merk=:merk,akun_code=:akun_code,item_no=:item_no,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
@@ -222,8 +222,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)) kode,a.code from master_data.t_item_category a INNER join '+
-    ' master_data.t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
+    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)) kode,a.code from t_item_category a INNER join '+
+    ' t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
     ' and b.deleted_at isnull group by a."id",a.category,a.code ';
     Execute;
   end;
@@ -233,7 +233,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Select "id",category,code,order_no from master_data.t_item_category where category='+QuotedStr(EdCategory.Text);
+      sql.Text:='Select "id",category,code,order_no from t_item_category where category='+QuotedStr(EdCategory.Text);
       ExecSQL;
     end;
   //   edkd.Text:=DM.Qtemp2['code'];
@@ -266,7 +266,7 @@ EdCategory.Clear;
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.* from master_data.t_item_category a inner join master_data.t_item_type b on a.type_id=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
+    sql.Text:='select a.* from t_item_category a inner join t_item_type b on a.type_id=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;

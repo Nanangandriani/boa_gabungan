@@ -204,7 +204,7 @@ object FNew_Barang: TFNew_Barang
     Height = 41
     Align = alBottom
     TabOrder = 5
-    ExplicitTop = 252
+    ExplicitTop = 242
     ExplicitWidth = 450
     object BBatal: TRzBitBtn
       Left = 378
@@ -266,7 +266,7 @@ object FNew_Barang: TFNew_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 374
+      ExplicitLeft = 384
     end
     object BSimpan: TRzBitBtn
       Left = 303
@@ -328,7 +328,7 @@ object FNew_Barang: TFNew_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 299
+      ExplicitLeft = 224
     end
     object BEdit: TRzBitBtn
       Left = 1
@@ -390,6 +390,7 @@ object FNew_Barang: TFNew_Barang
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 0
     end
   end
   object EdSatuan: TEdit
