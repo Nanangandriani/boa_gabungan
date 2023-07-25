@@ -229,7 +229,7 @@
             <Form>FNew_ItemType</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< HEAD
+// <<<<<<< HEAD
         <DCCReference Include="UNew_Supplier.pas">
             <Form>FNew_Supplier</Form>
             <FormType>dfm</FormType>
@@ -244,7 +244,7 @@
         </DCCReference>
         <DCCReference Include="UNew_Perusahaan.pas">
             <Form>FNewPerusahaan</Form>
-=======
+// =======}
         <DCCReference Include="UNew_KategoriBarang.pas">
             <Form>FNew_KategoriBarang</Form>
             <FormType>dfm</FormType>
