@@ -76,11 +76,11 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFInput_Penomoran, FInput_Penomoran);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
 <<<<<<< HEAD
-  // Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
+  //Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   // Application.CreateForm(TFNew_Barang, FNew_Barang);
   // Application.CreateForm(TFKategori_Barang, FKategori_Barang);
 =======
-//  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFListSupplier, FListSupplier);
  //  Application.CreateForm(TFInput_Supplier, FInput_Supplier);
 //  Application.CreateForm(TFInput_Pelanggan, FInput_Pelanggan);
 >>>>>>> 100ed7f4feaec3c21242107da74e53185b93024c

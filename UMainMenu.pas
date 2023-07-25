@@ -771,7 +771,5 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
-  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFlistPerusahaan,
-  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
-  ,TFKategori_Barang]);
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFlistPerusahaan,TFKategori_Barang]);
 end.
