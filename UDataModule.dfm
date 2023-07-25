@@ -1,6 +1,6 @@
 object dm: Tdm
-  Height = 383
-  Width = 473
+  Height = 188
+  Width = 322
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
@@ -8,56 +8,56 @@ object dm: Tdm
     Username = 'postgres'
     Server = '192.168.29.103'
     Connected = True
-    Left = 301
+    Left = 157
     Top = 13
     EncryptedPassword = 'BBFFBDFF9BFF9AFF89FF9AFF93FFBFFFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
-    Left = 371
+    Left = 227
     Top = 13
   end
   object Qtemp: TUniQuery
     Connection = Koneksi
-    Left = 58
+    Left = 18
     Top = 6
   end
   object dsQtemp: TDataSource
     DataSet = Qtemp
-    Left = 115
+    Left = 75
     Top = 6
   end
   object dsQtemp1: TDataSource
     DataSet = Qtemp1
-    Left = 115
-    Top = 83
+    Left = 75
+    Top = 59
   end
   object Qtemp1: TUniQuery
     Connection = Koneksi
-    Left = 58
-    Top = 83
+    Left = 18
+    Top = 59
   end
   object dsQtemp2: TDataSource
     DataSet = Qtemp2
-    Left = 115
-    Top = 166
+    Left = 75
+    Top = 118
   end
   object Qtemp2: TUniQuery
     Connection = Koneksi
-    Left = 58
-    Top = 166
+    Left = 18
+    Top = 118
   end
   object UniSQLMonitor1: TUniSQLMonitor
-    Left = 301
+    Left = 157
     Top = 64
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 115
-    Top = 256
+    Left = 219
+    Top = 120
   end
   object Qtemp3: TUniQuery
     Connection = Koneksi
-    Left = 58
-    Top = 256
+    Left = 162
+    Top = 120
   end
 end

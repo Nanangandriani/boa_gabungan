@@ -16,7 +16,7 @@ type
     Label9: TLabel;
     Label10: TLabel;
     EdKategori: TEdit;
-    EdKd: TEdit;
+    Edno: TEdit;
     Label19: TLabel;
     Label20: TLabel;
     Edkd_akun: TRzEdit;
@@ -27,9 +27,10 @@ type
     EdJenis: TComboBox;
     Edkd_akun1: TRzEdit;
     BCari: TRzBitBtn;
+    Edkd: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
-    procedure EdKdKeyPress(Sender: TObject; var Key: Char);
+    procedure EdnoKeyPress(Sender: TObject; var Key: Char);
     procedure EdJenisKeyPress(Sender: TObject; var Key: Char);
     procedure EdKategoriKeyPress(Sender: TObject; var Key: Char);
     procedure EdNm_akunKeyPress(Sender: TObject; var Key: Char);
@@ -100,13 +101,13 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into master_data.t_item_category(category,id_type,akun_code,order_no)values'+
-                '(:parct,:parjn,:parkd_akun,:parno)';
-                ParamByName('parct').Value:=EdKategori.Text;
-                ParamByName('parjn').Value:=id_type;
-                ParamByName('parkd_akun').Value:=Edkd_akun.Text;
-               // ParamByName('parkd_akun2').Value:=Edkd_akun.Text;
-                ParamByName('parno').Value:=EdKd.Text;
+      sql.Text:='insert into t_item_category(category,id_type,akun_code,order_no,code)values'+
+                '(:ct,:jn,:kd_akun,:no,:code)';
+                ParamByName('ct').Value:=EdKategori.Text;
+                ParamByName('jn').Value:=id_type;
+                ParamByName('kd_akun').Value:=Edkd_akun.Text;
+                ParamByName('code').Value:=Edkd.Text;
+                ParamByName('no').Value:=Edno.Text;
       ExecSQL;
     end;
   end;
@@ -116,14 +117,14 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update master_data.t_item_category set category=:parct,id_type=:parjn,akun_code=:parkd_akun,'+
-                ' order_no=:parno,updated_at=now() where "id"=:id';
+      sql.Text:='Update t_item_category set category=:ct,type_id=:tp,akun_code=:akun,'+
+                ' order_no=:parno,updated_at=now(),code=:code where "id"=:id';
                 ParamByName('id').Value:=id;
-                ParamByName('parct').Value:=EdKategori.Text;
-                ParamByName('parjn').Value:=id_type;
-                ParamByName('parkd_akun').Value:=Edkd_akun.Text;
-               // ParamByName('parkd_akun2').Value:=Edkd_akun.Text;
-                ParamByName('parno').Value:=EdKd.Text;
+                ParamByName('ct').Value:=EdKategori.Text;
+                ParamByName('tp').Value:=id_type;
+                ParamByName('akun').Value:=Edkd_akun.Text;
+                ParamByName('code').Value:=Edkd.Text;
+                ParamByName('parno').Value:=Edno.Text;
       ExecSQL;
     end;
   end;
@@ -146,10 +147,10 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='select * from master_data.t_item_type where type='+QuotedStr(EdJenis.Text);
+  sql.Text:='select * from t_item_type where type='+QuotedStr(EdJenis.Text);
   ExecSQL;
 end;
-  Edkd_akun1.Text:=Dm.Qtemp['akun_code'];
+//  Edkd_akun1.Text:=Dm.Qtemp['akun_code'];
   id_type:=dm.Qtemp['id'];
 end;
 
@@ -162,7 +163,7 @@ begin
 end;
 end;
 
-procedure TFNew_KategoriBarang.EdKdKeyPress(Sender: TObject; var Key: Char);
+procedure TFNew_KategoriBarang.EdnoKeyPress(Sender: TObject; var Key: Char);
 begin
 if key=#13 then
 begin
@@ -207,7 +208,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from master_data.t_item_type where deleted_at isnull order by created_by ';
+    sql.Text:='select * from t_item_type where deleted_at isnull order by created_by ';
     open;
   end;
     dm.Qtemp.First;

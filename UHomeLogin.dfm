@@ -4600,7 +4600,7 @@ object FHomeLogin: TFHomeLogin
     end
     object Edit3: TEdit
       Left = 96
-      Top = 63
+      Top = 71
       Width = 311
       Height = 34
       BevelInner = bvNone

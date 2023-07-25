@@ -121,11 +121,13 @@ begin
     show;
     statustr:=1;
     id:=Qkategori['id'];
-    EdKd.Text:=Qkategori['type'];
+    EdKd.Text:=Qkategori['code'];
     EdJenis.Text:=Qkategori['type'];
-    id_type:=Qkategori['id_type'];
+    id_type:=Qkategori['type_id'];
     EdKategori.Text:=Qkategori['category'];
     Edkd_akun.Text:=Qkategori['akun_code'];
+    EdKategori.Text:=Qkategori['category'];
+    Edno.Text:=Qkategori['order_no'];
   end;
 end;
 

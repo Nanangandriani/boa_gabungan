@@ -1,0 +1,50 @@
+unit UHomeSreen;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ComCtrls, RzPrgres,
+  RzBorder, RzStatus, RzButton, RzPanel, RzLabel, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage;
+
+type
+  TFHomeSreen = class(TForm)
+    ProgressBar1: TProgressBar;
+    Timer1: TTimer;
+    Label1: TRzLabel;
+    Image1: TImage;
+    procedure Timer1Timer(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FHomeSreen: TFHomeSreen;
+
+implementation
+
+{$R *.dfm}
+
+uses UMainMenu, UHomeLogin;
+
+procedure TFHomeSreen.Timer1Timer(Sender: TObject);
+var
+  Progress: Integer;
+begin
+  if ProgressBar1.Position=100 then
+  begin
+    Timer1.Enabled:=false;
+   // FHomeLogin.show;
+    Self.Hide;
+
+  end
+  else
+  begin
+    ProgressBar1.Position:=ProgressBar1.Position+5;
+  end;
+end;
+
+end.

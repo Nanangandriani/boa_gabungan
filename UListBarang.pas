@@ -43,7 +43,6 @@ type
     DxBarUpdate: TdxBarButton;
     DxBarRefresh: TdxBarButton;
     dxBDelete: TdxBarButton;
-    DxbEdit1: TdxBarLargeButton;
     dxBarBaru: TdxBarLargeButton;
     DBGridMaterial: TDBGridEh;
     ActMenu: TActionManager;
@@ -61,7 +60,6 @@ type
     dxBarButton1: TdxBarButton;
     procedure EdCategorySelect(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure DxbEdit1Click(Sender: TObject);
     procedure dxBDeleteClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -105,32 +103,30 @@ procedure TFlistBarang.ActBaruExecute(Sender: TObject);
 begin
   with FNew_barang do
   begin
-  Show;
-  Self.clear;
-  EdCategory.SetFocus;
-  BSimpan.Visible:=true;
-  BEdit.Visible:=False;
-  Caption:='New Barang';
+    Show;
+    Self.clear;
+    EdCategory.SetFocus;
+    BSimpan.Visible:=true;
+    BEdit.Visible:=False;
+    Caption:='New Barang';
+    status_tr:=0;
   end;
 end;
 
 procedure TFlistBarang.ActDelExecute(Sender: TObject);
 begin
-{  Self.Refresh;
-  Self.clear;
-  DBGridMaterial.Visible:=true;   }
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_material where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
-  Execute;
-end;
-ActRoExecute(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update t_item set deleted_at=now(),deleted_by='+QuotedStr(nm)+' where "id"='+QuotedStr(DBGridMaterial.Fields[9].AsString);
+      Execute;
+    end;
+    ActRoExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 procedure TFlistBarang.ActPrintExecute(Sender: TObject);
@@ -157,7 +153,6 @@ end;
 
 procedure TFlistBarang.ActRoExecute(Sender: TObject);
 begin
-
   Dm.Koneksi.Close;
   DBGridMaterial.StartLoadingStatus();
   DBGridMaterial.FinishLoadingStatus();
@@ -169,35 +164,29 @@ end;
 
 procedure TFlistBarang.ActUpdateExecute(Sender: TObject);
 begin
-with FNew_barang do
-begin
-  Show;
-  BEdit.Visible:=true;
-  BSimpan.Visible:=False;
-  Caption:='Update Material';
-with MemMaterial do
-begin
- { Close;
-  sql.clear;
-  sql.Text:='select * from t_material where category='+QuotedStr(DBGridEh1.Fields[0].AsString)+''+
-            ' and no_material='+QuotedStr(DBGridEh1.Fields[1].AsString);
-  ExecSQL;}
-  Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
-  Edno.Text:=MemMaterial.FieldByName('no_material').AsString;
-  EdKd.Text:=MemMaterial.FieldByName('kd_material').AsString;
-  EdNm.Text:=MemMaterial.FieldByName('nm_material').AsString;
-  EdCategory.Text:=MemMaterial.FieldByName('Category').AsString;
-  EdSatuan.Text:=MemMaterial.FieldByName('satuan').AsString;
-  Edjenis.Text:=MemMaterial.FieldByName('jenis').AsString;
-  EdMerk.Text:=MemMaterial.FieldByName('merk').AsString;
-  Edkd_akun.Text:=MemMaterial.FieldByName('kd_akun').AsString;
-  EdNm_akun.Text:=MemMaterial.FieldByName('nama_perkiraan').AsString;
-  idmaterial:=MemMaterial.FieldByName('id').AsString;
- // FNew_barang.DBGridEh1.Visible:=false;
-  //DxBedit1.Visible:=ivAlways;
-  //DXBsimpan1.Visible:=ivNever;
-end;
-end;
+  with FNew_barang do
+  begin
+    Show;
+    status_tr:=1;
+    //BEdit.Visible:=true;
+    //BSimpan.Visible:=False;
+    Caption:='Update Barang';
+    with MemMaterial do
+    begin
+    //  Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
+      Edno.Text:=MemMaterial.FieldByName('item_no').AsString;
+      EdKd.Text:=MemMaterial.FieldByName('item_code').AsString;
+      EdNm.Text:=MemMaterial.FieldByName('item_name').AsString;
+      EdCategory.Text:=MemMaterial.FieldByName('Category').AsString;
+      id_ct:=MemMaterial.FieldByName('Category_id').AsString;
+      EdSatuan.Text:=MemMaterial.FieldByName('unit').AsString;
+      Edjenis.Text:=MemMaterial.FieldByName('Type').AsString;
+      EdMerk.Text:=MemMaterial.FieldByName('merk').AsString;
+      Edkd_akun.Text:=MemMaterial.FieldByName('akun_code').AsString;
+     // EdNm_akun.Text:=MemMaterial.FieldByName('nama_perkiraan').AsString;
+      idmaterial:=MemMaterial.FieldByName('id').AsString;
+    end;
+  end;
 end;
 
 procedure TFlistBarang.clear;
@@ -220,27 +209,6 @@ END else
   ActUpdate.Enabled:=False;
 end;
 
-procedure TFlistBarang.DxbEdit1Click(Sender: TObject);
-begin
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:='Select * from t_material';
-  ExecSQL;
-end;
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-//  sql.Text:='Update t_material set no_urut='+QuotedStr(Edno1.Text)+', kd_material='+QuotedStr(Edkd.Text)+ ' ,nm_material='+QuotedStr(Ednm.Text)+''+
-//            ' ,category='+QuotedStr(EdCategory.Text)+' Where no_material='+QuotedStr(Edno.Text);
-  ExecSQL;
-  end;
-  ShowMessage('Data Berhasil di Update');
-  ActRoExecute(sender);
-end;
-
 procedure TFlistBarang.dxBDeleteClick(Sender: TObject);
 begin
  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
@@ -249,7 +217,7 @@ with dm.Qtemp do
 begin
   Close;
   sql.Clear;
-  sql.Text:='Delete From t_material where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
+  sql.Text:='Delete From t_item where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
   Execute;
 end;
 ActRoExecute(sender);
