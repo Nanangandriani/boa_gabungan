@@ -174,7 +174,7 @@ begin
     with MemMaterial do
     begin
     //  Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
-      Edno.Text:=MemMaterial.FieldByName('item_no').AsString;
+     // Edno.Text:=MemMaterial.FieldByName('item_no').AsString;
       EdKd.Text:=MemMaterial.FieldByName('item_code').AsString;
       EdNm.Text:=MemMaterial.FieldByName('item_name').AsString;
       EdCategory.Text:=MemMaterial.FieldByName('Category').AsString;

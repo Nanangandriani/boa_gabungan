@@ -87,7 +87,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select type from master_data.t_item_type where deleted_at isnull';
+    sql.Text:='select type from t_item_type where deleted_at isnull';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -153,7 +153,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.Text:='Select * from master_data.t_item';
+    sql.Text:='Select * from t_item';
     ExecSQL;
   end;
   if not dm.koneksi.InTransaction then
@@ -166,10 +166,9 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into master_data.t_item(order_no,item_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
-       ' values(:order_no,:item_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
+       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
+       ' values(:order_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
          ParamByName('order_no').Value:=Edno.Text;
-         ParamByName('item_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_nm').Value:=EdNm.Text;
          ParamByName('id_ct').Value:=id_ct;
@@ -186,7 +185,7 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:=' Update master_data.t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
+       sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
        ' unit=:unit,merk=:merk,akun_code=:akun_code,item_no=:item_no,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
@@ -222,9 +221,9 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)+1) kode,a.code from master_data.t_item_category a INNER join '+
-    ' master_data.t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
-    ' and deleted_at isnull group by a."id",a.category,a.code ';
+    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)) kode,a.code from t_item_category a INNER join '+
+    ' t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
+    ' and b.deleted_at isnull group by a."id",a.category,a.code ';
     Execute;
   end;
   if dm.Qtemp.RecordCount=0 then
@@ -233,25 +232,25 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Select "id",category,concat(code,order_no) kode,order_no from master_data.t_item_category where category='+QuotedStr(EdCategory.Text);
+      sql.Text:='Select "id",category,code,order_no from t_item_category where category='+QuotedStr(EdCategory.Text);
       ExecSQL;
     end;
-     edkd.Text:=DM.Qtemp2['kode'];
+  //   edkd.Text:=DM.Qtemp2['code'];
      Edno.Text:=dm.Qtemp2['order_no'];
      id_ct:=dm.Qtemp2['id'];
    //  Edit1.Text:=dm.Qtemp2['id'];
      no_urut:='00001';
-     kode:=DM.Qtemp2['kode'];
+     kode:=DM.Qtemp2['code'];
   end;
   //
   if dm.Qtemp.RecordCount<>0 then
     begin
      id_ct:=dm.Qtemp['id'];
-     kode:=DM.Qtemp2['kode'];
+     kode:=DM.Qtemp['code'];
      no_urut:=IntToStr(dm.Qtemp.FieldByName('kode').AsInteger+1);
-     if length(No_urut) < 4 then
+     if length(No_urut) < 5 then
       begin
-        for i := length(No_urut) to 3 do
+        for i := length(No_urut) to 4 do
           No_urut := '0' + No_urut;
       end;
     end;
@@ -266,7 +265,7 @@ EdCategory.Clear;
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.* from master_data.t_item_category a inner join master_data.t_item_type b on a.type_id=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
+    sql.Text:='select a.* from t_item_category a inner join t_item_type b on a.type_id=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;

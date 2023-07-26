@@ -166,10 +166,9 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into t_item(order_no,item_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
-       ' values(:order_no,:item_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
+       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
+       ' values(:order_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
          ParamByName('order_no').Value:=Edno.Text;
-         ParamByName('item_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_nm').Value:=EdNm.Text;
          ParamByName('id_ct').Value:=id_ct;
@@ -187,7 +186,7 @@ begin
        close;
        sql.clear;
        sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
-       ' unit=:unit,merk=:merk,akun_code=:akun_code,item_no=:item_no,category_id=:ct_id,updated_at=now(), '+
+       ' unit=:unit,merk=:merk,akun_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
@@ -195,7 +194,6 @@ begin
          ParamByName('unit').Value:=EdSatuan.Text;
          ParamByName('merk').Value:=EdMerk.Text;
          ParamByName('akun_code').Value:=Edkd_akun.Text;
-         ParamByName('item_no').Value:=Edno.Text;
          ParamByName('ct_id').Value:=id_ct;
          ParamByName('id').Value:=idmaterial;
          ParamByName('pic').Value:=nm;
