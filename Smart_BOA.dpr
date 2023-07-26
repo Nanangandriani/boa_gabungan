@@ -43,7 +43,12 @@ uses
   UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
   UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan},
   UPenomoran in 'UPenomoran.pas' {FPenomoran},
-  UNew_Penomoran in 'UNew_Penomoran.pas' {FNew_Penomoran};
+  UNew_Penomoran in 'UNew_Penomoran.pas' {FNew_Penomoran},
+  Udaftar_perkiraan in 'Udaftar_perkiraan.pas' {FDaftar_Perkiraan},
+  UNewDaftar_perkiraan in 'UNewDaftar_perkiraan.pas' {FNewdaftar_perkiraan_bank},
+  UNew_HeaderPerkiraan in 'UNew_HeaderPerkiraan.pas' {FNewHeaderPerkiraan},
+  UNew_Posting in 'UNew_Posting.pas' {FNewPosting},
+  UCari_Modul in 'UCari_Modul.pas' {Fbrowse_data_modul};
 
 {$R *.res}
 
@@ -83,6 +88,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
+  Application.CreateForm(TFNewPosting, FNewPosting);
   //  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   FHomeSreen.Hide;
   FHomeSreen.Free;

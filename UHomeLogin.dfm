@@ -4561,7 +4561,7 @@ object FHomeLogin: TFHomeLogin
       OnClick = Image1Click
     end
     object EdPass: TEdit
-      Left = 96
+      Left = 98
       Top = 311
       Width = 255
       Height = 34
@@ -4580,7 +4580,7 @@ object FHomeLogin: TFHomeLogin
       TextHint = 'PASSWORD'
     end
     object Eduser: TEdit
-      Left = 152
+      Left = 146
       Top = 218
       Width = 255
       Height = 34

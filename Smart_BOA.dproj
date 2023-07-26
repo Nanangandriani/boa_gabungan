@@ -261,6 +261,26 @@
             <Form>FNew_Penomoran</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Udaftar_perkiraan.pas">
+            <Form>FDaftar_Perkiraan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNewDaftar_perkiraan.pas">
+            <Form>FNewdaftar_perkiraan_bank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_HeaderPerkiraan.pas">
+            <Form>FNewHeaderPerkiraan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Posting.pas">
+            <Form>FNewPosting</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCari_Modul.pas">
+            <Form>Fbrowse_data_modul</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
