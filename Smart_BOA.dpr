@@ -88,6 +88,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
+  Application.CreateForm(TFNew_Supplier, FNew_Supplier);
   Application.CreateForm(TFNewPosting, FNewPosting);
   //  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   FHomeSreen.Hide;

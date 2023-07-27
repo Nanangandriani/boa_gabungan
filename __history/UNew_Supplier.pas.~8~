@@ -1,4 +1,4 @@
-unit UInput_Supplier;
+unit UNew_Supplier;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls;
 
 type
-  TFInput_Supplier = class(TForm)
+  TFNew_Supplier = class(TForm)
     Edno: TEdit;
     EdNm: TEdit;
     EdAlamat: TEdit;
@@ -32,24 +32,40 @@ type
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     Procedure Clear;
+
   end;
 
-var
-  FInput_Supplier: TFInput_Supplier;
+//var
+  //FInput_Supplier: TFInput_Supplier;
+
+Function  FNew_Supplier: TFNew_Supplier;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UListSupplier;
+uses UDataModule, UListSupplier, UMainMenu;
 
+var
+    RealFNew_Supplier: TFNew_Supplier;
 
-procedure TFInput_Supplier.Clear;
+Function FNew_Supplier: TFNew_Supplier;
+begin
+    if RealFNew_Supplier <> nil then
+    FNew_Supplier:= RealFNew_Supplier
+    else
+    Application.CreateForm(TFNew_Supplier, Result);
+end;
+
+procedure TFNew_Supplier.Clear;
 begin
    Edno.Text:='';
    EdNm.Text:='';
@@ -58,12 +74,15 @@ begin
    EdNPWP.Text:='';
 end;
 
-procedure TFInput_Supplier.BBatalClick(Sender: TObject);
+procedure TFNew_Supplier.BBatalClick(Sender: TObject);
 begin
+  self.Refresh;
   Close;
+  FlistSupplier.OnShow(sender);
+
 end;
 
-procedure TFInput_Supplier.BEditClick(Sender: TObject);
+procedure TFNew_Supplier.BEditClick(Sender: TObject);
 begin
     BEdit.Visible:=false;
     BSimpan.Visible:=true;
@@ -95,36 +114,37 @@ begin
     dm.koneksi.StartTransaction;
     try
     begin
-     with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.Text:='Select * from t_supplier';
-      ExecSQL;
-    end;
-     with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.Text:='Update t_supplier set nm_supplier='+QuotedStr(Ednm.Text)+ ' , Alamat='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
-                ' ,npwp='+QuotedStr(EdNPWP.Text)+''+
-                ' Where kd_supplier='+QuotedStr(Edno.Text);
-      ExecSQL;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='Select * from t_supplier';
+        ExecSQL;
       end;
-    dm.koneksi.Commit;
-    Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-    end
-    Except
-    on E :Exception do
-    begin
-    MessageDlg(E.Message,mtError,[MBok],0);
-    dm.koneksi.Rollback;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
+                  ' ,npwp='+QuotedStr(EdNPWP.Text)+''+
+                  ' Where supplier_code='+QuotedStr(Edno.Text);
+        ExecSQL;
+      end;
+      dm.koneksi.Commit;
+      Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+      end
+      Except
+      on E :Exception do
+      begin
+        MessageDlg(E.Message,mtError,[MBok],0);
+        dm.koneksi.Rollback;
+      end;
     end;
-    end;
-      BBatalClick(sender);;
-    end;
+    FMainMenu.TampilTabForm2;
+    BBatalClick(sender);;
+end;
 
-procedure TFInput_Supplier.BSimpanClick(Sender: TObject);
+procedure TFNew_Supplier.BSimpanClick(Sender: TObject);
 begin
     if Edno.Text='' then
     begin
@@ -166,9 +186,13 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Insert into t_supplier(kd_supplier,nm_supplier,alamat,Telp, npwp)values'+
+        sql.Text:='Insert into t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
-                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+')';
+                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:created_at,:created_by )';
+                  //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
+                  //:created_at,:created_by';
+                  parambyname('created_at').AsDateTime:=Now;
+                  parambyname('created_by').AsString:='Admin';
         ExecSQL;
       end;
       dm.koneksi.Commit;
@@ -181,15 +205,34 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
+    FMainMenu.TampilTabForm2;
+    //FListSupplier.dxbarRefreshClick(sender);
     BBatalClick(sender);
 end;
 
-procedure TFInput_Supplier.FormShow(Sender: TObject);
+procedure TFNew_Supplier.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-    Clear;
-    Edno.SetFocus;
+
+  //FListSupplier.Refresh;
+end;
+
+procedure TFNew_Supplier.FormCreate(Sender: TObject);
+begin
+    //RealFInput_Supplier:=self;
+end;
+
+procedure TFNew_Supplier.FormDestroy(Sender: TObject);
+begin
+   //RealFInput_Supplier:=nil;
+end;
+
+procedure TFNew_Supplier.FormShow(Sender: TObject);
+begin
+    //Clear;
+    //Edno.SetFocus;
     BSimpan.Visible:=True;
     BEdit.Visible:=False;
+
 end;
 
 end.

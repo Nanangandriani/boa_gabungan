@@ -85,12 +85,14 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='Insert Into t_produk(kd_produk,nm_produk,harga_satuan_dalam,harga_satuan_luar) '+
-    'Values (:parkd_produk,:parnm_produk,:parharga_satuan_dalam,:parharga_satuan_luar)';
+    sql.Text:='Insert Into t_product(product_code,product_name,unit_price_in,unit_price_out,created_at,created_by) '+
+    'Values (:parkd_produk,:parnm_produk,:parharga_satuan_dalam,:parharga_satuan_luar,:created_at,:created_by)';
     parambyname('parkd_produk').Value:=Edkd.Text;
     parambyname('parnm_produk').Value:=EdNm.Text;
     parambyname('parharga_satuan_dalam').Value:=HapusFormat(edharga_dalam_pulau);
     parambyname('parharga_satuan_luar').Value:=HapusFormat(edharga_luar_pulau);
+    parambyname('created_at').AsDateTime:=Now;
+    parambyname('created_by').AsString:='Admin';
     execsql;
   end;
   Close;
@@ -103,8 +105,8 @@ begin
   begin
     close;
       Sql.Clear;
-      Sql.Text:= 'update t_produk set nm_produk=:parnm_produk,harga_satuan_dalam=:parharga_satuan_dalam, '+
-                 'harga_satuan_luar=:parharga_satuan_luar where kd_produk=:parkd_produk';
+      Sql.Text:= 'update t_product set product_name=:parnm_produk,unit_price_in=:parharga_satuan_dalam, '+
+                 'unit_price_out=:parharga_satuan_luar, where kd_produk=:parkd_produk';
     parambyname('parkd_produk').Value:=Edkd.Text;
     parambyname('parnm_produk').Value:=EdNm.Text;
     parambyname('parharga_satuan_dalam').Value:=HapusFormat(edharga_dalam_pulau);

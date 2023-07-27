@@ -98,7 +98,6 @@ object FListPelanggan: TFListPelanggan
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 832
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -706,7 +705,7 @@ object FListPelanggan: TFListPelanggan
     Top = 40
   end
   object ActMenu: TActionManager
-    Left = 616
+    Left = 672
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction

@@ -25,7 +25,8 @@ uses
   dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Data.DB, MemDS, DBAccess, Uni;
+  Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFFakturPajak = class(TForm)
@@ -48,6 +49,15 @@ type
     DsFaktur: TDataSource;
     Qfaktur: TUniQuery;
     dxBarManager1Bar2: TdxBar;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarLargeBaruClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -112,7 +122,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from master_data.T_Faktur where deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from T_Faktur where deleted_at is null order by created_at Desc ';
        open;
    end;
    QFaktur.Active:=False;
@@ -149,7 +159,7 @@ begin
                 Close;
                 Sql.Clear;
                 //Sql.Text:='Delete from master_data.t_faktur where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
-                Sql.Text:='Update master_data.t_faktur set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                Sql.Text:='Update t_faktur set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                           'where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
                 parambyname('deleted_at').AsDateTime:=Now;
                 parambyname('deleted_by').AsString:='Admin';

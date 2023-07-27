@@ -24,7 +24,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Data.DB, MemDS, DBAccess, Uni;
+  Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFListBank = class(TForm)
@@ -46,6 +47,15 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     Dsbank: TDataSource;
     Qbank: TUniQuery;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarLargeBaruClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
@@ -71,13 +81,24 @@ uses UNewBank, UDataModule;
 
 procedure TFListBank.Refresh;
 begin
-   DBGridEh1.StartLoadingStatus();
+   with QBank do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from t_Bank where deleted_at is null order by created_at Desc ';
+       open;
+   end;
+   QBank.Active:=False;
+   QBank.Active:=True;
+   QBank.Close;
+   QBank.Open;
+   {DBGridEh1.StartLoadingStatus();
     try
       Qbank.close;
       Qbank.open;
     finally
     DBGridEh1.FinishLoadingStatus();
-    end;
+    end;}
 end;
 
 procedure TFListBank.dxBarRefreshClick(Sender: TObject);
@@ -90,10 +111,10 @@ begin
     FNewBank.Clear;
     with Qbank do
     begin
-      FNewBank.edbank.Text:=FieldByName('nama_bank').AsString;
-      FNewBank.edno_rek.Text:=FieldByName('no_rekening').AsString;
-      FNewBank.edkode_bank.Text:=FieldByName('kode_bank').AsString;
-      FNewBank.CBmata_uang.Text:=FieldByName('matauang').AsString;
+      FNewBank.edbank.Text:=FieldByName('bank_name').AsString;
+      FNewBank.edno_rek.Text:=FieldByName('rekening_no').AsString;
+      FNewBank.edkode_bank.Text:=FieldByName('bank_code').AsString;
+      FNewBank.CBmata_uang.Text:=FieldByName('Currency').AsString;
       FNewBank.edid.Text:=FieldByName('id').AsString;
     end;
     Status:=1;
@@ -108,8 +129,9 @@ end;
 
 procedure TFListBank.FormShow(Sender: TObject);
 begin
-   //Qbank.Close;
-   //Qbank.Open;
+    Refresh;
+    Qbank.Close;
+    Qbank.Open;
 end;
 
 procedure TFListBank.dxBarDeleteClick(Sender: TObject);
@@ -120,7 +142,11 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Delete From t_bank where id = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+        //sql.Text:='Delete From t_bank where id = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+        sql.Text:=' Update t_bank set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                  ' where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
+        parambyname('deleted_at').AsDateTime:=Now;
+        parambyname('deleted_by').AsString:='Admin';
         execsql;
       end;
       MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);

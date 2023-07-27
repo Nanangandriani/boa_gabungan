@@ -43,10 +43,10 @@ type
 
   end;
 
-//var
-  //FInput_Supplier: TFInput_Supplier;
+var
+  FNew_Supplier: TFNew_Supplier;
 
-Function  FNew_Supplier: TFNew_Supplier;
+//Function  FNew_Supplier: TFNew_Supplier;
 
 implementation
 
@@ -54,16 +54,16 @@ implementation
 
 uses UDataModule, UListSupplier, UMainMenu;
 
-var
-    RealFNew_Supplier: TFNew_Supplier;
+//var
+    //RealFNew_Supplier: TFNew_Supplier;
 
-Function FNew_Supplier: TFNew_Supplier;
+{Function FNew_Supplier: TFNew_Supplier;
 begin
     if RealFNew_Supplier <> nil then
     FNew_Supplier:= RealFNew_Supplier
     else
     Application.CreateForm(TFNew_Supplier, Result);
-end;
+end;}
 
 procedure TFNew_Supplier.Clear;
 begin
@@ -118,14 +118,14 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Select * from master_data.t_supplier';
+        sql.Text:='Select * from t_supplier';
         ExecSQL;
       end;
       with dm.Qtemp do
       begin
         close;
         sql.clear;
-        sql.Text:='Update master_data.t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
+        sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
                   ' ,npwp='+QuotedStr(EdNPWP.Text)+''+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
         ExecSQL;
@@ -140,7 +140,7 @@ begin
         dm.koneksi.Rollback;
       end;
     end;
-    FMainMenu.ShowInForm;
+    FMainMenu.TampilTabForm2;
     BBatalClick(sender);;
 end;
 
@@ -178,7 +178,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Select * from master_data.t_supplier';
+        sql.Text:='Select * from t_supplier';
         ExecSQL;
       end;
 
@@ -186,7 +186,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Insert into master_data.t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
+        sql.Text:='Insert into t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
                   ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:created_at,:created_by )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
@@ -205,7 +205,7 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
-    FMainMenu.ShowInForm;
+    FMainMenu.TampilTabForm2;
     //FListSupplier.dxbarRefreshClick(sender);
     BBatalClick(sender);
 end;
@@ -228,9 +228,9 @@ end;
 
 procedure TFNew_Supplier.FormShow(Sender: TObject);
 begin
-    Clear;
     BSimpan.Visible:=True;
     BEdit.Visible:=False;
+
 end;
 
 end.

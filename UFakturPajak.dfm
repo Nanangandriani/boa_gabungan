@@ -81,7 +81,6 @@ object FFakturPajak: TFFakturPajak
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 832
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -740,8 +739,43 @@ object FFakturPajak: TFFakturPajak
   object Qfaktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from master_data.t_faktur order by id Asc')
+      'select * from t_faktur order by id Asc')
     Left = 324
     Top = 48
+  end
+  object ActMenu: TActionManager
+    Left = 616
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = dxBarUpdateClick
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = dxBarRefreshClick
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+      OnExecute = dxBarDeleteClick
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
+    end
   end
 end

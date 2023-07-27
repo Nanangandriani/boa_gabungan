@@ -25,7 +25,7 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Vcl.StdCtrls;
 
 type
   TFListSupplier = class(TForm)
@@ -62,6 +62,7 @@ type
     procedure dxBarDeleteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -154,6 +155,23 @@ begin
   refresh;
   Qsupplier.Close;
   Qsupplier.Open;
+end;
+
+procedure TFListSupplier.Button1Click(Sender: TObject);
+begin
+    FNew_Supplier.Show;
+    FNew_Supplier.BSimpan.Visible:=False;
+    FNew_Supplier.BEdit.Visible:=True;
+    FNew_Supplier.Caption:='Update Supplier';
+    FNew_Supplier.Edno.Enabled:=False;
+    with QSupplier do
+    begin
+      FNew_Supplier.Edno.Text:=QSupplier.FieldByName('supplier_code').AsString;
+      FNew_Supplier.EdNm.Text:=QSupplier.FieldByName('supplier_name').AsString;
+      FNew_Supplier.Edalamat.Text:=QSupplier.FieldByName('address').AsString;
+      FNew_Supplier.Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
+      FNew_Supplier.EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
+    end;
 end;
 
 procedure TFListSupplier.dxBarBaruClick(Sender: TObject);

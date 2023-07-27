@@ -87,12 +87,13 @@ type
 
   private
     { Private declarations }
-    Procedure ShowForm;
-    Procedure TampilTabForm;
-    Procedure AksesSub(Form: TForm; Akses,Sub:String);
 
   public
     { Public declarations }
+    Procedure ShowForm;
+    Procedure TampilTabForm;
+    Procedure TampilTabForm2;
+    Procedure AksesSub(Form: TForm; Akses,Sub:String);
     Procedure CreateMenu(Role:String);
     Procedure CreateSubMenu(Role,Menu:String);
     Procedure CloseTabs(Sender: TObject);
@@ -134,7 +135,7 @@ implementation
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Material,
   UListKonversi_Produk, UList_Gudang, UListBank_perusahaan, UBarang_Stok,
-  UItem_Type;
+  UItem_Type, UKategori_Barang, UListPerusahaan, Udaftar_perkiraan;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -307,7 +308,7 @@ end;
 procedure TFMainMenu.PageControl1Close(Sender: TObject;
   var AllowClose: Boolean);
 begin  
-   //showmessage('Test'); 
+   //showmessage('Test');
     if PageControl1.TabIndex<>0 then
     begin
       //showmessage(TRzTabSheet(Sender).Name); 
@@ -342,12 +343,12 @@ begin
 
     if dm.Qtemp.RecordCount<>1 then
     begin
-    ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
-    exit;
+      ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+      exit;
     end;
 
     if dm.Qtemp.RecordCount=1 then
-    begin              
+    begin
        //create new Tabsheet
         ANewTabs := TRzTabSheet.Create(nil);
         ANewTabs.Name := 'Tab'+vNamaButton;
@@ -355,7 +356,7 @@ begin
         ANewTabs.PageControl := PageControl1; 
         PageControl1.ActivePage := ANewTabs;
 
-        {//Create Close Tab  
+        {//Create Close Tab
         CloseButton := TButton.Create(ANewTabs);
         CloseButton.Parent := ANewTabs;
         CloseButton.Caption := 'X';
@@ -383,6 +384,36 @@ begin
 end;
 
 
+procedure TFMainMenu.TampilTabForm2;
+begin
+   with dm.Qtemp do
+     begin
+      SQL.Clear;
+      SQL.Text := 'select * from t_submenu2 where submenu2=' +
+                  QuotedStr(vCaptionButton);
+      open;
+     end;
+
+    if dm.Qtemp.RecordCount<>1 then
+      begin
+        ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+        exit;
+      end;
+
+    if dm.Qtemp.RecordCount=1 then
+      begin
+          //Create Form Dalam Panel
+          AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
+          AFormClass := TFormClass(AClass);
+          AForm := AFormClass.Create(Application.MainForm);
+          AForm.Parent:=ApnTabs;
+          AForm.Align:=Alclient;
+          AForm.BorderStyle:=BsNone;
+          AksesSub(AForm,HakAkses,vCaptionButton);
+          AForm.Show;
+      end;
+end;
+
 procedure TFMainMenu.ShowForm;
 begin
 end;
@@ -407,15 +438,12 @@ begin
    ClearCategoryPanelGroup;
    //CategoryPanelUtama.Parent := SplitView1;
    CategoryPanelUtama.Width:=250;
-
    TRzTreeView.Create(nil);
    Treeview1.Create(nil);
    Cleartreview;
    Treeview1.Width:=250;
-
    while not dm.Qtemp1.Eof do
    begin
-
     //Create Category Panel
       CategoryPanelUtama.HeaderFont.Style:=[fsBold];
       ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
@@ -493,12 +521,10 @@ begin
    //CategoryPanelUtama.Parent := SplitView1;
    CategoryPanelUtama.Width:=300;
    CategoryPanelUtama.HeaderFont.style:=[fsbold];
-
    //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
 
    while not dm.Qtemp1.Eof do
    begin
-
     //Create Category Panel
       ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
       ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
@@ -549,7 +575,6 @@ begin
       ACategoryPanel.Collapsed:=True;
       dm.Qtemp1.Next;
     end;
-
 end;
 
 
@@ -716,5 +741,6 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
-  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type]);
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
+  ,TFKategori_Barang,TFPenomoran,TFListPerusahaan,TFDaftar_Perkiraan]);
 end.

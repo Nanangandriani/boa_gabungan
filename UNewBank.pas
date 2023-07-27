@@ -48,7 +48,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UListBank_perusahaan;
+uses UDataModule, UListBank_perusahaan, UMainMenu;
 
 
 procedure TFNewBank.BSaveClick(Sender: TObject);
@@ -82,6 +82,7 @@ begin
         end;
       end;
     end;
+    FMainMenu.TampilTabForm2;
 end;
 
 procedure TFNewBank.CBmata_uangKeyPress(Sender: TObject; var Key: Char);
@@ -130,12 +131,14 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_bank(nama_bank,no_rekening,kode_bank,matauang) '+
-                'Values (:parnama_bank,:parno_rekening,:parkode_bank,:parmatauang)';
+      sql.Text:='Insert Into t_bank(bank_name,rekening_no,bank_code,currency,created_at,created_by) '+
+                'Values (:parnama_bank,:parno_rekening,:parkode_bank,:parmatauang,:created_at,:created_by)';
       parambyname('parnama_bank').Value:=edbank.Text;
       parambyname('parno_rekening').Value:=edno_rek.Text;
       parambyname('parkode_bank').Value:=edkode_bank.Text;
       parambyname('parmatauang').Value:=CBmata_uang.Text;
+      parambyname('created_at').AsDateTime:=Now;
+      parambyname('created_by').AsString:='Admin';
       execsql;
     end;
     MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -150,13 +153,17 @@ begin
     begin
       close;
       Sql.Clear;
-      Sql.Text:='update t_bank set nama_bank=:parnama_bank, no_rekening=:parno_rekening, '+
-                'kode_bank=:parkode_bank,matauang=:parmatauang where id=:parid';
+      Sql.Text:='update t_bank set bank_name=:parnama_bank,rekening_no=:parno_rekening, '+
+                'bank_code=:parkode_bank,currency=:parmatauang,updated_at=:updated_at,updated_by=:updated_by '+
+                'where id=:parid';
       parambyname('parnama_bank').Value:=edbank.Text;
       parambyname('parno_rekening').Value:=edno_rek.Text;
       parambyname('parkode_bank').Value:=edkode_bank.Text;
       parambyname('parmatauang').Value:=CBmata_uang.Text;
+      parambyname('updated_at').AsDateTime:=Now;
+      parambyname('updated_by').Value:='Admin';
       parambyname('parid').Value:=edid.Text;
+
       ExecSql;
     end;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);

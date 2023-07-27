@@ -83,7 +83,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from master_data.T_company where deleted_at is null Order by company_code ASC ';
+       sql.Text:='select * from T_company where deleted_at is null Order by company_code ASC ';
        open;
    end;
    QPerusahaan.Close;
@@ -106,7 +106,7 @@ begin
         Close;
         sql.Clear;
         //sql.Text:='Delete From master_data.t_company where company_code='+QuotedStr(DBGridPerusahaan.Fields[0].AsString);
-        sql.Text:=' Update master_data.t_company set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+        sql.Text:=' Update t_company set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                   ' Where company_code='+QuotedStr(DBGridPerusahaan.Fields[0].AsString);
         parambyname('deleted_at').AsDateTime:=Now;
         parambyname('deleted_by').AsString:='Admin';

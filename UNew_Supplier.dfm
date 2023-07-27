@@ -128,10 +128,10 @@ object FNew_Supplier: TFNew_Supplier
     Height = 32
     Align = alBottom
     TabOrder = 5
-    ExplicitTop = 210
-    ExplicitWidth = 505
+    ExplicitTop = 209
+    ExplicitWidth = 501
     object BBatal: TRzBitBtn
-      Left = 435
+      Left = 431
       Top = 1
       Height = 30
       Align = alRight
@@ -190,10 +190,10 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 429
+      ExplicitLeft = 425
     end
     object BSimpan: TRzBitBtn
-      Left = 360
+      Left = 356
       Top = 1
       Height = 30
       Align = alRight
@@ -252,10 +252,10 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 354
+      ExplicitLeft = 350
     end
     object BEdit: TRzBitBtn
-      Left = 285
+      Left = 281
       Top = 1
       Height = 30
       Align = alRight
@@ -315,7 +315,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 279
+      ExplicitLeft = 275
     end
   end
 end

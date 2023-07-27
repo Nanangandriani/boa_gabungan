@@ -43,10 +43,10 @@ type
 
   end;
 
-//var
-  //FInput_Supplier: TFInput_Supplier;
+var
+  FNew_Supplier: TFNew_Supplier;
 
-Function  FNew_Supplier: TFNew_Supplier;
+//Function  FNew_Supplier: TFNew_Supplier;
 
 implementation
 
@@ -54,16 +54,16 @@ implementation
 
 uses UDataModule, UListSupplier, UMainMenu;
 
-var
-    RealFNew_Supplier: TFNew_Supplier;
+//var
+    //RealFNew_Supplier: TFNew_Supplier;
 
-Function FNew_Supplier: TFNew_Supplier;
+{Function FNew_Supplier: TFNew_Supplier;
 begin
     if RealFNew_Supplier <> nil then
     FNew_Supplier:= RealFNew_Supplier
     else
     Application.CreateForm(TFNew_Supplier, Result);
-end;
+end;}
 
 procedure TFNew_Supplier.Clear;
 begin
@@ -126,8 +126,10 @@ begin
         close;
         sql.clear;
         sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
-                  ' ,npwp='+QuotedStr(EdNPWP.Text)+''+
+                  ' ,npwp='+QuotedStr(EdNPWP.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
+        parambyname('updated_at').AsDateTime:=Now;
+        parambyname('updated_by').AsString:='Admin';
         ExecSQL;
       end;
       dm.koneksi.Commit;
@@ -140,7 +142,7 @@ begin
         dm.koneksi.Rollback;
       end;
     end;
- //   FMainMenu.ShowInForm;
+    FMainMenu.TampilTabForm2;
     BBatalClick(sender);;
 end;
 
@@ -229,8 +231,10 @@ end;
 procedure TFNew_Supplier.FormShow(Sender: TObject);
 begin
     Clear;
+    //Edno.SetFocus;
     BSimpan.Visible:=True;
     BEdit.Visible:=False;
+
 end;
 
 end.
