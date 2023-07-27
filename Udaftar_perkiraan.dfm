@@ -676,17 +676,15 @@ object FDaftar_Perkiraan: TFDaftar_Perkiraan
   object Qdaftar_perkiraan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      'select a.*, b.header_name,c.posting,d.category'
       
-        'select a.*, b.nama_header,c.nama_posting,d.nm_kategori,e.jenis_a' +
-        'kun,case when kelompok_akun = '#39'1'#39' then '#39'NERACA'#39' ELSE '#39'L/R'#39' END K' +
-        'elompok from t_daftar_perkiraan a'
-      'left join t_header_perkiraan b on a.kode_header=b.kode_header'
-      'left join t_posting c on a.posting=c.id '
-      
-        'left join t_kategori_akun d on a.kd_kategori_akun=d.kode_kategor' +
-        'i'
-      'left join t_jenis_akun e on a.id_jenis_akun=e.id'
-      'order by kode ASC')
+        ',e."type",case when "group_id" = '#39'1'#39' then '#39'NERACA'#39' ELSE '#39'L/R'#39' EN' +
+        'D Kelompok from t_ak_account a'
+      'left join t_ak_header b on a.header_code=b.header_code'
+      'left join t_ak_posting_type c on a.posting_id=c."id" '
+      'left join t_ak_category d on a.ct_code=d.category_code'
+      'left join t_ak_type e on a.type_id=e."id"'
+      'order by code ASC')
     Left = 240
     Top = 64
   end
