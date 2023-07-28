@@ -24,7 +24,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Data.DB, MemDS, DBAccess, Uni;
+  Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFListGudang = class(TForm)
@@ -46,9 +47,23 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DsGudang: TDataSource;
     QGudang: TUniQuery;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarLargeBaruClick(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
+    procedure refresh;
   public
     { Public declarations }
   end;
@@ -60,15 +75,82 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Gudang;
+uses UNew_Gudang, UDataModule;
+
+procedure TFListGudang.refresh;
+begin
+   with QGudang do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from t_wh where deleted_at is null order by created_at Desc ';
+       open;
+   end;
+   QGudang.Active:=False;
+   QGudang.Active:=True;
+   QGudang.Close;
+   QGudang.Open;
+end;
+
+procedure TFListGudang.ActDelExecute(Sender: TObject);
+begin
+    if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+        with Dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          //sql.Text:='Delete From t_wh where code = '+QuotedStr(DBGridGudang.Fields[0].AsString);
+          sql.Text:=' Update t_wh set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                    ' where code='+QuotedStr(DBGridGudang.Fields[0].AsString);
+          parambyname('deleted_at').AsDateTime:=Now;
+          parambyname('deleted_by').AsString:='Admin';
+          execsql;
+        end;
+        MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
+        Refresh;
+    end;
+end;
+
+procedure TFListGudang.ActROExecute(Sender: TObject);
+begin
+  DBGridGudang.StartLoadingStatus();
+  try
+    QGudang.Close;
+    QGudang.Open;
+  finally
+  DBGridGudang.FinishLoadingStatus();
+  end;
+end;
+
+procedure TFListGudang.ActUpdateExecute(Sender: TObject);
+begin
+    with FNew_gudang do
+    begin
+      CLear;
+      Show;
+      BEdit.Visible:=true;
+      BSimpan.Visible:=false;
+      Caption:='Update Gudang';
+      with QGudang do
+      begin
+        Edno.Text:=QGudang.FieldByName('no_urut').AsString;
+        Ednm.Text:=QGudang.FieldByName('nm_gudang').AsString;
+        Edkd.Text:=QGudang.FieldByName('kd_gudang').AsString;
+        CbCategory.Text:=QGudang.FieldByName('category').AsString;
+        CbSbu.Text:=QGudang.FieldByName('kd_sbu').AsString;
+        Edkode.Text:=QGudang.FieldByName('kode').AsString;
+      end;
+      Edkd.Enabled:=False;
+    end;
+end;
 
 procedure TFListGudang.dxBarLargeBaruClick(Sender: TObject);
 begin
-  FNew_Gudang.ShowModal;
+  FNew_Gudang.Show;
   with FNew_gudang do
   begin
-    CLear;
-    fnew_gudang.show;
+    Fnew_gudang.show;
     FNew_gudang.BSimpan.Visible:=true;
     FNew_gudang.BEdit.Visible:=false;
     FNew_gudang.Ednm.SetFocus;
@@ -76,6 +158,11 @@ begin
     Edkd.Enabled:=True;
   end;
 
+end;
+
+procedure TFListGudang.FormShow(Sender: TObject);
+begin
+   Refresh;
 end;
 
 end.

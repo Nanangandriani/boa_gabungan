@@ -1,7 +1,7 @@
-object Form1: TForm1
+object FNew_Gudang: TFNew_Gudang
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'FNew_Gudang'
   ClientHeight = 152
   ClientWidth = 381
   Color = clBtnFace
@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Label1: TLabel
     Left = 22
@@ -80,9 +81,9 @@ object Form1: TForm1
   object Label9: TLabel
     Left = 21
     Top = 12
-    Width = 84
+    Width = 89
     Height = 15
-    Caption = 'Kategori Barang'
+    Caption = 'Kategori Gudang'
   end
   object CbCategory: TComboBox
     Left = 126
@@ -90,7 +91,7 @@ object Form1: TForm1
     Width = 231
     Height = 23
     TabOrder = 0
-    Text = 'CbSbu'
+    OnSelect = CbCategorySelect
   end
   object CbSbu: TComboBox
     Left = 126
@@ -98,7 +99,6 @@ object Form1: TForm1
     Width = 231
     Height = 23
     TabOrder = 1
-    Text = 'CbSbu'
   end
   object Edkd: TEdit
     Left = 126
@@ -128,7 +128,7 @@ object Form1: TForm1
     Left = 126
     Top = -3
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 5
     Text = 'Edno'
     Visible = False
@@ -140,8 +140,8 @@ object Form1: TForm1
     Height = 32
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 119
-    ExplicitWidth = 377
+    ExplicitTop = 111
+    ExplicitWidth = 375
     object BBatal: TRzBitBtn
       Left = 305
       Top = 1
@@ -149,6 +149,7 @@ object Form1: TForm1
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -201,7 +202,7 @@ object Form1: TForm1
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 301
+      ExplicitLeft = 299
     end
     object BSimpan: TRzBitBtn
       Left = 230
@@ -211,6 +212,7 @@ object Form1: TForm1
       Caption = 'Simpan'
       TabOrder = 1
       Visible = False
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -263,7 +265,7 @@ object Form1: TForm1
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 226
+      ExplicitLeft = 224
     end
     object BEdit: TRzBitBtn
       Left = 155
@@ -273,6 +275,7 @@ object Form1: TForm1
       Caption = 'Simpan'
       TabOrder = 2
       Visible = False
+      OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -325,7 +328,7 @@ object Form1: TForm1
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 151
+      ExplicitLeft = 149
     end
   end
 end

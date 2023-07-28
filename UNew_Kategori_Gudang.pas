@@ -1,0 +1,203 @@
+unit UNew_Kategori_Gudang;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TFNew_Kategori_Gudang = class(TForm)
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    BEdit: TRzBitBtn;
+    Ednm: TEdit;
+    Label3: TLabel;
+    Label2: TLabel;
+    Edkd: TEdit;
+    Label7: TLabel;
+    Label5: TLabel;
+    QCategory_wh: TUniQuery;
+    DataSource1: TDataSource;
+    QCategory_whcategory_code: TStringField;
+    QCategory_whcategory: TStringField;
+    QCategory_whid: TGuidField;
+    QCategory_whcreated_at: TDateTimeField;
+    QCategory_whcreated_by: TStringField;
+    QCategory_whupdated_at: TDateTimeField;
+    QCategory_whupdated_by: TStringField;
+    QCategory_whdeleted_at: TDateTimeField;
+    QCategory_whdeleted_by: TStringField;
+    procedure BBatalClick(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
+    procedure EdkdChange(Sender: TObject);
+  private
+    { Private declarations }
+    procedure save;
+    procedure update;
+  public
+    { Public declarations }
+  end;
+
+var
+  FNew_Kategori_Gudang: TFNew_Kategori_Gudang;
+  status: integer;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule;
+
+procedure TFNew_Kategori_Gudang.update;
+begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      Sql.Text := 'Update t_wh_category set category_code=:category_code,'+
+                  'category=:category,updated_at=:updated_at,updated_by=:updated_by '+
+                  'Where category_code=:category_code';
+      parambyname('category_code').Value:=Edkd.Text;
+      parambyname('category').Value:=Ednm.Text;
+      parambyname('updated_at').AsDateTime:=Now;
+      parambyname('updated_by').AsString:='Admin';
+      ExecSQL;
+    end;
+    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+    Close;
+end;
+
+procedure TFNew_Kategori_Gudang.BSimpanClick(Sender: TObject);
+begin
+    if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if Edkd.Text='' then
+      begin
+        MessageDlg('Kode Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        Edkd.SetFocus;
+      end;
+      if Ednm.Text='' then
+      begin
+        MessageDlg('Nama Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        Ednm.SetFocus;
+      end;
+
+      if Status = 0 then
+      begin
+        Save;
+        Dm.Koneksi.Commit;
+      end
+      else
+      if Status = 1 then
+      begin
+        Update;
+        Dm.Koneksi.Commit;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+    {kode:=Qcategory_wh.fieldbyname('category_code').Asstring;
+    if kode=Edkd.Text then
+    begin
+         MessageDlg('Kode sudah ada',mtInformation,[MBOK],0);
+         Exit;
+    end;
+
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Add('select * from t_wh_category where category_code='+Quotedstr(Edkd.Text));
+      Open;
+    end;
+    if dm.Qtemp.RecordCount=0 then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert into t_wh_category(category_code,category,created_at,created_by ) '+
+                  'Values(:category_code,:category,:created_at,:created_by)';
+        parambyname('category_code').Value:=Edkd.Text;
+        parambyname('category').Value:=Ednm.Text;
+        parambyname('created_at').AsDateTime:=Now;
+        parambyname('created_by').AsString:='Admin';
+        ExecSQL;
+      end;
+      QCategory_wh.Close;
+      QCategory_wh.Open;
+      MessageDlg('Simpan data berhasil ',mtInformation,[MBOK],0);
+    end;
+    else
+    if dm.Qtemp.RecordCount > 0 then
+    begin
+      with dm.Qtemp do
+      begin
+         sql.Clear;
+         sql.Text:=' update t_wh_category set category=:category,updated_at=:updated_at,updated_by=:updated_by '+
+                   ' where category_code=:category_code' ;
+         Parambyname('category_code').value:=QCategory_wh.FieldByName('category_code').value;
+         parambyname('category').Value:=Ednm.Text;
+         parambyname('updated_at').AsDateTime:=Now;
+         parambyname('updated_by').AsString:='Admin';
+         execsql;
+      end;
+      QCategory_wh.Close;
+      QCategory_wh.Open;
+      MessageDlg('Simpan data berhasil ',mtInformation,[MBOK],0);
+    end;}
+
+end;
+
+procedure TFNew_Kategori_Gudang.EdkdChange(Sender: TObject);
+var kode:string;
+begin
+   with Qcategory_wh do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select * from t_wh_category where category_code='+Quotedstr(Edkd.Text)+' ';
+     open;
+   end;
+   kode:=Qcategory_wh.fieldbyname('category_code').Asstring;
+    if kode=Edkd.Text then
+    begin
+         MessageDlg('Kode Gudang sudah ada',mtInformation,[MBOK],0);
+         Exit;
+    end;
+end;
+
+procedure TFNew_Kategori_Gudang.save;
+begin
+    with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='Insert into t_wh_category(category_code,category,created_at,created_by ) '+
+                  'Values(:category_code,:category,:created_at,:created_by)';
+        parambyname('category_code').Value:=Edkd.Text;
+        parambyname('category').Value:=Ednm.Text;
+        parambyname('created_at').AsDateTime:=Now;
+        parambyname('created_by').AsString:='Admin';
+        ExecSQL;
+      end;
+      MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+      Close;
+end;
+
+
+procedure TFNew_Kategori_Gudang.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
+
+end.

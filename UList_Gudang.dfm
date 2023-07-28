@@ -1,7 +1,7 @@
 object FListGudang: TFListGudang
   Left = 0
   Top = 0
-  Caption = 'Formm List Gudang'
+  Caption = 'Form List Gudang'
   ClientHeight = 442
   ClientWidth = 832
   Color = clBtnFace
@@ -10,6 +10,7 @@ object FListGudang: TFListGudang
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object DBGridGudang: TDBGridEh
     Left = 0
@@ -26,7 +27,15 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_urut'
+        FieldName = 'code'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'order_no'
         Footers = <>
         Title.Caption = 'No'
       end
@@ -34,7 +43,7 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_gudang'
+        FieldName = 'wh_code'
         Footers = <>
         Title.Caption = 'Kode Gudang'
         Width = 100
@@ -43,7 +52,7 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_gudang'
+        FieldName = 'wh_name'
         Footers = <>
         Title.Caption = 'Nama Gudang'
         Width = 300
@@ -52,7 +61,7 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_sbu'
+        FieldName = 'sbu_code'
         Footers = <>
         Title.Caption = 'Lokasi'
         Width = 100
@@ -103,8 +112,8 @@ object FListGudang: TFListGudang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 600
-    Top = 104
+    Left = 640
+    Top = 40
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -550,10 +559,8 @@ object FListGudang: TFListGudang
         82}
     end
     object dxBarRefresh: TdxBarButton
-      Caption = 'Refresh'
+      Action = ActRO
       Category = 0
-      Hint = 'Refresh'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -586,10 +593,8 @@ object FListGudang: TFListGudang
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarDelete: TdxBarButton
-      Caption = 'Delete'
+      Action = ActDel
       Category = 0
-      Hint = 'Delete'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -631,14 +636,50 @@ object FListGudang: TFListGudang
   end
   object DsGudang: TDataSource
     DataSet = QGudang
-    Left = 376
-    Top = 160
+    Left = 472
+    Top = 48
   end
   object QGudang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_gudang order by no_urut Desc')
-    Left = 288
-    Top = 152
+      'select * from t_wh order by order_no Desc')
+    Left = 368
+    Top = 48
+  end
+  object ActMenu: TActionManager
+    Left = 544
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = dxBarLargeBaruClick
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = ActUpdateExecute
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActROExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+      OnExecute = ActDelExecute
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
+    end
   end
 end

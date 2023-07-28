@@ -1,4 +1,4 @@
-unit UNew_Gudang;
+unit UNew_Kategori_Gudang;
 
 interface
 
@@ -7,27 +7,18 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
-  TForm1 = class(TForm)
-    CbCategory: TComboBox;
-    CbSbu: TComboBox;
-    Edkd: TEdit;
-    Edkode: TEdit;
-    Ednm: TEdit;
-    Edno: TEdit;
-    Label1: TLabel;
-    Label10: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
+  TFNew_Kategori_Gudang = class(TForm)
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
     BEdit: TRzBitBtn;
+    Ednm: TEdit;
+    Label3: TLabel;
+    Label2: TLabel;
+    Edkd: TEdit;
+    Label7: TLabel;
+    Label5: TLabel;
+    procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,10 +26,15 @@ type
   end;
 
 var
-  Form1: TForm1;
+  FNew_Kategori_Gudang: TFNew_Kategori_Gudang;
 
 implementation
 
 {$R *.dfm}
+
+procedure TFNew_Kategori_Gudang.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
 
 end.

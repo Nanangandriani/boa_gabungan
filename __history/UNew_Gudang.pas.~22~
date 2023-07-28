@@ -1,0 +1,243 @@
+unit UNew_Gudang;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Mask, RzEdit, RzBtnEdt;
+
+type
+  TFNew_Gudang = class(TForm)
+    CbCategory: TComboBox;
+    CbSbu: TComboBox;
+    Edkd: TEdit;
+    Edkode: TEdit;
+    Ednm: TEdit;
+    Edno: TEdit;
+    Label1: TLabel;
+    Label10: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    BEdit: TRzBitBtn;
+    RzButtonEdit1: TRzButtonEdit;
+    procedure BBatalClick(Sender: TObject);
+    procedure BEditClick(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure CbCategorySelect(Sender: TObject);
+    procedure RzButtonEdit1ButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure showsbucode;
+    procedure showcategorywh;
+  public
+    { Public declarations }
+    Procedure CLear;
+  end;
+
+var
+  FNew_Gudang: TFNew_Gudang;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule, UNew_Kategori_Gudang, UMainMenu;
+
+
+procedure TFNew_Gudang.showsbucode;
+begin
+    {with DM.Qtemp do
+    begin
+      //close;
+      sql.Clear;
+      sql.Text:='select * from t_sbu';
+      Open;
+    end;
+    CbSbu.Items.Clear;
+    DM.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+      CbSbu.Items.Add(DM.Qtemp.FieldByName('sbu_code').AsString);
+      DM.Qtemp.Next;
+    end;}
+end;
+
+
+procedure TFNew_Gudang.showcategorywh;
+begin
+    {with DM.Qtemp2 do
+    begin
+      //close;
+      sql.Clear;
+      sql.Text:='select category from t_wh_category group by category';
+      Open;
+    end;
+    CbCategory.Items.Clear;
+    DM.Qtemp2.First;
+    while not dm.Qtemp2.Eof do
+    begin
+      CbCategory.Items.Add(DM.Qtemp2.FieldByName('category').AsString);
+      DM.Qtemp2.Next;
+    end;}
+    //showmessage('1');
+end;
+
+procedure TFNew_Gudang.BEditClick(Sender: TObject);
+begin
+    if Ednm.Text='' then
+    begin
+      MessageDlg('Nama Gudang Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ednm.SetFocus;
+      Exit;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_wh ';
+      ExecSQL;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',wh_code='+QuotedStr(Edkd.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+' where code='+QuotedStr(Edkode.Text)+' and order_no='+QuotedStr(Edno.Text);
+      ExecSQL;
+    end;
+    BBatalClick(sender);
+end;
+
+
+procedure TFNew_gudang.BSimpanClick(Sender: TObject);
+begin
+    if Ednm.Text='' then
+    begin
+      MessageDlg('Nama Gudang Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ednm.SetFocus;
+      Exit;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_wh ';
+      ExecSQL;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='insert into t_wh(wh_name,wh_code,sbu_code,category,code,created_at,created_by) '+
+                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_at,:created_by)';
+      parambyname('created_at').AsDateTime:=Now;
+      parambyname('created_by').AsString:='Admin';
+      ExecSQL;
+    end;
+    FMainMenu.TampilTabForm2;
+    BBatalClick(sender);
+end;
+
+procedure TFNew_Gudang.CbCategorySelect(Sender: TObject);
+var urut:string;
+begin
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_wh where category='+QuotedStr(CbCategory.Text);
+      ExecSQL;
+    end;
+    if DM.Qtemp3.RecordCount=0 then
+    begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_wh_category where category='+QuotedStr(CbCategory.Text);
+      ExecSQL;
+    end;
+    Edkode.Text:=DM.Qtemp['category_code']+'01';
+    end else
+    if dm.Qtemp3.RecordCount<>0 then
+    begin
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' SELECT "max"("right"(a.code,2))as kd, category_code from t_wh a INNER JOIN  t_wh_category b on a.category=b.category '+
+                  '  where category='+QuotedStr(CbCategory.Text)+''+
+                  ' GROUP BY category_code ';
+        ExecSQL;
+      end;
+      urut:=FloatToStr(DM.Qtemp2['kd']+1);
+      // Edkode.Text:=DM.Qtemp['kd_kategori']+urut;
+      edkode.Text:=DM.Qtemp2['category_code']+(Copy('00'+urut,length('00'+urut)-1,2));
+    end;
+end;
+
+procedure TFNew_Gudang.CLear;
+begin
+   Edkd.Clear;
+   Ednm.Clear;
+   CbSbu.Clear;
+   CbCategory.Clear;
+end;
+
+procedure TFNew_Gudang.FormShow(Sender: TObject);
+begin
+    Clear;
+    with DM.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_sbu';
+      Execute;
+    end;
+    DM.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+    CbSbu.Items.Add(DM.Qtemp['sbu_code']);
+    DM.Qtemp.Next;
+    end;
+
+    with DM.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select category from t_wh_category group by category';
+      Execute;
+    end;
+    DM.Qtemp2.First;
+    while not dm.Qtemp2.Eof do
+    begin
+    CbCategory.Items.Add(DM.Qtemp2['category']);
+    DM.Qtemp2.Next;
+    end;
+
+   //showcategorywh;
+   //showsbucode;
+end;
+
+
+procedure TFNew_Gudang.RzButtonEdit1ButtonClick(Sender: TObject);
+begin
+  FNew_Kategori_Gudang.Show;//Modal;
+end;
+
+procedure TFNew_Gudang.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
+
+end.
