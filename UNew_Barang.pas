@@ -71,7 +71,7 @@ implementation
 {$R *.dfm}
 
 uses  umainmenu, UDataModule, UAkun_Perkiraan_TerimaMat, UKategori_Barang,
-  UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType;
+  UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk;
 
 var RealFNew_barang: TFNew_barang;
 function FNew_Barang: TFNew_Barang;
@@ -277,13 +277,20 @@ end;
 
 procedure TFNew_Barang.EdNm_akunButtonClick(Sender: TObject);
 begin
-{with  FAkun_Perkiraan_TerimaMat do
-begin
-  Show;
-  statustr:='material';
- // edit1.Text:='material';
-  if QAkun.Active=false then QAkun.Active:=True;
-end; }
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='barang';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
 end;
 
 procedure TFNew_Barang.FormClose(Sender: TObject; var Action: TCloseAction);

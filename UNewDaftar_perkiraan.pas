@@ -28,7 +28,7 @@ type
     RzPanel2: TRzPanel;
     RzBitBtn4: TRzBitBtn;
     DataSource1: TDataSource;
-    MemTableEh1: TMemTableEh;
+    Memdetail: TMemTableEh;
     DBGridnewspmuat: TDBGridEh;
     DBGridbrowse: TDBGridEh;
     Label1: TLabel;
@@ -101,24 +101,52 @@ begin
   if not dm.Koneksi.InTransaction then
   dm.Koneksi.StartTransaction;
   try
-  if edkode.Text='' then
-  begin
-    MessageDlg('Kode Wajib Diisi..!!',mtInformation,[mbRetry],0);
-  end
-  else if ednama_perkiraan.Text='' then
-  begin
-    MessageDlg('Nama Perkiraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-  end
-  else if Status = 0 then
-  begin
-    Save;
-    Dm.Koneksi.Commit;
-  end
-  else if Status = 1 then
-  begin
-    Update;
-    Dm.Koneksi.Commit;
-  end;
+    if edkode.Text='' then
+    begin
+      MessageDlg('Kode Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edkode.SetFocus;
+      Exit;
+    end;
+    if ednama_perkiraan.Text='' then
+    begin
+      MessageDlg('Nama Perkiraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      ednama_perkiraan.SetFocus;
+      Exit;
+    end;
+    if CBposting.Text='' then
+    begin
+      MessageDlg('Posting Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      CBposting.SetFocus;
+      Exit;
+    end;
+    if CBposisi_d_k.Text='' then
+    begin
+      MessageDlg('posisi d/k Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      CBposisi_d_k.SetFocus;
+      Exit;
+    end;
+    if CBkelompok_akun.Text='' then
+    begin
+      MessageDlg('Kelompok Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      CBkelompok_akun.SetFocus;
+      Exit;
+    end
+    else if CBjenis_akun.Text='' then
+    begin
+      MessageDlg('jenis Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      CBjenis_akun.SetFocus;
+      Exit;
+    end;
+    if Status = 0 then
+    begin
+      Save;
+      Dm.Koneksi.Commit;
+    end;
+    if Status = 1 then
+    begin
+      Update;
+      Dm.Koneksi.Commit;
+    end;
   Except on E :Exception do
     begin
       begin
@@ -136,14 +164,14 @@ begin
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select a.nm_kategori from t_kategori_akun a '+
-              'left join t_jenis_akun b on a.id_jenis=b.id '+
-              'where b.jenis_akun='+QuotedStr(CBjenis_akun.Text);
+    Sql.Text:='select a.category from t_ak_category a '+
+              'left join t_ak_type b on a.type_id=b.id '+
+              'where b."type"='+QuotedStr(CBjenis_akun.Text);
     Open;
   end;
   while not Qtemp2.Eof do
   begin
-    CBkategori.Items.Add(Qtemp2.FieldByName('nm_kategori').AsString);
+    CBkategori.Items.Add(Qtemp2.FieldByName('category').AsString);
     Qtemp2.Next;
   end;
 end;
@@ -173,7 +201,7 @@ begin
   ednama_perkiraan.Text:='';
   CBjenis_akun.Clear;
   CBkategori.Clear;
-  MemTableEh1.EmptyTable;
+  Memdetail.EmptyTable;
 end;
 
 procedure TFNewdaftar_perkiraan_bank.edkodeKeyPress(Sender: TObject;
@@ -203,16 +231,17 @@ end;
 
 procedure TFNewdaftar_perkiraan_bank.FormShow(Sender: TObject);
 begin
+  statusnl:='0';
   with dm.Qtemp do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select nama_header from t_header_perkiraan';
+    Sql.Text:='select header_name from t_ak_header ';
     Open;
   end;
   while not DM.Qtemp.Eof do
   begin
-    CBheader.Items.Add(DM.Qtemp.FieldByName('nama_header').AsString);
+    CBheader.Items.Add(DM.Qtemp.FieldByName('header_name').AsString);
     DM.Qtemp.Next;
   end;
 
@@ -220,12 +249,12 @@ begin
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select nama_posting from t_posting';
+    Sql.Text:='select posting from t_ak_posting_type';
     Open;
   end;
   while not DM.Qtemp3.Eof do
   begin
-    CBposting.Items.Add(DM.Qtemp3.FieldByName('nama_posting').AsString);
+    CBposting.Items.Add(DM.Qtemp3.FieldByName('posting').AsString);
     DM.Qtemp3.Next;
   end;
 
@@ -233,12 +262,12 @@ begin
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select jenis_akun from t_jenis_akun';
+    Sql.Text:='select "type" from t_ak_type';
     Open;
   end;
   while not DM.Qtemp2.Eof do
   begin
-    CBjenis_akun.Items.Add(DM.Qtemp2.FieldByName('jenis_akun').AsString);
+    CBjenis_akun.Items.Add(DM.Qtemp2.FieldByName('type').AsString);
     DM.Qtemp2.Next;
   end;
  { with dm.Qtemp do
@@ -264,7 +293,7 @@ end;
 
 procedure TFNewdaftar_perkiraan_bank.RzBitBtn2Click(Sender: TObject);
 begin
-  Fbrowse_data_modul.Show;
+  FCari_Data_Modul.Show;
 end;
 
 procedure TFNewdaftar_perkiraan_bank.RzBitBtn3Click(Sender: TObject);
@@ -275,65 +304,64 @@ end;
 
 procedure TFNewdaftar_perkiraan_bank.Save;
 begin
-  with dm.QTemp2 do
+  with dm.QTemp1 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select kode_header from t_header_perkiraan where nama_header='+QuotedStr(CBheader.Text);
+    Sql.Text:='select header_code from t_ak_header where header_name='+QuotedStr(CBheader.Text);
     Open;
   end;
   with QTemp do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select id from t_posting where nama_posting='+QuotedStr(cbposting.Text);
+    Sql.Text:='select id from t_ak_posting_type where posting='+QuotedStr(cbposting.Text);
     Open;
   end;
   with QTemp2 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select id from t_jenis_akun where jenis_akun='+QuotedStr(CBjenis_akun.Text);
+    Sql.Text:='select id from t_ak_type where "type"='+QuotedStr(CBjenis_akun.Text);
     Open;
   end;
   with QTemp3 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select kode_kategori from t_kategori_akun where nm_kategori='+QuotedStr(CBkategori.Text);
+    Sql.Text:='select category_code from t_ak_category where category='+QuotedStr(CBkategori.Text);
     Open;
   end;
 
-  MemTableEh1.First;
-  while not MemTableEh1.Eof do
+  Memdetail.First;
+  while not Memdetail.Eof do
   begin
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_daftar_perkiraan_detail(kode_perkiraan,id_modul) '+
+      sql.Text:='Insert Into t_ak_account_det(account_code,module_id) '+
                 'Values (:parkode_perkiraan,:parid_modul)';
       parambyname('parkode_perkiraan').Value:=edkode.Text;
-      parambyname('parid_modul').Value:=MemTableEh1['id'];
+      parambyname('parid_modul').Value:=Memdetail['id'];
       execsql;
     end;
-    MemTableEh1.Next;
+    Memdetail.Next;
   end;
-
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='Insert Into t_daftar_perkiraan(kode,kode_header,nama_perkiraan,'+
-              'posting,posisi_dk,kelompok_akun,id_jenis_akun,kd_kategori_akun,status_neraca) '+
+    sql.Text:='Insert Into t_ak_account(code,header_code,account_name,'+
+              'posting_id,posisi_dk,group_id,type_id,category_code,balance_status) '+
               'Values (:parkode,:parkode_header,:parnama_perkiraan,:parposting,'+
               ':parposisi_dk,:parkelompok_akun,:parid_jenis_akun,:parkd_kategori_akun,:parstatus_neraca)';
     parambyname('parkode').Value:=edkode.Text;
-    parambyname('parkode_header').Value:=dm.QTemp2.FieldByName('kode_header').AsString;
+    parambyname('parkode_header').Value:=dm.QTemp1.FieldByName('header_code').AsString;
     parambyname('parnama_perkiraan').Value:=ednama_perkiraan.Text;
     parambyname('parposting').Value:=QTemp.FieldByName('id').AsString;
     ParamByName('parstatus_neraca').Value:=statusnl;
-    if CBposisi_d_k.Text='Debit' then
+    if CBposisi_d_k.Text='DEBIT' then
     begin
      parambyname('parposisi_dk').Value:='D';
     end
@@ -344,14 +372,14 @@ begin
 
     if CBkelompok_akun.Text='NERACA' then
     begin
-      parambyname('parkelompok_akun').Value:='1';
+      parambyname('parkelompok_akun').Value:=1;
     end
     else
     begin
-      parambyname('parkelompok_akun').Value:='2';
+      parambyname('parkelompok_akun').Value:=2;
     end;
     parambyname('parid_jenis_akun').Value:=QTemp2.FieldByName('id').AsString;
-    parambyname('parkd_kategori_akun').Value:=QTemp3.FieldByName('kode_kategori').AsString;
+    parambyname('parkd_kategori_akun').Value:=QTemp3.FieldByName('category_code').AsString;
 
     execsql;
   end;
@@ -363,32 +391,32 @@ end;
 
 procedure TFNewdaftar_perkiraan_bank.Update;
 begin
-  with dm.QTemp2 do
+  with dm.QTemp1 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select kode_header from t_header_perkiraan where nama_header='+QuotedStr(CBheader.Text);
+    Sql.Text:='select header_code from t_ak_header where header_name='+QuotedStr(CBheader.Text);
     Open;
   end;
   with QTemp do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select id from t_posting where nama_posting='+QuotedStr(cbposting.Text);
+    Sql.Text:='select id from t_ak_posting_type where posting='+QuotedStr(cbposting.Text);
     Open;
   end;
   with QTemp2 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select id from t_jenis_akun where jenis_akun='+QuotedStr(CBjenis_akun.Text);
+    Sql.Text:='select id from t_ak_type where "type"='+QuotedStr(CBjenis_akun.Text);
     Open;
   end;
   with dm.QTemp3 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select kode_kategori from t_kategori_akun where nm_kategori='+QuotedStr(CBkategori.Text);
+    Sql.Text:='select category_code from t_ak_category where category='+QuotedStr(CBkategori.Text);
     Open;
   end;
 
@@ -396,38 +424,38 @@ begin
   begin
     close;
     sql.Clear;
-    Sql.Text:='Delete From t_daftar_perkiraan_detail '+
-              'where kode_perkiraan='+QuotedStr(edkode.Text);
+    Sql.Text:='Delete From t_ak_account_det '+
+              'where account_code='+QuotedStr(edkode.Text);
     Execsql;
   end;
 
-  MemTableEh1.First;
-  while not MemTableEh1.Eof do
+  Memdetail.First;
+  while not Memdetail.Eof do
   begin
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_daftar_perkiraan_detail(kode_perkiraan,id_modul) '+
+      sql.Text:='Insert Into t_ak_account_det(account_code,module_id) '+
                 'Values (:parkode_perkiraan,:parid_modul)';
       parambyname('parkode_perkiraan').Value:=edkode.Text;
-      parambyname('parid_modul').Value:=MemTableEh1['id'];
+      parambyname('parid_modul').Value:=Memdetail['id'];
       execsql;
     end;
-    MemTableEh1.Next;
+    Memdetail.Next;
   end;
 
   with Dm.Qtemp do
   begin
     close;
     Sql.Clear;
-    Sql.Text :='update t_daftar_perkiraan set kode_header=:parkode_header,'+
-               'nama_perkiraan=:parnama_perkiraan,posting=:parposting,'+
-               'posisi_dk=:parposisi_dk,kelompok_akun=:parkelompok_akun,'+
-               'id_jenis_akun=:parid_jenis_akun,kd_kategori_akun=:parkd_kategori_akun '+
-               ',status_neraca=:parstatus_neraca where kode=:parkode';
+    Sql.Text :='update t_ak_account set header_code=:parkode_header,'+
+               'account_name=:parnama_perkiraan,posting_id=:parposting,'+
+               'posisi_dk=:parposisi_dk,group_id=:parkelompok_akun,'+
+               'type_id=:parid_jenis_akun,category_code=:parkd_kategori_akun '+
+               ',balance_status=:parstatus_neraca where code=:parkode';
     parambyname('parkode').Value:=edkode.Text;
-    parambyname('parkode_header').Value:=dm.QTemp2.FieldByName('kode_header').AsString;
+    parambyname('parkode_header').Value:=dm.QTemp1.FieldByName('header_code').AsString;
     parambyname('parnama_perkiraan').Value:=ednama_perkiraan.Text;
     parambyname('parposting').Value:=QTemp.FieldByName('id').AsString;
     ParamByName('parstatus_neraca').Value:=statusnl;
@@ -449,7 +477,7 @@ begin
       parambyname('parkelompok_akun').Value:='2';
     end;
     parambyname('parid_jenis_akun').Value:=QTemp2.FieldByName('id').AsString;
-    parambyname('parkd_kategori_akun').Value:=dm.QTemp3.FieldByName('kode_kategori').AsString;
+    parambyname('parkd_kategori_akun').Value:=dm.QTemp3.FieldByName('category_code').AsString;
     ExecSql;
   end;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);

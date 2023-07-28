@@ -16,20 +16,33 @@ type
     BSave: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FNewPosting: TFNewPosting;
+function FNewPosting: TFNewPosting;
 
 implementation
 
 {$R *.dfm}
 
 uses UNewDaftar_perkiraan, UDataModule;
+var
+//  FPakai_BahanPersbu: TFPakai_BahanPersbu;
+  RealFNewPosting: TFNewPosting;
+
+function FNewPosting: TFNewPosting;
+begin
+  if RealFNewPosting <> nil then
+    FNewPosting:= RealFNewPosting
+  else
+    Application.CreateForm(TFNewPosting, Result);
+end;
 
 procedure TFNewPosting.BBatalClick(Sender: TObject);
 begin
@@ -48,7 +61,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_posting(nama_posting) '+
+      sql.Text:='Insert Into t_ak_posting_type("posting") '+
                 'Values (:parnama_modul)';
       parambyname('parnama_modul').Value:=ednama_posting.Text;
       execsql;
@@ -59,16 +72,31 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select nama_posting from t_posting';
+      Sql.Text:='select "posting" from t_ak_posting_type';
       Open;
     end;
     while not DM.Qtemp.Eof do
     begin
-      FNewdaftar_perkiraan_bank.CBposting.Items.Add(DM.Qtemp.FieldByName('nama_posting').AsString);
+      FNewdaftar_perkiraan_bank.CBposting.Items.Add(DM.Qtemp.FieldByName('posting').AsString);
       DM.Qtemp.Next;
     end;
     Close;
   end
+end;
+
+procedure TFNewPosting.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNewPosting.FormCreate(Sender: TObject);
+begin
+  RealFNewPosting:=Self;
+end;
+
+procedure TFNewPosting.FormDestroy(Sender: TObject);
+begin
+  RealFNewPosting:=nil;
 end;
 
 end.

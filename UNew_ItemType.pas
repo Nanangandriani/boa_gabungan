@@ -24,6 +24,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BCariClick(Sender: TObject);
+    procedure EdNm_akunButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +39,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu, UItem_Type;
+uses UDataModule, UMainMenu, UItem_Type, UCari_DaftarPerk;
 var
   RealFNew_ItemType: TFNew_ItemType;
 // implementasi function
@@ -102,6 +103,24 @@ begin
     end;
     BBatalClick(sender);
     ShowMessage('Data Berhasil di Simpan');
+  end;
+end;
+
+procedure TFNew_ItemType.EdNm_akunButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='itemtype';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
   end;
 end;
 

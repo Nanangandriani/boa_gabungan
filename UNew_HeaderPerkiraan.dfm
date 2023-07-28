@@ -3,8 +3,8 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Input Header Perkiraan'
-  ClientHeight = 99
-  ClientWidth = 341
+  ClientHeight = 100
+  ClientWidth = 345
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -65,13 +65,13 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 67
-    Width = 341
+    Top = 68
+    Width = 345
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 68
-    ExplicitWidth = 345
+    ExplicitTop = 67
+    ExplicitWidth = 341
     object BBatal: TRzBitBtn
       Left = 269
       Top = 1
@@ -132,6 +132,7 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 265
     end
     object BSave: TRzBitBtn
       Left = 184
@@ -194,6 +195,7 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 180
     end
   end
 end

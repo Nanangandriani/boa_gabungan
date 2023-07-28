@@ -1,10 +1,10 @@
-object Fbrowse_data_modul: TFbrowse_data_modul
+object FCari_Data_Modul: TFCari_Data_Modul
   Left = 0
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Browse Data Modul'
-  ClientHeight = 240
-  ClientWidth = 420
+  ClientHeight = 241
+  ClientWidth = 424
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object Fbrowse_data_modul: TFbrowse_data_modul
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 420
-    Height = 208
+    Width = 424
+    Height = 209
     Align = alClient
     DataSource = DataSource1
     DynProps = <>
@@ -44,7 +44,7 @@ object Fbrowse_data_modul: TFbrowse_data_modul
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nama_modul'
+        FieldName = 'module_name'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Modul'
@@ -55,13 +55,13 @@ object Fbrowse_data_modul: TFbrowse_data_modul
   end
   object Panel1: TPanel
     Left = 0
-    Top = 208
-    Width = 420
+    Top = 209
+    Width = 424
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 209
-    ExplicitWidth = 424
+    ExplicitTop = 208
+    ExplicitWidth = 420
     object BBatal: TRzBitBtn
       Left = 348
       Top = 1
@@ -122,6 +122,7 @@ object Fbrowse_data_modul: TFbrowse_data_modul
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 344
     end
     object BEdit: TRzBitBtn
       Left = 273
@@ -183,6 +184,7 @@ object Fbrowse_data_modul: TFbrowse_data_modul
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 269
     end
   end
   object DataSource1: TDataSource
@@ -193,7 +195,7 @@ object Fbrowse_data_modul: TFbrowse_data_modul
   object UniQuery1: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_modul')
+      'select * from t_ak_module order by "id"')
     Left = 288
     Top = 123
   end

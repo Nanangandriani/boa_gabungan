@@ -67,7 +67,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_header_perkiraan(kode_header,nama_header) '+
+      sql.Text:='Insert Into t_ak_header(header_code,header_name) '+
                 'Values (:parkode_header,:parnama_header)';
       parambyname('parkode_header').Value:=edkode_header.Text;
       parambyname('parnama_header').Value:=ednama_header.Text;
@@ -80,12 +80,12 @@ begin
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='select nama_header from t_header_perkiraan';
+    Sql.Text:='select header_name from t_ak_header';
     Open;
   end;
   while not DM.Qtemp.Eof do
   begin
-    FNewdaftar_perkiraan_bank.CBheader.Items.Add(DM.Qtemp.FieldByName('nama_header').AsString);
+    FNewdaftar_perkiraan_bank.CBheader.Items.Add(DM.Qtemp.FieldByName('header_name').AsString);
     DM.Qtemp.Next;
   end;
   Close;

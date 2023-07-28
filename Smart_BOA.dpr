@@ -21,7 +21,7 @@ uses
   UListBank_perusahaan in 'UListBank_perusahaan.pas' {FListBank},
   UNewBank in 'UNewBank.pas' {FNewBank},
   UAkun_Perkiraan_TerimaMat in 'UAkun_Perkiraan_TerimaMat.pas' {FAkun_Perkiraan_TerimaMat},
-  Udafperkiraan in 'Udafperkiraan.pas' {Fdafperkiraan},
+  UCari_DaftarPerk in 'UCari_DaftarPerk.pas' {FCari_DaftarPerk},
   Uupdate_faktur in 'Uupdate_faktur.pas' {Fupdate_faktur},
   UBarang_Stok in 'UBarang_Stok.pas' {FBarang_Stok},
   UNew_Barang_Stok in 'UNew_Barang_Stok.pas' {FNew_Barang_stok},
@@ -48,7 +48,7 @@ uses
   UNewDaftar_perkiraan in 'UNewDaftar_perkiraan.pas' {FNewdaftar_perkiraan_bank},
   UNew_HeaderPerkiraan in 'UNew_HeaderPerkiraan.pas' {FNewHeaderPerkiraan},
   UNew_Posting in 'UNew_Posting.pas' {FNewPosting},
-  UCari_Modul in 'UCari_Modul.pas' {Fbrowse_data_modul};
+  UCari_Modul in 'UCari_Modul.pas' {FCari_Data_Modul};
 
 {$R *.res}
 
@@ -77,7 +77,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListBank, FListBank);
   Application.CreateForm(TFNewBank, FNewBank);
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
-  Application.CreateForm(TFdafperkiraan, Fdafperkiraan);
+  Application.CreateForm(TFCari_DaftarPerk, FCari_DaftarPerk);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
@@ -89,8 +89,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
   Application.CreateForm(TFNew_Supplier, FNew_Supplier);
-  Application.CreateForm(TFNewPosting, FNewPosting);
-  //  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
+  //  Application.CreateForm(TFNewPosting, FNewPosting);
+//  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

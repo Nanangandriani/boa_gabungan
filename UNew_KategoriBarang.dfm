@@ -125,7 +125,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
     Height = 41
     Align = alBottom
     TabOrder = 4
-    ExplicitTop = 138
+    ExplicitTop = 143
     ExplicitWidth = 481
     object BBatal: TRzBitBtn
       Left = 409

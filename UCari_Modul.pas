@@ -9,7 +9,7 @@ uses
   Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
 
 type
-  TFbrowse_data_modul = class(TForm)
+  TFCari_Data_Modul = class(TForm)
     DBGridEh1: TDBGridEh;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
@@ -29,7 +29,7 @@ type
   end;
 
 //var
-Function  Fbrowse_data_modul: TFbrowse_data_modul;
+Function  FCari_Data_Modul: TFCari_Data_Modul;
 var
   ItemReturn :Integer;
 
@@ -39,22 +39,22 @@ implementation
 
 uses UNewDaftar_perkiraan;
 var
-  realfbdm : TFbrowse_data_modul;
+  realfbdm : TFCari_Data_Modul;
 // implementasi function
-function fbrowse_data_modul: TFbrowse_data_modul;
+function FCari_Data_Modul: TFCari_Data_Modul;
 begin
   if realfbdm <> nil then
-    Fbrowse_data_modul:= realfbdm
+    FCari_Data_Modul:= realfbdm
   else
-    Application.CreateForm(TFbrowse_data_modul, Result);
+    Application.CreateForm(TFCari_Data_Modul, Result);
 end;
 
-procedure TFbrowse_data_modul.BBatalClick(Sender: TObject);
+procedure TFCari_Data_Modul.BBatalClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TFbrowse_data_modul.BEditClick(Sender: TObject);
+procedure TFCari_Data_Modul.BEditClick(Sender: TObject);
 VAR I :integer;
 begin
 if ItemReturn=0 then
@@ -68,10 +68,10 @@ if ItemReturn=0 then
           GotoBookmark(DBGridEh1.SelectedRows.Items[i]);
           with UniQuery1 do
           begin
-            FNewdaftar_perkiraan_bank.MemTableEh1.Insert;
-            FNewdaftar_perkiraan_bank.MemTableEh1['id']:=UniQuery1.FieldByName('id').AsString;
-            FNewdaftar_perkiraan_bank.MemTableEh1['nama_modul']:=UniQuery1.FieldByName('nama_modul').AsString;
-            FNewdaftar_perkiraan_bank.MemTableEh1.Post;
+            FNewdaftar_perkiraan_bank.Memdetail.Insert;
+            FNewdaftar_perkiraan_bank.Memdetail['id']:=UniQuery1.FieldByName('id').AsString;
+            FNewdaftar_perkiraan_bank.Memdetail['nama_modul']:=UniQuery1.FieldByName('module_name').AsString;
+            FNewdaftar_perkiraan_bank.Memdetail.Post;
           end;
         end;
       end;
@@ -80,23 +80,23 @@ if ItemReturn=0 then
   Close;
 end;
 
-procedure TFbrowse_data_modul.FormClose(Sender: TObject;
+procedure TFCari_Data_Modul.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Action:=caFree;
 end;
 
-procedure TFbrowse_data_modul.FormCreate(Sender: TObject);
+procedure TFCari_Data_Modul.FormCreate(Sender: TObject);
 begin
   realfbdm:=self;
 end;
 
-procedure TFbrowse_data_modul.FormDestroy(Sender: TObject);
+procedure TFCari_Data_Modul.FormDestroy(Sender: TObject);
 begin
   realfbdm:=nil;
 end;
 
-procedure TFbrowse_data_modul.FormShow(Sender: TObject);
+procedure TFCari_Data_Modul.FormShow(Sender: TObject);
 begin
   UniQuery1.Close;
   UniQuery1.Open;

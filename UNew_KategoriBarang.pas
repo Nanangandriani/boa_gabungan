@@ -56,7 +56,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, Udafperkiraan, UNew_Barang, UMainMenu, UKategori_Barang;
+uses UDataModule,UNew_Barang, UMainMenu, UKategori_Barang, UCari_DaftarPerk;
 
 var RealFNew_KategoriBarang: TFNew_KategoriBarang;
 function FNew_KategoriBarang: TFNew_KategoriBarang;
@@ -173,8 +173,20 @@ end;
 
 procedure TFNew_KategoriBarang.EdNm_akunButtonClick(Sender: TObject);
 begin
-  fdafperkiraan.Show;
-  fdafperkiraan.vpanggil:='kategorimaterial';
+with FCari_DaftarPerk do
+begin
+  Show;
+  vpanggil:='kategorimaterial';
+  with QDaftar_Perk do
+  begin
+    close;
+    sql.Clear;
+    SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+              ' left join t_ak_account b on a.account_code=b.code  '+
+              'left join t_ak_header c on b.header_code=c.header_code';
+    Execute;
+  end;
+end;
 end;
 
 procedure TFNew_KategoriBarang.EdNm_akunKeyPress(Sender: TObject; var Key: Char);

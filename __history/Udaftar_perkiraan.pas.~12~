@@ -1,0 +1,208 @@
+unit Udaftar_perkiraan;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxRibbonSkins, dxRibbonCustomizationForm,
+  DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
+  Data.DB, DataDriverEh, MemTableEh, MemDS, DBAccess, Uni, dxBar, EhLibVCL,
+  GridsEh, DBAxisGridsEh, DBGridEh, cxClasses, dxRibbon, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue, dxSkinsdxRibbonPainter, dxSkinsdxBarPainter, dxSkinBasic,
+  dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Black,
+  dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray, dxSkinOffice2019White,
+  dxSkinTheBezier, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxCore;
+
+type
+  TFDaftar_Perkiraan = class(TForm)
+    dxRibbon1: TdxRibbon;
+    dxRibbon1Tab1: TdxRibbonTab;
+    DBGridEh1: TDBGridEh;
+    dxBarManager1: TdxBarManager;
+    dxBarManager1Bar1: TdxBar;
+    dxBUpdate: TdxBarButton;
+    dxBRefresh: TdxBarButton;
+    dxBDelete: TdxBarButton;
+    dxBarButton2: TdxBarButton;
+    dxBuBaru: TdxBarLargeButton;
+    dxBprint: TdxBarLargeButton;
+    dxBarLargeButton1: TdxBarLargeButton;
+    Qdaftar_perkiraan: TUniQuery;
+    Dsdaftar_perkiraan: TDataSource;
+    DBGridEh2: TDBGridEh;
+    MemDaftar_Perk: TMemTableEh;
+    DataSetDriverEh1: TDataSetDriverEh;
+    DSdetail_perkiraan: TDataSource;
+    Qdetail_perkiraan: TUniQuery;
+    procedure dxBRefreshClick(Sender: TObject);
+    procedure dxBDeleteClick(Sender: TObject);
+    procedure dxBuBaruClick(Sender: TObject);
+    procedure dxBUpdateClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure DBGridEh1DblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure Refresh;
+  end;
+//var
+Function  FDaftar_Perkiraan: TFDaftar_Perkiraan;
+
+implementation
+
+{$R *.dfm}
+
+uses UNewDaftar_perkiraan, UDataModule;
+var
+//  FPakai_BahanPersbu: TFPakai_BahanPersbu;
+  RealPerkiraan: TFDaftar_Perkiraan;
+
+function FDaftar_Perkiraan: TFDaftar_Perkiraan;
+begin
+  if RealPerkiraan <> nil then
+    FDaftar_Perkiraan:= RealPerkiraan
+  else
+    Application.CreateForm(TFDaftar_Perkiraan, Result);
+end;
+
+procedure TFDaftar_Perkiraan.Refresh;
+begin
+  DBGridEh1.StartLoadingStatus();
+  try
+    Qdaftar_perkiraan.Close;
+    Qdaftar_perkiraan.Open;
+    Qdetail_perkiraan.Close;
+    Qdetail_perkiraan.Open;
+    MemDaftar_Perk.Close;
+    MemDaftar_Perk.Open;
+  finally
+  DBGridEh1.FinishLoadingStatus();
+  end;
+end;
+
+procedure TFDaftar_Perkiraan.DBGridEh1DblClick(Sender: TObject);
+begin
+  dxBUpdateClick(sender);
+end;
+
+procedure TFDaftar_Perkiraan.dxBDeleteClick(Sender: TObject);
+begin
+  if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='Delete From t_daftar_perkiraan where kode = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+      execsql;
+    end;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='Delete From t_daftar_perkiraan_detail where kode_perkiraan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+      execsql;
+    end;
+    MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
+    Refresh;
+  end;
+end;
+
+procedure TFDaftar_Perkiraan.dxBRefreshClick(Sender: TObject);
+begin
+  Refresh;
+end;
+
+procedure TFDaftar_Perkiraan.dxBuBaruClick(Sender: TObject);
+begin
+ with FNewdaftar_perkiraan_bank do
+ begin
+  Clear;
+  Status:=0;
+  ShowModal;
+  CkNeraca.Checked:=false;
+ end;
+end;
+
+procedure TFDaftar_Perkiraan.dxBUpdateClick(Sender: TObject);
+begin
+  FNewdaftar_perkiraan_bank.Clear;
+  with MemDaftar_Perk do
+  begin
+  with FNewdaftar_perkiraan_bank do
+  begin
+    edkode.Text:=FieldByName('code').AsString;
+    ednama_perkiraan.Text:=FieldByName('account_name').AsString;
+    CBheader.Text:=FieldByName('header_name').AsString;
+    CBposting.Text:=FieldByName('posting').AsString;
+    CbKategori.Text:=FieldByName('category').AsString;
+    CBjenis_akun.Text:=FieldByName('type').AsString;
+    CBposisi_d_k.Text:=FieldByName('posisi_dk').AsString;
+    CBkelompok_akun.Text:=FieldByName('group').AsString;
+    statusnl:=FieldByName('balance_status').AsString;
+    if statusnl='1' then CkNeraca.Checked:=true else CkNeraca.Checked:=false;
+//    FNewdaftar_perkiraan_bank.ed.Text:=FieldByName('id_jenis_akun').AsString;
+  end;
+  end;
+  Qdetail_perkiraan.First;
+  while not Qdetail_perkiraan.Eof do
+  begin
+    with Qdetail_perkiraan do
+    begin
+      FNewdaftar_perkiraan_bank.Memdetail.Insert;
+      FNewdaftar_perkiraan_bank.Memdetail['id']:=FieldByName('id_modul').AsString;
+      FNewdaftar_perkiraan_bank.Memdetail['nama_modul']:=FieldByName('nama_modul').AsString;
+      FNewdaftar_perkiraan_bank.Memdetail.Post;
+    end;
+    Qdetail_perkiraan.Next;
+  end;
+  Status:=1;
+  FNewdaftar_perkiraan_bank.ShowModal;
+end;
+
+procedure TFDaftar_Perkiraan.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Qdaftar_perkiraan.Close;
+  Action:=caFree;
+end;
+
+procedure TFDaftar_Perkiraan.FormCreate(Sender: TObject);
+begin
+  RealPerkiraan:=self;
+end;
+
+procedure TFDaftar_Perkiraan.FormDestroy(Sender: TObject);
+begin
+  RealPerkiraan:=nil;
+end;
+
+procedure TFDaftar_Perkiraan.FormShow(Sender: TObject);
+begin
+  Qdaftar_perkiraan.Close;
+  Qdaftar_perkiraan.Open;
+  Qdetail_perkiraan.Close;
+  Qdetail_perkiraan.Open;
+  MemDaftar_Perk.Close;
+  MemDaftar_Perk.Open;
+end;
+
+end.

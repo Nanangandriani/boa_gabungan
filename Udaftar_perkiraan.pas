@@ -44,7 +44,7 @@ type
     Qdaftar_perkiraan: TUniQuery;
     Dsdaftar_perkiraan: TDataSource;
     DBGridEh2: TDBGridEh;
-    MemTableEh1: TMemTableEh;
+    MemDaftar_Perk: TMemTableEh;
     DataSetDriverEh1: TDataSetDriverEh;
     DSdetail_perkiraan: TDataSource;
     Qdetail_perkiraan: TUniQuery;
@@ -89,10 +89,10 @@ begin
   try
     Qdaftar_perkiraan.Close;
     Qdaftar_perkiraan.Open;
+    MemDaftar_Perk.Close;
+    MemDaftar_Perk.Open;
     Qdetail_perkiraan.Close;
     Qdetail_perkiraan.Open;
-    MemTableEh1.Close;
-    MemTableEh1.Open;
   finally
   DBGridEh1.FinishLoadingStatus();
   end;
@@ -145,19 +145,19 @@ end;
 procedure TFDaftar_Perkiraan.dxBUpdateClick(Sender: TObject);
 begin
   FNewdaftar_perkiraan_bank.Clear;
-  with MemTableEh1 do
+  with MemDaftar_Perk do
   begin
   with FNewdaftar_perkiraan_bank do
   begin
-    edkode.Text:=FieldByName('kode').AsString;
-    ednama_perkiraan.Text:=FieldByName('nama_perkiraan').AsString;
-    CBheader.Text:=FieldByName('nama_header').AsString;
-    CBposting.Text:=FieldByName('nama_posting').AsString;
-    CbKategori.Text:=FieldByName('nm_kategori').AsString;
-    CBjenis_akun.Text:=FieldByName('jenis_akun').AsString;
+    edkode.Text:=FieldByName('code').AsString;
+    ednama_perkiraan.Text:=FieldByName('account_name').AsString;
+    CBheader.Text:=FieldByName('header_name').AsString;
+    CBposting.Text:=FieldByName('posting').AsString;
+    CbKategori.Text:=FieldByName('category').AsString;
+    CBjenis_akun.Text:=FieldByName('type').AsString;
     CBposisi_d_k.Text:=FieldByName('posisi_dk').AsString;
-    CBkelompok_akun.Text:=FieldByName('kelompok').AsString;
-    statusnl:=FieldByName('status_neraca').AsString;
+    CBkelompok_akun.Text:=FieldByName('group').AsString;
+    statusnl:=FieldByName('balance_status').AsString;
     if statusnl='1' then CkNeraca.Checked:=true else CkNeraca.Checked:=false;
 //    FNewdaftar_perkiraan_bank.ed.Text:=FieldByName('id_jenis_akun').AsString;
   end;
@@ -167,10 +167,10 @@ begin
   begin
     with Qdetail_perkiraan do
     begin
-      FNewdaftar_perkiraan_bank.MemTableEh1.Insert;
-      FNewdaftar_perkiraan_bank.MemTableEh1['id']:=FieldByName('id_modul').AsString;
-      FNewdaftar_perkiraan_bank.MemTableEh1['nama_modul']:=FieldByName('nama_modul').AsString;
-      FNewdaftar_perkiraan_bank.MemTableEh1.Post;
+      FNewdaftar_perkiraan_bank.Memdetail.Insert;
+      FNewdaftar_perkiraan_bank.Memdetail['id']:=FieldByName('module_id').AsString;
+      FNewdaftar_perkiraan_bank.Memdetail['nama_modul']:=FieldByName('module_name').AsString;
+      FNewdaftar_perkiraan_bank.Memdetail.Post;
     end;
     Qdetail_perkiraan.Next;
   end;
@@ -201,8 +201,8 @@ begin
   Qdaftar_perkiraan.Open;
   Qdetail_perkiraan.Close;
   Qdetail_perkiraan.Open;
-  MemTableEh1.Close;
-  MemTableEh1.Open;
+  MemDaftar_Perk.Close;
+  MemDaftar_Perk.Open;
 end;
 
 end.

@@ -1,0 +1,36 @@
+unit UCari_DaftarPerk;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS, DBAccess, Uni, Vcl.StdCtrls,
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+
+type
+  TFCari_DaftarPerk = class(TForm)
+    Button1: TButton;
+    DBGridDaftar_Perk: TDBGridEh;
+    Edit1: TEdit;
+    Label1: TLabel;
+    QDaftar_Perk: TUniQuery;
+    DataSource1: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+     vpanggil,nm_jenis:string;
+  end;
+
+var
+  FCari_DaftarPerk: TFCari_DaftarPerk;
+
+implementation
+
+{$R *.dfm}
+
+uses UNew_KategoriBarang;
+
+end.

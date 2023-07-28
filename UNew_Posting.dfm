@@ -3,8 +3,8 @@ object FNewPosting: TFNewPosting
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Input Posting'
-  ClientHeight = 70
-  ClientWidth = 339
+  ClientHeight = 71
+  ClientWidth = 343
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +12,9 @@ object FNewPosting: TFNewPosting
   Font.Name = 'Tahoma'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 13
   object Label17: TLabel
     Left = 91
@@ -37,13 +40,13 @@ object FNewPosting: TFNewPosting
   end
   object Panel2: TPanel
     Left = 0
-    Top = 38
-    Width = 339
+    Top = 39
+    Width = 343
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 39
-    ExplicitWidth = 361
+    ExplicitTop = 38
+    ExplicitWidth = 339
     object BBatal: TRzBitBtn
       Left = 267
       Top = 1
@@ -104,7 +107,7 @@ object FNewPosting: TFNewPosting
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 285
+      ExplicitLeft = 263
     end
     object BSave: TRzBitBtn
       Left = 182
@@ -167,7 +170,7 @@ object FNewPosting: TFNewPosting
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 200
+      ExplicitLeft = 178
     end
   end
 end

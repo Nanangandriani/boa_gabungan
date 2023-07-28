@@ -1,0 +1,55 @@
+unit UCari_DaftarPerk;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS, DBAccess, Uni, Vcl.StdCtrls,
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+
+type
+  TFCari_DaftarPerk = class(TForm)
+    Button1: TButton;
+    DBGridDaftar_Perk: TDBGridEh;
+    Edit1: TEdit;
+    Label1: TLabel;
+    QDaftar_Perk: TUniQuery;
+    DataSource1: TDataSource;
+    procedure DBGridDaftar_PerkDblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+     vpanggil,nm_jenis:string;
+  end;
+
+var
+  FCari_DaftarPerk: TFCari_DaftarPerk;
+
+implementation
+
+{$R *.dfm}
+
+uses UNew_KategoriBarang, UNew_ItemType;
+
+procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
+begin
+    if (vpanggil = 'kategorimaterial')then
+    begin
+      FNew_KategoriBarang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_KategoriBarang.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+
+    if (vpanggil = 'itemtype')then
+    begin
+      FNew_Itemtype.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_Itemtype.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    close;
+end;
+
+end.

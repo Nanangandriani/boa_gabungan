@@ -169,8 +169,8 @@
             <Form>FAkun_Perkiraan_TerimaMat</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Udafperkiraan.pas">
-            <Form>Fdafperkiraan</Form>
+        <DCCReference Include="UCari_DaftarPerk.pas">
+            <Form>FCari_DaftarPerk</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Uupdate_faktur.pas">
@@ -278,7 +278,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UCari_Modul.pas">
-            <Form>Fbrowse_data_modul</Form>
+            <Form>FCari_Data_Modul</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
