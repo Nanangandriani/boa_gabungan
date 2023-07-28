@@ -3,7 +3,7 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
   Top = 0
   Caption = 'Daftar Perkiraan'
   ClientHeight = 417
-  ClientWidth = 722
+  ClientWidth = 643
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -37,7 +37,7 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
   object DBGridDaftar_Perk: TDBGridEh
     Left = 0
     Top = 0
-    Width = 722
+    Width = 643
     Height = 417
     Align = alClient
     DataSource = DataSource1
