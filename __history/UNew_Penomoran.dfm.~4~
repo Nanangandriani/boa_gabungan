@@ -2,7 +2,7 @@ object FNew_Penomoran: TFNew_Penomoran
   Left = 0
   Top = 0
   Caption = 'Input Penomoran'
-  ClientHeight = 268
+  ClientHeight = 561
   ClientWidth = 607
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FNew_Penomoran: TFNew_Penomoran
     Left = 0
     Top = 0
     Width = 607
-    Height = 232
+    Height = 525
     Align = alClient
     Color = 15987699
     TabOrder = 0
@@ -150,7 +150,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Top = 119
       Width = 56
       Height = 23
-      Text = '1'
+      Text = ''
       TabOrder = 2
       OnChange = eddigit_countChange
     end
@@ -420,7 +420,7 @@ object FNew_Penomoran: TFNew_Penomoran
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 232
+    Top = 525
     Width = 607
     Height = 36
     Align = alBottom

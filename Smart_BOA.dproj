@@ -293,6 +293,34 @@
             <Form>FNew_KonvBarang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UHak_Akses.pas">
+            <Form>FHak_Akses</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDept.pas">
+            <Form>FDept</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Dept.pas">
+            <Form>FNew_Dept</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UUser.pas">
+            <Form>FUser</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_User.pas">
+            <Form>FNew_User</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UJabatan.pas">
+            <Form>FJabatan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Jabatan.pas">
+            <Form>FNew_Jabatan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

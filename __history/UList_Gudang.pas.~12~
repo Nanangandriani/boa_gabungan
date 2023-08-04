@@ -134,12 +134,12 @@ begin
       Caption:='Update Gudang';
       with QGudang do
       begin
-        Edno.Text:=QGudang.FieldByName('order_no').AsString;
-        Ednm.Text:=QGudang.FieldByName('wh_name').AsString;
-        Edkd.Text:=QGudang.FieldByName('wh_code').AsString;
+        Edno.Text:=QGudang.FieldByName('no_urut').AsString;
+        Ednm.Text:=QGudang.FieldByName('nm_gudang').AsString;
+        Edkd.Text:=QGudang.FieldByName('kd_gudang').AsString;
         CbCategory.Text:=QGudang.FieldByName('category').AsString;
-        CbSbu.Text:=QGudang.FieldByName('sbu_code').AsString;
-        Edkode.Text:=QGudang.FieldByName('code').AsString;
+        CbSbu.Text:=QGudang.FieldByName('kd_sbu').AsString;
+        Edkode.Text:=QGudang.FieldByName('kode').AsString;
       end;
       Edkd.Enabled:=False;
     end;

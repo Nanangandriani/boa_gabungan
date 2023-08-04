@@ -1,7 +1,7 @@
-object FListGudang: TFListGudang
+object FDept: TFDept
   Left = 0
   Top = 0
-  Caption = 'Form List Gudang'
+  Caption = 'Form Departemen'
   ClientHeight = 442
   ClientWidth = 832
   Color = clBtnFace
@@ -12,14 +12,15 @@ object FListGudang: TFListGudang
   Font.Style = []
   OnShow = FormShow
   TextHeight = 15
-  object DBGridGudang: TDBGridEh
+  object DBGridDept: TDBGridEh
     Left = 0
     Top = 127
     Width = 832
     Height = 315
     Align = alClient
-    DataSource = DsGudang
+    DataSource = DsDept
     DynProps = <>
+    ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 0
     Columns = <
@@ -27,53 +28,20 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code'
+        FieldName = 'dept_code'
         Footers = <>
-        Width = 0
+        Title.Alignment = taCenter
+        Title.Caption = 'Kode'
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'order_no'
+        FieldName = 'dept'
         Footers = <>
-        Title.Caption = 'No'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_code'
-        Footers = <>
-        Title.Caption = 'Kode Gudang'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_name'
-        Footers = <>
-        Title.Caption = 'Nama Gudang'
-        Width = 300
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sbu_code'
-        Footers = <>
-        Title.Caption = 'Lokasi'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'category'
-        Footers = <>
-        Title.Caption = 'Category'
-        Width = 100
+        Title.Alignment = taCenter
+        Title.Caption = 'Departemen'
+        Width = 200
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -96,6 +64,42 @@ object FListGudang: TFListGudang
           ToolbarName = 'dxBarManager1Bar1'
         end>
       Index = 0
+    end
+  end
+  object ActMenu: TActionManager
+    Left = 544
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = ActUpdateExecute
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActROExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+      OnExecute = ActDelExecute
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
     end
   end
   object dxBarManager1: TdxBarManager
@@ -380,10 +384,8 @@ object FListGudang: TFListGudang
         BFC080A205F60000000049454E44AE426082}
     end
     object dxBarLargeBaru: TdxBarLargeButton
-      Caption = 'New'
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -516,7 +518,6 @@ object FListGudang: TFListGudang
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeBaruClick
     end
     object dxBarUpdate: TdxBarButton
       Action = ActUpdate
@@ -632,52 +633,29 @@ object FListGudang: TFListGudang
         0000000049454E44AE426082}
     end
   end
-  object DsGudang: TDataSource
-    DataSet = QGudang
-    Left = 472
-    Top = 48
+  object DsDept: TDataSource
+    DataSet = MemDept
+    Left = 496
+    Top = 24
   end
-  object QGudang: TUniQuery
+  object DsdDept: TDataSetDriverEh
+    ProviderDataSet = QDept
+    Left = 496
+    Top = 80
+  end
+  object MemDept: TMemTableEh
+    Params = <>
+    DataDriver = DsdDept
+    Left = 440
+    Top = 81
+  end
+  object QDept: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_wh order by order_no Desc')
-    Left = 368
-    Top = 48
-  end
-  object ActMenu: TActionManager
-    Left = 544
-    Top = 32
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'Baru  '
-      OnExecute = dxBarLargeBaruClick
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-      OnExecute = ActUpdateExecute
-    end
-    object ActRO: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActROExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-      OnExecute = ActDelExecute
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      Enabled = False
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose PO    '
-      Enabled = False
-    end
+      '-- select dept_code,dept from t_dept order by dept_code Asc'
+      'select * from t_dept order by dept_code Asc')
+    Active = True
+    Left = 440
+    Top = 24
   end
 end

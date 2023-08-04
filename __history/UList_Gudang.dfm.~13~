@@ -519,8 +519,10 @@ object FListGudang: TFListGudang
       OnClick = dxBarLargeBaruClick
     end
     object dxBarUpdate: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update'
       Category = 0
+      Hint = 'Update'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D

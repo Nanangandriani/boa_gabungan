@@ -150,7 +150,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Top = 119
       Width = 56
       Height = 23
-      Text = '1'
+      Text = ''
       TabOrder = 2
       OnChange = eddigit_countChange
     end

@@ -1,0 +1,76 @@
+unit UNew_User;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls;
+
+type
+  TFNew_User = class(TForm)
+    EdNama: TEdit;
+    EdDept: TComboBox;
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    CbJabatan: TComboBox;
+    EdPass: TEdit;
+    EdNik: TEdit;
+    Label10: TLabel;
+    Label9: TLabel;
+    Label8: TLabel;
+    Label7: TLabel;
+    Label6: TLabel;
+    Label5: TLabel;
+    Label4: TLabel;
+    Label3: TLabel;
+    Label2: TLabel;
+    Label1: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    Procedure Clear;
+    Procedure Load;
+  end;
+
+var
+  FNew_User: TFNew_User;
+  Status:integer;
+  nodept:string;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule;
+
+
+procedure TFNew_User.Clear;
+begin
+  EdNik.Clear;
+  EdNama.Clear;
+  EdPass.Clear;
+  CbJabatan.Text:='';
+end;
+
+procedure TFNew_User.Load;
+begin
+  EdDept.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='Select * from t_dept';
+    ExecSQL;
+  end;
+  Dm.Qtemp.First;
+  while not Dm.Qtemp.Eof do
+  begin
+    EdDept.Items.Add(Dm.Qtemp['dept']);
+    Dm.Qtemp.Next;
+  end;
+end;
+
+
+end.

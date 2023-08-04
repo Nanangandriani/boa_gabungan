@@ -76,9 +76,7 @@ type
      function conv_terbilang(nilai:string):string;
      function Terbilang(sValue: string):string;
      function ConvKeHuruf(inp: string): string;
-     function digitnumber(a:integer):integer;
-     //function GiveZero(const aNumber, aMaxDigit: Integer): String;
-
+     function GiveZero(const aNumber, aMaxDigit: Integer): String;
   end;
 
 var
@@ -90,32 +88,15 @@ implementation
 
 uses UDataModule;
 
- function TFNew_Penomoran.digitnumber(a: Integer): Integer;
- begin
-    if a=1 then
-      Result := 0
-    else
-    if a=2  then
-      Result :=00
-    else
-    if a=3 then
-      Result :=000
-    else
-    if a=4 then
-      Result :=0000
-    else
-    if a=5 then
-      Result :=00000
- end;
 
-{function TFNew_Penomoran.GiveZero(const aNumber, aMaxDigit: Integer): String;
+function TFNew_Penomoran.GiveZero(const aNumber, aMaxDigit: Integer): String;
 var
   formatSpecifier: String;
 begin
    formatSpecifier := Format('%%.%dd', [aMaxDigit]);
   // formatSpecifier will result like this: '%.5d' if aMaxDigit=5
    Result := Format(formatSpecifier, [aNumber]);
-end;}
+end;
 
 
 
@@ -392,19 +373,24 @@ end;
 
 procedure TFNew_Penomoran.Edbut_thChange(Sender: TObject);
 begin
-  //LabelHasil.Caption:=(Edbut_th.text)+(Edbut_bln.Text)+(Edbut_tgl.Text)+(Edbut_counter.text)+(Edbut_pemisah.text);
+  LabelHasil.Caption:=(Edbut_th.text)+(Edbut_bln.Text)+(Edbut_tgl.Text)+(Edbut_counter.text)+(Edbut_pemisah.text);
   //Edhasil.Text:= (Edbut_th.text)+(Edbut_bln.Text)+(Edbut_tgl.Text)+(Edbut_counter.text)+(Edbut_pemisah.text)
 end;
 
 procedure TFNew_Penomoran.eddigit_countChange(Sender: TObject);
 var
-   a:integer;
-   hasil:string;
-begin
-   a:=strtoint(eddigit_count.Text);
-   hasil:=inttostr(digitnumber(a));
-   Ed_comp.text:=hasil;
+  i:integer;
+begin   i := 00000000;
+   Inc(i);
+   ShowMessage(IntToStr(i));
 end;
+{var aNumber: Integer;
+begin
+    if (TryStrToInt(eddigit_count.Text, aNumber)) then
+    Edbut_counter.Text := GiveZero(aNumber,5)
+    else
+      ShowMessage('Value in Edit1 is not a valid integer value');
+end;}
 
 procedure TFNew_Penomoran.btnplus2Click(Sender: TObject);
 var
@@ -427,9 +413,8 @@ var
   B: TrzButtonEdit;
   i:integer;
 begin
-   edhasil.Text:=edhasil.Text+Ed_comp.Text;
+   edhasil.Text:=edbut_th.text+Edbut_bln.Text+Edbut_tgl.Text+eddigit_count.Text+Ed_Komp.Text;
    ed_komp.Clear;
-   LabelHasil.Caption:= edhasil.Text;
 
    { for I := 0 to CBKomponen_No.ItemIndex do
     begin

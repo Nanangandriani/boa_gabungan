@@ -1,4 +1,4 @@
-unit UList_Gudang;
+unit UDept;
 
 interface
 
@@ -23,11 +23,22 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
-  dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+  MemTableDataEh, Data.DB, MemDS, DBAccess, Uni, MemTableEh, DataDriverEh,
+  dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
+  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
-  TFListGudang = class(TForm)
-    DBGridEh1: TDBGridEh;
+  TFDept = class(TForm)
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
+    DBGridDept: TDBGridEh;
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
     dxBarButton2: TdxBarButton;
@@ -37,13 +48,16 @@ type
     dxBarButton5: TdxBarButton;
     dxBarButton6: TdxBarButton;
     dxBarButton7: TdxBarButton;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarButton8: TdxBarButton;
-    dxBarButton9: TdxBarButton;
-    dxBarButton10: TdxBarButton;
+    dxBarLargeBaru: TdxBarLargeButton;
+    dxBarUpdate: TdxBarButton;
+    dxBarRefresh: TdxBarButton;
+    dxBarDelete: TdxBarButton;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
-    procedure dxBarLargeButton1Click(Sender: TObject);
+    DsDept: TDataSource;
+    DsdDept: TDataSetDriverEh;
+    MemDept: TMemTableEh;
+    QDept: TUniQuery;
   private
     { Private declarations }
   public
@@ -51,17 +65,10 @@ type
   end;
 
 var
-  FListGudang: TFListGudang;
+  FDept: TFDept;
 
 implementation
 
 {$R *.dfm}
-
-uses UNew_Gudang;
-
-procedure TFListGudang.dxBarLargeButton1Click(Sender: TObject);
-begin
-  FNew_Gudang.ShowModal;
-end;
 
 end.

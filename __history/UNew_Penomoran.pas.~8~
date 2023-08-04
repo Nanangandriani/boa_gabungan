@@ -397,13 +397,10 @@ begin
 end;
 
 procedure TFNew_Penomoran.eddigit_countChange(Sender: TObject);
-var
-   a:integer;
-   hasil:string;
+var a:integer;
 begin
    a:=strtoint(eddigit_count.Text);
-   hasil:=inttostr(digitnumber(a));
-   Ed_comp.text:=hasil;
+   digitnumber(a);
 end;
 
 procedure TFNew_Penomoran.btnplus2Click(Sender: TObject);

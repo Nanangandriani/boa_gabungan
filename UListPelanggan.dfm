@@ -2,7 +2,7 @@ object FListPelanggan: TFListPelanggan
   Left = 0
   Top = 0
   Caption = 'FListPelanggan'
-  ClientHeight = 441
+  ClientHeight = 433
   ClientWidth = 828
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FListPelanggan: TFListPelanggan
     Left = 0
     Top = 127
     Width = 828
-    Height = 314
+    Height = 306
     Align = alClient
     DataSource = DsPelanggan
     DynProps = <>

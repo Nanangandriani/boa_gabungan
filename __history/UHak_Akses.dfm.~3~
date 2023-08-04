@@ -1,7 +1,7 @@
-object FListGudang: TFListGudang
+object FHak_Akses: TFHak_Akses
   Left = 0
   Top = 0
-  Caption = 'Form List Gudang'
+  Caption = 'FHak_Akses'
   ClientHeight = 442
   ClientWidth = 832
   Color = clBtnFace
@@ -10,15 +10,14 @@ object FListGudang: TFListGudang
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OnShow = FormShow
   TextHeight = 15
-  object DBGridGudang: TDBGridEh
+  object DBGridAkses: TDBGridEh
     Left = 0
     Top = 127
     Width = 832
     Height = 315
     Align = alClient
-    DataSource = DsGudang
+    DataSource = DsAkses
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 0
@@ -27,53 +26,7 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code'
         Footers = <>
-        Width = 0
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'order_no'
-        Footers = <>
-        Title.Caption = 'No'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_code'
-        Footers = <>
-        Title.Caption = 'Kode Gudang'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_name'
-        Footers = <>
-        Title.Caption = 'Nama Gudang'
-        Width = 300
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sbu_code'
-        Footers = <>
-        Title.Caption = 'Lokasi'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'category'
-        Footers = <>
-        Title.Caption = 'Category'
-        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -89,6 +42,7 @@ object FListGudang: TFListGudang
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitLeft = -204
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -96,6 +50,38 @@ object FListGudang: TFListGudang
           ToolbarName = 'dxBarManager1Bar1'
         end>
       Index = 0
+    end
+  end
+  object ActMenu: TActionManager
+    Left = 400
+    Top = 24
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
     end
   end
   object dxBarManager1: TdxBarManager
@@ -112,8 +98,8 @@ object FListGudang: TFListGudang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 640
-    Top = 40
+    Left = 344
+    Top = 80
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -516,11 +502,11 @@ object FListGudang: TFListGudang
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeBaruClick
     end
     object dxBarUpdate: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update  '
       Category = 0
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -557,8 +543,9 @@ object FListGudang: TFListGudang
         82}
     end
     object dxBarRefresh: TdxBarButton
-      Action = ActRO
+      Caption = 'Refresh  '
       Category = 0
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -632,52 +619,31 @@ object FListGudang: TFListGudang
         0000000049454E44AE426082}
     end
   end
-  object DsGudang: TDataSource
-    DataSet = QGudang
-    Left = 472
-    Top = 48
+  object DsdAkses: TDataSetDriverEh
+    ProviderDataSet = QAkses
+    Left = 648
+    Top = 88
   end
-  object QGudang: TUniQuery
+  object MemAkses: TMemTableEh
+    FetchAllOnOpen = True
+    Params = <>
+    DataDriver = DsdAkses
+    Left = 552
+    Top = 81
+  end
+  object DsAkses: TDataSource
+    DataSet = MemAkses
+    Left = 648
+    Top = 24
+  end
+  object QAkses: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_wh order by order_no Desc')
-    Left = 368
-    Top = 48
-  end
-  object ActMenu: TActionManager
-    Left = 544
-    Top = 32
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'Baru  '
-      OnExecute = dxBarLargeBaruClick
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-      OnExecute = ActUpdateExecute
-    end
-    object ActRO: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActROExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-      OnExecute = ActDelExecute
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      Enabled = False
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose PO    '
-      Enabled = False
-    end
+      
+        'select A.*,b.nm_menu,c.Dept from t_akses  a inner join t_menu b ' +
+        'on a.id_menu=b.id_menu '
+      'inner join t_dept c on a.iddept=c.iddept order by a.id_menu Asc')
+    Left = 552
+    Top = 24
   end
 end

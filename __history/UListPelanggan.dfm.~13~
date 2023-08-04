@@ -1,24 +1,25 @@
-object FListGudang: TFListGudang
+object FListPelanggan: TFListPelanggan
   Left = 0
   Top = 0
-  Caption = 'Form List Gudang'
-  ClientHeight = 442
-  ClientWidth = 832
+  Caption = 'FListPelanggan'
+  ClientHeight = 441
+  ClientWidth = 828
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
-  object DBGridGudang: TDBGridEh
+  object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 127
-    Width = 832
-    Height = 315
+    Width = 828
+    Height = 314
     Align = alClient
-    DataSource = DsGudang
+    DataSource = DsPelanggan
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 0
@@ -27,53 +28,61 @@ object FListGudang: TFListGudang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code'
+        FieldName = 'customer_code'
         Footers = <>
-        Width = 0
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'order_no'
-        Footers = <>
-        Title.Caption = 'No'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_code'
-        Footers = <>
-        Title.Caption = 'Kode Gudang'
+        Title.Alignment = taCenter
+        Title.Caption = 'Kode Pelanggan'
         Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'wh_name'
+        FieldName = 'customer_name'
         Footers = <>
-        Title.Caption = 'Nama Gudang'
-        Width = 300
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama Pelanggan'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'sbu_code'
+        FieldName = 'telp'
         Footers = <>
-        Title.Caption = 'Lokasi'
+        Title.Alignment = taCenter
+        Title.Caption = 'Telepon'
         Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'category'
+        FieldName = 'email'
         Footers = <>
-        Title.Caption = 'Category'
-        Width = 100
+        Title.Alignment = taCenter
+        Title.Caption = 'Email'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'address'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Alamat'
+        Width = 400
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'payment_term'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tempo Pembayaran'
+        Width = 120
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -81,7 +90,7 @@ object FListGudang: TFListGudang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 832
+    Width = 828
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -112,8 +121,8 @@ object FListGudang: TFListGudang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 640
-    Top = 40
+    Left = 744
+    Top = 104
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -127,7 +136,7 @@ object FListGudang: TFListGudang
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarLargeBaru'
+          ItemName = 'dxBarLargeNew'
         end
         item
           Visible = True
@@ -379,11 +388,9 @@ object FListGudang: TFListGudang
         A27DAF95ADEB22B15CD883808984208E209A8F859A9C6F6078F0145684BF98E8
         BFC080A205F60000000049454E44AE426082}
     end
-    object dxBarLargeBaru: TdxBarLargeButton
-      Caption = 'New'
+    object dxBarLargeNew: TdxBarLargeButton
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -516,7 +523,6 @@ object FListGudang: TFListGudang
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeBaruClick
     end
     object dxBarUpdate: TdxBarButton
       Action = ActUpdate
@@ -632,37 +638,91 @@ object FListGudang: TFListGudang
         0000000049454E44AE426082}
     end
   end
-  object DsGudang: TDataSource
-    DataSet = QGudang
-    Left = 472
-    Top = 48
-  end
-  object QGudang: TUniQuery
+  object QPelanggan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_wh order by order_no Desc')
-    Left = 368
-    Top = 48
+      'select * from master_data.t_customer')
+    Left = 428
+    Top = 56
+    object QPelanggancustomer_code: TStringField
+      FieldName = 'customer_code'
+      Required = True
+    end
+    object QPelanggancustomer_name: TStringField
+      FieldName = 'customer_name'
+      Size = 255
+    end
+    object QPelanggantelp: TStringField
+      FieldName = 'telp'
+      Size = 14
+    end
+    object QPelangganemail: TStringField
+      FieldName = 'email'
+      Size = 50
+    end
+    object QPelangganaddress: TMemoField
+      FieldName = 'address'
+      OnGetText = QPelangganaddressGetText
+      BlobType = ftMemo
+    end
+    object QPelanggannpwp: TStringField
+      FieldName = 'npwp'
+      Size = 100
+    end
+    object QPelangganid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object QPelanggancreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QPelanggancreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object QPelangganupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QPelangganupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QPelanggandeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QPelanggandeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QPelangganpayment_term: TSmallintField
+      FieldName = 'payment_term'
+    end
+  end
+  object DsPelanggan: TDataSource
+    DataSet = QPelanggan
+    Left = 553
+    Top = 40
   end
   object ActMenu: TActionManager
-    Left = 544
+    Left = 672
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
-      OnExecute = dxBarLargeBaruClick
+      OnExecute = dxBarLargeNewClick
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
+      OnExecute = dxBarUpdateClick
     end
     object ActRO: TAction
       Caption = 'Refresh  '
-      OnExecute = ActROExecute
+      OnExecute = dxBarRefreshClick
     end
     object ActDel: TAction
       Caption = 'Delete  '
-      OnExecute = ActDelExecute
+      OnExecute = dxBarDeleteClick
     end
     object ActPrint: TAction
       Caption = 'Print  '
