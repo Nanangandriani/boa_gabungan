@@ -125,7 +125,8 @@ begin
     EdJenis.Text:=Qkategori['type'];
     id_type:=Qkategori['type_id'];
     EdKategori.Text:=Qkategori['category'];
-    Edkd_akun.Text:=Qkategori['akun_code'];
+    Edkd_akun.Text:=Qkategori['account_code'];
+    EdNm_akun.Text:=Qkategori['account_name'];
     EdKategori.Text:=Qkategori['category'];
     Edno.Text:=Qkategori['order_no'];
   end;

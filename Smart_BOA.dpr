@@ -11,8 +11,6 @@ uses
   Vcl.Styles,
   UListProduk in 'UListProduk.pas' {FListProduk},
   Unew_produk in 'Unew_produk.pas' {FInput_Produk},
-  UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
-  UNewKonv_Material in 'UNewKonv_Material.pas' {FNewKonv_Material},
   USearchMaterial in 'USearchMaterial.pas' {FSearchMaterial},
   UListKonversi_Produk in 'UListKonversi_Produk.pas' {FListKonvProduk},
   UNewKonv_Produk in 'UNewKonv_Produk.pas' {FNewKonv_produk},
@@ -48,7 +46,12 @@ uses
   UNewDaftar_perkiraan in 'UNewDaftar_perkiraan.pas' {FNewdaftar_perkiraan_bank},
   UNew_HeaderPerkiraan in 'UNew_HeaderPerkiraan.pas' {FNewHeaderPerkiraan},
   UNew_Posting in 'UNew_Posting.pas' {FNewPosting},
-  UCari_Modul in 'UCari_Modul.pas' {FCari_Data_Modul};
+  UCari_Modul in 'UCari_Modul.pas' {FCari_Data_Modul},
+  UNew_JenisAkun in 'UNew_JenisAkun.pas' {FNew_JenisAkun},
+  UNew_KategoriAkun in 'UNew_KategoriAkun.pas' {FNew_KategoriAkun},
+  UNew_Satuan in 'UNew_Satuan.pas' {FNew_Satuan},
+  UKonversi_Barang in 'UKonversi_Barang.pas' {FKonversi_Barang},
+  UNew_KonvBarang in 'UNew_KonvBarang.pas' {FNew_KonvBarang};
 
 {$R *.res}
 
@@ -67,8 +70,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFMainMenu, FMainMenu);
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
-  Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
-  Application.CreateForm(TFNewKonv_Material, FNewKonv_Material);
   Application.CreateForm(TFSearchMaterial, FSearchMaterial);
   Application.CreateForm(TFListKonvProduk, FListKonvProduk);
   Application.CreateForm(TFNewKonv_produk, FNewKonv_produk);
@@ -89,8 +90,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
   Application.CreateForm(TFNew_Supplier, FNew_Supplier);
-  //  Application.CreateForm(TFNewPosting, FNewPosting);
-//  Application.CreateForm(TFKategori_Barang, FKategori_Barang);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

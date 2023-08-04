@@ -182,7 +182,7 @@ begin
       EdSatuan.Text:=MemMaterial.FieldByName('unit').AsString;
       Edjenis.Text:=MemMaterial.FieldByName('Type').AsString;
       EdMerk.Text:=MemMaterial.FieldByName('merk').AsString;
-      Edkd_akun.Text:=MemMaterial.FieldByName('akun_code').AsString;
+      Edkd_akun.Text:=MemMaterial.FieldByName('account_code').AsString;
      // EdNm_akun.Text:=MemMaterial.FieldByName('nama_perkiraan').AsString;
       idmaterial:=MemMaterial.FieldByName('id').AsString;
     end;

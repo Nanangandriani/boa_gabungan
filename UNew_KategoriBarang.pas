@@ -101,7 +101,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_item_category(category,id_type,akun_code,order_no,code)values'+
+      sql.Text:='insert into t_item_category(category,id_type,account_code,order_no,code)values'+
                 '(:ct,:jn,:kd_akun,:no,:code)';
                 ParamByName('ct').Value:=EdKategori.Text;
                 ParamByName('jn').Value:=id_type;
@@ -117,7 +117,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update t_item_category set category=:ct,type_id=:tp,akun_code=:akun,'+
+      sql.Text:='Update t_item_category set category=:ct,type_id=:tp,account_code=:akun,'+
                 ' order_no=:parno,updated_at=now(),code=:code where "id"=:id';
                 ParamByName('id').Value:=id;
                 ParamByName('ct').Value:=EdKategori.Text;

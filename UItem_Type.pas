@@ -149,6 +149,8 @@ begin
     statustr:=1;
     id:=QType['id'];
     EdType.Text:=QType['type'];
+    Edkd_akun.Text:=QType['account_code'];
+    EdNm_akun.Text:=QType['account_name'];
   end;
 end;
 

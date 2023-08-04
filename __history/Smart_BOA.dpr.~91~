@@ -1,0 +1,98 @@
+program Smart_BOA;
+
+uses
+  Vcl.Forms,
+  UMainMenu in 'UMainMenu.pas' {FMainMenu},
+  UDataModule in 'UDataModule.pas' {dm: TDataModule},
+  UDashboard in 'UDashboard.pas' {FDashboard},
+  UHomeSreen in 'UHomeSreen.pas' {FHomeSreen},
+  UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
+  Vcl.Themes,
+  Vcl.Styles,
+  UListProduk in 'UListProduk.pas' {FListProduk},
+  Unew_produk in 'Unew_produk.pas' {FInput_Produk},
+  UListKonversi_Material in 'UListKonversi_Material.pas' {FListKonvMaterial},
+  UNewKonv_Material in 'UNewKonv_Material.pas' {FNewKonv_Material},
+  USearchMaterial in 'USearchMaterial.pas' {FSearchMaterial},
+  UListKonversi_Produk in 'UListKonversi_Produk.pas' {FListKonvProduk},
+  UNewKonv_Produk in 'UNewKonv_Produk.pas' {FNewKonv_produk},
+  UList_Gudang in 'UList_Gudang.pas' {FListGudang},
+  UNew_Gudang in 'UNew_Gudang.pas' {FNew_Gudang},
+  UListBank_perusahaan in 'UListBank_perusahaan.pas' {FListBank},
+  UNewBank in 'UNewBank.pas' {FNewBank},
+  UAkun_Perkiraan_TerimaMat in 'UAkun_Perkiraan_TerimaMat.pas' {FAkun_Perkiraan_TerimaMat},
+  UCari_DaftarPerk in 'UCari_DaftarPerk.pas' {FCari_DaftarPerk},
+  Uupdate_faktur in 'Uupdate_faktur.pas' {Fupdate_faktur},
+  UBarang_Stok in 'UBarang_Stok.pas' {FBarang_Stok},
+  UNew_Barang_Stok in 'UNew_Barang_Stok.pas' {FNew_Barang_stok},
+  UCari_Barang in 'UCari_Barang.pas' {FCari_Barang},
+  UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
+  UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
+  UItem_Type in 'UItem_Type.pas' {FItem_Type},
+  UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
+  UNew_KategoriBarang in 'UNew_KategoriBarang.pas' {FNew_KategoriBarang},
+  UListBarang in 'UListBarang.pas' {FlistBarang},
+  UNew_Barang in 'UNew_Barang.pas' {FNew_Barang},
+  UKategori_Barang in 'UKategori_Barang.pas' {FKategori_Barang},
+  UListPelanggan in 'UListPelanggan.pas' {FListPelanggan},
+  UNew_Pelanggan in 'UNew_Pelanggan.pas' {FNew_Pelanggan},
+  UFakturPajak in 'UFakturPajak.pas' {FFakturPajak},
+  UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
+  UListSupplier in 'UListSupplier.pas' {FListSupplier},
+  UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
+  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
+  UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan},
+  UPenomoran in 'UPenomoran.pas' {FPenomoran},
+  UNew_Penomoran in 'UNew_Penomoran.pas' {FNew_Penomoran},
+  Udaftar_perkiraan in 'Udaftar_perkiraan.pas' {FDaftar_Perkiraan},
+  UNewDaftar_perkiraan in 'UNewDaftar_perkiraan.pas' {FNewdaftar_perkiraan_bank},
+  UNew_HeaderPerkiraan in 'UNew_HeaderPerkiraan.pas' {FNewHeaderPerkiraan},
+  UNew_Posting in 'UNew_Posting.pas' {FNewPosting},
+  UCari_Modul in 'UCari_Modul.pas' {FCari_Data_Modul},
+  UNew_JenisAkun in 'UNew_JenisAkun.pas' {FNew_JenisAkun},
+  UNew_KategoriAkun in 'UNew_KategoriAkun.pas' {FNew_KategoriAkun},
+  UNew_Satuan in 'UNew_Satuan.pas' {FNew_Satuan};
+
+{$R *.res}
+
+begin
+FHomeSreen :=TFHomeSreen.Create(Application);
+FHomeSreen.Show;
+FHomeSreen.Update;
+
+while FHomeSreen.Timer1.Enabled do
+  Application.ProcessMessages;
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFHomeLogin, FHomeLogin);
+  Application.CreateForm(TFHomeSreen, FHomeSreen);
+  Application.CreateForm(Tdm, dm);
+  Application.CreateForm(TFMainMenu, FMainMenu);
+  Application.CreateForm(TFListProduk, FListProduk);
+  Application.CreateForm(TFInput_Produk, FInput_Produk);
+  Application.CreateForm(TFListKonvMaterial, FListKonvMaterial);
+  Application.CreateForm(TFNewKonv_Material, FNewKonv_Material);
+  Application.CreateForm(TFSearchMaterial, FSearchMaterial);
+  Application.CreateForm(TFListKonvProduk, FListKonvProduk);
+  Application.CreateForm(TFNewKonv_produk, FNewKonv_produk);
+  Application.CreateForm(TFListGudang, FListGudang);
+  Application.CreateForm(TFNew_Gudang, FNew_Gudang);
+  Application.CreateForm(TFListBank, FListBank);
+  Application.CreateForm(TFNewBank, FNewBank);
+  Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
+  Application.CreateForm(TFCari_DaftarPerk, FCari_DaftarPerk);
+  Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
+  Application.CreateForm(TFListPelanggan, FListPelanggan);
+  Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
+  Application.CreateForm(TFFakturPajak, FFakturPajak);
+  Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
+  Application.CreateForm(TFListSupplier, FListSupplier);
+  Application.CreateForm(TFListPerusahaan, FListPerusahaan);
+  Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
+  Application.CreateForm(TFPenomoran, FPenomoran);
+  Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
+  Application.CreateForm(TFNew_Supplier, FNew_Supplier);
+  FHomeSreen.Hide;
+  FHomeSreen.Free;
+  Application.Run;
+end.

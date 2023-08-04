@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls,
   RzCmboBx, Data.DB, MemDS, DBAccess, Uni, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, MemTableEh, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, RzPanel;
+  DBAxisGridsEh, DBGridEh, RzPanel, Vcl.Buttons;
 
 type
   TFNewdaftar_perkiraan_bank = class(TForm)
@@ -45,6 +45,8 @@ type
     Label18: TLabel;
     Label19: TLabel;
     CkNeraca: TCheckBox;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure edkodeKeyPress(Sender: TObject; var Key: Char);
@@ -59,6 +61,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure CkNeracaClick(Sender: TObject);
     procedure CBkelompok_akunChange(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,7 +81,7 @@ implementation
 {$R *.dfm}
 
 uses Udaftar_perkiraan, UNew_HeaderPerkiraan, UNew_Posting,
-  UCari_Modul, UDataModule;
+  UCari_Modul, UDataModule, UNew_JenisAkun, UNew_KategoriAkun;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
   RealFNew_PerkBank: TFNewdaftar_perkiraan_bank;
@@ -387,6 +391,22 @@ begin
   Clear;
   Close;
   Fdaftar_perkiraan.Refresh;
+end;
+
+procedure TFNewdaftar_perkiraan_bank.SpeedButton1Click(Sender: TObject);
+begin
+  with FNew_JenisAkun do
+  begin
+    Show;
+  end;
+end;
+
+procedure TFNewdaftar_perkiraan_bank.SpeedButton2Click(Sender: TObject);
+begin
+  with FNew_KategoriAkun do
+    begin
+      Show;
+    end;
 end;
 
 procedure TFNewdaftar_perkiraan_bank.Update;

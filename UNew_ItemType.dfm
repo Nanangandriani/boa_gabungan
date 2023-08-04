@@ -3,7 +3,7 @@ object FNew_ItemType: TFNew_ItemType
   Top = 0
   Caption = 'Form New Jenis Barang'
   ClientHeight = 148
-  ClientWidth = 464
+  ClientWidth = 434
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -32,14 +32,14 @@ object FNew_ItemType: TFNew_ItemType
   object Panel1: TPanel
     Left = 0
     Top = 116
-    Width = 464
+    Width = 434
     Height = 32
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 115
     ExplicitWidth = 460
     object BBatal: TRzBitBtn
-      Left = 388
+      Left = 358
       Top = 1
       Height = 30
       Align = alRight
@@ -101,7 +101,7 @@ object FNew_ItemType: TFNew_ItemType
       ExplicitLeft = 384
     end
     object BSimpan: TRzBitBtn
-      Left = 313
+      Left = 283
       Top = 1
       Height = 30
       Align = alRight
@@ -228,7 +228,7 @@ object FNew_ItemType: TFNew_ItemType
   object EdType: TEdit
     Left = 107
     Top = 22
-    Width = 329
+    Width = 302
     Height = 23
     CharCase = ecUpperCase
     TabOrder = 1
@@ -246,7 +246,7 @@ object FNew_ItemType: TFNew_ItemType
   object EdNm_akun: TRzButtonEdit
     Left = 207
     Top = 65
-    Width = 229
+    Width = 202
     Height = 23
     Text = ''
     CharCase = ecUpperCase

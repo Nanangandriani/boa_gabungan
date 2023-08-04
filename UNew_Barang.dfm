@@ -147,6 +147,14 @@ object FNew_Barang: TFNew_Barang
     Caption = '...'
     OnClick = SpeedButton2Click
   end
+  object Btn_Satuan: TSpeedButton
+    Left = 279
+    Top = 139
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = Btn_SatuanClick
+  end
   object EdNm: TEdit
     Left = 128
     Top = 111
@@ -392,14 +400,6 @@ object FNew_Barang: TFNew_Barang
       NumGlyphs = 2
     end
   end
-  object EdSatuan: TEdit
-    Left = 128
-    Top = 140
-    Width = 145
-    Height = 21
-    CharCase = ecUpperCase
-    TabOrder = 6
-  end
   object EdMerk: TRzComboBox
     Left = 128
     Top = 173
@@ -407,7 +407,7 @@ object FNew_Barang: TFNew_Barang
     Height = 21
     CharCase = ecUpperCase
     Enabled = False
-    TabOrder = 7
+    TabOrder = 6
     Items.Strings = (
       'KKJ'
       'KKSP')
@@ -418,7 +418,7 @@ object FNew_Barang: TFNew_Barang
     Width = 145
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 8
+    TabOrder = 7
     OnSelect = EdjenisSelect
     Items.Strings = (
       'PRODUKSI'
@@ -433,7 +433,7 @@ object FNew_Barang: TFNew_Barang
     Text = ''
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 9
+    TabOrder = 8
   end
   object EdNm_akun: TRzButtonEdit
     Left = 244
@@ -443,7 +443,7 @@ object FNew_Barang: TFNew_Barang
     Text = ''
     CharCase = ecUpperCase
     ReadOnlyColorOnFocus = True
-    TabOrder = 10
+    TabOrder = 9
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
     OnButtonClick = EdNm_akunButtonClick
@@ -453,15 +453,21 @@ object FNew_Barang: TFNew_Barang
     Top = 81
     Width = 66
     Height = 21
-    TabOrder = 11
+    TabOrder = 10
     Text = '0'
     Visible = False
   end
-  object UniQuery1: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from t_material')
-    Left = 304
-    Top = 144
+  object EdSatuan: TRzButtonEdit
+    Left = 128
+    Top = 140
+    Width = 145
+    Height = 21
+    Text = ''
+    CharCase = ecUpperCase
+    ReadOnlyColorOnFocus = True
+    TabOrder = 11
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = EdSatuanButtonClick
   end
 end

@@ -28,12 +28,10 @@ type
     BSimpan: TRzBitBtn;
     BEdit: TRzBitBtn;
     Label9: TLabel;
-    EdSatuan: TEdit;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
     EdMerk: TRzComboBox;
-    UniQuery1: TUniQuery;
     Label13: TLabel;
     Label14: TLabel;
     Edjenis: TRzComboBox;
@@ -44,6 +42,8 @@ type
     SpeedButton1: TSpeedButton;
     Cbkdtr: TComboBox;
     SpeedButton2: TSpeedButton;
+    Btn_Satuan: TSpeedButton;
+    EdSatuan: TRzButtonEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -55,6 +55,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
+    procedure Btn_SatuanClick(Sender: TObject);
+    procedure EdSatuanButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,7 +73,8 @@ implementation
 {$R *.dfm}
 
 uses  umainmenu, UDataModule, UAkun_Perkiraan_TerimaMat, UKategori_Barang,
-  UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk;
+  UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk,
+  UNew_Satuan;
 
 var RealFNew_barang: TFNew_barang;
 function FNew_Barang: TFNew_Barang;
@@ -166,7 +169,7 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,akun_code,created_by)'+
+       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,account_code,created_by)'+
        ' values(:order_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
@@ -186,7 +189,7 @@ begin
        close;
        sql.clear;
        sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
-       ' unit=:unit,merk=:merk,akun_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
+       ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
@@ -210,6 +213,22 @@ begin
       MessageDlg(E.Message,mtError,[MBok],0);
       dm.koneksi.Rollback;
     end;
+  end;
+end;
+
+procedure TFNew_Barang.Btn_SatuanClick(Sender: TObject);
+begin
+  with FNew_Satuan do
+  begin
+    show;
+    Caption:='Form New Satuan';
+    Statustr:=0;
+    PnlNew.show;
+  //  PnlAksi.show;
+    Pnllist.hide;
+    BCari.Hide;
+    BSimpan.Show;
+    BBatal.Show;
   end;
 end;
 
@@ -290,6 +309,24 @@ begin
                 'left join t_ak_header c on b.header_code=c.header_code';
       Execute;
     end;
+  end;
+end;
+
+procedure TFNew_Barang.EdSatuanButtonClick(Sender: TObject);
+begin
+  with FNew_Satuan do
+  begin
+    show;
+    Caption:='Form List Satuan';
+    jenis_tr:='Barang';
+    PnlNew.Hide;
+  //  PnlAksi.Hide;
+    Pnllist.show;
+    QSatuan.Close;
+    QSatuan.Open;
+    BCari.Show;
+    BSimpan.hide;
+    BBatal.hide;
   end;
 end;
 

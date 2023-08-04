@@ -1,0 +1,255 @@
+unit UNew_KonvBarang;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzCmboBx, RzButton,
+  Vcl.ExtCtrls, Vcl.Mask, RzEdit, RzBtnEdt;
+
+type
+  TFNew_KonvBarang = class(TForm)
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    Edkd: TEdit;
+    Edqty: TEdit;
+    Edsatuan: TEdit;
+    Label11: TLabel;
+    Label10: TLabel;
+    Label13: TLabel;
+    EdqtyKon: TEdit;
+    Label12: TLabel;
+    Edno: TEdit;
+    Label6: TLabel;
+    Label4: TLabel;
+    Label8: TLabel;
+    qty: TLabel;
+    Label5: TLabel;
+    Label7: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edcategory: TRzComboBox;
+    EdNm: TRzButtonEdit;
+    RzButtonEdit1: TRzButtonEdit;
+    procedure BBatalClick(Sender: TObject);
+    procedure EdNmSelect(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
+    procedure EdqtyChange(Sender: TObject);
+    procedure EdqtyKonChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure EdcategorySelect(Sender: TObject);
+    procedure EdNmButtonClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure RzButtonEdit1ButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    Procedure Load;
+  end;
+
+Function FNew_KonvBarang: TFNew_KonvBarang;
+var  Status:integer;
+
+implementation
+
+{$R *.dfm}
+
+uses UKonversi_Barang, UDataModule, UCari_Barang, UNew_Satuan;
+
+var RealFNew_KonvBarang: TFNew_KonvBarang;
+function FNew_KonvBarang: TFNew_KonvBarang;
+begin
+  if RealFNew_KonvBarang <> nil then FNew_KonvBarang:= RealFNew_KonvBarang
+  else  Application.CreateForm(TFNew_KonvBarang, Result);
+end;
+
+Procedure TFNew_KonvBarang.Load;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    sql.Clear;
+    sql.Text:='Select * from t_item_category';
+    ExecSQL;
+  end;
+  Dm.Qtemp.First;
+  while not Dm.Qtemp.Eof do
+  begin
+  Edcategory.Items.Add(Dm.Qtemp['category']);
+  Dm.Qtemp.Next;
+  end;
+end;
+
+procedure TFNew_KonvBarang.RzButtonEdit1ButtonClick(Sender: TObject);
+begin
+  with FNew_Satuan do
+  begin
+    show;
+    Caption:='Form List Satuan';
+    jenis_tr:='KonvBarang';
+    PnlNew.Hide;
+  //  PnlAksi.Hide;
+    Pnllist.show;
+    QSatuan.Close;
+    QSatuan.Open;
+    BCari.Show;
+    BSimpan.hide;
+    BBatal.hide;
+  end;
+end;
+
+procedure TFNew_KonvBarang.BBatalClick(Sender: TObject);
+begin
+  Close;
+  FKonversi_Barang.dxBarButton3Click(sender);
+end;
+
+procedure TFNew_KonvBarang.BSimpanClick(Sender: TObject);
+begin
+if EdNm.Text='' then
+begin
+  MessageDlg('Nama Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
+  EdNm.SetFocus;
+  Exit;
+end;
+if Edsatuan.Text='' then
+begin
+  MessageDlg('Satuan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+  Edsatuan.SetFocus;
+  Exit;
+end;
+if EdKonversi.Text='' then
+begin
+  MessageDlg('Satuan Konversi Tidak boleh Kosong ',MtWarning,[MbOk],0);
+  EdKonversi.SetFocus;
+  Exit;
+end;
+if not dm.koneksi.InTransaction then
+dm.koneksi.StartTransaction;
+try
+begin
+if status=0 then
+begin
+ with dm.Qtemp do
+begin
+  close;
+  sql.clear;
+  sql.Text:='Select * from t_item_conversion';
+  ExecSQL;
+end;
+ with dm.Qtemp do
+begin
+  close;
+  sql.clear;
+  sql.Text:='insert into t_konversi_material(no_konversi,kd_material, qtysatuan, satuan, qtykonversi, konversi)'+
+            'values('+QuotedStr(Edno.Text)+', '+QuotedStr(EdKd.Text)+', '+QuotedStr(Edqty.Text)+', '+QuotedStr(Edsatuan.Text)+', '+QuotedStr(EdqtyKon.Text)+', '+QuotedStr(EdKonversi.Text)+')';
+  ExecSQL;
+  end;
+end;
+if status=1 then
+ begin
+ with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Text:='Update t_konversi_material set kd_material='+QuotedStr(EdKd.Text)+ ' ,qtysatuan='+QuotedStr(Edqty.Text)+' ,satuan='+QuotedStr(Edsatuan.Text)+''+
+              ' ,qtykonversi='+QuotedStr(EdqtyKon.Text)+', konversi='+QuotedStr(EdKonversi.Text)+' Where No_konversi='+QuotedStr(Edno.Text);
+    ExecSQL;
+    end;
+ end;
+dm.koneksi.Commit;
+Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+end
+Except
+on E :Exception do
+begin
+MessageDlg(E.Message,mtError,[MBok],0);
+dm.koneksi.Rollback;
+end;
+end;
+  BBatalClick(sender);
+end;
+
+procedure TFNew_KonvBarang.EdcategorySelect(Sender: TObject);
+begin
+ with Dm.Qtemp do
+  begin
+    close;
+    sql.Text:='select a.item_code,a.item_name,b.category,a.order_no from t_item a inner join t_item_category b '+
+              ' on a.category_id=b.id where category='+QuotedStr(Edcategory.Text)+''+
+              ' Group by a.item_code,a.item_name,b.category,a.order_no '+
+              ' order by b.category,a.order_no Asc';
+    ExecSQL;
+  end;
+  Edkd.Clear;
+  EdNm.Clear;
+end;
+
+procedure TFNew_KonvBarang.EdNmButtonClick(Sender: TObject);
+begin
+  with FCari_Barang do
+  begin
+    show;
+    status_tr:='KonvBarang';
+  with QBarang do
+  begin
+    close;
+    sql.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.unit from t_item a inner join '+
+              ' t_item_category b on a.category_id=b.id where b.category='+QuotedStr(Edcategory.Text)+''+
+              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.unit  '+
+              ' order by b.category,a.order_no Asc';
+    ExecSQL;
+  end;
+  end;
+end;
+
+procedure TFNew_KonvBarang.EdNmSelect(Sender: TObject);
+begin
+ with Dm.Qtemp do
+  begin
+    close;
+    sql.Text:='select kd_material,nm_material,category,no_material from t_material '+
+              ' where concat(no_material,'' '', nm_material)='+QuotedStr(EdNm.Text)+''+
+              ' Group by kd_material,nm_material,category,no_material '+
+              ' order by category,no_material Asc';
+    ExecSQL;
+  end;
+  Edkd.Text:=Dm.Qtemp.FieldByName('kd_material').AsString;
+end;
+
+procedure TFNew_KonvBarang.EdqtyChange(Sender: TObject);
+begin
+if Edqty.Text='' then   Edqty.Text:='0'  ;
+end;
+
+procedure TFNew_KonvBarang.EdqtyKonChange(Sender: TObject);
+begin
+if EdqtyKon.Text='' then   EdqtyKon.Text:='0'  ;
+end;
+
+procedure TFNew_KonvBarang.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNew_KonvBarang.FormCreate(Sender: TObject);
+begin
+  RealFNew_KonvBarang:=self;
+end;
+
+procedure TFNew_KonvBarang.FormDestroy(Sender: TObject);
+begin
+  RealFNew_KonvBarang:=nil;
+end;
+
+procedure TFNew_KonvBarang.FormShow(Sender: TObject);
+begin
+  Load;
+end;
+
+end.

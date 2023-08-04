@@ -31,7 +31,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Barang_stok, UNew_BonPermtBarang;
+uses UNew_Barang_stok, UNew_BonPermtBarang, UNew_KonvBarang, UDataModule;
 
 var
   realfCari_barang: TFCari_Barang;
@@ -46,19 +46,29 @@ end;
 
 procedure TFCari_Barang.DBGridEh1DblClick(Sender: TObject);
 begin
-if status_tr='MatStok' then
+  if status_tr='MatStok' then
   begin
-  with Fnew_Barang_stok do
+    with Fnew_Barang_stok do
+    begin
+      EdKd_Material.Text:=QBarang.FieldByName('kd_material').AsString;
+      Edmerk.Text:=QBarang.FieldByName('merk').AsString;
+      EdNm_Material.Text:=QBarang.FieldByName('nm_material').AsString;
+      no_material:=QBarang.FieldByName('no_material').AsString;
+      EdSatuan.Text:=QBarang.FieldByName('satuan').AsString;
+      EdNm_supp.Enabled:=True;;
+    end;
+  end;
+  if status_tr='KonvBarang' then
   begin
-    EdKd_Material.Text:=QBarang.FieldByName('kd_material').AsString;
-    Edmerk.Text:=QBarang.FieldByName('merk').AsString;
-    EdNm_Material.Text:=QBarang.FieldByName('nm_material').AsString;
-    no_material:=QBarang.FieldByName('no_material').AsString;
-    EdSatuan.Text:=QBarang.FieldByName('satuan').AsString;
-    EdNm_supp.Enabled:=True;;
+    with FNew_KonvBarang do
+    begin
+      Edkd.Text:=QBarang.FieldByName('item_code').AsString;
+      EdNm.Text:=QBarang.FieldByName('item_name').AsString;
+      Edsatuan.Text:=QBarang.FieldByName('unit').AsString;
+      Edqty.Text:='1';
+    end;
   end;
-    close;
-  end;
+  close;
 end;
 
 procedure TFCari_Barang.FormClose(Sender: TObject; var Action: TCloseAction);

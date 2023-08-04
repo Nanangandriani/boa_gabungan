@@ -133,9 +133,9 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
-  UListPelanggan, UListSupplier, UListProduk, UListKonversi_Material,
-  UListKonversi_Produk, UList_Gudang, UListBank_perusahaan, UBarang_Stok,
-  UItem_Type, UKategori_Barang, UListPerusahaan, Udaftar_perkiraan;
+  UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
+  UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
+  Udaftar_perkiraan,UKonversi_Barang;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -543,7 +543,7 @@ begin
           ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
           ' WHERE dd.akses='+QuotedStr('Admin')+
           ' and b.submenu='+QuotedStr(dm.qtemp1['menu'])+
-          ' Order by bb.created_at DESC ' ;
+          ' Order by bb.created_at DESC ';
           open;
           First;
       end;
@@ -565,11 +565,11 @@ begin
         //AButtonPanel.Tag:=1;
           if (dm.Qtemp2.RecordCount=1) or (dm.Qtemp2.RecordCount= 2)then
           begin
-            ACategoryPanel.Height:=90;
+            ACategoryPanel.Height:=80;
           end;
           if dm.Qtemp2.RecordCount>2 then
           begin
-            ACategoryPanel.Height:=40*dm.Qtemp2.RecordCount;
+            ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
           end;
          dm.Qtemp2.Next;
       end;
@@ -741,7 +741,7 @@ begin
 end;
 
 Initialization
-  RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFListKonvMaterial,
+  RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
   ,TFKategori_Barang,TFPenomoran,TFListPerusahaan,TFDaftar_Perkiraan]);
 end.

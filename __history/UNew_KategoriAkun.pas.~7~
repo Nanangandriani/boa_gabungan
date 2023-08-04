@@ -1,0 +1,69 @@
+unit UNew_KategoriAkun;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls;
+
+type
+  TFNew_KategoriAkun = class(TForm)
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    EdJenis: TEdit;
+    Label2: TLabel;
+    Label4: TLabel;
+    Label1: TLabel;
+    Label3: TLabel;
+    CbJenis: TComboBox;
+    procedure BBatalClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    id:string;
+  end;
+
+Function FNew_KategoriAkun: TFNew_KategoriAkun;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule;
+var
+//  FPakai_BahanPersbu: TFPakai_BahanPersbu;
+  RealFNew_KategoriAkun: TFNew_KategoriAkun;
+
+function FNew_KategoriAkun: TFNew_KategoriAkun;
+begin
+  if RealFNew_KategoriAkun <> nil then
+    FNew_KategoriAkun:= RealFNew_KategoriAkun
+  else
+    Application.CreateForm(TFNew_KategoriAkun, Result);
+end;
+procedure TFNew_KategoriAkun.BBatalClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TFNew_KategoriAkun.FormShow(Sender: TObject);
+begin
+  with dm.qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.text:='select * from t_ak_type order by id';
+    execute;
+  end;
+  dm.qtemp.First;
+  while not DM.Qtemp.Eof do
+  begin
+  CbJenis.Items.add(dm.qtemp['"type"']);
+  dm.qtemp.next;
+  end;
+end;
+
+end.

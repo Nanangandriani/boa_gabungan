@@ -129,14 +129,6 @@
             <Form>FInput_Produk</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListKonversi_Material.pas">
-            <Form>FListKonvMaterial</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNewKonv_Material.pas">
-            <Form>FNewKonv_Material</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="USearchMaterial.pas">
             <Form>FSearchMaterial</Form>
             <FormType>dfm</FormType>
@@ -281,8 +273,24 @@
             <Form>FCari_Data_Modul</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UNew_Kategori_Gudang.pas">
-            <Form>FNew_Kategori_Gudang</Form>
+        <DCCReference Include="UNew_JenisAkun.pas">
+            <Form>FNew_JenisAkun</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_KategoriAkun.pas">
+            <Form>FNew_KategoriAkun</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Satuan.pas">
+            <Form>FNew_Satuan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UKonversi_Barang.pas">
+            <Form>FKonversi_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_KonvBarang.pas">
+            <Form>FNew_KonvBarang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

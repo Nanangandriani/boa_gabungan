@@ -1,0 +1,61 @@
+unit UNew_JenisAkun;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzBtnEdt, Vcl.Mask,
+  RzEdit, RzButton, Vcl.ExtCtrls;
+
+type
+  TFNew_JenisAkun = class(TForm)
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    EdKategori: TEdit;
+    Label2: TLabel;
+    Label4: TLabel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+Function FNew_JenisAkun: TFNew_JenisAkun;
+
+implementation
+
+{$R *.dfm}
+
+var
+//  FPakai_BahanPersbu: TFPakai_BahanPersbu;
+  RealFNew_JenisAkun: TFNew_JenisAkun;
+
+function FNew_JenisAkun: TFNew_JenisAkun;
+begin
+  if RealFNew_JenisAkun <> nil then
+    FNew_JenisAkun:= RealFNew_JenisAkun
+  else
+    Application.CreateForm(TFNew_JenisAkun, Result);
+end;
+
+
+procedure TFNew_JenisAkun.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNew_JenisAkun.FormCreate(Sender: TObject);
+begin
+  RealFNew_JenisAkun:=Self;
+end;
+
+procedure TFNew_JenisAkun.FormDestroy(Sender: TObject);
+begin
+  RealFNew_JenisAkun:=nil;
+end;
+
+end.

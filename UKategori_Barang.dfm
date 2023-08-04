@@ -26,7 +26,6 @@ object FKategori_Barang: TFKategori_Barang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 599
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -1477,9 +1476,10 @@ object FKategori_Barang: TFKategori_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.*,b.type from master_data.t_item_category a inner join ' +
-        'master_data.t_item_type b on a.type_id=b."id" where a.deleted_at' +
-        ' isnull order by a.created_at ')
+        'select a.*,b.type,c.account_name from t_item_category a inner jo' +
+        'in t_item_type b on a.type_id=b."id" inner join t_ak_account c o' +
+        'n a.account_code=c.code '
+      'where a.deleted_at isnull order by a.created_at ')
     Left = 240
     Top = 104
   end
