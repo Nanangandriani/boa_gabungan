@@ -50,11 +50,11 @@ begin
   begin
     with Fnew_Barang_stok do
     begin
-      EdKd_Material.Text:=QBarang.FieldByName('kd_material').AsString;
+      EdKd_Material.Text:=QBarang.FieldByName('item_code').AsString;
       Edmerk.Text:=QBarang.FieldByName('merk').AsString;
-      EdNm_Material.Text:=QBarang.FieldByName('nm_material').AsString;
-      no_material:=QBarang.FieldByName('no_material').AsString;
-      EdSatuan.Text:=QBarang.FieldByName('satuan').AsString;
+      EdNm_Material.Text:=QBarang.FieldByName('item_name').AsString;
+      no_material:=QBarang.FieldByName('order_no').AsString;
+      EdSatuan.Text:=QBarang.FieldByName('unit').AsString;
       EdNm_supp.Enabled:=True;;
     end;
   end;
@@ -66,6 +66,17 @@ begin
       EdNm.Text:=QBarang.FieldByName('item_name').AsString;
       Edsatuan.Text:=QBarang.FieldByName('unit').AsString;
       Edqty.Text:='1';
+    end;
+  end;
+  if status_tr='BonBarang' then
+  begin
+    with FNew_BonPermtBarang do
+    begin
+      MemMaterial.Insert;
+      MemMaterial['kd_material']:=QBarang.FieldByName('item_code').AsString;
+      MemMaterial['nm_material']:=QBarang.FieldByName('item_name').AsString;
+      MemMaterial['satuan']:=QBarang.FieldByName('unit').AsString;
+      MemMaterial.Post;
     end;
   end;
   close;

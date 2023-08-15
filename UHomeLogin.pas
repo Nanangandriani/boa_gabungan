@@ -25,6 +25,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+   // nm,loksbu,kdsbu,id_dept:string;
   end;
 
 var
@@ -47,7 +48,7 @@ end;
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
    FMainMenu.showmodal;
-   nm:=Eduser.Text;
+   Nm:=Eduser.Text;
    FHomeLogin.Close;
 end;
 

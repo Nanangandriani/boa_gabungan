@@ -21,14 +21,13 @@ object FKonversi_Barang: TFKonversi_Barang
     Left = 0
     Top = 0
     Width = 686
-    Height = 124
+    Height = 127
     BarManager = dxBarManager1
     Style = rs2010
-    ColorSchemeName = 'DevExpressStyle'
+    ColorSchemeName = 'Blue'
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 694
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -41,9 +40,9 @@ object FKonversi_Barang: TFKonversi_Barang
   end
   object DBGridEh1: TDBGridEh
     Left = 0
-    Top = 124
+    Top = 127
     Width = 686
-    Height = 385
+    Height = 382
     Align = alClient
     DataSource = DsKonversiM
     DynProps = <>

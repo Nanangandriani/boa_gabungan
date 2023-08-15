@@ -146,7 +146,7 @@ type
     Panel10: TPanel;
     CkLain2: TCheckBox;
     TabBarang: TRzTabSheet;
-    DBGridEh1: TDBGridEh;
+    DBGridstok: TDBGridEh;
     DBGridEh7: TDBGridEh;
     Panel2: TPanel;
     CheckBox1: TCheckBox;
@@ -843,109 +843,106 @@ end;
 
 procedure TFBarang_Stok.dxBdeleteClick(Sender: TObject);
 begin
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridBaku.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_material_stok where kd_material_stok='+QuotedStr(DBGridBaku.Fields[0].AsString);
-  Execute;
-end;
-dxbarRefreshClick(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridstok.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update t_item_stock set deleted_by='+QuotedStr(nm)+',deleted_at=now() where item_stock_code='+QuotedStr(DBGridstok.Fields[0].AsString);
+      Execute;
+    end;
+    dxbarRefreshClick(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 procedure TFBarang_Stok.dxbarRefreshClick(Sender: TObject);
 begin
 //  Refresh;
-  Qtepung.Close;
-  MemTepung.close;
-  Qtepung_det.Close;
-DBGridBaku.StartLoadingStatus();
-if loksbu='' then
-begin
-  with Qtepung do
+  QStok_Barang.Close;
+  MemStok_Barang.close;
+  QStok_Barangdet.Close;
+  DBGridstok.StartLoadingStatus();
+  DBGridstok.FinishLoadingStatus();
+  if loksbu='' then
   begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' FROM t_material_stok AS "a" LEFT JOIN	t_supplier AS b	ON 	a.kd_supplier = b.kd_supplier  '+
-	            ' INNER JOIN t_material AS "c"	ON 	a.kd_material = c.kd_material AND		a.no_material = c.no_material  '+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN   '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok)as aa on 1=1  '+
-              ' where C.category=''BAHAN BAKU'' Order by kd_material_stok Desc';
-    open;
+    with QStok_Barang do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
+      ' a.unit,a.merk,aa.totalmt as qty from t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."id" '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code)as aa on 1=1 where a.deleted_at isnull '+
+      ' Order by item_stock_code Desc';
+      open;
+    end;
+    MemStok_Barang.Open;
+    with QStok_Barangdet do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
+      open;
+    end;
   end;
-  MemTepung.Open;
-  with Qtepung_det do
+  if loksbu<>'' then
   begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0';
-    open;
+  with QStok_Barang do
+    begin
+      close;
+      sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
+      ' a.unit,a.merk,aa.totalmt as qty from t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."id" '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code and (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as'+
+      ' aa on 1=1 where a.deleted_at isnull Order by item_stock_code Desc';
+      Open;
+    end;
+    MemStok_Barang.Open;
+    with QStok_Barangdet do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''';
+      open;
+    end;
   end;
-end;
-if loksbu<>'' then
-begin
-with Qtepung do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' from t_material_stok A Left join t_supplier B on A.kd_supplier=B.kd_supplier '+
-              ' inner join t_material C on A.kd_material=C.kd_material and a.no_material=c.no_material'+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok AND '+
-              ' (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as aa on 1=1 where C.category=''BAHAN BAKU'''+
-              ' Order by kd_material_stok Desc ';
-    Open;
-  end;
-  MemTepung.Open;
-  with Qtepung_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu)+' OR b.kd_sbu=''''';
-    open;
-  end;
-end;
-DBGridBaku.FinishLoadingStatus();
 end;
 
 procedure TFBarang_Stok.dxBupdateClick(Sender: TObject);
 begin
-with FNew_Barang_Stok do
-begin
-  Show;
-  Self.Load;
-  Self.Clear;
-  Caption:='Update Stok Material';
-  EdNm_Material.Enabled:=false;
-  EdNm_supp.Enabled:=false;
-  FNew_Barang_Stok.BEdit.Visible:=True;
-  FNew_Barang_Stok.BSimpan.Visible:=False;
-  with MemTepung do
+  with FNew_Barang_Stok do
   begin
-    with FNew_Barang_Stok do
+    Show;
+    Self.Load;
+    Self.Clear;
+    Caption:='Update Stok Material';
+    EdNm_Material.Enabled:=false;
+    EdNm_supp.Enabled:=false;
+    FNew_Barang_Stok.BEdit.Visible:=True;
+    FNew_Barang_Stok.BSimpan.Visible:=False;
+    with MemStok_Barang do
     begin
-    EdNm_Material.Text:=MemTepung.FieldByName('nm_material').AsString;
-    EdKd_Material.Text:=MemTepung.FieldByName('kd_material').AsString;
-    EdNm_supp.Text:=MemTepung.FieldByName('nm_supplier').AsString;
-    EdKd_supp.Text:=MemTepung.FieldByName('kd_supplier').AsString;
-    Edkd.Text:=MemTepung.FieldByName('kd_material_stok').AsString;
-    Edstok.Text:=MemTepung.FieldByName('qty').AsString;
-    EdSatuan.Text:=MemTepung.FieldByName('satuan').AsString;
-    Edmerk.Text:=MemTepung.FieldByName('merk').AsString;
-    Edno.Text:=MemTepung.FieldByName('no_urut').AsString;
-    no_material:=MemTepung.FieldByName('no_material').AsString;
-    Edcategory.Text:=MemTepung.FieldByName('category').AsString;
+      with FNew_Barang_Stok do
+      begin
+      EdNm_Material.Text:=MemStok_Barang.FieldByName('item_name').AsString;
+      EdKd_Material.Text:=MemStok_Barang.FieldByName('item_code').AsString;
+      EdNm_supp.Text:=MemStok_Barang.FieldByName('supplier_name').AsString;
+      EdKd_supp.Text:=MemStok_Barang.FieldByName('supplier_code').AsString;
+      Edkd.Text:=MemStok_Barang.FieldByName('item_stock_code').AsString;
+      Edstok.Text:=MemStok_Barang.FieldByName('qty').AsString;
+      EdSatuan.Text:=MemStok_Barang.FieldByName('unit').AsString;
+      Edmerk.Text:=MemStok_Barang.FieldByName('merk').AsString;
+      Edno.Text:=MemStok_Barang.FieldByName('order_no').AsString;
+      no_material:=MemStok_Barang.FieldByName('order_no').AsString;
+      Edcategory.Text:=MemStok_Barang.FieldByName('category').AsString;
+     // id_.Text:=MemTepung.FieldByName('category').AsString;
+      end;
     end;
   end;
-end;
 end;
 
 Procedure TFBarang_Stok.Load;
@@ -954,14 +951,15 @@ begin
   with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select kd_material,nm_material,category,no_material from t_material Group by kd_material, '+
-              ' nm_material,category,no_material order by category,no_material Asc';
+    sql.Text:='select a.item_code,a.item_name,b.category,a.order_no from t_item a inner join t_item_category b '+
+              ' on a.category_id=b.id Group by a.item_code,a.item_name,b.category,a.order_no'+
+              ' order by b.category,a.order_no Asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
-  FNew_Barang_Stok.EdNm_Material1.Items.Add(Dm.Qtemp.FieldByName('no_material').AsString+' '+Dm.Qtemp.FieldByName('nm_material').AsString);
+  FNew_Barang_Stok.EdNm_Material1.Items.Add(Dm.Qtemp.FieldByName('order_no').AsString+' '+Dm.Qtemp.FieldByName('item_name').AsString);
   Dm.Qtemp.Next;
   end;
   FNew_Barang_Stok.Ednm_supp.Clear;
@@ -974,7 +972,7 @@ begin
   Dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
-  FNew_Barang_Stok.EdNm_supp.Items.Add(Dm.Qtemp.FieldByName('nm_supplier').AsString);
+  FNew_Barang_Stok.EdNm_supp.Items.Add(Dm.Qtemp.FieldByName('supplier_name').AsString);
   Dm.Qtemp.Next;
   end;
 end;
@@ -1326,7 +1324,7 @@ with dm.Qtemp do
 begin
   Close;
   SQL.clear;
-  sql.Text:=' SELECT * FROM t_material_stok Where kd_material='+QuotedStr(FNew_Barang_Stok.EdKd_Material.Text);
+  sql.Text:=' SELECT * FROM t_item_stock Where item_code='+QuotedStr(FNew_Barang_Stok.EdKd_Material.Text);
   ExecSQL;
 end;
 if dm.Qtemp.RecordCount =0 then urut:=1 else
@@ -1336,7 +1334,7 @@ with dm.Qtemp do
   begin
   close;
   sql.Clear;
-  sql.Text:=' SELECT max(no_urut)AS urut FROM t_material_stok Where kd_material='+QuotedStr(FNew_Barang_Stok.EdKd_Material.Text);
+  sql.Text:=' SELECT max(order_no)AS urut FROM t_item_stock Where item_code='+QuotedStr(FNew_Barang_Stok.EdKd_Material.Text);
   execsql;
   end;
     urut:=Dm.Qtemp.FieldByName('urut').AsInteger+1;
@@ -1354,7 +1352,7 @@ with dm.Qtemp do
 begin
   Close;
   sql.Clear;
-  sql.Text:='Delete From t_material_stok where kd_material_stok='+QuotedStr(DBGridKemasan.Fields[0].AsString);
+  sql.Text:='Delete From t_item_stock where item_stock_code='+QuotedStr(DBGridKemasan.Fields[0].AsString);
   Execute;
 end;
 dxbarRefreshClick(sender);

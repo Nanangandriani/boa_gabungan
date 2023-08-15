@@ -3,8 +3,8 @@ object FNewPosting: TFNewPosting
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Input Posting'
-  ClientHeight = 71
-  ClientWidth = 343
+  ClientHeight = 103
+  ClientWidth = 349
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,39 +16,106 @@ object FNewPosting: TFNewPosting
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 13
-  object Label17: TLabel
-    Left = 91
-    Top = 10
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object Label16: TLabel
-    Left = 8
-    Top = 10
-    Width = 65
-    Height = 13
-    Caption = 'Nama Posting'
-  end
-  object ednama_posting: TEdit
-    Left = 101
-    Top = 8
-    Width = 234
-    Height = 21
-    CharCase = ecUpperCase
+  object Pnlposting: TPanel
+    Left = 0
+    Top = 0
+    Width = 349
+    Height = 70
+    Align = alTop
     TabOrder = 0
+    object Label17: TLabel
+      Left = 94
+      Top = 24
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label16: TLabel
+      Left = 11
+      Top = 24
+      Width = 65
+      Height = 13
+      Caption = 'Nama Posting'
+    end
+    object ednama_posting: TEdit
+      Left = 104
+      Top = 22
+      Width = 234
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+  end
+  object Pnlcost: TPanel
+    Left = 0
+    Top = 70
+    Width = 349
+    Height = 70
+    Align = alTop
+    TabOrder = 1
+    object Label1: TLabel
+      Left = 94
+      Top = 27
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label2: TLabel
+      Left = 11
+      Top = 27
+      Width = 44
+      Height = 13
+      Caption = 'Group By'
+    end
+    object Edby: TEdit
+      Left = 104
+      Top = 25
+      Width = 234
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+  end
+  object PnlPosnr: TPanel
+    Left = 0
+    Top = 140
+    Width = 349
+    Height = 70
+    Align = alTop
+    TabOrder = 2
+    object Label3: TLabel
+      Left = 111
+      Top = 27
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label4: TLabel
+      Left = 11
+      Top = 27
+      Width = 94
+      Height = 13
+      Caption = 'Group Post Neraca'
+    end
+    object Edpost: TEdit
+      Left = 120
+      Top = 25
+      Width = 218
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 39
-    Width = 343
+    Top = 71
+    Width = 349
     Height = 32
     Align = alBottom
-    TabOrder = 1
-    ExplicitTop = 38
-    ExplicitWidth = 339
+    TabOrder = 3
+    ExplicitTop = 208
     object BBatal: TRzBitBtn
-      Left = 267
+      Left = 273
       Top = 1
       Height = 30
       Align = alRight
@@ -107,10 +174,9 @@ object FNewPosting: TFNewPosting
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 263
     end
     object BSave: TRzBitBtn
-      Left = 182
+      Left = 188
       Top = 1
       Width = 85
       Height = 30
@@ -170,7 +236,37 @@ object FNewPosting: TFNewPosting
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 178
+    end
+  end
+  object PnlLr: TPanel
+    Left = 0
+    Top = 210
+    Width = 349
+    Height = 70
+    Align = alTop
+    TabOrder = 4
+    ExplicitTop = 148
+    object Label5: TLabel
+      Left = 111
+      Top = 27
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label6: TLabel
+      Left = 11
+      Top = 27
+      Width = 45
+      Height = 13
+      Caption = 'Group L/r'
+    end
+    object Edlr: TEdit
+      Left = 120
+      Top = 25
+      Width = 218
+      Height = 21
+      CharCase = ecUpperCase
+      TabOrder = 0
     end
   end
 end

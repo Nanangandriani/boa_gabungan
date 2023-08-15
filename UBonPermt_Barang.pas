@@ -85,7 +85,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_BonPermtBarang, umainmenu, UDataModule;
+uses UNew_BonPermtBarang, umainmenu, UDataModule, UHomeLogin;
 var
   realFBonPermt_Barang: TFBonPermt_Barang;
 // implementasi function
@@ -124,13 +124,13 @@ end;
 
 procedure TFBonPermt_Barang.ActBaruExecute(Sender: TObject);
 begin
-with FNew_BonPermtBarang do
-begin
-  show;
-  status:=0;
-  MemMaterial.EmptyTable;
-  Edno.Clear;
-end;
+  with FNew_BonPermtBarang do
+  begin
+    show;
+    status:=0;
+    MemMaterial.EmptyTable;
+    Edno.Clear;
+  end;
 end;
 
 procedure TFBonPermt_Barang.ActDelExecute(Sender: TObject);
@@ -172,102 +172,102 @@ begin
   Execute;
 end;
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\BonPermintaanBarang.Fr3');
-  SetMemo(Rpt,'Mpt',' '+KdSBU);
+  SetMemo(Rpt,'Mpt',' '+kdsbu);
   Rpt.ShowReport();
 //  SetMemo(Rpt,'Mtgl',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));
 end;
 
 procedure TFBonPermt_Barang.ActRoExecute(Sender: TObject);
 begin
-if loksbu='' then
-begin
-with  QPermt_Material do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') and '+
-  ' (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status, tgl_permt,notrans,kdsbu ,thn,bln,'+
-  ' to_char(tgl_permt,''dd'') tgl from t_permt_barang2 order by id Desc';
-  open;
-end;
-  MemPermt_Material.Close;
-  MemPermt_Material.Open;
-  QPermt_Material_det.Close;
-  QPermt_Material_det.Open;
-end;
-if loksbu<>'' then
-begin
-with  QPermt_Material do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') and '+
-  ' (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status, tgl_permt,notrans,kdsbu,thn,bln,'+
-  ' to_char(tgl_permt,''dd'') tgl from t_permt_barang2 '+
-  ' where kdsbu='+QuotedStr(loksbu)+' order by id Desc';
-  open;
-end;
-  MemPermt_Material.Close;
-  MemPermt_Material.Open;
-  QPermt_Material_det.Close;
-  QPermt_Material_det.Open;
-end;
+  if loksbu='' then
+  begin
+    with  QPermt_Material do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
+      ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,kdsbu,'+
+      ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from t_item_request order by created_at Desc';
+      open;
+    end;
+      MemPermt_Material.Close;
+      MemPermt_Material.Open;
+      QPermt_Material_det.Close;
+      QPermt_Material_det.Open;
+  end;
+  if loksbu<>'' then
+  begin
+    with  QPermt_Material do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
+        ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,kdsbu,'+
+        ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from t_item_request  '+
+        ' where kdsbu='+QuotedStr(loksbu)+' order by id Desc';
+      open;
+    end;
+      MemPermt_Material.Close;
+      MemPermt_Material.Open;
+      QPermt_Material_det.Close;
+      QPermt_Material_det.Open;
+  end;
 end;
 
 procedure TFBonPermt_Barang.ActUpdateExecute(Sender: TObject);
 begin
-with FNew_BonPermtBarang do
-begin
-  show;
-  MemMaterial.EmptyTable;
-  status:=1;
-  Edno.Text:=MemPermt_Material['notrans'];
-  DtPeriode.Text:=MemPermt_Material['tgl_permt'];
-  while NOT QPermt_Material_det.Eof do
+  with FNew_BonPermtBarang do
   begin
-    MemMaterial.Insert;
-    MemMaterial['kd_material']:=QPermt_Material_det['kd_material'];
-    MemMaterial['nm_material']:=QPermt_Material_det['nm_material'];
-    MemMaterial['qty']:=QPermt_Material_det['qty'];
-    MemMaterial['satuan']:=QPermt_Material_det['satuan'];
-    MemMaterial['ket']:=QPermt_Material_det['ket'];
-    MemMaterial.Post;
-    QPermt_Material_det.Next;
+    show;
+    MemMaterial.EmptyTable;
+    status:=1;
+    Edno.Text:=MemPermt_Material['trans_no'];
+    DtPeriode.Text:=MemPermt_Material['trans_date'];
+    while NOT QPermt_Material_det.Eof do
+    begin
+      MemMaterial.Insert;
+      MemMaterial['kd_material']:=QPermt_Material_det['item_code'];
+      MemMaterial['nm_material']:=QPermt_Material_det['item_name'];
+      MemMaterial['qty']:=QPermt_Material_det['qty'];
+      MemMaterial['satuan']:=QPermt_Material_det['unit'];
+      MemMaterial['ket']:=QPermt_Material_det['note'];
+      MemMaterial.Post;
+      QPermt_Material_det.Next;
+    end;
   end;
-end;
 end;
 
 procedure TFBonPermt_Barang.DBGridEh1CellClick(Column: TColumnEh);
 begin
-if DBGridEh1.Fields[3].AsString='CREATED' then
-begin
-with DM.Qtemp do
-begin
-    Close;
-    sql.Clear;
- // lm  sql.Text:='select * from t_akses where no_group='+QuotedStr(Mn)+' and no_dept='+QuotedStr(no_dept);
-      sql.Text:='select * from t_akses where id_menu=''136'' and iddept='+QuotedStr(id_dept);
-    ExecSQL;
-end;
-  if dm.Qtemp['serah']=1 then
+{  if DBGridEh1.Fields[3].AsString='CREATED' then
   begin
-    ActApp.Enabled:=true;
-    ActUpdate.Enabled:=true;
+    with DM.Qtemp do
+    begin
+        Close;
+        sql.Clear;
+     // lm  sql.Text:='select * from t_akses where no_group='+QuotedStr(Mn)+' and no_dept='+QuotedStr(no_dept);
+          sql.Text:='select * from t_akses where id_menu=''136'' and iddept='+QuotedStr(id_dept);
+        ExecSQL;
+    end;
+    if dm.Qtemp['serah']=1 then
+    begin
+      ActApp.Enabled:=true;
+      ActUpdate.Enabled:=true;
+    end;
   end;
-end;
- if DBGridEh1.Fields[3].AsString<>'CREATED' then
-begin
-  ActApp.Enabled:=false;
-  ActUpdate.Enabled:=false;
-end;
-if DBGridEh1.Fields[3].AsString<>'APPROVE' then
-BEGIN
-  ActPrint.Enabled:=false;
-END;
-if DBGridEh1.Fields[3].AsString='APPROVE' then
-BEGIN
-  ActPrint.Enabled:=true;
-END;
+  if DBGridEh1.Fields[3].AsString<>'CREATED' then
+  begin
+    ActApp.Enabled:=false;
+    ActUpdate.Enabled:=false;
+  end;
+  if DBGridEh1.Fields[3].AsString<>'APPROVE' then
+  BEGIN
+    ActPrint.Enabled:=false;
+  END;
+  if DBGridEh1.Fields[3].AsString='APPROVE' then
+  BEGIN
+    ActPrint.Enabled:=true;
+  END;       }
 end;
 
 procedure TFBonPermt_Barang.FormClose(Sender: TObject;

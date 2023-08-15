@@ -1,0 +1,140 @@
+unit UNew_KategoriAkun;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls;
+
+type
+  TFNew_KategoriAkun = class(TForm)
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    Pnl_Kategori: TPanel;
+    Pnl_Neraca: TPanel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Ed_GroupNr: TEdit;
+    Cb_JenisNr: TComboBox;
+    Label2: TLabel;
+    Label4: TLabel;
+    Label1: TLabel;
+    Label3: TLabel;
+    EdJenis: TEdit;
+    CbJenis: TComboBox;
+    Edkd: TEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    procedure BBatalClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure CbJenisSelect(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    id,jenistr:string;
+  end;
+
+Function FNew_KategoriAkun: TFNew_KategoriAkun;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule, UMainMenu;
+var
+//  FPakai_BahanPersbu: TFPakai_BahanPersbu;
+  RealFNew_KategoriAkun: TFNew_KategoriAkun;
+
+function FNew_KategoriAkun: TFNew_KategoriAkun;
+begin
+  if RealFNew_KategoriAkun <> nil then
+    FNew_KategoriAkun:= RealFNew_KategoriAkun
+  else
+    Application.CreateForm(TFNew_KategoriAkun, Result);
+end;
+procedure TFNew_KategoriAkun.BBatalClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TFNew_KategoriAkun.BSimpanClick(Sender: TObject);
+begin
+  if jenistr='Kategori' then
+  begin
+    with dm.Qtemp do
+    begin
+       close;
+       sql.Clear;
+       sql.Text:='insert into t_ak_category(category_code,category,type_id,created_at)'+
+        'values(:code,:category,:type_id,:cr)';
+         ParamByName('code').Value:=Edkd.Text;
+         ParamByName('category').Value:=EdJenis.Text;
+         ParamByName('type_id').Value:=id;
+         ParamByName('cr').Value:=nm;
+       Execute;
+    end;
+  end;
+  if jenistr='Neraca' then
+  begin
+    with dm.Qtemp do
+    begin
+       close;
+       sql.Clear;
+       sql.Text:='insert into t_ak_type_balance(type,type_balance,created_at)values(:type,:type_balance,:cr)';
+         ParamByName('type').Value:=Cb_JenisNr.Text;
+         ParamByName('type_balance').Value:=Ed_GroupNr.Text;
+         ParamByName('cr').Value:=nm;
+       Execute;
+    end;
+  end;
+end;
+
+procedure TFNew_KategoriAkun.CbJenisSelect(Sender: TObject);
+begin
+  with dm.qtemp do
+  begin
+     close;
+     sql.Clear;
+     sql.Text:='select * from t_ak_type where "type"='+QuotedStr(CbJenis.Text);
+     Execute;
+  end;
+    id:=dm.qtemp['id'];
+  //  edjenis.text:=dm.qtemp['id'];
+end;
+
+procedure TFNew_KategoriAkun.FormShow(Sender: TObject);
+begin
+  with dm.qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.text:='select * from t_ak_type order by id';
+    execute;
+  end;
+  dm.qtemp.First;
+  while not DM.Qtemp.Eof do
+  begin
+  CbJenis.Items.add(dm.qtemp['type']);
+  dm.qtemp.next;
+  end;
+  with dm.qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.text:='select * from t_ak_type2 order by id';
+    execute;
+  end;
+  dm.qtemp.First;
+  while not DM.Qtemp.Eof do
+  begin
+  Cb_JenisNr.Items.add(dm.qtemp['type']);
+  dm.qtemp.next;
+  end;
+end;
+
+end.

@@ -101,7 +101,7 @@ with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select max(no_urut)as urut from t_permt_barang2 where thn='+QuotedStr(thn)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tgl);
+    sql.Text:='select max(order_no)as urut from t_item_request where trans_year='+QuotedStr(thn)+' and trans_month='+QuotedStr(bln)+' and date_no='+QuotedStr(tgl);
     open;
   end;
    if dm.Qtemp.Fields[0].AsString = '' then
@@ -127,39 +127,43 @@ end;
 procedure TFNew_BonPermtBarang.BSimpanClick(Sender: TObject);
 begin
 //ShowMessage(QuotedStr(IntToStr(status)));
-if not dm.koneksi.InTransaction then
-dm.koneksi.StartTransaction;
-try
-begin
-if status=0 then
-begin
-  simpan;
-end;
-if status=1 then
-begin
-  update;
-end;
-  MemMaterial.EmptyTable;
-  dm.koneksi.Commit;
-  Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-  BBatalClick(sender);
-end
-Except
-on E :Exception do
-begin
-MessageDlg(E.Message,mtError,[MBok],0);
-dm.koneksi.Rollback;
-end;
-end;
+  if not dm.koneksi.InTransaction then
+  dm.koneksi.StartTransaction;
+  try
+    begin
+      if status=0 then
+      begin
+        simpan;
+      end;
+      if status=1 then
+      begin
+        update;
+      end;
+      MemMaterial.EmptyTable;
+      dm.koneksi.Commit;
+      Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+      BBatalClick(sender);
+    end
+    Except
+    on E :Exception do
+      begin
+      MessageDlg(E.Message,mtError,[MBok],0);
+      dm.koneksi.Rollback;
+      end;
+  end;
   close;
 end;
 
 procedure TFNew_BonPermtBarang.DBGridEh1Columns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-  FCari_Barang.Show;
-  FCari_Barang.QBarang.Close;
-  FCari_Barang.QBarang.open;
+  with FCari_Barang do
+  begin
+    Show;
+    QBarang.Close;
+    QBarang.open;
+    status_tr:='BonBarang';
+  end;
 end;
 
 procedure TFNew_BonPermtBarang.FormClose(Sender: TObject;
@@ -186,48 +190,43 @@ end;
 
 Procedure TFNew_BonPermtBarang.Simpan;
 begin
-Autonumber;
-{MemMaterial.First;
-while not MemMaterial.Eof do
-begin   }
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='insert into t_permt_barang2(tgl_permt,notrans,status,status_app,no_urut,kdsbu,tgl_no,thn,bln,pic)'+
-            ' values(:tgl_permt,:notrans,:status,:status_app,:urut,:kdsbu,:tgl_no,:thn,:bln,:pic)';
-            ParamByName('tgl_permt').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
-            ParamByName('notrans').Value:=Edno.Text;
-            Parambyname('status').Value:='0';
-            ParamByName('status_app').Value:='0';
-            ParamByName('kdsbu').value:=loksbu;
-            ParamByName('urut').Value:=nourut;
-            ParamByName('tgl_no').Value:=tgl;
-            ParamByName('thn').Value:=thn;
-            ParamByName('bln').Value:=bln;
-            ParamByName('pic').Value:=nm;
-  ExecSQL;
-//end;
-//MemMaterial.Next;
-end;
-MemMaterial.First;
-while not MemMaterial.Eof do
-begin
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='insert into t_permt_barang2_det(kd_material,qty,notrans,satuan,ket)'+
-            ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
-            ParamByName('kd_material').Value:=MemMaterial['kd_material'];
-            ParamByName('qty').Value:=MemMaterial['qty'];
-            ParamByName('notrans').Value:=Edno.Text;
-            Parambyname('satuan').Value:=MemMaterial['satuan'];
-            Parambyname('ket').Value:=MemMaterial['ket'];
-  ExecSQL;
-end;
-  MemMaterial.Next;
-end;
+  Autonumber;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='insert into t_item_request(trans_date,trans_no,status,status_app,order_no,kdsbu,date_no,trans_year,trans_month,created_by)'+
+              ' values(:tgl,:notrans,:status,:status_app,:urut,:kdsbu,:tgl_no,:thn,:bln,:pic)';
+              ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
+              ParamByName('notrans').Value:=Edno.Text;
+              Parambyname('status').Value:='0';
+              ParamByName('status_app').Value:='0';
+              ParamByName('kdsbu').value:=loksbu;
+              ParamByName('urut').Value:=nourut;
+              ParamByName('tgl_no').Value:=tgl;
+              ParamByName('thn').Value:=thn;
+              ParamByName('bln').Value:=bln;
+              ParamByName('pic').Value:=nm;
+    ExecSQL;
+  end;
+  MemMaterial.First;
+  while not MemMaterial.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='insert into t_item_request_det(item_code,qty,trans_no,unit,note)'+
+                ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
+                ParamByName('kd_material').Value:=MemMaterial['kd_material'];
+                ParamByName('qty').Value:=MemMaterial['qty'];
+                ParamByName('notrans').Value:=Edno.Text;
+                Parambyname('satuan').Value:=MemMaterial['satuan'];
+                Parambyname('ket').Value:=MemMaterial['ket'];
+      ExecSQL;
+    end;
+    MemMaterial.Next;
+  end;
 end;
 
 Procedure TFNew_BonPermtBarang.Update;

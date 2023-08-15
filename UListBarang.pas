@@ -173,6 +173,7 @@ begin
     Caption:='Update Barang';
     with MemMaterial do
     begin
+      EdKd.Enabled:=false;
     //  Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
      // Edno.Text:=MemMaterial.FieldByName('item_no').AsString;
       EdKd.Text:=MemMaterial.FieldByName('item_code').AsString;
@@ -183,7 +184,7 @@ begin
       Edjenis.Text:=MemMaterial.FieldByName('Type').AsString;
       EdMerk.Text:=MemMaterial.FieldByName('merk').AsString;
       Edkd_akun.Text:=MemMaterial.FieldByName('account_code').AsString;
-     // EdNm_akun.Text:=MemMaterial.FieldByName('nama_perkiraan').AsString;
+      EdNm_akun.Text:=MemMaterial.FieldByName('account_name').AsString;
       idmaterial:=MemMaterial.FieldByName('id').AsString;
     end;
   end;

@@ -8,12 +8,25 @@ uses
 
 type
   TFNewPosting = class(TForm)
+    Pnlposting: TPanel;
     Label17: TLabel;
     Label16: TLabel;
     ednama_posting: TEdit;
+    Pnlcost: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edby: TEdit;
+    PnlPosnr: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Edpost: TEdit;
     Panel2: TPanel;
     BBatal: TRzBitBtn;
     BSave: TRzBitBtn;
+    PnlLr: TPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Edlr: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -23,6 +36,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    jenis:string;
   end;
 
 function FNewPosting: TFNewPosting;
@@ -51,37 +65,100 @@ end;
 
 procedure TFNewPosting.BSaveClick(Sender: TObject);
 begin
-  if ednama_posting.Text='' then
+  if jenis='Posting' then
   begin
-    MessageDlg('Nama Posting Wajib Diisi..!!',mtInformation,[mbRetry],0);
-  end
-  else
+    if ednama_posting.Text='' then
+    begin
+      MessageDlg('Nama Posting Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert Into t_ak_posting_type("posting") '+
+                  'Values (:parnama_modul)';
+        parambyname('parnama_modul').Value:=ednama_posting.Text;
+        execsql;
+      end;
+      MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+      FNewdaftar_perkiraan_bank.CBposting.Clear;
+      with dm.Qtemp do
+      begin
+        Close;
+        Sql.Clear;
+        Sql.Text:='select "posting" from t_ak_posting_type';
+        Open;
+      end;
+      while not DM.Qtemp.Eof do
+      begin
+        FNewdaftar_perkiraan_bank.CBposting.Items.Add(DM.Qtemp.FieldByName('posting').AsString);
+        DM.Qtemp.Next;
+      end;
+    end;
+  end;
+  if jenis='by' then
   begin
-    with dm.Qtemp do
+    if edby.Text='' then
     begin
-      close;
-      sql.Clear;
-      sql.Text:='Insert Into t_ak_posting_type("posting") '+
-                'Values (:parnama_modul)';
-      parambyname('parnama_modul').Value:=ednama_posting.Text;
-      execsql;
-    end;
-    MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
-    FNewdaftar_perkiraan_bank.CBposting.Clear;
-    with dm.Qtemp do
+      MessageDlg('Group by Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else
     begin
-      Close;
-      Sql.Clear;
-      Sql.Text:='select "posting" from t_ak_posting_type';
-      Open;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert Into t_ak_type_cost("cost_type") '+
+                  'Values (:parnama_modul)';
+        parambyname('parnama_modul').Value:=Edby.Text;
+        execsql;
+      end;
+      MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
     end;
-    while not DM.Qtemp.Eof do
+  end;
+  if jenis='postnr' then
+  begin
+    if Edpost.Text='' then
     begin
-      FNewdaftar_perkiraan_bank.CBposting.Items.Add(DM.Qtemp.FieldByName('posting').AsString);
-      DM.Qtemp.Next;
+      MessageDlg('Group Post Neraca Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert Into t_ak_type_balance_post(post_name) '+
+                  'Values(:post)';
+        parambyname('post').Value:=Edpost.Text;
+        execsql;
+      end;
+      MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
     end;
-    Close;
-  end
+  end;
+  if jenis='lr' then
+  begin
+    if Edlr.Text='' then
+    begin
+      MessageDlg('Group Laba / Rugi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert Into t_ak_type_lr(lr2) '+
+                  'Values(:lr)';
+        parambyname('lr').Value:=Edlr.Text;
+        execsql;
+      end;
+      MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+    end;
+  end;
+  Close;
 end;
 
 procedure TFNewPosting.FormClose(Sender: TObject; var Action: TCloseAction);

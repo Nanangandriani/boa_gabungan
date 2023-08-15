@@ -70,7 +70,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 68
-    Width = 679
+    Width = 675
     Height = 251
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
@@ -144,8 +144,10 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
     Height = 32
     Align = alBottom
     TabOrder = 3
+    ExplicitTop = 324
+    ExplicitWidth = 700
     object BBatal: TRzBitBtn
-      Left = 632
+      Left = 628
       Top = 1
       Height = 30
       Align = alRight
@@ -204,10 +206,10 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 628
+      ExplicitLeft = 624
     end
     object BSimpan: TRzBitBtn
-      Left = 557
+      Left = 553
       Top = 1
       Height = 30
       Align = alRight
@@ -266,7 +268,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 553
+      ExplicitLeft = 549
     end
   end
   object EdStatus: TEdit

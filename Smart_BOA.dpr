@@ -11,7 +11,6 @@ uses
   Vcl.Styles,
   UListProduk in 'UListProduk.pas' {FListProduk},
   Unew_produk in 'Unew_produk.pas' {FInput_Produk},
-  USearchMaterial in 'USearchMaterial.pas' {FSearchMaterial},
   UListKonversi_Produk in 'UListKonversi_Produk.pas' {FListKonvProduk},
   UNewKonv_Produk in 'UNewKonv_Produk.pas' {FNewKonv_produk},
   UList_Gudang in 'UList_Gudang.pas' {FListGudang},
@@ -51,7 +50,14 @@ uses
   UNew_KategoriAkun in 'UNew_KategoriAkun.pas' {FNew_KategoriAkun},
   UNew_Satuan in 'UNew_Satuan.pas' {FNew_Satuan},
   UKonversi_Barang in 'UKonversi_Barang.pas' {FKonversi_Barang},
-  UNew_KonvBarang in 'UNew_KonvBarang.pas' {FNew_KonvBarang};
+  UNew_KonvBarang in 'UNew_KonvBarang.pas' {FNew_KonvBarang},
+  UDept in 'UDept.pas' {FDept},
+  UJabatan in 'UJabatan.pas' {FJabatan},
+  UNew_Dept in 'UNew_Dept.pas' {FNew_Dept},
+  UNew_Jabatan in 'UNew_Jabatan.pas' {FNew_Jabatan},
+  UTransfer_Barang in 'UTransfer_Barang.pas' {FTransfer_Barang},
+  UNew_TransferBarang in 'UNew_TransferBarang.pas' {FNew_TransferBarang},
+  UItem_TransferBarang in 'UItem_TransferBarang.pas' {FItem_TransferBarang};
 
 {$R *.res}
 
@@ -70,7 +76,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFMainMenu, FMainMenu);
   Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
-  Application.CreateForm(TFSearchMaterial, FSearchMaterial);
   Application.CreateForm(TFListKonvProduk, FListKonvProduk);
   Application.CreateForm(TFNewKonv_produk, FNewKonv_produk);
   Application.CreateForm(TFListGudang, FListGudang);
@@ -90,6 +95,11 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFNew_Penomoran, FNew_Penomoran);
   Application.CreateForm(TFNew_Supplier, FNew_Supplier);
+  Application.CreateForm(TFDept, FDept);
+  Application.CreateForm(TFJabatan, FJabatan);
+  Application.CreateForm(TFNew_Dept, FNew_Dept);
+  Application.CreateForm(TFNew_Jabatan, FNew_Jabatan);
+  Application.CreateForm(TFItem_TransferBarang, FItem_TransferBarang);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

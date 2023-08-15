@@ -688,15 +688,24 @@ object FDaftar_Perkiraan: TFDaftar_Perkiraan
   object Qdaftar_perkiraan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select a.*, b.header_name,c.posting,d.category'
       
-        ',e."type",case when "group_id" = '#39'1'#39' then '#39'NERACA'#39' ELSE '#39'L/R'#39' EN' +
-        'D "group" from t_ak_account a'
+        'select a.*, b.header_name,c.posting,d.category,e."type",case whe' +
+        'n "group_id" = '#39'1'#39' then '#39'NERACA'#39' ELSE '#39'L/R'#39' END "group",f.type_b' +
+        'alance,g.post_name,'
+      'h.cost_type,i.lr2 from t_ak_account a'
       'left join t_ak_header b on a.header_code=b.header_code'
       'left join t_ak_posting_type c on a.posting_id=c."id" '
       'left join t_ak_category d on a.category_code=d.category_code'
       'left join t_ak_type e on a.type_id=e."id"'
+      'left join t_ak_type_balance f on a.balance_st_id=f."id"'
+      
+        'left join t_ak_type_balance_post g on a.balance_post_st_id=g."id' +
+        '" '
+      'left join t_ak_type_cost h on a.cost_st_id=h."id"'
+      'left join t_ak_type_lr i on a.lr_st_id=i."id"'
+      '-- WHERE code='#39'70000.03'#39
       'order by code ASC')
+    Active = True
     Left = 240
     Top = 64
   end
@@ -705,6 +714,7 @@ object FDaftar_Perkiraan: TFDaftar_Perkiraan
     Left = 387
   end
   object MemDaftar_Perk: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1

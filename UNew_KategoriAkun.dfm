@@ -2,7 +2,7 @@ object FNew_KategoriAkun: TFNew_KategoriAkun
   Left = 0
   Top = 0
   Caption = 'Form New Kategori Akun'
-  ClientHeight = 151
+  ClientHeight = 183
   ClientWidth = 346
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,43 +13,15 @@ object FNew_KategoriAkun: TFNew_KategoriAkun
   Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
-  object Label2: TLabel
-    Left = 16
-    Top = 68
-    Width = 44
-    Height = 15
-    Caption = 'Kategori'
-  end
-  object Label4: TLabel
-    Left = 66
-    Top = 68
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label1: TLabel
-    Left = 16
-    Top = 26
-    Width = 25
-    Height = 15
-    Caption = 'Jenis'
-  end
-  object Label3: TLabel
-    Left = 66
-    Top = 26
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
   object Panel1: TPanel
     Left = 0
-    Top = 110
+    Top = 142
     Width = 346
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 143
-    ExplicitWidth = 481
+    ExplicitTop = 109
+    ExplicitWidth = 342
     object BBatal: TRzBitBtn
       Left = 270
       Top = 1
@@ -110,7 +82,7 @@ object FNew_KategoriAkun: TFNew_KategoriAkun
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 265
+      ExplicitLeft = 266
     end
     object BSimpan: TRzBitBtn
       Left = 195
@@ -119,6 +91,7 @@ object FNew_KategoriAkun: TFNew_KategoriAkun
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 0
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -171,23 +144,134 @@ object FNew_KategoriAkun: TFNew_KategoriAkun
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 190
+      ExplicitLeft = 191
     end
   end
-  object EdJenis: TEdit
-    Left = 75
-    Top = 65
-    Width = 249
-    Height = 23
-    CharCase = ecUpperCase
+  object Pnl_Kategori: TPanel
+    Left = 0
+    Top = 0
+    Width = 346
+    Height = 139
+    Align = alTop
     TabOrder = 1
+    object Label2: TLabel
+      Left = 15
+      Top = 100
+      Width = 44
+      Height = 15
+      Caption = 'Kategori'
+    end
+    object Label4: TLabel
+      Left = 65
+      Top = 100
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label1: TLabel
+      Left = 16
+      Top = 26
+      Width = 25
+      Height = 15
+      Caption = 'Jenis'
+    end
+    object Label3: TLabel
+      Left = 66
+      Top = 26
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label5: TLabel
+      Left = 66
+      Top = 63
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label6: TLabel
+      Left = 16
+      Top = 63
+      Width = 27
+      Height = 15
+      Caption = 'Kode'
+    end
+    object EdJenis: TEdit
+      Left = 74
+      Top = 97
+      Width = 249
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+    object CbJenis: TComboBox
+      Left = 75
+      Top = 23
+      Width = 249
+      Height = 23
+      TabOrder = 1
+      OnSelect = CbJenisSelect
+    end
+    object Edkd: TEdit
+      Left = 75
+      Top = 60
+      Width = 126
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 2
+    end
   end
-  object CbJenis: TComboBox
-    Left = 75
-    Top = 23
-    Width = 249
-    Height = 23
+  object Pnl_Neraca: TPanel
+    Left = 0
+    Top = 139
+    Width = 346
+    Height = 3
+    Align = alClient
     TabOrder = 2
-    OnSelect = CbJenisSelect
+    ExplicitTop = 242
+    ExplicitHeight = 127
+    object Label9: TLabel
+      Left = 24
+      Top = 76
+      Width = 33
+      Height = 15
+      Caption = 'Group'
+    end
+    object Label10: TLabel
+      Left = 74
+      Top = 76
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label11: TLabel
+      Left = 24
+      Top = 34
+      Width = 25
+      Height = 15
+      Caption = 'Jenis'
+    end
+    object Label12: TLabel
+      Left = 74
+      Top = 34
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Ed_GroupNr: TEdit
+      Left = 83
+      Top = 73
+      Width = 249
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+    object Cb_JenisNr: TComboBox
+      Left = 83
+      Top = 31
+      Width = 249
+      Height = 23
+      TabOrder = 1
+    end
   end
 end

@@ -102,7 +102,6 @@ type
     Procedure GetSubMenu(Sender: TObject);
     Procedure btnApplyClick(Sender: TObject);
     Procedure CallFoo(S: string; I: Integer);
-
     procedure Getsubmenutree(Sender: TObject);
 
   end;
@@ -123,11 +122,10 @@ var
   HakAkses : String;
   vCaptionButton, vNamaButton :string;
   MyTreeView : TRzTreeView;
-
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
+  Nm,loksbu,kdsbu,id_dept:string;
   JSFn: string;
-  nm,loksbu,kdsbu,id_dept:string;
 implementation
 
 {$R *.dfm}
@@ -135,7 +133,8 @@ implementation
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
   UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
-  Udaftar_perkiraan,UKonversi_Barang;
+  Udaftar_perkiraan,UKonversi_Barang, UJabatan, UDept, UBonPermt_Barang,
+  UTransfer_Barang;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -245,10 +244,8 @@ begin
   if TreeView1.Selected <> nil then
   begin
     SelNode := TreeView1.Selected;
-
     TreeView1.Selected.Delete;
     TreeView1.SetFocus;
-
   end;
 end;
 
@@ -728,7 +725,6 @@ end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
-
   //CreateMenu('admin');
   // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
@@ -742,6 +738,6 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
-  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
-  ,TFKategori_Barang,TFPenomoran,TFListPerusahaan,TFDaftar_Perkiraan]);
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFKategori_Barang,TFPenomoran,
+  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang]);
 end.

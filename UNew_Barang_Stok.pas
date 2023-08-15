@@ -73,7 +73,7 @@ implementation
 
 {$R *.dfm}
 
-uses UCari_Barang,UBarang_Stok, UDataModule;
+uses UCari_Barang,UBarang_Stok, UDataModule, UMainMenu;
 var
   RealFnew_materialstok: TFnew_barang_stok;
 function FNew_Barang_stok: TFNew_Barang_stok;
@@ -91,7 +91,7 @@ Edcategory.Clear;
   begin
     Close;
     sql.Clear;
-    sql.Text:='Select * from t_category_material';
+    sql.Text:='Select * from t_item_category';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -111,7 +111,7 @@ Edcategory.Clear;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do
   begin
-  EdNm_supp.Items.Add(Dm.Qtemp['nm_supplier']);
+  EdNm_supp.Items.Add(Dm.Qtemp['supplier_name']);
   Dm.Qtemp.Next;
   end;
 end;
@@ -126,10 +126,11 @@ begin
     begin
     Close;
     sql.clear;
-    SQL.Text:='select kd_material,nm_material,category,no_material,merk,satuan from t_material '+
-              ' where category='+QuotedStr(Edcategory.Text)+''+
-              ' Group by kd_material,nm_material,category,no_material,merk,satuan '+
-              ' order by category,no_material Asc';
+    SQL.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
+              ' a INNER JOIN t_item_category b on a.category_id=b.id '+
+              ' where b.category='+QuotedStr(Edcategory.Text)+''+
+              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
+              ' order by b.category,a.order_no Asc';
       execute;
     end;
   end;
@@ -155,22 +156,22 @@ end;
 begin
   close;
   sql.clear;
-  sql.Text:=' Update t_material_stok set kd_material=:parkd_mat,kd_supplier=:kd_supp,qty=:parqty,'+
-            ' satuan=:parsatuan,no_urut=:parno_urut,merk=:parmerk,kd_urut=:parkd_urut,'+
-            ' nm_material=:parnm_mat,no_material=:parno_mat where kd_material_stok=:parkd_mat_stok';
+  sql.Text:=' Update t_item_stock set item_code=:parkd_mat,supplier_code=:kd_supp,qty=:parqty,'+
+            ' unit=:parsatuan,order_no=:parno_urut,merk=:parmerk,item_name=:parnm_mat where '+
+            ' item_stock_code=:parkd_mat_stok';
             ParamByName('parkd_mat').Value:=EdKd_Material.Text;
             ParamByName('kd_supp').Value:=EdKd_supp.Text;
             ParamByName('parqty').Value:=Edstok.Text;
             ParamByName('parsatuan').Value:=EdSatuan.Text;
             ParamByName('parno_urut').Value:=Edno.Text;
             ParamByName('parmerk').Value:=Edmerk.Text;
-            ParamByName('parkd_urut').Value:=Edhuruf.Text;
+           // ParamByName('parkd_urut').Value:=Edhuruf.Text;
             ParamByName('parnm_mat').Value:=EdNm_Material.Text;
-            ParamByName('parno_mat').Value:=no_material;
+        //    ParamByName('parno_mat').Value:=no_material;
             ParamByName('parkd_mat_stok').Value:=Edkd.Text;
   ExecSQL;
   end;
- with dm.Qtemp do
+{ with dm.Qtemp do
 begin
   close;
   sql.clear;
@@ -207,7 +208,7 @@ begin
             ParamByName('parno_mat').Value:=no_material;
             ParamByName('parkd_mat_stok').Value:=Edkd.Text;
   ExecSQL;
-  end;
+  end;   }
   ShowMessage('Data Berhasil di Update');
   BBatalClick(sender);
 end;
@@ -224,21 +225,21 @@ end;
 begin
   close;
   sql.clear;
-  sql.Text:='Select * from t_material_stok';
+  sql.Text:='Select * from t_item_stock';
   ExecSQL;
 end;
 with dm.Qtemp do
 begin
   close;
   sql.clear;
-  sql.Text:='insert into t_material_stok(kd_material_stok, kd_material,kd_supplier, qty, satuan, no_urut, merk, kd_urut,nm_material,no_material)'+
-            ' values('+QuotedStr(Edkd.Text)+', '+quotedstr(EdKd_Material.Text)+', '+QuotedStr(EdKd_supp.Text)+' '+
-            ', '+QuotedStr(Edstok.Text)+', '+QuotedStr(EdSatuan.Text)+', '+QuotedStr(EdNo.Text)+', '+QuotedStr(Edmerk.Text)+','+
-            ' '+QuotedStr(Edhuruf.Text)+','+QuotedStr(EdNm_Material.Text)+','+QuotedStr(no_material)+')';
+  sql.Text:='insert into t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,merk,item_name,created_by)'+
+            ' values('+QuotedStr(Edkd.Text)+','+quotedstr(EdKd_Material.Text)+','+QuotedStr(EdKd_supp.Text)+' '+
+            ','+QuotedStr(Edstok.Text)+','+QuotedStr(EdSatuan.Text)+','+QuotedStr(EdNo.Text)+','+QuotedStr(Edmerk.Text)+''+
+            ','+QuotedStr(EdNm_Material.Text)+','+QuotedStr(nm)+')';
   ExecSQL;
   end;
 
-with dm.Qtemp do
+{with dm.Qtemp do
 begin
   close;
   sql.clear;
@@ -257,7 +258,7 @@ begin
             ', '+QuotedStr(Edstok.Text)+', '+QuotedStr(EdSatuan.Text)+', '+QuotedStr(EdNo.Text)+', '+QuotedStr(Edmerk.Text)+','+
             ' '+QuotedStr(Edhuruf.Text)+','+QuotedStr(EdNm_Material.Text)+','+QuotedStr(no_material)+')';
   ExecSQL;
-  end;
+  end;    }
   ShowMessage('Data Berhasil di Simpan');
   BBatalClick(sender);
 end;
@@ -267,18 +268,17 @@ begin
  with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select kd_material,nm_material,category,no_material from t_material '+
-              ' where category='+QuotedStr(Edcategory.Text)+''+
-              ' Group by kd_material,nm_material,category,no_material '+
-              ' order by category,no_material Asc';
+    sql.Text:='select a.item_code,a.item_name,b.category from t_item a inner join '+
+    ' t_item_category b on a.category_id=b."id" where b.category='+QuotedStr(Edcategory.Text)+''+
+    ' Group by a.item_code,a.item_name,b.category order by b.category Asc';
     ExecSQL;
   end;
   EdNm_Material1.Clear;
   Dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
-  EdNm_Material1.Items.Add(Dm.Qtemp.FieldByName('no_material').AsString+' '+Dm.Qtemp.FieldByName('nm_material').AsString);
-  Dm.Qtemp.Next;
+   // EdNm_Material1.Items.Add(Dm.Qtemp.FieldByName('no_material').AsString+' '+Dm.Qtemp.FieldByName('nm_material').AsString);
+    Dm.Qtemp.Next;
   end;
 end;
 
@@ -323,10 +323,10 @@ begin
   with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select * from t_supplier where nm_supplier='+QuotedStr(EdNm_supp.Text);
+    sql.Text:='select * from t_supplier where supplier_name='+QuotedStr(EdNm_supp.Text);
     ExecSQL;
   end;
-  EdKd_supp.Text:=Dm.Qtemp.FieldByName('kd_supplier').AsString;
+  EdKd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
   FBarang_Stok.Autonumber;
   Edkd.Text:=EdKd_Material.Text+EdKd_supp.Text;
   //EdnoSelect(sender);

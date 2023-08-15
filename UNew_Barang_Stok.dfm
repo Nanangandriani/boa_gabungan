@@ -2,7 +2,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   Left = 0
   Top = 0
   Caption = 'PT HHA'
-  ClientHeight = 271
+  ClientHeight = 285
   ClientWidth = 437
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,42 +18,42 @@ object FNew_Barang_stok: TFNew_Barang_stok
   TextHeight = 13
   object Label1: TLabel
     Left = 24
-    Top = 41
+    Top = 53
     Width = 64
     Height = 13
     Caption = 'Nama Barang'
   end
   object Label5: TLabel
     Left = 24
-    Top = 73
+    Top = 85
     Width = 68
     Height = 13
     Caption = 'Nama Supplier'
   end
   object qty: TLabel
     Left = 24
-    Top = 105
+    Top = 117
     Width = 24
     Height = 13
     Caption = 'Kode'
   end
   object Label7: TLabel
     Left = 24
-    Top = 139
+    Top = 151
     Width = 21
     Height = 13
     Caption = 'Stok'
   end
   object Label10: TLabel
     Left = 24
-    Top = 172
+    Top = 184
     Width = 34
     Height = 13
     Caption = 'Satuan'
   end
   object Label2: TLabel
     Left = 24
-    Top = 204
+    Top = 216
     Width = 23
     Height = 13
     Caption = 'Merk'
@@ -61,7 +61,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Label9: TLabel
     Left = 104
-    Top = 204
+    Top = 216
     Width = 4
     Height = 13
     Caption = ':'
@@ -69,64 +69,64 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Label8: TLabel
     Left = 104
-    Top = 139
+    Top = 151
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label12: TLabel
     Left = 104
-    Top = 172
+    Top = 184
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label4: TLabel
     Left = 104
-    Top = 105
+    Top = 117
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label6: TLabel
     Left = 104
-    Top = 73
+    Top = 85
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label3: TLabel
     Left = 104
-    Top = 41
+    Top = 53
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label11: TLabel
     Left = 104
-    Top = 8
+    Top = 20
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label13: TLabel
     Left = 24
-    Top = 11
+    Top = 23
     Width = 40
     Height = 13
     Caption = 'Kategori'
   end
   object Panel1: TPanel
     Left = 0
-    Top = 239
+    Top = 253
     Width = 437
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 228
-    ExplicitWidth = 424
+    ExplicitTop = 252
+    ExplicitWidth = 433
     object BBatal: TRzBitBtn
-      Left = 365
+      Left = 361
       Top = 1
       Height = 30
       Align = alRight
@@ -185,10 +185,10 @@ object FNew_Barang_stok: TFNew_Barang_stok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 348
+      ExplicitLeft = 357
     end
     object BSimpan: TRzBitBtn
-      Left = 290
+      Left = 286
       Top = 1
       Height = 30
       Align = alRight
@@ -247,10 +247,10 @@ object FNew_Barang_stok: TFNew_Barang_stok
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 273
+      ExplicitLeft = 282
     end
     object BEdit: TRzBitBtn
-      Left = 215
+      Left = 211
       Top = 1
       Height = 30
       Align = alRight
@@ -310,12 +310,12 @@ object FNew_Barang_stok: TFNew_Barang_stok
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 198
+      ExplicitLeft = 207
     end
   end
   object Edmerk: TEdit
     Left = 127
-    Top = 201
+    Top = 213
     Width = 121
     Height = 21
     CharCase = ecUpperCase
@@ -325,7 +325,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object EdSatuan: TEdit
     Left = 127
-    Top = 169
+    Top = 181
     Width = 121
     Height = 21
     CharCase = ecUpperCase
@@ -335,7 +335,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Edstok: TEdit
     Left = 127
-    Top = 136
+    Top = 148
     Width = 121
     Height = 21
     CharCase = ecUpperCase
@@ -346,7 +346,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Edkd: TEdit
     Left = 127
-    Top = 102
+    Top = 114
     Width = 121
     Height = 21
     CharCase = ecUpperCase
@@ -356,17 +356,16 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object EdNm_supp: TRzComboBox
     Left = 127
-    Top = 70
+    Top = 82
     Width = 218
     Height = 21
-    CharCase = ecUpperCase
     Enabled = False
     TabOrder = 5
     OnSelect = EdNm_suppSelect
   end
   object EdNm_Material1: TRzComboBox
     Left = 287
-    Top = 151
+    Top = 163
     Width = 121
     Height = 21
     TabOrder = 6
@@ -376,7 +375,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object EdKd_Material: TEdit
     Left = 351
-    Top = 38
+    Top = 50
     Width = 44
     Height = 21
     CharCase = ecUpperCase
@@ -386,7 +385,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object EdKd_supp: TEdit
     Left = 351
-    Top = 70
+    Top = 82
     Width = 44
     Height = 21
     CharCase = ecUpperCase
@@ -396,7 +395,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object DtBln: TRzDateTimeEdit
     Left = 351
-    Top = 97
+    Top = 109
     Width = 44
     Height = 21
     EditType = etDate
@@ -407,7 +406,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object DtTh: TRzDateTimeEdit
     Left = 351
-    Top = 124
+    Top = 136
     Width = 57
     Height = 21
     EditType = etDate
@@ -418,7 +417,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Edhuruf: TEdit
     Left = 401
-    Top = 70
+    Top = 82
     Width = 26
     Height = 21
     CharCase = ecUpperCase
@@ -428,7 +427,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Edno: TRzComboBox
     Left = 401
-    Top = 38
+    Top = 50
     Width = 26
     Height = 21
     CharCase = ecUpperCase
@@ -453,7 +452,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object Edcategory: TRzComboBox
     Left = 127
-    Top = 5
+    Top = 17
     Width = 218
     Height = 21
     CharCase = ecUpperCase
@@ -462,7 +461,7 @@ object FNew_Barang_stok: TFNew_Barang_stok
   end
   object EdNm_Material: TRzButtonEdit
     Left = 127
-    Top = 38
+    Top = 50
     Width = 218
     Height = 21
     Text = ''

@@ -4,7 +4,7 @@ object FNew_Barang: TFNew_Barang
   BorderStyle = bsDialog
   Caption = 'Form New Barang'
   ClientHeight = 294
-  ClientWidth = 454
+  ClientWidth = 455
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,14 +18,14 @@ object FNew_Barang: TFNew_Barang
   OnShow = FormShow
   TextHeight = 13
   object Label8: TLabel
-    Left = 106
+    Left = 101
     Top = 53
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label3: TLabel
-    Left = 330
+    Left = 325
     Top = 84
     Width = 4
     Height = 13
@@ -33,35 +33,35 @@ object FNew_Barang: TFNew_Barang
     Visible = False
   end
   object Label6: TLabel
-    Left = 106
+    Left = 101
     Top = 84
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label4: TLabel
-    Left = 106
+    Left = 101
     Top = 114
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label2: TLabel
-    Left = 24
+    Left = 19
     Top = 114
     Width = 64
     Height = 13
     Caption = 'Nama Barang'
   end
   object Label5: TLabel
-    Left = 24
+    Left = 19
     Top = 84
     Width = 24
     Height = 13
     Caption = 'Kode'
   end
   object Label1: TLabel
-    Left = 296
+    Left = 291
     Top = 84
     Width = 17
     Height = 13
@@ -69,70 +69,70 @@ object FNew_Barang: TFNew_Barang
     Visible = False
   end
   object Label7: TLabel
-    Left = 24
+    Left = 19
     Top = 53
     Width = 40
     Height = 13
     Caption = 'Kategori'
   end
   object Label9: TLabel
-    Left = 24
+    Left = 19
     Top = 143
     Width = 34
     Height = 13
     Caption = 'Satuan'
   end
   object Label10: TLabel
-    Left = 106
+    Left = 101
     Top = 143
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label11: TLabel
-    Left = 24
+    Left = 19
     Top = 176
     Width = 23
     Height = 13
     Caption = 'Merk'
   end
   object Label12: TLabel
-    Left = 106
+    Left = 101
     Top = 176
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label13: TLabel
-    Left = 24
+    Left = 19
     Top = 22
     Width = 24
     Height = 13
     Caption = 'Jenis'
   end
   object Label14: TLabel
-    Left = 106
+    Left = 101
     Top = 22
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label19: TLabel
-    Left = 24
+    Left = 19
     Top = 209
     Width = 72
     Height = 13
     Caption = 'Akun Perkiraan'
   end
   object Label20: TLabel
-    Left = 106
+    Left = 101
     Top = 209
     Width = 4
     Height = 13
     Caption = ':'
   end
   object SpeedButton1: TSpeedButton
-    Left = 278
+    Left = 273
     Top = 50
     Width = 23
     Height = 22
@@ -140,7 +140,7 @@ object FNew_Barang: TFNew_Barang
     OnClick = SpeedButton1Click
   end
   object SpeedButton2: TSpeedButton
-    Left = 279
+    Left = 274
     Top = 18
     Width = 23
     Height = 22
@@ -148,7 +148,7 @@ object FNew_Barang: TFNew_Barang
     OnClick = SpeedButton2Click
   end
   object Btn_Satuan: TSpeedButton
-    Left = 279
+    Left = 274
     Top = 139
     Width = 23
     Height = 22
@@ -156,15 +156,15 @@ object FNew_Barang: TFNew_Barang
     OnClick = Btn_SatuanClick
   end
   object EdNm: TEdit
-    Left = 128
+    Left = 123
     Top = 111
-    Width = 301
+    Width = 319
     Height = 21
     CharCase = ecUpperCase
     TabOrder = 4
   end
   object EdKd: TEdit
-    Left = 128
+    Left = 123
     Top = 81
     Width = 73
     Height = 21
@@ -173,7 +173,7 @@ object FNew_Barang: TFNew_Barang
     TabOrder = 2
   end
   object Edno1: TEdit
-    Left = 307
+    Left = 302
     Top = 50
     Width = 121
     Height = 21
@@ -182,7 +182,7 @@ object FNew_Barang: TFNew_Barang
     Visible = False
   end
   object Edno: TEdit
-    Left = 352
+    Left = 347
     Top = 81
     Width = 73
     Height = 21
@@ -193,7 +193,7 @@ object FNew_Barang: TFNew_Barang
     Visible = False
   end
   object EdCategory: TRzComboBox
-    Left = 128
+    Left = 123
     Top = 50
     Width = 145
     Height = 21
@@ -208,14 +208,14 @@ object FNew_Barang: TFNew_Barang
   object Panel1: TPanel
     Left = 0
     Top = 253
-    Width = 454
+    Width = 455
     Height = 41
     Align = alBottom
     TabOrder = 5
     ExplicitTop = 252
     ExplicitWidth = 450
     object BBatal: TRzBitBtn
-      Left = 378
+      Left = 379
       Top = 1
       Height = 39
       Align = alRight
@@ -277,7 +277,7 @@ object FNew_Barang: TFNew_Barang
       ExplicitLeft = 374
     end
     object BSimpan: TRzBitBtn
-      Left = 303
+      Left = 304
       Top = 1
       Height = 39
       Align = alRight
@@ -401,7 +401,7 @@ object FNew_Barang: TFNew_Barang
     end
   end
   object EdMerk: TRzComboBox
-    Left = 128
+    Left = 123
     Top = 173
     Width = 145
     Height = 21
@@ -413,7 +413,7 @@ object FNew_Barang: TFNew_Barang
       'KKSP')
   end
   object Edjenis: TRzComboBox
-    Left = 128
+    Left = 123
     Top = 19
     Width = 145
     Height = 21
@@ -426,9 +426,9 @@ object FNew_Barang: TFNew_Barang
       'AKTIVA')
   end
   object Edkd_akun: TRzEdit
-    Left = 128
+    Left = 123
     Top = 206
-    Width = 110
+    Width = 90
     Height = 21
     Text = ''
     Color = clInfoBk
@@ -436,9 +436,9 @@ object FNew_Barang: TFNew_Barang
     TabOrder = 8
   end
   object EdNm_akun: TRzButtonEdit
-    Left = 244
+    Left = 214
     Top = 206
-    Width = 185
+    Width = 228
     Height = 21
     Text = ''
     CharCase = ecUpperCase
@@ -449,7 +449,7 @@ object FNew_Barang: TFNew_Barang
     OnButtonClick = EdNm_akunButtonClick
   end
   object Cbkdtr: TComboBox
-    Left = 207
+    Left = 202
     Top = 81
     Width = 66
     Height = 21
@@ -458,7 +458,7 @@ object FNew_Barang: TFNew_Barang
     Visible = False
   end
   object EdSatuan: TRzButtonEdit
-    Left = 128
+    Left = 123
     Top = 140
     Width = 145
     Height = 21

@@ -46,7 +46,19 @@ type
     Label19: TLabel;
     CkNeraca: TCheckBox;
     SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
+    EdKategori: TSpeedButton;
+    Label2: TLabel;
+    Label4: TLabel;
+    Cb_PosNR: TRzComboBox;
+    Cb_Neraca: TRzComboBox;
+    Label6: TLabel;
+    Label8: TLabel;
+    Cb_lr: TRzComboBox;
+    Cb_by: TRzComboBox;
+    SpeedButton3: TSpeedButton;
+    Btnlr: TSpeedButton;
+    BtnNeraca: TRzBitBtn;
+    BtnPosNr: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure edkodeKeyPress(Sender: TObject; var Key: Char);
@@ -62,12 +74,20 @@ type
     procedure CkNeracaClick(Sender: TObject);
     procedure CBkelompok_akunChange(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
+    procedure EdKategoriClick(Sender: TObject);
+    procedure Cb_bySelect(Sender: TObject);
+    procedure Cb_lrSelect(Sender: TObject);
+    procedure Cb_NeracaSelect(Sender: TObject);
+    procedure Cb_PosNRSelect(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure BtnlrClick(Sender: TObject);
+    procedure BtnNeracaClick(Sender: TObject);
+    procedure BtnPosNrClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    statusnl,Kelompok:string;
+    statusnl,Kelompok,id_by,id_lr,id_nr,id_posnr:string;
     procedure Clear;
     procedure Save;
     procedure Update;
@@ -161,6 +181,18 @@ begin
   end;
 end;
 
+procedure TFNewdaftar_perkiraan_bank.BtnNeracaClick(Sender: TObject);
+begin
+  with FNew_KategoriAkun do
+    begin
+      Show;
+      caption:='Form New group Laba / Rugi';
+      jenistr:='Neraca';
+      Pnl_Neraca.show;
+      Pnl_Kategori.Hide;
+    end;
+end;
+
 procedure TFNewdaftar_perkiraan_bank.CBjenis_akunChange(Sender: TObject);
 begin
   CBkategori.Clear;
@@ -194,6 +226,70 @@ begin
   end;
 end;
 
+procedure TFNewdaftar_perkiraan_bank.Cb_bySelect(Sender: TObject);
+begin
+  with Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select "id",cost_type from t_ak_type_cost where cost_type='+QuotedStr(CB_by.Text);
+    Open;
+  end;
+  if qtemp.RecordCount=0 then
+  begin
+    id_by:='0';
+  end else
+    id_by:=Qtemp['id'];
+end;
+
+procedure TFNewdaftar_perkiraan_bank.Cb_lrSelect(Sender: TObject);
+begin
+  with Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select "id",lr2 from t_ak_type_lr where lr2='+QuotedStr(CB_lr.Text);
+    Open;
+  end;
+  if qtemp.RecordCount=0 then
+  begin
+    id_lr:='0';
+  end else
+    id_lr:=Qtemp['id'];
+end;
+
+procedure TFNewdaftar_perkiraan_bank.Cb_NeracaSelect(Sender: TObject);
+begin
+  with Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select "id",type_balance from t_ak_type_balance where type_balance='+QuotedStr(CB_neraca.Text);
+    Open;
+  end;
+  if qtemp.RecordCount=0 then
+  begin
+    id_nr:='0';
+  end else
+    id_nr:=Qtemp['id'];
+end;
+
+procedure TFNewdaftar_perkiraan_bank.Cb_PosNRSelect(Sender: TObject);
+begin
+  with Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select "id",post_name from t_ak_type_balance_post where post_name='+QuotedStr(CB_posnr.Text);
+    Open;
+  end;
+  if qtemp.RecordCount=0 then
+  begin
+    id_posnr:='0';
+  end else
+    id_posnr:=Qtemp['id'];
+end;
+
 procedure TFNewdaftar_perkiraan_bank.CkNeracaClick(Sender: TObject);
 begin
   if CkNeraca.Checked=true then statusnl:='1' else statusnl:='0';
@@ -206,6 +302,10 @@ begin
   CBjenis_akun.Clear;
   CBkategori.Clear;
   Memdetail.EmptyTable;
+  id_by:='0';
+  id_lr:='0';
+  id_nr:='0';
+  id_posnr:='0';
 end;
 
 procedure TFNewdaftar_perkiraan_bank.edkodeKeyPress(Sender: TObject;
@@ -286,6 +386,58 @@ begin
     CBkategori.Items.Add(DM.Qtemp.FieldByName('nm_kategori').AsString);
     DM.Qtemp.Next;
   end;   }
+  Cb_Neraca.Clear;
+  with dm.Qtemp2 do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select type_balance from t_ak_type_balance where type_balance <> '''' ';
+    Open;
+  end;
+  while not DM.Qtemp2.Eof do
+  begin
+    Cb_Neraca.Items.Add(DM.Qtemp2.FieldByName('type_balance').AsString);
+    DM.Qtemp2.Next;
+  end;
+  Cb_by.Clear;
+  with dm.Qtemp2 do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select cost_type from t_ak_type_cost where cost_type <> '''' ';
+    Open;
+  end;
+  while not DM.Qtemp2.Eof do
+  begin
+    Cb_by.Items.Add(DM.Qtemp2.FieldByName('cost_type').AsString);
+    DM.Qtemp2.Next;
+  end;
+  Cb_PosNR.Clear;
+  with dm.Qtemp2 do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select post_name from t_ak_type_balance_post where post_name <> '''' ';
+    Open;
+  end;
+  while not DM.Qtemp2.Eof do
+  begin
+    Cb_PosNR.Items.Add(DM.Qtemp2.FieldByName('post_name').AsString);
+    DM.Qtemp2.Next;
+  end;
+  Cb_lr.Clear;
+  with dm.Qtemp2 do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='select lr2 from t_ak_type_lr where lr2 <> '''' ';
+    Open;
+  end;
+  while not DM.Qtemp2.Eof do
+  begin
+    Cb_lr.Items.Add(DM.Qtemp2.FieldByName('lr2').AsString);
+    DM.Qtemp2.Next;
+  end;
 end;
 
 procedure TFNewdaftar_perkiraan_bank.RzBitBtn1Click(Sender: TObject);
@@ -302,8 +454,32 @@ end;
 
 procedure TFNewdaftar_perkiraan_bank.RzBitBtn3Click(Sender: TObject);
 begin
-  FNewPosting.ednama_posting.Text:='';
-  FNewPosting.Show;
+  with FNewPosting do
+  begin
+    jenis:='posting';
+    caption:='Form New Group Posting';
+    ednama_posting.Text:='';
+    Pnlposting.visible:=true;
+    Pnlcost.visible:=false;
+    PnlLr.visible:=false;
+    PnlPosnr.visible:=false;
+    Show;
+  end;
+end;
+
+procedure TFNewdaftar_perkiraan_bank.BtnPosNrClick(Sender: TObject);
+begin
+   with FNewPosting do
+  begin
+    jenis:='postnr';
+    caption:='Form New Group Post Neraca';
+    ednama_posting.Text:='';
+    Pnlposting.visible:=false;
+    Pnlcost.visible:=false;
+    PnlLr.Hide;
+    PnlPosnr.visible:=true;
+    Show;
+  end;
 end;
 
 procedure TFNewdaftar_perkiraan_bank.Save;
@@ -356,15 +532,15 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='Insert Into t_ak_account(code,header_code,account_name,'+
-              'posting_id,posisi_dk,group_id,type_id,category_code,balance_status) '+
-              'Values (:parkode,:parkode_header,:parnama_perkiraan,:parposting,'+
-              ':parposisi_dk,:parkelompok_akun,:parid_jenis_akun,:parkd_kategori_akun,:parstatus_neraca)';
+    sql.Text:='Insert Into t_ak_account(code,header_code,account_name,posting_id,posisi_dk,group_id,'+
+    'type_id,category_code,balance_status,cost_st_id,lr_st_id,balance_st_id,balance_post_st_id) '+
+    'Values (:parkode,:parkode_header,:parnama_perkiraan,:parposting,:parposisi_dk,:parkelompok_akun,'+
+    ':parid_jenis_akun,:parkd_kategori_akun,:status_neraca,:cost_id,:lr_id,:balance_id,:balance_post_id)';
     parambyname('parkode').Value:=edkode.Text;
     parambyname('parkode_header').Value:=dm.QTemp1.FieldByName('header_code').AsString;
     parambyname('parnama_perkiraan').Value:=ednama_perkiraan.Text;
     parambyname('parposting').Value:=QTemp.FieldByName('id').AsString;
-    ParamByName('parstatus_neraca').Value:=statusnl;
+    ParamByName('status_neraca').Value:=statusnl;
     if CBposisi_d_k.Text='DEBIT' then
     begin
      parambyname('parposisi_dk').Value:='D';
@@ -384,7 +560,10 @@ begin
     end;
     parambyname('parid_jenis_akun').Value:=QTemp2.FieldByName('id').AsString;
     parambyname('parkd_kategori_akun').Value:=QTemp3.FieldByName('category_code').AsString;
-
+    parambyname('cost_id').Value:=id_by;
+    parambyname('lr_id').Value:=id_lr;
+    parambyname('balance_id').Value:=id_nr;
+    parambyname('balance_post_id').Value:=id_posnr;
     execsql;
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -401,12 +580,48 @@ begin
   end;
 end;
 
-procedure TFNewdaftar_perkiraan_bank.SpeedButton2Click(Sender: TObject);
+procedure TFNewdaftar_perkiraan_bank.EdKategoriClick(Sender: TObject);
 begin
   with FNew_KategoriAkun do
     begin
       Show;
+      caption:='Form New Kategori Akun';
+      jenistr:='Kategori';
+      Pnl_Kategori.Show;
+      Pnl_Neraca.Hide;
     end;
+end;
+
+procedure TFNewdaftar_perkiraan_bank.SpeedButton3Click(Sender: TObject);
+begin
+  with FNewPosting do
+  begin
+    jenis:='by';
+    caption:='Form New Group By';
+    ednama_posting.Text:='';
+    Pnlposting.visible:=false;
+    PnlLr.visible:=false;
+    PnlPosnr.visible:=false;
+    Pnlcost.visible:=true;
+    Edby.Text:='';
+    Show;
+  end;
+end;
+
+procedure TFNewdaftar_perkiraan_bank.BtnlrClick(Sender: TObject);
+begin
+  with FNewPosting do
+  begin
+    caption:='Form New group Laba / Rugi';
+    jenis:='lr';
+    ednama_posting.Text:='';
+    Pnlposting.visible:=false;
+    Pnlcost.visible:=false;
+    PnlPosnr.visible:=false;
+    PnlLr.visible:=true;
+    Edlr.Text:='';
+    Show;
+  end;
 end;
 
 procedure TFNewdaftar_perkiraan_bank.Update;
@@ -469,11 +684,10 @@ begin
   begin
     close;
     Sql.Clear;
-    Sql.Text :='update t_ak_account set header_code=:parkode_header,'+
-               'account_name=:parnama_perkiraan,posting_id=:parposting,'+
-               'posisi_dk=:parposisi_dk,group_id=:parkelompok_akun,'+
-               'type_id=:parid_jenis_akun,category_code=:parkd_kategori_akun '+
-               ',balance_status=:parstatus_neraca where code=:parkode';
+    Sql.Text :='update t_ak_account set header_code=:parkode_header,account_name=:parnama_perkiraan,'+
+    'posting_id=:parposting,posisi_dk=:parposisi_dk,group_id=:parkelompok_akun,type_id=:parid_jenis_akun,'+
+    'category_code=:parkd_kategori_akun,balance_status=:parstatus_neraca,cost_st_id=:cost_id,'+
+    'lr_st_id=:lr_id,balance_st_id=:balance_id,balance_post_st_id=:balance_post_id where code=:parkode';
     parambyname('parkode').Value:=edkode.Text;
     parambyname('parkode_header').Value:=dm.QTemp1.FieldByName('header_code').AsString;
     parambyname('parnama_perkiraan').Value:=ednama_perkiraan.Text;
@@ -498,6 +712,10 @@ begin
     end;
     parambyname('parid_jenis_akun').Value:=QTemp2.FieldByName('id').AsString;
     parambyname('parkd_kategori_akun').Value:=dm.QTemp3.FieldByName('category_code').AsString;
+    parambyname('cost_id').Value:=id_by;
+    parambyname('lr_id').Value:=id_lr;
+    parambyname('balance_id').Value:=id_nr;
+    parambyname('balance_post_id').Value:=id_posnr;
     ExecSql;
   end;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);

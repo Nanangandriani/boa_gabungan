@@ -144,23 +144,35 @@ end;
 
 procedure TFDaftar_Perkiraan.dxBUpdateClick(Sender: TObject);
 begin
+  FNewdaftar_perkiraan_bank.Show;
   FNewdaftar_perkiraan_bank.Clear;
   with MemDaftar_Perk do
   begin
-  with FNewdaftar_perkiraan_bank do
-  begin
-    edkode.Text:=FieldByName('code').AsString;
-    ednama_perkiraan.Text:=FieldByName('account_name').AsString;
-    CBheader.Text:=FieldByName('header_name').AsString;
-    CBposting.Text:=FieldByName('posting').AsString;
-    CbKategori.Text:=FieldByName('category').AsString;
-    CBjenis_akun.Text:=FieldByName('type').AsString;
-    CBposisi_d_k.Text:=FieldByName('posisi_dk').AsString;
-    CBkelompok_akun.Text:=FieldByName('group').AsString;
-    statusnl:=FieldByName('balance_status').AsString;
-    if statusnl='1' then CkNeraca.Checked:=true else CkNeraca.Checked:=false;
-//    FNewdaftar_perkiraan_bank.ed.Text:=FieldByName('id_jenis_akun').AsString;
-  end;
+    with FNewdaftar_perkiraan_bank do
+    begin
+      edkode.Enabled:=false;
+      edkode.Text:=FieldByName('code').AsString;
+      ednama_perkiraan.Text:=FieldByName('account_name').AsString;
+      CBheader.Text:=FieldByName('header_name').AsString;
+      CBposting.Text:=FieldByName('posting').AsString;
+      CbKategori.Text:=FieldByName('category').AsString;
+      CBjenis_akun.Text:=FieldByName('type').AsString;
+      CBposisi_d_k.Text:=FieldByName('posisi_dk').AsString;
+      CBkelompok_akun.Text:=FieldByName('group').AsString;
+      statusnl:=FieldByName('balance_status').AsString;
+     //cr ds gabungan 07-08-2023
+      Cb_neraca.Text:=FieldByName('type_balance').AsString;
+      Cb_by.Text:=FieldByName('cost_type').AsString;
+      Cb_PosNR.Text:=FieldByName('post_name').AsString;
+      Cb_lr.Text:=FieldByName('lr2').AsString;
+     { id_nr:=FieldByName('balance_st_id').AsString;
+      id_by:=FieldByName('cost_st_id').AsString;
+      id_posnr:=FieldByName('balance_post_st_id').AsString;
+      id_lr:=FieldByName('lr_st_id').AsString; }
+      //
+      if statusnl='1' then CkNeraca.Checked:=true else CkNeraca.Checked:=false;
+      //   FNewdaftar_perkiraan_bank.ed.Text:=FieldByName('id_jenis_akun').AsString;
+    end;
   end;
   Qdetail_perkiraan.First;
   while not Qdetail_perkiraan.Eof do
@@ -175,7 +187,6 @@ begin
     Qdetail_perkiraan.Next;
   end;
   Status:=1;
-  FNewdaftar_perkiraan_bank.ShowModal;
 end;
 
 procedure TFDaftar_Perkiraan.FormClose(Sender: TObject;
