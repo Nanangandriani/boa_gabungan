@@ -133,13 +133,8 @@ implementation
 uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
   UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
-<<<<<<< Updated upstream
   Udaftar_perkiraan,UKonversi_Barang, UJabatan, UDept, UBonPermt_Barang,
   UTransfer_Barang;
-=======
-  Udaftar_perkiraan,UKonversi_Barang,UHak_Akses,
-  UDept, UUser, UJabatan, UKontrakKerjasama;
->>>>>>> Stashed changes
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -503,7 +498,7 @@ begin
 
     end;}
 
-   with dm.Qtemp1 do
+    with dm.Qtemp1 do
    begin
        SQL.Clear;
        SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.submenu menu FROM t_akses aa '+
@@ -567,14 +562,11 @@ begin
         //AButtonPanel.Tag:=1;
           if (dm.Qtemp2.RecordCount=1) or (dm.Qtemp2.RecordCount= 2)then
           begin
-            //ACategoryPanel.Height:=80;
-            ACategoryPanel.Height:=90;
+            ACategoryPanel.Height:=80;
           end;
           if dm.Qtemp2.RecordCount>2 then
           begin
-            //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
-            ACategoryPanel.Height:=45+35*dm.Qtemp2.RecordCount;
-            //ACategoryPanel.Height:=ACategoryPanel.Height *dm.Qtemp2.RecordCount;
+            ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
           end;
          dm.Qtemp2.Next;
       end;
@@ -746,6 +738,6 @@ end;
 
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
-  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type
-  ,TFKategori_Barang,TFPenomoran,TFListPerusahaan,TFDaftar_Perkiraan,TFHak_Akses,TFDept,TFUser,TFJabatan,TFKontrakkerjasama,TFBonPermt_Barang,TFTransfer_Barang]);
+  TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFKategori_Barang,TFPenomoran,
+  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang]);
 end.
