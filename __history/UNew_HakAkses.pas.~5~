@@ -1,0 +1,166 @@
+unit UNew_HakAkses;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, Vcl.ExtCtrls, Vcl.StdCtrls, RzCmboBx, EhLibVCL,
+  GridsEh, DBAxisGridsEh, DBGridEh, RzButton, Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TFNew_Hak_Akses = class(TForm)
+    BKurang: TRzBitBtn;
+    BTambah: TRzBitBtn;
+    DBGridEh1: TDBGridEh;
+    DBGridEh2: TDBGridEh;
+    Edkd: TEdit;
+    EdNm: TRzComboBox;
+    EdNo: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label8: TLabel;
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    DsMenu: TDataSource;
+    QMenu: TUniQuery;
+    DsDetail: TDataSource;
+    QDetail: TUniQuery;
+    procedure BKurangClick(Sender: TObject);
+    procedure BBatalClick(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure Autonumber;
+    Procedure Load;
+    Procedure RefreshMenu;
+  end;
+
+var
+  FNew_Hak_Akses: TFNew_Hak_Akses;
+  no_dept:string;
+  Status:integer;
+
+implementation
+
+{$R *.dfm}
+
+uses UDataModule;
+
+
+procedure TFNew_Hak_Akses.Autonumber;
+var
+  code:string;
+     i:integer;
+begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      SQL.Text:='select max(no_akses)as no from t_akses';
+      ExecSQL;
+    end;
+    if dm.Qtemp['no'] = null then
+        code := '1'
+    else
+    code:= FloatToStr(dm.Qtemp['no']+ 1);
+    EdNo.Text:=code;
+end;
+
+procedure TFNew_Hak_Akses.BBatalClick(Sender: TObject);
+begin
+   Close;
+   FHak_Akses.dxbarRefreshClick(sender);
+end;
+
+procedure TFNew_Hak_Akses.BKurangClick(Sender: TObject);
+begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='Delete From t_akses where idakses='+QuotedStr(QDetail['idakses']);
+      ExecSQL;
+    end;
+      EdkdChange(sender);
+      RefreshMenu;
+end;
+
+procedure TFNew_Hak_Akses.BSimpanClick(Sender: TObject);
+begin
+    if EdNo.Text='' then
+    begin
+      MessageDlg('No Group Akses Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdNo.SetFocus;
+      Exit;
+    end;
+    if EdNm.Text='' then
+    begin
+      MessageDlg('Department Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdNm.SetFocus;
+      Exit;
+    end;
+    if not dm.koneksi.InTransaction then
+    dm.koneksi.StartTransaction;
+    try
+    begin
+    if status=0 then
+    begin
+      QDetail.Edit;
+      QDetail.Post;
+    end;
+    if status=1 then
+    begin
+      QDetail.Edit;
+      QDetail.Post;
+    end;
+    dm.koneksi.Commit;
+    Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+    BBatalClick(sender);
+    end;
+    Except
+    on E :Exception do
+    begin
+    MessageDlg(E.Message,mtError,[MBok],0);
+    dm.koneksi.Rollback;
+    end;
+    end;
+end;
+
+procedure TFNew_Hak_Akses.load;
+begin
+    EdNm.Clear;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_dept';
+      ExecSQL;
+    end;
+    Dm.Qtemp.First;
+    while not Dm.Qtemp.Eof do
+    begin
+      EdNm.Items.Add(Dm.Qtemp['dept']);
+      Dm.Qtemp.Next;
+    end;
+end;
+
+Procedure TFNew_Hak_Akses.RefreshMenu;
+begin
+    with QMenu do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * from t_menu WHERE id_menu not in ((SELECT id_menu FROM t_akses '+
+                ' WHERE iddept='+QuotedStr(Edkd.Text)+') ) order by id_menu Asc';
+      ExecSQL;
+    end;
+    QMenu.Close;
+    QMenu.Open;
+end;
+
+end.

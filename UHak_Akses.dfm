@@ -42,7 +42,6 @@ object FHak_Akses: TFHak_Akses
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = -204
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -58,15 +57,19 @@ object FHak_Akses: TFHak_Akses
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRO: TAction
       Caption = 'Refresh  '
+      OnExecute = ActROExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -366,10 +369,8 @@ object FHak_Akses: TFHak_Akses
         BFC080A205F60000000049454E44AE426082}
     end
     object dxBarLargeBaru: TdxBarLargeButton
-      Caption = 'New'
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -504,9 +505,8 @@ object FHak_Akses: TFHak_Akses
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update  '
+      Action = ActUpdate
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -543,9 +543,8 @@ object FHak_Akses: TFHak_Akses
         82}
     end
     object dxBarRefresh: TdxBarButton
-      Caption = 'Refresh  '
+      Action = ActRO
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -640,9 +639,18 @@ object FHak_Akses: TFHak_Akses
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.menu,c.Dept from t_akses  a inner join t_menu b on ' +
+        '-- select A.*,b.menu,c.Dept from t_akses  a inner join t_menu b ' +
+        'on a.id_menu=b.id_menu '
+      
+        '-- inner join t_dept c on a.iddept=c.iddept order by a.id_menu A' +
+        'sc'
+      ''
+      
+        'select a.*,b.menu,c.Dept from t_akses  a inner join t_menu b on ' +
         'a.id_menu=b.id_menu '
-      'inner join t_dept c on a.iddept=c.iddept order by a.id_menu Asc')
+      
+        'inner join t_dept c on a.iddept=c.dept_code order by a.id_menu A' +
+        'sc')
     Left = 552
     Top = 24
   end

@@ -1,0 +1,72 @@
+unit UNew_KontrakKerjasama;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, RzButton,
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzEdit, Vcl.Samples.Spin,
+  RzBtnEdt, Vcl.StdCtrls, RzCmboBx, Vcl.Mask, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    pninput: TPanel;
+    Label1: TLabel;
+    qty: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label10: TLabel;
+    Label12: TLabel;
+    Label2: TLabel;
+    Label9: TLabel;
+    Label11: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label8: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    EdNo_kontrak: TEdit;
+    EdKd_supp: TEdit;
+    Edtempo: TEdit;
+    DtKontrak: TRzDateTimeEdit;
+    DtSelesai: TRzDateTimeEdit;
+    EdNo: TEdit;
+    DtBln: TRzDateTimeEdit;
+    DtTh: TRzDateTimeEdit;
+    EdKet: TMemo;
+    EdCurr: TRzComboBox;
+    DtPengiriman: TRzDateTimeEdit;
+    CbKategori: TComboBox;
+    EdNm_supp: TRzButtonEdit;
+    CbJenis: TComboBox;
+    CB_kirim: TComboBox;
+    EdTh_kirim: TSpinEdit;
+    EdnilaiCurr: TRzNumericEdit;
+    DBGridEh2: TDBGridEh;
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    BEdit: TRzBitBtn;
+    MemMaterial: TMemTableEh;
+    DataSource1: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+end.

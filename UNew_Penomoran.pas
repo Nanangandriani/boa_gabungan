@@ -65,6 +65,7 @@ type
     procedure btnplus2Click(Sender: TObject);
     procedure btnplusClick(Sender: TObject);
     procedure Ed_KompChange(Sender: TObject);
+    procedure EdhasilChange(Sender: TObject);
     procedure eddigit_countChange(Sender: TObject);
 
 
@@ -89,6 +90,23 @@ implementation
 {$R *.dfm}
 
 uses UDataModule;
+
+function DecToRoman(decimal:longint):string;  //Romawi
+const
+ numbers:Array [1..13] of integer=(1,4,5,9,10,40,50,90,100,400,500,900,1000);
+ romans :Array [1..13] of string=('I','IV','V','IX','X','XL','L','XC','C','CD','D','CM','M');
+Var
+  i:integer;
+begin
+    result:='';
+    for I := 13 downto 1 do
+    while (Decimal >=Numbers[i]) do
+    begin
+      Decimal:=Decimal-Numbers[i];
+      Result:=Result+Romans[i];
+    end;
+
+end;
 
  function TFNew_Penomoran.digitnumber(a: Integer): Integer;
  begin
@@ -397,13 +415,37 @@ begin
 end;
 
 procedure TFNew_Penomoran.eddigit_countChange(Sender: TObject);
-var
-   a:integer;
-   hasil:string;
+var i:integer;
 begin
-   a:=strtoint(eddigit_count.Text);
-   hasil:=inttostr(digitnumber(a));
-   Ed_comp.text:=hasil;
+    i:=strtoint(eddigit_count.Text);
+    if eddigit_count.Text='' then
+       exit;
+       eddigit_count.Text:='0';
+    if i=0 then
+       Ed_comp.text:= ''
+    else
+    if i=1 then
+       Ed_comp.text:= '0'
+    else
+    if i=2  then
+      Ed_comp.text:='00'
+    else
+    if i=3 then
+      Ed_comp.text :='000'
+    else
+    if i=4 then
+      Ed_comp.text :='0000'
+    else
+    if i=5 then
+      Ed_comp.text :='00000'
+   //digitnumber(i);
+
+
+end;
+
+procedure TFNew_Penomoran.EdhasilChange(Sender: TObject);
+begin
+    LabelHasil.Caption:=Edhasil.text;
 end;
 
 procedure TFNew_Penomoran.btnplus2Click(Sender: TObject);
@@ -454,6 +496,10 @@ begin
 end;
 
 procedure TFNew_Penomoran.CBKomponen_NoSelect(Sender: TObject);
+var
+ th,bln,hr :word;
+ counter:integer;
+
 begin
    if CBKomponen_No.ItemIndex=0 then
    begin
@@ -468,10 +514,22 @@ begin
       Ed_comp.Text:=uniquery1.FieldByName('tahun').AsString;
       //Edbut_th.Text:=uniquery1.FieldByName('tahun').AsString;
       //ListBox1.Items.Add(Edbut_th.Text);
-
    end
    else
    if CBKomponen_No.ItemIndex=1 then
+   begin
+      with uniquery1 do
+      begin
+        close;
+        sql.Clear;
+        //sql.Create.Add(' SELECT date_part(''year'', now()) Tahun ');
+        sql.Create.Add(' SELECT TO_CHAR(NOW() :: DATE, ''yy'') Tahun '); //th 2 digit
+        Open;
+      end;
+      Ed_comp.Text:=uniquery1.FieldByName('tahun').AsString;
+   end
+   else
+   if CBKomponen_No.ItemIndex=2 then
    begin
       with uniquery1 do
       begin
@@ -483,10 +541,24 @@ begin
       Ed_comp.Text:=uniquery1.FieldByName('bulan').AsString;
       //Edbut_bln.Text:=uniquery1.FieldByName('bulan').AsString;
       //ListBox1.Items.Add(Edbut_bln.Text);
+   end
+   else
+   if CBKomponen_No.ItemIndex=3 then  //Bulan Romawi
+   begin
+      with uniquery1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Create.Add(' SELECT date_part(''month'', now()) bulan ');
+        Open;
+      end;
+      Ed_comp.Text:=uniquery1.FieldByName('bulan').AsString;
+      Ed_comp.Text:=DecToRoman(strtoint(Ed_comp.Text));
+      //Ed_comp.Text:=convbulanrom(uniquery1.FieldByName('bulan').AsString);
 
    end
    else
-   if CBKomponen_No.ItemIndex=2 then
+   if CBKomponen_No.ItemIndex=4 then
    begin
       with uniquery1 do
       begin
@@ -501,14 +573,15 @@ begin
 
    end
    else
-   if CBKomponen_No.ItemIndex=3 then
+   if CBKomponen_No.ItemIndex=5 then
    begin
-      Ed_comp.Text:=eddigit_count.Text;
-      //Edbut_counter.Text:=eddigit_count.Text;
-      //ListBox1.Items.Add(Edbut_counter.Text);
+      //Ed_comp.Text:=eddigit_count.Text;
+      Counter := 0;
+      Ed_comp.Text:= IntToStr(Counter);
+
    end
    else
-   if CBKomponen_No.ItemIndex=4 then
+   if CBKomponen_No.ItemIndex=6 then
    begin
        Ed_comp.Text:='';
      //btnplus.Visible:=true;

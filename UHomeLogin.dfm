@@ -2,8 +2,8 @@ object FHomeLogin: TFHomeLogin
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  ClientHeight = 466
-  ClientWidth = 496
+  ClientHeight = 372
+  ClientWidth = 394
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,18 +15,20 @@ object FHomeLogin: TFHomeLogin
   object pnApproval: TRzPanel
     Left = 0
     Top = 0
-    Width = 496
-    Height = 466
+    Width = 394
+    Height = 372
     Align = alClient
     BorderOuter = fsNone
     Color = 15987699
     TabOrder = 0
     Transparent = True
+    ExplicitWidth = 496
+    ExplicitHeight = 466
     object ImgApproval: TImage
       Left = 0
       Top = 0
-      Width = 496
-      Height = 466
+      Width = 394
+      Height = 372
       Align = alClient
       AutoSize = True
       Center = True
@@ -4355,14 +4357,13 @@ object FHomeLogin: TFHomeLogin
         BC31F7F839146CB4D996D5C4F70BF80404414C8DDDD4FF07215EEC0C4FCF1420
         0000000049454E44AE426082}
       Proportional = True
-      ExplicitLeft = 48
-      ExplicitTop = 311
+      ExplicitWidth = 377
     end
     object ImgTransaksi: TImage
-      Left = 48
-      Top = 385
-      Width = 169
-      Height = 56
+      Left = 53
+      Top = 312
+      Width = 121
+      Height = 40
       Align = alCustom
       Picture.Data = {
         0954506E67496D61676589504E470D0A1A0A0000000D49484452000001390000
@@ -4455,10 +4456,10 @@ object FHomeLogin: TFHomeLogin
       OnClick = ImgTransaksiClick
     end
     object Image1: TImage
-      Left = 248
-      Top = 385
-      Width = 169
-      Height = 56
+      Left = 200
+      Top = 312
+      Width = 117
+      Height = 40
       Align = alCustom
       Picture.Data = {
         0954506E67496D61676589504E470D0A1A0A0000000D49484452000001390000
@@ -4561,10 +4562,10 @@ object FHomeLogin: TFHomeLogin
       OnClick = Image1Click
     end
     object EdPass: TEdit
-      Left = 98
-      Top = 311
-      Width = 255
-      Height = 34
+      Left = 79
+      Top = 248
+      Width = 202
+      Height = 29
       BevelInner = bvNone
       BevelOuter = bvNone
       BorderStyle = bsNone
@@ -4577,13 +4578,13 @@ object FHomeLogin: TFHomeLogin
       ParentFont = False
       PasswordChar = '*'
       TabOrder = 0
-      TextHint = 'PASSWORD'
+      TextHint = 'Password'
     end
     object Eduser: TEdit
-      Left = 146
-      Top = 218
-      Width = 255
-      Height = 34
+      Left = 117
+      Top = 174
+      Width = 198
+      Height = 29
       BevelInner = bvNone
       BevelOuter = bvNone
       BorderStyle = bsNone
@@ -4599,10 +4600,10 @@ object FHomeLogin: TFHomeLogin
       TextHint = 'USERNAME'
     end
     object Edit3: TEdit
-      Left = 96
-      Top = 71
-      Width = 311
-      Height = 34
+      Left = 79
+      Top = 67
+      Width = 246
+      Height = 25
       BevelInner = bvNone
       BevelOuter = bvNone
       BorderStyle = bsNone
@@ -4619,9 +4620,9 @@ object FHomeLogin: TFHomeLogin
       Visible = False
     end
     object ComboBox1: TComboBox
-      Left = 96
-      Top = 127
-      Width = 297
+      Left = 72
+      Top = 98
+      Width = 244
       Height = 23
       BevelInner = bvNone
       BevelOuter = bvNone
