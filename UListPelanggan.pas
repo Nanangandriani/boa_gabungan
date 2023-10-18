@@ -146,8 +146,8 @@ begin
   begin
     FNew_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('customer_code').AsString;
     FNew_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('customer_name').AsString;
-    FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('address').AsString;
-    FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telp').AsString;
+    //FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('address').AsString;
+    //FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telp').AsString;
     FNew_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
     FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('payment_term').AsString;
   end;

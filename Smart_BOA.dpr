@@ -57,7 +57,11 @@ uses
   UNew_Jabatan in 'UNew_Jabatan.pas' {FNew_Jabatan},
   UTransfer_Barang in 'UTransfer_Barang.pas' {FTransfer_Barang},
   UNew_TransferBarang in 'UNew_TransferBarang.pas' {FNew_TransferBarang},
-  UItem_TransferBarang in 'UItem_TransferBarang.pas' {FItem_TransferBarang};
+  UItem_TransferBarang in 'UItem_TransferBarang.pas' {FItem_TransferBarang},
+  USetMasterPelanggan in 'USetMasterPelanggan.pas' {FSetMasterPelanggan},
+  UMasterWilayah in 'UMasterWilayah.pas' {FMasterWilayah},
+  USetMasterWilayah in 'USetMasterWilayah.pas' {FSetMasterWilayah},
+  UDaftarKlasifikasi in 'UDaftarKlasifikasi.pas' {FDaftarKlasifikasi};
 
 {$R *.res}
 
@@ -100,6 +104,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Dept, FNew_Dept);
   Application.CreateForm(TFNew_Jabatan, FNew_Jabatan);
   Application.CreateForm(TFItem_TransferBarang, FItem_TransferBarang);
+  Application.CreateForm(TFSetMasterPelanggan, FSetMasterPelanggan);
+  Application.CreateForm(TFMasterWilayah, FMasterWilayah);
+  Application.CreateForm(TFSetMasterWilayah, FSetMasterWilayah);
+  Application.CreateForm(TFDaftarKlasifikasi, FDaftarKlasifikasi);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

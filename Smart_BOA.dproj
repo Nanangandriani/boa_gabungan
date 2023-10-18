@@ -317,6 +317,22 @@
             <Form>FItem_TransferBarang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="USetMasterPelanggan.pas">
+            <Form>FSetMasterPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMasterWilayah.pas">
+            <Form>FMasterWilayah</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USetMasterWilayah.pas">
+            <Form>FSetMasterWilayah</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDaftarKlasifikasi.pas">
+            <Form>FDaftarKlasifikasi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

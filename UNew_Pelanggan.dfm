@@ -2,8 +2,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
   Left = 145
   Top = 65
   Caption = 'New Pelanggan'
-  ClientHeight = 295
-  ClientWidth = 465
+  ClientHeight = 478
+  ClientWidth = 1109
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,157 +13,284 @@ object FNew_Pelanggan: TFNew_Pelanggan
   Position = poDesktopCenter
   TextHeight = 15
   object Label14: TLabel
-    Left = 207
-    Top = 227
+    Left = 663
+    Top = 194
     Width = 22
     Height = 15
     Caption = 'Hari'
   end
   object Label13: TLabel
     Left = 20
-    Top = 198
+    Top = 165
     Width = 29
     Height = 15
     Caption = 'Email'
   end
   object Label12: TLabel
     Left = 117
-    Top = 198
+    Top = 165
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label11: TLabel
-    Left = 117
-    Top = 227
+    Left = 189
+    Top = 505
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label10: TLabel
-    Left = 20
-    Top = 227
-    Width = 105
+    Left = 477
+    Top = 194
+    Width = 54
     Height = 15
-    Caption = 'Tempo Pembayaran'
-  end
-  object Label4: TLabel
-    Left = 117
-    Top = 77
-    Width = 3
-    Height = 15
-    Caption = ':'
+    Caption = 'Jth Tempo'
   end
   object Label6: TLabel
     Left = 117
-    Top = 44
+    Top = 49
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label3: TLabel
     Left = 117
-    Top = 14
+    Top = 19
     Width = 3
     Height = 15
     Caption = ':'
   end
   object LabelPelanggan: TLabel
     Left = 20
-    Top = 14
+    Top = 19
     Width = 86
     Height = 15
     Caption = 'Kode Pelanggan'
   end
   object Label5: TLabel
     Left = 20
-    Top = 44
+    Top = 49
     Width = 91
     Height = 15
     Caption = 'Nama Pelanggan'
   end
-  object Label2: TLabel
+  object Label15: TLabel
     Left = 20
-    Top = 77
-    Width = 38
+    Top = 78
+    Width = 56
     Height = 15
-    Caption = 'Alamat'
+    Caption = 'Nama PKP'
   end
-  object Label7: TLabel
-    Left = 20
-    Top = 171
-    Width = 35
-    Height = 15
-    Caption = 'Telpon'
-  end
-  object Label8: TLabel
+  object Label16: TLabel
     Left = 117
-    Top = 171
+    Top = 78
     Width = 3
     Height = 15
     Caption = ':'
   end
-  object MemAlamat: TRzMemo
-    Left = 132
-    Top = 71
-    Width = 313
-    Height = 89
-    TabOrder = 0
-    OnKeyPress = MemAlamatKeyPress
+  object Label17: TLabel
+    Left = 117
+    Top = 107
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label18: TLabel
+    Left = 20
+    Top = 107
+    Width = 34
+    Height = 15
+    Caption = 'NPWP'
+  end
+  object Label19: TLabel
+    Left = 20
+    Top = 136
+    Width = 19
+    Height = 15
+    Caption = 'NIK'
+  end
+  object Label20: TLabel
+    Left = 117
+    Top = 136
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label21: TLabel
+    Left = 20
+    Top = 194
+    Width = 36
+    Height = 15
+    Caption = 'No. VA'
+  end
+  object Label22: TLabel
+    Left = 117
+    Top = 194
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label23: TLabel
+    Left = 476
+    Top = 19
+    Width = 42
+    Height = 15
+    Caption = 'Wilayah'
+  end
+  object Label24: TLabel
+    Left = 573
+    Top = 19
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label25: TLabel
+    Left = 573
+    Top = 136
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label26: TLabel
+    Left = 476
+    Top = 136
+    Width = 79
+    Height = 15
+    Caption = 'Type Penjualan'
+  end
+  object Label27: TLabel
+    Left = 476
+    Top = 165
+    Width = 52
+    Height = 15
+    Caption = 'Golongan'
+  end
+  object Label28: TLabel
+    Left = 573
+    Top = 165
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object btMasterWilayah: TSpeedButton
+    Left = 779
+    Top = 16
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = btMasterWilayahClick
+  end
+  object btMasterTypePenjualan: TSpeedButton
+    Left = 834
+    Top = 133
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = btMasterTypePenjualanClick
+  end
+  object Label1: TLabel
+    Left = 476
+    Top = 107
+    Width = 84
+    Height = 15
+    Caption = 'Jenis Pelanggan'
+  end
+  object Label2: TLabel
+    Left = 573
+    Top = 107
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object btJenisPelanggan: TSpeedButton
+    Left = 834
+    Top = 104
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = btJenisPelangganClick
+  end
+  object btMasterDetailPel: TSpeedButton
+    Left = 20
+    Top = 220
+    Width = 172
+    Height = 22
+    Caption = 'Master Detail Pelanggan'
+    OnClick = btMasterDetailPelClick
+  end
+  object btMasterGolongan: TSpeedButton
+    Left = 834
+    Top = 162
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = btMasterGolonganClick
+  end
+  object Label4: TLabel
+    Left = 573
+    Top = 76
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label7: TLabel
+    Left = 476
+    Top = 76
+    Width = 49
+    Height = 15
+    Caption = 'Kode Pos'
+  end
+  object Label8: TLabel
+    Left = 573
+    Top = 194
+    Width = 3
+    Height = 15
+    Caption = ':'
   end
   object Edemail: TEdit
     Left = 132
-    Top = 195
+    Top = 162
     Width = 313
     Height = 23
-    TabOrder = 1
+    TabOrder = 0
     OnKeyPress = EdemailKeyPress
   end
   object Edtempo: TEdit
-    Left = 132
-    Top = 224
+    Left = 588
+    Top = 191
     Width = 69
     Height = 23
     NumbersOnly = True
-    TabOrder = 2
+    TabOrder = 1
   end
   object Edkode: TEdit
     Left = 132
-    Top = 11
+    Top = 16
     Width = 185
     Height = 23
     CharCase = ecUpperCase
-    TabOrder = 3
+    TabOrder = 2
     OnKeyPress = EdkodeKeyPress
   end
   object Ednama: TEdit
     Left = 132
-    Top = 41
+    Top = 46
     Width = 313
     Height = 23
-    TabOrder = 4
+    TabOrder = 3
     OnKeyPress = EdnamaKeyPress
-  end
-  object Edtelp: TEdit
-    Left = 132
-    Top = 168
-    Width = 313
-    Height = 23
-    NumbersOnly = True
-    TabOrder = 5
-    OnKeyPress = EdtelpKeyPress
   end
   object Panel2: TPanel
     Left = 0
-    Top = 263
-    Width = 465
+    Top = 446
+    Width = 1109
     Height = 32
     Align = alBottom
-    TabOrder = 6
-    ExplicitTop = 255
-    ExplicitWidth = 463
+    TabOrder = 4
+    ExplicitTop = 448
     object BBatal: TRzBitBtn
-      Left = 393
+      Left = 1033
       Top = 1
       Height = 30
       Align = alRight
@@ -222,10 +349,10 @@ object FNew_Pelanggan: TFNew_Pelanggan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 387
+      ExplicitLeft = 1027
     end
     object BSave: TRzBitBtn
-      Left = 318
+      Left = 958
       Top = 1
       Height = 30
       Align = alRight
@@ -284,7 +411,397 @@ object FNew_Pelanggan: TFNew_Pelanggan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 312
+      ExplicitLeft = 952
+    end
+    object BDataProspek: TRzBitBtn
+      Left = 169
+      Top = 1
+      Width = 105
+      Height = 30
+      Align = alLeft
+      Caption = 'Data Prospek'
+      TabOrder = 2
+      OnClick = BDataProspekClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000830B0000830B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E809090909
+        0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E809101010
+        1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809101010
+        1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809090909
+        0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 1
+    end
+    object Edautocode: TEdit
+      Left = 712
+      Top = 4
+      Width = 185
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 3
+      TextHint = 'Autonumber'
+      OnKeyPress = EdkodeKeyPress
+    end
+    object btKlasifikasiHargaHargaJual: TRzBitBtn
+      Left = 1
+      Top = 1
+      Width = 168
+      Height = 30
+      Align = alLeft
+      Caption = 'Data Klasifikasi Harga Jual'
+      TabOrder = 4
+      OnClick = btKlasifikasiHargaHargaJualClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000830B0000830B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E809090909
+        0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E809101010
+        1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809101010
+        1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809090909
+        0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+    end
+  end
+  object Ednamapkp: TEdit
+    Left = 132
+    Top = 75
+    Width = 313
+    Height = 23
+    TabOrder = 5
+    OnKeyPress = EdnamapkpKeyPress
+  end
+  object Ednpwp: TEdit
+    Left = 132
+    Top = 104
+    Width = 313
+    Height = 23
+    TabOrder = 6
+    OnKeyPress = EdnpwpKeyPress
+  end
+  object Ednik: TEdit
+    Left = 132
+    Top = 133
+    Width = 313
+    Height = 23
+    TabOrder = 7
+    OnKeyPress = EdnikKeyPress
+  end
+  object cbpkp: TCheckBox
+    Left = 323
+    Top = 19
+    Width = 142
+    Height = 17
+    Caption = 'PKP'
+    TabOrder = 8
+    OnClick = cbpkpClick
+  end
+  object Ednomorva: TEdit
+    Left = 132
+    Top = 191
+    Width = 313
+    Height = 23
+    TabOrder = 9
+  end
+  object Ednamawilayah: TEdit
+    Left = 588
+    Top = 44
+    Width = 349
+    Height = 23
+    ReadOnly = True
+    TabOrder = 10
+    OnKeyPress = EdemailKeyPress
+  end
+  object Cbtypejual: TRzComboBox
+    Left = 588
+    Top = 133
+    Width = 240
+    Height = 23
+    CharCase = ecUpperCase
+    Enabled = False
+    TabOrder = 11
+    OnKeyPress = CbtypejualKeyPress
+    Items.Strings = (
+      'KKJ'
+      'KKSP')
+  end
+  object Cbgolongan: TRzComboBox
+    Left = 588
+    Top = 162
+    Width = 240
+    Height = 23
+    CharCase = ecUpperCase
+    Enabled = False
+    TabOrder = 12
+    OnKeyPress = CbgolonganKeyPress
+    Items.Strings = (
+      'KKJ'
+      'KKSP')
+  end
+  object Edkodewilayah: TEdit
+    Left = 588
+    Top = 16
+    Width = 185
+    Height = 23
+    CharCase = ecUpperCase
+    ReadOnly = True
+    TabOrder = 13
+    OnKeyPress = EdkodeKeyPress
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 256
+    Width = 1109
+    Height = 190
+    ActivePage = TabSDetailPel
+    Align = alBottom
+    TabOrder = 14
+    ExplicitTop = 247
+    ExplicitWidth = 1103
+    object TabSDetailPel: TTabSheet
+      Caption = 'Detail Pelanggan'
+      object DBGridCustomer: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1101
+        Height = 160
+        Align = alClient
+        DataSource = DSDetailPel
+        DynProps = <>
+        SearchPanel.Enabled = True
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'KODE_URUTAN_KE'
+            Footers = <>
+            Title.Caption = 'Kode Urutan'
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ALAMAT'
+            Footers = <>
+            Title.Caption = 'Alamat'
+            Width = 450
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'CONTACT_PERSON1'
+            Footers = <>
+            Title.Caption = 'Contact Person 1'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'CONTACT_PERSON2'
+            Footers = <>
+            Title.Caption = 'Contact Person 2'
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'CONTACT_PERSON3'
+            Footers = <>
+            Title.Caption = 'Contact Person 3'
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'URUTAN_KE'
+            Footers = <>
+            Visible = False
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+  end
+  object CbJenisPel: TRzComboBox
+    Left = 588
+    Top = 104
+    Width = 240
+    Height = 23
+    CharCase = ecUpperCase
+    Enabled = False
+    TabOrder = 15
+    OnKeyPress = CbtypejualKeyPress
+    Items.Strings = (
+      'KKJ'
+      'KKSP')
+  end
+  object Edkodepos: TEdit
+    Left = 588
+    Top = 73
+    Width = 185
+    Height = 23
+    CharCase = ecUpperCase
+    ReadOnly = True
+    TabOrder = 16
+    OnKeyPress = EdkodeKeyPress
+  end
+  object DSDetailPel: TDataSource
+    DataSet = MemDetailPel
+    Left = 944
+    Top = 152
+  end
+  object MemDetailPel: TMemTableEh
+    Params = <>
+    Left = 944
+    Top = 200
+    object MemDetailPelKODE_URUTAN_KE: TStringField
+      FieldName = 'KODE_URUTAN_KE'
+    end
+    object MemDetailPelALAMAT: TStringField
+      FieldName = 'ALAMAT'
+      Size = 500
+    end
+    object MemDetailPelCONTACT_PERSON1: TStringField
+      FieldName = 'CONTACT_PERSON1'
+    end
+    object MemDetailPelCONTACT_PERSON2: TStringField
+      FieldName = 'CONTACT_PERSON2'
+    end
+    object MemDetailPelCONTACT_PERSON3: TStringField
+      FieldName = 'CONTACT_PERSON3'
+    end
+    object MemDetailPelURUTAN_KE: TIntegerField
+      FieldName = 'URUTAN_KE'
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object KODE_URUTAN_KE: TMTStringDataFieldEh
+          FieldName = 'KODE_URUTAN_KE'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object ALAMAT: TMTStringDataFieldEh
+          FieldName = 'ALAMAT'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 500
+        end
+        object CONTACT_PERSON1: TMTStringDataFieldEh
+          FieldName = 'CONTACT_PERSON1'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object CONTACT_PERSON2: TMTStringDataFieldEh
+          FieldName = 'CONTACT_PERSON2'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object CONTACT_PERSON3: TMTStringDataFieldEh
+          FieldName = 'CONTACT_PERSON3'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object URUTAN_KE: TMTNumericDataFieldEh
+          FieldName = 'URUTAN_KE'
+          NumericDataType = fdtIntegerEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
     end
   end
 end

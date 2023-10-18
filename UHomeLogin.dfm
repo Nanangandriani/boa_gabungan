@@ -2,6 +2,7 @@ object FHomeLogin: TFHomeLogin
   Left = 0
   Top = 0
   BorderStyle = bsNone
+  Caption = 'Autonumber'
   ClientHeight = 372
   ClientWidth = 394
   Color = clBtnFace
@@ -22,8 +23,6 @@ object FHomeLogin: TFHomeLogin
     Color = 15987699
     TabOrder = 0
     Transparent = True
-    ExplicitWidth = 496
-    ExplicitHeight = 466
     object ImgApproval: TImage
       Left = 0
       Top = 0
