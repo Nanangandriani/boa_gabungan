@@ -2,6 +2,7 @@ object FHomeLogin: TFHomeLogin
   Left = 0
   Top = 0
   BorderStyle = bsNone
+  Caption = 'Autonumber'
   ClientHeight = 372
   ClientWidth = 394
   Color = clBtnFace

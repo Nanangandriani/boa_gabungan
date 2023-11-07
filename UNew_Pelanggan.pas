@@ -5,16 +5,16 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls,
-  RzEdit;
+  RzEdit, Vcl.Mask, RzBtnEdt, RzCmboBx, Vcl.ComCtrls, DBGridEhGrouping,
+  ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB,
+  MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Vcl.Buttons;
 
 type
   TFNew_Pelanggan = class(TForm)
-    MemAlamat: TRzMemo;
     Edemail: TEdit;
     Edtempo: TEdit;
     Edkode: TEdit;
     Ednama: TEdit;
-    Edtelp: TEdit;
     Panel2: TPanel;
     BBatal: TRzBitBtn;
     BSave: TRzBitBtn;
@@ -23,21 +23,78 @@ type
     Label12: TLabel;
     Label11: TLabel;
     Label10: TLabel;
-    Label4: TLabel;
     Label6: TLabel;
     Label3: TLabel;
     LabelPelanggan: TLabel;
     Label5: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Ednamapkp: TEdit;
+    Ednpwp: TEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Ednik: TEdit;
+    cbpkp: TCheckBox;
+    Label21: TLabel;
+    Label22: TLabel;
+    Ednomorva: TEdit;
+    Label23: TLabel;
+    Label24: TLabel;
+    Ednamawilayah: TEdit;
+    Cbtypejual: TRzComboBox;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Cbgolongan: TRzComboBox;
+    Edkodewilayah: TEdit;
+    PageControl1: TPageControl;
+    TabSDetailPel: TTabSheet;
+    DBGridCustomer: TDBGridEh;
+    DSDetailPel: TDataSource;
+    MemDetailPel: TMemTableEh;
+    MemDetailPelKODE_URUTAN_KE: TStringField;
+    MemDetailPelALAMAT: TStringField;
+    MemDetailPelCONTACT_PERSON1: TStringField;
+    MemDetailPelCONTACT_PERSON2: TStringField;
+    MemDetailPelCONTACT_PERSON3: TStringField;
+    MemDetailPelURUTAN_KE: TIntegerField;
+    btMasterWilayah: TSpeedButton;
+    btMasterTypePenjualan: TSpeedButton;
+    Label1: TLabel;
     Label2: TLabel;
+    CbJenisPel: TRzComboBox;
+    btJenisPelanggan: TSpeedButton;
+    btMasterDetailPel: TSpeedButton;
+    BDataProspek: TRzBitBtn;
+    btMasterGolongan: TSpeedButton;
+    Edautocode: TEdit;
+    Edkodepos: TEdit;
+    Label4: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    btKlasifikasiHargaHargaJual: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
     procedure EdnamaKeyPress(Sender: TObject; var Key: Char);
-    procedure MemAlamatKeyPress(Sender: TObject; var Key: Char);
     procedure EdtelpKeyPress(Sender: TObject; var Key: Char);
     procedure EdemailKeyPress(Sender: TObject; var Key: Char);
+    procedure cbpkpClick(Sender: TObject);
+    procedure EdnamapkpKeyPress(Sender: TObject; var Key: Char);
+    procedure EdnpwpKeyPress(Sender: TObject; var Key: Char);
+    procedure EdnikKeyPress(Sender: TObject; var Key: Char);
+    procedure CbtypejualKeyPress(Sender: TObject; var Key: Char);
+    procedure CbgolonganKeyPress(Sender: TObject; var Key: Char);
+    procedure btJenisPelangganClick(Sender: TObject);
+    procedure btMasterTypePenjualanClick(Sender: TObject);
+    procedure btMasterGolonganClick(Sender: TObject);
+    procedure btMasterDetailPelClick(Sender: TObject);
+    procedure BDataProspekClick(Sender: TObject);
+    procedure btMasterWilayahClick(Sender: TObject);
+    procedure btKlasifikasiHargaHargaJualClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,7 +113,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UListPelanggan, UMainMenu;
+uses UDataModule, UListPelanggan, UMainMenu, USetMasterPelanggan,
+  UMasterWilayah, UDaftarKlasifikasi;
 
 
 procedure TFNew_Pelanggan.Autocode;
@@ -87,25 +145,38 @@ begin
   Edkode.Clear;
   kode := inttostr(urut);
   kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
-  Edkode.Text := 'PL'+Kode;
+  Edautocode.Text := 'PL'+Kode;
+end;
 
+procedure TFNew_Pelanggan.CbtypejualKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = chr(13) then
+  begin
+    Cbgolongan.SetFocus;
+  end;
 end;
 
 procedure TFNew_Pelanggan.Clear;
 begin
   Edkode.Text:='';
   Ednama.Text:='';
-  Edtelp.Text:='';
-  Edemail.Text:='';
-  MemAlamat.Text:='';
+  Ednamapkp.Text:='';
+  Ednpwp.Text:='';
+  Ednik.Text:='';
   Edtempo.Text:='';
+  Edemail.Text:='';
+  Ednomorva.Text:='';
+  Edkodewilayah.Text:='';
+  Ednamawilayah.Text:='';
+  Edtempo.Text:='';
+  MemDetailPel.EmptyTable;
 end;
 
 procedure TFNew_Pelanggan.EdemailKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = chr(13) then
   begin
-    Edtempo.SetFocus;
+    Ednomorva.SetFocus;
   end;
 end;
 
@@ -119,13 +190,21 @@ end;
 
 procedure TFNew_Pelanggan.EdnamaKeyPress(Sender: TObject; var Key: Char);
 begin
-    if key = chr(13) then
-    begin
-      MemAlamat.SetFocus;
-    end;
+  if key = chr(13) then
+  begin
+    cbpkp.SetFocus;
+  end;
 end;
 
-procedure TFNew_Pelanggan.EdtelpKeyPress(Sender: TObject; var Key: Char);
+procedure TFNew_Pelanggan.EdnamapkpKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = chr(13) then
+  begin
+    Ednpwp.SetFocus;
+  end;
+end;
+
+procedure TFNew_Pelanggan.EdnikKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = chr(13) then
   begin
@@ -133,11 +212,19 @@ begin
   end;
 end;
 
-procedure TFNew_Pelanggan.MemAlamatKeyPress(Sender: TObject; var Key: Char);
+procedure TFNew_Pelanggan.EdnpwpKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = chr(13) then
   begin
-    Edtelp.SetFocus;
+    Ednik.SetFocus;
+  end;
+end;
+
+procedure TFNew_Pelanggan.EdtelpKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = chr(13) then
+  begin
+    Edemail.SetFocus;
   end;
 end;
 
@@ -152,8 +239,8 @@ begin
                   'Where customer_code=:parkode_pelanggan';
       parambyname('parkode_pelanggan').Value:=Edkode.Text;
       parambyname('parnama_pelanggan').Value:=Ednama.Text;
-      parambyname('paralamat').Value:=MemAlamat.Text;
-      parambyname('partelpon').Value:=Edtelp.Text;
+      //parambyname('paralamat').Value:=MemAlamat.Text;
+      //parambyname('partelpon').Value:=Edtelp.Text;
       parambyname('paremail').Value:=edemail.Text;
       parambyname('partempo_pembayaran').Value:=Edtempo.Text;
       parambyname('updated_at').AsDateTime:=Now;
@@ -178,8 +265,8 @@ begin
               ':paralamat,:partelpon,:paremail,:partempo_pembayaran,:created_at,:created_by)';
     parambyname('parkode_pelanggan').Value:=Edkode.Text;
     parambyname('parnama_pelanggan').Value:=Ednama.Text;
-    parambyname('paralamat').Value:=MemAlamat.Text;
-    parambyname('partelpon').Value:=Edtelp.Text;
+    //parambyname('paralamat').Value:=MemAlamat.Text;
+    //parambyname('partelpon').Value:=Edtelp.Text;
     parambyname('paremail').Value:=edemail.Text;
     parambyname('partempo_pembayaran').Value:=Edtempo.Text;
     parambyname('created_at').AsDateTime:=Now;
@@ -195,6 +282,11 @@ end;
 procedure TFNew_Pelanggan.BBatalClick(Sender: TObject);
 begin
    Close;
+end;
+
+procedure TFNew_Pelanggan.BDataProspekClick(Sender: TObject);
+begin
+  ShowMessage('Tampil Data Master Prospek Untuk Client Yang Menggunakan Fitur Prospek...');
 end;
 
 procedure TFNew_Pelanggan.BSaveClick(Sender: TObject);
@@ -237,6 +329,78 @@ begin
       end;
       FMainMenu.TampilTabForm2;
 
+end;
+
+procedure TFNew_Pelanggan.btJenisPelangganClick(Sender: TObject);
+begin
+  FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=true;
+  FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
+  FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.btKlasifikasiHargaHargaJualClick(Sender: TObject);
+begin
+  FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=true;
+  FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
+  FDaftarKlasifikasi.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.btMasterDetailPelClick(Sender: TObject);
+begin
+  FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
+  FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetDetail.TabVisible:=true;
+  FSetMasterPelanggan.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.btMasterGolonganClick(Sender: TObject);
+begin
+  FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
+  FSetMasterPelanggan.TabSetGolongan.TabVisible:=true;
+  FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.btMasterTypePenjualanClick(Sender: TObject);
+begin
+  FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetTypeJual.TabVisible:=true;
+  FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.btMasterWilayahClick(Sender: TObject);
+begin
+  FMasterWilayah.Showmodal;
+end;
+
+procedure TFNew_Pelanggan.CbgolonganKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = chr(13) then
+  begin
+    Edtempo.SetFocus;
+  end;
+end;
+
+procedure TFNew_Pelanggan.cbpkpClick(Sender: TObject);
+begin
+  if cbpkp.Checked=true then
+  begin
+    Ednamapkp.ReadOnly:=false;
+    Ednpwp.ReadOnly:=false;
+  end;
+  if cbpkp.Checked=false then
+  begin
+    Ednamapkp.Text:='0';
+    Ednpwp.Text:='0';
+    Ednamapkp.ReadOnly:=true;
+    Ednpwp.ReadOnly:=true;
+  end;
 end;
 
 end.
