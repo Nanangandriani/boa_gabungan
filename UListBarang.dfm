@@ -165,7 +165,7 @@ object FlistBarang: TFlistBarang
       
         'SELECT'#9'"a".category,"c"."type",b.order_no,b.item_code,b.item_nam' +
         'e,b.category_id,b.unit,b.merk,b.account_code,b.correction_status' +
-        ',b."id",d.account_name FROM '
+        ',b."id",d.account_name,b.description FROM '
       't_item_category AS "a"'#9
       'INNER JOIN t_item AS b ON "a"."id" = b.category_id'#9
       'INNER JOIN t_item_type AS "c" ON "a".type_id = "c"."id"'

@@ -14,10 +14,14 @@ type
     BSimpan: TRzBitBtn;
     EdType: TEdit;
     Label2: TLabel;
+    BCari: TRzBitBtn;
+    GroupBox1: TGroupBox;
     Label19: TLabel;
     Edkd_akun: TRzEdit;
     EdNm_akun: TRzButtonEdit;
-    BCari: TRzBitBtn;
+    Label1: TLabel;
+    Edkd_akun2: TRzEdit;
+    Ednm_akun2: TRzButtonEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -25,6 +29,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure BCariClick(Sender: TObject);
     procedure EdNm_akunButtonClick(Sender: TObject);
+    procedure Ednm_akun2ButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -139,6 +144,24 @@ end;
 procedure TFNew_ItemType.FormDestroy(Sender: TObject);
 begin
   RealFNew_ItemType:=nil;
+end;
+
+procedure TFNew_ItemType.Ednm_akun2ButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='itemtype2';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
 end;
 
 end.

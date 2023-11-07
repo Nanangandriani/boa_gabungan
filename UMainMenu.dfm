@@ -14,7 +14,7 @@ object FMainMenu: TFMainMenu
   OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
-  object RzStatusBar1: TRzStatusBar
+  object ST: TRzStatusBar
     Left = 0
     Top = 608
     Width = 1043
@@ -33,8 +33,8 @@ object FMainMenu: TFMainMenu
       Height = 19
       Align = alLeft
       StyleName = 'Windows'
-      ExplicitLeft = 1043
-      ExplicitHeight = 20
+      ExplicitLeft = -6
+      ExplicitTop = -8
     end
     object RzVersionInfoStatus1: TRzVersionInfoStatus
       Left = 943
@@ -64,6 +64,15 @@ object FMainMenu: TFMainMenu
     end
     object RzGlyphStatus1: TRzGlyphStatus
       Left = 200
+      Top = 0
+      Height = 19
+      Align = alLeft
+      Caption = ''
+      ExplicitLeft = 1043
+      ExplicitHeight = 20
+    end
+    object RzStatusPane1: TRzStatusPane
+      Left = 300
       Top = 0
       Height = 19
       Align = alLeft
@@ -883,5 +892,10 @@ object FMainMenu: TFMainMenu
         AD47F40FD5561AE288C27E740000000049454E44AE426082}
       OnClick = dxBarLargeButtonUtilityClick
     end
+  end
+  object Qperusahaan: TUniQuery
+    Connection = dm.Koneksi
+    Left = 391
+    Top = 340
   end
 end

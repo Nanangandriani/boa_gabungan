@@ -32,6 +32,7 @@ type
     Edcategory: TRzComboBox;
     EdNm: TRzButtonEdit;
     EdKonversi: TRzButtonEdit;
+    RzBitBtn1: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure EdNmSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -44,12 +45,14 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EdKonversiButtonClick(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     id:string;
     Procedure Load;
+    Procedure Clear;
   end;
 
 Function FNew_KonvBarang: TFNew_KonvBarang;
@@ -83,6 +86,34 @@ begin
   Edcategory.Items.Add(Dm.Qtemp['category']);
   Dm.Qtemp.Next;
   end;
+end;
+
+procedure TFNew_KonvBarang.RzBitBtn1Click(Sender: TObject);
+begin
+  with FKonversi_Barang do
+  begin
+    show;
+     with QKonversiM do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT	b.qty_unit,b.unit,"a".item_name,"a".item_code,b.qty_conv,b.unit_conv,"c".category,b."id"'+
+      ' FROM t_item AS "a" INNER JOIN t_item_conversion AS b ON	"a".item_code = b.item_code INNER JOIN   '+
+      '	t_item_category AS "c" ON "a".category_id="c"."id" where a.item_code='+QuotedStr(EdKd.Text);
+      open;
+    end;
+  end;  
+end;
+
+Procedure TFNew_KonvBarang.Clear;
+begin
+  FNew_KonvBarang.EdKd.Text:='';
+  FNew_KonvBarang.EdNm.Text:='';
+  FNew_KonvBarang.Edqty.Text:='0';
+  FNew_KonvBarang.Edsatuan.Text:='';
+  FNew_KonvBarang.EdqtyKon.Text:='0';
+  FNew_KonvBarang.EdKonversi.Text:='';
+  FNew_KonvBarang.Edno.Text:='';
 end;
 
 procedure TFNew_KonvBarang.EdKonversiButtonClick(Sender: TObject);

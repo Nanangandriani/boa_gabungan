@@ -22,8 +22,6 @@ object FHomeLogin: TFHomeLogin
     Color = 15987699
     TabOrder = 0
     Transparent = True
-    ExplicitWidth = 496
-    ExplicitHeight = 466
     object ImgApproval: TImage
       Left = 0
       Top = 0

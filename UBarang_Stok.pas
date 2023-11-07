@@ -149,7 +149,7 @@ type
     DBGridstok: TDBGridEh;
     DBGridEh7: TDBGridEh;
     Panel2: TPanel;
-    CheckBox1: TCheckBox;
+    CkBarang: TCheckBox;
     QStok_Barang: TUniQuery;
     MemStok_Barang: TMemTableEh;
     QStok_Barangdet: TUniQuery;
@@ -193,6 +193,7 @@ type
     procedure CkLain2Click(Sender: TObject);
     procedure dxBarKimiaRefreshClick(Sender: TObject);
     procedure BarKmsRefreshClick(Sender: TObject);
+    procedure CkBarangClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -274,6 +275,56 @@ begin
   end;
 end;
 end;
+end;
+
+procedure TFBarang_Stok.CkBarangClick(Sender: TObject);
+begin
+  if CkTepung.Checked=True then
+  begin
+    if loksbu='' then
+    begin
+      with QStok_Barangdet do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code'; //where "Outstanding"=0';
+        ExecSQL;
+      end;
+    end;
+    if loksbu<>'' then
+    begin
+      with QStok_Barangdet do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code where b.sbu_code='+QuotedStr(loksbu); //where "Outstanding"=0';
+        ExecSQL;
+      end;
+    end;
+  end;
+  if CkTepung.Checked=False then
+  begin
+    if loksbu='' then
+    begin
+      with QStok_Barangdet do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code where "outstanding"<>0';
+        ExecSQL;
+      end;
+    end;
+    if loksbu<>'' then
+    begin
+      with QStok_Barangdet do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code where "outstanding"<>0 and b.sbu_code='+QuotedStr(loksbu); //where "Outstanding"=0';
+        ExecSQL;
+      end;
+    end;
+  end;
 end;
 
 procedure TFBarang_Stok.CkKemasanClick(Sender: TObject);
@@ -872,9 +923,9 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
-      ' a.unit,a.merk,aa.totalmt as qty from t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' a.unit,a.merk,aa.totalmt as qty from gudang.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
       ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."id" '+
-      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
       ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code)as aa on 1=1 where a.deleted_at isnull '+
       ' Order by item_stock_code Desc';
       open;
@@ -884,7 +935,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
       open;
     end;
   end;
@@ -894,9 +945,9 @@ begin
     begin
       close;
       sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
-      ' a.unit,a.merk,aa.totalmt as qty from t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' a.unit,a.merk,aa.totalmt as qty from gudang.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
       ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."id" '+
-      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
       ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code and (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as'+
       ' aa on 1=1 where a.deleted_at isnull Order by item_stock_code Desc';
       Open;
@@ -906,7 +957,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''';
       open;
     end;
   end;
@@ -1324,7 +1375,7 @@ with dm.Qtemp do
 begin
   Close;
   SQL.clear;
-  sql.Text:=' SELECT * FROM t_item_stock Where item_code='+QuotedStr(FNew_Barang_Stok.EdKd_Material.Text);
+  sql.Text:=' SELECT * FROM gudang.t_item_stock Where item_code='+QuotedStr(FNew_Barang_Stok.EdKd_Material.Text);
   ExecSQL;
 end;
 if dm.Qtemp.RecordCount =0 then urut:=1 else

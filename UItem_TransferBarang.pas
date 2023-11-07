@@ -20,6 +20,9 @@ type
     procedure BSimpanClick(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,15 +31,24 @@ type
     Procedure Autonumber;
   end;
 
-var
-  FItem_TransferBarang: TFItem_TransferBarang;
-  category,nourut:string;
+Function FItem_TransferBarang: TFItem_TransferBarang;
+var  category,nourut:string;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_TransferBarang, UMainmenu, UDataModule;
+var
+  realFItem_TransferBarang: TFItem_TransferBarang;
+// implementasi function
+function FItem_TransferBarang: TFItem_TransferBarang;
+begin
+  if realFItem_TransferBarang <> nil then
+    FItem_TransferBarang:= realFItem_TransferBarang
+  else
+    Application.CreateForm(TFItem_TransferBarang, Result);
+end;
 
 function IntToRoman(Value : Longint):String;  // fungsi
     const
@@ -97,7 +109,7 @@ with dm.Qtemp do
     end;
   EditComplete:=CODE;
   Memdetail.Edit;
-  Memdetail['kd_stok_baru']:= Memdetail['no_material']+ '/'+Qbarang['kd_supplier']+'/'+EditComplete+'/'+kd_gdng+'/'+yn;
+  Memdetail['kd_stok_baru']:= Memdetail['no_material']+ '/'+Qbarang['kd_supplier']+'/'+EditComplete+'/'+kd_gdngke+'/'+yn;
   Memdetail['nourut']:=EditComplete;
   Memdetail.Post;
   Memdetail.Next;
@@ -222,6 +234,22 @@ Self.Autonumber;
 Memdetail.Next;
 end;
 end;
+end;
+
+procedure TFItem_TransferBarang.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFItem_TransferBarang.FormCreate(Sender: TObject);
+begin
+   realFItem_TransferBarang:=self;
+end;
+
+procedure TFItem_TransferBarang.FormDestroy(Sender: TObject);
+begin
+  realFItem_TransferBarang:=nil;
 end;
 
 end.

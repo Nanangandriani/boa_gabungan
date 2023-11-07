@@ -22,9 +22,9 @@ object FBarang_Stok: TFBarang_Stok
     Width = 896
     Height = 388
     Hint = ''
-    ActivePage = TabBarang
+    ActivePage = TabBaku
     Align = alClient
-    TabIndex = 5
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 892
     ExplicitHeight = 387
@@ -182,8 +182,8 @@ object FBarang_Stok: TFBarang_Stok
               Align = alTop
               TabOrder = 1
               object CkTepung: TCheckBox
-                Left = 15
-                Top = 2
+                Left = 7
+                Top = 3
                 Width = 169
                 Height = 17
                 Caption = 'Tampilkan Kuantum yang 0'
@@ -1305,8 +1305,10 @@ object FBarang_Stok: TFBarang_Stok
             Align = alClient
             DataSource = DsStok_Barangdet
             DynProps = <>
+            FooterRowCount = 1
             SearchPanel.Enabled = True
             SearchPanel.CaseSensitive = True
+            SumList.Active = True
             TabOrder = 0
             Columns = <
               item
@@ -1344,6 +1346,8 @@ object FBarang_Stok: TFBarang_Stok
                 DynProps = <>
                 EditButtons = <>
                 FieldName = 'outstanding'
+                Footer.DisplayFormat = '0.00#,##'
+                Footer.ValueType = fvtSum
                 Footers = <>
                 Title.Caption = 'Sisa Kuantum'
                 Width = 120
@@ -1367,14 +1371,14 @@ object FBarang_Stok: TFBarang_Stok
             Height = 25
             Align = alTop
             TabOrder = 1
-            object CheckBox1: TCheckBox
+            object CkBarang: TCheckBox
               Left = 15
               Top = 2
               Width = 169
               Height = 17
               Caption = 'Tampilkan Kuantum yang 0'
               TabOrder = 0
-              OnClick = CkTepungClick
+              OnClick = CkBarangClick
             end
           end
         end
@@ -3156,26 +3160,25 @@ object FBarang_Stok: TFBarang_Stok
         'em_stock_code=a.item_stock_code)as aa on 1=1 '
       '-- where C.category='#39'BAHAN BAKU'#39
       'where a.deleted_at isnull Order by item_stock_code Desc')
-    Left = 390
-    Top = 335
+    Left = 262
+    Top = 415
   end
   object MemStok_Barang: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdStok_Barang
-    Left = 441
-    Top = 324
+    Left = 281
+    Top = 372
   end
   object QStok_Barangdet: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_item_stock_det')
+      'select * from gudang.t_item_stock_det')
     MasterSource = DsStok_Barang
     MasterFields = 'item_stock_code'
     DetailFields = 'item_stock_code'
-    Left = 500
-    Top = 336
+    Left = 332
+    Top = 424
     ParamData = <
       item
         DataType = ftUnknown

@@ -54,7 +54,6 @@ type
   private
     { Private declarations }
     Procedure Refresh;
-    procedure Clear;
   public
     { Public declarations }
     Procedure Autonumber;
@@ -94,23 +93,14 @@ begin
    FNew_KonvBarang.Edno.Text:=FloatToStr(urut);
 end;
 
-Procedure TFKonversi_Barang.Clear;
-begin
-  FNew_KonvBarang.EdKd.Text:='';
-  FNew_KonvBarang.EdNm.Text:='';
-  FNew_KonvBarang.Edqty.Text:='0';
-  FNew_KonvBarang.Edsatuan.Text:='';
-  FNew_KonvBarang.EdqtyKon.Text:='0';
-  FNew_KonvBarang.EdKonversi.Text:='';
-  FNew_KonvBarang.Edno.Text:='';
-end;
+
 
 procedure TFKonversi_Barang.dxBarBaruClick(Sender: TObject);
 begin
   with FNew_KonvBarang do
   begin
     Show;
-    Self.Clear;
+    Clear;
   //  Self.Autonumber;
   // FNew_KonvBarang.BSimpan.Visible:=True;
   // FNew_KonvBarang.BEdit.Visible:=False;
@@ -177,14 +167,14 @@ end;
 
 procedure TFKonversi_Barang.BBaruClick(Sender: TObject);
 begin
-Self.Clear;
-Self.Autonumber;
-//Self.Load;
+  FNew_KonvBarang.Clear;
+  Self.Autonumber;
+  //Self.Load;
 end;
 
 procedure TFKonversi_Barang.BBatalClick(Sender: TObject);
 begin
-  Self.Clear;
+  FNew_KonvBarang.Clear;
   Self.Refresh;
 end;
 

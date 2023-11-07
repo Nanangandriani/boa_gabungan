@@ -105,9 +105,9 @@ begin
   begin
     Show;
     Self.clear;
-    EdCategory.SetFocus;
+   // EdCategory.SetFocus;
     BSimpan.Visible:=true;
-    BEdit.Visible:=False;
+    //BEdit.Visible:=False;
     Caption:='New Barang';
     status_tr:=0;
   end;
@@ -186,6 +186,7 @@ begin
       Edkd_akun.Text:=MemMaterial.FieldByName('account_code').AsString;
       EdNm_akun.Text:=MemMaterial.FieldByName('account_name').AsString;
       idmaterial:=MemMaterial.FieldByName('id').AsString;
+      EdDesk.Text:=MemMaterial.FieldByName('description').AsString;
     end;
   end;
 end;

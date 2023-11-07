@@ -57,7 +57,14 @@ uses
   UNew_Jabatan in 'UNew_Jabatan.pas' {FNew_Jabatan},
   UTransfer_Barang in 'UTransfer_Barang.pas' {FTransfer_Barang},
   UNew_TransferBarang in 'UNew_TransferBarang.pas' {FNew_TransferBarang},
-  UItem_TransferBarang in 'UItem_TransferBarang.pas' {FItem_TransferBarang};
+  UItem_TransferBarang in 'UItem_TransferBarang.pas' {FItem_TransferBarang},
+  UNew_KelompokBarang in 'UNew_KelompokBarang.pas' {FNew_KelompokBarang},
+  UPenjualan in 'UPenjualan.pas' {Flist_penjualan},
+  UNew_Penjualan in 'UNew_Penjualan.pas' {Finput_penjualan},
+  Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
+  Ubrowse_faktur_pajak in 'Ubrowse_faktur_pajak.pas' {Fbrowse_faktur_pajak},
+  UListSPmuat in 'UListSPmuat.pas' {Flist_sp_muat},
+  UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat};
 
 {$R *.res}
 
@@ -99,7 +106,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFJabatan, FJabatan);
   Application.CreateForm(TFNew_Dept, FNew_Dept);
   Application.CreateForm(TFNew_Jabatan, FNew_Jabatan);
-  Application.CreateForm(TFItem_TransferBarang, FItem_TransferBarang);
+  Application.CreateForm(TFNew_KelompokBarang, FNew_KelompokBarang);
+  Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);
+  Application.CreateForm(TFbrowse_faktur_pajak, Fbrowse_faktur_pajak);
+  //  Application.CreateForm(TFItem_TransferBarang, FItem_TransferBarang);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

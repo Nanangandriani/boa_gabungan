@@ -2,7 +2,7 @@ object FNew_ItemType: TFNew_ItemType
   Left = 0
   Top = 0
   Caption = 'Form New Jenis Barang'
-  ClientHeight = 148
+  ClientHeight = 248
   ClientWidth = 434
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,22 +22,15 @@ object FNew_ItemType: TFNew_ItemType
     Height = 15
     Caption = 'Nama'
   end
-  object Label19: TLabel
-    Left = 21
-    Top = 68
-    Width = 80
-    Height = 15
-    Caption = 'Akun Perkiraan'
-  end
   object Panel1: TPanel
     Left = 0
-    Top = 116
+    Top = 216
     Width = 434
     Height = 32
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 115
-    ExplicitWidth = 460
+    ExplicitWidth = 430
     object BBatal: TRzBitBtn
       Left = 358
       Top = 1
@@ -98,7 +91,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 384
+      ExplicitLeft = 354
     end
     object BSimpan: TRzBitBtn
       Left = 283
@@ -160,7 +153,7 @@ object FNew_ItemType: TFNew_ItemType
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 309
+      ExplicitLeft = 279
     end
     object BCari: TRzBitBtn
       Left = 1
@@ -233,27 +226,72 @@ object FNew_ItemType: TFNew_ItemType
     CharCase = ecUpperCase
     TabOrder = 1
   end
-  object Edkd_akun: TRzEdit
-    Left = 107
-    Top = 65
-    Width = 94
-    Height = 23
-    Text = ''
-    Color = clInfoBk
-    ReadOnly = True
+  object GroupBox1: TGroupBox
+    Left = 21
+    Top = 64
+    Width = 405
+    Height = 129
+    Caption = 'Akun Perkiraan'
     TabOrder = 2
-  end
-  object EdNm_akun: TRzButtonEdit
-    Left = 207
-    Top = 65
-    Width = 202
-    Height = 23
-    Text = ''
-    CharCase = ecUpperCase
-    ReadOnlyColorOnFocus = True
-    TabOrder = 3
-    AltBtnNumGlyphs = 1
-    ButtonNumGlyphs = 1
-    OnButtonClick = EdNm_akunButtonClick
+    object Label19: TLabel
+      Left = 13
+      Top = 37
+      Width = 56
+      Height = 15
+      Caption = 'Pembelian'
+    end
+    object Label1: TLabel
+      Left = 13
+      Top = 85
+      Width = 52
+      Height = 15
+      Caption = 'Penjualan'
+    end
+    object Edkd_akun: TRzEdit
+      Left = 91
+      Top = 34
+      Width = 94
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object EdNm_akun: TRzButtonEdit
+      Left = 191
+      Top = 34
+      Width = 202
+      Height = 23
+      Text = ''
+      CharCase = ecUpperCase
+      ReadOnlyColorOnFocus = True
+      TabOrder = 1
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = EdNm_akunButtonClick
+    end
+    object Edkd_akun2: TRzEdit
+      Left = 91
+      Top = 82
+      Width = 94
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 2
+    end
+    object Ednm_akun2: TRzButtonEdit
+      Left = 191
+      Top = 82
+      Width = 202
+      Height = 23
+      Text = ''
+      CharCase = ecUpperCase
+      ReadOnlyColorOnFocus = True
+      TabOrder = 3
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = Ednm_akun2ButtonClick
+    end
   end
 end

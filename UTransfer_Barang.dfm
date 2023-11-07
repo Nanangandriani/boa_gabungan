@@ -3,7 +3,7 @@ object FTransfer_Barang: TFTransfer_Barang
   Top = 0
   Caption = 'Form Transfer Antar Gudang'
   ClientHeight = 499
-  ClientWidth = 872
+  ClientWidth = 1024
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FTransfer_Barang: TFTransfer_Barang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 872
+    Width = 1024
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -45,19 +45,19 @@ object FTransfer_Barang: TFTransfer_Barang
   object DBGridTransfer: TDBGridEh
     Left = 0
     Top = 127
-    Width = 872
+    Width = 1024
     Height = 372
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_5_tahun'
+        ColumnName = 'Column_5_trans_year'
       end
       item
-        ColumnName = 'Column_6_bln'
+        ColumnName = 'Column_6_trans_month'
       end
       item
-        ColumnName = 'Column_7_tgl_no'
+        ColumnName = 'Column_7_date_no'
       end>
     DataSource = DsTransfer
     DynProps = <>
@@ -71,7 +71,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_transfer'
+        FieldName = 'trans_no'
         Footers = <>
         Title.Caption = 'No. Transfer'
         Width = 143
@@ -80,34 +80,34 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_transfer'
+        FieldName = 'trans_date'
         Footers = <>
         Title.Caption = 'Tanggal'
-        Width = 144
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'Dari'
+        FieldName = 'from'
         Footers = <>
         Title.Caption = 'Gudang|Dari'
-        Width = 150
+        Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'Ke'
+        FieldName = 'to'
         Footers = <>
         Title.Caption = 'Gudang|Ke'
-        Width = 150
+        Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'ket'
+        FieldName = 'note'
         Footers = <>
         Title.Caption = 'Keterangan'
         Width = 260
@@ -116,7 +116,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tahun'
+        FieldName = 'trans_year'
         Footers = <>
         Title.Caption = 'Tahun'
         Visible = False
@@ -125,7 +125,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'bln'
+        FieldName = 'trans_month'
         Footers = <>
         Title.Caption = 'Bulan'
         Visible = False
@@ -134,7 +134,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_no'
+        FieldName = 'date_no'
         Footers = <>
         Title.Caption = 'Tanggal'
         Visible = False
@@ -143,7 +143,7 @@ object FTransfer_Barang: TFTransfer_Barang
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 831
+        Width = 887
         Height = 118
         Align = alClient
         DataSource = DsDetail
@@ -154,7 +154,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_transfer'
+            FieldName = 'trans_no'
             Footers = <>
             Visible = False
           end
@@ -162,7 +162,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kd_material_stok'
+            FieldName = 'item_stock_code'
             Footers = <>
             Title.Caption = 'Kode Material'
             Width = 96
@@ -171,7 +171,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nm_material'
+            FieldName = 'item_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 150
@@ -180,7 +180,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kd_stok_lama'
+            FieldName = 'stok_code_old'
             Footers = <>
             Title.Caption = 'Kode Stok Lama'
             Width = 170
@@ -189,7 +189,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kd_stok_baru'
+            FieldName = 'stock_code_new'
             Footers = <>
             Title.Caption = 'Kode Stok Baru'
             Width = 180
@@ -208,7 +208,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'satuan'
+            FieldName = 'unit'
             Footers = <>
             Title.Caption = 'Satuan'
             Width = 100
@@ -671,7 +671,7 @@ object FTransfer_Barang: TFTransfer_Barang
   object QTransfer: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_transfer_antar_gudang order by no_transfer desc')
+      'select * from gudang.t_item_transfer order by trans_no desc')
     Left = 448
     Top = 24
   end
@@ -696,20 +696,20 @@ object FTransfer_Barang: TFTransfer_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.nm_material,B.no_material from t_transfer_antar_gud' +
-        'angdet a inner join t_material_stok b on A.kd_material_stok=b.kd' +
-        '_material_stok')
+        'select A.*,b.item_name,B.order_no from gudang.t_item_transfer_de' +
+        't a inner join gudang.t_item_stock b on A.item_stock_code=b.item' +
+        '_stock_code')
     MasterSource = DsTransfer
-    MasterFields = 'no_transfer'
-    DetailFields = 'no_transfer'
+    MasterFields = 'trans_no'
+    DetailFields = 'trans_no'
     Left = 616
     Top = 32
     ParamData = <
       item
         DataType = ftString
-        Name = 'no_transfer'
+        Name = 'trans_no'
         ParamType = ptInput
-        Value = '002/III/21/PMA'
+        Value = 'TR/897/19/III/22/MLB'
       end>
   end
   object DsDetail: TDataSource
@@ -799,17 +799,15 @@ object FTransfer_Barang: TFTransfer_Barang
     end
   end
   object QRptTransfer: TUniQuery
+    Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.nm_material,B.no_material, c."Dari", c."Ke", c.tgl_' +
-        'transfer, c.ket'
-      ' from t_transfer_antar_gudangdet a '
+        'select A.*,b.item_name,B.order_no,c."from",c."to",c.trans_date,c' +
+        '.note from gudang.t_item_transfer_det a '
       
-        'inner join t_material_stok b on A.kd_material_stok=b.kd_material' +
-        '_stok'
-      
-        'inner join t_transfer_antar_gudang c on a.no_transfer=c.no_trans' +
-        'fer')
+        'inner join gudang.t_item_stock b on A.item_stock_code=b.item_sto' +
+        'ck_code'
+      'inner join gudang.t_item_transfer c on a.trans_no=c.trans_no')
     DetailFields = 'no_transfer'
     Left = 368
     Top = 32

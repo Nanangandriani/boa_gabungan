@@ -2,8 +2,8 @@ object FNew_TransferBarang: TFNew_TransferBarang
   Left = 0
   Top = 0
   Caption = 'Form New Transfer Antar Gudang'
-  ClientHeight = 389
-  ClientWidth = 740
+  ClientHeight = 456
+  ClientWidth = 738
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,108 +17,108 @@ object FNew_TransferBarang: TFNew_TransferBarang
   OnShow = FormShow
   TextHeight = 13
   object Label1: TLabel
-    Left = 26
-    Top = 39
+    Left = 36
+    Top = 45
     Width = 61
     Height = 13
     Caption = 'No. Transfer'
   end
   object Label2: TLabel
-    Left = 26
-    Top = 65
+    Left = 36
+    Top = 74
     Width = 41
     Height = 13
     Caption = 'Tanggal '
   end
   object Label3: TLabel
-    Left = 26
-    Top = 92
+    Left = 36
+    Top = 103
     Width = 56
     Height = 13
     Caption = 'Keterangan'
   end
   object Label4: TLabel
-    Left = 338
-    Top = 38
+    Left = 348
+    Top = 44
     Width = 19
     Height = 13
     Caption = 'Dari'
   end
   object Label5: TLabel
-    Left = 337
-    Top = 65
+    Left = 347
+    Top = 74
     Width = 12
     Height = 13
     Caption = 'Ke'
   end
   object Label6: TLabel
-    Left = 97
-    Top = 39
+    Left = 107
+    Top = 45
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label7: TLabel
-    Left = 98
-    Top = 66
+    Left = 108
+    Top = 75
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label8: TLabel
-    Left = 97
-    Top = 92
+    Left = 107
+    Top = 103
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label9: TLabel
-    Left = 401
-    Top = 38
+    Left = 411
+    Top = 44
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label10: TLabel
-    Left = 402
-    Top = 65
+    Left = 412
+    Top = 74
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label11: TLabel
-    Left = 338
-    Top = 11
+    Left = 348
+    Top = 16
     Width = 40
     Height = 13
     Caption = 'Kategori'
   end
   object Label12: TLabel
-    Left = 402
-    Top = 11
+    Left = 412
+    Top = 16
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label13: TLabel
-    Left = 26
-    Top = 11
+    Left = 36
+    Top = 16
     Width = 24
     Height = 13
     Caption = 'Jenis'
   end
   object Label14: TLabel
-    Left = 98
-    Top = 11
+    Left = 108
+    Top = 16
     Width = 4
     Height = 13
     Caption = ':'
   end
   object DBGriddetail: TDBGridEh
     Left = 0
-    Top = 168
-    Width = 740
-    Height = 189
+    Top = 192
+    Width = 738
+    Height = 232
     Align = alBottom
     DataSource = DsDetail
     DynProps = <>
@@ -135,7 +135,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         FieldName = 'kd_material'
         Footers = <>
         Title.Caption = 'Kode Material'
-        Width = 77
+        Width = 82
       end
       item
         CellButtons = <>
@@ -195,15 +195,15 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 357
-    Width = 740
+    Top = 424
+    Width = 738
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 356
-    ExplicitWidth = 736
+    ExplicitTop = 423
+    ExplicitWidth = 734
     object BBatal: TRzBitBtn
-      Left = 664
+      Left = 662
       Top = 1
       Height = 30
       Align = alRight
@@ -262,10 +262,10 @@ object FNew_TransferBarang: TFNew_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 660
+      ExplicitLeft = 658
     end
     object BSimpan: TRzBitBtn
-      Left = 589
+      Left = 587
       Top = 1
       Height = 30
       Align = alRight
@@ -324,13 +324,13 @@ object FNew_TransferBarang: TFNew_TransferBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 585
+      ExplicitLeft = 583
     end
   end
   object Edno: TRzEdit
-    Left = 112
-    Top = 36
-    Width = 163
+    Left = 122
+    Top = 41
+    Width = 200
     Height = 21
     Text = ''
     Color = clInfoBk
@@ -338,50 +338,51 @@ object FNew_TransferBarang: TFNew_TransferBarang
     TabOrder = 2
   end
   object DtTransfer: TRzDateTimeEdit
-    Left = 112
-    Top = 62
+    Left = 122
+    Top = 71
     Width = 114
     Height = 21
     EditType = etDate
     TabOrder = 3
   end
   object EdKet: TMemo
-    Left = 112
-    Top = 89
-    Width = 467
-    Height = 74
+    Left = 122
+    Top = 99
+    Width = 524
+    Height = 77
     Lines.Strings = (
       '')
     TabOrder = 4
   end
   object CbDari: TRzComboBox
-    Left = 416
-    Top = 35
-    Width = 163
+    Left = 426
+    Top = 41
+    Width = 220
     Height = 21
     TabOrder = 5
+    OnSelect = CbDariSelect
   end
   object CbKe: TRzComboBox
-    Left = 416
-    Top = 62
-    Width = 163
+    Left = 426
+    Top = 71
+    Width = 220
     Height = 21
     TabOrder = 6
     OnSelect = CbKeSelect
   end
   object CbKategori: TRzComboBox
-    Left = 416
-    Top = 8
-    Width = 163
+    Left = 426
+    Top = 13
+    Width = 220
     Height = 21
     TabOrder = 7
     OnChange = CbKategoriSelect
     OnSelect = CbKategoriSelect
   end
   object RzComboBox1: TRzComboBox
-    Left = 112
-    Top = 8
-    Width = 163
+    Left = 122
+    Top = 13
+    Width = 200
     Height = 21
     TabOrder = 8
     OnChange = CbKategoriSelect
@@ -393,8 +394,8 @@ object FNew_TransferBarang: TFNew_TransferBarang
   object Memdetail: TMemTableEh
     Active = True
     Params = <>
-    Left = 617
-    Top = 24
+    Left = 681
+    Top = 8
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kd_material: TMTStringDataFieldEh
@@ -451,7 +452,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object DsDetail: TDataSource
     DataSet = Memdetail
-    Left = 625
-    Top = 88
+    Left = 681
+    Top = 64
   end
 end

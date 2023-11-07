@@ -7,9 +7,6 @@ Coordinates=276,124,137,36
 [RzVersionInfoStatus1]
 Coordinates=127,124,139,36
 
-[RzStatusBar1]
-Coordinates=10,10,94,58
-
 [RzGlyphStatus1]
 Coordinates=10,124,107,36
 
@@ -28,4 +25,7 @@ Coordinates=184,248,77,36
 []
 Coordinates=114,10,89,58
 Visible=True
+
+[ST]
+Coordinates=10,10,94,58
 

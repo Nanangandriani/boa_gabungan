@@ -2,7 +2,7 @@ object FNew_Satuan: TFNew_Satuan
   Left = 0
   Top = 0
   Caption = 'Form New Satuan'
-  ClientHeight = 242
+  ClientHeight = 180
   ClientWidth = 436
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,12 +17,12 @@ object FNew_Satuan: TFNew_Satuan
   TextHeight = 15
   object PnlAksi: TPanel
     Left = 0
-    Top = 201
+    Top = 139
     Width = 436
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 141
+    ExplicitTop = 200
     ExplicitWidth = 432
     object BBatal: TRzBitBtn
       Left = 360
@@ -270,16 +270,16 @@ object FNew_Satuan: TFNew_Satuan
     Left = 0
     Top = 136
     Width = 436
-    Height = 65
+    Height = 3
     Align = alClient
     TabOrder = 2
     ExplicitWidth = 432
-    ExplicitHeight = 5
+    ExplicitHeight = 64
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1
       Width = 434
-      Height = 63
+      Height = 1
       Align = alClient
       DataSource = DsSatuan
       DynProps = <>
@@ -313,7 +313,6 @@ object FNew_Satuan: TFNew_Satuan
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_unit order by unit_code')
-    Active = True
     Left = 272
     Top = 104
   end

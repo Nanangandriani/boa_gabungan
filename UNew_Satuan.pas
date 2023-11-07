@@ -111,7 +111,7 @@ end;
 
 procedure TFNew_Satuan.DBGridEh1DblClick(Sender: TObject);
 begin
-  if jenis_tr='KonvBarang' then
+  if jenis_tr='Barang' then
   begin
     with FNew_Barang do
     begin

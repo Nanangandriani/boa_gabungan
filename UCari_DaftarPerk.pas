@@ -49,10 +49,46 @@ begin
       FNew_Itemtype.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
+    if (vpanggil = 'itemtype2')then
+    begin
+      FNew_Itemtype.Edkd_akun2.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_Itemtype.EdNm_akun2.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
     if (vpanggil = 'barang')then
     begin
       FNew_barang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
       FNew_barang.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if vpanggil = 'Pemb_barang' then
+    begin
+      FNew_barang.Edkd_akunpemb.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_barang.EdNm_akunpemb.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if vpanggil = 'RTPemb_barang' then
+    begin
+      FNew_barang.Edkd_akunRt_pemb.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_barang.EdNm_akunRt_pemb.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if vpanggil = 'PotPemb_barang' then
+    begin
+      FNew_barang.Edkd_akunPot_pemb.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_barang.EdNm_akunPot_pemb.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if vpanggil = 'Penj_barang' then
+    begin
+      FNew_barang.Edkd_akunPenj.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_barang.EdNm_akunPenj.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if vpanggil = 'RtPenj_barang' then
+    begin
+      FNew_barang.Edkd_akunRt_Penj.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_barang.EdNm_akunRt_Penj.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
     close;

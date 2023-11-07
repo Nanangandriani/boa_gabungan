@@ -123,11 +123,11 @@ object FKonversi_Barang: TFKonversi_Barang
       #9'ON '
       #9#9'"a".category_id = "c"."id"')
     Left = 324
-    Top = 48
+    Top = 32
   end
   object DsKonversiM: TDataSource
     DataSet = QKonversiM
-    Left = 393
+    Left = 409
     Top = 32
   end
   object dxBarManager1: TdxBarManager
@@ -145,7 +145,7 @@ object FKonversi_Barang: TFKonversi_Barang
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 505
-    Top = 36
+    Top = 28
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'

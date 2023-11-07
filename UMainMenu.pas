@@ -27,11 +27,11 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
-  dxBar, cxClasses, dxRibbon;
+  dxBar, cxClasses, dxRibbon, Data.DB, MemDS, DBAccess, Uni;
 
 type
   TFMainMenu = class(TForm)
-    RzStatusBar1: TRzStatusBar;
+    ST: TRzStatusBar;
     RzDBStateStatus1: TRzDBStateStatus;
     RzVersionInfoStatus1: TRzVersionInfoStatus;
     RzProgressStatus1: TRzProgressStatus;
@@ -64,6 +64,8 @@ type
     dxBarLargeButtonLaporan: TdxBarLargeButton;
     dxBarLargeButtonApproval: TdxBarLargeButton;
     dxBarLargeButtonUtility: TdxBarLargeButton;
+    RzStatusPane1: TRzStatusPane;
+    Qperusahaan: TUniQuery;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -103,6 +105,8 @@ type
     Procedure btnApplyClick(Sender: TObject);
     Procedure CallFoo(S: string; I: Integer);
     procedure Getsubmenutree(Sender: TObject);
+    function getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
+    function convbulan(nobulan:Integer):string;
 
   end;
 
@@ -134,7 +138,65 @@ uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
   UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
   Udaftar_perkiraan,UKonversi_Barang, UJabatan, UDept, UBonPermt_Barang,
-  UTransfer_Barang;
+  UTransfer_Barang, UPenjualan, UListSPmuat;
+
+function TFMainMenu.convbulan(nobulan:Integer):string;
+begin
+  case nobulan of
+    1:Result:='I';
+    2:Result:='II';
+    3:Result:='III';
+    4:Result:='IV';
+    5:Result:='V';
+    6:Result:='VI';
+    7:Result:='VII';
+    8:Result:='VIII';
+    9:Result:='IX';
+    10:Result:='X';
+    11:Result:='XI';
+    12:Result:='XII';
+  end;
+end;
+
+function TFMainMenu.getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
+var
+  year, month, day: word;
+  strsepr: string[1];
+  strtemp,strbukti, strtgl,strbulan,strtahun,conv_romawi: string;
+  q:TUniQuery;
+  i,n:Integer;
+begin
+   decodedate(tgl,Year,month,day);
+   strsepr:='/';
+   strbulan:=convbulan(month);
+   strtahun:=inttostr(year);
+
+   strtemp:=inttostr(month);
+   if length(strtemp)<2 then strtemp:='0'+strtemp;
+
+   strtgl:=strsepr+strtemp+strsepr+copy(inttostr(year),1,4);
+   strbukti:='Select max(NOURUT) from '+Tablename+' where substring(voucher,1,2)='+QuotedStr(kode);//+// ' and ';
+//   strbukti:=strbukti+'KODEPRSH='+quotedstr(vKODEPRSH);
+   strbukti:=strbukti+' AND BULAN='+ quotedstr(strbulan)+' AND TAHUN='+quotedstr(strtahun);
+   q:=TUniQuery.Create(self);
+   q.Connection:=dm.Koneksi;
+   q.SQL.Add(strbukti);
+   q.Open;
+   if q.RecordCount=0 then
+   n:=0
+   else
+   n:=q.fields[0].AsInteger;
+  // vNOURUT:=n+1;
+         strtemp:=inttostr(n+1);
+         strbukti:='';
+         for i:=1 to 3-length(strtemp) do
+         begin
+           strbukti:=strbukti+'0';
+         end;
+//  strbukti:=strbukti+strtemp+strsepr+strbulan+strsepr+vKODEPRSH2+strsepr+strtahun;
+  //strbukti:=strbukti+strtemp+strsepr+strbulan+strsepr+vKODEPRSH+strsepr+strtahun;
+  Result:=strbukti;
+end;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -635,8 +697,7 @@ begin
    TCategoryPanelGroup.Create(nil);
    while not dm.Qtemp1.Eof do
    begin
-
-    //Create Button Di Panel Header
+        //Create Button Di Panel Header
         //AButtonPanel:= TButton.Create(PenelHeader);
         //AButtonPanel:= TRzButton.Create(PenelHeader);
         //AButtonPanel:= TButton.Create(ACategoryPanel);
@@ -736,8 +797,10 @@ begin
   ShowForm;
 end;
 
+
+
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFKategori_Barang,TFPenomoran,
-  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang]);
+  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang,TFlist_penjualan,TFlist_sp_muat]);
 end.

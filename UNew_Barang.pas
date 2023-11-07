@@ -6,44 +6,74 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls,
   RzCmboBx, Data.DB, MemDS, DBAccess, Uni, RzBtnEdt, Vcl.Mask, RzEdit,
-  Vcl.Buttons;
+  Vcl.Buttons, RzTabs, Vcl.ComCtrls;
 
 type
   TFNew_Barang = class(TForm)
-    EdNm: TEdit;
-    EdKd: TEdit;
-    Edno1: TEdit;
-    Edno: TEdit;
-    EdCategory: TRzComboBox;
-    Label8: TLabel;
-    Label3: TLabel;
-    Label6: TLabel;
-    Label4: TLabel;
-    Label2: TLabel;
-    Label5: TLabel;
-    Label1: TLabel;
-    Label7: TLabel;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
-    BEdit: TRzBitBtn;
-    Label9: TLabel;
-    Label10: TLabel;
-    Label11: TLabel;
-    Label12: TLabel;
-    EdMerk: TRzComboBox;
-    Label13: TLabel;
-    Label14: TLabel;
+    RzBitBtn1: TRzBitBtn;
+    Bkonversi: TRzBitBtn;
+    RzPageControl1: TRzPageControl;
+    TabSheet1: TRzTabSheet;
+    TabSheet2: TRzTabSheet;
+    EdDesk: TEdit;
+    EdSatuan: TRzButtonEdit;
+    Cbkdtr: TComboBox;
     Edjenis: TRzComboBox;
+    EdMerk: TRzComboBox;
+    EdCategory: TRzComboBox;
+    Edno: TEdit;
+    Edno1: TEdit;
+    EdKd: TEdit;
+    EdNm: TEdit;
+    Label16: TLabel;
+    Btn_Satuan: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton1: TSpeedButton;
+    Label13: TLabel;
+    Label11: TLabel;
+    Label9: TLabel;
+    Label7: TLabel;
+    Label1: TLabel;
+    Label5: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    TabSheet3: TRzTabSheet;
     Label19: TLabel;
     Edkd_akun: TRzEdit;
-    Label20: TLabel;
     EdNm_akun: TRzButtonEdit;
-    SpeedButton1: TSpeedButton;
-    Cbkdtr: TComboBox;
-    SpeedButton2: TSpeedButton;
-    Btn_Satuan: TSpeedButton;
-    EdSatuan: TRzButtonEdit;
+    Label22: TLabel;
+    Edkd_akunPemb: TRzEdit;
+    EdNm_akunPemb: TRzButtonEdit;
+    Label24: TLabel;
+    Edkd_akunrt_Pemb: TRzEdit;
+    EdNm_akunRt_Pemb: TRzButtonEdit;
+    Label26: TLabel;
+    Edkd_akunPenj: TRzEdit;
+    EdNm_akunPenj: TRzButtonEdit;
+    Label28: TLabel;
+    Edkd_akunRt_Penj: TRzEdit;
+    EdNm_akunRt_Penj: TRzButtonEdit;
+    Label30: TLabel;
+    Edkd_akunPot_Pemb: TRzEdit;
+    EdNm_akunPot_Pemb: TRzButtonEdit;
+    GroupBox1: TGroupBox;
+    Label20: TLabel;
+    RzNumericEdit4: TRzNumericEdit;
+    RzNumericEdit1: TRzNumericEdit;
+    Label17: TLabel;
+    GroupBox2: TGroupBox;
+    Label23: TLabel;
+    Label25: TLabel;
+    RzNumericEdit5: TRzNumericEdit;
+    RzNumericEdit6: TRzNumericEdit;
+    Label4: TLabel;
+    RzComboBox1: TRzComboBox;
+    SpKelompok: TSpeedButton;
+    Edkd_display: TEdit;
+    StatusBar1: TStatusBar;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -57,6 +87,13 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     procedure Btn_SatuanClick(Sender: TObject);
     procedure EdSatuanButtonClick(Sender: TObject);
+    procedure BkonversiClick(Sender: TObject);
+    procedure EdNm_akunPembButtonClick(Sender: TObject);
+    procedure EdNm_akunRt_PembButtonClick(Sender: TObject);
+    procedure EdNm_akunPot_PembButtonClick(Sender: TObject);
+    procedure EdNm_akunPenjButtonClick(Sender: TObject);
+    procedure EdNm_akunRt_PenjButtonClick(Sender: TObject);
+    procedure SpKelompokClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,7 +111,7 @@ implementation
 
 uses  umainmenu, UDataModule, UAkun_Perkiraan_TerimaMat, UKategori_Barang,
   UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk,
-  UNew_Satuan;
+  UNew_Satuan, UKonversi_Barang, UNew_KonvBarang, UNew_KelompokBarang;
 
 var RealFNew_barang: TFNew_barang;
 function FNew_Barang: TFNew_Barang;
@@ -101,6 +138,96 @@ begin
   end;
 end;
 
+procedure TFNew_Barang.EdNm_akunPembButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='Pemb_barang';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFNew_Barang.EdNm_akunPenjButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='Penj_barang';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFNew_Barang.EdNm_akunPot_PembButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='PotPemb_barang';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFNew_Barang.EdNm_akunRt_PembButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='RTPemb_barang';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFNew_Barang.EdNm_akunRt_PenjButtonClick(Sender: TObject);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='RtPenj_barang';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
 procedure TFNew_Barang.SpeedButton1Click(Sender: TObject);
 begin
   FNew_KategoriBarang.Show;
@@ -113,11 +240,47 @@ begin
   FNew_ItemType.statustr:=3;
 end;
 
+procedure TFNew_Barang.SpKelompokClick(Sender: TObject);
+begin
+  FNew_KelompokBarang.Show;
+//  FNew_KelompokBarang.statustr:=3;
+end;
+
 procedure TFNew_Barang.BBatalClick(Sender: TObject);
 begin
   FlistBarang.Show;
   FlistBarang.ActRoExecute(sender);
   Close;
+end;
+
+procedure TFNew_Barang.BkonversiClick(Sender: TObject);
+begin
+{  with FKonversi_Barang do
+  begin
+    show;
+     with QKonversiM do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT	b.qty_unit,b.unit,"a".item_name,"a".item_code,b.qty_conv,b.unit_conv,"c".category,b."id"'+
+      ' FROM t_item AS "a" INNER JOIN t_item_conversion AS b ON	"a".item_code = b.item_code INNER JOIN   '+
+      '	t_item_category AS "c" ON "a".category_id="c"."id" where a.item_code='+QuotedStr(EdKd.Text);
+      open;
+    end;
+  end;  }
+  with FNew_KonvBarang do
+  begin
+    Show;
+    Clear;
+  //  Self.Autonumber;
+    FNew_KonvBarang.Edcategory.Text:=FNew_Barang.Edcategory.Text;
+    FNew_KonvBarang.Edkd.Text:=FNew_Barang.Edkd.Text;
+    FNew_KonvBarang.EdNm.Text:=FNew_Barang.EdNm.Text;
+    FNew_KonvBarang.Edsatuan.Text:=FNew_Barang.EdSatuan.Text;
+    FNew_KonvBarang.Edqty.Text:='1';
+    caption:='New Konversi Barang';
+    Status:=0;
+  end;
 end;
 
 procedure TFNew_Barang.BSimpanClick(Sender: TObject);
@@ -169,8 +332,8 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,account_code,created_by)'+
-       ' values(:order_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic)';
+       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,account_code,created_by,description)'+
+       ' values(:order_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic,:desk)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_nm').Value:=EdNm.Text;
@@ -179,6 +342,7 @@ begin
          ParamByName('merk').Value:=EdMerk.Text;
          ParamByName('akun_cd').Value:=edkd_akun.text;
          ParamByName('pic').Value:=Nm;
+         ParamByName('desk').Value:=EdDesk.text;
        ExecSQL;
        end;
       end;
@@ -190,7 +354,7 @@ begin
        sql.clear;
        sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
        ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
-       ' updated_by=:pic where "id"=:id';
+       ' updated_by=:pic,description=:desk where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
          ParamByName('item_name').Value:=EdNm.Text;
@@ -200,6 +364,7 @@ begin
          ParamByName('ct_id').Value:=id_ct;
          ParamByName('id').Value:=idmaterial;
          ParamByName('pic').Value:=nm;
+         ParamByName('desk').Value:=EdDesk.text;
        ExecSQL;
        end;
       end;

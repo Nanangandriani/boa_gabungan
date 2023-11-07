@@ -38,7 +38,7 @@ object dm: Tdm
   end
   object dsQtemp2: TDataSource
     DataSet = Qtemp2
-    Left = 75
+    Left = 83
     Top = 118
   end
   object Qtemp2: TUniQuery
@@ -52,7 +52,7 @@ object dm: Tdm
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 219
+    Left = 227
     Top = 120
   end
   object Qtemp3: TUniQuery

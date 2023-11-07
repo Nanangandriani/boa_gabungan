@@ -132,73 +132,73 @@ procedure TFTransfer_Barang.dxbarRefreshClick(Sender: TObject);
 begin
 DBGridTransfer.StartLoadingStatus();
 DBGridTransfer.FinishLoadingStatus();
-if loksbu='' then
-begin
-  with QTransfer do
+  if loksbu='' then
   begin
-  close;
-  sql.Clear;
-  sql.Text:='select * from t_transfer_antar_gudang order by no_transfer desc';
-  ExecSQL;
+    with QTransfer do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from gudang.t_item_transfer order by trans_no desc';
+      ExecSQL;
+    end;
+    QTransfer.Active:=True;
+    MemTransfer.Active:=False;
+    MemTransfer.Active:=True;
+    Qdetail.Active:=False;
+    Qdetail.Active:=True;
   end;
-  QTransfer.Active:=True;
-  MemTransfer.Active:=False;
-  MemTransfer.Active:=True;
-  Qdetail.Active:=False;
-  Qdetail.Active:=True;
-end;
-if loksbu<>'' then
-begin
-  with QTransfer do
+  if loksbu<>'' then
   begin
-  close;
-  sql.Clear;
-  sql.Text:='select * from t_transfer_antar_gudang where kd_sbu='+QuotedStr(loksbu)+' order by no_transfer desc';
-  ExecSQL;
+    with QTransfer do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from gudang.t_item_transfer where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
+      ExecSQL;
+    end;
+    QTransfer.Active:=True;
+    MemTransfer.Active:=False;
+    MemTransfer.Active:=True;
+    Qdetail.Active:=False;
+    Qdetail.Active:=True;
   end;
-QTransfer.Active:=True;
-MemTransfer.Active:=False;
-MemTransfer.Active:=True;
-Qdetail.Active:=False;
-Qdetail.Active:=True;
-end;
 end;
 
 procedure TFTransfer_Barang.dxBarUpdateClick(Sender: TObject);
 begin
-with FNew_TransferBarang do
-begin
-  Show;
-  Clear;
-  status:=1;
-  Caption:='Update Transfer Barang Antar Gudang';
-  Edno.Text:=MemTransfer['no_transfer'];
-  DtTransfer.Date:=MemTransfer['tgl_transfer'];
-  EdKet.Text:=MemTransfer['ket'];
-  CbDari.Text:=MemTransfer['dari'];
-  CbKe.Text:=MemTransfer['Ke'];
-  CbKategori.Text:=MemTransfer['kategori'];
-end;
-Qdetail.First;
-while not Qdetail.eof do
-begin
-with Qdetail do
-begin
   with FNew_TransferBarang do
   begin
-    Memdetail.Insert;
-    Memdetail['kd_material']:=Qdetail['kd_material_stok'];
-    Memdetail['kd_stok_lama']:=Qdetail['kd_stok_lama'];
-    Memdetail['kd_stok_baru']:=Qdetail['kd_stok_baru'];
-    Memdetail['qty']:=Qdetail['qty'];
-    Memdetail['satuan']:=Qdetail['satuan'];
-    Memdetail['nm_material']:=Qdetail['nm_material'];
-    Memdetail['no_material']:=Qdetail['No_material'];
-    Memdetail.Post;
-    Qdetail.Next;
+    Show;
+    Clear;
+    status:=1;
+    Caption:='Update Transfer Barang Antar Gudang';
+    Edno.Text:=MemTransfer['trans_no'];
+    DtTransfer.Date:=MemTransfer['trans_date'];
+    EdKet.Text:=MemTransfer['note'];
+    CbDari.Text:=MemTransfer['from'];
+    CbKe.Text:=MemTransfer['to'];
+    CbKategori.Text:=MemTransfer['category'];
   end;
-end;
-end;
+  Qdetail.First;
+  while not Qdetail.eof do
+  begin
+    with Qdetail do
+    begin
+      with FNew_TransferBarang do
+      begin
+        Memdetail.Insert;
+        Memdetail['kd_material']:=Qdetail['item_stock_code'];
+        Memdetail['kd_stok_lama']:=Qdetail['stock_code_old'];
+        Memdetail['kd_stok_baru']:=Qdetail['stock_code_new'];
+        Memdetail['qty']:=Qdetail['qty'];
+        Memdetail['satuan']:=Qdetail['unit'];
+        Memdetail['nm_material']:=Qdetail['item_name'];
+        Memdetail['no_material']:=Qdetail['order_no'];
+        Memdetail.Post;
+        Qdetail.Next;
+      end;
+    end;
+  end;
 end;
 
 procedure TFTransfer_Barang.FormClose(Sender: TObject;

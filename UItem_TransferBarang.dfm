@@ -3,8 +3,8 @@ object FItem_TransferBarang: TFItem_TransferBarang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form Item Transfer Antar Gudang'
-  ClientHeight = 406
-  ClientWidth = 771
+  ClientHeight = 405
+  ClientWidth = 767
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,12 +12,15 @@ object FItem_TransferBarang: TFItem_TransferBarang
   Font.Name = 'Tahoma'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 13
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 771
-    Height = 374
+    Width = 767
+    Height = 373
     Align = alClient
     DataSource = DsBarang
     DynProps = <>
@@ -31,7 +34,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_material_stok'
+        FieldName = 'item_stock_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
         Width = 74
@@ -40,7 +43,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'item_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
         Width = 112
@@ -49,7 +52,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_supplier'
+        FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Nama Supplier'
         Width = 149
@@ -58,7 +61,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_stok'
+        FieldName = 'stock_code'
         Footers = <>
         Title.Caption = 'Kode Stok'
         Width = 114
@@ -68,7 +71,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'Outstanding'
+        FieldName = 'outstanding'
         Footers = <>
         Title.Caption = 'Kuantum'
         Width = 85
@@ -77,7 +80,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'satuan'
+        FieldName = 'unit'
         Footers = <>
         Title.Caption = 'Satuan'
         Width = 57
@@ -86,7 +89,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'gudang'
+        FieldName = 'wh_code'
         Footers = <>
         Title.Caption = 'Gudang'
         Width = 124
@@ -96,15 +99,15 @@ object FItem_TransferBarang: TFItem_TransferBarang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 374
-    Width = 771
+    Top = 373
+    Width = 767
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 373
-    ExplicitWidth = 767
+    ExplicitTop = 372
+    ExplicitWidth = 763
     object BBatal: TRzBitBtn
-      Left = 695
+      Left = 691
       Top = 1
       Height = 30
       Align = alRight
@@ -163,10 +166,10 @@ object FItem_TransferBarang: TFItem_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 691
+      ExplicitLeft = 687
     end
     object BSimpan: TRzBitBtn
-      Left = 620
+      Left = 616
       Top = 1
       Height = 30
       Align = alRight
@@ -225,15 +228,17 @@ object FItem_TransferBarang: TFItem_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 616
+      ExplicitLeft = 612
     end
   end
   object Qbarang: TUniQuery
+    Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.*,b.*,c.nm_supplier from t_material_stok_det a inner jo' +
-        'in t_material_stok b on a.kd_material_stok=b.kd_material_stok'
-      'inner join t_supplier c on b.kd_supplier=c.kd_supplier')
+        'select a.*,b.*,c.supplier_name from gudang.t_item_stock_det a in' +
+        'ner join gudang.t_item_stock b on a.item_stock_code=b.item_stock' +
+        '_code'
+      'inner join t_supplier c on b.supplier_code=c.supplier_code')
     Left = 240
     Top = 104
   end

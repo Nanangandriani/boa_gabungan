@@ -317,6 +317,34 @@
             <Form>FItem_TransferBarang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UNew_KelompokBarang.pas">
+            <Form>FNew_KelompokBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPenjualan.pas">
+            <Form>Flist_penjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Penjualan.pas">
+            <Form>Finput_penjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ubrowse_pelanggan.pas">
+            <Form>Fbrowse_data_pelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ubrowse_faktur_pajak.pas">
+            <Form>Fbrowse_faktur_pajak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSPmuat.pas">
+            <Form>Flist_sp_muat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNewSPMuat.pas">
+            <Form>Finput_sp_muat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

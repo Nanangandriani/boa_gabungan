@@ -25,6 +25,8 @@ type
     Edno_urut: TEdit;
     MemMaterial: TMemTableEh;
     DsMaterial: TDataSource;
+    Edit1: TEdit;
+    Button1: TButton;
     procedure BSimpanClick(Sender: TObject);
     procedure DBGridEh1Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -33,6 +35,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -154,15 +157,28 @@ begin
   close;
 end;
 
+procedure TFNew_BonPermtBarang.Button1Click(Sender: TObject);
+begin
+  FMainMenu.getNourutBlnPrshthn_kode(DtPeriode.Date,'gudang.t_item_request',)(;
+end;
+
 procedure TFNew_BonPermtBarang.DBGridEh1Columns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
   with FCari_Barang do
   begin
     Show;
-    QBarang.Close;
-    QBarang.open;
     status_tr:='BonBarang';
+    with QBarang do
+    begin
+    Close;
+    sql.clear;
+    SQL.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
+              ' a INNER JOIN t_item_category b on a.category_id=b.id '+
+              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
+              ' order by b.category,a.order_no Asc';
+      open;
+    end;
   end;
 end;
 
@@ -195,7 +211,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='insert into t_item_request(trans_date,trans_no,status,status_app,order_no,kdsbu,date_no,trans_year,trans_month,created_by)'+
+    sql.Text:='insert into gudang.t_item_request(trans_date,trans_no,status,status_app,order_no,kdsbu,date_no,trans_year,trans_month,created_by)'+
               ' values(:tgl,:notrans,:status,:status_app,:urut,:kdsbu,:tgl_no,:thn,:bln,:pic)';
               ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
               ParamByName('notrans').Value:=Edno.Text;
@@ -216,7 +232,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_item_request_det(item_code,qty,trans_no,unit,note)'+
+      sql.Text:='insert into gudang.t_item_request_det(item_code,qty,trans_no,unit,note)'+
                 ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
                 ParamByName('kd_material').Value:=MemMaterial['kd_material'];
                 ParamByName('qty').Value:=MemMaterial['qty'];
@@ -235,7 +251,7 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='update t_permt_barang2 set tgl_permt=:tgl_permt,pic=:pic where notrans=:notrans';
+  sql.Text:='update gudang.t_item_request set trans_date=:tgl_permt,update_by=:pic,update_at=now() where trans_no=:notrans';
             ParamByName('tgl_permt').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
             ParamByName('notrans').Value:=Edno.Text;
             ParamByName('pic').Value:=nm;
@@ -245,7 +261,7 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='delete from t_permt_barang2_det where notrans='+QuotedStr(Edno.Text);
+  sql.Text:='delete from gudang.t_item_request_det where notrans='+QuotedStr(Edno.Text);
   ExecSQL;
 end;
 MemMaterial.First;
@@ -255,16 +271,17 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='insert into t_permt_barang2_det(kd_material,qty,notrans,satuan,ket)'+
-            ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
-            ParamByName('kd_material').Value:=MemMaterial['kd_material'];
-            ParamByName('qty').Value:=MemMaterial['qty'];
-            ParamByName('notrans').Value:=Edno.Text;
-            Parambyname('satuan').Value:=MemMaterial['satuan'];
-            Parambyname('ket').Value:=MemMaterial['ket'];
+      sql.Text:='insert into gudang.t_item_request_det(item_code,qty,trans_no,unit,note)'+
+                ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
+                ParamByName('kd_material').Value:=MemMaterial['kd_material'];
+                ParamByName('qty').Value:=MemMaterial['qty'];
+                ParamByName('notrans').Value:=Edno.Text;
+                Parambyname('satuan').Value:=MemMaterial['satuan'];
+                Parambyname('ket').Value:=MemMaterial['ket'];
   ExecSQL;
 end;
   MemMaterial.Next;
 end;
 end;
 end.
+

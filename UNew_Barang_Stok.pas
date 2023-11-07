@@ -149,14 +149,14 @@ begin
 begin
   close;
   sql.clear;
-  sql.Text:='Select * from t_material_stok';
+  sql.Text:='Select * from gudang.t_material_stok';
   ExecSQL;
 end;
  with dm.Qtemp do
 begin
   close;
   sql.clear;
-  sql.Text:=' Update t_item_stock set item_code=:parkd_mat,supplier_code=:kd_supp,qty=:parqty,'+
+  sql.Text:=' Update gudang.t_item_stock set item_code=:parkd_mat,supplier_code=:kd_supp,qty=:parqty,'+
             ' unit=:parsatuan,order_no=:parno_urut,merk=:parmerk,item_name=:parnm_mat where '+
             ' item_stock_code=:parkd_mat_stok';
             ParamByName('parkd_mat').Value:=EdKd_Material.Text;
@@ -225,14 +225,14 @@ end;
 begin
   close;
   sql.clear;
-  sql.Text:='Select * from t_item_stock';
+  sql.Text:='Select * from gudang.t_item_stock';
   ExecSQL;
 end;
 with dm.Qtemp do
 begin
   close;
   sql.clear;
-  sql.Text:='insert into t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,merk,item_name,created_by)'+
+  sql.Text:='insert into gudang.t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,merk,item_name,created_by)'+
             ' values('+QuotedStr(Edkd.Text)+','+quotedstr(EdKd_Material.Text)+','+QuotedStr(EdKd_supp.Text)+' '+
             ','+QuotedStr(Edstok.Text)+','+QuotedStr(EdSatuan.Text)+','+QuotedStr(EdNo.Text)+','+QuotedStr(Edmerk.Text)+''+
             ','+QuotedStr(EdNm_Material.Text)+','+QuotedStr(nm)+')';
