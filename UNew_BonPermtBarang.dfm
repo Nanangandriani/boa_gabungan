@@ -271,7 +271,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
       ExplicitLeft = 549
     end
     object Edit1: TEdit
-      Left = 328
+      Left = 256
       Top = 0
       Width = 121
       Height = 21

@@ -399,8 +399,8 @@ object FMainMenu: TFMainMenu
       'begin'
       ''
       'end.')
-    Left = 352
-    Top = 88
+    Left = 432
+    Top = 200
     Datasets = <>
     Variables = <>
     Style = <>

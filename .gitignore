@@ -2,4 +2,5 @@
 /__history/
 Smart_BOA
 /__recovery/
-UMainmenu
+UMainMenu.pas
+UMainMenu.dfm
