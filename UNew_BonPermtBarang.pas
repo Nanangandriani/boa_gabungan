@@ -118,7 +118,7 @@ with dm.Qtemp do
     end;
   EditComplete:=CODE;
   nourut:=code;
-  EdNo.Text:= EditComplete+ '/'+maxmy + '/'+ kdsbu;
+  EdNo.Text:= EditComplete+ '/' +maxmy + '/'+ kdsbu;
 end;
 
 procedure TFNew_BonPermtBarang.BBatalClick(Sender: TObject);
@@ -159,7 +159,7 @@ end;
 
 procedure TFNew_BonPermtBarang.Button1Click(Sender: TObject);
 begin
-  FMainMenu.getNourutBlnPrshthn_kode(DtPeriode.Date,'gudang.t_item_request',)(;
+//  FMainMenu.getNourutBlnPrshthn_kode(DtPeriode.Date,'gudang.t_item_request',)(;
 end;
 
 procedure TFNew_BonPermtBarang.DBGridEh1Columns0EditButtons0Click(

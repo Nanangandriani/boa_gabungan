@@ -25,8 +25,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 599
-    ExplicitWidth = 1037
+    ExplicitTop = 607
+    ExplicitWidth = 1039
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -96,8 +96,8 @@ object FMainMenu: TFMainMenu
     Align = alClient
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 1037
-    ExplicitHeight = 473
+    ExplicitWidth = 1039
+    ExplicitHeight = 481
     BarSize = (
       303
       0
@@ -124,7 +124,7 @@ object FMainMenu: TFMainMenu
       HeaderFont.Name = 'Segoe UI'
       HeaderFont.Style = []
       TabOrder = 0
-      ExplicitHeight = 473
+      ExplicitHeight = 481
     end
     object TreeView1: TRzTreeView
       Left = 0
@@ -148,14 +148,14 @@ object FMainMenu: TFMainMenu
       TabIndex = 0
       TabOrder = 0
       OnClose = PageControl1Close
-      ExplicitWidth = 727
-      ExplicitHeight = 473
+      ExplicitWidth = 729
+      ExplicitHeight = 481
       FixedDimension = 21
       object TabForm: TRzTabSheet
         Color = 15987699
         Caption = 'Dashboard'
-        ExplicitWidth = 723
-        ExplicitHeight = 448
+        ExplicitWidth = 725
+        ExplicitHeight = 456
         object PanelParent: TPanel
           Left = 0
           Top = 0
@@ -163,8 +163,8 @@ object FMainMenu: TFMainMenu
           Height = 457
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 723
-          ExplicitHeight = 448
+          ExplicitWidth = 725
+          ExplicitHeight = 456
           object EdgeBrowser1: TEdgeBrowser
             Left = 1
             Top = 1
@@ -173,8 +173,8 @@ object FMainMenu: TFMainMenu
             Align = alClient
             TabOrder = 0
             UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-            ExplicitWidth = 721
-            ExplicitHeight = 446
+            ExplicitWidth = 723
+            ExplicitHeight = 454
           end
           object WebBrowser1: TWebBrowser
             Left = 1
@@ -183,10 +183,10 @@ object FMainMenu: TFMainMenu
             Height = 455
             Align = alClient
             TabOrder = 1
-            ExplicitWidth = 721
-            ExplicitHeight = 446
+            ExplicitWidth = 723
+            ExplicitHeight = 454
             ControlData = {
-              4C0000001C3C00009F2500000000000000000000000000000000000000000000
+              4C000000234B0000072F00000000000000000000000000000000000000000000
               000000004C000000000000000000000001000000E0D057007335CF11AE690800
               2B2E126208000000000000004C0000000114020000000000C000000000000046
               8000000000000000000000000000000000000000000000000000000000000000

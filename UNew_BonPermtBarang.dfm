@@ -70,7 +70,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 68
-    Width = 673
+    Width = 669
     Height = 251
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
@@ -289,8 +289,8 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
     end
   end
   object EdStatus: TEdit
-    Left = 501
-    Top = 8
+    Left = 421
+    Top = 14
     Width = 106
     Height = 21
     TabOrder = 4
@@ -298,8 +298,8 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
     Visible = False
   end
   object Edno_urut: TEdit
-    Left = 501
-    Top = 35
+    Left = 421
+    Top = 41
     Width = 121
     Height = 21
     TabOrder = 5
