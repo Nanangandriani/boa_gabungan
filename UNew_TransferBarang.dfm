@@ -402,11 +402,19 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Edit1: TEdit
     Left = 24
-    Top = 144
+    Top = 136
     Width = 121
     Height = 21
     TabOrder = 9
     Text = 'Edit1'
+  end
+  object Edit2: TEdit
+    Left = 24
+    Top = 163
+    Width = 121
+    Height = 21
+    TabOrder = 10
+    Text = 'Edit2'
   end
   object Memdetail: TMemTableEh
     Active = True

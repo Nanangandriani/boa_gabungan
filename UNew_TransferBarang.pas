@@ -40,6 +40,7 @@ type
     RzComboBox1: TRzComboBox;
     BitBtn1: TBitBtn;
     Edit1: TEdit;
+    Edit2: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -412,6 +413,7 @@ begin
   idmenu:='1';
   strday2:=DtTransfer.Date;
   Edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer','kk');
+  Edit2.Text:=order_no;
 end;
 
 procedure TFNew_TransferBarang.BSimpanClick(Sender: TObject);

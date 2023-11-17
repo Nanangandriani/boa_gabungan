@@ -6,7 +6,7 @@ Uses SysUtils, frxClass,uni;
   function convbulan(nobulan:Integer):string;
   function GenerateNumber(startingNumber, digits: Integer): string;
   function getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
-  var strday,strmonth,stryear,notif,notrans,idmenu:string;
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no:string;
       strday2:TDate;
 
 implementation
@@ -139,6 +139,7 @@ begin
                       'ORDER BY a.trans_no,a.urutan';
             Open;
        end;
+       order_no:=GenerateNumber(nourut,(dm.Qtemp2['digit_counter']));
        notif:='';
        dm.qtemp.First;
        while not dm.qtemp.eof do
