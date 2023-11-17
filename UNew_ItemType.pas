@@ -5,7 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls,
-  RzBtnEdt, Vcl.Mask, RzEdit;
+  RzBtnEdt, Vcl.Mask, RzEdit, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
+  DynVarsEh, Data.DB, MemDS, DBAccess, Uni, EhLibVCL, GridsEh, DBAxisGridsEh,
+  DBGridEh;
 
 type
   TFNew_ItemType = class(TForm)
@@ -14,22 +16,24 @@ type
     BSimpan: TRzBitBtn;
     EdType: TEdit;
     Label2: TLabel;
-    BCari: TRzBitBtn;
-    GroupBox1: TGroupBox;
+    BRefresh: TRzBitBtn;
     Label19: TLabel;
     Edkd_akun: TRzEdit;
     EdNm_akun: TRzButtonEdit;
-    Label1: TLabel;
-    Edkd_akun2: TRzEdit;
-    Ednm_akun2: TRzButtonEdit;
+    DBGridEh7: TDBGridEh;
+    QType: TUniQuery;
+    DsType: TDataSource;
+    Btambah: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure BCariClick(Sender: TObject);
+    procedure BRefreshClick(Sender: TObject);
     procedure EdNm_akunButtonClick(Sender: TObject);
     procedure Ednm_akun2ButtonClick(Sender: TObject);
+    procedure BtambahClick(Sender: TObject);
+    procedure DBGridEh7DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,7 +62,7 @@ end;
 
 procedure TFNew_ItemType.BBatalClick(Sender: TObject);
 begin
-if statustr=3 then
+{if statustr=3 then
 begin
   close;
 end;
@@ -67,12 +71,17 @@ begin
   close;
   FItem_Type.Show;
   FItem_Type.ActROExecute(sender);
-end;
+end;    }
+close;
 end;
 
-procedure TFNew_ItemType.BCariClick(Sender: TObject);
+procedure TFNew_ItemType.BRefreshClick(Sender: TObject);
 begin
-  FItem_Type.Show;
+//  FItem_Type.Show;
+  DBGridEh7.StartLoadingStatus();
+    QType.Close;
+    QType.Open;
+  DBGridEh7.FinishLoadingStatus();
 end;
 
 procedure TFNew_ItemType.BSimpanClick(Sender: TObject);
@@ -108,9 +117,28 @@ begin
                   ExecSQL;
       end;
     end;
-    BBatalClick(sender);
+   // BBatalClick(sender);
+    BRefreshClick(sender);
     ShowMessage('Data Berhasil di Simpan');
   end;
+end;
+
+procedure TFNew_ItemType.BtambahClick(Sender: TObject);
+begin
+statustr:=0;
+EdType.Clear;
+Edkd_akun.Clear;
+EdNm_akun.Clear;
+EdType.SetFocus;
+end;
+
+procedure TFNew_ItemType.DBGridEh7DblClick(Sender: TObject);
+begin
+  statustr:=1;
+  id:=QType['id'];
+  EdType.Text:=QType['type'];
+  Edkd_akun.Text:=QType['account_code'];
+  EdNm_akun.Text:=QType['account_name'];
 end;
 
 procedure TFNew_ItemType.EdNm_akunButtonClick(Sender: TObject);

@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, RzButton, Vcl.ExtCtrls, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, Vcl.StdCtrls, RzCmboBx, RzEdit, Vcl.Mask,
-  MemTableDataEh, Data.DB, MemTableEh;
+  MemTableDataEh, Data.DB, MemTableEh, Vcl.Buttons,uni;
 
 type
   TFNew_TransferBarang = class(TForm)
@@ -38,6 +38,8 @@ type
     Label13: TLabel;
     Label14: TLabel;
     RzComboBox1: TRzComboBox;
+    BitBtn1: TBitBtn;
+    Edit1: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -49,6 +51,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure CbDariSelect(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,19 +61,21 @@ type
     Procedure Load;
     Procedure Autonumber;
     Procedure Clear;
+    function getNourutBlnPrshthn_kode2(tgl:TDateTime;Tablename,kode:string):string;
   end;
 
 //var
 Function  FNew_TransferBarang: TFNew_TransferBarang;
 var
   status:integer;
-  th,kd_gdngdari,kd_gdngke,bln,tglno,nourut:string;
+  th,kd_gdngdari,kd_gdngke,bln,tglno,nourut,text1:string;
 
 implementation
 
 {$R *.dfm}
 
-uses UTransfer_Barang, UItem_TransferBarang, UMainmenu, UDataModule;
+uses UTransfer_Barang, UItem_TransferBarang, UMainmenu, UDataModule,
+  UMy_Function;
 var
   realfnew_transfergdng : TFNew_TransferBarang;
 // implementasi function
@@ -94,6 +99,98 @@ function IntToRoman(Value : Longint):String;  // fungsi
       Value := Value - Arabics[i];
       Result:= Result + Romans[i];
     end;
+end;
+
+function TFNew_TransferBarang.getNourutBlnPrshthn_kode2(tgl:TDateTime;Tablename,kode:string):string;
+var
+  year, month, day: word;
+  strsepr: string[1];
+  strtemp,strbukti, strtgl,strbulan,strtahun,conv_romawi: string;
+  q:TUniQuery;
+  i,n,nourut:Integer;
+  query,query2,query3:string;
+begin
+   decodedate(tgl,Year,month,day);
+   strsepr:='/';
+   strbulan:=inttostr(month);
+   strtahun:=inttostr(year);
+
+   strtemp:=inttostr(month);
+{  strbukti:='Select max(order_no) urut from '+Tablename+' where substring(voucher,1,2)='+QuotedStr(kode);//+// ' and ';
+   strbukti:=strbukti+' AND BULAN='+ quotedstr(strbulan)+' AND TAHUN='+quotedstr(strtahun);  }
+   strbukti:='Select max(order_no) urut from '+Tablename+' where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+//   q:=TUniQuery.Create(self);
+ // with q do    begin
+ //   q.Connection:=dm.Koneksi;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      SQL.Add(strbukti);
+      Open;
+    end;
+{
+  with dm.Qtemp do
+  begin
+  ShowMessage('0');
+  end;           }
+
+       if (dm.Qtemp.RecordCount=0) then //or (dm.Qtemp1.FieldByName('urut').value='') then
+     //if  (dm.Qtemp1['urut']='') then
+        nourut :=1
+     else
+        //if dm.Qtemp1.RecordCount<>0 then
+      //  showmessage(inttostr(dm.Qtemp1.FieldByName('urut').AsInteger));
+        nourut :=dm.Qtemp.fields[0].AsInteger+ 1;
+      //        Edurut.Text:=inttostr(nourut);
+           // ShowMessage('0');
+     query2:='SELECT digit_counter from t_numb where numb_type='+QuotedStr(idmenu);
+     with dm.Qtemp2 do
+     begin
+          close;
+          sql.Clear;
+          sql.add(query2);
+          open;
+     end;
+     query3:='SELECT reset_type from t_numb where numb_type='+QuotedStr(idmenu);
+     with dm.Qtemp3 do
+     begin
+          close;
+          sql.Clear;
+          sql.add(query3);
+          open;
+     end;
+     with dm.Qtemp do
+     begin
+          close;
+          sql.Clear;
+          sql.text:='SELECT a.*,b.description,b.note,c.digit_counter,reset_type, '+
+                    'case when b.id=1 then(SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''yyyy'') tahun) '+
+                    'when b.id=2 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''yy'') tahun) '+
+                    'when b.id=3 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''mm'') bulan) '+
+                    'when b.id=4 then (SELECT trim(TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''RM'')) bulan) '+
+                    'when b.id=5 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''dd'') hari)  '+
+                    //'when b.id=6 then '+Quotedstr(Fnew_Penomoran.GenerateCustomSerialNumber(dm.Qtemp1['urut'],(dm.Qtemp2['digit_counter'])))+' else a.param_name end param, '+
+                    'when b.id=6 then '+Quotedstr(GenerateNumber(nourut,(dm.Qtemp2['digit_counter'])))+' else a.param_name end param, '+
+                    'c.trans_type,d.note as reset FROM t_numb_det a '+
+                    'left join t_numb_component b on a.id_param=b.id '+
+                    'inner join t_numb c on a.trans_no=c.trans_no    '+
+                    'left join t_numb_type d on c.reset_type=d.id    '+
+                    'where c.numb_type='+QuotedStr(idmenu)+'     '+
+                    'ORDER BY a.trans_no,a.urutan';
+          Open;
+     end;
+     //Edno.Text:=dm.qtemp.FieldByName('param').AsString;
+    // ShowMessage('1');
+     text1:='';
+     dm.qtemp.First;
+     while not dm.qtemp.eof do
+     begin
+        text1:=text1+dm.qtemp.FieldByName('param').AsString;
+        dm.qtemp.next;
+     end;
+     Notrans:=text1;
+//     ShowMessage(''+text1+'');
 end;
 
 Procedure TFNew_TransferBarang.Autonumber;
@@ -124,7 +221,7 @@ with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select max(nourut)as urut from gudang.t_transfer_antar_gudang where tahun='+QuotedStr(th)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tglno);
+    sql.Text:='select max(nourut)as urut from warehouse.t_transfer_antar_gudang where tahun='+QuotedStr(th)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tglno);
     open;
   end;
    if dm.Qtemp['urut']= '' then
@@ -310,6 +407,13 @@ begin
   FTransfer_Barang.dxbarRefreshClick(sender);
 end;
 
+procedure TFNew_TransferBarang.BitBtn1Click(Sender: TObject);
+begin
+  idmenu:='1';
+  strday2:=DtTransfer.Date;
+  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer','kk');
+end;
+
 procedure TFNew_TransferBarang.BSimpanClick(Sender: TObject);
 begin
   if not dm.Koneksi.InTransaction then
@@ -317,6 +421,7 @@ begin
   try
     if status=0 then
     begin
+      edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer','');
       Simpan;
       Dm.Koneksi.Commit;
     end;
@@ -426,7 +531,7 @@ end;
 procedure TFNew_TransferBarang.FormShow(Sender: TObject);
 begin
 //  Self.Load;
-  CbKategori.Clear;
+{  CbKategori.Clear;
   with dm.Qtemp do
   begin
     Close;
@@ -439,7 +544,12 @@ begin
   begin
     CbKategori.Items.Add(Dm.Qtemp['category']);
     Dm.Qtemp.Next;
-  end;
+  end;    }
+  DtTransfer.Date:=now;
 end;
 
 end.
+
+
+
+

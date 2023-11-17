@@ -64,7 +64,11 @@ uses
   Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
   Ubrowse_faktur_pajak in 'Ubrowse_faktur_pajak.pas' {Fbrowse_faktur_pajak},
   UListSPmuat in 'UListSPmuat.pas' {Flist_sp_muat},
-  UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat};
+  UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat},
+  UDaftarKlasifikasi in 'UDaftarKlasifikasi.pas' {FDaftarKlasifikasi},
+  USetMasterPelanggan in 'USetMasterPelanggan.pas' {FSetMasterPelanggan},
+  USetMasterWilayah in 'USetMasterWilayah.pas' {FSetMasterWilayah},
+  UMy_Function in 'UMy_Function.pas';
 
 {$R *.res}
 
@@ -90,7 +94,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListBank, FListBank);
   Application.CreateForm(TFNewBank, FNewBank);
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
-  Application.CreateForm(TFCari_DaftarPerk, FCari_DaftarPerk);
+  //  Application.CreateForm(TFCari_DaftarPerk, FCari_DaftarPerk);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
@@ -109,6 +113,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_KelompokBarang, FNew_KelompokBarang);
   Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);
   Application.CreateForm(TFbrowse_faktur_pajak, Fbrowse_faktur_pajak);
+  Application.CreateForm(TFDaftarKlasifikasi, FDaftarKlasifikasi);
+  Application.CreateForm(TFSetMasterPelanggan, FSetMasterPelanggan);
+  Application.CreateForm(TFSetMasterWilayah, FSetMasterWilayah);
   //  Application.CreateForm(TFItem_TransferBarang, FItem_TransferBarang);
   FHomeSreen.Hide;
   FHomeSreen.Free;

@@ -17,6 +17,9 @@ type
     QDaftar_Perk: TUniQuery;
     DataSource1: TDataSource;
     procedure DBGridDaftar_PerkDblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -25,14 +28,21 @@ type
      vpanggil,nm_jenis:string;
   end;
 
-var
-  FCari_DaftarPerk: TFCari_DaftarPerk;
+Function FCari_DaftarPerk: TFCari_DaftarPerk;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang;
+
+
+var RealFCari_DaftarPerk: TFCari_DaftarPerk;
+function FCari_DaftarPerk: TFCari_DaftarPerk;
+begin
+  if RealFCari_DaftarPerk <> nil then FCari_DaftarPerk:= RealFCari_DaftarPerk
+  else  Application.CreateForm(TFCari_DaftarPerk, Result);
+end;
 
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
 begin
@@ -51,8 +61,8 @@ begin
     end;
     if (vpanggil = 'itemtype2')then
     begin
-      FNew_Itemtype.Edkd_akun2.Text:=QDaftar_Perk.fieldbyname('code').AsString;
-      FNew_Itemtype.EdNm_akun2.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+   //   FNew_Itemtype.Edkd_akun2.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+   //   FNew_Itemtype.EdNm_akun2.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
     if (vpanggil = 'barang')then
@@ -92,6 +102,22 @@ begin
       QDaftar_Perk.Close;
     end;
     close;
+end;
+
+procedure TFCari_DaftarPerk.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    Action:=cafree;
+end;
+
+procedure TFCari_DaftarPerk.FormCreate(Sender: TObject);
+begin
+  RealFCari_DaftarPerk:=self;
+end;
+
+procedure TFCari_DaftarPerk.FormDestroy(Sender: TObject);
+begin
+  RealFCari_DaftarPerk:=nil;
 end;
 
 end.

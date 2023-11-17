@@ -326,6 +326,15 @@ object FNew_TransferBarang: TFNew_TransferBarang
       NumGlyphs = 2
       ExplicitLeft = 583
     end
+    object BitBtn1: TBitBtn
+      Left = 440
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn1'
+      TabOrder = 2
+      OnClick = BitBtn1Click
+    end
   end
   object Edno: TRzEdit
     Left = 122
@@ -390,6 +399,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Items.Strings = (
       'Otomatis'
       'Manual')
+  end
+  object Edit1: TEdit
+    Left = 24
+    Top = 144
+    Width = 121
+    Height = 21
+    TabOrder = 9
+    Text = 'Edit1'
   end
   object Memdetail: TMemTableEh
     Active = True

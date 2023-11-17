@@ -2,8 +2,8 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
   Left = 0
   Top = 0
   Caption = 'Daftar Perkiraan'
-  ClientHeight = 417
-  ClientWidth = 643
+  ClientHeight = 416
+  ClientWidth = 639
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,9 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object Label1: TLabel
     Left = 28
@@ -37,8 +40,8 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
   object DBGridDaftar_Perk: TDBGridEh
     Left = 0
     Top = 0
-    Width = 643
-    Height = 417
+    Width = 639
+    Height = 416
     Align = alClient
     DataSource = DataSource1
     DynProps = <>

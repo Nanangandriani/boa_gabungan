@@ -20,8 +20,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
     ActivePage = TabMasterKlasifikasi
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 855
-    ExplicitHeight = 556
+    ExplicitWidth = 959
+    ExplicitHeight = 726
     object TabMasterKlasifikasi: TTabSheet
       Caption = 'Master Klasifikasi'
       object Panel3: TPanel
@@ -31,7 +31,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 193
         Align = alTop
         TabOrder = 0
-        ExplicitTop = -5
+        ExplicitWidth = 951
         object Label9: TLabel
           Left = 117
           Top = 86
@@ -338,8 +338,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alClient
         Caption = 'Daftar Klasifikasi'
         TabOrder = 1
-        ExplicitTop = 456
-        ExplicitHeight = 241
+        ExplicitWidth = 951
+        ExplicitHeight = 471
         object DBGridEh2: TDBGridEh
           Left = 2
           Top = 17
@@ -360,8 +360,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 32
         Align = alTop
         TabOrder = 2
-        ExplicitTop = 113
-        ExplicitWidth = 764
+        ExplicitWidth = 951
         object RzBitBtn1: TRzBitBtn
           Left = 879
           Top = 1
@@ -421,6 +420,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 875
         end
         object RzBitBtn2: TRzBitBtn
           Left = 729
@@ -481,6 +481,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 725
         end
         object RzBitBtn3: TRzBitBtn
           Left = 804
@@ -541,6 +542,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 800
         end
       end
     end
@@ -554,7 +556,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 177
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 847
         object Label6: TLabel
           Left = 117
           Top = 49
@@ -684,8 +685,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 158
-        ExplicitWidth = 794
         object BBatal: TRzBitBtn
           Left = 698
           Top = 1
@@ -746,7 +745,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 771
         end
         object BSave: TRzBitBtn
           Left = 1
@@ -808,7 +806,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitHeight = 32
         end
         object BRefresh: TRzBitBtn
           Left = 257
@@ -870,8 +867,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 544
-          ExplicitWidth = 227
         end
       end
       object GroupBox1: TGroupBox
@@ -882,7 +877,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alTop
         Caption = 'Daftar Klasifikasi'
         TabOrder = 2
-        ExplicitWidth = 941
         object DBGridCustomer: TDBGridEh
           Left = 2
           Top = 17
@@ -904,7 +898,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alTop
         Caption = 'Daftar Master Klasifikasi'
         TabOrder = 3
-        ExplicitTop = 689
         object DBGridEh1: TDBGridEh
           Left = 2
           Top = 17

@@ -25,38 +25,10 @@ uses
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
   dxRibbon, dxBar, cxClasses, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, EhLibVCL, GridsEh, DBAxisGridsEh,
-  DBGridEh, Vcl.StdCtrls;
+  DBGridEh, Vcl.StdCtrls, RzBtnEdt, Vcl.Mask, RzEdit, RzButton, Vcl.ExtCtrls;
 
 type
   TFItem_Type = class(TForm)
-    dxBarManager1: TdxBarManager;
-    dxBarMb1: TdxBar;
-    dxBarMb2: TdxBar;
-    dxBarMB3: TdxBar;
-    dxBarManager1Bar1: TdxBar;
-    dxbarmb4: TdxBar;
-    dxBupdate: TdxBarButton;
-    dxbarRefresh: TdxBarButton;
-    dxBdelete: TdxBarButton;
-    dxBarKimiaUpdate: TdxBarButton;
-    dxBbaru: TdxBarLargeButton;
-    dxBarKimiaBaru: TdxBarLargeButton;
-    dxBarKimiaRefresh: TdxBarButton;
-    dxBarKimiaDelete: TdxBarButton;
-    BarKmsBaru: TdxBarLargeButton;
-    BarKmsUpdate: TdxBarButton;
-    BarKmsRefresh: TdxBarButton;
-    BarKmsDelete: TdxBarButton;
-    dxBarButton1: TdxBarButton;
-    dxBarPenolong: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarLargeButton2: TdxBarLargeButton;
-    dxBarButton4: TdxBarButton;
-    dxBarlain: TdxBarButton;
-    dxBarButton6: TdxBarButton;
-    dxRibbon1: TdxRibbon;
-    dxRibbon1Tab1: TdxRibbonTab;
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -69,6 +41,15 @@ type
     DBGridEh7: TDBGridEh;
     QType: TUniQuery;
     DsType: TDataSource;
+    Label2: TLabel;
+    Panel1: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    BCari: TRzBitBtn;
+    EdType: TEdit;
+    Label19: TLabel;
+    Edkd_akun: TRzEdit;
+    EdNm_akun: TRzButtonEdit;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
@@ -77,10 +58,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
+    procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    statustr:integer;
+    id:string;
   end;
 
 function FItem_Type: TFItem_Type;
@@ -106,11 +90,45 @@ end;
 
 procedure TFItem_Type.ActBaruExecute(Sender: TObject);
 begin
-  with FNew_ItemType do
+{  with FNew_ItemType do
   begin
     show;
     statustr:=0;
     EdType.Clear;
+  end; }
+  if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+  if not dm.koneksi.InTransaction then
+    if statustr=0 then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Insert into t_item_type(type,created_by,account_code)values(:type,:created_by,:acc_cd)';
+                  ParamByName('type').Value:=EdType.Text;
+                  ParamByName('created_by').value:=nm;
+                  ParamByName('acc_cd').Value:=Edkd_akun.Text;
+                  Execute;
+      end;
+    end;
+    if statustr=1 then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='update t_item_type set type=:type,updated_by=:updated_by,updated_at=now(), '+
+                  'account_code=:acc_cd where "id"=:id ';
+                  ParamByName('type').Value:=EdType.Text;
+                  ParamByName('updated_by').value:=nm;
+            //      ParamByName('id').Value:=id;
+                  ParamByName('acc_cd').Value:=Edkd_akun.Text;
+                  ExecSQL;
+      end;
+    end;
+    BBatalClick(sender);
+    ShowMessage('Data Berhasil di Simpan');
   end;
 end;
 
@@ -152,6 +170,11 @@ begin
     Edkd_akun.Text:=QType['account_code'];
     EdNm_akun.Text:=QType['account_name'];
   end;
+end;
+
+procedure TFItem_Type.BBatalClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TFItem_Type.FormClose(Sender: TObject; var Action: TCloseAction);

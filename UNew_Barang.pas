@@ -70,7 +70,7 @@ type
     RzNumericEdit5: TRzNumericEdit;
     RzNumericEdit6: TRzNumericEdit;
     Label4: TLabel;
-    RzComboBox1: TRzComboBox;
+    Cbkelompok: TRzComboBox;
     SpKelompok: TSpeedButton;
     Edkd_display: TEdit;
     StatusBar1: TStatusBar;
@@ -400,7 +400,7 @@ end;
 procedure TFNew_Barang.EdCategorySelect(Sender: TObject);
 var i:integer;
 begin
-  with dm.Qtemp do
+{  with dm.Qtemp do
   begin
     close;
     sql.Clear;
@@ -438,7 +438,21 @@ begin
       end;
     end;
     Edno.Text:=no_urut;
-    EdKd.Text:=kode + No_urut;
+    EdKd.Text:=kode + No_urut;     }
+  Cbkelompok.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.* from t_item_category a inner join t_item_group b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+'order by group asc';
+    ExecSQL;
+  end;
+  Dm.Qtemp.First;
+  while not Dm.Qtemp.Eof do
+  begin
+    Cbkelompok.Items.Add(Dm.Qtemp['group']);
+    Dm.Qtemp.Next;
+  end;
 end;
 
 procedure TFNew_Barang.EdjenisSelect(Sender: TObject);

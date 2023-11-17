@@ -280,17 +280,15 @@ object FNew_Barang: TFNew_Barang
     Width = 561
     Height = 372
     Hint = ''
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 1
     ExplicitWidth = 557
     ExplicitHeight = 371
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
       Caption = 'Umum'
-      ExplicitWidth = 553
-      ExplicitHeight = 348
       object Label16: TLabel
         Left = 32
         Top = 172
@@ -433,10 +431,6 @@ object FNew_Barang: TFNew_Barang
         CharCase = ecUpperCase
         TabOrder = 3
         OnSelect = EdjenisSelect
-        Items.Strings = (
-          'PRODUKSI'
-          'NON PRODUKSI'
-          'AKTIVA')
       end
       object EdMerk: TRzComboBox
         Left = 136
@@ -458,10 +452,6 @@ object FNew_Barang: TFNew_Barang
         CharCase = ecUpperCase
         TabOrder = 5
         OnSelect = EdCategorySelect
-        Items.Strings = (
-          'BAHAN BAKU'
-          'BAHAN KEMASAN'
-          'KIMIA')
       end
       object Edno: TEdit
         Left = 432
@@ -500,7 +490,7 @@ object FNew_Barang: TFNew_Barang
         CharCase = ecUpperCase
         TabOrder = 9
       end
-      object RzComboBox1: TRzComboBox
+      object Cbkelompok: TRzComboBox
         Left = 136
         Top = 82
         Width = 145
@@ -508,10 +498,6 @@ object FNew_Barang: TFNew_Barang
         CharCase = ecUpperCase
         TabOrder = 10
         OnSelect = EdCategorySelect
-        Items.Strings = (
-          'BAHAN BAKU'
-          'BAHAN KEMASAN'
-          'KIMIA')
       end
       object Edkd_display: TEdit
         Left = 136
@@ -527,8 +513,6 @@ object FNew_Barang: TFNew_Barang
         Width = 557
         Height = 19
         Panels = <>
-        ExplicitTop = 329
-        ExplicitWidth = 553
       end
     end
     object TabSheet2: TRzTabSheet
@@ -612,6 +596,8 @@ object FNew_Barang: TFNew_Barang
     end
     object TabSheet3: TRzTabSheet
       Caption = 'Akun'
+      ExplicitWidth = 553
+      ExplicitHeight = 348
       object Label19: TLabel
         Left = 27
         Top = 28
