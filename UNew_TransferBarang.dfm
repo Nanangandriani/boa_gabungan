@@ -200,8 +200,8 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 423
-    ExplicitWidth = 734
+    ExplicitTop = 415
+    ExplicitWidth = 732
     object BBatal: TRzBitBtn
       Left = 662
       Top = 1
@@ -262,7 +262,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 658
+      ExplicitLeft = 656
     end
     object BSimpan: TRzBitBtn
       Left = 587
@@ -324,11 +324,11 @@ object FNew_TransferBarang: TFNew_TransferBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 583
+      ExplicitLeft = 581
     end
     object BitBtn1: TBitBtn
       Left = 440
-      Top = 6
+      Top = 3
       Width = 75
       Height = 25
       Caption = 'BitBtn1'

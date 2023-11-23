@@ -11,7 +11,7 @@ uses
   Vcl.Mask, RzBtnEdt;
 
 type
-  TFnew_spb = class(TForm)
+  TFNew_SPB = class(TForm)
     Ednm_supp: TRzButtonEdit;
     DsDetail: TDataSource;
     Memdetail: TMemTableEh;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  Fnew_spb: TFnew_spb;
+  FNew_SPB: TFNew_SPB;
 
 implementation
 

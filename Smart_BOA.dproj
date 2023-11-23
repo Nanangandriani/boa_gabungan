@@ -341,10 +341,6 @@
             <Form>Flist_sp_muat</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UNewSPMuat.pas">
-            <Form>Finput_sp_muat</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UDaftarKlasifikasi.pas">
             <Form>FDaftarKlasifikasi</Form>
             <FormType>dfm</FormType>
@@ -357,7 +353,54 @@
             <Form>FSetMasterWilayah</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UMy_Function.pas"/>
+        <DCCReference Include="UPO.pas">
+            <Form>FPO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_PO.pas">
+            <Form>FNew_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_Supplier_SPB.pas">
+            <Form>FSearch_Supplier_SPB</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UKontrakKerjasama.pas">
+            <Form>FKontrakkerjasama</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_KontrakKerjasama.pas">
+            <Form>FNewKontrak_ks</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPembelian.pas">
+            <Form>FPembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Pembelian.pas">
+            <Form>FNew_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPot_Pembelian.pas">
+            <Form>FPot_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Pot_Pembelian.pas">
+            <Form>FNew_Pot_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USPB.pas">
+            <Form>FSPB</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNewSPMuat.pas">
+            <Form>Finput_sp_muat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Additional.pas">
+            <Form>FNew_Additional</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

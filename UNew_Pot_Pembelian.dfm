@@ -1,9 +1,10 @@
-object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
+object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
   Left = 0
   Top = 0
-  Caption = 'List Supplier'
-  ClientHeight = 315
-  ClientWidth = 380
+  BorderStyle = bsDialog
+  Caption = 'New Potongan Pembelian'
+  ClientHeight = 318
+  ClientWidth = 569
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,59 +12,233 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
-  OnDblClick = FormDblClick
-  OnShow = FormShow
   TextHeight = 15
-  object DBGridEh1: TDBGridEh
-    Left = 0
-    Top = 0
-    Width = 380
-    Height = 283
-    Align = alClient
-    DataSource = DsSupplier
-    DynProps = <>
-    SearchPanel.Enabled = True
-    TabOrder = 0
-    OnDblClick = DBGridEh1DblClick
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_code'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Kode Supplier'
-        Width = 88
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_name'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Nama Supplier'
-        Width = 247
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-    end
+  object Label1: TLabel
+    Left = 24
+    Top = 24
+    Width = 46
+    Height = 15
+    Caption = 'No.Trans'
   end
-  object Panel1: TPanel
-    Left = 0
-    Top = 283
-    Width = 380
-    Height = 32
-    Align = alBottom
+  object Label2: TLabel
+    Left = 328
+    Top = 24
+    Width = 41
+    Height = 15
+    Caption = 'Tanggal'
+  end
+  object Label3: TLabel
+    Left = 24
+    Top = 58
+    Width = 43
+    Height = 15
+    Caption = 'Supplier'
+  end
+  object Label4: TLabel
+    Left = 24
+    Top = 92
+    Width = 39
+    Height = 15
+    Caption = 'No.LPB'
+  end
+  object Label5: TLabel
+    Left = 24
+    Top = 127
+    Width = 52
+    Height = 15
+    Caption = 'No.Faktur'
+  end
+  object Label6: TLabel
+    Left = 328
+    Top = 127
+    Width = 41
+    Height = 15
+    Caption = 'Tanggal'
+  end
+  object Label7: TLabel
+    Left = 328
+    Top = 92
+    Width = 23
+    Height = 15
+    Caption = 'Kurs'
+  end
+  object Label8: TLabel
+    Left = 24
+    Top = 164
+    Width = 32
+    Height = 15
+    Caption = 'Harga'
+  end
+  object Label9: TLabel
+    Left = 24
+    Top = 199
+    Width = 23
+    Height = 15
+    Caption = 'PPN'
+  end
+  object Label10: TLabel
+    Left = 24
+    Top = 231
+    Width = 60
+    Height = 15
+    Caption = 'Grand Total'
+  end
+  object Label11: TLabel
+    Left = 265
+    Top = 164
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Label12: TLabel
+    Left = 143
+    Top = 199
+    Width = 10
+    Height = 15
+    Caption = '%'
+  end
+  object Label13: TLabel
+    Left = 543
+    Top = 164
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Label14: TLabel
+    Left = 543
+    Top = 199
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Label15: TLabel
+    Left = 543
+    Top = 231
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Edit1: TEdit
+    Left = 96
+    Top = 21
+    Width = 201
+    Height = 23
+    TabOrder = 0
+  end
+  object DateTimePicker1: TDateTimePicker
+    Left = 384
+    Top = 21
+    Width = 153
+    Height = 23
+    Date = 45232.000000000000000000
+    Time = 0.637056678242515800
     TabOrder = 1
-    Visible = False
-    ExplicitTop = 274
-    ExplicitWidth = 374
-    object BBatal: TRzBitBtn
-      Left = 304
-      Top = 1
-      Height = 30
-      Align = alRight
+  end
+  object Edit2: TEdit
+    Left = 96
+    Top = 55
+    Width = 89
+    Height = 23
+    TabOrder = 2
+  end
+  object ButtonedEdit1: TButtonedEdit
+    Left = 200
+    Top = 55
+    Width = 337
+    Height = 23
+    TabOrder = 3
+  end
+  object ComboBox1: TComboBox
+    Left = 96
+    Top = 89
+    Width = 201
+    Height = 23
+    TabOrder = 4
+  end
+  object ComboBox2: TComboBox
+    Left = 96
+    Top = 124
+    Width = 201
+    Height = 23
+    TabOrder = 5
+  end
+  object Edit3: TEdit
+    Left = 384
+    Top = 89
+    Width = 153
+    Height = 23
+    TabOrder = 6
+  end
+  object Edit4: TEdit
+    Left = 384
+    Top = 124
+    Width = 153
+    Height = 23
+    TabOrder = 7
+  end
+  object Edit5: TEdit
+    Left = 96
+    Top = 161
+    Width = 153
+    Height = 23
+    TabOrder = 8
+  end
+  object Edit6: TEdit
+    Left = 96
+    Top = 196
+    Width = 41
+    Height = 23
+    TabOrder = 9
+    Text = '11'
+  end
+  object Edit7: TEdit
+    Left = 168
+    Top = 196
+    Width = 129
+    Height = 23
+    TabOrder = 10
+  end
+  object Edit8: TEdit
+    Left = 328
+    Top = 161
+    Width = 209
+    Height = 23
+    TabOrder = 11
+  end
+  object Edit9: TEdit
+    Left = 328
+    Top = 196
+    Width = 209
+    Height = 23
+    TabOrder = 12
+  end
+  object Edit10: TEdit
+    Left = 328
+    Top = 228
+    Width = 209
+    Height = 23
+    TabOrder = 13
+  end
+  object Edit11: TEdit
+    Left = 96
+    Top = 228
+    Width = 201
+    Height = 23
+    TabOrder = 14
+  end
+  object RzPanel1: TRzPanel
+    Left = 0
+    Top = 277
+    Width = 569
+    Height = 41
+    Align = alBottom
+    Color = 15987699
+    TabOrder = 15
+    ExplicitTop = 268
+    ExplicitWidth = 561
+    object RzBitBtn1: TRzBitBtn
+      Left = 485
+      Top = 8
       Caption = 'Batal'
       TabOrder = 0
       Glyph.Data = {
@@ -118,13 +293,10 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 298
     end
-    object BSimpan: TRzBitBtn
-      Left = 229
-      Top = 1
-      Height = 30
-      Align = alRight
+    object RzBitBtn2: TRzBitBtn
+      Left = 397
+      Top = 8
       Caption = 'Simpan'
       TabOrder = 1
       Glyph.Data = {
@@ -179,21 +351,6 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 223
     end
-  end
-  object QSupplier: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'SELECT * from t_supplier where deleted_at is null order by suppl' +
-        'ier_code asc')
-    Left = 248
-    Top = 72
-  end
-  object DsSupplier: TDataSource
-    DataSet = QSupplier
-    Left = 336
-    Top = 80
   end
 end

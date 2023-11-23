@@ -1,13 +1,10 @@
-unit UPenomoran;
+unit UReturnPembelian;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, RzPanel,
-  Vcl.StdCtrls, RzCmboBx, Vcl.Mask, RzEdit, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxSkinsCore, dxSkinBasic, dxSkinBlack,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, dxSkinsCore, dxSkinBasic, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -25,35 +22,25 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
-  cxClasses, dxRibbon, dxBar, MemDS, DBAccess, Uni, MemTableDataEh, DataDriverEh,
-  MemTableEh, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
-  Vcl.ActnMan;
+  DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses;
 
 type
-  TFPenomoran = class(TForm)
+  TFReturnPembelian = class(TForm)
     dxBarManager1: TdxBarManager;
-    dxRibbon1Tab1: TdxRibbonTab;
-    dxRibbon1: TdxRibbon;
     dxBarManager1Bar1: TdxBar;
+    dxBarButton2: TdxBarButton;
     dxBarButton1: TdxBarButton;
     dxBarButton3: TdxBarButton;
     dxBarButton4: TdxBarButton;
-    dxBarButton2: TdxBarButton;
     dxBarButton5: TdxBarButton;
     dxBarButton6: TdxBarButton;
     dxBarButton7: TdxBarButton;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarButton8: TdxBarButton;
-    dxBarButton9: TdxBarButton;
-    dxBarButton10: TdxBarButton;
-    QDetNo: TUniQuery;
-    DsDetNo: TDataSource;
-    DBGridNo: TDBGridEh;
-    DBGridNodet: TDBGridEh;
-    QNo: TUniQuery;
-    DSDNo: TDataSetDriverEh;
-    MemNo: TMemTableEh;
-    DSNo: TDataSource;
+    dxBarBaru: TdxBarLargeButton;
+    dxBarUpdate: TdxBarButton;
+    dxbarRefresh: TdxBarButton;
+    dxBarDelete: TdxBarButton;
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -63,9 +50,11 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
-    procedure dxBarButton1Click(Sender: TObject);
-    procedure dxBarLargeButton1Click(Sender: TObject);
-    procedure ActRoExecute(Sender: TObject);
+    dxRibbon1: TdxRibbon;
+    dxRibbon1Tab1: TdxRibbonTab;
+    DBGridReturnPemb: TDBGridEh;
+    DBGridEh1: TDBGridEh;
+    procedure ActBaruExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,35 +62,24 @@ type
   end;
 
 var
-  FPenomoran: TFPenomoran;
+  FReturnPembelian: TFReturnPembelian;
 
 implementation
 
 {$R *.dfm}
 
-uses Unew_Penomoran, UDataModule;
+uses UNew_ReturnPembelian;
 
-procedure TFPenomoran.ActRoExecute(Sender: TObject);
+procedure TFReturnPembelian.ActBaruExecute(Sender: TObject);
 begin
-    DBGridNo.StartLoadingStatus();
-    DBGridNo.FinishLoadingStatus();
-    QNo.Close;
-    MemNo.Close;
-    QdetNo.Close;
-    if QNo.Active=False then QNo.Active:=True;
-    if MemNo.Active=False then MemNo.Active:=True;
-    if QdetNo.Active=False then QdetNo.Active:=True;
-
-end;
-
-procedure TFPenomoran.dxBarButton1Click(Sender: TObject);
-begin
-  FNew_Penomoran.ShowModal;
-end;
-
-procedure TFPenomoran.dxBarLargeButton1Click(Sender: TObject);
-begin
-   FNew_Penomoran.ShowModal;
+    with FNew_returnPemb do
+    begin
+      Show;
+      //Autonumber;
+      //Refresh;
+      //Caption:='New Retur Pembelian';
+      //status:=0;
+    end;
 end;
 
 end.

@@ -1,9 +1,10 @@
 object FNew_Penomoran: TFNew_Penomoran
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Input Penomoran'
-  ClientHeight = 268
-  ClientWidth = 562
+  ClientHeight = 332
+  ClientWidth = 510
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +17,13 @@ object FNew_Penomoran: TFNew_Penomoran
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 562
-    Height = 232
+    Width = 510
+    Height = 297
     Align = alClient
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 556
-    ExplicitHeight = 223
+    ExplicitWidth = 504
+    ExplicitHeight = 288
     object Label1: TLabel
       Left = 25
       Top = 25
@@ -46,36 +47,35 @@ object FNew_Penomoran: TFNew_Penomoran
     end
     object Label4: TLabel
       Left = 25
-      Top = 122
+      Top = 154
       Width = 119
       Height = 15
       Caption = 'Jumlah digit Counter *'
     end
     object Label5: TLabel
       Left = 25
-      Top = 153
-      Width = 125
+      Top = 185
+      Width = 124
       Height = 15
-      Caption = 'Componen Penomoran'
+      Caption = 'Komponen Penomoran'
     end
     object Label6: TLabel
       Left = 25
-      Top = 189
+      Top = 259
       Width = 134
       Height = 15
       Caption = 'Contoh Hasil Penomoran'
     end
     object LabelHasil: TLabel
-      Left = 185
-      Top = 189
-      Width = 237
+      Left = 170
+      Top = 259
+      Width = 246
       Height = 15
       AutoSize = False
-      Caption = 'LabelHasil'
     end
     object Label7: TLabel
       Left = 163
-      Top = 153
+      Top = 185
       Width = 3
       Height = 15
       Caption = ':'
@@ -103,33 +103,40 @@ object FNew_Penomoran: TFNew_Penomoran
     end
     object Label11: TLabel
       Left = 163
-      Top = 122
+      Top = 153
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 163
-      Top = 190
+      Top = 259
       Width = 3
       Height = 15
       Caption = ':'
     end
     object LabelA: TLabel
-      Left = 88
-      Top = 416
+      Left = 49
+      Top = 570
       Width = 36
       Height = 15
       Caption = 'LabelA'
     end
     object LabelB: TLabel
-      Left = 88
-      Top = 450
+      Left = 49
+      Top = 604
       Width = 35
       Height = 15
       Caption = 'LabelB'
     end
-    object RzEdit1: TRzEdit
+    object Label13: TLabel
+      Left = 163
+      Top = 123
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object EdNama: TRzEdit
       Left = 170
       Top = 22
       Width = 209
@@ -137,54 +144,38 @@ object FNew_Penomoran: TFNew_Penomoran
       Text = ''
       TabOrder = 0
     end
-    object RzEdit2: TRzEdit
-      Left = 170
-      Top = 55
-      Width = 209
-      Height = 23
-      Text = ''
-      TabOrder = 1
-    end
     object eddigit_count: TRzEdit
       Left = 170
-      Top = 119
+      Top = 151
       Width = 56
       Height = 23
       Text = '0'
-      TabOrder = 2
+      Enabled = False
+      TabOrder = 1
       OnChange = eddigit_countChange
     end
-    object RzComboBox1: TRzComboBox
+    object CbTipeNo: TRzComboBox
       Left = 170
       Top = 87
       Width = 209
       Height = 23
-      TabOrder = 3
-      Items.Strings = (
-        'Reset setiap bulan')
+      TabOrder = 2
+      OnSelect = CbTipeNoSelect
     end
     object CBKomponen_No: TRzComboBox
       Left = 170
-      Top = 150
+      Top = 182
       Width = 209
       Height = 23
-      TabOrder = 4
+      TabOrder = 3
       OnSelect = CBKomponen_NoSelect
-      Items.Strings = (
-        'Tahun'
-        'Tahun (Singkat)'
-        'Bulan'
-        'Bulan (Romawi) '
-        'Hari'
-        'Counter'
-        'Teks / Pemisah')
     end
     object btnplus: TRzBitBtn
-      Left = 514
-      Top = 149
+      Left = 474
+      Top = 182
       Width = 29
       Height = 24
-      TabOrder = 5
+      TabOrder = 4
       OnClick = btnplusClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -240,10 +231,10 @@ object FNew_Penomoran: TFNew_Penomoran
       NumGlyphs = 2
     end
     object btnplus2: TRzBitBtn
-      Left = 515
-      Top = 255
+      Left = 584
+      Top = 267
       Width = 28
-      TabOrder = 6
+      TabOrder = 5
       OnClick = btnplus2Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -299,12 +290,12 @@ object FNew_Penomoran: TFNew_Penomoran
       NumGlyphs = 2
     end
     object Ed_Komp: TRzButtonEdit
-      Left = 387
-      Top = 256
+      Left = 34
+      Top = 476
       Width = 121
       Height = 23
       Text = ''
-      TabOrder = 7
+      TabOrder = 6
       OnChange = Ed_KompChange
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -312,12 +303,12 @@ object FNew_Penomoran: TFNew_Penomoran
       OnButtonClick = Ed_KompButtonClick
     end
     object Edbut_th: TRzButtonEdit
-      Left = 170
-      Top = 289
+      Left = 174
+      Top = 475
       Width = 80
       Height = 23
       Text = ''
-      TabOrder = 8
+      TabOrder = 7
       OnChange = Edbut_thChange
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -325,8 +316,20 @@ object FNew_Penomoran: TFNew_Penomoran
       OnButtonClick = Edbut_thButtonClick
     end
     object Edbut_bln: TRzButtonEdit
-      Left = 256
-      Top = 289
+      Left = 260
+      Top = 475
+      Width = 80
+      Height = 23
+      Text = ''
+      TabOrder = 8
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      ButtonKind = bkReject
+      OnButtonClick = Edbut_blnButtonClick
+    end
+    object Edbut_tgl: TRzButtonEdit
+      Left = 346
+      Top = 475
       Width = 80
       Height = 23
       Text = ''
@@ -334,11 +337,11 @@ object FNew_Penomoran: TFNew_Penomoran
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       ButtonKind = bkReject
-      OnButtonClick = Edbut_blnButtonClick
+      OnButtonClick = Edbut_tglButtonClick
     end
-    object Edbut_tgl: TRzButtonEdit
-      Left = 342
-      Top = 289
+    object Edbut_counter: TRzButtonEdit
+      Left = 432
+      Top = 475
       Width = 80
       Height = 23
       Text = ''
@@ -346,27 +349,15 @@ object FNew_Penomoran: TFNew_Penomoran
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       ButtonKind = bkReject
-      OnButtonClick = Edbut_tglButtonClick
+      OnButtonClick = Edbut_counterButtonClick
     end
-    object Edbut_counter: TRzButtonEdit
-      Left = 428
-      Top = 289
+    object Edbut_pemisah: TRzButtonEdit
+      Left = 583
+      Top = 301
       Width = 80
       Height = 23
       Text = ''
       TabOrder = 11
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      ButtonKind = bkReject
-      OnButtonClick = Edbut_counterButtonClick
-    end
-    object Edbut_pemisah: TRzButtonEdit
-      Left = 514
-      Top = 289
-      Width = 80
-      Height = 23
-      Text = ''
-      TabOrder = 12
       OnChange = Edbut_pemisahChange
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -374,70 +365,447 @@ object FNew_Penomoran: TFNew_Penomoran
       OnButtonClick = Edbut_pemisahButtonClick
     end
     object Edit1: TEdit
-      Left = 73
-      Top = 328
+      Left = 34
+      Top = 505
+      Width = 121
+      Height = 23
+      TabOrder = 12
+    end
+    object Edit2: TEdit
+      Left = 34
+      Top = 545
       Width = 121
       Height = 23
       TabOrder = 13
     end
-    object Edit2: TEdit
-      Left = 73
-      Top = 368
-      Width = 121
-      Height = 23
-      TabOrder = 14
-    end
     object Button1: TButton
-      Left = 240
-      Top = 327
+      Left = 201
+      Top = 504
+      Width = 75
+      Height = 25
+      Caption = 'Konversi'
+      TabOrder = 14
+      OnClick = Button1Click
+    end
+    object Button2: TButton
+      Left = 201
+      Top = 545
       Width = 75
       Height = 25
       Caption = 'Konversi'
       TabOrder = 15
-      OnClick = Button1Click
-    end
-    object Button2: TButton
-      Left = 240
-      Top = 368
-      Width = 75
-      Height = 25
-      Caption = 'Konversi'
-      TabOrder = 16
       OnClick = Button2Click
     end
     object Edhasil: TEdit
-      Left = 280
-      Top = 185
-      Width = 121
+      Left = 170
+      Top = 214
+      Width = 209
       Height = 23
-      TabOrder = 17
+      TabOrder = 16
       OnChange = EdhasilChange
     end
     object Ed_comp: TEdit
       Left = 387
-      Top = 150
-      Width = 121
+      Top = 182
+      Width = 78
+      Height = 23
+      TabOrder = 17
+    end
+    object IdComp: TEdit
+      Left = 387
+      Top = 151
+      Width = 33
       Height = 23
       TabOrder = 18
+      Visible = False
+      OnChange = IdCompChange
+    end
+    object CbTipe_transaksi: TRzComboBox
+      Left = 170
+      Top = 54
+      Width = 209
+      Height = 23
+      TabOrder = 19
+      OnSelect = CbTipe_transaksiSelect
+    end
+    object Kdsubmenu: TRzEdit
+      Left = 387
+      Top = 54
+      Width = 35
+      Height = 23
+      Text = ''
+      TabOrder = 20
+      Visible = False
+    end
+    object KdType: TRzEdit
+      Left = 387
+      Top = 87
+      Width = 35
+      Height = 23
+      Text = ''
+      TabOrder = 21
+      Visible = False
+    end
+    object KdKonter: TRzEdit
+      Left = 234
+      Top = 151
+      Width = 35
+      Height = 23
+      Text = ''
+      TabOrder = 22
+      Visible = False
+    end
+    object Kd: TRzEdit
+      Left = 387
+      Top = 22
+      Width = 121
+      Height = 23
+      Text = ''
+      TabOrder = 23
+      Visible = False
+    end
+    object DBGridEh1: TDBGridEh
+      Left = 736
+      Top = 0
+      Width = 300
+      Height = 231
+      DataSource = DataSource1
+      DynProps = <>
+      TabOrder = 24
+      object RowDetailData: TRowDetailPanelControlEh
+      end
+    end
+    object BTNclear: TRzBitBtn
+      Left = 387
+      Top = 214
+      Width = 29
+      Height = 23
+      TabOrder = 25
+      OnClick = BTNclearClick
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000000000030000
+        000B000000120000001300000013000000140000001400000014000000140000
+        0014000000140000001500000015000000140000000D000000030000000B1C11
+        6CC3261796FF271696FF261695FF261594FF251594FF251594FF241394FF2412
+        93FF241292FF231292FF231192FF231191FF190C68C50000000C0000000F2B1C
+        9BFF384AD3FF2637CEFF3042D2FF4254D9FF3646D4FF2437CCFF2434CCFF3444
+        D3FF3C4ED6FF2A3ACEFF202FC9FF1E2CC9FF251595FF000000120000000F3121
+        A0FF4356D7FF374BD5FF3F4BCBFF2827ABFF363CBEFF3E4FD6FF3D4ED5FF353A
+        BEFF2827ABFF3B45C9FF2F41D0FF2332CCFF291A99FF000000120000000E3529
+        A5FF4E62DBFF444FCCFF605DBDFFEDEDF8FF8B89CEFF383CBCFF383CBBFF8B89
+        CEFFEDEDF8FF5F5DBDFF3D47C9FF293ACEFF2D1F9EFF000000110000000D392F
+        ABFF596FDFFF2722A5FFECE7ECFFF5EBE4FFF8F2EEFF9491D1FF9491D1FFF8F1
+        EDFFF3E9E2FFECE6EBFF2721A5FF2F42D1FF3326A3FF0000000F0000000C4036
+        B1FF657AE2FF3135B7FF8070ADFFEBDBD3FFF4EAE4FFF7F2EDFFF8F1EDFFF4E9
+        E2FFEADAD1FF7F6FACFF2E31B6FF3549D5FF372CA9FF0000000E0000000B453D
+        B6FF6E83E5FF485EDCFF393BB7FF8A7FB9FFF6ECE7FFF5ECE6FFF4EBE5FFF6EB
+        E5FF897DB8FF3739B6FF4054D9FF3D51D7FF3C33AFFF0000000D0000000A4A44
+        BCFF788FE8FF6077E3FF4B4BBBFF9189C7FFF7EFE9FFF6EEE9FFF6EFE8FFF7ED
+        E8FF9087C5FF4949BAFF596FDFFF4359DAFF423AB4FF0000000C00000009504C
+        C2FF92A7EEFF5655BCFF8F89CAFFFBF6F4FFF7F1ECFFEDE1D9FFEDE0D9FFF7F0
+        EAFFFAF5F2FF8F89CAFF5453BCFF6278E2FF4943B9FF0000000B000000086B6A
+        D0FFADC1F4FF2A1E9BFFE5DADEFFF6EEEBFFEDDFDAFF816EA9FF816EA9FFEDDF
+        D8FFF4ECE7FFE5D9DCFF2A1D9BFF8B9EEBFF6563C9FF0000000A000000077577
+        D6FFB1C6F5FF6E77D1FF5747A1FFCCB6BCFF7A68A8FF4E4CB7FF4F4EB8FF7A68
+        A8FFCBB5BCFF5746A1FF6B75D0FF8EA1ECFF706ED0FF0000000900000006797B
+        DAFFB5CAF6FF93A7EEFF7079D2FF2E229BFF5453BBFF93A7EEFF93A7EEFF5555
+        BCFF2E219BFF6F77D1FF91A4EDFF90A3EDFF7475D4FF00000008000000057D80
+        DEFFB9CDF6FFB9CDF6FFB9CCF6FFB9CCF6FFB9CDF6FFB8CCF6FFB8CCF6FFB7CC
+        F6FFB7CBF6FFB6CBF6FFB5C9F6FFB5C9F6FF787AD8FF00000006000000036062
+        A6C08184E1FF8183E0FF8083E0FF7F83DFFF7F83DFFF7F82DFFF7E81DFFF7E81
+        DEFF7D81DEFF7D80DEFF7D7FDEFF7C7FDDFF5C5EA3C100000004000000000000
+        0002000000030000000400000004000000040000000400000004000000040000
+        0004000000040000000400000005000000050000000300000001}
+    end
+    object DBGridEhNotemp: TDBGridEh
+      Left = 6
+      Top = 625
+      Width = 543
+      Height = 96
+      DataSource = DataSource2
+      DynProps = <>
+      IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+      TabOrder = 26
+      Columns = <
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_param'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'param_name'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'trans_no'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'urutan'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'delimiter'
+          Footers = <>
+        end>
+      object RowDetailData: TRowDetailPanelControlEh
+      end
+    end
+    object CheckBox1: TCheckBox
+      Left = 368
+      Top = 537
+      Width = 97
+      Height = 17
+      Caption = 'CheckBox1'
+      Checked = True
+      State = cbChecked
+      TabOrder = 27
+      OnClick = CheckBox1Click
+    end
+    object BitBtn1: TBitBtn
+      Left = 49
+      Top = 342
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn1'
+      TabOrder = 28
+      OnClick = BitBtn1Click
+    end
+    object Ed1: TEdit
+      Left = 736
+      Top = 256
+      Width = 121
+      Height = 23
+      TabOrder = 29
+    end
+    object Ed2: TEdit
+      Left = 736
+      Top = 285
+      Width = 121
+      Height = 23
+      TabOrder = 30
+    end
+    object Ed3: TEdit
+      Left = 736
+      Top = 314
+      Width = 121
+      Height = 23
+      TabOrder = 31
+    end
+    object Ed6: TEdit
+      Left = 736
+      Top = 401
+      Width = 121
+      Height = 23
+      TabOrder = 32
+    end
+    object Ed5: TEdit
+      Left = 736
+      Top = 372
+      Width = 121
+      Height = 23
+      TabOrder = 33
+    end
+    object Ed4: TEdit
+      Left = 736
+      Top = 343
+      Width = 121
+      Height = 23
+      TabOrder = 34
+    end
+    object Ed7: TEdit
+      Left = 736
+      Top = 430
+      Width = 121
+      Height = 23
+      TabOrder = 35
+    end
+    object Ed8: TEdit
+      Left = 736
+      Top = 459
+      Width = 121
+      Height = 23
+      TabOrder = 36
+    end
+    object Ed10: TEdit
+      Left = 736
+      Top = 519
+      Width = 121
+      Height = 23
+      TabOrder = 37
+    end
+    object Ed9: TEdit
+      Left = 736
+      Top = 488
+      Width = 121
+      Height = 23
+      TabOrder = 38
+    end
+    object BitBtn2: TBitBtn
+      Left = 49
+      Top = 388
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn2'
+      TabOrder = 39
+      OnClick = BitBtn2Click
+    end
+    object Edit3: TEdit
+      Left = 170
+      Top = 343
+      Width = 209
+      Height = 23
+      TabOrder = 40
+    end
+    object CheckAdd: TCheckBox
+      Left = 69
+      Top = 123
+      Width = 97
+      Height = 17
+      Caption = 'Additional'
+      TabOrder = 41
+      OnClick = CheckAddClick
+    end
+    object CbAdd: TRzComboBox
+      Left = 170
+      Top = 120
+      Width = 209
+      Height = 23
+      Enabled = False
+      TabOrder = 42
+      OnSelect = CbAddSelect
+    end
+    object Edit4: TEdit
+      Left = 170
+      Top = 388
+      Width = 209
+      Height = 23
+      TabOrder = 43
+    end
+    object Edit5: TEdit
+      Left = 170
+      Top = 433
+      Width = 209
+      Height = 23
+      TabOrder = 44
+    end
+    object DateTimePicker1: TDateTimePicker
+      Left = 170
+      Top = 301
+      Width = 186
+      Height = 23
+      Date = 45213.000000000000000000
+      Time = 0.472056504630018000
+      TabOrder = 45
+      OnChange = DateTimePicker1Change
+    end
+    object BitBtn3: TBitBtn
+      Left = 49
+      Top = 431
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn3'
+      TabOrder = 46
+      OnClick = BitBtn3Click
+    end
+    object Edit6: TEdit
+      Left = 385
+      Top = 343
+      Width = 80
+      Height = 23
+      TabOrder = 47
+    end
+    object Edit7: TEdit
+      Left = 385
+      Top = 388
+      Width = 80
+      Height = 23
+      TabOrder = 48
+    end
+    object Edit8: TEdit
+      Left = 385
+      Top = 301
+      Width = 80
+      Height = 23
+      TabOrder = 49
+    end
+    object Edit9: TEdit
+      Left = 471
+      Top = 301
+      Width = 80
+      Height = 23
+      TabOrder = 50
+    end
+    object Edit10: TEdit
+      Left = 385
+      Top = 432
+      Width = 80
+      Height = 23
+      TabOrder = 51
+    end
+    object BCari: TRzButtonEdit
+      Left = 387
+      Top = 120
+      Width = 21
+      Height = 23
+      Text = ''
+      Enabled = False
+      TabOrder = 52
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = BCariButtonClick
+    end
+    object EdAdd: TEdit
+      Left = 422
+      Top = 120
+      Width = 31
+      Height = 23
+      TabOrder = 53
+      Text = '0'
+      Visible = False
     end
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 232
-    Width = 562
-    Height = 36
+    Top = 297
+    Width = 510
+    Height = 35
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 223
-    ExplicitWidth = 556
+    ExplicitTop = 288
+    ExplicitWidth = 504
     object RzBitBtn4: TRzBitBtn
-      Left = 410
+      Left = 358
       Top = 2
-      Height = 32
+      Height = 31
       Align = alRight
       Caption = 'Save'
       TabOrder = 0
+      OnClick = RzBitBtn4Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -490,16 +858,16 @@ object FNew_Penomoran: TFNew_Penomoran
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 404
+      ExplicitLeft = 352
     end
-    object RzBitBtn5: TRzBitBtn
-      Left = 485
+    object BCancel: TRzBitBtn
+      Left = 433
       Top = 2
-      Height = 32
+      Height = 31
       Align = alRight
       Caption = 'Cancel'
       TabOrder = 1
-      OnClick = RzBitBtn5Click
+      OnClick = BCancelClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -552,12 +920,128 @@ object FNew_Penomoran: TFNew_Penomoran
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 479
+      ExplicitLeft = 427
     end
   end
-  object UniQuery1: TUniQuery
+  object qnumb_det_tmp: TUniQuery
     Connection = dm.Koneksi
-    Left = 456
-    Top = 56
+    SQL.Strings = (
+      'SELECT * FROM t_numb_det_tmp')
+    Left = 448
+    Top = 48
+    object qnumb_det_tmpid: TIntegerField
+      FieldName = 'id'
+    end
+    object qnumb_det_tmpid_param: TSmallintField
+      FieldName = 'id_param'
+    end
+    object qnumb_det_tmpparam_name: TStringField
+      FieldName = 'param_name'
+      Size = 50
+    end
+    object qnumb_det_tmpurutan: TSmallintField
+      FieldName = 'urutan'
+    end
+    object qnumb_det_tmptrans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 25
+    end
+    object qnumb_det_tmpdelimiter: TStringField
+      FieldName = 'delimiter'
+      Size = 5
+    end
+  end
+  object Qcomp: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_numb_component')
+    Left = 448
+  end
+  object MemTableEh1: TMemTableEh
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 40
+    Top = 136
+  end
+  object DataSource1: TDataSource
+    DataSet = MemTableEh1
+    Left = 8
+    Top = 208
+  end
+  object DataSource2: TDataSource
+    DataSet = qnumb_det_tmp
+    Left = 496
+    Top = 48
+  end
+  object Query: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_numb order by trans_no ASC')
+    Left = 496
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = UniQuery2
+    Left = 40
+    Top = 208
+  end
+  object UniQuery2: TUniQuery
+    Connection = dm.Koneksi
+    Left = 8
+    Top = 136
+  end
+  object UniQuery3: TUniQuery
+    Connection = dm.Koneksi
+    Left = 72
+    Top = 136
+  end
+  object DataSource3: TDataSource
+    DataSet = UniQuery3
+    Left = 80
+    Top = 208
+  end
+  object Qnumb_det: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT * FROM t_numb_det')
+    Left = 496
+    Top = 96
+  end
+  object Qnumb: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_numb')
+    Left = 448
+    Top = 96
+  end
+  object UniQuery4: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      '-- SELECT a.*,b.description,b.note FROM t_numb_det a '
+      
+        '-- left join t_numb_component b on a.id_param=b.id ORDER BY a.tr' +
+        'ans_no,a.urutan  ')
+    Left = 32
+    Top = 8
+  end
+  object QtypeNo: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_numb_type order by id')
+    Left = 120
+    Top = 8
+  end
+  object QnumbComp: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_numb_component order by id')
+    Left = 24
+    Top = 72
+  end
+  object Qtranstype: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_submenu2 order by submenu2 ASC')
+    Left = 80
+    Top = 8
   end
 end

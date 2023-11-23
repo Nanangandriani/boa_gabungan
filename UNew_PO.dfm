@@ -1,7 +1,7 @@
 object FNew_PO: TFNew_PO
   Left = 0
   Top = 0
-  Caption = 'FORM NEW PURCHASE ORDER'
+  Caption = 'Form New Purchase Order'
   ClientHeight = 645
   ClientWidth = 1210
   Color = clBtnFace
@@ -11,6 +11,7 @@ object FNew_PO: TFNew_PO
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object pninput: TPanel
     Left = 0
@@ -19,8 +20,7 @@ object FNew_PO: TFNew_PO
     Height = 235
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = -6
-    ExplicitWidth = 1216
+    ExplicitWidth = 1204
     object Label1: TLabel
       Left = 24
       Top = 86
@@ -207,6 +207,7 @@ object FNew_PO: TFNew_PO
       EditType = etDate
       CharCase = ecUpperCase
       TabOrder = 1
+      OnChange = DtPOChange
     end
     object EdNo: TEdit
       Left = 903
@@ -290,6 +291,7 @@ object FNew_PO: TFNew_PO
       Items.Strings = (
         'SUPPLIER'
         'DELIVERY ORDER')
+      ItemIndex = 0
     end
     object Edjenispo: TRzComboBox
       Left = 190
@@ -308,20 +310,22 @@ object FNew_PO: TFNew_PO
       Top = 142
       Width = 121
       Height = 23
-      Text = ''
+      Text = '0'
       CharCase = ecUpperCase
       DisabledColor = clInfoBk
       TabOrder = 11
+      OnChange = Edjatuh_tempoChange
     end
     object EdNm_supp: TRzButtonEdit
       Left = 269
-      Top = 52
+      Top = 54
       Width = 235
       Height = 23
       Text = ''
       TabOrder = 12
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
+      OnButtonClick = EdNm_suppButtonClick
     end
     object DtDelivery: TRzDateTimeEdit
       Left = 729
@@ -405,7 +409,7 @@ object FNew_PO: TFNew_PO
       NumGlyphs = 2
     end
     object DtDelivery2: TRzDateTimeEdit
-      Left = 876
+      Left = 878
       Top = 83
       Width = 121
       Height = 23
@@ -420,6 +424,51 @@ object FNew_PO: TFNew_PO
       Height = 23
       TabOrder = 17
     end
+    object Nopo: TEdit
+      Left = 383
+      Top = 25
+      Width = 121
+      Height = 23
+      TabOrder = 18
+    end
+    object DateTimePicker1: TDateTimePicker
+      Left = 190
+      Top = 198
+      Width = 164
+      Height = 23
+      Date = 45238.000000000000000000
+      Time = 0.576702314814610900
+      TabOrder = 19
+      Visible = False
+    end
+    object Edurut: TEdit
+      Left = 383
+      Top = 83
+      Width = 121
+      Height = 23
+      TabOrder = 20
+    end
+    object Edbln: TEdit
+      Left = 974
+      Top = 142
+      Width = 58
+      Height = 23
+      TabOrder = 21
+    end
+    object Edth: TEdit
+      Left = 1038
+      Top = 142
+      Width = 58
+      Height = 23
+      TabOrder = 22
+    end
+    object Edhari: TEdit
+      Left = 909
+      Top = 142
+      Width = 58
+      Height = 23
+      TabOrder = 23
+    end
   end
   object DBGridDetail: TDBGridEh
     Left = 0
@@ -427,6 +476,7 @@ object FNew_PO: TFNew_PO
     Width = 1210
     Height = 216
     Align = alTop
+    DataSource = DsItempo
     DynProps = <>
     FooterRowCount = 1
     HorzScrollBar.ExtraPanel.Visible = True
@@ -518,6 +568,7 @@ object FNew_PO: TFNew_PO
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
             ShortCut = 113
             Style = ebsEllipsisEh
+            OnClick = DBGridDetailColumns0EditButtons0Click
           end>
         FieldName = 'Kd_Material_stok'
         Footers = <>
@@ -732,6 +783,7 @@ object FNew_PO: TFNew_PO
     Height = 166
     Align = alTop
     TabOrder = 2
+    ExplicitWidth = 1204
     object Label7: TLabel
       Left = 832
       Top = 52
@@ -901,8 +953,8 @@ object FNew_PO: TFNew_PO
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitLeft = -6
-    ExplicitWidth = 1216
+    ExplicitTop = 604
+    ExplicitWidth = 1204
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
@@ -910,6 +962,7 @@ object FNew_PO: TFNew_PO
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -962,7 +1015,7 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1140
+      ExplicitLeft = 1128
     end
     object BSimpan: TRzBitBtn
       Left = 1059
@@ -972,6 +1025,7 @@ object FNew_PO: TFNew_PO
       Caption = 'Simpan'
       TabOrder = 1
       Visible = False
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -1024,7 +1078,7 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1065
+      ExplicitLeft = 1053
     end
     object BEdit: TRzBitBtn
       Left = 984
@@ -1086,7 +1140,198 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 990
+      ExplicitLeft = 978
+    end
+    object Button1: TButton
+      Left = 856
+      Top = 0
+      Width = 75
+      Height = 25
+      Caption = 'Button1'
+      TabOrder = 3
+      Visible = False
+      OnClick = Button1Click
+    end
+  end
+  object DsGudang: TDataSource
+    DataSet = QGudang
+    Left = 1112
+    Top = 64
+  end
+  object DsItempo: TDataSource
+    DataSet = MemItempo
+    Left = 1041
+    Top = 72
+  end
+  object QGudang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_wh')
+    Left = 1112
+    Top = 16
+  end
+  object MemItempo: TMemTableEh
+    Params = <>
+    Left = 1033
+    Top = 16
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object Kd_Material_stok: TMTStringDataFieldEh
+          FieldName = 'Kd_Material_stok'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object Nm_material: TMTStringDataFieldEh
+          FieldName = 'Nm_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object satuan: TMTStringDataFieldEh
+          FieldName = 'satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object Qty: TMTNumericDataFieldEh
+          FieldName = 'Qty'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object harga: TMTNumericDataFieldEh
+          FieldName = 'harga'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object gudang: TMTStringDataFieldEh
+          FieldName = 'gudang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object qtyperkonversi: TMTNumericDataFieldEh
+          FieldName = 'qtyperkonversi'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object qtykonversi: TMTNumericDataFieldEh
+          FieldName = 'qtykonversi'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object satuankonversi: TMTStringDataFieldEh
+          FieldName = 'satuankonversi'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object totalbayar: TMTNumericDataFieldEh
+          FieldName = 'totalbayar'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object sisabayar: TMTNumericDataFieldEh
+          FieldName = 'sisabayar'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object sisaqty: TMTNumericDataFieldEh
+          FieldName = 'sisaqty'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object qtyterkirim: TMTNumericDataFieldEh
+          FieldName = 'qtyterkirim'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object qtykontrak: TMTNumericDataFieldEh
+          FieldName = 'qtykontrak'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object ppn: TMTNumericDataFieldEh
+          FieldName = 'ppn'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object ppn_rp: TMTNumericDataFieldEh
+          FieldName = 'ppn_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = False
+          Precision = 100
+        end
+        object pph: TMTNumericDataFieldEh
+          FieldName = 'pph'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 20
+        end
+        object pph_rp: TMTNumericDataFieldEh
+          FieldName = 'pph_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object subtotal: TMTNumericDataFieldEh
+          FieldName = 'subtotal'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = False
+          Precision = 100
+        end
+        object grandtotal: TMTNumericDataFieldEh
+          FieldName = 'grandtotal'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = False
+          Precision = 100
+        end
+        object subtotal_rp: TMTNumericDataFieldEh
+          FieldName = 'subtotal_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = False
+          Precision = 100
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
     end
   end
 end

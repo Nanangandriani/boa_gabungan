@@ -1,22 +1,20 @@
-object FPenomoran: TFPenomoran
+object FSPB: TFSPB
   Left = 0
   Top = 0
-  Caption = 'FPenomoran'
-  ClientHeight = 491
-  ClientWidth = 905
+  Caption = 'FSPB'
+  ClientHeight = 433
+  ClientWidth = 826
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
-  WindowState = wsMaximized
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 905
+    Width = 826
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -24,6 +22,7 @@ object FPenomoran: TFPenomoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitTop = 8
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -33,124 +32,197 @@ object FPenomoran: TFPenomoran
       Index = 0
     end
   end
-  object DBGridNo: TDBGridEh
+  object DBGridSPB: TDBGridEh
     Left = 0
     Top = 127
-    Width = 905
-    Height = 364
+    Width = 826
+    Height = 306
     Align = alClient
-    DataSource = DSNo
+    DataSource = DsSPB
     DrawMemoText = True
     DynProps = <>
-    IndicatorTitle.TitleButton = True
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
-    SearchPanel.CaseSensitive = True
-    SearchPanel.FilterOnTyping = True
-    STFilter.Location = stflInTitleFilterEh
-    STFilter.Visible = True
-    TabOrder = 5
-    TitleParams.MultiTitle = True
+    TabOrder = 1
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_no'
+        FieldName = 'nospb'
         Footers = <>
-        Title.Caption = 'No Trans'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'numb_type'
-        Footers = <>
-        Title.Caption = 'Kode Modul'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_type'
-        Footers = <>
-        Title.Caption = 'Nama Modul'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'component_description'
-        Footers = <>
-        Title.Caption = 'Deskripsi Penomoran'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'digit_counter'
-        Footers = <>
-        Title.Caption = 'Digit Counter'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'description'
-        Footers = <>
-        Title.Caption = 'Jenis Reset'
+        Title.Caption = 'No. SP'
         Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nm_supplier'
+        Footer.FieldName = 'nm_supplier'
+        Footers = <>
+        Title.Caption = 'Nama Supplier'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nopo'
+        Footers = <>
+        Title.Caption = 'No. PO'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'tgl_spb'
+        Footers = <>
+        Title.Caption = 'Tanggal'
+        Width = 76
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pic'
+        Footers = <>
+        Title.Caption = 'PIC'
+        Visible = False
+        Width = 143
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nokendaraan'
+        Footers = <>
+        Title.Caption = 'No. Kendaraan'
+        Width = 158
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'driver'
+        Footers = <>
+        Title.Caption = 'Driver'
+        Width = 155
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'status_app'
+        Footers = <>
+        Title.Caption = 'Status Approval'
+        Width = 102
       end>
     object RowDetailData: TRowDetailPanelControlEh
-      object DBGridNodet: TDBGridEh
+      object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 815
+        Width = 776
         Height = 118
         Align = alClient
-        DataSource = DsDetNo
         DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SumList.Active = True
         TabOrder = 0
-        TitleParams.MultiTitle = True
         Columns = <
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'urutan'
+            FieldName = 'kd_material_stok'
             Footers = <>
-            Title.Caption = 'No Urut'
+            Title.Caption = 'kode Material'
+            Visible = False
+            Width = 84
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'param_name'
+            FieldName = 'nm_material'
             Footers = <>
-            Title.Caption = 'Parameter'
-            Width = 100
+            Title.Caption = 'Nama Barang'
+            Width = 150
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'description'
+            FieldName = 'nopo'
             Footers = <>
-            Title.Caption = 'Keterangan'
+            Title.Caption = 'No. PO'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'qty'
+            Footers = <>
+            Title.Caption = 'Kuantum'
+            Width = 101
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'satuan'
+            Footers = <>
+            Title.Caption = 'Satuan'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'gudang'
+            Footers = <>
+            Title.Caption = 'Gudang'
             Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
+    end
+  end
+  object ActMenu: TActionManager
+    Left = 600
+    Top = 48
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRo: TAction
+      Caption = 'Refresh  '
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
     end
   end
   object dxBarManager1: TdxBarManager
@@ -167,7 +239,7 @@ object FPenomoran: TFPenomoran
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 744
+    Left = 688
     Top = 48
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -177,24 +249,24 @@ object FPenomoran: TFPenomoran
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 56
+      FloatClientHeight = 123
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'dxBarBaru'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton8'
+          ItemName = 'dxBarUpdate'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton9'
+          ItemName = 'dxbarRefresh'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton10'
+          ItemName = 'dxBarDelete'
         end>
       OneOnRow = True
       Row = 0
@@ -265,7 +337,6 @@ object FPenomoran: TFPenomoran
         05E60567412852BEACBAE94267CDEE1B6375AD77646D4BEFDB554DE72F1595C6
         2A8050F58E5E948850B856EFBA094AF8BFEF80058481A22091011CC0AD6ABE6A
         44E03B805C64CDB4C3E1300000000049454E44AE426082}
-      OnClick = dxBarButton1Click
     end
     object dxBarButton3: TdxBarButton
       Caption = 'Refresh'
@@ -435,11 +506,9 @@ object FPenomoran: TFPenomoran
         A27DAF95ADEB22B15CD883808984208E209A8F859A9C6F6078F0145684BF98E8
         BFC080A205F60000000049454E44AE426082}
     end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'New'
+    object dxBarBaru: TdxBarLargeButton
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -572,12 +641,10 @@ object FPenomoran: TFPenomoran
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
     end
-    object dxBarButton8: TdxBarButton
-      Caption = 'Update'
+    object dxBarUpdate: TdxBarButton
+      Caption = 'Update  '
       Category = 0
-      Hint = 'Update'
       Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
@@ -614,9 +681,10 @@ object FPenomoran: TFPenomoran
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
     end
-    object dxBarButton9: TdxBarButton
-      Action = ActRo
+    object dxbarRefresh: TdxBarButton
+      Caption = 'Refresh  '
       Category = 0
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -648,10 +716,9 @@ object FPenomoran: TFPenomoran
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
-    object dxBarButton10: TdxBarButton
-      Caption = 'Delete'
+    object dxBarDelete: TdxBarButton
+      Caption = 'Delete  '
       Category = 0
-      Hint = 'Delete'
       Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
@@ -692,101 +759,138 @@ object FPenomoran: TFPenomoran
         0000000049454E44AE426082}
     end
   end
-  object QDetNo: TUniQuery
+  object Qdetailpo: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT  a.*,c.description from t_numb_det a '
-      'LEFT JOIN t_numb_component c on a.id_param=c.id'
       
-        'GROUP BY a.trans_no,a.id,a.param_name,a.urutan,a.id_param,a.deli' +
-        'miter,c.description'
-      'order by a.trans_no ASC')
-    MasterSource = DSNo
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Active = True
-    Left = 488
-    Top = 33
+        'select A.*, B.Nm_material from t_podetail A inner join t_materia' +
+        'l_stok B on '
+      'A.kd_materialstok=B.kd_material_Stok')
+    DetailFields = 'nopo'
+    Left = 664
+    Top = 80
+  end
+  object QRptSpb: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'Select c.nm_supplier,e.nm_material,b.qty,f.qtykonversi,f.satuan,' +
+        'f.konversi,a.nospb,a.nopo,a.tgl_spb,a.pic,a.nokendaraan, '
+      #9'a.driver,a.status,a.kd_supplier,(b.qty*F.qtykonversi)as jumlah '
+      'from t_spb A '
+      'inner join t_spb_det B on a.nospb=b.nospb'
+      'inner join t_supplier C on A.kd_supplier=C.kd_supplier '
+      
+        'inner join t_podetail D on B.nopo=D.nopo and b.kd_material_stok=' +
+        'd.kd_materialstok'
+      
+        'Inner join t_material_stok E on D.kd_materialstok=E.kd_material_' +
+        'Stok'
+      'left join t_konversi_material F on E.kd_material=F.kd_material'
+      
+        'Group by c.nm_supplier,e.nm_material,b.qty,f.qtykonversi,f.satua' +
+        'n,f.konversi,a.nospb,a.nopo,a.tgl_spb,a.pic,a.nokendaraan, '
+      #9'a.driver,a.status,a.kd_supplier'
+      'order by A.nospb desc')
+    Left = 664
+    Top = 29
+  end
+  object DBSPBDet: TfrxDBDataset
+    UserName = 'DBSPBDet'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'iddetail=iddetail'
+      'nopo=nopo'
+      'kd_materialstok=kd_materialstok'
+      'qty=qty'
+      'harga=harga'
+      'satuan=satuan'
+      'lok_gudang=lok_gudang'
+      'currency=currency'
+      'conv_currency=conv_currency'
+      'totalharga=totalharga'
+      'qtyterkirim=qtyterkirim'
+      'totalbayar=totalbayar'
+      'nm_material=nm_material')
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 600
+    Top = 80
+  end
+  object DBSPB: TfrxDBDataset
+    UserName = 'DBSPB'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'nospb=nospb'
+      'nopo=nopo'
+      'tgl_spb=tgl_spb'
+      'pic=pic'
+      'nokendaraan=nokendaraan'
+      'driver=driver'
+      'nm_supplier=nm_supplier'
+      'nm_material=nm_material'
+      'qty=qty'
+      'qtykonversi=qtykonversi'
+      'satuan=satuan'
+      'konversi=konversi'
+      'jumlah=jumlah')
+    DataSet = QRptSpb
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 600
+    Top = 32
+  end
+  object Qdetailspb: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT A.*,b.nm_material from t_spb_det a inner join'
+      ' t_material_stok b on b.kd_material_stok=a.kd_material_stok')
+    MasterSource = DsSPB
+    MasterFields = 'nospb'
+    DetailFields = 'nospb'
+    Left = 432
+    Top = 80
     ParamData = <
       item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'TR20231006-1'
+        DataType = ftUnknown
+        Name = 'nospb'
+        Value = nil
       end>
   end
-  object DsDetNo: TDataSource
-    DataSet = QDetNo
-    Left = 488
-    Top = 88
+  object DSDetailspb: TDataSource
+    DataSet = Qdetailspb
+    Left = 424
+    Top = 24
   end
-  object QNo: TUniQuery
+  object QSPB: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      ''
-      'SELECT  a.*,c.submenu2,d.description from t_numb a'
-      'INNER JOIN t_numb_det b on a.trans_no=b.trans_no'
-      'LEFT JOIN t_submenu2 c  on a.numb_type=c.kd_submenu'
-      'LEFT JOIN t_numb_type d on a.reset_type=d.id'
       
-        'GROUP BY a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.c' +
-        'omponent_description,'
-      'a.reset_type,a.id_additional,c.submenu2,d.description,a.remarks'
-      'order by a.trans_no ASC')
-    Active = True
-    Left = 384
-    Top = 32
+        'Select (case WHEN a."Status_approval"=0 THEN '#39'PENGAJUAN'#39' WHEN a.' +
+        '"Status_approval"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
+      
+        'END) AS status_app,A.*, B.Nm_supplier from t_spb a inner join t_' +
+        'supplier b on A.kd_supplier=b.kd_supplier '
+      'order by nospb desc')
+    Left = 368
+    Top = 29
   end
-  object DSDNo: TDataSetDriverEh
-    ProviderDataSet = QNo
-    Left = 424
-    Top = 88
-  end
-  object MemNo: TMemTableEh
-    Active = True
+  object MemSPB: TMemTableEh
+    FetchAllOnOpen = True
     Params = <>
-    DataDriver = DSDNo
-    Left = 384
-    Top = 88
+    DataDriver = DsdSPB
+    Options = [mtoTextFieldsCaseInsensitive]
+    Left = 368
+    Top = 77
   end
-  object DSNo: TDataSource
-    DataSet = MemNo
-    Left = 424
-    Top = 32
+  object DsdSPB: TDataSetDriverEh
+    ProviderDataSet = QSPB
+    Left = 296
+    Top = 77
   end
-  object ActMenu: TActionManager
-    Left = 656
-    Top = 32
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'Baru  '
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-    end
-    object ActRo: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActRoExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      Enabled = False
-      Visible = False
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-      Visible = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose Kontrak    '
-      Enabled = False
-    end
+  object DsSPB: TDataSource
+    DataSet = MemSPB
+    Left = 296
+    Top = 29
   end
 end

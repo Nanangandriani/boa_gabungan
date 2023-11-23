@@ -1,9 +1,9 @@
-object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
+object Flistmaterialstok: TFlistmaterialstok
   Left = 0
   Top = 0
-  Caption = 'List Supplier'
-  ClientHeight = 315
-  ClientWidth = 380
+  Caption = 'List Material'
+  ClientHeight = 344
+  ClientWidth = 518
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,56 +11,70 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
-  OnDblClick = FormDblClick
-  OnShow = FormShow
   TextHeight = 15
-  object DBGridEh1: TDBGridEh
+  object DBGridMaterial: TDBGridEh
     Left = 0
     Top = 0
-    Width = 380
-    Height = 283
+    Width = 518
+    Height = 312
     Align = alClient
-    DataSource = DsSupplier
+    DataSource = DsMaterial_stok
     DynProps = <>
-    SearchPanel.Enabled = True
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
     TabOrder = 0
-    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'supplier_code'
+        FieldName = 'kd_material_stok'
         Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Kode Supplier'
-        Width = 88
+        Title.Caption = 'Kode Barang'
+        Width = 91
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'supplier_name'
+        FieldName = 'nm_material'
         Footers = <>
-        ReadOnly = True
+        Title.Caption = 'Nama Barang'
+        Width = 116
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nm_supplier'
+        Footers = <>
         Title.Caption = 'Nama Supplier'
-        Width = 247
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'satuan'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 60
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel1: TPanel
     Left = 0
-    Top = 283
-    Width = 380
+    Top = 312
+    Width = 518
     Height = 32
     Align = alBottom
     TabOrder = 1
-    Visible = False
-    ExplicitTop = 274
-    ExplicitWidth = 374
+    ExplicitTop = 311
+    ExplicitWidth = 514
     object BBatal: TRzBitBtn
-      Left = 304
+      Left = 442
       Top = 1
       Height = 30
       Align = alRight
@@ -118,18 +132,18 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 298
+      ExplicitLeft = 438
     end
-    object BSimpan: TRzBitBtn
-      Left = 229
+    object BEdit: TRzBitBtn
+      Left = 367
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'OK'
       TabOrder = 1
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
+        08000000000000020000630B0000630B00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -162,38 +176,53 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
-        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
-        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
-        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
-        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
-        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
-        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
+        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
+        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
+        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
+        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
+        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
+        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
+        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
+        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
+        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 223
+      ExplicitLeft = 363
     end
   end
-  object QSupplier: TUniQuery
+  object DsMaterial_stok: TDataSource
+    DataSet = QMaterial_stok
+    Left = 153
+    Top = 101
+  end
+  object QMaterial_stok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * from t_supplier where deleted_at is null order by suppl' +
-        'ier_code asc')
-    Left = 248
-    Top = 72
-  end
-  object DsSupplier: TDataSource
-    DataSet = QSupplier
-    Left = 336
-    Top = 80
+        'select a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,' +
+        'a.kd_urut,a.qty,a.satuan,'
+      
+        'a.merk,a.nm_material,a.no_material,a.qtyperkonversi,a.qtykonvers' +
+        'i,B.nm_supplier ,'
+      ' A.nm_material,C.category,D.konversi from t_material_stok A'
+      'inner join t_supplier B on A.kd_supplier=B.kd_supplier '
+      'inner join t_material C on A.kd_material=C.kd_material'
+      'Inner join t_konversi_material D on A.kd_material=D.kd_material'
+      
+        'Group by a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_uru' +
+        't,a.kd_urut,a.qty,a.satuan,'
+      
+        'a.merk,a.nm_material,a.no_material,a.qtyperkonversi,a.qtykonvers' +
+        'i,B.nm_supplier ,'
+      'A.nm_material,C.category,D.konversi'
+      'order by kd_material_stok Desc')
+    Left = 236
+    Top = 101
   end
 end
