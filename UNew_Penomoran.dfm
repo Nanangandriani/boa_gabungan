@@ -135,6 +135,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Width = 3
       Height = 15
       Caption = ':'
+      WordWrap = True
     end
     object EdNama: TRzEdit
       Left = 170
@@ -696,6 +697,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Height = 23
       Enabled = False
       TabOrder = 42
+      Visible = False
       OnSelect = CbAddSelect
     end
     object Edit4: TEdit
@@ -774,6 +776,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Text = ''
       Enabled = False
       TabOrder = 52
+      Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = BCariButtonClick
@@ -1033,7 +1036,7 @@ object FNew_Penomoran: TFNew_Penomoran
   object QnumbComp: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_numb_component order by id')
+      'select * from t_numb_component where id <> 8 order by id')
     Left = 24
     Top = 72
   end
@@ -1043,5 +1046,11 @@ object FNew_Penomoran: TFNew_Penomoran
       'select * from t_submenu2 order by submenu2 ASC')
     Left = 80
     Top = 8
+  end
+  object QAdditional: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_numb_component  order by id ASC')
+    Left = 336
   end
 end

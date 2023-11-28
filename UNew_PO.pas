@@ -99,6 +99,7 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure Edjatuh_tempoChange(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure EdNm_suppChange(Sender: TObject);
   private
     { Private declarations }
      procedure Clear;
@@ -394,6 +395,37 @@ begin
     end;
 end;
 
+procedure TFNew_PO.EdNm_suppChange(Sender: TObject);
+begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Text:='select * from t_supplier where supplier_name='+QuotedStr(EdNm_supp.Text);
+      ExecSQL;
+    end;
+    EdKd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
+    Edno_kontrak.Clear;
+    with dm.QTemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_coop_contract where kd_supplier='+QuotedStr(EdKd_supp.Text)+''+
+                ' and status = ''1'' AND "Status_Approval"=''1'' order by no_kontrak Desc';
+
+      ExecSQL;
+    end;
+    if dm.QTemp2['No_kontrak']<>'' then
+    begin
+      Edno_kontrak.Text:='0';
+    end else
+    Dm.QTemp2.First;
+    while not dm.QTemp2.Eof do
+    begin
+    Edno_kontrak.Items.Add(Dm.Qtemp2.FieldByName('contract_no').AsString);
+    Dm.QTemp2.Next;
+    end;
+end;
+
 {procedure TFNew_PO.Autonumber;
 var param:string;
     i,resettype,nourut,current_month,current_year:integer;
@@ -572,10 +604,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' insert into purchase.t_po(nopo,no_kontrak,tgl_po, kd_supplier,pph23,ppn,jenispo,'+
-                ' valas,nilai_valas,order_no, Keterangan,jenis,jenisangkutan,kd_divisi,status,'+
-                ' jatuh_tempo,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",tgl_delivery,"Status_approval",'+
-                ' tgl_delivery2,gudang,kd_sbu,pic,nopo2,trans_day,trans_month,trans_year) '+
+      sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
+                ' valas,valas_value,order_no, remarks,type,transportation_type,division_code,status,'+
+                ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,"approval_status",'+
+                ' delivery2_date,warehouse,sbu_code,pic,po2_no,trans_day,trans_month,trans_year) '+
                 ' values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,'+
                 ' :parjenispo,:parvalas,:parnilai_valas,:parorder_no,:parKeterangan,:parjenis,'+
                 ' :parjenisangkutan,:parkd_divisi,:parstatus,:parjatuh_tempo,:parSubtotal,'+
@@ -736,24 +768,23 @@ begin
     dm.koneksi.StartTransaction;
     try
     begin
-       //Cekdata;
        Autonumber;
-    if EdStatus.Text='KONTRAK KERJASAMA' then
-    begin
-       Simpan;
-    end
-    else
-       Simpan2;
-       dm.koneksi.Commit;
-       Messagedlg(' Data Berhasil di Simpan ',MtInformation,[Mbok],0);
+       if EdStatus.Text='KONTRAK KERJASAMA' then
+       begin
+         Simpan;
+       end
+       else
+         Simpan2;
+         dm.koneksi.Commit;
+         Messagedlg(' Data Berhasil di Simpan ',MtInformation,[Mbok],0);
        //BBatalClick(sender);
-    end
-    Except
-    on E :Exception do
-    begin
-       MessageDlg(E.Message,mtError,[MBok],0);
-       dm.koneksi.Rollback;
-    end;
+       end
+       Except
+       on E :Exception do
+       begin
+         MessageDlg(E.Message,mtError,[MBok],0);
+         dm.koneksi.Rollback;
+       end;
     end;
     Fpo.ActBaru.OnExecute(sender);
   end;

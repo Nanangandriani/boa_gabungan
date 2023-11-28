@@ -11,7 +11,6 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
-  OnDblClick = FormDblClick
   OnShow = FormShow
   TextHeight = 15
   object DBGridEh1: TDBGridEh

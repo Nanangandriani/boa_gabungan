@@ -66,6 +66,7 @@ object FPO: TFPO
         FieldName = 'trans_year'
         Footers = <>
         Title.Caption = 'Tahun'
+        Width = 50
       end
       item
         CellButtons = <>
@@ -74,12 +75,13 @@ object FPO: TFPO
         FieldName = 'trans_month'
         Footers = <>
         Title.Caption = 'Bulan'
+        Width = 50
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nopo'
+        FieldName = 'po_no'
         Footers = <>
         Title.Caption = 'No Purchase Order'
         Width = 150
@@ -98,7 +100,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_kontrak'
+        FieldName = 'contract_no'
         Footers = <>
         Title.Caption = 'No Kontrak'
         Width = 150
@@ -107,7 +109,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'gudang'
+        FieldName = 'warehouse'
         Footers = <>
         Title.Caption = 'Gudang'
         Width = 150
@@ -116,7 +118,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_po'
+        FieldName = 'po_date'
         Footers = <>
         Title.Caption = 'Tanggal'
         Width = 80
@@ -125,7 +127,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_delivery'
+        FieldName = 'delivery_date'
         Footers = <>
         Title.Caption = 'Tanggal Delivery| Mulai'
         Width = 80
@@ -134,7 +136,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_delivery2'
+        FieldName = 'delivery2_date'
         Footers = <>
         Title.Caption = 'Tanggal Delivery| Selesai'
         Width = 59
@@ -174,7 +176,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jenispo'
+        FieldName = 'po_type'
         Footers = <>
         Title.Caption = 'Jenis PO'
         Width = 150
@@ -183,7 +185,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jenisangkutan'
+        FieldName = 'transportation_type'
         Footers = <>
         Title.Caption = 'Jenis Angkutan'
         Width = 148
@@ -210,7 +212,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'keterangan'
+        FieldName = 'remarks'
         Footers = <>
         Title.Caption = 'Keterangan'
         Width = 181
@@ -230,6 +232,7 @@ object FPO: TFPO
         Width = 753
         Height = 118
         Align = alClient
+        DataSource = DsDetailPo
         DynProps = <>
         FooterRowCount = 1
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
@@ -242,7 +245,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kd_materialstok'
+            FieldName = 'material_stock_code'
             Footers = <>
             Title.Caption = 'Kode Barang'
             Width = 84
@@ -251,7 +254,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nm_material'
+            FieldName = 'material_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 135
@@ -271,7 +274,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'satuan'
+            FieldName = 'unit'
             Footers = <>
             Title.Caption = 'Karung/Botol|Satuan'
             Visible = False
@@ -302,7 +305,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'satuan'
+            FieldName = 'unit'
             Footers = <>
             Title.Caption = 'Satuan'
             Width = 68
@@ -312,7 +315,7 @@ object FPO: TFPO
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'harga'
+            FieldName = 'price'
             Footers = <>
             Title.Caption = 'Harga'
             Width = 90
@@ -383,7 +386,7 @@ object FPO: TFPO
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'qtyterkirim'
+            FieldName = 'qty_sent'
             Footers = <>
             Title.Caption = 'Kuantum|Terkirim'
             Width = 90
@@ -393,7 +396,7 @@ object FPO: TFPO
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'totalbayar'
+            FieldName = 'total_payment'
             Footer.DisplayFormat = '0.00#,##'
             Footer.ValueType = fvtSum
             Footers = <>
@@ -405,7 +408,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nopo'
+            FieldName = 'po_no'
             Footers = <>
             Visible = False
           end
@@ -414,7 +417,7 @@ object FPO: TFPO
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'sisaqty'
+            FieldName = 'remaining_qty'
             Footers = <>
             Title.Caption = 'Kuantum|Belum Dikirim'
             Width = 90
@@ -424,7 +427,7 @@ object FPO: TFPO
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'sisabayar'
+            FieldName = 'remaining_payment'
             Footer.DisplayFormat = '0.00#,##'
             Footer.ValueType = fvtSum
             Footers = <>
@@ -436,7 +439,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'gudang'
+            FieldName = 'warehouse'
             Footers = <>
             Title.Caption = 'Gudang'
             Width = 90
@@ -40753,7 +40756,7 @@ object FPO: TFPO
     MasterSource = DsRptPO
     MasterFields = 'nopo'
     DetailFields = 'nopo'
-    Left = 616
+    Left = 632
     Top = 32
     ParamData = <
       item
@@ -40888,37 +40891,40 @@ object FPO: TFPO
   object Qdetailpo: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      #9#9#9#9' '
       
-        'SELECT'#9'c.nm_material,c.category,a.iddetail,a.nopo,a.kd_materials' +
-        'tok,a.qty,a.harga,a.satuan,a.gudang,a.conv_currency, '
+        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
+        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
       
-        #9'a.qtyterkirim,a.totalbayar,a.sisabayar,a.sisaqty,a.ppn,a.ppn_rp' +
-        ',a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
+        #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
+        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
+      '        a.status,a.grandtotal'
+      '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
+      'FROM purchase.t_podetail AS "a" '
       
-        'FROM purchase.t_podetail AS "a" INNER JOIN purchase.t_material_s' +
-        'tok AS b ON a.kd_materialstok = b.kd_material_stok'
+        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
+        'de = b.material_stock_code'
       
-        '        INNER JOIN purchase.t_material AS "c" ON b.kd_material =' +
-        ' c.kd_material and b.no_material=c.no_material'
-      ' -- where a.nopo='#39'PO/547/E1/MLB/VI/21'#39
+        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
+        'erial_code and b.material_no=c.material_no'
       
-        'GROUP BY c.nm_material,c.category,a.iddetail,a.nopo,a.kd_materia' +
-        'lstok,a.qty,a.harga,a.satuan,a.gudang,a.conv_currency,'
+        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
+        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,'
       
-        '         a.qtyterkirim,a.totalbayar,a.sisabayar,a.sisaqty,a.ppn,' +
-        'a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,'
-      '         a.grandtotal')
+        '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
+        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
+        'dtotal'#9#9#9)
     MasterSource = DsPo
-    MasterFields = 'nopo'
-    DetailFields = 'nopo'
+    MasterFields = 'po_no'
+    DetailFields = 'po_no'
     Left = 424
     Top = 32
     ParamData = <
       item
         DataType = ftString
-        Name = 'nopo'
+        Name = 'po_no'
         ParamType = ptInput
-        Value = 'PO/013/III/21/PMA'
+        Value = 'PO/2023/XII/0001'
       end>
   end
   object DsdPO: TDataSetDriverEh
@@ -40943,24 +40949,23 @@ object FPO: TFPO
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'Select '#9'(case WHEN a."Status_approval"=0 THEN '#39'PENGAJUAN'#39' WHEN a' +
-        '."Status_approval"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
+        'select '#9'(case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a' +
+        '."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
       
         'END) AS status_app, (case WHEN a.status='#39'1'#39' THEN '#39'AKTIF'#39' WHEN a.' +
         'status='#39'0'#39' THEN '#39'SELESAI'#39
       'END) AS status,'
       
-        'a.nopo,a.no_kontrak,a.tgl_po,a.kd_supplier,a.pph23,a.ppn,a.order' +
-        '_no,a.nilai_valas,a.jenispo,'
+        'a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.' +
+        'order_no,a.valas_value,a.po_type,'
       
-        'a.valas,a.keterangan,a.jenis,a.status,a.jenisangkutan,a.kd_divis' +
-        'i,a.tgl_delivery,B.supplier_name,--C.nm_divisi,'
+        'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.divisi' +
+        'on_code,a.delivery_date,B.supplier_name,--C.nm_divisi,'
       
-        ' a.jatuh_tempo,a."Status_approval",a.approval,a.gudang,a.tgl_del' +
-        'ivery2,a.id,a.trans_day,a.trans_month,a.trans_year'
+        ' a.due_date,a."approval_status",a.approval,a.warehouse,a.deliver' +
+        'y2_date,a.id,a.trans_day,a.trans_month,a.trans_year'
       'from purchase.t_po A '
-      'Inner join t_supplier B on A.kd_supplier=B.supplier_code'
-      '-- Inner join t_divisi C on A.kd_divisi=C.kd_divisi'
+      'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'order by A.id desc')
     Active = True
     Left = 320

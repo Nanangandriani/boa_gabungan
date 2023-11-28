@@ -72,14 +72,24 @@ type
     { Public declarations }
   end;
 
-var
-  FPenomoran: TFPenomoran;
+function FPenomoran: TFPenomoran;
 
 implementation
 
 {$R *.dfm}
 
 uses Unew_Penomoran, UDataModule;
+
+var
+  realFPenomoran: TFPenomoran;
+
+function FPenomoran: TFPenomoran;
+begin
+  if realFPenomoran <> nil then
+    FPenomoran:= realFPenomoran
+  else
+    Application.CreateForm(TFPenomoran, Result);
+end;
 
 procedure TFPenomoran.ActRoExecute(Sender: TObject);
 begin

@@ -108,6 +108,7 @@ type
     Edit10: TEdit;
     BCari: TRzButtonEdit;
     EdAdd: TEdit;
+    QAdditional: TUniQuery;
     procedure BCancelClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CBKomponen_NoSelect(Sender: TObject);
@@ -769,20 +770,20 @@ end;
 
 procedure TFNew_Penomoran.numb_comp_load;
 begin
-    with QnumbComp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from t_numb_component order by id ASC';
-      Open;
-    end;
-    CBKomponen_No.Items.Clear;
-    QnumbComp.First;
-    while not QnumbComp.Eof do
-    begin
-      CBKomponen_No.Items.Add(QnumbComp['description']);
-      QnumbComp.Next;
-    end;
+      with QnumbComp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_numb_component where id <> 8 order by id ASC';
+        Open;
+      end;
+      CBKomponen_No.Items.Clear;
+      QnumbComp.First;
+      while not QnumbComp.Eof do
+      begin
+        CBKomponen_No.Items.Add(QnumbComp['description']);
+        QnumbComp.Next;
+      end;
 end;
 
 procedure TFNew_Penomoran.numb_type_load;
@@ -826,7 +827,7 @@ begin
     trans_type_load;
     numb_type_load;
     numb_comp_load;
-    additional_load;
+    //additional_load;
     qnumb_det_tmp.Close;
     qnumb_det_tmp.Open;
 
@@ -1446,6 +1447,19 @@ begin
         IdComp.Text:=fieldbyname('id').AsString;
       end;
    end;
+   if CBKomponen_No.ItemIndex=7 then
+   begin
+      Ed_comp.Text:='';
+
+      with Qcomp do
+      begin
+        close;
+        sql.Clear;
+        sql.Add('select * from t_numb_component where description='+Quotedstr(CBKomponen_No.Text));
+        Open;
+        IdComp.Text:=fieldbyname('id').AsString;
+      end;
+   end;
 end;
 
 procedure TFNew_Penomoran.CbTipeNoSelect(Sender: TObject);
@@ -1474,13 +1488,17 @@ end;
 
 procedure TFNew_Penomoran.CheckAddClick(Sender: TObject);
 begin
-   if CheckAdd.Checked then
+   if CheckAdd.Checked=true then
    begin
-     CbAdd.Enabled:=True;
      Bcari.Enabled:=True;
-   end
-   else
-   CbAdd.Enabled:=False;
+     additional_load;
+   end;
+   if CheckAdd.Checked=False then
+   begin
+     Bcari.Enabled:=True;
+     CBKomponen_No.Text:='';
+     numb_comp_load;
+   end;
 
 end;
 
@@ -1659,7 +1677,21 @@ end;
 
 procedure TFNew_Penomoran.additional_load;
 begin
-    with  FNew_Additional.QAdditional do
+      with QAdditional do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_numb_component  order by id ASC';
+        Open;
+      end;
+      CBKomponen_No.Items.Clear;
+      QAdditional.First;
+      while not QAdditional.Eof do
+      begin
+        CBKomponen_No.Items.Add(QAdditional['description']);
+        QAdditional.Next;
+      end;
+    {with  FNew_Additional.QAdditional do
     begin
       close;
       sql.Clear;
@@ -1672,7 +1704,7 @@ begin
     begin
       CBAdd.Items.Add(FNew_Additional.QAdditional['code']);
       FNew_Additional.QAdditional.Next;
-    end;
+    end;}
 end;
 
 end.

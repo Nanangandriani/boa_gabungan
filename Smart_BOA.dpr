@@ -78,7 +78,11 @@ uses
   UNew_Pot_Pembelian in 'UNew_Pot_Pembelian.pas' {FNew_Pot_Pembelian},
   USPB in 'USPB.pas' {FSPB},
   UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat},
-  UNew_Additional in 'UNew_Additional.pas' {FNew_Additional};
+  UNew_Additional in 'UNew_Additional.pas' {FNew_Additional},
+  UMy_Function in 'UMy_Function.pas',
+  UNew_Kategori_Gudang in 'UNew_Kategori_Gudang.pas' {FNew_Kategori_Gudang},
+  Udafcek_entry in 'Udafcek_entry.pas' {FDaf_EntryCek},
+  Uimportnocek in 'Uimportnocek.pas' {FImportnocek};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -108,6 +112,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFPO, FPO);
   Application.CreateForm(TFNew_Additional, FNew_Additional);
+  Application.CreateForm(TFNew_Kategori_Gudang, FNew_Kategori_Gudang);
+  Application.CreateForm(TFImportnocek, FImportnocek);
+  //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   //Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
   Application.CreateForm(TFSearch_Supplier_SPB, FSearch_Supplier_SPB);
@@ -127,7 +134,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListSupplier, FListSupplier);
   Application.CreateForm(TFListPerusahaan, FListPerusahaan);
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
-  Application.CreateForm(TFPenomoran, FPenomoran);
+  //Application.CreateForm(TFPenomoran, FPenomoran);
   Application.CreateForm(TFNew_Supplier, FNew_Supplier);
   Application.CreateForm(TFDept, FDept);
   Application.CreateForm(TFJabatan, FJabatan);

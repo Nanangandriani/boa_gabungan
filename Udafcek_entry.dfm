@@ -1,7 +1,9 @@
-object FPenomoran: TFPenomoran
+object FDaf_EntryCek: TFDaf_EntryCek
   Left = 0
   Top = 0
-  Caption = 'FPenomoran'
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Form List Daftar Cek'
   ClientHeight = 491
   ClientWidth = 905
   Color = clBtnFace
@@ -10,8 +12,8 @@ object FPenomoran: TFPenomoran
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
-  WindowState = wsMaximized
+  Position = poMainFormCenter
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -24,6 +26,7 @@ object FPenomoran: TFPenomoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitTop = 8
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -33,124 +36,207 @@ object FPenomoran: TFPenomoran
       Index = 0
     end
   end
-  object DBGridNo: TDBGridEh
+  object DBGridEh1: TDBGridEh
     Left = 0
-    Top = 127
+    Top = 169
     Width = 905
-    Height = 364
+    Height = 322
     Align = alClient
-    DataSource = DSNo
-    DrawMemoText = True
+    DataSource = DSnocek
     DynProps = <>
-    IndicatorTitle.TitleButton = True
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
-    SearchPanel.FilterOnTyping = True
-    STFilter.Location = stflInTitleFilterEh
-    STFilter.Visible = True
     TabOrder = 1
-    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_no'
+        FieldName = 'cek_no'
         Footers = <>
-        Title.Caption = 'No Trans'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'numb_type'
-        Footers = <>
-        Title.Caption = 'Kode Modul'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_type'
-        Footers = <>
-        Title.Caption = 'Nama Modul'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'component_description'
-        Footers = <>
-        Title.Caption = 'Deskripsi Penomoran'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'digit_counter'
-        Footers = <>
-        Title.Caption = 'Digit Counter'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'description'
-        Footers = <>
-        Title.Caption = 'Jenis Reset'
+        Title.Caption = 'No.Cek'
         Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bank'
+        Footers = <>
+        Title.Caption = 'Bank'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'rek_no'
+        Footers = <>
+        Title.Caption = 'No.Rekening'
+        Width = 200
       end>
     object RowDetailData: TRowDetailPanelControlEh
-      object DBGridNodet: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 815
-        Height = 118
-        Align = alClient
-        DataSource = DsDetNo
-        DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SumList.Active = True
-        TabOrder = 0
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'urutan'
-            Footers = <>
-            Title.Caption = 'No Urut'
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'param_name'
-            Footers = <>
-            Title.Caption = 'Parameter'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'description'
-            Footers = <>
-            Title.Caption = 'Keterangan'
-            Width = 150
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 127
+    Width = 905
+    Height = 42
+    Align = alTop
+    TabOrder = 6
+    object Label1: TLabel
+      Left = 15
+      Top = 14
+      Width = 54
+      Height = 13
+      Alignment = taCenter
+      Caption = 'Cek / BG'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Layout = tlCenter
+    end
+    object Label2: TLabel
+      Left = 253
+      Top = 14
+      Width = 30
+      Height = 13
+      Caption = 'Bank'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object ComboBox1: TComboBox
+      Left = 90
+      Top = 11
+      Width = 133
+      Height = 23
+      Style = csDropDownList
+      ImeName = 'US'
+      TabOrder = 0
+      OnChange = ComboBox1Change
+      Items.Strings = (
+        ''
+        'CEK'
+        'BG'
+        'SLIP')
+    end
+    object cbbank: TComboBox
+      Left = 292
+      Top = 11
+      Width = 147
+      Height = 23
+      Style = csDropDownList
+      ImeName = 'US'
+      TabOrder = 1
+      OnChange = cbbankChange
+      Items.Strings = (
+        ''
+        'CEK'
+        'BG')
+    end
+  end
+  object qnocek: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_nocek')
+    Left = 569
+    Top = 48
+    object qnocekcode: TIntegerField
+      FieldName = 'code'
+    end
+    object qnocekcek_no: TStringField
+      FieldName = 'cek_no'
+      Size = 35
+    end
+    object qnocekbank: TStringField
+      FieldName = 'bank'
+      Size = 10
+    end
+    object qnocekrek_no: TStringField
+      FieldName = 'rek_no'
+      Size = 25
+    end
+    object qnocekcekbg: TStringField
+      FieldName = 'cekbg'
+      Size = 5
+    end
+    object qnocekstatus: TStringField
+      FieldName = 'status'
+      Size = 1
+    end
+    object qnocekid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object qnocekcreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object qnocekcreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object qnocekupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object qnocekupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object qnocekdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object qnocekdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+  end
+  object DSnocek: TDataSource
+    DataSet = qnocek
+    Left = 504
+    Top = 48
+  end
+  object ActMenu: TActionManager
+    Left = 656
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRo: TAction
+      Caption = 'Refresh  '
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
     end
   end
   object dxBarManager1: TdxBarManager
@@ -177,8 +263,8 @@ object FPenomoran: TFPenomoran
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 51
+      FloatClientHeight = 151
       ItemLinks = <
         item
           Visible = True
@@ -265,7 +351,6 @@ object FPenomoran: TFPenomoran
         05E60567412852BEACBAE94267CDEE1B6375AD77646D4BEFDB554DE72F1595C6
         2A8050F58E5E948850B856EFBA094AF8BFEF80058481A22091011CC0AD6ABE6A
         44E03B805C64CDB4C3E1300000000049454E44AE426082}
-      OnClick = dxBarButton1Click
     end
     object dxBarButton3: TdxBarButton
       Caption = 'Refresh'
@@ -436,10 +521,8 @@ object FPenomoran: TFPenomoran
         BFC080A205F60000000049454E44AE426082}
     end
     object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'New'
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -572,7 +655,6 @@ object FPenomoran: TFPenomoran
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
     end
     object dxBarButton8: TdxBarButton
       Caption = 'Update'
@@ -615,8 +697,9 @@ object FPenomoran: TFPenomoran
         82}
     end
     object dxBarButton9: TdxBarButton
-      Action = ActRo
+      Caption = 'Refresh  '
       Category = 0
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -690,103 +773,6 @@ object FPenomoran: TFPenomoran
         DA8CD6E1B4ABA77376F3CD9987FBB0596FF0DBF6A78FD5E81DB6219848F3BFFB
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
-    end
-  end
-  object QDetNo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'SELECT  a.*,c.description from t_numb_det a '
-      'LEFT JOIN t_numb_component c on a.id_param=c.id'
-      
-        'GROUP BY a.trans_no,a.id,a.param_name,a.urutan,a.id_param,a.deli' +
-        'miter,c.description'
-      'order by a.trans_no ASC')
-    MasterSource = DSNo
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Active = True
-    Left = 488
-    Top = 33
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'TR20231006-1'
-      end>
-  end
-  object DsDetNo: TDataSource
-    DataSet = QDetNo
-    Left = 488
-    Top = 88
-  end
-  object QNo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      ''
-      'SELECT  a.*,c.submenu2,d.description from t_numb a'
-      'INNER JOIN t_numb_det b on a.trans_no=b.trans_no'
-      'LEFT JOIN t_submenu2 c  on a.numb_type=c.kd_submenu'
-      'LEFT JOIN t_numb_type d on a.reset_type=d.id'
-      
-        'GROUP BY a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.c' +
-        'omponent_description,'
-      
-        'a.reset_type,a.additional_status,a.active_status,c.submenu2,d.de' +
-        'scription,a.remarks'
-      'order by a.trans_no ASC')
-    Left = 384
-    Top = 32
-  end
-  object DSDNo: TDataSetDriverEh
-    ProviderDataSet = QNo
-    Left = 424
-    Top = 88
-  end
-  object MemNo: TMemTableEh
-    Params = <>
-    DataDriver = DSDNo
-    Left = 384
-    Top = 88
-  end
-  object DSNo: TDataSource
-    DataSet = MemNo
-    Left = 424
-    Top = 32
-  end
-  object ActMenu: TActionManager
-    Left = 656
-    Top = 32
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'Baru  '
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-    end
-    object ActRo: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActRoExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      Enabled = False
-      Visible = False
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-      Visible = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose Kontrak    '
-      Enabled = False
     end
   end
 end

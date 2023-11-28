@@ -401,6 +401,19 @@
             <Form>FNew_Additional</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UMy_Function.pas"/>
+        <DCCReference Include="UNew_Kategori_Gudang.pas">
+            <Form>FNew_Kategori_Gudang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Udafcek_entry.pas">
+            <Form>FDaf_EntryCek</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Uimportnocek.pas">
+            <Form>FImportnocek</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

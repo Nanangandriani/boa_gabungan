@@ -17,7 +17,6 @@ type
     QSupplier: TUniQuery;
     DsSupplier: TDataSource;
     procedure DBGridEh1DblClick(Sender: TObject);
-    procedure FormDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -46,42 +45,17 @@ begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
     end;
-    with FNewKontrak_ks do
+    {with FNewKontrak_ks do
     begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
-    end;
+    end;}
     {with FNew_do do
     begin
       Edkd_supp_Angkutan.Text:=QSupplier['supplier_code'];
       ednm_supp_Angkutan.Text:=QSupplier['supplier_name'];
     end;}
      close;
-end;
-
-procedure TFSearch_Supplier_SPB.FormDblClick(Sender: TObject);
-begin
-    with Fnew_spb do
-    begin
-      Edkd_supp.Text:=QSupplier['kd_supplier'];
-      ednm_supp.Text:=QSupplier['nm_supplier'];
-    end;
-    with FNew_PO do
-    begin
-      Edkd_supp.Text:=QSupplier['kd_supplier'];
-      ednm_supp.Text:=QSupplier['nm_supplier'];
-    end;
-    with FNewKontrak_ks do
-    begin
-      Edkd_supp.Text:=QSupplier['kd_supplier'];
-      ednm_supp.Text:=QSupplier['nm_supplier'];
-    end;
-    {with FNew_do do
-    begin
-      Edkd_supp_Angkutan.Text:=QSupplier['kd_supplier'];
-      ednm_supp_Angkutan.Text:=QSupplier['nm_supplier'];
-    end;}
- close;
 end;
 
 procedure TFSearch_Supplier_SPB.FormShow(Sender: TObject);

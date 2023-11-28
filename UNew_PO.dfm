@@ -323,6 +323,7 @@ object FNew_PO: TFNew_PO
       Height = 23
       Text = ''
       TabOrder = 12
+      OnChange = EdNm_suppChange
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = EdNm_suppButtonClick
@@ -1144,7 +1145,7 @@ object FNew_PO: TFNew_PO
     end
     object Button1: TButton
       Left = 856
-      Top = 0
+      Top = 4
       Width = 75
       Height = 25
       Caption = 'Button1'
