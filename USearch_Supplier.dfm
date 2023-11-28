@@ -189,6 +189,63 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
         'ier_code asc')
     Left = 248
     Top = 72
+    object QSuppliersupplier_code: TStringField
+      FieldName = 'supplier_code'
+      Required = True
+      Size = 3
+    end
+    object QSuppliersupplier_name: TStringField
+      FieldName = 'supplier_name'
+      Size = 100
+    end
+    object QSupplieraddress: TStringField
+      FieldName = 'address'
+      Size = 200
+    end
+    object QSuppliertelp: TStringField
+      FieldName = 'telp'
+      FixedChar = True
+    end
+    object QSuppliersupplier1_name: TStringField
+      FieldName = 'supplier1_name'
+      Size = 255
+    end
+    object QSuppliernpwp: TStringField
+      FieldName = 'npwp'
+      Size = 50
+    end
+    object QSuppliercontact_person: TStringField
+      FieldName = 'contact_person'
+      Size = 255
+    end
+    object QSupplierpph: TStringField
+      FieldName = 'pph'
+    end
+    object QSupplierid: TGuidField
+      FieldName = 'id'
+      Size = 38
+    end
+    object QSuppliercreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QSuppliercreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object QSupplierupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QSupplierupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QSupplierdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QSupplierdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
   end
   object DsSupplier: TDataSource
     DataSet = QSupplier

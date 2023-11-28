@@ -1,4 +1,4 @@
-unit USearch_Supplier_SPB;
+unit USearch_Supplier;
 
 interface
 
@@ -16,6 +16,21 @@ type
     BSimpan: TRzBitBtn;
     QSupplier: TUniQuery;
     DsSupplier: TDataSource;
+    QSuppliersupplier_code: TStringField;
+    QSuppliersupplier_name: TStringField;
+    QSupplieraddress: TStringField;
+    QSuppliertelp: TStringField;
+    QSuppliersupplier1_name: TStringField;
+    QSuppliernpwp: TStringField;
+    QSuppliercontact_person: TStringField;
+    QSupplierpph: TStringField;
+    QSupplierid: TGuidField;
+    QSuppliercreated_at: TDateTimeField;
+    QSuppliercreated_by: TStringField;
+    QSupplierupdated_at: TDateTimeField;
+    QSupplierupdated_by: TStringField;
+    QSupplierdeleted_at: TDateTimeField;
+    QSupplierdeleted_by: TStringField;
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -35,6 +50,7 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO;
 
 procedure TFSearch_Supplier_SPB.DBGridEh1DblClick(Sender: TObject);
 begin
+    //showmessage('0');
     {with Fnew_spb do
     begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
@@ -42,8 +58,8 @@ begin
     end;}
     with FNew_PO do
     begin
-      Edkd_supp.Text:=QSupplier['supplier_code'];
-      ednm_supp.Text:=QSupplier['supplier_name'];
+      FNew_PO.EdKd_supp.Text:=QSupplier['supplier_code'];
+      FNew_PO.ednm_supp.Text:=QSupplier['supplier_name'];
     end;
     {with FNewKontrak_ks do
     begin
