@@ -56,46 +56,45 @@ begin
    strday:=IntToStr(day);
    strbulan:=inttostr(month);
    strtahun:=inttostr(year);
-
    // menentukan akses reset number
    with dm.Qtemp do
    begin
      close;
      sql.Clear;
-     sql.Text:='select a.id,b.id_additional,c.code from t_numb_type a inner join t_numb b on a.id=b.reset_type left join t_additional c on c.id=b.id_additional where numb_type='+QuotedStr(idmenu);
+     sql.Text:='select a.id,b.additional_status from t_numb_type a inner join t_numb b on a.id=b.reset_type where numb_type='+QuotedStr(idmenu);
      open;
    end;
-   if (dm.Qtemp['id']='1') and (dm.Qtemp['id_additional']='0') then
+   if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']='0') then
    begin
        strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional isnull';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='2') and (dm.Qtemp['id_additional']='0') then
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']='0') then
    begin
        strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and  trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='3') and (dm.Qtemp['id_additional']='0')then
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']='0')then
    begin
        strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='4') and (dm.Qtemp['id_additional']='0')then
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']='0')then
    begin
        strbukti:='Select max(order_no) urut from '+Tablename+'  where code_additional isnull and trans_year='+quotedstr(strtahun);
    end;
-      if (dm.Qtemp['id']='1') and (dm.Qtemp['id_additional']>'0') then
+      if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename +' where code_additional='+ quotedstr(dm.Qtemp['code']);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename +' where code_additional='+ quotedstr(kode);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='2') and (dm.Qtemp['id_additional']>'0') then
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional='+ quotedstr(dm.Qtemp['code'])+' and trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional='+ quotedstr(kode)+' and trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='3') and (dm.Qtemp['id_additional']>'0')then
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(dm.Qtemp['code'])+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='4') and (dm.Qtemp['id_additional']>'0')then
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(dm.Qtemp['code'])+' and trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and trans_year='+quotedstr(strtahun);
    end;
     with dm.Qtemp do
     begin
@@ -108,7 +107,6 @@ begin
         nourut :=1
      else
         nourut :=dm.Qtemp.fields[0].AsInteger+ 1;
-
       // menentukan counter number
        query2:='SELECT digit_counter from t_numb where numb_type='+QuotedStr(idmenu);
        with dm.Qtemp2 do
@@ -130,7 +128,8 @@ begin
                       'when b.id=3 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''mm'') bulan) '+
                       'when b.id=4 then (SELECT trim(TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''RM'')) bulan) '+
                       'when b.id=5 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''dd'') hari)  '+
-                       'when b.id=6 then '+Quotedstr(GenerateNumber(nourut,(dm.Qtemp2['digit_counter'])))+' else a.param_name end param, '+
+                      'when b.id=6 then '+Quotedstr(GenerateNumber(nourut,(dm.Qtemp2['digit_counter'])))+' '+
+                      'when b.id=8 then '+Quotedstr(kode)+' else a.param_name end param, '+
                       'c.trans_type,d.note as reset FROM t_numb_det a '+
                       'left join t_numb_component b on a.id_param=b.id '+
                       'inner join t_numb c on a.trans_no=c.trans_no    '+

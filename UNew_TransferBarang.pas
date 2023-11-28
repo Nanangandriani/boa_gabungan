@@ -69,7 +69,7 @@ type
 Function  FNew_TransferBarang: TFNew_TransferBarang;
 var
   status:integer;
-  th,kd_gdngdari,kd_gdngke,bln,tglno,nourut,text1:string;
+  th,kd_gdngdari,kd_gdngke,bln,tglno,nourut,text1,kd_add:string;
 
 implementation
 
@@ -412,7 +412,8 @@ procedure TFNew_TransferBarang.BitBtn1Click(Sender: TObject);
 begin
   idmenu:='1';
   strday2:=DtTransfer.Date;
-  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer','kk');
+ // kd_add:=Edit1.Text;
+  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer',Edit1.Text);
   Edit2.Text:=order_no;
 end;
 
