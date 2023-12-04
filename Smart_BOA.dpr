@@ -69,7 +69,7 @@ uses
   USetMasterWilayah in 'USetMasterWilayah.pas' {FSetMasterWilayah},
   UPO in 'UPO.pas' {FPO},
   UNew_PO in 'UNew_PO.pas' {FNew_PO},
-  USearch_Supplier_SPB in 'USearch_Supplier_SPB.pas' {FSearch_Supplier_SPB},
+  USearch_Supplier in 'USearch_Supplier.pas' {FSearch_Supplier},
   UKontrakKerjasama in 'UKontrakKerjasama.pas' {FKontrakkerjasama},
   UNew_KontrakKerjasama in 'UNew_KontrakKerjasama.pas' {FNewKontrak_ks},
   UPembelian in 'UPembelian.pas' {FPembelian},
@@ -82,7 +82,9 @@ uses
   UMy_Function in 'UMy_Function.pas',
   UNew_Kategori_Gudang in 'UNew_Kategori_Gudang.pas' {FNew_Kategori_Gudang},
   Udafcek_entry in 'Udafcek_entry.pas' {FDaf_EntryCek},
-  Uimportnocek in 'Uimportnocek.pas' {FImportnocek};
+  Uimportnocek in 'Uimportnocek.pas' {FImportnocek},
+  UListItempo in 'UListItempo.pas' {Flistitempo},
+  Ulist_materialstok in 'Ulist_materialstok.pas' {Flistmaterialstok};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -114,10 +116,12 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Additional, FNew_Additional);
   Application.CreateForm(TFNew_Kategori_Gudang, FNew_Kategori_Gudang);
   Application.CreateForm(TFImportnocek, FImportnocek);
+  Application.CreateForm(TFlistitempo, Flistitempo);
+  Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
   //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
-  //Application.CreateForm(TFNew_PO, FNew_PO);
+  Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
-  Application.CreateForm(TFSearch_Supplier_SPB, FSearch_Supplier_SPB);
+  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFKontrakkerjasama, FKontrakkerjasama);
   Application.CreateForm(TFNewKontrak_ks, FNewKontrak_ks);
   Application.CreateForm(TFPembelian, FPembelian);

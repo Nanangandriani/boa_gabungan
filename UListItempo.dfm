@@ -34,7 +34,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_material_stok'
+        FieldName = 'material_stock_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
         Width = 95
@@ -43,7 +43,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'material_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
         Width = 145
@@ -62,7 +62,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'satuan'
+        FieldName = 'unit'
         Footers = <>
         Title.Caption = 'Satuan'
         Width = 83
@@ -72,7 +72,7 @@ object Flistitempo: TFlistitempo
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'harga'
+        FieldName = 'price'
         Footers = <>
         Title.Caption = 'Harga Satuan'
         Width = 84
@@ -81,7 +81,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'sisaqty'
+        FieldName = 'remaining_qty'
         Footers = <>
         Title.Caption = 'Sisa Kuantum Kontrak'
         Width = 126
@@ -108,7 +108,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_material_stok'
+        FieldName = 'material_stock_code'
         Footers = <>
         Title.Caption = 'Kode Material'
         Width = 99
@@ -117,7 +117,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'material_name'
         Footers = <>
         Title.Caption = 'Nama Material'
         Width = 171
@@ -126,7 +126,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_supplier'
+        FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Supplier'
         Visible = False
@@ -136,7 +136,7 @@ object Flistitempo: TFlistitempo
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'satuan'
+        FieldName = 'unit'
         Footers = <>
         Width = 76
       end>
@@ -150,8 +150,8 @@ object Flistitempo: TFlistitempo
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 335
-    ExplicitWidth = 583
+    ExplicitTop = 314
+    ExplicitWidth = 573
     object BBatal: TRzBitBtn
       Left = 503
       Top = 1
@@ -336,27 +336,60 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = 6
+      ExplicitLeft = 347
     end
   end
   object QMaterial_stok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.no_kontrak,a.kd_material_stok,a.qty,a.harga,a.satuan,a.' +
-        'total_harga,'
-      'a.sisaqty,a.totalpo,b.nm_material,A.ppn '
-      'FROM pembelian.t_kontrak_kerjasama_det AS "a"'
+        'SELECT a.contract_no,a.material_stock_code,a.qty,a.price,a.unit,' +
+        'a.total_price,'
+      'a.remaining_qty,a.totalpo,b.material_name,a.ppn '
+      'FROM purchase.t_coop_contract_det AS "a"'
       
-        'INNER JOIN pembelian.t_material_stok AS b ON a.kd_material_stok ' +
-        '= b.kd_material_stok'
+        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
+        'de = b.material_stock_code'
       
-        'GROUP BY a.no_kontrak,a.kd_material_stok,a.qty,a.harga,a.satuan,' +
-        'a.total_harga,'
-      'a.sisaqty,a.totalpo,b.nm_material,a.ppn'
-      'ORDER BY kd_material_stok DESC')
+        'GROUP BY a.contract_no,a.material_stock_code,a.qty,a.price,a.uni' +
+        't,a.total_price,'
+      'a.remaining_qty,a.totalpo,b.material_name,a.ppn'
+      'ORDER BY material_stock_code DESC')
     Left = 236
     Top = 173
+    object QMaterial_stokcontract_no: TStringField
+      FieldName = 'contract_no'
+    end
+    object QMaterial_stokmaterial_stock_code: TStringField
+      FieldName = 'material_stock_code'
+    end
+    object QMaterial_stokqty: TFloatField
+      FieldName = 'qty'
+    end
+    object QMaterial_stokprice: TFloatField
+      FieldName = 'price'
+    end
+    object QMaterial_stokunit: TStringField
+      FieldName = 'unit'
+      Size = 10
+    end
+    object QMaterial_stoktotal_price: TFloatField
+      FieldName = 'total_price'
+    end
+    object QMaterial_stokremaining_qty: TFloatField
+      FieldName = 'remaining_qty'
+    end
+    object QMaterial_stoktotalpo: TFloatField
+      FieldName = 'totalpo'
+    end
+    object QMaterial_stokmaterial_name: TStringField
+      FieldName = 'material_name'
+      ReadOnly = True
+      Size = 100
+    end
+    object QMaterial_stokppn: TFloatField
+      FieldName = 'ppn'
+    end
   end
   object DsMaterial_stok: TDataSource
     DataSet = QMaterial_stok
@@ -371,12 +404,75 @@ object Flistitempo: TFlistitempo
   object Qmaterial_stok2: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select A.*,B.nm_supplier , C.nm_material from t_material_stok A'
-      'left join t_supplier B on A.kd_supplier=B.kd_supplier '
-      'inner join t_material C on A.kd_material=C.kd_material'
-      'where B.nm_supplier is null'
-      'order by kd_material_stok Desc')
+      
+        'select A.*,B.supplier_name , C.material_name from purchase.t_mat' +
+        'erial_stock A'
+      'left join t_supplier B on A.supplier_code=B.supplier_code '
+      
+        'inner join purchase.t_material C on A.material_code=C.material_c' +
+        'ode'
+      'where B.supplier_name is null'
+      'order by material_stock_code Desc')
     Left = 236
     Top = 237
+    object Qmaterial_stok2material_code: TStringField
+      FieldName = 'material_code'
+      Size = 10
+    end
+    object Qmaterial_stok2supplier_code: TStringField
+      FieldName = 'supplier_code'
+      Size = 10
+    end
+    object Qmaterial_stok2material_stock_code: TStringField
+      FieldName = 'material_stock_code'
+      Required = True
+    end
+    object Qmaterial_stok2order_no: TLargeintField
+      FieldName = 'order_no'
+    end
+    object Qmaterial_stok2order_code: TStringField
+      FieldName = 'order_code'
+      Size = 6
+    end
+    object Qmaterial_stok2qty: TFloatField
+      FieldName = 'qty'
+    end
+    object Qmaterial_stok2unit: TStringField
+      FieldName = 'unit'
+      Size = 10
+    end
+    object Qmaterial_stok2merk: TStringField
+      FieldName = 'merk'
+      Size = 5
+    end
+    object Qmaterial_stok2material_name: TStringField
+      FieldName = 'material_name'
+      ReadOnly = True
+      Size = 100
+    end
+    object Qmaterial_stok2material_no: TStringField
+      FieldName = 'material_no'
+      Size = 5
+    end
+    object Qmaterial_stok2qty_per_conversion: TFloatField
+      FieldName = 'qty_per_conversion'
+    end
+    object Qmaterial_stok2qty_conversion: TFloatField
+      FieldName = 'qty_conversion'
+    end
+    object Qmaterial_stok2unit_conversion: TStringField
+      FieldName = 'unit_conversion'
+      Size = 40
+    end
+    object Qmaterial_stok2supplier_name: TStringField
+      FieldName = 'supplier_name'
+      ReadOnly = True
+      Size = 100
+    end
+    object Qmaterial_stok2material_name_1: TStringField
+      FieldName = 'material_name_1'
+      ReadOnly = True
+      Size = 100
+    end
   end
 end

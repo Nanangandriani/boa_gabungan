@@ -1,6 +1,7 @@
 object Flistmaterialstok: TFlistmaterialstok
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'List Material'
   ClientHeight = 344
   ClientWidth = 518
@@ -71,8 +72,8 @@ object Flistmaterialstok: TFlistmaterialstok
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 311
-    ExplicitWidth = 514
+    ExplicitTop = 303
+    ExplicitWidth = 512
     object BBatal: TRzBitBtn
       Left = 442
       Top = 1
@@ -132,7 +133,7 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 438
+      ExplicitLeft = 436
     end
     object BEdit: TRzBitBtn
       Left = 367
@@ -193,7 +194,7 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 363
+      ExplicitLeft = 361
     end
   end
   object DsMaterial_stok: TDataSource

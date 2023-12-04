@@ -9,7 +9,7 @@ uses
   Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
 
 type
-  TFSearch_Supplier_SPB = class(TForm)
+  TFSearch_Supplier = class(TForm)
     DBGridEh1: TDBGridEh;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
@@ -40,7 +40,7 @@ type
   end;
 
 var
-  FSearch_Supplier_SPB: TFSearch_Supplier_SPB;
+  FSearch_Supplier: TFSearch_Supplier;
 
 implementation
 
@@ -48,7 +48,7 @@ implementation
 
 uses UNew_KontrakKerjasama, Unew_spb, UNew_PO;
 
-procedure TFSearch_Supplier_SPB.DBGridEh1DblClick(Sender: TObject);
+procedure TFSearch_Supplier.DBGridEh1DblClick(Sender: TObject);
 begin
     //showmessage('0');
     {with Fnew_spb do
@@ -58,23 +58,24 @@ begin
     end;}
     with FNew_PO do
     begin
-      FNew_PO.EdKd_supp.Text:=QSupplier['supplier_code'];
-      FNew_PO.ednm_supp.Text:=QSupplier['supplier_name'];
+      EdKd_supp.Text:=QSupplier['supplier_code'];
+      ednm_supp.Text:=QSupplier['supplier_name'];
     end;
-    {with FNewKontrak_ks do
+    with FNewKontrak_ks do
     begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
-    end;}
+    end;
     {with FNew_do do
     begin
       Edkd_supp_Angkutan.Text:=QSupplier['supplier_code'];
       ednm_supp_Angkutan.Text:=QSupplier['supplier_name'];
     end;}
-     close;
+
+    close;
 end;
 
-procedure TFSearch_Supplier_SPB.FormShow(Sender: TObject);
+procedure TFSearch_Supplier.FormShow(Sender: TObject);
 begin
    DBGridEh1.SearchPanel.SearchingText:='';
 end;

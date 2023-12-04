@@ -20,7 +20,7 @@ object FNew_PO: TFNew_PO
     Height = 235
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1204
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 24
       Top = 86
@@ -469,6 +469,16 @@ object FNew_PO: TFNew_PO
       Width = 58
       Height = 23
       TabOrder = 23
+    end
+    object Cb_Code: TComboBox
+      Left = 383
+      Top = 169
+      Width = 121
+      Height = 23
+      TabOrder = 24
+      Items.Strings = (
+        'MDI'
+        'BCA')
     end
   end
   object DBGridDetail: TDBGridEh
@@ -1150,7 +1160,6 @@ object FNew_PO: TFNew_PO
       Height = 25
       Caption = 'Button1'
       TabOrder = 3
-      Visible = False
       OnClick = Button1Click
     end
   end

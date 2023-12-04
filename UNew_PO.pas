@@ -90,6 +90,7 @@ type
     Edth: TEdit;
     Button1: TButton;
     Edhari: TEdit;
+    Cb_Code: TComboBox;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -118,10 +119,10 @@ type
 
   end;
 
-function FNew_PO: TFNew_PO;
+//function FNew_PO: TFNew_PO;
 
 var
-  //FNew_PO: TFNew_PO;
+  FNew_PO: TFNew_PO;
   Status,kd_gd,kdsb,nopo:string;
   subtotal,ppn,pph,grandtotal:Real;
   StatusTr:integer;
@@ -129,10 +130,10 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier_SPB, UListItempo,
+uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier, UListItempo,
   UMainMenu,UMy_Function;
 
-var
+{var
   realFNew_PO: TFNew_PO;
 // implementasi function
 function FNew_PO: TFNew_PO;
@@ -141,14 +142,15 @@ begin
     FNew_PO:= RealFNew_PO
   else
     Application.CreateForm(TFNew_PO, Result);
-end;
+end;}
 
 
 procedure TFNew_PO.Autonumber;
 begin
   idmenu:='M4302';
   strday2:=Dtpo.Date;
-  Nopo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_po','');
+  //Nopo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_po','');
+  Nopo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_po',Cb_code.text);
   Edurut.Text:=order_no;
 end;
 
@@ -223,7 +225,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_kontrak_kerjasama_det where no_kontrak='+QuotedStr(Edno_kontrak.Text);
+      sql.Text:='select * from purchase.t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text);
       ExecSQL;
     end;
     Dm.QTemp2.First;
@@ -236,13 +238,13 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' SELECT a.no_kontrak,a.kd_material_stok,a.qty,a.harga,a.satuan,a.total_harga,'+
-                ' a.sisaqty,a.totalpo,b.nm_material,a.ppn FROM t_kontrak_kerjasama_det AS "a" '+
-                ' INNER JOIN t_material_stok AS b ON a.kd_material_stok = b.kd_material_stok '+
-                ' where A.no_kontrak='+QuotedStr(Edno_kontrak.Text)+''+
-                ' GROUP BY a.no_kontrak,a.kd_material_stok,a.qty,a.harga,a.satuan, '+
-                ' a.total_harga, a.sisaqty,a.totalpo,b.nm_material,a.ppn '+
-                ' ORDER BY kd_material_stok DESC ';
+      sql.Text:=' SELECT a.contract_no,a.material_stock_code,a.qty,a.price,a.unit,a.total_price,'+
+                ' a.remaining_qty,a.totalpo,b.material_name,a.ppn FROM purchase.t_coop_contract_det AS "a" '+
+                ' INNER JOIN purchase.t_material_stock AS b ON a.material_stock_code = b.material_stock_code '+
+                ' where A.contract_no='+QuotedStr(Edno_kontrak.Text)+''+
+                ' GROUP BY a.contract_no,a.material_stock_code,a.qty,a.price,a.unit, '+
+                ' a.total_price, a.remaining_qty,a.totalpo,b.material_name,a.ppn '+
+                ' ORDER BY material_stock_code DESC ';
       ExecSQL;
     end;
     Flistitempo.QMaterial_stok.Open;
@@ -271,11 +273,11 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' select A.*,B.supplier_name , C.nm_material from purchase.t_material_stok A  '+
-                ' left join t_supplier B on A.kd_supplier=B.supplier_code  '+
-                ' inner join purchase.t_material C on A.kd_material=C.kd_material  '+
-                ' where A.kd_supplier='+QuotedStr(EdKd_supp.Text)+' and '+
-                ' C.jenis<>''PRODUKSI''';
+      sql.Text:=' select A.*,B.supplier_name , C.material_name from purchase.t_material_stock A  '+
+                ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
+                ' inner join purchase.t_material C on A.material_code=C.material_code  '+
+                ' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+' and '+
+                ' C.type <>''PRODUKSI''';
       ExecSQL;
     end;
     Flistitempo.QMaterial_stok2.Open;
@@ -285,16 +287,16 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' select a.kd_material,a.kd_supplier, a.kd_material_stok,a.no_urut,a.kd_urut, '+
-                '	a.qty,a.satuan, a.merk,a.nm_material,a.no_material,	a.qtyperkonversi, '+
-                ' a.qtykonversi,a.satuankonversi,B.nm_supplier , C.nm_material,C.jenis '+
-                ' from t_material_stok A  '+
-                ' left join t_supplier B on A.kd_supplier=B.kd_supplier  '+
-                ' inner join t_material C on A.kd_material=C.kd_material  '+
-                ' where A.kd_supplier='+QuotedStr(EdKd_supp.Text)+'and c.jenis<>''PRODUKSI'''+
-                ' group by a.kd_material,a.kd_supplier, a.kd_material_stok,a.no_urut,a.kd_urut, '+
-                '	a.qty,a.satuan, a.merk,a.nm_material,a.no_material,	a.qtyperkonversi, '+
-                ' a.qtykonversi,a.satuankonversi,B.nm_supplier , C.nm_material,c.jenis';
+      sql.Text:=' select a.material_code,a.supplier_code, a.material_stock_code,a.order_no,a.order_code, '+
+                '	a.qty,a.unit, a.merk,a.material_name,a.material_no,	a.qty_per_conversion, '+
+                ' a.qty_conversion,a.unit_conversion,B.supplier_name , C.material_name,C.type '+
+                ' from purchase.t_material_stock A  '+
+                ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
+                ' inner join purchase.t_material C on A.material_code=C.material_code  '+
+                ' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+'and c.type<>''PRODUKSI'''+
+                ' group by a.material_code,a.supplier_code, a.material_stock,a.order_no,a.order_code, '+
+                '	a.qty,a.unit, a.merk,a.material_name,a.no_material,	a.qty_per_conversion, '+
+                ' a.qty_conversion,a.unit_conversion,B.supplier_no, C.material_name,c.type';
       ExecSQL;
     end;
     Flistitempo.QMaterial_stok2.Open;
@@ -303,10 +305,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' select A.*,B.supplier_name , C.nm_material,C.jenis from purchase.t_material_stok A  '+
-                ' left join t_supplier B on A.kd_supplier=B.supplier_code  '+
-                ' inner join purchase.t_material C on A.kd_material=C.kd_material  '+
-                ' where C.jenis<>''PRODUKSI'' and b.supplier_name is Null';
+      sql.Text:=' select A.*,B.supplier_name , C.material_name,C.type from purchase.t_material_stock A  '+
+                ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
+                ' inner join purchase.t_material C on A.material_code=C.material_code  '+
+                ' where C.type <>''PRODUKSI'' and b.supplier_name is Null';
       ExecSQL;
     end;
     Flistitempo.QMaterial_stok2.Open;
@@ -387,7 +389,7 @@ end;
 
 procedure TFNew_PO.EdNm_suppButtonClick(Sender: TObject);
 begin
-    with FSearch_Supplier_SPB do
+    with FSearch_Supplier do
     begin
       Show;
       QSupplier.Close;
@@ -409,12 +411,12 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_coop_contract where kd_supplier='+QuotedStr(EdKd_supp.Text)+''+
-                ' and status = ''1'' AND "Status_Approval"=''1'' order by no_kontrak Desc';
+      sql.Text:='select * from purchase.t_coop_contract where supplier_code='+QuotedStr(EdKd_supp.Text)+''+
+                ' and status = ''1'' AND "approval_status"=''1'' order by contract_no Desc';
 
       ExecSQL;
     end;
-    if dm.QTemp2['No_kontrak']<>'' then
+    if dm.QTemp2['contract_no']<>'' then
     begin
       Edno_kontrak.Text:='0';
     end else
@@ -514,6 +516,7 @@ begin
 end;}
 
 procedure TFNew_PO.FormShow(Sender: TObject);
+var status:string;
 begin
    Datetimepicker1.Date:=Now;
    DtBln.Date:=now;
@@ -522,7 +525,28 @@ begin
    FPO.Load;
    if MemItempo.Active=False then  MemItempo.Active:=True;
    Self.Clear;
-   //Autonumber;
+
+   with dm.Qtemp do
+   begin
+      close;
+      sql.Clear;
+      sql.Add('SELECT * from t_numb where numb_type=''M4302'' ');
+      open;
+   end;
+   status:=dm.Qtemp.FieldByName('additional_status').Asstring;
+   showmessage(dm.Qtemp.FieldByName('additional_status').Asstring);
+
+   if status='false' then
+   begin
+      Cb_code.Enabled:=false;
+      showmessage('tidak aktif');
+   end;
+   if status='true' then
+   begin
+      Cb_code.Enabled:=true;
+      showmessage('aktif');
+   end;
+
 end;
 
 procedure TFNew_PO.Simpan;
@@ -709,7 +733,7 @@ end;
 
 procedure TFNew_PO.BSimpanClick(Sender: TObject);
 begin
-   { if EdStatus.Text='' then
+    if EdStatus.Text='' then
     begin
       MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
       EdStatus.SetFocus;
@@ -721,12 +745,12 @@ begin
       EdNm_supp.SetFocus;
       Exit;
     end;
-    if EdCurr.Text='' then
+    {if EdCurr.Text='' then
     begin
       MessageDlg('Currency Tidak boleh Kosong ',MtWarning,[MbOk],0);
       EdCurr.SetFocus;
       Exit;
-    end;
+    end;}
     if DtPO.Text='' then
     begin
       MessageDlg('Tanggal Po Tidak Boleh Kosong ',MtWarning,[MbOk],0);
@@ -760,9 +784,7 @@ begin
       Exit;
     end;
     MemItempo.Next;
-    end; }
-
-
+    end;
 
     if not dm.koneksi.InTransaction then
     dm.koneksi.StartTransaction;
@@ -792,8 +814,6 @@ begin
 procedure TFNew_PO.Button1Click(Sender: TObject);
 begin
   Autonumber;
-
-
 end;
 
 end.

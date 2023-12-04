@@ -22,6 +22,7 @@ object FPO: TFPO
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -40729,28 +40730,30 @@ object FPO: TFPO
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT'#9'c.nm_material,c.category,a.iddetail,a.nopo,a.kd_materials' +
-        'tok,a.qty,a.harga,a.satuan,a.gudang,a.conv_currency, '
+        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
+        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
       
-        #9'a.qtyterkirim,a.totalbayar,a.sisabayar,a.sisaqty,a.ppn,a.ppn_rp' +
-        ',a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
+        #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
+        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
       ',sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
       ''
+      'FROM purchase.t_podetail AS "a" '
       
-        'FROM t_podetail AS "a" INNER JOIN t_material_stok AS b ON a.kd_m' +
-        'aterialstok = b.kd_material_stok'
+        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
+        'de = b.material_stock_code'
       
-        '     INNER JOIN t_material AS "c" ON b.kd_material = c.kd_materi' +
-        'al and b.no_material=c.no_material'
+        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
+        'erial_code and b.material_no=c.material_no'
       
-        '-- INNER JOIN (select sum(Grandtotal)as sumtotal,nopo from t_pod' +
-        'etail GROUP BY nopo) f on f.nopo=a.nopo'
+        '-- INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purc' +
+        'hase.t_podetail GROUP BY po_no) f on f.po_no=a.po_no'
       
-        'GROUP BY c.nm_material,c.category,a.iddetail,a.nopo,a.kd_materia' +
-        'lstok,a.qty,a.harga,a.satuan,a.gudang,a.conv_currency,'
+        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
+        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,'
       
-        '         a.qtyterkirim,a.totalbayar,a.sisabayar,a.sisaqty,a.ppn,' +
-        'a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
+        '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
+        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
+        'dtotal'
       ''
       '-- where A.nopo='#39'PO/002/XI/20/HKJ'#39)
     MasterSource = DsRptPO
@@ -40849,37 +40852,40 @@ object FPO: TFPO
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT'#9'c.nm_material,c.category,a.iddetail,a.nopo,a.kd_materials' +
-        'tok,a.qty,a.harga,a.satuan,a.gudang,a.conv_currency, '
+        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
+        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
       
-        #9'a.qtyterkirim,a.totalbayar,a.sisabayar,a.sisaqty,a.ppn,a.ppn_rp' +
-        ',a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
+        #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
+        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
       
-        ',sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.tgl_po,d.t' +
-        'gl_delivery, E.nm_supplier,e.ALAMAT,d.valas,d.keterangan'
-      ',d.tgl_delivery2,d.nopo2,sumtotal,c.jenis'
+        ',sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.po_date,d.' +
+        'delivery_date, E.supplier_name,e.address,d.valas,d.remarks'
+      ',d.delivery2_date,d.po2_no,sumtotal,c.type'
+      'FROM purchase.t_podetail AS "a" '
       
-        'FROM t_podetail AS "a" INNER JOIN t_material_stok AS b ON a.kd_m' +
-        'aterialstok = b.kd_material_stok'
+        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
+        'de = b.material_stock_code'
       
-        '     INNER JOIN t_material AS "c" ON b.kd_material = c.kd_materi' +
-        'al and b.no_material=c.no_material'
-      '     Inner join t_po D on a.nopo=d.nopo'
-      '     INNER JOIN t_supplier E on D.kd_supplier=E.kd_supplier'
+        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
+        'erial_code and b.material_no=c.material_no'
+      'Inner join purchase.t_po D on a.po_no=d.po_no'
+      'INNER JOIN t_supplier E on D.supplier_code=E.supplier_code'
       
-        'INNER JOIN (select sum(Grandtotal)as sumtotal,nopo from t_podeta' +
-        'il GROUP BY nopo) f on d.nopo=f.nopo'
+        'INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purchas' +
+        'e.t_podetail GROUP BY po_no) f on d.po_no=f.po_no'
       '-- where a.nopo='#39'PO/105/E2/MLB/VII/21'#39
       
-        'GROUP BY c.nm_material,c.category,a.iddetail,a.nopo,a.kd_materia' +
-        'lstok,a.qty,a.harga,a.satuan,a.gudang,a.conv_currency,'
+        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
+        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,d' +
+        '.po_date,'
       
-        '         a.qtyterkirim,a.totalbayar,a.sisabayar,a.sisaqty,a.ppn,' +
-        'a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
+        '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
+        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
+        'dtotal'
       
-        ',d.tgl_po,d.tgl_delivery, E.nm_supplier,e.ALAMAT,d.valas,d.keter' +
-        'angan,d.tgl_delivery2,d.nopo2,sumtotal,c.jenis'
-      'order by a.nopo desc')
+        ',d.po_no,d.delivery_date, E.supplier_name,e.address,d.valas,d.re' +
+        'marks,d.delivery2_date,d.po2_no,sumtotal,c.type'
+      'order by a.po_no desc')
     Left = 504
     Top = 32
   end
@@ -40918,7 +40924,7 @@ object FPO: TFPO
     MasterFields = 'po_no'
     DetailFields = 'po_no'
     Left = 424
-    Top = 32
+    Top = 40
     ParamData = <
       item
         DataType = ftString

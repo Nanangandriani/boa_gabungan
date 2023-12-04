@@ -66,6 +66,7 @@ type
     procedure dxBarButton1Click(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -111,7 +112,21 @@ end;
 
 procedure TFPenomoran.dxBarLargeButton1Click(Sender: TObject);
 begin
+   with  FNew_Penomoran.qnumb_det_tmp do
+   begin
+     close;
+     sql.clear;
+     sql.add('delete from t_numb_det_tmp');
+     execute;
+   end;
    FNew_Penomoran.ShowModal;
+end;
+
+procedure TFPenomoran.FormShow(Sender: TObject);
+begin
+   if QNo.Active=False then QNo.Active:=True;
+   if MemNo.Active=False then MemNo.Active:=True;
+   if QdetNo.Active=False then QdetNo.Active:=True;
 end;
 
 end.

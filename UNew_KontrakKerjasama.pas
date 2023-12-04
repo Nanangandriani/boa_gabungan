@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, RzButton,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzEdit, Vcl.Samples.Spin,
-  RzBtnEdt, Vcl.StdCtrls, RzCmboBx, Vcl.Mask, Vcl.ExtCtrls;
+  RzBtnEdt, Vcl.StdCtrls, RzCmboBx, Vcl.Mask, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
   TFNewKontrak_ks = class(TForm)
@@ -56,6 +56,7 @@ type
     BEdit: TRzBitBtn;
     MemMaterial: TMemTableEh;
     DataSource1: TDataSource;
+    BitBtn1: TBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -68,6 +69,8 @@ type
     procedure EdCurrSelect(Sender: TObject);
     procedure EdnilaiCurrKeyPress(Sender: TObject; var Key: Char);
     procedure EdNm_suppButtonClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,7 +87,8 @@ implementation
 
 {$R *.dfm}
 
-uses USearch_Supplier_SPB, UDataModule, UKontrakKerjasama, UMainMenu;
+uses USearch_Supplier, UDataModule, UKontrakKerjasama, UMainMenu, UMy_Function,
+  Ulist_materialstok;
 
 function IntToRoman(Value : Longint):String;  // fungsi
     const
@@ -101,42 +105,11 @@ function IntToRoman(Value : Longint):String;  // fungsi
 end;
 
 procedure TFNewKontrak_ks.Autonumber;
-  var i      : integer;
-    urut   : integer;
-    yr,mt,dy,noSJ,noEX ,yn : string;
-    yy,d,M : word;
-    code   : string;
-    //urutan   : string;
-    EditComplete : string;
-    maxmy  : string;
 begin
-  {(*Find encode of the date*)
-   DecodeDate(DtKontrak.Date, yy,M,d );
-   yr:=intTostr(yy);
-   yn:=copy(yr,3,2);
-   mt:=IntToStr(M);
-   dy:=IntToStr(d);
-   (*looking for max mm/yy*)
-   maxmy:= (IntToRoman(strToint(mt)))+'/'+yn;
-    with dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select "numeric"(max(left(no_kontrak,3)))as nourut from t_kontrak_kerjasama where tahun='+QuotedStr(DtTh.Text)+' and date_part(''MONTH'',tgl_kontrak)='+QuotedStr(DtBln.Text);
-      open;
-    end;
-     if dm.Qtemp['nourut'] = Null then
-        code := '1'
-     else
-        code:= IntToStr(dm.Qtemp['nourut']+ 1);
-     if length(code) < 10 then
-      begin
-       for i := length(code) to 2 do
-        code := '0' + code;
-      end;
-    EditComplete:=CODE;
-    EdNo.Text:=EditComplete;
-    EdNo_kontrak.Text:= EditComplete+ '/'+maxmy + '/'+ Kd_SBU;}
+   idmenu:='M4301';
+   strday2:=Dtkontrak.Date;
+   EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
+   EdNo.Text:=Order_no;
 end;
 
 
@@ -195,18 +168,18 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Select * from t_kontrak_kerjasama';
+        sql.Text:='Select * from purchase.t_coop_contract';
         ExecSQL;
       end;
       with dm.Qtemp2 do
       begin
         close;
         sql.clear;
-        sql.Text:='update t_kontrak_kerjasama set kd_supplier=:parkd_supplier,tgl_kontrak=:partgl_kontrak,'+
-                  ' tgl_selesai=:partgl_selesai,jatuh_tempo=:parjatuh_tempo,tahun=:partahun,jenis=:parjenis, '+
-                  ' no_urut=:parno_urut,Keterangan=:parketerangan,currency=:parcurrency,'+
-                  ' nilaicurrency=:parnilaicurrency,bln_kirim=:parbln_kirim, kategori=:parkategori '+
-                  ' , th_kirim=:parth_kirim, PIC=:parpic where no_kontrak=:parno_kontrak';
+        sql.Text:='update t_coop_contract set supplier_code=:parkd_supplier,contract_date=:partgl_kontrak,'+
+                  ' finish_date=:partgl_selesai,due_date=:parjatuh_tempo,trans_year=:partahun,type=:parjenis, '+
+                  ' order_no=:parno_urut,remarks=:parketerangan,currency=:parcurrency,'+
+                  ' currency_value=:parnilaicurrency,delivery_month=:parbln_kirim, category=:parkategori '+
+                  ' delivery_month, delivery_year=:parth_kirim, PIC=:parpic where contract_no=:parno_kontrak';
                   ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                   ParamByName('parkd_supplier').Value:=EdKd_supp.Text;
                   ParamByName('partgl_kontrak').Value:=FormatDateTime('yyy-mm-dd',DtKontrak.Date);
@@ -215,7 +188,7 @@ begin
                   ParamByName('parno_urut').Value:=EdNo.Text;
                   ParamByName('partahun').Value:=DtTh.Text;
                   ParamByName('parketerangan').Value:=EdKet.Text;
-          //        ParamByName('parstatus').Value:=Status2;
+                  //ParamByName('parstatus').Value:=Status2;
                   ParamByName('parcurrency').Value:=EdCurr.Text;
                   ParamByName('parnilaicurrency').Value:=EdnilaiCurr.Text;
                   ParamByName('parjenis').Value:=CbJenis.Text;
@@ -229,7 +202,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Delete from t_kontrak_kerjasama_det where no_kontrak='+QuotedStr(EdNo_kontrak.Text);
+        sql.Text:='Delete from purchase.t_coop_contract_det where no_kontrak='+QuotedStr(EdNo_kontrak.Text);
         ExecSQL;
       end;
       MemMaterial.First;
@@ -239,15 +212,15 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='Select * from t_kontrak_kerjasama_det';
+          sql.Text:='Select * from purchase.t_coop_contract_det';
           ExecSQL;
         end;
         with dm.Qtemp do
         begin
           close;
           sql.clear;
-          sql.Text:='insert into t_kontrak_kerjasama_det(no_kontrak,kd_material_stok,qty,harga,satuan,'+
-                    ' total_harga, totalpo, sisaqty, status,ppn,ppn_rp,"Spesifikasi",'+
+          sql.Text:='insert into purchase.t_coop_contract_det(contract_no,material_stock_code,qty,price,unit,'+
+                    ' total_harga, totalpo, sisaqty, status,ppn,ppn_rp,specification,'+
                     ' subtotal_rp,grandtotal)values(:parno_kontrak,:parkd_material_stok,:parqty,'+
                     ' :parharga,:parsatuan,:partotal_harga,:partotalpo,:parsisaqty,:parstatus,'+
                     ' :parppn,:parppn_rp,:parSpesifikasi,:parsubtotal_rp,:pargrandtotal)';
@@ -262,7 +235,6 @@ begin
                     ParamByName('parstatus').Value:='CREATED';
                     ParamByName('parppn').Value:=MemMaterial['ppn'];
                     ParamByName('parppn_rp').Value:=MemMaterial['ppn_rp'];
-                 //   ParamByName('pargrandtotal').Value:=MemMaterial['grandtotal'];
                     ParamByName('parSpesifikasi').Value:=MemMaterial['Spesifikasi'];
                     ParamByName('pargrandtotal').Value:=MemMaterial['grandtotal'];
                     ParamByName('parsubtotal_rp').Value:=MemMaterial['subtotal_rp'];
@@ -281,6 +253,11 @@ begin
       dm.koneksi.Rollback;
     end;
     end;
+end;
+
+procedure TFNewKontrak_ks.BitBtn1Click(Sender: TObject);
+begin
+   self.Autonumber;
 end;
 
 procedure TFNewKontrak_ks.BSimpanClick(Sender: TObject);
@@ -342,16 +319,16 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='Select * from t_kontrak_kerjasama';
+          sql.Text:='Select * from purchase.t_coop_contract';
           ExecSQL;
         end;
         with dm.Qtemp do
         begin
           close;
           sql.clear;
-          sql.Text:='insert into t_kontrak_kerjasama(no_kontrak,kd_supplier,tgl_kontrak,tgl_selesai,'+
-                    ' jatuh_tempo, no_urut, tahun, keterangan, status,currency,nilaicurrency,'+
-                    ' jenis,"Status_Approval",kategori,bln_kirim,th_kirim,pic,bulan)'+
+          sql.Text:='insert into purchase.t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
+                    ' due_date, order_no, trans_year, remarks, status,currency,currency_value,'+
+                    ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month )'+
                     ' values(:parno_kontrak,:parkd_supplier,:partgl_kontrak,:partgl_selesai, '+
                     ' :parjatuh_tempo,:parno_urut,:partahun,:parketerangan,:parstatus,:parcurrency,'+
                     ' :parnilaicurrency,:parjenis,:parStatus_Approval,:parkategori,:parbln_kirim,:parth_kirim,:parpic,:parbulan)';
@@ -382,16 +359,16 @@ begin
           begin
             close;
             sql.clear;
-            sql.Text:='Select * from t_kontrak_kerjasama_det';
+            sql.Text:='Select * from purchase.t_coop_contract_det';
             ExecSQL;
           end;
           with dm.Qtemp do
           begin
             close;
             sql.clear;
-            sql.Text:='insert into t_kontrak_kerjasama_det(no_kontrak,kd_material_stok,qty,harga,satuan,'+
-                      ' total_harga, totalpo, sisaqty, status,ppn,ppn_rp,"Spesifikasi",'+
-                      ' subtotal_rp,grandtotal,harga2)values(:parno_kontrak,'+
+            sql.Text:='insert into purchase.t_coop_contract_det(contract,material_stock_code,qty,price,unit,'+
+                      ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,specification,'+
+                      ' subtotal_rp,grandtotal,price2)values(:parno_kontrak,'+
                       ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
                       ' :parsisaqty,:parstatus,:parppn,:parppn_rp,:parSpesifikasi,'+
                       ' :parsubtotal_rp,:pargrandtotal,:parharga2)';
@@ -406,7 +383,6 @@ begin
                       ParamByName('parstatus').Value:='CREATED';
                       ParamByName('parppn').Value:=MemMaterial['ppn'];
                       ParamByName('parppn_rp').Value:=MemMaterial['ppn_rp'];
-                     // ParamByName('pargrandtotal').Value:=MemMaterial['grandtotal'];
                       ParamByName('parSpesifikasi').Value:=MemMaterial['Spesifikasi'];
                       ParamByName('pargrandtotal').Value:=MemMaterial['grandtotal'];
                       ParamByName('parsubtotal_rp').Value:=MemMaterial['subtotal_rp'];
@@ -502,25 +478,25 @@ end;
 procedure TFNewKontrak_ks.DBGridEh2Columns0EditButtons0Click(Sender: TObject;
   var Handled: Boolean);
 begin
-    {with Flistmaterialstok do
+    with Flistmaterialstok do
     begin
       Show;
       with QMaterial_stok do
       begin
         close;
         sql.Clear;
-        sql.Text:='select a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,'+
-                  ' a.qty,a.satuan,a.merk,a.nm_material,a.no_material,a.qtyperkonversi,'+
-                  ' a.qtykonversi,a.satuankonversi,B.nm_supplier,A.nm_material,C.category, '+
-                  ' D.konversi,c.jenis from t_material_stok A '+
-                  ' inner join t_supplier B on A.kd_supplier=B.kd_supplier '+
-                  ' inner join t_material C on A.kd_material=C.kd_material '+
-                  ' left join t_konversi_material D on A.kd_material=D.kd_material '+
-                  ' where B.kd_supplier='+QuotedStr(EdKd_supp.Text)+' and c.jenis='+QuotedStr(CbKategori.Text)+''+
-                  ' Group by a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,'+
-                  ' a.kd_urut,a.qty,a.satuan,a.merk,a.nm_material,a.no_material,a.qtyperkonversi,'+
-                  ' a.qtykonversi,a.satuankonversi,B.nm_supplier,A.nm_material,C.category,d.konversi,c.jenis '+
-                  ' order by kd_material_stok Desc';
+        sql.Text:='select a.material_code,a.supplier_code,a.material_stock_code,a.order_no,a.order_code,'+
+                  ' a.qty,a.unit,a.merk,a.material_name,a.material_no,a.qty_per_conversion,'+
+                  ' a.qty_conversion,a.unit_conversion,B.supplier_name,A.material_name,C.category, '+
+                  ' D.conversion,c.type from purchase.t_material_stock A '+
+                  ' inner join t_supplier B on A.supplier_code=B.supplier_code '+
+                  ' inner join purchase.t_material C on A.material_code=C.material_code '+
+                  ' left join t_material_conversion D on A.material_code=D.material_code '+
+                  ' where B.supplier_code='+QuotedStr(EdKd_supp.Text)+' and c.type='+QuotedStr(CbKategori.Text)+''+
+                  ' Group by a.material_code,a.supplier_code,a.material_stock_code,a.order_no,'+
+                  ' a.order_code,a.qty,a.unit,a.merk,a.material_name,a.material_no,a.qty_per_conversion,'+
+                  ' a.qty_conversion,a.unit_conversion,B.supplier_name,A.material_name,C.category,d.conversion,c.type '+
+                  ' order by material_stock_code Desc';
         ExecSQL;
       end;
       QMaterial_stok.Open;
@@ -536,7 +512,7 @@ begin
       end
       else
          Panel1.Visible:=False;
-    end;}
+    end;
 end;
 
 procedure TFNewKontrak_ks.DBGridEh2KeyPress(Sender: TObject; var Key: Char);
@@ -588,12 +564,18 @@ begin
 
 procedure TFNewKontrak_ks.EdNm_suppButtonClick(Sender: TObject);
 begin
-    with FSearch_Supplier_SPB do
+    with FSearch_Supplier do
     begin
       Show;
       QSupplier.Close;
       QSupplier.Open;
     end;
+end;
+
+procedure TFNewKontrak_ks.FormShow(Sender: TObject);
+begin
+  EdnilaiCurr.Visible:=False;
+  MemMaterial.Open;
 end;
 
 end.

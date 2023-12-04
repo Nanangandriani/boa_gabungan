@@ -12,6 +12,7 @@ object FPenomoran: TFPenomoran
   Font.Style = []
   Position = poDesktopCenter
   WindowState = wsMaximized
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -700,11 +701,10 @@ object FPenomoran: TFPenomoran
       
         'GROUP BY a.trans_no,a.id,a.param_name,a.urutan,a.id_param,a.deli' +
         'miter,c.description'
-      'order by a.trans_no ASC')
+      'order by a.trans_no,a.urutan ASC')
     MasterSource = DSNo
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Active = True
     Left = 488
     Top = 33
     ParamData = <

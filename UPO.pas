@@ -191,8 +191,8 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Select * from t_kontrak_kerjasama_det where no_kontrak='+QuotedStr(Edno_kontrak.Text)+''+
-                      ' and kd_material_stok='+QuotedStr(MemItempo['kd_material_stok']);
+            sql.Text:='Select * from t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text)+''+
+                      ' and material_stock_code='+QuotedStr(MemItempo['material_stock']);
             Execute;
           end;
           MemItempo.Edit;

@@ -361,8 +361,8 @@
             <Form>FNew_PO</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="USearch_Supplier_SPB.pas">
-            <Form>FSearch_Supplier_SPB</Form>
+        <DCCReference Include="USearch_Supplier.pas">
+            <Form>FSearch_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UKontrakKerjasama.pas">
@@ -412,6 +412,14 @@
         </DCCReference>
         <DCCReference Include="Uimportnocek.pas">
             <Form>FImportnocek</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListItempo.pas">
+            <Form>Flistitempo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ulist_materialstok.pas">
+            <Form>Flistmaterialstok</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

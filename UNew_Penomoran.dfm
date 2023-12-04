@@ -139,7 +139,7 @@ object FNew_Penomoran: TFNew_Penomoran
     end
     object EdNama: TRzEdit
       Left = 170
-      Top = 22
+      Top = 23
       Width = 209
       Height = 23
       Text = ''
@@ -423,7 +423,7 @@ object FNew_Penomoran: TFNew_Penomoran
     end
     object CbTipe_transaksi: TRzComboBox
       Left = 170
-      Top = 54
+      Top = 55
       Width = 209
       Height = 23
       TabOrder = 19

@@ -23,6 +23,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -38,12 +39,21 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Width = 826
     Height = 306
     Align = alClient
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_0_trans_year'
+      end
+      item
+        ColumnName = 'Column_1_trans_month'
+      end>
+    DataSource = DsKerjasama
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
-    TabOrder = 5
+    TabOrder = 1
     TitleParams.MultiTitle = True
     OnCellClick = DBGridKontrakCellClick
     Columns = <
@@ -51,7 +61,24 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_kontrak'
+        FieldName = 'trans_year'
+        Footers = <>
+        Title.Caption = 'Tahun'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_month'
+        Footers = <>
+        Title.Caption = 'Bulan'
+        Width = 49
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'contract_no'
         Footers = <>
         Title.Caption = 'No Kontrak'
         Width = 100
@@ -60,7 +87,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_supplier'
+        FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Nama Supplier'
         Width = 178
@@ -69,7 +96,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_kontrak'
+        FieldName = 'contract_date'
         Footers = <>
         Title.Caption = 'Tanggal Kontrak|Mulai'
         Width = 70
@@ -78,7 +105,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_selesai'
+        FieldName = 'finish_date'
         Footers = <>
         Title.Caption = 'Tanggal Kontrak|Selesai'
         Width = 70
@@ -88,7 +115,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jatuh_tempo'
+        FieldName = 'due_date'
         Footers = <>
         Title.Caption = 'Lama Tempo Pembayaran'
         Width = 80
@@ -107,7 +134,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nilaicurrency'
+        FieldName = 'currency_value'
         Footers = <>
         Title.Caption = 'Currency|Nilai'
         Width = 82
@@ -116,7 +143,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jenis'
+        FieldName = 'type'
         Footers = <>
         Title.Caption = 'Jenis'
         Width = 100
@@ -125,7 +152,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kategori'
+        FieldName = 'category'
         Footers = <>
         Title.Caption = 'Kategori'
         Width = 100
@@ -134,7 +161,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'status_approval'
+        FieldName = 'approval_status'
         Footers = <>
         Title.Caption = 'Status Approval'
         Width = 103
@@ -152,7 +179,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'keterangan'
+        FieldName = 'remarks'
         Footers = <>
         Width = 166
       end>
@@ -160,9 +187,10 @@ object FKontrakkerjasama: TFKontrakkerjasama
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 789
+        Width = 753
         Height = 118
         Align = alClient
+        DataSource = DsKerjasama_det
         DynProps = <>
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
         TabOrder = 0
@@ -172,7 +200,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kd_material_stok'
+            FieldName = 'material_stock_code'
             Footers = <>
             Title.Caption = 'Kode Barang'
             Width = 60
@@ -181,7 +209,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nm_material'
+            FieldName = 'material_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 126
@@ -244,7 +272,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'satuan'
+            FieldName = 'unit'
             Footers = <>
             Title.Caption = 'Satuan'
             Width = 79
@@ -254,7 +282,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'harga'
+            FieldName = 'price'
             Footers = <>
             Title.Caption = 'Harga'
             Width = 120
@@ -264,7 +292,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'total_harga'
+            FieldName = 'total_price'
             Footers = <>
             Title.Caption = 'Sub Total Harga'
             Width = 100
@@ -313,7 +341,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'sisaqty'
+            FieldName = 'remaining_qty'
             Footers = <>
             Title.Caption = 'Sisa Kuantum'
             Width = 100
@@ -865,6 +893,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Top = 104
   end
   object Memkerjasama: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1
@@ -875,17 +904,18 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select'#9'(case WHEN a."Status_Approval"=0 THEN '#39'PENGAJUAN'#39' WHEN a.' +
-        '"Status_Approval"=1 THEN'
+        'select'#9'(case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a.' +
+        '"approval_status"=1 THEN'
       #39'APPROVE'#39' else '#39'REJECT'#39' END) AS status_approval, '
       #9'(case WHEN status='#39'1'#39' THEN '#39'AKTIF'#39' WHEN status='#39'0'#39' THEN'
       #39'SELESAI'#39' END) AS status, '
       #9'a.*, '
       
-        #9'b.nm_supplier from t_kontrak_kerjasama A inner join t_supplier ' +
-        'B'
-      'on A.kd_supplier=B.kd_supplier'
+        #9'b.supplier_name from purchase.t_coop_contract A inner join t_su' +
+        'pplier B'
+      'on A.supplier_code=B.supplier_code'
       'order by id Desc')
+    Active = True
     Left = 188
     Top = 48
   end
@@ -5333,51 +5363,50 @@ object FKontrakkerjasama: TFKontrakkerjasama
   object QKerjasama_det: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT'#9'a.no_kontrak, '
-      #9'a.kd_material_stok, '
+      'SELECT'#9'a.contract_no, '
+      #9'a.material_stock_code, '
       #9'a.qty, '
-      #9'a.harga, '
-      #9'a.satuan, '
-      #9'a.total_harga, '
-      #9'a.sisaqty, '
-      #9'c.nm_material, '
-      #9'(A.sisaqty/A.qty) AS total, '
+      #9'a.price, '
+      #9'a.unit, '
+      #9'a.total_price, '
+      #9'a.remaining_qty, '
+      #9'c.material_name, '
+      #9'(A.remaining_qty/A.qty) AS total, '
       #9'c.category, '
       #9'a.totalpo, '
       #9'a.ppn, '
       #9'a.ppn_rp, '
-      #9'a."Spesifikasi",a.subtotal_rp,a.grandtotal'
-      'FROM'#9't_kontrak_kerjasama_det AS "a"'
+      #9'a."specification",a.subtotal_rp,a.grandtotal'
+      'FROM'#9'purchase.t_coop_contract_det AS "a"'
       
-        #9'INNER JOIN t_material_stok AS b'#9'ON a.kd_material_stok = b.kd_ma' +
-        'terial_stok'
+        #9'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_c' +
+        'ode = b.material_stock_code'
       
-        #9'INNER JOIN t_material AS "c" ON b.kd_material = c.kd_material a' +
-        'nd b.no_material=c.no_material'
-      'GROUP BY a.no_kontrak, '
-      #9'a.kd_material_stok, '
+        #9'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.ma' +
+        'terial_code and b.material_no=c.material_no'
+      'GROUP BY a.contract_no, '
+      #9'a.material_stock_code, '
       #9'a.qty, '
-      #9'a.harga, '
-      #9'a.satuan, '
-      #9'a.total_harga, '
-      #9'a.sisaqty, '
-      #9'c.nm_material, '
+      #9'a.price, '
+      #9'a.unit, '
+      #9'a.total_price, '
+      #9'a.remaining_qty, '
+      #9'c.material_name, '
       #9'c.category, '
       #9'a.totalpo, '
       #9'a.ppn, '
       #9'a.ppn_rp, '
-      #9'a."Spesifikasi",a.subtotal_rp,a.grandtotal')
+      #9'a."specification",a.subtotal_rp,a.grandtotal')
     MasterSource = DsKerjasama
-    MasterFields = 'no_kontrak'
-    DetailFields = 'no_kontrak'
+    MasterFields = 'contract_no'
+    DetailFields = 'contract_no'
     Left = 400
     Top = 40
     ParamData = <
       item
-        DataType = ftString
-        Name = 'no_kontrak'
-        ParamType = ptInput
-        Value = '015/III/21/PMA'
+        DataType = ftUnknown
+        Name = 'contract_no'
+        Value = nil
       end>
   end
   object MemTableEh1: TMemTableEh

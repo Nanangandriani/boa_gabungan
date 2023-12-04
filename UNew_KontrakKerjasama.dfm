@@ -11,6 +11,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnShow = FormShow
   TextHeight = 15
   object pninput: TPanel
     Left = 0
@@ -19,7 +20,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Height = 361
     Align = alTop
     TabOrder = 0
-    ExplicitTop = -6
+    ExplicitWidth = 1018
     object Label1: TLabel
       Left = 24
       Top = 86
@@ -214,7 +215,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
       CharCase = ecUpperCase
       TabOrder = 5
       Text = 'EDNO'
-      Visible = False
     end
     object DtBln: TRzDateTimeEdit
       Left = 340
@@ -329,7 +329,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       MaxValue = 10000
       MinValue = 2000
       TabOrder = 15
-      Value = 2021
+      Value = 2023
     end
     object EdnilaiCurr: TRzNumericEdit
       Left = 271
@@ -604,9 +604,8 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = -392
-    ExplicitTop = 410
-    ExplicitWidth = 1020
+    ExplicitTop = 560
+    ExplicitWidth = 1018
     object BBatal: TRzBitBtn
       Left = 948
       Top = 1
@@ -667,7 +666,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 944
+      ExplicitLeft = 942
     end
     object BSimpan: TRzBitBtn
       Left = 873
@@ -729,7 +728,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 869
+      ExplicitLeft = 867
     end
     object BEdit: TRzBitBtn
       Left = 798
@@ -792,7 +791,16 @@ object FNewKontrak_ks: TFNewKontrak_ks
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 794
+      ExplicitLeft = 792
+    end
+    object BitBtn1: TBitBtn
+      Left = 671
+      Top = 3
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn1'
+      TabOrder = 3
+      OnClick = BitBtn1Click
     end
   end
   object MemMaterial: TMemTableEh
@@ -926,7 +934,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
   end
   object DataSource1: TDataSource
     DataSet = MemMaterial
-    Left = 593
+    Left = 633
     Top = 32
   end
 end

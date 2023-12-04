@@ -840,6 +840,32 @@ end;
 procedure TFNew_Penomoran.RzBitBtn4Click(Sender: TObject);
 var i:integer;
 begin
+    if Ednama.Text='' then
+    begin
+      MessageDlg('Nama Penomoran Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      Ednama.SetFocus;
+      Exit;
+    end;
+    if CbTipe_transaksi.Text='' then
+    begin
+      MessageDlg('Tipe Transaksi Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      CbTipe_transaksi.SetFocus;
+      Exit;
+    end;
+     if CBTipeNo.Text='' then
+    begin
+      MessageDlg('TipePenomoran Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      CBTipeNo.SetFocus;
+      Exit;
+    end;
+    if CBKomponen_No.Text='' then
+    begin
+      MessageDlg('Komponen Penomoran Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      CBKomponen_No.SetFocus;
+      Exit;
+    end;
+
+    if application.MessageBox('Apakah anda yakin akan menyimpan data?','confirm',mb_yesno or MB_ICONQUESTION)=id_yes then
     with qnumb_det_tmp do
     begin
       close;
@@ -882,7 +908,7 @@ begin
    begin
        close;
        sql.clear;
-       sql.add('insert into t_numb (trans_no,trans_type,numb_type,digit_counter,component_description,reset_type,id_additional,remarks)');
+       sql.add('insert into t_numb (trans_no,trans_type,numb_type,digit_counter,component_description,reset_type,additional_status,remarks)');
        sql.add('values(:1,:2,:3,:4,:5,:6,:7,:8)');
        params.parambyname('1').value:=kd.Text;
        params.parambyname('2').value:=CbTipe_transaksi.text;
@@ -890,7 +916,10 @@ begin
        params.parambyname('4').value:=KdKonter.Text;
        params.parambyname('5').value:=Edhasil.Text;
        params.parambyname('6').value:=kdtype.Text;
-       params.parambyname('7').value:=EdAdd.Text;
+       if CheckAdd.Checked=true then
+       params.parambyname('7').value:='true'
+       else
+       params.parambyname('7').value:='false';
        params.parambyname('8').value:=EdNama.Text;
        execute;
    end;
@@ -1458,6 +1487,7 @@ begin
         sql.Add('select * from t_numb_component where description='+Quotedstr(CBKomponen_No.Text));
         Open;
         IdComp.Text:=fieldbyname('id').AsString;
+         Ed_comp.Text:=FieldByName('note').AsString;
       end;
    end;
 end;

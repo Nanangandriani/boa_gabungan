@@ -1,4 +1,4 @@
-object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
+object FSearch_Supplier: TFSearch_Supplier
   Left = 0
   Top = 0
   Caption = 'List Supplier'
@@ -187,6 +187,7 @@ object FSearch_Supplier_SPB: TFSearch_Supplier_SPB
       
         'SELECT * from t_supplier where deleted_at is null order by suppl' +
         'ier_code asc')
+    Active = True
     Left = 248
     Top = 72
     object QSuppliersupplier_code: TStringField
