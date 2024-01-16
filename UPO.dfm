@@ -22,7 +22,6 @@ object FPO: TFPO
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -231,7 +230,7 @@ object FPO: TFPO
         Left = 0
         Top = 0
         Width = 753
-        Height = 118
+        Height = 106
         Align = alClient
         DataSource = DsDetailPo
         DynProps = <>

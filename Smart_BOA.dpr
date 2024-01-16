@@ -84,7 +84,10 @@ uses
   Udafcek_entry in 'Udafcek_entry.pas' {FDaf_EntryCek},
   Uimportnocek in 'Uimportnocek.pas' {FImportnocek},
   UListItempo in 'UListItempo.pas' {Flistitempo},
-  Ulist_materialstok in 'Ulist_materialstok.pas' {Flistmaterialstok};
+  Ulist_materialstok in 'Ulist_materialstok.pas' {Flistmaterialstok},
+  UReturnPembelian in 'UReturnPembelian.pas' {FReturnPembelian},
+  UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
+  USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -118,6 +121,13 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFImportnocek, FImportnocek);
   Application.CreateForm(TFlistitempo, Flistitempo);
   Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
+<<<<<<< Updated upstream
+=======
+  Application.CreateForm(TFReturnPembelian, FReturnPembelian);
+  Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
+  Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
+  //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
+>>>>>>> Stashed changes
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
   Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);

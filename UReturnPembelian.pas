@@ -24,7 +24,9 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses,
+  MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, frxClass, MemDS, DBAccess,
+  Uni, frxDBSet;
 
 type
   TFReturnPembelian = class(TForm)
@@ -54,7 +56,24 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DBGridReturnPemb: TDBGridEh;
     DBGridEh1: TDBGridEh;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    DBPerusahaan: TfrxDBDataset;
+    QPerusahaan: TUniQuery;
+    frxReport1: TfrxReport;
+    frxDBReturnPemb: TfrxDBDataset;
+    DsRptReturnPemb: TDataSource;
+    QRptReturnPemb: TUniQuery;
+    DbrptDet: TfrxDBDataset;
+    QRptDet: TUniQuery;
+    DsDetail: TDataSource;
+    QDetail: TUniQuery;
+    DsdReturn: TDataSetDriverEh;
+    MemReturn: TMemTableEh;
+    DsReturnPembelian: TDataSource;
+    QReturnPembelian: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
+    procedure dxbarRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,12 +82,13 @@ type
 
 var
   FReturnPembelian: TFReturnPembelian;
+  status:integer;
 
 implementation
 
 {$R *.dfm}
 
-uses UNew_ReturnPembelian;
+uses UNew_ReturnPembelian, UDataModule;
 
 procedure TFReturnPembelian.ActBaruExecute(Sender: TObject);
 begin
@@ -77,9 +97,23 @@ begin
       Show;
       //Autonumber;
       //Refresh;
-      //Caption:='New Retur Pembelian';
-      //status:=0;
+      Caption:='New Retur Pembelian';
+      status:=0;
     end;
+end;
+
+procedure TFReturnPembelian.dxbarRefreshClick(Sender: TObject);
+begin
+    DBGridReturnPemb.StartLoadingStatus();
+    DBGridReturnPemb.FinishLoadingStatus();
+    QReturnPembelian.Close;
+    MemReturn.Close;
+    QDetail.Close;
+    if QReturnPembelian.Active=false then QReturnPembelian.Active:=True;
+    if MemReturn.Active=False then MemReturn.Active:=True;
+    if QDetail.Active=False then QDetail.Active:=True;
+    if QRptReturnPemb.Active=False then QRptReturnPemb.Active:=True;
+    if QRptDet.Active=False then QRptDet.Active:=True;
 end;
 
 end.

@@ -217,26 +217,14 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Text = 'EDNO'
     end
     object DtBln: TRzDateTimeEdit
-      Left = 340
+      Left = 423
       Top = 52
-      Width = 73
+      Width = 57
       Height = 23
       EditType = etDate
       Format = 'mm'
       CharCase = ecUpperCase
       TabOrder = 6
-      Visible = False
-    end
-    object DtTh: TRzDateTimeEdit
-      Left = 419
-      Top = 52
-      Width = 57
-      Height = 23
-      EditType = etDate
-      Format = 'yy'
-      CharCase = ecUpperCase
-      TabOrder = 7
-      Visible = False
     end
     object EdKet: TMemo
       Left = 189
@@ -244,14 +232,14 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Width = 292
       Height = 76
       CharCase = ecUpperCase
-      TabOrder = 8
+      TabOrder = 7
     end
     object EdCurr: TRzComboBox
       Left = 189
       Top = 246
       Width = 76
       Height = 23
-      TabOrder = 9
+      TabOrder = 8
       OnSelect = EdCurrSelect
       Items.Strings = (
         'Rp'
@@ -265,7 +253,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       EditType = etDate
       Format = 'mmmm-yyy'
       CharCase = ecUpperCase
-      TabOrder = 10
+      TabOrder = 9
       Visible = False
     end
     object CbKategori: TComboBox
@@ -273,7 +261,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 52
       Width = 145
       Height = 23
-      TabOrder = 11
+      TabOrder = 10
       Items.Strings = (
         'PRODUKSI'
         'NON PRODUKSI'
@@ -286,7 +274,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Height = 23
       Text = ''
       CharCase = ecUpperCase
-      TabOrder = 12
+      TabOrder = 11
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = EdNm_suppButtonClick
@@ -296,7 +284,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 20
       Width = 145
       Height = 23
-      TabOrder = 13
+      TabOrder = 12
       Items.Strings = (
         'IMPORT'
         'LOKAL')
@@ -306,7 +294,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 180
       Width = 145
       Height = 23
-      TabOrder = 14
+      TabOrder = 13
       Items.Strings = (
         'JANUARI'
         'FEBRUARI'
@@ -328,7 +316,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Height = 24
       MaxValue = 10000
       MinValue = 2000
-      TabOrder = 15
+      TabOrder = 14
       Value = 2023
     end
     object EdnilaiCurr: TRzNumericEdit
@@ -336,265 +324,29 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 246
       Width = 65
       Height = 23
-      TabOrder = 16
+      TabOrder = 15
       OnKeyPress = EdnilaiCurrKeyPress
       DisplayFormat = '#,##'
     end
-  end
-  object DBGridEh2: TDBGridEh
-    Left = 0
-    Top = 361
-    Width = 1024
-    Height = 208
-    Align = alClient
-    DataSource = DataSource1
-    DynProps = <>
-    HorzScrollBar.ExtraPanel.Visible = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-    TabOrder = 1
-    TitleParams.MultiTitle = True
-    OnCellClick = DBGridEh2CellClick
-    OnColEnter = DBGridEh2ColEnter
-    OnKeyPress = DBGridEh2KeyPress
-    Columns = <
-      item
-        CellButtons = <>
-        Color = clInfoBk
-        DynProps = <>
-        EditButtons = <
-          item
-            Glyph.Data = {
-              36090000424D3609000000000000360000002800000018000000180000000100
-              2000000000000009000000000000000000000000000000000000FFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFDADADAFF000000FFD5D5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDADA
-              DAFF000000FF000000FF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5D5D5FF0000
-              00FF000000FF000000FFD5D5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCF
-              CFFFC5C5C5FFEDEDEDFFFFFFFFFFFFFFFFFFFFFFFFFFCBCBCBFF000000FF0000
-              00FF000000FFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDDDDDDFF2D2D2DFF000000FF0000
-              00FF000000FF000000FF000000FF909090FFFFFFFFFF000000FF000000FF0000
-              00FFE4E4E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFF8A8A8AFF000000FF000000FF000000FF4545
-              45FF535353FF1A1A1AFF000000FF000000FF1A1A1AFFFFFFFFFF000000FFE4E4
-              E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFA3A3A3FF000000FF000000FF9D9D9DFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFECECECFF121212FF000000FF191919FFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFF000000FF000000FFD3D3D3FFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF121212FF000000FF8F8F8FFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFF848484FF000000FF5D5D5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF000000FFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFF2D2D2DFF000000FFDFDFDFFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF191919FF000000FFEFEF
-              EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFF0A0A0AFF000000FFFFFFFFFF181818FFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FF000000FFC7C7
-              C7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFF131313FF000000FFFFFFFFFF2D2D2DFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF434343FF000000FFD1D1
-              D1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFF4B4B4BFF000000FFBEBEBEFFB2B2B2FF616161FFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF000000FFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFBABABAFF000000FF121212FFFFFFFFFF282828FF898989FFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF989898FF000000FF313131FFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFF141414FF000000FF4D4D4DFFFFFFFFFFC1C1C1FFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFD0D0D0FF000000FF000000FFE1E1E1FFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFEFEFEFF000000FF000000FF111111FFB9B9B9FFFFFF
-              FFFFFFFFFFFFDADADAFF5B5B5BFF000000FF000000FF8F8F8FFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF161616FF000000FF000000FF0000
-              00FF000000FF000000FF000000FF000000FFA6A6A6FFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBCBCBCFF4D4D4DFF1515
-              15FF0C0C0CFF303030FF868686FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-            ShortCut = 113
-            Style = ebsEllipsisEh
-            OnClick = DBGridEh2Columns0EditButtons0Click
-          end>
-        FieldName = 'Kd_Material'
-        Footers = <>
-        LookupParams.LookupDataSet = FKontrakkerjasama.QKerjasama
-        ReadOnly = True
-        Title.Caption = 'Kode Barang'
-        Width = 97
-      end
-      item
-        CellButtons = <>
-        Color = clInfoBk
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'Nm_material'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Nama Barang'
-        Width = 182
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '0.00#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'Qty'
-        Footers = <>
-        Title.Caption = 'Karung/Botol|Quantum'
-        Visible = False
-        Width = 101
-      end
-      item
-        CellButtons = <>
-        Color = clInfoBk
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'satuan'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Karung/Botol|Satuan'
-        Visible = False
-        Width = 94
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'Spesifikasi'
-        Footers = <>
-        Width = 120
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '0.00#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'qtyperkonversi'
-        Footers = <>
-        Title.Caption = 'Berat(KG)'
-        Visible = False
-        Width = 90
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'Qty'
-        Footers = <>
-        Title.Caption = 'Kuantum'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        Color = clInfoBk
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'satuan'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Satuan'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'harga'
-        Footers = <>
-        Title.Caption = 'Harga Satuan (USD)'
-        Width = 96
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'harga2'
-        Footers = <>
-        Title.Caption = 'Harga Satuan (Rp)'
-        Width = 74
-      end
-      item
-        CellButtons = <>
-        Color = clInfoBk
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'total_harga'
-        Footers = <>
-        Title.Caption = 'Sub Total ( USD )'
-        Width = 128
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'subtotal_rp'
-        Footers = <>
-        Title.Caption = 'Rupiah|Sub Total'
-        Width = 120
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ppn'
-        Footers = <>
-        Title.Caption = 'Rupiah|PPN|%'
-        Width = 39
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ppn_rp'
-        Footers = <>
-        Title.Caption = 'Rupiah|PPN|Nominal'
-        Width = 85
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'grandtotal'
-        Footers = <>
-        Title.Caption = 'Rupiah|Grand Total'
-        Width = 120
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
+    object DtHr: TRzDateTimeEdit
+      Left = 360
+      Top = 52
+      Width = 57
+      Height = 23
+      EditType = etDate
+      Format = 'dd'
+      CharCase = ecUpperCase
+      TabOrder = 16
+    end
+    object DtTahun: TRzDateTimeEdit
+      Left = 487
+      Top = 52
+      Width = 57
+      Height = 23
+      EditType = etDate
+      Format = 'yyyy'
+      CharCase = ecUpperCase
+      TabOrder = 17
     end
   end
   object Panel1: TPanel
@@ -603,7 +355,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Width = 1024
     Height = 32
     Align = alBottom
-    TabOrder = 2
+    TabOrder = 1
     ExplicitTop = 560
     ExplicitWidth = 1018
     object BBatal: TRzBitBtn
@@ -803,10 +555,367 @@ object FNewKontrak_ks: TFNewKontrak_ks
       OnClick = BitBtn1Click
     end
   end
+  object DBGridEh2: TDBGridEh
+    Left = 0
+    Top = 361
+    Width = 1024
+    Height = 208
+    Align = alClient
+    DataSource = DataSource1
+    DynProps = <>
+    FooterRowCount = 1
+    HorzScrollBar.ExtraPanel.Visible = True
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SumList.Active = True
+    TabOrder = 2
+    TitleParams.MultiTitle = True
+    OnCellClick = DBGridEh2CellClick
+    OnColEnter = DBGridEh2ColEnter
+    OnColExit = DBGridEh2ColEnter
+    OnKeyPress = DBGridEh2KeyPress
+    Columns = <
+      item
+        CellButtons = <>
+        Color = clInfoBk
+        DynProps = <>
+        EditButtons = <
+          item
+            Glyph.Data = {
+              36090000424D3609000000000000360000002800000018000000180000000100
+              2000000000000009000000000000000000000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFDADADAFF000000FFD5D5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDADA
+              DAFF000000FF000000FF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5D5D5FF0000
+              00FF000000FF000000FFD5D5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCF
+              CFFFC5C5C5FFEDEDEDFFFFFFFFFFFFFFFFFFFFFFFFFFCBCBCBFF000000FF0000
+              00FF000000FFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDDDDDDFF2D2D2DFF000000FF0000
+              00FF000000FF000000FF000000FF909090FFFFFFFFFF000000FF000000FF0000
+              00FFE4E4E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF8A8A8AFF000000FF000000FF000000FF4545
+              45FF535353FF1A1A1AFF000000FF000000FF1A1A1AFFFFFFFFFF000000FFE4E4
+              E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFA3A3A3FF000000FF000000FF9D9D9DFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFECECECFF121212FF000000FF191919FFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFF000000FF000000FFD3D3D3FFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF121212FF000000FF8F8F8FFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF848484FF000000FF5D5D5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF000000FFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF2D2D2DFF000000FFDFDFDFFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF191919FF000000FFEFEF
+              EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF0A0A0AFF000000FFFFFFFFFF181818FFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FF000000FFC7C7
+              C7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF131313FF000000FFFFFFFFFF2D2D2DFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF434343FF000000FFD1D1
+              D1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF4B4B4BFF000000FFBEBEBEFFB2B2B2FF616161FFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF000000FFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFBABABAFF000000FF121212FFFFFFFFFF282828FF898989FFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF989898FF000000FF313131FFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFF141414FF000000FF4D4D4DFFFFFFFFFFC1C1C1FFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFD0D0D0FF000000FF000000FFE1E1E1FFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFEFEFEFF000000FF000000FF111111FFB9B9B9FFFFFF
+              FFFFFFFFFFFFDADADAFF5B5B5BFF000000FF000000FF8F8F8FFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF161616FF000000FF000000FF0000
+              00FF000000FF000000FF000000FF000000FFA6A6A6FFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBCBCBCFF4D4D4DFF1515
+              15FF0C0C0CFF303030FF868686FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+            ShortCut = 113
+            Style = ebsEllipsisEh
+            OnClick = DBGridEh2Columns0EditButtons0Click
+          end>
+        FieldName = 'Kd_Material'
+        Footers = <>
+        LookupParams.LookupDataSet = FKontrakkerjasama.QKerjasama
+        ReadOnly = True
+        Title.Caption = 'Kode Barang'
+        Width = 97
+      end
+      item
+        CellButtons = <>
+        Color = clInfoBk
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Nm_material'
+        Footers = <>
+        ReadOnly = True
+        Title.Caption = 'Nama Barang'
+        Width = 182
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '0.00#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Qty'
+        Footers = <>
+        Title.Caption = 'Karung/Botol|Quantum'
+        Visible = False
+        Width = 101
+      end
+      item
+        CellButtons = <>
+        Color = clInfoBk
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'satuan'
+        Footers = <>
+        ReadOnly = True
+        Title.Caption = 'Karung/Botol|Satuan'
+        Visible = False
+        Width = 94
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Spesifikasi'
+        Footers = <>
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '0.00#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qtyperkonversi'
+        Footers = <>
+        Title.Caption = 'Berat(KG)'
+        Visible = False
+        Width = 90
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Qty'
+        Footers = <>
+        Title.Caption = 'Kuantum'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        Color = clInfoBk
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'satuan'
+        Footers = <>
+        ReadOnly = True
+        Title.Caption = 'Satuan'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.0000'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'harga'
+        Footers = <>
+        Title.Caption = 'USD|Harga Satuan'
+        Width = 70
+      end
+      item
+        CellButtons = <>
+        Color = clInfoBk
+        DisplayFormat = '#,##0.0000'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'total_harga'
+        Footer.DisplayFormat = '#,##0.0000'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'USD|Sub Total'
+        Width = 70
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ppn'
+        Footers = <>
+        Title.Caption = 'USD|PPN|%'
+        Width = 27
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.0000'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ppn_us'
+        Footer.DisplayFormat = '#,##0.0000'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'USD|PPN|Nominal'
+        Width = 52
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '0.0000'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pemb_ppn_us'
+        Footers = <>
+        Title.Caption = 'USD|PPN|Pembulatan'
+        Width = 64
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.0000'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'grandtotal'
+        Footer.DisplayFormat = '#,##0.0000'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'USD|Grand Total'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'harga2'
+        Footers = <>
+        Title.Caption = 'Rupiah|Harga Satuan'
+        Width = 74
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'subtotal_rp'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Rupiah|Sub Total'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pemb_dpp'
+        Footers = <>
+        Title.Caption = 'Rupiah|Pembulatan'
+        Width = 63
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ppn'
+        Footers = <>
+        Title.Caption = 'Rupiah|PPN|%'
+        Width = 26
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ppn_rp'
+        Footer.Alignment = taRightJustify
+        Footer.DisplayFormat = '#,##'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Rupiah|PPN|Nominal'
+        Width = 85
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pemb_ppn'
+        Footers = <>
+        Title.Caption = 'Rupiah|PPN|Pembulatan'
+        Width = 67
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pph'
+        Footers = <>
+        Title.Caption = 'Rupiah|PPH|%'
+        Width = 28
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pph_rp'
+        Footer.Alignment = taRightJustify
+        Footer.DisplayFormat = '#,##'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Rupiah|PPH|Nominal'
+        Width = 75
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'grandtotal_rp'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Rupiah|Grand Total'
+        Width = 120
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = MemMaterial
+    Left = 793
+    Top = 8
+  end
   object MemMaterial: TMemTableEh
     Params = <>
-    Left = 553
-    Top = 32
+    Left = 609
+    Top = 24
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object totalpo: TMTNumericDataFieldEh
@@ -857,19 +966,27 @@ object FNewKontrak_ks: TFNewKontrak_ks
         end
         object harga: TMTNumericDataFieldEh
           FieldName = 'harga'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 30
-          currency = False
+          currency = True
           Precision = 30
         end
         object total_harga: TMTNumericDataFieldEh
           FieldName = 'total_harga'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 30
-          currency = False
+          currency = True
           Precision = 30
+        end
+        object pemb_ppn: TMTNumericDataFieldEh
+          FieldName = 'pemb_ppn'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
         object ppn: TMTNumericDataFieldEh
           FieldName = 'ppn'
@@ -881,18 +998,18 @@ object FNewKontrak_ks: TFNewKontrak_ks
         end
         object grandtotal: TMTNumericDataFieldEh
           FieldName = 'grandtotal'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 50
-          currency = False
+          currency = True
           Precision = 50
         end
         object ppn_rp: TMTNumericDataFieldEh
           FieldName = 'ppn_rp'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 50
-          currency = False
+          currency = True
           Precision = 50
         end
         object Spesifikasi: TMTStringDataFieldEh
@@ -903,7 +1020,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         end
         object subtotal_rp: TMTNumericDataFieldEh
           FieldName = 'subtotal_rp'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 100
           DisplayFormat = '#,##0.00'
@@ -912,7 +1029,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         end
         object grandtotal_rp: TMTNumericDataFieldEh
           FieldName = 'grandtotal_rp'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 100
           DisplayFormat = '#,##0.00'
@@ -927,14 +1044,49 @@ object FNewKontrak_ks: TFNewKontrak_ks
           currency = False
           Precision = 50
         end
+        object ppn_us: TMTNumericDataFieldEh
+          FieldName = 'ppn_us'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object pemb_ppn_us: TMTNumericDataFieldEh
+          FieldName = 'pemb_ppn_us'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object pph: TMTNumericDataFieldEh
+          FieldName = 'pph'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object pph_rp: TMTNumericDataFieldEh
+          FieldName = 'pph_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object pemb_dpp: TMTNumericDataFieldEh
+          FieldName = 'pemb_dpp'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
       end
     end
-  end
-  object DataSource1: TDataSource
-    DataSet = MemMaterial
-    Left = 633
-    Top = 32
   end
 end

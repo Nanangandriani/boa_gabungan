@@ -84,6 +84,7 @@ type
     procedure Refresh;
     Procedure Autonumber;
     Procedure Load;
+    Procedure Load_category;
   end;
 
 var
@@ -175,7 +176,7 @@ begin
     DtSelesai.Date:=now;
     DtPengiriman.Date:=now;
     DtBln.Date:=now;
-    DtTh.Date:=now;
+    DtTahun.Date:=now;
     EdKet.Text:='';
     EdCurr.Text:='';
     CbJenis.Text:='';
@@ -279,7 +280,7 @@ begin
       Self.Clear;
       //EdnilaiCurr.Value:=1;
       Bln:=FNewKontrak_ks.DtBln.Text;
-      th:=FNewKontrak_ks.DtTh.Text;
+      th:=FNewKontrak_ks.DtTahun.Text;
       //Autonumber;
       Self.Load;
       BSimpan.Visible:=true;
@@ -343,7 +344,7 @@ end;
 Procedure TFKontrakkerjasama.Autonumber;
 begin
 Bln:=FNewKontrak_ks.DtBln.Text;
-th:=FNewKontrak_ks.DtTh.Text;
+th:=FNewKontrak_ks.DtTahun.Text;
 with dm.Qtemp do
 begin
   Close;
@@ -358,7 +359,7 @@ with dm.Qtemp do
   begin
   close;
   sql.Clear;
-  sql.Text:=' SELECT max(no_urut)AS urut FROM t_kontrak_kerjasama';
+  sql.Text:=' SELECT max(order_no)AS urut FROM t_coop_contract';
   execsql;
   end;
     urut:=Dm.Qtemp.FieldByName('urut').AsInteger+1;
@@ -446,7 +447,7 @@ begin
           DtKontrak.Text:=Memkerjasama.FieldByName('tgl_kontrak').AsString;
           DtSelesai.Text:=Memkerjasama.FieldByName('tgl_selesai').AsString;
           Edtempo.Text:=Memkerjasama.FieldByName('jatuh_tempo').AsString;
-          DtTh.Text:=Memkerjasama.FieldByName('tahun').AsString;
+          DtTahun.Text:=Memkerjasama.FieldByName('tahun').AsString;
           EdKet.Text:=Memkerjasama.FieldByName('Keterangan').AsString;
         //  Status2:=Memkerjasama.FieldByName('status').AsString;
           EdCurr.Text:=Memkerjasama.FieldByName('currency').AsString;
@@ -459,7 +460,22 @@ begin
         end;
           DBGridEh2ColEnter(sender);
           EdCurrSelect(sender);
-        end;
     end;
+end;
+procedure TFKontrakkerjasama.Load_category;
+begin
+      with Dm.Qtemp do
+      begin
+        close;
+        sql.Text:='SELECT * FROM t_item_category';
+        ExecSQL;
+      end;
+      Dm.Qtemp.First;
+      while not dm.Qtemp.Eof do
+      begin
+         FNewKontrak_ks.CbKategori.Items.Add(Dm.Qtemp.FieldByName('category').AsString);
+      Dm.Qtemp.Next;
+      end;
+end;
 
 end.

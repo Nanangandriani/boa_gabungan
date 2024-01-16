@@ -72,6 +72,7 @@ begin
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']='0') then
    begin
        strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and  trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       //strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and  cast(trans_day as INTEGER)='+ quotedstr(strday)+' and cast(trans_month as INTEGER)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']='0')then
    begin

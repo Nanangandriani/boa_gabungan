@@ -26,7 +26,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitTop = 8
+    ExplicitWidth = 899
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -44,6 +44,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Align = alClient
     DataSource = DSnocek
     DynProps = <>
+    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     TabOrder = 1
@@ -76,6 +77,41 @@ object FDaf_EntryCek: TFDaf_EntryCek
         Width = 200
       end>
     object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh2: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 532
+        Height = 118
+        Align = alClient
+        DataSource = DSnocek
+        DynProps = <>
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'cek_no'
+            Footers = <>
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'bank'
+            Footers = <>
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'rek_no'
+            Footers = <>
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
   object Panel1: TPanel
@@ -84,7 +120,8 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Width = 905
     Height = 42
     Align = alTop
-    TabOrder = 6
+    TabOrder = 2
+    ExplicitWidth = 899
     object Label1: TLabel
       Left = 15
       Top = 14

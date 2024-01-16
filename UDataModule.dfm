@@ -7,8 +7,14 @@ object dm: Tdm
     Database = 'db_boa_hps'
     Username = 'postgres'
     Server = '10.10.10.110'
+<<<<<<< Updated upstream
     Left = 157
     Top = 13
+=======
+    Connected = True
+    Left = 196
+    Top = 16
+>>>>>>> Stashed changes
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider

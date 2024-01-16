@@ -422,6 +422,18 @@
             <Form>Flistmaterialstok</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UReturnPembelian.pas">
+            <Form>FReturnPembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_ReturnPembelian.pas">
+            <Form>FNew_ReturnPemb</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USupp_Pembelian.pas">
+            <Form>FSupp_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

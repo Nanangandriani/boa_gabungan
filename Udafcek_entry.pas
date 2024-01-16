@@ -75,6 +75,7 @@ type
     Label2: TLabel;
     ComboBox1: TComboBox;
     cbbank: TComboBox;
+    DBGridEh2: TDBGridEh;
     procedure ActBaruExecute(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure cbbankChange(Sender: TObject);

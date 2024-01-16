@@ -2,8 +2,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   Left = 0
   Top = 0
   Caption = 'New Retur Pembelian'
-  ClientHeight = 531
-  ClientWidth = 798
+  ClientHeight = 489
+  ClientWidth = 937
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,140 +11,156 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnShow = FormShow
   DesignSize = (
-    798
-    531)
+    937
+    489)
   TextHeight = 15
   object Label8: TLabel
-    Left = 128
-    Top = 115
+    Left = 92
+    Top = 85
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label7: TLabel
-    Left = 40
-    Top = 115
+    Left = 20
+    Top = 85
     Width = 42
     Height = 15
     Caption = 'No. LPB'
   end
   object Label17: TLabel
-    Left = 580
-    Top = 463
+    Left = 725
+    Top = 411
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label14: TLabel
-    Left = 508
-    Top = 463
+    Left = 653
+    Top = 411
     Width = 60
     Height = 15
     Caption = 'Grand Total'
   end
   object Label13: TLabel
-    Left = 633
-    Top = 428
+    Left = 778
+    Top = 376
     Width = 10
     Height = 15
     Caption = '%'
   end
   object Label12: TLabel
-    Left = 128
-    Top = 178
+    Left = 645
+    Top = 52
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label11: TLabel
-    Left = 41
-    Top = 178
+    Left = 558
+    Top = 52
     Width = 77
     Height = 15
     Caption = 'Tanggal Faktur'
   end
   object Label16: TLabel
-    Left = 128
-    Top = 146
+    Left = 645
+    Top = 19
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label15: TLabel
-    Left = 40
-    Top = 146
+    Left = 558
+    Top = 19
     Width = 55
     Height = 15
     Caption = 'No. Faktur'
   end
   object Label10: TLabel
-    Left = 580
-    Top = 428
+    Left = 725
+    Top = 376
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label9: TLabel
-    Left = 508
-    Top = 428
+    Left = 653
+    Top = 376
     Width = 21
     Height = 15
     Caption = 'PPn'
   end
   object Label6: TLabel
-    Left = 128
-    Top = 86
+    Left = 92
+    Top = 52
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label5: TLabel
-    Left = 128
-    Top = 53
+    Left = 377
+    Top = 19
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label4: TLabel
-    Left = 128
+    Left = 92
     Top = 19
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label3: TLabel
-    Left = 40
+    Left = 20
     Top = 19
     Width = 50
     Height = 15
     Caption = 'No. Retur'
   end
   object Label2: TLabel
-    Left = 40
-    Top = 53
+    Left = 321
+    Top = 19
     Width = 41
     Height = 15
     Caption = 'Tanggal'
   end
   object Label1: TLabel
-    Left = 40
-    Top = 86
+    Left = 20
+    Top = 52
     Width = 43
     Height = 15
     Caption = 'Supplier'
   end
+  object Label18: TLabel
+    Left = 558
+    Top = 85
+    Width = 23
+    Height = 15
+    Caption = 'Kurs'
+  end
+  object Label19: TLabel
+    Left = 644
+    Top = 85
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
   object edno_terima: TRzComboBox
-    Left = 138
-    Top = 112
-    Width = 265
+    Left = 102
+    Top = 82
+    Width = 203
     Height = 23
     CharCase = ecUpperCase
     TabOrder = 0
+    OnChange = edno_terimaChange
   end
   object Edgrandtotal: TRzEdit
-    Left = 648
-    Top = 460
+    Left = 793
+    Top = 408
     Width = 127
     Height = 23
     Text = '0'
@@ -152,24 +168,24 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 1
   end
   object edppn: TRzEdit
-    Left = 590
-    Top = 425
+    Left = 735
+    Top = 373
     Width = 39
-    Height = 21
+    Height = 23
     Text = '10'
     TabOrder = 2
   end
   object EdNoFaktur: TRzComboBox
-    Left = 138
-    Top = 143
+    Left = 655
+    Top = 16
     Width = 265
     Height = 23
     CharCase = ecUpperCase
     TabOrder = 3
   end
   object DtFaktur: TRzDateTimeEdit
-    Left = 138
-    Top = 175
+    Left = 655
+    Top = 49
     Width = 121
     Height = 23
     EditType = etDate
@@ -179,10 +195,10 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 4
   end
   object DBGridEh3: TDBGridEh
-    Left = 0
-    Top = 216
-    Width = 775
-    Height = 194
+    Left = 9
+    Top = 140
+    Width = 920
+    Height = 227
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
     DynProps = <>
@@ -270,8 +286,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     end
   end
   object Edppnrp: TRzEdit
-    Left = 648
-    Top = 425
+    Left = 793
+    Top = 373
     Width = 127
     Height = 23
     Text = '0'
@@ -280,20 +296,20 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   end
   object Panel1: TPanel
     Left = 0
-    Top = 499
-    Width = 798
-    Height = 32
+    Top = 453
+    Width = 937
+    Height = 36
     Align = alBottom
     TabOrder = 7
-    ExplicitTop = 498
-    ExplicitWidth = 794
+    ExplicitTop = 496
     object BBatal: TRzBitBtn
-      Left = 722
+      Left = 861
       Top = 1
-      Height = 30
+      Height = 34
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -346,15 +362,17 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 718
+      ExplicitLeft = 716
+      ExplicitHeight = 30
     end
     object BSimpan: TRzBitBtn
-      Left = 647
+      Left = 786
       Top = 1
-      Height = 30
+      Height = 34
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 1
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -407,13 +425,21 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 643
+      ExplicitLeft = 641
+      ExplicitHeight = 30
+    end
+    object RzBitBtn1: TRzBitBtn
+      Left = 528
+      Top = 4
+      Caption = 'RzBitBtn1'
+      TabOrder = 2
+      OnClick = RzBitBtn1Click
     end
   end
   object Edno: TRzEdit
-    Left = 138
+    Left = 102
     Top = 16
-    Width = 265
+    Width = 203
     Height = 23
     Text = ''
     CharCase = ecUpperCase
@@ -422,36 +448,93 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 8
   end
   object DtReturn: TRzDateTimeEdit
-    Left = 138
-    Top = 50
+    Left = 387
+    Top = 16
     Width = 121
     Height = 23
     EditType = etDate
+    Format = 'dd/mm/yyyy'
     CharCase = ecUpperCase
     TabOrder = 9
+    OnChange = DtReturnChange
   end
   object Ednm_supp: TRzButtonEdit
-    Left = 215
-    Top = 83
-    Width = 187
+    Left = 183
+    Top = 49
+    Width = 325
     Height = 23
     Text = ''
     CharCase = ecUpperCase
     Color = clWhite
     TabOrder = 10
+    OnChange = Ednm_suppChange
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
+    OnButtonClick = Ednm_suppButtonClick
   end
   object Edkd_supp: TRzEdit
-    Left = 138
-    Top = 83
-    Width = 71
+    Left = 102
+    Top = 49
+    Width = 75
     Height = 23
     Text = ''
     CharCase = ecUpperCase
     Color = clInfoBk
     ReadOnly = True
     TabOrder = 11
+  end
+  object Edurut: TEdit
+    Left = 387
+    Top = 82
+    Width = 121
+    Height = 23
+    TabOrder = 12
+  end
+  object RzNumericEdit1: TRzNumericEdit
+    Left = 655
+    Top = 82
+    Width = 120
+    Height = 23
+    TabOrder = 13
+    DisplayFormat = ',0;(,0)'
+  end
+  object RzNumericEdit2: TRzNumericEdit
+    Left = 781
+    Top = 82
+    Width = 139
+    Height = 23
+    TabOrder = 14
+    DisplayFormat = ',0;(,0)'
+  end
+  object DtTh: TRzDateTimeEdit
+    Left = 229
+    Top = 111
+    Width = 57
+    Height = 23
+    EditType = etDate
+    Format = 'yyyy'
+    CharCase = ecUpperCase
+    TabOrder = 15
+  end
+  object DtBln: TRzDateTimeEdit
+    Left = 165
+    Top = 111
+    Width = 57
+    Height = 23
+    EditType = etDate
+    Format = 'mm'
+    CharCase = ecUpperCase
+    TabOrder = 16
+  end
+  object DtHr: TRzDateTimeEdit
+    Left = 102
+    Top = 111
+    Width = 57
+    Height = 23
+    EditType = etDate
+    Format = 'dd'
+    CharCase = ecUpperCase
+    TabOrder = 17
   end
   object DsDetail: TDataSource
     DataSet = MemDetail
@@ -538,7 +621,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_terima_material')
-    Left = 464
-    Top = 16
+    Left = 584
+    Top = 112
   end
 end

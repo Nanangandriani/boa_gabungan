@@ -23,7 +23,6 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -187,7 +186,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 753
+        Width = 789
         Height = 118
         Align = alClient
         DataSource = DsKerjasama_det
@@ -893,7 +892,6 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Top = 104
   end
   object Memkerjasama: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1
@@ -915,7 +913,6 @@ object FKontrakkerjasama: TFKontrakkerjasama
         'pplier B'
       'on A.supplier_code=B.supplier_code'
       'order by id Desc')
-    Active = True
     Left = 188
     Top = 48
   end

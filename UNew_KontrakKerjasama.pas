@@ -39,7 +39,6 @@ type
     DtSelesai: TRzDateTimeEdit;
     EdNo: TEdit;
     DtBln: TRzDateTimeEdit;
-    DtTh: TRzDateTimeEdit;
     EdKet: TMemo;
     EdCurr: TRzComboBox;
     DtPengiriman: TRzDateTimeEdit;
@@ -49,14 +48,16 @@ type
     CB_kirim: TComboBox;
     EdTh_kirim: TSpinEdit;
     EdnilaiCurr: TRzNumericEdit;
-    DBGridEh2: TDBGridEh;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
     BEdit: TRzBitBtn;
-    MemMaterial: TMemTableEh;
-    DataSource1: TDataSource;
     BitBtn1: TBitBtn;
+    DtHr: TRzDateTimeEdit;
+    DtTahun: TRzDateTimeEdit;
+    DataSource1: TDataSource;
+    MemMaterial: TMemTableEh;
+    DBGridEh2: TDBGridEh;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -186,7 +187,7 @@ begin
                   ParamByName('partgl_selesai').Value:=FormatDateTime('yyy-mm-dd',DtSelesai.Date);
                   ParamByName('parjatuh_tempo').Value:=Edtempo.Text;
                   ParamByName('parno_urut').Value:=EdNo.Text;
-                  ParamByName('partahun').Value:=DtTh.Text;
+                  ParamByName('partahun').Value:=DtTahun.Text;
                   ParamByName('parketerangan').Value:=EdKet.Text;
                   //ParamByName('parstatus').Value:=Status2;
                   ParamByName('parcurrency').Value:=EdCurr.Text;
@@ -271,7 +272,7 @@ begin
         end;
         MemMaterial.Next;
       end;
-      if EdNm_supp.Text='' then
+      {if EdNm_supp.Text='' then
       begin
         MessageDlg('Nama Supplier Tidak boleh Kosong ',MtWarning,[MbOk],0);
         EdNm_supp.SetFocus;
@@ -309,7 +310,7 @@ begin
       begin
         MessageDlg('Total Harga Tidak boleh Kosong ',MtWarning,[MbOk],0);
         Exit;
-      end;
+      end; }
       if not dm.koneksi.InTransaction then
       dm.koneksi.StartTransaction;
       try
@@ -328,7 +329,7 @@ begin
           sql.clear;
           sql.Text:='insert into purchase.t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
                     ' due_date, order_no, trans_year, remarks, status,currency,currency_value,'+
-                    ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month )'+
+                    ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month)'+
                     ' values(:parno_kontrak,:parkd_supplier,:partgl_kontrak,:partgl_selesai, '+
                     ' :parjatuh_tempo,:parno_urut,:partahun,:parketerangan,:parstatus,:parcurrency,'+
                     ' :parnilaicurrency,:parjenis,:parStatus_Approval,:parkategori,:parbln_kirim,:parth_kirim,:parpic,:parbulan)';
@@ -338,7 +339,7 @@ begin
                     ParamByName('partgl_selesai').Value:=FormatDateTime('yyy-mm-dd',DtSelesai.Date);
                     ParamByName('parjatuh_tempo').Value:=Edtempo.Text;
                     ParamByName('parno_urut').Value:=EdNo.Text;
-                    ParamByName('partahun').Value:=DtTh.Text;
+                    ParamByName('partahun').Value:=DtTahun.Text;
                     ParamByName('parketerangan').Value:=EdKet.Text;
                     ParamByName('parstatus').AsString:='1';
                     ParamByName('parcurrency').Value:=EdCurr.Text;
@@ -485,18 +486,22 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select a.material_code,a.supplier_code,a.material_stock_code,a.order_no,a.order_code,'+
-                  ' a.qty,a.unit,a.merk,a.material_name,a.material_no,a.qty_per_conversion,'+
-                  ' a.qty_conversion,a.unit_conversion,B.supplier_name,A.material_name,C.category, '+
-                  ' D.conversion,c.type from purchase.t_material_stock A '+
-                  ' inner join t_supplier B on A.supplier_code=B.supplier_code '+
-                  ' inner join purchase.t_material C on A.material_code=C.material_code '+
-                  ' left join t_material_conversion D on A.material_code=D.material_code '+
-                  ' where B.supplier_code='+QuotedStr(EdKd_supp.Text)+' and c.type='+QuotedStr(CbKategori.Text)+''+
-                  ' Group by a.material_code,a.supplier_code,a.material_stock_code,a.order_no,'+
-                  ' a.order_code,a.qty,a.unit,a.merk,a.material_name,a.material_no,a.qty_per_conversion,'+
-                  ' a.qty_conversion,a.unit_conversion,B.supplier_name,A.material_name,C.category,d.conversion,c.type '+
-                  ' order by material_stock_code Desc';
+        sql.Text:='select a.item_name,b.supplier_code,b.supplier_name,a.item_stock_code,a.order_no,a.kd_urut, a.qty,a.unit,a.merk,  '+
+                  'd.qty_unit,d.unit,d.qty_conv,d.unit_conv, '+
+                  'e.category,f."type",g.group_name '+
+
+                  'from warehouse.t_item_stock a  '+
+                  'inner join t_supplier b on a.supplier_code=b.supplier_code '+
+                  'inner join t_item c on a.item_code=c.item_code  '+
+                  'left  join t_item_conversion d on a.item_code=d.item_code '+
+                  'left  join t_item_category e on c.category_id=e.category_id '+
+                  'left  join t_item_type f on e.type_id=f.type_id '+
+                  'left  join t_item_group g on c.category_id=g.group_id '+
+                  'where b.supplier_code='+QuotedStr(EdKd_supp.Text)+' and f.type='+QuotedStr(CbKategori.Text)+' '+
+
+                  'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stock_code,a.order_no, a.kd_urut,a.qty,a.unit,a.merk,a.item_name,d.unit,d.qty_unit,d.qty_conv, '+
+                  'd.unit_conv,a.item_name,e.category,g.group_name,f."type" '+
+                  'order by item_stock_code Desc';
         ExecSQL;
       end;
       QMaterial_stok.Open;
@@ -524,7 +529,8 @@ end;
 procedure TFNewKontrak_ks.DtKontrakChange(Sender: TObject);
 begin
    DtBln.Date:=DtKontrak.Date;
-   DtTh.Date:=DtKontrak.Date;
+   DtTahun.Date:=DtKontrak.Date;
+   Dthr.Date:=DtKontrak.Date;
 end;
 
 procedure TFNewKontrak_ks.EdCurrSelect(Sender: TObject);
@@ -576,6 +582,7 @@ procedure TFNewKontrak_ks.FormShow(Sender: TObject);
 begin
   EdnilaiCurr.Visible:=False;
   MemMaterial.Open;
+
 end;
 
 end.

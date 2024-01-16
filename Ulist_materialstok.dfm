@@ -30,7 +30,7 @@ object Flistmaterialstok: TFlistmaterialstok
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_material_stok'
+        FieldName = 'item_stock_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
         Width = 91
@@ -39,7 +39,7 @@ object Flistmaterialstok: TFlistmaterialstok
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'item_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
         Width = 116
@@ -48,7 +48,7 @@ object Flistmaterialstok: TFlistmaterialstok
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_supplier'
+        FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Nama Supplier'
         Width = 200
@@ -57,7 +57,7 @@ object Flistmaterialstok: TFlistmaterialstok
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'satuan'
+        FieldName = 'unit'
         Footers = <>
         Title.Caption = 'Satuan'
         Width = 60
@@ -142,6 +142,7 @@ object Flistmaterialstok: TFlistmaterialstok
       Align = alRight
       Caption = 'OK'
       TabOrder = 1
+      OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -205,24 +206,28 @@ object Flistmaterialstok: TFlistmaterialstok
   object QMaterial_stok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      'select '
       
-        'select a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,' +
-        'a.kd_urut,a.qty,a.satuan,'
+        'a.item_name,b.supplier_code,b.supplier_name,a.item_stock_code,a.' +
+        'order_no,a.kd_urut, a.qty,a.unit,a.merk,'
+      'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,'
+      'e.category,f."type",g.group_name  '
+      ''
+      'from warehouse.t_item_stock a  '
+      'inner join t_supplier b on a.supplier_code=b.supplier_code  '
+      'inner join t_item c on a.item_code=c.item_code  '
+      'left  join t_item_conversion d on a.item_code=d.item_code'
+      'left  join t_item_category e on c.category_id=e.category_id'
+      'left  join t_item_type f on e.type_id=f.type_id '
+      'left  join t_item_group g on c.group_id=g.group_id'
+      'where b.supplier_code='#39'S0004'#39' and f.type='#39'PERSEDIAAN'#39' '
+      ''
       
-        'a.merk,a.nm_material,a.no_material,a.qtyperkonversi,a.qtykonvers' +
-        'i,B.nm_supplier ,'
-      ' A.nm_material,C.category,D.konversi from t_material_stok A'
-      'inner join t_supplier B on A.kd_supplier=B.kd_supplier '
-      'inner join t_material C on A.kd_material=C.kd_material'
-      'Inner join t_konversi_material D on A.kd_material=D.kd_material'
-      
-        'Group by a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_uru' +
-        't,a.kd_urut,a.qty,a.satuan,'
-      
-        'a.merk,a.nm_material,a.no_material,a.qtyperkonversi,a.qtykonvers' +
-        'i,B.nm_supplier ,'
-      'A.nm_material,C.category,D.konversi'
-      'order by kd_material_stok Desc')
+        'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stoc' +
+        'k_code,a.order_no, a.kd_urut,a.qty,a.unit,a.merk,a.item_name,d.u' +
+        'nit,d.qty_unit,d.qty_conv,'
+      'd.unit_conv,a.item_name,e.category,g.group_name,f."type"  '
+      'order by item_stock_code Desc')
     Left = 236
     Top = 101
   end

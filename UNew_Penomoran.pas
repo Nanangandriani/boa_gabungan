@@ -1035,10 +1035,46 @@ end;
 procedure TFNew_Penomoran.eddigit_countChange(Sender: TObject);
 var i:integer;
 begin
-    i:=strtoint(eddigit_count.Text);
     if eddigit_count.Text='' then
     begin
-       exit;
+       eddigit_count.Text:='0';
+    end;
+
+    if eddigit_count.Text='0' then
+    begin
+       Ed_comp.text:= '';
+    end
+    else
+    if eddigit_count.Text='1' then
+      begin
+        Ed_comp.text:= '0';
+        kdkonter.Text:='1';
+      end
+    else
+    if eddigit_count.Text='2'  then
+      begin
+        Ed_comp.text:='00';
+        kdkonter.text:='2';
+      end
+    else
+    if eddigit_count.Text='3' then
+      begin
+        Ed_comp.text :='000';
+        kdkonter.text:='3';
+      end
+    else
+    if eddigit_count.Text='4' then
+      begin
+        Ed_comp.text :='0000';
+        kdkonter.text:='4';
+      end
+    else
+    if eddigit_count.Text='5' then
+      Ed_comp.text :='00000'
+
+    {i:=strtoint(eddigit_count.Text);
+    if eddigit_count.Text='' then
+    begin
        eddigit_count.Text:='0';
     end;
 
@@ -1072,8 +1108,8 @@ begin
       end
     else
     if i=5 then
-      Ed_comp.text :='00000'
-   //digitnumber(i);
+      Ed_comp.text :='00000' }
+
 
 
 end;
