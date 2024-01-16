@@ -497,7 +497,7 @@ begin
                   'left  join t_item_category e on c.category_id=e.category_id '+
                   'left  join t_item_type f on e.type_id=f.type_id '+
                   'left  join t_item_group g on c.category_id=g.group_id '+
-                  'where b.supplier_code='+QuotedStr(EdKd_supp.Text)+' and f.type='+QuotedStr(CbKategori.Text)+' '+
+                  'where b.supplier_code='+QuotedStr(EdKd_supp.Text)+' and e.category='+QuotedStr(CbKategori.Text)+' '+
 
                   'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stock_code,a.order_no, a.kd_urut,a.qty,a.unit,a.merk,a.item_name,d.unit,d.qty_unit,d.qty_conv, '+
                   'd.unit_conv,a.item_name,e.category,g.group_name,f."type" '+

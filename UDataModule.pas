@@ -39,8 +39,6 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses UBarang_Stok, UNew_Barang;
-
 {$R *.dfm}
 
 end.

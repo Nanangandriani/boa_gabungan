@@ -2,8 +2,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   Left = 0
   Top = 0
   Caption = 'FNew_KelompokBarang'
-  ClientHeight = 555
-  ClientWidth = 582
+  ClientHeight = 546
+  ClientWidth = 576
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -105,8 +105,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 175
-    Width = 582
+    Top = 166
+    Width = 576
     Height = 41
     Align = alBottom
     TabOrder = 2
@@ -477,8 +477,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 216
-    Width = 582
+    Top = 207
+    Width = 576
     Height = 339
     Align = alBottom
     DataSource = DsKelompok

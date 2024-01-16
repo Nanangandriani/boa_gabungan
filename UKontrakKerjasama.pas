@@ -283,6 +283,7 @@ begin
       th:=FNewKontrak_ks.DtTahun.Text;
       //Autonumber;
       Self.Load;
+      self.Load_category;
       BSimpan.Visible:=true;
       BEdit.Visible:=false;
       Caption:='New Kontrak Kerjasama';

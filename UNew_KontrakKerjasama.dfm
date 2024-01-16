@@ -225,6 +225,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Format = 'mm'
       CharCase = ecUpperCase
       TabOrder = 6
+      Visible = False
     end
     object EdKet: TMemo
       Left = 189
@@ -262,10 +263,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Width = 145
       Height = 23
       TabOrder = 10
-      Items.Strings = (
-        'PRODUKSI'
-        'NON PRODUKSI'
-        'AKTIVA')
     end
     object EdNm_supp: TRzButtonEdit
       Left = 268
@@ -337,6 +334,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Format = 'dd'
       CharCase = ecUpperCase
       TabOrder = 16
+      Visible = False
     end
     object DtTahun: TRzDateTimeEdit
       Left = 487
@@ -347,6 +345,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Format = 'yyyy'
       CharCase = ecUpperCase
       TabOrder = 17
+      Visible = False
     end
   end
   object Panel1: TPanel
@@ -662,7 +661,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
           end>
         FieldName = 'Kd_Material'
         Footers = <>
-        LookupParams.LookupDataSet = FKontrakkerjasama.QKerjasama
         ReadOnly = True
         Title.Caption = 'Kode Barang'
         Width = 97

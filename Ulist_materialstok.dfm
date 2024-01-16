@@ -3,8 +3,8 @@ object Flistmaterialstok: TFlistmaterialstok
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'List Material'
-  ClientHeight = 344
-  ClientWidth = 518
+  ClientHeight = 335
+  ClientWidth = 512
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object Flistmaterialstok: TFlistmaterialstok
   object DBGridMaterial: TDBGridEh
     Left = 0
     Top = 0
-    Width = 518
-    Height = 312
+    Width = 512
+    Height = 303
     Align = alClient
     DataSource = DsMaterial_stok
     DynProps = <>
@@ -67,13 +67,11 @@ object Flistmaterialstok: TFlistmaterialstok
   end
   object Panel1: TPanel
     Left = 0
-    Top = 312
-    Width = 518
+    Top = 303
+    Width = 512
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 303
-    ExplicitWidth = 512
     object BBatal: TRzBitBtn
       Left = 442
       Top = 1
