@@ -71,7 +71,6 @@ type
     procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
-    procedure clear;
   public
     { Public declarations }
   end;
@@ -104,7 +103,6 @@ begin
   with FNew_barang do
   begin
     Show;
-    Self.clear;
    // EdCategory.SetFocus;
     BSimpan.Visible:=true;
     //BEdit.Visible:=False;
@@ -177,6 +175,7 @@ begin
     //  Edno1.Text:=MemMaterial.FieldByName('no_urut').AsString;
      // Edno.Text:=MemMaterial.FieldByName('item_no').AsString;
       EdKd.Text:=MemMaterial.FieldByName('item_code').AsString;
+      Edkd_display.Text:=MemMaterial.FieldByName('item_code2').AsString;
       EdNm.Text:=MemMaterial.FieldByName('item_name').AsString;
       EdCategory.Text:=MemMaterial.FieldByName('Category').AsString;
       id_ct:=MemMaterial.FieldByName('Category_id').AsString;
@@ -187,44 +186,53 @@ begin
       EdNm_akun.Text:=MemMaterial.FieldByName('account_name').AsString;
       idmaterial:=MemMaterial.FieldByName('id').AsString;
       EdDesk.Text:=MemMaterial.FieldByName('description').AsString;
+      Edno.Text:=MemMaterial.FieldByName('order_no').AsString;
+      group_id:=MemMaterial.FieldByName('group_id').AsString;
+      st_penjualan:=MemMaterial.FieldByName('sell_status').AsString;
+      Cbkelompok.Text:=MemMaterial.FieldByName('group_name').AsString;
+      if MemMaterial['sell_status']='false' then ck_st_penjualan.Checked:=false else ck_st_penjualan.Checked:=true;
+      edharga_pemb.value:=MemMaterial.FieldByName('buy').value;
+      eddisc_pemb.Value:=MemMaterial.FieldByName('disc_buy').Value;
+      edharga_penj.Value:=MemMaterial.FieldByName('sell').Value;
+      eddisc_penj.Value:=MemMaterial.FieldByName('disc_sell').Value;
+      Edkd_akunPemb.Text:=MemMaterial.FieldByName('acc_pemb').value;
+      EdNm_akunPemb.Text:=MemMaterial.FieldByName('nm_pemb').value;
+      Edkd_akunrt_Pemb.Text:=MemMaterial.FieldByName('acc_rtpemb').value;
+      EdNm_akunRt_Pemb.Text:=MemMaterial.FieldByName('nm_rtpemb').value;
+      Edkd_akunPot_Pemb.Text:=MemMaterial.FieldByName('acc_potpemb').value;
+      EdNm_akunPot_Pemb.Text:=MemMaterial.FieldByName('nm_potpemb').value;
+      Edkd_akunPenj.Text:=MemMaterial.FieldByName('acc_penj').value;
+      EdNm_akunPenj.Text:=MemMaterial.FieldByName('nm_penj').value;
+      Edkd_akunRt_Penj.Text:=MemMaterial.FieldByName('acc_rtpenj').value;
+      EdNm_akunRt_Penj.Text:=MemMaterial.FieldByName('nm_rtpenj').value;
+      if MemMaterial['lot_status']='false' then Ck_NoUrut.Checked:=false else Ck_NoUrut.Checked:=true;
     end;
   end;
 end;
 
-procedure TFlistBarang.clear;
-begin
-  FNew_barang.Edno.Text:='';
-  FNew_barang.Edkd.Text:='';
-  FNew_barang.Ednm.Text:='';
-  FNew_barang.EdCategory.Text:='';
-  FNew_barang.Edjenis.Text:='';
-  FNew_barang.Edkd_akun.Text:='';
-  FNew_barang.EdNm_akun.Text:='';
-end;
-
 procedure TFlistBarang.DBGridMaterialCellClick(Column: TColumnEh);
 begin
-if DBGridMaterial.Fields[8].AsString='1' then
-BEGIN
-  ActUpdate.Enabled:=True;
-END else
-  ActUpdate.Enabled:=False;
+  if DBGridMaterial.Fields[8].AsString='1' then
+  BEGIN
+    ActUpdate.Enabled:=True;
+  END else
+    ActUpdate.Enabled:=False;
 end;
 
 procedure TFlistBarang.dxBDeleteClick(Sender: TObject);
 begin
- if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_item where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
-  Execute;
-end;
-ActRoExecute(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_item where no_so='+QuotedStr(DBGridMaterial.Fields[0].AsString);
+      Execute;
+    end;
+    ActRoExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 procedure TFlistBarang.EdCategorySelect(Sender: TObject);

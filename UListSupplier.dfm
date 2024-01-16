@@ -11,7 +11,9 @@ object FListSupplier: TFListSupplier
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object DBGridSupplier: TDBGridEh
@@ -22,6 +24,8 @@ object FListSupplier: TFListSupplier
     Align = alClient
     DataSource = DsSupplier
     DynProps = <>
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
     Columns = <
@@ -29,7 +33,7 @@ object FListSupplier: TFListSupplier
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'supplier_code'
+        FieldName = 'supplier_code2'
         Footers = <>
         Title.Caption = 'Kode Supplier'
         Width = 100
@@ -71,6 +75,38 @@ object FListSupplier: TFListSupplier
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 789
+        Height = 118
+        Align = alClient
+        DataSource = DsBarang
+        DynProps = <>
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_code'
+            Footers = <>
+            Title.Caption = 'Kode Barang'
+            Width = 126
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_name'
+            Footers = <>
+            Title.Caption = 'Nama Barang'
+            Width = 370
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
   object dxRibbon1: TdxRibbon
@@ -645,10 +681,10 @@ object FListSupplier: TFListSupplier
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select * from T_Supplier where deleted_at is null order by creat' +
-        'ed_at Desc')
+        'select * from T_Supplier where deleted_at is null order by suppl' +
+        'ier_code2 Asc')
     Left = 484
-    Top = 72
+    Top = 48
   end
   object ActMenu: TActionManager
     Left = 616
@@ -685,5 +721,27 @@ object FListSupplier: TFListSupplier
       Caption = 'CLose PO    '
       Enabled = False
     end
+  end
+  object QBarang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from warehouse.t_item_stock')
+    MasterSource = DsSupplier
+    MasterFields = 'supplier_code'
+    DetailFields = 'supplier_code'
+    Left = 400
+    Top = 64
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'supplier_code'
+        ParamType = ptInput
+        Value = 'S0004'
+      end>
+  end
+  object DsBarang: TDataSource
+    DataSet = QBarang
+    Left = 312
+    Top = 56
   end
 end

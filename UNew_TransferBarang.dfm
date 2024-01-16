@@ -18,14 +18,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   TextHeight = 13
   object Label1: TLabel
     Left = 36
-    Top = 45
+    Top = 70
     Width = 61
     Height = 13
     Caption = 'No. Transfer'
   end
   object Label2: TLabel
     Left = 36
-    Top = 74
+    Top = 41
     Width = 41
     Height = 13
     Caption = 'Tanggal '
@@ -45,7 +45,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Caption = 'Dari'
   end
   object Label5: TLabel
-    Left = 347
+    Left = 348
     Top = 74
     Width = 12
     Height = 13
@@ -53,14 +53,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label6: TLabel
     Left = 107
-    Top = 45
+    Top = 70
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label7: TLabel
     Left = 108
-    Top = 75
+    Top = 42
     Width = 4
     Height = 13
     Caption = ':'
@@ -101,18 +101,20 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Caption = ':'
   end
   object Label13: TLabel
-    Left = 36
-    Top = 16
+    Left = 21
+    Top = 168
     Width = 24
     Height = 13
     Caption = 'Jenis'
+    Visible = False
   end
   object Label14: TLabel
-    Left = 108
-    Top = 16
+    Left = 93
+    Top = 168
     Width = 4
     Height = 13
     Caption = ':'
+    Visible = False
   end
   object DBGriddetail: TDBGridEh
     Left = 0
@@ -338,7 +340,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Edno: TRzEdit
     Left = 122
-    Top = 41
+    Top = 66
     Width = 200
     Height = 21
     Text = ''
@@ -348,8 +350,8 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object DtTransfer: TRzDateTimeEdit
     Left = 122
-    Top = 71
-    Width = 114
+    Top = 38
+    Width = 143
     Height = 21
     EditType = etDate
     TabOrder = 3
@@ -389,32 +391,17 @@ object FNew_TransferBarang: TFNew_TransferBarang
     OnSelect = CbKategoriSelect
   end
   object RzComboBox1: TRzComboBox
-    Left = 122
-    Top = 13
+    Left = 107
+    Top = 165
     Width = 200
     Height = 21
     TabOrder = 8
+    Visible = False
     OnChange = CbKategoriSelect
     OnSelect = CbKategoriSelect
     Items.Strings = (
       'Otomatis'
       'Manual')
-  end
-  object Edit1: TEdit
-    Left = 24
-    Top = 136
-    Width = 121
-    Height = 21
-    TabOrder = 9
-    Text = 'Edit1'
-  end
-  object Edit2: TEdit
-    Left = 24
-    Top = 163
-    Width = 121
-    Height = 21
-    TabOrder = 10
-    Text = 'Edit2'
   end
   object Memdetail: TMemTableEh
     Active = True

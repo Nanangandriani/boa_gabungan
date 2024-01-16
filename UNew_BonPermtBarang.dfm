@@ -3,7 +3,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   Top = 0
   Caption = 'Form New Bon Permintaan Barang'
   ClientHeight = 357
-  ClientWidth = 704
+  ClientWidth = 710
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,7 +16,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   OnDestroy = FormDestroy
   OnShow = FormShow
   DesignSize = (
-    704
+    710
     357)
   TextHeight = 13
   object Label1: TLabel
@@ -70,7 +70,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 68
-    Width = 669
+    Width = 690
     Height = 251
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
@@ -140,14 +140,14 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object Panel1: TPanel
     Left = 0
     Top = 325
-    Width = 704
+    Width = 710
     Height = 32
     Align = alBottom
     TabOrder = 3
     ExplicitTop = 324
-    ExplicitWidth = 700
+    ExplicitWidth = 706
     object BBatal: TRzBitBtn
-      Left = 628
+      Left = 634
       Top = 1
       Height = 30
       Align = alRight
@@ -206,10 +206,10 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 624
+      ExplicitLeft = 630
     end
     object BSimpan: TRzBitBtn
-      Left = 553
+      Left = 559
       Top = 1
       Height = 30
       Align = alRight
@@ -268,29 +268,12 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 549
-    end
-    object Edit1: TEdit
-      Left = 256
-      Top = 0
-      Width = 121
-      Height = 21
-      TabOrder = 2
-      Text = 'Edit1'
-    end
-    object Button1: TButton
-      Left = 134
-      Top = 0
-      Width = 75
-      Height = 25
-      Caption = 'Button1'
-      TabOrder = 3
-      OnClick = Button1Click
+      ExplicitLeft = 555
     end
   end
   object EdStatus: TEdit
     Left = 421
-    Top = 14
+    Top = 8
     Width = 106
     Height = 21
     TabOrder = 4
@@ -298,8 +281,8 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
     Visible = False
   end
   object Edno_urut: TEdit
-    Left = 421
-    Top = 41
+    Left = 533
+    Top = 11
     Width = 121
     Height = 21
     TabOrder = 5

@@ -3,7 +3,7 @@ object FNew_ItemType: TFNew_ItemType
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Form New Jenis Barang'
-  ClientHeight = 399
+  ClientHeight = 466
   ClientWidth = 518
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -32,13 +32,13 @@ object FNew_ItemType: TFNew_ItemType
   end
   object Panel1: TPanel
     Left = 0
-    Top = 105
+    Top = 100
     Width = 518
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 215
-    ExplicitWidth = 430
+    ExplicitTop = 99
+    ExplicitWidth = 514
     object BBatal: TRzBitBtn
       Left = 442
       Top = 1
@@ -99,7 +99,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 354
+      ExplicitLeft = 438
     end
     object BSimpan: TRzBitBtn
       Left = 292
@@ -161,7 +161,7 @@ object FNew_ItemType: TFNew_ItemType
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 171
+      ExplicitLeft = 288
     end
     object BRefresh: TRzBitBtn
       Left = 367
@@ -223,7 +223,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 258
+      ExplicitLeft = 363
     end
     object Btambah: TRzBitBtn
       Left = 217
@@ -285,7 +285,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 171
+      ExplicitLeft = 213
     end
   end
   object EdType: TEdit
@@ -321,9 +321,9 @@ object FNew_ItemType: TFNew_ItemType
   end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 137
+    Top = 132
     Width = 518
-    Height = 262
+    Height = 334
     Align = alBottom
     DataSource = DsType
     DynProps = <>
@@ -359,8 +359,8 @@ object FNew_ItemType: TFNew_ItemType
     SQL.Strings = (
       
         'select a.*,b.account_name from t_item_type a inner join t_ak_acc' +
-        'ount b on a.account_code=code where a.deleted_at isnull order by' +
-        ' a.created_at ')
+        'ount b on a.acc_code_pemb=code where a.deleted_at isnull order b' +
+        'y a.created_at ')
     Left = 237
     Top = 192
   end

@@ -23,6 +23,7 @@ object FCari_Barang: TFCari_Barang
     Align = alClient
     DataSource = DsBarang
     DynProps = <>
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     TabOrder = 0

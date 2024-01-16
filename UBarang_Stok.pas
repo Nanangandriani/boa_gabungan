@@ -31,10 +31,6 @@ uses
 type
   TFBarang_Stok = class(TForm)
     PGControl: TRzPageControl;
-    TabBaku: TRzTabSheet;
-    pnList: TPanel;
-    DBGridBaku: TDBGridEh;
-    DBGridEh3: TDBGridEh;
     Tabnew: TRzTabSheet;
     pninput: TPanel;
     Label1: TLabel;
@@ -56,10 +52,6 @@ type
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
     BEdit: TRzBitBtn;
-    QKimia: TUniQuery;
-    DsKimia: TDataSource;
-    MemKimia: TMemTableEh;
-    DsdKimia: TDataSetDriverEh;
     EdNm_Material: TRzComboBox;
     Edstok: TEdit;
     Edkd: TEdit;
@@ -67,8 +59,6 @@ type
     Label2: TLabel;
     Label9: TLabel;
     Edmerk: TEdit;
-    QKimia_det: TUniQuery;
-    DsKimia_det: TDataSource;
     DtBln: TRzDateTimeEdit;
     DtTh: TRzDateTimeEdit;
     dxBarManager1: TdxBarManager;
@@ -78,24 +68,6 @@ type
     dxBupdate: TdxBarButton;
     dxbarRefresh: TdxBarButton;
     dxBdelete: TdxBarButton;
-    TabKimia: TRzTabSheet;
-    TabKemasan: TRzTabSheet;
-    Dstepung_det: TDataSource;
-    Qtepung_det: TUniQuery;
-    MemTepung: TMemTableEh;
-    Dsdtepung: TDataSetDriverEh;
-    DsTepung: TDataSource;
-    Qtepung: TUniQuery;
-    DBGridKimia: TDBGridEh;
-    DBGridEh4: TDBGridEh;
-    DBGridKemasan: TDBGridEh;
-    DBGridEh6: TDBGridEh;
-    Qkemasan: TUniQuery;
-    DsKemasan: TDataSource;
-    DsdKemasan: TDataSetDriverEh;
-    Memkemasan: TMemTableEh;
-    QKemasan_det: TUniQuery;
-    DsKemasan_det: TDataSource;
     dxBarMb2: TdxBar;
     dxBarMB3: TdxBar;
     dxBarKimiaUpdate: TdxBarButton;
@@ -107,44 +79,16 @@ type
     BarKmsUpdate: TdxBarButton;
     BarKmsRefresh: TdxBarButton;
     BarKmsDelete: TdxBarButton;
-    TabBahanPenolong: TRzTabSheet;
-    DBGridPenolong: TDBGridEh;
-    DBGridEh2: TDBGridEh;
-    QPenolong: TUniQuery;
-    DsPenolong: TDataSource;
-    DsdPenolong: TDataSetDriverEh;
-    MemPenolong: TMemTableEh;
-    QPenolongdet: TUniQuery;
-    DsPenolongdet: TDataSource;
     dxBarManager1Bar1: TdxBar;
     dxBarButton1: TdxBarButton;
     dxBarPenolong: TdxBarButton;
     dxBarButton3: TdxBarButton;
     dxBarLargeButton1: TdxBarLargeButton;
-    TabLain2: TRzTabSheet;
     dxbarmb4: TdxBar;
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarButton4: TdxBarButton;
     dxBarlain: TdxBarButton;
     dxBarButton6: TdxBarButton;
-    DBGridlain2: TDBGridEh;
-    DBGridEh5: TDBGridEh;
-    QLain2: TUniQuery;
-    DsLain2: TDataSource;
-    DataSetDriverEh1: TDataSetDriverEh;
-    MemLain2: TMemTableEh;
-    QLain2det: TUniQuery;
-    DsLain2det: TDataSource;
-    Panel6: TPanel;
-    CkTepung: TCheckBox;
-    Panel7: TPanel;
-    CkKimia: TCheckBox;
-    Panel8: TPanel;
-    CkKemasan: TCheckBox;
-    Panel9: TPanel;
-    CkPenolong: TCheckBox;
-    Panel10: TPanel;
-    CkLain2: TCheckBox;
     TabBarang: TRzTabSheet;
     DBGridstok: TDBGridEh;
     DBGridEh7: TDBGridEh;
@@ -160,7 +104,6 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdnoSelect(Sender: TObject);
-    procedure BBaruClick(Sender: TObject);
     procedure EdNm_suppSelect(Sender: TObject);
     procedure EdhurufChange(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
@@ -170,30 +113,15 @@ type
     procedure TabKemasanShow(Sender: TObject);
     procedure TabKimiaShow(Sender: TObject);
     procedure dxBarKimiaUpdateClick(Sender: TObject);
-    procedure BarKmsUpdateClick(Sender: TObject);
     procedure dxBdeleteClick(Sender: TObject);
-    procedure dxBarKimiaDeleteClick(Sender: TObject);
-    procedure BarKmsDeleteClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarButton1Click(Sender: TObject);
     procedure TabBahanPenolongShow(Sender: TObject);
-    procedure dxBarPenolongClick(Sender: TObject);
-    procedure dxBarlainClick(Sender: TObject);
-    procedure dxBarButton3Click(Sender: TObject);
-    procedure dxBarButton6Click(Sender: TObject);
     procedure TabLain2Show(Sender: TObject);
     procedure dxBarButton4Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure CkTepungClick(Sender: TObject);
-    procedure CkKimiaClick(Sender: TObject);
-    procedure CkKemasanClick(Sender: TObject);
-    procedure CkPenolongClick(Sender: TObject);
-    procedure CkLain2Click(Sender: TObject);
-    procedure dxBarKimiaRefreshClick(Sender: TObject);
-    procedure BarKmsRefreshClick(Sender: TObject);
-    procedure CkBarangClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -214,7 +142,7 @@ implementation
 
 {$R *.dfm}
 
-uses umainmenu,UNew_Barang_Stok, UDataModule; //UNew_Materialstok,
+uses umainmenu,UNew_Barang_Stok, UDataModule, UNew_Barang; //UNew_Materialstok,
 
 var
   realfMatStok : TFBarang_Stok;
@@ -225,307 +153,6 @@ begin
     FBarang_Stok:= realfMatStok
   else
     Application.CreateForm(TFBarang_Stok, Result);
-end;
-
-procedure TFBarang_Stok.CkLain2Click(Sender: TObject);
-begin
-if CkLain2.Checked=True then
-begin
-if loksbu='' then
-begin
-  with QLain2det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang'; //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QLain2det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
-if CkLain2.Checked=False then
-begin
-if loksbu='' then
-begin
-  with QLain2det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QLain2det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu);
-    ExecSQL;
-  end;
-end;
-end;
-end;
-
-procedure TFBarang_Stok.CkBarangClick(Sender: TObject);
-begin
-  if CkTepung.Checked=True then
-  begin
-    if loksbu='' then
-    begin
-      with QStok_Barangdet do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code'; //where "Outstanding"=0';
-        ExecSQL;
-      end;
-    end;
-    if loksbu<>'' then
-    begin
-      with QStok_Barangdet do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code where b.sbu_code='+QuotedStr(loksbu); //where "Outstanding"=0';
-        ExecSQL;
-      end;
-    end;
-  end;
-  if CkTepung.Checked=False then
-  begin
-    if loksbu='' then
-    begin
-      with QStok_Barangdet do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code where "outstanding"<>0';
-        ExecSQL;
-      end;
-    end;
-    if loksbu<>'' then
-    begin
-      with QStok_Barangdet do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select a.*,b.sbu_code from gudang.t_item_stock_det a INNER JOIN t_wh b on a.wh_code=b.wh_code where "outstanding"<>0 and b.sbu_code='+QuotedStr(loksbu); //where "Outstanding"=0';
-        ExecSQL;
-      end;
-    end;
-  end;
-end;
-
-procedure TFBarang_Stok.CkKemasanClick(Sender: TObject);
-begin
-if CkKemasan.Checked=True then
-begin
-if loksbu='' then
-begin
-  with QKemasan_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang'; //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QKemasan_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
-if CkKemasan.Checked=False then
-begin
-if loksbu='' then
-begin
-  with QKemasan_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QKemasan_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
-end;
-
-procedure TFBarang_Stok.CkKimiaClick(Sender: TObject);
-begin
-if CkKimia.Checked=True then
-begin
-if loksbu='' then
-begin
-  with QKimia_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang'; //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QKimia_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
-if CkKimia.Checked=False then
-begin
-if loksbu='' then
-begin
-  with QKimia_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QKimia_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu);
-    ExecSQL;
-  end;
-end;
-end;
-end;
-
-procedure TFBarang_Stok.CkPenolongClick(Sender: TObject);
-begin
-if CkPenolong.Checked=True then
-begin
-if loksbu='' then
-begin
-  with QPenolongdet do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang'; //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QPenolongdet do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
-if CkPenolong.Checked=False then
-begin
-if loksbu='' then
-begin
-  with QPenolongdet do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QPenolongdet do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu);
-    ExecSQL;
-  end;
-end;
-
-end;
-end;
-
-procedure TFBarang_Stok.CkTepungClick(Sender: TObject);
-begin
-if CkTepung.Checked=True then
-begin
-if loksbu='' then
-begin
-  with Qtepung_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang'; //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with Qtepung_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
-if CkTepung.Checked=False then
-begin
-if loksbu='' then
-begin
-  with Qtepung_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0';
-    ExecSQL;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with Qtepung_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where "Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu); //where "Outstanding"=0';
-    ExecSQL;
-  end;
-end;
-end;
 end;
 
 procedure TFBarang_Stok.Clear;
@@ -554,95 +181,6 @@ begin
   EdNm_supp.Enabled:=false;
   FNew_Barang_Stok.BEdit.Visible:=True;
   FNew_Barang_Stok.BSimpan.Visible:=False;
-  with MemPenolong do
-  begin
-    FNew_Barang_Stok.EdNm_Material.Text:=MemPenolong.FieldByName('nm_material').AsString;
-    FNew_Barang_Stok.EdKd_Material.Text:=MemPenolong.FieldByName('kd_material').AsString;
-    FNew_Barang_Stok.EdNm_supp.Text:=MemPenolong.FieldByName('nm_supplier').AsString;
-    FNew_Barang_Stok.EdKd_supp.Text:=MemPenolong.FieldByName('kd_supplier').AsString;
-    FNew_Barang_Stok.Edkd.Text:=MemPenolong.FieldByName('kd_material_stok').AsString;
-    FNew_Barang_Stok.Edstok.Text:=MemPenolong.FieldByName('qty').AsString;
-    FNew_Barang_Stok.EdSatuan.Text:=MemPenolong.FieldByName('satuan').AsString;
-    FNew_Barang_Stok.Edmerk.Text:=MemPenolong.FieldByName('merk').AsString;
-    FNew_Barang_Stok.Edno.Text:=MemPenolong.FieldByName('no_urut').AsString;
-    no_material:=MemPenolong.FieldByName('no_material').AsString;
-    FNew_Barang_Stok.Edcategory.Text:=MemPenolong.FieldByName('category').AsString;
-  end;
-end;
-end;
-
-procedure TFBarang_Stok.dxBarPenolongClick(Sender: TObject);
-begin
-//  refresh;
-QPenolong.Close;
-MemPenolong.Close;
-QPenolongdet.Close;
-DBGridPenolong.StartLoadingStatus();
-if loksbu='' then
-begin
- with QPenolong do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi, '+
-    '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' FROM t_material_stok AS "a" LEFT JOIN	t_supplier AS b	ON 	a.kd_supplier = b.kd_supplier  '+
-	            ' INNER JOIN t_material AS "c"	ON 	a.kd_material = c.kd_material AND		a.no_material = c.no_material  '+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN   '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok)as aa on 1=1  '+
-              ' where C.category=''BAHAN PENOLONG'' Order by kd_material_stok Desc';
-    open;
-  end;
-  MemPenolong.Open;
-  with QPenolongdet do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0';
-    open;
-  end;
-end;
-if loksbu<>'' then
-begin
-   with QPenolong do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' from t_material_stok A Left join t_supplier B on A.kd_supplier=B.kd_supplier '+
-              ' inner join t_material C on A.kd_material=C.kd_material and a.no_material=c.no_material'+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok AND '+
-              ' (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as aa on 1=1 where C.category=''BAHAN PENOLONG'''+
-              ' Order by kd_material_stok Desc ';
-    open;
-  end;
-  MemPenolong.Open;
-    with QPenolongdet do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu)+' OR b.kd_sbu=''''';
-    open;
-  end;
-end;
-DBGridPenolong.FinishLoadingStatus();
-end;
-
-procedure TFBarang_Stok.dxBarButton3Click(Sender: TObject);
-begin
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPenolong.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_material_stok where kd_material_stok='+QuotedStr(DBGridPenolong.Fields[0].AsString);
-  Execute;
-end;
-dxbarRefreshClick(sender);
-ShowMessage('Data Berhasil di Hapus');
 end;
 end;
 
@@ -658,179 +196,7 @@ begin
   EdNm_supp.Enabled:=false;
   FNew_Barang_Stok.BEdit.Visible:=True;
   FNew_Barang_Stok.BSimpan.Visible:=False;
-  with MemPenolong do
-  begin
-    FNew_Barang_Stok.EdNm_Material.Text:=MemLain2.FieldByName('nm_material').AsString;
-    FNew_Barang_Stok.EdKd_Material.Text:=MemLain2.FieldByName('kd_material').AsString;
-    FNew_Barang_Stok.EdNm_supp.Text:=MemLain2.FieldByName('nm_supplier').AsString;
-    FNew_Barang_Stok.EdKd_supp.Text:=MemLain2.FieldByName('kd_supplier').AsString;
-    FNew_Barang_Stok.Edkd.Text:=MemLain2.FieldByName('kd_material_stok').AsString;
-    FNew_Barang_Stok.Edstok.Text:=MemLain2.FieldByName('qty').AsString;
-    FNew_Barang_Stok.EdSatuan.Text:=MemLain2.FieldByName('satuan').AsString;
-    FNew_Barang_Stok.Edmerk.Text:=MemLain2.FieldByName('merk').AsString;
-    FNew_Barang_Stok.Edno.Text:=MemLain2.FieldByName('no_urut').AsString;
-    no_material:=MemLain2.FieldByName('no_material').AsString;
-    FNew_Barang_Stok.Edcategory.Text:=MemLain2.FieldByName('category').AsString;
-  end;
 end;
-{if loksbu<>'' then
-begin
-
-end;
-DBGridPenolong.FinishLoadingStatus();  }
-end;
-
-procedure TFBarang_Stok.dxBarlainClick(Sender: TObject);
-begin
-//  refresh;
-QLain2.Close;
-MemLain2.Close;
-QLain2det.Close;
-DBGridlain2.StartLoadingStatus();
-if loksbu='' then
-begin
-  with QLain2 do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,C.jenis,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' FROM t_material_stok AS "a" LEFT JOIN	t_supplier AS b	ON 	a.kd_supplier = b.kd_supplier  '+
-	            ' INNER JOIN t_material AS "c"	ON 	a.kd_material = c.kd_material AND		a.no_material = c.no_material  '+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN   '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok)as aa on 1=1  '+
-              ' where C.jenis<>''PRODUKSI'''+
-              ' GROUP BY b.nm_supplier,c.nm_material,c.category,C.jenis,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,aa.totalmt'+
-              ' Order by kd_material_stok Desc ';
-    open;
-  end;
-  MemLain2.Open;
-  with QLain2det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a left JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu)+' OR b.kd_sbu=''''';
-    open;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QLain2 do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,C.jenis,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' FROM t_material_stok AS "a" LEFT JOIN	t_supplier AS b	ON 	a.kd_supplier = b.kd_supplier  '+
-	            ' INNER JOIN t_material AS "c"	ON 	a.kd_material = c.kd_material AND		a.no_material = c.no_material  '+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN   '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok AND '+
-              ' (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as aa on 1=1  '+
-              ' where C.jenis<>''PRODUKSI'''+
-              ' GROUP BY b.nm_supplier,c.nm_material,c.category,C.jenis,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,aa.totalmt'+
-              ' Order by kd_material_stok Desc ';
-    open;
-  end;
-  MemLain2.Open;
-  with QLain2det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a left JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu)+' OR b.kd_sbu=''''';
-    open;
-  end;
-end;
-DBGridlain2.FinishLoadingStatus();
-end;
-
-procedure TFBarang_Stok.dxBarButton6Click(Sender: TObject);
-begin
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridlain2.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_material_stok where kd_material_stok='+QuotedStr(DBGridlain2.Fields[0].AsString);
-  Execute;
-end;
-dxbarRefreshClick(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
-end;
-
-procedure TFBarang_Stok.dxBarKimiaDeleteClick(Sender: TObject);
-begin
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridKimia.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_material_stok where kd_material_stok='+QuotedStr(DBGridKimia.Fields[0].AsString);
-  Execute;
-end;
-dxbarRefreshClick(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
-end;
-
-procedure TFBarang_Stok.dxBarKimiaRefreshClick(Sender: TObject);
-begin
-  QKimia.Close;
-  MemKimia.close;
-  QKimia_det.Close;
-DBGridKimia.StartLoadingStatus();
-if loksbu='' then
-begin
-  with QKimia do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi, '+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' FROM t_material_stok AS "a" LEFT JOIN	t_supplier AS b	ON 	a.kd_supplier = b.kd_supplier  '+
-	            ' INNER JOIN t_material AS "c"	ON 	a.kd_material = c.kd_material AND		a.no_material = c.no_material  '+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN   '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok)as aa on 1=1  '+
-              ' where C.category=''KIMIA'' Order by kd_material_stok Desc';
-    open;
-  end;
-  MemKimia.Open;
-  with QKimia_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0';
-    open;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with QKimia do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' from t_material_stok A Left join t_supplier B on A.kd_supplier=B.kd_supplier '+
-              ' inner join t_material C on A.kd_material=C.kd_material and a.no_material=c.no_material'+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok AND '+
-              ' (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu='' ''))as aa on 1=1 where C.category=''KIMIA'''+
-              ' Order by kd_material_stok Desc ';
-    open;
-  end;
-  MemKimia.Open;
-  with QKimia_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu)+' OR b.kd_sbu=''''';
-    open;
-  end;
-end;
-DBGridKimia.FinishLoadingStatus();
 end;
 
 procedure TFBarang_Stok.dxBarKimiaUpdateClick(Sender: TObject);
@@ -845,20 +211,6 @@ begin
   EdNm_supp.Enabled:=false;
   FNew_Barang_Stok.BEdit.Visible:=True;
   FNew_Barang_Stok.BSimpan.Visible:=False;
-  with MemKimia do
-  begin
-    FNew_Barang_Stok.EdNm_Material.Text:=MemKimia.FieldByName('nm_material').AsString;
-    FNew_Barang_Stok.EdKd_Material.Text:=MemKimia.FieldByName('kd_material').AsString;
-    FNew_Barang_Stok.EdNm_supp.Text:=MemKimia.FieldByName('nm_supplier').AsString;
-    FNew_Barang_Stok.EdKd_supp.Text:=MemKimia.FieldByName('kd_supplier').AsString;
-    FNew_Barang_Stok.Edkd.Text:=MemKimia.FieldByName('kd_material_stok').AsString;
-    FNew_Barang_Stok.Edstok.Text:=MemKimia.FieldByName('qty').AsString;
-    FNew_Barang_Stok.EdSatuan.Text:=MemKimia.FieldByName('satuan').AsString;
-    FNew_Barang_Stok.Edmerk.Text:=MemKimia.FieldByName('merk').AsString;
-    FNew_Barang_Stok.Edno.Text:=MemKimia.FieldByName('no_urut').AsString;
-    no_material:=MemKimia.FieldByName('no_material').AsString;
-    FNew_Barang_Stok.Edcategory.Text:=MemKimia.FieldByName('category').AsString;
-  end;
 end;
 end;
 
@@ -923,9 +275,9 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
-      ' a.unit,a.merk,aa.totalmt as qty from gudang.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
-      ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."id" '+
-      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' a.unit,a.merk,aa.totalmt as qty from warehouse.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."category_id" '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
       ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code)as aa on 1=1 where a.deleted_at isnull '+
       ' Order by item_stock_code Desc';
       open;
@@ -935,7 +287,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a1.*,b1.sbu_code FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
       open;
     end;
   end;
@@ -945,9 +297,9 @@ begin
     begin
       close;
       sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
-      ' a.unit,a.merk,aa.totalmt as qty from gudang.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
-      ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."id" '+
-      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' a.unit,a.merk,aa.totalmt as qty from warehouse.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."category_id" '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
       ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code and (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as'+
       ' aa on 1=1 where a.deleted_at isnull Order by item_stock_code Desc';
       Open;
@@ -957,7 +309,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a1.*,b1.sbu_code FROM gudang.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''';
       open;
     end;
   end;
@@ -1083,17 +435,12 @@ begin
   DtTh.Date:=now;
 //  Self.Refresh;
   Self.Clear;
-  TabBaku.TabVisible:=false;
-  TabKimia.TabVisible:=false;
-  TabKemasan.TabVisible:=false;
-  TabBahanPenolong.TabVisible:=false;
-  TabLain2.TabVisible:=false;
   TabBarang.TabVisible:=true;
 end;
 
 procedure TFBarang_Stok.Refresh;
 begin
-if kdsbu='' then
+{if kdsbu='' then
 begin
   with Qtepung do
   begin
@@ -1319,7 +666,7 @@ end;
   if QKemasan_det.Active=false then QKemasan_det.Active:=true;
   if QLain2.Active=false then QLain2.Active:=true;
   if MemLain2.Active=false then MemLain2.Active:=true;
-  if QLain2det.Active=false then QLain2det.Active:=true;
+  if QLain2det.Active=false then QLain2det.Active:=true;  }
 end;
 
 procedure TFBarang_Stok.TabBahanPenolongShow(Sender: TObject);
@@ -1395,122 +742,10 @@ end;
    FNew_Barang_Stok.Edno.Text:=kode;
 end;
 
-procedure TFBarang_Stok.BarKmsDeleteClick(Sender: TObject);
-begin
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridKemasan.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_item_stock where item_stock_code='+QuotedStr(DBGridKemasan.Fields[0].AsString);
-  Execute;
-end;
-dxbarRefreshClick(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
-end;
-
-procedure TFBarang_Stok.BarKmsRefreshClick(Sender: TObject);
-begin
-  Qkemasan.Close;
-  Memkemasan.close;
-  QKemasan_det.Close;
-DBGridKemasan.StartLoadingStatus();
-if loksbu='' then
-begin
-  with Qkemasan do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi, '+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' FROM t_material_stok AS "a" LEFT JOIN	t_supplier AS b	ON 	a.kd_supplier = b.kd_supplier  '+
-	            ' INNER JOIN t_material AS "c"	ON 	a.kd_material = c.kd_material AND		a.no_material = c.no_material  '+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN   '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok)as aa on 1=1  '+
-              ' where C.category=''BAHAN KEMASAN'' Order by kd_material_stok Desc';
-    OPEN;
-  end;
-  Memkemasan.Open;
-  with QKemasan_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0';
-    open;
-  end;
-end;
-if loksbu<>'' then
-begin
-  with Qkemasan do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd_supplier,a.kd_material_stok,a.no_urut,a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_material,a.qtykonversi,a.satuankonversi,'+
-              '(case when aa.totalmt ISNULL then 0 else aa.totalmt end) as qty  '+
-              ' from t_material_stok A Left join t_supplier B on A.kd_supplier=B.kd_supplier '+
-              ' inner join t_material C on A.kd_material=C.kd_material and a.no_material=c.no_material'+
-              ' LEFT JOIN LATERAL (SELECT sum(a1."Outstanding")as totalmt FROM t_material_stok_det a1 INNER JOIN '+
-              ' t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd_material_stok=a.kd_material_stok AND '+
-              ' (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu='' ''))as aa on 1=1 where C.category=''BAHAN KEMASAN'''+
-              ' Order by kd_material_stok Desc ';
-    OPEN;
-  end;
-  Memkemasan.Open;
-  with QKemasan_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.*,b.kd_sbu from t_material_stok_det a INNER JOIN t_gudang b on a.gudang=b.nm_gudang where a."Outstanding"<>0 and b.kd_sbu='+QuotedStr(loksbu)+' OR b.kd_sbu=''''';
-    open;
-  end;
-end;
-DBGridKemasan.FinishLoadingStatus();
-end;
-
-procedure TFBarang_Stok.BarKmsUpdateClick(Sender: TObject);
-begin
-with FNew_Barang_Stok do
-begin
-  Show;
-  Self.Load;
-  Self.Clear;
-  Caption:='Update Stok Material';
-  EdNm_Material.Enabled:=false;
-  EdNm_supp.Enabled:=false;
-  FNew_Barang_Stok.BEdit.Visible:=True;
-  FNew_Barang_Stok.BSimpan.Visible:=False;
-  with Memkemasan do
-  begin
-    FNew_Barang_Stok.EdNm_Material.Text:=Memkemasan.FieldByName('nm_material').AsString;
-    FNew_Barang_Stok.EdKd_Material.Text:=Memkemasan.FieldByName('kd_material').AsString;
-    FNew_Barang_Stok.EdNm_supp.Text:=Memkemasan.FieldByName('nm_supplier').AsString;
-    FNew_Barang_Stok.EdKd_supp.Text:=Memkemasan.FieldByName('kd_supplier').AsString;
-    FNew_Barang_Stok.Edkd.Text:=Memkemasan.FieldByName('kd_material_stok').AsString;
-    FNew_Barang_Stok.Edstok.Text:=Memkemasan.FieldByName('qty').AsString;
-    FNew_Barang_Stok.EdSatuan.Text:=Memkemasan.FieldByName('satuan').AsString;
-    FNew_Barang_Stok.Edmerk.Text:=Memkemasan.FieldByName('merk').AsString;
-    FNew_Barang_Stok.Edno.Text:=Memkemasan.FieldByName('no_urut').AsString;
-    no_material:=Memkemasan.FieldByName('no_material').AsString;
-    FNew_Barang_Stok.Edcategory.Text:=Memkemasan.FieldByName('category').AsString;
-  end;
-end;
-end;
-
-procedure TFBarang_Stok.BBaruClick(Sender: TObject);
-begin
-{Tabnew.TabVisible:=true;
-PGControl.ActivePage:=Tabnew;
-Self.Load;  }
-end;
-
 procedure TFBarang_Stok.BBatalClick(Sender: TObject);
 begin
 Self.Clear;
 Self.Refresh;
-TabBaku.TabVisible:=true;
-PGControl.ActivePage:=TabBaku;
 end;
 
 procedure TFBarang_Stok.BSimpanClick(Sender: TObject);

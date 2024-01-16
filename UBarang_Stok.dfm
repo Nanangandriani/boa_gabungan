@@ -22,179 +22,13 @@ object FBarang_Stok: TFBarang_Stok
     Width = 896
     Height = 388
     Hint = ''
-    ActivePage = TabBaku
+    ActivePage = TabBarang
     Align = alClient
     TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 892
     ExplicitHeight = 387
     FixedDimension = 19
-    object TabBaku: TRzTabSheet
-      OnShow = TabBakuShow
-      Caption = 'Bahan Baku'
-      object pnList: TPanel
-        Left = 0
-        Top = 0
-        Width = 892
-        Height = 365
-        Align = alClient
-        Caption = 'pnList'
-        TabOrder = 0
-        object DBGridBaku: TDBGridEh
-          Left = 1
-          Top = 1
-          Width = 890
-          Height = 363
-          Align = alClient
-          DataSource = DsTepung
-          DynProps = <>
-          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-          RowDetailPanel.Active = True
-          RowDetailPanel.Height = 180
-          SearchPanel.Enabled = True
-          TabOrder = 0
-          Columns = <
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'kd_material_stok'
-              Footers = <>
-              Title.Caption = 'Kode Barang'
-              Width = 135
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'nm_material'
-              Footers = <>
-              Title.Caption = 'Nama Barang'
-              Width = 150
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'nm_supplier'
-              Footers = <>
-              Title.Caption = 'Nama Supplier'
-              Width = 250
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'merk'
-              Footers = <>
-              Title.Caption = 'Merk'
-              Width = 127
-            end
-            item
-              CellButtons = <>
-              DisplayFormat = '#,##0.00'
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'qty'
-              Footers = <>
-              Title.Caption = 'Stok'
-              Width = 130
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'satuan'
-              Footers = <>
-              Title.Caption = 'Satuan'
-              Visible = False
-              Width = 86
-            end>
-          object RowDetailData: TRowDetailPanelControlEh
-            object DBGridEh3: TDBGridEh
-              Left = 0
-              Top = 25
-              Width = 776
-              Height = 153
-              Align = alClient
-              DataSource = Dstepung_det
-              DynProps = <>
-              SearchPanel.Enabled = True
-              SearchPanel.CaseSensitive = True
-              TabOrder = 0
-              Columns = <
-                item
-                  CellButtons = <>
-                  DynProps = <>
-                  EditButtons = <>
-                  FieldName = 'kd_stok'
-                  Footers = <>
-                  Title.Caption = 'Kode Stok '
-                  Width = 140
-                end
-                item
-                  CellButtons = <>
-                  DisplayFormat = '0.00#,##'
-                  DynProps = <>
-                  EditButtons = <>
-                  FieldName = 'qty'
-                  Footers = <>
-                  Title.Caption = 'Kuantum'
-                  Width = 120
-                end
-                item
-                  CellButtons = <>
-                  DisplayFormat = '0.00#,##'
-                  DynProps = <>
-                  EditButtons = <>
-                  FieldName = 'qtyout'
-                  Footers = <>
-                  Title.Caption = 'Kuantum Keluar'
-                  Width = 120
-                end
-                item
-                  CellButtons = <>
-                  DisplayFormat = '0.00#,##'
-                  DynProps = <>
-                  EditButtons = <>
-                  FieldName = 'Outstanding'
-                  Footers = <>
-                  Title.Caption = 'Sisa Kuantum'
-                  Width = 120
-                end
-                item
-                  CellButtons = <>
-                  DynProps = <>
-                  EditButtons = <>
-                  FieldName = 'satuan'
-                  Footers = <>
-                  Title.Caption = 'Satuan'
-                  Width = 100
-                end>
-              object RowDetailData: TRowDetailPanelControlEh
-              end
-            end
-            object Panel6: TPanel
-              Left = 0
-              Top = 0
-              Width = 776
-              Height = 25
-              Align = alTop
-              TabOrder = 1
-              object CkTepung: TCheckBox
-                Left = 7
-                Top = 3
-                Width = 169
-                Height = 17
-                Caption = 'Tampilkan Kuantum yang 0'
-                TabOrder = 0
-                OnClick = CkTepungClick
-              end
-            end
-          end
-        end
-      end
-    end
     object Tabnew: TRzTabSheet
       TabVisible = False
       Caption = 'Tabnew'
@@ -590,638 +424,6 @@ object FBarang_Stok: TFBarang_Stok
         end
       end
     end
-    object TabKimia: TRzTabSheet
-      OnShow = TabKimiaShow
-      Caption = 'Bahan Kimia'
-      object DBGridKimia: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 892
-        Height = 365
-        Align = alClient
-        DataSource = DsKimia
-        DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        RowDetailPanel.Active = True
-        RowDetailPanel.Height = 180
-        SearchPanel.Enabled = True
-        TabOrder = 0
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_material_stok'
-            Footers = <>
-            Title.Caption = 'Kode Barang'
-            Width = 135
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_material'
-            Footers = <>
-            Title.Caption = 'Nama Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_supplier'
-            Footers = <>
-            Title.Caption = 'Nama Supplier'
-            Width = 250
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'merk'
-            Footers = <>
-            Title.Caption = 'Merk'
-            Width = 127
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Stok'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'satuan'
-            Footers = <>
-            Title.Caption = 'Satuan'
-            Visible = False
-            Width = 86
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-          object DBGridEh4: TDBGridEh
-            Left = 0
-            Top = 25
-            Width = 776
-            Height = 153
-            Align = alClient
-            DataSource = DsKimia_det
-            DynProps = <>
-            SearchPanel.Enabled = True
-            SearchPanel.CaseSensitive = True
-            TabOrder = 0
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'kd_stok'
-                Footers = <>
-                Title.Caption = 'Kode Stok '
-                Width = 140
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qtyout'
-                Footers = <>
-                Title.Caption = 'Kuatum Keluar'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'Outstanding'
-                Footers = <>
-                Title.Caption = 'Sisa Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'satuan'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 100
-              end>
-            object RowDetailData: TRowDetailPanelControlEh
-            end
-          end
-          object Panel7: TPanel
-            Left = 0
-            Top = 0
-            Width = 776
-            Height = 25
-            Align = alTop
-            TabOrder = 1
-            object CkKimia: TCheckBox
-              Left = 15
-              Top = 3
-              Width = 169
-              Height = 17
-              Caption = 'Tampilkan Kuantum yang 0'
-              TabOrder = 0
-              OnClick = CkKimiaClick
-            end
-          end
-        end
-      end
-    end
-    object TabKemasan: TRzTabSheet
-      OnShow = TabKemasanShow
-      Caption = 'Bahan Kemasan'
-      object DBGridKemasan: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 892
-        Height = 365
-        Align = alClient
-        DataSource = DsKemasan
-        DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        RowDetailPanel.Active = True
-        RowDetailPanel.Height = 180
-        SearchPanel.Enabled = True
-        TabOrder = 0
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_material_stok'
-            Footers = <>
-            Title.Caption = 'Kode  Barang'
-            Width = 135
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_material'
-            Footers = <>
-            Title.Caption = 'Nama  Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_supplier'
-            Footers = <>
-            Title.Caption = 'Nama Supplier'
-            Width = 250
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'merk'
-            Footers = <>
-            Title.Caption = 'Merk'
-            Width = 127
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Stok'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'satuan'
-            Footers = <>
-            Title.Caption = 'Satuan'
-            Visible = False
-            Width = 86
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-          object DBGridEh6: TDBGridEh
-            Left = 0
-            Top = 25
-            Width = 776
-            Height = 153
-            Align = alClient
-            DataSource = DsKemasan_det
-            DynProps = <>
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-            SearchPanel.Enabled = True
-            SearchPanel.CaseSensitive = True
-            TabOrder = 0
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'kd_stok'
-                Footers = <>
-                Title.Caption = 'Kode Stok '
-                Width = 140
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Total Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qtyout'
-                Footers = <>
-                Title.Caption = 'Kuantum Keluar'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'Outstanding'
-                Footers = <>
-                Title.Caption = 'Sisa Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'satuan'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 100
-              end>
-            object RowDetailData: TRowDetailPanelControlEh
-            end
-          end
-          object Panel8: TPanel
-            Left = 0
-            Top = 0
-            Width = 776
-            Height = 25
-            Align = alTop
-            TabOrder = 1
-            object CkKemasan: TCheckBox
-              Left = 16
-              Top = 2
-              Width = 169
-              Height = 17
-              Caption = 'Tampilkan Kuantum yang 0'
-              TabOrder = 0
-              OnClick = CkKemasanClick
-            end
-          end
-        end
-      end
-    end
-    object TabBahanPenolong: TRzTabSheet
-      OnShow = TabBahanPenolongShow
-      Caption = 'Bahan Penolong'
-      object DBGridPenolong: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 892
-        Height = 365
-        Align = alClient
-        DataSource = DsPenolong
-        DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        RowDetailPanel.Active = True
-        RowDetailPanel.Height = 180
-        SearchPanel.Enabled = True
-        TabOrder = 0
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_material_stok'
-            Footers = <>
-            Title.Caption = 'Kode  Barang'
-            Width = 135
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_material'
-            Footers = <>
-            Title.Caption = 'Nama  Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_supplier'
-            Footers = <>
-            Title.Caption = 'Nama Supplier'
-            Width = 250
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'merk'
-            Footers = <>
-            Title.Caption = 'Merk'
-            Width = 127
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Stok'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'satuan'
-            Footers = <>
-            Title.Caption = 'Satuan'
-            Visible = False
-            Width = 86
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-          object DBGridEh2: TDBGridEh
-            Left = 0
-            Top = 25
-            Width = 776
-            Height = 153
-            Align = alClient
-            DataSource = DsPenolongdet
-            DynProps = <>
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-            SearchPanel.Enabled = True
-            SearchPanel.CaseSensitive = True
-            TabOrder = 0
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'kd_stok'
-                Footers = <>
-                Title.Caption = 'Kode Stok '
-                Width = 140
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Total Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qtyout'
-                Footers = <>
-                Title.Caption = 'Kuantum Keluar'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'Outstanding'
-                Footers = <>
-                Title.Caption = 'Sisa Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'satuan'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 100
-              end>
-            object RowDetailData: TRowDetailPanelControlEh
-            end
-          end
-          object Panel9: TPanel
-            Left = 0
-            Top = 0
-            Width = 776
-            Height = 25
-            Align = alTop
-            TabOrder = 1
-            object CkPenolong: TCheckBox
-              Left = 16
-              Top = 3
-              Width = 169
-              Height = 17
-              Caption = 'Tampilkan Kuantum yang 0'
-              TabOrder = 0
-              OnClick = CkPenolongClick
-            end
-          end
-        end
-      end
-    end
-    object TabLain2: TRzTabSheet
-      OnShow = TabLain2Show
-      Caption = 'Lain- lain'
-      object DBGridlain2: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 892
-        Height = 365
-        Align = alClient
-        DataSource = DsLain2
-        DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        RowDetailPanel.Active = True
-        RowDetailPanel.Height = 180
-        SearchPanel.Enabled = True
-        SearchPanel.CaseSensitive = True
-        TabOrder = 0
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_material_stok'
-            Footers = <>
-            Title.Caption = 'Kode  Barang'
-            Width = 135
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_material'
-            Footers = <>
-            Title.Caption = 'Nama  Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_supplier'
-            Footers = <>
-            Title.Caption = 'Nama Supplier'
-            Width = 250
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'merk'
-            Footers = <>
-            Title.Caption = 'Merk'
-            Width = 127
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Stok'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'satuan'
-            Footers = <>
-            Title.Caption = 'Satuan'
-            Visible = False
-            Width = 86
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-          object DBGridEh5: TDBGridEh
-            Left = 0
-            Top = 25
-            Width = 776
-            Height = 153
-            Align = alClient
-            DataSource = DsLain2det
-            DynProps = <>
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-            SearchPanel.Enabled = True
-            SearchPanel.CaseSensitive = True
-            TabOrder = 0
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'kd_stok'
-                Footers = <>
-                Title.Caption = 'Kode Stok '
-                Width = 140
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Total Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qtyout'
-                Footers = <>
-                Title.Caption = 'Kuantum Keluar'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'Outstanding'
-                Footers = <>
-                Title.Caption = 'Sisa Kuantum'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'satuan'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 100
-              end>
-            object RowDetailData: TRowDetailPanelControlEh
-            end
-          end
-          object Panel10: TPanel
-            Left = 0
-            Top = 0
-            Width = 776
-            Height = 25
-            Align = alTop
-            TabOrder = 1
-            object CkLain2: TCheckBox
-              Left = 16
-              Top = 4
-              Width = 169
-              Height = 15
-              Caption = 'Tampilkan Kuantum yang 0'
-              TabOrder = 0
-              OnClick = CkLain2Click
-            end
-          end
-        end
-      end
-    end
     object TabBarang: TRzTabSheet
       Caption = 'List Barang'
       ExplicitWidth = 888
@@ -1232,6 +434,11 @@ object FBarang_Stok: TFBarang_Stok
         Width = 892
         Height = 365
         Align = alClient
+        DataGrouping.Active = True
+        DataGrouping.GroupLevels = <
+          item
+            ColumnName = 'Column_0_item_code'
+          end>
         DataSource = DsStok_Barang
         DynProps = <>
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
@@ -1244,7 +451,7 @@ object FBarang_Stok: TFBarang_Stok
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'item_stock_code'
+            FieldName = 'item_code'
             Footers = <>
             Title.Caption = 'Kode Barang'
             Width = 135
@@ -1378,7 +585,6 @@ object FBarang_Stok: TFBarang_Stok
               Height = 17
               Caption = 'Tampilkan Kuantum yang 0'
               TabOrder = 0
-              OnClick = CkBarangClick
             end
           end
         end
@@ -1418,55 +624,6 @@ object FBarang_Stok: TFBarang_Stok
       Index = 0
     end
   end
-  object QKimia: TUniQuery
-    SQL.Strings = (
-      
-        'select A.*,B.nm_supplier , C.nm_material,c.category from t_mater' +
-        'ial_stok A'
-      'Left join t_supplier B on A.kd_supplier=B.kd_supplier '
-      'inner join t_material C on A.kd_material=C.kd_material'
-      'where C.category='#39'KIMIA'#39
-      'order by kd_material_stok Desc')
-    Left = 740
-    Top = 232
-  end
-  object DsKimia: TDataSource
-    DataSet = MemKimia
-    Left = 737
-    Top = 288
-  end
-  object MemKimia: TMemTableEh
-    Params = <>
-    DataDriver = DsdKimia
-    Left = 777
-    Top = 244
-  end
-  object DsdKimia: TDataSetDriverEh
-    ProviderDataSet = QKimia
-    Left = 776
-    Top = 296
-  end
-  object QKimia_det: TUniQuery
-    SQL.Strings = (
-      'select * from t_material_stok_det')
-    MasterSource = DsKimia
-    MasterFields = 'kd_material_stok'
-    DetailFields = 'kd_material_stok'
-    Left = 820
-    Top = 232
-    ParamData = <
-      item
-        DataType = ftFixedChar
-        Name = 'kd_material_stok'
-        ParamType = ptInput
-        Value = 'W'
-      end>
-  end
-  object DsKimia_det: TDataSource
-    DataSet = QKimia_det
-    Left = 825
-    Top = 280
-  end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1481,8 +638,8 @@ object FBarang_Stok: TFBarang_Stok
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 440
-    Top = 40
+    Left = 248
+    Top = 32
     PixelsPerInch = 96
     object dxBarMb1: TdxBar
       Caption = 'Proses'
@@ -1652,7 +809,7 @@ object FBarang_Stok: TFBarang_Stok
       Caption = 'Update    '
       Category = 0
       Hint = 'Update    '
-      Visible = ivAlways
+      Visible = ivNever
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
@@ -1756,7 +913,7 @@ object FBarang_Stok: TFBarang_Stok
       Caption = 'Delete     '
       Category = 0
       Hint = 'Delete     '
-      Visible = ivAlways
+      Visible = ivNever
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
@@ -1857,7 +1014,7 @@ object FBarang_Stok: TFBarang_Stok
       Caption = 'Baru'
       Category = 0
       Hint = 'Baru'
-      Visible = ivAlways
+      Visible = ivNever
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -2150,7 +1307,6 @@ object FBarang_Stok: TFBarang_Stok
         564F8F8EE0C7D565B6C89EC4927C56AC9253248D1ED758926FE189CCE1794D92
         66165DC1102CFB17F0D9CD055C585AE44642166F324FFF7F28869942EEEEB1EA
         185EAC8DE32F3CD6CD0E9015BFB10000000049454E44AE426082}
-      OnClick = dxBarKimiaRefreshClick
     end
     object dxBarKimiaDelete: TdxBarButton
       Caption = 'Delete       '
@@ -2195,7 +1351,6 @@ object FBarang_Stok: TFBarang_Stok
         B9380D47CE53369C3E6A3854895FD770B2B82DB3915AE65DFA5AE3DDB5CCF1D8
         86414D3FE32CF8D1F049CED9B580C45935FD770BF0124682FAC930B63DF20000
         000049454E44AE426082}
-      OnClick = dxBarKimiaDeleteClick
     end
     object BarKmsBaru: TdxBarLargeButton
       Caption = 'Baru'
@@ -2319,7 +1474,6 @@ object FBarang_Stok: TFBarang_Stok
         EDBF51B0F4C129CC316C0E3C34B9E5E5E5A8A830D3D06803743DCA3F87386C94
         254DAF9394B568D1F3282C2C14951600F00F711766BA950C0023000000004945
         4E44AE426082}
-      OnClick = BarKmsUpdateClick
     end
     object BarKmsRefresh: TdxBarButton
       Caption = 'Refresh    '
@@ -2365,7 +1519,6 @@ object FBarang_Stok: TFBarang_Stok
         564F8F8EE0C7D565B6C89EC4927C56AC9253248D1ED758926FE189CCE1794D92
         66165DC1102CFB17F0D9CD055C585AE44642166F324FFF7F28869942EEEEB1EA
         185EAC8DE32F3CD6CD0E9015BFB10000000049454E44AE426082}
-      OnClick = BarKmsRefreshClick
     end
     object BarKmsDelete: TdxBarButton
       Caption = 'Delete       '
@@ -2410,7 +1563,6 @@ object FBarang_Stok: TFBarang_Stok
         B9380D47CE53369C3E6A3854895FD770B2B82DB3915AE65DFA5AE3DDB5CCF1D8
         86414D3FE32CF8D1F049CED9B580C45935FD770BF0124682FAC930B63DF20000
         000049454E44AE426082}
-      OnClick = BarKmsDeleteClick
     end
     object dxBarButton1: TdxBarButton
       Caption = 'Update     '
@@ -2513,7 +1665,6 @@ object FBarang_Stok: TFBarang_Stok
         564F8F8EE0C7D565B6C89EC4927C56AC9253248D1ED758926FE189CCE1794D92
         66165DC1102CFB17F0D9CD055C585AE44642166F324FFF7F28869942EEEEB1EA
         185EAC8DE32F3CD6CD0E9015BFB10000000049454E44AE426082}
-      OnClick = dxBarPenolongClick
     end
     object dxBarButton3: TdxBarButton
       Caption = 'Delete     '
@@ -2558,7 +1709,6 @@ object FBarang_Stok: TFBarang_Stok
         B9380D47CE53369C3E6A3854895FD770B2B82DB3915AE65DFA5AE3DDB5CCF1D8
         86414D3FE32CF8D1F049CED9B580C45935FD770BF0124682FAC930B63DF20000
         000049454E44AE426082}
-      OnClick = dxBarButton3Click
     end
     object dxBarLargeButton1: TdxBarLargeButton
       Caption = 'Baru'
@@ -2857,7 +2007,6 @@ object FBarang_Stok: TFBarang_Stok
         564F8F8EE0C7D565B6C89EC4927C56AC9253248D1ED758926FE189CCE1794D92
         66165DC1102CFB17F0D9CD055C585AE44642166F324FFF7F28869942EEEEB1EA
         185EAC8DE32F3CD6CD0E9015BFB10000000049454E44AE426082}
-      OnClick = dxBarlainClick
     end
     object dxBarButton6: TdxBarButton
       Caption = 'Delete  '
@@ -2902,273 +2051,23 @@ object FBarang_Stok: TFBarang_Stok
         B9380D47CE53369C3E6A3854895FD770B2B82DB3915AE65DFA5AE3DDB5CCF1D8
         86414D3FE32CF8D1F049CED9B580C45935FD770BF0124682FAC930B63DF20000
         000049454E44AE426082}
-      OnClick = dxBarButton6Click
     end
-  end
-  object Dstepung_det: TDataSource
-    DataSet = Qtepung_det
-    Left = 753
-    Top = 48
-  end
-  object Qtepung_det: TUniQuery
-    SQL.Strings = (
-      'select * from t_material_stok_det')
-    MasterSource = DsTepung
-    MasterFields = 'kd_material_stok'
-    DetailFields = 'kd_material_stok'
-    Left = 748
-    ParamData = <
-      item
-        DataType = ftFixedChar
-        Name = 'kd_material_stok'
-        ParamType = ptInput
-        Value = 'W'
-      end>
-  end
-  object MemTepung: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = Dsdtepung
-    Left = 697
-    Top = 65524
-  end
-  object Dsdtepung: TDataSetDriverEh
-    ProviderDataSet = Qtepung
-    Left = 701
-    Top = 32
-  end
-  object DsTepung: TDataSource
-    DataSet = MemTepung
-    Left = 657
-    Top = 48
-  end
-  object Qtepung: TUniQuery
-    SQL.Strings = (
-      
-        'SELECT b.nm_supplier,c.nm_material,c.category,a.kd_material,a.kd' +
-        '_supplier,a.kd_material_stok,a.no_urut,'
-      
-        'a.kd_urut,a.satuan,a.merk,a.nm_material,a.qtyperkonversi,a.no_ma' +
-        'terial,a.qtykonversi,a.satuankonversi,aa.totalmt as qty '
-      
-        '              from t_material_stok A Left join t_supplier B on A' +
-        '.kd_supplier=B.kd_supplier'
-      
-        '               inner join t_material C on A.kd_material=C.kd_mat' +
-        'erial and a.no_material=c.no_material'
-      
-        '               LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt F' +
-        'ROM t_material_stok_det a1 INNER JOIN '
-      
-        '               t_gudang b1 on a1.gudang=b1.nm_gudang where a1.kd' +
-        '_material_stok=a.kd_material_stok)as aa on 1=1 where C.category=' +
-        #39'BAHAN BAKU'#39
-      '               Order by kd_material_stok Desc')
-    Left = 652
-  end
-  object Qkemasan: TUniQuery
-    SQL.Strings = (
-      
-        'SELECT b.nm_supplier, c.nm_material, a.kd_material, a.kd_supplie' +
-        'r, a.kd_material_stok, a.no_urut,'
-      
-        ' a.kd_urut, a.qty, A.merk, A.no_material,A.satuan,c.category FRO' +
-        'M t_material_stok AS "a"'
-      'LEFT JOIN t_supplier AS b ON a.kd_supplier = b.kd_supplier'
-      
-        'INNER JOIN t_material AS "c" ON a.kd_material = c.kd_material an' +
-        'd a.no_material=c.no_material'
-      'WHERE c.category = '#39'BAHAN KEMASAN'#39' '
-      
-        'GROUP BY b.nm_supplier, c.nm_material, a.kd_material, a.kd_suppl' +
-        'ier, a.kd_material_stok, a.no_urut, '
-      'a.kd_urut, a.qty, a.merk ,A.no_material,A.satuan,c.category'
-      'ORDER BY no_material Asc')
-    Left = 638
-    Top = 127
-  end
-  object DsKemasan: TDataSource
-    DataSet = Memkemasan
-    Left = 641
-    Top = 184
-  end
-  object DsdKemasan: TDataSetDriverEh
-    ProviderDataSet = Qkemasan
-    Left = 688
-    Top = 168
-  end
-  object Memkemasan: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = DsdKemasan
-    Left = 689
-    Top = 116
-  end
-  object QKemasan_det: TUniQuery
-    SQL.Strings = (
-      'select * from t_material_stok_det')
-    MasterSource = DsKemasan
-    MasterFields = 'kd_material_stok'
-    DetailFields = 'kd_material_stok'
-    Left = 748
-    Top = 128
-    ParamData = <
-      item
-        DataType = ftUnknown
-        Name = 'kd_material_stok'
-        Value = nil
-      end>
-  end
-  object DsKemasan_det: TDataSource
-    DataSet = QKemasan_det
-    Left = 753
-    Top = 180
-  end
-  object QPenolong: TUniQuery
-    SQL.Strings = (
-      
-        'SELECT b.nm_supplier, c.nm_material, a.kd_material, a.kd_supplie' +
-        'r, a.kd_material_stok, a.no_urut,'
-      
-        ' a.kd_urut, a.qty, A.merk, A.no_material,A.satuan,c.category FRO' +
-        'M t_material_stok AS "a"'
-      'LEFT JOIN t_supplier AS b ON a.kd_supplier = b.kd_supplier'
-      
-        'INNER JOIN t_material AS "c" ON a.kd_material = c.kd_material an' +
-        'd a.no_material=c.no_material'
-      'WHERE c.category = '#39'BAHAN PENOLONG'#39' '
-      
-        'GROUP BY b.nm_supplier, c.nm_material, a.kd_material, a.kd_suppl' +
-        'ier, a.kd_material_stok, a.no_urut, '
-      'a.kd_urut, a.qty, a.merk ,A.no_material,A.satuan,c.category'
-      'ORDER BY no_material Asc')
-    Left = 406
-    Top = 151
-  end
-  object DsPenolong: TDataSource
-    DataSet = MemPenolong
-    Left = 385
-    Top = 208
-  end
-  object DsdPenolong: TDataSetDriverEh
-    ProviderDataSet = QPenolong
-    Left = 432
-    Top = 192
-  end
-  object MemPenolong: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = DsdPenolong
-    Left = 449
-    Top = 116
-  end
-  object QPenolongdet: TUniQuery
-    SQL.Strings = (
-      'select * from t_material_stok_det')
-    MasterSource = DsPenolong
-    MasterFields = 'kd_material_stok'
-    DetailFields = 'kd_material_stok'
-    Left = 492
-    Top = 152
-    ParamData = <
-      item
-        DataType = ftUnknown
-        Name = 'kd_material_stok'
-        Value = nil
-      end>
-  end
-  object DsPenolongdet: TDataSource
-    DataSet = QPenolongdet
-    Left = 497
-    Top = 204
-  end
-  object QLain2: TUniQuery
-    SQL.Strings = (
-      
-        'SELECT b.nm_supplier, c.nm_material, a.kd_material, a.kd_supplie' +
-        'r, a.kd_material_stok, a.no_urut,'
-      
-        ' a.kd_urut, a.qty, A.merk, A.no_material,A.satuan,c.jenis,c.cate' +
-        'gory FROM t_material_stok AS "a"'
-      'LEFT JOIN t_supplier AS b ON a.kd_supplier = b.kd_supplier'
-      
-        'INNER JOIN t_material AS "c" ON a.kd_material = c.kd_material an' +
-        'd a.no_material=c.no_material'
-      'WHERE c.jenis='#39'NON PRODUKSI'#39
-      
-        'GROUP BY b.nm_supplier, c.nm_material, a.kd_material, a.kd_suppl' +
-        'ier, a.kd_material_stok, a.no_urut, '
-      
-        'a.kd_urut, a.qty, a.merk ,A.no_material,A.satuan,c.jenis,c.categ' +
-        'ory'
-      'ORDER BY no_material Asc')
-    Left = 126
-    Top = 271
-  end
-  object DsLain2: TDataSource
-    DataSet = MemLain2
-    Left = 129
-    Top = 328
-  end
-  object DataSetDriverEh1: TDataSetDriverEh
-    ProviderDataSet = QLain2
-    Left = 176
-    Top = 312
-  end
-  object MemLain2: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = DataSetDriverEh1
-    Left = 177
-    Top = 260
-  end
-  object QLain2det: TUniQuery
-    SQL.Strings = (
-      'select * from t_material_stok_det')
-    MasterSource = DsLain2
-    MasterFields = 'kd_material_stok'
-    DetailFields = 'kd_material_stok'
-    Left = 236
-    Top = 272
-    ParamData = <
-      item
-        DataType = ftUnknown
-        Name = 'kd_material_stok'
-        Value = nil
-      end>
-  end
-  object DsLain2det: TDataSource
-    DataSet = QLain2det
-    Left = 241
-    Top = 324
   end
   object QStok_Barang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supp' +
-        'lier_code,a.item_stock_code,a.order_no,a.unit,a.merk,aa.totalmt ' +
-        'as qty '
-      
-        'from t_item_stock A Left join t_supplier B on A.supplier_code=B.' +
-        'supplier_code'
-      'inner join t_item C on A.item_code=C.item_code'
-      'INNER JOIN t_item_category d on c.category_id=d."id"'
-      
-        'LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stoc' +
-        'k_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1.it' +
-        'em_stock_code=a.item_stock_code)as aa on 1=1 '
-      '-- where C.category='#39'BAHAN BAKU'#39
-      'where a.deleted_at isnull Order by item_stock_code Desc')
-    Left = 262
-    Top = 415
+        'select a.*,b.supplier_name from warehouse.t_item_stock a INNER J' +
+        'OIN t_supplier b on a.supplier_code=b.supplier_code')
+    Left = 326
+    Top = 87
   end
   object MemStok_Barang: TMemTableEh
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdStok_Barang
-    Left = 281
-    Top = 372
+    Left = 345
+    Top = 44
   end
   object QStok_Barangdet: TUniQuery
     Connection = dm.Koneksi
@@ -3177,8 +2076,8 @@ object FBarang_Stok: TFBarang_Stok
     MasterSource = DsStok_Barang
     MasterFields = 'item_stock_code'
     DetailFields = 'item_stock_code'
-    Left = 332
-    Top = 424
+    Left = 396
+    Top = 96
     ParamData = <
       item
         DataType = ftUnknown
@@ -3188,17 +2087,17 @@ object FBarang_Stok: TFBarang_Stok
   end
   object DsdStok_Barang: TDataSetDriverEh
     ProviderDataSet = QStok_Barang
-    Left = 440
-    Top = 376
+    Left = 504
+    Top = 48
   end
   object DsStok_Barangdet: TDataSource
     DataSet = QStok_Barangdet
-    Left = 505
-    Top = 388
+    Left = 569
+    Top = 60
   end
   object DsStok_Barang: TDataSource
     DataSet = MemStok_Barang
-    Left = 393
-    Top = 392
+    Left = 457
+    Top = 64
   end
 end

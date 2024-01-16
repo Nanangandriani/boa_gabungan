@@ -861,8 +861,8 @@ object FBonPermt_Barang: TFBonPermt_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,B.item_name from gudang.t_item_request_det a inner jo' +
-        'in t_item B on'
+        'select A.*,B.item_name from warehouse.t_item_request_det a inner' +
+        ' join t_item B on'
       ' A.item_code=B.item_code')
     MasterSource = DsPermt_material
     MasterFields = 'trans_no'
@@ -891,8 +891,8 @@ object FBonPermt_Barang: TFBonPermt_Barang
         '-PROSES'#39' END status,'
       
         'trans_date,trans_no,kdsbu,trans_year,trans_month,to_char(trans_d' +
-        'ate,'#39'dd'#39') tgl from gudang.t_item_request order by created_at Des' +
-        'c')
+        'ate,'#39'dd'#39') tgl from warehouse.t_item_request order by created_at ' +
+        'Desc')
     Left = 384
   end
   object DsPermt_material: TDataSource

@@ -163,13 +163,27 @@ object FlistBarang: TFlistBarang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT'#9'"a".category,"c"."type",b.order_no,b.item_code,b.item_nam' +
-        'e,b.category_id,b.unit,b.merk,b.account_code,b.correction_status' +
-        ',b."id",d.account_name,b.description FROM '
+        'SELECT'#9'"a".category,"c"."type",b.*,d.account_name,e.group_id,e.g' +
+        'roup_name,f.* FROM '
       't_item_category AS "a"'#9
-      'INNER JOIN t_item AS b ON "a"."id" = b.category_id'#9
-      'INNER JOIN t_item_type AS "c" ON "a".type_id = "c"."id"'
+      'left JOIN t_item AS b ON "a"."category_id" = b.category_id'#9
+      'INNER JOIN t_item_type AS "c" ON "a".type_id = "c"."type_id"'
+      'INNER JOIN t_item_group AS "e" ON "b".group_id = "e"."group_id"'
       'LEFT JOIN t_ak_account d ON b.account_code=d.code'
+      
+        'LEFT JOIN (SELECT'#9'acc_persd, b.account_name ,acc_pemb, c.account' +
+        '_name as nm_pemb, acc_penj, d.account_name as nm_penj, acc_rtpem' +
+        'b, e.account_name nm_rtpemb, acc_potpemb, f.account_name nm_potp' +
+        'emb,acc_rtpenj, g.account_name nm_rtpenj, item_code FROM t_item_' +
+        'account AS "a" '
+      'INNER JOIN t_ak_account b on a.acc_persd=b.code'
+      'INNER JOIN t_ak_account c on a.acc_pemb=c.code'
+      'INNER JOIN t_ak_account d on a.acc_penj=d.code'
+      'INNER JOIN t_ak_account e on a.acc_rtpemb=e.code'
+      'INNER JOIN t_ak_account f on a.acc_potpemb=f.code'
+      
+        'INNER JOIN t_ak_account g on a.acc_rtpenj=g.code) f on b.item_co' +
+        'de=f.item_code'
       'where b.deleted_at isnull'
       'order by b.item_code asc')
     Left = 44

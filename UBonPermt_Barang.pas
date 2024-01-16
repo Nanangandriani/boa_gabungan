@@ -85,7 +85,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_BonPermtBarang, umainmenu, UDataModule, UHomeLogin;
+uses UNew_BonPermtBarang, umainmenu, UDataModule, UHomeLogin, UMy_Function;
 var
   realFBonPermt_Barang: TFBonPermt_Barang;
 // implementasi function
@@ -130,6 +130,7 @@ begin
     status:=0;
     MemMaterial.EmptyTable;
     Edno.Clear;
+    idmenu:='M4103';
   end;
 end;
 
@@ -187,7 +188,7 @@ begin
       sql.Clear;
       sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
       ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,kdsbu,'+
-      ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from gudang.t_item_request order by created_at Desc';
+      ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from warehouse.t_item_request order by created_at Desc';
       open;
     end;
       MemPermt_Material.Close;
@@ -203,7 +204,7 @@ begin
       sql.Clear;
       sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
         ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,kdsbu,'+
-        ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from gudang.t_item_request  '+
+        ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from warehouse.t_item_request  '+
         ' where kdsbu='+QuotedStr(loksbu)+' order by id Desc';
       open;
     end;

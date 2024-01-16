@@ -332,8 +332,8 @@ object FItem_Type: TFItem_Type
     SQL.Strings = (
       
         'select a.*,b.account_name from t_item_type a inner join t_ak_acc' +
-        'ount b on a.account_code=code where a.deleted_at isnull order by' +
-        ' a.created_at ')
+        'ount b on a.acc_code_pemb=code where a.deleted_at isnull order b' +
+        'y a.created_at ')
     Left = 237
     Top = 192
   end

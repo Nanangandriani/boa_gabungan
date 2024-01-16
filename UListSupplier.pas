@@ -56,6 +56,9 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
+    QBarang: TUniQuery;
+    DBGridEh1: TDBGridEh;
+    DsBarang: TDataSource;
     procedure dxBarBaruClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
@@ -63,6 +66,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,24 +77,24 @@ type
     Procedure Autonumber;
   end;
 
-var
-  FListSupplier: TFListSupplier;
+function FListSupplier: TFListSupplier;
   //RealListSupplier: TFListSupplier;
-  urut:integer;
+var  urut:integer;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_Supplier, UDataModule, UMainMenu;
-
-{function FListSupplier: TFListSupplier;
+var
+  RealListSupplier: TFListSupplier;
+function FListSupplier: TFListSupplier;
 begin
    if RealListSupplier <> nil then
       FListSupplier:= RealListSupplier
    else
      Application.CreateForm(TFListSupplier, Result);
-end;}
+end;
 
 procedure TFListSupplier.Refresh;
 begin
@@ -102,10 +107,9 @@ begin
    end;
    QSupplier.Active:=False;
    QSupplier.Active:=True;
-   QSupplier.Close;
-   QSupplier.Open;
+   QBarang.Close;
+   QBarang.Open;
 end;
-
 
 procedure TFListSupplier.Autonumber;
 begin
@@ -122,23 +126,52 @@ end;
 
 procedure TFListSupplier.dxBarUpdateClick(Sender: TObject);
 begin
-    FNew_Supplier.Show;
-    FNew_Supplier.BSimpan.Visible:=False;
-    FNew_Supplier.BEdit.Visible:=True;
-    FNew_Supplier.Caption:='Update Supplier';
-    FNew_Supplier.Edno.Enabled:=False;
-    with QSupplier do
-    begin
-      FNew_Supplier.Edno.Text:=QSupplier.FieldByName('supplier_code').AsString;
-      FNew_Supplier.EdNm.Text:=QSupplier.FieldByName('supplier_name').AsString;
-      FNew_Supplier.Edalamat.Text:=QSupplier.FieldByName('address').AsString;
-      FNew_Supplier.Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
-      FNew_Supplier.EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
-    end;
+  with FNew_Supplier do
+  begin
+      Show;
+      BSimpan.Visible:=False;
+      BEdit.Visible:=True;
+      Caption:='Update Supplier';
+      Edno.Enabled:=False;
+      Edkd.Enabled:=False;
+      MemMaterial.EmptyTable;
+      MemMaterial.Active:=false;
+      MemMaterial.Active:=true;
+      with QSupplier do
+      begin
+        Edno.Text:=QSupplier.FieldByName('supplier_code').AsString;
+        Edkd.Text:=QSupplier.FieldByName('supplier_code2').AsString;
+        EdNm.Text:=QSupplier.FieldByName('supplier_name').AsString;
+        Edalamat.Text:=QSupplier.FieldByName('address').AsString;
+        Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
+        EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
+      end;
+      QBarang.First;
+      while not QBarang.eof do
+      begin
+        with QBarang do
+        begin
+          MemMaterial.Insert;
+          MemMaterial['kd_material']:=QBarang.FieldByName('item_code').AsString;
+          MemMaterial['nm_material']:=QBarang.FieldByName('item_name').AsString;
+          MemMaterial['qty']:=QBarang.FieldByName('qty').AsString;
+          MemMaterial['satuan']:=QBarang.FieldByName('unit').AsString;
+          MemMaterial['kode']:=QBarang.FieldByName('item_stock_code').AsString;
+          MemMaterial.Post;
+        end;
+        QBarang.Next;
+      end;
+  end;
+end;
+
+procedure TFListSupplier.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
 end;
 
 procedure TFListSupplier.FormCreate(Sender: TObject);
 begin
+  RealListSupplier:=self;
    with QSupplier do
    begin
        close;
@@ -148,6 +181,11 @@ begin
    end;
    Qsupplier.Close;
    Qsupplier.Open;
+end;
+
+procedure TFListSupplier.FormDestroy(Sender: TObject);
+begin
+  RealListSupplier:=nil;
 end;
 
 procedure TFListSupplier.FormShow(Sender: TObject);
@@ -176,8 +214,16 @@ end;
 
 procedure TFListSupplier.dxBarBaruClick(Sender: TObject);
 begin
-    FNew_Supplier.Caption:='New Supplier';
-    FNew_Supplier.show;
+  with FNew_Supplier do
+  begin
+      Caption:='New Supplier';
+      show;
+      Autonumber;
+      Edkd.Enabled:=true;
+      MemMaterial.EmptyTable;
+      MemMaterial.Active:=false;
+      MemMaterial.Active:=true;
+  end;
 end;
 
 procedure TFListSupplier.dxBarDeleteClick(Sender: TObject);

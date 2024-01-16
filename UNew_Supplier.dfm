@@ -2,8 +2,8 @@ object FNew_Supplier: TFNew_Supplier
   Left = 0
   Top = 0
   Caption = 'New Supplier'
-  ClientHeight = 250
-  ClientWidth = 507
+  ClientHeight = 523
+  ClientWidth = 867
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,122 +16,17 @@ object FNew_Supplier: TFNew_Supplier
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
-  object Label1: TLabel
-    Left = 24
-    Top = 29
-    Width = 73
-    Height = 15
-    Caption = 'Kode Supplier'
-  end
-  object Label2: TLabel
-    Left = 24
-    Top = 66
-    Width = 78
-    Height = 15
-    Caption = 'Nama Supplier'
-  end
-  object Label3: TLabel
-    Left = 24
-    Top = 105
-    Width = 38
-    Height = 15
-    Caption = 'Alamat'
-  end
-  object Label4: TLabel
-    Left = 24
-    Top = 144
-    Width = 21
-    Height = 15
-    Caption = 'Telp'
-  end
-  object Label5: TLabel
-    Left = 24
-    Top = 183
-    Width = 34
-    Height = 15
-    Caption = 'NPWP'
-  end
-  object Label6: TLabel
-    Left = 114
-    Top = 26
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label7: TLabel
-    Left = 114
-    Top = 68
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label8: TLabel
-    Left = 114
-    Top = 105
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label9: TLabel
-    Left = 114
-    Top = 144
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label10: TLabel
-    Left = 114
-    Top = 183
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Edno: TEdit
-    Left = 123
-    Top = 23
-    Width = 153
-    Height = 23
-    TabOrder = 0
-  end
-  object EdNm: TEdit
-    Left = 123
-    Top = 63
-    Width = 374
-    Height = 23
-    TabOrder = 1
-  end
-  object EdAlamat: TEdit
-    Left = 123
-    Top = 102
-    Width = 374
-    Height = 23
-    TabOrder = 2
-  end
-  object EdTelp: TEdit
-    Left = 123
-    Top = 143
-    Width = 374
-    Height = 23
-    TabOrder = 3
-  end
-  object EdNPWP: TEdit
-    Left = 123
-    Top = 180
-    Width = 374
-    Height = 23
-    TabOrder = 4
-  end
   object Panel2: TPanel
     Left = 0
-    Top = 218
-    Width = 507
+    Top = 491
+    Width = 867
     Height = 32
     Align = alBottom
-    TabOrder = 5
-    ExplicitTop = 209
-    ExplicitWidth = 501
+    TabOrder = 0
+    ExplicitTop = 490
+    ExplicitWidth = 863
     object BBatal: TRzBitBtn
-      Left = 431
+      Left = 791
       Top = 1
       Height = 30
       Align = alRight
@@ -190,10 +85,10 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 425
+      ExplicitLeft = 787
     end
     object BSimpan: TRzBitBtn
-      Left = 356
+      Left = 716
       Top = 1
       Height = 30
       Align = alRight
@@ -252,10 +147,10 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 350
+      ExplicitLeft = 712
     end
     object BEdit: TRzBitBtn
-      Left = 281
+      Left = 641
       Top = 1
       Height = 30
       Align = alRight
@@ -315,7 +210,258 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 275
+      ExplicitLeft = 637
     end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 867
+    Height = 201
+    Align = alTop
+    TabOrder = 1
+    ExplicitWidth = 863
+    object Label1: TLabel
+      Left = 30
+      Top = 29
+      Width = 73
+      Height = 15
+      Caption = 'Kode Supplier'
+    end
+    object Label2: TLabel
+      Left = 30
+      Top = 57
+      Width = 78
+      Height = 15
+      Caption = 'Nama Supplier'
+    end
+    object Label3: TLabel
+      Left = 30
+      Top = 89
+      Width = 38
+      Height = 15
+      Caption = 'Alamat'
+    end
+    object Label4: TLabel
+      Left = 30
+      Top = 119
+      Width = 21
+      Height = 15
+      Caption = 'Telp'
+    end
+    object Label5: TLabel
+      Left = 30
+      Top = 153
+      Width = 34
+      Height = 15
+      Caption = 'NPWP'
+    end
+    object Label6: TLabel
+      Left = 120
+      Top = 26
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label7: TLabel
+      Left = 120
+      Top = 59
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label8: TLabel
+      Left = 120
+      Top = 89
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label9: TLabel
+      Left = 120
+      Top = 119
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label10: TLabel
+      Left = 120
+      Top = 153
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Edno: TEdit
+      Left = 279
+      Top = 25
+      Width = 132
+      Height = 23
+      TabOrder = 0
+    end
+    object EdNm: TEdit
+      Left = 137
+      Top = 54
+      Width = 374
+      Height = 23
+      TabOrder = 1
+    end
+    object EdAlamat: TEdit
+      Left = 137
+      Top = 86
+      Width = 374
+      Height = 23
+      TabOrder = 2
+    end
+    object EdTelp: TEdit
+      Left = 137
+      Top = 118
+      Width = 374
+      Height = 23
+      TabOrder = 3
+    end
+    object EdNPWP: TEdit
+      Left = 137
+      Top = 150
+      Width = 374
+      Height = 23
+      TabOrder = 4
+    end
+    object Edkd: TEdit
+      Left = 137
+      Top = 25
+      Width = 136
+      Height = 23
+      TabOrder = 5
+    end
+  end
+  object DBGridEh1: TDBGridEh
+    Left = 0
+    Top = 201
+    Width = 867
+    Height = 290
+    Align = alClient
+    AutoFitColWidths = True
+    DataSource = DsMaterial
+    DynProps = <>
+    HorzScrollBar.ExtraPanel.Visible = True
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    TabOrder = 2
+    TitleParams.MultiTitle = True
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <
+          item
+            Style = ebsEllipsisEh
+            OnClick = DBGridEh1Columns0EditButtons0Click
+          end>
+        FieldName = 'kd_material'
+        Footers = <>
+        Title.Caption = 'Kode Barang'
+        Width = 102
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <
+          item
+          end>
+        FieldName = 'nm_material'
+        Footers = <>
+        Title.Caption = 'Nama Barang'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '0.00#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty'
+        Footers = <>
+        Title.Caption = 'Kuantum'
+        Width = 82
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'satuan'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 65
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ket'
+        Footers = <>
+        Title.Caption = 'Keterangan'
+        Width = 173
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kode'
+        Footers = <>
+        Visible = False
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object MemMaterial: TMemTableEh
+    Active = True
+    Params = <>
+    Left = 552
+    Top = 112
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object kode: TMTStringDataFieldEh
+          FieldName = 'kode'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_material: TMTStringDataFieldEh
+          FieldName = 'nm_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object qty: TMTNumericDataFieldEh
+          FieldName = 'qty'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 30
+          currency = False
+          Precision = 30
+        end
+        object satuan: TMTStringDataFieldEh
+          FieldName = 'satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object ket: TMTStringDataFieldEh
+          FieldName = 'ket'
+          StringDataType = fdtStringEh
+          DisplayWidth = 200
+          Size = 200
+        end
+        object kd_material: TMTStringDataFieldEh
+          FieldName = 'kd_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DsMaterial: TDataSource
+    DataSet = MemMaterial
+    Left = 548
+    Top = 56
   end
 end

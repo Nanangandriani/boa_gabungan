@@ -1477,8 +1477,8 @@ object FKategori_Barang: TFKategori_Barang
     SQL.Strings = (
       
         'select a.*,b.type,c.account_name from t_item_category a inner jo' +
-        'in t_item_type b on a.type_id=b."id" inner join t_ak_account c o' +
-        'n a.account_code=c.code '
+        'in t_item_type b on a.type_id=b."type_id" inner join t_ak_accoun' +
+        't c on a.account_code=c.code '
       'where a.deleted_at isnull order by a.created_at ')
     Left = 240
     Top = 104

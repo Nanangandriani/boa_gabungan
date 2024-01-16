@@ -5,15 +5,17 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, RzPanel,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh,
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, Data.DB,
+  MemTableEh;
 
 type
   TFNew_Supplier = class(TForm)
-    Edno: TEdit;
-    EdNm: TEdit;
-    EdAlamat: TEdit;
-    EdTelp: TEdit;
-    EdNPWP: TEdit;
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    BEdit: TRzBitBtn;
+    Panel1: TPanel;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -24,10 +26,15 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BSimpan: TRzBitBtn;
-    BEdit: TRzBitBtn;
+    Edno: TEdit;
+    EdNm: TEdit;
+    EdAlamat: TEdit;
+    EdTelp: TEdit;
+    EdNPWP: TEdit;
+    DBGridEh1: TDBGridEh;
+    MemMaterial: TMemTableEh;
+    DsMaterial: TDataSource;
+    Edkd: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -35,35 +42,35 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure DBGridEh1Columns0EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     { Private declarations }
   public
     { Public declarations }
     Procedure Clear;
-
+    Procedure Autonumber;
   end;
 
-var
-  FNew_Supplier: TFNew_Supplier;
+//var  FNew_Supplier: TFNew_Supplier;
 
-//Function  FNew_Supplier: TFNew_Supplier;
+Function  FNew_Supplier: TFNew_Supplier;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UListSupplier, UMainMenu;
+uses UDataModule, UListSupplier, UMainMenu, UCari_Barang;
 
-//var
-    //RealFNew_Supplier: TFNew_Supplier;
-
-{Function FNew_Supplier: TFNew_Supplier;
+var
+    RealFNew_Supplier: TFNew_Supplier;
+Function FNew_Supplier: TFNew_Supplier;
 begin
     if RealFNew_Supplier <> nil then
     FNew_Supplier:= RealFNew_Supplier
     else
     Application.CreateForm(TFNew_Supplier, Result);
-end;}
+end;
 
 procedure TFNew_Supplier.Clear;
 begin
@@ -72,6 +79,52 @@ begin
    EdAlamat.Text:='';
    Edtelp.Text:='';
    EdNPWP.Text:='';
+end;
+
+Procedure TFNew_supplier.Autonumber;
+var nourut,code:string;
+i:integer;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select max(RIGHT(supplier_code,4)) as urut from t_supplier';
+    Execute;
+  end;
+     if dm.Qtemp['urut']= '' then
+      code := '1'
+     else
+     code:= IntToStr(dm.Qtemp['urut'] + 1);
+     if length(code) < 10 then
+      begin
+       for i := length(code) to 3 do
+        code := '0' + code;
+      end;
+    nourut:=code;
+    Edno.Text:='SP'+nourut;
+    Edkd.Text:='SP'+nourut;
+end;
+
+procedure TFNew_Supplier.DBGridEh1Columns0EditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+begin
+ with FCari_Barang do
+  begin
+    show;
+    status_tr:='Supplier';
+    with QBarang do
+    begin
+    Close;
+    sql.clear;
+    SQL.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
+              ' a INNER JOIN t_item_category b on a.category_id=b.category_id '+
+             // ' where b.category='+QuotedStr(Edcategory.Text)+''+
+              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
+              ' order by b.category,a.order_no Asc';
+      execute;
+    end;
+  end;
 end;
 
 procedure TFNew_Supplier.BBatalClick(Sender: TObject);
@@ -126,11 +179,38 @@ begin
         close;
         sql.clear;
         sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
-                  ' ,npwp='+QuotedStr(EdNPWP.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+                  ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
-        parambyname('updated_at').AsDateTime:=Now;
-        parambyname('updated_by').AsString:='Admin';
+                  parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+                  parambyname('updated_by').AsString:='Admin';
         ExecSQL;
+      end;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='Delete from warehouse.t_item_stock where supplier_code='+QuotedStr(Edno.Text);
+        ExecSQL;
+      end;
+      MemMaterial.First;
+      while not MemMaterial.eof do
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:='insert into warehouse.t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,item_name,created_by)'+
+                    ' values(:item_stock,:item_code,:supplier_code,:qty,:unit,:order_no,:item_name,:cr_by)';
+                    ParamByName('item_stock').AsString:=MemMaterial['kode'];
+                    ParamByName('item_code').AsString:=MemMaterial['kd_material'];
+                    ParamByName('supplier_code').AsString:=Edno.Text;
+                    ParamByName('qty').AsString:=MemMaterial['qty'];
+                    ParamByName('unit').AsString:=MemMaterial['satuan'];
+                    ParamByName('item_name').AsString:=MemMaterial['nm_material'];
+                    ParamByName('cr_by').AsString:=nm;
+          ExecSQL;
+        end;
+          MemMaterial.Next;
       end;
       dm.koneksi.Commit;
       Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
@@ -147,6 +227,7 @@ begin
 end;
 
 procedure TFNew_Supplier.BSimpanClick(Sender: TObject);
+var sp_code:string;
 begin
     if Edno.Text='' then
     begin
@@ -180,32 +261,45 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Select * from t_supplier';
-        ExecSQL;
-      end;
-
-      with dm.Qtemp do
-      begin
-        close;
-        sql.clear;
-        sql.Text:='Insert into t_supplier(supplier_code,supplier_name,address,Telp, npwp,created_at,created_by)values'+
-                  '('+QuotedStr(Edno.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
+        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,created_at,created_by)values'+
+                  '('+QuotedStr(Edno.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
                   ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:created_at,:created_by )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
                   //:created_at,:created_by';
-                  parambyname('created_at').AsDateTime:=Now;
+                  parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   parambyname('created_by').AsString:='Admin';
         ExecSQL;
+      end;
+
+      MemMaterial.First;
+      while not MemMaterial.eof do
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:='insert into warehouse.t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,item_name,created_by)'+
+                    ' values(:item_stock,:item_code,:supplier_code,:qty,:unit,:order_no,:item_name,:cr_by)';
+                    ParamByName('item_stock').AsString:=MemMaterial['kode'];
+                    ParamByName('item_code').AsString:=MemMaterial['kd_material'];
+                    ParamByName('supplier_code').AsString:=Edno.Text;
+                    ParamByName('qty').AsString:=MemMaterial['qty'];
+                    ParamByName('unit').AsString:=MemMaterial['satuan'];
+                    ParamByName('item_name').AsString:=MemMaterial['nm_material'];
+                    ParamByName('cr_by').AsString:=nm;
+          ExecSQL;
+        end;
+          MemMaterial.Next;
       end;
       dm.koneksi.Commit;
       Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
       end
     Except
     on E :Exception do
-    begin
-      MessageDlg(E.Message,mtError,[MBok],0);
-      dm.koneksi.Rollback;
-    end;
+      begin
+        MessageDlg(E.Message,mtError,[MBok],0);
+        dm.koneksi.Rollback;
+      end;
     end;
     FMainMenu.TampilTabForm2;
     //FListSupplier.dxbarRefreshClick(sender);
@@ -214,18 +308,17 @@ end;
 
 procedure TFNew_Supplier.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-
   //FListSupplier.Refresh;
 end;
 
 procedure TFNew_Supplier.FormCreate(Sender: TObject);
 begin
-    //RealFInput_Supplier:=self;
+  RealFNew_Supplier:=self;
 end;
 
 procedure TFNew_Supplier.FormDestroy(Sender: TObject);
 begin
-   //RealFInput_Supplier:=nil;
+   RealFNew_Supplier:=nil;
 end;
 
 procedure TFNew_Supplier.FormShow(Sender: TObject);
@@ -234,7 +327,6 @@ begin
     //Edno.SetFocus;
     BSimpan.Visible:=True;
     BEdit.Visible:=False;
-
 end;
 
 end.

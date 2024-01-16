@@ -3,7 +3,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Form New Kategori Barang'
-  ClientHeight = 448
+  ClientHeight = 532
   ClientWidth = 548
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -128,12 +128,13 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 145
+    Top = 149
     Width = 548
     Height = 35
     Align = alBottom
     TabOrder = 4
-    ExplicitTop = 182
+    ExplicitTop = 144
+    ExplicitWidth = 544
     object BBatal: TRzBitBtn
       Left = 472
       Top = 1
@@ -194,8 +195,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 478
-      ExplicitTop = -4
+      ExplicitLeft = 468
     end
     object BSimpan: TRzBitBtn
       Left = 322
@@ -257,8 +257,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 330
-      ExplicitHeight = 39
+      ExplicitLeft = 318
     end
     object BRefresh: TRzBitBtn
       Left = 397
@@ -320,7 +319,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 363
+      ExplicitLeft = 393
     end
     object Btambah: TRzBitBtn
       Left = 247
@@ -382,8 +381,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 241
-      ExplicitTop = -4
+      ExplicitLeft = 243
     end
   end
   object EdJenis: TComboBox
@@ -423,9 +421,9 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
   end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 180
+    Top = 184
     Width = 548
-    Height = 268
+    Height = 348
     Align = alBottom
     DataSource = Dskategori
     DynProps = <>
@@ -485,8 +483,8 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
     SQL.Strings = (
       
         'select a.*,b.type,c.account_name from t_item_category a inner jo' +
-        'in t_item_type b on a.type_id=b."id" inner join t_ak_account c o' +
-        'n a.account_code=c.code '
+        'in t_item_type b on a.type_id=b."id" left join t_ak_account c on' +
+        ' a.account_code=c.code '
       'where a.deleted_at isnull order by a.created_at ')
     Left = 408
     Top = 8

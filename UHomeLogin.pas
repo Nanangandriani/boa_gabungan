@@ -36,7 +36,6 @@ implementation
 {$R *.dfm}
 
 uses UMainMenu;
-
     //FMainMenu.show;
     //FHomeLogin.Close;
 
@@ -47,8 +46,9 @@ end;
 
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
-   FMainMenu.showmodal;
    Nm:=Eduser.Text;
+   FMainMenu.showmodal;
+//   Nm:=Eduser.Text;
    FHomeLogin.Close;
 end;
 

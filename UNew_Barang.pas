@@ -61,19 +61,23 @@ type
     EdNm_akunPot_Pemb: TRzButtonEdit;
     GroupBox1: TGroupBox;
     Label20: TLabel;
-    RzNumericEdit4: TRzNumericEdit;
-    RzNumericEdit1: TRzNumericEdit;
+    edharga_pemb: TRzNumericEdit;
+    eddisc_pemb: TRzNumericEdit;
     Label17: TLabel;
     GroupBox2: TGroupBox;
     Label23: TLabel;
     Label25: TLabel;
-    RzNumericEdit5: TRzNumericEdit;
-    RzNumericEdit6: TRzNumericEdit;
+    edharga_penj: TRzNumericEdit;
+    eddisc_penj: TRzNumericEdit;
     Label4: TLabel;
     Cbkelompok: TRzComboBox;
     SpKelompok: TSpeedButton;
     Edkd_display: TEdit;
     StatusBar1: TStatusBar;
+    ck_st_penjualan: TCheckBox;
+    Label6: TLabel;
+    Label8: TLabel;
+    Ck_NoUrut: TCheckBox;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -94,13 +98,17 @@ type
     procedure EdNm_akunPenjButtonClick(Sender: TObject);
     procedure EdNm_akunRt_PenjButtonClick(Sender: TObject);
     procedure SpKelompokClick(Sender: TObject);
+    procedure CbkelompokSelect(Sender: TObject);
+    procedure ck_st_penjualanClick(Sender: TObject);
+    procedure Ck_NoUrutClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    id_ct,idmaterial,no_urut,kode:string;
+    id_ct,idmaterial,no_urut,kode,group_id,st_penjualan,st_nourut:string;
     status_tr:integer;
     Procedure Load;
+    Procedure clear;
   end;
 
 Function FNew_Barang: TFNew_Barang;
@@ -136,6 +144,23 @@ begin
     Edjenis.Items.Add(Dm.Qtemp['type']);
     Dm.Qtemp.Next;
   end;
+end;
+
+Procedure TFNew_Barang.clear;
+begin
+  Edjenis.Clear;
+  EdCategory.Clear;
+  Cbkelompok.Clear;
+  EdKd.Clear;
+  Edkd_display.Clear;
+  EdDesk.Clear;
+  EdNm.Clear;
+  EdSatuan.Clear;
+  EdMerk.Clear;
+  st_penjualan:='False';
+  st_nourut:='False';
+  ck_st_penjualan.Checked:=false;
+  Ck_NoUrut.Checked:=false;
 end;
 
 procedure TFNew_Barang.EdNm_akunPembButtonClick(Sender: TObject);
@@ -231,19 +256,19 @@ end;
 procedure TFNew_Barang.SpeedButton1Click(Sender: TObject);
 begin
   FNew_KategoriBarang.Show;
-  FNew_KategoriBarang.statustr:=3;
+  FNew_KategoriBarang.statustr:=0;
 end;
 
 procedure TFNew_Barang.SpeedButton2Click(Sender: TObject);
 begin
   FNew_ItemType.Show;
-  FNew_ItemType.statustr:=3;
+  FNew_ItemType.statustr:=0;
 end;
 
 procedure TFNew_Barang.SpKelompokClick(Sender: TObject);
 begin
   FNew_KelompokBarang.Show;
-//  FNew_KelompokBarang.statustr:=3;
+  statustr:=0;
 end;
 
 procedure TFNew_Barang.BBatalClick(Sender: TObject);
@@ -297,6 +322,12 @@ begin
     EdCategory.SetFocus;
     Exit;
   end;
+    if Cbkelompok.Text='' then
+  begin
+    MessageDlg('Kelompok Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Cbkelompok.SetFocus;
+    Exit;
+  end;
   if EdKd.Text='' then
   begin
     MessageDlg('Kode Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
@@ -332,10 +363,11 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into t_item(order_no,item_code,item_name,category_id,unit,merk,account_code,created_by,description)'+
-       ' values(:order_no,:item_cd,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic,:desk)';
+       sql.Text:='insert into t_item(order_no,item_code,item_code2,item_name,category_id,unit,merk,account_code,created_by,description,group_id,sell_status,"buy","disc_buy","sell","disc_sell",lot_status)'+
+       ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,:lot_status)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
+         ParamByName('item_cd2').Value:=Edkd_display.Text;
          ParamByName('item_nm').Value:=EdNm.Text;
          ParamByName('id_ct').Value:=id_ct;
          ParamByName('unit').Value:=EdSatuan.Text;
@@ -343,8 +375,30 @@ begin
          ParamByName('akun_cd').Value:=edkd_akun.text;
          ParamByName('pic').Value:=Nm;
          ParamByName('desk').Value:=EdDesk.text;
+         ParamByName('group_id').Value:=group_id;
+         ParamByName('sell_status').Value:=st_penjualan;
+         ParamByName('buy').Value:=edharga_pemb.Value;
+         ParamByName('discount_buy').Value:=eddisc_pemb.Value;
+         ParamByName('sell').Value:=edharga_penj.Value;
+         ParamByName('discount_sell').Value:=eddisc_penj.Value;
+         ParamByName('lot_status').Value:=st_nourut;
        ExecSQL;
        end;
+         with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='insert into t_item_account(acc_persd,acc_pemb,acc_penj,acc_rtpemb,acc_potpemb,acc_rtpenj,item_code)'+
+           ' values(:acc_persd,:acc_pemb,:acc_penj,:acc_rtpemb,:acc_potpemb,:acc_rtpenj,:item_code)';
+            ParamByName('acc_persd').Value:=Edkd_akun.Text;
+            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
+            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
+            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
+            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
+            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
+            ParamByName('item_code').Value:=EdKd.Text;
+            Execute;
+         end;
       end;
       if status_tr=1 then
       begin
@@ -352,11 +406,13 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_name=:item_name,'+
+       sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_code2=:item_cd2,item_name=:item_name,'+
        ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
-       ' updated_by=:pic,description=:desk where "id"=:id';
+       ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
+       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,lot_status=:lot_status where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
+         ParamByName('item_cd2').Value:=Edkd_display.Text;
          ParamByName('item_name').Value:=EdNm.Text;
          ParamByName('unit').Value:=EdSatuan.Text;
          ParamByName('merk').Value:=EdMerk.Text;
@@ -365,8 +421,30 @@ begin
          ParamByName('id').Value:=idmaterial;
          ParamByName('pic').Value:=nm;
          ParamByName('desk').Value:=EdDesk.text;
+         ParamByName('group_id').Value:=group_id;
+         ParamByName('sell_status').Value:=st_penjualan;
+         ParamByName('buy').Value:=edharga_pemb.Value;
+         ParamByName('discount_buy').Value:=eddisc_pemb.Value;
+         ParamByName('sell').Value:=edharga_penj.Value;
+         ParamByName('discount_sell').Value:=eddisc_penj.Value;
+         ParamByName('lot_status').Value:=st_nourut;
        ExecSQL;
        end;
+        with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='update t_item_account set acc_persd=:acc_persd,acc_pemb=:acc_pemb,acc_penj=:acc_penj,acc_rtpemb=:acc_rtpemb,'+
+           ' acc_potpemb=:acc_potpemb,acc_rtpenj=:acc_rtpenj where item_code=:item_code';
+            ParamByName('acc_persd').Value:=Edkd_akun.Text;
+            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
+            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
+            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
+            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
+            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
+            ParamByName('item_code').Value:=EdKd.Text;
+            Execute;
+         end;
       end;
       dm.koneksi.Commit;
       Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
@@ -389,27 +467,86 @@ begin
     Caption:='Form New Satuan';
     Statustr:=0;
     PnlNew.show;
-  //  PnlAksi.show;
-    Pnllist.hide;
+    PnlAksi.show;
+ //   Pnllist.sohw;
     BCari.Hide;
     BSimpan.Show;
     BBatal.Show;
+    jenis_tr:='BARU';
   end;
+end;
+
+procedure TFNew_Barang.CbkelompokSelect(Sender: TObject);
+var i:integer;
+begin
+ with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    SQL.Text:=' Select a.group_name,a.group_id,a.code,a.account_code,b.account_name from t_item_group a '+
+    ' LEFT JOIN t_ak_account b on a.account_code=b.code where a.group_name='+QuotedStr(Cbkelompok.Text);
+    ExecSQL;
+  end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    SQL.Text:=' Select a.group_name,a.group_id,max(cast(b.order_no as INTEGER)) kode from t_item_group a '+
+              ' INNER join t_item b on a.group_id=b.group_id where group_name='+QuotedStr(Cbkelompok.Text)+' GROUP BY a.group_name,a.group_id';
+    ExecSQL;
+  end;
+   group_id:=Dm.Qtemp2['group_id'];
+   kode:=DM.Qtemp2['code'];
+   Edkd_akun.Text:=Dm.Qtemp2['account_code'];
+   Edkd_akunPemb.Text:=Dm.Qtemp2['account_code'];
+   Edkd_akunrt_Pemb.Text:=Dm.Qtemp2['account_code'];
+   Edkd_akunPot_Pemb.Text:=Dm.Qtemp2['account_code'];
+   EdNm_akun.Text:=Dm.Qtemp2['account_name'];
+   Ednm_akunPemb.Text:=Dm.Qtemp2['account_name'];
+   Ednm_akunrt_Pemb.Text:=Dm.Qtemp2['account_name'];
+   Ednm_akunPot_Pemb.Text:=Dm.Qtemp2['account_name'];
+   if dm.Qtemp.RecordCount=0 then
+    begin
+      //Edno.Text:=dm.Qtemp2['order_no'];
+      no_urut:='00001';
+    end;
+
+  if dm.Qtemp.RecordCount>0 then
+    begin
+      no_urut:=IntToStr(dm.Qtemp.FieldByName('kode').AsInteger+1);
+      if length(No_urut) < 5 then
+      begin
+        for i := length(No_urut) to 4 do
+          No_urut := '0' + No_urut;
+      end;
+    end;
+    Edno.Text:=no_urut;
+    EdKd.Text:=kode + No_urut;
+    Edkd_display.Text:=kode + No_urut;
+end;
+
+procedure TFNew_Barang.Ck_NoUrutClick(Sender: TObject);
+begin
+  if Ck_NoUrut.Checked=true then st_nourut:='true' else st_nourut:='false';
+end;
+
+procedure TFNew_Barang.ck_st_penjualanClick(Sender: TObject);
+begin
+  if ck_st_penjualan.Checked=true then st_penjualan:='true' else st_penjualan:='false';
 end;
 
 procedure TFNew_Barang.EdCategorySelect(Sender: TObject);
 var i:integer;
 begin
-{  with dm.Qtemp do
+  with dm.Qtemp2 do
   begin
     close;
     sql.Clear;
-    sql.Text:=' select a."id",a.category,max(cast(b.order_no as INTEGER)) kode,a.code from t_item_category a INNER join '+
-    ' t_item b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+''+
-    ' and b.deleted_at isnull group by a."id",a.category,a.code ';
+    sql.Text:=' select a."category_id",a.category,a.code from t_item_category a'+
+              ' where a.category='+QuotedStr(EdCategory.Text);
     Execute;
   end;
-  if dm.Qtemp.RecordCount=0 then
+ { if dm.Qtemp.RecordCount=0 then
   begin
     with dm.Qtemp2 do
     begin
@@ -439,30 +576,31 @@ begin
     end;
     Edno.Text:=no_urut;
     EdKd.Text:=kode + No_urut;     }
+  id_ct:=dm.Qtemp2['category_id'];
   Cbkelompok.Clear;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.* from t_item_category a inner join t_item_group b on a."id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+'order by group asc';
+    sql.Text:='select a.*,b.group_name,b.group_id from t_item_category a inner join t_item_group b on a."category_id"=b.category_id where a.category='+QuotedStr(EdCategory.Text)+'order by group_name asc';
     ExecSQL;
   end;
-  Dm.Qtemp.First;
-  while not Dm.Qtemp.Eof do
-  begin
-    Cbkelompok.Items.Add(Dm.Qtemp['group']);
-    Dm.Qtemp.Next;
-  end;
+      Dm.Qtemp.First;
+      while not Dm.Qtemp.Eof do
+      begin
+        Cbkelompok.Items.Add(Dm.Qtemp['group_name']);
+        Dm.Qtemp.Next;
+      end;
 end;
 
 procedure TFNew_Barang.EdjenisSelect(Sender: TObject);
 begin
-EdCategory.Clear;
+  EdCategory.Clear;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.* from t_item_category a inner join t_item_type b on a.type_id=b."id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
+    sql.Text:='select a.* from t_item_category a inner join t_item_type b on a.type_id=b."type_id" where b.type='+QuotedStr(Edjenis.Text)+'order by category asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -499,7 +637,7 @@ begin
     Caption:='Form List Satuan';
     jenis_tr:='Barang';
     PnlNew.Hide;
-  //  PnlAksi.Hide;
+    PnlAksi.Hide;
     Pnllist.show;
     QSatuan.Close;
     QSatuan.Open;
@@ -526,6 +664,7 @@ end;
 
 procedure TFNew_Barang.FormShow(Sender: TObject);
 begin
+  clear;
   Load;
 end;
 

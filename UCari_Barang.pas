@@ -31,7 +31,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Barang_stok, UNew_BonPermtBarang, UNew_KonvBarang, UDataModule;
+uses UNew_Barang_stok, UNew_BonPermtBarang, UNew_KonvBarang, UDataModule,
+  UNew_Supplier;
 
 var
   realfCari_barang: TFCari_Barang;
@@ -76,6 +77,19 @@ begin
       MemMaterial['kd_material']:=QBarang.FieldByName('item_code').AsString;
       MemMaterial['nm_material']:=QBarang.FieldByName('item_name').AsString;
       MemMaterial['satuan']:=QBarang.FieldByName('unit').AsString;
+      MemMaterial.Post;
+    end;
+  end;
+  if status_tr='Supplier' then
+  begin
+    with FNew_Supplier do
+    begin
+      MemMaterial.Insert;
+      MemMaterial['kd_material']:=QBarang.FieldByName('item_code').AsString;
+      MemMaterial['nm_material']:=QBarang.FieldByName('item_name').AsString;
+      MemMaterial['satuan']:=QBarang.FieldByName('unit').AsString;
+      MemMaterial['qty']:=0;
+      MemMaterial['kode']:=QBarang.FieldByName('item_code').AsString+edno.Text;
       MemMaterial.Post;
     end;
   end;

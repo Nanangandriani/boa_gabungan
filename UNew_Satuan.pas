@@ -25,13 +25,17 @@ type
     DBGridEh1: TDBGridEh;
     QSatuan: TUniQuery;
     DsSatuan: TDataSource;
+    Btambah: TRzBitBtn;
+    BRefresh: TRzBitBtn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure BtambahClick(Sender: TObject);
     procedure BCariClick(Sender: TObject);
+    procedure BRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,14 +69,22 @@ end;
 
 procedure TFNew_Satuan.BCariClick(Sender: TObject);
 begin
-  Pnllist.Hide;
-  PnlNew.Show;
+//  Pnllist.Hide;
+//  PnlNew.Show;
   Statustr:=1;
   Edkd.Text:=QSatuan['unit_code'];
   Eddesk.Text:=QSatuan['unit_name'];
   BCari.Hide;
   BBatal.Show;
   BSimpan.Show;
+end;
+
+procedure TFNew_Satuan.BRefreshClick(Sender: TObject);
+begin
+  DBGridEh1.StartLoadingStatus();
+  QSatuan.Close;
+  QSatuan.Open;
+  DBGridEh1.FinishLoadingStatus();
 end;
 
 procedure TFNew_Satuan.BSimpanClick(Sender: TObject);
@@ -109,6 +121,14 @@ begin
   end;
 end;
 
+procedure TFNew_Satuan.BtambahClick(Sender: TObject);
+begin
+  statustr:=0;
+  Edkd.Clear;
+  EdDesk.Clear;
+  Edkd.SetFocus;
+end;
+
 procedure TFNew_Satuan.DBGridEh1DblClick(Sender: TObject);
 begin
   if jenis_tr='Barang' then
@@ -116,6 +136,7 @@ begin
     with FNew_Barang do
     begin
       EdSatuan.Text:=QSatuan['unit_code'];
+      FNew_Satuan.close;
     end;
   end;
   if jenis_tr='KonvBarang' then
@@ -123,9 +144,18 @@ begin
    with FNew_KonvBarang do
    begin
     EdKonversi.text:=QSatuan['unit_code'];
+    FNew_Satuan.Close;
    end;
   end;
-  Close;
+  if jenis_tr='BARU' then
+  BEGIN
+    Statustr:=1;
+    Edkd.Text:=QSatuan['unit_code'];
+    Eddesk.Text:=QSatuan['unit_name'];
+   // BCari.Hide;
+    BBatal.Show;
+    BSimpan.Show;
+  END;
 end;
 
 procedure TFNew_Satuan.FormClose(Sender: TObject; var Action: TCloseAction);

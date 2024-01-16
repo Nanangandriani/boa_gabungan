@@ -109,7 +109,7 @@ begin
         close;
         sql.Clear;
         sql.Text:='update t_item_type set type=:type,updated_by=:updated_by,updated_at=now(), '+
-                  'account_code=:acc_cd where "id"=:id ';
+                  'account_code=:acc_cd where "type_id"=:id ';
                   ParamByName('type').Value:=EdType.Text;
                   ParamByName('updated_by').value:=nm;
                   ParamByName('id').Value:=id;
@@ -125,17 +125,17 @@ end;
 
 procedure TFNew_ItemType.BtambahClick(Sender: TObject);
 begin
-statustr:=0;
-EdType.Clear;
-Edkd_akun.Clear;
-EdNm_akun.Clear;
-EdType.SetFocus;
+  statustr:=0;
+  EdType.Clear;
+  Edkd_akun.Clear;
+  EdNm_akun.Clear;
+  EdType.SetFocus;
 end;
 
 procedure TFNew_ItemType.DBGridEh7DblClick(Sender: TObject);
 begin
   statustr:=1;
-  id:=QType['id'];
+  id:=QType['type_id'];
   EdType.Text:=QType['type'];
   Edkd_akun.Text:=QType['account_code'];
   EdNm_akun.Text:=QType['account_name'];
@@ -184,8 +184,8 @@ begin
     begin
       close;
       sql.Clear;
-      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
-                ' left join t_ak_account b on a.account_code=b.code  '+
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a '+
+                'left join t_ak_account b on a.account_code=b.code  '+
                 'left join t_ak_header c on b.header_code=c.header_code';
       Execute;
     end;

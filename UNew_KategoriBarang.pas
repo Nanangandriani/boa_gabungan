@@ -136,7 +136,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_item_category(category,id_type,account_code,order_no,code)values'+
+      sql.Text:='insert into t_item_category(category,type_id,account_code,order_no,code)values'+
                 '(:ct,:jn,:kd_akun,:no,:code)';
                 ParamByName('ct').Value:=EdKategori.Text;
                 ParamByName('jn').Value:=id_type;

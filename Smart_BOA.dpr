@@ -118,7 +118,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFImportnocek, FImportnocek);
   Application.CreateForm(TFlistitempo, Flistitempo);
   Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
-  //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
   Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
@@ -129,17 +128,13 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);
   Application.CreateForm(TFNew_Pot_Pembelian, FNew_Pot_Pembelian);
   Application.CreateForm(TFSPB, FSPB);
-  //  Application.CreateForm(TFCari_DaftarPerk, FCari_DaftarPerk);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
-  Application.CreateForm(TFListSupplier, FListSupplier);
   Application.CreateForm(TFListPerusahaan, FListPerusahaan);
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
-  //Application.CreateForm(TFPenomoran, FPenomoran);
-  Application.CreateForm(TFNew_Supplier, FNew_Supplier);
   Application.CreateForm(TFDept, FDept);
   Application.CreateForm(TFJabatan, FJabatan);
   Application.CreateForm(TFNew_Dept, FNew_Dept);
@@ -150,7 +145,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKlasifikasi, FDaftarKlasifikasi);
   Application.CreateForm(TFSetMasterPelanggan, FSetMasterPelanggan);
   Application.CreateForm(TFSetMasterWilayah, FSetMasterWilayah);
-  //  Application.CreateForm(TFItem_TransferBarang, FItem_TransferBarang);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;
