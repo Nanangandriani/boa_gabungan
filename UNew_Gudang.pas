@@ -47,7 +47,7 @@ type
 
 var
   FNew_Gudang: TFNew_Gudang;
-
+  no_urut: integer;
 implementation
 
 {$R *.dfm}
@@ -134,12 +134,23 @@ begin
       sql.Text:='select * from t_wh ';
       ExecSQL;
     end;
+
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select max(order_no) as urut  from t_wh ';
+      Open;
+    end;
+    no_urut:=dm.Qtemp1.FieldByName('urut').AsInteger+1;
+
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_wh(wh_name,wh_code,sbu_code,category,code,created_at,created_by) '+
-                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_at,:created_by)';
+      sql.Text:='insert into t_wh(order_no,wh_name,wh_code,sbu_code,category,code,created_at,created_by) '+
+                ' values(:no_urut,'+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_at,:created_by)';
+      parambyname('no_urut').Value:=no_urut;
       parambyname('created_at').AsDateTime:=Now;
       parambyname('created_by').AsString:='Admin';
       ExecSQL;
@@ -182,7 +193,6 @@ begin
       end;
       urut:=FloatToStr(DM.Qtemp2['kd']+1);
       edkode.Text:=DM.Qtemp2['category_code']+(Copy('00'+urut,length('00'+urut)-1,2));
-
 
     end;
 end;

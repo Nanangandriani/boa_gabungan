@@ -40972,7 +40972,6 @@ object FPO: TFPO
       'from purchase.t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'order by A.id desc')
-    Active = True
     Left = 320
     Top = 32
   end

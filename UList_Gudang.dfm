@@ -20,6 +20,8 @@ object FListGudang: TFListGudang
     Align = alClient
     DataSource = DsGudang
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 0
     Columns = <
@@ -29,6 +31,7 @@ object FListGudang: TFListGudang
         EditButtons = <>
         FieldName = 'code'
         Footers = <>
+        Visible = False
         Width = 0
       end
       item
@@ -38,6 +41,7 @@ object FListGudang: TFListGudang
         FieldName = 'order_no'
         Footers = <>
         Title.Caption = 'No'
+        Visible = False
       end
       item
         CellButtons = <>

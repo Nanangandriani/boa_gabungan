@@ -187,6 +187,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       CharCase = ecUpperCase
       NumbersOnly = True
       TabOrder = 2
+      OnKeyPress = EdtempoKeyPress
     end
     object DtKontrak: TRzDateTimeEdit
       Left = 189
@@ -480,6 +481,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 867
+      ExplicitTop = 6
     end
     object BEdit: TRzBitBtn
       Left = 798
@@ -791,7 +793,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         FieldName = 'pemb_ppn_us'
         Footers = <>
         Title.Caption = 'USD|PPN|Pembulatan'
-        Width = 64
+        Width = 100
       end
       item
         CellButtons = <>
@@ -835,7 +837,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         FieldName = 'pemb_dpp'
         Footers = <>
         Title.Caption = 'Rupiah|Pembulatan'
-        Width = 63
+        Width = 100
       end
       item
         CellButtons = <>

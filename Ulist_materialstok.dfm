@@ -3,8 +3,8 @@ object Flistmaterialstok: TFlistmaterialstok
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'List Material'
-  ClientHeight = 335
-  ClientWidth = 512
+  ClientHeight = 344
+  ClientWidth = 518
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,21 +16,22 @@ object Flistmaterialstok: TFlistmaterialstok
   object DBGridMaterial: TDBGridEh
     Left = 0
     Top = 0
-    Width = 512
-    Height = 303
+    Width = 518
+    Height = 312
     Align = alClient
     DataSource = DsMaterial_stok
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SearchPanel.Enabled = True
     TabOrder = 0
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'item_stock_code'
+        FieldName = 'item_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
         Width = 91
@@ -67,11 +68,13 @@ object Flistmaterialstok: TFlistmaterialstok
   end
   object Panel1: TPanel
     Left = 0
-    Top = 303
-    Width = 512
+    Top = 312
+    Width = 518
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 303
+    ExplicitWidth = 512
     object BBatal: TRzBitBtn
       Left = 442
       Top = 1
@@ -79,6 +82,7 @@ object Flistmaterialstok: TFlistmaterialstok
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -206,8 +210,8 @@ object Flistmaterialstok: TFlistmaterialstok
     SQL.Strings = (
       'select '
       
-        'a.item_name,b.supplier_code,b.supplier_name,a.item_stock_code,a.' +
-        'order_no,a.kd_urut, a.qty,a.unit,a.merk,'
+        'a.item_name,b.supplier_code,b.supplier_name,a.item_code,a.item_s' +
+        'tock_code,a.order_no,a.kd_urut, a.qty,a.unit,a.merk,'
       'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,'
       'e.category,f."type",g.group_name  '
       ''

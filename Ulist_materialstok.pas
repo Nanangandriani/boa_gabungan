@@ -17,6 +17,7 @@ type
     BBatal: TRzBitBtn;
     BEdit: TRzBitBtn;
     procedure BEditClick(Sender: TObject);
+    procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,6 +34,11 @@ implementation
 
 uses UNew_KontrakKerjasama;
 
+procedure TFlistmaterialstok.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure TFlistmaterialstok.BEditClick(Sender: TObject);
 var i:integer;
 begin
@@ -48,10 +54,10 @@ begin
              with FNewKontrak_ks do
              begin
                 MemMaterial.Insert;
-                MemMaterial['kd_material']:=QMaterial_stok.FieldByName('kd_material_stok').AsString;
-                MemMaterial['nm_material']:=QMaterial_stok.FieldByName('nm_material').AsString;
-                MemMaterial['nm_supplier']:=QMaterial_stok.FieldByName('nm_supplier').AsString;
-                MemMaterial['satuan']:=QMaterial_stok.FieldByName('satuan').AsString;
+                MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
+                MemMaterial['nm_material']:=QMaterial_stok.FieldByName('item_name').AsString;
+                MemMaterial['nm_supplier']:=QMaterial_stok.FieldByName('supplier_name').AsString;
+                MemMaterial['satuan']:=QMaterial_stok.FieldByName('unit').AsString;
                 MemMaterial['qty']:='0';
                 MemMaterial['harga']:='0';
                 MemMaterial['harga2']:='0';

@@ -20,7 +20,7 @@ object FNew_PO: TFNew_PO
     Height = 235
     Align = alTop
     TabOrder = 0
-    ExplicitTop = -6
+    ExplicitWidth = 1204
     object Label1: TLabel
       Left = 24
       Top = 86
