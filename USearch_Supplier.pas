@@ -66,6 +66,7 @@ begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
     end;
+
     {with FNew_do do
     begin
       Edkd_supp_Angkutan.Text:=QSupplier['supplier_code'];

@@ -200,6 +200,61 @@ object Flistmaterialstok: TFlistmaterialstok
       ExplicitLeft = 361
     end
   end
+  object DBGridEh1: TDBGridEh
+    Left = 0
+    Top = 0
+    Width = 518
+    Height = 312
+    Align = alClient
+    DataSource = DsMaterial_stok
+    DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SearchPanel.Enabled = True
+    SearchPanel.FilterEnabled = False
+    TabOrder = 2
+    OnDblClick = DBGridEh1DblClick
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_code'
+        Footers = <>
+        Title.Caption = 'Kode Barang'
+        Width = 91
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_name'
+        Footers = <>
+        Title.Caption = 'Nama Barang'
+        Width = 116
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'supplier_name'
+        Footers = <>
+        Title.Caption = 'Nama Supplier'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 60
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
   object DsMaterial_stok: TDataSource
     DataSet = QMaterial_stok
     Left = 153
@@ -222,7 +277,7 @@ object Flistmaterialstok: TFlistmaterialstok
       'left  join t_item_category e on c.category_id=e.category_id'
       'left  join t_item_type f on e.type_id=f.type_id '
       'left  join t_item_group g on c.group_id=g.group_id'
-      'where b.supplier_code='#39'S0004'#39' and f.type='#39'PERSEDIAAN'#39' '
+      '-- where b.supplier_code='#39'S0004'#39' and f.type='#39'PERSEDIAAN'#39' '
       ''
       
         'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stoc' +
@@ -232,5 +287,34 @@ object Flistmaterialstok: TFlistmaterialstok
       'order by item_stock_code Desc')
     Left = 236
     Top = 101
+  end
+  object MemMt_stok: TMemTableEh
+    Params = <>
+    DataDriver = DsdMaterial
+    Left = 232
+    Top = 179
+  end
+  object DsdMaterial: TDataSetDriverEh
+    ProviderDataSet = QMaterial_stok
+    Left = 152
+    Top = 179
+  end
+  object Qjenis_pajak: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_tax_type')
+    Left = 48
+    Top = 74
+    object Qjenis_pajakid: TSmallintField
+      FieldName = 'id'
+      Required = True
+    end
+    object Qjenis_pajaktype: TStringField
+      FieldName = 'type'
+      Size = 255
+    end
+    object Qjenis_pajakpercentage: TFloatField
+      FieldName = 'percentage'
+    end
   end
 end

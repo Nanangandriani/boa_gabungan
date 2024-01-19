@@ -193,7 +193,7 @@ object FSearch_Supplier: TFSearch_Supplier
     object QSuppliersupplier_code: TStringField
       FieldName = 'supplier_code'
       Required = True
-      Size = 3
+      Size = 6
     end
     object QSuppliersupplier_name: TStringField
       FieldName = 'supplier_name'

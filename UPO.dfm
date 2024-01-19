@@ -230,7 +230,7 @@ object FPO: TFPO
         Left = 0
         Top = 0
         Width = 753
-        Height = 106
+        Height = 118
         Align = alClient
         DataSource = DsDetailPo
         DynProps = <>
@@ -40972,6 +40972,7 @@ object FPO: TFPO
       'from purchase.t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'order by A.id desc')
+    Active = True
     Left = 320
     Top = 32
   end

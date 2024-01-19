@@ -178,6 +178,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 1
+      OnChange = EdKd_suppChange
     end
     object Edtempo: TEdit
       Left = 189
@@ -226,7 +227,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Format = 'mm'
       CharCase = ecUpperCase
       TabOrder = 6
-      Visible = False
     end
     object EdKet: TMemo
       Left = 189
@@ -335,18 +335,16 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Format = 'dd'
       CharCase = ecUpperCase
       TabOrder = 16
-      Visible = False
     end
     object DtTahun: TRzDateTimeEdit
       Left = 487
       Top = 52
-      Width = 57
+      Width = 58
       Height = 23
       EditType = etDate
       Format = 'yyyy'
       CharCase = ecUpperCase
       TabOrder = 17
-      Visible = False
     end
   end
   object Panel1: TPanel
@@ -481,7 +479,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 867
-      ExplicitTop = 6
     end
     object BEdit: TRzBitBtn
       Left = 798
