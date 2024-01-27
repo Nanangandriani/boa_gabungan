@@ -282,13 +282,17 @@ object FNew_Barang: TFNew_Barang
     Hint = ''
     ActivePage = TabSheet1
     Align = alClient
+    UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
     ExplicitWidth = 557
     ExplicitHeight = 333
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Umum'
+      ExplicitWidth = 553
+      ExplicitHeight = 310
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -548,9 +552,8 @@ object FNew_Barang: TFNew_Barang
       end
     end
     object TabSheet2: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
-      ExplicitWidth = 553
-      ExplicitHeight = 310
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
@@ -629,7 +632,10 @@ object FNew_Barang: TFNew_Barang
       end
     end
     object TabSheet3: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Akun'
+      ExplicitLeft = 177
+      ExplicitTop = 132
       object Label19: TLabel
         Left = 27
         Top = 28

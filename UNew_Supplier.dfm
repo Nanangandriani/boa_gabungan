@@ -219,6 +219,8 @@ object FNew_Supplier: TFNew_Supplier
     Width = 867
     Height = 201
     Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
     TabOrder = 1
     ExplicitWidth = 863
     object Label1: TLabel
@@ -297,6 +299,7 @@ object FNew_Supplier: TFNew_Supplier
       Width = 132
       Height = 23
       TabOrder = 0
+      Visible = False
     end
     object EdNm: TEdit
       Left = 137

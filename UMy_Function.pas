@@ -7,7 +7,7 @@ Uses SysUtils, frxClass,uni;
   function GenerateNumber(startingNumber, digits: Integer): string;
   function getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
   function GetNourut(tgl:TDateTime;Tablename,kode:string):string;
-  var strday,strmonth,stryear,notif,notrans,idmenu,order_no:string;
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vthn,Vbln,Vtgl:string;
       strday2:TDate;
 
 implementation
@@ -203,6 +203,9 @@ begin
    begin
        strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and cast(trans_year as integer)='+quotedstr(strtahun);
    end;
+    Vthn:=FormatDateTime('yyyy',strday2);
+    Vbln:=FormatDateTime('mm',strday2);
+    Vtgl:=FormatDateTime('dd',strday2);
     with dm.Qtemp do
     begin
       close;

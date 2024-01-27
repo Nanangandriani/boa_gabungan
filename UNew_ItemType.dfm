@@ -16,28 +16,13 @@ object FNew_ItemType: TFNew_ItemType
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 15
-  object Label2: TLabel
-    Left = 21
-    Top = 25
-    Width = 32
-    Height = 15
-    Caption = 'Nama'
-  end
-  object Label19: TLabel
-    Left = 21
-    Top = 61
-    Width = 80
-    Height = 15
-    Caption = 'Akun Perkiraan'
-  end
   object Panel1: TPanel
     Left = 0
-    Top = 100
+    Top = 105
     Width = 518
     Height = 32
-    Align = alBottom
+    Align = alTop
     TabOrder = 0
-    ExplicitTop = 99
     ExplicitWidth = 514
     object BBatal: TRzBitBtn
       Left = 442
@@ -288,48 +273,17 @@ object FNew_ItemType: TFNew_ItemType
       ExplicitLeft = 213
     end
   end
-  object EdType: TEdit
-    Left = 107
-    Top = 22
-    Width = 302
-    Height = 23
-    CharCase = ecUpperCase
-    TabOrder = 1
-  end
-  object Edkd_akun: TRzEdit
-    Left = 107
-    Top = 58
-    Width = 94
-    Height = 23
-    Text = ''
-    Color = clInfoBk
-    ReadOnly = True
-    TabOrder = 2
-  end
-  object EdNm_akun: TRzButtonEdit
-    Left = 207
-    Top = 58
-    Width = 202
-    Height = 23
-    Text = ''
-    CharCase = ecUpperCase
-    ReadOnlyColorOnFocus = True
-    TabOrder = 3
-    AltBtnNumGlyphs = 1
-    ButtonNumGlyphs = 1
-    OnButtonClick = EdNm_akunButtonClick
-  end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 132
+    Top = 137
     Width = 518
-    Height = 334
-    Align = alBottom
+    Height = 329
+    Align = alClient
     DataSource = DsType
     DynProps = <>
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
-    TabOrder = 4
+    TabOrder = 1
     OnDblClick = DBGridEh7DblClick
     Columns = <
       item
@@ -352,6 +306,62 @@ object FNew_ItemType: TFNew_ItemType
         Width = 215
       end>
     object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 0
+    Width = 518
+    Height = 105
+    Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
+    TabOrder = 2
+    ExplicitWidth = 514
+    object Label2: TLabel
+      Left = 21
+      Top = 25
+      Width = 32
+      Height = 15
+      Caption = 'Nama'
+    end
+    object Label19: TLabel
+      Left = 21
+      Top = 61
+      Width = 80
+      Height = 15
+      Caption = 'Akun Perkiraan'
+    end
+    object EdType: TEdit
+      Left = 107
+      Top = 22
+      Width = 302
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+    object Edkd_akun: TRzEdit
+      Left = 107
+      Top = 58
+      Width = 94
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 1
+    end
+    object EdNm_akun: TRzButtonEdit
+      Left = 207
+      Top = 58
+      Width = 202
+      Height = 23
+      Text = ''
+      CharCase = ecUpperCase
+      ReadOnlyColorOnFocus = True
+      TabOrder = 2
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = EdNm_akunButtonClick
     end
   end
   object QType: TUniQuery

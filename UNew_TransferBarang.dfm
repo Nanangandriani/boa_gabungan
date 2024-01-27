@@ -3,7 +3,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   Top = 0
   Caption = 'Form New Transfer Antar Gudang'
   ClientHeight = 456
-  ClientWidth = 738
+  ClientWidth = 777
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,14 +18,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   TextHeight = 13
   object Label1: TLabel
     Left = 36
-    Top = 70
+    Top = 74
     Width = 61
     Height = 13
     Caption = 'No. Transfer'
   end
   object Label2: TLabel
     Left = 36
-    Top = 41
+    Top = 45
     Width = 41
     Height = 13
     Caption = 'Tanggal '
@@ -53,14 +53,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label6: TLabel
     Left = 107
-    Top = 70
+    Top = 74
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label7: TLabel
     Left = 108
-    Top = 42
+    Top = 46
     Width = 4
     Height = 13
     Caption = ':'
@@ -101,16 +101,16 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Caption = ':'
   end
   object Label13: TLabel
-    Left = 21
-    Top = 168
+    Left = 36
+    Top = 16
     Width = 24
     Height = 13
     Caption = 'Jenis'
     Visible = False
   end
   object Label14: TLabel
-    Left = 93
-    Top = 168
+    Left = 108
+    Top = 16
     Width = 4
     Height = 13
     Caption = ':'
@@ -119,7 +119,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   object DBGriddetail: TDBGridEh
     Left = 0
     Top = 192
-    Width = 738
+    Width = 777
     Height = 232
     Align = alBottom
     DataSource = DsDetail
@@ -134,10 +134,10 @@ object FNew_TransferBarang: TFNew_TransferBarang
             Style = ebsPlusEh
             OnClick = DBGridEh1Columns0EditButtons0Click
           end>
-        FieldName = 'kd_material'
+        FieldName = 'kd_material1'
         Footers = <>
         Title.Caption = 'Kode Material'
-        Width = 82
+        Width = 120
       end
       item
         CellButtons = <>
@@ -198,14 +198,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   object Panel2: TPanel
     Left = 0
     Top = 424
-    Width = 738
+    Width = 777
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 423
-    ExplicitWidth = 734
+    ExplicitWidth = 773
     object BBatal: TRzBitBtn
-      Left = 662
+      Left = 701
       Top = 1
       Height = 30
       Align = alRight
@@ -264,10 +264,10 @@ object FNew_TransferBarang: TFNew_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 658
+      ExplicitLeft = 697
     end
     object BSimpan: TRzBitBtn
-      Left = 587
+      Left = 626
       Top = 1
       Height = 30
       Align = alRight
@@ -326,7 +326,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 583
+      ExplicitLeft = 622
     end
     object BitBtn1: TBitBtn
       Left = 440
@@ -340,7 +340,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Edno: TRzEdit
     Left = 122
-    Top = 66
+    Top = 70
     Width = 200
     Height = 21
     Text = ''
@@ -350,7 +350,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object DtTransfer: TRzDateTimeEdit
     Left = 122
-    Top = 38
+    Top = 42
     Width = 143
     Height = 21
     EditType = etDate
@@ -391,8 +391,8 @@ object FNew_TransferBarang: TFNew_TransferBarang
     OnSelect = CbKategoriSelect
   end
   object RzComboBox1: TRzComboBox
-    Left = 107
-    Top = 165
+    Left = 122
+    Top = 13
     Width = 200
     Height = 21
     TabOrder = 8
@@ -410,6 +410,11 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Top = 8
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
+        object kd_material1: TMTStringDataFieldEh
+          FieldName = 'kd_material1'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
         object kd_material: TMTStringDataFieldEh
           FieldName = 'kd_material'
           StringDataType = fdtStringEh

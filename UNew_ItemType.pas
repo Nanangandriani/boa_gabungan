@@ -14,16 +14,17 @@ type
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
-    EdType: TEdit;
-    Label2: TLabel;
     BRefresh: TRzBitBtn;
-    Label19: TLabel;
-    Edkd_akun: TRzEdit;
-    EdNm_akun: TRzButtonEdit;
     DBGridEh7: TDBGridEh;
     QType: TUniQuery;
     DsType: TDataSource;
     Btambah: TRzBitBtn;
+    Panel2: TPanel;
+    Label2: TLabel;
+    Label19: TLabel;
+    EdType: TEdit;
+    Edkd_akun: TRzEdit;
+    EdNm_akun: TRzButtonEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -95,7 +96,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Insert into t_item_type(type,created_by,account_code)values(:type,:created_by,:acc_cd)';
+        sql.Text:='Insert into t_item_type(type,created_by,acc_code_pemb)values(:type,:created_by,:acc_cd)';
                   ParamByName('type').Value:=EdType.Text;
                   ParamByName('created_by').value:=nm;
                   ParamByName('acc_cd').Value:=Edkd_akun.Text;
@@ -109,7 +110,7 @@ begin
         close;
         sql.Clear;
         sql.Text:='update t_item_type set type=:type,updated_by=:updated_by,updated_at=now(), '+
-                  'account_code=:acc_cd where "type_id"=:id ';
+                  'acc_code_pemb=:acc_cd where "type_id"=:id ';
                   ParamByName('type').Value:=EdType.Text;
                   ParamByName('updated_by').value:=nm;
                   ParamByName('id').Value:=id;
@@ -137,7 +138,7 @@ begin
   statustr:=1;
   id:=QType['type_id'];
   EdType.Text:=QType['type'];
-  Edkd_akun.Text:=QType['account_code'];
+  Edkd_akun.Text:=QType['acc_code_pemb'];
   EdNm_akun.Text:=QType['account_name'];
 end;
 

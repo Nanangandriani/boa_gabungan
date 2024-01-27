@@ -121,7 +121,7 @@ object FKonversi_Barang: TFKonversi_Barang
       #9'INNER JOIN'
       #9't_item_category AS "c"'
       #9'ON '
-      #9#9'"a".category_id = "c"."id"')
+      #9#9'"a".category_id = "c"."category_id"')
     Left = 324
     Top = 32
   end

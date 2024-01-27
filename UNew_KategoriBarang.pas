@@ -153,7 +153,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='Update t_item_category set category=:ct,type_id=:tp,account_code=:akun,'+
-                ' order_no=:parno,updated_at=now(),code=:code where "id"=:id';
+                ' order_no=:parno,updated_at=now(),code=:code where "category_id"=:id';
                 ParamByName('id').Value:=id;
                 ParamByName('ct').Value:=EdKategori.Text;
                 ParamByName('tp').Value:=id_type;
@@ -207,7 +207,7 @@ begin
   begin
    // show;
     statustr:=1;
-    id:=Qkategori['id'];
+    id:=Qkategori['category_id'];
     EdKd.Text:=Qkategori['code'];
     EdJenis.Text:=Qkategori['type'];
     id_type:=Qkategori['type_id'];
@@ -237,7 +237,7 @@ begin
   ExecSQL;
 end;
 //  Edkd_akun1.Text:=Dm.Qtemp['akun_code'];
-  id_type:=dm.Qtemp['id'];
+  id_type:=dm.Qtemp['type_id'];
 end;
 
 procedure TFNew_KategoriBarang.EdKategoriKeyPress(Sender: TObject;

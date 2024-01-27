@@ -5,7 +5,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
   Caption = 'Form New Kategori Barang'
   ClientHeight = 532
   ClientWidth = 548
-  Color = clBtnFace
+  Color = clGradientInactiveCaption
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -133,7 +133,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
     Height = 35
     Align = alBottom
     TabOrder = 4
-    ExplicitTop = 144
+    ExplicitTop = 148
     ExplicitWidth = 544
     object BBatal: TRzBitBtn
       Left = 472
@@ -443,7 +443,9 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         Width = 88
       end
       item
-        CellButtons = <>
+        CellButtons = <
+          item
+          end>
         DynProps = <>
         EditButtons = <>
         FieldName = 'type'
@@ -483,10 +485,10 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
     SQL.Strings = (
       
         'select a.*,b.type,c.account_name from t_item_category a inner jo' +
-        'in t_item_type b on a.type_id=b."id" left join t_ak_account c on' +
-        ' a.account_code=c.code '
+        'in t_item_type b on a.type_id=b."type_id" left join t_ak_account' +
+        ' c on a.account_code=c.code '
       'where a.deleted_at isnull order by a.created_at ')
-    Left = 408
+    Left = 424
     Top = 8
   end
   object ActMenu: TActionManager

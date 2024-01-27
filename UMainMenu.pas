@@ -135,8 +135,8 @@ uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
   UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
   Udaftar_perkiraan,UKonversi_Barang, UJabatan, UDept, UBonPermt_Barang,
-  UTransfer_Barang, UKontrakKerjasama,Uuser, UHak_Akses, UPO, UReturnPembelian,
-  UPembelian, UPot_Pembelian, USPB, Udafcek_entry;
+  UTransfer_Barang, UKontrakKerjasama,Uuser, UPO, UReturnPembelian,
+  UPembelian, UPot_Pembelian, USPB, Udafcek_entry, UHak_Akses;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -614,6 +614,8 @@ end;
 procedure TFMainMenu.dxBarLargeButtonUtilityClick(Sender: TObject);
 begin
   CreateSubMenu('admin',dxBarLargeButtonUtility.Caption);
+//  Panel1.Parent:=FTransfer_Barang;
+//  FTransfer_Barang.Show;
 end;
 
 procedure TFMainMenu.CreateMenu(Role:String);
@@ -744,5 +746,6 @@ end;
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFKategori_Barang,TFPenomoran,
-  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang,TFKontrakKerjasama,TFUser,TFHak_Akses,TFPO, TFReturnPembelian,TFPembelian,TFPot_Pembelian,TFSPB,TFDaf_EntryCek]);
+  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang,TFKontrakKerjasama,TFUser,TFHak_Akses,TFPO,
+  TFReturnPembelian,TFPembelian,TFPot_Pembelian,TFSPB,TFDaf_EntryCek]);
 end.

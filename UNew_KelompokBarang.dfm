@@ -1,6 +1,7 @@
 object FNew_KelompokBarang: TFNew_KelompokBarang
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'FNew_KelompokBarang'
   ClientHeight = 546
   ClientWidth = 576
@@ -13,107 +14,17 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
-  object Label6: TLabel
-    Left = 106
-    Top = 17
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label4: TLabel
-    Left = 106
-    Top = 106
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label2: TLabel
-    Left = 24
-    Top = 106
-    Width = 54
-    Height = 15
-    Caption = 'Kelompok'
-  end
-  object Label5: TLabel
-    Left = 24
-    Top = 17
-    Width = 27
-    Height = 15
-    Caption = 'Kode'
-  end
-  object Label9: TLabel
-    Left = 24
-    Top = 44
-    Width = 25
-    Height = 15
-    Caption = 'Jenis'
-  end
-  object Label10: TLabel
-    Left = 106
-    Top = 44
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label1: TLabel
-    Left = 24
-    Top = 74
-    Width = 44
-    Height = 15
-    Caption = 'Kategori'
-  end
-  object Label3: TLabel
-    Left = 106
-    Top = 74
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label19: TLabel
-    Left = 24
-    Top = 140
-    Width = 80
-    Height = 15
-    Caption = 'Akun Perkiraan'
-  end
-  object Label20: TLabel
-    Left = 106
-    Top = 140
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object EdKelompok: TEdit
-    Left = 128
-    Top = 105
-    Width = 329
-    Height = 23
-    CharCase = ecUpperCase
-    TabOrder = 0
-  end
-  object Edno: TEdit
-    Left = 207
-    Top = 14
-    Width = 73
-    Height = 23
-    Alignment = taRightJustify
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 1
-    Text = '00000'
-    TextHint = '00000'
-  end
   object Panel1: TPanel
     Left = 0
-    Top = 166
+    Top = 183
     Width = 576
     Height = 41
     Align = alBottom
-    TabOrder = 2
-    ExplicitTop = 174
-    ExplicitWidth = 578
+    TabOrder = 0
+    ExplicitTop = 165
+    ExplicitWidth = 572
     object BTutup: TRzBitBtn
-      Left = 506
+      Left = 500
       Top = 1
       Height = 39
       Align = alRight
@@ -172,10 +83,10 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 502
+      ExplicitLeft = 496
     end
     object BSimpan: TRzBitBtn
-      Left = 356
+      Left = 350
       Top = 1
       Height = 39
       Align = alRight
@@ -234,7 +145,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 352
+      ExplicitLeft = 346
     end
     object BCari: TRzBitBtn
       Left = 1
@@ -299,7 +210,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 281
+      Left = 275
       Top = 1
       Height = 39
       Align = alRight
@@ -358,10 +269,10 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 277
+      ExplicitLeft = 271
     end
     object BRefresh: TRzBitBtn
-      Left = 431
+      Left = 425
       Top = 1
       Height = 39
       Align = alRight
@@ -420,72 +331,20 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 427
+      ExplicitLeft = 421
     end
-  end
-  object EdJenis: TComboBox
-    Left = 128
-    Top = 43
-    Width = 201
-    Height = 23
-    TabOrder = 3
-    OnSelect = EdJenisSelect
-    Items.Strings = (
-      'PRODUKSI'
-      'NON PRODUKSI'
-      'AKTIVA')
-  end
-  object Edkd: TEdit
-    Left = 128
-    Top = 14
-    Width = 73
-    Height = 23
-    CharCase = ecUpperCase
-    TabOrder = 4
-    TextHint = 'AAA'
-  end
-  object CbKategori: TComboBox
-    Left = 128
-    Top = 73
-    Width = 201
-    Height = 23
-    TabOrder = 5
-    OnSelect = CbKategoriSelect
-  end
-  object Edkd_akun: TRzEdit
-    Left = 128
-    Top = 137
-    Width = 110
-    Height = 23
-    Text = ''
-    Color = clInfoBk
-    ReadOnly = True
-    TabOrder = 6
-  end
-  object EdNm_akun: TRzButtonEdit
-    Left = 244
-    Top = 137
-    Width = 213
-    Height = 23
-    Text = ''
-    CharCase = ecUpperCase
-    ReadOnlyColorOnFocus = True
-    TabOrder = 7
-    AltBtnNumGlyphs = 1
-    ButtonNumGlyphs = 1
-    OnButtonClick = EdNm_akunButtonClick
   end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 207
+    Top = 224
     Width = 576
-    Height = 339
+    Height = 322
     Align = alBottom
     DataSource = DsKelompok
     DynProps = <>
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
-    TabOrder = 8
+    TabOrder = 1
     OnDblClick = DBGridEh7DblClick
     Columns = <
       item
@@ -536,6 +395,159 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         Width = 180
       end>
     object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 0
+    Width = 576
+    Height = 183
+    Align = alClient
+    Color = clGradientInactiveCaption
+    ParentBackground = False
+    TabOrder = 2
+    ExplicitHeight = 193
+    object Label6: TLabel
+      Left = 106
+      Top = 17
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label4: TLabel
+      Left = 106
+      Top = 106
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label2: TLabel
+      Left = 24
+      Top = 106
+      Width = 54
+      Height = 15
+      Caption = 'Kelompok'
+    end
+    object Label5: TLabel
+      Left = 24
+      Top = 17
+      Width = 27
+      Height = 15
+      Caption = 'Kode'
+    end
+    object Label9: TLabel
+      Left = 24
+      Top = 44
+      Width = 25
+      Height = 15
+      Caption = 'Jenis'
+    end
+    object Label10: TLabel
+      Left = 106
+      Top = 44
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label1: TLabel
+      Left = 24
+      Top = 74
+      Width = 44
+      Height = 15
+      Caption = 'Kategori'
+    end
+    object Label3: TLabel
+      Left = 106
+      Top = 74
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label19: TLabel
+      Left = 24
+      Top = 140
+      Width = 80
+      Height = 15
+      Caption = 'Akun Perkiraan'
+    end
+    object Label20: TLabel
+      Left = 106
+      Top = 140
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object EdKelompok: TEdit
+      Left = 128
+      Top = 105
+      Width = 329
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 0
+    end
+    object Edno: TEdit
+      Left = 207
+      Top = 14
+      Width = 73
+      Height = 23
+      Alignment = taRightJustify
+      CharCase = ecUpperCase
+      Enabled = False
+      TabOrder = 1
+      Text = '00000'
+      TextHint = '00000'
+    end
+    object EdJenis: TComboBox
+      Left = 128
+      Top = 43
+      Width = 201
+      Height = 23
+      TabOrder = 2
+      OnSelect = EdJenisSelect
+      Items.Strings = (
+        'PRODUKSI'
+        'NON PRODUKSI'
+        'AKTIVA')
+    end
+    object Edkd: TEdit
+      Left = 128
+      Top = 14
+      Width = 73
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 3
+      TextHint = 'AAA'
+    end
+    object CbKategori: TComboBox
+      Left = 128
+      Top = 73
+      Width = 201
+      Height = 23
+      TabOrder = 4
+      OnSelect = CbKategoriSelect
+    end
+    object Edkd_akun: TRzEdit
+      Left = 128
+      Top = 137
+      Width = 110
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 5
+    end
+    object EdNm_akun: TRzButtonEdit
+      Left = 244
+      Top = 137
+      Width = 213
+      Height = 23
+      Text = ''
+      CharCase = ecUpperCase
+      ReadOnlyColorOnFocus = True
+      TabOrder = 6
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = EdNm_akunButtonClick
     end
   end
   object QKelompok: TUniQuery

@@ -182,8 +182,6 @@ begin
       end;
       urut:=FloatToStr(DM.Qtemp2['kd']+1);
       edkode.Text:=DM.Qtemp2['category_code']+(Copy('00'+urut,length('00'+urut)-1,2));
-
-
     end;
 end;
 

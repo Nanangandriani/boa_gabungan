@@ -67,7 +67,7 @@ type
 Function  FNew_TransferBarang: TFNew_TransferBarang;
 var
   status:integer;
-  th,kd_gdngdari,kd_gdngke,bln,tglno,nourut,text1,kd_add:string;
+  kd_gdngdari,kd_gdngke,nourut,text1,kd_add:string;
 
 implementation
 
@@ -205,22 +205,22 @@ Procedure TFNew_TransferBarang.Autonumber;
 begin
 (*Find encode of the date*)
  DecodeDate(DtTransfer.Date, yy,M,d );
- th:=FormatDateTime('yyy',DtTransfer.Date);
- bln:=FormatDateTime('mm',DtTransfer.Date);
- tglno:=FormatDateTime('dd',DtTransfer.Date);
+// th:=FormatDateTime('yyy',DtTransfer.Date);
+// bln:=FormatDateTime('mm',DtTransfer.Date);
+// tglno:=FormatDateTime('dd',DtTransfer.Date);
  yr:=intTostr(yy);
  yn:=copy(yr,3,2);
  mt:=IntToStr(M);
  dy:=IntToStr(d);
  (*looking for max mm/yy*)
- maxmy:= (tglno+'/'+IntToRoman(strToint(mt)))+'/'+yn;
+// maxmy:= (tglno+'/'+IntToRoman(strToint(mt)))+'/'+yn;
  with FNew_TransferBarang do
  begin
 with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select max(nourut)as urut from warehouse.t_transfer_antar_gudang where tahun='+QuotedStr(th)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tglno);
+ //   sql.Text:='select max(nourut)as urut from warehouse.t_transfer_antar_gudang where tahun='+QuotedStr(th)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tglno);
     open;
   end;
    if dm.Qtemp['urut']= '' then
@@ -246,10 +246,10 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select wh_code from t_wh where wh_name='+QuotedStr(Cbdari.Text);
+    sql.Text:='select code from t_wh where wh_name='+QuotedStr(Cbdari.Text);
     Execute;
   end;
-   kd_gdngdari:=dm.Qtemp2['wh_code'];
+   kd_gdngdari:=dm.Qtemp2['code'];
    if loksbu='' then
     begin
       with dm.Qtemp do
@@ -257,7 +257,7 @@ begin
         Close;
         sql.Clear;
         sql.Text:=' select * from t_wh where (category='+QuotedStr(CbKategori.Text)+''+
-                  ' or category=''LAIN-LAIN'') and wh_code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
+                  ' or category=''LAIN-LAIN'') and code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
         ExecSQL;
       end;
     end;
@@ -269,7 +269,7 @@ begin
         sql.Clear;
         sql.Text:=' select * from t_wh where (category='+QuotedStr(CbKategori.Text)+''+
                   ' or category=''LAIN-LAIN'') AND (sbu_code='+QuotedStr(loksbu)+' OR sbu_code='''')'+
-                  ' and wh_code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
+                  ' and code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
         ExecSQL;
       end;
     end;
@@ -292,10 +292,10 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select wh_code from t_wh where wh_name='+QuotedStr(CbKe.Text);
+    sql.Text:='select code from t_wh where wh_name='+QuotedStr(CbKe.Text);
     Execute;
   end;
-   kd_gdngke:=dm.Qtemp['wh_code'];
+   kd_gdngke:=dm.Qtemp['code'];
 end;
 
 Procedure TFNew_TransferBarang.Clear;
@@ -351,28 +351,30 @@ end;
 
 Procedure TFNew_TransferBarang.Simpan;
 begin
-Autonumber;
+//Autonumber;
+  idmenu:='M4104';
+  strday2:=DtTransfer.Date;
+  Edno.Text:=getNourut(strday2,'warehouse.t_item_transfer','');
   if messageDlg ('Anda Yakin Simpan No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Insert into gudang.t_transfer_antar_gudang(kategori,tgl_transfer,no_transfer,"Dari","Ke",ket,tahun,kd_sbu,pic,tgl_update,bln,tgl_no,nourut)'+
-                ' values(:parkt,:partgl_transfer,:parno_transfer,:parDari,:parKe,:parket,:partahun,:parkd_sbu,:parpic,:partgl_update,:parbln,:partglno,:parnourut)';
+      sql.Text:='Insert into warehouse.t_item_transfer(wh_category_code,trans_date,trans_no,wh_code_from,wh_code_to,note,trans_year,kd_sbu,created_by,trans_month,trans_day,order_no)'+
+                ' values(:parkt,:partgl_transfer,:parno_transfer,:parDari,:parKe,:parket,:partahun,:parkd_sbu,:parpic,:parbln,:partglno,:parnourut)';
                 ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
                 ParamByName('parno_transfer').Value:=Edno.Text;
                 ParamByName('pardari').Value:=CbDari.Text;
                 ParamByName('parke').Value:=CbKe.Text;
                 ParamByName('parket').Value:=EdKet.Text;
-                ParamByName('partahun').Value:=th;
+                ParamByName('partahun').Value:=Vthn;
                 ParamByName('parkt').Value:=CbKategori.Text;
                 ParamByName('parkd_sbu').Value:=loksbu;
                 ParamByName('parpic').Value:=Nm;
-                ParamByName('partgl_update').Value:=now();
-                ParamByName('parbln').Value:=bln;
-                ParamByName('partglno').Value:=tglno;
-                ParamByName('parnourut').Value:=nourut;
+                ParamByName('parbln').Value:=Vbln;
+                ParamByName('partglno').Value:=Vtgl;
+                ParamByName('parnourut').Value:=order_no;
       ExecSQL;
     end;
     Memdetail.First;
@@ -382,8 +384,8 @@ Autonumber;
       begin
         Close;
         sql.Clear;
-        sql.Text:='Insert into gudang.t_transfer_antar_gudangdet(no_transfer,kd_material_stok,kd_stok_lama,'+
-                  'kd_stok_baru,qty,satuan,nourut)values(:parno_transfer,:parkd_material_stok,:parkd_stok_lama,'+
+        sql.Text:='Insert into warehouse.t_item_transfer_det(trans_no,item_stock_code,stock_code_old,'+
+                  'stock_code_new,qty,unit,order_no)values(:parno_transfer,:parkd_material_stok,:parkd_stok_lama,'+
                   ':parkd_stok_baru,:parqty,:parsatuan,:parnourut)';
                   ParamByName('parno_transfer').Value:=Edno.Text;
                   ParamByName('parkd_material_stok').Value:=Memdetail['kd_material'];
@@ -400,18 +402,68 @@ Autonumber;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
 end;
 
+Procedure TFNew_TransferBarang.Edit;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    sql.Clear;
+    sql.Text:=' Update warehouse.t_item_transfer set tgl_transfer=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
+              ' wh_code_from=:pardari,wh_code_to=:parke,note=:parket,wh_category_code=:parkt,kd_sbu=:parkd_sbu where trans_no=:parno_transfer ';
+              ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
+              ParamByName('parno_transfer').Value:=Edno.Text;
+              ParamByName('pardari').Value:=CbDari.Text;
+              ParamByName('parke').Value:=CbKe.Text;
+              ParamByName('parket').Value:=EdKet.Text;
+              ParamByName('parkt').Value:=CbKategori.Text;
+              ParamByName('parkd_sbu').Value:=loksbu;
+              ParamByName('parpic').Value:=nm;
+              ParamByName('partglup').Value:=now();
+    ExecSQL;
+  end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='Delete From warehouse.t_item_transfer_det where trans_no='+QuotedStr(Edno.Text);
+    ExecSQL;
+  end;
+  Memdetail.First;
+    while not Memdetail.Eof do
+    begin
+      with dm.Qtemp do
+      begin
+        Close;
+        sql.Clear;
+        sql.Text:='Insert into warehouse.t_item_transfer_det(trans_no,item_stock_code,stock_code_old,'+
+                  'stock_code_new,qty,unit,order_no)values(:parno_transfer,:parkd_material_stok,:parkd_stok_lama,'+
+                  ':parkd_stok_baru,:parqty,:parsatuan,:parnourut)';
+                  ParamByName('parno_transfer').Value:=Edno.Text;
+                  ParamByName('parkd_material_stok').Value:=Memdetail['kd_material'];
+                  ParamByName('parkd_stok_lama').Value:=Memdetail['kd_stok_lama'];
+                  ParamByName('parkd_stok_baru').Value:=Memdetail['kd_stok_baru'];
+                  ParamByName('parqty').Value:=Memdetail['qty'];
+                  ParamByName('parsatuan').Value:=Memdetail['satuan'];
+                  ParamByName('parnourut').Value:=Memdetail['nourut'];
+        ExecSQL;
+      end;
+    Memdetail.Next;
+    end;
+  MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
+end;
+
 procedure TFNew_TransferBarang.BBatalClick(Sender: TObject);
 begin
   Close;
-  FTransfer_Barang.dxbarRefreshClick(sender);
+  FTransfer_Barang.ActRoExecute(sender);
 end;
 
 procedure TFNew_TransferBarang.BitBtn1Click(Sender: TObject);
 begin
-  idmenu:='1';
+  idmenu:='M4104';
   strday2:=DtTransfer.Date;
  // kd_add:=Edit1.Text;
-  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer','');
+  Edno.Text:=getNourut(strday2,'warehouse.t_item_transfer','');
 //  Edit2.Text:=order_no;
 end;
 
@@ -422,7 +474,6 @@ begin
   try
     if status=0 then
     begin
-      edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_transfer','');
       Simpan;
       Dm.Koneksi.Commit;
     end;
@@ -446,6 +497,12 @@ end;
 procedure TFNew_TransferBarang.DBGridEh1Columns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
+    if cbKe.Text='' then
+    begin
+      MessageDlg('Supplier Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      cbKe.SetFocus;
+      Exit;
+    end;
   with FItem_TransferBarang do
   begin
     Show;
@@ -454,63 +511,13 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='select a.*,b.*,c.supplier_name from gudang.t_item_stock_det a inner join gudang.t_item_stock b on '+
-                ' a.item_stock_code=b.item_stock_code inner join t_supplier c on '+
-                ' b.supplier_code=c.supplier_code where a."outstanding" > 0 AND a.wh_name='+QuotedStr(CbDari.Text);
+      sql.Text:=' select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a inner join warehouse.t_item_stock b on '+
+                ' a.item_stock_code=b.item_stock_code inner join t_supplier c on b.supplier_code=c.supplier_code '+
+                ' inner join t_wh d on a.wh_code=d.code where a."outstanding" > 0 AND d.wh_name='+QuotedStr(CbDari.Text);
       ExecSQL;
     end;
     FItem_TransferBarang.Qbarang.Open;
   end;
-end;
-
-Procedure TFNew_TransferBarang.Edit;
-begin
-  with dm.Qtemp do
-  begin
-    Close;
-    sql.Clear;
-    sql.Text:=' Update gudang.t_transfer_antar_gudang set tgl_transfer=:partgl_transfer,pic=:parpic,tgl_update=:partglup,'+
-              ' "Dari"=:pardari,"Ke"=:parke,ket=:parket,kategori=:parkt,kd_sbu=:parkd_sbu where trans_no=:parno_transfer ';
-              ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
-              ParamByName('parno_transfer').Value:=Edno.Text;
-              ParamByName('pardari').Value:=CbDari.Text;
-              ParamByName('parke').Value:=CbKe.Text;
-              ParamByName('parket').Value:=EdKet.Text;
-              ParamByName('parkt').Value:=CbKategori.Text;
-              ParamByName('parkd_sbu').Value:=loksbu;
-              ParamByName('parpic').Value:=nm;
-              ParamByName('partglup').Value:=now();
-    ExecSQL;
-  end;
-  with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='Delete From gudang.t_item_transfer_det where trans_no='+QuotedStr(Edno.Text);
-    ExecSQL;
-  end;
-  Memdetail.First;
-  while not Memdetail.Eof do
-  begin
-    with dm.Qtemp do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text:='Insert into gudang.t_item_transferdet(no_transfer,kd_material_stok,kd_stok_lama,'+
-                'kd_stok_baru,qty,satuan)values(:parno_transfer,:parkd_material_stok,:parkd_stok_lama,'+
-                ':parkd_stok_baru,:parqty,:parsatuan)';
-                ParamByName('parno_transfer').Value:=Edno.Text;
-                ParamByName('parkd_material_stok').Value:=Memdetail['kd_material'];
-                ParamByName('parkd_stok_lama').Value:=Memdetail['kd_stok_lama'];
-                ParamByName('parkd_stok_baru').Value:=Memdetail['kd_stok_baru'];
-                ParamByName('parqty').Value:=Memdetail['qty'];
-                ParamByName('parsatuan').Value:=Memdetail['satuan'];
-               // ParamByName('parkd_sbu').Value:=loksbu;
-      ExecSQL;
-    end;
-  Memdetail.Next;
-  end;
-  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
 end;
 
 procedure TFNew_TransferBarang.FormClose(Sender: TObject;
@@ -532,7 +539,7 @@ end;
 procedure TFNew_TransferBarang.FormShow(Sender: TObject);
 begin
 //  Self.Load;
-{  CbKategori.Clear;
+ CbKategori.Clear;
   with dm.Qtemp do
   begin
     Close;
@@ -545,7 +552,7 @@ begin
   begin
     CbKategori.Items.Add(Dm.Qtemp['category']);
     Dm.Qtemp.Next;
-  end;    }
+  end;
   DtTransfer.Date:=now;
 end;
 

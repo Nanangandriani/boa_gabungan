@@ -87,7 +87,9 @@ uses
   Ulist_materialstok in 'Ulist_materialstok.pas' {Flistmaterialstok},
   UReturnPembelian in 'UReturnPembelian.pas' {FReturnPembelian},
   UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
-  USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian};
+  USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian},
+  UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
+  UNew_HakAkses in 'UNew_HakAkses.pas' {FNew_Hak_Akses};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -124,6 +126,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
+  Application.CreateForm(TFHak_Akses, FHak_Akses);
   //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);

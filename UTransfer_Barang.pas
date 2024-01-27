@@ -26,7 +26,8 @@ uses
   dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Black,
   dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray, dxSkinOffice2019White,
   dxSkinTheBezier, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
-  dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Light, dxCore, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFTransfer_Barang = class(TForm)
@@ -51,14 +52,23 @@ type
     Rpt: TfrxReport;
     QRptTransfer: TUniQuery;
     DbRptTransfer: TfrxDBDataset;
-    procedure dxBarBaruClick(Sender: TObject);
-    procedure dxBarUpdateClick(Sender: TObject);
-    procedure dxbarRefreshClick(Sender: TObject);
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRo: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActRoExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -94,51 +104,29 @@ begin
     memo.Text := aText;
 end;
 
-procedure TFTransfer_Barang.dxBarBaruClick(Sender: TObject);
+procedure TFTransfer_Barang.ActBaruExecute(Sender: TObject);
 begin
-with FNew_TransferBarang do
-begin
-  Show;
-  Clear;
-  status:=0;
-  Caption:='New Transfer Barang Antar Gudang';
-  //autonumber;
-end;
-end;
-
-procedure TFTransfer_Barang.dxBarLargeButton1Click(Sender: TObject);
-begin
- with QRptTransfer do
- begin
-   Filtered:=False;
-   Filter:=' no_transfer='+QuotedStr(DBGridTransfer.Fields[0].AsString);
-   FilterOptions:=[];
-   Filtered:=True;
- end;
- QRptTransfer.Open;
-if QRptTransfer.FieldByName('no_transfer').AsString=''  then
-begin
-ShowMessage('Maaf data kosong');
-end else
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_TransferAntarGudang.Fr3');
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=kdSBU;
- // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
-//  SetMemo(Rpt,'MPT',' '+SBU+' ');
-  //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
-  Rpt.ShowReport();
+  with FNew_TransferBarang do
+  begin
+    Show;
+    Clear;
+    status:=0;
+    Caption:='New Transfer Barang Antar Gudang';
+    //autonumber;
+  end;
 end;
 
-procedure TFTransfer_Barang.dxbarRefreshClick(Sender: TObject);
+procedure TFTransfer_Barang.ActRoExecute(Sender: TObject);
 begin
-DBGridTransfer.StartLoadingStatus();
-DBGridTransfer.FinishLoadingStatus();
+  DBGridTransfer.StartLoadingStatus();
+  DBGridTransfer.FinishLoadingStatus();
   if loksbu='' then
   begin
     with QTransfer do
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from gudang.t_item_transfer order by trans_no desc';
+      sql.Text:='select * from warehouse.t_item_transfer order by trans_no desc';
       ExecSQL;
     end;
     QTransfer.Active:=True;
@@ -153,7 +141,7 @@ DBGridTransfer.FinishLoadingStatus();
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from gudang.t_item_transfer where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
+      sql.Text:='select * from warehouse.t_item_transfer where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
       ExecSQL;
     end;
     QTransfer.Active:=True;
@@ -164,9 +152,9 @@ DBGridTransfer.FinishLoadingStatus();
   end;
 end;
 
-procedure TFTransfer_Barang.dxBarUpdateClick(Sender: TObject);
+procedure TFTransfer_Barang.ActUpdateExecute(Sender: TObject);
 begin
-  with FNew_TransferBarang do
+ with FNew_TransferBarang do
   begin
     Show;
     Clear;
@@ -175,8 +163,8 @@ begin
     Edno.Text:=MemTransfer['trans_no'];
     DtTransfer.Date:=MemTransfer['trans_date'];
     EdKet.Text:=MemTransfer['note'];
-    CbDari.Text:=MemTransfer['from'];
-    CbKe.Text:=MemTransfer['to'];
+    CbDari.Text:=MemTransfer['wh_code_from'];
+    CbKe.Text:=MemTransfer['wh_code_to'];
     CbKategori.Text:=MemTransfer['category'];
   end;
   Qdetail.First;
@@ -199,6 +187,28 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TFTransfer_Barang.dxBarLargeButton1Click(Sender: TObject);
+begin
+ with QRptTransfer do
+ begin
+   Filtered:=False;
+   Filter:=' no_transfer='+QuotedStr(DBGridTransfer.Fields[0].AsString);
+   FilterOptions:=[];
+   Filtered:=True;
+ end;
+ QRptTransfer.Open;
+if QRptTransfer.FieldByName('no_transfer').AsString=''  then
+begin
+ShowMessage('Maaf data kosong');
+end else
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_TransferAntarGudang.Fr3');
+  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=kdSBU;
+ // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+//  SetMemo(Rpt,'MPT',' '+SBU+' ');
+  //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
+  Rpt.ShowReport();
 end;
 
 procedure TFTransfer_Barang.FormClose(Sender: TObject;

@@ -34,10 +34,10 @@ object FItem_TransferBarang: TFItem_TransferBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'item_stock_code'
+        FieldName = 'item_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
-        Width = 74
+        Width = 126
       end
       item
         CellButtons = <>
@@ -46,7 +46,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         FieldName = 'item_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
-        Width = 112
+        Width = 160
       end
       item
         CellButtons = <>
@@ -55,7 +55,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Nama Supplier'
-        Width = 149
+        Width = 160
       end
       item
         CellButtons = <>
@@ -64,7 +64,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         FieldName = 'stock_code'
         Footers = <>
         Title.Caption = 'Kode Stok'
-        Width = 114
+        Width = 138
       end
       item
         CellButtons = <>
@@ -92,7 +92,7 @@ object FItem_TransferBarang: TFItem_TransferBarang
         FieldName = 'wh_code'
         Footers = <>
         Title.Caption = 'Gudang'
-        Width = 124
+        Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -235,9 +235,9 @@ object FItem_TransferBarang: TFItem_TransferBarang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.*,b.*,c.supplier_name from gudang.t_item_stock_det a in' +
-        'ner join gudang.t_item_stock b on a.item_stock_code=b.item_stock' +
-        '_code'
+        'select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a' +
+        ' inner join warehouse.t_item_stock b on a.item_stock_code=b.item' +
+        '_stock_code'
       'inner join t_supplier c on b.supplier_code=c.supplier_code')
     Left = 240
     Top = 104

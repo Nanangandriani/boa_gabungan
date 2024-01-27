@@ -11,32 +11,33 @@ uses
 
 type
   TFNew_KelompokBarang = class(TForm)
+    Panel1: TPanel;
+    BTutup: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    BCari: TRzBitBtn;
+    Btambah: TRzBitBtn;
+    BRefresh: TRzBitBtn;
+    DBGridEh7: TDBGridEh;
+    QKelompok: TUniQuery;
+    DsKelompok: TDataSource;
+    Panel2: TPanel;
     Label6: TLabel;
     Label4: TLabel;
     Label2: TLabel;
     Label5: TLabel;
     Label9: TLabel;
     Label10: TLabel;
-    EdKelompok: TEdit;
-    Edno: TEdit;
-    Panel1: TPanel;
-    BTutup: TRzBitBtn;
-    BSimpan: TRzBitBtn;
-    BCari: TRzBitBtn;
-    EdJenis: TComboBox;
-    Edkd: TEdit;
     Label1: TLabel;
     Label3: TLabel;
-    CbKategori: TComboBox;
     Label19: TLabel;
     Label20: TLabel;
+    EdKelompok: TEdit;
+    Edno: TEdit;
+    EdJenis: TComboBox;
+    Edkd: TEdit;
+    CbKategori: TComboBox;
     Edkd_akun: TRzEdit;
     EdNm_akun: TRzButtonEdit;
-    Btambah: TRzBitBtn;
-    BRefresh: TRzBitBtn;
-    DBGridEh7: TDBGridEh;
-    QKelompok: TUniQuery;
-    DsKelompok: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure EdJenisSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
