@@ -32,6 +32,7 @@ type
     Label1: TLabel;
     LProgress: TLabel;
     Label2: TLabel;
+    EdKode: TEdit;
     procedure FormShow(Sender: TObject);
     procedure cbbankChange(Sender: TObject);
     procedure BProsesClick(Sender: TObject);
@@ -39,6 +40,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure autocode;
   end;
 
 var
@@ -50,10 +52,48 @@ implementation
 
 uses UMainMenu, UDataModule, Udafcek_entry;
 
+procedure TFImportnocek.autocode;
+var
+   trans:integer;
+begin
+   with dm.Qtemp do
+   begin
+      Close;
+      sql.Clear;
+      sql.Add('select max(trans_no) as nomor from t_nocek_master ');
+      open;
+   end;
+   trans:=dm.Qtemp.FieldByName('nomor').AsInteger;
+   if dm. Qtemp.RecordCount=0 then
+   begin
+      trans:=1;
+   end
+   else
+      //trans:=dm.Qtemp.RecordCount+1;
+      edkode.Text:=inttostr(trans+1);
+end;
+
 procedure TFImportnocek.BProsesClick(Sender: TObject);
 var i,j:integer;
     no_faktur,no_urut:string;
+    trans:integer;
 begin
+   self.autocode;
+
+   with dm.Qtemp do
+   begin
+       close;
+       sql.clear;
+       sql.Add('insert into t_nocek_master(trans_no,first_nocek,last_nocek,bank,rek_no)');
+       sql.Add('values (:partrans_no,:parfirst_nocek,:parlast_nocek,:parbank,:parrek_no)');
+       Params.ParamByName('partrans_no').Value:=EdKode.Text;
+       Params.ParamByName('parfirst_nocek').Value:='';
+       Params.ParamByName('parlast_nocek').Value:='';
+       Params.ParamByName('parbank').Value:=cbbank.Text;
+       Params.ParamByName('parrek_no').Value:=cbrek.Text;
+       Execute;
+   end;
+
    if Application.MessageBox('Import data No.Cek/BG akan diproses?','confirm',mb_yesno or mb_iconquestion)=id_yes then
    begin
       ProgressBar.Position:=0;
@@ -102,13 +142,14 @@ begin
             begin
               close;
               sql.clear;
-              sql.Add('insert into t_nocek(cek_no,bank,rek_no,cekbg,status,created_at,created_by)');
-              sql.Add('values (:nc,:kdb,:nrk,:ckb,:stat,:created_at,:created_by)');
+              sql.Add('insert into t_nocek(cek_no,bank,rek_no,cekbg,status,trans_no,created_at,created_by)');
+              sql.Add('values (:nc,:kdb,:nrk,:ckb,:stat,:trans,:created_at,:created_by)');
               Params.ParamByName('nc').Value:=no_faktur;
               Params.ParamByName('kdb').Value:=cbbank.Text;
               Params.ParamByName('nrk').Value:=cbrek.Text;
               Params.ParamByName('ckb').Value:=cbcek.Text;
               Params.ParamByName('stat').Value:='N';
+              Params.ParamByName('trans').Value:=EdKode.Text;
               Params.parambyname('created_at').AsDateTime:=Now;
               Params.parambyname('created_by').AsString:='Admin';
               Execute;
@@ -121,6 +162,8 @@ begin
       FDaf_EntryCek.qnocek.close;
       FDaf_EntryCek.qnocek.open;
    end;
+
+
 end;
 
 procedure TFImportnocek.cbbankChange(Sender: TObject);
@@ -159,6 +202,8 @@ begin
      cbbank.Items.add(dm.Qtemp.fieldbyname('bank_code').asstring);
      dm.Qtemp.next;
    end;
+   //self.autocode;
+
 end;
 
 end.

@@ -434,6 +434,22 @@
             <Form>FSupp_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UEdit_Penomoran.pas">
+            <Form>FEdit_Penomoran</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UUang_Muka_Pembelian.pas">
+            <Form>FUang_Muka_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UInput_um.pas">
+            <Form>FNew_UM_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UAkun_Perkiraan_UM.pas">
+            <Form>FAkun_Perkiraan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

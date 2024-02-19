@@ -1,9 +1,9 @@
-object FPenomoran: TFPenomoran
+object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
   Left = 0
   Top = 0
-  Caption = 'FPenomoran'
-  ClientHeight = 491
-  ClientWidth = 905
+  Caption = 'Uang Muka Pembelian'
+  ClientHeight = 442
+  ClientWidth = 755
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,54 +11,31 @@ object FPenomoran: TFPenomoran
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  WindowState = wsMaximized
   OnShow = FormShow
   TextHeight = 15
-  object dxRibbon1: TdxRibbon
-    Left = 0
-    Top = 0
-    Width = 905
-    Height = 127
-    BarManager = dxBarManager1
-    Style = rs2010
-    ColorSchemeName = 'Blue'
-    Contexts = <>
-    TabOrder = 0
-    TabStop = False
-    object dxRibbon1Tab1: TdxRibbonTab
-      Active = True
-      Groups = <
-        item
-          ToolbarName = 'dxBarManager1Bar1'
-        end>
-      Index = 0
-    end
-  end
-  object DBGridNo: TDBGridEh
+  object DBGrid_um: TDBGridEh
     Left = 0
     Top = 127
-    Width = 905
-    Height = 364
+    Width = 755
+    Height = 315
     Align = alClient
-    DataSource = DSNo
-    DrawMemoText = True
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_2_supplier_name'
+      end>
+    DataSource = DS_UM
     DynProps = <>
-    IndicatorTitle.TitleButton = True
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
-    SearchPanel.FilterOnTyping = True
-    STFilter.Location = stflInTitleFilterEh
-    STFilter.Visible = True
-    TabOrder = 1
+    TabOrder = 0
     TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_no'
+        FieldName = 'no_trans'
         Footers = <>
         Title.Caption = 'No Trans'
         Width = 100
@@ -67,91 +44,66 @@ object FPenomoran: TFPenomoran
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'numb_type'
+        FieldName = 'trans_date'
         Footers = <>
-        Title.Caption = 'Kode Modul'
+        Title.Caption = 'Tanggal'
         Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_type'
+        FieldName = 'supplier_name'
         Footers = <>
-        Title.Caption = 'Nama Modul'
+        Title.Caption = 'Supplier'
         Width = 200
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'component_description'
+        FieldName = 'um_value'
         Footers = <>
-        Title.Caption = 'Deskripsi Penomoran'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'digit_counter'
-        Footers = <>
-        Title.Caption = 'Digit Counter'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'description'
-        Footers = <>
-        Title.Caption = 'Jenis Reset'
-        Width = 150
+        Title.Caption = 'Nilai Uang Muka'
+        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
-      object DBGridNodet: TDBGridEh
+      object DBGridCek_Det: TDBGridEh
         Left = 0
         Top = 0
-        Width = 815
-        Height = 118
+        Width = 0
+        Height = 0
         Align = alClient
-        DataSource = DsDetNo
         DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SumList.Active = True
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
         TabOrder = 0
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'urutan'
-            Footers = <>
-            Title.Caption = 'No Urut'
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'param_name'
-            Footers = <>
-            Title.Caption = 'Parameter'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'description'
-            Footers = <>
-            Title.Caption = 'Keterangan'
-            Width = 150
-          end>
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
+    end
+  end
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 755
+    Height = 127
+    BarManager = dxBarManager1
+    Style = rs2010
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 1
+    TabStop = False
+    ExplicitLeft = -103
+    ExplicitWidth = 858
+    object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
+      Groups = <
+        item
+          ToolbarName = 'dxBarManager1Bar1'
+        end>
+      Index = 0
     end
   end
   object dxBarManager1: TdxBarManager
@@ -168,7 +120,7 @@ object FPenomoran: TFPenomoran
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 744
+    Left = 727
     Top = 48
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -178,8 +130,8 @@ object FPenomoran: TFPenomoran
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 56
+      FloatClientHeight = 123
       ItemLinks = <
         item
           Visible = True
@@ -266,7 +218,6 @@ object FPenomoran: TFPenomoran
         05E60567412852BEACBAE94267CDEE1B6375AD77646D4BEFDB554DE72F1595C6
         2A8050F58E5E948850B856EFBA094AF8BFEF80058481A22091011CC0AD6ABE6A
         44E03B805C64CDB4C3E1300000000049454E44AE426082}
-      OnClick = dxBarButton1Click
     end
     object dxBarButton3: TdxBarButton
       Caption = 'Refresh'
@@ -437,10 +388,8 @@ object FPenomoran: TFPenomoran
         BFC080A205F60000000049454E44AE426082}
     end
     object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'New'
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -573,11 +522,11 @@ object FPenomoran: TFPenomoran
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
     end
     object dxBarButton8: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update  '
       Category = 0
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -648,9 +597,8 @@ object FPenomoran: TFPenomoran
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarButton10: TdxBarButton
-      Caption = 'Delete'
+      Caption = 'Delete  '
       Category = 0
-      Hint = 'Delete'
       Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
@@ -691,77 +639,16 @@ object FPenomoran: TFPenomoran
         0000000049454E44AE426082}
     end
   end
-  object QDetNo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'SELECT  a.*,c.description from t_numb_det a '
-      'LEFT JOIN t_numb_component c on a.id_param=c.id'
-      
-        'GROUP BY a.trans_no,a.id,a.param_name,a.urutan,a.id_param,a.deli' +
-        'miter,c.description'
-      'order by a.trans_no,a.urutan ASC')
-    MasterSource = DSNo
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Left = 488
-    Top = 33
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'TR20231006-1'
-      end>
-  end
-  object DsDetNo: TDataSource
-    DataSet = QDetNo
-    Left = 488
-    Top = 88
-  end
-  object QNo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      ''
-      'SELECT  a.*,c.submenu2,d.description from t_numb a'
-      'INNER JOIN t_numb_det b on a.trans_no=b.trans_no'
-      'LEFT JOIN t_submenu2 c  on a.numb_type=c.kd_submenu'
-      'LEFT JOIN t_numb_type d on a.reset_type=d.id'
-      
-        'GROUP BY a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.c' +
-        'omponent_description,'
-      
-        'a.reset_type,a.additional_status,a.active_status,c.submenu2,d.de' +
-        'scription,a.remarks'
-      'order by a.trans_no ASC')
-    Left = 328
-    Top = 24
-  end
-  object DSDNo: TDataSetDriverEh
-    ProviderDataSet = QNo
-    Left = 376
-    Top = 88
-  end
-  object MemNo: TMemTableEh
-    Params = <>
-    DataDriver = DSDNo
-    Left = 376
-    Top = 24
-  end
-  object DSNo: TDataSource
-    DataSet = MemNo
-    Left = 328
-    Top = 88
-  end
   object ActMenu: TActionManager
     Left = 656
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '
@@ -787,5 +674,20 @@ object FPenomoran: TFPenomoran
       Caption = 'CLose Kontrak    '
       Enabled = False
     end
+  end
+  object QUM: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select a.*,b.supplier_name '
+      'from purchase.t_advance_payment a'
+      'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code'
+      'group by a.supplier_code,b.supplier_name,a.no_trans')
+    Left = 360
+    Top = 32
+  end
+  object DS_UM: TDataSource
+    DataSet = QUM
+    Left = 360
+    Top = 80
   end
 end

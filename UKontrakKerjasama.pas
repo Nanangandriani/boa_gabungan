@@ -78,6 +78,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBGridKontrakRowDetailPanelShow(Sender: TCustomDBGridEh;
       var CanShow: Boolean);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -261,6 +262,11 @@ procedure TFKontrakkerjasama.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     Dm.Koneksi.Close;
+end;
+
+procedure TFKontrakkerjasama.FormShow(Sender: TObject);
+begin
+  ActROExecute(sender);
 end;
 
 procedure TFKontrakkerjasama.ActAppExecute(Sender: TObject);
@@ -448,7 +454,8 @@ begin
             with QKerjasama_det do
             begin
               FNewKontrak_ks.MemMaterial.Insert;
-              FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
+              //FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
+              FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_code').AsString;
               FNewKontrak_ks.MemMaterial['nm_material']:=QKerjasama_det.FieldByName('item_name').AsString;
               FNewKontrak_ks.MemMaterial['qty']:=QKerjasama_det.FieldByName('qty').AsString;
               FNewKontrak_ks.MemMaterial['harga2']:=QKerjasama_det.FieldByName('price').AsString;
@@ -515,7 +522,8 @@ begin
             with QKerjasama_det do
             begin
               FNewKontrak_ks.MemMaterial.Insert;
-              FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
+              //FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
+              FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_code').AsString;
               FNewKontrak_ks.MemMaterial['nm_material']:=QKerjasama_det.FieldByName('item_name').AsString;
               FNewKontrak_ks.MemMaterial['qty']:=QKerjasama_det.FieldByName('qty').AsString;
               FNewKontrak_ks.MemMaterial['harga']:=QKerjasama_det.FieldByName('price').AsString;
@@ -545,7 +553,6 @@ begin
           DtKontrak.Text:=Memkerjasama.FieldByName('contract_date').AsString;
           DtSelesai.Text:=Memkerjasama.FieldByName('finish_date').AsString;
           Edtempo.Text:=Memkerjasama.FieldByName('due_date').AsString;
-          DtTahun.Text:=Memkerjasama.FieldByName('trans_years').AsString;
           EdKet.Text:=Memkerjasama.FieldByName('remarks').AsString;
           EdCurr.Text:=Memkerjasama.FieldByName('currency').AsString;
           EdnilaiCurr.Text:=Memkerjasama.FieldByName('currency_value').AsString;

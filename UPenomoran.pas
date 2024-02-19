@@ -67,6 +67,7 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,10 +80,11 @@ implementation
 
 {$R *.dfm}
 
-uses Unew_Penomoran, UDataModule;
+uses Unew_Penomoran, UDataModule, UEdit_Penomoran;
 
 var
   realFPenomoran: TFPenomoran;
+  status_add:bool;
 
 function FPenomoran: TFPenomoran;
 begin
@@ -102,6 +104,70 @@ begin
     if QNo.Active=False then QNo.Active:=True;
     if MemNo.Active=False then MemNo.Active:=True;
     if QdetNo.Active=False then QdetNo.Active:=True;
+
+end;
+
+procedure TFPenomoran.ActUpdateExecute(Sender: TObject);
+begin
+     FEdit_Penomoran.Mem_component.EmptyTable;
+     with FEdit_Penomoran do
+     begin
+         with dm.Qtemp do
+         begin
+            close;
+            sql.Clear;
+            sql.Text:='select a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.component_description,a.reset_type,a.remarks,a.additional_status,a.active_status,b.param_name,b.urutan,b.id_param,d.description,c.description as jenis_reset '+
+                      'from t_numb a '+
+                      'INNER JOIN  t_numb_det b on a.trans_no=b.trans_no '+
+                      'INNER JOIN  t_numb_type c on a.reset_type=c.id '+
+                      'INNER JOIN  t_numb_component d on d.id=b.id_param '+
+                      'where a.trans_no='+QuotedStr(MemNo['trans_no'])+'  '+
+                      'ORDER BY b.urutan ';
+            open;
+         end;
+         show;
+         kd.Text:=dm.Qtemp.FieldByName('trans_no').AsString;
+         EdNama.Text:=dm.Qtemp.FieldByName('remarks').AsString;
+         CbTipe_transaksi.Text:=dm.Qtemp.FieldByName('trans_type').AsString;
+         CbTipeNo.Text:=dm.Qtemp.FieldByName('jenis_reset').AsString;
+         Kdsubmenu.Text:=dm.Qtemp.FieldByName('numb_type').AsString;
+         KdType.Text:=dm.Qtemp.FieldByName('reset_type').AsString;
+         eddigit_count.Text:=dm.Qtemp.FieldByName('digit_counter').AsString;
+         status_add:=dm.Qtemp.FieldByName('additional_status').Asboolean;
+         if status_add=true then
+         begin
+            FEdit_Penomoran.CheckAdd.Checked:=true;
+         end
+         else
+            FEdit_Penomoran.CheckAdd.Checked:=false;
+
+          DBGridNotemp.Columns[2].PickList.clear;
+          dm.Qtemp.First;
+          while not dm.Qtemp.Eof do
+          begin
+            DBGridNotemp.Columns[3].PickList.add(dm.Qtemp.fieldbyname('description').AsString);
+            dm.Qtemp.Next;
+          end;
+
+          dm.Qtemp.First;
+          while not dm.Qtemp.Eof do
+          begin
+              with dm.Qtemp do
+              begin
+                Mem_component.Insert;
+                Mem_component['urutan']:=dm.Qtemp.FieldByName('urutan').AsString;
+                Mem_component['trans_no']:=dm.Qtemp.FieldByName('trans_no').AsString;
+                Mem_component['param_name']:=dm.Qtemp.FieldByName('param_name').AsString;
+                Mem_component['remarks']:=dm.Qtemp.FieldByName('description').AsString;
+                Mem_component['id_param']:=dm.Qtemp.FieldByName('id_param').AsString;
+                Mem_component.Post;
+              end;
+              dm.Qtemp.Next;
+          end;
+
+     end;
+
+
 
 end;
 

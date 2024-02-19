@@ -46,7 +46,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_KontrakKerjasama, Unew_spb, UNew_PO;
+uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um;
 
 procedure TFSearch_Supplier.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -72,6 +72,11 @@ begin
       Edkd_supp_Angkutan.Text:=QSupplier['supplier_code'];
       ednm_supp_Angkutan.Text:=QSupplier['supplier_name'];
     end;}
+    with FNew_UM_Pembelian do
+    begin
+      Edkd_supp.Text:=QSupplier['supplier_code'];
+      ednm_supp.Text:=QSupplier['supplier_name'];
+    end;
 
     close;
 end;

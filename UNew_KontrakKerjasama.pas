@@ -111,7 +111,7 @@ end;
 
 procedure TFNewKontrak_ks.Autonumber;
 begin
-   idmenu:='M4301';
+   idmenu:='M11001';
    strday2:=Dtkontrak.Date;
    //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
    EdNo_kontrak.Text:=getNourut(strday2,'purchase.t_coop_contract','');
@@ -498,10 +498,10 @@ begin
           sql.clear;
           sql.Text:=' insert into purchase.t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
                     ' due_date, order_no, trans_year, remarks, status,currency,currency_value,'+
-                    ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month,trans_day)'+
+                    ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month,trans_day,input_date)'+
                     ' values(:parno_kontrak,:parkd_supplier,:partgl_kontrak,:partgl_selesai, '+
                     ' :parjatuh_tempo,:parno_urut,:partahun,:parketerangan,:parstatus,:parcurrency,:parnilaicurrency,:parjenis,'+
-                    ' :parStatus_Approval,:parkategori,:parbln_kirim,:parth_kirim,:parpic,:parbulan,:partgl)';
+                    ' :parStatus_Approval,:parkategori,:parbln_kirim,:parth_kirim,:parpic,:parbulan,:partgl,:parinput_date)';
                     ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                     ParamByName('parkd_supplier').Value:=EdKd_supp.Text;
                     ParamByName('partgl_kontrak').Value:=FormatDateTime('yyy-mm-dd',DtKontrak.Date);
@@ -521,6 +521,7 @@ begin
                     ParamByName('parpic').Value:=Nm;
                     ParamByName('parbulan').Value:=DtBln.Text;
                     ParamByName('partgl').Value:=DtHr.Text;
+                    ParamByName('parinput_date').AsDateTime:=Now;
 
           ExecSQL;
         end;
@@ -545,7 +546,7 @@ begin
                       ' :parsisaqty,:parstatus,:parppn,:parppn_rp,:parSpesifikasi,'+
                       ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:parpph,:parpph_rp,:parpemb_dpp)';
                       ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
-                      ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material'];
+                      ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                       ParamByName('parqty').Value:=MemMaterial['qty'];
                       ParamByName('parharga').Value:=MemMaterial['harga2'];
                       ParamByName('parsatuan').Value:=MemMaterial['satuan'];
@@ -816,7 +817,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select a.item_name,b.supplier_code,b.supplier_name,a.item_code,a.item_stock_code,a.order_no,a.kd_urut, a.qty,a.unit,a.merk,  '+
+        sql.Text:='select a.item_name,b.supplier_code,b.supplier_name,a.item_code,a.item_stock_code,a.order_no, a.qty,a.unit,a.merk,  '+
                   'd.qty_unit,d.unit,d.qty_conv,d.unit_conv, '+
                   'e.category,f."type",g.group_name '+
 
@@ -829,7 +830,7 @@ begin
                   'left  join t_item_group g on c.category_id=g.group_id '+
                   'where b.supplier_code='+QuotedStr(EdKd_supp.Text)+' and f.type='+QuotedStr(CbKategori.Text)+' '+
 
-                  'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stock_code,a.order_no, a.kd_urut,a.qty,a.unit,a.merk,a.item_name,d.unit,d.qty_unit,d.qty_conv, '+
+                  'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stock_code,a.order_no,a.qty,a.unit,a.merk,a.item_name,d.unit,d.qty_unit,d.qty_conv, '+
                   'd.unit_conv,a.item_name,e.category,g.group_name,f."type" '+
                   'order by item_stock_code Desc';
         ExecSQL;

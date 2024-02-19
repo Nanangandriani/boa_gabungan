@@ -167,7 +167,7 @@ object FImportnocek: TFImportnocek
     Left = 402
     Top = 111
     Width = 121
-    Height = 21
+    Height = 23
     ImeName = 'US'
     TabOrder = 5
   end
@@ -185,7 +185,7 @@ object FImportnocek: TFImportnocek
     Left = 17
     Top = 112
     Width = 321
-    Height = 23
+    Height = 21
     Ctl3D = False
     ImeName = 'US'
     ParentCtl3D = False
@@ -230,7 +230,7 @@ object FImportnocek: TFImportnocek
     Left = 402
     Top = 138
     Width = 232
-    Height = 21
+    Height = 23
     ImeName = 'US'
     TabOrder = 11
   end
@@ -244,6 +244,14 @@ object FImportnocek: TFImportnocek
     RowCount = 1
     FixedRows = 0
     TabOrder = 12
+    Visible = False
+  end
+  object EdKode: TEdit
+    Left = 228
+    Top = 10
+    Width = 72
+    Height = 23
+    TabOrder = 13
     Visible = False
   end
   object MyQuery2: TUniQuery

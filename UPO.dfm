@@ -2,19 +2,20 @@ object FPO: TFPO
   Left = 0
   Top = 0
   Caption = 'Form Purchase Order'
-  ClientHeight = 433
-  ClientWidth = 826
+  ClientHeight = 489
+  ClientWidth = 863
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 826
+    Width = 863
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +23,7 @@ object FPO: TFPO
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 826
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,23 +36,25 @@ object FPO: TFPO
   object DBGridPO: TDBGridEh
     Left = 0
     Top = 169
-    Width = 826
-    Height = 264
+    Width = 863
+    Height = 320
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_0_trans_year'
+        ColumnName = 'Column_16_trans_year'
       end
       item
-        ColumnName = 'Column_1_trans_month'
+        ColumnName = 'Column_17_trans_month'
       end>
     DataSource = DsPo
     DrawMemoText = True
     DynProps = <>
+    FooterRowCount = 1
     IndicatorTitle.TitleButton = True
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
+    RowDetailPanel.Height = 160
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     SearchPanel.FilterOnTyping = True
@@ -59,24 +63,6 @@ object FPO: TFPO
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_year'
-        Footers = <>
-        Title.Caption = 'Tahun'
-        Width = 50
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_month'
-        Footers = <>
-        Title.Caption = 'Bulan'
-        Width = 50
-      end
       item
         CellButtons = <>
         DynProps = <>
@@ -224,13 +210,43 @@ object FPO: TFPO
         FieldName = 'jenis'
         Footers = <>
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_year'
+        Footers = <>
+        Title.Caption = 'Tahun'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_month'
+        Footers = <>
+        Title.Caption = 'Bulan'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_day'
+        Footers = <>
+        Title.Caption = 'Hari'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 753
-        Height = 118
+        Width = 826
+        Height = 158
         Align = alClient
         DataSource = DsDetailPo
         DynProps = <>
@@ -245,7 +261,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_stock_code'
+            FieldName = 'item_code'
             Footers = <>
             Title.Caption = 'Kode Barang'
             Width = 84
@@ -254,7 +270,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_name'
+            FieldName = 'item_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 135
@@ -326,6 +342,8 @@ object FPO: TFPO
             DynProps = <>
             EditButtons = <>
             FieldName = 'subtotal'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Sub Total'
             Width = 100
@@ -345,6 +363,8 @@ object FPO: TFPO
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'PPN|Nominal'
             Width = 80
@@ -443,6 +463,23 @@ object FPO: TFPO
             Footers = <>
             Title.Caption = 'Gudang'
             Width = 90
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_stock_code'
+            Footers = <>
+            Title.Caption = 'Kode Barang Supp'
+            Width = 0
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pemb_ppn'
+            Footers = <>
+            Width = 0
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -452,7 +489,7 @@ object FPO: TFPO
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 826
+    Width = 863
     Height = 42
     Align = alTop
     Color = 15987699
@@ -40898,27 +40935,25 @@ object FPO: TFPO
     SQL.Strings = (
       #9#9#9#9' '
       
-        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
-        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
+        'SELECT'#9'c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.item_' +
+        'code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
       
         #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
-        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
+        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,'
       '        a.status,a.grandtotal'
       '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
       'FROM purchase.t_podetail AS "a" '
       
-        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
-        'de = b.material_stock_code'
+        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
+        'item_stock_code'
+      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code '
       
-        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
-        'erial_code and b.material_no=c.material_no'
-      
-        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
-        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,'
+        'GROUP BY c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.ite' +
+        'm_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,'
       
         '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
-        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
-        'dtotal'#9#9#9)
+        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
+      '         a.pemb_dpp,a.pemb_ppn,a.status,a.grandtotal'#9#9#9)
     MasterSource = DsPo
     MasterFields = 'po_no'
     DetailFields = 'po_no'
@@ -40929,7 +40964,7 @@ object FPO: TFPO
         DataType = ftString
         Name = 'po_no'
         ParamType = ptInput
-        Value = 'PO/2023/XII/0001'
+        Value = 'PO/2024/II/0001/'
       end>
   end
   object DsdPO: TDataSetDriverEh
@@ -40943,7 +40978,6 @@ object FPO: TFPO
     Top = 32
   end
   object Mempo: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdPO
@@ -40968,11 +41002,10 @@ object FPO: TFPO
         'on_code,a.delivery_date,B.supplier_name,--C.nm_divisi,'
       
         ' a.due_date,a."approval_status",a.approval,a.warehouse,a.deliver' +
-        'y2_date,a.id,a.trans_day,a.trans_month,a.trans_year'
+        'y2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code'
       'from purchase.t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'order by A.id desc')
-    Active = True
     Left = 320
     Top = 32
   end

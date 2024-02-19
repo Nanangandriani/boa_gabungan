@@ -63,15 +63,21 @@ begin
              with FNewKontrak_ks do
              begin
                 MemMaterial.Insert;
-                MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
+                MemMaterial['kd_material_supp']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
+                MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_code').AsString;
                 MemMaterial['nm_material']:=QMaterial_stok.FieldByName('item_name').AsString;
                 MemMaterial['nm_supplier']:=QMaterial_stok.FieldByName('supplier_name').AsString;
                 MemMaterial['satuan']:=QMaterial_stok.FieldByName('unit').AsString;
                 MemMaterial['qty']:='0';
                 MemMaterial['harga']:='0';
                 MemMaterial['harga2']:='0';
-                MemMaterial['ppn']:='10';
+                MemMaterial['ppn_rp']:= Qjenis_pajak['percentage'];
+                MemMaterial['pemb_ppn']:='0';
+                MemMaterial['pemb_ppn_us']:='0';
+                MemMaterial['pemb_dpp']:='0';
+                MemMaterial['pph']:='0';
                 MemMaterial.Post;
+
              end;
            end;
         end;
@@ -85,7 +91,8 @@ begin
     with FNewKontrak_ks do
     begin
       MemMaterial.edit;
-      MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
+      MemMaterial['kd_material_supp']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
+      MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_code').AsString;
       MemMaterial['nm_material']:=QMaterial_stok.FieldByName('item_name').AsString;
       MemMaterial['nm_supplier']:=QMaterial_stok.FieldByName('supplier_name').AsString;
       MemMaterial['satuan']:=QMaterial_stok.FieldByName('unit').AsString;

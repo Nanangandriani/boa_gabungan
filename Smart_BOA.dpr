@@ -87,7 +87,11 @@ uses
   Ulist_materialstok in 'Ulist_materialstok.pas' {Flistmaterialstok},
   UReturnPembelian in 'UReturnPembelian.pas' {FReturnPembelian},
   UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
-  USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian};
+  USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian},
+  UEdit_Penomoran in 'UEdit_Penomoran.pas' {FEdit_Penomoran},
+  UUang_Muka_Pembelian in 'UUang_Muka_Pembelian.pas' {FUang_Muka_Pembelian},
+  UInput_um in 'UInput_um.pas' {FNew_UM_Pembelian},
+  UAkun_Perkiraan_UM in 'UAkun_Perkiraan_UM.pas' {FAkun_Perkiraan};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -119,11 +123,15 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Additional, FNew_Additional);
   Application.CreateForm(TFNew_Kategori_Gudang, FNew_Kategori_Gudang);
   Application.CreateForm(TFImportnocek, FImportnocek);
-  Application.CreateForm(TFlistitempo, Flistitempo);
+  Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
+  Application.CreateForm(TFNew_UM_Pembelian, FNew_UM_Pembelian);
+  Application.CreateForm(TFAkun_Perkiraan, FAkun_Perkiraan);
+  //Application.CreateForm(TFlistitempo, Flistitempo);
   Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
+  Application.CreateForm(TFEdit_Penomoran, FEdit_Penomoran);
   //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);

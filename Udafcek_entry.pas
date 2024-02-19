@@ -56,7 +56,7 @@ type
     dxBarButton10: TdxBarButton;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
-    DBGridEh1: TDBGridEh;
+    DBGridCek: TDBGridEh;
     qnocekcode: TIntegerField;
     qnocekcek_no: TStringField;
     qnocekbank: TStringField;
@@ -75,19 +75,31 @@ type
     Label2: TLabel;
     ComboBox1: TComboBox;
     cbbank: TComboBox;
-    DBGridEh2: TDBGridEh;
+    DBGridCek_Det: TDBGridEh;
+    Qnocek_master: TUniQuery;
+    DSnocek_master: TDataSource;
+    qnocektrans_no: TIntegerField;
+    Qnocek_mastertrans_no: TIntegerField;
+    Qnocek_masterfirst_nocek: TStringField;
+    Qnocek_masterlast_nocek: TStringField;
+    Qnocek_masterbank: TStringField;
+    Qnocek_masterrek_no: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure cbbankChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ActRoExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure refresh;
   end;
 
 
-  function FDaf_EntryCek: TFDaf_EntryCek;
+function FDaf_EntryCek: TFDaf_EntryCek;
 
 
 implementation
@@ -99,6 +111,7 @@ uses Uimportnocek, UDataModule;
 
 var
   RealFDaf_EntryCek: TFDaf_EntryCek;
+  Status:integer;
 
 function FDaf_EntryCek: TFDaf_EntryCek;
 begin
@@ -114,6 +127,73 @@ begin
     if not assigned(FImportnocek) then
     FImportnocek:=TFImportnocek.create(application);
     FImportnocek.show;
+end;
+
+procedure TFDaf_EntryCek.ActDelExecute(Sender: TObject);
+begin
+    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridCek.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+    then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:=' Update t_nocek_master set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                ' where trans_no='+QuotedStr(DBGridCek.Fields[0].AsString);
+      parambyname('deleted_at').AsDateTime:=Now;
+      parambyname('deleted_by').AsString:='Admin';
+      Execute;
+    end;
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:=' Update t_nocek set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                ' where trans_no='+QuotedStr(DBGridCek.Fields[0].AsString);
+      parambyname('deleted_at').AsDateTime:=Now;
+      parambyname('deleted_by').AsString:='Admin';
+      Execute;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+    end;
+end;
+
+procedure TFDaf_EntryCek.ActRoExecute(Sender: TObject);
+begin
+    DBGridCek.StartLoadingStatus();
+    DBGridCek.FinishLoadingStatus();
+    Qnocek_master.Close;
+    Qnocek.Close;
+    Qnocek_master.Open;
+    Qnocek.Open;
+end;
+
+procedure TFDaf_EntryCek.ActUpdateExecute(Sender: TObject);
+begin
+    with qnocek do
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' select * from t_nocek where trans_no='+QuotedStr(qnocek['trans_no']);
+        ExecSQL;
+      end;
+    end;
+    with FImportnocek do
+    begin
+      show;
+      Status:=1;
+      caption:='Update No Cek';
+
+      with qnocek_master do
+      begin
+          cbbank.Text:=qnocek_master.FieldByName('bank').AsString;
+          cbrek.Text:=qnocek_master.FieldByName('rek_no').AsString;
+      end;
+
+    end;
+
 end;
 
 procedure TFDaf_EntryCek.cbbankChange(Sender: TObject);
@@ -148,6 +228,7 @@ end;
 
 procedure TFDaf_EntryCek.FormShow(Sender: TObject);
 begin
+    refresh;
     cbbank.Clear;
     with dm.qtemp2 do
     begin
@@ -164,4 +245,26 @@ begin
     end;
 end;
 
+procedure TFDaf_EntryCek.refresh;
+begin
+   with Qnocek_master do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from t_nocek_master where deleted_at is null order by trans_no ASC ';
+       open;
+   end;
+   Qnocek_master.Close;
+   Qnocek_master.open;
+
+   with qnocek do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from t_nocek where deleted_at is null order by trans_no ASC ';
+       open;
+   end;
+   qnocek.Close;
+   qnocek.Open;
+end;
 end.

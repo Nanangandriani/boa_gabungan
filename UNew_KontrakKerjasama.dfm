@@ -1,6 +1,7 @@
 object FNewKontrak_ks: TFNewKontrak_ks
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'New Kontrak Kerjasama'
   ClientHeight = 601
   ClientWidth = 1024
@@ -550,6 +551,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
+      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -900,6 +902,14 @@ object FNewKontrak_ks: TFNewKontrak_ks
         Footers = <>
         Title.Caption = 'Rupiah|Grand Total'
         Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kd_material_supp'
+        Footers = <>
+        Title.Caption = 'Kode Barang Supp'
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -1080,6 +1090,11 @@ object FNewKontrak_ks: TFNewKontrak_ks
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object kd_material_supp: TMTStringDataFieldEh
+          FieldName = 'kd_material_supp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

@@ -403,7 +403,6 @@ object FNew_Penomoran: TFNew_Penomoran
       Width = 209
       Height = 23
       TabOrder = 16
-      OnChange = EdhasilChange
     end
     object Ed_comp: TEdit
       Left = 387

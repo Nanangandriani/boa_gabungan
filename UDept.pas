@@ -82,11 +82,11 @@ uses UNew_Dept, UDataModule;
 
 procedure TFDept.refresh;
 begin
-  with QDept do
+   with QDept do
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_dept where deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from T_dept where deleted_at is null order by created_at ASC ';
        open;
    end;
    QDept.Active:=False;

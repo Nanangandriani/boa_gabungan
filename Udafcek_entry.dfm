@@ -5,7 +5,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
   BorderStyle = bsSingle
   Caption = 'Form List Daftar Cek'
   ClientHeight = 491
-  ClientWidth = 905
+  ClientWidth = 858
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 905
+    Width = 858
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,7 +26,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 899
+    ExplicitWidth = 905
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -36,27 +36,46 @@ object FDaf_EntryCek: TFDaf_EntryCek
       Index = 0
     end
   end
-  object DBGridEh1: TDBGridEh
+  object DBGridCek: TDBGridEh
     Left = 0
     Top = 169
-    Width = 905
+    Width = 858
     Height = 322
     Align = alClient
-    DataSource = DSnocek
+    DataSource = DSnocek_master
     DynProps = <>
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     TabOrder = 1
+    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'cek_no'
+        FieldName = 'trans_no'
         Footers = <>
-        Title.Caption = 'No.Cek'
-        Width = 150
+        Title.Caption = 'No'
+        Width = 50
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'first_nocek'
+        Footers = <>
+        Title.Caption = 'No. Cek / BG|No. Cek / BG Awal'
+        Width = 159
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'last_nocek'
+        Footers = <>
+        Title.Caption = 'No. Cek / BG|No. Cek / BG Akhir'
+        Width = 136
       end
       item
         CellButtons = <>
@@ -65,7 +84,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
         FieldName = 'bank'
         Footers = <>
         Title.Caption = 'Bank'
-        Width = 200
+        Width = 150
       end
       item
         CellButtons = <>
@@ -73,18 +92,20 @@ object FDaf_EntryCek: TFDaf_EntryCek
         EditButtons = <>
         FieldName = 'rek_no'
         Footers = <>
-        Title.Caption = 'No.Rekening'
-        Width = 200
+        Title.Caption = 'No.Rek'
+        Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
-      object DBGridEh2: TDBGridEh
+      object DBGridCek_Det: TDBGridEh
         Left = 0
         Top = 0
-        Width = 532
+        Width = 629
         Height = 118
         Align = alClient
         DataSource = DSnocek
         DynProps = <>
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
         TabOrder = 0
         Columns = <
           item
@@ -93,6 +114,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
             EditButtons = <>
             FieldName = 'cek_no'
             Footers = <>
+            Title.Caption = 'No. Cek/ BG'
           end
           item
             CellButtons = <>
@@ -100,6 +122,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
             EditButtons = <>
             FieldName = 'bank'
             Footers = <>
+            Title.Caption = 'Bank '
             Width = 100
           end
           item
@@ -108,6 +131,16 @@ object FDaf_EntryCek: TFDaf_EntryCek
             EditButtons = <>
             FieldName = 'rek_no'
             Footers = <>
+            Title.Caption = 'No. Rek'
+            Width = 265
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_no'
+            Footers = <>
+            Width = 0
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -117,7 +150,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
   object Panel1: TPanel
     Left = 0
     Top = 127
-    Width = 905
+    Width = 858
     Height = 42
     Align = alTop
     TabOrder = 2
@@ -183,10 +216,22 @@ object FDaf_EntryCek: TFDaf_EntryCek
   object qnocek: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_nocek')
-    Left = 569
-    Top = 48
+      'select * from t_nocek order by  trans_no ASC')
+    MasterSource = DSnocek_master
+    MasterFields = 'trans_no'
+    DetailFields = 'trans_no'
+    Active = True
+    Left = 577
+    Top = 32
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'trans_no'
+        ParamType = ptInput
+        Value = 1
+      end>
     object qnocekcode: TIntegerField
+      AutoGenerateValue = arAutoInc
       FieldName = 'code'
     end
     object qnocekcek_no: TStringField
@@ -235,11 +280,15 @@ object FDaf_EntryCek: TFDaf_EntryCek
       FieldName = 'deleted_by'
       Size = 50
     end
+    object qnocektrans_no: TIntegerField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'trans_no'
+    end
   end
   object DSnocek: TDataSource
     DataSet = qnocek
-    Left = 504
-    Top = 48
+    Left = 576
+    Top = 88
   end
   object ActMenu: TActionManager
     Left = 656
@@ -251,12 +300,15 @@ object FDaf_EntryCek: TFDaf_EntryCek
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '
+      OnExecute = ActRoExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -694,10 +746,8 @@ object FDaf_EntryCek: TFDaf_EntryCek
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarButton8: TdxBarButton
-      Caption = 'Update'
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -734,9 +784,8 @@ object FDaf_EntryCek: TFDaf_EntryCek
         82}
     end
     object dxBarButton9: TdxBarButton
-      Caption = 'Refresh  '
+      Action = ActRo
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -769,10 +818,8 @@ object FDaf_EntryCek: TFDaf_EntryCek
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarButton10: TdxBarButton
-      Caption = 'Delete'
+      Action = ActDel
       Category = 0
-      Hint = 'Delete'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -811,5 +858,38 @@ object FDaf_EntryCek: TFDaf_EntryCek
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+  end
+  object Qnocek_master: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_nocek_master order by trans_no ASC')
+    Active = True
+    Left = 440
+    Top = 24
+    object Qnocek_mastertrans_no: TIntegerField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'trans_no'
+    end
+    object Qnocek_masterfirst_nocek: TStringField
+      FieldName = 'first_nocek'
+      Size = 35
+    end
+    object Qnocek_masterlast_nocek: TStringField
+      FieldName = 'last_nocek'
+      Size = 35
+    end
+    object Qnocek_masterbank: TStringField
+      FieldName = 'bank'
+      Size = 10
+    end
+    object Qnocek_masterrek_no: TStringField
+      FieldName = 'rek_no'
+      Size = 25
+    end
+  end
+  object DSnocek_master: TDataSource
+    DataSet = Qnocek_master
+    Left = 440
+    Top = 80
   end
 end

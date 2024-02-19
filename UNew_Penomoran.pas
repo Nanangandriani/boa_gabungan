@@ -125,7 +125,6 @@ type
     procedure btnplus2Click(Sender: TObject);
     procedure btnplusClick(Sender: TObject);
     procedure Ed_KompChange(Sender: TObject);
-    procedure EdhasilChange(Sender: TObject);
     procedure eddigit_countChange(Sender: TObject);
     procedure CbTipe_transaksiSelect(Sender: TObject);
     procedure CbTipeNoSelect(Sender: TObject);
@@ -935,48 +934,6 @@ begin
     execute;
   end;
 
-    {with uniquery1 do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:=' select * from t_numb_det_tmp '+
-              ' where trans_no='+quotedstr(kd.Text);
-    open;
-  end; }
-  {if uniquery1.RecordCount<>0 then
-  begin
-      CheckBox1.Checked:=True;
-      while not uniquery1.eof do
-      begin
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.add('insert into t_numb_det (trans_no,param_name,urutan,id_param)');
-          sql.add('values(:1,:2,:3,:4)');
-          params.parambyname('1').asstring:=uniquery1.FieldByName('trans_no').AsString;
-          params.parambyname('2').asstring:=uniquery1.FieldByName('param_name').AsString;
-          params.parambyname('3').asinteger:=uniquery1.FieldByName('urutan').AsInteger;
-          params.parambyname('4').asstring:=uniquery1.FieldByName('id_param').AsString;
-          execute;
-        end;
-        dm.Qtemp.next;
-      end;}
-    //DBGridEhNotemp.SelectedRows.SelectAll;
-     {if CheckAll.Checked then
-     begin
-        DBGridItemDimensi.SelectedRows.SelectAll;
-     end
-     else
-        DBGridItemDimensi.SelectedRows.Clear;}
-
-  {with Qnumb_det do
-  begin
-    close;
-    sql.Clear;
-    sql.Add('select * from t_numb_det ');
-    open;
-  end;}
 end;
 
 procedure TFNew_Penomoran.BCancelClick(Sender: TObject);
@@ -1072,85 +1029,6 @@ begin
     if eddigit_count.Text='5' then
       Ed_comp.text :='00000'
 
-    {i:=strtoint(eddigit_count.Text);
-    if eddigit_count.Text='' then
-    begin
-       eddigit_count.Text:='0';
-    end;
-
-    if i=0 then
-    begin
-       Ed_comp.text:= '';
-    end
-    else
-    if i=1 then
-      begin
-        Ed_comp.text:= '0';
-        kdkonter.Text:='1';
-      end
-    else
-    if i=2  then
-      begin
-        Ed_comp.text:='00';
-        kdkonter.text:='2';
-      end
-    else
-    if i=3 then
-      begin
-        Ed_comp.text :='000';
-        kdkonter.text:='3';
-      end
-    else
-    if i=4 then
-      begin
-        Ed_comp.text :='0000';
-        kdkonter.text:='4';
-      end
-    else
-    if i=5 then
-      Ed_comp.text :='00000' }
-
-
-
-end;
-
-procedure TFNew_Penomoran.EdhasilChange(Sender: TObject);
-begin
-     {with dm.Qtemp do
-     begin
-          close;
-          sql.Clear;
-          sql.text:='SELECT a.*,b.description,b.note, '+
-                    'case when b.id=1 then(SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DateTimePicker1.Date))+' :: DATE, ''yyyy'') tahun) '+
-                    'when b.id=2 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DateTimePicker1.Date))+' :: DATE, ''yy'') tahun) '+
-                    'when b.id=3 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DateTimePicker1.Date))+' :: DATE, ''mm'') bulan) '+
-                    'when b.id=4 then (SELECT trim(TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DateTimePicker1.Date))+' :: DATE, ''RM'')) bulan) '+
-                    'when b.id=5 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DateTimePicker1.Date))+' :: DATE, ''dd'') hari)  '+
-                    'else a.param_name end param, '+
-                    'c.trans_type,d.note as reset FROM t_numb_det a '+
-                    'left join t_numb_component b on a.id_param=b.id '+
-                    'inner join t_numb c on a.trans_no=c.trans_no    '+
-                    'left join t_numb_type d on c.reset_type=d.id    '+
-                    'where c.trans_type='+Quotedstr(CbTipe_transaksi.Text)+'     '+
-                    'ORDER BY a.trans_no,a.urutan';
-          Open;
-     end;
-     notif:='';
-     dm.qtemp.First;
-     while not dm.qtemp.eof do
-     begin
-          if dm.qtemp.FieldByName('id_param').Asinteger<>6 then
-          begin
-            notif:=notif+dm.qtemp.FieldByName('param').AsString;
-          end;
-
-          if dm.qtemp.FieldByName('id_param').Asinteger=6 then
-          begin
-
-          end;
-       dm.qtemp.next;
-     end;
-     labelhasil.caption:=notif;}
 
 end;
 

@@ -11,6 +11,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -51,6 +52,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
+    RowDetailPanel.Height = 150
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True
@@ -198,11 +200,13 @@ object FKontrakkerjasama: TFKontrakkerjasama
         Left = 0
         Top = 0
         Width = 789
-        Height = 118
+        Height = 148
         Align = alClient
         DataSource = DsKerjasama_det
         DynProps = <>
+        FooterRowCount = 1
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+        SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
@@ -302,7 +306,9 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'total_price'
+            FieldName = 'subtotal_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Sub Total Harga'
             Width = 100
@@ -322,6 +328,8 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'PPN|Nominal'
             Width = 84
@@ -332,6 +340,8 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DynProps = <>
             EditButtons = <>
             FieldName = 'grandtotal'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Grand Total Harga'
             Width = 123

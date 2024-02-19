@@ -89,7 +89,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from t_position where deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from t_position where deleted_at is null order by created_at ASC ';
        open;
    end;
    QJab.Active:=False;

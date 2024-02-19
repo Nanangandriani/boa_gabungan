@@ -4,7 +4,7 @@ object Flistmaterialstok: TFlistmaterialstok
   BorderIcons = [biSystemMenu]
   Caption = 'List Material'
   ClientHeight = 344
-  ClientWidth = 518
+  ClientWidth = 516
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,9 +15,9 @@ object Flistmaterialstok: TFlistmaterialstok
   TextHeight = 15
   object DBGridMaterial: TDBGridEh
     Left = 0
-    Top = 0
-    Width = 518
-    Height = 312
+    Top = 303
+    Width = 516
+    Height = 9
     Align = alClient
     DataSource = DsMaterial_stok
     DynProps = <>
@@ -69,14 +69,14 @@ object Flistmaterialstok: TFlistmaterialstok
   object Panel1: TPanel
     Left = 0
     Top = 312
-    Width = 518
+    Width = 516
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 303
-    ExplicitWidth = 512
+    ExplicitWidth = 510
     object BBatal: TRzBitBtn
-      Left = 442
+      Left = 440
       Top = 1
       Height = 30
       Align = alRight
@@ -135,10 +135,10 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 436
+      ExplicitLeft = 434
     end
     object BEdit: TRzBitBtn
-      Left = 367
+      Left = 365
       Top = 1
       Height = 30
       Align = alRight
@@ -197,15 +197,15 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 361
+      ExplicitLeft = 359
     end
   end
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 518
-    Height = 312
-    Align = alClient
+    Width = 516
+    Height = 303
+    Align = alTop
     DataSource = DsMaterial_stok
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
@@ -214,6 +214,7 @@ object Flistmaterialstok: TFlistmaterialstok
     SearchPanel.Enabled = True
     SearchPanel.FilterEnabled = False
     TabOrder = 2
+    Visible = False
     OnDblClick = DBGridEh1DblClick
     Columns = <
       item
@@ -266,7 +267,7 @@ object Flistmaterialstok: TFlistmaterialstok
       'select '
       
         'a.item_name,b.supplier_code,b.supplier_name,a.item_code,a.item_s' +
-        'tock_code,a.order_no,a.kd_urut, a.qty,a.unit,a.merk,'
+        'tock_code,a.order_no, a.qty,a.unit,a.merk,'
       'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,'
       'e.category,f."type",g.group_name  '
       ''
@@ -281,8 +282,8 @@ object Flistmaterialstok: TFlistmaterialstok
       ''
       
         'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stoc' +
-        'k_code,a.order_no, a.kd_urut,a.qty,a.unit,a.merk,a.item_name,d.u' +
-        'nit,d.qty_unit,d.qty_conv,'
+        'k_code,a.order_no,a.qty,a.unit,a.merk,a.item_name,d.unit,d.qty_u' +
+        'nit,d.qty_conv,'
       'd.unit_conv,a.item_name,e.category,g.group_name,f."type"  '
       'order by item_stock_code Desc')
     Left = 236
