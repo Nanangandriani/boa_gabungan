@@ -58,10 +58,10 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 461
-    ExplicitWidth = 1051
+    ExplicitTop = 459
+    ExplicitWidth = 1043
     object BBatal: TRzBitBtn
-      Left = 975
+      Left = 971
       Top = 1
       Height = 30
       Align = alRight
@@ -120,9 +120,10 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 967
     end
     object BSimpan: TRzBitBtn
-      Left = 900
+      Left = 896
       Top = 1
       Height = 30
       Align = alRight
@@ -181,6 +182,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 892
     end
   end
   object EdNm: TRzComboBox

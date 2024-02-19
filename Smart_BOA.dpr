@@ -89,7 +89,13 @@ uses
   UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
   USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian},
   UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
-  UNew_HakAkses in 'UNew_HakAkses.pas' {FNew_Hak_Akses};
+  UNew_HakAkses in 'UNew_HakAkses.pas' {FNew_Hak_Akses},
+  UPeng_stok in 'UPeng_stok.pas' {FPeng_Stok},
+  UNew_PengStok in 'UNew_PengStok.pas' {FNew_PengStok},
+  UCari_Barang2 in 'UCari_Barang2.pas' {FSearch_Barang},
+  maenangka in 'maenangka.pas',
+  UMaster_Menu in 'UMaster_Menu.pas' {FMaster_Menu},
+  UMaster_PercBarang in 'UMaster_PercBarang.pas' {FMaster_PercBarang};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -127,6 +133,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
   Application.CreateForm(TFHak_Akses, FHak_Akses);
+  Application.CreateForm(TFMaster_Menu, FMaster_Menu);
+  Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);

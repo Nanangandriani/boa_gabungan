@@ -80,7 +80,7 @@ begin
     Autonumber;
     Show;
     Load;
-    RefreshMenu;
+  //  RefreshMenu;
     status:=0;
     Caption:='New Hak Akses';
   end;

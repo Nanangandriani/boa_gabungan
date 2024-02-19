@@ -126,7 +126,9 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from warehouse.t_item_transfer order by trans_no desc';
+      sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code '+
+      ' INNER JOIN t_wh c on a.wh_code_to=c.code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code order by trans_no desc';
       ExecSQL;
     end;
     QTransfer.Active:=True;
@@ -141,7 +143,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from warehouse.t_item_transfer where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
+      sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code '+
+      ' INNER JOIN t_wh c on a.wh_code_to=c.code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code '+
+      ' where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
       ExecSQL;
     end;
     QTransfer.Active:=True;
@@ -154,7 +159,7 @@ end;
 
 procedure TFTransfer_Barang.ActUpdateExecute(Sender: TObject);
 begin
- with FNew_TransferBarang do
+  with FNew_TransferBarang do
   begin
     Show;
     Clear;
@@ -163,9 +168,12 @@ begin
     Edno.Text:=MemTransfer['trans_no'];
     DtTransfer.Date:=MemTransfer['trans_date'];
     EdKet.Text:=MemTransfer['note'];
-    CbDari.Text:=MemTransfer['wh_code_from'];
-    CbKe.Text:=MemTransfer['wh_code_to'];
+    CbDari.Text:=MemTransfer['nm_from'];
+    CbKe.Text:=MemTransfer['nm_to'];
     CbKategori.Text:=MemTransfer['category'];
+    kd_gdngdari:=MemTransfer['wh_code_from'];
+    kd_gdngke:=MemTransfer['wh_code_to'];
+    kd_ct:=MemTransfer['wh_category_code'];
   end;
   Qdetail.First;
   while not Qdetail.eof do
@@ -176,6 +184,7 @@ begin
       begin
         Memdetail.Insert;
         Memdetail['kd_material']:=Qdetail['item_stock_code'];
+        Memdetail['kd_material1']:=Qdetail['item_code'];
         Memdetail['kd_stok_lama']:=Qdetail['stock_code_old'];
         Memdetail['kd_stok_baru']:=Qdetail['stock_code_new'];
         Memdetail['qty']:=Qdetail['qty'];

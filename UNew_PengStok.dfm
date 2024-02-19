@@ -1,113 +1,195 @@
-object FItem_TransferBarang: TFItem_TransferBarang
+object FNew_PengStok: TFNew_PengStok
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
-  Caption = 'Form Item Transfer Antar Gudang'
-  ClientHeight = 405
-  ClientWidth = 767
+  Caption = 'Form New Penggabungan Stok'
+  ClientHeight = 434
+  ClientWidth = 617
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Position = poMainFormCenter
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 13
-  object DBGridEh1: TDBGridEh
+  object Label1: TLabel
+    Left = 26
+    Top = 10
+    Width = 17
+    Height = 13
+    Caption = 'No.'
+  end
+  object Label2: TLabel
+    Left = 26
+    Top = 36
+    Width = 41
+    Height = 13
+    Caption = 'Tanggal '
+  end
+  object Label3: TLabel
+    Left = 26
+    Top = 90
+    Width = 56
+    Height = 13
+    Caption = 'Keterangan'
+  end
+  object Label4: TLabel
+    Left = 290
+    Top = 10
+    Width = 37
+    Height = 13
+    Caption = 'Gudang'
+  end
+  object Label6: TLabel
+    Left = 97
+    Top = 10
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label7: TLabel
+    Left = 98
+    Top = 37
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label8: TLabel
+    Left = 97
+    Top = 90
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label9: TLabel
+    Left = 361
+    Top = 10
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label11: TLabel
+    Left = 290
+    Top = 38
+    Width = 48
+    Height = 13
+    Caption = 'Kode Stok'
+  end
+  object Label12: TLabel
+    Left = 361
+    Top = 38
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label13: TLabel
+    Left = 26
+    Top = 63
+    Width = 64
+    Height = 13
+    Caption = 'Nama Barang'
+  end
+  object Label14: TLabel
+    Left = 98
+    Top = 63
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object DBGriddetail: TDBGridEh
     Left = 0
-    Top = 0
-    Width = 767
-    Height = 373
-    Align = alClient
-    DataSource = DsBarang
+    Top = 168
+    Width = 617
+    Height = 234
+    Align = alBottom
+    DataSource = DsDetail
     DynProps = <>
-    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    SearchPanel.Enabled = True
+    FooterRowCount = 1
+    SumList.Active = True
     TabOrder = 0
-    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
-        EditButtons = <>
-        FieldName = 'item_code'
+        EditButtons = <
+          item
+            Style = ebsPlusEh
+            OnClick = DBGriddetailColumns0EditButtons0Click
+          end>
+        FieldName = 'kd_material'
         Footers = <>
-        Title.Caption = 'Kode Barang'
-        Width = 126
+        Title.Caption = 'Kode Material'
+        Width = 94
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'item_name'
+        FieldName = 'nm_material'
         Footers = <>
         Title.Caption = 'Nama Barang'
-        Width = 160
+        Width = 168
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'supplier_name'
+        FieldName = 'kd_stok'
         Footers = <>
-        Title.Caption = 'Nama Supplier'
-        Width = 160
+        Title.Caption = 'Kode Stok Lama'
+        Width = 150
       end
       item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'stock_code'
-        Footers = <>
-        Title.Caption = 'Kode Stok'
-        Width = 138
-      end
-      item
+        Alignment = taRightJustify
         CellButtons = <>
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'outstanding'
+        FieldName = 'qty'
+        Footer.Alignment = taRightJustify
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Kuantum'
-        Width = 85
+        Width = 98
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'unit'
+        FieldName = 'satuan'
+        Footer.FieldName = 'satuan'
+        Footer.ValueType = fvtStaticText
         Footers = <>
         Title.Caption = 'Satuan'
-        Width = 57
+        Width = 86
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'wh_code'
+        FieldName = 'no_material'
         Footers = <>
-        Title.Caption = 'Gudang'
-        Width = 150
+        Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 373
-    Width = 767
+    Top = 402
+    Width = 617
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 372
-    ExplicitWidth = 763
+    ExplicitTop = 401
+    ExplicitWidth = 613
     object BBatal: TRzBitBtn
-      Left = 691
+      Left = 541
       Top = 1
       Height = 30
       Align = alRight
@@ -166,19 +248,19 @@ object FItem_TransferBarang: TFItem_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 687
+      ExplicitLeft = 537
     end
     object BSimpan: TRzBitBtn
-      Left = 616
+      Left = 466
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'OK'
+      Caption = 'Simpan'
       TabOrder = 1
       OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000630B0000630B00000001000000000000000000003300
+        08000000000000020000730E0000730E00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -211,41 +293,163 @@ object FItem_TransferBarang: TFItem_TransferBarang
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
-        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
-        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
-        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
-        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
-        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
-        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
-        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
-        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
-        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
+        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
+        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
+        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
+        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
+        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
+        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 612
+      ExplicitLeft = 462
+    end
+    object BitBtn1: TBitBtn
+      Left = 288
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn1'
+      TabOrder = 2
+      Visible = False
+      OnClick = BitBtn1Click
     end
   end
-  object Qbarang: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a' +
-        ' inner join warehouse.t_item_stock b on a.item_stock_code=b.item' +
-        '_stock_code'
-      'inner join t_supplier c on b.supplier_code=c.supplier_code')
-    Active = True
-    Left = 240
-    Top = 104
+  object Edno: TRzEdit
+    Left = 112
+    Top = 7
+    Width = 163
+    Height = 21
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 2
   end
-  object DsBarang: TDataSource
-    DataSet = Qbarang
-    Left = 240
-    Top = 168
+  object DtTransfer: TRzDateTimeEdit
+    Left = 112
+    Top = 33
+    Width = 114
+    Height = 21
+    EditType = etDate
+    TabOrder = 3
+  end
+  object EdKet: TMemo
+    Left = 112
+    Top = 87
+    Width = 428
+    Height = 74
+    Lines.Strings = (
+      '')
+    TabOrder = 4
+  end
+  object CbGudang: TRzComboBox
+    Left = 371
+    Top = 6
+    Width = 169
+    Height = 21
+    TabOrder = 5
+    OnSelect = CbGudangSelect
+  end
+  object Edkd_stok: TEdit
+    Left = 371
+    Top = 33
+    Width = 169
+    Height = 21
+    TabOrder = 6
+  end
+  object Edkd_Barang: TRzEdit
+    Left = 112
+    Top = 60
+    Width = 93
+    Height = 21
+    Text = ''
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 7
+    OnChange = Edkd_BarangChange
+  end
+  object EdNm_Barang: TRzButtonEdit
+    Left = 211
+    Top = 60
+    Width = 230
+    Height = 21
+    Text = ''
+    CharCase = ecUpperCase
+    TabOrder = 8
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = EdNm_BarangButtonClick
+  end
+  object edkdbr: TRzEdit
+    Left = 447
+    Top = 60
+    Width = 93
+    Height = 21
+    Text = ''
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 9
+  end
+  object Memdetail: TMemTableEh
+    Params = <>
+    Left = 57
+    Top = 121
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object kd_material: TMTStringDataFieldEh
+          FieldName = 'kd_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object kd_stok: TMTStringDataFieldEh
+          FieldName = 'kd_stok'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object qty: TMTNumericDataFieldEh
+          FieldName = 'qty'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 30
+          currency = False
+          Precision = 30
+        end
+        object satuan: TMTStringDataFieldEh
+          FieldName = 'satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 30
+          Size = 30
+        end
+        object no_material: TMTStringDataFieldEh
+          FieldName = 'no_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_material: TMTStringDataFieldEh
+          FieldName = 'nm_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DsDetail: TDataSource
+    DataSet = Memdetail
+    Left = 9
+    Top = 118
   end
 end

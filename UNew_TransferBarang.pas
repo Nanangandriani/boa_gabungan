@@ -67,7 +67,7 @@ type
 Function  FNew_TransferBarang: TFNew_TransferBarang;
 var
   status:integer;
-  kd_gdngdari,kd_gdngke,nourut,text1,kd_add:string;
+  kd_ct,kd_gdngdari,kd_gdngke,nourut,text1,kd_add:string;
 
 implementation
 
@@ -284,6 +284,14 @@ end;
 procedure TFNew_TransferBarang.CbKategoriSelect(Sender: TObject);
 begin
   Load;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select category_code from t_wh_category where category='+QuotedStr(CbKategori.Text);
+    Execute;
+  end;
+   kd_ct:=dm.Qtemp['category_code'];
 end;
 
 procedure TFNew_TransferBarang.CbKeSelect(Sender: TObject);
@@ -365,11 +373,11 @@ begin
                 ' values(:parkt,:partgl_transfer,:parno_transfer,:parDari,:parKe,:parket,:partahun,:parkd_sbu,:parpic,:parbln,:partglno,:parnourut)';
                 ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
                 ParamByName('parno_transfer').Value:=Edno.Text;
-                ParamByName('pardari').Value:=CbDari.Text;
-                ParamByName('parke').Value:=CbKe.Text;
+                ParamByName('pardari').Value:=kd_gdngdari;
+                ParamByName('parke').Value:=kd_gdngke;
                 ParamByName('parket').Value:=EdKet.Text;
                 ParamByName('partahun').Value:=Vthn;
-                ParamByName('parkt').Value:=CbKategori.Text;
+                ParamByName('parkt').Value:=kd_ct;
                 ParamByName('parkd_sbu').Value:=loksbu;
                 ParamByName('parpic').Value:=Nm;
                 ParamByName('parbln').Value:=Vbln;
@@ -408,17 +416,17 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:=' Update warehouse.t_item_transfer set tgl_transfer=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
+    sql.Text:=' Update warehouse.t_item_transfer set trans_date=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
               ' wh_code_from=:pardari,wh_code_to=:parke,note=:parket,wh_category_code=:parkt,kd_sbu=:parkd_sbu where trans_no=:parno_transfer ';
               ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
               ParamByName('parno_transfer').Value:=Edno.Text;
-              ParamByName('pardari').Value:=CbDari.Text;
-              ParamByName('parke').Value:=CbKe.Text;
+              ParamByName('pardari').Value:=kd_gdngdari;
+              ParamByName('parke').Value:=kd_gdngke;
               ParamByName('parket').Value:=EdKet.Text;
-              ParamByName('parkt').Value:=CbKategori.Text;
+              ParamByName('parkt').Value:=kd_ct;
               ParamByName('parkd_sbu').Value:=loksbu;
               ParamByName('parpic').Value:=nm;
-              ParamByName('partglup').Value:=now();
+              ParamByName('partglup').Value:=FormatDateTime('yyyy-mm-dd',now());
     ExecSQL;
   end;
   with dm.Qtemp do

@@ -38,7 +38,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_TransferBarang, UMainmenu, UDataModule;
+uses UNew_TransferBarang, UMainmenu, UDataModule, UNew_PengStok;
 var
   realFItem_TransferBarang: TFItem_TransferBarang;
 // implementasi function
@@ -132,20 +132,37 @@ begin
       for i := 0 to DBGridEh1.SelectedRows.Count-1 do
       begin
         //GotoBookmark(Pointer(DBGridEh1.SelectedRows.Items[i]));
-        with FNew_TransferBarang do
-        begin
-          Memdetail.Insert;
-          Memdetail['kd_material1']:=Qbarang.FieldByName('item_code').AsString;
-          Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
-          Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
-          Memdetail['kd_stok_lama']:=Qbarang.FieldByName('stock_code').AsString;
-          Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
-          Memdetail['qty']:=Qbarang.FieldByName('qty').AsString;
-        //  Memdetail['no_material']:=Qbarang.FieldByName('no_material').AsString;
-          Memdetail['kd_stok_baru']:=Qbarang.FieldByName('item_stock_code').AsString+kd_gdngke;
-         // Memdetail['ppn']:='10';
-          Memdetail.Post;
-        end;
+        if statustr='ps' then
+          begin
+            with FNew_PengStok do
+            begin
+              Memdetail.Insert;
+              Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
+              Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
+              Memdetail['kd_stok']:=Qbarang.FieldByName('stock_code').AsString;
+              Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
+              Memdetail['qty']:=Qbarang.FieldByName('outstanding').AsString;
+            //  Memdetail['no_material']:=Qbarang.FieldByName('item_no').AsString;
+              Memdetail.Post;
+            end;
+          end;
+       if statustr='tr' then
+          begin
+            with FNew_TransferBarang do
+            begin
+              Memdetail.Insert;
+              Memdetail['kd_material1']:=Qbarang.FieldByName('item_code').AsString;
+              Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
+              Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
+              Memdetail['kd_stok_lama']:=Qbarang.FieldByName('stock_code').AsString;
+              Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
+              Memdetail['qty']:=Qbarang.FieldByName('qty').AsString;
+            //  Memdetail['no_material']:=Qbarang.FieldByName('no_material').AsString;
+              Memdetail['kd_stok_baru']:=Qbarang.FieldByName('item_stock_code').AsString+kd_gdngke;
+             // Memdetail['ppn']:='10';
+              Memdetail.Post;
+            end;
+          end;
       end;
     end;
   end;
@@ -191,12 +208,12 @@ begin
   with FNew_TransferBarang do
   begin
     Memdetail.Insert;
-    Memdetail['kd_material']:=Qbarang.FieldByName('kd_material_stok').AsString;
-    Memdetail['nm_material']:=Qbarang.FieldByName('nm_material').AsString;
-    Memdetail['kd_stok_lama']:=Qbarang.FieldByName('kd_stok').AsString;
-    Memdetail['satuan']:=Qbarang.FieldByName('satuan').AsString;
+    Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
+    Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
+    Memdetail['kd_stok_lama']:=Qbarang.FieldByName('stock_code').AsString;
+    Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
     Memdetail['qty']:=Qbarang.FieldByName('qty').AsString;
-    Memdetail['no_material']:=Qbarang.FieldByName('no_material').AsString;
+    Memdetail['no_material']:=Qbarang.FieldByName('item_no').AsString;
   //  Memdetail['kd_stok_baru']:=autonumber;
    // Memdetail['ppn']:='10';
     Memdetail.Post;
@@ -231,7 +248,7 @@ begin
       Memdetail['kd_stok_baru']:=Memdetail['kd_material'];
       Memdetail.Post;
     end else  }
-    Self.Autonumber;
+   // Self.Autonumber;
     Memdetail.Next;
     end;
   end;

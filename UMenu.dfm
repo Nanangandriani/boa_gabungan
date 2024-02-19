@@ -1,32 +1,81 @@
-object FTransfer_Barang: TFTransfer_Barang
+object FMenu: TFMenu
   Left = 0
   Top = 0
-  Caption = 'Form Transfer Antar Gudang'
-  ClientHeight = 499
-  ClientWidth = 1024
+  Caption = ' Form Menu'
+  ClientHeight = 558
+  ClientWidth = 689
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
+  object DBGridMenu: TDBGridEh
+    Left = 0
+    Top = 127
+    Width = 689
+    Height = 431
+    Align = alClient
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_0_menu'
+      end>
+    DataSource = DsMenu
+    DynProps = <>
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    SearchPanel.Enabled = True
+    TabOrder = 0
+    TitleParams.MultiTitle = True
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'menu'
+        Footers = <>
+        Title.Caption = 'Nama Group'
+        Width = 97
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'submenu_code'
+        Footers = <>
+        Title.Caption = 'No. Menu'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'submenu'
+        Footers = <>
+        Title.Caption = 'Menu'
+        Width = 441
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1024
+    Width = 689
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 0
+    TabOrder = 1
     TabStop = False
+    ExplicitWidth = 693
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -35,187 +84,8 @@ object FTransfer_Barang: TFTransfer_Barang
           ToolbarName = 'dxBarManager1Bar1'
         end
         item
-        end
-        item
-          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
-    end
-  end
-  object DBGridTransfer: TDBGridEh
-    Left = 0
-    Top = 127
-    Width = 1024
-    Height = 372
-    Align = alClient
-    DataGrouping.Active = True
-    DataGrouping.GroupLevels = <
-      item
-        ColumnName = 'Column_5_thn'
-      end
-      item
-        ColumnName = 'Column_6_bln'
-      end
-      item
-        ColumnName = 'Column_7_tgl'
-      end>
-    DataSource = DsTransfer
-    DynProps = <>
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    RowDetailPanel.Active = True
-    SearchPanel.Enabled = True
-    TabOrder = 1
-    TitleParams.MultiTitle = True
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_no'
-        Footers = <>
-        Title.Caption = 'No. Transfer'
-        Width = 143
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_date'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_from'
-        Footers = <>
-        Title.Caption = 'Gudang|Dari'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_to'
-        Footers = <>
-        Title.Caption = 'Gudang|Ke'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'note'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 260
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'thn'
-        Footers = <>
-        Title.Caption = 'Tahun'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bln'
-        Footers = <>
-        Title.Caption = 'Bulan'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tgl'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Visible = False
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-      object DBGridEh1: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 887
-        Height = 118
-        Align = alClient
-        DataSource = DsDetail
-        DynProps = <>
-        TabOrder = 0
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_no'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_stock_code'
-            Footers = <>
-            Title.Caption = 'Kode Material'
-            Width = 96
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_name'
-            Footers = <>
-            Title.Caption = 'Nama Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'stock_code_old'
-            Footers = <>
-            Title.Caption = 'Kode Stok Lama'
-            Width = 170
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'stock_code_new'
-            Footers = <>
-            Title.Caption = 'Kode Stok Baru'
-            Width = 180
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Kuantum'
-            Width = 73
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit'
-            Footers = <>
-            Title.Caption = 'Satuan'
-            Width = 100
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
     end
   end
   object dxBarManager1: TdxBarManager
@@ -233,7 +103,7 @@ object FTransfer_Barang: TFTransfer_Barang
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 368
-    Top = 80
+    Top = 40
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -261,27 +131,7 @@ object FTransfer_Barang: TFTransfer_Barang
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = True
-      WholeRow = False
-    end
-    object dxBarManager1Bar2: TdxBar
-      Caption = 'Report'
-      CaptionButtons = <>
-      DockedLeft = 125
-      DockedTop = 0
-      FloatLeft = 898
-      FloatTop = 8
-      FloatClientWidth = 0
-      FloatClientHeight = 0
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton1'
-        end>
-      OneOnRow = False
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -328,66 +178,6 @@ object FTransfer_Barang: TFTransfer_Barang
     object dxBarBaru: TdxBarLargeButton
       Action = ActBaru
       Category = 0
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
-        F40000002C744558745469746C65004164643B4974656D3B4164644974656D3B
-        426172733B526962626F6E3B4974656D3B506C75734E32EF81000006C5494441
-        54785EC5977D8C156715C67F67E6EE2E1F5BF9E8F24DA17C7581A51B0256B450
-        124861050D04A3698AE2071A9BB4C6D694A405AABBA5D5261A4D89696A6825AD
-        B686B67FF847AD464B23AD0183144DC1AA8545285FBD65E9B2DFF763E63DC7DB
-        B9F7CD6CBA1756FFF29D9C9CF7CE4CEEF3E439CF9C33236686885059522D578D
-        EAD70CD0245F6399A597331F0190DDCF1CDC4F20ABC4C000D410044B0E1028EF
-        0CCCC084F206E8E9EA7DA4EDFEF5BB3C895DBBF71BA618D07ADFDA61D90810EE
-        7EF6900DB70A85C8FA060AD6D53D60EF5FEEB133E73AEDC8B1F3F6DAC193F6E0
-        63BF7E04A8010240FE71229B62A4983E862A601800B11AA84100A60280BFE614
-        CC4011D424B9F7C0E153DCFFF595F4E7A287EE6B7B491E6FFBC22E205E78D364
-        CC33181A43088033004C7D06F05A83014118008A95B20B0204A5508C005875EB
-        3C9CEACEFCF6E7E4678F7D2921212257F545304401AB009B80011E1F4BF7A604
-        41500A9050508442AE08401806DCBEA2B11437EFD8FA9DBDAD83CBF15F11508F
-        598134A59CAD1228000A090911408D5CA14C2013089930A06555136B572DDEFE
-        C5BB9FFCDE5012D54B2080982A00DEBD46596E4889F8A5188108865032262290
-        09852010C2D0D8D8D28CBA787B54DCCD8B4FDFDBE6FFE29A1EF000A9FA0A1680
-        F9320A8A672249D4D4858CB96E04773DF82B54D347148C75AB17D138FFA6EDC0
-        A3801BCE84A22983942A8A7A23E2814155094261D4885ABE7AC772FA06F2148B
-        112E36A258899D23230264014280E10978F7FB3A9B915AD893330C1001106A33
-        6505AE1B5D87734A1C39A20F73EC929238A778B9185E01F5E060E6354B5519AC
-        00026A88406D4D889A6116E26A436A9DE2624D08289E000C6F42E76B688094B3
-        571E3015F0347C5510CC925C366210608021D464048D199E800F5F02D2470E73
-        FED460265EA54A045E630331EA02C109D48442C3F8919E003B9F3FC6779F3F8E
-        89F0E8E645D53CA00024299014C5D2668C8FCA240D02E3726F9E6367BA3993ED
-        A773202610183B32E4C649A39833ABC1AB2D5FDED808407D4DE66A9DD05BCE30
-        3548EA0A8A619612C1774C537E7FF4224FEF3F4B8F13E6CF9FC0C6DB67B3A114
-        0B164CA2D732FCAD03BED2FAC216A0B6B1BE4E42110A4EAB1350054871141260
-        ADEC15C3A92F84F2CB3F9EE67C4FC49DEBE7D1BC7022E31AEAC959404E83D27E
-        34372F98C0A6357359B4B8F9C777EF7EFD85E98D4B47CF1D5D2B573561ECD483
-        E3D2B637A4378818AF1CBE40D184961533B9D81DA106FB5E3AC499772F0370E3
-        CC096CBEE3563202EB57CFE1D53782CFB46CFD41DBCF1F68D99109A458B50F78
-        995D0A3678831949ABEDB832C0919357D8B2A9897FBD97234C869324E03FFCC6
-        A792FDB63D87284446CE94AED23DB72D9BC1D9F3DDDF5EF7CD9FFC62C688CCDF
-        CD4CAB94C05BDE7CC2FC91EC054C39F05696E6B9D773AAA340AE60E48A8E42AC
-        00CC98369EC54D3300C817B514560AC7894BF9D2F989351F9B34EB6B40A6BA02
-        AA406A7E86CC060333DA2FF4F2895B1AB8D41773E0B5A3BCFF5E277E29920002
-        3CF1C46F00983C653CABD72EA561CC68241CB906D809148778C0392BE37A05D2
-        C193BE13A27474152861D39B8B12F01FDDB59C4024298521C44ED9B36D0D5114
-        539309B9E7A7AFD33BE0C810E234980A84D79C051E17F0E0A096641523978FB8
-        3250247202C0F429D727B3A0BF101348793E4C9B3CD68F704484C8299D7DC9AC
-        18D209252DC1A0DA6BFA16ACA90F112469327D7D053453C7D46913D8F2FDDF56
-        5E50846776AC43CDF87CEBCB84618804C20D332711C71F122F921BC89D05AC5A
-        1FC099626698FADF86A260E5304031E64C19C5E56C3786B17859131B3EB7920D
-        9B6EA3902F902FC40901173BD67FF6937C7ADD321636CF21564757470FFDDD1F
-        BC0AC455FB807F08D4069722C03332140858B5640AADCF1E67C9A4F174478E9E
-        A4250340FDC80C4E0D11E1524F11D50AF15839F5CEC5387BEA2FCF01D1470918
-        A06A0E03C6D6D7F8FAA5FE4F3B31B3A78F63C582B1BCF9D7D32C583A9BA23344
-        8D0925429B77BD9280374C1C47143B14408DF66367C99E3BFDE4C93F3D7512D0
-        6A04A2623EF7C6B776EC5B6996763E43C104C39F301AC6D73367E618C2FE2EDE
-        3ADCCEC225B3B04068BEA52919C12610474A4FDEA1B1A3FDF8592E9CF8F7EF8E
-        EEBBA715C86723334FC0832B90DFFBF8D60D401D100EF38D284098A9ADAF6F6C
-        697BE083EC953B6F9837353371EA3846D4D76140AEBF40C7852B9C6BBF90EB7C
-        F7ED87DFF9C3C37B809E12B8025455007040CE830E1771B12F78FBE56DF74EFF
-        F8D6A73AB34D9B6B478E594E104E01D45C9C2DE6BA0E769F3BB2377BECC57F02
-        390F5E9D401A8EFF6D15CEBFB9F7CFC0D1F41B000005A24AC45EF621C3E7FFB9
-        FE034F250E6FBC460FB00000000049454E44AE426082}
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -596,246 +386,37 @@ object FTransfer_Barang: TFTransfer_Barang
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'Print'
-      Category = 0
-      Hint = 'Print'
-      Visible = ivAlways
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
-        0D00000009704859730000136100001361011D7D0BC7000000206348524D0000
-        7A25000080830000F9FF000080E9000075300000EA6000003A980000176F925F
-        C546000002714944415478DAAC954B6B135118869F4C2E93C9A526B5A9859A58
-        17C54A69158A0B410C0A522878011771E3425C168508823F4077621645BA7617
-        150DA5EEC44217A2225E162A54A8B669D56A6DA6493399C9E4725C242D4D3A29
-        2A3DCB737978BFF3BDE73D3621043B39247678D8AC26E369F52870013809F400
-        3E200FCC015340321109BE683E27846804C6D36A3F701788FE85986960341109
-        7EB404C6D3EA69E03EA0FC43853A104B4482930DC0785A8D024F01E77F5C5B09
-        38958804A78510D8E26955016680F0E65DC7FD328A542B40D60B388B06AA6E30
-        E569B7822E0007EE8403BA045C6E8601447D32C36D6E86DBDCF4568AF85633B8
-        17E71959FA8285D1C2750E12106BD09F55F9F63849B9A06D39150A85E8F2283C
-        BF7E85ECD7D9E6E5D83A7068F3ECD293148BC97B542C80F556927BFB8A77B76F
-        A197CA9B5786001CCD5DAD964A003C4826F1F9FD0078BC5EBC5E1F005A3EBFB1
-        EFC3B24ADFEE007ED9C93AC7516FFD16AB4C3C4B41158C8C89A6691886B1456C
-        B92AF8F47B95DEF636DA15595F07BE018E6DBC4567CD39A367FA18E89E07147C
-        42C659360158B1EFE7ECB5D7E070D4940AC1CC4A969E807F010238EA66DE0076
-        8C9CE357054E444D82B99700149605865EB350649F8972F808AED8A506B59A59
-        7A0F58FBB05215F499B3B8A85DFA5E294348CA01B05671726379A001E6B24BE5
-        4EAFB2E7617F77A6E54BA9546BA5648BE6F6E962832EAFE76A6A303C2684A8C5
-        5722129C06CED71B04805DB271B063171D1E77EBECB3D9E8F428375383E131CB
-        F86A953673AB797EE40B0D30AFD3910DB85D171F0D84275BC6D77679F87DAD50
-        FCA9E9B81DF6CFB2DD3E3E7128326E99873BFD05FC1900C3F8EE74769BA80100
-        00000049454E44AE426082}
-      LargeGlyph.SourceDPI = 96
-      LargeGlyph.Data = {
-        89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
-        0D00000009704859730000136100001361011D7D0BC7000000206348524D0000
-        7A25000080830000F9FF000080E9000075300000EA6000003A980000176F925F
-        C546000002714944415478DAAC954B6B135118869F4C2E93C9A526B5A9859A58
-        17C54A69158A0B410C0A522878011771E3425C168508823F4077621645BA7617
-        150DA5EEC44217A2225E162A54A8B669D56A6DA6493399C9E4725C242D4D3A29
-        2A3DCB737978BFF3BDE73D3621043B39247678D8AC26E369F52870013809F400
-        3E200FCC015340321109BE683E27846804C6D36A3F701788FE85986960341109
-        7EB404C6D3EA69E03EA0FC43853A104B4482930DC0785A8D024F01E77F5C5B09
-        38958804A78510D8E26955016680F0E65DC7FD328A542B40D60B388B06AA6E30
-        E569B7822E0007EE8403BA045C6E8601447D32C36D6E86DBDCF4568AF85633B8
-        17E71959FA8285D1C2750E12106BD09F55F9F63849B9A06D39150A85E8F2283C
-        BF7E85ECD7D9E6E5D83A7068F3ECD293148BC97B542C80F556927BFB8A77B76F
-        A197CA9B5786001CCD5DAD964A003C4826F1F9FD0078BC5EBC5E1F005A3EBFB1
-        EFC3B24ADFEE007ED9C93AC7516FFD16AB4C3C4B41158C8C89A6691886B1456C
-        B92AF8F47B95DEF636DA15595F07BE018E6DBC4567CD39A367FA18E89E07147C
-        42C659360158B1EFE7ECB5D7E070D4940AC1CC4A969E807F010238EA66DE0076
-        8C9CE357054E444D82B99700149605865EB350649F8972F808AED8A506B59A59
-        7A0F58FBB05215F499B3B8A85DFA5E294348CA01B05671726379A001E6B24BE5
-        4EAFB2E7617F77A6E54BA9546BA5648BE6F6E962832EAFE76A6A303C2684A8C5
-        5722129C06CED71B04805DB271B063171D1E77EBECB3D9E8F428375383E131CB
-        F86A953673AB797EE40B0D30AFD3910DB85D171F0D84275BC6D77679F87DAD50
-        FCA9E9B81DF6CFB2DD3E3E7128326E99873BFD05FC1900C3F8EE74769BA80100
-        00000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
-    end
   end
-  object QTransfer: TUniQuery
+  object QMenu: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.*,date_part('#39'YEAR'#39',trans_date) thn,date_part('#39'MONTH'#39',tr' +
-        'ans_date) bln,date_part('#39'DAY'#39',trans_date) tgl,b.wh_name nm_from,'
-      
-        'c.wh_name nm_to,d.category,d.category_code from warehouse.t_item' +
-        '_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code INNER JOI' +
-        'N t_wh c on a.wh_code_to=c.code '
-      'INNER JOIN t_wh_category d on a.wh_category_code=d.category_code'
-      'order by trans_no desc')
-    Active = True
-    Left = 448
+        'select b.menu,a.* from t_menu_sub a inner join t_menu b on a.men' +
+        'u_code=b.menu_code'
+      'order by a.menu_code,a.submenu_code Asc')
+    Left = 440
     Top = 24
   end
-  object MemTransfer: TMemTableEh
-    Active = True
+  object MemMenu: TMemTableEh
     FetchAllOnOpen = True
     Params = <>
-    DataDriver = DsdTransfer
-    Left = 448
+    DataDriver = DsdMenu
+    Left = 440
     Top = 81
   end
-  object DsdTransfer: TDataSetDriverEh
-    ProviderDataSet = QTransfer
+  object DsMenu: TDataSource
+    DataSet = MemMenu
+    Left = 544
+    Top = 32
+  end
+  object DsdMenu: TDataSetDriverEh
+    ProviderDataSet = QMenu
     Left = 544
     Top = 80
   end
-  object DsTransfer: TDataSource
-    DataSet = MemTransfer
-    Left = 544
-    Top = 32
-  end
-  object Qdetail: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select A.*,b.item_name,B.order_no,b.item_code from warehouse.t_i' +
-        'tem_transfer_det a inner join warehouse.t_item_stock b on A.item' +
-        '_stock_code=b.item_stock_code')
-    MasterSource = DsTransfer
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Left = 616
-    Top = 32
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = '001/I/24'
-      end>
-  end
-  object DsDetail: TDataSource
-    DataSet = Qdetail
-    Left = 616
-    Top = 88
-  end
-  object Rpt: TfrxReport
-    Version = '2022.2.7'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 44767.691441412040000000
-    ReportOptions.LastChange = 44767.691441412040000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      ''
-      'begin'
-      ''
-      'end.')
-    Left = 520
-    Top = 136
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
-      MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 83.149660000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 147.401670000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[Page#]')
-        end
-      end
-    end
-  end
-  object QRptTransfer: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select A.*,b.item_name,B.order_no,c."from",c."to",c.trans_date,c' +
-        '.note from gudang.t_item_transfer_det a '
-      
-        'inner join gudang.t_item_stock b on A.item_stock_code=b.item_sto' +
-        'ck_code'
-      'inner join gudang.t_item_transfer c on a.trans_no=c.trans_no')
-    DetailFields = 'no_transfer'
-    Left = 368
-    Top = 32
-  end
-  object DbRptTransfer: TfrxDBDataset
-    UserName = 'RptTransfer'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'id=id'
-      'kd_material_stok=kd_material_stok'
-      'kd_stok_lama=kd_stok_lama'
-      'kd_stok_baru=kd_stok_baru'
-      'qty=qty'
-      'satuan=satuan'
-      'no_transfer=no_transfer'
-      'nm_material=nm_material'
-      'no_material=no_material'
-      'Dari=Dari'
-      'Ke=Ke'
-      'tgl_transfer=tgl_transfer'
-      'ket=ket')
-    DataSet = QRptTransfer
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 590
-    Top = 140
-  end
   object ActMenu: TActionManager
-    Left = 264
-    Top = 32
+    Left = 280
+    Top = 40
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -851,17 +432,18 @@ object FTransfer_Barang: TFTransfer_Barang
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
     end
     object ActApp: TAction
-      Caption = 'Approve  '
+      Caption = 'Memberikan Barang'
       Enabled = False
       Visible = False
     end
     object ActReject: TAction
-      Caption = 'Reject  '
+      Caption = 'Terima Barang ...'
       Enabled = False
       Visible = False
     end

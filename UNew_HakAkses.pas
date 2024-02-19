@@ -78,7 +78,7 @@ begin
   begin
     Close;
     sql.Clear;
-    SQL.Text:='select max(no_akses)as no from t_akses';
+    SQL.Text:='select max(akses_no)as no from t_akses';
     ExecSQL;
   end;
   if dm.Qtemp['no'] = null then
@@ -114,15 +114,15 @@ end;
 Procedure TFNew_Hak_Akses.RefreshMenu;
 begin
   with QMenu do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='SELECT * from t_menu WHERE id_menu not in ((SELECT id_menu FROM t_akses '+
-            ' WHERE iddept='+QuotedStr(Edkd.Text)+') ) order by id_menu Asc';
-  ExecSQL;
-end;
-QMenu.Close;
-QMenu.Open;
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_menu WHERE id_menu not in ((SELECT id_menu FROM t_akses '+
+              ' WHERE iddept='+QuotedStr(Edkd.Text)+') ) order by id_menu Asc';
+    ExecSQL;
+  end;
+  QMenu.Close;
+  QMenu.Open;
 end;
 
 procedure TFNew_Hak_Akses.BKurangClick(Sender: TObject);
@@ -217,8 +217,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select A.*,b.nm_menu,c.Dept from t_akses  a inner join t_menu b on '+
-              ' a.id_menu=b.id_menu inner join t_dept c on a.iddept=c.iddept '+
+    sql.Text:=' select A.*,b.nm_menu,c.Dept from t_akses  a inner join t_submenu2 b on '+
+              ' a.menu_code=b.menu_code inner join t_dept c on a.dept_code=c.dept_code '+
               ' where a.iddept='+QuotedStr(Edkd.Text)+''+
               ' order by a.id_menu Asc ';
     ExecSQL;
@@ -236,10 +236,10 @@ begin
     sql.Text:='select * from t_dept where dept='+QuotedStr(EdNm.Text);
     ExecSQL;
   end;
-    Edkd.Text:=Dm.Qtemp['iddept'];
-    no_dept:=Dm.Qtemp['iddept'];
-    EdkdChange(sender);
-    RefreshMenu;
+    Edkd.Text:=Dm.Qtemp['dept_code'];
+    no_dept:=Dm.Qtemp['dept_code'];
+ //   EdkdChange(sender);
+//    RefreshMenu;
 end;
 
 procedure TFNew_Hak_Akses.FormClose(Sender: TObject; var Action: TCloseAction);

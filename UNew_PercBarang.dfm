@@ -1,37 +1,246 @@
-object FNew_Supplier: TFNew_Supplier
+object FNew_PercBarang: TFNew_PercBarang
   Left = 0
   Top = 0
-  Caption = 'New Supplier'
-  ClientHeight = 523
-  ClientWidth = 867
+  BorderStyle = bsSizeToolWin
+  Caption = 'New Permintaan  Barang'
+  ClientHeight = 388
+  ClientWidth = 1020
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
-  Font.Name = 'Segoe UI'
+  Font.Height = -11
+  Font.Name = 'Tahoma'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poOwnerFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  TextHeight = 15
-  object Panel2: TPanel
+  DesignSize = (
+    1020
+    388)
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 21
+    Width = 74
+    Height = 13
+    Caption = 'No. Permintaan'
+  end
+  object Label2: TLabel
+    Left = 16
+    Top = 57
+    Width = 36
+    Height = 13
+    Caption = 'Periode'
+  end
+  object Label3: TLabel
+    Left = 304
+    Top = 20
+    Width = 24
+    Height = 13
+    Caption = 'Jenis'
+  end
+  object Label4: TLabel
+    Left = 112
+    Top = 21
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label5: TLabel
+    Left = 112
+    Top = 57
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label6: TLabel
+    Left = 400
+    Top = 20
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label7: TLabel
+    Left = 304
+    Top = 57
+    Width = 76
+    Height = 13
+    Caption = 'Jumlah Timbang'
+  end
+  object Label8: TLabel
+    Left = 399
+    Top = 57
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 575
+    Top = 19
+    Width = 23
+    Height = 22
+    Caption = '--'
+    OnClick = SpeedButton1Click
+  end
+  object DtPeriode: TRzDateTimeEdit
+    Left = 128
+    Top = 55
+    Width = 135
+    Height = 21
+    EditType = etDate
+    CharCase = ecUpperCase
+    TabOrder = 0
+  end
+  object Edno: TRzEdit
+    Left = 128
+    Top = 19
+    Width = 135
+    Height = 21
+    Text = ''
+    CharCase = ecUpperCase
+    TabOrder = 1
+  end
+  object DBGridEh1: TDBGridEh
+    Left = 8
+    Top = 94
+    Width = 988
+    Height = 257
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    AutoFitColWidths = True
+    DataSource = DsMaterial
+    DynProps = <>
+    HorzScrollBar.ExtraPanel.Visible = True
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    TabOrder = 2
+    TitleParams.MultiTitle = True
+    OnCellClick = DBGridEh1CellClick
+    OnColEnter = DBGridEh1ColEnter
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <
+          item
+            OnClick = DBGridEh1Columns0EditButtons0Click
+          end>
+        FieldName = 'kd_material'
+        Footers = <>
+        Title.Caption = 'Kode Barang'
+        Width = 83
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nm_material'
+        Footers = <>
+        Title.Caption = 'Nama Barang'
+        Width = 160
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <
+          item
+            OnClick = DBGridEh1Columns1EditButtons0Click
+          end>
+        FieldName = 'kd_stok'
+        Footers = <>
+        Title.Caption = 'Kode Stok'
+        Width = 175
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty'
+        Footers = <>
+        Title.Caption = 'Permintaan|Index'
+        Width = 64
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ttl'
+        Footers = <>
+        ReadOnly = True
+        Title.Caption = 'Permintaan|Total'
+        Width = 90
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Total'
+        Footers = <>
+        Title.Caption = 'Permintaan|Total Stok'
+        Width = 90
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'satuan'
+        Footers = <>
+        Title.Caption = 'Permintaan|Satuan'
+        Width = 57
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Timbang'
+        Footers = <>
+        ReadOnly = True
+        Title.Caption = 'Permintaan|Timbang'
+        Width = 90
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'gudang'
+        Footers = <>
+        LookupParams.KeyFieldNames = 'gudang'
+        LookupParams.LookupDataSet = QGudang
+        LookupParams.LookupDisplayFieldName = 'wh_name'
+        LookupParams.LookupKeyFieldNames = 'wh_name'
+        Title.Caption = 'Gudang'
+        Width = 168
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ket'
+        Footers = <>
+        Title.Caption = 'Keterangan'
+        Width = 134
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object Panel1: TPanel
     Left = 0
-    Top = 491
-    Width = 867
+    Top = 356
+    Width = 1020
     Height = 32
     Align = alBottom
-    TabOrder = 0
-    ExplicitTop = 490
-    ExplicitWidth = 863
+    TabOrder = 3
+    ExplicitTop = 344
+    ExplicitWidth = 1012
     object BBatal: TRzBitBtn
-      Left = 791
+      Left = 944
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Batal'
-      TabOrder = 2
+      TabOrder = 0
       OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -85,10 +294,10 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 787
+      ExplicitLeft = 936
     end
     object BSimpan: TRzBitBtn
-      Left = 716
+      Left = 869
       Top = 1
       Height = 30
       Align = alRight
@@ -147,16 +356,15 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 722
-      ExplicitTop = 6
+      ExplicitLeft = 861
     end
     object BEdit: TRzBitBtn
-      Left = 641
+      Left = 794
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Simpan'
-      TabOrder = 0
+      TabOrder = 2
       Visible = False
       OnClick = BEditClick
       Glyph.Data = {
@@ -211,224 +419,75 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 635
-      ExplicitTop = 6
+      ExplicitLeft = 786
     end
   end
-  object Panel1: TPanel
-    Left = 0
-    Top = 0
-    Width = 867
-    Height = 201
-    Align = alTop
-    Color = clGradientInactiveCaption
-    ParentBackground = False
-    TabOrder = 1
-    ExplicitWidth = 863
-    object Label1: TLabel
-      Left = 30
-      Top = 29
-      Width = 73
-      Height = 15
-      Caption = 'Kode Supplier'
-    end
-    object Label2: TLabel
-      Left = 30
-      Top = 57
-      Width = 78
-      Height = 15
-      Caption = 'Nama Supplier'
-    end
-    object Label3: TLabel
-      Left = 30
-      Top = 89
-      Width = 38
-      Height = 15
-      Caption = 'Alamat'
-    end
-    object Label4: TLabel
-      Left = 30
-      Top = 119
-      Width = 21
-      Height = 15
-      Caption = 'Telp'
-    end
-    object Label5: TLabel
-      Left = 30
-      Top = 153
-      Width = 34
-      Height = 15
-      Caption = 'NPWP'
-    end
-    object Label6: TLabel
-      Left = 120
-      Top = 26
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label7: TLabel
-      Left = 120
-      Top = 59
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label8: TLabel
-      Left = 120
-      Top = 89
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label9: TLabel
-      Left = 120
-      Top = 119
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label10: TLabel
-      Left = 120
-      Top = 153
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Edno: TEdit
-      Left = 279
-      Top = 25
-      Width = 132
-      Height = 23
-      TabOrder = 0
-      Visible = False
-    end
-    object EdNm: TEdit
-      Left = 137
-      Top = 54
-      Width = 374
-      Height = 23
-      TabOrder = 1
-    end
-    object EdAlamat: TEdit
-      Left = 137
-      Top = 86
-      Width = 374
-      Height = 23
-      TabOrder = 2
-    end
-    object EdTelp: TEdit
-      Left = 137
-      Top = 118
-      Width = 374
-      Height = 23
-      TabOrder = 3
-    end
-    object EdNPWP: TEdit
-      Left = 137
-      Top = 150
-      Width = 374
-      Height = 23
-      TabOrder = 4
-    end
-    object Edkd: TEdit
-      Left = 137
-      Top = 25
-      Width = 136
-      Height = 23
-      TabOrder = 5
-    end
+  object Edjenis: TRzComboBox
+    Left = 416
+    Top = 19
+    Width = 153
+    Height = 21
+    CharCase = ecUpperCase
+    TabOrder = 4
+    OnChange = EdjenisSelect
+    OnSelect = EdjenisSelect
+    Items.Strings = (
+      'TEPUNG DW'
+      'PARFUM'
+      'PREMIX')
   end
-  object DBGridEh1: TDBGridEh
-    Left = 0
-    Top = 201
-    Width = 867
-    Height = 290
-    Align = alClient
-    AutoFitColWidths = True
-    DataSource = DsMaterial
-    DynProps = <>
-    HorzScrollBar.ExtraPanel.Visible = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-    TabOrder = 2
-    TitleParams.MultiTitle = True
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <
-          item
-            Style = ebsEllipsisEh
-            OnClick = DBGridEh1Columns0EditButtons0Click
-          end>
-        FieldName = 'kd_material'
-        Footers = <>
-        Title.Caption = 'Kode Barang'
-        Width = 102
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <
-          item
-          end>
-        FieldName = 'nm_material'
-        Footers = <>
-        Title.Caption = 'Nama Barang'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '0.00#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'qty'
-        Footers = <>
-        Title.Caption = 'Kuantum'
-        Width = 82
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'satuan'
-        Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 65
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ket'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 173
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kode'
-        Footers = <>
-        Visible = False
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-    end
+  object Edkd_material: TEdit
+    Left = 760
+    Top = 39
+    Width = 106
+    Height = 21
+    TabOrder = 5
+    Text = 'Edkd_material'
+    Visible = False
+  end
+  object EdStatus: TEdit
+    Left = 760
+    Top = 66
+    Width = 106
+    Height = 21
+    TabOrder = 6
+    Text = 'EdStatus'
+    Visible = False
+  end
+  object Edno_urut: TEdit
+    Left = 760
+    Top = 12
+    Width = 121
+    Height = 21
+    TabOrder = 7
+    Text = 'Edno_urut'
+    Visible = False
+  end
+  object EdTimbang: TRzNumericEdit
+    Left = 416
+    Top = 54
+    Width = 153
+    Height = 21
+    TabOrder = 8
+    OnChange = EdtimbangChange
+    DisplayFormat = '#,##'
+  end
+  object Qmaterial1: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select item_code,item_name, b.category from t_item a inner join ' +
+        't_item_category b on a.category_id=b.category_id'
+      'group by item_code,item_name, b.category')
+    Left = 544
+    Top = 200
   end
   object MemMaterial: TMemTableEh
-    Active = True
     Params = <>
-    Left = 552
-    Top = 112
+    Left = 544
+    Top = 248
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
-        object kode: TMTStringDataFieldEh
-          FieldName = 'kode'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
         object nm_material: TMTStringDataFieldEh
           FieldName = 'nm_material'
           StringDataType = fdtStringEh
@@ -437,9 +496,10 @@ object FNew_Supplier: TFNew_Supplier
         end
         object qty: TMTNumericDataFieldEh
           FieldName = 'qty'
-          NumericDataType = fdtCurrencyEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 30
+          DisplayFormat = '0.00#,##'
           currency = False
           Precision = 30
         end
@@ -448,16 +508,67 @@ object FNew_Supplier: TFNew_Supplier
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
+        object gudang: TMTStringDataFieldEh
+          FieldName = 'gudang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
         object ket: TMTStringDataFieldEh
           FieldName = 'ket'
           StringDataType = fdtStringEh
-          DisplayWidth = 200
-          Size = 200
+          DisplayWidth = 20
+        end
+        object kd_stok: TMTStringDataFieldEh
+          FieldName = 'kd_stok'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
         end
         object kd_material: TMTStringDataFieldEh
           FieldName = 'kd_material'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object Timbang: TMTNumericDataFieldEh
+          FieldName = 'Timbang'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 30
+          currency = False
+          Precision = 30
+        end
+        object Total: TMTNumericDataFieldEh
+          FieldName = 'Total'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 25
+          currency = False
+          Precision = 25
+        end
+        object Total_terima: TMTNumericDataFieldEh
+          FieldName = 'Total_terima'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object ttl: TMTNumericDataFieldEh
+          FieldName = 'ttl'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object total_stok: TMTNumericDataFieldEh
+          FieldName = 'total_stok'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
       end
       object RecordsList: TRecordsListEh
@@ -466,7 +577,27 @@ object FNew_Supplier: TFNew_Supplier
   end
   object DsMaterial: TDataSource
     DataSet = MemMaterial
-    Left = 548
+    Left = 600
+    Top = 200
+  end
+  object QMaster: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select A.*,B.item_name from warehouse.t_mixing_master A'
+      ' inner join t_item B on A.item_code=B.item_code')
+    Left = 680
+    Top = 8
+  end
+  object QGudang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_wh')
+    Left = 616
+    Top = 8
+  end
+  object DsGudang: TDataSource
+    DataSet = QGudang
+    Left = 616
     Top = 56
   end
 end

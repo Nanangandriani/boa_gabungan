@@ -1,113 +1,110 @@
-object FItem_TransferBarang: TFItem_TransferBarang
+object FNew_menu: TFNew_menu
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Form Item Transfer Antar Gudang'
-  ClientHeight = 405
-  ClientWidth = 767
+  Caption = 'FNew_menu'
+  ClientHeight = 188
+  ClientWidth = 394
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Position = poMainFormCenter
+  Position = poOwnerFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 13
-  object DBGridEh1: TDBGridEh
-    Left = 0
-    Top = 0
-    Width = 767
-    Height = 373
-    Align = alClient
-    DataSource = DsBarang
-    DynProps = <>
-    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    SearchPanel.Enabled = True
+  object Label1: TLabel
+    Left = 10
+    Top = 52
+    Width = 46
+    Height = 13
+    Caption = 'No. Menu'
+  end
+  object Label2: TLabel
+    Left = 10
+    Top = 86
+    Width = 56
+    Height = 13
+    Caption = 'Nama Menu'
+  end
+  object Label7: TLabel
+    Left = 107
+    Top = 86
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label8: TLabel
+    Left = 107
+    Top = 52
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label3: TLabel
+    Left = 10
+    Top = 19
+    Width = 59
+    Height = 13
+    Caption = 'Nama Group'
+  end
+  object Label4: TLabel
+    Left = 107
+    Top = 19
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 351
+    Top = 16
+    Width = 28
+    Height = 21
+    Caption = '--'
+    OnClick = SpeedButton1Click
+  end
+  object Label5: TLabel
+    Left = 10
+    Top = 120
+    Width = 54
+    Height = 13
+    Caption = 'Nama Form'
+  end
+  object Label6: TLabel
+    Left = 107
+    Top = 120
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Edkd: TEdit
+    Left = 131
+    Top = 49
+    Width = 112
+    Height = 21
+    ReadOnly = True
     TabOrder = 0
-    OnDblClick = DBGridEh1DblClick
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'item_code'
-        Footers = <>
-        Title.Caption = 'Kode Barang'
-        Width = 126
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'item_name'
-        Footers = <>
-        Title.Caption = 'Nama Barang'
-        Width = 160
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_name'
-        Footers = <>
-        Title.Caption = 'Nama Supplier'
-        Width = 160
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'stock_code'
-        Footers = <>
-        Title.Caption = 'Kode Stok'
-        Width = 138
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'outstanding'
-        Footers = <>
-        Title.Caption = 'Kuantum'
-        Width = 85
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'unit'
-        Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 57
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_code'
-        Footers = <>
-        Title.Caption = 'Gudang'
-        Width = 150
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-    end
+  end
+  object EdNm: TEdit
+    Left = 131
+    Top = 83
+    Width = 248
+    Height = 21
+    TabOrder = 1
   end
   object Panel2: TPanel
     Left = 0
-    Top = 373
-    Width = 767
+    Top = 156
+    Width = 394
     Height = 32
     Align = alBottom
-    TabOrder = 1
-    ExplicitTop = 372
-    ExplicitWidth = 763
+    TabOrder = 2
     object BBatal: TRzBitBtn
-      Left = 691
+      Left = 322
       Top = 1
       Height = 30
       Align = alRight
@@ -166,19 +163,19 @@ object FItem_TransferBarang: TFItem_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 687
+      ExplicitLeft = 318
     end
     object BSimpan: TRzBitBtn
-      Left = 616
+      Left = 247
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'OK'
+      Caption = 'Simpan'
       TabOrder = 1
       OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000630B0000630B00000001000000000000000000003300
+        08000000000000020000730E0000730E00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -211,41 +208,39 @@ object FItem_TransferBarang: TFItem_TransferBarang
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
-        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
-        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
-        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
-        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
-        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
-        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
-        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
-        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
-        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
+        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
+        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
+        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
+        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
+        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
+        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 612
+      ExplicitLeft = 243
     end
   end
-  object Qbarang: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a' +
-        ' inner join warehouse.t_item_stock b on a.item_stock_code=b.item' +
-        '_stock_code'
-      'inner join t_supplier c on b.supplier_code=c.supplier_code')
-    Active = True
-    Left = 240
-    Top = 104
+  object EdGroup: TRzComboBox
+    Left = 131
+    Top = 16
+    Width = 214
+    Height = 21
+    TabOrder = 3
+    OnSelect = EdGroupSelect
   end
-  object DsBarang: TDataSource
-    DataSet = Qbarang
-    Left = 240
-    Top = 168
+  object Edlink: TEdit
+    Left = 131
+    Top = 117
+    Width = 248
+    Height = 21
+    TabOrder = 4
   end
 end

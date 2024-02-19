@@ -442,6 +442,27 @@
             <Form>FNew_Hak_Akses</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UPeng_stok.pas">
+            <Form>FPeng_Stok</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_PengStok.pas">
+            <Form>FNew_PengStok</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCari_Barang2.pas">
+            <Form>FSearch_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="maenangka.pas"/>
+        <DCCReference Include="UMaster_Menu.pas">
+            <Form>FMaster_Menu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMaster_PercBarang.pas">
+            <Form>FMaster_PercBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
