@@ -26,6 +26,7 @@ type
     UniSQLMonitor1: TUniSQLMonitor;
     dsQtemp3: TDataSource;
     Qtemp3: TUniQuery;
+    UniConnection1: TUniConnection;
   private
     { Private declarations }
   public

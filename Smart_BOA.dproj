@@ -434,9 +434,27 @@
             <Form>FSupp_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UEdit_Penomoran.pas">
-            <Form>FEdit_Penomoran</Form>
-            <FormType>dfm</FormType>
+        <DCCReference Include="UHak_Akses.pas">
+            <Form>FHak_Akses</Form>
+        </DCCReference>
+        <DCCReference Include="UNew_HakAkses.pas">
+            <Form>FNew_Hak_Akses</Form>
+        </DCCReference>
+        <DCCReference Include="UPeng_stok.pas">
+            <Form>FPeng_Stok</Form>
+        </DCCReference>
+        <DCCReference Include="UNew_PengStok.pas">
+            <Form>FNew_PengStok</Form>
+        </DCCReference>
+        <DCCReference Include="UCari_Barang2.pas">
+            <Form>FSearch_Barang</Form>
+        </DCCReference>
+        <DCCReference Include="maenangka.pas"/>
+        <DCCReference Include="UMaster_Menu.pas">
+            <Form>FMaster_Menu</Form>
+        </DCCReference>
+        <DCCReference Include="UMaster_PercBarang.pas">
+            <Form>FMaster_PercBarang</Form>
         </DCCReference>
         <DCCReference Include="UUang_Muka_Pembelian.pas">
             <Form>FUang_Muka_Pembelian</Form>
@@ -444,10 +462,6 @@
         </DCCReference>
         <DCCReference Include="UInput_um.pas">
             <Form>FNew_UM_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UAkun_Perkiraan_UM.pas">
-            <Form>FAkun_Perkiraan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

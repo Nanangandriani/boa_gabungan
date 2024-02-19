@@ -135,8 +135,10 @@ uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
   UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
   Udaftar_perkiraan,UKonversi_Barang, UJabatan, UDept, UBonPermt_Barang,
-  UTransfer_Barang, UKontrakKerjasama,Uuser, UHak_Akses, UPO, UReturnPembelian,
-  UPembelian, UPot_Pembelian, USPB, Udafcek_entry, UUang_Muka_Pembelian;
+  UTransfer_Barang, UKontrakKerjasama,Uuser, UPO, UReturnPembelian,
+  UPembelian, UPot_Pembelian, USPB, Udafcek_entry, UHak_Akses, UPeng_stok,
+  UPercampuran_Barang, UMaster_Akun, UMenu, UUang_Muka_Pembelian;
+
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -335,7 +337,7 @@ begin
    with dm.Qtemp do
    begin
     SQL.Clear;
-    SQL.Text := 'select * from t_submenu2 where submenu2=' +
+    SQL.Text := 'select * from t_menu_sub where submenu=' +
                 QuotedStr(vCaptionButton);
     open;
    end;
@@ -388,7 +390,7 @@ begin
    with dm.Qtemp do
      begin
       SQL.Clear;
-      SQL.Text := 'select * from t_submenu2 where submenu2=' +
+      SQL.Text := 'select * from t_menu_sub where submenu=' +
                   QuotedStr(vCaptionButton);
       open;
      end;
@@ -504,7 +506,7 @@ begin
    begin
        SQL.Clear;
        SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
-       ' INNER JOIN t_menu_sub bb ON aa.submenu = bb.submenu '+
+       ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code '+
        ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
        ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
        ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
@@ -537,8 +539,8 @@ begin
      begin
           SQL.Clear;
           SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
-          ' INNER JOIN t_menu_sub bb ON aa.submenu=bb.submenu INNER JOIN t_menu b '+
-          ' ON b.menu_code = bb.menu_code  INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
+          ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code INNER JOIN t_menu b '+
+          ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
           ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
           ' WHERE dd.akses='+QuotedStr('Admin')+
           ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
@@ -614,6 +616,8 @@ end;
 procedure TFMainMenu.dxBarLargeButtonUtilityClick(Sender: TObject);
 begin
   CreateSubMenu('admin',dxBarLargeButtonUtility.Caption);
+//  Panel1.Parent:=FTransfer_Barang;
+//  FTransfer_Barang.Show;
 end;
 
 procedure TFMainMenu.CreateMenu(Role:String);
@@ -627,11 +631,12 @@ begin
                    ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
                    ' WHERE dd.akses='+QuotedStr('Admin')+
                    ' Order by cc.id DESC';}
-        SQL.Text := 'SELECT DISTINCT cc.id, cc.menu FROM t_akses aa '+
-                   ' INNER JOIN t_menu_sub bb ON aa.submenu = bb.submenu '+
-                   ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
-                   ' INNER JOIN t_user dd ON dd.user_name= aa.RoleNama '+
-                   ' WHERE dd.username='+QuotedStr('Admin')+
+
+        SQL.Text := 'SELECT DISTINCT cc.id, cc.master_name menu FROM t_akses aa '+
+                   ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu '+
+                   ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code '+
+                   ' INNER JOIN t_user dd ON dd.akses = aa.RoleNama '+
+                   ' WHERE dd.akses='+QuotedStr('Admin')+
                    ' Order by cc.id DESC';
       open;
       First;
@@ -670,7 +675,7 @@ begin
                         ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');}
 
              SQL.Text := 'SELECT aa.* FROM t_akses aa '+
-            ' INNER JOIN t_menu_sub bb ON aa.submenu = bb.submenu '+
+            ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu '+
             ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
             ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
             ' WHERE aa.RoleNama='+QuotedStr('Admin')+
@@ -744,5 +749,8 @@ end;
 Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFKategori_Barang,TFPenomoran,
-  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang,TFKontrakKerjasama,TFUser,TFHak_Akses,TFPO, TFReturnPembelian,TFPembelian,TFPot_Pembelian,TFSPB,TFDaf_EntryCek,TFUang_Muka_Pembelian]);
+  TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang,TFKontrakKerjasama,TFUser,TFHak_Akses,TFPO,
+  TFReturnPembelian,TFPembelian,TFPot_Pembelian,TFSPB,TFDaf_EntryCek,
+  TFPeng_Stok,TFPerc_Barang,TFMaster_Akun,TFMenu,TFUang_Muka_Pembelian]);
+
 end.

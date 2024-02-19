@@ -7,7 +7,7 @@ Uses SysUtils, frxClass,uni;
   function GenerateNumber(startingNumber, digits: Integer): string;
   function getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
   function GetNourut(tgl:TDateTime;Tablename,kode:string):string;
-  var strday,strmonth,stryear,notif,notrans,idmenu,order_no:string;
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn:string;
       strday2:TDate;
 
 implementation

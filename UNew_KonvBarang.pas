@@ -5,22 +5,21 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzCmboBx, RzButton,
-  Vcl.ExtCtrls, Vcl.Mask, RzEdit, RzBtnEdt;
+  Vcl.ExtCtrls, Vcl.Mask, RzEdit, RzBtnEdt, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
+  Data.DB, MemDS, DBAccess, Uni;
 
 type
   TFNew_KonvBarang = class(TForm)
     Panel2: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
-    Edkd: TEdit;
-    Edqty: TEdit;
-    Edsatuan: TEdit;
+    RzBitBtn1: TRzBitBtn;
+    Panel1: TPanel;
     Label11: TLabel;
     Label10: TLabel;
     Label13: TLabel;
-    EdqtyKon: TEdit;
     Label12: TLabel;
-    Edno: TEdit;
     Label6: TLabel;
     Label4: TLabel;
     Label8: TLabel;
@@ -29,10 +28,19 @@ type
     Label7: TLabel;
     Label1: TLabel;
     Label2: TLabel;
+    Edkd: TEdit;
+    Edqty: TEdit;
+    Edsatuan: TEdit;
+    EdqtyKon: TEdit;
+    Edno: TEdit;
     Edcategory: TRzComboBox;
     EdNm: TRzButtonEdit;
     EdKonversi: TRzButtonEdit;
-    RzBitBtn1: TRzBitBtn;
+    DBGridEh1: TDBGridEh;
+    Btambah: TRzBitBtn;
+    BRefresh: TRzBitBtn;
+    DsKonversiM: TDataSource;
+    QKonversiM: TUniQuery;
     procedure BBatalClick(Sender: TObject);
     procedure EdNmSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -46,6 +54,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EdKonversiButtonClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
+    procedure BtambahClick(Sender: TObject);
+    procedure BRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,7 +109,7 @@ begin
       sql.Clear;
       sql.Text:='SELECT	b.qty_unit,b.unit,"a".item_name,"a".item_code,b.qty_conv,b.unit_conv,"c".category,b."id"'+
       ' FROM t_item AS "a" INNER JOIN t_item_conversion AS b ON	"a".item_code = b.item_code INNER JOIN   '+
-      '	t_item_category AS "c" ON "a".category_id="c"."id" where a.item_code='+QuotedStr(EdKd.Text);
+      '	t_item_category AS "c" ON "a".category_id="c"."category_id" where a.item_code='+QuotedStr(EdKd.Text);
       open;
     end;
   end;  
@@ -138,6 +148,14 @@ procedure TFNew_KonvBarang.BBatalClick(Sender: TObject);
 begin
   Close;
   FKonversi_Barang.dxBarButton3Click(sender);
+end;
+
+procedure TFNew_KonvBarang.BRefreshClick(Sender: TObject);
+begin
+  DBGridEh1.StartLoadingStatus();
+  QKonversiM.Close;
+  QKonversiM.Open;
+  DBGridEh1.FinishLoadingStatus();
 end;
 
 procedure TFNew_KonvBarang.BSimpanClick(Sender: TObject);
@@ -204,6 +222,14 @@ dm.koneksi.Rollback;
 end;
 end;
   BBatalClick(sender);
+end;
+
+procedure TFNew_KonvBarang.BtambahClick(Sender: TObject);
+begin
+    Clear;
+    caption:='New Konversi Barang';
+    Status:=0;
+    Edcategory.SetFocus;
 end;
 
 procedure TFNew_KonvBarang.EdcategorySelect(Sender: TObject);

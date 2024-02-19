@@ -34,7 +34,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang;
+uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
+  UInput_um;
 
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
@@ -105,6 +106,12 @@ begin
     begin
       FNew_KelompokBarang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
       FNew_KelompokBarang.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if (vpanggil = 'um')then
+    begin
+      FNew_UM_Pembelian.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_UM_Pembelian.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
     close;

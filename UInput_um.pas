@@ -65,7 +65,8 @@ implementation
 
 {$R *.dfm}
 
-uses USearch_Supplier, UAkun_Perkiraan_UM, UDataModule, UMainMenu, UMy_Function;
+uses USearch_Supplier, UAkun_Perkiraan_UM, UDataModule, UMainMenu, UMy_Function,
+  UCari_DaftarPerk;
 
 procedure TFNew_UM_Pembelian.load;
 begin
@@ -213,13 +214,28 @@ end;
 
 procedure TFNew_UM_Pembelian.Ednm_akunButtonClick(Sender: TObject);
 begin
-  with  FAkun_Perkiraan do
+  with  FCari_DaftarPerk do
   begin
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT distinct b.code,b.account_name,c.header_name FROM t_ak_account_det a '+
+                'left join t_ak_account b on a.account_code=b.code '+
+                'left join t_ak_header c on b.header_code=c.header_code GROUP BY b.code,b.account_name,c.header_name '+
+                'ORDER BY b.code ASC';
+      Open;
+    end;
     Show;
-    statustr:='um';
+    vpanggil:='um';
+    QDaftar_Perk.Close;
+    if QDaftar_Perk.Active=false then
+       QDaftar_Perk.Active:=True;
+
+    {statustr:='um';
     QAkun.Close;
     if QAkun.Active=false then
-       QAkun.Active:=True;
+       QAkun.Active:=True;}
   end;
 end;
 

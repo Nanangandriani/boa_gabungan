@@ -21,6 +21,7 @@ object FNew_PO: TFNew_PO
     Height = 257
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 1204
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -228,7 +229,7 @@ object FNew_PO: TFNew_PO
       Left = 175
       Top = 215
       Width = 3
-      Height = 17
+      Height = 15
       Caption = ':'
     end
     object EdKd_supp: TEdit
@@ -580,7 +581,7 @@ object FNew_PO: TFNew_PO
       Left = 994
       Top = 183
       Width = 187
-      Height = 21
+      Height = 23
       Text = ''
       Enabled = False
       FocusColor = clInfoBk
@@ -592,7 +593,7 @@ object FNew_PO: TFNew_PO
       Left = 917
       Top = 183
       Width = 71
-      Height = 21
+      Height = 23
       Text = ''
       Enabled = False
       FocusColor = clInfoBk
@@ -604,7 +605,7 @@ object FNew_PO: TFNew_PO
       Left = 729
       Top = 183
       Width = 121
-      Height = 21
+      Height = 23
       Enabled = False
       ReadOnly = True
       TabOrder = 31
@@ -634,7 +635,6 @@ object FNew_PO: TFNew_PO
     Height = 143
     Align = alTop
     TabOrder = 1
-    ExplicitTop = 482
     ExplicitWidth = 1204
     object Label7: TLabel
       Left = 832
@@ -806,9 +806,8 @@ object FNew_PO: TFNew_PO
     Height = 34
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 625
     ExplicitWidth = 1204
-    ExplicitHeight = 24
+    ExplicitHeight = 25
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
@@ -870,7 +869,7 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1128
-      ExplicitHeight = 22
+      ExplicitHeight = 23
     end
     object BSimpan: TRzBitBtn
       Left = 1059
@@ -934,7 +933,7 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1053
-      ExplicitHeight = 22
+      ExplicitHeight = 23
     end
     object BEdit: TRzBitBtn
       Left = 984
@@ -998,7 +997,7 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 978
-      ExplicitHeight = 22
+      ExplicitHeight = 23
     end
     object Button1: TButton
       Left = 856
@@ -1018,7 +1017,6 @@ object FNew_PO: TFNew_PO
     Height = 265
     Align = alTop
     TabOrder = 3
-    ExplicitTop = 217
     ExplicitWidth = 1204
     object DBGridDetail: TDBGridEh
       Left = 1

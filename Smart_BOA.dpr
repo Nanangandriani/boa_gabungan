@@ -88,10 +88,16 @@ uses
   UReturnPembelian in 'UReturnPembelian.pas' {FReturnPembelian},
   UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
   USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian},
-  UEdit_Penomoran in 'UEdit_Penomoran.pas' {FEdit_Penomoran},
+  UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
+  UNew_HakAkses in 'UNew_HakAkses.pas' {FNew_Hak_Akses},
+  UPeng_stok in 'UPeng_stok.pas' {FPeng_Stok},
+  UNew_PengStok in 'UNew_PengStok.pas' {FNew_PengStok},
+  UCari_Barang2 in 'UCari_Barang2.pas' {FSearch_Barang},
+  maenangka in 'maenangka.pas',
+  UMaster_Menu in 'UMaster_Menu.pas' {FMaster_Menu},
+  UMaster_PercBarang in 'UMaster_PercBarang.pas' {FMaster_PercBarang},
   UUang_Muka_Pembelian in 'UUang_Muka_Pembelian.pas' {FUang_Muka_Pembelian},
-  UInput_um in 'UInput_um.pas' {FNew_UM_Pembelian},
-  UAkun_Perkiraan_UM in 'UAkun_Perkiraan_UM.pas' {FAkun_Perkiraan};
+  UInput_um in 'UInput_um.pas' {FNew_UM_Pembelian};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -125,13 +131,18 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFImportnocek, FImportnocek);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
   Application.CreateForm(TFNew_UM_Pembelian, FNew_UM_Pembelian);
-  Application.CreateForm(TFAkun_Perkiraan, FAkun_Perkiraan);
+  //Application.CreateForm(TFAkun_Perkiraan, FAkun_Perkiraan);
+  Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
+  Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
+  Application.CreateForm(TFNew_UM_Pembelian, FNew_UM_Pembelian);
   //Application.CreateForm(TFlistitempo, Flistitempo);
   Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
-  Application.CreateForm(TFEdit_Penomoran, FEdit_Penomoran);
+  Application.CreateForm(TFHak_Akses, FHak_Akses);
+  Application.CreateForm(TFMaster_Menu, FMaster_Menu);
+  Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);

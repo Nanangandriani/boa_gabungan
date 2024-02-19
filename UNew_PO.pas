@@ -965,6 +965,8 @@ begin
    if MemItempo.Active=False then  MemItempo.Active:=True;
    Self.Clear;
    Cb_bon.Enabled:=false;
+   status_um:='0';
+   status_as:='0';
 
    with dm.Qtemp do
    begin
@@ -1004,7 +1006,7 @@ begin
         sql.Clear;
         sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
                   ' valas,valas_value,order_no, remarks,type,transportation_type,division_code,status,'+
-                  ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,"approval_status",'+
+                  ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status,'+
                   ' delivery2_date,warehouse,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,um_status,um_value,um_account_code,um_no) '+
                   ' values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,'+
                   ' :parjenispo,:parvalas,:parnilai_valas,:parorder_no,:parKeterangan,:parjenis,'+
@@ -1098,7 +1100,7 @@ begin
         sql.Clear;
         sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date, supplier_code,pph23,ppn,po_type, '+
                   ' valas,valas_value,order_no,remarks,type,transportation_type,division_code,status, '+
-                  ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,"approval_status", '+
+                  ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status, '+
                   ' delivery2_date,warehouse,sbu_code,pic,po2_no,trans_day,trans_month,trans_year, '+
                   ' as_status,trans_category,um_status,um_value,um_account_code,um_no)values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,:parjenispo, '+
                   ' :parvalas,:parnilai_valas,:parno_urut,:parKeterangan,:parjenis,:parjenisangkutan,:parkd_divisi,:parstatus, '+
@@ -1203,7 +1205,7 @@ begin
         sql.Clear;
         sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
                   ' valas,valas_value,order_no, remarks,type,transportation_type,division_code,status,'+
-                  ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,"approval_status",'+
+                  ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status,'+
                   ' delivery2_date,warehouse,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,um_status,um_value,um_account_code,um_no) '+
                   ' values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,'+
                   ' :parjenispo,:parvalas,:parnilai_valas,:parorder_no,:parKeterangan,:parjenis,'+

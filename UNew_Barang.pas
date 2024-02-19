@@ -269,6 +269,7 @@ procedure TFNew_Barang.SpKelompokClick(Sender: TObject);
 begin
   FNew_KelompokBarang.Show;
   statustr:=0;
+  FNew_KelompokBarang.Caption:='Form Kelompok Barang';
 end;
 
 procedure TFNew_Barang.BBatalClick(Sender: TObject);

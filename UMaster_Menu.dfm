@@ -1,10 +1,9 @@
-object FNew_KelompokBarang: TFNew_KelompokBarang
+object FMaster_Menu: TFMaster_Menu
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu]
-  Caption = 'FNew_KelompokBarang'
-  ClientHeight = 555
-  ClientWidth = 582
+  Caption = 'Form Master Menu'
+  ClientHeight = 444
+  ClientWidth = 467
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,23 +13,22 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
-  object Panel1: TPanel
+  object PnlAksi: TPanel
     Left = 0
-    Top = 183
-    Width = 576
-    Height = 41
-    Align = alBottom
+    Top = 145
+    Width = 467
+    Height = 35
+    Align = alTop
     TabOrder = 0
-    ExplicitTop = 165
-    ExplicitWidth = 572
-    object BTutup: TRzBitBtn
-      Left = 500
+    ExplicitWidth = 463
+    object BBatal: TRzBitBtn
+      Left = 391
       Top = 1
-      Height = 39
+      Height = 33
       Align = alRight
-      Caption = 'Tutup'
+      Caption = 'Batal'
       TabOrder = 1
-      OnClick = BTutupClick
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -83,12 +81,12 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 496
+      ExplicitLeft = 387
     end
     object BSimpan: TRzBitBtn
-      Left = 350
+      Left = 241
       Top = 1
-      Height = 39
+      Height = 33
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 0
@@ -145,20 +143,20 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 346
+      ExplicitLeft = 237
     end
     object BCari: TRzBitBtn
       Left = 1
       Top = 1
-      Width = 109
-      Height = 39
+      Width = 96
+      Height = 33
       Align = alLeft
-      Caption = 'Cari'
+      Caption = 'Edit'
       TabOrder = 2
       Visible = False
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000830E0000830E00000001000000000000000000003300
+        08000000000000020000520B0000520B00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -191,28 +189,28 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E80909E80909E80909E8E8E8E8E8E8E8E88181E88181E88181E8E8E8E8E8E8
-        E8E81009E81009E81009E8E8E8E8E8E8E8E8E281E8E281E8E281E8E8E8E8E8E8
-        E8B4D8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E281E8E8E8E8E8E8E8E8E8E8E8E8E8
-        B46C6CD8E8E8E8E8E8E8E8E8E8E8E8E8E2818181E8E8E8E8E8E8E8E8E8E8E8E8
-        B46CD86CD8E8E8E8E8E8E8E8E8E8E8E8E281818181E8E8E8E8E8E8E8E8E8E8E8
-        B46C6CD86CD8E8E8E8E8E8E8E8E8E8E8E28181818181E8E8E8E8E8E8E8E8E8D7
-        5E6C6C6CB46CD8E8E8E8E8E8E8E8E8D781818181E28181E8E8E8E8E8E8E8E8D7
-        89896CB4B4B46CD8E8E8E8E8E8E8E8D7ACAC81E2E2E28181E8E8E8E8E8E8D789
-        89D7D7B4C7C7C76CE8E8E8E8E8E8D7ACACD7D7E2ACACAC81E8E8E8E8E8D78989
-        D7D7D7D76C6C6CE8E8E8E8E8E8D7ACACD7D7D7D7818181E8E8E8E8E8D78989D7
-        D7D75E5EE8E8E8E8E8E8E8E8D7ACACD7D7D78181E8E8E8E8E8E8E8D78989D7D7
-        D75EE8E8E8E8E8E8E8E8E8D7ACACD7D7D781E8E8E8E8E8E8E8E8D78989D7D7D7
-        5EB4E8E8E8E8E8E8E8E8D7ACACD7D7D781E2E8E8E8E8E8E8E8E85E89D7D7D75E
-        B4E8E8E8E8E8E8E8E8E881ACD7D7D781E2E8E8E8E8E8E8E8E8E8E85ED7D75EE8
-        E8E8E8E8E8E8E8E8E8E8E881D7D781E8E8E8E8E8E8E8E8E8E8E8E8E85E5EE8E8
-        E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8}
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8002BE8E8E8E8
+        E8E8E8E8E8E8E8E8E8E85681E8E8E8E8E8E8E8E8E8E8E8E8E8E82B565656E8E8
+        E8E8E8E8E8E8E8E8E8E881565656E8E8E8E8E8E8E8E8E8E8E8E8E881AC815656
+        E8E8E8E8E8E8E8E8E8E8E881AC815656E8E8E8E8E8E8E8E8E8E8E881ACAC8181
+        5656E8E8E8E8E8E8E8E8E881ACAC81815656E8E8E8E8E8E8E8E8E8E881ACAC81
+        81815656E8E8E8E8E8E8E8E881ACAC8181815656E8E8E8E8E8E8E8E881E3ACAC
+        818181090808E8E8E8E8E8E881E3ACAC818181815656E8E8E8E8E8E8E881E3AC
+        AC810909090908E8E8E8E8E8E881E3ACAC818181818156E8E8E8E8E8E881D7E3
+        AC09090909090908E8E8E8E8E881D7E3AC81818181818156E8E8E8E8E8E881D7
+        093409090909090908E8E8E8E8E881D781AC81818181818156E8E8E8E8E88109
+        34093409090909090908E8E8E8E88181AC81AC81818181818156E8E8E8E8E809
+        09340934090909090909E8E8E8E8E88181AC81AC818181818181E8E8E8E8E809
+        09093409340909090981E8E8E8E8E8818181AC81AC8181818181E8E8E8E8E8E8
+        09090934093409098181E8E8E8E8E8E8818181AC81AC81818181E8E8E8E8E8E8
+        E8090909340909ACAC81E8E8E8E8E8E8E8818181AC8181ACAC81E8E8E8E8E8E8
+        E8E809090909E3E3ACACE8E8E8E8E8E8E8E881818181E3E3ACAC}
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 275
+      Left = 166
       Top = 1
-      Height = 39
+      Height = 33
       Align = alRight
       Caption = 'Tambah'
       TabOrder = 3
@@ -269,14 +267,14 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 271
+      ExplicitLeft = 162
     end
     object BRefresh: TRzBitBtn
-      Left = 425
+      Left = 316
       Top = 1
-      Height = 39
+      Height = 33
       Align = alRight
-      Caption = 'Refresh  '
+      Caption = 'Refresh'
       TabOrder = 4
       OnClick = BRefreshClick
       Glyph.Data = {
@@ -331,240 +329,142 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 421
+      ExplicitLeft = 312
     end
   end
-  object DBGridEh7: TDBGridEh
-    Left = 0
-    Top = 224
-    Width = 576
-    Height = 322
-    Align = alBottom
-    DataSource = DsKelompok
-    DynProps = <>
-    SearchPanel.Enabled = True
-    SearchPanel.CaseSensitive = True
-    TabOrder = 1
-    OnDblClick = DBGridEh7DblClick
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'group_id'
-        Footers = <>
-        Title.Caption = 'Id'
-        Visible = False
-        Width = 88
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'type'
-        Footers = <>
-        Title.Caption = 'Jenis'
-        Width = 180
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'category'
-        Footers = <>
-        Title.Caption = 'Kategori'
-        Width = 180
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'akun_code'
-        Footers = <>
-        Title.Caption = 'Kode Perkiraan'
-        Visible = False
-        Width = 121
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'group_name'
-        Footers = <>
-        Title.Caption = 'Kelompok'
-        Width = 180
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-    end
-  end
-  object Panel2: TPanel
+  object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 576
-    Height = 183
-    Align = alClient
+    Width = 467
+    Height = 145
+    Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
-    TabOrder = 2
-    ExplicitHeight = 193
+    TabOrder = 1
+    ExplicitWidth = 463
     object Label6: TLabel
       Left = 106
-      Top = 17
+      Top = 59
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
       Left = 106
-      Top = 106
+      Top = 100
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label2: TLabel
       Left = 24
-      Top = 106
-      Width = 54
+      Top = 100
+      Width = 47
       Height = 15
-      Caption = 'Kelompok'
+      Caption = 'Deskripsi'
     end
     object Label5: TLabel
       Left = 24
-      Top = 17
+      Top = 59
       Width = 27
       Height = 15
       Caption = 'Kode'
     end
-    object Label9: TLabel
-      Left = 24
-      Top = 44
-      Width = 25
-      Height = 15
-      Caption = 'Jenis'
-    end
-    object Label10: TLabel
-      Left = 106
-      Top = 44
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label1: TLabel
       Left = 24
-      Top = 74
-      Width = 44
+      Top = 20
+      Width = 27
       Height = 15
-      Caption = 'Kategori'
+      Caption = 'Kode'
     end
     object Label3: TLabel
       Left = 106
-      Top = 74
+      Top = 20
       Width = 3
       Height = 15
       Caption = ':'
     end
-    object Label19: TLabel
-      Left = 24
-      Top = 140
-      Width = 80
-      Height = 15
-      Caption = 'Akun Perkiraan'
-    end
-    object Label20: TLabel
-      Left = 106
-      Top = 140
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object EdKelompok: TEdit
+    object EdDesk: TEdit
       Left = 128
-      Top = 105
-      Width = 329
+      Top = 97
+      Width = 297
       Height = 23
-      CharCase = ecUpperCase
       TabOrder = 0
-    end
-    object Edno: TEdit
-      Left = 207
-      Top = 14
-      Width = 73
-      Height = 23
-      Alignment = taRightJustify
-      CharCase = ecUpperCase
-      Enabled = False
-      TabOrder = 1
-      Text = '00000'
-      TextHint = '00000'
-    end
-    object EdJenis: TComboBox
-      Left = 128
-      Top = 43
-      Width = 201
-      Height = 23
-      TabOrder = 2
-      OnSelect = EdJenisSelect
-      Items.Strings = (
-        'PRODUKSI'
-        'NON PRODUKSI'
-        'AKTIVA')
     end
     object Edkd: TEdit
       Left = 128
-      Top = 14
-      Width = 73
+      Top = 56
+      Width = 81
       Height = 23
       CharCase = ecUpperCase
-      TabOrder = 3
-      TextHint = 'AAA'
+      Enabled = False
+      TabOrder = 1
+      TextHint = 'M'
     end
-    object CbKategori: TComboBox
+    object Cbmaster: TComboBox
       Left = 128
-      Top = 73
-      Width = 201
+      Top = 17
+      Width = 153
       Height = 23
-      TabOrder = 4
-      OnSelect = CbKategoriSelect
-    end
-    object Edkd_akun: TRzEdit
-      Left = 128
-      Top = 137
-      Width = 110
-      Height = 23
-      Text = ''
-      Color = clInfoBk
-      ReadOnly = True
-      TabOrder = 5
-    end
-    object EdNm_akun: TRzButtonEdit
-      Left = 244
-      Top = 137
-      Width = 213
-      Height = 23
-      Text = ''
-      CharCase = ecUpperCase
-      ReadOnlyColorOnFocus = True
-      TabOrder = 6
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      OnButtonClick = EdNm_akunButtonClick
+      TabOrder = 2
+      OnSelect = CbmasterSelect
     end
   end
-  object QKelompok: TUniQuery
+  object Pnllist: TPanel
+    Left = 0
+    Top = 180
+    Width = 467
+    Height = 264
+    Align = alClient
+    TabOrder = 2
+    ExplicitWidth = 463
+    ExplicitHeight = 263
+    object DBGridEh1: TDBGridEh
+      Left = 1
+      Top = 1
+      Width = 465
+      Height = 262
+      Align = alClient
+      DataSource = Dsmenu
+      DynProps = <>
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+      TabOrder = 0
+      OnDblClick = DBGridEh1DblClick
+      Columns = <
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'master_code'
+          Footers = <>
+          Title.Caption = 'Kode'
+          Width = 123
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'master_name'
+          Footers = <>
+          Title.Caption = 'Deskripsi'
+          Width = 294
+        end>
+      object RowDetailData: TRowDetailPanelControlEh
+      end
+    end
+  end
+  object Qmenu: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select c.*,b.type,d.account_name,a.category from t_item_category' +
-        ' a inner join t_item_type b on a.type_id=b."type_id"  INNER JOIN' +
-        ' t_item_group c on a."category_id"=c.category_id inner join t_ak' +
-        '_account d on c.account_code=d.code'
-      'where a.deleted_at isnull order by a.created_at ')
-    Left = 408
-    Top = 8
+        'select b.master_name,a.* from t_menu a inner join t_menu_master ' +
+        'b on a.master_code=b.master_code order by menu_code')
+    Left = 288
+    Top = 24
   end
-  object DsKelompok: TDataSource
-    DataSet = QKelompok
-    Left = 411
-    Top = 64
+  object Dsmenu: TDataSource
+    DataSet = Qmenu
+    Left = 368
+    Top = 16
   end
 end

@@ -61,4 +61,15 @@ object dm: Tdm
     Left = 203
     Top = 150
   end
+  object UniConnection1: TUniConnection
+    ProviderName = 'PostgreSQL'
+    Port = 5432
+    Database = 'db_boa_hps'
+    Username = 'postgres'
+    Server = '10.10.10.110'
+    Connected = True
+    Left = 316
+    Top = 86
+    EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
+  end
 end

@@ -26,7 +26,8 @@ uses
   dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Black,
   dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray, dxSkinOffice2019White,
   dxSkinTheBezier, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
-  dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Light, dxCore, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFTransfer_Barang = class(TForm)
@@ -51,14 +52,23 @@ type
     Rpt: TfrxReport;
     QRptTransfer: TUniQuery;
     DbRptTransfer: TfrxDBDataset;
-    procedure dxBarBaruClick(Sender: TObject);
-    procedure dxBarUpdateClick(Sender: TObject);
-    procedure dxbarRefreshClick(Sender: TObject);
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRo: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActRoExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -94,16 +104,98 @@ begin
     memo.Text := aText;
 end;
 
-procedure TFTransfer_Barang.dxBarBaruClick(Sender: TObject);
+procedure TFTransfer_Barang.ActBaruExecute(Sender: TObject);
 begin
-with FNew_TransferBarang do
-begin
-  Show;
-  Clear;
-  status:=0;
-  Caption:='New Transfer Barang Antar Gudang';
-  //autonumber;
+  with FNew_TransferBarang do
+  begin
+    Show;
+    Clear;
+    status:=0;
+    Caption:='New Transfer Barang Antar Gudang';
+    //autonumber;
+  end;
 end;
+
+procedure TFTransfer_Barang.ActRoExecute(Sender: TObject);
+begin
+  DBGridTransfer.StartLoadingStatus();
+  DBGridTransfer.FinishLoadingStatus();
+  if loksbu='' then
+  begin
+    with QTransfer do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code '+
+      ' INNER JOIN t_wh c on a.wh_code_to=c.code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code order by trans_no desc';
+      ExecSQL;
+    end;
+    QTransfer.Active:=True;
+    MemTransfer.Active:=False;
+    MemTransfer.Active:=True;
+    Qdetail.Active:=False;
+    Qdetail.Active:=True;
+  end;
+  if loksbu<>'' then
+  begin
+    with QTransfer do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code '+
+      ' INNER JOIN t_wh c on a.wh_code_to=c.code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code '+
+      ' where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
+      ExecSQL;
+    end;
+    QTransfer.Active:=True;
+    MemTransfer.Active:=False;
+    MemTransfer.Active:=True;
+    Qdetail.Active:=False;
+    Qdetail.Active:=True;
+  end;
+end;
+
+procedure TFTransfer_Barang.ActUpdateExecute(Sender: TObject);
+begin
+  with FNew_TransferBarang do
+  begin
+    Show;
+    Clear;
+    status:=1;
+    Caption:='Update Transfer Barang Antar Gudang';
+    Edno.Text:=MemTransfer['trans_no'];
+    DtTransfer.Date:=MemTransfer['trans_date'];
+    EdKet.Text:=MemTransfer['note'];
+    CbDari.Text:=MemTransfer['nm_from'];
+    CbKe.Text:=MemTransfer['nm_to'];
+    CbKategori.Text:=MemTransfer['category'];
+    kd_gdngdari:=MemTransfer['wh_code_from'];
+    kd_gdngke:=MemTransfer['wh_code_to'];
+    kd_ct:=MemTransfer['wh_category_code'];
+  end;
+  Qdetail.First;
+  while not Qdetail.eof do
+  begin
+    with Qdetail do
+    begin
+      with FNew_TransferBarang do
+      begin
+        Memdetail.Insert;
+        Memdetail['kd_material']:=Qdetail['item_stock_code'];
+        Memdetail['kd_material1']:=Qdetail['item_code'];
+        Memdetail['kd_stok_lama']:=Qdetail['stock_code_old'];
+        Memdetail['kd_stok_baru']:=Qdetail['stock_code_new'];
+        Memdetail['qty']:=Qdetail['qty'];
+        Memdetail['satuan']:=Qdetail['unit'];
+        Memdetail['nm_material']:=Qdetail['item_name'];
+        Memdetail['no_material']:=Qdetail['order_no'];
+        Memdetail.Post;
+        Qdetail.Next;
+      end;
+    end;
+  end;
 end;
 
 procedure TFTransfer_Barang.dxBarLargeButton1Click(Sender: TObject);
@@ -126,79 +218,6 @@ end else
 //  SetMemo(Rpt,'MPT',' '+SBU+' ');
   //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
   Rpt.ShowReport();
-end;
-
-procedure TFTransfer_Barang.dxbarRefreshClick(Sender: TObject);
-begin
-DBGridTransfer.StartLoadingStatus();
-DBGridTransfer.FinishLoadingStatus();
-  if loksbu='' then
-  begin
-    with QTransfer do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from gudang.t_item_transfer order by trans_no desc';
-      ExecSQL;
-    end;
-    QTransfer.Active:=True;
-    MemTransfer.Active:=False;
-    MemTransfer.Active:=True;
-    Qdetail.Active:=False;
-    Qdetail.Active:=True;
-  end;
-  if loksbu<>'' then
-  begin
-    with QTransfer do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from gudang.t_item_transfer where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
-      ExecSQL;
-    end;
-    QTransfer.Active:=True;
-    MemTransfer.Active:=False;
-    MemTransfer.Active:=True;
-    Qdetail.Active:=False;
-    Qdetail.Active:=True;
-  end;
-end;
-
-procedure TFTransfer_Barang.dxBarUpdateClick(Sender: TObject);
-begin
-  with FNew_TransferBarang do
-  begin
-    Show;
-    Clear;
-    status:=1;
-    Caption:='Update Transfer Barang Antar Gudang';
-    Edno.Text:=MemTransfer['trans_no'];
-    DtTransfer.Date:=MemTransfer['trans_date'];
-    EdKet.Text:=MemTransfer['note'];
-    CbDari.Text:=MemTransfer['from'];
-    CbKe.Text:=MemTransfer['to'];
-    CbKategori.Text:=MemTransfer['category'];
-  end;
-  Qdetail.First;
-  while not Qdetail.eof do
-  begin
-    with Qdetail do
-    begin
-      with FNew_TransferBarang do
-      begin
-        Memdetail.Insert;
-        Memdetail['kd_material']:=Qdetail['item_stock_code'];
-        Memdetail['kd_stok_lama']:=Qdetail['stock_code_old'];
-        Memdetail['kd_stok_baru']:=Qdetail['stock_code_new'];
-        Memdetail['qty']:=Qdetail['qty'];
-        Memdetail['satuan']:=Qdetail['unit'];
-        Memdetail['nm_material']:=Qdetail['item_name'];
-        Memdetail['no_material']:=Qdetail['order_no'];
-        Memdetail.Post;
-        Qdetail.Next;
-      end;
-    end;
-  end;
 end;
 
 procedure TFTransfer_Barang.FormClose(Sender: TObject;

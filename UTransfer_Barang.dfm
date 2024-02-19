@@ -51,13 +51,13 @@ object FTransfer_Barang: TFTransfer_Barang
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_5_trans_year'
+        ColumnName = 'Column_5_thn'
       end
       item
-        ColumnName = 'Column_6_trans_month'
+        ColumnName = 'Column_6_bln'
       end
       item
-        ColumnName = 'Column_7_date_no'
+        ColumnName = 'Column_7_tgl'
       end>
     DataSource = DsTransfer
     DynProps = <>
@@ -89,7 +89,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'from'
+        FieldName = 'nm_from'
         Footers = <>
         Title.Caption = 'Gudang|Dari'
         Width = 200
@@ -98,7 +98,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'to'
+        FieldName = 'nm_to'
         Footers = <>
         Title.Caption = 'Gudang|Ke'
         Width = 200
@@ -116,7 +116,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_year'
+        FieldName = 'thn'
         Footers = <>
         Title.Caption = 'Tahun'
         Visible = False
@@ -125,7 +125,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_month'
+        FieldName = 'bln'
         Footers = <>
         Title.Caption = 'Bulan'
         Visible = False
@@ -134,7 +134,7 @@ object FTransfer_Barang: TFTransfer_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'date_no'
+        FieldName = 'tgl'
         Footers = <>
         Title.Caption = 'Tanggal'
         Visible = False
@@ -180,7 +180,7 @@ object FTransfer_Barang: TFTransfer_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'stok_code_old'
+            FieldName = 'stock_code_old'
             Footers = <>
             Title.Caption = 'Kode Stok Lama'
             Width = 170
@@ -270,7 +270,7 @@ object FTransfer_Barang: TFTransfer_Barang
     object dxBarManager1Bar2: TdxBar
       Caption = 'Report'
       CaptionButtons = <>
-      DockedLeft = 131
+      DockedLeft = 125
       DockedTop = 0
       FloatLeft = 898
       FloatTop = 8
@@ -288,10 +288,8 @@ object FTransfer_Barang: TFTransfer_Barang
       WholeRow = False
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update    '
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update    '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -326,13 +324,10 @@ object FTransfer_Barang: TFTransfer_Barang
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarUpdateClick
     end
     object dxBarBaru: TdxBarLargeButton
-      Caption = 'Baru'
+      Action = ActBaru
       Category = 0
-      Hint = 'Baru'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -525,13 +520,10 @@ object FTransfer_Barang: TFTransfer_Barang
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarBaruClick
     end
     object dxbarRefresh: TdxBarButton
-      Caption = 'Refresh    '
+      Action = ActRo
       Category = 0
-      Hint = 'Refresh    '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -562,14 +554,10 @@ object FTransfer_Barang: TFTransfer_Barang
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxbarRefreshClick
     end
     object dxBarDelete: TdxBarButton
-      Caption = 'Delete     '
+      Action = ActDel
       Category = 0
-      Enabled = False
-      Hint = 'Delete     '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -671,11 +659,21 @@ object FTransfer_Barang: TFTransfer_Barang
   object QTransfer: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from gudang.t_item_transfer order by trans_no desc')
+      
+        'select a.*,date_part('#39'YEAR'#39',trans_date) thn,date_part('#39'MONTH'#39',tr' +
+        'ans_date) bln,date_part('#39'DAY'#39',trans_date) tgl,b.wh_name nm_from,'
+      
+        'c.wh_name nm_to,d.category,d.category_code from warehouse.t_item' +
+        '_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code INNER JOI' +
+        'N t_wh c on a.wh_code_to=c.code '
+      'INNER JOIN t_wh_category d on a.wh_category_code=d.category_code'
+      'order by trans_no desc')
+    Active = True
     Left = 448
     Top = 24
   end
   object MemTransfer: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdTransfer
@@ -696,9 +694,9 @@ object FTransfer_Barang: TFTransfer_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.item_name,B.order_no from gudang.t_item_transfer_de' +
-        't a inner join gudang.t_item_stock b on A.item_stock_code=b.item' +
-        '_stock_code')
+        'select A.*,b.item_name,B.order_no,b.item_code from warehouse.t_i' +
+        'tem_transfer_det a inner join warehouse.t_item_stock b on A.item' +
+        '_stock_code=b.item_stock_code')
     MasterSource = DsTransfer
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
@@ -709,7 +707,7 @@ object FTransfer_Barang: TFTransfer_Barang
         DataType = ftString
         Name = 'trans_no'
         ParamType = ptInput
-        Value = 'TR/897/19/III/22/MLB'
+        Value = '001/I/24'
       end>
   end
   object DsDetail: TDataSource
@@ -834,5 +832,42 @@ object FTransfer_Barang: TFTransfer_Barang
     DataSetOptions = []
     Left = 590
     Top = 140
+  end
+  object ActMenu: TActionManager
+    Left = 264
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = ActUpdateExecute
+    end
+    object ActRo: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActRoExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
+    end
   end
 end

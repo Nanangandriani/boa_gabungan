@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, MemDS,
   DBAccess, Uni, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, RzEdit, Vcl.Mask;
+  DBAxisGridsEh, DBGridEh, RzEdit, Vcl.Mask, Vcl.Buttons;
 
 type
   TFNew_BonPermtBarang = class(TForm)
@@ -136,10 +136,7 @@ begin
       begin
         idmenu:='M4103';
         strday2:=DtPeriode.Date;
-        thn:=FormatDateTime('yyyy',DtPeriode.Date);
-        bln:=FormatDateTime('mm',DtPeriode.Date);
-        tgl:=FormatDateTime('dd',DtPeriode.Date);
-        Edno.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_request','');
+        Edno.Text:=getNourut(strday2,'warehouse.t_item_request','');
         Edno_urut.Text:=order_no;
         simpan;
       end;
@@ -229,9 +226,9 @@ begin
               ParamByName('status_app').Value:='0';
               ParamByName('kdsbu').value:=loksbu;
               ParamByName('urut').Value:=order_no;
-              ParamByName('tgl_no').Value:=tgl;
-              ParamByName('thn').Value:=thn;
-              ParamByName('bln').Value:=bln;
+              ParamByName('tgl_no').Value:=Vtgl;
+              ParamByName('thn').Value:=Vthn;
+              ParamByName('bln').Value:=Vbln;
               ParamByName('pic').Value:=nm;
     ExecSQL;
   end;
@@ -261,7 +258,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='update warehouse.t_item_request set trans_date=:tgl_permt,update_by=:pic,update_at=now() where trans_no=:notrans';
+    sql.Text:='update warehouse.t_item_request set trans_date=:tgl_permt,updated_by=:pic,updated_at=now() where trans_no=:notrans';
               ParamByName('tgl_permt').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
               ParamByName('notrans').Value:=Edno.Text;
               ParamByName('pic').Value:=nm;
@@ -271,7 +268,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='delete from warehouse.t_item_request_det where notrans='+QuotedStr(Edno.Text);
+    sql.Text:='delete from warehouse.t_item_request_det where trans_no='+QuotedStr(Edno.Text);
     ExecSQL;
   end;
   MemMaterial.First;

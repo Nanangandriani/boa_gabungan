@@ -282,13 +282,17 @@ object FNew_Barang: TFNew_Barang
     Hint = ''
     ActivePage = TabSheet1
     Align = alClient
+    UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
     ExplicitWidth = 557
     ExplicitHeight = 333
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Umum'
+      ExplicitWidth = 553
+      ExplicitHeight = 310
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -429,8 +433,8 @@ object FNew_Barang: TFNew_Barang
         OnButtonClick = EdSatuanButtonClick
       end
       object Cbkdtr: TComboBox
-        Left = 455
-        Top = 53
+        Left = 355
+        Top = 49
         Width = 66
         Height = 21
         TabOrder = 2
@@ -527,6 +531,8 @@ object FNew_Barang: TFNew_Barang
         Width = 557
         Height = 19
         Panels = <>
+        ExplicitTop = 291
+        ExplicitWidth = 553
       end
       object ck_st_penjualan: TCheckBox
         Left = 412
@@ -548,9 +554,8 @@ object FNew_Barang: TFNew_Barang
       end
     end
     object TabSheet2: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
-      ExplicitWidth = 553
-      ExplicitHeight = 310
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
@@ -629,6 +634,7 @@ object FNew_Barang: TFNew_Barang
       end
     end
     object TabSheet3: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Akun'
       object Label19: TLabel
         Left = 27

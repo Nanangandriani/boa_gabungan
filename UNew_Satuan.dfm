@@ -22,8 +22,7 @@ object FNew_Satuan: TFNew_Satuan
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitTop = 138
-    ExplicitWidth = 432
+    ExplicitWidth = 502
     object BBatal: TRzBitBtn
       Left = 430
       Top = 1
@@ -84,8 +83,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 475
-      ExplicitTop = -3
+      ExplicitLeft = 426
     end
     object BSimpan: TRzBitBtn
       Left = 280
@@ -147,7 +145,7 @@ object FNew_Satuan: TFNew_Satuan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 281
+      ExplicitLeft = 276
     end
     object BCari: TRzBitBtn
       Left = 1
@@ -272,8 +270,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 213
-      ExplicitHeight = 30
+      ExplicitLeft = 201
     end
     object BRefresh: TRzBitBtn
       Left = 355
@@ -335,8 +332,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 400
-      ExplicitTop = -3
+      ExplicitLeft = 351
     end
   end
   object PnlNew: TPanel
@@ -345,7 +341,10 @@ object FNew_Satuan: TFNew_Satuan
     Width = 506
     Height = 121
     Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 502
     object Label6: TLabel
       Left = 106
       Top = 35
@@ -399,9 +398,8 @@ object FNew_Satuan: TFNew_Satuan
     Height = 367
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 136
-    ExplicitWidth = 432
-    ExplicitHeight = 2
+    ExplicitWidth = 502
+    ExplicitHeight = 366
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1

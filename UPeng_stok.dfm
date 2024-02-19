@@ -1,139 +1,30 @@
-object FHak_Akses: TFHak_Akses
+object FPeng_Stok: TFPeng_Stok
   Left = 0
   Top = 0
-  Caption = 'Form Hak Akses'
-  ClientHeight = 442
-  ClientWidth = 832
+  Caption = 'Form Penggabungan Stok'
+  ClientHeight = 547
+  ClientWidth = 998
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
-  Font.Name = 'Segoe UI'
+  Font.Height = -11
+  Font.Name = 'Tahoma'
   Font.Style = []
-  TextHeight = 15
-  object DBGridAkses: TDBGridEh
-    Left = 0
-    Top = 127
-    Width = 832
-    Height = 315
-    Align = alClient
-    DataGrouping.Active = True
-    DataGrouping.GroupLevels = <
-      item
-        ColumnName = 'Column_1_dept'
-      end>
-    DataSource = DsAkses
-    DynProps = <>
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    SearchPanel.Enabled = True
-    TabOrder = 0
-    TitleParams.MultiTitle = True
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'akses_no'
-        Footers = <>
-        Title.Caption = 'No.'
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'dept'
-        Footers = <>
-        Title.Caption = 'Department'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'position'
-        Footers = <>
-        Title.Caption = 'Position'
-        Width = 110
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'submenu'
-        Footers = <>
-        Title.Caption = 'Nama Menu'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'RAdd'
-        Footers = <>
-        Title.Caption = 'Baru'
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'REdit'
-        Footers = <>
-        Title.Caption = 'Update'
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'RRefresh'
-        Footers = <>
-        Title.Caption = 'Refresh'
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'RDelete'
-        Footers = <>
-        Title.Caption = 'Delete'
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'rhandover'
-        Footers = <>
-        Title.Caption = 'Serah'
-        Width = 64
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'raccept'
-        Footers = <>
-        Title.Caption = 'Terima'
-        Width = 64
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-    end
-  end
+  Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  TextHeight = 13
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 832
-    Height = 127
+    Width = 998
+    Height = 124
     BarManager = dxBarManager1
     Style = rs2010
-    ColorSchemeName = 'Blue'
+    ColorSchemeName = 'DevExpressStyle'
     Contexts = <>
-    TabOrder = 1
+    TabOrder = 0
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
@@ -143,8 +34,211 @@ object FHak_Akses: TFHak_Akses
           ToolbarName = 'dxBarManager1Bar1'
         end
         item
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
+    end
+  end
+  object DBGridTransfer: TDBGridEh
+    Left = 0
+    Top = 124
+    Width = 998
+    Height = 423
+    Align = alClient
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_9_trans_year'
+      end
+      item
+        ColumnName = 'Column_8_trans_month'
+      end
+      item
+        ColumnName = 'Column_10_trans_day'
+      end>
+    DataSource = DsTransfer
+    DynProps = <>
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    RowDetailPanel.Active = True
+    SearchPanel.Enabled = True
+    TabOrder = 1
+    TitleParams.MultiTitle = True
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_no'
+        Footers = <>
+        Title.Caption = 'No. Transaksi'
+        Width = 143
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'tgl'
+        Footers = <>
+        Title.Caption = 'Tanggal'
+        Width = 102
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_name'
+        Footers = <>
+        Title.Caption = 'Nama Barang'
+        Width = 183
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'stock_code'
+        Footers = <>
+        Title.Caption = 'Kode Stok'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty'
+        Footers = <>
+        Title.Caption = 'Kuantum'
+        Width = 123
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 68
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_name'
+        Footers = <>
+        Title.Caption = 'Gudang'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'note'
+        Footers = <>
+        Title.Caption = 'Keterangan'
+        Width = 184
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_month'
+        Footers = <>
+        Title.Caption = 'Bulan'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_year'
+        Footers = <>
+        Title.Caption = 'Tahun'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_day'
+        Footers = <>
+        Title.Caption = 'Tanggal'
+        Visible = False
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 961
+        Height = 118
+        Align = alClient
+        DataSource = DsDetail
+        DynProps = <>
+        FooterRowCount = 1
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_no'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_stock_code'
+            Footers = <>
+            Title.Caption = 'Kode Material'
+            Width = 96
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_name'
+            Footers = <>
+            Title.Caption = 'Nama Barang'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'stock_code_old'
+            Footers = <>
+            Title.Caption = 'Kode Stok'
+            Width = 170
+          end
+          item
+            Alignment = taRightJustify
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'qty'
+            Footer.Alignment = taRightJustify
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Kuantum'
+            Width = 108
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'unit'
+            Footers = <>
+            Title.Caption = 'Satuan'
+            Width = 100
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
   object dxBarManager1: TdxBarManager
@@ -161,7 +255,7 @@ object FHak_Akses: TFHak_Akses
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 256
+    Left = 376
     Top = 80
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -196,9 +290,32 @@ object FHak_Akses: TFHak_Akses
       Visible = True
       WholeRow = False
     end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Report'
+      CaptionButtons = <>
+      DockedDockingStyle = dsTop
+      DockedLeft = 127
+      DockedTop = 0
+      FloatLeft = 898
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = False
+      WholeRow = False
+    end
     object dxBarUpdate: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update    '
       Category = 0
+      Hint = 'Update    '
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
@@ -254,6 +371,7 @@ object FHak_Akses: TFHak_Akses
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFCF7ECFFEDC36AFFF1D08BFFFFFFFFFFFFFFFFFF}
+      OnClick = dxBarUpdateClick
     end
     object dxBarBaru: TdxBarLargeButton
       Action = ActBaru
@@ -322,7 +440,7 @@ object FHak_Akses: TFHak_Akses
         FFFFFFFFFFFF}
     end
     object dxbarRefresh: TdxBarButton
-      Action = ActRO
+      Action = ActRo
       Category = 0
       Glyph.SourceDPI = 96
       Glyph.Data = {
@@ -381,8 +499,11 @@ object FHak_Akses: TFHak_Akses
         F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FF}
     end
     object dxBarDelete: TdxBarButton
-      Action = ActDel
+      Caption = 'Delete     '
       Category = 0
+      Enabled = False
+      Hint = 'Delete     '
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
@@ -433,40 +554,243 @@ object FHak_Akses: TFHak_Akses
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFBFBFFFFF0C0CFFFFABABFFFFFFFFFFFFFFFFFFFF}
     end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Print'
+      Category = 0
+      Hint = 'Print'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        424D2E0B00000000000036000000280000001A0000001B000000010020000000
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
+        F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F4FFBEBB
+        B8FF95918BFF8F8B85FF928E88FF938F89FF97938EFF8E8983FF3C2814FF4532
+        1FFF8D8176FFEEECEBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1
+        ADFF8D8882FF96918CFF9A9590FF9B9792FF9B9792FF9F9B97FF95908AFF4835
+        22FF4E3C2AFF4E3C29FF473421FF37230EFF7B6E60FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEEE
+        EDFF918D87FF96918CFF9A9691FF9B9792FF9B9792FF9B9792FF9F9C98FF928D
+        86FF473420FF4E3C2AFF503E2CFF503E2CFF503E2CFF4F3D2BFF473421FF3F2B
+        18FFE1DFDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFE9E8E7FF8C8782FF999590FF9B9792FF9B9792FF9B9792FF9B9792FFA09C
+        98FF908A83FF46331FFF4F3C2AFF503E2CFF503E2CFF503E2CFF503E2CFF503E
+        2CFF503E2CFF4D3B29FF36210DFFD8D4D0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFF9F8F8FF8D8983FF9A9691FF9B9792FF9B9792FF9B9792FF9B97
+        92FF9D9995FF888079FF402C18FF493724FF4A3725FF4A3725FF4A3725FF4C3A
+        27FF503E2CFF503E2CFF503E2CFF503E2CFF4E3C2AFF38240FFFF3F2F1FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF9D9994FF98948FFF9B9792FF9B9792FF9B97
+        92FF9B9792FF9D9A96FF9E9994FF766758FF7D7063FF7E7164FF7E7164FF7E71
+        64FF807366FF645444FF4C3A27FF503E2CFF503E2CFF503E2CFF503E2CFF4B39
+        26FF544231FFFFFFFFFFFFFFFFFFFFFFFFFFD7D6D4FF918D87FF9B9792FF9B97
+        92FF9B9792FF9B9792FFA19E9AFF786F65FFDBD7D3FF958A7FFF9C9288FF9C92
+        88FF9C9288FF9C9288FF968B80FFE5E3E1FF412D1AFF503E2CFF503E2CFF503E
+        2CFF503E2CFF503E2CFF3F2C18FFB9B2AAFFFFFFFFFFFFFFFFFF9B9792FF9995
+        90FF9B9792FF9B9792FF9B9792FFA29F9BFF847B73FF37210CFFDDDAD7FF3925
+        10FF473422FF473422FF473422FF473422FF392510FFDCD9D6FF412E1AFF503E
+        2CFF503E2CFF503E2CFF503E2CFF503E2CFF4D3A28FF503E2CFFFFFFFFFFF4F3
+        F3FF8F8A85FF9B9792FF9B9792FF9B9792FF9A9692FF72675CFF37220CFF331E
+        0AFFDAD6D3FF412E1AFF503E2CFF503E2CFF503E2CFF503E2CFF412E1AFFD9D5
+        D2FF341F0AFF422E1BFF412E1AFF483522FF503E2CFF503E2CFF503E2CFF3B27
+        13FFEBE9E7FFD6D5D3FF948F8AFF9B9792FF9B9792FF96928DFFC2C0BDFFDBD6
+        D2FFD7D3CFFFCDC8C3FFFEFEFEFF321D08FF44311EFF44311EFF44311EFF4431
+        1EFF321D08FFFCFCFCFFCEC9C5FFD9D5D1FFE7E5E2FF92877CFF483522FF503E
+        2CFF503E2CFF44311DFFB7AFA8FFC5C2BFFF96928CFF9B9792FF9B9792FF938F
+        89FFF4F4F5FF37230FFF3B2712FF7B6E60FFFFFFFFFFB7B0A9FFBEB8B1FFBEB8
+        B1FFBEB8B1FFBEB8B1FFB7B0A9FFFFFFFFFF7C6E61FF3B2712FF3A2611FFDDD9
+        D5FF422F1BFF503E2CFF503E2CFF44311DFF998E84FFBCBAB7FF97928DFF9B97
+        92FF9B9792FF938F89FFF1F1F1FF45321FFF4E3B29FF544231FF4D3B28FF5645
+        33FF52412FFF554433FF554433FF513F2DFF594837FF544231FF554332FF4E3C
+        29FF483521FFD7D3CFFF422F1BFF503E2CFF4A3725FF574737FFC4C2C1FFBEBB
+        B8FF96928DFF9B9792FF9B9792FF938F89FFF1F1F1FF45321FFF4E3C2AFF4835
+        23FFBEB7B0FF897D71FFBAB3ACFF91867CFF908579FFCCC7C2FF695A4AFF6F61
+        52FF4A3825FF4F3D2BFF483521FFD7D3CFFF422F1BFF4A3724FF5E4E3FFFA09E
+        9AFFBEBCB9FFC9C6C4FF95918CFF9B9792FF9B9792FF938F89FFF1F1F1FF4532
+        1FFF4C3A27FF3E2A16FF756758FF564533FF6E5F50FF554433FF645344FF5341
+        2FFF685849FF645444FF3F2B17FF4C3A28FF483521FFD7D3CFFF3C2713FF6052
+        43FFA5A39FFF96928DFFC8C6C3FFDDDCDAFF938F89FF9B9792FF9B9792FF938F
+        89FFF3F3F3FF36220EFF4C3927FFFFFFFFFFFCFBFBFFCBC6C1FFCFCAC5FFD1CC
+        C8FFD0CBC7FFD1CCC8FFCAC5C0FFFDFDFDFFFFFFFFFF4C3A28FF3A2510FFD4CF
+        CAFF564636FFA5A3A0FF9B9792FF938F89FFDDDBDAFFFFFFFFFF8D8883FF9A96
+        91FF9B9792FF95918BFFD5D3D2FFBFB7B0FFBDB5AEFFE0DDD9FFEFECEAFF311B
+        06FF422F1CFF422F1CFF422F1CFF422F1CFF311B06FFF0EEEDFFE8E6E3FFBEB6
+        B0FFC0B9B1FFC6C3BFFF9B9894FF9B9792FF9A9691FF8D8883FFFEFEFEFFFFFF
+        FFFFAAA7A3FF97938EFF9B9792FF9A9691FF948F8AFFA4A19DFFA5A29EFF9996
+        91FFF4F5F4FF301A05FF412E1AFF412E1AFF412E1AFF412E1AFF321D08FFDFDB
+        D8FF45321EFFA09C98FFA5A29EFF95918CFF9B9792FF9B9792FF97938EFFAAA6
+        A2FFFFFFFFFFFFFFFFFFECEBEAFF8D8983FF9A9691FF9B9792FF9A9691FF9995
+        90FF999590FF918D88FFECECEBFFD0CAC5FFD3CEC9FFD3CEC9FFD3CEC9FFD3CE
+        C9FFD2CCC7FFDAD5D2FF8B857EFF9B9893FF999590FF9A9691FF9B9792FF9B97
+        92FF8D8983FFEBEBEAFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1ADFF95908BFF9B97
+        92FF9B9792FF9B9792FF9B9792FF9B9792FF938E89FF96928DFF96928DFF9692
+        8DFF96928DFF96928DFF96928DFF95918CFF9C9893FF9B9792FF9B9792FF9B97
+        92FF9B9792FF95908BFFB4B1ADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFF9A9691FF97938EFF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
+        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
+        92FF9B9792FF9B9792FF97938EFF999590FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF98948FFF96918CFF9B9792FF9B9792FF9B97
+        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
+        92FF9B9792FF9B9792FF9B9792FF96918CFF98938EFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAAA6A2FF908B
+        86FF999590FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
+        92FF9B9792FF9B9792FF9B9792FF999590FF908B86FFA9A6A2FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFDCDBD9FF98938EFF918C87FF96928DFF999590FF9A9691FF9B97
+        92FF9B9792FF9A9691FF999590FF96928DFF918C87FF97938EFFDCDAD9FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E2E0FFB9B7B3FF9C98
+        93FF8D8983FF8F8B85FF8F8B85FF8D8983FF9C9893FFB9B7B3FFE3E2E0FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    end
   end
-  object QAkses: TUniQuery
+  object QTransfer: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.submenu,c.Dept,d."position" from t_akses  a inner j' +
-        'oin t_menu_sub b on a.submenu_code=b.submenu_code'
-      
-        'inner join t_dept c on a.dept_code=c.dept_code INNER JOIN t_posi' +
-        'tion d on a.position_code=d.position_code order by a.submenu_cod' +
-        'e Asc')
-    Left = 440
-    Top = 24
+        'SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code ' +
+        'from warehouse.t_item_comb a INNER JOIN warehouse.t_item_stock b' +
+        ' on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code' +
+        '=c.code order by a.trans_no asc')
+    Left = 288
+    Top = 40
   end
-  object MemAkses: TMemTableEh
+  object MemTransfer: TMemTableEh
     FetchAllOnOpen = True
     Params = <>
-    DataDriver = DsdAkses
-    Left = 440
-    Top = 81
+    DataDriver = DsdTransfer
+    Left = 288
+    Top = 89
   end
-  object DsAkses: TDataSource
-    DataSet = MemAkses
-    Left = 544
-    Top = 32
-  end
-  object DsdAkses: TDataSetDriverEh
-    ProviderDataSet = QAkses
+  object DsdTransfer: TDataSetDriverEh
+    ProviderDataSet = QTransfer
     Left = 544
     Top = 80
   end
+  object DsTransfer: TDataSource
+    DataSet = MemTransfer
+    Left = 544
+    Top = 32
+  end
+  object Qdetail: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT'#9'b.item_name, '
+      #9'a.item_stock_code, '
+      #9'a.stock_code_old, '
+      #9'a.qty, '
+      #9'a.unit, '
+      #9'a.trans_no'
+      'FROM'#9'warehouse.t_item_comb_det AS "a"'
+      #9'INNER JOIN'
+      #9'warehouse.t_item_stock AS b'
+      #9'ON a.item_stock_code= b.item_stock_code')
+    MasterSource = DsTransfer
+    MasterFields = 'trans_no'
+    DetailFields = 'trans_no'
+    Left = 616
+    Top = 32
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'trans_no'
+        Value = nil
+      end>
+  end
+  object DsDetail: TDataSource
+    DataSet = Qdetail
+    Left = 616
+    Top = 88
+  end
+  object Rpt: TfrxReport
+    Version = '2022.2.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44496.958662303240000000
+    ReportOptions.LastChange = 44496.958662303240000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    Left = 685
+    Top = 80
+    Datasets = <>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 215.900000000000000000
+      PaperHeight = 279.400000000000000000
+      PaperSize = 1
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+    end
+  end
+  object QRptTransfer: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select A.*,b.nm_material,B.no_material, c."Dari", c."Ke", c.tgl_' +
+        'transfer, c.ket'
+      ' from t_transfer_antar_gudangdet a '
+      
+        'inner join t_material_stok b on A.kd_material_stok=b.kd_material' +
+        '_stok'
+      
+        'inner join t_transfer_antar_gudang c on a.no_transfer=c.no_trans' +
+        'fer')
+    DetailFields = 'no_transfer'
+    Left = 376
+    Top = 32
+  end
+  object DbRptTransfer: TfrxDBDataset
+    UserName = 'RptTransfer'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'id=id'
+      'kd_material_stok=kd_material_stok'
+      'kd_stok_lama=kd_stok_lama'
+      'kd_stok_baru=kd_stok_baru'
+      'qty=qty'
+      'satuan=satuan'
+      'no_transfer=no_transfer'
+      'nm_material=nm_material'
+      'no_material=no_material'
+      'Dari=Dari'
+      'Ke=Ke'
+      'tgl_transfer=tgl_transfer'
+      'ket=ket')
+    DataSet = QRptTransfer
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 733
+    Top = 12
+  end
   object ActMenu: TActionManager
-    Left = 256
-    Top = 24
+    Left = 200
+    Top = 8
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -474,15 +798,13 @@ object FHak_Akses: TFHak_Akses
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
-    object ActRO: TAction
+    object ActRo: TAction
       Caption = 'Refresh  '
-      OnExecute = ActROExecute
+      OnExecute = ActRoExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
-      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -490,13 +812,15 @@ object FHak_Akses: TFHak_Akses
     object ActApp: TAction
       Caption = 'Approve  '
       Enabled = False
+      Visible = False
     end
     object ActReject: TAction
       Caption = 'Reject  '
       Enabled = False
+      Visible = False
     end
     object ActClose: TAction
-      Caption = 'CLose PO    '
+      Caption = 'CLose Kontrak    '
       Enabled = False
     end
   end

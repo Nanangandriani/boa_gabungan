@@ -30,6 +30,19 @@ uses
 
 type
   TFHak_Akses = class(TForm)
+    DBGridAkses: TDBGridEh;
+    dxRibbon1: TdxRibbon;
+    dxRibbon1Tab1: TdxRibbonTab;
+    dxBarManager1: TdxBarManager;
+    dxBarManager1Bar1: TdxBar;
+    dxBarUpdate: TdxBarButton;
+    dxBarBaru: TdxBarLargeButton;
+    dxbarRefresh: TdxBarButton;
+    dxBarDelete: TdxBarButton;
+    QAkses: TUniQuery;
+    MemAkses: TMemTableEh;
+    DsAkses: TDataSource;
+    DsdAkses: TDataSetDriverEh;
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -39,26 +52,6 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
-    DBGridAkses: TDBGridEh;
-    dxBarManager1: TdxBarManager;
-    dxBarManager1Bar1: TdxBar;
-    dxBarButton2: TdxBarButton;
-    dxBarButton1: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarButton4: TdxBarButton;
-    dxBarButton5: TdxBarButton;
-    dxBarButton6: TdxBarButton;
-    dxBarButton7: TdxBarButton;
-    dxBarLargeBaru: TdxBarLargeButton;
-    dxBarUpdate: TdxBarButton;
-    dxBarRefresh: TdxBarButton;
-    dxBarDelete: TdxBarButton;
-    dxRibbon1: TdxRibbon;
-    dxRibbon1Tab1: TdxRibbonTab;
-    DsdAkses: TDataSetDriverEh;
-    MemAkses: TMemTableEh;
-    DsAkses: TDataSource;
-    QAkses: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -87,7 +80,7 @@ begin
     Autonumber;
     Show;
     Load;
-    RefreshMenu;
+  //  RefreshMenu;
     status:=0;
     Caption:='New Hak Akses';
   end;
@@ -131,9 +124,9 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' select A.*,b.nm_menu,c.Dept from t_akses  a inner join t_menu b on '+
-                  ' a.no_menu=b.no_menu inner join t_dept c on a.iddept=c.iddept '+
-                  ' where a.iddept='+QuotedStr(DBGridAkses.Fields[0].AsString)+''+
+        sql.Text:=' select A.*,b.submenu2,c.Dept from t_akses  a inner join t_submenu2 b on '+
+                  ' a.menu_code=b.kd_submenu inner join t_dept c on a.iddept=c.iddept '+
+                  ' where a.akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString)+''+
                   ' order by a.no_akses Asc ';
       end;
       EdNo.Text:=MemAkses['no_akses'];

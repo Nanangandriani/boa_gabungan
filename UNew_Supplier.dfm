@@ -147,7 +147,8 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 712
+      ExplicitLeft = 722
+      ExplicitTop = 6
     end
     object BEdit: TRzBitBtn
       Left = 641
@@ -210,7 +211,8 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 637
+      ExplicitLeft = 635
+      ExplicitTop = 6
     end
   end
   object Panel1: TPanel
@@ -219,6 +221,8 @@ object FNew_Supplier: TFNew_Supplier
     Width = 867
     Height = 201
     Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
     TabOrder = 1
     ExplicitWidth = 863
     object Label1: TLabel
@@ -297,6 +301,7 @@ object FNew_Supplier: TFNew_Supplier
       Width = 132
       Height = 23
       TabOrder = 0
+      Visible = False
     end
     object EdNm: TEdit
       Left = 137
