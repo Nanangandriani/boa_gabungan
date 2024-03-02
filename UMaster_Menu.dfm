@@ -341,7 +341,8 @@ object FMaster_Menu: TFMaster_Menu
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 463
+    ExplicitLeft = 1
+    ExplicitTop = -5
     object Label6: TLabel
       Left = 106
       Top = 59
@@ -387,7 +388,7 @@ object FMaster_Menu: TFMaster_Menu
     object EdDesk: TEdit
       Left = 128
       Top = 97
-      Width = 297
+      Width = 188
       Height = 23
       TabOrder = 0
     end
@@ -404,7 +405,7 @@ object FMaster_Menu: TFMaster_Menu
     object Cbmaster: TComboBox
       Left = 128
       Top = 17
-      Width = 153
+      Width = 188
       Height = 23
       TabOrder = 2
       OnSelect = CbmasterSelect
@@ -435,7 +436,7 @@ object FMaster_Menu: TFMaster_Menu
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
-          FieldName = 'master_code'
+          FieldName = 'menu_code'
           Footers = <>
           Title.Caption = 'Kode'
           Width = 123
@@ -444,7 +445,7 @@ object FMaster_Menu: TFMaster_Menu
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
-          FieldName = 'master_name'
+          FieldName = 'menu'
           Footers = <>
           Title.Caption = 'Deskripsi'
           Width = 294
@@ -459,8 +460,8 @@ object FMaster_Menu: TFMaster_Menu
       
         'select b.master_name,a.* from t_menu a inner join t_menu_master ' +
         'b on a.master_code=b.master_code order by menu_code')
-    Left = 288
-    Top = 24
+    Left = 368
+    Top = 72
   end
   object Dsmenu: TDataSource
     DataSet = Qmenu

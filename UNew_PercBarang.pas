@@ -103,7 +103,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select type from warehouse.t_mixing_master GROUP BY type order by type asc';
+    sql.Text:='select item_name "type" from warehouse.t_mixing_master a inner join t_item b on a.type_code=b.item_code GROUP BY item_name order by item_name asc';
     Execute;
   end;
   DM.Qtemp.First;
@@ -274,102 +274,102 @@ procedure TFNew_PercBarang.BSimpanClick(Sender: TObject);
 begin
 Autonumber;
  if messageDlg ('Yakin Simpan ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-if EdNo.Text='' then
-begin
-  MessageDlg('No. Permintaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNo.SetFocus;
-  Exit;
-end;
-if Edjenis.Text='' then
-begin
-  MessageDlg('Jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  Edjenis.SetFocus;
-  Exit;
-end;
-if DtPeriode.Text='' then
-begin
-  MessageDlg('Periode Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  DtPeriode.SetFocus;
-  Exit;
-end;
-if Edtimbang.Text='0' then
-begin
-  MessageDlg('Timbang Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  Edtimbang.SetFocus;
-  Exit;
-end;
-MemMaterial.First;
-while not MemMaterial.Eof do
-begin
-if MemMaterial['total_stok'] < MemMaterial['Total'] then
-begin
-   ShowMessage(''+MemMaterial['nm_material']+ '  Stok Tidak Mencukupi');
-   Exit;
-end;
-  MemMaterial.Next;
-end;
-if not dm.koneksi.InTransaction then
-dm.koneksi.StartTransaction;
-try
-begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='select * from t_permt_material';
-  Execsql;
-end;
-MemMaterial.First;
-while not MemMaterial.Eof do
-begin
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='insert into t_permt_material(kd_material_stok, qty,satuan, keterangan,periode,gudang,jenis,'+
-            ' no_permintaan,kd_stok,status,no_urut,kd_material,jmlh_timbang,total_Permt,total_terima,'+
-            ' timbang,status_trans,kd_sbu,thn,bln,tgl_no)values(:parkd_material_stok, :parqty,'+
-            ' :parsatuan, :parketerangan,:parperiode,:pargudang,:parjenis, :parno_permintaan,'+
-            ' :parkd_stok,:parstatus,:parno_urut,:parkd_material,:parjmlh_timbang,:partotal_Permt,'+
-            ' :partotal_terima,:partimbang,:parstatus_trans,:parsbu,:parthn,:parbln,:partglno)';
-            ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material'];
-            ParamByName('parqty').ASfloat:=MemMaterial['qty'];
-            parambyname('parsatuan').Value:=MemMaterial['satuan'];
-            ParamByName('parketerangan').Value:=MemMaterial['ket'];
-            ParamByName('parperiode').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
-            Parambyname('pargudang').Value:=MemMaterial['gudang'];
-            ParamByName('parjenis').Value:=Edjenis.Text;
-            ParamByName('parno_permintaan').Value:=Edno.Text;
-            Parambyname('parkd_stok').Value:=MemMaterial['kd_stok'];
-            ParamByName('parstatus').Value:='Created';
-            ParamByName('parno_urut').Value:=nourut;
-            ParamByName('parkd_material').Value:=Kode;
-            ParamByName('parjmlh_timbang').Value:=edtimbang.Value;
-            ParamByName('partotal_Permt').value:=MemMaterial['total'];
-            ParamByName('partotal_terima').Value:='0';
-            ParamByName('partimbang').Value:=MemMaterial['timbang'];
-            ParamByName('parstatus_trans').Value:='1';
-            ParamByName('parsbu').AsString:=loksbu;
-            ParamByName('parthn').Value:=thn;
-            ParamByName('parbln').Value:=bln;
-            ParamByName('partglno').AsString:=tglno;
-  ExecSQL;
-end;
-MemMaterial.Next;
-end;
-dm.koneksi.Commit;
-Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-BBatalClick(sender);
-end
-Except
-on E :Exception do
-begin
-MessageDlg(E.Message,mtError,[MBok],0);
-dm.koneksi.Rollback;
-end;
-end;
-end;
+  then begin
+    if EdNo.Text='' then
+    begin
+      MessageDlg('No. Permintaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdNo.SetFocus;
+      Exit;
+    end;
+    if Edjenis.Text='' then
+    begin
+      MessageDlg('Jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Edjenis.SetFocus;
+      Exit;
+    end;
+    if DtPeriode.Text='' then
+    begin
+      MessageDlg('Periode Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtPeriode.SetFocus;
+      Exit;
+    end;
+    if Edtimbang.Text='0' then
+    begin
+      MessageDlg('Timbang Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Edtimbang.SetFocus;
+      Exit;
+    end;
+    MemMaterial.First;
+    while not MemMaterial.Eof do
+    begin
+    if MemMaterial['total_stok'] < MemMaterial['Total'] then
+    begin
+       ShowMessage(''+MemMaterial['nm_material']+ '  Stok Tidak Mencukupi');
+       Exit;
+    end;
+      MemMaterial.Next;
+    end;
+    if not dm.koneksi.InTransaction then
+    dm.koneksi.StartTransaction;
+    try
+      begin
+      with dm.Qtemp do
+        begin
+          Close;
+          sql.Clear;
+          sql.Text:='select * from t_permt_material';
+          Execsql;
+        end;
+        MemMaterial.First;
+        while not MemMaterial.Eof do
+        begin
+          with dm.Qtemp do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:='insert into t_permt_material(kd_material_stok, qty,satuan, keterangan,periode,gudang,jenis,'+
+                      ' no_permintaan,kd_stok,status,no_urut,kd_material,jmlh_timbang,total_Permt,total_terima,'+
+                      ' timbang,status_trans,kd_sbu,thn,bln,tgl_no)values(:parkd_material_stok, :parqty,'+
+                      ' :parsatuan, :parketerangan,:parperiode,:pargudang,:parjenis, :parno_permintaan,'+
+                      ' :parkd_stok,:parstatus,:parno_urut,:parkd_material,:parjmlh_timbang,:partotal_Permt,'+
+                      ' :partotal_terima,:partimbang,:parstatus_trans,:parsbu,:parthn,:parbln,:partglno)';
+                      ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material'];
+                      ParamByName('parqty').ASfloat:=MemMaterial['qty'];
+                      parambyname('parsatuan').Value:=MemMaterial['satuan'];
+                      ParamByName('parketerangan').Value:=MemMaterial['ket'];
+                      ParamByName('parperiode').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
+                      Parambyname('pargudang').Value:=MemMaterial['gudang'];
+                      ParamByName('parjenis').Value:=Edjenis.Text;
+                      ParamByName('parno_permintaan').Value:=Edno.Text;
+                      Parambyname('parkd_stok').Value:=MemMaterial['kd_stok'];
+                      ParamByName('parstatus').Value:='Created';
+                      ParamByName('parno_urut').Value:=nourut;
+                      ParamByName('parkd_material').Value:=Kode;
+                      ParamByName('parjmlh_timbang').Value:=edtimbang.Value;
+                      ParamByName('partotal_Permt').value:=MemMaterial['total'];
+                      ParamByName('partotal_terima').Value:='0';
+                      ParamByName('partimbang').Value:=MemMaterial['timbang'];
+                      ParamByName('parstatus_trans').Value:='1';
+                      ParamByName('parsbu').AsString:=loksbu;
+                      ParamByName('parthn').Value:=thn;
+                      ParamByName('parbln').Value:=bln;
+                      ParamByName('partglno').AsString:=tglno;
+            ExecSQL;
+          end;
+          MemMaterial.Next;
+        end;
+        dm.koneksi.Commit;
+        Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+        BBatalClick(sender);
+        end
+        Except
+        on E :Exception do
+        begin
+        MessageDlg(E.Message,mtError,[MBok],0);
+        dm.koneksi.Rollback;
+        end;
+    end;
+  end;
 end;
 
 procedure TFNew_PercBarang.DBGridEh1CellClick(Column: TColumnEh);
@@ -449,7 +449,7 @@ end;
 procedure TFNew_PercBarang.EdjenisSelect(Sender: TObject);
 var i : Integer;
 begin
-  with dm.Qtemp do
+{  with dm.Qtemp do
   begin
     close;
     sql.Clear;
@@ -482,7 +482,7 @@ begin
       MemMaterial['qty']:=QMaster['qty'];
       MemMaterial.Post;
       QMaster.Next;
-    end;
+    end;   }
 end;
 
 procedure TFNew_PercBarang.EdtimbangChange(Sender: TObject);

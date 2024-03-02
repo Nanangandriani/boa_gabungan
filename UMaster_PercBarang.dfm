@@ -1,32 +1,34 @@
 object FMaster_PercBarang: TFMaster_PercBarang
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'Form Master Percampuran Barang'
-  ClientHeight = 394
-  ClientWidth = 551
+  ClientHeight = 562
+  ClientWidth = 581
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   TextHeight = 15
   object PnlAksi: TPanel
     Left = 0
-    Top = 313
-    Width = 551
+    Top = 301
+    Width = 581
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitTop = 121
-    ExplicitWidth = 502
+    ExplicitWidth = 577
     object BBatal: TRzBitBtn
-      Left = 475
+      Left = 505
       Top = 1
       Height = 39
       Align = alRight
       Caption = 'Batal'
       TabOrder = 1
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -79,15 +81,16 @@ object FMaster_PercBarang: TFMaster_PercBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 430
+      ExplicitLeft = 501
     end
     object BSimpan: TRzBitBtn
-      Left = 325
+      Left = 355
       Top = 1
       Height = 39
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 0
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -140,15 +143,16 @@ object FMaster_PercBarang: TFMaster_PercBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 280
+      ExplicitLeft = 351
     end
     object Btambah: TRzBitBtn
-      Left = 250
+      Left = 280
       Top = 1
       Height = 39
       Align = alRight
       Caption = 'Tambah'
       TabOrder = 2
+      OnClick = BtambahClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830B0000830B00000001000000000000000000003300
@@ -201,10 +205,10 @@ object FMaster_PercBarang: TFMaster_PercBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 205
+      ExplicitLeft = 276
     end
     object BRefresh: TRzBitBtn
-      Left = 400
+      Left = 430
       Top = 1
       Height = 39
       Align = alRight
@@ -262,18 +266,20 @@ object FMaster_PercBarang: TFMaster_PercBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 355
+      ExplicitLeft = 426
     end
   end
   object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 551
-    Height = 313
+    Width = 581
+    Height = 301
     Align = alTop
     Color = clGradientActiveCaption
+    Enabled = False
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 577
     object Label6: TLabel
       Left = 106
       Top = 35
@@ -291,9 +297,9 @@ object FMaster_PercBarang: TFMaster_PercBarang
     object Label2: TLabel
       Left = 24
       Top = 76
-      Width = 47
+      Width = 25
       Height = 15
-      Caption = 'Deskripsi'
+      Caption = 'Jenis'
     end
     object Label5: TLabel
       Left = 24
@@ -310,48 +316,94 @@ object FMaster_PercBarang: TFMaster_PercBarang
       CharCase = ecUpperCase
       TabOrder = 0
     end
-    object DBGrid1: TDBGrid
-      Left = 1
-      Top = 128
-      Width = 549
-      Height = 184
-      Align = alBottom
-      TabOrder = 1
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-    end
     object edkd: TRzButtonEdit
       Left = 128
       Top = 32
       Width = 145
       Height = 23
       Text = ''
-      TabOrder = 2
+      TabOrder = 1
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edkdButtonClick
     end
+    object DBGridEh2: TDBGridEh
+      Left = 1
+      Top = 128
+      Width = 579
+      Height = 172
+      Align = alBottom
+      DataSource = DsDetail
+      DynProps = <>
+      HorzScrollBar.ExtraPanel.NavigatorButtons = [nbInsertEh, nbDeleteEh, nbEditEh, nbPostEh, nbRefreshEh]
+      HorzScrollBar.ExtraPanel.Visible = True
+      TabOrder = 2
+      Columns = <
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <
+            item
+              Style = ebsPlusEh
+              OnClick = DBGridEh2Columns0EditButtons0Click
+            end>
+          FieldName = 'item_code'
+          Footers = <>
+          Title.Caption = 'Kode Barang'
+          Width = 120
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'item_name'
+          Footers = <>
+          Title.Caption = 'Nama Barang'
+          Width = 200
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'qty'
+          Footers = <>
+          Title.Caption = 'Kuantum'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'unit'
+          Footers = <>
+          Title.Caption = 'Satuan'
+          Width = 100
+        end>
+      object RowDetailData: TRowDetailPanelControlEh
+      end
+    end
   end
   object Pnllist: TPanel
     Left = 0
-    Top = 354
-    Width = 551
-    Height = 40
+    Top = 342
+    Width = 581
+    Height = 220
     Align = alClient
     TabOrder = 2
-    ExplicitTop = -127
-    ExplicitWidth = 506
-    ExplicitHeight = 367
+    ExplicitWidth = 577
+    ExplicitHeight = 219
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1
-      Width = 549
-      Height = 38
+      Width = 579
+      Height = 218
       Align = alClient
-      DataSource = DsSatuan
+      DataGrouping.Active = True
+      DataGrouping.GroupLevels = <
+        item
+          ColumnName = 'Column_0_jenis'
+        end>
+      DataSource = DsMaster
       DynProps = <>
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 0
@@ -360,34 +412,126 @@ object FMaster_PercBarang: TFMaster_PercBarang
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
-          FieldName = 'unit_code'
+          FieldName = 'jenis'
           Footers = <>
-          Title.Caption = 'Kode'
+          Title.Caption = 'Jenis'
           Width = 123
         end
         item
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
-          FieldName = 'unit_name'
+          FieldName = 'item_code'
           Footers = <>
-          Title.Caption = 'Deskripsi'
-          Width = 294
+          Title.Caption = 'Kode Barang'
+          Width = 120
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'item_name'
+          Footers = <>
+          Title.Caption = 'Nama Barang'
+          Width = 160
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'qty'
+          Footers = <>
+          Title.Caption = 'Kuantum'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'unit'
+          Footers = <>
+          Title.Caption = 'Satuan'
+          Width = 60
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
     end
   end
-  object QSatuan: TUniQuery
+  object QMaster: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_unit order by unit_code')
-    Left = 336
-    Top = 24
+      
+        'select a.*,b.item_name jenis,c.item_name,c.unit from warehouse.t' +
+        '_mixing_master a INNER JOIN t_item b on a.type_code=b.item_code ' +
+        'INNER JOIN t_item c on a.item_code=c.item_code order by master_n' +
+        'o')
+    Active = True
+    Left = 464
+    Top = 16
   end
-  object DsSatuan: TDataSource
-    DataSet = QSatuan
-    Left = 416
-    Top = 24
+  object DsDetail: TDataSource
+    DataSet = Memdetail
+    Left = 352
+    Top = 64
+  end
+  object Memdetail: TMemTableEh
+    Active = True
+    Params = <>
+    Left = 352
+    Top = 8
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object item_code: TMTStringDataFieldEh
+          FieldName = 'item_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+          Size = 50
+        end
+        object item_name: TMTStringDataFieldEh
+          FieldName = 'item_name'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+          Size = 100
+        end
+        object unit: TMTStringDataFieldEh
+          FieldName = 'unit'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object qty: TMTNumericDataFieldEh
+          FieldName = 'qty'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object item_code2: TMTStringDataFieldEh
+          FieldName = 'item_code2'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+          Size = 50
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DsMaster: TDataSource
+    DataSet = MemTableEh1
+    Left = 464
+    Top = 72
+  end
+  object MemTableEh1: TMemTableEh
+    Active = True
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 472
+    Top = 168
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QMaster
+    Left = 400
+    Top = 184
   end
 end

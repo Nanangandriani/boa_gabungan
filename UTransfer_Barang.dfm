@@ -668,12 +668,10 @@ object FTransfer_Barang: TFTransfer_Barang
         'N t_wh c on a.wh_code_to=c.code '
       'INNER JOIN t_wh_category d on a.wh_category_code=d.category_code'
       'order by trans_no desc')
-    Active = True
     Left = 448
     Top = 24
   end
   object MemTransfer: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdTransfer

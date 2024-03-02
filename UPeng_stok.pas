@@ -43,10 +43,10 @@ type
     dxbarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     dxBarLargeButton1: TdxBarLargeButton;
-    QTransfer: TUniQuery;
-    MemTransfer: TMemTableEh;
-    DsdTransfer: TDataSetDriverEh;
-    DsTransfer: TDataSource;
+    QPeng_Stok: TUniQuery;
+    MemPeng_Stok: TMemTableEh;
+    DsdPeng_Stok: TDataSetDriverEh;
+    DsPeng_Stok: TDataSource;
     Qdetail: TUniQuery;
     DsDetail: TDataSource;
     Rpt: TfrxReport;
@@ -108,7 +108,7 @@ DBGridTransfer.StartLoadingStatus();
 DBGridTransfer.FinishLoadingStatus();
   if loksbu='' then
   begin
-    with QTransfer do
+    with QPeng_Stok do
     begin
       close;
       sql.Clear;
@@ -116,15 +116,15 @@ DBGridTransfer.FinishLoadingStatus();
       ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.code order by a.trans_no asc';
       ExecSQL;
     end;
-    QTransfer.Open;
-    MemTransfer.Close;
-    MemTransfer.Open;
+    QPeng_Stok.Open;
+    MemPeng_Stok.Close;
+    MemPeng_Stok.Open;
     Qdetail.close;
     qdetail.open;
   end;
   if loksbu<>'' then
   begin
-    with QTransfer do
+    with QPeng_Stok do
     begin
       close;
       sql.Clear;
@@ -133,9 +133,9 @@ DBGridTransfer.FinishLoadingStatus();
       '  where a.kd_sbu='+QuotedStr(loksbu)+' order by a.trans_no asc';
       ExecSQL;
     end;
-    QTransfer.Open;
-    MemTransfer.Close;
-    MemTransfer.Open;
+    QPeng_Stok.Open;
+    MemPeng_Stok.Close;
+    MemPeng_Stok.Open;
     Qdetail.close;
     qdetail.open;
   end;
@@ -143,37 +143,37 @@ end;
 
 procedure TFPeng_Stok.dxBarUpdateClick(Sender: TObject);
 begin
-{with FNew_PengStok do
-begin
-  Show;
-  status:=1;
-  Edno.Text:=MemTransfer['no_trans'];
-  EdKet.Text:=MemTransfer['ket'];
-  Edkd_stok.Text:=MemTransfer['kd_stok'];
-  Edkd_Barang.Text:=MemTransfer['kd_material'];
-  edkdbr.Text:=MemTransfer['kdmat'];
-  EdNm_Barang.Text:=MemTransfer['nm_material'];
-  kdgd:=MemTransfer['kdgd'];
-  nogd:=MemTransfer['kd_gudang'];
-  CbGudang.Text:=MemTransfer['nm_gudang'];
-  DtTransfer.Text:=MemTransfer['tgl'];
-  satuan:=MemTransfer['satuan'];
-Qdetail.First;
-while not Qdetail.eof do
-begin
-with Qdetail do
-begin
-  MemDetail.Insert;
-  MemDetail['kd_material']:=Qdetail.FieldByName('kd_material_stok').AsString;
-  MemDetail['nm_material']:=Qdetail.FieldByName('nm_material').AsString;
-  MemDetail['qty']:=Qdetail.FieldByName('qty').AsString;
-  MemDetail['satuan']:=Qdetail.FieldByName('satuan').AsString;
-  MemDetail['kd_stok']:=Qdetail.FieldByName('kd_stok_lama').AsString;
-  MemDetail.Post;
-  Qdetail.Next;
-end;
-end;
-end;      }
+  with FNew_PengStok do
+  begin
+    Show;
+    statustr:=1;
+    Edno.Text:=MemPeng_Stok['trans_no'];
+    EdKet.Text:=MemPeng_Stok['note'];
+    Edkd_stok.Text:=MemPeng_Stok['stock_code'];
+    Edkd_Barang.Text:=MemPeng_Stok['item_code'];
+    edkdbr.Text:=MemPeng_Stok['kdmat'];
+    EdNm_Barang.Text:=MemPeng_Stok['item_name'];
+ //   kdgd:=MemTransfer['kdgd'];
+    nogd:=MemPeng_Stok['wh_code'];
+    CbGudang.Text:=MemPeng_Stok['wh_name'];
+    DtTransfer.Text:=MemPeng_Stok['trans_date'];
+    satuan:=MemPeng_Stok['unit'];
+    Qdetail.First;
+    while not Qdetail.eof do
+    begin
+      with Qdetail do
+      begin
+        MemDetail.Insert;
+        MemDetail['kd_material']:=Qdetail.FieldByName('item_stock_code').AsString;
+        MemDetail['nm_material']:=Qdetail.FieldByName('item_name').AsString;
+        MemDetail['qty']:=Qdetail.FieldByName('qty').AsString;
+        MemDetail['satuan']:=Qdetail.FieldByName('unit').AsString;
+        MemDetail['kd_stok']:=Qdetail.FieldByName('stock_code_old').AsString;
+        MemDetail.Post;
+        Qdetail.Next;
+      end;
+    end;
+  end;
 end;
 
 procedure TFPeng_Stok.FormClose(Sender: TObject; var Action: TCloseAction);

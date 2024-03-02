@@ -140,9 +140,9 @@ begin
   begin
     close;
     sql.clear;
-    sql.text:='Update t_pengabungan_stok set kd_gudang=:parkd_gd,kd_material=:parkd_mat,tgl=:partgl,'+
-    ' ket=:parket,kd_sbu=:parkd_sbu,qty=:parqty,satuan=:parsatuan,kd_stok=:parkd_stok,pic=:parpic'+
-    ' where no_trans=:parno';
+    sql.text:='Update warehouse.t_item_comb set wh_code=:parkd_gd,item_code=:parkd_mat,trans_date=:partgl,'+
+    ' note=:parket,sbu_code=:parkd_sbu,qty=:parqty,unit=:parsatuan,stock_code=:parkd_stok,updated_by=:parpic'+
+    ' , updated_at=now() where trans_no=:parno';
      parambyname('parno').asstring:=edno.text;
      parambyname('parkd_gd').asstring:=nogd;
      parambyname('parkd_mat').asstring:=Edkd_Barang.Text;
@@ -159,7 +159,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='delete from t_pengabungan_stokdet where no_trans='+QuotedStr(edno.Text);
+    sql.Text:='delete from warehouse.t_item_comb_det where trans_no='+QuotedStr(edno.Text);
     ExecSQL;
   end;
   Memdetail.First;
@@ -169,7 +169,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.text:='Insert into t_pengabungan_stokdet(kd_material_stok,kd_stok_lama,qty,satuan,no_trans)'+
+    sql.text:='Insert into warehouse.t_item_comb_det(item_stock_code,stock_code_old,qty,unit,trans_no)'+
               'values(:parkd_mat,:parkd_stok,:parqty,:parsatuan,:parno)';
      parambyname('parno').asstring:=edno.text;
      parambyname('parkd_mat').asstring:=Memdetail['kd_material'];

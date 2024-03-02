@@ -97,7 +97,11 @@ uses
   UMaster_Menu in 'UMaster_Menu.pas' {FMaster_Menu},
   UMaster_PercBarang in 'UMaster_PercBarang.pas' {FMaster_PercBarang},
   UUang_Muka_Pembelian in 'UUang_Muka_Pembelian.pas' {FUang_Muka_Pembelian},
-  UInput_um in 'UInput_um.pas' {FNew_UM_Pembelian};
+  UInput_um in 'UInput_um.pas' {FNew_UM_Pembelian},
+  UMenu in 'UMenu.pas' {FMenu},
+  UNew_Menu in 'UNew_Menu.pas' {FNew_menu},
+  UPercampuran_Barang in 'UPercampuran_Barang.pas' {FPerc_Barang},
+  UNew_PercBarang in 'UNew_PercBarang.pas' {FNew_PercBarang};
 
 // UMy_Function in 'UMy_Function.pas';
 

@@ -123,12 +123,13 @@ begin
   with FMaster_Menu do
   begin
     Show;
-    btambah.enabled:=false;
+    btambah.enabled:=true;
     Cbmaster.Text:='';
     Edkd.Clear;
     EdDesk.Clear;
     Qmenu.Close;
     qmenu.open;
+    PnlNew.Enabled:=false;
   end;
 end;
 

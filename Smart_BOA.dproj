@@ -464,6 +464,22 @@
             <Form>FNew_UM_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UMenu.pas">
+            <Form>FMenu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Menu.pas">
+            <Form>FNew_menu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPercampuran_Barang.pas">
+            <Form>FPerc_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_PercBarang.pas">
+            <Form>FNew_PercBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

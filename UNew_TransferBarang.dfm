@@ -18,14 +18,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   TextHeight = 13
   object Label1: TLabel
     Left = 36
-    Top = 74
+    Top = 45
     Width = 61
     Height = 13
     Caption = 'No. Transfer'
   end
   object Label2: TLabel
     Left = 36
-    Top = 45
+    Top = 16
     Width = 41
     Height = 13
     Caption = 'Tanggal '
@@ -53,14 +53,14 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label6: TLabel
     Left = 107
-    Top = 74
+    Top = 45
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label7: TLabel
     Left = 108
-    Top = 46
+    Top = 17
     Width = 4
     Height = 13
     Caption = ':'
@@ -102,7 +102,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label13: TLabel
     Left = 36
-    Top = 16
+    Top = 74
     Width = 24
     Height = 13
     Caption = 'Jenis'
@@ -110,7 +110,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label14: TLabel
     Left = 108
-    Top = 16
+    Top = 74
     Width = 4
     Height = 13
     Caption = ':'
@@ -335,12 +335,13 @@ object FNew_TransferBarang: TFNew_TransferBarang
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 2
+      Visible = False
       OnClick = BitBtn1Click
     end
   end
   object Edno: TRzEdit
     Left = 122
-    Top = 70
+    Top = 41
     Width = 200
     Height = 21
     Text = ''
@@ -350,7 +351,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object DtTransfer: TRzDateTimeEdit
     Left = 122
-    Top = 42
+    Top = 13
     Width = 143
     Height = 21
     EditType = etDate
@@ -392,7 +393,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object RzComboBox1: TRzComboBox
     Left = 122
-    Top = 13
+    Top = 71
     Width = 200
     Height = 21
     TabOrder = 8

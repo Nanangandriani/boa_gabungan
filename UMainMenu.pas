@@ -564,15 +564,21 @@ begin
         AButtonPanel.OnClick := btnApplyClick;
         AButtonPanel.Alignment:=taleftjustify;
         //AButtonPanel.Tag:=1;
-          if (dm.Qtemp2.RecordCount=1) or (dm.Qtemp2.RecordCount= 2)then
+          if (dm.Qtemp2.RecordCount=1) then
           begin
             //ACategoryPanel.Height:=80;
-            ACategoryPanel.Height:=90;
+            ACategoryPanel.Height:=60;
           end;
+          if (dm.Qtemp2.RecordCount= 2)then
+          begin
+            //ACategoryPanel.Height:=80;
+            ACategoryPanel.Height:=80;
+          end;
+
           if dm.Qtemp2.RecordCount>2 then
           begin
             //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
-            ACategoryPanel.Height:=45+35*dm.Qtemp2.RecordCount;
+            ACategoryPanel.Height:=35+25*dm.Qtemp2.RecordCount;
             //ACategoryPanel.Height:=ACategoryPanel.Height *dm.Qt
           end;
          dm.Qtemp2.Next;

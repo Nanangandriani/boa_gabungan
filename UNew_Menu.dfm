@@ -103,8 +103,10 @@ object FNew_menu: TFNew_menu
     Height = 32
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 155
+    ExplicitWidth = 390
     object BBatal: TRzBitBtn
-      Left = 322
+      Left = 318
       Top = 1
       Height = 30
       Align = alRight
@@ -163,10 +165,10 @@ object FNew_menu: TFNew_menu
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 318
+      ExplicitLeft = 314
     end
     object BSimpan: TRzBitBtn
-      Left = 247
+      Left = 243
       Top = 1
       Height = 30
       Align = alRight
@@ -225,7 +227,7 @@ object FNew_menu: TFNew_menu
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 243
+      ExplicitLeft = 239
     end
   end
   object EdGroup: TRzComboBox
