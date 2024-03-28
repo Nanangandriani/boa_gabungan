@@ -302,7 +302,7 @@ end;
 
 procedure TFNew_PengStok.EdNm_BarangButtonClick(Sender: TObject);
 begin
-  FSearch_Barang.show;
+  FCari_Barang2.show;
 end;
 
 procedure TFNew_PengStok.FormClose(Sender: TObject; var Action: TCloseAction);

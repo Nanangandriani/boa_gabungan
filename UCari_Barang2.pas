@@ -9,7 +9,7 @@ uses
   Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
 
 type
-  TFSearch_Barang = class(TForm)
+  TFCari_Barang2 = class(TForm)
     DBGridEh1: TDBGridEh;
     Qbarang: TUniQuery;
     DsBarang: TDataSource;
@@ -24,52 +24,69 @@ type
     { Public declarations }
   end;
 
-Function FSearch_Barang: TFSearch_Barang;
+Function FCari_Barang2: TFCari_Barang2;
 
 implementation
 
 {$R *.dfm}
 
-uses Udatamodule, UItem_TransferBarang, UNew_PengStok;
+uses Udatamodule, UItem_TransferBarang, UNew_PengStok, UMainMenu,
+  UNew_PercBarang;
 var
-  RealFSearch_Barang: TFSearch_Barang;
-function FSearch_Barang: TFSearch_Barang;
+  RealFCari_Barang2: TFCari_Barang2;
+function FCari_Barang2: TFCari_Barang2;
 begin
-  if RealFSearch_Barang <> nil then
-    FSearch_Barang:= RealFSearch_Barang
-  else
-    Application.CreateForm(TFSearch_Barang, Result);
+  if RealFCari_Barang2 <> nil then FCari_Barang2:= RealFCari_Barang2 else Application.CreateForm(TFCari_Barang2, Result);
 end;
 
-procedure TFSearch_Barang.DBGridEh1DblClick(Sender: TObject);
+procedure TFCari_Barang2.DBGridEh1DblClick(Sender: TObject);
 begin
-  with FNew_PengStok do
+  if VMenu='0' then
   begin
-    Edkdbr.Text:=Qbarang['item_code'];
-    Edkd_Barang.Text:=Qbarang['item_stock_code'];
-    EdNm_Barang.Text:=Qbarang['item_name'];
-    sp:=Qbarang['supplier_code'];
-    satuan:=Qbarang['unit'];
+    with FNew_PengStok do
+    begin
+      Edkdbr.Text:=Qbarang['item_code'];
+      Edkd_Barang.Text:=Qbarang['item_stock_code'];
+      EdNm_Barang.Text:=Qbarang['item_name'];
+      sp:=Qbarang['supplier_code'];
+      satuan:=Qbarang['unit'];
+    end;
+  end;
+  if VMenu='1' then
+  begin
+    with FNew_PercBarang do
+    begin
+      MemMaterial.edit;
+      MemMaterial['kd_material']:=Qbarang['item_stock_code'];
+      MemMaterial['nm_material']:=Qbarang['item_name'];
+      MemMaterial['kd_stok']:=Qbarang['item_stock_code'];
+      MemMaterial['total']:=Qbarang['outstanding'];
+      MemMaterial['total_stok']:=Qbarang['outstanding'];
+      MemMaterial['satuan']:=Qbarang['unit'];
+      MemMaterial['kd_gudang']:=Qbarang['wh_code'];
+      MemMaterial['gudang']:=Qbarang['wh_name'];
+      MemMaterial.Post;
+    end;
   end;
   Close;
 end;
 
-procedure TFSearch_Barang.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFCari_Barang2.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   action:=cafree;
 end;
 
-procedure TFSearch_Barang.FormCreate(Sender: TObject);
+procedure TFCari_Barang2.FormCreate(Sender: TObject);
 begin
-  RealFSearch_Barang:=self;
+  RealFCari_Barang2:=self;
 end;
 
-procedure TFSearch_Barang.FormDestroy(Sender: TObject);
+procedure TFCari_Barang2.FormDestroy(Sender: TObject);
 begin
-   RealFSearch_Barang:=nil;
+   RealFCari_Barang2:=nil;
 end;
 
-procedure TFSearch_Barang.FormShow(Sender: TObject);
+procedure TFCari_Barang2.FormShow(Sender: TObject);
 begin
   Qbarang.Close;
   Qbarang.Open;

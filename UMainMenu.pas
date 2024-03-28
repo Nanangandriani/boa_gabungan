@@ -124,7 +124,7 @@ var
   MyTreeView : TRzTreeView;
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
-  Nm,loksbu,kdsbu,id_dept,SBU,Kd_SBU:string;
+  Nm,loksbu,kdsbu,id_dept,SBU,Kd_SBU,VMenu:string;
   JSFn: string;
   statustr:integer;
 implementation

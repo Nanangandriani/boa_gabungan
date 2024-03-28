@@ -4,12 +4,13 @@ object dm: Tdm
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_gabungan2'
+    Database = 'db_boa_hps'
     Username = 'postgres'
-    Server = 'localhost'
+    Server = '10.10.10.110'
+    Connected = True
     Left = 157
     Top = 13
-    EncryptedPassword = '9EFF9BFF92FF96FF91FF'
+    EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
     Left = 227

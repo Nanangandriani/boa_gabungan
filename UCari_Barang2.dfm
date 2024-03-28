@@ -1,9 +1,9 @@
-object FSearch_Barang: TFSearch_Barang
+object FCari_Barang2: TFCari_Barang2
   Left = 0
   Top = 0
-  Caption = 'FSearch_Barang'
+  Caption = 'FCari_Barang2'
   ClientHeight = 491
-  ClientWidth = 638
+  ClientWidth = 746
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FSearch_Barang: TFSearch_Barang
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 638
+    Width = 746
     Height = 491
     Align = alClient
     DataSource = DsBarang
@@ -55,6 +55,23 @@ object FSearch_Barang: TFSearch_Barang
         Footers = <>
         Title.Caption = 'Nama Supplier'
         Width = 220
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty'
+        Footers = <>
+        Width = 91
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 69
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -64,7 +81,8 @@ object FSearch_Barang: TFSearch_Barang
     SQL.Strings = (
       
         'select a.item_stock_code,a.item_name,b.supplier_name,f.type,a.it' +
-        'em_code,a.supplier_code,a.unit from warehouse.t_item_stock a '
+        'em_code,a.supplier_code,a.unit,0 qty from warehouse.t_item_stock' +
+        ' a '
       'inner join t_supplier b on a.supplier_code=b.supplier_code'
       'inner join t_item c on a.item_code=c.item_code '
       'inner join t_item_group d on c.group_id=d.group_id '
@@ -72,7 +90,6 @@ object FSearch_Barang: TFSearch_Barang
       'inner join t_item_type f on f.type_id=e.type_id '
       '-- where f.type='#39'PRODUKSI'#39
       'ORDER BY a.item_stock_code asc')
-    Active = True
     Left = 240
     Top = 104
   end

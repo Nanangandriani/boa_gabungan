@@ -186,7 +186,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' SELECT "max"("right"(a.code,2))as kd, category_code from t_wh a INNER JOIN  t_wh_category b on a.category=b.category '+
+        sql.Text:=' SELECT "max"("right"(a.wh_code,2))as kd, category_code from t_wh a INNER JOIN  t_wh_category b on a.category=b.category '+
                   '  where a.category='+QuotedStr(CbCategory.Text)+''+
                   ' GROUP BY b.category_code,a.category';
         ExecSQL;
@@ -234,7 +234,6 @@ begin
     CbCategory.Items.Add(DM.Qtemp2['category']);
     DM.Qtemp2.Next;
     end;
-
    //showcategorywh;
    //showsbucode;
 end;

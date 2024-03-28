@@ -14,7 +14,6 @@ object FPerc_Barang: TFPerc_Barang
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   TextHeight = 13
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -74,7 +73,7 @@ object FPerc_Barang: TFPerc_Barang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_no'
+        FieldName = 'mixing_no'
         Footers = <>
         Title.Caption = 'No. Permintaan'
         Width = 236
@@ -158,7 +157,7 @@ object FPerc_Barang: TFPerc_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nm_material'
+            FieldName = 'item_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 215
@@ -177,7 +176,7 @@ object FPerc_Barang: TFPerc_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'satuan'
+            FieldName = 'unit'
             Footers = <>
             Title.Caption = 'Satuan'
             Width = 82
@@ -187,7 +186,7 @@ object FPerc_Barang: TFPerc_Barang
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'total_permt'
+            FieldName = 'total_request'
             Footers = <>
             Title.Caption = 'Total'
             Width = 84
@@ -196,7 +195,7 @@ object FPerc_Barang: TFPerc_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'gudang'
+            FieldName = 'wh_name'
             Footers = <>
             Title.Caption = 'Gudang'
             Width = 155
@@ -205,7 +204,7 @@ object FPerc_Barang: TFPerc_Barang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'keterangan'
+            FieldName = 'note'
             Footers = <>
             Title.Caption = 'Keterangan'
             Width = 167
@@ -855,42 +854,43 @@ object FPerc_Barang: TFPerc_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.trans_no,A.periode,A."type",A.status,A.item_code,A.weig' +
-        'h_amount,A.order_no,a.sbu_code,a.trans_year,a.trans_month,a.tran' +
-        's_day from warehouse.t_item_mix A'
+        'select A.mixing_no,A.periode,A."type",A.status,A.item_code,A.wei' +
+        'gh_amount,A.order_no,a.sbu_code,a.trans_year,a.trans_month,'
+      'a.trans_day,a.trans_status from warehouse.t_item_mixing A'
       
         'inner join warehouse.t_item_stock B on A.item_code=B.item_stock_' +
         'code '
       
-        'group by A.trans_no,A.periode,A."type",A.status,A.item_code,A.we' +
-        'igh_amount,A.order_no,a.sbu_code,a.trans_year,a.trans_month,a.tr' +
-        'ans_day'
-      'order by trans_no Desc')
+        'group by A.mixing_no,A.periode,A."type",A.status,A.item_code,A.w' +
+        'eigh_amount,A.order_no,a.sbu_code,a.trans_year,a.trans_month,a.t' +
+        'rans_day'
+      ',a.trans_status order by mixing_no Desc')
     Left = 408
   end
   object DsPermt_material: TDataSource
     DataSet = MemPermt_Material
     Left = 400
-    Top = 72
+    Top = 56
   end
   object QPermt_Material_det: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,B.nm_material from t_permt_material a inner join t_ma' +
-        'terial_stok B on'
-      ' A.kd_material_stok=B.kd_material_stok')
+        'select A.*,B.item_name,c.wh_name from warehouse.t_item_mixing a ' +
+        'inner join warehouse.t_item_stock B on'
+      
+        ' A.item_stock_code=B.item_stock_code left join t_wh c on a.wh_co' +
+        'de=c.wh_code')
     MasterSource = DsPermt_material
-    MasterFields = 'no_permintaan'
-    DetailFields = 'no_permintaan'
+    MasterFields = 'mixing_no'
+    DetailFields = 'mixing_no'
     Left = 584
     Top = 24
     ParamData = <
       item
-        DataType = ftString
-        Name = 'no_permintaan'
-        ParamType = ptInput
-        Value = '004/I/21/HKJ'
+        DataType = ftUnknown
+        Name = 'mixing_no'
+        Value = nil
       end>
   end
   object DsQPermt_Material_det: TDataSource

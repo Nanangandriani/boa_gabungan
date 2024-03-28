@@ -116,8 +116,7 @@ object FMainMenu: TFMainMenu
       HeaderFont.Name = 'Segoe UI'
       HeaderFont.Style = []
       TabOrder = 0
-      ExplicitLeft = 1
-      ExplicitTop = -6
+      ExplicitHeight = 472
     end
     object TreeView1: TRzTreeView
       Left = 0

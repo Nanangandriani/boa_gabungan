@@ -65,7 +65,6 @@ type
     ActReject: TAction;
     ActClose: TAction;
     procedure DBGridPermtCellClick(Column: TColumnEh);
-    procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
@@ -88,7 +87,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_PercBarang, UDataModule, umainmenu, maenangka;//, maenangka;
+uses UNew_PercBarang, UDataModule, umainmenu, maenangka, UMy_Function;//, maenangka;
 
 var RealFPerc_Barang: TFPerc_Barang;
 
@@ -104,28 +103,27 @@ begin
   begin
     Clear;
     Show;
-  //  FNew_PercBarang.Autonumber;
-    BEdit.Visible:=false;
-    BSimpan.Visible:=true;
+  //  BSimpan.Visible:=true;
     Caption:='New Permintaan Barang Untuk Dicampur';
     Load;
+    statustr:=0;
   end;
 end;
 
 procedure TFPerc_Barang.ActDelExecute(Sender: TObject);
 begin
  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPermt.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_permint_material where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
-  Execute;
-end;
-ActROExecute(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_permint_material where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
+      Execute;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 procedure TFPerc_Barang.ActRoExecute(Sender: TObject);
@@ -161,69 +159,77 @@ end;
 
 procedure TFPerc_Barang.ActUpdateExecute(Sender: TObject);
 begin
-FNew_PercBarang.Clear;
-FNew_PercBarang.BEdit.Visible:=True;
-FNew_PercBarang.BSimpan.Visible:=False;
-FNew_PercBarang.Show;
-FNew_PercBarang.Load;
-QPermt_Material_det.First;
-FNew_PercBarang.Caption:='Update Permintaan Barang Untuk Campur';
-while NOT QPermt_Material_det.Eof do
-begin
-FNew_PercBarang.Edno.Text:=MemPermt_Material['no_permintaan'];
-FNew_PercBarang.Edjenis.Text:=MemPermt_Material['jenis'];
-FNew_PercBarang.Edkd_material.Text:=MemPermt_Material['kd_material'];
-FNew_PercBarang.Edtimbang.Text:=MemPermt_Material['jmlh_timbang'];
-FNew_PercBarang.DtPeriode.Text:=MemPermt_Material['periode'];
-FNew_PercBarang.EdStatus.Text:=MemPermt_Material['status'];
-FNew_PercBarang.Edno_urut.Text:=MemPermt_Material['no_urut'];
-FNew_PercBarang.st:=MemPermt_Material['no_urut'];
-with FNew_PercBarang.MemMaterial do
-begin
-FNew_PercBarang.MemMaterial.Insert;
-FNew_PercBarang.MemMaterial['nm_material']:=QPermt_Material_det['nm_material'];
-FNew_PercBarang.MemMaterial['kd_stok']:=QPermt_Material_det['kd_stok'];
-FNew_PercBarang.MemMaterial['kd_material']:=QPermt_Material_det['kd_material_stok'];
-FNew_PercBarang.MemMaterial['qty']:=QPermt_Material_det['qty'];
-FNew_PercBarang.MemMaterial['satuan']:=QPermt_Material_det['satuan'];
-FNew_PercBarang.MemMaterial['gudang']:=QPermt_Material_det['gudang'];
-FNew_PercBarang.MemMaterial['ket']:=QPermt_Material_det['keterangan'];
-FNew_PercBarang.MemMaterial['total']:=QPermt_Material_det['total_permt'];
-FNew_PercBarang.MemMaterial['total_terima']:=QPermt_Material_det['total_terima'];
-FNew_PercBarang.MemMaterial.Post;
-QPermt_Material_det.Next;
-end;
-end;
+  FNew_PercBarang.Clear;
+  // FNew_PercBarang.BEdit.Visible:=True;
+  // FNew_PercBarang.BSimpan.Visible:=False;
+  FNew_PercBarang.Show;
+  FNew_PercBarang.Load;
+  statustr:=1;
+  QPermt_Material_det.First;
+  FNew_PercBarang.Caption:='Update Permintaan Barang Untuk Campur';
+  while NOT QPermt_Material_det.Eof do
+  begin
+    FNew_PercBarang.Edno.Text:=MemPermt_Material['mixing_no'];
+    FNew_PercBarang.Edjenis.Text:=MemPermt_Material['type'];
+    FNew_PercBarang.Edkd_material.Text:=MemPermt_Material['item_code'];
+    FNew_PercBarang.Edtimbang.Text:=MemPermt_Material['weigh_amount'];
+    FNew_PercBarang.DtPeriode.Text:=MemPermt_Material['periode'];
+    FNew_PercBarang.EdStatus.Text:=MemPermt_Material['trans_status'];
+    FNew_PercBarang.Edno_urut.Text:=MemPermt_Material['order_no'];
+    FNew_PercBarang.st:=MemPermt_Material['order_no'];
+    order_no:=MemPermt_Material['order_no'];
+    Vthn:= MemPermt_Material['trans_year'];
+    Vbln:= MemPermt_Material['trans_month'];
+    Vtgl:= MemPermt_Material['trans_day'];
+    with FNew_PercBarang.MemMaterial do
+    begin
+      FNew_PercBarang.MemMaterial.Insert;
+      FNew_PercBarang.MemMaterial['nm_material']:=QPermt_Material_det['item_name'];
+      FNew_PercBarang.MemMaterial['kd_stok']:=QPermt_Material_det['stock_code'];
+      FNew_PercBarang.MemMaterial['kd_material']:=QPermt_Material_det['item_stock_code'];
+      FNew_PercBarang.MemMaterial['qty']:=QPermt_Material_det['qty'];
+      FNew_PercBarang.MemMaterial['satuan']:=QPermt_Material_det['unit'];
+      FNew_PercBarang.MemMaterial['kd_gudang']:=QPermt_Material_det['wh_code'];
+      FNew_PercBarang.MemMaterial['gudang']:=QPermt_Material_det['wh_name'];
+      FNew_PercBarang.MemMaterial['ket']:=QPermt_Material_det['note'];
+      FNew_PercBarang.MemMaterial['total']:=QPermt_Material_det['total_request'];
+      FNew_PercBarang.MemMaterial['total_terima']:=QPermt_Material_det['total_received'];
+      FNew_PercBarang.MemMaterial['total_stok']:=QPermt_Material_det['total_request'];
+      FNew_PercBarang.MemMaterial.Post;
+      QPermt_Material_det.Next;
+    end;
+  end;
+  FNew_PercBarang.DBGridEh1ColEnter(sender);
 end;
 
 procedure TFPerc_Barang.DBGridPermtCellClick(Column: TColumnEh);
 begin
-if MemPermt_Material['status']<>'In-Proses' then dxBarTerima.Enabled:=False
-else dxBarTerima.Enabled:=True;
-if MemPermt_Material['status']<>'Created' then dxbarberi.Enabled:=False
-else dxBarBeri.Enabled:=True;
-if MemPermt_Material['status']='Selesai' then ActUpdate.Enabled:=False
-else ActUpdate.Enabled:=True;
+  if MemPermt_Material['status']<>'In-Proses' then dxBarTerima.Enabled:=False
+  else dxBarTerima.Enabled:=True;
+  if MemPermt_Material['status']<>'Created' then dxbarberi.Enabled:=False
+  else dxBarBeri.Enabled:=True;
+  if MemPermt_Material['status']='Selesai' then ActUpdate.Enabled:=False
+  else ActUpdate.Enabled:=True;
 //if MemPermt_Material['status']<>'Selesai' then dxbarberi.Enabled:=True else ActUpdate.Enabled:=False;
 end;
 
 procedure TFPerc_Barang.dxBarBeriClick(Sender: TObject);
 begin
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select * from t_permt_material';
-  ExecSQL;
-end;
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='Update t_permt_material set Status=''In-Proses'' where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
-  ExecSQL;
-end;
-ActRoExecute(sender);
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_permt_material';
+    ExecSQL;
+  end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='Update t_permt_material set Status=''In-Proses'' where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
+    ExecSQL;
+  end;
+  ActRoExecute(sender);
 end;
 
 procedure TFPerc_Barang.dxBarLargeButton1Click(Sender: TObject);
@@ -236,35 +242,35 @@ begin
              ' where a.no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
    open;
  end;
-if QRptPermintaan.FieldByName('no_permintaan').AsString<>''  then
-begin
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PermintaanBarang.Fr3');
-//  Tfrxmemoview(RptRekap_Persediaan.FindObject('Memo2')).Memo.Text:='Periode  : '+DtMulai.Text+' - '+DtSelesai.Text;
- // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
-  SetMemo(Rpt,'Mpt',''+KdSBU+'');
-  //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
-  Rpt.ShowReport();
-end else
-ShowMessage('Maaf data kosong');
+  if QRptPermintaan.FieldByName('no_permintaan').AsString<>''  then
+  begin
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PermintaanBarang.Fr3');
+  //  Tfrxmemoview(RptRekap_Persediaan.FindObject('Memo2')).Memo.Text:='Periode  : '+DtMulai.Text+' - '+DtSelesai.Text;
+   // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+    SetMemo(Rpt,'Mpt',''+KdSBU+'');
+    //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
+    Rpt.ShowReport();
+  end else
+  ShowMessage('Maaf data kosong');
 end;
 
 procedure TFPerc_Barang.dxBarTerimaClick(Sender: TObject);
 begin
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select * from t_permt_material';
-  ExecSQL;
-end;
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='Update t_permt_material set Status=''Selesai'' where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
-  ExecSQL;
-end;
-ActRoExecute(sender);
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_permt_material';
+    ExecSQL;
+  end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='Update t_permt_material set Status=''Selesai'' where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
+    ExecSQL;
+  end;
+  ActRoExecute(sender);
 end;
 
 procedure TFPerc_Barang.FormClose(Sender: TObject;
@@ -281,11 +287,6 @@ end;
 procedure TFPerc_Barang.FormDestroy(Sender: TObject);
 begin
   RealFPerc_Barang:=nil;
-end;
-
-procedure TFPerc_Barang.FormShow(Sender: TObject);
-begin
-  //ActRoExecute(sender);
 end;
 
 end.
