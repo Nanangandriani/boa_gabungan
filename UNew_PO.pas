@@ -107,6 +107,9 @@ type
     Label40: TLabel;
     Label41: TLabel;
     Cb_bon: TRzComboBox;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -133,6 +136,7 @@ type
     procedure EdKd_suppChange(Sender: TObject);
     procedure NoTransUMSelect(Sender: TObject);
     procedure Edkd_akunChange(Sender: TObject);
+    procedure EdNopoChange(Sender: TObject);
   private
     { Private declarations }
      procedure Clear;
@@ -143,6 +147,7 @@ type
      Procedure Loaditem;
      Procedure Loaditem2;
      Procedure Loaditem3;
+     Procedure Loaditem4;
      Procedure Autonumber;
      Procedure Simpan;
      Procedure Simpan2;
@@ -410,12 +415,20 @@ procedure TFNew_PO.Loaditem3;
 begin
     with dm.QTemp3 do
     begin
+      {close;
+      sql.Clear;
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from warehouse.t_item_request_det a '+
+                'LEFT JOIN t_item b on a.item_code=b.item_code '+
+                'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
+                'WHERE trans_no='+Quotedstr(Cb_bon.Text)+'  '+
+                'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name ';
+      Open;}
       close;
       sql.Clear;
       sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from warehouse.t_item_request_det a '+
                 'LEFT JOIN t_item b on a.item_code=b.item_code '+
-                'WHERE trans_no='+Quotedstr(Cb_bon.Text)+' '+
-                'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name';
+                'WHERE trans_no='+Quotedstr(Cb_bon.Text)+'  '+
+                'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name ';
       Open;
     end;
     Dm.QTemp3.First;
@@ -433,6 +446,15 @@ begin
                 'WHERE trans_no='+Quotedstr(Cb_bon.Text)+' '+
                 'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name';
       ExecSQL;
+
+      {close;
+      sql.Clear;
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note,c.supplier_code from warehouse.t_item_request_det a '+
+                'LEFT JOIN t_item b on a.item_code=b.item_code '+
+                'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
+                'WHERE trans_no='+Quotedstr(Cb_bon.Text)+' and c.supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
+                'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name,c.supplier_code';
+      ExecSQL;}
     end;
     Flistitempo.QMaterial3.Open;
     Flistitempo.DBGridMaterial3.Show;
@@ -441,6 +463,47 @@ begin
     Flistitempo.Bedit2.Visible:=false;
     Flistitempo.BEdit.Visible:=False;
     Flistitempo.BEdit3.Visible:=true;
+    Flistitempo.BEdit3.Visible:=false;
+end;
+
+procedure TFNew_PO.Loaditem4;
+begin
+    with dm.QTemp1 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from warehouse.t_item_request_det a '+
+                'LEFT JOIN t_item b on a.item_code=b.item_code '+
+                'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
+                'WHERE trans_no='+Quotedstr(Cb_bon.Text)+'  '+
+                'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name ';
+      Open;
+    end;
+    Dm.QTemp1.First;
+    while not dm.QTemp1.Eof do
+    begin
+       Dm.QTemp1.Next;
+    end;
+    with Flistitempo.QMaterial4 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note,c.supplier_code from warehouse.t_item_request_det a '+
+                'LEFT JOIN t_item b on a.item_code=b.item_code '+
+                'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
+                'WHERE trans_no='+Quotedstr(Cb_bon.Text)+' and c.supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
+                'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name,c.supplier_code';
+      ExecSQL;
+    end;
+    Flistitempo.QMaterial4.Open;
+    Flistitempo.DBGridMaterial4.Show;
+    Flistitempo.DBGridMaterial.Hide;
+    Flistitempo.DBGridMaterial2.Hide;
+    Flistitempo.DBGridMaterial3.Hide;
+    Flistitempo.Bedit2.Visible:=false;
+    Flistitempo.BEdit.Visible:=False;
+    Flistitempo.BEdit3.Visible:=False;
+    Flistitempo.BEdit4.Visible:=true;
 end;
 
 procedure TFNew_PO.Loaditem;
@@ -477,6 +540,7 @@ begin
     Flistitempo.Bedit.Visible:=true;
     Flistitempo.BEdit2.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
+    Flistitempo.BEdit4.Visible:=False;
 end;
 
 procedure TFNew_PO.Loaditem2;
@@ -549,6 +613,7 @@ begin
     Flistitempo.Bedit2.Visible:=true;
     Flistitempo.BEdit.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
+    Flistitempo.BEdit4.Visible:=False;
 end;
 
 procedure TFNew_PO.CkUangmkClick(Sender: TObject);
@@ -626,6 +691,7 @@ begin
       Flistitempo.DBGridMaterial.Visible:=true;
       Flistitempo.DBGridMaterial2.Visible:=false;
       Flistitempo.DBGridMaterial3.Visible:=false;
+      Flistitempo.DBGridMaterial4.Visible:=false;
     end
     else
     if EdStatus.Text='NON KONTRAK KERJASAMA' then
@@ -634,14 +700,28 @@ begin
       Flistitempo.DBGridMaterial.Visible:=false;
       Flistitempo.DBGridMaterial2.Visible:=true;
       Flistitempo.DBGridMaterial3.Visible:=false;
+      Flistitempo.DBGridMaterial4.Visible:=false;
     end
     else
+    if EdStatus.Text='BON PERMINTAAN BARANG'  then
+    //if (EdStatus.Text='BON PERMINTAAN BARANG') and (Length(Edkd_supp.Text)=0) then
     begin
        Self.Loaditem3;
        Flistitempo.DBGridMaterial.Visible:=false;
        Flistitempo.DBGridMaterial2.Visible:=false;
        Flistitempo.DBGridMaterial3.Visible:=true;
+       Flistitempo.DBGridMaterial4.Visible:=false;
     end;
+    {else
+    if (EdStatus.Text='BON PERMINTAAN BARANG') and (Length(Edkd_supp.Text)<>0) then
+    begin
+       Self.Loaditem4;
+       Flistitempo.DBGridMaterial.Visible:=false;
+       Flistitempo.DBGridMaterial2.Visible:=false;
+       Flistitempo.DBGridMaterial3.Visible:=false;
+       Flistitempo.DBGridMaterial4.Visible:=true;
+    end;}
+
 end;
 
 procedure TFNew_PO.DBGridDetailKeyPress(Sender: TObject; var Key: Char);
@@ -786,6 +866,30 @@ begin
     Edno_kontrak.Items.Add(Dm.Qtemp2.FieldByName('contract_no').AsString);
     Dm.QTemp2.Next;
     end;
+end;
+
+procedure TFNew_PO.EdNopoChange(Sender: TObject);
+var nopo:string;
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select * FROM purchase.t_advance_payment WHERE po_no='+QuotedStr(EdNopo.Text);
+     Open;
+   end;
+   NoTransUM.Text:=dm.Qtemp.FieldByName('no_trans').AsString;
+   EdUM.Text:=dm.Qtemp.FieldByName('um_value').AsString;
+   Edkd_akun.Text:=dm.Qtemp.FieldByName('um_account_code').AsString;
+
+   nopo:=dm.Qtemp.FieldByName('po_no').AsString;
+   if nopo<>'' then
+   begin
+     CkUangmk.Checked:=true;
+   end;
+
+
+
 end;
 
 procedure TFNew_PO.Edno_kontrakSelect(Sender: TObject);

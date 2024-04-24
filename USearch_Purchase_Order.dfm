@@ -1,37 +1,34 @@
-object FNew_Supplier: TFNew_Supplier
+object FUSearch_PO: TFUSearch_PO
   Left = 0
   Top = 0
-  Caption = 'New Supplier'
-  ClientHeight = 523
-  ClientWidth = 867
+  Caption = 'FUSearch_PO'
+  ClientHeight = 339
+  ClientWidth = 621
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
+  Position = poMainFormCenter
   OnShow = FormShow
   TextHeight = 15
-  object Panel2: TPanel
+  object Panel1: TPanel
     Left = 0
-    Top = 491
-    Width = 867
+    Top = 307
+    Width = 621
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 482
-    ExplicitWidth = 861
+    ExplicitLeft = -6
+    ExplicitWidth = 627
     object BBatal: TRzBitBtn
-      Left = 791
+      Left = 545
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Batal'
-      TabOrder = 2
+      TabOrder = 0
       OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -85,19 +82,19 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 785
+      ExplicitLeft = 551
     end
     object BSimpan: TRzBitBtn
-      Left = 716
+      Left = 470
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'OK'
       TabOrder = 1
       OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
+        08000000000000020000630B0000630B00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -130,37 +127,36 @@ object FNew_Supplier: TFNew_Supplier
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
-        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
-        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
-        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
-        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
-        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
-        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
+        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
+        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
+        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
+        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
+        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
+        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
+        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
+        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
+        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 710
+      ExplicitLeft = 476
     end
-    object BEdit: TRzBitBtn
-      Left = 641
+    object BSelectAll: TRzBitBtn
+      Left = 1
       Top = 1
+      Width = 80
       Height = 30
-      Align = alRight
-      Caption = 'Simpan'
-      TabOrder = 0
-      Visible = False
-      OnClick = BEditClick
+      Align = alLeft
+      Caption = 'Select All'
+      TabOrder = 2
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
+        08000000000000020000930E0000930E00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -193,278 +189,131 @@ object FNew_Supplier: TFNew_Supplier
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
-        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
-        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
-        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
-        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
-        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
-        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+        5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+        D7D7D7D7D7D7D75EE8E8E8E881ACACACACACACACACACAC81E8E8E8E85ED7D7D7
+        09D7D7D7D7D7D75EE8E8E8E881ACACAC81ACACACACACAC81E8E8E8E85ED7D709
+        0909D7D7D7D7D75EE8E8E8E881ACAC818181ACACACACAC81E8E8E8E85ED70909
+        090909D7D7D7D75EE8E8E8E881AC8181818181ACACACAC81E8E8E8E85ED70909
+        D7090909D7D7D75EE8E8E8E881AC8181AC818181ACACAC81E8E8E8E85ED709D7
+        D7D7090909D7D75EE8E8E8E881AC81ACACAC818181ACAC81E8E8E8E85ED7D7D7
+        D7D7D70909D7D75EE8E8E8E881ACACACACACAC8181ACAC81E8E8E8E85ED7D7D7
+        D7D7D7D709D7D75EE8E8E8E881ACACACACACACAC81ACAC81E8E8E8E85ED7D7D7
+        D7D7D7D7D7D7D75EE8E8E8E881ACACACACACACACACACAC81E8E8E8E85ED7D7D7
+        D7D7D7D75E5E5E5EE8E8E8E881ACACACACACACAC81818181E8E8E8E85ED7D7D7
+        D7D7D7D75EE35EE8E8E8E8E881ACACACACACACAC81AC81E8E8E8E8E85ED7D7D7
+        D7D7D7D75E5EE8E8E8E8E8E881ACACACACACACAC8181E8E8E8E8E8E85E5E5E5E
+        5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 635
-    end
-  end
-  object Panel1: TPanel
-    Left = 0
-    Top = 0
-    Width = 867
-    Height = 201
-    Align = alTop
-    Color = clGradientInactiveCaption
-    ParentBackground = False
-    TabOrder = 1
-    ExplicitWidth = 861
-    object Label1: TLabel
-      Left = 30
-      Top = 29
-      Width = 73
-      Height = 15
-      Caption = 'Kode Supplier'
-    end
-    object Label2: TLabel
-      Left = 30
-      Top = 57
-      Width = 78
-      Height = 15
-      Caption = 'Nama Supplier'
-    end
-    object Label3: TLabel
-      Left = 30
-      Top = 89
-      Width = 38
-      Height = 15
-      Caption = 'Alamat'
-    end
-    object Label4: TLabel
-      Left = 30
-      Top = 119
-      Width = 21
-      Height = 15
-      Caption = 'Telp'
-    end
-    object Label5: TLabel
-      Left = 30
-      Top = 153
-      Width = 34
-      Height = 15
-      Caption = 'NPWP'
-    end
-    object Label6: TLabel
-      Left = 120
-      Top = 26
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label7: TLabel
-      Left = 120
-      Top = 59
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label8: TLabel
-      Left = 120
-      Top = 89
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label9: TLabel
-      Left = 120
-      Top = 119
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label10: TLabel
-      Left = 120
-      Top = 153
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Edno: TEdit
-      Left = 279
-      Top = 25
-      Width = 132
-      Height = 23
-      TabOrder = 0
-      Visible = False
-    end
-    object EdNm: TEdit
-      Left = 137
-      Top = 54
-      Width = 374
-      Height = 23
-      TabOrder = 1
-    end
-    object EdAlamat: TEdit
-      Left = 137
-      Top = 86
-      Width = 374
-      Height = 23
-      TabOrder = 2
-    end
-    object EdTelp: TEdit
-      Left = 137
-      Top = 118
-      Width = 374
-      Height = 23
-      TabOrder = 3
-    end
-    object EdNPWP: TEdit
-      Left = 137
-      Top = 150
-      Width = 374
-      Height = 23
-      TabOrder = 4
-    end
-    object Edkd: TEdit
-      Left = 137
-      Top = 25
-      Width = 136
-      Height = 23
-      TabOrder = 5
     end
   end
   object DBGridEh1: TDBGridEh
     Left = 0
-    Top = 201
-    Width = 867
-    Height = 290
+    Top = 0
+    Width = 621
+    Height = 307
     Align = alClient
-    AutoFitColWidths = True
-    DataSource = DsMaterial
+    DataSource = DsPO
     DynProps = <>
-    HorzScrollBar.ExtraPanel.Visible = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-    TabOrder = 2
-    TitleParams.MultiTitle = True
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    SearchPanel.Enabled = True
+    TabOrder = 1
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
-        EditButtons = <
-          item
-            Style = ebsEllipsisEh
-            OnClick = DBGridEh1Columns0EditButtons0Click
-          end>
-        FieldName = 'kd_material'
-        Footers = <>
-        Title.Caption = 'Kode Barang'
-        Width = 102
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <
-          item
-          end>
-        FieldName = 'nm_material'
-        Footers = <>
-        Title.Caption = 'Nama Barang'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '0.00#,##'
-        DynProps = <>
         EditButtons = <>
-        FieldName = 'qty'
+        FieldName = 'po_no'
         Footers = <>
-        Title.Caption = 'Kuantum'
-        Width = 82
+        Title.Caption = 'No. PO'
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'satuan'
+        FieldName = 'po_date'
         Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 65
+        Title.Caption = 'Tanggal'
+        Width = 63
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'ket'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 173
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kode'
+        FieldName = 'item_stock_code'
         Footers = <>
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_name'
+        Footers = <>
+        Title.Caption = 'Nama Barang'
+        Width = 118
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'remaining_sp'
+        Footers = <>
+        Title.Caption = 'Kuantum'
+        Width = 58
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 56
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'warehouse'
+        Footers = <>
+        Title.Caption = 'Gudang'
+        Width = 133
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'sbu_code'
+        Footers = <>
+        Title.Caption = 'SBU'
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
-  object MemMaterial: TMemTableEh
-    Active = True
-    Params = <>
-    Left = 552
-    Top = 112
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object kode: TMTStringDataFieldEh
-          FieldName = 'kode'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object nm_material: TMTStringDataFieldEh
-          FieldName = 'nm_material'
-          StringDataType = fdtStringEh
-          DisplayWidth = 50
-          Size = 50
-        end
-        object qty: TMTNumericDataFieldEh
-          FieldName = 'qty'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 30
-          currency = False
-          Precision = 30
-        end
-        object satuan: TMTStringDataFieldEh
-          FieldName = 'satuan'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object ket: TMTStringDataFieldEh
-          FieldName = 'ket'
-          StringDataType = fdtStringEh
-          DisplayWidth = 200
-          Size = 200
-        end
-        object kd_material: TMTStringDataFieldEh
-          FieldName = 'kd_material'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-      end
-      object RecordsList: TRecordsListEh
-      end
-    end
+  object QPo: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      ''
+      
+        'SELECT c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit' +
+        ',b.warehouse,c.item_name,a.supplier_code,a.sbu_code,'
+      'a.approval_status from purchase.t_po a '
+      'INNER JOIN purchase.t_podetail b on a.po_no=b.po_no'
+      
+        'inner join warehouse.t_item_stock c on b.item_stock_code=c.item_' +
+        'stock_code'
+      'where b.remaining_sp <>0 and a.approval_status='#39'1'#39)
+    Left = 304
+    Top = 80
   end
-  object DsMaterial: TDataSource
-    DataSet = MemMaterial
-    Left = 548
-    Top = 56
+  object DsPO: TDataSource
+    DataSet = QPo
+    Left = 344
+    Top = 80
   end
 end

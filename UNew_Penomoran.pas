@@ -755,14 +755,15 @@ begin
     with Qtranstype do
     begin
       close;
-      sql.Text:='select * from t_submenu2 order by submenu2 ASC ';
+      //sql.Text:='select * from t_submenu2 order by submenu2 ASC ';
+      sql.Text:='select * from t_menu_sub order by submenu ASC ';
       Open;
     end;
     CbTipe_transaksi.Items.Clear;
     Qtranstype.First;
     while not Qtranstype.Eof do
     begin
-      CbTipe_transaksi.Items.Add(Qtranstype.FieldByName('submenu2').AsString);
+      CbTipe_transaksi.Items.Add(Qtranstype.FieldByName('submenu').AsString);
       Qtranstype.Next;
     end;
 end;
@@ -1424,10 +1425,12 @@ begin
    begin
      close;
      sql.Clear;
-     sql.Text:='select * from t_submenu2 where submenu2='+Quotedstr(CbTipe_transaksi.Text)+' ';
+     //sql.Text:='select * from t_submenu2 where submenu2='+Quotedstr(CbTipe_transaksi.Text)+' ';
+     sql.Text:='select * from t_menu_sub where submenu='+Quotedstr(CbTipe_transaksi.Text)+' ';
      Open;
    end;
-   Kdsubmenu.Text:=dm.Qtemp.fieldbyname('kd_submenu').AsString;
+   //Kdsubmenu.Text:=dm.Qtemp.fieldbyname('kd_submenu').AsString;
+   Kdsubmenu.Text:=dm.Qtemp.fieldbyname('submenu_code').AsString;
 end;
 
 procedure TFNew_Penomoran.CheckAddClick(Sender: TObject);

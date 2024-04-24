@@ -187,6 +187,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 7
+      OnChange = Edkd_akunChange
     end
     object Edbln: TEdit
       Left = 576
@@ -364,6 +365,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       Caption = 'Simpan'
       TabOrder = 2
       Visible = False
+      OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300

@@ -25,6 +25,7 @@ object FPenomoran: TFPenomoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 899
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -722,16 +723,16 @@ object FPenomoran: TFPenomoran
     Connection = dm.Koneksi
     SQL.Strings = (
       ''
-      'SELECT  a.*,c.submenu2,d.description from t_numb a'
+      'SELECT  a.*,c.submenu,d.description from t_numb a'
       'INNER JOIN t_numb_det b on a.trans_no=b.trans_no'
-      'LEFT JOIN t_submenu2 c  on a.numb_type=c.kd_submenu'
+      'LEFT JOIN t_menu_sub c  on a.numb_type=c.submenu_code'
       'LEFT JOIN t_numb_type d on a.reset_type=d.id'
       
         'GROUP BY a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.c' +
         'omponent_description,'
       
-        'a.reset_type,a.additional_status,a.active_status,c.submenu2,d.de' +
-        'scription,a.remarks'
+        'a.reset_type,a.additional_status,a.active_status,c.submenu,d.des' +
+        'cription,a.remarks'
       'order by a.trans_no ASC')
     Left = 328
     Top = 24

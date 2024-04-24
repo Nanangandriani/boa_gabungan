@@ -98,7 +98,7 @@ type
     Procedure CreateSubMenu(Role,Menu:String);
     Procedure CloseTabs(Sender: TObject);
     Procedure ClearCategoryPanelGroup;
-       Procedure Cleartreview;
+    Procedure Cleartreview;
     Procedure GetSubMenu(Sender: TObject);
     Procedure btnApplyClick(Sender: TObject);
     Procedure CallFoo(S: string; I: Integer);

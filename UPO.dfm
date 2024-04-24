@@ -23,7 +23,7 @@ object FPO: TFPO
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 826
+    ExplicitWidth = 857
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -180,7 +180,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'status_app'
+        FieldName = 'approval_status'
         Footers = <>
         Title.Caption = 'Status Approval'
         Width = 100
@@ -494,7 +494,7 @@ object FPO: TFPO
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 820
+    ExplicitWidth = 857
     object Label1: TLabel
       Left = 20
       Top = 12

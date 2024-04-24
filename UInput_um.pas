@@ -47,6 +47,8 @@ type
     procedure DTP_UMChange(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure EdKd_suppChange(Sender: TObject);
+    procedure BEditClick(Sender: TObject);
+    procedure Edkd_akunChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -55,18 +57,52 @@ type
     procedure clear;
     Procedure Autonumber;
     procedure simpan;
+    procedure update;
     procedure load;
   end;
 
 var
   FNew_UM_Pembelian: TFNew_UM_Pembelian;
-
+  StatusTr:integer;
+  status_um,user,orderno:string;
 implementation
 
 {$R *.dfm}
 
 uses USearch_Supplier, UAkun_Perkiraan_UM, UDataModule, UMainMenu, UMy_Function,
   UCari_DaftarPerk;
+
+procedure TFNew_UM_Pembelian.update;
+begin
+    with dm.Qtemp do
+    begin
+        close;
+        sql.clear;
+        sql.Text:='Update purchase.t_advance_payment set trans_date=:partrans_date,supplier_code=:parsupplier_code,um_status=:parum_status, '+
+                  'um_value=:parum_value,um_account_code=:parum_account_code,trans_day=:partrans_day,trans_month=:partrans_month,trans_year=:partrans_year, '+
+                  //'pic=:parpic,
+                  'input_date=:parinput_date, '+
+                  //order_no=:parorder_no,
+                  'po_no=:parpo_no,updated_at=:updated_at,updated_by=:updated_by '+
+                  'Where no_trans='+QuotedStr(Ed_No_trans.Text);
+        parambyname('partrans_date').AsDate:=DTP_UM.Date;
+        parambyname('parsupplier_code').AsString:=EdKd_supp.Text;
+        parambyname('parum_status').value:='0';
+        parambyname('parum_value').value:=EdUM.value;
+        parambyname('parum_account_code').AsString:=Edkd_akun.Text;
+        parambyname('partrans_day').AsString:=Edhari.Text;
+        parambyname('partrans_month').AsString:=Edbln.Text;
+        parambyname('partrans_year').AsString:=Edth.Text;
+        //parambyname('parpic').AsString:=user;
+        parambyname('parinput_date').AsString:=Formatdatetime('yyyy-mm-dd',Now());
+        //parambyname('parorder_no').AsString:=orderno;
+        parambyname('updated_at').AsString:=Formatdatetime('yyyy-mm-dd',Now());
+        parambyname('updated_by').AsString:='Admin';
+
+
+        ExecSQL;
+    end;
+end;
 
 procedure TFNew_UM_Pembelian.load;
 begin
@@ -102,10 +138,10 @@ begin
         close;
         sql.Clear;
         sql.Text:=' insert into purchase.t_advance_payment(no_trans,trans_date,supplier_code,um_status,um_value,um_account_code,'+
-                  ' trans_day,trans_month,trans_year,pic,input_date,order_no,po_no) '+
+                  ' trans_day,trans_month,trans_year,pic,input_date,order_no,po_no,created_at,created_by) '+
                   ' values(:parno_trans,:partrans_date,:parkd_supplier,:parum_status,:parum_value,'+
                   ' :parum_account_code,:partrans_day,:partrans_month,:partrans_year,:parpic,:parinput_date,'+
-                  ' :parorder_no,:parpo_no)';
+                  ' :parorder_no,:parpo_no,:created_at,:created_by)';
                   ParamByName('parno_trans').Value:=Ed_No_trans.Text;
                   ParamByName('partrans_date').Value:=FormatDateTime('yyy-mm-dd',DTP_UM.Date);
                   ParamByName('parkd_supplier').Value:=EdKd_supp.Text;
@@ -119,12 +155,16 @@ begin
                   ParamByName('parinput_date').AsDateTime:=Now;
                   ParamByName('parorder_no').Value:=Edurut.text;
                   ParamByName('parpo_no').Value:=CbPo.text;
+                  parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+                  parambyname('created_by').AsString:='Admin';
         ExecSQL;
       end;
 end;
 
 procedure TFNew_UM_Pembelian.BSimpanClick(Sender: TObject);
 begin
+  if messageDlg ('Anda Yakin akan Menyimpan Transaksi ini.'+Ed_No_trans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+  begin
     if DTP_UM.Date=null then
     begin
       MessageDlg('Tanggal transaksi Tidak Boleh Kosong ',MtWarning,[MbOk],0);
@@ -151,12 +191,14 @@ begin
     end;
     Close;
 end;
+end;
 
 procedure TFNew_UM_Pembelian.clear;
 begin
   Ed_No_trans.Text:='';
   EdKd_supp.Text:='';
   EdNm_supp.Text:='';
+  EdUM.Text:='0';
   EdUM.DisplayFormat:='#,##0.00';
   Edkd_akun.Text:='';
   Ednm_akun.Text:='';
@@ -202,9 +244,50 @@ begin
   Close;
 end;
 
+procedure TFNew_UM_Pembelian.BEditClick(Sender: TObject);
+begin
+  if messageDlg ('Anda Yakin Update Transaksi No.'+Ed_No_trans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+  begin
+    if not dm.koneksi.InTransaction then
+    dm.koneksi.StartTransaction;
+    try
+      begin
+        update;
+        dm.koneksi.Commit;
+        Messagedlg(' Data Berhasil di Update ',MtInformation,[Mbok],0);
+        BBatalClick(sender);
+      end;
+    Except
+    on E :Exception do
+      begin
+        MessageDlg(E.Message,mtError,[MBok],0);
+        dm.koneksi.Rollback;
+      end;
+    end;
+    Close;
+  end;
+end;
+
 procedure TFNew_UM_Pembelian.BitBtn1Click(Sender: TObject);
 begin
     autonumber;
+end;
+
+procedure TFNew_UM_Pembelian.Edkd_akunChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT distinct b.code,b.account_name,c.header_name FROM t_ak_account_det a '+
+                'left join t_ak_account b on a.account_code=b.code '+
+                'left join t_ak_header c on b.header_code=c.header_code where code='+Quotedstr(Edkd_akun.Text)+' '+
+                'GROUP BY b.code,b.account_name,c.header_name '+
+                'ORDER BY b.code ASC';
+     open;
+   end;
+   Ednm_akun.Text:=dm.Qtemp.FieldByName('account_name').AsString;
+
 end;
 
 procedure TFNew_UM_Pembelian.EdKd_suppChange(Sender: TObject);

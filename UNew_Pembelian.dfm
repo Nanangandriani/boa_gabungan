@@ -3,7 +3,7 @@ object FNew_Pembelian: TFNew_Pembelian
   Top = 0
   Caption = 'Form New Pembelian'
   ClientHeight = 599
-  ClientWidth = 1049
+  ClientWidth = 1113
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,13 +11,15 @@ object FNew_Pembelian: TFNew_Pembelian
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnShow = FormShow
   TextHeight = 15
   object DBGridDetailpo: TDBGridEh
     Left = 0
-    Top = 281
-    Width = 1049
-    Height = 286
+    Top = 289
+    Width = 1113
+    Height = 278
     Align = alClient
+    DataSource = DsTerimadet
     DynProps = <>
     FooterRowCount = 1
     HorzScrollBar.ExtraPanel.Visible = True
@@ -26,6 +28,7 @@ object FNew_Pembelian: TFNew_Pembelian
     SumList.Active = True
     TabOrder = 0
     TitleParams.MultiTitle = True
+    OnColEnter = DBGridDetailpoColEnter
     Columns = <
       item
         CellButtons = <>
@@ -34,6 +37,7 @@ object FNew_Pembelian: TFNew_Pembelian
           item
             ShortCut = 113
             Style = ebsEllipsisEh
+            OnClick = DBGridDetailpoColumns0EditButtons0Click
           end>
         FieldName = 'kd_material'
         Footers = <>
@@ -89,6 +93,7 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'qtypo'
@@ -117,6 +122,7 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'qty'
@@ -135,30 +141,13 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'qtyselisih'
         Footers = <>
         Title.Caption = 'Terima|Selisih'
         Width = 58
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'Harga'
-        Footers = <>
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'gudang'
-        Footers = <>
-        Title.Caption = 'Lokasi Gudang'
-        Width = 88
       end
       item
         CellButtons = <>
@@ -170,15 +159,49 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
+        DisplayFormat = '#,##0.0000'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Harga'
+        Footers = <>
+        Title.Caption = 'Harga|Satuan'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.0000'
         DynProps = <>
         EditButtons = <>
         FieldName = 'subtotal'
+        Footer.DisplayFormat = '#,##0.0000'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Harga|Sub Total'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pemb_dpp'
         Footer.DisplayFormat = '#,##0.00'
         Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Sub Total'
-        Width = 100
+        Title.Caption = 'Harga|Pembulatan'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'subtotalrp'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Harga|Sub Total Rp'
+        Width = 120
       end
       item
         CellButtons = <>
@@ -191,11 +214,11 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
+        DisplayFormat = '#,##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'ppn_rp'
-        Footer.DisplayFormat = '#,##0.00'
+        Footer.DisplayFormat = '#,##'
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'PPN|Nominal'
@@ -203,13 +226,15 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
+        DisplayFormat = '#,##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'ppn_rp_pembulatan'
+        Footer.DisplayFormat = '#,##'
+        Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'PPN|Pembulatan'
-        Width = 63
+        Width = 70
       end
       item
         CellButtons = <>
@@ -218,19 +243,19 @@ object FNew_Pembelian: TFNew_Pembelian
         FieldName = 'pph'
         Footers = <>
         Title.Caption = 'PPH|%'
-        Visible = False
-        Width = 33
+        Width = 34
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
+        DisplayFormat = '#,##'
         DynProps = <>
         EditButtons = <
           item
             Style = ebsPlusEh
+            Visible = False
           end>
         FieldName = 'pph_rp'
-        Footer.DisplayFormat = '#,##0.00'
+        Footer.DisplayFormat = '#,##'
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'PPH|Nominal'
@@ -238,15 +263,60 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       item
         CellButtons = <>
+        DynProps = <>
+        EditButtons = <
+          item
+            OnClick = DBGridDetailpoColumns22EditButtons0Click
+          end>
+        FieldName = 'kd_akunpph'
+        Footers = <>
+        Title.Caption = 'PPH|Kode Akun'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bea_masuk'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Bea Masuk|Nominal'
+        Width = 78
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <
+          item
+          end>
+        FieldName = 'kd_akunbea'
+        Footer.FieldName = 'kd_akunbea'
+        Footers = <>
+        Title.Caption = 'Bea Masuk|Kode Akun'
+        Width = 77
+      end
+      item
+        CellButtons = <>
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'grandtotal'
-        Footer.DisplayFormat = '#,##0.00'
+        Footer.DisplayFormat = '#,##0.0000'
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Grand Total'
-        Width = 90
+        Width = 130
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'gudang'
+        Footers = <>
+        Title.Caption = 'Lokasi Gudang'
+        Width = 130
       end
       item
         CellButtons = <>
@@ -260,6 +330,14 @@ object FNew_Pembelian: TFNew_Pembelian
         Title.Caption = 'Kode Akun Perkiraan'
         Visible = False
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_stock_code'
+        Footers = <>
+        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -267,19 +345,20 @@ object FNew_Pembelian: TFNew_Pembelian
   object Panel1: TPanel
     Left = 0
     Top = 567
-    Width = 1049
+    Width = 1113
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 566
-    ExplicitWidth = 1045
+    ExplicitTop = 558
+    ExplicitWidth = 1107
     object BBatal: TRzBitBtn
-      Left = 973
+      Left = 1037
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -332,15 +411,16 @@ object FNew_Pembelian: TFNew_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 969
+      ExplicitLeft = 1031
     end
     object BSimpan: TRzBitBtn
-      Left = 898
+      Left = 962
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 1
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -393,15 +473,16 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 894
+      ExplicitLeft = 956
     end
     object BEdit: TRzBitBtn
-      Left = 823
+      Left = 887
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 2
+      OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -454,16 +535,17 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 819
+      ExplicitLeft = 881
     end
     object BPosting: TRzBitBtn
-      Left = 748
+      Left = 812
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Posting'
       TabOrder = 3
       Visible = False
+      OnClick = BPostingClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830E0000830E00000001000000000000000000003300
@@ -516,265 +598,253 @@ object FNew_Pembelian: TFNew_Pembelian
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 744
+      ExplicitLeft = 806
+    end
+    object Button1: TButton
+      Left = 737
+      Top = 1
+      Width = 75
+      Height = 30
+      Align = alRight
+      Caption = 'Button1'
+      TabOrder = 4
+      OnClick = Button1Click
+      ExplicitLeft = 731
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1049
-    Height = 281
+    Width = 1113
+    Height = 289
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 1045
+    ExplicitWidth = 1107
     object Label1: TLabel
-      Left = 22
-      Top = 54
+      Left = 12
+      Top = 42
       Width = 35
       Height = 15
       Caption = 'No. SP'
     end
     object Label3: TLabel
-      Left = 22
-      Top = 122
+      Left = 12
+      Top = 129
       Width = 57
       Height = 15
       Caption = 'No. Terima'
     end
     object Label5: TLabel
-      Left = 491
-      Top = 197
+      Left = 512
+      Top = 157
       Width = 60
       Height = 15
       Caption = 'Keterangan'
     end
     object Label6: TLabel
-      Left = 22
-      Top = 160
+      Left = 12
+      Top = 98
       Width = 79
       Height = 15
       Caption = 'Tanggal Terima'
     end
-    object Label8: TLabel
-      Left = 118
-      Top = 54
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label10: TLabel
-      Left = 118
-      Top = 122
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label11: TLabel
-      Left = 118
-      Top = 160
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label12: TLabel
-      Left = 628
-      Top = 197
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label4: TLabel
-      Left = 491
-      Top = 54
+      Left = 512
+      Top = 42
       Width = 56
       Height = 15
       Caption = 'Surat Jalan'
     end
-    object Label7: TLabel
-      Left = 628
-      Top = 54
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label13: TLabel
-      Left = 491
-      Top = 122
+      Left = 512
+      Top = 131
       Width = 55
       Height = 15
       Caption = 'No. Faktur'
     end
-    object Label14: TLabel
-      Left = 628
-      Top = 122
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label2: TLabel
-      Left = 628
-      Top = 157
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label9: TLabel
-      Left = 491
-      Top = 157
-      Width = 134
+      Left = 512
+      Top = 98
+      Width = 108
       Height = 15
-      Caption = 'Tanggal Terima Dokumen'
+      Caption = 'Tgl.Terima Dokumen'
     end
     object Label15: TLabel
-      Left = 491
-      Top = 86
+      Left = 512
+      Top = 70
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
-    object Label16: TLabel
-      Left = 628
-      Top = 86
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label17: TLabel
-      Left = 22
-      Top = 90
+      Left = 12
+      Top = 70
       Width = 43
       Height = 15
       Caption = 'Supplier'
     end
-    object Label18: TLabel
-      Left = 118
-      Top = 90
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label19: TLabel
-      Left = 22
-      Top = 200
+      Left = 12
+      Top = 259
       Width = 80
       Height = 15
       Caption = 'Akun Perkiraan'
     end
-    object Label20: TLabel
-      Left = 118
-      Top = 200
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label21: TLabel
-      Left = 22
-      Top = 22
+      Left = 12
+      Top = 15
       Width = 84
       Height = 15
       Caption = 'Jenis Pembelian'
     end
-    object Label22: TLabel
-      Left = 118
-      Top = 22
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label23: TLabel
-      Left = 22
-      Top = 237
+      Left = 12
+      Top = 158
       Width = 26
       Height = 15
       Caption = 'Valas'
     end
-    object Label24: TLabel
-      Left = 118
-      Top = 237
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
     object Label25: TLabel
-      Left = 491
-      Top = 22
+      Left = 512
+      Top = 15
       Width = 39
       Height = 15
       Caption = 'No. PIB'
     end
-    object Label26: TLabel
-      Left = 628
-      Top = 22
-      Width = 3
+    object Label27: TLabel
+      Left = 867
+      Top = 110
+      Width = 58
       Height = 15
-      Caption = ':'
+      Caption = 'Bea Import'
+      Visible = False
+    end
+    object Lblakun: TLabel
+      Left = 966
+      Top = 150
+      Width = 46
+      Height = 15
+      Caption = 'Lain-lain'
+      Visible = False
+    end
+    object Label31: TLabel
+      Left = 12
+      Top = 188
+      Width = 44
+      Height = 15
+      Caption = 'Jenis PO'
+    end
+    object Label2: TLabel
+      Left = 268
+      Top = 188
+      Width = 21
+      Height = 15
+      Caption = 'SBU'
+    end
+    object Label7: TLabel
+      Left = 797
+      Top = 129
+      Width = 54
+      Height = 15
+      Caption = 'Tgl. Faktur'
+    end
+    object Label26: TLabel
+      Left = 11
+      Top = 223
+      Width = 144
+      Height = 15
+      Caption = 'Akun Perkiraan Uang Muka'
+    end
+    object Label8: TLabel
+      Left = 455
+      Top = 205
+      Width = 157
+      Height = 15
+      Caption = 'Uang Muka yang sudah bayar'
+    end
+    object Label10: TLabel
+      Left = 455
+      Top = 242
+      Width = 63
+      Height = 15
+      Caption = 'Sisa Hutang'
+    end
+    object Label11: TLabel
+      Left = 619
+      Top = 205
+      Width = 89
+      Height = 15
+      Caption = 'Total Uang Muka'
     end
     object EdNoSPB: TRzComboBox
-      Left = 136
-      Top = 51
+      Left = 159
+      Top = 42
       Width = 210
       Height = 23
       TabOrder = 0
+      OnSelect = EdNoSPBSelect
     end
     object EdNo: TEdit
-      Left = 136
-      Top = 119
+      Left = 159
+      Top = 126
       Width = 210
       Height = 23
+      Color = clInfoBk
       ReadOnly = True
       TabOrder = 1
     end
     object Dtterima: TRzDateTimeEdit
-      Left = 136
-      Top = 157
+      Left = 159
+      Top = 98
       Width = 121
       Height = 23
       EditType = etDate
-      Format = 'mm/dd/yyyy'
+      Format = 'dd/mm/yyyy'
       TabOrder = 2
+      OnChange = DtterimaChange
     end
     object EdKet: TMemo
-      Left = 646
-      Top = 194
-      Width = 335
-      Height = 58
+      Left = 621
+      Top = 154
+      Width = 339
+      Height = 50
       CharCase = ecUpperCase
       TabOrder = 3
     end
     object EdSJ: TEdit
-      Left = 646
-      Top = 51
-      Width = 210
+      Left = 621
+      Top = 42
+      Width = 232
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 4
     end
     object Edno_Faktur: TEdit
-      Left = 646
-      Top = 119
-      Width = 167
+      Left = 621
+      Top = 126
+      Width = 168
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 5
     end
     object DtFaktur: TRzDateTimeEdit
-      Left = 646
-      Top = 154
+      Left = 621
+      Top = 98
       Width = 121
       Height = 23
       EditType = etDate
       TabOrder = 6
     end
     object Edjatuhtempo: TEdit
-      Left = 646
-      Top = 83
+      Left = 621
+      Top = 70
       Width = 121
       Height = 23
       TabOrder = 7
     end
     object Edkd_supp: TRzEdit
-      Left = 136
-      Top = 87
+      Left = 159
+      Top = 70
       Width = 53
       Height = 23
       Text = ''
@@ -783,8 +853,8 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 8
     end
     object EdNm_supp: TRzButtonEdit
-      Left = 195
-      Top = 87
+      Left = 218
+      Top = 70
       Width = 242
       Height = 23
       Text = ''
@@ -793,22 +863,21 @@ object FNew_Pembelian: TFNew_Pembelian
       ButtonNumGlyphs = 1
     end
     object EdNm_akun: TRzButtonEdit
-      Left = 252
-      Top = 197
+      Left = 263
+      Top = 258
       Width = 185
       Height = 23
       Text = ''
       Color = clInfoBk
-      ReadOnly = True
       ReadOnlyColorOnFocus = True
       TabOrder = 10
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
     object Edkd_akun: TRzEdit
-      Left = 136
-      Top = 197
-      Width = 110
+      Left = 159
+      Top = 258
+      Width = 101
       Height = 23
       Text = ''
       Color = clInfoBk
@@ -816,67 +885,60 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 11
     end
     object Edjenis: TRzComboBox
-      Left = 136
-      Top = 19
+      Left = 159
+      Top = 15
       Width = 210
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 12
+      OnSelect = EdjenisSelect
       Items.Strings = (
-        'AKTIVA'
-        'PRODUKSI'
-        'NON PRODUKSI')
+        '')
     end
     object EdValas: TRzEdit
-      Left = 136
-      Top = 234
-      Width = 110
+      Left = 159
+      Top = 155
+      Width = 101
       Height = 23
       Text = '0'
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 13
     end
-    object EdNilai_Valas: TRzEdit
-      Left = 252
-      Top = 234
-      Width = 139
-      Height = 23
-      Text = '0'
-      TabOrder = 14
-    end
     object EdPIB: TEdit
-      Left = 646
-      Top = 19
-      Width = 210
+      Left = 621
+      Top = 15
+      Width = 232
       Height = 23
       Alignment = taRightJustify
       CharCase = ecUpperCase
-      TabOrder = 15
+      TabOrder = 14
       Text = '0'
     end
-    object GroupBox1: TGroupBox
-      Left = 874
-      Top = 14
+    object GBDok: TGroupBox
+      Left = 859
+      Top = 11
       Width = 139
-      Height = 121
+      Height = 100
       Caption = 'Check List Dokumen'
-      TabOrder = 16
+      TabOrder = 15
       object Cksj: TCheckBox
         Left = 13
         Top = 19
         Width = 97
         Height = 18
-        Caption = 'Surat Jalan'
+        Caption = 'Konf'
         TabOrder = 0
+        OnClick = CksjClick
       end
       object CkFk: TCheckBox
         Left = 13
         Top = 43
         Width = 97
         Height = 18
-        Caption = 'Faktur Pembelian'
+        Caption = 'Prev. Dok'
         TabOrder = 1
+        OnClick = CkFkClick
       end
       object CkInv: TCheckBox
         Left = 13
@@ -885,24 +947,303 @@ object FNew_Pembelian: TFNew_Pembelian
         Height = 18
         Caption = 'Invoice'
         TabOrder = 2
+        OnClick = CkInvClick
       end
     end
+    object Edbea: TRzNumericEdit
+      Left = 966
+      Top = 169
+      Width = 92
+      Height = 23
+      TabOrder = 16
+      Visible = False
+      DisplayFormat = '#,##'
+    end
+    object RzNumericEdit2: TRzNumericEdit
+      Left = 748
+      Top = 70
+      Width = 105
+      Height = 23
+      TabOrder = 17
+      Visible = False
+      DisplayFormat = '#,##'
+    end
+    object EdNilai_Valas: TRzNumericEdit
+      Left = 263
+      Top = 155
+      Width = 106
+      Height = 23
+      TabOrder = 18
+      DisplayFormat = ',0;(,0)'
+    end
+    object Edjenispo: TRzComboBox
+      Left = 159
+      Top = 186
+      Width = 101
+      Height = 23
+      CharCase = ecUpperCase
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 19
+      Text = 'LOKAL'
+      Items.Strings = (
+        'IMPORT'
+        'LOKAL')
+    end
+    object Edkd_akunBea: TRzButtonEdit
+      Left = 966
+      Top = 126
+      Width = 128
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnlyColorOnFocus = True
+      TabOrder = 20
+      Visible = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+    end
+    object Edsbu: TComboBox
+      Left = 300
+      Top = 186
+      Width = 66
+      Height = 23
+      TabOrder = 21
+    end
+    object dtfaktur2: TRzDateTimeEdit
+      Left = 853
+      Top = 126
+      Width = 107
+      Height = 23
+      EditType = etDate
+      TabOrder = 22
+    end
+    object Edkd_akunum: TRzEdit
+      Left = 158
+      Top = 220
+      Width = 101
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 23
+    end
+    object EdNilai_um: TRzNumericEdit
+      Left = 454
+      Top = 220
+      Width = 145
+      Height = 23
+      TabOrder = 24
+      DisplayFormat = '#,##0.00'
+    end
+    object EdSisaHutang: TRzNumericEdit
+      Left = 454
+      Top = 257
+      Width = 146
+      Height = 23
+      TabOrder = 25
+      DisplayFormat = '#,##0.00'
+    end
+    object EdNm_akunum: TRzButtonEdit
+      Left = 262
+      Top = 220
+      Width = 185
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnlyColorOnFocus = True
+      TabOrder = 26
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+    end
+    object edum: TRzNumericEdit
+      Left = 621
+      Top = 220
+      Width = 145
+      Height = 23
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 27
+      DisplayFormat = '#,##0.00'
+    end
+    object Button2: TButton
+      Left = 622
+      Top = 254
+      Width = 75
+      Height = 25
+      Caption = 'Button2'
+      TabOrder = 28
+      Visible = False
+    end
+    object Edurut: TEdit
+      Left = 772
+      Top = 254
+      Width = 121
+      Height = 23
+      TabOrder = 29
+    end
+    object Edth: TEdit
+      Left = 901
+      Top = 220
+      Width = 58
+      Height = 23
+      TabOrder = 30
+    end
+    object Edbln: TEdit
+      Left = 837
+      Top = 220
+      Width = 58
+      Height = 23
+      TabOrder = 31
+    end
+    object Edhari: TEdit
+      Left = 772
+      Top = 220
+      Width = 58
+      Height = 23
+      TabOrder = 32
+    end
+  end
+  object QMaterial1: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'Select * from t_material_stok'
+      ' order by kd_material_stok desc')
+    Left = 1040
+    Top = 221
+  end
+  object DsTerimadet: TDataSource
+    DataSet = MemterimaDet
+    Left = 1028
+    Top = 91
   end
   object DsMaterial: TDataSource
-    Left = 816
-    Top = 13
+    Left = 984
+    Top = 213
   end
   object MemterimaDet: TMemTableEh
     Active = True
     Params = <>
-    Left = 744
-    Top = 16
+    Left = 1032
+    Top = 32
+    object MemterimaDetnm_material: TStringField
+      FieldName = 'nm_material'
+    end
+    object MemterimaDetkd_material: TStringField
+      FieldName = 'kd_material'
+    end
+    object MemterimaDetkd_stok: TStringField
+      FieldName = 'kd_stok'
+      Size = 100
+    end
+    object MemterimaDetqty: TFloatField
+      FieldName = 'qty'
+    end
+    object MemterimaDetsatuan: TStringField
+      FieldName = 'satuan'
+    end
+    object MemterimaDetgudang: TStringField
+      FieldName = 'gudang'
+      Size = 100
+    end
+    object MemterimaDetno_ked: TStringField
+      FieldName = 'no_ked'
+    end
+    object MemterimaDetno_material: TStringField
+      FieldName = 'no_material'
+    end
+    object MemterimaDetqtypo: TFloatField
+      FieldName = 'qtypo'
+    end
+    object MemterimaDetsatuanpo: TStringField
+      FieldName = 'satuanpo'
+    end
+    object MemterimaDetqtyselisih: TFloatField
+      FieldName = 'qtyselisih'
+    end
+    object MemterimaDettahun: TStringField
+      FieldName = 'tahun'
+    end
+    object MemterimaDetqtyperkonversi: TFloatField
+      FieldName = 'qtyperkonversi'
+    end
+    object MemterimaDetqtykonversi: TFloatField
+      FieldName = 'qtykonversi'
+    end
+    object MemterimaDetsatuankonversi: TStringField
+      FieldName = 'satuankonversi'
+    end
+    object MemterimaDetppn: TFloatField
+      FieldName = 'ppn'
+    end
+    object MemterimaDetpph: TFloatField
+      FieldName = 'pph'
+    end
+    object MemterimaDetsubtotal: TFloatField
+      FieldName = 'subtotal'
+    end
+    object MemterimaDetgrandtotal: TFloatField
+      FieldName = 'grandtotal'
+    end
+    object MemterimaDetppn_rp: TFloatField
+      FieldName = 'ppn_rp'
+    end
+    object MemterimaDetppn_rp_pembulatan: TFloatField
+      FieldName = 'ppn_rp_pembulatan'
+    end
+    object MemterimaDetpph_rp: TFloatField
+      FieldName = 'pph_rp'
+    end
+    object MemterimaDetHarga: TFloatField
+      FieldName = 'Harga'
+    end
+    object MemterimaDetnopo: TStringField
+      FieldName = 'nopo'
+      Size = 100
+    end
+    object MemterimaDetkd_akun: TStringField
+      FieldName = 'kd_akun'
+    end
+    object MemterimaDetkd_akunbea: TStringField
+      FieldName = 'kd_akunbea'
+    end
+    object MemterimaDetbea_masuk: TFloatField
+      FieldName = 'bea_masuk'
+    end
+    object MemterimaDetkd_akunpph: TStringField
+      FieldName = 'kd_akunpph'
+    end
+    object MemterimaDetppnrp: TFloatField
+      FieldName = 'ppnrp'
+    end
+    object MemterimaDetpphrp: TFloatField
+      FieldName = 'pphrp'
+    end
+    object MemterimaDetbeamasuk: TFloatField
+      FieldName = 'beamasuk'
+    end
+    object MemterimaDetsubtotalrp: TFloatField
+      FieldName = 'subtotalrp'
+    end
+    object MemterimaDettotalrp: TFloatField
+      FieldName = 'totalrp'
+    end
+    object MemterimaDetnourut: TStringField
+      FieldName = 'nourut'
+    end
+    object MemterimaDetpemb_dpp: TCurrencyField
+      FieldName = 'pemb_dpp'
+    end
+    object MemterimaDetitem_stock_code: TStringField
+      FieldName = 'item_stock_code'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object nm_material: TMTStringDataFieldEh
           FieldName = 'nm_material'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object kd_material: TMTStringDataFieldEh
           FieldName = 'kd_material'
@@ -931,12 +1272,14 @@ object FNew_Pembelian: TFNew_Pembelian
         object gudang: TMTStringDataFieldEh
           FieldName = 'gudang'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object no_ked: TMTStringDataFieldEh
           FieldName = 'no_ked'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object no_material: TMTStringDataFieldEh
           FieldName = 'no_material'
@@ -1065,17 +1408,85 @@ object FNew_Pembelian: TFNew_Pembelian
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
+        object kd_akunbea: TMTStringDataFieldEh
+          FieldName = 'kd_akunbea'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object bea_masuk: TMTNumericDataFieldEh
+          FieldName = 'bea_masuk'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object kd_akunpph: TMTStringDataFieldEh
+          FieldName = 'kd_akunpph'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object ppnrp: TMTNumericDataFieldEh
+          FieldName = 'ppnrp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object pphrp: TMTNumericDataFieldEh
+          FieldName = 'pphrp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object beamasuk: TMTNumericDataFieldEh
+          FieldName = 'beamasuk'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object subtotalrp: TMTNumericDataFieldEh
+          FieldName = 'subtotalrp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object totalrp: TMTNumericDataFieldEh
+          FieldName = 'totalrp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object nourut: TMTStringDataFieldEh
+          FieldName = 'nourut'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object pemb_dpp: TMTNumericDataFieldEh
+          FieldName = 'pemb_dpp'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object item_stock_code: TMTStringDataFieldEh
+          FieldName = 'item_stock_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
       end
       object RecordsList: TRecordsListEh
       end
     end
-  end
-  object QMaterial1: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'Select * from t_material_stok'
-      ' order by kd_material_stok desc')
-    Left = 816
-    Top = 69
   end
 end

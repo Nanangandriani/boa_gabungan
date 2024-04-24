@@ -197,7 +197,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object DBGridEh3: TDBGridEh
     Left = 9
     Top = 140
-    Width = 920
+    Width = 902
     Height = 227
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -208,6 +208,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SumList.Active = True
     TabOrder = 5
+    OnCellClick = DBGridEh3CellClick
+    OnColEnter = DBGridEh3ColEnter
     Columns = <
       item
         CellButtons = <>
@@ -215,6 +217,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         EditButtons = <
           item
             Style = ebsEllipsisEh
+            OnClick = DBGridEh3Columns0EditButtons0Click
           end>
         FieldName = 'no_terima'
         Footers = <>
@@ -301,7 +304,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Height = 36
     Align = alBottom
     TabOrder = 7
-    ExplicitTop = 496
+    ExplicitTop = 444
+    ExplicitWidth = 931
     object BBatal: TRzBitBtn
       Left = 861
       Top = 1
@@ -362,8 +366,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 716
-      ExplicitHeight = 30
+      ExplicitLeft = 855
     end
     object BSimpan: TRzBitBtn
       Left = 786
@@ -425,8 +428,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 641
-      ExplicitHeight = 30
+      ExplicitLeft = 780
     end
     object RzBitBtn1: TRzBitBtn
       Left = 528
@@ -490,7 +492,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Height = 23
     TabOrder = 12
   end
-  object RzNumericEdit1: TRzNumericEdit
+  object Edvls: TRzNumericEdit
     Left = 655
     Top = 82
     Width = 120
@@ -498,7 +500,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 13
     DisplayFormat = ',0;(,0)'
   end
-  object RzNumericEdit2: TRzNumericEdit
+  object ednilai_vls: TRzNumericEdit
     Left = 781
     Top = 82
     Width = 139
@@ -538,14 +540,14 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   end
   object DsDetail: TDataSource
     DataSet = MemDetail
-    Left = 112
-    Top = 288
+    Left = 128
+    Top = 376
   end
   object MemDetail: TMemTableEh
     Active = True
     Params = <>
-    Left = 176
-    Top = 288
+    Left = 192
+    Top = 379
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object no_terima: TMTStringDataFieldEh
@@ -620,8 +622,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object QFaktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_terima_material')
-    Left = 584
-    Top = 112
+      'select * from purchase.t_item_receive')
+    Left = 56
+    Top = 376
   end
 end

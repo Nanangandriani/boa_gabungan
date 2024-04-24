@@ -40,6 +40,17 @@ type
     QMaterial3unit: TStringField;
     QMaterial3note: TStringField;
     BEdit3: TRzBitBtn;
+    BEdit4: TRzBitBtn;
+    DBGridMaterial4: TDBGridEh;
+    QMaterial4: TUniQuery;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    FloatField1: TFloatField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    DsMaterial4: TDataSource;
+    QMaterial4supplier_code: TStringField;
     procedure Bedit2Click(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
@@ -50,10 +61,12 @@ type
     procedure DBGridMaterial2DblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BEdit3Click(Sender: TObject);
+    procedure BEdit4Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+
   end;
 
 //var
@@ -120,37 +133,150 @@ end;
 
 procedure TFlistitempo.BEdit3Click(Sender: TObject);
 var i:integer;
+    kdbarang,kdsupp,kdbon,akdbarang:string;
 begin
-   if DBGridMaterial3.SelectedRows.Count > 0 then
-    begin
-      with DBGridMaterial3.DataSource.DataSet do
+   {with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note,c.supplier_code from warehouse.t_item_request_det a  '+
+               'INNER JOIN t_item b on a.item_code=b.item_code '+
+               'INNER JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
+               'where a.trans_no='+Quotedstr(FNew_PO.cb_bon.Text)+' and c.supplier_code='+Quotedstr(FNew_PO.EdKd_supp.Text)+' '+
+               'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name,c.supplier_code';
+     open;
+   end;
+   kdbarang:=dm.Qtemp.FieldByName('item_code').AsString;
+   kdsupp:=dm.Qtemp.FieldByName('supplier_code').AsString;
+   kdbon:=dm.Qtemp.FieldByName('trans_no').AsString;
+
+   FNew_PO.Edit2.text:= kdsupp;
+   FNew_PO.Edit3.text:= kdbon;
+
+   akdbarang:='';
+   dm.qtemp.First;
+   while not dm.qtemp.eof do
+   begin
+      with dm.qtemp do
       begin
-        for i := 0 to DBGridMaterial3.SelectedRows.Count-1 do
+          akdbarang:=dm.qtemp.FieldByName('item_code').AsString;
+      end;
+      dm.qtemp.next;
+   end;
+   FNew_PO.Edit1.text:= akdbarang;}
+   {if (DBGridMaterial3.Fields[1].Value <> kdbarang) and (kdsupp<> FNew_PO.EdKd_supp.Text) then
+   begin
+     MessageDlg('Barang Tidak terdaftar di supplier',MtWarning,[MbOk],0);
+     exit;
+   end;}
+
+   //if (DBGridMaterial3.Fields[1].Value = kdbarang) and (kdsupp = FNew_PO.EdKd_supp.Text) then
+   //begin
+      {if DBGridMaterial3.SelectedRows.Count > 0 then
+      begin
+         with DBGridMaterial3.DataSource.DataSet do
+         begin
+            for i := 0 to DBGridMaterial3.SelectedRows.Count-1 do
+            begin
+                GotoBookmark((DBGridMaterial3.SelectedRows.Items[i]));
+                if (DBGridMaterial3.Fields[1].Value <> akdbarang) and (kdbon<>FNew_PO.Cb_bon.Text) and  (kdsupp<> FNew_PO.EdKd_supp.Text) then
+                begin
+                   MessageDlg('Barang Tidak terdaftar di supplier',MtWarning,[MbOk],0);
+                   exit;
+                end
+                else
+                if (DBGridMaterial3.Fields[1].Value = akdbarang) and (kdbon=FNew_PO.Cb_bon.Text) and  (kdsupp = FNew_PO.EdKd_supp.Text) then
+                FNew_PO.Show;
+                with FNew_PO do
+                begin
+                  FNew_PO.MemItempo.Insert;
+                  FNew_PO.MemItempo['kd_material']:=QMaterial3['item_code'];
+                  FNew_PO.MemItempo['nm_material']:=QMaterial3['item_name'];
+                  FNew_PO.MemItempo['satuan']:=QMaterial3['unit'];
+                  FNew_PO.MemItempo['qty']:=QMaterial3['qty'];;
+                  FNew_PO.MemItempo['harga']:='0';
+                  FNew_PO.MemItempo['qtykontrak']:='0';
+                  //FNew_PO.MemItempo['qty']:=0;
+                  FNew_PO.MemItempo['ppn']:=Flistmaterialstok.Qjenis_pajak['percentage'];
+                  FNew_po.MemItempo['pemb_ppn']:=0;
+                  FNew_po.MemItempo['pemb_ppn_us']:=0;
+                  FNew_po.MemItempo['pph']:=0;
+                  FNew_po.MemItempo['pemb_dpp']:=0;
+                  MemItempo['gudang']:=cb_gudang.Text;
+                  FNew_PO.MemItempo.Post;
+                end;
+            end;
+         end;
+      end; }
+      close;
+     //MessageDlg('0',MtWarning,[MbOk],0);
+   //end;
+
+
+      if DBGridMaterial3.SelectedRows.Count > 0 then
+      begin
+        with DBGridMaterial3.DataSource.DataSet do
         begin
-          GotoBookmark((DBGridMaterial3.SelectedRows.Items[i]));
-          FNew_PO.Show;
-          with FNew_PO do
+          for i := 0 to DBGridMaterial3.SelectedRows.Count-1 do
           begin
-            FNew_PO.MemItempo.Insert;
-            FNew_PO.MemItempo['kd_material']:=QMaterial3['item_code'];
-            FNew_PO.MemItempo['nm_material']:=QMaterial3['item_name'];
-            FNew_PO.MemItempo['satuan']:=QMaterial3['unit'];
-            FNew_PO.MemItempo['qty']:=QMaterial3['qty'];;
-            FNew_PO.MemItempo['harga']:='0';
-            FNew_PO.MemItempo['qtykontrak']:='0';
-            //FNew_PO.MemItempo['qty']:=0;
-            FNew_PO.MemItempo['ppn']:=Flistmaterialstok.Qjenis_pajak['percentage'];
-            FNew_po.MemItempo['pemb_ppn']:=0;
-            FNew_po.MemItempo['pemb_ppn_us']:=0;
-            FNew_po.MemItempo['pph']:=0;
-            FNew_po.MemItempo['pemb_dpp']:=0;
-            MemItempo['gudang']:=cb_gudang.Text;
-            FNew_PO.MemItempo.Post;
+            GotoBookmark((DBGridMaterial3.SelectedRows.Items[i]));
+            FNew_PO.Show;
+            with FNew_PO do
+            begin
+              FNew_PO.MemItempo.Insert;
+              FNew_PO.MemItempo['kd_material']:=QMaterial3['item_code'];
+              FNew_PO.MemItempo['nm_material']:=QMaterial3['item_name'];
+              FNew_PO.MemItempo['satuan']:=QMaterial3['unit'];
+              FNew_PO.MemItempo['qty']:=QMaterial3['qty'];;
+              FNew_PO.MemItempo['harga']:='0';
+              FNew_PO.MemItempo['qtykontrak']:='0';
+              //FNew_PO.MemItempo['qty']:=0;
+              FNew_PO.MemItempo['ppn']:=Flistmaterialstok.Qjenis_pajak['percentage'];
+              FNew_po.MemItempo['pemb_ppn']:=0;
+              FNew_po.MemItempo['pemb_ppn_us']:=0;
+              FNew_po.MemItempo['pph']:=0;
+              FNew_po.MemItempo['pemb_dpp']:=0;
+              MemItempo['gudang']:=cb_gudang.Text;
+              FNew_PO.MemItempo.Post;
+            end;
           end;
         end;
       end;
-    end;
-   close;
+      close;
+end;
+
+procedure TFlistitempo.BEdit4Click(Sender: TObject);
+var i:integer;
+begin
+      if DBGridMaterial4.SelectedRows.Count > 0 then
+      begin
+        with DBGridMaterial4.DataSource.DataSet do
+        begin
+          for i := 0 to DBGridMaterial4.SelectedRows.Count-1 do
+          begin
+            GotoBookmark((DBGridMaterial4.SelectedRows.Items[i]));
+            FNew_PO.Show;
+            with FNew_PO do
+            begin
+              FNew_PO.MemItempo.Insert;
+              FNew_PO.MemItempo['kd_material']:=QMaterial4['item_code'];
+              FNew_PO.MemItempo['nm_material']:=QMaterial4['item_name'];
+              FNew_PO.MemItempo['satuan']:=QMaterial4['unit'];
+              FNew_PO.MemItempo['qty']:=QMaterial4['qty'];;
+              FNew_PO.MemItempo['harga']:='0';
+              FNew_PO.MemItempo['qtykontrak']:='0';
+              FNew_PO.MemItempo['ppn']:=Flistmaterialstok.Qjenis_pajak['percentage'];
+              FNew_po.MemItempo['pemb_ppn']:=0;
+              FNew_po.MemItempo['pemb_ppn_us']:=0;
+              FNew_po.MemItempo['pph']:=0;
+              FNew_po.MemItempo['pemb_dpp']:=0;
+              MemItempo['gudang']:=cb_gudang.Text;
+              FNew_PO.MemItempo.Post;
+            end;
+          end;
+        end;
+      end;
+      close;
 end;
 
 procedure TFlistitempo.BEditClick(Sender: TObject);

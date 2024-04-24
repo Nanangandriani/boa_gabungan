@@ -18,7 +18,7 @@ object FNew_PO: TFNew_PO
     Left = 0
     Top = 0
     Width = 1210
-    Height = 257
+    Height = 261
     Align = alTop
     TabOrder = 0
     ExplicitWidth = 1204
@@ -301,6 +301,7 @@ object FNew_PO: TFNew_PO
       DisabledColor = clInfoBk
       Enabled = False
       TabOrder = 6
+      OnChange = EdNopoChange
     end
     object EdCurr: TRzComboBox
       Left = 190
@@ -504,7 +505,6 @@ object FNew_PO: TFNew_PO
       Width = 121
       Height = 23
       TabOrder = 20
-      Visible = False
     end
     object Edbln: TEdit
       Left = 968
@@ -627,10 +627,34 @@ object FNew_PO: TFNew_PO
       Height = 23
       TabOrder = 33
     end
+    object Edit1: TEdit
+      Left = 383
+      Top = 208
+      Width = 121
+      Height = 23
+      TabOrder = 34
+      Visible = False
+    end
+    object Edit2: TEdit
+      Left = 383
+      Top = 232
+      Width = 121
+      Height = 23
+      TabOrder = 35
+      Visible = False
+    end
+    object Edit3: TEdit
+      Left = 510
+      Top = 232
+      Width = 121
+      Height = 23
+      TabOrder = 36
+      Visible = False
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 522
+    Top = 526
     Width = 1210
     Height = 143
     Align = alTop
@@ -801,17 +825,17 @@ object FNew_PO: TFNew_PO
   end
   object Panel1: TPanel
     Left = 0
-    Top = 665
+    Top = 669
     Width = 1210
-    Height = 34
+    Height = 30
     Align = alClient
     TabOrder = 2
     ExplicitWidth = 1204
-    ExplicitHeight = 25
+    ExplicitHeight = 21
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
-      Height = 32
+      Height = 28
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
@@ -869,12 +893,12 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1128
-      ExplicitHeight = 23
+      ExplicitHeight = 19
     end
     object BSimpan: TRzBitBtn
       Left = 1059
       Top = 1
-      Height = 32
+      Height = 28
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 1
@@ -933,12 +957,12 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1053
-      ExplicitHeight = 23
+      ExplicitHeight = 19
     end
     object BEdit: TRzBitBtn
       Left = 984
       Top = 1
-      Height = 32
+      Height = 28
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 2
@@ -997,22 +1021,21 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 978
-      ExplicitHeight = 23
+      ExplicitHeight = 19
     end
     object Button1: TButton
       Left = 856
-      Top = 4
+      Top = 2
       Width = 75
       Height = 25
       Caption = 'Button1'
       TabOrder = 3
-      Visible = False
       OnClick = Button1Click
     end
   end
   object Panel3: TPanel
     Left = 0
-    Top = 257
+    Top = 261
     Width = 1210
     Height = 265
     Align = alTop

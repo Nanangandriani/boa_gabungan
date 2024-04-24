@@ -49,8 +49,8 @@ type
     RzBitBtn1: TRzBitBtn;
     Label18: TLabel;
     Label19: TLabel;
-    RzNumericEdit1: TRzNumericEdit;
-    RzNumericEdit2: TRzNumericEdit;
+    Edvls: TRzNumericEdit;
+    ednilai_vls: TRzNumericEdit;
     DtTh: TRzDateTimeEdit;
     DtBln: TRzDateTimeEdit;
     DtHr: TRzDateTimeEdit;
@@ -62,6 +62,10 @@ type
     procedure RzBitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DtReturnChange(Sender: TObject);
+    procedure DBGridEh3ColEnter(Sender: TObject);
+    procedure DBGridEh3CellClick(Column: TColumnEh);
+    procedure DBGridEh3Columns0EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -81,7 +85,8 @@ implementation
 
 {$R *.dfm}
 
-uses USupp_Pembelian, UDataModule, UReturnPembelian,UMy_Function;
+uses USupp_Pembelian, UDataModule, UReturnPembelian,UMy_Function,
+  USearch_ItemRetur;
 
 Procedure TFNew_returnPemb.Totalretur;
 begin
@@ -94,7 +99,7 @@ end;
 
 procedure TFNew_ReturnPemb.Autonumber;
 begin
-  idmenu:='M4304';
+  idmenu:='M11005';
   strday2:=DtReturn.Date;
   Edno.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_purchase_return','');
   Edurut.Text:=order_no;
@@ -243,11 +248,75 @@ begin
 end;
 
 
+procedure TFNew_ReturnPemb.DBGridEh3CellClick(Column: TColumnEh);
+begin
+    MemDetail.Edit;
+    MemDetail['totalharga']:=MemDetail['qty']*MemDetail['harga'];
+    MemDetail.Post;
+    Totalretur;
+end;
+
+procedure TFNew_ReturnPemb.DBGridEh3ColEnter(Sender: TObject);
+begin
+    MemDetail.Edit;
+    MemDetail['totalharga']:=MemDetail['qty']*MemDetail['harga'];
+    MemDetail.Post;
+    Totalretur;
+end;
+
+procedure TFNew_ReturnPemb.DBGridEh3Columns0EditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+begin
+    with FSearch_MaterialRetur do
+    begin
+      jenis_tr:='rt_pemb';
+      Show;
+      with Qmaterial do
+      begin
+        Filtered:=false;
+        Filter:=' supplier_code='+QuotedStr(Edkd_supp.Text);
+        FilterOptions:=[];
+        Filtered:=True;
+      end;
+      Qmaterial.Open;
+    end;
+end;
+
 procedure TFNew_ReturnPemb.DtReturnChange(Sender: TObject);
+var SelectedDate: TRzDateTimeEdit;
+    year, month, day: word;
 begin
    DtBln.Date:=DtReturn.Date;
    DtTh.Date:=DtReturn.Date;
    Dthr.Date:=DtReturn.Date;
+
+      {with dm.Qtemp2 do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DtReturn.Date))+' :: DATE, ''dd'') hari ';
+     Open;
+   end;
+   dthr.Text:=dm.Qtemp2.FieldByName('hari').AsString;
+
+   with dm.Qtemp1 do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DtReturn.Date))+' :: DATE, ''mm'') bulan ';
+     Open;
+   end;
+   Dtbln.Text:=dm.Qtemp1.FieldByName('bulan').AsString;
+
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',DtReturn.Date))+' :: DATE, ''yyyy'') tahun ';
+     Open;
+   end;
+   Dtth.Text:=dm.Qtemp.FieldByName('tahun').AsString;}
+
 end;
 
 procedure TFNew_ReturnPemb.Ednm_suppButtonClick(Sender: TObject);
@@ -265,9 +334,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_material_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
+      sql.Text:='select * from purchase.t_item_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
       Execute;
     end;
+    edno_terima.Items.Clear;
     Dm.Qtemp.First;
     while not Dm.Qtemp.Eof do
     begin
@@ -282,7 +352,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_material_receive where Receive_no='+QuotedStr(edno_terima.Text);
+      sql.Text:='select * from purchase.t_item_receive where Receive_no='+QuotedStr(edno_terima.Text);
       Execute;
     end;
       EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];
