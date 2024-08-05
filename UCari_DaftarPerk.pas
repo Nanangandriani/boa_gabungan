@@ -35,7 +35,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
-  UInput_um;
+  UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder;
 
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
@@ -47,6 +47,32 @@ end;
 
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
 begin
+    if (vpanggil = 'do_ppn')then
+    begin
+      FNewDeliveryOrder.edKodeAkunPPN.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNewDeliveryOrder.edNamaAkunPPN.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+
+    if (vpanggil = 'do_pph')then
+    begin
+      FNewDeliveryOrder.edKodeAkunPPH.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNewDeliveryOrder.edNamaAkunPPH.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+
+    if (vpanggil = 'penjualan')then
+    begin
+      FNew_Penjualan.MemDetail.Edit;
+      FNew_Penjualan.MemDetail['PPH_AKUN']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_Penjualan.MemDetail['NAMA_PPH']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FNew_Penjualan.MemDetail['PPH_PERSEN']:='0';
+      FNew_Penjualan.MemDetail['PPH_NILAI']:='0';
+      FNew_Penjualan.MemDetail.post;
+
+      QDaftar_Perk.Close;
+    end;
+
     if (vpanggil = 'kategorimaterial')then
     begin
       FNew_KategoriBarang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;

@@ -115,12 +115,9 @@ end;
 procedure TFListGudang.ActROExecute(Sender: TObject);
 begin
   DBGridGudang.StartLoadingStatus();
-  try
     QGudang.Close;
     QGudang.Open;
-  finally
   DBGridGudang.FinishLoadingStatus();
-  end;
 end;
 
 procedure TFListGudang.ActUpdateExecute(Sender: TObject);

@@ -133,7 +133,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 287
     Top = 182
     Width = 170
-    Height = 21
+    Height = 23
     Color = clInfoBk
     ReadOnly = True
     TabOrder = 1
@@ -143,7 +143,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 287
     Top = 155
     Width = 170
-    Height = 21
+    Height = 23
     TabOrder = 2
     DisplayFormat = '#,##'
   end
@@ -151,7 +151,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 100
     Top = 182
     Width = 176
-    Height = 21
+    Height = 23
     Color = clInfoBk
     ReadOnly = True
     TabOrder = 3
@@ -161,7 +161,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 165
     Top = 155
     Width = 111
-    Height = 21
+    Height = 23
     Color = clInfoBk
     ReadOnly = True
     TabOrder = 4
@@ -171,7 +171,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 100
     Top = 155
     Width = 39
-    Height = 21
+    Height = 23
     Text = '11'
     TabOrder = 5
   end
@@ -179,7 +179,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 287
     Top = 129
     Width = 170
-    Height = 21
+    Height = 23
     TabOrder = 6
     DisplayFormat = '#,##0.00'
   end
@@ -187,7 +187,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 336
     Top = 75
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 7
     DisplayFormat = '#,##'
     Value = 1.000000000000000000
@@ -196,7 +196,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Left = 100
     Top = 129
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 8
     DisplayFormat = '#,##0.0000'
   end

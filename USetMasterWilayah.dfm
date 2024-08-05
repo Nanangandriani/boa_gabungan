@@ -2,8 +2,8 @@ object FSetMasterWilayah: TFSetMasterWilayah
   Left = 0
   Top = 0
   Caption = 'Setting Master'
-  ClientHeight = 419
-  ClientWidth = 802
+  ClientHeight = 520
+  ClientWidth = 909
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,87 +11,165 @@ object FSetMasterWilayah: TFSetMasterWilayah
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
-  object PageControl1: TPageControl
+  object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 802
-    Height = 419
-    ActivePage = TabSetBagianWilayah
+    Width = 909
+    Height = 520
+    Hint = ''
+    ActivePage = TabSetKares
     Align = alClient
+    UseColoredTabs = True
+    TabIndex = 2
     TabOrder = 0
-    object TabSetBagianWilayah: TTabSheet
+    ExplicitWidth = 903
+    ExplicitHeight = 511
+    FixedDimension = 21
+    object TabSetBagianWilayah: TRzTabSheet
       Caption = 'Setting Bagian Wilayah'
-      ImageIndex = 2
-      object Label6: TLabel
-        Left = 117
-        Top = 49
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label3: TLabel
-        Left = 117
-        Top = 19
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object LabelPelanggan: TLabel
-        Left = 20
-        Top = 19
-        Width = 27
-        Height = 15
-        Caption = 'Kode'
-      end
-      object Label5: TLabel
-        Left = 20
-        Top = 49
-        Width = 32
-        Height = 15
-        Caption = 'Nama'
-      end
-      object Label18: TLabel
-        Left = 117
-        Top = 78
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label19: TLabel
-        Left = 20
-        Top = 78
-        Width = 60
-        Height = 15
-        Caption = 'Keterangan'
-      end
-      object DBGridCustomer: TDBGridEh
+      object DBGrid_setwilayah: TDBGridEh
         Left = 0
-        Top = 196
-        Width = 794
-        Height = 193
-        Align = alBottom
+        Top = 145
+        Width = 905
+        Height = 350
+        Align = alClient
+        DataSource = dsWilayah
         DynProps = <>
+        ReadOnly = True
         SearchPanel.Enabled = True
         TabOrder = 0
+        OnDblClick = DBGrid_setwilayahDblClick
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code'
+            Footers = <>
+            Title.Caption = 'Kode'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name'
+            Footers = <>
+            Title.Caption = 'Name'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'description'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 300
+          end>
         object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+      object pnSetWilayah: TPanel
+        Left = 0
+        Top = 0
+        Width = 905
+        Height = 113
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        object Label18: TLabel
+          Left = 125
+          Top = 78
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label6: TLabel
+          Left = 125
+          Top = 49
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label3: TLabel
+          Left = 125
+          Top = 19
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object LabelPelanggan: TLabel
+          Left = 28
+          Top = 19
+          Width = 27
+          Height = 15
+          Caption = 'Kode'
+        end
+        object Label5: TLabel
+          Left = 28
+          Top = 49
+          Width = 32
+          Height = 15
+          Caption = 'Nama'
+        end
+        object Label19: TLabel
+          Left = 28
+          Top = 78
+          Width = 60
+          Height = 15
+          Caption = 'Keterangan'
+        end
+        object edKode_setwilayah: TEdit
+          Left = 140
+          Top = 16
+          Width = 185
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 0
+        end
+        object cbstatus_setwilayah: TCheckBox
+          Left = 331
+          Top = 19
+          Width = 142
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 1
+        end
+        object edNama_setwilayah: TEdit
+          Left = 140
+          Top = 46
+          Width = 313
+          Height = 23
+          TabOrder = 2
+        end
+        object edKet_setwilayah: TEdit
+          Left = 140
+          Top = 75
+          Width = 313
+          Height = 23
+          TabOrder = 3
         end
       end
       object Panel2: TPanel
         Left = 0
-        Top = 164
-        Width = 794
+        Top = 113
+        Width = 905
         Height = 32
-        Align = alBottom
-        TabOrder = 1
-        ExplicitTop = 158
-        object BBatal: TRzBitBtn
-          Left = 718
+        Align = alTop
+        TabOrder = 2
+        object btBatal_setwilayah: TRzBitBtn
+          Left = 829
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
-          TabOrder = 1
+          Caption = 'Close'
+          TabOrder = 3
+          OnClick = btBatal_setwilayahClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -145,13 +223,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object BSave: TRzBitBtn
-          Left = 568
+        object btSimpan_setwilayah: TRzBitBtn
+          Left = 679
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Simpan'
-          TabOrder = 0
+          TabOrder = 1
+          OnClick = btSimpan_setwilayahClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -205,13 +284,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object BRefresh: TRzBitBtn
-          Left = 643
+        object btRefresh_setwilayah: TRzBitBtn
+          Left = 754
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = btRefresh_setwilayahClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -265,111 +345,262 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-      end
-      object Edkode: TEdit
-        Left = 132
-        Top = 16
-        Width = 185
-        Height = 23
-        CharCase = ecUpperCase
-        TabOrder = 2
-      end
-      object Ednama: TEdit
-        Left = 132
-        Top = 46
-        Width = 313
-        Height = 23
-        TabOrder = 3
-      end
-      object cbstatus: TCheckBox
-        Left = 323
-        Top = 19
-        Width = 142
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 4
-      end
-      object Edit8: TEdit
-        Left = 132
-        Top = 75
-        Width = 313
-        Height = 23
-        TabOrder = 5
+        object btBaru_setwilayah: TRzBitBtn
+          Left = 604
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'New'
+          TabOrder = 0
+          OnClick = btBaru_setwilayahClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7
+            D7D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E881E8E8E8E8E85ED7D7D7
+            D7D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+        end
       end
     end
-    object TabSetArea: TTabSheet
+    object TabSetArea: TRzTabSheet
       Caption = 'Setting Area'
-      object Label1: TLabel
-        Left = 28
-        Top = 19
-        Width = 81
-        Height = 15
-        Caption = 'Wilayah Bagian'
+      object pnSetArea: TPanel
+        Left = 0
+        Top = 0
+        Width = 905
+        Height = 145
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 28
+          Top = 19
+          Width = 81
+          Height = 15
+          Caption = 'Wilayah Bagian'
+        end
+        object Label2: TLabel
+          Left = 28
+          Top = 49
+          Width = 27
+          Height = 15
+          Caption = 'Kode'
+        end
+        object Label4: TLabel
+          Left = 28
+          Top = 79
+          Width = 32
+          Height = 15
+          Caption = 'Nama'
+        end
+        object Label45: TLabel
+          Left = 125
+          Top = 19
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label20: TLabel
+          Left = 125
+          Top = 108
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label21: TLabel
+          Left = 125
+          Top = 79
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label44: TLabel
+          Left = 125
+          Top = 50
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label7: TLabel
+          Left = 28
+          Top = 108
+          Width = 60
+          Height = 15
+          Caption = 'Keterangan'
+        end
+        object edNama_setarea: TEdit
+          Left = 140
+          Top = 76
+          Width = 313
+          Height = 23
+          TabOrder = 0
+        end
+        object edKet_setarea: TEdit
+          Left = 140
+          Top = 105
+          Width = 313
+          Height = 23
+          TabOrder = 1
+        end
+        object cbstatus_setarea: TCheckBox
+          Left = 331
+          Top = 49
+          Width = 142
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 2
+          Visible = False
+        end
+        object edKode_setarea: TEdit
+          Left = 140
+          Top = 47
+          Width = 185
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 3
+        end
+        object edWilayah_setarea: TRzButtonEdit
+          Left = 140
+          Top = 16
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 4
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edWilayah_setareaButtonClick
+        end
+        object edKDWilayah_setarea: TEdit
+          Left = 386
+          Top = 16
+          Width = 100
+          Height = 23
+          TabOrder = 5
+          Visible = False
+        end
       end
-      object Label2: TLabel
-        Left = 28
-        Top = 49
-        Width = 27
-        Height = 15
-        Caption = 'Kode'
-      end
-      object Label4: TLabel
-        Left = 28
-        Top = 79
-        Width = 32
-        Height = 15
-        Caption = 'Nama'
-      end
-      object Label7: TLabel
-        Left = 28
-        Top = 108
-        Width = 60
-        Height = 15
-        Caption = 'Keterangan'
-      end
-      object Label20: TLabel
-        Left = 125
-        Top = 108
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label21: TLabel
-        Left = 125
-        Top = 79
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label44: TLabel
-        Left = 125
-        Top = 49
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label45: TLabel
-        Left = 125
-        Top = 19
-        Width = 3
-        Height = 15
-        Caption = ':'
+      object DBGrid_setarea: TDBGridEh
+        Left = 0
+        Top = 177
+        Width = 905
+        Height = 318
+        Align = alClient
+        DataSource = dsArea
+        DynProps = <>
+        ReadOnly = True
+        SearchPanel.Enabled = True
+        TabOrder = 1
+        OnDblClick = DBGrid_setareaDblClick
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_region'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_region'
+            Footers = <>
+            Title.Caption = 'Nama Wilayah'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_region_areas'
+            Footers = <>
+            Title.Caption = 'Kode Area'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_region_areas'
+            Footers = <>
+            Title.Caption = 'Nama Area'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'description'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 300
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
       end
       object Panel1: TPanel
         Left = 0
-        Top = 164
-        Width = 794
+        Top = 145
+        Width = 905
         Height = 32
-        Align = alBottom
-        TabOrder = 0
-        ExplicitTop = 120
-        object RzBitBtn1: TRzBitBtn
-          Left = 718
+        Align = alTop
+        TabOrder = 2
+        object edBatal_setarea: TRzBitBtn
+          Left = 829
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
-          TabOrder = 1
+          Caption = 'Close'
+          TabOrder = 3
+          OnClick = edBatal_setareaClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -423,13 +654,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn2: TRzBitBtn
-          Left = 568
+        object edSimpan_setarea: TRzBitBtn
+          Left = 679
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Simpan'
-          TabOrder = 0
+          Caption = 'Save'
+          TabOrder = 1
+          OnClick = edSimpan_setareaClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -483,13 +715,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn3: TRzBitBtn
-          Left = 643
+        object btRefresh_setarea: TRzBitBtn
+          Left = 754
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = btRefresh_setareaClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -543,137 +776,266 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
+        object edBaru_setarea: TRzBitBtn
+          Left = 604
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'New'
+          TabOrder = 0
+          OnClick = edBaru_setareaClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7
+            D7D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E881E8E8E8E8E85ED7D7D7
+            D7D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+        end
       end
-      object DBGridEh1: TDBGridEh
+    end
+    object TabSetKares: TRzTabSheet
+      Caption = 'Setting Karesidenan'
+      ExplicitWidth = 899
+      ExplicitHeight = 486
+      object DBGrid_setkares: TDBGridEh
         Left = 0
-        Top = 196
-        Width = 794
-        Height = 193
-        Align = alBottom
+        Top = 177
+        Width = 905
+        Height = 318
+        Align = alClient
+        DataSource = dsKaresidenan
         DynProps = <>
+        ReadOnly = True
         SearchPanel.Enabled = True
-        TabOrder = 1
+        TabOrder = 0
+        OnDblClick = DBGrid_setkaresDblClick
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_areas'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_areas'
+            Footers = <>
+            Title.Caption = 'Nama Area'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_region_kares'
+            Footers = <>
+            Title.Caption = 'Kode Karesidenan'
+            Width = 113
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_region_kares'
+            Footers = <>
+            Title.Caption = 'Nama Karesidenan'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'description'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 300
+          end>
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
-      object RzComboBox4: TRzComboBox
-        Left = 140
-        Top = 16
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 2
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
-      end
-      object Edit1: TEdit
-        Left = 140
-        Top = 46
-        Width = 185
-        Height = 23
-        CharCase = ecUpperCase
-        TabOrder = 3
-      end
-      object Edit2: TEdit
-        Left = 140
-        Top = 76
-        Width = 313
-        Height = 23
-        TabOrder = 4
-      end
-      object Edit9: TEdit
-        Left = 140
-        Top = 105
-        Width = 313
-        Height = 23
-        TabOrder = 5
-      end
-      object CheckBox1: TCheckBox
-        Left = 331
-        Top = 47
-        Width = 142
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 6
-        Visible = False
-      end
-    end
-    object TabSetKares: TTabSheet
-      Caption = 'Setting Karesidenan'
-      ImageIndex = 3
-      object Label12: TLabel
-        Left = 28
-        Top = 27
-        Width = 42
-        Height = 15
-        Caption = 'Provinsi'
-      end
-      object Label13: TLabel
-        Left = 28
-        Top = 57
-        Width = 27
-        Height = 15
-        Caption = 'Kode'
-      end
-      object Label14: TLabel
-        Left = 28
-        Top = 87
-        Width = 32
-        Height = 15
-        Caption = 'Nama'
-      end
-      object Label15: TLabel
-        Left = 28
-        Top = 116
-        Width = 60
-        Height = 15
-        Caption = 'Keterangan'
-      end
-      object Label16: TLabel
-        Left = 125
-        Top = 116
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label17: TLabel
-        Left = 125
-        Top = 87
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label42: TLabel
-        Left = 125
-        Top = 57
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label43: TLabel
-        Left = 125
-        Top = 27
-        Width = 3
-        Height = 15
-        Caption = ':'
+      object pnSetKares: TPanel
+        Left = 0
+        Top = 0
+        Width = 905
+        Height = 145
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        ExplicitWidth = 899
+        object Label16: TLabel
+          Left = 125
+          Top = 116
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label17: TLabel
+          Left = 125
+          Top = 87
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label42: TLabel
+          Left = 125
+          Top = 57
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label43: TLabel
+          Left = 125
+          Top = 27
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label12: TLabel
+          Left = 28
+          Top = 27
+          Width = 24
+          Height = 15
+          Caption = 'Area'
+        end
+        object Label13: TLabel
+          Left = 28
+          Top = 57
+          Width = 27
+          Height = 15
+          Caption = 'Kode'
+        end
+        object Label14: TLabel
+          Left = 28
+          Top = 87
+          Width = 32
+          Height = 15
+          Caption = 'Nama'
+        end
+        object Label15: TLabel
+          Left = 28
+          Top = 116
+          Width = 60
+          Height = 15
+          Caption = 'Keterangan'
+        end
+        object edKode_setkares: TEdit
+          Left = 140
+          Top = 54
+          Width = 185
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 0
+        end
+        object edNama_setkares: TEdit
+          Left = 140
+          Top = 84
+          Width = 313
+          Height = 23
+          TabOrder = 1
+        end
+        object edKet_setkares: TEdit
+          Left = 140
+          Top = 113
+          Width = 313
+          Height = 23
+          TabOrder = 2
+        end
+        object cbstatus_setkares: TCheckBox
+          Left = 331
+          Top = 53
+          Width = 142
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 3
+          Visible = False
+        end
+        object edArea_setkares: TRzButtonEdit
+          Left = 140
+          Top = 24
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 4
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edArea_setkaresButtonClick
+        end
+        object edKDArea_setkares: TEdit
+          Left = 386
+          Top = 24
+          Width = 100
+          Height = 23
+          TabOrder = 5
+          Visible = False
+        end
       end
       object Panel4: TPanel
         Left = 0
-        Top = 164
-        Width = 794
+        Top = 145
+        Width = 905
         Height = 32
-        Align = alBottom
-        TabOrder = 0
-        ExplicitTop = 120
-        object RzBitBtn7: TRzBitBtn
-          Left = 718
+        Align = alTop
+        TabOrder = 2
+        ExplicitWidth = 899
+        object btBatal_setkares: TRzBitBtn
+          Left = 829
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
-          TabOrder = 1
+          Caption = 'Close'
+          TabOrder = 3
+          OnClick = btBatal_setkaresClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -726,14 +1088,16 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 823
         end
-        object RzBitBtn8: TRzBitBtn
-          Left = 568
+        object edSimpan_setkares: TRzBitBtn
+          Left = 679
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Simpan'
-          TabOrder = 0
+          Caption = 'Save'
+          TabOrder = 1
+          OnClick = edSimpan_setkaresClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -786,14 +1150,16 @@ object FSetMasterWilayah: TFSetMasterWilayah
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 673
         end
-        object RzBitBtn9: TRzBitBtn
-          Left = 643
+        object btRefresh_setkares: TRzBitBtn
+          Left = 754
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = btRefresh_setkaresClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -846,152 +1212,315 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 748
+        end
+        object edBaru_setkares: TRzBitBtn
+          Left = 604
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'New'
+          TabOrder = 0
+          OnClick = edBaru_setkaresClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7
+            D7D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E881E8E8E8E8E85ED7D7D7
+            D7D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+          ExplicitLeft = 598
+        end
+        object RzBitBtn1: TRzBitBtn
+          Left = 1
+          Top = 1
+          Width = 240
+          Height = 30
+          Align = alLeft
+          Caption = 'Add Provinsi Kabupaten Kecamatan'
+          TabOrder = 4
+          OnClick = RzBitBtn1Click
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000830B0000830B00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+            09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+            09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+            09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E809090909
+            0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E809101010
+            1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809101010
+            1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809090909
+            0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E8E8E8E8E8
+            09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+            09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+            09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+            09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
         end
       end
-      object DBGridEh3: TDBGridEh
+    end
+    object TabSetProvinsi: TRzTabSheet
+      Caption = 'Setting Provinsi'
+      object DBGrid_setprov: TDBGridEh
         Left = 0
-        Top = 196
-        Width = 794
-        Height = 193
-        Align = alBottom
+        Top = 193
+        Width = 905
+        Height = 302
+        Align = alClient
+        DataSource = dsProvinsi
         DynProps = <>
+        ReadOnly = True
         SearchPanel.Enabled = True
-        TabOrder = 1
+        TabOrder = 0
+        OnDblClick = DBGrid_setprovDblClick
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
-      object RzComboBox3: TRzComboBox
-        Left = 140
-        Top = 24
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 2
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
-      end
-      object Edit5: TEdit
-        Left = 140
-        Top = 54
-        Width = 185
-        Height = 23
-        CharCase = ecUpperCase
-        TabOrder = 3
-      end
-      object Edit6: TEdit
-        Left = 140
-        Top = 84
-        Width = 313
-        Height = 23
-        TabOrder = 4
-      end
-      object Edit7: TEdit
-        Left = 140
-        Top = 113
-        Width = 313
-        Height = 23
-        TabOrder = 5
-      end
-      object CheckBox3: TCheckBox
-        Left = 331
-        Top = 53
-        Width = 142
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 6
-        Visible = False
-      end
-    end
-    object TabSetProvinsi: TTabSheet
-      Caption = 'Setting Provinsi'
-      ImageIndex = 1
-      object Label8: TLabel
-        Left = 125
-        Top = 11
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label9: TLabel
-        Left = 125
-        Top = 40
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label10: TLabel
-        Left = 125
-        Top = 69
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label11: TLabel
-        Left = 125
-        Top = 99
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label22: TLabel
-        Left = 125
-        Top = 128
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label23: TLabel
-        Left = 28
-        Top = 128
-        Width = 60
-        Height = 15
-        Caption = 'Keterangan'
-      end
-      object Label46: TLabel
-        Left = 28
-        Top = 99
-        Width = 32
-        Height = 15
-        Caption = 'Nama'
-      end
-      object Label47: TLabel
-        Left = 28
-        Top = 69
-        Width = 27
-        Height = 15
-        Caption = 'Kode'
-      end
-      object Label48: TLabel
-        Left = 28
-        Top = 40
-        Width = 24
-        Height = 15
-        Caption = 'Area'
-      end
-      object Label49: TLabel
-        Left = 28
-        Top = 11
-        Width = 81
-        Height = 15
-        Caption = 'Wilayah Bagian'
+      object pnSetProvinsi: TPanel
+        Left = 0
+        Top = 0
+        Width = 905
+        Height = 161
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        object Label22: TLabel
+          Left = 125
+          Top = 128
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label11: TLabel
+          Left = 125
+          Top = 99
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label10: TLabel
+          Left = 125
+          Top = 69
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label9: TLabel
+          Left = 125
+          Top = 40
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label8: TLabel
+          Left = 125
+          Top = 11
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label49: TLabel
+          Left = 28
+          Top = 11
+          Width = 81
+          Height = 15
+          Caption = 'Wilayah Bagian'
+        end
+        object Label48: TLabel
+          Left = 28
+          Top = 40
+          Width = 24
+          Height = 15
+          Caption = 'Area'
+        end
+        object Label47: TLabel
+          Left = 28
+          Top = 69
+          Width = 27
+          Height = 15
+          Caption = 'Kode'
+        end
+        object Label46: TLabel
+          Left = 28
+          Top = 99
+          Width = 32
+          Height = 15
+          Caption = 'Nama'
+        end
+        object Label23: TLabel
+          Left = 28
+          Top = 128
+          Width = 60
+          Height = 15
+          Caption = 'Keterangan'
+        end
+        object edKet_setprov: TEdit
+          Left = 140
+          Top = 125
+          Width = 313
+          Height = 23
+          TabOrder = 0
+        end
+        object edNama_setprov: TEdit
+          Left = 140
+          Top = 96
+          Width = 313
+          Height = 23
+          TabOrder = 1
+        end
+        object edKode_setprov: TEdit
+          Left = 140
+          Top = 66
+          Width = 185
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 2
+        end
+        object cbstatus_setprov: TCheckBox
+          Left = 331
+          Top = 69
+          Width = 142
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 3
+          Visible = False
+        end
+        object edWilayah_setprov: TRzButtonEdit
+          Left = 140
+          Top = 8
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 4
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edWilayah_setprovButtonClick
+        end
+        object edArea_setprov: TRzButtonEdit
+          Left = 140
+          Top = 37
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 5
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edArea_setprovButtonClick
+        end
+        object edKDWilayah_setprov: TEdit
+          Left = 386
+          Top = 8
+          Width = 100
+          Height = 23
+          TabOrder = 6
+          Visible = False
+        end
+        object edKDArea_setprov: TEdit
+          Left = 386
+          Top = 37
+          Width = 100
+          Height = 23
+          TabOrder = 7
+          Visible = False
+        end
       end
       object Panel3: TPanel
         Left = 0
-        Top = 164
-        Width = 794
+        Top = 161
+        Width = 905
         Height = 32
-        Align = alBottom
-        TabOrder = 0
-        ExplicitTop = 120
-        object RzBitBtn4: TRzBitBtn
-          Left = 718
+        Align = alTop
+        TabOrder = 2
+        object btBatal_setprov: TRzBitBtn
+          Left = 829
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
-          TabOrder = 1
+          Caption = 'Close'
+          TabOrder = 3
+          OnClick = btBatal_setprovClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -1045,13 +1574,13 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn5: TRzBitBtn
-          Left = 568
+        object btSimpan_setprov: TRzBitBtn
+          Left = 679
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Simpan'
-          TabOrder = 0
+          Caption = 'Save'
+          TabOrder = 1
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -1105,13 +1634,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn6: TRzBitBtn
-          Left = 643
+        object btRefresh_setprov: TRzBitBtn
+          Left = 754
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = btRefresh_setprovClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -1165,204 +1695,217 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-      end
-      object DBGridEh2: TDBGridEh
-        Left = 0
-        Top = 196
-        Width = 794
-        Height = 193
-        Align = alBottom
-        DynProps = <>
-        SearchPanel.Enabled = True
-        TabOrder = 1
-        object RowDetailData: TRowDetailPanelControlEh
+        object btBaru_setprov: TRzBitBtn
+          Left = 604
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'New'
+          TabOrder = 0
+          OnClick = btBaru_setprovClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7
+            D7D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E881E8E8E8E8E85ED7D7D7
+            D7D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
         end
-      end
-      object Edit3: TEdit
-        Left = 140
-        Top = 125
-        Width = 313
-        Height = 23
-        TabOrder = 2
-      end
-      object Edit4: TEdit
-        Left = 140
-        Top = 96
-        Width = 313
-        Height = 23
-        TabOrder = 3
-      end
-      object Edit10: TEdit
-        Left = 140
-        Top = 66
-        Width = 185
-        Height = 23
-        CharCase = ecUpperCase
-        TabOrder = 4
-      end
-      object RzComboBox5: TRzComboBox
-        Left = 140
-        Top = 37
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 5
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
-      end
-      object RzComboBox6: TRzComboBox
-        Left = 140
-        Top = 8
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 6
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
-      end
-      object CheckBox2: TCheckBox
-        Left = 331
-        Top = 69
-        Width = 142
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 7
-        Visible = False
       end
     end
-    object TabSetKabupaten: TTabSheet
+    object TabSetKabupaten: TRzTabSheet
       Caption = 'Setting Kabupaten'
-      ImageIndex = 4
-      object Label24: TLabel
-        Left = 117
-        Top = 79
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label25: TLabel
-        Left = 117
-        Top = 49
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label26: TLabel
-        Left = 20
-        Top = 49
-        Width = 27
-        Height = 15
-        Caption = 'Kode'
-      end
-      object Label27: TLabel
-        Left = 20
-        Top = 79
-        Width = 32
-        Height = 15
-        Caption = 'Nama'
-      end
-      object Label28: TLabel
-        Left = 117
-        Top = 108
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label29: TLabel
-        Left = 20
-        Top = 108
-        Width = 60
-        Height = 15
-        Caption = 'Keterangan'
-      end
-      object Label40: TLabel
-        Left = 20
-        Top = 19
-        Width = 42
-        Height = 15
-        Caption = 'Provinsi'
-      end
-      object Label41: TLabel
-        Left = 117
-        Top = 19
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object DBGridEh4: TDBGridEh
+      object DBGrid_setkab: TDBGridEh
         Left = 0
-        Top = 196
-        Width = 794
-        Height = 193
-        Align = alBottom
+        Top = 169
+        Width = 905
+        Height = 326
+        Align = alClient
+        DataSource = dsKabupaten
         DynProps = <>
+        ReadOnly = True
         SearchPanel.Enabled = True
         TabOrder = 0
+        OnDblClick = DBGrid_setkabDblClick
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
-      object Edit11: TEdit
-        Left = 132
-        Top = 46
-        Width = 185
-        Height = 23
-        CharCase = ecUpperCase
+      object pnSetKabupaten: TPanel
+        Left = 0
+        Top = 0
+        Width = 905
+        Height = 137
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
         TabOrder = 1
-      end
-      object Edit12: TEdit
-        Left = 132
-        Top = 76
-        Width = 313
-        Height = 23
-        TabOrder = 2
-      end
-      object CheckBox4: TCheckBox
-        Left = 323
-        Top = 45
-        Width = 142
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 3
-        Visible = False
-      end
-      object Edit13: TEdit
-        Left = 132
-        Top = 105
-        Width = 313
-        Height = 23
-        TabOrder = 4
-      end
-      object RzComboBox2: TRzComboBox
-        Left = 132
-        Top = 16
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 5
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
+        object Label41: TLabel
+          Left = 117
+          Top = 19
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label25: TLabel
+          Left = 117
+          Top = 49
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label24: TLabel
+          Left = 117
+          Top = 79
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label28: TLabel
+          Left = 117
+          Top = 108
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label29: TLabel
+          Left = 20
+          Top = 108
+          Width = 60
+          Height = 15
+          Caption = 'Keterangan'
+        end
+        object Label27: TLabel
+          Left = 20
+          Top = 79
+          Width = 32
+          Height = 15
+          Caption = 'Nama'
+        end
+        object Label26: TLabel
+          Left = 20
+          Top = 49
+          Width = 27
+          Height = 15
+          Caption = 'Kode'
+        end
+        object Label40: TLabel
+          Left = 20
+          Top = 19
+          Width = 42
+          Height = 15
+          Caption = 'Provinsi'
+        end
+        object edKet_setkab: TEdit
+          Left = 132
+          Top = 105
+          Width = 313
+          Height = 23
+          TabOrder = 0
+        end
+        object edNama_setkab: TEdit
+          Left = 132
+          Top = 76
+          Width = 313
+          Height = 23
+          TabOrder = 1
+        end
+        object edKode_setkab: TEdit
+          Left = 132
+          Top = 46
+          Width = 185
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 2
+        end
+        object cbstatus_setkab: TCheckBox
+          Left = 323
+          Top = 47
+          Width = 142
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 3
+          Visible = False
+        end
+        object edProv_setkab: TRzButtonEdit
+          Left = 132
+          Top = 16
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 4
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edProv_setkabButtonClick
+        end
+        object edKDProv_setkab: TEdit
+          Left = 378
+          Top = 16
+          Width = 100
+          Height = 23
+          TabOrder = 5
+          Visible = False
+        end
       end
       object Panel5: TPanel
         Left = 0
-        Top = 164
-        Width = 794
+        Top = 137
+        Width = 905
         Height = 32
-        Align = alBottom
-        TabOrder = 6
-        ExplicitTop = 172
-        object RzBitBtn10: TRzBitBtn
-          Left = 718
+        Align = alTop
+        TabOrder = 2
+        object btBatal_setkab: TRzBitBtn
+          Left = 829
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
-          TabOrder = 1
+          Caption = 'Close'
+          TabOrder = 3
+          OnClick = btBatal_setkabClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -1416,13 +1959,13 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn11: TRzBitBtn
-          Left = 568
+        object btSimpan_setkab: TRzBitBtn
+          Left = 679
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Simpan'
-          TabOrder = 0
+          Caption = 'Save'
+          TabOrder = 1
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -1476,13 +2019,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn12: TRzBitBtn
-          Left = 643
+        object btRefresh_setkab: TRzBitBtn
+          Left = 754
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = btRefresh_setkabClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -1536,118 +2080,250 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
+        object btBaru_setkab: TRzBitBtn
+          Left = 604
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'New'
+          TabOrder = 0
+          OnClick = btBaru_setkabClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7
+            D7D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E881E8E8E8E8E85ED7D7D7
+            D7D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+        end
       end
     end
-    object TabSetKecamatan: TTabSheet
+    object TabSetKecamatan: TRzTabSheet
       Caption = 'Setting Kecamatan'
-      ImageIndex = 5
-      object Label30: TLabel
-        Left = 117
-        Top = 107
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label31: TLabel
-        Left = 117
-        Top = 77
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label32: TLabel
-        Left = 20
-        Top = 77
-        Width = 27
-        Height = 15
-        Caption = 'Kode'
-      end
-      object Label33: TLabel
-        Left = 20
-        Top = 107
-        Width = 32
-        Height = 15
-        Caption = 'Nama'
-      end
-      object Label34: TLabel
-        Left = 117
-        Top = 136
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label35: TLabel
-        Left = 20
-        Top = 136
-        Width = 60
-        Height = 15
-        Caption = 'Keterangan'
-      end
-      object Label36: TLabel
-        Left = 20
-        Top = 48
-        Width = 57
-        Height = 15
-        Caption = 'Kabupaten'
-      end
-      object Label37: TLabel
-        Left = 117
-        Top = 48
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label38: TLabel
-        Left = 117
-        Top = 19
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label39: TLabel
-        Left = 20
-        Top = 19
-        Width = 42
-        Height = 15
-        Caption = 'Provinsi'
-      end
-      object CheckBox5: TCheckBox
-        Left = 323
-        Top = 77
-        Width = 142
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 0
-        Visible = False
-      end
-      object DBGridEh5: TDBGridEh
+      object DBGrid_setkec: TDBGridEh
         Left = 0
-        Top = 208
-        Width = 794
-        Height = 181
-        Align = alBottom
+        Top = 201
+        Width = 905
+        Height = 294
+        Align = alClient
+        DataSource = dsKecamatan
         DynProps = <>
+        ReadOnly = True
         SearchPanel.Enabled = True
-        TabOrder = 1
+        TabOrder = 0
+        OnDblClick = DBGrid_setkecDblClick
         object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+      object pnSetKecamatan: TPanel
+        Left = 0
+        Top = 0
+        Width = 905
+        Height = 169
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        object Label34: TLabel
+          Left = 117
+          Top = 136
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label30: TLabel
+          Left = 117
+          Top = 107
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label31: TLabel
+          Left = 117
+          Top = 77
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label37: TLabel
+          Left = 117
+          Top = 48
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label38: TLabel
+          Left = 117
+          Top = 19
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label39: TLabel
+          Left = 20
+          Top = 19
+          Width = 42
+          Height = 15
+          Caption = 'Provinsi'
+        end
+        object Label36: TLabel
+          Left = 20
+          Top = 48
+          Width = 57
+          Height = 15
+          Caption = 'Kabupaten'
+        end
+        object Label32: TLabel
+          Left = 20
+          Top = 77
+          Width = 27
+          Height = 15
+          Caption = 'Kode'
+        end
+        object Label33: TLabel
+          Left = 20
+          Top = 107
+          Width = 32
+          Height = 15
+          Caption = 'Nama'
+        end
+        object Label35: TLabel
+          Left = 20
+          Top = 136
+          Width = 60
+          Height = 15
+          Caption = 'Keterangan'
+        end
+        object edKet_setkec: TEdit
+          Left = 132
+          Top = 133
+          Width = 313
+          Height = 23
+          TabOrder = 0
+        end
+        object edNama_setkec: TEdit
+          Left = 132
+          Top = 104
+          Width = 313
+          Height = 23
+          TabOrder = 1
+        end
+        object edKode_setkec: TEdit
+          Left = 132
+          Top = 74
+          Width = 185
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 2
+        end
+        object cbstatus_setkec: TCheckBox
+          Left = 323
+          Top = 77
+          Width = 142
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 3
+          Visible = False
+        end
+        object edProv_setkec: TRzButtonEdit
+          Left = 132
+          Top = 16
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 4
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edProv_setkecButtonClick
+        end
+        object edKab_setkec: TRzButtonEdit
+          Left = 132
+          Top = 45
+          Width = 240
+          Height = 23
+          Text = ''
+          TabOrder = 5
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edKab_setkecButtonClick
+        end
+        object edKDProv_setkec: TEdit
+          Left = 378
+          Top = 16
+          Width = 100
+          Height = 23
+          TabOrder = 6
+          Visible = False
+        end
+        object edKDKab_setkec: TEdit
+          Left = 378
+          Top = 45
+          Width = 100
+          Height = 23
+          TabOrder = 7
+          Visible = False
         end
       end
       object Panel6: TPanel
         Left = 0
-        Top = 176
-        Width = 794
+        Top = 169
+        Width = 905
         Height = 32
-        Align = alBottom
+        Align = alTop
         TabOrder = 2
-        ExplicitLeft = 3
-        ExplicitTop = 91
-        object RzBitBtn13: TRzBitBtn
-          Left = 718
+        object btBatal_setkec: TRzBitBtn
+          Left = 829
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
-          TabOrder = 1
+          Caption = 'Close'
+          TabOrder = 3
+          OnClick = btBatal_setkecClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -1701,13 +2377,13 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn14: TRzBitBtn
-          Left = 568
+        object btSimpan_setkec: TRzBitBtn
+          Left = 679
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Simpan'
-          TabOrder = 0
+          Caption = 'Save'
+          TabOrder = 1
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -1761,13 +2437,14 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-        object RzBitBtn15: TRzBitBtn
-          Left = 643
+        object btRefresh_setkec: TRzBitBtn
+          Left = 754
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = btRefresh_setkecClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -1821,53 +2498,212 @@ object FSetMasterWilayah: TFSetMasterWilayah
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
-      end
-      object Edit14: TEdit
-        Left = 132
-        Top = 74
-        Width = 185
-        Height = 23
-        CharCase = ecUpperCase
-        TabOrder = 3
-      end
-      object Edit15: TEdit
-        Left = 132
-        Top = 104
-        Width = 313
-        Height = 23
-        TabOrder = 4
-      end
-      object Edit16: TEdit
-        Left = 132
-        Top = 133
-        Width = 313
-        Height = 23
-        TabOrder = 5
-      end
-      object Cbgolongan: TRzComboBox
-        Left = 132
-        Top = 45
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 6
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
-      end
-      object RzComboBox1: TRzComboBox
-        Left = 132
-        Top = 16
-        Width = 240
-        Height = 23
-        CharCase = ecUpperCase
-        Enabled = False
-        TabOrder = 7
-        Items.Strings = (
-          'KKJ'
-          'KKSP')
+        object btBaru_setkec: TRzBitBtn
+          Left = 604
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'New'
+          TabOrder = 0
+          OnClick = btBaru_setkecClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3E3E3E3D75EE8E8E8E881E8ACACACACACACACACE881E8E8E8E85ED7D7D7
+            D7D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3
+            E3E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7
+            D7D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E881E8E8E8E8E85ED7D7D7
+            D7D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E
+            5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+        end
       end
     end
+  end
+  object dsWilayah: TDataSource
+    DataSet = QWilayah
+    Left = 80
+    Top = 432
+  end
+  object QWilayah: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT code, name, description from t_region'
+      'WHERE '#9'deleted_at IS NULL'
+      'order by code asc')
+    Left = 80
+    Top = 376
+    object QWilayahcode: TStringField
+      FieldName = 'code'
+      Required = True
+      Size = 255
+    end
+    object QWilayahname: TStringField
+      FieldName = 'name'
+      Size = 255
+    end
+    object QWilayahdescription: TMemoField
+      FieldName = 'description'
+      OnGetText = QWilayahdescriptionGetText
+      BlobType = ftMemo
+    end
+  end
+  object QArea: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT code_region, b.name as name_region, a.code as code_region' +
+        '_areas , a.name as name_region_areas, a.description from t_regio' +
+        'n_areas a'
+      'LEFT JOIN t_region b ON a.code_region=b.code'
+      'WHERE a.deleted_at IS NULL'
+      'order by a.code asc')
+    Left = 152
+    Top = 376
+    object QAreacode_region: TStringField
+      FieldName = 'code_region'
+      Size = 255
+    end
+    object QAreaname_region: TStringField
+      FieldName = 'name_region'
+      ReadOnly = True
+      Size = 255
+    end
+    object QAreacode_region_areas: TStringField
+      FieldName = 'code_region_areas'
+      Required = True
+      Size = 255
+    end
+    object QAreaname_region_areas: TStringField
+      FieldName = 'name_region_areas'
+      Size = 255
+    end
+    object QAreadescription: TMemoField
+      FieldName = 'description'
+      ReadOnly = True
+      OnGetText = QAreadescriptionGetText
+      BlobType = ftMemo
+    end
+  end
+  object dsArea: TDataSource
+    DataSet = QArea
+    Left = 152
+    Top = 432
+  end
+  object QKaresidenan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT code_areas, b.name as name_areas, a.code as code_region_k' +
+        'ares, a.name as name_region_kares, a.description from t_region_k' +
+        'aresidenan a'
+      
+        'LEFT JOIN (SELECT * from t_region_areas where deleted_at IS NULL' +
+        ') b ON a.code_areas=b.code'
+      'WHERE a.deleted_at IS NULL'
+      'order by a.code asc')
+    Left = 232
+    Top = 376
+    object QKaresidenancode_areas: TStringField
+      FieldName = 'code_areas'
+      Size = 255
+    end
+    object QKaresidenanname_areas: TStringField
+      FieldName = 'name_areas'
+      ReadOnly = True
+      Size = 255
+    end
+    object QKaresidenancode_region_kares: TStringField
+      FieldName = 'code_region_kares'
+      Required = True
+      Size = 255
+    end
+    object QKaresidenanname_region_kares: TStringField
+      FieldName = 'name_region_kares'
+      Size = 255
+    end
+    object QKaresidenandescription: TMemoField
+      FieldName = 'description'
+      ReadOnly = True
+      OnGetText = QKaresidenandescriptionGetText
+      BlobType = ftMemo
+    end
+  end
+  object QProvinsi: TUniQuery
+    Connection = dm.Koneksi
+    Left = 304
+    Top = 376
+  end
+  object dsKaresidenan: TDataSource
+    DataSet = QKaresidenan
+    Left = 232
+    Top = 432
+  end
+  object dsProvinsi: TDataSource
+    DataSet = QProvinsi
+    Left = 304
+    Top = 432
+  end
+  object QKabupaten: TUniQuery
+    Connection = dm.Koneksi
+    Left = 376
+    Top = 376
+  end
+  object dsKabupaten: TDataSource
+    DataSet = QKabupaten
+    Left = 376
+    Top = 432
+  end
+  object dsKecamatan: TDataSource
+    DataSet = QKecamatan
+    Left = 448
+    Top = 432
+  end
+  object QKecamatan: TUniQuery
+    Connection = dm.Koneksi
+    Left = 448
+    Top = 376
   end
 end

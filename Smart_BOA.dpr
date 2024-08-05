@@ -75,7 +75,6 @@ uses
   UPembelian in 'UPembelian.pas' {FPembelian},
   UNew_Pembelian in 'UNew_Pembelian.pas' {FNew_Pembelian},
   UPot_Pembelian in 'UPot_Pembelian.pas' {FPot_Pembelian},
-  UNew_Pot_Pembelian in 'UNew_Pot_Pembelian.pas' {FNew_Pot_Pembelian},
   USPB in 'USPB.pas' {FSPB},
   UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat},
   UNew_Additional in 'UNew_Additional.pas' {FNew_Additional},
@@ -101,7 +100,9 @@ uses
   UMenu in 'UMenu.pas' {FMenu},
   UNew_Menu in 'UNew_Menu.pas' {FNew_menu},
   UPercampuran_Barang in 'UPercampuran_Barang.pas' {FPerc_Barang},
-  UNew_PercBarang in 'UNew_PercBarang.pas' {FNew_PercBarang};
+  UNew_PercBarang in 'UNew_PercBarang.pas' {FNew_PercBarang},
+  UNew_Pot_Pembelian in 'UNew_Pot_Pembelian.pas' {FNew_Pot_Pembelian},
+  USearch_ItemRetur in 'USearch_ItemRetur.pas' {FSearch_MaterialRetur};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -135,6 +136,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFImportnocek, FImportnocek);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
   Application.CreateForm(TFNew_UM_Pembelian, FNew_UM_Pembelian);
+  Application.CreateForm(TFSearch_MaterialRetur, FSearch_MaterialRetur);
   //Application.CreateForm(TFAkun_Perkiraan, FAkun_Perkiraan);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
@@ -156,7 +158,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);
-  Application.CreateForm(TFNew_Pot_Pembelian, FNew_Pot_Pembelian);
+ // Application.CreateForm(TFNew_Pot_Pembelian, FNew_Pot_Pembelian);
   Application.CreateForm(TFSPB, FSPB);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
   Application.CreateForm(TFListPelanggan, FListPelanggan);

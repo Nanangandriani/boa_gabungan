@@ -47,12 +47,13 @@ type
 
 var
   FNew_Gudang: TFNew_Gudang;
-  no_urut: integer;
+  urut:string;
+
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Kategori_Gudang, UMainMenu;
+uses UDataModule, UNew_Kategori_Gudang, UMainMenu, UList_Gudang;
 
 
 procedure TFNew_Gudang.showsbucode;
@@ -112,9 +113,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',wh_code='+QuotedStr(Edkd.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+' where code='+QuotedStr(Edkode.Text)+' and order_no='+QuotedStr(Edno.Text);
+      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',wh_code='+QuotedStr(Edkd.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+', updated_at=now(),updated_by='+QuotedStr(nm)+' where code='+QuotedStr(Edkode.Text)+' and order_no='+QuotedStr(Edno.Text);
       ExecSQL;
     end;
+    ShowMessage('Data Berhasil di Update');
     BBatalClick(sender);
 end;
 
@@ -134,33 +136,22 @@ begin
       sql.Text:='select * from t_wh ';
       ExecSQL;
     end;
-
-    with dm.Qtemp1 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select max(order_no) as urut  from t_wh ';
-      Open;
-    end;
-    no_urut:=dm.Qtemp1.FieldByName('urut').AsInteger+1;
-
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_wh(order_no,wh_name,wh_code,sbu_code,category,code,created_at,created_by) '+
-                ' values(:no_urut,'+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_at,:created_by)';
-      parambyname('no_urut').Value:=no_urut;
-      parambyname('created_at').AsDateTime:=Now;
+      sql.Text:='insert into t_wh(wh_name,code,sbu_code,category,wh_code,created_by) '+
+                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_by)';
+      //parambyname('created_at').AsDateTime:=Now;
       parambyname('created_by').AsString:='Admin';
       ExecSQL;
     end;
     FMainMenu.TampilTabForm2;
+    ShowMessage('Data Berhasil Disimpan');
     BBatalClick(sender);
 end;
 
 procedure TFNew_Gudang.CbCategorySelect(Sender: TObject);
-var urut:string;
 begin
     with dm.Qtemp3 do
     begin
@@ -246,6 +237,8 @@ end;
 
 procedure TFNew_Gudang.BBatalClick(Sender: TObject);
 begin
+  //FListGudang.Show;
+  FListGudang.ActROExecute(sender);
   Close;
 end;
 

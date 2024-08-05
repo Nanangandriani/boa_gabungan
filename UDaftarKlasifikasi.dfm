@@ -2,8 +2,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
   Left = 0
   Top = 0
   Caption = 'Daftar Klasifikasi'
-  ClientHeight = 727
-  ClientWidth = 963
+  ClientHeight = 567
+  ClientWidth = 1087
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,344 +11,403 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   TextHeight = 15
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 963
-    Height = 727
-    ActivePage = TabMasterKlasifikasi
+    Width = 1087
+    Height = 567
+    ActivePage = TabDaftarKlasifikasiPelanggan
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 959
-    ExplicitHeight = 726
+    ExplicitWidth = 1081
+    ExplicitHeight = 558
     object TabMasterKlasifikasi: TTabSheet
       Caption = 'Master Klasifikasi'
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 955
+        Width = 1079
         Height = 193
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 951
+        ExplicitWidth = 1073
         object Label9: TLabel
           Left = 117
-          Top = 86
+          Top = 57
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label10: TLabel
           Left = 20
-          Top = 86
+          Top = 57
           Width = 84
           Height = 15
           Caption = 'Kategori Barang'
         end
         object Label11: TLabel
           Left = 20
-          Top = 115
+          Top = 86
           Width = 92
           Height = 15
           Caption = 'Type Perhitungan'
         end
         object Label12: TLabel
           Left = 117
-          Top = 115
+          Top = 86
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label13: TLabel
           Left = 20
-          Top = 57
+          Top = 28
           Width = 84
           Height = 15
           Caption = 'Jenis Pelanggan'
         end
         object Label14: TLabel
           Left = 117
-          Top = 57
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label1: TLabel
-          Left = 117
           Top = 28
           Width = 3
           Height = 15
           Caption = ':'
-        end
-        object Label4: TLabel
-          Left = 20
-          Top = 28
-          Width = 86
-          Height = 15
-          Caption = 'Status Klasifikasi'
         end
         object Label7: TLabel
           Left = 117
-          Top = 145
+          Top = 116
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label8: TLabel
-          Left = 597
-          Top = 28
+          Left = 119
+          Top = 145
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label15: TLabel
           Left = 20
-          Top = 145
+          Top = 116
           Width = 79
           Height = 15
           Caption = 'Type Penjualan'
         end
         object Label16: TLabel
-          Left = 500
-          Top = 28
+          Left = 22
+          Top = 145
           Width = 80
           Height = 15
           Caption = 'Jenis Penjualan'
         end
-        object Label17: TLabel
-          Left = 500
-          Top = 57
-          Width = 63
-          Height = 15
-          Caption = 'Status Pajak'
-        end
-        object Label18: TLabel
-          Left = 500
-          Top = 87
-          Width = 71
-          Height = 15
-          Caption = 'Status Promo'
-        end
-        object Label19: TLabel
-          Left = 500
-          Top = 116
-          Width = 80
-          Height = 15
-          Caption = 'Jenis Potongan'
-        end
-        object Label20: TLabel
-          Left = 597
-          Top = 116
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label21: TLabel
-          Left = 597
-          Top = 87
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label22: TLabel
-          Left = 597
-          Top = 57
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object btMasterArea: TSpeedButton
-          Left = 437
-          Top = 54
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object btMasterWilayah: TSpeedButton
-          Left = 437
+        object ednm_jenis_pel: TRzButtonEdit
+          Left = 126
           Top = 25
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object btMasterProvinsi: TSpeedButton
-          Left = 437
-          Top = 83
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object btMasterKaresidenan: TSpeedButton
-          Left = 437
-          Top = 111
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object SpeedButton1: TSpeedButton
-          Left = 918
-          Top = 26
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object SpeedButton2: TSpeedButton
-          Left = 918
-          Top = 112
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object SpeedButton3: TSpeedButton
-          Left = 918
-          Top = 84
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object SpeedButton4: TSpeedButton
-          Left = 918
-          Top = 55
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object SpeedButton5: TSpeedButton
-          Left = 438
-          Top = 139
-          Width = 23
-          Height = 22
-          Caption = '...'
-        end
-        object RzComboBox1: TRzComboBox
-          Left = 132
-          Top = 83
-          Width = 300
+          Width = 259
           Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
+          Text = ''
           TabOrder = 0
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_jenis_pelButtonClick
         end
-        object RzComboBox2: TRzComboBox
-          Left = 132
-          Top = 112
-          Width = 300
+        object edkd_jenis_pel: TEdit
+          Left = 847
+          Top = 25
+          Width = 98
           Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
           TabOrder = 1
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
+          Visible = False
         end
-        object RzComboBox3: TRzComboBox
-          Left = 132
+        object ednm_kategori: TRzButtonEdit
+          Left = 126
           Top = 54
-          Width = 300
+          Width = 259
           Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
+          Text = ''
           TabOrder = 2
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_kategoriButtonClick
         end
-        object RzComboBox4: TRzComboBox
-          Left = 132
-          Top = 25
-          Width = 300
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 3
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
-        end
-        object RzComboBox5: TRzComboBox
-          Left = 612
-          Top = 25
-          Width = 300
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 4
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
-        end
-        object RzComboBox6: TRzComboBox
-          Left = 132
-          Top = 142
-          Width = 300
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 5
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
-        end
-        object RzComboBox7: TRzComboBox
-          Left = 612
+        object edkd_kategori: TEdit
+          Left = 847
           Top = 54
-          Width = 300
+          Width = 98
           Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 6
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
+          TabOrder = 3
+          Visible = False
         end
-        object RzComboBox8: TRzComboBox
-          Left = 612
-          Top = 84
-          Width = 300
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 7
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
-        end
-        object RzComboBox9: TRzComboBox
-          Left = 612
+        object ednm_type_jual: TRzButtonEdit
+          Left = 126
           Top = 113
-          Width = 300
+          Width = 259
           Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
+          Text = ''
+          TabOrder = 4
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_type_jualButtonClick
+        end
+        object edkd_type_jual: TEdit
+          Left = 847
+          Top = 113
+          Width = 98
+          Height = 23
+          TabOrder = 5
+          Visible = False
+        end
+        object ednm_jenis_jual: TRzButtonEdit
+          Left = 126
+          Top = 142
+          Width = 259
+          Height = 23
+          Text = ''
+          TabOrder = 6
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_jenis_jualButtonClick
+        end
+        object edkd_jenis_jual: TEdit
+          Left = 847
+          Top = 142
+          Width = 98
+          Height = 23
+          TabOrder = 7
+          Visible = False
+        end
+        object ednm_type_hitung: TRzButtonEdit
+          Left = 126
+          Top = 83
+          Width = 259
+          Height = 23
+          Text = ''
           TabOrder = 8
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_type_hitungButtonClick
+        end
+        object edkd_type_hitung: TEdit
+          Left = 847
+          Top = 83
+          Width = 98
+          Height = 23
+          TabOrder = 9
+          Visible = False
+        end
+        object rgPembayaran: TRzRadioGroup
+          Left = 391
+          Top = 16
+          Width = 186
+          Height = 46
+          Caption = 'Status Pembayaran'
+          Color = 15987699
+          Columns = 2
+          ItemHeight = 17
+          ItemIndex = 1
           Items.Strings = (
-            'KKJ'
-            'KKSP')
+            'Cash                                  '
+            'Kredit')
+          TabOrder = 10
+        end
+        object rgPotongan: TRzRadioGroup
+          Left = 589
+          Top = 16
+          Width = 186
+          Height = 46
+          Caption = 'Jenis Potongan'
+          Color = 15987699
+          Columns = 2
+          ItemHeight = 17
+          ItemIndex = 0
+          Items.Strings = (
+            'Disc'
+            'Value (Rp)')
+          TabOrder = 11
+        end
+        object rgPromo: TRzRadioGroup
+          Left = 589
+          Top = 70
+          Width = 186
+          Height = 46
+          Caption = 'Status Promo'
+          Color = 15987699
+          Columns = 2
+          ItemHeight = 17
+          ItemIndex = 0
+          Items.Strings = (
+            'Tidak'
+            'Iya')
+          TabOrder = 12
+        end
+        object rgGrouping: TRzRadioGroup
+          Left = 391
+          Top = 70
+          Width = 186
+          Height = 46
+          Caption = 'Status Grouping'
+          Color = 15987699
+          Columns = 2
+          ItemHeight = 17
+          ItemIndex = 1
+          Items.Strings = (
+            'Non Grouping                                  '
+            'Grouping')
+          TabOrder = 13
+        end
+        object rgPajak: TRzRadioGroup
+          Left = 391
+          Top = 122
+          Width = 186
+          Height = 46
+          Caption = 'Status Pajak'
+          Color = 15987699
+          Columns = 2
+          ItemHeight = 17
+          ItemIndex = 1
+          Items.Strings = (
+            'Tidak'
+            'Iya')
+          TabOrder = 14
         end
       end
       object GroupBox3: TGroupBox
         Left = 0
         Top = 225
-        Width = 955
-        Height = 472
+        Width = 1079
+        Height = 312
         Align = alClient
         Caption = 'Daftar Klasifikasi'
         TabOrder = 1
-        ExplicitWidth = 951
-        ExplicitHeight = 471
-        object DBGridEh2: TDBGridEh
+        ExplicitWidth = 1073
+        ExplicitHeight = 303
+        object DBGridDetail: TDBGridEh
           Left = 2
           Top = 17
-          Width = 951
-          Height = 453
+          Width = 1075
+          Height = 293
           Align = alClient
+          DataSource = dsKlasifikasi
           DynProps = <>
+          HorzScrollBar.ExtraPanel.Visible = True
           SearchPanel.Enabled = True
           TabOrder = 0
+          TitleParams.MultiTitle = True
+          Columns = <
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'kd_barang'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <
+                item
+                  OnClick = DBGridDetailColumns1CellButtons0Click
+                  Caption = '...'
+                end>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nm_barang'
+              Footers = <>
+              Title.Caption = 'Nama Barang'
+              Width = 200
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'kd_satuan'
+              Footers = <>
+              Title.Caption = 'Satuan'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nm_satuan'
+              Footers = <>
+              Visible = False
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'harga_satuan'
+              Footers = <>
+              Title.Caption = 'Harga Satuan'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'batas1'
+              Footers = <>
+              Title.Caption = 'Batas | Awal'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'batas2'
+              Footers = <>
+              Title.Caption = 'Batas | Akhir'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc'
+              Footers = <>
+              Visible = False
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc1'
+              Footers = <>
+              Title.Caption = 'Potongan | Kesatu'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc2'
+              Footers = <>
+              Title.Caption = 'Potongan | Kedua'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc3'
+              Footers = <>
+              Title.Caption = 'Potongan | Ketiga'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc4'
+              Footers = <>
+              Title.Caption = 'Potongan | Keempat'
+              Width = 100
+            end>
           object RowDetailData: TRowDetailPanelControlEh
           end
         end
@@ -356,18 +415,19 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
       object Panel4: TPanel
         Left = 0
         Top = 193
-        Width = 955
+        Width = 1079
         Height = 32
         Align = alTop
         TabOrder = 2
-        ExplicitWidth = 951
-        object RzBitBtn1: TRzBitBtn
-          Left = 879
+        ExplicitWidth = 1073
+        object bt_m_batal: TRzBitBtn
+          Left = 1003
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Batal'
+          Caption = 'Close'
           TabOrder = 1
+          OnClick = bt_m_batalClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -420,15 +480,16 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 875
+          ExplicitLeft = 997
         end
-        object RzBitBtn2: TRzBitBtn
-          Left = 729
+        object bt_m_simpan: TRzBitBtn
+          Left = 928
           Top = 1
           Height = 30
           Align = alRight
-          Caption = 'Simpan'
+          Caption = 'Save'
           TabOrder = 0
+          OnClick = bt_m_simpanClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000730E0000730E00000001000000000000000000003300
@@ -481,18 +542,20 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 725
+          ExplicitLeft = 922
         end
-        object RzBitBtn3: TRzBitBtn
-          Left = 804
+        object bt_m_tampilkan: TRzBitBtn
+          Left = 823
           Top = 1
+          Width = 105
           Height = 30
           Align = alRight
-          Caption = 'Refresh'
+          Caption = 'Preview'
           TabOrder = 2
+          OnClick = bt_m_tampilkanClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
-            08000000000000020000630B0000630B00000001000000000000000000003300
+            08000000000000020000830E0000830E00000001000000000000000000003300
             00006600000099000000CC000000FF0000000033000033330000663300009933
             0000CC330000FF33000000660000336600006666000099660000CC660000FF66
             000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -525,24 +588,24 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
             0000000000000000000000000000000000000000000000000000000000000000
             0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E09
-            095EE8E8E8E8E8E8E8E8E8E8E8E8E28181E2E8E8E8E8E8E8E8E8E8E8E8090910
-            1009E8E8E8E8E8E8E8E8E8E8E88181ACAC81E8E8E8E8E8E8E8E8E8E809101009
-            095EE8E8E8E8E8E8E8E8E8E881ACAC8181E2E8E8E8E8E8E8E8E8E85E0910095E
-            E8E809090909090909E8E8E281AC81E2E8E881818181818181E8E80910095EE8
-            E8E809101010101009E8E881AC81E2E8E8E881ACACACACAC81E8E8091009E8E8
-            E8E8E8091010101009E8E881AC81E8E8E8E8E881ACACACAC81E8E80910095EE8
-            E8E8E85E0910101009E8E881AC81E2E8E8E8E8E281ACACAC81E8E85E0910095E
-            E85E09091009101009E8E8E281AC81E2E8E28181AC81ACAC81E8E8E809101009
-            09091010095E091009E8E8E881ACAC818181ACAC81E281AC81E8E8E8E8090910
-            10100909E8E8E80909E8E8E8E88181ACACAC8181E8E8E88181E8E8E8E8E85E09
-            09095EE8E8E8E8E8E8E8E8E8E8E8E2818181E2E8E8E8E8E8E8E8E8E8E8E8E8E8
-            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8820982E8E8E8E8E8E8E8E8E8E8E8E8E8AC81ACE85E5E5E5E5E
+            5E5E5E5E5E5E82090909E88181818181818181818181AC818181E85ED7D7D7D7
+            D7D7D7D7D7DF09090982E881E8E8E8E8E8E8E8E8E8DF818181ACE85ED7E3E3E3
+            E3E3DFDFDF09090982E8E881E8ACACACACACDFDFDF818181ACE8E85ED7D7D7D7
+            E35DB3B3D7880982E8E8E881E8E8E8E8AC81E3E3D7E381ACE8E8E85ED7E3E3E3
+            81E6B3B3B3D756E8E8E8E881E8ACACAC81E3E3E3E3D756E8E8E8E85ED7D7D7D7
+            81E6D7E6B3B356E8E8E8E881E8E8E8E881E3D7E3E3E356E8E8E8E85ED7E3E3E3
+            81E6D7D7E6B356E8E8E8E881E8ACACAC81E3D7D7E3E356E8E8E8E85ED7D7D7D7
+            D781E6E6E65DDFE8E8E8E881E8E8E8E8E881E3E3E381DFE8E8E8E85ED7E3E3E3
+            E3E3818181E35EE8E8E8E881E8ACACACACAC818181E381E8E8E8E85ED7D7D7D7
+            D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3E3
+            E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7D7
+            D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E381E8E8E8E8E85ED7D7D7D7
+            D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E5E
+            5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 800
+          ExplicitLeft = 817
         end
       end
     end
@@ -552,8 +615,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 955
-        Height = 177
+        Width = 1079
+        Height = 105
         Align = alTop
         TabOrder = 0
         object Label6: TLabel
@@ -585,114 +648,140 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Caption = 'Nama Pelanggan'
         end
         object Label25: TLabel
-          Left = 117
-          Top = 107
+          Left = 589
+          Top = 48
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label26: TLabel
-          Left = 20
-          Top = 107
-          Width = 48
+          Left = 492
+          Top = 48
+          Width = 80
           Height = 15
-          Caption = 'Jenis Jual'
+          Caption = 'Jenis Penjualan'
         end
         object Label27: TLabel
-          Left = 20
-          Top = 136
+          Left = 492
+          Top = 77
           Width = 84
           Height = 15
           Caption = 'Kategori Barang'
         end
         object Label28: TLabel
-          Left = 117
-          Top = 136
+          Left = 589
+          Top = 77
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Wilayah: TLabel
-          Left = 20
-          Top = 78
-          Width = 47
+          Left = 492
+          Top = 19
+          Width = 79
           Height = 15
-          Caption = 'Type Jual'
+          Caption = 'Type Penjualan'
         end
         object Label2: TLabel
-          Left = 117
-          Top = 78
+          Left = 589
+          Top = 19
           Width = 3
           Height = 15
           Caption = ':'
         end
-        object Ednama: TEdit
+        object edNama_Pelanggan: TEdit
           Left = 132
           Top = 46
-          Width = 313
+          Width = 344
           Height = 23
           TabOrder = 0
         end
-        object Edkode: TEdit
+        object edkd_type_jual_pel: TEdit
+          Left = 954
+          Top = 16
+          Width = 200
+          Height = 23
+          TabOrder = 1
+          Visible = False
+        end
+        object ednm_jenis_jual_pel: TRzButtonEdit
+          Left = 604
+          Top = 45
+          Width = 344
+          Height = 23
+          Text = ''
+          TabOrder = 2
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_jenis_jual_pelButtonClick
+        end
+        object ednm_type_jual_pel: TRzButtonEdit
+          Left = 604
+          Top = 16
+          Width = 344
+          Height = 23
+          Text = ''
+          TabOrder = 3
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_type_jual_pelButtonClick
+        end
+        object edkd_jenis_jual_pel: TEdit
+          Left = 954
+          Top = 45
+          Width = 200
+          Height = 23
+          TabOrder = 4
+          Visible = False
+        end
+        object ednm_kategori_pel: TRzButtonEdit
+          Left = 604
+          Top = 74
+          Width = 344
+          Height = 23
+          Text = ''
+          TabOrder = 5
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_kategori_pelButtonClick
+        end
+        object edkd_kategori_pel: TEdit
+          Left = 954
+          Top = 74
+          Width = 200
+          Height = 23
+          TabOrder = 6
+          Visible = False
+        end
+        object edKode_Pelanggan: TRzButtonEdit
           Left = 132
           Top = 16
-          Width = 185
+          Width = 125
           Height = 23
-          CharCase = ecUpperCase
-          TabOrder = 1
-        end
-        object Cbtypejual: TRzComboBox
-          Left = 132
-          Top = 104
-          Width = 240
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 2
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
-        end
-        object Cbgolongan: TRzComboBox
-          Left = 132
-          Top = 133
-          Width = 240
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 3
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
-        end
-        object CbJenisPel: TRzComboBox
-          Left = 132
-          Top = 75
-          Width = 240
-          Height = 23
-          CharCase = ecUpperCase
-          Enabled = False
-          TabOrder = 4
-          Items.Strings = (
-            'KKJ'
-            'KKSP')
+          Text = ''
+          TabOrder = 7
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edKode_PelangganButtonClick
         end
       end
       object Panel2: TPanel
         Left = 0
-        Top = 425
-        Width = 955
+        Top = 316
+        Width = 1079
         Height = 32
         Align = alTop
         TabOrder = 1
+        ExplicitTop = 345
         object BBatal: TRzBitBtn
-          Left = 698
+          Left = 822
           Top = 1
           Width = 256
           Height = 30
           Align = alRight
           Caption = 'Hapus'
           TabOrder = 1
+          OnClick = BBatalClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -754,6 +843,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Align = alLeft
           Caption = 'Tambahkan'
           TabOrder = 0
+          OnClick = BSaveClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000830B0000830B00000001000000000000000000003300
@@ -810,11 +900,12 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         object BRefresh: TRzBitBtn
           Left = 257
           Top = 1
-          Width = 441
+          Width = 565
           Height = 30
           Align = alClient
           Caption = 'Refresh'
           TabOrder = 2
+          OnClick = BRefreshClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -871,45 +962,775 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
       end
       object GroupBox1: TGroupBox
         Left = 0
-        Top = 177
-        Width = 955
-        Height = 248
+        Top = 105
+        Width = 1079
+        Height = 211
         Align = alTop
         Caption = 'Daftar Klasifikasi'
         TabOrder = 2
-        object DBGridCustomer: TDBGridEh
+        object DBGridKlasifikasi: TDBGridEh
           Left = 2
           Top = 17
-          Width = 951
-          Height = 229
+          Width = 1075
+          Height = 192
           Align = alClient
+          DataSource = dsGroup
           DynProps = <>
+          ReadOnly = True
           SearchPanel.Enabled = True
           TabOrder = 0
+          TitleParams.MultiTitle = True
+          OnDblClick = DBGridKlasifikasiDblClick
+          Columns = <
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'kd_barang'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nm_barang'
+              Footers = <>
+              Title.Caption = 'Nama Barang'
+              Width = 200
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'kd_satuan'
+              Footers = <>
+              Title.Caption = 'Satuan'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nm_satuan'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'harga_satuan'
+              Footers = <>
+              Title.Caption = 'Harga Satuan'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'batas1'
+              Footers = <>
+              Title.Caption = 'Batas | Awal'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'batas2'
+              Footers = <>
+              Title.Caption = 'Batas | Akhir'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc1'
+              Footers = <>
+              Title.Caption = 'Potongan | Kesatu'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc2'
+              Footers = <>
+              Title.Caption = 'Potongan | Kedua'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc3'
+              Footers = <>
+              Title.Caption = 'Potongan | Ketiga'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc4'
+              Footers = <>
+              Title.Caption = 'Potongan | Keempat'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'id_master'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'id_master_det'
+              Footers = <>
+              Visible = False
+            end>
           object RowDetailData: TRowDetailPanelControlEh
           end
         end
       end
       object GroupBox2: TGroupBox
         Left = 0
-        Top = 457
-        Width = 955
-        Height = 248
+        Top = 348
+        Width = 1079
+        Height = 189
         Align = alTop
         Caption = 'Daftar Master Klasifikasi'
         TabOrder = 3
-        object DBGridEh1: TDBGridEh
+        object DBGridMaster: TDBGridEh
           Left = 2
           Top = 17
-          Width = 951
-          Height = 229
+          Width = 1075
+          Height = 170
           Align = alClient
+          DataSource = dsMaster
           DynProps = <>
+          ReadOnly = True
           SearchPanel.Enabled = True
           TabOrder = 0
+          TitleParams.MultiTitle = True
+          OnDblClick = DBGridMasterDblClick
+          Columns = <
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'kd_barang'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nm_barang'
+              Footers = <>
+              Title.Caption = 'Nama Barang'
+              Width = 200
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'kd_satuan'
+              Footers = <>
+              Title.Caption = 'Satuan'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nm_satuan'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'harga_satuan'
+              Footers = <>
+              Title.Caption = 'Harga Satuan'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'batas1'
+              Footers = <>
+              Title.Caption = 'Batas | Awal'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'batas2'
+              Footers = <>
+              Title.Caption = 'Batas | Akhir'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc1'
+              Footers = <>
+              Title.Caption = 'Potongan | Kesatu'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc2'
+              Footers = <>
+              Title.Caption = 'Potongan | Kedua'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc3'
+              Footers = <>
+              Title.Caption = 'Potongan | Ketiga'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'disc4'
+              Footers = <>
+              Title.Caption = 'Potongan | Keempat'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'id_master'
+              Footers = <>
+              Visible = False
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'id_master_det'
+              Footers = <>
+              Visible = False
+            end>
           object RowDetailData: TRowDetailPanelControlEh
           end
         end
+      end
+    end
+  end
+  object dsKlasifikasi: TDataSource
+    DataSet = MemKlasifikasi
+    Left = 40
+    Top = 448
+  end
+  object MemKlasifikasi: TMemTableEh
+    Params = <>
+    Left = 40
+    Top = 504
+    object MemKlasifikasikd_barang: TStringField
+      FieldName = 'kd_barang'
+    end
+    object MemKlasifikasinm_barang: TStringField
+      FieldName = 'nm_barang'
+      Size = 200
+    end
+    object MemKlasifikasikd_satuan: TStringField
+      FieldName = 'kd_satuan'
+    end
+    object MemKlasifikasinm_satuan: TStringField
+      FieldName = 'nm_satuan'
+    end
+    object MemKlasifikasiharga_satuan: TFloatField
+      FieldName = 'harga_satuan'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasibatas1: TFloatField
+      FieldName = 'batas1'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasibatas2: TFloatField
+      FieldName = 'batas2'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasidisc: TFloatField
+      FieldName = 'disc'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasidisc1: TFloatField
+      FieldName = 'disc1'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasidisc2: TFloatField
+      FieldName = 'disc2'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasidisc3: TFloatField
+      FieldName = 'disc3'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemKlasifikasidisc4: TFloatField
+      FieldName = 'disc4'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object kd_barang: TMTStringDataFieldEh
+          FieldName = 'kd_barang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_barang: TMTStringDataFieldEh
+          FieldName = 'nm_barang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 200
+        end
+        object kd_satuan: TMTStringDataFieldEh
+          FieldName = 'kd_satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_satuan: TMTStringDataFieldEh
+          FieldName = 'nm_satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object harga_satuan: TMTNumericDataFieldEh
+          FieldName = 'harga_satuan'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object batas1: TMTNumericDataFieldEh
+          FieldName = 'batas1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object batas2: TMTNumericDataFieldEh
+          FieldName = 'batas2'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc: TMTNumericDataFieldEh
+          FieldName = 'disc'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc1: TMTNumericDataFieldEh
+          FieldName = 'disc1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc2: TMTNumericDataFieldEh
+          FieldName = 'disc2'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc3: TMTNumericDataFieldEh
+          FieldName = 'disc3'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc4: TMTNumericDataFieldEh
+          FieldName = 'disc4'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object dsGroup: TDataSource
+    DataSet = MemGroup
+    Left = 144
+    Top = 448
+  end
+  object MemGroup: TMemTableEh
+    Params = <>
+    Left = 144
+    Top = 504
+    object StringField1: TStringField
+      FieldName = 'kd_barang'
+    end
+    object StringField2: TStringField
+      FieldName = 'nm_barang'
+      Size = 200
+    end
+    object StringField3: TStringField
+      FieldName = 'kd_satuan'
+    end
+    object StringField4: TStringField
+      FieldName = 'nm_satuan'
+    end
+    object FloatField1: TFloatField
+      FieldName = 'harga_satuan'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField2: TFloatField
+      FieldName = 'batas1'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField3: TFloatField
+      FieldName = 'batas2'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField4: TFloatField
+      FieldName = 'disc'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField5: TFloatField
+      FieldName = 'disc1'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField6: TFloatField
+      FieldName = 'disc2'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField7: TFloatField
+      FieldName = 'disc3'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField8: TFloatField
+      FieldName = 'disc4'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemGroupid_master: TStringField
+      FieldName = 'id_master'
+      Size = 50
+    end
+    object MemGroupid_master_det: TStringField
+      FieldName = 'id_master_det'
+      Size = 50
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object id_master: TMTStringDataFieldEh
+          FieldName = 'id_master'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object id_master_det: TMTStringDataFieldEh
+          FieldName = 'id_master_det'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object kd_barang: TMTStringDataFieldEh
+          FieldName = 'kd_barang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_barang: TMTStringDataFieldEh
+          FieldName = 'nm_barang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 200
+        end
+        object kd_satuan: TMTStringDataFieldEh
+          FieldName = 'kd_satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_satuan: TMTStringDataFieldEh
+          FieldName = 'nm_satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object harga_satuan: TMTNumericDataFieldEh
+          FieldName = 'harga_satuan'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object batas1: TMTNumericDataFieldEh
+          FieldName = 'batas1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object batas2: TMTNumericDataFieldEh
+          FieldName = 'batas2'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc: TMTNumericDataFieldEh
+          FieldName = 'disc'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc1: TMTNumericDataFieldEh
+          FieldName = 'disc1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc2: TMTNumericDataFieldEh
+          FieldName = 'disc2'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc3: TMTNumericDataFieldEh
+          FieldName = 'disc3'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc4: TMTNumericDataFieldEh
+          FieldName = 'disc4'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object dsMaster: TDataSource
+    DataSet = MemMaster
+    Left = 240
+    Top = 448
+  end
+  object MemMaster: TMemTableEh
+    Params = <>
+    Left = 240
+    Top = 504
+    object StringField5: TStringField
+      FieldName = 'kd_barang'
+    end
+    object StringField6: TStringField
+      FieldName = 'nm_barang'
+      Size = 200
+    end
+    object StringField7: TStringField
+      FieldName = 'kd_satuan'
+    end
+    object StringField8: TStringField
+      FieldName = 'nm_satuan'
+    end
+    object FloatField9: TFloatField
+      FieldName = 'harga_satuan'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField10: TFloatField
+      FieldName = 'batas1'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField11: TFloatField
+      FieldName = 'batas2'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField12: TFloatField
+      FieldName = 'disc'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField13: TFloatField
+      FieldName = 'disc1'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField14: TFloatField
+      FieldName = 'disc2'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField15: TFloatField
+      FieldName = 'disc3'
+      DisplayFormat = '#,##0.##'
+    end
+    object FloatField16: TFloatField
+      FieldName = 'disc4'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemMasterid_master: TStringField
+      FieldName = 'id_master'
+      Size = 50
+    end
+    object MemMasterid_master_det: TStringField
+      FieldName = 'id_master_det'
+      Size = 50
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object id_master: TMTStringDataFieldEh
+          FieldName = 'id_master'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object id_master_det: TMTStringDataFieldEh
+          FieldName = 'id_master_det'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object kd_barang: TMTStringDataFieldEh
+          FieldName = 'kd_barang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_barang: TMTStringDataFieldEh
+          FieldName = 'nm_barang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 200
+        end
+        object kd_satuan: TMTStringDataFieldEh
+          FieldName = 'kd_satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_satuan: TMTStringDataFieldEh
+          FieldName = 'nm_satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object harga_satuan: TMTNumericDataFieldEh
+          FieldName = 'harga_satuan'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object batas1: TMTNumericDataFieldEh
+          FieldName = 'batas1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object batas2: TMTNumericDataFieldEh
+          FieldName = 'batas2'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc: TMTNumericDataFieldEh
+          FieldName = 'disc'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc1: TMTNumericDataFieldEh
+          FieldName = 'disc1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc2: TMTNumericDataFieldEh
+          FieldName = 'disc2'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc3: TMTNumericDataFieldEh
+          FieldName = 'disc3'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object disc4: TMTNumericDataFieldEh
+          FieldName = 'disc4'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+      end
+      object RecordsList: TRecordsListEh
       end
     end
   end

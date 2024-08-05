@@ -1,9 +1,9 @@
 object FListPelanggan: TFListPelanggan
   Left = 0
   Top = 0
-  Caption = 'FListPelanggan'
-  ClientHeight = 433
-  ClientWidth = 828
+  Caption = 'Pelanggan'
+  ClientHeight = 424
+  ClientWidth = 822
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,16 +13,36 @@ object FListPelanggan: TFListPelanggan
   Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 822
+    Height = 127
+    BarManager = dxBarManager1
+    Style = rs2010
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 0
+    TabStop = False
+    object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
+      Groups = <
+        item
+          ToolbarName = 'dxBarManager1Bar1'
+        end>
+      Index = 0
+    end
+  end
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 127
-    Width = 828
-    Height = 306
+    Width = 822
+    Height = 297
     Align = alClient
     DataSource = DsPelanggan
     DynProps = <>
     SearchPanel.Enabled = True
-    TabOrder = 0
+    TabOrder = 1
     Columns = <
       item
         CellButtons = <>
@@ -85,26 +105,6 @@ object FListPelanggan: TFListPelanggan
         Width = 120
       end>
     object RowDetailData: TRowDetailPanelControlEh
-    end
-  end
-  object dxRibbon1: TdxRibbon
-    Left = 0
-    Top = 0
-    Width = 828
-    Height = 127
-    BarManager = dxBarManager1
-    Style = rs2010
-    ColorSchemeName = 'Blue'
-    Contexts = <>
-    TabOrder = 1
-    TabStop = False
-    object dxRibbon1Tab1: TdxRibbonTab
-      Active = True
-      Groups = <
-        item
-          ToolbarName = 'dxBarManager1Bar1'
-        end>
-      Index = 0
     end
   end
   object dxBarManager1: TdxBarManager
@@ -390,6 +390,7 @@ object FListPelanggan: TFListPelanggan
     end
     object dxBarLargeNew: TdxBarLargeButton
       Action = ActBaru
+      Caption = 'New'
       Category = 0
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -641,7 +642,13 @@ object FListPelanggan: TFListPelanggan
   object QPelanggan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from master_data.t_customer')
+      
+        'select a.customer_code, customer_name, email, address, contact_p' +
+        'erson1 as telp, payment_term from t_customer a'
+      
+        'LEFT JOIN (select customer_code, address, contact_person1 from t' +
+        '_customer_address limit 1) b ON a.customer_code=b.customer_code'
+      'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56
     object QPelanggancustomer_code: TStringField
@@ -664,36 +671,6 @@ object FListPelanggan: TFListPelanggan
       FieldName = 'address'
       OnGetText = QPelangganaddressGetText
       BlobType = ftMemo
-    end
-    object QPelanggannpwp: TStringField
-      FieldName = 'npwp'
-      Size = 100
-    end
-    object QPelangganid: TGuidField
-      FieldName = 'id'
-      Required = True
-      Size = 38
-    end
-    object QPelanggancreated_at: TDateTimeField
-      FieldName = 'created_at'
-    end
-    object QPelanggancreated_by: TStringField
-      FieldName = 'created_by'
-      Size = 50
-    end
-    object QPelangganupdated_at: TDateTimeField
-      FieldName = 'updated_at'
-    end
-    object QPelangganupdated_by: TStringField
-      FieldName = 'updated_by'
-      Size = 50
-    end
-    object QPelanggandeleted_at: TDateTimeField
-      FieldName = 'deleted_at'
-    end
-    object QPelanggandeleted_by: TStringField
-      FieldName = 'deleted_by'
-      Size = 50
     end
     object QPelangganpayment_term: TSmallintField
       FieldName = 'payment_term'

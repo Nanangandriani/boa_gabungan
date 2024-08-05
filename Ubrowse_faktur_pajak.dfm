@@ -42,7 +42,7 @@ object Fbrowse_faktur_pajak: TFbrowse_faktur_pajak
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tahun'
+        FieldName = 'years'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Tahun'
@@ -62,7 +62,7 @@ object Fbrowse_faktur_pajak: TFbrowse_faktur_pajak
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_faktur'
+        FieldName = 'no_invoice_tax'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'No Faktur Pajak'
@@ -91,8 +91,8 @@ object Fbrowse_faktur_pajak: TFbrowse_faktur_pajak
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * FROM t_faktur where status='#39'Non Aktif'#39' order by periode' +
-        ', no_faktur')
+        'SELECT * from t_invoicetax_det where status=false ORDER BY perio' +
+        'de, no_invoice_tax asc')
     Left = 520
     Top = 224
   end

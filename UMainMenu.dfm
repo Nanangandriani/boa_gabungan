@@ -78,8 +78,8 @@ object FMainMenu: TFMainMenu
     Top = 126
     Width = 1037
     Height = 473
-    Position = 242
-    Percent = 23
+    Position = 307
+    Percent = 30
     UpperLeft.Color = 15987699
     UpperLeft.FlatColor = clGradientInactiveCaption
     LowerRight.Color = 15987699
@@ -88,12 +88,11 @@ object FMainMenu: TFMainMenu
     Align = alClient
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 1033
-    ExplicitHeight = 472
+    ExplicitWidth = 1089
     BarSize = (
-      242
+      307
       0
-      249
+      314
       473)
     UpperLeftControls = (
       CategoryPanelUtama
@@ -103,7 +102,7 @@ object FMainMenu: TFMainMenu
     object CategoryPanelUtama: TCategoryPanelGroup
       Left = 0
       Top = 0
-      Width = 242
+      Width = 307
       Height = 473
       VertScrollBar.Tracking = True
       Align = alClient
@@ -116,7 +115,7 @@ object FMainMenu: TFMainMenu
       HeaderFont.Name = 'Segoe UI'
       HeaderFont.Style = []
       TabOrder = 0
-      ExplicitHeight = 472
+      ExplicitWidth = 242
     end
     object TreeView1: TRzTreeView
       Left = 0
@@ -131,7 +130,7 @@ object FMainMenu: TFMainMenu
     object PageControl1: TRzPageControl
       Left = 0
       Top = 0
-      Width = 788
+      Width = 723
       Height = 473
       Hint = ''
       ActivePage = TabForm
@@ -140,8 +139,9 @@ object FMainMenu: TFMainMenu
       TabIndex = 0
       TabOrder = 0
       OnClose = PageControl1Close
-      ExplicitWidth = 784
-      ExplicitHeight = 472
+      ExplicitLeft = 24
+      ExplicitTop = 6
+      ExplicitWidth = 788
       FixedDimension = 21
       object TabForm: TRzTabSheet
         Color = 15987699
@@ -151,7 +151,7 @@ object FMainMenu: TFMainMenu
         object PanelParent: TPanel
           Left = 0
           Top = 0
-          Width = 784
+          Width = 719
           Height = 448
           Align = alClient
           TabOrder = 0
@@ -160,7 +160,7 @@ object FMainMenu: TFMainMenu
           object EdgeBrowser1: TEdgeBrowser
             Left = 1
             Top = 1
-            Width = 782
+            Width = 717
             Height = 446
             Align = alClient
             TabOrder = 0
@@ -171,14 +171,13 @@ object FMainMenu: TFMainMenu
           object WebBrowser1: TWebBrowser
             Left = 1
             Top = 1
-            Width = 782
+            Width = 717
             Height = 446
             Align = alClient
             TabOrder = 1
-            ExplicitWidth = 778
-            ExplicitHeight = 445
+            ExplicitWidth = 782
             ControlData = {
-              4C000000D2500000182E00000000000000000000000000000000000000000000
+              4C0000001B4A0000182E00000000000000000000000000000000000000000000
               000000004C000000000000000000000001000000E0D057007335CF11AE690800
               2B2E126208000000000000004C0000000114020000000000C000000000000046
               8000000000000000000000000000000000000000000000000000000000000000

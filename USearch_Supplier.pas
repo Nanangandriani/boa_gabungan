@@ -37,6 +37,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    vcall : string;
   end;
 
 var
@@ -46,7 +47,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um;
+uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,
+  UDelivery_Order_Sumber;
 
 procedure TFSearch_Supplier.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -56,6 +58,28 @@ begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
     end;}
+    if vcall='delivery_order' then
+    begin
+      FDelivery_Order_Sumber.edKodeVendorMuatan.Text:=QSupplier['supplier_code'];
+      FDelivery_Order_Sumber.edNamaVendorMuatan.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='delivery_order_kend' then
+    begin
+      FNewDeliveryOrder.edKodeVendorTransMuatan.Text:=QSupplier['supplier_code'];
+      FNewDeliveryOrder.edNamaVendorTransMuatan.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='delivery_order_reimburst' then
+    begin
+       FNewDeliveryOrder.MemDataBiaya.insert;
+       FNewDeliveryOrder.MemDataBiaya['kd_biaya']:=QSupplier['supplier_code'];
+       FNewDeliveryOrder.MemDataBiaya['nm_biaya']:=QSupplier['supplier_name'];
+       FNewDeliveryOrder.MemDataBiaya['dpp']:='0';
+       FNewDeliveryOrder.MemDataBiaya['ppn']:='0';
+       FNewDeliveryOrder.MemDataBiaya['pph']:='0';
+       FNewDeliveryOrder.MemDataBiaya['total']:='0';
+       FNewDeliveryOrder.MemDataBiaya.post;
+    end;
+
     with FNew_PO do
     begin
       EdKd_supp.Text:=QSupplier['supplier_code'];

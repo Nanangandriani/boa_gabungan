@@ -274,7 +274,7 @@ end;
 
 procedure TFNew_Barang.BBatalClick(Sender: TObject);
 begin
-  FlistBarang.Show;
+//  FlistBarang.Show;
   FlistBarang.ActRoExecute(sender);
   Close;
 end;

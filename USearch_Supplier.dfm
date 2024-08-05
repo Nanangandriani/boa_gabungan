@@ -187,7 +187,6 @@ object FSearch_Supplier: TFSearch_Supplier
       
         'SELECT * from t_supplier where deleted_at is null order by suppl' +
         'ier_code asc')
-    Active = True
     Left = 248
     Top = 72
     object QSuppliersupplier_code: TStringField

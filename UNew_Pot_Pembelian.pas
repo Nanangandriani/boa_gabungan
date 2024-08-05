@@ -209,7 +209,6 @@ begin
                       ParamByName('parpic').Value:=Nm;
             ExecSQL;
           end;
-
         end;
           dm.koneksi.Commit;
           Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);

@@ -385,10 +385,6 @@
             <Form>FPot_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UNew_Pot_Pembelian.pas">
-            <Form>FNew_Pot_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="USPB.pas">
             <Form>FSPB</Form>
             <FormType>dfm</FormType>
@@ -478,6 +474,14 @@
         </DCCReference>
         <DCCReference Include="UNew_PercBarang.pas">
             <Form>FNew_PercBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Pot_Pembelian.pas">
+            <Form>FNew_Pot_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_ItemRetur.pas">
+            <Form>FSearch_MaterialRetur</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
