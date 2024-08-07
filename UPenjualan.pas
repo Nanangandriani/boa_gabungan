@@ -1131,4 +1131,6 @@ begin
   end;
 end;
 
+initialization
+RegisterClass(TFlist_penjualan);
 end.

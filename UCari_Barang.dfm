@@ -15,6 +15,13 @@ object FCari_Barang: TFCari_Barang
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 13
+  object Gauge1: TGauge
+    Left = 320
+    Top = 96
+    Width = 100
+    Height = 100
+    Progress = 0
+  end
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0

@@ -115,9 +115,12 @@ end;
 procedure TFListGudang.ActROExecute(Sender: TObject);
 begin
   DBGridGudang.StartLoadingStatus();
+  try
     QGudang.Close;
     QGudang.Open;
+  finally
   DBGridGudang.FinishLoadingStatus();
+  end;
 end;
 
 procedure TFListGudang.ActUpdateExecute(Sender: TObject);
@@ -139,7 +142,6 @@ begin
         Edkode.Text:=QGudang.FieldByName('code').AsString;
       end;
       Edkd.Enabled:=False;
-      Edkode.Enabled:=False;
     end;
 end;
 
@@ -154,7 +156,6 @@ begin
     FNew_gudang.Ednm.SetFocus;
     Caption:='New Gudang';
     Edkd.Enabled:=True;
-    Edkode.Enabled:=False;
   end;
 
 end;
@@ -163,5 +164,8 @@ procedure TFListGudang.FormShow(Sender: TObject);
 begin
    Refresh;
 end;
+
+initialization
+  RegisterClass(TFListGudang);
 
 end.

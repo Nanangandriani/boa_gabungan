@@ -24,9 +24,7 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, DBGridEhGrouping, ToolCtrlsEh,
-  DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, frxClass, MemDS, DBAccess,
-  Uni, frxDBSet;
+  DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
 
 type
   TFPot_Pembelian = class(TForm)
@@ -54,29 +52,13 @@ type
     dxBarDelete: TdxBarButton;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
-    DBGridReturnPemb: TDBGridEh;
+    DBGridPotPemb: TDBGridEh;
     DBGridEh1: TDBGridEh;
-    DBPerusahaan: TfrxDBDataset;
-    QPerusahaan: TUniQuery;
-    frxReport1: TfrxReport;
-    frxDBPotPemb: TfrxDBDataset;
-    DsRptPot_Pemb: TDataSource;
-    QRptPot_Pemb: TUniQuery;
-    QRptDet: TUniQuery;
-    DbrptDet: TfrxDBDataset;
-    QDetail: TUniQuery;
-    DsDetail: TDataSource;
-    DsdReturn: TDataSetDriverEh;
-    MemReturn: TMemTableEh;
-    DsReturnPembelian: TDataSource;
-    QReturnPembelian: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
-    procedure ActRoExecute(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-
   end;
 
 var
@@ -88,33 +70,16 @@ implementation
 
 uses UNew_Pot_Pembelian;
 
-
 procedure TFPot_Pembelian.ActBaruExecute(Sender: TObject);
 begin
-    with FNew_Pot_Pembelian do
+    with Fnew_pot_pembelian do
     begin
       Show;
-      Clear;
 
-      Refresh;
-      Caption:='New Potongan Pembelian';
-      status:=0;
     end;
-
 end;
 
-procedure TFPot_Pembelian.ActRoExecute(Sender: TObject);
-begin
-  DBGridReturnPemb.StartLoadingStatus();
-  DBGridReturnPemb.FinishLoadingStatus();
-  QReturnPembelian.Close;
-  MemReturn.Close;
-  QDetail.Close;
-  if QReturnPembelian.Active=false then QReturnPembelian.Active:=True;
-  if MemReturn.Active=False then MemReturn.Active:=True;
-  if QDetail.Active=False then QDetail.Active:=True;
-  if QRptPot_Pemb.Active=False then QRptPot_Pemb.Active:=True;
-  if QRptDet.Active=False then QRptDet.Active:=True;
-end;
+initialization
+registerclass(TFPot_Pembelian);
 
 end.

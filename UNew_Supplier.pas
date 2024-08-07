@@ -137,6 +137,8 @@ end;
 
 procedure TFNew_Supplier.BEditClick(Sender: TObject);
 begin
+  if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
     BEdit.Visible:=false;
     BSimpan.Visible:=true;
     if Edno.Text='' then
@@ -181,7 +183,7 @@ begin
         sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
                   ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
-                  parambyname('updated_at').AsString:=Formatdatetime('yyyy-mm-dd',Now());
+                  parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   parambyname('updated_by').AsString:='Admin';
         ExecSQL;
       end;
@@ -223,7 +225,8 @@ begin
       end;
     end;
     FMainMenu.TampilTabForm2;
-    BBatalClick(sender);;
+    BBatalClick(sender);
+  end;
 end;
 
 procedure TFNew_Supplier.BSimpanClick(Sender: TObject);

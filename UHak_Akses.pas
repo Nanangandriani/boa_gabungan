@@ -83,6 +83,8 @@ begin
   //  RefreshMenu;
     status:=0;
     Caption:='New Hak Akses';
+    MemDetail.Close;
+    MemDetail.Open;
   end;
 end;
 
@@ -94,7 +96,7 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='Delete From t_akses where no_akses='+QuotedStr(DBGridAkses.Fields[0].AsString);
+      sql.Text:='Delete From t_akses where akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString);
       Execute;
     end;
     ActROExecute(sender);
@@ -124,16 +126,19 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' select A.*,b.submenu2,c.Dept from t_akses  a inner join t_submenu2 b on '+
-                  ' a.menu_code=b.kd_submenu inner join t_dept c on a.iddept=c.iddept '+
+        sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a inner join t_menu_sub b on '+
+                  ' a.submenu_code=b.submenu_code inner join t_dept c on a.dept_code=c.dept_code '+
                   ' where a.akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString)+''+
-                  ' order by a.no_akses Asc ';
+                  ' order by a.akses_no Asc ';
       end;
-      EdNo.Text:=MemAkses['no_akses'];
-      Edkd.Text:=MemAkses['iddept'];
+      EdNo.Text:=MemAkses['akses_no'];
+      Edkd.Text:=MemAkses['dept_code'];
       EdNm.Text:=MemAkses['dept'];
       EdNmSelect(sender);
     end;
 end;
+
+initialization
+RegisterClass(TFHak_Akses);
 
 end.

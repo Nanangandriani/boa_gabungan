@@ -1,8 +1,8 @@
 object FMainMenu: TFMainMenu
   Left = 0
   Top = 0
-  ClientHeight = 618
-  ClientWidth = 1037
+  ClientHeight = 627
+  ClientWidth = 1043
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,10 +14,19 @@ object FMainMenu: TFMainMenu
   OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
+  object Splitter1: TSplitter
+    Left = 169
+    Top = 126
+    Width = 12
+    Height = 482
+    ResizeStyle = rsUpdate
+    StyleName = 'Windows'
+    ExplicitLeft = 160
+  end
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 599
-    Width = 1037
+    Top = 608
+    Width = 1043
     Height = 19
     BorderInner = fsNone
     BorderOuter = fsNone
@@ -25,8 +34,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 598
-    ExplicitWidth = 1033
+    ExplicitTop = 607
+    ExplicitWidth = 1039
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -37,12 +46,11 @@ object FMainMenu: TFMainMenu
       ExplicitHeight = 20
     end
     object RzVersionInfoStatus1: TRzVersionInfoStatus
-      Left = 937
+      Left = 943
       Top = 0
       Height = 19
       Align = alRight
       Field = vifProductVersion
-      ExplicitLeft = 943
     end
     object RzProgressStatus1: TRzProgressStatus
       Left = 100
@@ -57,7 +65,7 @@ object FMainMenu: TFMainMenu
       ExplicitHeight = 20
     end
     object RzClockStatus1: TRzClockStatus
-      Left = 787
+      Left = 793
       Top = 0
       Height = 19
       Align = alRight
@@ -73,129 +81,15 @@ object FMainMenu: TFMainMenu
       ExplicitHeight = 20
     end
   end
-  object RzSplitter1: TRzSplitter
-    Left = 0
-    Top = 126
-    Width = 1037
-    Height = 473
-    Position = 307
-    Percent = 30
-    UpperLeft.Color = 15987699
-    UpperLeft.FlatColor = clGradientInactiveCaption
-    LowerRight.Color = 15987699
-    HotSpotVisible = True
-    SplitterWidth = 7
-    Align = alClient
-    Color = 15987699
-    TabOrder = 1
-    ExplicitWidth = 1089
-    BarSize = (
-      307
-      0
-      314
-      473)
-    UpperLeftControls = (
-      CategoryPanelUtama
-      TreeView1)
-    LowerRightControls = (
-      PageControl1)
-    object CategoryPanelUtama: TCategoryPanelGroup
-      Left = 0
-      Top = 0
-      Width = 307
-      Height = 473
-      VertScrollBar.Tracking = True
-      Align = alClient
-      ChevronHotColor = clSkyBlue
-      Color = clGradientInactiveCaption
-      GradientColor = clBtnFace
-      HeaderFont.Charset = DEFAULT_CHARSET
-      HeaderFont.Color = clWindowText
-      HeaderFont.Height = -15
-      HeaderFont.Name = 'Segoe UI'
-      HeaderFont.Style = []
-      TabOrder = 0
-      ExplicitWidth = 242
-    end
-    object TreeView1: TRzTreeView
-      Left = 0
-      Top = 304
-      Width = 200
-      Height = 0
-      SelectionPen.Color = clBtnShadow
-      Indent = 19
-      TabOrder = 1
-      Visible = False
-    end
-    object PageControl1: TRzPageControl
-      Left = 0
-      Top = 0
-      Width = 723
-      Height = 473
-      Hint = ''
-      ActivePage = TabForm
-      Align = alClient
-      ShowCloseButtonOnActiveTab = True
-      TabIndex = 0
-      TabOrder = 0
-      OnClose = PageControl1Close
-      ExplicitLeft = 24
-      ExplicitTop = 6
-      ExplicitWidth = 788
-      FixedDimension = 21
-      object TabForm: TRzTabSheet
-        Color = 15987699
-        Caption = 'Dashboard'
-        ExplicitWidth = 780
-        ExplicitHeight = 447
-        object PanelParent: TPanel
-          Left = 0
-          Top = 0
-          Width = 719
-          Height = 448
-          Align = alClient
-          TabOrder = 0
-          ExplicitWidth = 780
-          ExplicitHeight = 447
-          object EdgeBrowser1: TEdgeBrowser
-            Left = 1
-            Top = 1
-            Width = 717
-            Height = 446
-            Align = alClient
-            TabOrder = 0
-            UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-            ExplicitWidth = 778
-            ExplicitHeight = 445
-          end
-          object WebBrowser1: TWebBrowser
-            Left = 1
-            Top = 1
-            Width = 717
-            Height = 446
-            Align = alClient
-            TabOrder = 1
-            ExplicitWidth = 782
-            ControlData = {
-              4C0000001B4A0000182E00000000000000000000000000000000000000000000
-              000000004C000000000000000000000001000000E0D057007335CF11AE690800
-              2B2E126208000000000000004C0000000114020000000000C000000000000046
-              8000000000000000000000000000000000000000000000000000000000000000
-              00000000000000000100000000000000000000000000000000000000}
-          end
-        end
-      end
-    end
-  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1037
+    Width = 1043
     Height = 126
     BarManager = dxBarManager1
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 2
+    TabOrder = 1
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
@@ -230,6 +124,82 @@ object FMainMenu: TFMainMenu
           ToolbarName = 'dxBarManager1Bar7'
         end>
       Index = 0
+    end
+  end
+  object CategoryPanelUtama: TCategoryPanelGroup
+    Left = 0
+    Top = 126
+    Width = 169
+    Height = 482
+    VertScrollBar.Tracking = True
+    ChevronHotColor = clSkyBlue
+    Color = clGradientInactiveCaption
+    GradientColor = clBtnFace
+    HeaderFont.Charset = DEFAULT_CHARSET
+    HeaderFont.Color = clWindowText
+    HeaderFont.Height = -15
+    HeaderFont.Name = 'Segoe UI'
+    HeaderFont.Style = []
+    TabOrder = 2
+    ExplicitHeight = 481
+  end
+  object PageControl1: TRzPageControl
+    Left = 181
+    Top = 126
+    Width = 862
+    Height = 482
+    Hint = ''
+    ActivePage = TabForm
+    Align = alClient
+    ShowCloseButtonOnActiveTab = True
+    TabIndex = 0
+    TabOrder = 3
+    OnClose = PageControl1Close
+    ExplicitWidth = 858
+    ExplicitHeight = 481
+    FixedDimension = 21
+    object TabForm: TRzTabSheet
+      Color = 15987699
+      Caption = 'Dashboard'
+      ExplicitWidth = 854
+      ExplicitHeight = 456
+      object PanelParent: TPanel
+        Left = 0
+        Top = 0
+        Width = 858
+        Height = 457
+        Align = alClient
+        TabOrder = 0
+        ExplicitWidth = 854
+        ExplicitHeight = 456
+        object EdgeBrowser1: TEdgeBrowser
+          Left = 1
+          Top = 1
+          Width = 856
+          Height = 455
+          Align = alClient
+          TabOrder = 0
+          UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
+          ExplicitWidth = 852
+          ExplicitHeight = 454
+        end
+        object WebBrowser1: TWebBrowser
+          Left = 1
+          Top = 1
+          Width = 856
+          Height = 455
+          Align = alClient
+          TabOrder = 1
+          ExplicitWidth = 852
+          ExplicitHeight = 454
+          ControlData = {
+            4C00000078580000072F00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126208000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
+        end
+      end
     end
   end
   object ImageList1: TImageList
@@ -390,8 +360,8 @@ object FMainMenu: TFMainMenu
       'begin'
       ''
       'end.')
-    Left = 352
-    Top = 88
+    Left = 616
+    Top = 48
     Datasets = <>
     Variables = <>
     Style = <>
@@ -592,6 +562,10 @@ object FMainMenu: TFMainMenu
         item
           Visible = True
           ItemName = 'dxBarLargeButtonUtility'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = False
       Row = 0
@@ -882,6 +856,82 @@ object FMainMenu: TFMainMenu
         C5EE4F5D418A2FC1E0F60920E12A18F44E82D6C4C29B5D058438006B4D18356B
         AD47F40FD5561AE288C27E740000000049454E44AE426082}
       OnClick = dxBarLargeButtonUtilityClick
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000001974455874536F6674776172650041646F626520496D616765526561
+        647971C9653C00000030744558745469746C650044423B536F757263653B5374
+        6F723B64617461736F757263653B44617461626173653B4164643B4E657722FB
+        FACB0000011949444154785EEDD5316A84401805E029B65FB0DB1BA4D8C2332C
+        5AC6BD464A49659322C113D8E5260B3629D28AD8E512A651B0083879BB3C6141
+        417E668661C1E22BFC71661EE853A5B5F66A36D802FC7EBFDEDBC30952F88412
+        7EA0853F6A392B794F0A27AE55240E708437A8409354C53D8ED2006768405BD2
+        C059108087DBD54802740E0274920083830083F700DE1F81F797F0A16A984162
+        F143944026AD610DEF10197C8A23EE519BD4B0872F28E0056278820076147016
+        F39E826BFA87ADE1E820C0E8AB866AE2A586D7FD9E3F2E9A6ED7799E5F6713B7
+        35140470534341003735340B2037DB6B29006713AB7F431E2623AEA1FB00ACA1
+        CF0020A8A1E01D0005AB2D981C2084485A43AE098501CC2D1CB01A600BF00FC0
+        497997F7F584210000000049454E44AE426082}
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Close All Tab'
+      Category = 0
+      Hint = 'Close All Tab'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E57686974657B66696C6C3A
+        234646464646463B7D262331333B262331303B2623393B2E5265647B66696C6C
+        3A234431314331433B7D262331333B262331303B2623393B2E7374307B6F7061
+        636974793A302E363B7D3C2F7374796C653E0D0A3C7061746820636C6173733D
+        22426C61636B2220643D224D342C327632386832345638682D36563248347A22
+        2F3E0D0A3C706F6C79676F6E20636C6173733D2257686974652220706F696E74
+        733D22362C3420362C32382032362C32382032362C31302032302C3130203230
+        2C3420222F3E0D0A3C672069643D22536176655F616E645F636C6F7365223E0D
+        0A09093C673E0D0A0909093C7061746820636C6173733D225265642220643D22
+        4D32352C313863332E392C302C372C332E312C372C37732D332E312C372D372C
+        37732D372D332E312D372D375332312E312C31382C32352C31387A222F3E0D0A
+        0909093C706F6C79676F6E20636C6173733D225265642220706F696E74733D22
+        32382E382C32372E332032372E342C32382E372032352C32362E342032322E37
+        2C32382E372032312E332C32372E332032332E362C32352032312E332C32322E
+        372032322E372C32312E332032352C32332E362032372E332C32312E33202020
+        2623393B2623393B2623393B32382E372C32322E372032362E342C3235202623
+        393B2623393B222F3E0D0A09093C2F673E0D0A09093C673E0D0A0909093C7061
+        746820636C6173733D225265642220643D224D32352C313863332E392C302C37
+        2C332E312C372C37732D332E312C372D372C37732D372D332E312D372D375332
+        312E312C31382C32352C31387A222F3E0D0A0909093C706F6C79676F6E20636C
+        6173733D2257686974652220706F696E74733D2232382E382C32372E33203237
+        2E342C32382E372032352C32362E342032322E372C32382E372032312E332C32
+        372E332032332E362C32352032312E332C32322E372032322E372C32312E3320
+        32352C32332E362032372E332C32312E332020202623393B2623393B2623393B
+        32382E372C32322E372032362E342C3235202623393B2623393B222F3E0D0A09
+        093C2F673E0D0A093C2F673E0D0A3C672069643D22D0A1D0BBD0BED0B95F3222
+        20636C6173733D22737430223E0D0A09093C7265637420783D22382220793D22
+        32302220636C6173733D22426C61636B222077696474683D2238222068656967
+        68743D2232222F3E0D0A09093C7265637420783D22382220793D223136222063
+        6C6173733D22426C61636B222077696474683D22313222206865696768743D22
+        32222F3E0D0A09093C7265637420783D22382220793D2231322220636C617373
+        3D22426C61636B222077696474683D22313622206865696768743D2232222F3E
+        0D0A09093C7265637420783D22382220793D22382220636C6173733D22426C61
+        636B222077696474683D22313022206865696768743D2232222F3E0D0A093C2F
+        673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton2Click
     end
   end
 end

@@ -4,7 +4,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
   BorderStyle = bsToolWindow
   Caption = 'New Konversi Barang'
   ClientHeight = 413
-  ClientWidth = 510
+  ClientWidth = 540
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,17 +17,17 @@ object FNew_KonvBarang: TFNew_KonvBarang
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
-  object Panel2: TPanel
+  object PnlTombol: TPanel
     Left = 0
     Top = 169
-    Width = 510
+    Width = 540
     Height = 32
-    Align = alTop
+    Align = alBottom
     TabOrder = 0
-    ExplicitTop = 152
-    ExplicitWidth = 433
+    ExplicitTop = 157
+    ExplicitWidth = 532
     object BBatal: TRzBitBtn
-      Left = 434
+      Left = 464
       Top = 1
       Height = 30
       Align = alRight
@@ -86,10 +86,10 @@ object FNew_KonvBarang: TFNew_KonvBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 357
+      ExplicitLeft = 456
     end
     object BSimpan: TRzBitBtn
-      Left = 284
+      Left = 314
       Top = 1
       Height = 30
       Align = alRight
@@ -148,7 +148,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 282
+      ExplicitLeft = 306
     end
     object RzBitBtn1: TRzBitBtn
       Left = 1
@@ -214,7 +214,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 209
+      Left = 239
       Top = 1
       Height = 30
       Align = alRight
@@ -273,11 +273,10 @@ object FNew_KonvBarang: TFNew_KonvBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 243
-      ExplicitHeight = 33
+      ExplicitLeft = 231
     end
     object BRefresh: TRzBitBtn
-      Left = 359
+      Left = 389
       Top = 1
       Height = 30
       Align = alRight
@@ -336,20 +335,21 @@ object FNew_KonvBarang: TFNew_KonvBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 393
-      ExplicitHeight = 33
+      ExplicitLeft = 381
     end
   end
-  object Panel1: TPanel
+  object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 510
+    Width = 540
     Height = 169
-    Align = alTop
+    Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 441
+    Visible = False
+    ExplicitWidth = 532
+    ExplicitHeight = 157
     object Label11: TLabel
       Left = 228
       Top = 127
@@ -432,7 +432,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
       Top = 22
       Width = 45
       Height = 13
-      Caption = 'Categroy'
+      Caption = 'Kelompok'
     end
     object Edkd: TEdit
       Left = 121
@@ -518,16 +518,20 @@ object FNew_KonvBarang: TFNew_KonvBarang
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 201
-    Width = 510
+    Width = 540
     Height = 212
-    Align = alClient
+    Align = alBottom
     DataSource = DsKonversiM
     DynProps = <>
+    HorzScrollBar.ExtraPanel.NavigatorButtons = [nbFirstEh, nbPriorEh, nbNextEh, nbLastEh, nbDeleteEh, nbRefreshEh]
+    HorzScrollBar.ExtraPanel.Visible = True
+    HorzScrollBar.ExtraPanel.VisibleItems = [gsbiNavigator, gsbiSelAggregationInfoEh]
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 2
+    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>
@@ -536,7 +540,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
         FieldName = 'item_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
-        Width = 190
+        Width = 161
       end
       item
         CellButtons = <>
@@ -587,13 +591,14 @@ object FNew_KonvBarang: TFNew_KonvBarang
   object QKonversiM: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT'#9'b.qty_unit, '
+      'SELECT'#9'"a".group_id,b.qty_unit, '
       #9'b.unit, '
       #9'"a".item_name, '
       #9'"a".item_code, '
       #9'b.qty_conv, '
       #9'b.unit_conv, '
-      #9'"c".category,b."id"'
+      #9'"c".group_name,b."id"'
+      ''
       'FROM'
       #9't_item AS "a"'
       #9'INNER JOIN'
@@ -601,10 +606,10 @@ object FNew_KonvBarang: TFNew_KonvBarang
       #9'ON '
       #9#9'"a".item_code = b.item_code'
       #9'INNER JOIN'
-      #9't_item_category AS "c"'
+      #9't_item_group AS "c"'
       #9'ON '
-      #9#9'"a".category_id = "c"."category_id"')
-    Left = 372
-    Top = 72
+      #9#9'"a".group_id = "c"."group_id"')
+    Left = 460
+    Top = 16
   end
 end

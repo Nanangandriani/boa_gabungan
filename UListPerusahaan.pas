@@ -153,4 +153,7 @@ begin
     Qperusahaan.Open;
 end;
 
+initialization
+RegisterClass(TFListPerusahaan);
+
 end.

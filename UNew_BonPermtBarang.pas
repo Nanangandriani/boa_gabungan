@@ -134,7 +134,7 @@ begin
     begin
       if status=0 then
       begin
-        idmenu:='M4103';
+        idmenu:='M04003';
         strday2:=DtPeriode.Date;
         Edno.Text:=getNourut(strday2,'warehouse.t_item_request','');
         Edno_urut.Text:=order_no;
@@ -218,7 +218,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='insert into warehouse.t_item_request(trans_date,trans_no,status,status_app,order_no,kdsbu,trans_day,trans_year,trans_month,created_by)'+
+    sql.Text:='insert into warehouse.t_item_request(trans_date,trans_no,status,status_app,order_no,sbu_code,trans_day,trans_year,trans_month,created_by)'+
               ' values(:tgl,:notrans,:status,:status_app,:urut,:kdsbu,:tgl_no,:thn,:bln,:pic)';
               ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
               ParamByName('notrans').Value:=Edno.Text;

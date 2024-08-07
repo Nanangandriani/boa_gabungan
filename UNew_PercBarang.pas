@@ -119,7 +119,7 @@ Procedure TFNew_PercBarang.Simpan;
 begin
   idmenu:='M04006';
   strday2:=DtPeriode.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_mix','');
+  Edno.Text:=getNourut(strday2,'warehouse.t_item_mixing','');
   with dm.Qtemp do
    begin
     Close;
@@ -410,6 +410,18 @@ begin
   end;
   if loksbu <> '' then
   begin
+    VMenu:='1';
+    FCari_Barang2.Show;
+    with FCari_Barang2.Qbarang do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=' Select a.*,b.item_name,c.supplier_name,d.wh_name from warehouse.t_item_stock_det a INNER JOIN warehouse.t_item_stock b on a.item_stock_code=b.item_stock_code'+
+      ' INNER JOIN t_supplier c on b.supplier_code=c.supplier_code left join t_wh d on a.wh_code=d.wh_code'+
+      ' where b.item_code='+QuotedStr(MemMaterial['kd_material'])+' and a."outstanding" > 0'+
+      ' and d.sbu_code='+QuotedStr(loksbu);
+      ExecSQL;
+    end;
   {  FSearch_KdStok_Permt_Mat.Show;
     with FSearch_KdStok_Permt_Mat.QSupplier do
     begin

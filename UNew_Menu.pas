@@ -9,22 +9,26 @@ uses
 
 type
   TFNew_menu = class(TForm)
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSimpan: TRzBitBtn;
+    Panel1: TPanel;
     Label1: TLabel;
     Label2: TLabel;
     Label7: TLabel;
     Label8: TLabel;
-    Edkd: TEdit;
-    EdNm: TEdit;
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BSimpan: TRzBitBtn;
     Label3: TLabel;
     Label4: TLabel;
-    EdGroup: TRzComboBox;
     SpeedButton1: TSpeedButton;
     Label5: TLabel;
     Label6: TLabel;
+    Edkd: TEdit;
+    EdNm: TEdit;
+    EdGroup: TRzComboBox;
     Edlink: TEdit;
+    Label9: TLabel;
+    Label10: TLabel;
+    Edunit: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdGroupSelect(Sender: TObject);
@@ -123,13 +127,12 @@ begin
   with FMaster_Menu do
   begin
     Show;
-    btambah.enabled:=true;
+    btambah.enabled:=false;
     Cbmaster.Text:='';
     Edkd.Clear;
     EdDesk.Clear;
     Qmenu.Close;
     qmenu.open;
-    PnlNew.Enabled:=false;
   end;
 end;
 
@@ -163,8 +166,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='insert into t_menu_sub(submenu_code,submenu,menu_code,link,created_by)values('+QuotedStr(Edkd.Text)+','+
-              ''+QuotedStr(EdNm.Text)+', '+QuotedStr(No_group)+', '+QuotedStr(edlink.Text)+', '+QuotedStr(nm)+')';
+    sql.Text:='insert into t_menu_sub(submenu_code,submenu,menu_code,link,created_by,link_unit)values('+QuotedStr(Edkd.Text)+','+
+              ''+QuotedStr(EdNm.Text)+', '+QuotedStr(No_group)+', '+QuotedStr(edlink.Text)+', '+QuotedStr(nm)+','+QuotedStr(edunit.Text)+')';
     ExecSQL;
   end;
 end;
@@ -175,7 +178,7 @@ begin
     close;
     sql.Clear;
     sql.Text:=' Update t_menu_sub set submenu='+QuotedStr(EdNm.Text)+',menu_code='+QuotedStr(No_group)+',submenu_code='+QuotedStr(Edkd.Text)+','+
-              ' link='+QuotedStr(Edlink.Text)+',updated_by='+QuotedStr(nm)+',updated_at=now() where submenu_code='+QuotedStr(Edkd.Text);
+              ' link='+QuotedStr(Edlink.Text)+',updated_by='+QuotedStr(nm)+',updated_at=now(), link_unit='+QuotedStr(edunit.Text)+' where submenu_code='+QuotedStr(Edkd.Text);
     ExecSQL;
   end;
 end;

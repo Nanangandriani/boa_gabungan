@@ -31,19 +31,23 @@ type
     Memdetail: TMemTableEh;
     DBGridEh2: TDBGridEh;
     DsMaster: TDataSource;
-    MemTableEh1: TMemTableEh;
+    MemMaster: TMemTableEh;
     DataSetDriverEh1: TDataSetDriverEh;
+    BUpdate: TRzBitBtn;
     procedure edkdButtonClick(Sender: TObject);
     procedure DBGridEh2Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure BBatalClick(Sender: TObject);
     procedure BtambahClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
+    procedure BRefreshClick(Sender: TObject);
+    procedure BUpdateClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     Procedure Autonumber;
+    Procedure clear;
   end;
 
 var
@@ -74,9 +78,18 @@ begin
   //if dm.Qtemp2.RecordCount=1 then
     if dm.Qtemp2['urut']<> null then
   begin
-    order_no := IntToStr(dm.Qtemp['urut']+1);
+    order_no := IntToStr(dm.Qtemp2['urut']+1);
   end;
  // Edit1.Text:=order_no;
+end;
+
+Procedure TFMaster_PercBarang.clear;
+begin
+  edkd.Clear;
+  EdNm.Clear;
+  Memdetail.Close;
+  memdetail.Open;
+  Memdetail.EmptyTable;
 end;
 
 procedure TFMaster_PercBarang.BBatalClick(Sender: TObject);
@@ -84,9 +97,18 @@ begin
   close;
 end;
 
+procedure TFMaster_PercBarang.BRefreshClick(Sender: TObject);
+begin
+  DBGridEh1.StartLoadingStatus();
+    QMaster.Close;
+    QMaster.Open;
+    MemMaster.Close;
+    MemMaster.Open;
+  DBGridEh1.FinishLoadingStatus();
+end;
+
 procedure TFMaster_PercBarang.BSimpanClick(Sender: TObject);
 begin
-  Autonumber;
   if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
      if edkd.Text='' then
@@ -99,27 +121,58 @@ begin
     dm.koneksi.StartTransaction;
     try
       begin
-        Memdetail.First;
-        while not Memdetail.eof do
+        if statustr=0 then
         begin
-          with dm.Qtemp do
+          Autonumber;
+          Memdetail.First;
+          while not Memdetail.eof do
           begin
-            close;
-            sql.clear;        {
-            sql.Text:='insert into warehouse.t_mixing_master(supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
-                      ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
-                      ' Where supplier_code='+QuotedStr(Edno.Text);
-                      parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
-                      parambyname('updated_by').AsString:='Admin'; }
-            sql.Text:='insert into warehouse.t_mixing_master(master_no,type_code,item_code,qty)values'+
-                      '(:master_no,:type_code,:item_code,:qty)';
-                      ParamByName('master_no').Value:=order_no;
-                      ParamByName('type_code').Value:=edkd.Text;
-                      ParamByName('item_code').Value:=Memdetail['item_code'];
-                      ParamByName('qty').Value:=Memdetail['qty'];
-                      ExecSQL;
+            with dm.Qtemp do
+            begin
+              close;
+              sql.clear;        {
+              sql.Text:='insert into warehouse.t_mixing_master(supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
+                        ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+                        ' Where supplier_code='+QuotedStr(Edno.Text);
+                        parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+                        parambyname('updated_by').AsString:='Admin'; }
+              sql.Text:='insert into warehouse.t_mixing_master(master_no,type_code,item_code,qty)values'+
+                        '(:master_no,:type_code,:item_code,:qty)';
+                        ParamByName('master_no').Value:=order_no;
+                        ParamByName('type_code').Value:=edkd.Text;
+                        ParamByName('item_code').Value:=Memdetail['item_code'];
+                        ParamByName('qty').Value:=Memdetail['qty'];
+                        ExecSQL;
+            end;
+              Memdetail.Next;
           end;
+        end;
+        if statustr=1 then
+        begin
+            with dm.Qtemp do
+            begin
+              close;
+              sql.clear;
+              sql.Text:='delete from warehouse.t_mixing_master where master_no='+QuotedStr(order_no);
+                        ExecSQL;
+            end;
+          Memdetail.First;
+          while not Memdetail.eof do
+          begin
+            with dm.Qtemp do
+            begin
+              close;
+              sql.clear;
+              sql.Text:='insert into warehouse.t_mixing_master(master_no,type_code,item_code,qty)values'+
+                        '(:master_no,:type_code,:item_code,:qty)';
+                        ParamByName('master_no').Value:=order_no;
+                        ParamByName('type_code').Value:=edkd.Text;
+                        ParamByName('item_code').Value:=Memdetail['item_code'];
+                        ParamByName('qty').Value:=Memdetail['qty'];
+                        ExecSQL;
+            end;
             Memdetail.Next;
+          end;
         end;
         dm.koneksi.Commit;
         Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
@@ -132,14 +185,44 @@ begin
       end;
     end;
     FMainMenu.TampilTabForm2;
-    BBatalClick(sender);
+    BRefreshClick(sender);
   end;
+  PnlNew.visible:=False;
+  Pnllist.visible:=True;
 end;
 
 procedure TFMaster_PercBarang.BtambahClick(Sender: TObject);
 begin
+  PnlNew.visible:=True;
+  clear;
+  Pnllist.Visible:=False;
   edkd.SetFocus;
   statustr:=0;
+end;
+
+procedure TFMaster_PercBarang.BUpdateClick(Sender: TObject);
+begin
+  statustr:=1;
+  PnlNew.Visible:=true;
+  Memdetail.Close;
+  Memdetail.Open;
+  Memdetail.EmptyTable;
+  clear;
+  order_no:=MemMaster['master_no'];
+  edkd.Text:=MemMaster['type_code'];
+  EdNm.Text:=MemMaster['jenis'];
+//  MemMaster.First;
+  while not MemMaster.eof do
+  begin
+    Memdetail.Insert;
+    Memdetail['item_code']:=MemMaster['item_code'];
+    Memdetail['item_name']:=MemMaster['item_name'];
+    Memdetail['qty']:=MemMaster['qty'];
+    Memdetail['unit']:=MemMaster['unit'];
+    Memdetail.Post;
+    MemMaster.Next;
+  end;
+  Pnllist.Visible:=False;
 end;
 
 procedure TFMaster_PercBarang.DBGridEh2Columns0EditButtons0Click(

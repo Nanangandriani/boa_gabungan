@@ -396,6 +396,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
     end
     object dxBarLargeButton1: TdxBarLargeButton
       Action = ActBaru
+      Caption = 'New'
       Category = 0
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {

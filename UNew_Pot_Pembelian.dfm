@@ -3,8 +3,8 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
   Top = 0
   BorderStyle = bsDialog
   Caption = 'New Potongan Pembelian'
-  ClientHeight = 259
-  ClientWidth = 500
+  ClientHeight = 318
+  ClientWidth = 569
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,237 +13,234 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
   Font.Style = []
   Position = poMainFormCenter
   TextHeight = 15
-  object Label6: TLabel
-    Left = 465
-    Top = 185
-    Width = 14
-    Height = 15
-    Caption = 'Rp'
-  end
-  object Label5: TLabel
-    Left = 465
-    Top = 158
-    Width = 14
-    Height = 15
-    Caption = 'Rp'
-  end
-  object Label4: TLabel
-    Left = 465
-    Top = 132
-    Width = 14
-    Height = 15
-    Caption = 'Rp'
-  end
-  object Label20: TLabel
-    Left = 20
-    Top = 185
-    Width = 60
-    Height = 15
-    Caption = 'Grand Total'
-  end
-  object Label19: TLabel
-    Left = 146
-    Top = 158
-    Width = 10
-    Height = 15
-    Caption = '%'
-  end
-  object Label17: TLabel
-    Left = 20
-    Top = 155
-    Width = 23
-    Height = 15
-    Caption = 'PPN'
-  end
-  object Lbcurr: TLabel
-    Left = 243
-    Top = 132
-    Width = 14
-    Height = 15
-    Caption = 'Rp'
-  end
-  object Label13: TLabel
-    Left = 280
-    Top = 75
-    Width = 23
-    Height = 15
-    Caption = 'Kurs'
-  end
-  object Label7: TLabel
-    Left = 20
-    Top = 80
-    Width = 42
-    Height = 15
-    Caption = 'No. LPB'
-  end
-  object Label11: TLabel
-    Left = 280
-    Top = 105
-    Width = 41
-    Height = 15
-    Caption = 'Tanggal'
-  end
-  object Label15: TLabel
-    Left = 20
-    Top = 105
-    Width = 55
-    Height = 15
-    Caption = 'No. Faktur'
-  end
-  object Label9: TLabel
-    Left = 20
-    Top = 132
-    Width = 32
-    Height = 15
-    Caption = 'Harga'
-  end
-  object Label3: TLabel
-    Left = 20
+  object Label1: TLabel
+    Left = 24
     Top = 24
-    Width = 49
+    Width = 46
     Height = 15
-    Caption = 'No. Trans'
+    Caption = 'No.Trans'
   end
   object Label2: TLabel
-    Left = 280
-    Top = 23
+    Left = 328
+    Top = 24
     Width = 41
     Height = 15
     Caption = 'Tanggal'
   end
-  object Label1: TLabel
-    Left = 20
-    Top = 51
+  object Label3: TLabel
+    Left = 24
+    Top = 58
     Width = 43
     Height = 15
     Caption = 'Supplier'
   end
-  object Edno: TRzEdit
-    Left = 100
-    Top = 20
-    Width = 160
+  object Label4: TLabel
+    Left = 24
+    Top = 92
+    Width = 39
+    Height = 15
+    Caption = 'No.LPB'
+  end
+  object Label5: TLabel
+    Left = 24
+    Top = 127
+    Width = 52
+    Height = 15
+    Caption = 'No.Faktur'
+  end
+  object Label6: TLabel
+    Left = 328
+    Top = 127
+    Width = 41
+    Height = 15
+    Caption = 'Tanggal'
+  end
+  object Label7: TLabel
+    Left = 328
+    Top = 92
+    Width = 23
+    Height = 15
+    Caption = 'Kurs'
+  end
+  object Label8: TLabel
+    Left = 24
+    Top = 164
+    Width = 32
+    Height = 15
+    Caption = 'Harga'
+  end
+  object Label9: TLabel
+    Left = 24
+    Top = 199
+    Width = 23
+    Height = 15
+    Caption = 'PPN'
+  end
+  object Label10: TLabel
+    Left = 24
+    Top = 231
+    Width = 60
+    Height = 15
+    Caption = 'Grand Total'
+  end
+  object Label11: TLabel
+    Left = 265
+    Top = 164
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Label12: TLabel
+    Left = 143
+    Top = 199
+    Width = 10
+    Height = 15
+    Caption = '%'
+  end
+  object Label13: TLabel
+    Left = 543
+    Top = 164
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Label14: TLabel
+    Left = 543
+    Top = 199
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Label15: TLabel
+    Left = 543
+    Top = 231
+    Width = 17
+    Height = 15
+    Caption = 'Rp.'
+  end
+  object Edit1: TEdit
+    Left = 96
+    Top = 21
+    Width = 201
     Height = 23
-    Text = ''
-    CharCase = ecUpperCase
-    Color = clInfoBk
-    ReadOnly = True
     TabOrder = 0
   end
-  object EdTotal_rp: TRzNumericEdit
-    Left = 287
-    Top = 182
-    Width = 170
+  object DateTimePicker1: TDateTimePicker
+    Left = 384
+    Top = 21
+    Width = 153
     Height = 23
-    Color = clInfoBk
-    ReadOnly = True
+    Date = 45232.000000000000000000
+    Time = 0.637056678242515800
     TabOrder = 1
-    DisplayFormat = '#,##0.00'
   end
-  object Edppn_rp: TRzNumericEdit
-    Left = 287
-    Top = 155
-    Width = 170
+  object Edit2: TEdit
+    Left = 96
+    Top = 55
+    Width = 89
     Height = 23
     TabOrder = 2
-    DisplayFormat = '#,##'
   end
-  object Edgrandtotal: TRzNumericEdit
-    Left = 100
-    Top = 182
-    Width = 176
+  object ButtonedEdit1: TButtonedEdit
+    Left = 200
+    Top = 55
+    Width = 337
     Height = 23
-    Color = clInfoBk
-    ReadOnly = True
     TabOrder = 3
-    DisplayFormat = '#,##0.0000'
   end
-  object Edppnrp: TRzNumericEdit
-    Left = 165
-    Top = 155
-    Width = 111
+  object ComboBox1: TComboBox
+    Left = 96
+    Top = 89
+    Width = 201
     Height = 23
-    Color = clInfoBk
-    ReadOnly = True
     TabOrder = 4
-    DisplayFormat = '#,##0.0000'
   end
-  object edppn: TRzEdit
-    Left = 100
-    Top = 155
-    Width = 39
+  object ComboBox2: TComboBox
+    Left = 96
+    Top = 124
+    Width = 201
     Height = 23
-    Text = '11'
     TabOrder = 5
   end
-  object edrp: TRzNumericEdit
-    Left = 287
-    Top = 129
-    Width = 170
+  object Edit3: TEdit
+    Left = 384
+    Top = 89
+    Width = 153
     Height = 23
     TabOrder = 6
-    DisplayFormat = '#,##0.00'
   end
-  object edcurr: TRzNumericEdit
-    Left = 336
-    Top = 75
-    Width = 121
+  object Edit4: TEdit
+    Left = 384
+    Top = 124
+    Width = 153
     Height = 23
     TabOrder = 7
-    DisplayFormat = '#,##'
-    Value = 1.000000000000000000
   end
-  object edharga: TRzNumericEdit
-    Left = 100
-    Top = 129
-    Width = 121
+  object Edit5: TEdit
+    Left = 96
+    Top = 161
+    Width = 153
     Height = 23
     TabOrder = 8
-    DisplayFormat = '#,##0.0000'
   end
-  object edno_terima: TRzComboBox
-    Left = 100
-    Top = 75
-    Width = 160
+  object Edit6: TEdit
+    Left = 96
+    Top = 196
+    Width = 41
     Height = 23
-    CharCase = ecUpperCase
     TabOrder = 9
+    Text = '11'
   end
-  object EdNoFaktur: TRzComboBox
-    Left = 100
-    Top = 102
-    Width = 160
+  object Edit7: TEdit
+    Left = 168
+    Top = 196
+    Width = 129
     Height = 23
-    CharCase = ecUpperCase
     TabOrder = 10
   end
-  object DtFaktur: TRzDateTimeEdit
-    Left = 336
-    Top = 102
-    Width = 121
+  object Edit8: TEdit
+    Left = 328
+    Top = 161
+    Width = 209
     Height = 23
-    EditType = etDate
-    CharCase = ecUpperCase
-    Color = clInfoBk
-    ReadOnly = True
     TabOrder = 11
   end
-  object Panel1: TPanel
-    Left = 0
-    Top = 227
-    Width = 500
-    Height = 32
-    Align = alBottom
+  object Edit9: TEdit
+    Left = 328
+    Top = 196
+    Width = 209
+    Height = 23
     TabOrder = 12
-    ExplicitTop = 226
-    ExplicitWidth = 496
-    object BBatal: TRzBitBtn
-      Left = 424
-      Top = 1
-      Height = 30
-      Align = alRight
+  end
+  object Edit10: TEdit
+    Left = 328
+    Top = 228
+    Width = 209
+    Height = 23
+    TabOrder = 13
+  end
+  object Edit11: TEdit
+    Left = 96
+    Top = 228
+    Width = 201
+    Height = 23
+    TabOrder = 14
+  end
+  object RzPanel1: TRzPanel
+    Left = 0
+    Top = 277
+    Width = 569
+    Height = 41
+    Align = alBottom
+    Color = 15987699
+    TabOrder = 15
+    ExplicitTop = 268
+    ExplicitWidth = 561
+    object RzBitBtn1: TRzBitBtn
+      Left = 485
+      Top = 8
       Caption = 'Batal'
       TabOrder = 0
-      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -296,16 +293,12 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 420
     end
-    object BSimpan: TRzBitBtn
-      Left = 349
-      Top = 1
-      Height = 30
-      Align = alRight
+    object RzBitBtn2: TRzBitBtn
+      Left = 397
+      Top = 8
       Caption = 'Simpan'
       TabOrder = 1
-      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -358,126 +351,6 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 345
     end
-  end
-  object DtReturn: TRzDateTimeEdit
-    Left = 336
-    Top = 21
-    Width = 121
-    Height = 23
-    EditType = etDate
-    CharCase = ecUpperCase
-    TabOrder = 13
-  end
-  object Ednm_supp: TRzButtonEdit
-    Left = 187
-    Top = 48
-    Width = 270
-    Height = 23
-    Text = ''
-    CharCase = ecUpperCase
-    Color = clWhite
-    TabOrder = 14
-    AltBtnNumGlyphs = 1
-    ButtonNumGlyphs = 1
-  end
-  object Edkd_supp: TRzEdit
-    Left = 100
-    Top = 48
-    Width = 71
-    Height = 23
-    Text = ''
-    CharCase = ecUpperCase
-    Color = clInfoBk
-    ReadOnly = True
-    TabOrder = 15
-  end
-  object DsDetail: TDataSource
-    DataSet = MemDetail
-    Left = 124
-    Top = 213
-  end
-  object MemDetail: TMemTableEh
-    Params = <>
-    Left = 76
-    Top = 205
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object no_terima: TMTStringDataFieldEh
-          FieldName = 'no_terima'
-          StringDataType = fdtStringEh
-          DisplayWidth = 50
-          Size = 50
-        end
-        object satuan: TMTStringDataFieldEh
-          FieldName = 'satuan'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object NoFaktur: TMTStringDataFieldEh
-          FieldName = 'NoFaktur'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
-        end
-        object kd_material: TMTStringDataFieldEh
-          FieldName = 'kd_material'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object nm_material: TMTStringDataFieldEh
-          FieldName = 'nm_material'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
-        end
-        object qty: TMTNumericDataFieldEh
-          FieldName = 'qty'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object harga: TMTNumericDataFieldEh
-          FieldName = 'harga'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object totalharga: TMTNumericDataFieldEh
-          FieldName = 'totalharga'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object nopo: TMTStringDataFieldEh
-          FieldName = 'nopo'
-          StringDataType = fdtStringEh
-          DisplayWidth = 50
-          Size = 50
-        end
-        object kd_stok: TMTStringDataFieldEh
-          FieldName = 'kd_stok'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
-        end
-      end
-      object RecordsList: TRecordsListEh
-      end
-    end
-  end
-  object QFaktur: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from t_terima_material')
-    Left = 12
-    Top = 205
   end
 end

@@ -51,6 +51,7 @@ object FKonversi_Barang: TFKonversi_Barang
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 1
+    OnDblClick = ActUpdateExecute
     Columns = <
       item
         CellButtons = <>
@@ -121,7 +122,7 @@ object FKonversi_Barang: TFKonversi_Barang
       #9'INNER JOIN'
       #9't_item_category AS "c"'
       #9'ON '
-      #9#9'"a".category_id = "c"."category_id"')
+      #9#9'"a".category_id = "c"."category_id" where b.deleted_at is null')
     Left = 324
     Top = 32
   end
@@ -248,10 +249,8 @@ object FKonversi_Barang: TFKonversi_Barang
         FFFFFFFFFFFF}
     end
     object dxBarButton2: TdxBarButton
-      Caption = 'Update  '
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update  '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -286,13 +285,10 @@ object FKonversi_Barang: TFKonversi_Barang
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarButton2Click
     end
     object dxBarButton3: TdxBarButton
-      Caption = 'Refresh '
+      Action = ActRo
       Category = 0
-      Hint = 'Refresh '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -323,14 +319,10 @@ object FKonversi_Barang: TFKonversi_Barang
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxBarButton3Click
     end
     object dxBarButton4: TdxBarButton
-      Caption = 'Delete'
+      Action = ActDel
       Category = 0
-      Enabled = False
-      Hint = 'Delete'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -370,10 +362,8 @@ object FKonversi_Barang: TFKonversi_Barang
         0000000049454E44AE426082}
     end
     object dxBarBaru: TdxBarLargeButton
-      Caption = 'Baru'
+      Action = ActBaru
       Category = 0
-      Hint = 'Baru'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -506,7 +496,44 @@ object FKonversi_Barang: TFKonversi_Barang
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarBaruClick
+    end
+  end
+  object ActMenu: TActionManager
+    Left = 224
+    Top = 56
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'New   '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = ActUpdateExecute
+    end
+    object ActRo: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActRoExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete     '
+      OnExecute = ActDelExecute
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
     end
   end
 end

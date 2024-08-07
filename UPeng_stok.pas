@@ -43,14 +43,14 @@ type
     dxbarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     dxBarLargeButton1: TdxBarLargeButton;
-    QPeng_Stok: TUniQuery;
-    MemPeng_Stok: TMemTableEh;
-    DsdPeng_Stok: TDataSetDriverEh;
-    DsPeng_Stok: TDataSource;
+    QPeng_stok: TUniQuery;
+    MemPeng_stok: TMemTableEh;
+    DsdPeng_stok: TDataSetDriverEh;
+    DsPeng_stok: TDataSource;
     Qdetail: TUniQuery;
     DsDetail: TDataSource;
     Rpt: TfrxReport;
-    QRptTransfer: TUniQuery;
+    QRptPeng_stok: TUniQuery;
     DbRptTransfer: TfrxDBDataset;
     ActMenu: TActionManager;
     ActBaru: TAction;
@@ -108,34 +108,34 @@ DBGridTransfer.StartLoadingStatus();
 DBGridTransfer.FinishLoadingStatus();
   if loksbu='' then
   begin
-    with QPeng_Stok do
+    with QPeng_stok do
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code from warehouse.t_item_comb a INNER JOIN '+
-      ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.code order by a.trans_no asc';
+      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code code2 from warehouse.t_item_comb a INNER JOIN '+
+      ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.wh_code order by a.trans_no asc';
       ExecSQL;
     end;
-    QPeng_Stok.Open;
-    MemPeng_Stok.Close;
-    MemPeng_Stok.Open;
+    QPeng_stok.Open;
+    MemPeng_stok.Close;
+    MemPeng_stok.Open;
     Qdetail.close;
     qdetail.open;
   end;
   if loksbu<>'' then
   begin
-    with QPeng_Stok do
+    with QPeng_stok do
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code from warehouse.t_item_comb a INNER JOIN '+
-      ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.code '+
-      '  where a.kd_sbu='+QuotedStr(loksbu)+' order by a.trans_no asc';
+      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code code2 from warehouse.t_item_comb a INNER JOIN '+
+      ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.wh_code '+
+      '  where a.sbu_code='+QuotedStr(loksbu)+' order by a.trans_no asc';
       ExecSQL;
     end;
-    QPeng_Stok.Open;
-    MemPeng_Stok.Close;
-    MemPeng_Stok.Open;
+    QPeng_stok.Open;
+    MemPeng_stok.Close;
+    MemPeng_stok.Open;
     Qdetail.close;
     qdetail.open;
   end;
@@ -147,17 +147,17 @@ begin
   begin
     Show;
     statustr:=1;
-    Edno.Text:=MemPeng_Stok['trans_no'];
-    EdKet.Text:=MemPeng_Stok['note'];
-    Edkd_stok.Text:=MemPeng_Stok['stock_code'];
-    Edkd_Barang.Text:=MemPeng_Stok['item_code'];
-    edkdbr.Text:=MemPeng_Stok['kdmat'];
-    EdNm_Barang.Text:=MemPeng_Stok['item_name'];
- //   kdgd:=MemTransfer['kdgd'];
-    nogd:=MemPeng_Stok['wh_code'];
-    CbGudang.Text:=MemPeng_Stok['wh_name'];
-    DtTransfer.Text:=MemPeng_Stok['trans_date'];
-    satuan:=MemPeng_Stok['unit'];
+    Edno.Text:=MemPeng_stok['trans_no'];
+    EdKet.Text:=MemPeng_stok['note'];
+    Edkd_stok.Text:=MemPeng_stok['stock_code'];
+    Edkd_Barang.Text:=MemPeng_stok['item_code'];
+    edkdbr.Text:=MemPeng_stok['kdmat'];
+    EdNm_Barang.Text:=MemPeng_stok['item_name'];
+    kdgd:=MemPeng_stok['wh_code'];
+    nogd:=MemPeng_stok['code2'];
+    CbGudang.Text:=MemPeng_stok['wh_name'];
+    DtTransfer.Text:=MemPeng_stok['trans_date'];
+    satuan:=MemPeng_stok['unit'];
     Qdetail.First;
     while not Qdetail.eof do
     begin
@@ -190,5 +190,8 @@ procedure TFPeng_Stok.FormDestroy(Sender: TObject);
 begin
   RealFPeng_Stok:=nil;
 end;
+
+initialization
+RegisterClass(TFPeng_Stok);
 
 end.

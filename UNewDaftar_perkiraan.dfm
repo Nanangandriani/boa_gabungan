@@ -172,7 +172,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Width = 598
     Height = 233
     Align = alTop
-    Color = 15987699
+    Color = clGradientInactiveCaption
     TabOrder = 1
     ExplicitWidth = 594
     object Label16: TLabel

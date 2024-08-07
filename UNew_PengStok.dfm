@@ -102,9 +102,9 @@ object FNew_PengStok: TFNew_PengStok
   end
   object DBGriddetail: TDBGridEh
     Left = 0
-    Top = 167
+    Top = 175
     Width = 613
-    Height = 234
+    Height = 226
     Align = alBottom
     DataSource = DsDetail
     DynProps = <>
@@ -186,8 +186,10 @@ object FNew_PengStok: TFNew_PengStok
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 400
+    ExplicitWidth = 609
     object BBatal: TRzBitBtn
-      Left = 541
+      Left = 537
       Top = 1
       Height = 30
       Align = alRight
@@ -246,10 +248,10 @@ object FNew_PengStok: TFNew_PengStok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 537
+      ExplicitLeft = 533
     end
     object BSimpan: TRzBitBtn
-      Left = 466
+      Left = 462
       Top = 1
       Height = 30
       Align = alRight
@@ -308,17 +310,7 @@ object FNew_PengStok: TFNew_PengStok
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 462
-    end
-    object BitBtn1: TBitBtn
-      Left = 288
-      Top = 8
-      Width = 75
-      Height = 25
-      Caption = 'BitBtn1'
-      TabOrder = 2
-      Visible = False
-      OnClick = BitBtn1Click
+      ExplicitLeft = 458
     end
   end
   object Edno: TRzEdit
@@ -350,7 +342,7 @@ object FNew_PengStok: TFNew_PengStok
   end
   object CbGudang: TRzComboBox
     Left = 371
-    Top = 6
+    Top = 7
     Width = 169
     Height = 21
     TabOrder = 5

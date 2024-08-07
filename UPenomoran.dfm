@@ -25,7 +25,6 @@ object FPenomoran: TFPenomoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 899
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -577,8 +576,10 @@ object FPenomoran: TFPenomoran
       OnClick = dxBarLargeButton1Click
     end
     object dxBarButton8: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update'
       Category = 0
+      Hint = 'Update'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -734,24 +735,24 @@ object FPenomoran: TFPenomoran
         'a.reset_type,a.additional_status,a.active_status,c.submenu,d.des' +
         'cription,a.remarks'
       'order by a.trans_no ASC')
-    Left = 328
-    Top = 24
+    Left = 384
+    Top = 32
   end
   object DSDNo: TDataSetDriverEh
     ProviderDataSet = QNo
-    Left = 376
+    Left = 424
     Top = 88
   end
   object MemNo: TMemTableEh
     Params = <>
     DataDriver = DSDNo
-    Left = 376
-    Top = 24
+    Left = 384
+    Top = 88
   end
   object DSNo: TDataSource
     DataSet = MemNo
-    Left = 328
-    Top = 88
+    Left = 424
+    Top = 32
   end
   object ActMenu: TActionManager
     Left = 656
@@ -762,7 +763,6 @@ object FPenomoran: TFPenomoran
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '

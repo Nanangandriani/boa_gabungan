@@ -105,7 +105,7 @@ object FNew_PercBarang: TFNew_PercBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 94
-    Width = 1061
+    Width = 1045
     Height = 257
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True

@@ -104,15 +104,15 @@ procedure TFMenu.ActDelExecute(Sender: TObject);
 begin
   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMenu.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
-  with dm.Qtemp do
-  begin
-    Close;
-    sql.Clear;
-    sql.Text:='Delete From t_submenu2 where kd_submenu='+QuotedStr(DBGridMenu.Fields[1].AsString);
-    Execute;
-  end;
-  ActRoExecute(sender);
-  ShowMessage('Data Berhasil di Hapus');
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_menu_sub where submenu_code='+QuotedStr(DBGridMenu.Fields[1].AsString);
+      Execute;
+    end;
+    ActRoExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
   end;
 end;
 
@@ -139,6 +139,7 @@ begin
     no_group:=MemMenu['menu_code'];
   //  idmenu:=MemMenu['id'];
     edlink.text:=MemMenu['link'];
+    edunit.text:=MemMenu['link_unit'];
   end;
 end;
 
@@ -161,5 +162,8 @@ procedure TFMenu.FormShow(Sender: TObject);
 begin
 //  ActRoExecute(sender);
 end;
+
+initialization
+RegisterClass(TFMenu);
 
 end.

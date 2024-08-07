@@ -116,6 +116,9 @@ begin
      Edbln.Text:=QUM.fieldbyname('trans_month').Value;
      Edth.Text:=QUM.fieldbyname('trans_year').Value;
      CbPo.text:=QUM.fieldbyname('po_no').AsString;
+     Cb_Curr.Text:=QUM.fieldbyname('currency').Value;
+     Ed_kurs.Text:=QUM.fieldbyname('exchange_rate').Value;
+
    end;
 
 
@@ -126,5 +129,8 @@ procedure TFUang_Muka_Pembelian.FormShow(Sender: TObject);
 begin
     ActRoExecute(sender);
 end;
+
+initialization
+registerclass(TFUang_Muka_Pembelian);
 
 end.

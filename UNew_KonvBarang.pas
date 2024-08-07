@@ -11,11 +11,11 @@ uses
 
 type
   TFNew_KonvBarang = class(TForm)
-    Panel2: TPanel;
+    PnlTombol: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
     RzBitBtn1: TRzBitBtn;
-    Panel1: TPanel;
+    PnlNew: TPanel;
     Label11: TLabel;
     Label10: TLabel;
     Label13: TLabel;
@@ -56,6 +56,7 @@ type
     procedure RzBitBtn1Click(Sender: TObject);
     procedure BtambahClick(Sender: TObject);
     procedure BRefreshClick(Sender: TObject);
+    procedure DBGridEh1DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,6 +64,7 @@ type
     id:string;
     Procedure Load;
     Procedure Clear;
+    var kd_barang:string
   end;
 
 Function FNew_KonvBarang: TFNew_KonvBarang;
@@ -72,7 +74,7 @@ implementation
 
 {$R *.dfm}
 
-uses UKonversi_Barang, UDataModule, UCari_Barang, UNew_Satuan;
+uses UKonversi_Barang, UDataModule, UCari_Barang, UNew_Satuan, UMainMenu;
 
 var RealFNew_KonvBarang: TFNew_KonvBarang;
 function FNew_KonvBarang: TFNew_KonvBarang;
@@ -87,13 +89,13 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:='Select * from t_item_category';
+    sql.Text:='Select * from t_item_group';
     ExecSQL;
   end;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do
   begin
-  Edcategory.Items.Add(Dm.Qtemp['category']);
+  Edcategory.Items.Add(Dm.Qtemp['group_name']);
   Dm.Qtemp.Next;
   end;
 end;
@@ -126,6 +128,19 @@ begin
   FNew_KonvBarang.Edno.Text:='';
 end;
 
+procedure TFNew_KonvBarang.DBGridEh1DblClick(Sender: TObject);
+begin
+  PnlNew.show;
+  edkd.Text:=QKonversiM['item_code'];
+  EdNm.Text:=QKonversiM['item_name'];
+  Edqty.Text:=QKonversiM['qty_unit'];
+  Edsatuan.Text:=QKonversiM['unit'];
+  EdqtyKon.Text:=QKonversiM['qty_conv'];
+  EdKonversi.Text:=QKonversiM['unit_conv'];
+  Edcategory.Text:=QKonversiM['group_name'];
+  DBGridEh1.Hide;
+end;
+
 procedure TFNew_KonvBarang.EdKonversiButtonClick(Sender: TObject);
 begin
   with FNew_Satuan do
@@ -147,89 +162,106 @@ end;
 procedure TFNew_KonvBarang.BBatalClick(Sender: TObject);
 begin
   Close;
-  FKonversi_Barang.dxBarButton3Click(sender);
+  FKonversi_Barang.ActRoExecute(sender);
 end;
 
 procedure TFNew_KonvBarang.BRefreshClick(Sender: TObject);
 begin
   DBGridEh1.StartLoadingStatus();
-  QKonversiM.Close;
-  QKonversiM.Open;
+  if Vmenu='1' then
+  begin
+    QKonversiM.Close;
+    QKonversiM.Open;
+  end;
+  if vmenu<>'1' then
+  begin
+    with QKonversiM do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT	b.qty_unit,b.unit,"a".item_name,"a".item_code,b.qty_conv,b.unit_conv,"c".group_name,b."id" '+
+      ' FROM t_item AS "a" INNER JOIN t_item_conversion AS b ON "a".item_code = b.item_code INNER JOIN '+
+      '	t_item_group AS "c" ON "a".group_id = "c"."group_id" where a.item_code='+QuotedStr(kd_barang);
+      Open;
+    end;
+  end;
   DBGridEh1.FinishLoadingStatus();
 end;
 
 procedure TFNew_KonvBarang.BSimpanClick(Sender: TObject);
 begin
-if EdNm.Text='' then
-begin
-  MessageDlg('Nama Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNm.SetFocus;
-  Exit;
-end;
-if Edsatuan.Text='' then
-begin
-  MessageDlg('Satuan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  Edsatuan.SetFocus;
-  Exit;
-end;
-if EdKonversi.Text='' then
-begin
-  MessageDlg('Satuan Konversi Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdKonversi.SetFocus;
-  Exit;
-end;
-if not dm.koneksi.InTransaction then
-dm.koneksi.StartTransaction;
-try
-begin
-if status=0 then
-begin
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:='Select * from t_item_conversion';
-  ExecSQL;
-end;
- with dm.Qtemp do
-begin
-  close;
-  sql.clear;
-  sql.Text:='insert into t_item_conversion(item_code,qty_unit,unit,qty_conv,unit_conv)'+
-            'values('+QuotedStr(EdKd.Text)+','+QuotedStr(Edqty.Text)+','+QuotedStr(Edsatuan.Text)+','+QuotedStr(EdqtyKon.Text)+','+QuotedStr(EdKonversi.Text)+')';
-  ExecSQL;
-  end;
-end;
-if status=1 then
- begin
- with dm.Qtemp do
+  if EdNm.Text='' then
   begin
-    close;
-    sql.clear;
-    sql.Text:='Update t_item_conversion set item_code='+QuotedStr(EdKd.Text)+ ',qty_unit='+QuotedStr(Edqty.Text)+',unit='+QuotedStr(Edsatuan.Text)+''+
-              ',qty_conv='+QuotedStr(EdqtyKon.Text)+',unit_conv='+QuotedStr(EdKonversi.Text)+' Where "id"='+QuotedStr(id);
-    ExecSQL;
+    MessageDlg('Nama Material Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNm.SetFocus;
+    Exit;
+  end;
+  if Edsatuan.Text='' then
+  begin
+    MessageDlg('Satuan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Edsatuan.SetFocus;
+    Exit;
+  end;
+  if EdKonversi.Text='' then
+  begin
+    MessageDlg('Satuan Konversi Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdKonversi.SetFocus;
+    Exit;
+  end;
+  if not dm.koneksi.InTransaction then
+  dm.koneksi.StartTransaction;
+  try
+    begin
+      if status=0 then
+      begin
+        with dm.Qtemp do
+          begin
+            close;
+            sql.clear;
+            sql.Text:='Select * from t_item_conversion';
+            ExecSQL;
+          end;
+         with dm.Qtemp do
+          begin
+            close;
+            sql.clear;
+            sql.Text:='insert into t_item_conversion(item_code,qty_unit,unit,qty_conv,unit_conv)'+
+                      'values('+QuotedStr(EdKd.Text)+','+QuotedStr(Edqty.Text)+','+QuotedStr(Edsatuan.Text)+','+QuotedStr(EdqtyKon.Text)+','+QuotedStr(EdKonversi.Text)+')';
+            ExecSQL;
+          end;
+      end;
+      if status=1 then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:='Update t_item_conversion set item_code='+QuotedStr(EdKd.Text)+ ',qty_unit='+QuotedStr(Edqty.Text)+',unit='+QuotedStr(Edsatuan.Text)+''+
+                    ',qty_conv='+QuotedStr(EdqtyKon.Text)+',unit_conv='+QuotedStr(EdKonversi.Text)+' Where "id"='+QuotedStr(id);
+          ExecSQL;
+        end;
+      end;
+      dm.koneksi.Commit;
+      Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+    end
+    Except
+    on E :Exception do
+    begin
+    MessageDlg(E.Message,mtError,[MBok],0);
+    dm.koneksi.Rollback;
     end;
- end;
-dm.koneksi.Commit;
-Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-end
-Except
-on E :Exception do
-begin
-MessageDlg(E.Message,mtError,[MBok],0);
-dm.koneksi.Rollback;
-end;
-end;
+  end;
   BBatalClick(sender);
 end;
 
 procedure TFNew_KonvBarang.BtambahClick(Sender: TObject);
 begin
-    Clear;
-    caption:='New Konversi Barang';
-    Status:=0;
-    Edcategory.SetFocus;
+  DBGridEh1.Visible:=false;
+  Pnlnew.Visible:=true;
+//  Clear;
+  caption:='New Konversi Barang';
+  Status:=0;
+  Edcategory.SetFocus;
 end;
 
 procedure TFNew_KonvBarang.EdcategorySelect(Sender: TObject);
@@ -237,10 +269,10 @@ begin
  with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select a.item_code,a.item_name,b.category,a.order_no from t_item a inner join t_item_category b '+
-              ' on a.category_id=b.id where category='+QuotedStr(Edcategory.Text)+''+
-              ' Group by a.item_code,a.item_name,b.category,a.order_no '+
-              ' order by b.category,a.order_no Asc';
+    sql.Text:='select a.item_code,a.item_name,b.group_name,a.order_no from t_item a inner join t_item_group b '+
+              ' on a.group_id=b.group_id where group_name='+QuotedStr(Edcategory.Text)+''+
+              ' Group by a.item_code,a.item_name,b.group_name,a.order_no '+
+              ' order by b.group_name,a.order_no Asc';
     ExecSQL;
   end;
   Edkd.Clear;
@@ -253,15 +285,15 @@ begin
   begin
     show;
     status_tr:='KonvBarang';
-  with QBarang do
-  begin
-    close;
-    sql.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.unit from t_item a inner join '+
-              ' t_item_category b on a.category_id=b.id where b.category='+QuotedStr(Edcategory.Text)+''+
-              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.unit  '+
-              ' order by b.category,a.order_no Asc';
-    ExecSQL;
-  end;
+    with QBarang do
+    begin
+      close;
+      sql.Text:='select a.item_code,a.item_name,b.group_name,a.order_no,a.unit from t_item a inner join '+
+                ' t_item_group b on a.group_id=b.group_id where b.group_name='+QuotedStr(Edcategory.Text)+' and a.deleted_at isnull'+
+                ' Group by a.item_code,a.item_name,b.group_name,a.order_no,a.unit '+
+                ' order by b.group_name,a.order_no Asc';
+      ExecSQL;
+    end;
   end;
 end;
 
@@ -270,7 +302,7 @@ begin
  with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select kd_material,nm_material,category,no_material from t_material '+
+    sql.Text:='select kd_material,nm_material,group_name,no_material from t_material '+
               ' where concat(no_material,'' '', nm_material)='+QuotedStr(EdNm.Text)+''+
               ' Group by kd_material,nm_material,category,no_material '+
               ' order by category,no_material Asc';

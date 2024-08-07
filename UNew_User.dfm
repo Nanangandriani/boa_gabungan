@@ -102,6 +102,7 @@ object FNew_User: TFNew_User
     Top = 54
     Width = 177
     Height = 23
+    CharCase = ecUpperCase
     TabOrder = 0
   end
   object EdDept: TComboBox
@@ -109,7 +110,7 @@ object FNew_User: TFNew_User
     Top = 158
     Width = 177
     Height = 23
-    TabOrder = 1
+    TabOrder = 3
     OnSelect = EdDeptSelect
   end
   object Panel2: TPanel
@@ -118,10 +119,9 @@ object FNew_User: TFNew_User
     Width = 469
     Height = 32
     Align = alBottom
-    TabOrder = 2
-    ExplicitLeft = -6
-    ExplicitTop = 249
-    ExplicitWidth = 406
+    TabOrder = 5
+    ExplicitTop = 242
+    ExplicitWidth = 465
     object BBatal: TRzBitBtn
       Left = 393
       Top = 1
@@ -182,7 +182,7 @@ object FNew_User: TFNew_User
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 330
+      ExplicitLeft = 389
     end
     object BSimpan: TRzBitBtn
       Left = 318
@@ -244,7 +244,7 @@ object FNew_User: TFNew_User
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 255
+      ExplicitLeft = 314
     end
   end
   object CbJabatan: TComboBox
@@ -252,7 +252,7 @@ object FNew_User: TFNew_User
     Top = 193
     Width = 177
     Height = 23
-    TabOrder = 3
+    TabOrder = 4
     Text = '0'
     OnSelect = CbJabatanSelect
   end
@@ -262,34 +262,36 @@ object FNew_User: TFNew_User
     Width = 177
     Height = 23
     PasswordChar = '#'
-    TabOrder = 4
+    TabOrder = 2
   end
   object EdNik: TEdit
     Left = 144
     Top = 21
     Width = 121
     Height = 23
-    TabOrder = 5
+    ReadOnly = True
+    TabOrder = 6
   end
   object kddept: TEdit
     Left = 748
     Top = 154
     Width = 24
     Height = 23
-    TabOrder = 6
+    TabOrder = 7
   end
   object Kdjab: TEdit
     Left = 748
     Top = 191
     Width = 24
     Height = 23
-    TabOrder = 7
+    TabOrder = 8
   end
   object Edfull_name: TEdit
     Left = 144
     Top = 88
     Width = 281
     Height = 23
-    TabOrder = 8
+    CharCase = ecUpperCase
+    TabOrder = 1
   end
 end

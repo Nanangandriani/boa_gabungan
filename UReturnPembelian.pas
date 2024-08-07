@@ -74,8 +74,6 @@ type
     QReturnPembelian: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
-    procedure ActUpdateExecute(Sender: TObject);
-    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -104,64 +102,6 @@ begin
     end;
 end;
 
-procedure TFReturnPembelian.ActUpdateExecute(Sender: TObject);
-begin
-    with FNew_returnPemb do
-    begin
-      Clear;
-      Show;
-      status:=1;
-      Caption:='Update Retur Pembelian';
-      Edkd_supp.Text:=MemReturn['kd_supplier'];
-      Ednm_supp.Text:=MemReturn['nm_supplier'];
-      Edno.Text:=MemReturn['no_return'];
-      DtReturn.Date:=MemReturn['tgl_return'];
-      Ednofaktur.Text:=MemReturn['nofaktur'];
-      edppn.Text:=MemReturn['ppn'];
-      edvls.Text:=MemReturn['valas'];
-      ednilai_vls.Text:=MemReturn['nilai_valas'];
-      edno_terima.Text:=MemReturn['no_terima'];
-
-      QDetail.First;
-      while not QDetail.Eof do
-      begin
-        MemDetail.Insert;
-        Memdetail['no_terima']:=QDetail['no_terima'];
-        Memdetail['nofaktur']:=QDetail['nofaktur'];
-        MemDetail['kd_material']:=QDetail['kd_material_stok'];
-        MemDetail['nopo']:=QDetail['nopo'];
-        MemDetail['kd_stok']:=QDetail['kd_stok'];
-        MemDetail['nm_material']:=QDetail['nm_material'];
-        MemDetail['harga']:=QDetail['harga'];
-        MemDetail['satuan']:=QDetail['satuan'];
-        MemDetail['totalharga']:=QDetail['total_harga'];
-        MemDetail['qty']:=QDetail['qty'];
-        MemDetail.Post;
-        QDetail.Next;
-      end;
-    end;
-    FNew_returnPemb.DBGridEh3ColEnter(sender);
-end;
-
-procedure TFReturnPembelian.dxBarLargeButton1Click(Sender: TObject);
-begin
-   QPerusahaan.Close;
-   QPerusahaan.Open;
-   with QRptReturnPemb do
-   begin
-      close;
-      sql.Clear;
-      sql.Text:='select	d.supplier_name,f.faktur_date,d.address,d.npwp,((a.price/100)*a.ppn) AS ppn_rp,a.return_no,a.return_date,a.faktur_no,a.total_price,'+
-                ' a.ppn,a.price,a.valas,a.valas_value from purchase.t_purchase_return a inner join t_supplier d on a.supplier_code=d.supplier_code '+
-                ' inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no  where a.return_no='+QuotedStr(DBGridReturnPemb.Fields[0].asstring)+''+
-                ' Group by d.supplier_name,f.faktur_date,d.address,d.npwp,a.return_no,a.return_date,a.faktur_no,a.total_price,a.ppn,a.price,a.valas,a.valas_value ';
-      ExecSQL;
-   end;
-   QRptReturnPemb.Open;
-   frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_ReturnPembelian.Fr3');
-   frxReport1.ShowReport();
-end;
-
 procedure TFReturnPembelian.dxbarRefreshClick(Sender: TObject);
 begin
     DBGridReturnPemb.StartLoadingStatus();
@@ -175,5 +115,8 @@ begin
     if QRptReturnPemb.Active=False then QRptReturnPemb.Active:=True;
     if QRptDet.Active=False then QRptDet.Active:=True;
 end;
+
+initialization
+registerclass(TFReturnPembelian);
 
 end.

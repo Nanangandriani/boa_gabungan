@@ -1,5 +1,6 @@
 object dm: Tdm
-  Height = 188
+  OnCreate = DataModuleCreate
+  Height = 245
   Width = 322
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
@@ -8,13 +9,13 @@ object dm: Tdm
     Username = 'postgres'
     Server = '10.10.10.110'
     Connected = True
-    Left = 157
+    Left = 141
     Top = 13
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
     Left = 227
-    Top = 13
+    Top = 5
   end
   object Qtemp: TUniQuery
     Connection = Koneksi
@@ -66,8 +67,25 @@ object dm: Tdm
     Database = 'db_boa_hps'
     Username = 'postgres'
     Server = '10.10.10.110'
-    Left = 253
+    Left = 245
     Top = 69
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
+  end
+  object QLink: TUniQuery
+    Connection = Koneksi
+    SQL.Strings = (
+      ''
+      
+        ' -- select string_agg(concat('#39'T'#39', link) , '#39','#39') link1, string_agg' +
+        '(concat('#39#39', link_unit) , '#39','#39') link2 from t_menu_sub'
+      ''
+      ''
+      ''
+      
+        ' select concat('#39'T'#39', link) link1, string_agg(concat('#39#39', link_unit' +
+        ') , '#39','#39') link2 from t_menu_sub'
+      '')
+    Left = 16
+    Top = 176
   end
 end

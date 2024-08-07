@@ -57,7 +57,7 @@ type
     Rpt: TfrxReport;
     DBBarang: TfrxDBDataset;
     Qrpt_Material: TUniQuery;
-    dxBarButton1: TdxBarButton;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure EdCategorySelect(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxBDeleteClick(Sender: TObject);
@@ -67,7 +67,6 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
-    procedure DBGridMaterialCellClick(Column: TColumnEh);
     procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
@@ -119,7 +118,7 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='update t_item set deleted_at=now(),deleted_by='+QuotedStr(nm)+' where "id"='+QuotedStr(DBGridMaterial.Fields[9].AsString);
+      sql.Text:='update t_item set deleted_at=now(),deleted_by='+QuotedStr(nm)+' where "id"='+QuotedStr(DBGridMaterial.Fields[10].AsString);
       Execute;
     end;
     ActRoExecute(sender);
@@ -210,15 +209,6 @@ begin
   end;
 end;
 
-procedure TFlistBarang.DBGridMaterialCellClick(Column: TColumnEh);
-begin
-  if DBGridMaterial.Fields[8].AsString='1' then
-  BEGIN
-    ActUpdate.Enabled:=True;
-  END else
-    ActUpdate.Enabled:=False;
-end;
-
 procedure TFlistBarang.dxBDeleteClick(Sender: TObject);
 begin
   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
@@ -279,5 +269,8 @@ procedure TFlistBarang.FormDestroy(Sender: TObject);
 begin
   RealFlistBarang:=nil;
 end;
+
+initialization
+registerclass(TFlistBarang);
 
 end.

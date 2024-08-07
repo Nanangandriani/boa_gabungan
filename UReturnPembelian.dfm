@@ -161,7 +161,7 @@ object FReturnPembelian: TFReturnPembelian
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 735
+        Width = 789
         Height = 118
         Align = alClient
         DataSource = DsDetail
@@ -675,8 +675,9 @@ object FReturnPembelian: TFReturnPembelian
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update  '
       Category = 0
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -905,7 +906,6 @@ object FReturnPembelian: TFReturnPembelian
         CB53228C564703F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3
         FD77EC2BF95211609209DC78B818F9E4F10F4824A6D94EC853CD000000004945
         4E44AE426082}
-      OnClick = dxBarLargeButton1Click
     end
   end
   object ActMenu: TActionManager
@@ -918,7 +918,6 @@ object FReturnPembelian: TFReturnPembelian
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '
@@ -965,7 +964,7 @@ object FReturnPembelian: TFReturnPembelian
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_company where deleted_at is Null')
+      'select * from t_data_perusahaan')
     Left = 733
     Top = 80
   end
@@ -2010,7 +2009,9 @@ object FReturnPembelian: TFReturnPembelian
       #9'a.price '
       'from purchase.t_purchase_return A '
       'inner join t_supplier D on A.supplier_code=D.supplier_code'
-      'inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no'
+      
+        'inner join purchase.t_material_receive f on a.faktur_no=f.faktur' +
+        '_no'
       'Group by d.supplier_name, '
       #9'f.faktur_date, '
       #9'd.address, '
@@ -2043,11 +2044,11 @@ object FReturnPembelian: TFReturnPembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.qty,a.price,a.total_price,b.item_name,a.return_no from ' +
-        'purchase.t_purchase_return_det a '
+        'select a.qty,a.price,a.total_price,b.material_name,a.return_no f' +
+        'rom purchase.t_purchase_return_det a '
       
-        'inner join warehouse.t_item_stock b on a.item_stock_code=b.item_' +
-        'stock_code')
+        'inner join purchase.t_material_stock b on a.material_stock_code=' +
+        'b.material_stock_code')
     MasterSource = DsRptReturnPemb
     MasterFields = 'return_no'
     DetailFields = 'return_no'
@@ -2068,9 +2069,9 @@ object FReturnPembelian: TFReturnPembelian
   object QDetail: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT a.*,b.item_name from purchase.t_purchase_return_det a'
-      'inner join warehouse.t_item_stock AS b '
-      'ON a.item_stock_code = b.item_stock_code'
+      'SELECT A.*,b.material_name from purchase.t_purchase_return_det a'
+      'inner join purchase.t_material_stock AS b '
+      'ON a.material_stock_code = b.material_stock_code'
       'ORDER BY  id asc')
     MasterSource = DsReturnPembelian
     MasterFields = 'return_no'
@@ -2079,9 +2080,8 @@ object FReturnPembelian: TFReturnPembelian
     Top = 32
     ParamData = <
       item
-        DataType = ftString
+        DataType = ftUnknown
         Name = 'return_no'
-        ParamType = ptInput
         Value = nil
       end>
   end
@@ -2091,7 +2091,6 @@ object FReturnPembelian: TFReturnPembelian
     Top = 88
   end
   object MemReturn: TMemTableEh
-    Active = True
     Params = <>
     DataDriver = DsdReturn
     Left = 320
@@ -2119,7 +2118,8 @@ object FReturnPembelian: TFReturnPembelian
       #9'purchase.t_purchase_return AS "a"'
       #9'INNER JOIN'
       #9't_supplier AS d'
-      #9'ON a.supplier_code = d.supplier_code'
+      #9'ON '
+      #9#9'a.supplier_code = d.supplier_code'
       'Group by '
       '        a.trans_day,'
       '        a.trans_month,'
@@ -2132,7 +2132,6 @@ object FReturnPembelian: TFReturnPembelian
       'ORDER BY'
       #9'a.return_no DESC'
       '')
-    Active = True
     Left = 240
     Top = 32
   end

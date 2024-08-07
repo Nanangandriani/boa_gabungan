@@ -65,23 +65,7 @@ type
     MemSPB: TMemTableEh;
     DsdSPB: TDataSetDriverEh;
     DsSPB: TDataSource;
-    dxBarManager1Bar2: TdxBar;
-    dxBarManager1Bar3: TdxBar;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarButton8: TdxBarButton;
-    dxBarButton9: TdxBarButton;
-    dxBPrint: TdxBarLargeButton;
-    BApprove: TdxBarButton;
-    BReject: TdxBarButton;
-    dxBarLargeButton3: TdxBarLargeButton;
-    Rpt: TfrxReport;
     procedure ActBaruExecute(Sender: TObject);
-    procedure BApproveClick(Sender: TObject);
-    procedure ActRoExecute(Sender: TObject);
-    procedure ActDelExecute(Sender: TObject);
-    procedure ActUpdateExecute(Sender: TObject);
-    procedure DBGridSPBCellClick(Column: TColumnEh);
-    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -95,196 +79,23 @@ implementation
 
 {$R *.dfm}
 
-uses Unew_spb, UDataModule, UMainMenu;
+uses Unew_spb;
 
 procedure TFSPB.ActBaruExecute(Sender: TObject);
 begin
     with Fnew_spb do
     begin
       Show;
-      Clear;
+      //Clear;
       //Autonumber;
       BEdit.Visible:=false;
       BSimpan.Visible:=true;
       Caption:='New Surat Perintah Bongkar';
-      status:=0;
-      DtSpbChange(sender);
+      //status:=0;
     end;
 end;
 
-procedure TFSPB.ActDelExecute(Sender: TObject);
-begin
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridSPB.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-    begin
-      with dm.Qtemp do
-      begin
-        Close;
-        sql.Clear;
-        sql.Text:='Delete From purchase.t_spb where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
-        Execute;
-      end;
-      with dm.Qtemp do
-      begin
-        Close;
-        sql.Clear;
-        sql.Text:='Delete From purchase.t_spb_det where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
-        Execute;
-      end;
-      ActROExecute(sender);
-      ShowMessage('Data Berhasil di Hapus');
-    end;
-end;
-
-procedure TFSPB.ActPrintExecute(Sender: TObject);
-begin
-    QRptSpb.Close;
-    QRptSpb.Open;
-    with QRptSpb do
-    begin
-      Filtered:=False;
-      Filter:=' spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
-      FilterOptions:=[];
-      Filtered:=True;
-    end;
-      QRptSpb.Open;
-      //Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_SPB.Fr3');
-      //SetMemo(Rpt,'MPt',' Kepada Yth. Sdr.   '+QRptSpb['to_at']);
-      //SetMemo(Rpt,'MPt2','         '+SBU);
-      Rpt.ShowReport();
-end;
-
-procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
-var
-  memo: TfrxMemoView;
-begin
-  memo := aReport.FindObject(aMemoName) as TfrxMemoView;
-  if memo <> nil then
-    memo.Text := aText;
-end;
-
-procedure TFSPB.ActRoExecute(Sender: TObject);
-begin
-   DBGridSPB.StartLoadingStatus();
-   DBGridSPB.FinishLoadingStatus();
-   QSPB.Close;
-   MemSPB.close;
-   Qdetailspb.Close;
-   if kdsbu='' then
-   begin
-     with QSPB do
-     begin
-       close;
-       sql.Clear;
-       sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 '+
-                 ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
-                 ' purchase.t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
-                 ' order by spb_no desc';
-       ExecSQL;
-     end;
-   end
-   else
-   if kdsbu<>'' then
-   begin
-     with QSPB do
-     begin
-       close;
-       sql.Clear;
-       sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 '+
-                 ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
-                 ' purchase.t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
-                 ' where (sbu_code='+QuotedStr(loksbu)+' or sbu_code=''MLB'' or sbu_code='''') '+
-                 ' order by spb_no desc';
-       ExecSQL;
-     end;
-   end;
-   if QSPB.Active=False then QSPB.Active:=True;
-   if MemSPB.Active=False then MemSPB.Active:=True;
-   if Qdetailspb.Active=False then Qdetailspb.Active:=True;
-end;
-
-procedure TFSPB.ActUpdateExecute(Sender: TObject);
-begin
-    Fnew_spb.Memdetail.EmptyTable;
-    With Fnew_spb do
-    begin
-      Clear;
-      Show;
-      Caption:='Update Surat Perintah Bongkar';
-      BSimpan.Visible:=False;
-      BEdit.Visible:=True;
-      status:=1;
-      with MemSPB do
-      begin
-        EdnoPo.Text:=MemSPB.FieldByName('po_no').AsString;
-        EdnoSpb.Text:=MemSPB.FieldByName('spb_no').AsString;
-        EdnoKend.Text:=MemSPB.FieldByName('vehicle_no').AsString;
-        Eddriver.Text:=MemSPB.FieldByName('driver').AsString;
-        Edkd_supp.Text:=MemSPB.FieldByName('supplier_code').AsString;
-        Ednm_supp.Text:=MemSPB.FieldByName('supplier_name').AsString;
-        DtSpb.Text:=MemSPB.FieldByName('spb_date').AsString;
-        dttgl_kembali.Date:=MemSPB.FieldByName('return_date').AsDateTime;
-        dtJam_Serah.Text:=MemSPB.FieldByName('handover_time').AsString;
-        dtjam_kembali.Text:=MemSPB.FieldByName('return_time').AsString;
-        Edket.Text:=MemSPB.FieldByName('remark').AsString;
-        kdsb:=MemSPB.FieldByName('sbu_code').AsString;
-        no_urut:=MemSPB.FieldByName('order_no').value;
-        kategori_tr:=MemSPB.FieldByName('trans_category').value;
-        EdKepada.Text:=MemSPB.FieldByName('to_at').AsString;
-      end;
-      Qdetailspb.First;
-      while not Qdetailspb.Eof do
-      begin
-        Memdetail.Insert;
-        Memdetail['nopo']:=Qdetailspb['po_no'];
-        Memdetail['kd_material']:=Qdetailspb['item_stock_code'];
-        Memdetail['nm_material']:=Qdetailspb['item_name'];
-        Memdetail['qty']:=Qdetailspb['qty'];
-        Memdetail['satuan']:=Qdetailspb['unit'];
-        Memdetail['gudang']:=Qdetailspb['warehouse'];
-        Memdetail.Post;
-        Qdetailspb.Next;
-      end;
-    end;
-end;
-
-procedure TFSPB.BApproveClick(Sender: TObject);
-begin
-    if messageDlg ('Yakin Approve No.'+DBGridSPB.Fields[0].AsString+' ini '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-    begin
-      with dm.Qtemp do
-      begin
-        Close;
-        sql.Clear;
-        sql.Text:='Update purchase.t_spb set "approval_status"=''1'', spb_date=now(), approval='+QuotedStr(Nm)+' where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
-        Execute;
-      end;
-      ActROExecute(sender);
-      ShowMessage('Data Berhasil di Approve');
-    end;
-end;
-
-procedure TFSPB.DBGridSPBCellClick(Column: TColumnEh);
-begin
-    if DBGridSPB.Fields[7].AsString='APPROVE' then
-    begin
-      dxBPrint.Enabled:=true;
-    end else
-      dxBPrint.Enabled:=false;
-    if DBGridSPB.Fields[7].AsString='APPROVE' then
-    BEGIN
-      BApprove.Enabled:=False;
-      BReject.Enabled:=False;
-    END;
-    if DBGridSPB.Fields[7].AsString='REJECT' then
-    BEGIN
-      BApprove.Enabled:=False;
-      BReject.Enabled:=False;
-    END;
-    if DBGridSPB.Fields[7].AsString='PENGAJUAN' then
-    BEGIN
-      BApprove.Enabled:=True;
-      BReject.Enabled:=True;
-    end;
-end;
+initialization
+RegisterClass(TFSPB);
 
 end.

@@ -664,8 +664,8 @@ object FTransfer_Barang: TFTransfer_Barang
         'ans_date) bln,date_part('#39'DAY'#39',trans_date) tgl,b.wh_name nm_from,'
       
         'c.wh_name nm_to,d.category,d.category_code from warehouse.t_item' +
-        '_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code INNER JOI' +
-        'N t_wh c on a.wh_code_to=c.code '
+        '_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '
+      'INNER JOIN t_wh c on a.wh_code_to=c.wh_code '
       'INNER JOIN t_wh_category d on a.wh_category_code=d.category_code'
       'order by trans_no desc')
     Left = 448
@@ -705,7 +705,7 @@ object FTransfer_Barang: TFTransfer_Barang
         DataType = ftString
         Name = 'trans_no'
         ParamType = ptInput
-        Value = '001/I/24'
+        Value = nil
       end>
   end
   object DsDetail: TDataSource

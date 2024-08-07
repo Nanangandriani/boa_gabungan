@@ -26,7 +26,8 @@ uses
   dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Black,
   dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray, dxSkinOffice2019White,
   dxSkinTheBezier, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
-  dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Light, dxCore, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFKonversi_Barang = class(TForm)
@@ -42,15 +43,25 @@ type
     dxBarButton4: TdxBarButton;
     dxBarBaru: TdxBarLargeButton;
     DBGridEh1: TDBGridEh;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRo: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure BBaruClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
-    procedure dxBarButton2Click(Sender: TObject);
-    procedure dxBarButton3Click(Sender: TObject);
-    procedure dxBarBaruClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActRoExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
     Procedure Refresh;
@@ -67,7 +78,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_KonvBarang, UDataModule;
+uses UNew_KonvBarang, UDataModule, UMainMenu;
 var
   RealFKonversi_Barang : TFKonversi_Barang;
 
@@ -78,6 +89,68 @@ begin
     FKonversi_Barang:= RealFKonversi_Barang
   else
     Application.CreateForm(TFKonversi_Barang, Result);
+end;
+
+procedure TFKonversi_Barang.ActBaruExecute(Sender: TObject);
+begin
+  FNew_KonvBarang.Show;
+  FNew_KonvBarang.PnlNew.Visible:=true;
+  //FNew_KonvBarang.BSimpan.Visible:=False;
+  //FNew_KonvBarang.BEdit.Visible:=True;
+  FNew_KonvBarang.Caption:='Update Konversi Barang';
+  FNew_KonvBarang.DBGridEh1.Visible:=false;
+  Fnew_KonvBarang.Btambah.Visible:=false;
+  FNew_KonvBarang.BRefresh.Visible:=false;
+  Status:=0;
+end;
+
+procedure TFKonversi_Barang.ActDelExecute(Sender: TObject);
+begin
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridEh1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update t_item_conversion set deleted_at=now(),deleted_by='+QuotedStr(nm)+' where "id"='+QuotedStr(QKonversiM['id']);
+      Execute;
+    end;
+    ActRoExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
+end;
+
+procedure TFKonversi_Barang.ActRoExecute(Sender: TObject);
+begin
+  DBGridEh1.StartLoadingStatus();
+  Self.Refresh;
+  DBGridEh1.FinishLoadingStatus();
+end;
+
+procedure TFKonversi_Barang.ActUpdateExecute(Sender: TObject);
+begin
+   FNew_KonvBarang.Show;
+  FNew_KonvBarang.PnlNew.Visible:=true;
+  //FNew_KonvBarang.BSimpan.Visible:=False;
+  //FNew_KonvBarang.BEdit.Visible:=True;
+  FNew_KonvBarang.Caption:='Update Konversi Barang';
+  FNew_KonvBarang.DBGridEh1.Visible:=false;
+  Fnew_KonvBarang.Btambah.Visible:=false;
+  FNew_KonvBarang.BRefresh.Visible:=false;
+  Status:=1;
+  VMenu:='1';
+  with QKonversiM do
+  begin
+  //  FNew_KonvBarang.Edno.Text:=QKonversiM.FieldByName('no_konversi').AsString;
+    FNew_KonvBarang.EdKd.Text:=QKonversiM.FieldByName('item_code').AsString;
+    FNew_KonvBarang.EdNm.Text:=QKonversiM.FieldByName('item_name').AsString;
+    FNew_KonvBarang.Edqty.Text:=QKonversiM.FieldByName('qty_unit').AsString;
+    FNew_KonvBarang.Edsatuan.Text:=QKonversiM.FieldByName('unit').AsString;
+    FNew_KonvBarang.EdqtyKon.Text:=QKonversiM.FieldByName('qty_conv').AsString;
+    FNew_KonvBarang.EdKonversi.Text:=QKonversiM.FieldByName('unit_conv').AsString;
+    FNew_KonvBarang.Edcategory.Text:=QKonversiM.FieldByName('category').AsString;
+    FNew_KonvBarang.id:=QKonversiM.FieldByName('id').AsString;
+  end;
 end;
 
 procedure TFKonversi_Barang.Autonumber;
@@ -94,48 +167,6 @@ begin
 end;
 
 
-
-procedure TFKonversi_Barang.dxBarBaruClick(Sender: TObject);
-begin
-  with FNew_KonvBarang do
-  begin
-    Show;
-    Clear;
-  //  Self.Autonumber;
-  // FNew_KonvBarang.BSimpan.Visible:=True;
-  // FNew_KonvBarang.BEdit.Visible:=False;
-    caption:='New Konversi Barang';
-    Status:=0;
-  end;
-end;
-
-procedure TFKonversi_Barang.dxBarButton2Click(Sender: TObject);
-begin
-  FNew_KonvBarang.Show;
-  //FNew_KonvBarang.BSimpan.Visible:=False;
-  //FNew_KonvBarang.BEdit.Visible:=True;
-  FNew_KonvBarang.Caption:='Update Konversi Barang';
-  Status:=1;
-  with QKonversiM do
-  begin
-  //  FNew_KonvBarang.Edno.Text:=QKonversiM.FieldByName('no_konversi').AsString;
-    FNew_KonvBarang.EdKd.Text:=QKonversiM.FieldByName('item_code').AsString;
-    FNew_KonvBarang.EdNm.Text:=QKonversiM.FieldByName('item_name').AsString;
-    FNew_KonvBarang.Edqty.Text:=QKonversiM.FieldByName('qty_unit').AsString;
-    FNew_KonvBarang.Edsatuan.Text:=QKonversiM.FieldByName('unit').AsString;
-    FNew_KonvBarang.EdqtyKon.Text:=QKonversiM.FieldByName('qty_conv').AsString;
-    FNew_KonvBarang.EdKonversi.Text:=QKonversiM.FieldByName('unit_conv').AsString;
-    FNew_KonvBarang.Edcategory.Text:=QKonversiM.FieldByName('category').AsString;
-    FNew_KonvBarang.id:=QKonversiM.FieldByName('id').AsString;
-  end;
-end;
-
-procedure TFKonversi_Barang.dxBarButton3Click(Sender: TObject);
-begin
-  DBGridEh1.StartLoadingStatus();
-  Self.Refresh;
-  DBGridEh1.FinishLoadingStatus();
-end;
 
 procedure TFKonversi_Barang.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -178,5 +209,7 @@ begin
   Self.Refresh;
 end;
 
+initialization
+RegisterClass(TFKonversi_Barang);
 
 end.

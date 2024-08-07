@@ -28,4 +28,8 @@ begin
 //  frxReport1.ShowReport()
 end;
 
+Initialization
+  RegisterClass(TFDashboard);
+
+
 end.

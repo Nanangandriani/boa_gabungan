@@ -113,10 +113,9 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',wh_code='+QuotedStr(Edkd.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+', updated_at=now(),updated_by='+QuotedStr(nm)+' where code='+QuotedStr(Edkode.Text)+' and order_no='+QuotedStr(Edno.Text);
+      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',wh_code='+QuotedStr(Edkd.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+' where code='+QuotedStr(Edkode.Text)+' and order_no='+QuotedStr(Edno.Text);
       ExecSQL;
     end;
-    ShowMessage('Data Berhasil di Update');
     BBatalClick(sender);
 end;
 
@@ -140,14 +139,13 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_wh(wh_name,code,sbu_code,category,wh_code,created_by) '+
-                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_by)';
+      sql.Text:='insert into t_wh(wh_name,code,sbu_code,category,wh_code,created_at,created_by) '+
+                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',now(),:created_by)';
       //parambyname('created_at').AsDateTime:=Now;
       parambyname('created_by').AsString:='Admin';
       ExecSQL;
     end;
     FMainMenu.TampilTabForm2;
-    ShowMessage('Data Berhasil Disimpan');
     BBatalClick(sender);
 end;
 
@@ -225,6 +223,7 @@ begin
     CbCategory.Items.Add(DM.Qtemp2['category']);
     DM.Qtemp2.Next;
     end;
+
    //showcategorywh;
    //showsbucode;
 end;
@@ -237,9 +236,8 @@ end;
 
 procedure TFNew_Gudang.BBatalClick(Sender: TObject);
 begin
-  //FListGudang.Show;
-  FListGudang.ActROExecute(sender);
   Close;
+  FListGudang.ActROExecute(sender);
 end;
 
 end.

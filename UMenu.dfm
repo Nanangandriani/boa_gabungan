@@ -2,8 +2,8 @@ object FMenu: TFMenu
   Left = 0
   Top = 0
   Caption = ' Form Menu'
-  ClientHeight = 558
-  ClientWidth = 689
+  ClientHeight = 559
+  ClientWidth = 693
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object FMenu: TFMenu
   object DBGridMenu: TDBGridEh
     Left = 0
     Top = 127
-    Width = 689
-    Height = 431
+    Width = 693
+    Height = 432
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -67,7 +67,7 @@ object FMenu: TFMenu
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 689
+    Width = 693
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -75,7 +75,6 @@ object FMenu: TFMenu
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 693
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

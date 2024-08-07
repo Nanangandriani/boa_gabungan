@@ -19,7 +19,6 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
     Width = 684
     Height = 416
     Align = alTop
-    DataSource = DsAkun
     DynProps = <>
     FooterRowCount = 1
     HorzScrollBar.ExtraPanel.NavigatorButtons = [nbLastEh, nbInsertEh, nbDeleteEh, nbPostEh, nbRefreshEh]
@@ -29,13 +28,12 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
     SumList.Active = True
     TabOrder = 0
     TitleParams.MultiTitle = True
-    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'account_code'
+        FieldName = 'kode_perkiraan'
         Footers = <>
         Title.Caption = 'Kode Akun Perkiraan'
         Width = 130
@@ -47,7 +45,7 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
         EditButtons = <
           item
           end>
-        FieldName = 'account_name'
+        FieldName = 'nama_perkiraan'
         Footers = <>
         Title.Caption = 'Nama Akun Perkiraan'
         Width = 272
@@ -56,7 +54,7 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'header_name'
+        FieldName = 'nama_header'
         Footers = <>
         Title.Caption = 'Kategori'
         Width = 225
@@ -68,18 +66,13 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.account_code,b.account_name,c.header_name FROM t_ak_acc' +
-        'ount_det a'
-      'left join t_ak_account b'
-      'on a.account_code=b.code'
-      'left join t_ak_header c on b.header_code=c.header_code'
-      'where a.module_id='#39'2'#39)
+        'SELECT a.kode_perkiraan,b.nama_perkiraan,c.nama_header FROM t_da' +
+        'ftar_perkiraan_detail a'
+      'left join t_daftar_perkiraan b'
+      'on a.kode_perkiraan=b.kode'
+      'left join t_header_perkiraan c on b.kode_header=c.kode_header'
+      'where a.id_modul='#39'2'#39)
     Left = 312
-    Top = 152
-  end
-  object DsAkun: TDataSource
-    DataSet = QAkun
-    Left = 312
-    Top = 96
+    Top = 144
   end
 end

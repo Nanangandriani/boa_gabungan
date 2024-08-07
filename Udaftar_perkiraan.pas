@@ -216,4 +216,7 @@ begin
   MemDaftar_Perk.Open;
 end;
 
+initialization
+RegisterClass(TFDaftar_Perkiraan);
+
 end.

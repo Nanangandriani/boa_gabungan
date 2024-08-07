@@ -144,4 +144,8 @@ begin
    dxBarRefreshClick(sender);
 end;
 
+initialization
+  // Register TForm1 class
+  RegisterClass(TFListProduk);
+
 end.
