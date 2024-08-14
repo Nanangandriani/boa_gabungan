@@ -205,7 +205,7 @@ begin
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
   //refresh grid
-      ShowMessage(IntToStr(FDataPerintahMuat.Status));
+      //ShowMessage(IntToStr(FDataPerintahMuat.Status));
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try

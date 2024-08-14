@@ -450,12 +450,127 @@
             <Form>FNew_PercBarang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UMasterWilayah.pas">
-            <Form>FMasterWilayah</Form>
+        <DCCReference Include="maenangka.pas"/>
+        <DCCReference Include="UMaster_PercBarang.pas">
+            <Form>FMaster_PercBarang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UMasterData.pas">
-            <Form>FMasterData</Form>
+        <DCCReference Include="UMaster_Akun.pas">
+            <Form>FMaster_Akun</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Menu.pas">
+            <Form>FNew_menu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMenu.pas">
+            <Form>FMenu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMaster_Menu.pas">
+            <Form>FMaster_Menu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Master_Akun.pas">
+            <Form>FNew_Master_Akun</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCari_Menu.pas">
+            <Form>FCari_Menu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UHasil_Percampuran_Barang.pas">
+            <Form>FHasil_Perc_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_HasilPercampuranBarang.pas">
+            <Form>FNew_Hasil_Perc_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Permintaan_Barang2.pas">
+            <Form>FNew_Permintaan_Barang2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPermintaan_Barang2.pas">
+            <Form>FPermintaan_Barang2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UTerima_Amplop.pas">
+            <Form>FTerima_Amplop</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_TerimaAmplop.pas">
+            <Form>FNew_TerimaAmplop</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMaster_FormulaTest.pas">
+            <Form>FMaster_FormulaTest</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_MasterFormulaTest.pas">
+            <Form>FNew_MasterFormula</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USPK_Formula.pas">
+            <Form>FSPK_Formula</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_SPKFormula.pas">
+            <Form>FNew_SPKFormula</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Pakai_Material_For.pas">
+            <Form>FNew_PakaiMatFor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPakai_Material_For.pas">
+            <Form>FPakai_Material_For</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UResult_Formula.pas">
+            <Form>FResult_Formula</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_ResultFormula.pas">
+            <Form>FNew_resultFormula</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UFor_TestBakar.pas">
+            <Form>FFor_Testbakar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_ForTestBakar.pas">
+            <Form>FNew_ForTestBakar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UUser.pas">
+            <Form>FUser</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_User.pas">
+            <Form>FNew_User</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UInput_um.pas">
+            <Form>FNew_UM_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uLkJSON.pas"/>
+        <DCCReference Include="uJSON.pas"/>
+        <DCCReference Include="USetDeliveryOrder.pas">
+            <Form>FSetDeliveryOrder</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UUang_Muka_Pembelian.pas">
+            <Form>FUang_Muka_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSPmuat.pas">
+            <Form>Flist_sp_muat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListSalesOrder.pas">
+            <Form>FListSalesOrder</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListSales_Order.pas">
@@ -466,112 +581,46 @@
             <Form>FNew_SalesOrder</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UTambah_Barang.pas">
-            <Form>FTambah_Barang</Form>
+        <DCCReference Include="Ubrowse_pelanggan.pas">
+            <Form>Fbrowse_data_pelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UMasterSales.pas">
-            <Form>FMasterSales</Form>
+        <DCCReference Include="Ubrowse_faktur_pajak.pas">
+            <Form>Fbrowse_faktur_pajak</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UMasterWilayahAdministratif.pas">
-            <Form>FMasterWilayahAdministratif</Form>
+        <DCCReference Include="UMasterData.pas">
+            <Form>FMasterData</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UTemplate_Temp.pas">
-            <Form>FTemplate_Temp</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListOrderTelemarketing.pas">
-            <Form>FListOrderTelemarketing</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListKontrakJasa.pas">
-            <Form>FListKontrakJasa</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPenjualan.pas">
-            <Form>FDataListPenjualan</Form>
+        <DCCReference Include="UMasterWilayah.pas">
+            <Form>FMasterWilayah</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_DataPenjualan.pas">
             <Form>FNew_Penjualan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="URincianPot_Penjualan.pas">
-            <Form>FRincianPot_Penjualan</Form>
+        <DCCReference Include="UListDeliveryOrder.pas">
+            <Form>FListDeliveryOrder</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="USetMasterPenjulan.pas">
-            <Form>FSetMasterPenjulan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UDataProspekPelanggan.pas">
-            <Form>FDataProspekPelanggan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="uLkJSON.pas"/>
-        <DCCReference Include="uJSON.pas"/>
-        <DCCReference Include="UListSalesOrder.pas">
-            <Form>FListSalesOrder</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UDataListParameter.pas">
-            <Form>FDataListParameter</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListTujualAwal.pas">
-            <Form>FListTujualAwal</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNew_TujuanAwal.pas">
-            <Form>FNew_TujuanAwal</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListMasterBiayaDO.pas">
-            <Form>FListMasterBiayaDO</Form>
+        <DCCReference Include="UNewDeliveryOrder.pas">
+            <Form>FNewDeliveryOrder</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_MasterBiayaDO.pas">
             <Form>FNew_MasterBiayaDO</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListMasterBiayaDO.pas">
+            <Form>FListMasterBiayaDO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="UListKlasifikasi.pas">
             <Form>FListKlasifikasi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
-        <DCCReference Include="UNewDeliveryOrder.pas">
-            <Form>FNewDeliveryOrder</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListDeliveryOrder.pas">
-            <Form>FListDeliveryOrder</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="USetDeliveryOrder.pas">
-            <Form>FSetDeliveryOrder</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UDelivery_Order_Sumber.pas">
-            <Form>FDelivery_Order_Sumber</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPerintahMuat.pas">
-            <Form>FListPerintahMuat</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UDataPerintahMuat.pas">
-            <Form>FDataPerintahMuat</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPengajuanApprovePenjualan.pas">
-            <Form>FListPengajuanApprovePenjualan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UPerintahMuat_Sumber.pas">
-            <Form>FPerintahMuat_Sumber</Form>
-=======
         <DCCReference Include="UDataListParameter.pas">
             <Form>FDataListParameter</Form>
             <FormType>dfm</FormType>
@@ -582,7 +631,26 @@
         </DCCReference>
         <DCCReference Include="UApproval_Trans_For_dan_Prod.pas">
             <Form>FApproval_Trans_For_dan_Prod</Form>
->>>>>>> Stashed changes
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPerintahMuat_Sumber.pas">
+            <Form>FPerintahMuat_Sumber</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPengajuanApprovePenjualan.pas">
+            <Form>FListPengajuanApprovePenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataPerintahMuat.pas">
+            <Form>FDataPerintahMuat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPerintahMuat.pas">
+            <Form>FListPerintahMuat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDelivery_Order_Sumber.pas">
+            <Form>FDelivery_Order_Sumber</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
