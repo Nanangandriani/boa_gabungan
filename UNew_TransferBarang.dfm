@@ -102,7 +102,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label13: TLabel
     Left = 36
-    Top = 74
+    Top = 0
     Width = 24
     Height = 13
     Caption = 'Jenis'
@@ -110,7 +110,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object Label14: TLabel
     Left = 108
-    Top = 74
+    Top = 0
     Width = 4
     Height = 13
     Caption = ':'
@@ -328,16 +328,6 @@ object FNew_TransferBarang: TFNew_TransferBarang
       NumGlyphs = 2
       ExplicitLeft = 622
     end
-    object BitBtn1: TBitBtn
-      Left = 440
-      Top = 3
-      Width = 75
-      Height = 25
-      Caption = 'BitBtn1'
-      TabOrder = 2
-      Visible = False
-      OnClick = BitBtn1Click
-    end
   end
   object Edno: TRzEdit
     Left = 122
@@ -393,7 +383,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
   end
   object RzComboBox1: TRzComboBox
     Left = 122
-    Top = 71
+    Top = -3
     Width = 200
     Height = 21
     TabOrder = 8

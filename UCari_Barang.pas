@@ -6,13 +6,14 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS, DBAccess, Uni, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh;
+  GridsEh, DBAxisGridsEh, DBGridEh, Vcl.Samples.Gauges;
 
 type
   TFCari_Barang = class(TForm)
     DBGridEh1: TDBGridEh;
     QBarang: TUniQuery;
     DsBarang: TDataSource;
+    Gauge1: TGauge;
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -32,7 +33,8 @@ implementation
 {$R *.dfm}
 
 uses UNew_Barang_stok, UNew_BonPermtBarang, UNew_KonvBarang, UDataModule,
-  UNew_Supplier;
+  UNew_Supplier, UMaster_PercBarang, UNew_PercBarang, UMainMenu,
+  UNew_SPKFormula;
 
 var
   realfCari_barang: TFCari_Barang;
@@ -91,6 +93,47 @@ begin
       MemMaterial['qty']:=0;
       MemMaterial['kode']:=QBarang.FieldByName('item_code').AsString+edno.Text;
       MemMaterial.Post;
+    end;
+  end;
+  if status_tr='5' then
+  begin
+    with FMaster_PercBarang do
+    begin
+      edkd.text:=QBarang.FieldByName('item_code').AsString;
+      ednm.text:=QBarang.FieldByName('item_name').AsString;
+    end;
+  end;
+  if status_tr='6' then
+  begin
+    with FMaster_PercBarang do
+    begin
+      Memdetail.Insert;
+      Memdetail['item_code']:=QBarang.FieldByName('item_code').AsString;
+      Memdetail['item_name']:=QBarang.FieldByName('item_name').AsString;
+      Memdetail['qty']:=0;
+      Memdetail['unit']:=QBarang.FieldByName('unit').AsString;
+    end;
+  end;
+  if Vmenu='7' then
+  begin
+    with FNew_PercBarang do
+    begin
+      MemMaterial.Insert;
+      MemMaterial['kd_material']:=QBarang.FieldByName('item_code').AsString;
+      MemMaterial['nm_material']:=QBarang.FieldByName('item_name').AsString;
+      MemMaterial['qty']:=0;
+      MemMaterial['satuan']:=QBarang.FieldByName('unit').AsString;
+    end;
+  end;
+  if Vmenu='8' then
+  begin
+    with FNew_SPKFormula do
+    begin
+      Memformuladet.Insert;
+      Memformuladet['kd_material']:=QBarang.FieldByName('item_code').AsString;
+      Memformuladet['nm_material']:=QBarang.FieldByName('item_name').AsString;
+      Memformuladet['qty']:=0;
+      Memformuladet['satuan']:=QBarang.FieldByName('unit').AsString;
     end;
   end;
   close;

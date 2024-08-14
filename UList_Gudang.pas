@@ -142,7 +142,6 @@ begin
         Edkode.Text:=QGudang.FieldByName('code').AsString;
       end;
       Edkd.Enabled:=False;
-      Edkode.Enabled:=False;
     end;
 end;
 
@@ -157,7 +156,6 @@ begin
     FNew_gudang.Ednm.SetFocus;
     Caption:='New Gudang';
     Edkd.Enabled:=True;
-    Edkode.Enabled:=False;
   end;
 
 end;
@@ -166,5 +164,8 @@ procedure TFListGudang.FormShow(Sender: TObject);
 begin
    Refresh;
 end;
+
+initialization
+  RegisterClass(TFListGudang);
 
 end.

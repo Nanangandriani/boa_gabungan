@@ -300,7 +300,7 @@ begin
       ' a.unit,a.merk,aa.totalmt as qty from warehouse.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
       ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."category_id" '+
       ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
-      ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code and (b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''))as'+
+      ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code and (b1.sbu_code='+QuotedStr(loksbu)+' OR b1.sbu_code=''''))as'+
       ' aa on 1=1 where a.deleted_at isnull Order by item_stock_code Desc';
       Open;
     end;
@@ -309,7 +309,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a1.*,b1.sbu_code FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.kd_sbu='+QuotedStr(loksbu)+' OR b1.kd_sbu=''''';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.sbu_code='+QuotedStr(loksbu)+' OR b1.sbu_code=''''';
       open;
     end;
   end;
@@ -769,6 +769,9 @@ begin
   ShowMessage('Data Berhasil di Simpan');
   BBatalClick(sender);
 end;
+
+initialization
+ RegisterClass(TFBarang_Stok);
 
 end.
 

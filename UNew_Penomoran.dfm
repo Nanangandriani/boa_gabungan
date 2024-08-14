@@ -4,7 +4,7 @@ object FNew_Penomoran: TFNew_Penomoran
   BorderStyle = bsDialog
   Caption = 'Input Penomoran'
   ClientHeight = 332
-  ClientWidth = 510
+  ClientWidth = 519
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,13 @@ object FNew_Penomoran: TFNew_Penomoran
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 510
+    Width = 519
     Height = 297
     Align = alClient
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 504
-    ExplicitHeight = 288
+    ExplicitWidth = 515
+    ExplicitHeight = 296
     object Label1: TLabel
       Left = 25
       Top = 25
@@ -403,6 +403,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Width = 209
       Height = 23
       TabOrder = 16
+      OnChange = EdhasilChange
     end
     object Ed_comp: TEdit
       Left = 387
@@ -431,11 +432,10 @@ object FNew_Penomoran: TFNew_Penomoran
     object Kdsubmenu: TRzEdit
       Left = 387
       Top = 54
-      Width = 35
+      Width = 110
       Height = 23
       Text = ''
       TabOrder = 20
-      Visible = False
     end
     object KdType: TRzEdit
       Left = 387
@@ -462,7 +462,6 @@ object FNew_Penomoran: TFNew_Penomoran
       Height = 23
       Text = ''
       TabOrder = 23
-      Visible = False
     end
     object DBGridEh1: TDBGridEh
       Left = 736
@@ -793,15 +792,15 @@ object FNew_Penomoran: TFNew_Penomoran
   object RzPanel2: TRzPanel
     Left = 0
     Top = 297
-    Width = 510
+    Width = 519
     Height = 35
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 288
-    ExplicitWidth = 504
+    ExplicitTop = 296
+    ExplicitWidth = 515
     object RzBitBtn4: TRzBitBtn
-      Left = 358
+      Left = 367
       Top = 2
       Height = 31
       Align = alRight
@@ -860,10 +859,10 @@ object FNew_Penomoran: TFNew_Penomoran
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 352
+      ExplicitLeft = 363
     end
     object BCancel: TRzBitBtn
-      Left = 433
+      Left = 442
       Top = 2
       Height = 31
       Align = alRight
@@ -922,7 +921,7 @@ object FNew_Penomoran: TFNew_Penomoran
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 427
+      ExplicitLeft = 438
     end
   end
   object qnumb_det_tmp: TUniQuery
@@ -1042,7 +1041,7 @@ object FNew_Penomoran: TFNew_Penomoran
   object Qtranstype: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_submenu2 order by submenu2 ASC')
+      'select * from t_menu_sub order by submenu ASC')
     Left = 80
     Top = 8
   end

@@ -329,18 +329,6 @@
             <Form>Finput_penjualan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Ubrowse_pelanggan.pas">
-            <Form>Fbrowse_data_pelanggan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Ubrowse_faktur_pajak.pas">
-            <Form>Fbrowse_faktur_pajak</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListSPmuat.pas">
-            <Form>Flist_sp_muat</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UDaftarKlasifikasi.pas">
             <Form>FDaftarKlasifikasi</Form>
             <FormType>dfm</FormType>
@@ -436,40 +424,22 @@
         </DCCReference>
         <DCCReference Include="UHak_Akses.pas">
             <Form>FHak_Akses</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_HakAkses.pas">
             <Form>FNew_Hak_Akses</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UPeng_stok.pas">
             <Form>FPeng_Stok</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_PengStok.pas">
             <Form>FNew_PengStok</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UCari_Barang2.pas">
-            <Form>FSearch_Barang</Form>
-        </DCCReference>
-        <DCCReference Include="maenangka.pas"/>
-        <DCCReference Include="UMaster_Menu.pas">
-            <Form>FMaster_Menu</Form>
-        </DCCReference>
-        <DCCReference Include="UMaster_PercBarang.pas">
-            <Form>FMaster_PercBarang</Form>
-        </DCCReference>
-        <DCCReference Include="UUang_Muka_Pembelian.pas">
-            <Form>FUang_Muka_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UInput_um.pas">
-            <Form>FNew_UM_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UMenu.pas">
-            <Form>FMenu</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNew_Menu.pas">
-            <Form>FNew_menu</Form>
+            <Form>FCari_Barang2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UPercampuran_Barang.pas">

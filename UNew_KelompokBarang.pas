@@ -221,6 +221,7 @@ end;
 
 procedure TFNew_KelompokBarang.FormShow(Sender: TObject);
 begin
+  Clear;
   Load;
 end;
 

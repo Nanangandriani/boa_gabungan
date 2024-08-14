@@ -82,4 +82,7 @@ begin
     end;
 end;
 
+initialization
+RegisterClass(TFPembelian);
+
 end.

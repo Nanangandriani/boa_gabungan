@@ -576,8 +576,10 @@ object FPenomoran: TFPenomoran
       OnClick = dxBarLargeButton1Click
     end
     object dxBarButton8: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update'
       Category = 0
+      Hint = 'Update'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -722,35 +724,35 @@ object FPenomoran: TFPenomoran
     Connection = dm.Koneksi
     SQL.Strings = (
       ''
-      'SELECT  a.*,c.submenu2,d.description from t_numb a'
+      'SELECT  a.*,c.submenu,d.description from t_numb a'
       'INNER JOIN t_numb_det b on a.trans_no=b.trans_no'
-      'LEFT JOIN t_submenu2 c  on a.numb_type=c.kd_submenu'
+      'LEFT JOIN t_menu_sub c  on a.numb_type=c.submenu_code'
       'LEFT JOIN t_numb_type d on a.reset_type=d.id'
       
         'GROUP BY a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.c' +
         'omponent_description,'
       
-        'a.reset_type,a.additional_status,a.active_status,c.submenu2,d.de' +
-        'scription,a.remarks'
+        'a.reset_type,a.additional_status,a.active_status,c.submenu,d.des' +
+        'cription,a.remarks'
       'order by a.trans_no ASC')
-    Left = 328
-    Top = 24
+    Left = 384
+    Top = 32
   end
   object DSDNo: TDataSetDriverEh
     ProviderDataSet = QNo
-    Left = 376
+    Left = 424
     Top = 88
   end
   object MemNo: TMemTableEh
     Params = <>
     DataDriver = DSDNo
-    Left = 376
-    Top = 24
+    Left = 384
+    Top = 88
   end
   object DSNo: TDataSource
     DataSet = MemNo
-    Left = 328
-    Top = 88
+    Left = 424
+    Top = 32
   end
   object ActMenu: TActionManager
     Left = 656
@@ -761,7 +763,6 @@ object FPenomoran: TFPenomoran
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '

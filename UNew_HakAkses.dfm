@@ -1,67 +1,32 @@
 object FNew_Hak_Akses: TFNew_Hak_Akses
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'Form New Hak Akses'
-  ClientHeight = 492
-  ClientWidth = 1047
+  ClientHeight = 478
+  ClientWidth = 544
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 13
-  object Label1: TLabel
-    Left = 32
-    Top = 54
-    Width = 59
-    Height = 13
-    Caption = 'Departemen'
-  end
-  object Label8: TLabel
-    Left = 129
-    Top = 54
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object Label2: TLabel
-    Left = 32
-    Top = 19
-    Width = 17
-    Height = 13
-    Caption = 'No.'
-  end
-  object Label3: TLabel
-    Left = 129
-    Top = 19
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object Edkd: TEdit
-    Left = 153
-    Top = 51
-    Width = 80
-    Height = 21
-    TabOrder = 2
-    Text = '0'
-    OnChange = EdkdChange
-  end
   object Panel2: TPanel
     Left = 0
-    Top = 460
-    Width = 1047
+    Top = 446
+    Width = 544
     Height = 32
     Align = alBottom
-    TabOrder = 1
+    TabOrder = 0
     ExplicitTop = 459
-    ExplicitWidth = 1043
+    ExplicitWidth = 540
     object BBatal: TRzBitBtn
-      Left = 971
+      Left = 468
       Top = 1
       Height = 30
       Align = alRight
@@ -120,10 +85,10 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 967
+      ExplicitLeft = 464
     end
     object BSimpan: TRzBitBtn
-      Left = 896
+      Left = 393
       Top = 1
       Height = 30
       Align = alRight
@@ -182,32 +147,14 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 892
+      ExplicitLeft = 389
     end
-  end
-  object EdNm: TRzComboBox
-    Left = 248
-    Top = 51
-    Width = 161
-    Height = 21
-    TabOrder = 0
-    OnChange = EdNmSelect
-    OnSelect = EdNmSelect
-  end
-  object EdNo: TEdit
-    Left = 153
-    Top = 16
-    Width = 80
-    Height = 21
-    Color = clInfoBk
-    ReadOnly = True
-    TabOrder = 3
   end
   object BTambah: TRzBitBtn
     Left = 543
     Top = 249
     Width = 34
-    TabOrder = 4
+    TabOrder = 1
     OnClick = BTambahClick
     Glyph.Data = {
       36060000424D3606000000000000360400002800000020000000100000000100
@@ -266,7 +213,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Left = 543
     Top = 280
     Width = 34
-    TabOrder = 5
+    TabOrder = 2
     OnClick = BKurangClick
     Glyph.Data = {
       36060000424D3606000000000000360400002800000020000000100000000100
@@ -331,7 +278,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     SearchPanel.Enabled = True
     SearchPanel.FilterEnabled = False
     SearchPanel.FilterOnTyping = True
-    TabOrder = 6
+    TabOrder = 3
     OnDblClick = DBGridEh1DblClick
     Columns = <
       item
@@ -356,19 +303,26 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     end
   end
   object DBGridEh2: TDBGridEh
-    Left = 8
-    Top = 96
-    Width = 513
-    Height = 359
+    Left = 0
+    Top = 97
+    Width = 544
+    Height = 349
+    Align = alClient
     DataSource = DsDetail
     DynProps = <>
-    TabOrder = 7
+    HorzScrollBar.ExtraPanel.NavigatorButtons = [nbInsertEh, nbDeleteEh, nbEditEh]
+    HorzScrollBar.ExtraPanel.Visible = True
+    TabOrder = 4
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
-        EditButtons = <>
-        FieldName = 'id_menu'
+        EditButtons = <
+          item
+            Style = ebsPlusEh
+            OnClick = DBGridEh2Columns0EditButtons0Click
+          end>
+        FieldName = 'submenu_code'
         Footers = <>
         Title.Caption = 'ID Menu'
         Width = 100
@@ -377,18 +331,84 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_menu'
+        FieldName = 'submenu'
         Footers = <>
         Title.Caption = 'Nama Menu'
-        Width = 400
+        Width = 393
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 544
+    Height = 97
+    Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
+    TabOrder = 5
+    ExplicitWidth = 540
+    object Label1: TLabel
+      Left = 32
+      Top = 54
+      Width = 59
+      Height = 13
+      Caption = 'Departemen'
+    end
+    object Label8: TLabel
+      Left = 129
+      Top = 54
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label2: TLabel
+      Left = 32
+      Top = 19
+      Width = 17
+      Height = 13
+      Caption = 'No.'
+    end
+    object Label3: TLabel
+      Left = 129
+      Top = 19
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Edkd: TEdit
+      Left = 153
+      Top = 51
+      Width = 80
+      Height = 21
+      TabOrder = 0
+      Text = '0'
+      OnChange = EdkdChange
+    end
+    object EdNm: TRzComboBox
+      Left = 248
+      Top = 51
+      Width = 161
+      Height = 21
+      TabOrder = 1
+      OnChange = EdNmSelect
+      OnSelect = EdNmSelect
+    end
+    object EdNo: TEdit
+      Left = 153
+      Top = 16
+      Width = 80
+      Height = 21
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 2
+    end
+  end
   object DsDetail: TDataSource
     DataSet = QDetail
-    Left = 528
-    Top = 16
+    Left = 360
+    Top = 64
   end
   object DsMenu: TDataSource
     DataSet = QMenu
@@ -399,21 +419,43 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.nm_menu,c.Dept from t_akses  a inner join t_menu b ' +
-        'on a.id_menu=b.id_menu '
+        'select A.*,b.submenu,c.Dept from t_akses  a inner join t_menu_su' +
+        'b b on a.submenu_code=b.submenu_code '
       
-        'inner join t_dept c on a.no_dept=c.no_dept order by a.no_akses A' +
-        'sc')
-    Left = 472
-    Top = 16
+        'inner join t_dept c on a.dept_code=c.dept_code order by a.akses_' +
+        'no Asc')
+    Left = 360
+    Top = 8
   end
   object QMenu: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * from t_menu  order by id_menu Asc -- WHERE no_menu not ' +
-        'in (SELECT no_menu FROM t_akses WHERE no_dept=:no_dept)')
+        'SELECT * from t_menu_sub  order by submenu_code Asc -- WHERE no_' +
+        'menu not in (SELECT no_menu FROM t_akses WHERE no_dept=:no_dept)')
     Left = 657
     Top = 40
+  end
+  object MemDetail: TMemTableEh
+    Params = <>
+    Left = 464
+    Top = 32
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object idmenu: TMTStringDataFieldEh
+          FieldName = 'idmenu'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object menu: TMTStringDataFieldEh
+          FieldName = 'menu'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
   end
 end

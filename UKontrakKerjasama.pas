@@ -76,9 +76,6 @@ type
     procedure ActAppExecute(Sender: TObject);
     procedure ActRejectExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure DBGridKontrakRowDetailPanelShow(Sender: TCustomDBGridEh;
-      var CanShow: Boolean);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -252,21 +249,10 @@ begin
     end;}
 end;
 
-procedure TFKontrakkerjasama.DBGridKontrakRowDetailPanelShow(
-  Sender: TCustomDBGridEh; var CanShow: Boolean);
-begin
-   Memkerjasama.Active:=true;
-end;
-
 procedure TFKontrakkerjasama.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     Dm.Koneksi.Close;
-end;
-
-procedure TFKontrakkerjasama.FormShow(Sender: TObject);
-begin
-  ActROExecute(sender);
 end;
 
 procedure TFKontrakkerjasama.ActAppExecute(Sender: TObject);
@@ -325,20 +311,13 @@ end;
 
 procedure TFKontrakkerjasama.ActDelExecute(Sender: TObject);
 begin
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridKontrak.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-    begin
+    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridKontrak.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+    then begin
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Delete From purchase.t_coop_contract where contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
-      Execute;
-    end;
-    with dm.Qtemp1 do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text:='Delete From purchase.t_coop_contract_det where contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+      sql.Text:='Delete From t_kontrak_kerjasama where no_kontrak='+QuotedStr(DBGridKontrak.Fields[0].AsString);
       Execute;
     end;
     ActROExecute(sender);
@@ -365,7 +344,7 @@ end;
 
 Procedure TFKontrakkerjasama.Autonumber;
 begin
-{Bln:=FNewKontrak_ks.DtBln.Text;
+Bln:=FNewKontrak_ks.DtBln.Text;
 th:=FNewKontrak_ks.DtTahun.Text;
 with dm.Qtemp do
 begin
@@ -389,7 +368,7 @@ end;
    kode:=FloatToStr(urut);
    kode:=Copy('000'+kode,length('000'+kode)-2,3);
    FNewKontrak_ks.Edno.Text:=kode;
-   FNewKontrak_ks.EdNo_kontrak.Text:=kode+'/'+bln+'/'+th+'/'+'HKJ';}
+   FNewKontrak_ks.EdNo_kontrak.Text:=kode+'/'+bln+'/'+th+'/'+'HKJ';
 end;
 
 
@@ -423,171 +402,83 @@ end;
 
 procedure TFKontrakkerjasama.ActUpdateExecute(Sender: TObject);
 begin
+    if Memkerjasama['no_kontrak']='' then
+    begin
+      ShowMessage('Data Tidak Ada');
+    end else
     with FNewKontrak_ks do
     begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:=' select * from purchase.t_coop_contract where contract_no='+QuotedStr(Memkerjasama['contract_no']);
-        ExecSQL;
-      end;
-      EdCurr.Text:=DM.Qtemp['currency'];
-      if EdCurr.Text='Rp' then
-      begin
-        if Memkerjasama['contract_no']='' then
-        begin
-          ShowMessage('Data Tidak Ada');
-        end
-      else
-      with FNewKontrak_ks do
-      begin
-        Show;
-        Self.Clear;
-        BEdit.Visible:=true;
-        BSimpan.Visible:=false;
-        Caption:='Update Kontrak Kerjasama';
+      Show;
+      Self.Clear;
+      BEdit.Visible:=true;
+      BSimpan.Visible:=false;
+      Caption:='Update Kontrak Kerjasama';
 
-        QKerjasama_det.First;
-        while not QKerjasama_det.Eof do
+      QKerjasama_det.First;
+      while not QKerjasama_det.Eof do
+      begin
+        with QKerjasama_det do
         begin
-            with QKerjasama_det do
-            begin
-              FNewKontrak_ks.MemMaterial.Insert;
-              //FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
-              FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_code').AsString;
-              FNewKontrak_ks.MemMaterial['nm_material']:=QKerjasama_det.FieldByName('item_name').AsString;
-              FNewKontrak_ks.MemMaterial['qty']:=QKerjasama_det.FieldByName('qty').AsString;
-              FNewKontrak_ks.MemMaterial['harga2']:=QKerjasama_det.FieldByName('price').AsString;
-              FNewKontrak_ks.MemMaterial['satuan']:=QKerjasama_det.FieldByName('unit').AsString;
-              FNewKontrak_ks.MemMaterial['subtotal_rp']:=QKerjasama_det.FieldByName('total_price').AsString;
-              FNewKontrak_ks.MemMaterial['totalpo']:=QKerjasama_det.FieldByName('totalpo').AsString;
-              FNewKontrak_ks.MemMaterial['sisaqty']:=QKerjasama_det.FieldByName('remaining_qty').AsString;
-              FNewKontrak_ks.MemMaterial['ppn']:=QKerjasama_det.FieldByName('ppn').AsString;
-              FNewKontrak_ks.MemMaterial['ppn_rp']:=QKerjasama_det.FieldByName('ppn_rp').AsString;
-              FNewKontrak_ks.MemMaterial['Spesifikasi']:=QKerjasama_det.FieldByName('specification').AsString;
-              MemMaterial['subtotal_rp']:=QKerjasama_det.FieldByName('total_price').AsString;
-              MemMaterial['pemb_dpp']:=QKerjasama_det.FieldByName('pemb_dpp').AsString;
-              MemMaterial['grandtotal_rp']:=QKerjasama_det.FieldByName('grandtotal').AsString;
-              MemMaterial['pemb_ppn']:=QKerjasama_det.FieldByName('pemb_ppn').AsString;
-              FNewKontrak_ks.MemMaterial['pph']:=QKerjasama_det.FieldByName('pph').AsString;
-              FNewKontrak_ks.MemMaterial['pph_rp']:=QKerjasama_det.FieldByName('pph_rp').AsString;
-              FNewKontrak_ks.MemMaterial.Post;
-            end;
-        QKerjasama_det.Next;
+          FNewKontrak_ks.MemMaterial.Insert;
+          FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('kd_material_stok').AsString;
+          FNewKontrak_ks.MemMaterial['nm_material']:=QKerjasama_det.FieldByName('nm_material').AsString;
+          FNewKontrak_ks.MemMaterial['qty']:=QKerjasama_det.FieldByName('qty').AsString;
+          FNewKontrak_ks.MemMaterial['harga']:=QKerjasama_det.FieldByName('harga').AsString;
+          FNewKontrak_ks.MemMaterial['satuan']:=QKerjasama_det.FieldByName('satuan').AsString;
+          FNewKontrak_ks.MemMaterial['total_harga']:=QKerjasama_det.FieldByName('total_harga').AsString;
+          FNewKontrak_ks.MemMaterial['totalpo']:=QKerjasama_det.FieldByName('totalpo').AsString;
+          FNewKontrak_ks.MemMaterial['sisaqty']:=QKerjasama_det.FieldByName('sisaqty').AsString;
+          FNewKontrak_ks.MemMaterial['ppn']:=QKerjasama_det.FieldByName('ppn').AsString;
+          FNewKontrak_ks.MemMaterial['ppn_rp']:=QKerjasama_det.FieldByName('ppn_rp').AsString;
+         // FNewKontrak_ks.MemMaterial['grandtotal']:=QKerjasama_det.FieldByName('grandtotal').AsString;
+          FNewKontrak_ks.MemMaterial['Spesifikasi']:=QKerjasama_det.FieldByName('spesifikasi').AsString;
+          MemMaterial['subtotal_rp']:=QKerjasama_det.FieldByName('subtotal_rp').AsString;
+          MemMaterial['grandtotal']:=QKerjasama_det.FieldByName('grandtotal').AsString;
+          FNewKontrak_ks.MemMaterial.Post;
+          end;
+          QKerjasama_det.Next;
         end;
-
+      //EdnilaiCurr.Text:='1';
         with Memkerjasama do
         begin
-          Edno.Text:=Memkerjasama.FieldByName('order_no').AsString;
-          EdNo_kontrak.Text:=Memkerjasama.FieldByName('contract_no').AsString;
-          EdKd_supp.Text:=Memkerjasama.FieldByName('supplier_code').AsString;
-          EdNm_supp.Text:=Memkerjasama.FieldByName('supplier_name').AsString;
-          DtKontrak.Text:=Memkerjasama.FieldByName('contract_date').AsString;
-          DtSelesai.Text:=Memkerjasama.FieldByName('finish_date').AsString;
-          Edtempo.Text:=Memkerjasama.FieldByName('due_date').AsString;
-          DtTahun.Text:=Memkerjasama.FieldByName('trans_year').AsString;
-          EdKet.Text:=Memkerjasama.FieldByName('remarks').AsString;
+          Edno.Text:=Memkerjasama.FieldByName('no_urut').AsString;
+          EdNo_kontrak.Text:=Memkerjasama.FieldByName('no_kontrak').AsString;
+          EdKd_supp.Text:=Memkerjasama.FieldByName('kd_supplier').AsString;
+          EdNm_supp.Text:=Memkerjasama.FieldByName('nm_supplier').AsString;
+          DtKontrak.Text:=Memkerjasama.FieldByName('tgl_kontrak').AsString;
+          DtSelesai.Text:=Memkerjasama.FieldByName('tgl_selesai').AsString;
+          Edtempo.Text:=Memkerjasama.FieldByName('jatuh_tempo').AsString;
+          DtTahun.Text:=Memkerjasama.FieldByName('tahun').AsString;
+          EdKet.Text:=Memkerjasama.FieldByName('Keterangan').AsString;
+        //  Status2:=Memkerjasama.FieldByName('status').AsString;
           EdCurr.Text:=Memkerjasama.FieldByName('currency').AsString;
-          EdnilaiCurr.Text:=Memkerjasama.FieldByName('currency_value').AsString;
-          cb_kirim.Text:=Memkerjasama.FieldByName('delivery_month').AsString;
-          EdTh_kirim.Text:=Memkerjasama.FieldByName('delivery_year').AsString;
-          CbJenis.Text:=Memkerjasama.FieldByName('type').AsString;
-          CbKategori.Text:=Memkerjasama.FieldByName('category').AsString;
-
+          EdnilaiCurr.Text:=Memkerjasama.FieldByName('nilaicurrency').AsString;
+          cb_kirim.Text:=Memkerjasama.FieldByName('bln_kirim').AsString;
+          EdTh_kirim.Text:=Memkerjasama.FieldByName('th_kirim').AsString;
+          CbJenis.Text:=Memkerjasama.FieldByName('jenis').AsString;
+          //status_App:=Memkerjasama.FieldByName('status_approval').Value;
+          CbKategori.Text:=Memkerjasama.FieldByName('kategori').AsString;
         end;
-        DBGridEh2ColEnter(sender);
-        EdCurrSelect(sender);
-        DtKontrak.OnChange(sender);
-      end;
+          DBGridEh2ColEnter(sender);
+          EdCurrSelect(sender);
     end;
-
-    if EdCurr.Text<>'Rp' then
-    begin
-      if Memkerjasama['contract_no']='' then
-      begin
-        ShowMessage('Data Tidak Ada');
-      end
-      else
-      with FNewKontrak_ks do
-      begin
-        Show;
-        Self.Clear;
-        BEdit.Visible:=true;
-        BSimpan.Visible:=false;
-        Caption:='Update Kontrak Kerjasama';
-        QKerjasama_det.First;
-        while not QKerjasama_det.Eof do
-        begin
-            with QKerjasama_det do
-            begin
-              FNewKontrak_ks.MemMaterial.Insert;
-              //FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
-              FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_code').AsString;
-              FNewKontrak_ks.MemMaterial['nm_material']:=QKerjasama_det.FieldByName('item_name').AsString;
-              FNewKontrak_ks.MemMaterial['qty']:=QKerjasama_det.FieldByName('qty').AsString;
-              FNewKontrak_ks.MemMaterial['harga']:=QKerjasama_det.FieldByName('price').AsString;
-              FNewKontrak_ks.MemMaterial['satuan']:=QKerjasama_det.FieldByName('unit').AsString;
-              FNewKontrak_ks.MemMaterial['total_harga']:=QKerjasama_det.FieldByName('total_price').AsString;
-              FNewKontrak_ks.MemMaterial['totalpo']:=QKerjasama_det.FieldByName('totalpo').AsString;
-              FNewKontrak_ks.MemMaterial['sisaqty']:=QKerjasama_det.FieldByName('remaining_qty').AsString;
-              FNewKontrak_ks.MemMaterial['ppn']:=QKerjasama_det.FieldByName('ppn').AsString;
-              FNewKontrak_ks.MemMaterial['ppn_rp']:=QKerjasama_det.FieldByName('ppn_rp').AsString;
-              FNewKontrak_ks.MemMaterial['Spesifikasi']:=QKerjasama_det.FieldByName('specification').AsString;
-              MemMaterial['subtotal_rp']:=QKerjasama_det.FieldByName('subtotal_rp').AsString;
-              MemMaterial['grandtotal']:=QKerjasama_det.FieldByName('grandtotal').AsString;
-              MemMaterial['pemb_ppn_us']:=QKerjasama_det.FieldByName('pemb_ppn').AsString;
-              FNewKontrak_ks.MemMaterial['pph']:=QKerjasama_det.FieldByName('pph').AsString;
-              FNewKontrak_ks.MemMaterial['pph_rp']:=QKerjasama_det.FieldByName('pph_rp').AsString;
-              FNewKontrak_ks.MemMaterial.Post;
-            end;
-              QKerjasama_det.Next;
-        end;
-
-        with Memkerjasama do
-        begin
-          Edno.Text:=Memkerjasama.FieldByName('order_no').AsString;
-          EdNo_kontrak.Text:=Memkerjasama.FieldByName('contract_no').AsString;
-          EdKd_supp.Text:=Memkerjasama.FieldByName('supplier_code').AsString;
-          EdNm_supp.Text:=Memkerjasama.FieldByName('supplier_name').AsString;
-          DtKontrak.Text:=Memkerjasama.FieldByName('contract_date').AsString;
-          DtSelesai.Text:=Memkerjasama.FieldByName('finish_date').AsString;
-          Edtempo.Text:=Memkerjasama.FieldByName('due_date').AsString;
-          EdKet.Text:=Memkerjasama.FieldByName('remarks').AsString;
-          EdCurr.Text:=Memkerjasama.FieldByName('currency').AsString;
-          EdnilaiCurr.Text:=Memkerjasama.FieldByName('currency_value').AsString;
-          cb_kirim.Text:=Memkerjasama.FieldByName('delivery_month').AsString;
-          EdTh_kirim.Text:=Memkerjasama.FieldByName('delivery_year').AsString;
-          CbJenis.Text:=Memkerjasama.FieldByName('type').AsString;
-          CbKategori.Text:=Memkerjasama.FieldByName('category').AsString;
-          DtHr.Text:=Memkerjasama.FieldByName('trans_day').AsString;
-          DtBln.Text:=Memkerjasama.FieldByName('trans_month').AsString;
-          DtTahun.Text:=Memkerjasama.FieldByName('trans_year').AsString;
-        end;
-        DBGridEh2ColEnter(sender);
-        EdCurrSelect(sender);
-        DtKontrak.OnChange(sender);
-      end;
-    end;
-    end;
-
 end;
-
 procedure TFKontrakkerjasama.Load_category;
 begin
       with Dm.Qtemp do
       begin
         close;
-        sql.Text:='SELECT * FROM t_item_type';
+        sql.Text:='SELECT * FROM t_item_category';
         ExecSQL;
       end;
       Dm.Qtemp.First;
-      FNewKontrak_ks.CbKategori.Items.Clear;
       while not dm.Qtemp.Eof do
       begin
-         FNewKontrak_ks.CbKategori.Items.Add(Dm.Qtemp.FieldByName('type').AsString);
-         Dm.Qtemp.Next;
+         FNewKontrak_ks.CbKategori.Items.Add(Dm.Qtemp.FieldByName('category').AsString);
+      Dm.Qtemp.Next;
       end;
 end;
 
+initialization
+registerclass(TFKontrakkerjasama);
 end.

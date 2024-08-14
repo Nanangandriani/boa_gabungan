@@ -147,8 +147,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 722
-      ExplicitTop = 6
+      ExplicitLeft = 712
     end
     object BEdit: TRzBitBtn
       Left = 641
@@ -211,8 +210,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 635
-      ExplicitTop = 6
+      ExplicitLeft = 637
     end
   end
   object Panel1: TPanel
@@ -386,6 +384,7 @@ object FNew_Supplier: TFNew_Supplier
         FieldName = 'qty'
         Footers = <>
         Title.Caption = 'Kuantum'
+        Visible = False
         Width = 82
       end
       item

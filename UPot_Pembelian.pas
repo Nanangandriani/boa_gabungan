@@ -79,4 +79,7 @@ begin
     end;
 end;
 
+initialization
+registerclass(TFPot_Pembelian);
+
 end.

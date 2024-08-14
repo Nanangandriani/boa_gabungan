@@ -71,4 +71,21 @@ object dm: Tdm
     Top = 86
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
+  object QLink: TUniQuery
+    Connection = Koneksi
+    SQL.Strings = (
+      ''
+      
+        ' -- select string_agg(concat('#39'T'#39', link) , '#39','#39') link1, string_agg' +
+        '(concat('#39#39', link_unit) , '#39','#39') link2 from t_menu_sub'
+      ''
+      ''
+      ''
+      
+        ' select concat('#39'T'#39', link) link1, string_agg(concat('#39#39', link_unit' +
+        ') , '#39','#39') link2 from t_menu_sub'
+      '')
+    Left = 16
+    Top = 176
+  end
 end

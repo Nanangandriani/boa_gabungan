@@ -205,18 +205,35 @@ end;
 
 procedure TFItem_TransferBarang.DBGridEh1DblClick(Sender: TObject);
 begin
-  with FNew_TransferBarang do
+  if statustr='ps' then
   begin
-    Memdetail.Insert;
-    Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
-    Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
-    Memdetail['kd_stok_lama']:=Qbarang.FieldByName('stock_code').AsString;
-    Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
-    Memdetail['qty']:=Qbarang.FieldByName('qty').AsString;
-    Memdetail['no_material']:=Qbarang.FieldByName('item_no').AsString;
-  //  Memdetail['kd_stok_baru']:=autonumber;
-   // Memdetail['ppn']:='10';
-    Memdetail.Post;
+    with FNew_PengStok do
+    begin
+      Memdetail.Insert;
+      Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
+      Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
+      Memdetail['kd_stok']:=Qbarang.FieldByName('stock_code').AsString;
+      Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
+      Memdetail['qty']:=Qbarang.FieldByName('outstanding').AsString;
+            //  Memdetail['no_material']:=Qbarang.FieldByName('item_no').AsString;
+      Memdetail.Post;
+    end;
+  end;
+  if statustr='tr' then
+  begin
+    with FNew_TransferBarang do
+    begin
+      Memdetail.Insert;
+      Memdetail['kd_material']:=Qbarang.FieldByName('item_stock_code').AsString;
+      Memdetail['nm_material']:=Qbarang.FieldByName('item_name').AsString;
+      Memdetail['kd_stok_lama']:=Qbarang.FieldByName('stock_code').AsString;
+      Memdetail['satuan']:=Qbarang.FieldByName('unit').AsString;
+      Memdetail['qty']:=Qbarang.FieldByName('qty').AsString;
+    //  Memdetail['no_material']:=Qbarang.FieldByName('item_no').AsString;
+    //  Memdetail['kd_stok_baru']:=autonumber;
+     // Memdetail['ppn']:='10';
+      Memdetail.Post;
+    end;
   end;
   Close;
   FNew_TransferBarang.Memdetail.First;

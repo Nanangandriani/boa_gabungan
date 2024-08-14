@@ -27,6 +27,8 @@ type
     DsSatuan: TDataSource;
     Btambah: TRzBitBtn;
     BRefresh: TRzBitBtn;
+    Edit1: TEdit;
+    BDelete: TRzBitBtn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -36,6 +38,8 @@ type
     procedure BtambahClick(Sender: TObject);
     procedure BCariClick(Sender: TObject);
     procedure BRefreshClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure BDeleteClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,7 +54,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Barang, UNew_KonvBarang;
+uses UDataModule, UNew_Barang, UNew_KonvBarang, UMainMenu, UMy_Function;
 var
   RealFNew_Satuan: TFNew_Satuan;
 // implementasi function
@@ -64,13 +68,16 @@ end;
 
 procedure TFNew_Satuan.BBatalClick(Sender: TObject);
 begin
-  close;
+  PnlNew.Visible:=false;
+  Edkd.Clear;
+  EdDesk.Clear;
+//  close;
 end;
 
 procedure TFNew_Satuan.BCariClick(Sender: TObject);
 begin
-//  Pnllist.Hide;
-//  PnlNew.Show;
+  Pnllist.Hide;
+  PnlNew.Show;
   Statustr:=1;
   Edkd.Text:=QSatuan['unit_code'];
   Eddesk.Text:=QSatuan['unit_name'];
@@ -84,6 +91,8 @@ begin
   DBGridEh1.StartLoadingStatus();
   QSatuan.Close;
   QSatuan.Open;
+  Pnllist.show;
+  PnlNew.hide;
   DBGridEh1.FinishLoadingStatus();
 end;
 
@@ -117,20 +126,46 @@ begin
       end;
     end;
     ShowMessage('Data Berhasil di Simpan');
-    BBatalClick(sender);
+    BRefreshClick(sender);
   end;
+  PnlNew.Visible:=false;
+  BBatal.Visible:=false;
 end;
 
 procedure TFNew_Satuan.BtambahClick(Sender: TObject);
 begin
+  PnlNew.Visible:=true;
   statustr:=0;
   Edkd.Clear;
   EdDesk.Clear;
   Edkd.SetFocus;
+  BBatal.Visible:=true;
+  BSimpan.Visible:=true;
+end;
+
+procedure TFNew_Satuan.Button1Click(Sender: TObject);
+begin
+ { with dm.Qtemp2 do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text:='select max(master_no) as urut from warehouse.t_mixing';
+    Execute;
+  end;
+  if dm.Qtemp2.RecordCount=1 then
+  begin    //order_no := IntToStr(dm.Qtemp['urut']+1);
+    Order_no := '0';
+  end;
+  if dm.Qtemp2.RecordCount=0 then
+  begin
+    Order_no:='1';
+  end;
+  Edit1.Text:=order_no; }
 end;
 
 procedure TFNew_Satuan.DBGridEh1DblClick(Sender: TObject);
 begin
+  PnlNew.Visible:=true;
   if jenis_tr='Barang' then
   begin
     with FNew_Barang do
@@ -171,6 +206,22 @@ end;
 procedure TFNew_Satuan.FormDestroy(Sender: TObject);
 begin
   RealFNew_Satuan:=nil;
+end;
+
+procedure TFNew_Satuan.BDeleteClick(Sender: TObject);
+begin
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridEh1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='delete from t_unit where unit_code='+QuotedStr(DBGridEh1.Fields[0].AsString);
+      Execute;
+    end;
+    BRefreshClick(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 end.

@@ -47,12 +47,13 @@ type
 
 var
   FNew_Gudang: TFNew_Gudang;
-  no_urut: integer;
+  urut:string;
+
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Kategori_Gudang, UMainMenu;
+uses UDataModule, UNew_Kategori_Gudang, UMainMenu, UList_Gudang;
 
 
 procedure TFNew_Gudang.showsbucode;
@@ -134,24 +135,13 @@ begin
       sql.Text:='select * from t_wh ';
       ExecSQL;
     end;
-
-    with dm.Qtemp1 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select max(order_no) as urut  from t_wh ';
-      Open;
-    end;
-    no_urut:=dm.Qtemp1.FieldByName('urut').AsInteger+1;
-
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_wh(order_no,wh_name,wh_code,sbu_code,category,code,created_at,created_by) '+
-                ' values(:no_urut,'+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',:created_at,:created_by)';
-      parambyname('no_urut').Value:=no_urut;
-      parambyname('created_at').AsDateTime:=Now;
+      sql.Text:='insert into t_wh(wh_name,code,sbu_code,category,wh_code,created_at,created_by) '+
+                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',now(),:created_by)';
+      //parambyname('created_at').AsDateTime:=Now;
       parambyname('created_by').AsString:='Admin';
       ExecSQL;
     end;
@@ -160,7 +150,6 @@ begin
 end;
 
 procedure TFNew_Gudang.CbCategorySelect(Sender: TObject);
-var urut:string;
 begin
     with dm.Qtemp3 do
     begin
@@ -234,6 +223,7 @@ begin
     CbCategory.Items.Add(DM.Qtemp2['category']);
     DM.Qtemp2.Next;
     end;
+
    //showcategorywh;
    //showsbucode;
 end;
@@ -247,6 +237,7 @@ end;
 procedure TFNew_Gudang.BBatalClick(Sender: TObject);
 begin
   Close;
+  FListGudang.ActROExecute(sender);
 end;
 
 end.

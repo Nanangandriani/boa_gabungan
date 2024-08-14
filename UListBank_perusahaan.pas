@@ -162,4 +162,7 @@ begin
   FNewBank.showmodal;
 end;
 
+initialization
+RegisterClass(TFListBank);
+
 end.

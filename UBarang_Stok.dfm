@@ -32,6 +32,10 @@ object FBarang_Stok: TFBarang_Stok
     object Tabnew: TRzTabSheet
       TabVisible = False
       Caption = 'Tabnew'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pninput: TPanel
         Left = 0
         Top = 0

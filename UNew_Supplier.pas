@@ -137,6 +137,8 @@ end;
 
 procedure TFNew_Supplier.BEditClick(Sender: TObject);
 begin
+  if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
     BEdit.Visible:=false;
     BSimpan.Visible:=true;
     if Edno.Text='' then
@@ -223,7 +225,8 @@ begin
       end;
     end;
     FMainMenu.TampilTabForm2;
-    BBatalClick(sender);;
+    BBatalClick(sender);
+  end;
 end;
 
 procedure TFNew_Supplier.BSimpanClick(Sender: TObject);

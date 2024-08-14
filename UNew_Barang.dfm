@@ -3,7 +3,7 @@ object FNew_Barang: TFNew_Barang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form New Barang'
-  ClientHeight = 375
+  ClientHeight = 435
   ClientWidth = 561
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,13 +19,15 @@ object FNew_Barang: TFNew_Barang
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 334
+    Top = 394
     Width = 561
     Height = 41
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 325
     ExplicitWidth = 555
+    ExplicitTop = 393
+    ExplicitWidth = 557
     object BBatal: TRzBitBtn
       Left = 485
       Top = 1
@@ -278,7 +280,7 @@ object FNew_Barang: TFNew_Barang
     Left = 0
     Top = 0
     Width = 561
-    Height = 334
+    Height = 394
     Hint = ''
     ActivePage = TabSheet3
     Align = alClient
@@ -287,9 +289,13 @@ object FNew_Barang: TFNew_Barang
     TabOrder = 1
     ExplicitWidth = 555
     ExplicitHeight = 325
+    ParentColor = False
+    TabIndex = 0
+    TabOrder = 1
+    ExplicitWidth = 557
+    ExplicitHeight = 393
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
-      Color = clGradientInactiveCaption
       Caption = 'Umum'
       ExplicitWidth = 551
       ExplicitHeight = 302
@@ -525,296 +531,562 @@ object FNew_Barang: TFNew_Barang
         CharCase = ecUpperCase
         TabOrder = 11
       end
+      ExplicitWidth = 553
+      ExplicitHeight = 370
       object StatusBar1: TStatusBar
         Left = 0
-        Top = 292
+        Top = 352
         Width = 557
         Height = 19
         Panels = <>
         ExplicitTop = 283
         ExplicitWidth = 551
+        ExplicitTop = 351
+        ExplicitWidth = 553
       end
-      object ck_st_penjualan: TCheckBox
-        Left = 412
-        Top = 212
-        Width = 97
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 13
-        OnClick = ck_st_penjualanClick
-      end
-      object Ck_NoUrut: TCheckBox
-        Left = 412
-        Top = 245
-        Width = 97
-        Height = 17
-        Caption = 'Aktif'
-        TabOrder = 14
-        OnClick = Ck_NoUrutClick
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 557
+        Height = 352
+        Align = alClient
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        ExplicitWidth = 553
+        ExplicitHeight = 351
+        object Btn_Satuan: TSpeedButton
+          Left = 287
+          Top = 209
+          Width = 27
+          Height = 22
+          Caption = '+'
+          OnClick = Btn_SatuanClick
+        end
+        object Label1: TLabel
+          Left = 326
+          Top = 116
+          Width = 17
+          Height = 13
+          Caption = 'No.'
+          Visible = False
+        end
+        object Label11: TLabel
+          Left = 32
+          Top = 246
+          Width = 23
+          Height = 13
+          Caption = 'Merk'
+        end
+        object Label13: TLabel
+          Left = 32
+          Top = 25
+          Width = 24
+          Height = 13
+          Caption = 'Jenis'
+        end
+        object Label16: TLabel
+          Left = 32
+          Top = 183
+          Width = 42
+          Height = 13
+          Caption = 'Deskripsi'
+        end
+        object Label2: TLabel
+          Left = 32
+          Top = 152
+          Width = 64
+          Height = 13
+          Caption = 'Nama Barang'
+        end
+        object Label3: TLabel
+          Left = 360
+          Top = 115
+          Width = 4
+          Height = 13
+          Caption = ':'
+          Visible = False
+        end
+        object Label4: TLabel
+          Left = 32
+          Top = 87
+          Width = 45
+          Height = 13
+          Caption = 'Kelompok'
+        end
+        object Label5: TLabel
+          Left = 32
+          Top = 119
+          Width = 24
+          Height = 13
+          Caption = 'Kode'
+        end
+        object Label6: TLabel
+          Left = 320
+          Top = 213
+          Width = 81
+          Height = 13
+          Caption = 'Status Penjualan'
+        end
+        object Label7: TLabel
+          Left = 32
+          Top = 56
+          Width = 40
+          Height = 13
+          Caption = 'Kategori'
+        end
+        object Label8: TLabel
+          Left = 320
+          Top = 246
+          Width = 71
+          Height = 13
+          Caption = 'Status No Urut'
+        end
+        object Label9: TLabel
+          Left = 32
+          Top = 213
+          Width = 34
+          Height = 13
+          Caption = 'Satuan'
+        end
+        object SpeedButton1: TSpeedButton
+          Left = 286
+          Top = 52
+          Width = 23
+          Height = 22
+          Caption = '+'
+          OnClick = SpeedButton1Click
+        end
+        object SpeedButton2: TSpeedButton
+          Left = 287
+          Top = 20
+          Width = 23
+          Height = 22
+          Caption = '+'
+          OnClick = SpeedButton2Click
+        end
+        object SpKelompok: TSpeedButton
+          Left = 419
+          Top = 83
+          Width = 23
+          Height = 22
+          Caption = '+'
+          OnClick = SpKelompokClick
+        end
+        object Cbkdtr: TComboBox
+          Left = 355
+          Top = 49
+          Width = 66
+          Height = 21
+          TabOrder = 0
+          Text = '0'
+          Visible = False
+        end
+        object Cbkelompok: TRzComboBox
+          Left = 136
+          Top = 84
+          Width = 273
+          Height = 21
+          CharCase = ecUpperCase
+          TabOrder = 1
+          OnSelect = CbkelompokSelect
+        end
+        object Ck_NoUrut: TCheckBox
+          Left = 412
+          Top = 245
+          Width = 97
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 2
+          OnClick = Ck_NoUrutClick
+        end
+        object ck_st_penjualan: TCheckBox
+          Left = 412
+          Top = 212
+          Width = 97
+          Height = 17
+          Caption = 'Aktif'
+          TabOrder = 3
+          OnClick = ck_st_penjualanClick
+        end
+        object EdCategory: TRzComboBox
+          Left = 136
+          Top = 53
+          Width = 145
+          Height = 21
+          CharCase = ecUpperCase
+          TabOrder = 4
+          OnSelect = EdCategorySelect
+        end
+        object EdDesk: TEdit
+          Left = 136
+          Top = 180
+          Width = 319
+          Height = 21
+          CharCase = ecUpperCase
+          TabOrder = 5
+        end
+        object Edjenis: TRzComboBox
+          Left = 136
+          Top = 22
+          Width = 145
+          Height = 21
+          CharCase = ecUpperCase
+          TabOrder = 6
+          OnSelect = EdjenisSelect
+        end
+        object EdKd: TEdit
+          Left = 239
+          Top = 115
+          Width = 73
+          Height = 21
+          CharCase = ecUpperCase
+          Enabled = False
+          TabOrder = 7
+        end
+        object Edkd_display: TEdit
+          Left = 136
+          Top = 115
+          Width = 97
+          Height = 21
+          CharCase = ecUpperCase
+          TabOrder = 8
+        end
+        object EdMerk: TRzComboBox
+          Left = 136
+          Top = 243
+          Width = 145
+          Height = 21
+          CharCase = ecUpperCase
+          FlatButtons = True
+          TabOrder = 9
+          Items.Strings = (
+            'KKJ'
+            'KKSP')
+        end
+        object EdNm: TEdit
+          Left = 136
+          Top = 149
+          Width = 319
+          Height = 21
+          CharCase = ecUpperCase
+          TabOrder = 10
+        end
+        object Edno: TEdit
+          Left = 382
+          Top = 113
+          Width = 73
+          Height = 21
+          CharCase = ecUpperCase
+          Enabled = False
+          ReadOnly = True
+          TabOrder = 11
+          Visible = False
+        end
+        object Edno1: TEdit
+          Left = 355
+          Top = 22
+          Width = 121
+          Height = 21
+          TabOrder = 12
+          Text = 'Edno1'
+          Visible = False
+        end
+        object EdSatuan: TRzButtonEdit
+          Left = 136
+          Top = 210
+          Width = 145
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 13
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdSatuanButtonClick
+        end
       end
     end
     object TabSheet2: TRzTabSheet
-      Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
-      object GroupBox1: TGroupBox
-        Left = 16
-        Top = 16
-        Width = 273
-        Height = 129
-        Caption = 'Pembelian'
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 557
+        Height = 371
+        Align = alClient
+        Color = clGradientInactiveCaption
+        ParentBackground = False
         TabOrder = 0
-        object Label20: TLabel
-          Left = 26
-          Top = 76
-          Width = 69
-          Height = 13
-          Caption = 'Default Diskon'
-        end
-        object Label17: TLabel
-          Left = 26
-          Top = 37
-          Width = 29
-          Height = 13
-          Caption = 'Harga'
-        end
-        object edharga_pemb: TRzNumericEdit
-          Left = 104
-          Top = 34
-          Width = 130
-          Height = 21
+        object GroupBox1: TGroupBox
+          Left = 16
+          Top = 16
+          Width = 273
+          Height = 129
+          Caption = 'Pembelian'
           TabOrder = 0
-          DisplayFormat = ',0;(,0)'
+          object Label20: TLabel
+            Left = 26
+            Top = 76
+            Width = 69
+            Height = 13
+            Caption = 'Default Diskon'
+          end
+          object Label17: TLabel
+            Left = 26
+            Top = 37
+            Width = 29
+            Height = 13
+            Caption = 'Harga'
+          end
+          object edharga_pemb: TRzNumericEdit
+            Left = 104
+            Top = 34
+            Width = 130
+            Height = 21
+            TabOrder = 0
+            DisplayFormat = ',0;(,0)'
+          end
+          object eddisc_pemb: TRzNumericEdit
+            Left = 104
+            Top = 73
+            Width = 130
+            Height = 21
+            TabOrder = 1
+            DisplayFormat = ',0;(,0)'
+          end
         end
-        object eddisc_pemb: TRzNumericEdit
-          Left = 104
-          Top = 73
-          Width = 130
-          Height = 21
+        object GroupBox2: TGroupBox
+          Left = 16
+          Top = 161
+          Width = 273
+          Height = 129
+          Caption = 'Penjualan'
           TabOrder = 1
-          DisplayFormat = ',0;(,0)'
-        end
-      end
-      object GroupBox2: TGroupBox
-        Left = 16
-        Top = 161
-        Width = 273
-        Height = 129
-        Caption = 'Penjualan'
-        TabOrder = 1
-        object Label23: TLabel
-          Left = 26
-          Top = 76
-          Width = 69
-          Height = 13
-          Caption = 'Default Diskon'
-        end
-        object Label25: TLabel
-          Left = 26
-          Top = 37
-          Width = 29
-          Height = 13
-          Caption = 'Harga'
-        end
-        object edharga_penj: TRzNumericEdit
-          Left = 104
-          Top = 34
-          Width = 130
-          Height = 21
-          TabOrder = 0
-          DisplayFormat = ',0;(,0)'
-        end
-        object eddisc_penj: TRzNumericEdit
-          Left = 104
-          Top = 73
-          Width = 130
-          Height = 21
-          TabOrder = 1
-          DisplayFormat = ',0;(,0)'
+          object Label23: TLabel
+            Left = 26
+            Top = 76
+            Width = 69
+            Height = 13
+            Caption = 'Default Diskon'
+          end
+          object Label25: TLabel
+            Left = 26
+            Top = 37
+            Width = 29
+            Height = 13
+            Caption = 'Harga'
+          end
+          object edharga_penj: TRzNumericEdit
+            Left = 104
+            Top = 34
+            Width = 130
+            Height = 21
+            TabOrder = 0
+            DisplayFormat = ',0;(,0)'
+          end
+          object eddisc_penj: TRzNumericEdit
+            Left = 104
+            Top = 73
+            Width = 130
+            Height = 21
+            TabOrder = 1
+            DisplayFormat = ',0;(,0)'
+          end
         end
       end
     end
     object TabSheet3: TRzTabSheet
-      Color = clGradientInactiveCaption
       Caption = 'Akun'
-      object Label19: TLabel
-        Left = 27
-        Top = 28
-        Width = 53
-        Height = 13
-        Caption = 'Persediaan'
-      end
-      object Label22: TLabel
-        Left = 27
-        Top = 57
-        Width = 48
-        Height = 13
-        Caption = 'Pembelian'
-      end
-      object Label24: TLabel
-        Left = 27
-        Top = 88
-        Width = 78
-        Height = 13
-        Caption = 'Retur Pembelian'
-      end
-      object Label26: TLabel
-        Left = 27
-        Top = 151
-        Width = 47
-        Height = 13
-        Caption = 'Penjualan'
-      end
-      object Label28: TLabel
-        Left = 27
-        Top = 183
-        Width = 77
-        Height = 13
-        Caption = 'Retur Penjualan'
-      end
-      object Label30: TLabel
-        Left = 27
-        Top = 119
-        Width = 97
-        Height = 13
-        Caption = 'Potongan Pembelian'
-      end
-      object Edkd_akun: TRzEdit
-        Left = 158
-        Top = 25
-        Width = 90
-        Height = 21
-        Text = ''
-        Color = clInfoBk
-        ReadOnly = True
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 557
+        Height = 371
+        Align = alClient
+        Color = clGradientInactiveCaption
+        ParentBackground = False
         TabOrder = 0
-      end
-      object EdNm_akun: TRzButtonEdit
-        Left = 253
-        Top = 25
-        Width = 228
-        Height = 21
-        Text = ''
-        CharCase = ecUpperCase
-        ReadOnlyColorOnFocus = True
-        TabOrder = 1
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdNm_akunButtonClick
-      end
-      object Edkd_akunPemb: TRzEdit
-        Left = 158
-        Top = 54
-        Width = 90
-        Height = 21
-        Text = ''
-        Color = clInfoBk
-        ReadOnly = True
-        TabOrder = 2
-      end
-      object EdNm_akunPemb: TRzButtonEdit
-        Left = 253
-        Top = 54
-        Width = 228
-        Height = 21
-        Text = ''
-        CharCase = ecUpperCase
-        ReadOnlyColorOnFocus = True
-        TabOrder = 3
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdNm_akunPembButtonClick
-      end
-      object Edkd_akunrt_Pemb: TRzEdit
-        Left = 158
-        Top = 85
-        Width = 90
-        Height = 21
-        Text = ''
-        Color = clInfoBk
-        ReadOnly = True
-        TabOrder = 4
-      end
-      object EdNm_akunRt_Pemb: TRzButtonEdit
-        Left = 253
-        Top = 85
-        Width = 228
-        Height = 21
-        Text = ''
-        CharCase = ecUpperCase
-        ReadOnlyColorOnFocus = True
-        TabOrder = 5
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdNm_akunRt_PembButtonClick
-      end
-      object Edkd_akunPenj: TRzEdit
-        Left = 158
-        Top = 148
-        Width = 90
-        Height = 21
-        Text = ''
-        Color = clInfoBk
-        ReadOnly = True
-        TabOrder = 6
-      end
-      object EdNm_akunPenj: TRzButtonEdit
-        Left = 253
-        Top = 148
-        Width = 228
-        Height = 21
-        Text = ''
-        CharCase = ecUpperCase
-        ReadOnlyColorOnFocus = True
-        TabOrder = 7
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdNm_akunPenjButtonClick
-      end
-      object Edkd_akunRt_Penj: TRzEdit
-        Left = 158
-        Top = 180
-        Width = 90
-        Height = 21
-        Text = ''
-        Color = clInfoBk
-        ReadOnly = True
-        TabOrder = 8
-      end
-      object EdNm_akunRt_Penj: TRzButtonEdit
-        Left = 253
-        Top = 180
-        Width = 228
-        Height = 21
-        Text = ''
-        CharCase = ecUpperCase
-        ReadOnlyColorOnFocus = True
-        TabOrder = 9
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdNm_akunRt_PenjButtonClick
-      end
-      object Edkd_akunPot_Pemb: TRzEdit
-        Left = 158
-        Top = 116
-        Width = 90
-        Height = 21
-        Text = ''
-        Color = clInfoBk
-        ReadOnly = True
-        TabOrder = 10
-      end
-      object EdNm_akunPot_Pemb: TRzButtonEdit
-        Left = 253
-        Top = 116
-        Width = 228
-        Height = 21
-        Text = ''
-        CharCase = ecUpperCase
-        ReadOnlyColorOnFocus = True
-        TabOrder = 11
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdNm_akunPot_PembButtonClick
+        object Label19: TLabel
+          Left = 27
+          Top = 28
+          Width = 53
+          Height = 13
+          Caption = 'Persediaan'
+        end
+        object Label22: TLabel
+          Left = 27
+          Top = 57
+          Width = 48
+          Height = 13
+          Caption = 'Pembelian'
+        end
+        object Label24: TLabel
+          Left = 27
+          Top = 88
+          Width = 78
+          Height = 13
+          Caption = 'Retur Pembelian'
+        end
+        object Label26: TLabel
+          Left = 27
+          Top = 151
+          Width = 47
+          Height = 13
+          Caption = 'Penjualan'
+        end
+        object Label28: TLabel
+          Left = 27
+          Top = 183
+          Width = 77
+          Height = 13
+          Caption = 'Retur Penjualan'
+        end
+        object Label30: TLabel
+          Left = 27
+          Top = 119
+          Width = 97
+          Height = 13
+          Caption = 'Potongan Pembelian'
+        end
+        object Edkd_akun: TRzEdit
+          Left = 158
+          Top = 25
+          Width = 90
+          Height = 21
+          Text = ''
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 0
+        end
+        object Edkd_akunPemb: TRzEdit
+          Left = 158
+          Top = 54
+          Width = 90
+          Height = 21
+          Text = ''
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 1
+        end
+        object Edkd_akunPenj: TRzEdit
+          Left = 158
+          Top = 148
+          Width = 90
+          Height = 21
+          Text = ''
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 2
+        end
+        object Edkd_akunPot_Pemb: TRzEdit
+          Left = 158
+          Top = 116
+          Width = 90
+          Height = 21
+          Text = ''
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 3
+        end
+        object Edkd_akunrt_Pemb: TRzEdit
+          Left = 158
+          Top = 85
+          Width = 90
+          Height = 21
+          Text = ''
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 4
+        end
+        object Edkd_akunRt_Penj: TRzEdit
+          Left = 158
+          Top = 180
+          Width = 90
+          Height = 21
+          Text = ''
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 5
+        end
+        object EdNm_akun: TRzButtonEdit
+          Left = 253
+          Top = 25
+          Width = 228
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 6
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdNm_akunButtonClick
+        end
+        object EdNm_akunPemb: TRzButtonEdit
+          Left = 253
+          Top = 54
+          Width = 228
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 7
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdNm_akunPembButtonClick
+        end
+        object EdNm_akunPenj: TRzButtonEdit
+          Left = 253
+          Top = 148
+          Width = 228
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 8
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdNm_akunPenjButtonClick
+        end
+        object EdNm_akunPot_Pemb: TRzButtonEdit
+          Left = 253
+          Top = 116
+          Width = 228
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 9
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdNm_akunPot_PembButtonClick
+        end
+        object EdNm_akunRt_Pemb: TRzButtonEdit
+          Left = 253
+          Top = 85
+          Width = 228
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 10
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdNm_akunRt_PembButtonClick
+        end
+        object EdNm_akunRt_Penj: TRzButtonEdit
+          Left = 253
+          Top = 180
+          Width = 228
+          Height = 21
+          Text = ''
+          CharCase = ecUpperCase
+          ReadOnlyColorOnFocus = True
+          TabOrder = 11
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = EdNm_akunRt_PenjButtonClick
+        end
       end
     end
   end

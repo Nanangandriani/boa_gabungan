@@ -888,9 +888,10 @@ object FPerc_Barang: TFPerc_Barang
     Top = 24
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftString
         Name = 'mixing_no'
-        Value = nil
+        ParamType = ptInput
+        Value = '0002/01/III/24'
       end>
   end
   object DsQPermt_Material_det: TDataSource
@@ -1030,7 +1031,7 @@ object FPerc_Barang: TFPerc_Barang
     Top = 152
   end
   object ActMenu: TActionManager
-    Left = 336
+    Left = 576
     Top = 152
     StyleName = 'Platform Default'
     object ActBaru: TAction

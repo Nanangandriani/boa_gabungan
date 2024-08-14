@@ -45,8 +45,8 @@ type
     dxBarBeri: TdxBarButton;
     dxBarTerima: TdxBarButton;
     dxBarLargeButton1: TdxBarLargeButton;
-    QRptPermintaan: TUniQuery;
-    DbRptPermintaan: TfrxDBDataset;
+    QRptBon: TUniQuery;
+    DbRptBon: TfrxDBDataset;
     DsQPermt_Material_det: TDataSource;
     QPermt_Material_det: TUniQuery;
     MemPermt_Material: TMemTableEh;
@@ -163,13 +163,14 @@ end;
 
 procedure TFBonPermt_Barang.ActPrintExecute(Sender: TObject);
 begin
-with QRptPermintaan do
+with QRptBon do
 begin
   close;
   sql.Clear;
-  sql.Text:='select A.tgl_permt,a.pic,a.app1,a.app2,b.*,c.nm_material,d.ttd,e.ttd ttd2,kdsbu from t_permt_barang2 a INNER JOIN'+
-  ' t_permt_barang2_det b on a.notrans=b.notrans inner join t_material c on b.kd_material=c.kd_material LEFT JOIN t_user d'+
-  ' on a.pic=d.nama LEFT JOIN t_user e on a.app1=e.nama where a.notrans='+QuotedStr(MemPermt_Material['notrans']);
+  sql.Text:='select A.trans_date,a.sbu_code,c.item_name,b.*,a.created_by,a.app1,a.app2,d.ttd,e.ttd ttd2 from '+
+  ' warehouse.t_item_request a INNER JOIN warehouse.t_item_request_det b on a.trans_no=b.trans_no '+
+  ' inner join t_item c on b.item_code=c.item_code LEFT JOIN t_user d on a.app1=d.code LEFT JOIN t_user e on a.app2=e.code'+
+  ' where a.trans_no='+QuotedStr(MemPermt_Material['trans_no']);
   Execute;
 end;
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\BonPermintaanBarang.Fr3');
@@ -187,7 +188,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
-      ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,kdsbu,'+
+      ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,sbu_code,'+
       ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from warehouse.t_item_request order by created_at Desc';
       open;
     end;
@@ -203,9 +204,9 @@ begin
       close;
       sql.Clear;
       sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
-        ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,kdsbu,'+
+        ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,sbu_code,'+
         ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from warehouse.t_item_request  '+
-        ' where kdsbu='+QuotedStr(loksbu)+' order by id Desc';
+        ' where sbu_code='+QuotedStr(loksbu)+' order by id Desc';
       open;
     end;
       MemPermt_Material.Close;
@@ -286,5 +287,8 @@ procedure TFBonPermt_Barang.FormDestroy(Sender: TObject);
 begin
   realFBonPermt_Barang:=nil;
 end;
+
+initialization
+RegisterClass(TFBonPermt_Barang);
 
 end.

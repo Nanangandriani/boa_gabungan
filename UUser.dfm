@@ -107,8 +107,6 @@ object FUser: TFUser
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = -200
-    ExplicitWidth = 828
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -123,7 +121,7 @@ object FUser: TFUser
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New   '
       OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction

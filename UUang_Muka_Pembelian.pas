@@ -60,6 +60,7 @@ type
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,8 +81,10 @@ begin
    with  FNew_UM_Pembelian do
    begin
      Show;
+     StatusTr:=0;
      clear;
      BSimpan.Visible:=True;
+     BEdit.Visible:=false;
      DTP_UM.Date:=Now;
    end;
 end;
@@ -94,9 +97,40 @@ begin
     if QUM.Active=False then QUM.Active:=True;
 end;
 
+procedure TFUang_Muka_Pembelian.ActUpdateExecute(Sender: TObject);
+begin
+   with  FNew_UM_Pembelian do
+   begin
+     Show;
+     StatusTr:=1;
+     BSimpan.Visible:=false;
+     BEdit.Visible:=true;
+
+     Ed_No_trans.Text:=QUM.fieldbyname('no_trans').AsString;
+     DTP_UM.Date:=QUM.fieldbyname('trans_date').Value;
+     EdKd_supp.Text:=QUM.fieldbyname('supplier_code').AsString;
+     Ednm_supp.Text:=QUM.fieldbyname('supplier_name').AsString;
+     EdUM.Value:=QUM.fieldbyname('um_value').Value;
+     Edkd_akun.Text:=QUM.fieldbyname('um_account_code').Asstring;
+     Edhari.Text:=QUM.fieldbyname('trans_day').Value;
+     Edbln.Text:=QUM.fieldbyname('trans_month').Value;
+     Edth.Text:=QUM.fieldbyname('trans_year').Value;
+     CbPo.text:=QUM.fieldbyname('po_no').AsString;
+     Cb_Curr.Text:=QUM.fieldbyname('currency').Value;
+     Ed_kurs.Text:=QUM.fieldbyname('exchange_rate').Value;
+
+   end;
+
+
+
+end;
+
 procedure TFUang_Muka_Pembelian.FormShow(Sender: TObject);
 begin
     ActRoExecute(sender);
 end;
+
+initialization
+registerclass(TFUang_Muka_Pembelian);
 
 end.

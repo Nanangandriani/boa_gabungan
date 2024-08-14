@@ -38,7 +38,6 @@ type
     Label13: TLabel;
     Label14: TLabel;
     RzComboBox1: TRzComboBox;
-    BitBtn1: TBitBtn;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -50,7 +49,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure CbDariSelect(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -246,10 +244,10 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select code from t_wh where wh_name='+QuotedStr(Cbdari.Text);
+    sql.Text:='select wh_code from t_wh where wh_name='+QuotedStr(Cbdari.Text);
     Execute;
   end;
-   kd_gdngdari:=dm.Qtemp2['code'];
+   kd_gdngdari:=dm.Qtemp2['wh_code'];
    if loksbu='' then
     begin
       with dm.Qtemp do
@@ -269,7 +267,7 @@ begin
         sql.Clear;
         sql.Text:=' select * from t_wh where (category='+QuotedStr(CbKategori.Text)+''+
                   ' or category=''LAIN-LAIN'') AND (sbu_code='+QuotedStr(loksbu)+' OR sbu_code='''')'+
-                  ' and code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
+                  ' and wh_code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
         ExecSQL;
       end;
     end;
@@ -300,10 +298,10 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select code from t_wh where wh_name='+QuotedStr(CbKe.Text);
+    sql.Text:='select wh_code from t_wh where wh_name='+QuotedStr(CbKe.Text);
     Execute;
   end;
-   kd_gdngke:=dm.Qtemp['code'];
+   kd_gdngke:=dm.Qtemp['wh_code'];
 end;
 
 Procedure TFNew_TransferBarang.Clear;
@@ -359,8 +357,7 @@ end;
 
 Procedure TFNew_TransferBarang.Simpan;
 begin
-//Autonumber;
-  idmenu:='M4104';
+  idmenu:='M04004';
   strday2:=DtTransfer.Date;
   Edno.Text:=getNourut(strday2,'warehouse.t_item_transfer','');
   if messageDlg ('Anda Yakin Simpan No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
@@ -369,7 +366,7 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='Insert into warehouse.t_item_transfer(wh_category_code,trans_date,trans_no,wh_code_from,wh_code_to,note,trans_year,kd_sbu,created_by,trans_month,trans_day,order_no)'+
+      sql.Text:='Insert into warehouse.t_item_transfer(wh_category_code,trans_date,trans_no,wh_code_from,wh_code_to,note,trans_year,sbu_code,created_by,trans_month,trans_day,order_no)'+
                 ' values(:parkt,:partgl_transfer,:parno_transfer,:parDari,:parKe,:parket,:partahun,:parkd_sbu,:parpic,:parbln,:partglno,:parnourut)';
                 ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
                 ParamByName('parno_transfer').Value:=Edno.Text;
@@ -417,7 +414,7 @@ begin
     Close;
     sql.Clear;
     sql.Text:=' Update warehouse.t_item_transfer set trans_date=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
-              ' wh_code_from=:pardari,wh_code_to=:parke,note=:parket,wh_category_code=:parkt,kd_sbu=:parkd_sbu where trans_no=:parno_transfer ';
+              ' wh_code_from=:pardari,wh_code_to=:parke,note=:parket,wh_category_code=:parkt,sbu_code=:parkd_sbu where trans_no=:parno_transfer ';
               ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
               ParamByName('parno_transfer').Value:=Edno.Text;
               ParamByName('pardari').Value:=kd_gdngdari;
@@ -466,15 +463,6 @@ begin
   FTransfer_Barang.ActRoExecute(sender);
 end;
 
-procedure TFNew_TransferBarang.BitBtn1Click(Sender: TObject);
-begin
-  idmenu:='M4104';
-  strday2:=DtTransfer.Date;
- // kd_add:=Edit1.Text;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_transfer','');
-//  Edit2.Text:=order_no;
-end;
-
 procedure TFNew_TransferBarang.BSimpanClick(Sender: TObject);
 begin
   if not dm.Koneksi.InTransaction then
@@ -521,7 +509,7 @@ begin
       sql.Clear;
       sql.Text:=' select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a inner join warehouse.t_item_stock b on '+
                 ' a.item_stock_code=b.item_stock_code inner join t_supplier c on b.supplier_code=c.supplier_code '+
-                ' inner join t_wh d on a.wh_code=d.code where a."outstanding" > 0 AND d.wh_name='+QuotedStr(CbDari.Text);
+                ' inner join t_wh d on a.wh_code=d.wh_code where a."outstanding" > 0 AND d.wh_name='+QuotedStr(CbDari.Text);
       ExecSQL;
     end;
     FItem_TransferBarang.Qbarang.Open;

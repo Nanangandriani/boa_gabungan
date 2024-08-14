@@ -30,7 +30,8 @@ object FJabatan: TFJabatan
         EditButtons = <>
         FieldName = 'position_code'
         Footers = <>
-        Title.Caption = 'Kode'
+        Title.Caption = 'Kode Jabatan'
+        Width = 100
       end
       item
         CellButtons = <>
@@ -645,7 +646,7 @@ object FJabatan: TFJabatan
   object QJab: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_position order by position_code ASC')
+      'select * from t_position order by position_code Asc')
     Left = 440
     Top = 24
     object QJabid: TGuidField
@@ -653,7 +654,6 @@ object FJabatan: TFJabatan
       Size = 38
     end
     object QJabposition_code: TIntegerField
-      AutoGenerateValue = arAutoInc
       FieldName = 'position_code'
       Required = True
     end

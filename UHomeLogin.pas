@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.StdCtrls,
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, RzPanel, Vcl.Mask, RzEdit, ShellAPI,
-  RzCmboBx, RzLabel, Vcl.ComCtrls ;
+  RzCmboBx, RzLabel, Vcl.ComCtrls;
 
 type
   TFHomeLogin = class(TForm)
@@ -21,6 +21,7 @@ type
     procedure RzPanel1Paint(Sender: TObject);
     procedure ImgTransaksiClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
+    procedure EdPassKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -35,9 +36,17 @@ implementation
 
 {$R *.dfm}
 
-uses UMainMenu;
+uses UMainMenu, UDataModule;
     //FMainMenu.show;
     //FHomeLogin.Close;
+
+procedure TFHomeLogin.EdPassKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+     ImgTransaksiClick(sender);
+  end;
+end;
 
 procedure TFHomeLogin.Image1Click(Sender: TObject);
 begin

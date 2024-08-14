@@ -287,12 +287,17 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Top = 304
     Width = 1218
     Height = 206
+    Top = 261
+    Width = 1218
+    Height = 249
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
+    ExplicitTop = 252
+    ExplicitWidth = 1212
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Alamat Pelanggan'
@@ -303,6 +308,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Top = 0
         Width = 1214
         Height = 181
+        Height = 224
         Align = alClient
         DataSource = DSDetailPel
         DynProps = <>
@@ -387,6 +393,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Top = 0
     Width = 1218
     Height = 304
+    Height = 261
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
@@ -394,7 +401,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     ExplicitHeight = 289
     object Label14: TLabel
       Left = 663
-      Top = 194
       Width = 22
       Height = 15
       Caption = 'Hari'
@@ -531,6 +537,9 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Width = 80
       Height = 15
       Caption = 'Jenis Penjualan'
+      Width = 79
+      Height = 15
+      Caption = 'Type Penjualan'
     end
     object Label27: TLabel
       Left = 476
@@ -587,6 +596,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
     object Label4: TLabel
       Left = 573
       Top = 47
+      Top = 76
       Width = 3
       Height = 15
       Caption = ':'
@@ -594,6 +604,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
     object Label7: TLabel
       Left = 476
       Top = 47
+      Top = 76
       Width = 49
       Height = 15
       Caption = 'Kode Pos'
@@ -608,6 +619,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
     object btMasterDetailPel: TSpeedButton
       Left = 20
       Top = 276
+      Top = 225
       Width = 172
       Height = 22
       Caption = 'Add Master Detail Pelanggan'
@@ -733,6 +745,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
     object Ednamawilayah: TEdit
       Left = 691
       Top = 15
+      Left = 588
+      Top = 44
       Width = 349
       Height = 23
       ReadOnly = True
@@ -743,6 +757,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Left = 588
       Top = 44
       Width = 125
+      Top = 73
+      Width = 185
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 10
@@ -816,6 +832,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Left = 588
       Top = 15
       Width = 97
+      Width = 240
       Height = 23
       Text = ''
       TabOrder = 17

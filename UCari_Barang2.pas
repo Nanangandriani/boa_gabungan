@@ -31,7 +31,7 @@ implementation
 {$R *.dfm}
 
 uses Udatamodule, UItem_TransferBarang, UNew_PengStok, UMainMenu,
-  UNew_PercBarang;
+  UNew_PercBarang, UNew_MasterFormulaTest;
 var
   RealFCari_Barang2: TFCari_Barang2;
 function FCari_Barang2: TFCari_Barang2;
@@ -66,6 +66,25 @@ begin
       MemMaterial['kd_gudang']:=Qbarang['wh_code'];
       MemMaterial['gudang']:=Qbarang['wh_name'];
       MemMaterial.Post;
+    end;
+  end;
+
+  if VMenu='2' then
+  begin
+    with FNew_MasterFormula do
+    begin
+      Memformuladet.Edit;
+      Memformuladet['item_code']:=QBarang.FieldByName('item_stock_code').AsString;
+      Memformuladet['supplier_name']:=Qbarang.FieldByName('supplier_name').AsString;
+      Memformuladet['supplier_code']:=Qbarang.FieldByName('supplier_code').AsString;
+      Memformuladet['stock_code']:=Qbarang.FieldByName('stock_code').AsString;
+      Memformuladet['unit']:=Qbarang.FieldByName('unit_conv').AsString;
+      Memformuladet['wh']:=Qbarang.FieldByName('wh_name').AsString;
+      Memformuladet['wh_code']:=Qbarang.FieldByName('wh_code').AsString;
+      Memformuladet['pack_unit']:=Qbarang.FieldByName('unit').AsString;
+      Memformuladet['pack_qty']:=Qbarang.FieldByName('qty_conv').AsString;
+      Memformuladet.Post;
+      DBGridEh2ColEnter(sender);
     end;
   end;
   Close;

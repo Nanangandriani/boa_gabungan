@@ -161,7 +161,7 @@ object FReturnPembelian: TFReturnPembelian
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 735
+        Width = 789
         Height = 118
         Align = alClient
         DataSource = DsDetail
@@ -2091,7 +2091,6 @@ object FReturnPembelian: TFReturnPembelian
     Top = 88
   end
   object MemReturn: TMemTableEh
-    Active = True
     Params = <>
     DataDriver = DsdReturn
     Left = 320
@@ -2133,7 +2132,6 @@ object FReturnPembelian: TFReturnPembelian
       'ORDER BY'
       #9'a.return_no DESC'
       '')
-    Active = True
     Left = 240
     Top = 32
   end

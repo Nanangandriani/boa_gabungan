@@ -95,4 +95,7 @@ begin
     end;
 end;
 
+initialization
+RegisterClass(TFSPB);
+
 end.

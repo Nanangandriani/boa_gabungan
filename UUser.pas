@@ -178,4 +178,7 @@ begin
   Refresh;
 end;
 
+initialization
+RegisterClass(TFUser);
+
 end.

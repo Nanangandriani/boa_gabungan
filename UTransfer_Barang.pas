@@ -127,8 +127,8 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
-      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code '+
-      ' INNER JOIN t_wh c on a.wh_code_to=c.code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code order by trans_no desc';
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
+      ' INNER JOIN t_wh c on a.wh_code_to=c.wh_code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code order by trans_no desc';
       ExecSQL;
     end;
     QTransfer.Active:=True;
@@ -144,9 +144,9 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
-      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.code '+
-      ' INNER JOIN t_wh c on a.wh_code_to=c.code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code '+
-      ' where sbu_code='+QuotedStr(loksbu)+' order by trans_no desc';
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
+      ' INNER JOIN t_wh c on a.wh_code_to=c.wh_code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code '+
+      ' where a.sbu_code='+QuotedStr(loksbu)+' order by a.trans_no desc';
       ExecSQL;
     end;
     QTransfer.Active:=True;
@@ -240,5 +240,8 @@ procedure TFTransfer_Barang.FormShow(Sender: TObject);
 begin
 //dxbarRefreshClick(sender);
 end;
+
+initialization
+RegisterClass(TFTransfer_Barang);
 
 end.

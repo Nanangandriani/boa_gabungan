@@ -61,9 +61,6 @@ uses
   UNew_KelompokBarang in 'UNew_KelompokBarang.pas' {FNew_KelompokBarang},
   UPenjualan in 'UPenjualan.pas' {Flist_penjualan},
   UNew_Penjualan in 'UNew_Penjualan.pas' {Finput_penjualan},
-  Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
-  Ubrowse_faktur_pajak in 'Ubrowse_faktur_pajak.pas' {Fbrowse_faktur_pajak},
-  UListSPmuat in 'UListSPmuat.pas' {Flist_sp_muat},
   UDaftarKlasifikasi in 'UDaftarKlasifikasi.pas' {FDaftarKlasifikasi},
   USetMasterPelanggan in 'USetMasterPelanggan.pas' {FSetMasterPelanggan},
   USetMasterWilayah in 'USetMasterWilayah.pas' {FSetMasterWilayah},
@@ -92,14 +89,7 @@ uses
   UNew_HakAkses in 'UNew_HakAkses.pas' {FNew_Hak_Akses},
   UPeng_stok in 'UPeng_stok.pas' {FPeng_Stok},
   UNew_PengStok in 'UNew_PengStok.pas' {FNew_PengStok},
-  UCari_Barang2 in 'UCari_Barang2.pas' {FSearch_Barang},
-  maenangka in 'maenangka.pas',
-  UMaster_Menu in 'UMaster_Menu.pas' {FMaster_Menu},
-  UMaster_PercBarang in 'UMaster_PercBarang.pas' {FMaster_PercBarang},
-  UUang_Muka_Pembelian in 'UUang_Muka_Pembelian.pas' {FUang_Muka_Pembelian},
-  UInput_um in 'UInput_um.pas' {FNew_UM_Pembelian},
-  UMenu in 'UMenu.pas' {FMenu},
-  UNew_Menu in 'UNew_Menu.pas' {FNew_menu},
+  UCari_Barang2 in 'UCari_Barang2.pas' {FCari_Barang2},
   UPercampuran_Barang in 'UPercampuran_Barang.pas' {FPerc_Barang},
   UNew_PercBarang in 'UNew_PercBarang.pas' {FNew_PercBarang},
   UMasterWilayah in 'UMasterWilayah.pas' {FMasterWilayah},
@@ -152,9 +142,29 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFHomeSreen, FHomeSreen);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFMainMenu, FMainMenu);
-  Application.CreateForm(TFListProduk, FListProduk);
+  Application.CreateForm(TFUser, FUser);
+  Application.CreateForm(TFNew_User, FNew_User);
+  Application.CreateForm(TFNew_UM_Pembelian, FNew_UM_Pembelian);
+  Application.CreateForm(TFDelivery_Order_Sumber, FDelivery_Order_Sumber);
+  Application.CreateForm(TFSetDeliveryOrder, FSetDeliveryOrder);
+  Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
+  Application.CreateForm(TFListPerintahMuat, FListPerintahMuat);
+  Application.CreateForm(TFListSalesOrder, FListSalesOrder);
+  Application.CreateForm(TFSalesOrder, FSalesOrder);
+  Application.CreateForm(TFNew_SalesOrder, FNew_SalesOrder);
+  Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);
+  Application.CreateForm(TFbrowse_faktur_pajak, Fbrowse_faktur_pajak);
+  Application.CreateForm(TFMasterData, FMasterData);
+  Application.CreateForm(TFMasterWilayah, FMasterWilayah);
+  Application.CreateForm(TFNew_Penjualan, FNew_Penjualan);
+  Application.CreateForm(TFListDeliveryOrder, FListDeliveryOrder);
+  Application.CreateForm(TFNewDeliveryOrder, FNewDeliveryOrder);
+  Application.CreateForm(TFNew_MasterBiayaDO, FNew_MasterBiayaDO);
+  Application.CreateForm(TFListMasterBiayaDO, FListMasterBiayaDO);
+  Application.CreateForm(TFListKlasifikasi, FListKlasifikasi);
+  //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
-  Application.CreateForm(TFListKonvProduk, FListKonvProduk);
+ // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
   Application.CreateForm(TFNewKonv_produk, FNewKonv_produk);
   Application.CreateForm(TFListGudang, FListGudang);
   Application.CreateForm(TFNew_Gudang, FNew_Gudang);
@@ -207,9 +217,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
   Application.CreateForm(TFHak_Akses, FHak_Akses);
-  Application.CreateForm(TFMaster_Menu, FMaster_Menu);
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
-  //Application.CreateForm(TFDaf_EntryCek, FDaf_EntryCek);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
   Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
@@ -237,6 +245,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKlasifikasi, FDaftarKlasifikasi);
   Application.CreateForm(TFSetMasterPelanggan, FSetMasterPelanggan);
   Application.CreateForm(TFSetMasterWilayah, FSetMasterWilayah);
+  //  Application.CreateForm(TFCari_Menu, FCari_Menu);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

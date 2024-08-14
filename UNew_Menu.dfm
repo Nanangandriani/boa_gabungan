@@ -3,8 +3,8 @@ object FNew_menu: TFNew_menu
   Top = 0
   BorderStyle = bsDialog
   Caption = 'FNew_menu'
-  ClientHeight = 188
-  ClientWidth = 394
+  ClientHeight = 248
+  ClientWidth = 398
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,96 +17,17 @@ object FNew_menu: TFNew_menu
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
-  object Label1: TLabel
-    Left = 10
-    Top = 52
-    Width = 46
-    Height = 13
-    Caption = 'No. Menu'
-  end
-  object Label2: TLabel
-    Left = 10
-    Top = 86
-    Width = 56
-    Height = 13
-    Caption = 'Nama Menu'
-  end
-  object Label7: TLabel
-    Left = 107
-    Top = 86
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object Label8: TLabel
-    Left = 107
-    Top = 52
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object Label3: TLabel
-    Left = 10
-    Top = 19
-    Width = 59
-    Height = 13
-    Caption = 'Nama Group'
-  end
-  object Label4: TLabel
-    Left = 107
-    Top = 19
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object SpeedButton1: TSpeedButton
-    Left = 351
-    Top = 16
-    Width = 28
-    Height = 21
-    Caption = '--'
-    OnClick = SpeedButton1Click
-  end
-  object Label5: TLabel
-    Left = 10
-    Top = 120
-    Width = 54
-    Height = 13
-    Caption = 'Nama Form'
-  end
-  object Label6: TLabel
-    Left = 107
-    Top = 120
-    Width = 4
-    Height = 13
-    Caption = ':'
-  end
-  object Edkd: TEdit
-    Left = 131
-    Top = 49
-    Width = 112
-    Height = 21
-    ReadOnly = True
-    TabOrder = 0
-  end
-  object EdNm: TEdit
-    Left = 131
-    Top = 83
-    Width = 248
-    Height = 21
-    TabOrder = 1
-  end
   object Panel2: TPanel
     Left = 0
-    Top = 156
-    Width = 394
+    Top = 216
+    Width = 398
     Height = 32
     Align = alBottom
-    TabOrder = 2
-    ExplicitTop = 155
-    ExplicitWidth = 390
+    TabOrder = 0
+    ExplicitTop = 156
+    ExplicitWidth = 394
     object BBatal: TRzBitBtn
-      Left = 318
+      Left = 322
       Top = 1
       Height = 30
       Align = alRight
@@ -165,10 +86,10 @@ object FNew_menu: TFNew_menu
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 314
+      ExplicitLeft = 318
     end
     object BSimpan: TRzBitBtn
-      Left = 243
+      Left = 247
       Top = 1
       Height = 30
       Align = alRight
@@ -227,22 +148,134 @@ object FNew_menu: TFNew_menu
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 239
+      ExplicitLeft = 243
     end
   end
-  object EdGroup: TRzComboBox
-    Left = 131
-    Top = 16
-    Width = 214
-    Height = 21
-    TabOrder = 3
-    OnSelect = EdGroupSelect
-  end
-  object Edlink: TEdit
-    Left = 131
-    Top = 117
-    Width = 248
-    Height = 21
-    TabOrder = 4
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 398
+    Height = 216
+    Align = alClient
+    Color = clGradientInactiveCaption
+    ParentBackground = False
+    TabOrder = 1
+    ExplicitWidth = 394
+    ExplicitHeight = 156
+    object Label1: TLabel
+      Left = 10
+      Top = 52
+      Width = 46
+      Height = 13
+      Caption = 'No. Menu'
+    end
+    object Label2: TLabel
+      Left = 10
+      Top = 86
+      Width = 56
+      Height = 13
+      Caption = 'Nama Menu'
+    end
+    object Label7: TLabel
+      Left = 107
+      Top = 86
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label8: TLabel
+      Left = 107
+      Top = 52
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label3: TLabel
+      Left = 10
+      Top = 19
+      Width = 59
+      Height = 13
+      Caption = 'Nama Group'
+    end
+    object Label4: TLabel
+      Left = 107
+      Top = 19
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 351
+      Top = 16
+      Width = 28
+      Height = 21
+      Caption = '--'
+      OnClick = SpeedButton1Click
+    end
+    object Label5: TLabel
+      Left = 10
+      Top = 120
+      Width = 54
+      Height = 13
+      Caption = 'Nama Form'
+    end
+    object Label6: TLabel
+      Left = 107
+      Top = 120
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Label9: TLabel
+      Left = 10
+      Top = 152
+      Width = 19
+      Height = 13
+      Caption = 'Unit'
+    end
+    object Label10: TLabel
+      Left = 107
+      Top = 152
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
+    object Edkd: TEdit
+      Left = 131
+      Top = 49
+      Width = 112
+      Height = 21
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object EdNm: TEdit
+      Left = 131
+      Top = 83
+      Width = 248
+      Height = 21
+      TabOrder = 1
+    end
+    object EdGroup: TRzComboBox
+      Left = 131
+      Top = 16
+      Width = 214
+      Height = 21
+      TabOrder = 2
+      OnSelect = EdGroupSelect
+    end
+    object Edlink: TEdit
+      Left = 131
+      Top = 117
+      Width = 248
+      Height = 21
+      TabOrder = 3
+    end
+    object Edunit: TEdit
+      Left = 131
+      Top = 149
+      Width = 248
+      Height = 21
+      TabOrder = 4
+    end
   end
 end

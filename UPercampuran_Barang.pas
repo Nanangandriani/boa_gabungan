@@ -145,15 +145,15 @@ begin
    with QPermt_Material do
    begin
      Filtered:=False;
-     Filter:=' kd_sbu='+QuotedStr(loksbu);
+     Filter:=' sbu_code='+QuotedStr(loksbu);
      FilterOptions:=[];
      Filtered:=True;
    end;
     QPermt_Material.Open;
     MemPermt_Material.Close;
     MemPermt_Material.Open;
- //   QPermt_Material_det.Close;
-//    QPermt_Material_det.Open;
+    QPermt_Material_det.Close;
+    QPermt_Material_det.Open;
   end;
 end;
 
@@ -219,14 +219,14 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_permt_material';
+    sql.Text:='select * from warehouse.t_item_mixing';
     ExecSQL;
   end;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='Update t_permt_material set Status=''In-Proses'' where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
+    sql.Text:='Update warehouse.t_item_mixing set Status=''In-Proses'' where mixing_no='+QuotedStr(DBGridPermt.Fields[0].AsString);
     ExecSQL;
   end;
   ActRoExecute(sender);
@@ -260,14 +260,14 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_permt_material';
+    sql.Text:='select * from warehouse.t_item_mixing';
     ExecSQL;
   end;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='Update t_permt_material set Status=''Selesai'' where no_permintaan='+QuotedStr(DBGridPermt.Fields[0].AsString);
+    sql.Text:='Update warehouse.t_item_mixing set Status=''Selesai'' where mixing_no='+QuotedStr(DBGridPermt.Fields[0].AsString);
     ExecSQL;
   end;
   ActRoExecute(sender);
@@ -288,5 +288,8 @@ procedure TFPerc_Barang.FormDestroy(Sender: TObject);
 begin
   RealFPerc_Barang:=nil;
 end;
+
+initialization
+registerclass(TFPerc_Barang);
 
 end.

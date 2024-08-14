@@ -435,4 +435,7 @@ begin
   end;
 end;
 
+initialization
+RegisterClass(TFlist_sp_muat);
+
 end.

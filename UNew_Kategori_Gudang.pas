@@ -183,10 +183,10 @@ begin
         close;
         sql.clear;
         sql.Text:='Insert into t_wh_category(category_code,category,created_at,created_by ) '+
-                  'Values(:category_code,:category,:created_at,:created_by)';
+                  'Values(:category_code,:category,now(),:created_by)';
         parambyname('category_code').Value:=Edkd.Text;
         parambyname('category').Value:=Ednm.Text;
-        parambyname('created_at').AsDateTime:=Now;
+       // parambyname('created_at').AsDateTime:=Now;
         parambyname('created_by').AsString:='Admin';
         ExecSQL;
       end;

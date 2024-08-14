@@ -22,7 +22,6 @@ object FSPB: TFSPB
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitTop = 8
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

@@ -47,8 +47,8 @@ object FNew_Kategori_Gudang: TFNew_Kategori_Gudang
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 65
-    ExplicitWidth = 380
+    ExplicitTop = 73
+    ExplicitWidth = 382
     object BBatal: TRzBitBtn
       Left = 310
       Top = 1
@@ -109,7 +109,7 @@ object FNew_Kategori_Gudang: TFNew_Kategori_Gudang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 304
+      ExplicitLeft = 306
     end
     object BSimpan: TRzBitBtn
       Left = 235
@@ -171,7 +171,7 @@ object FNew_Kategori_Gudang: TFNew_Kategori_Gudang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 229
+      ExplicitLeft = 231
     end
     object BEdit: TRzBitBtn
       Left = 160
@@ -233,7 +233,7 @@ object FNew_Kategori_Gudang: TFNew_Kategori_Gudang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 154
+      ExplicitLeft = 156
     end
   end
   object Ednm: TEdit

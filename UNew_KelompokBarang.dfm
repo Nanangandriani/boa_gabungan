@@ -3,8 +3,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'FNew_KelompokBarang'
-  ClientHeight = 555
-  ClientWidth = 582
+  ClientHeight = 546
+  ClientWidth = 638
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,14 +17,14 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   object Panel1: TPanel
     Left = 0
     Top = 183
-    Width = 576
+    Width = 638
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 165
+    ExplicitTop = 182
     ExplicitWidth = 572
     object BTutup: TRzBitBtn
-      Left = 500
+      Left = 562
       Top = 1
       Height = 39
       Align = alRight
@@ -86,7 +86,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       ExplicitLeft = 496
     end
     object BSimpan: TRzBitBtn
-      Left = 350
+      Left = 412
       Top = 1
       Height = 39
       Align = alRight
@@ -210,7 +210,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 275
+      Left = 337
       Top = 1
       Height = 39
       Align = alRight
@@ -272,7 +272,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       ExplicitLeft = 271
     end
     object BRefresh: TRzBitBtn
-      Left = 425
+      Left = 487
       Top = 1
       Height = 39
       Align = alRight
@@ -337,7 +337,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   object DBGridEh7: TDBGridEh
     Left = 0
     Top = 224
-    Width = 576
+    Width = 638
     Height = 322
     Align = alBottom
     DataSource = DsKelompok
@@ -364,7 +364,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         FieldName = 'type'
         Footers = <>
         Title.Caption = 'Jenis'
-        Width = 180
+        Width = 160
       end
       item
         CellButtons = <>
@@ -389,6 +389,15 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'code'
+        Footers = <>
+        Title.Caption = 'Kode'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'group_name'
         Footers = <>
         Title.Caption = 'Kelompok'
@@ -400,13 +409,14 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 576
+    Width = 638
     Height = 183
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitHeight = 193
+    ExplicitWidth = 572
+    ExplicitHeight = 182
     object Label6: TLabel
       Left = 106
       Top = 17

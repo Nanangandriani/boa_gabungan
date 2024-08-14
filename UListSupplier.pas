@@ -253,4 +253,7 @@ begin
    Refresh;
 end;
 
+initialization
+RegisterClass(TFListSupplier);
+
 end.

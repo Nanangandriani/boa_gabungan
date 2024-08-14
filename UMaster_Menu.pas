@@ -37,6 +37,9 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,14 +47,21 @@ type
     kdmaster:string;
   end;
 
-var
-  FMaster_Menu: TFMaster_Menu;
+Function FMaster_Menu: TFMaster_Menu;
 
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UMainMenu;
+
+var RealFMaster_Menu: TFMaster_Menu;
+
+function FMaster_Menu: TFMaster_Menu;
+begin
+  if RealFMaster_menu<> nil then FMAster_menu:= RealFMaster_Menu
+  else  Application.CreateForm(TFMaster_Menu, Result);
+end;
 
 procedure TFMaster_Menu.BBatalClick(Sender: TObject);
 begin
@@ -77,7 +87,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_menu(master_code,menu_code,menu)values('+QuotedStr(kdmaster)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdDesk.Text)+')';
+      sql.Text:='insert into t_menu(master_code,menu_code,menu)vaues('+QuotedStr(kdmaster)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdDesk.Text)+')';
       ExecSQL;
     end;
   end;
@@ -96,23 +106,20 @@ begin
   Cbmaster.Text:='';
   Edkd.Clear;
   EdDesk.Clear;
-  PnlNew.Enabled:=false;
 end;
 
 procedure TFMaster_Menu.BtambahClick(Sender: TObject);
 begin
-  PnlNew.Enabled:=true;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    SQL.Text:='select cast(cast(max(left(right(menu_code,5),2) )as integer)+1 as VARCHAR) urut from t_menu';
+    SQL.Text:='select cast(cast(max(left(right(menu_code,5),2) )as integer)+1 as VARCHAR) urut from t_submenu';
     Execute;
   end;
   Edkd.Text:='M'+dm.Qtemp['urut']+'000';
   Cbmaster.SetFocus;
   statustr:=0;
-  Btambah.Enabled:=false;
 end;
 
 procedure TFMaster_Menu.CbmasterSelect(Sender: TObject);
@@ -125,18 +132,6 @@ begin
     execute;
   end;
   kdmaster:=dm.qtemp['master_code'];
- { with dm.Qtemp1 do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select max(right(left(menu_code,3),2)) as urut from t_menu';
-    Execute;
-  end;
-  if dm.Qtemp1['urut']= null then
-  begin
-    Edkd.Text:='01000';
-  end else
-    Edkd.Text:=inttostr(dm.Qtemp1['urut']+1)+'000';   }
 end;
 
 procedure TFMaster_Menu.DBGridEh1DblClick(Sender: TObject);
@@ -147,12 +142,25 @@ begin
   Cbmaster.Text:=Qmenu['master_name'];
   statustr:=1;
   Btambah.Enabled:=False;
-  PnlNew.Enabled:=True;
+end;
+
+procedure TFMaster_Menu.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFMaster_Menu.FormCreate(Sender: TObject);
+begin
+  RealFMaster_Menu:=self;
+end;
+
+procedure TFMaster_Menu.FormDestroy(Sender: TObject);
+begin
+  RealFMaster_Menu:=nil;
 end;
 
 procedure TFMaster_Menu.FormShow(Sender: TObject);
 begin
-  Cbmaster.Clear;
   with dm.qtemp do
   begin
     close;

@@ -19,10 +19,10 @@ object FPeng_Stok: TFPeng_Stok
     Left = 0
     Top = 0
     Width = 998
-    Height = 124
+    Height = 127
     BarManager = dxBarManager1
     Style = rs2010
-    ColorSchemeName = 'DevExpressStyle'
+    ColorSchemeName = 'Blue'
     Contexts = <>
     TabOrder = 0
     TabStop = False
@@ -43,9 +43,9 @@ object FPeng_Stok: TFPeng_Stok
   end
   object DBGridTransfer: TDBGridEh
     Left = 0
-    Top = 124
+    Top = 127
     Width = 998
-    Height = 423
+    Height = 420
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -58,7 +58,7 @@ object FPeng_Stok: TFPeng_Stok
       item
         ColumnName = 'Column_10_trans_day'
       end>
-    DataSource = DsPeng_Stok
+    DataSource = DsPeng_stok
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
@@ -170,7 +170,7 @@ object FPeng_Stok: TFPeng_Stok
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 907
+        Width = 961
         Height = 118
         Align = alClient
         DataSource = DsDetail
@@ -665,33 +665,33 @@ object FPeng_Stok: TFPeng_Stok
         FFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     end
   end
-  object QPeng_Stok: TUniQuery
+  object QPeng_stok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
         'SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code ' +
-        'from warehouse.t_item_comb a INNER JOIN warehouse.t_item_stock b' +
-        ' on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code' +
-        '=c.code order by a.trans_no asc')
-    Active = True
+        'code2  from warehouse.t_item_comb a '
+      
+        'INNER JOIN warehouse.t_item_stock b on a.item_code=b.item_stock_' +
+        'code '
+      'inner join t_wh c on a.wh_code=c.wh_code order by a.trans_no asc')
     Left = 288
     Top = 40
   end
-  object MemPeng_Stok: TMemTableEh
-    Active = True
+  object MemPeng_stok: TMemTableEh
     FetchAllOnOpen = True
     Params = <>
-    DataDriver = DsdPeng_Stok
+    DataDriver = DsdPeng_stok
     Left = 288
     Top = 89
   end
-  object DsdPeng_Stok: TDataSetDriverEh
-    ProviderDataSet = QPeng_Stok
+  object DsdPeng_stok: TDataSetDriverEh
+    ProviderDataSet = QPeng_stok
     Left = 544
     Top = 80
   end
-  object DsPeng_Stok: TDataSource
-    DataSet = MemPeng_Stok
+  object DsPeng_stok: TDataSource
+    DataSet = MemPeng_stok
     Left = 544
     Top = 32
   end
@@ -703,22 +703,21 @@ object FPeng_Stok: TFPeng_Stok
       #9'a.stock_code_old, '
       #9'a.qty, '
       #9'a.unit, '
-      #9'a.trans_no'
+      #9'a.trans_no,b.item_code'
       'FROM'#9'warehouse.t_item_comb_det AS "a"'
       #9'INNER JOIN'
       #9'warehouse.t_item_stock AS b'
       #9'ON a.item_stock_code= b.item_stock_code')
-    MasterSource = DsPeng_Stok
+    MasterSource = DsPeng_stok
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
     Left = 616
     Top = 32
     ParamData = <
       item
-        DataType = ftString
+        DataType = ftUnknown
         Name = 'trans_no'
-        ParamType = ptInput
-        Value = '001/12/II/24/PS'
+        Value = nil
       end>
   end
   object DsDetail: TDataSource
@@ -763,7 +762,7 @@ object FPeng_Stok: TFPeng_Stok
       MirrorMode = []
     end
   end
-  object QRptTransfer: TUniQuery
+  object QRptPeng_stok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
@@ -797,7 +796,7 @@ object FPeng_Stok: TFPeng_Stok
       'Ke=Ke'
       'tgl_transfer=tgl_transfer'
       'ket=ket')
-    DataSet = QRptTransfer
+    DataSet = QRptPeng_stok
     BCDToCurrency = False
     DataSetOptions = []
     Left = 733

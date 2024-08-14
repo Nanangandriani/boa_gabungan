@@ -89,7 +89,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from t_position where deleted_at is null order by created_at ASC ';
+       sql.Text:='select * from t_position where deleted_at is null order by created_at Desc ';
        open;
    end;
    QJab.Active:=False;
@@ -160,5 +160,8 @@ procedure TFJabatan.FormShow(Sender: TObject);
 begin
     Refresh;
 end;
+
+initialization
+RegisterClass(TFJabatan);
 
 end.

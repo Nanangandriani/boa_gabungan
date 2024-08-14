@@ -38,7 +38,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
         FieldName = 'no_trans'
         Footers = <>
         Title.Caption = 'No Trans'
-        Width = 100
+        Width = 120
       end
       item
         CellButtons = <>
@@ -67,6 +67,15 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
         Footers = <>
         Title.Caption = 'Nilai Uang Muka'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'po_no'
+        Footers = <>
+        Title.Caption = 'No.PO'
+        Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridCek_Det: TDBGridEh
@@ -95,8 +104,6 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = -103
-    ExplicitWidth = 858
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -389,6 +396,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
     end
     object dxBarLargeButton1: TdxBarLargeButton
       Action = ActBaru
+      Caption = 'New'
       Category = 0
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -524,9 +532,8 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarButton8: TdxBarButton
-      Caption = 'Update  '
+      Action = ActUpdate
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -649,6 +656,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '
@@ -681,7 +689,8 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
       'select a.*,b.supplier_name '
       'from purchase.t_advance_payment a'
       'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code'
-      'group by a.supplier_code,b.supplier_name,a.no_trans')
+      'group by a.supplier_code,b.supplier_name,a.no_trans'
+      'order by a.no_trans DESC')
     Left = 360
     Top = 32
   end

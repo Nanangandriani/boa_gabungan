@@ -11,6 +11,9 @@ object FMaster_Menu: TFMaster_Menu
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object PnlAksi: TPanel
@@ -341,8 +344,7 @@ object FMaster_Menu: TFMaster_Menu
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 1
-    ExplicitTop = -5
+    ExplicitWidth = 463
     object Label6: TLabel
       Left = 106
       Top = 59
@@ -388,7 +390,7 @@ object FMaster_Menu: TFMaster_Menu
     object EdDesk: TEdit
       Left = 128
       Top = 97
-      Width = 188
+      Width = 297
       Height = 23
       TabOrder = 0
     end
@@ -405,7 +407,7 @@ object FMaster_Menu: TFMaster_Menu
     object Cbmaster: TComboBox
       Left = 128
       Top = 17
-      Width = 188
+      Width = 153
       Height = 23
       TabOrder = 2
       OnSelect = CbmasterSelect
@@ -436,7 +438,7 @@ object FMaster_Menu: TFMaster_Menu
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
-          FieldName = 'menu_code'
+          FieldName = 'master_code'
           Footers = <>
           Title.Caption = 'Kode'
           Width = 123
@@ -445,7 +447,7 @@ object FMaster_Menu: TFMaster_Menu
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
-          FieldName = 'menu'
+          FieldName = 'master_name'
           Footers = <>
           Title.Caption = 'Deskripsi'
           Width = 294
@@ -460,8 +462,8 @@ object FMaster_Menu: TFMaster_Menu
       
         'select b.master_name,a.* from t_menu a inner join t_menu_master ' +
         'b on a.master_code=b.master_code order by menu_code')
-    Left = 368
-    Top = 72
+    Left = 288
+    Top = 24
   end
   object Dsmenu: TDataSource
     DataSet = Qmenu

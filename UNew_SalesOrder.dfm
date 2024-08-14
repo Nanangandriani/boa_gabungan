@@ -24,6 +24,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     TabOrder = 0
     ExplicitWidth = 1067
     ExplicitHeight = 279
+    ExplicitWidth = 1069
+    ExplicitHeight = 287
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -335,6 +337,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     TabOrder = 1
     ExplicitTop = 499
     ExplicitWidth = 1067
+    ExplicitTop = 507
+    ExplicitWidth = 1069
     object BBatal: TRzBitBtn
       Left = 997
       Top = 1
@@ -396,6 +400,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 991
+      ExplicitLeft = 993
     end
     object BSave: TRzBitBtn
       Left = 922
@@ -458,6 +463,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 916
+      ExplicitLeft = 918
     end
     object Edautocode: TEdit
       Left = 712
@@ -487,6 +493,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1063
+    ExplicitTop = 287
+    ExplicitWidth = 1069
+    FixedDimension = 21
+    object TabSDetailPel: TRzTabSheet
+      Caption = 'Detail Order'
+      ExplicitWidth = 1065
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

@@ -37,16 +37,8 @@ type
     RzProgressStatus1: TRzProgressStatus;
     RzClockStatus1: TRzClockStatus;
     RzGlyphStatus1: TRzGlyphStatus;
-    CategoryPanelUtama: TCategoryPanelGroup;
     ImageList1: TImageList;
-    PageControl1: TRzPageControl;
-    TabForm: TRzTabSheet;
-    PanelParent: TPanel;
-    EdgeBrowser1: TEdgeBrowser;
-    WebBrowser1: TWebBrowser;
     frxReport1: TfrxReport;
-    RzSplitter1: TRzSplitter;
-    TreeView1: TRzTreeView;
     dxBarManager1: TdxBarManager;
     dxRibbon1Tab1: TdxRibbonTab;
     dxRibbon1: TdxRibbon;
@@ -65,6 +57,15 @@ type
     dxBarLargeButtonApproval: TdxBarLargeButton;
     dxBarLargeButtonUtility: TdxBarLargeButton;
     UniQuery1: TUniQuery;
+    dxBarLargeButton1: TdxBarLargeButton;
+    CategoryPanelUtama: TCategoryPanelGroup;
+    Splitter1: TSplitter;
+    PageControl1: TRzPageControl;
+    TabForm: TRzTabSheet;
+    PanelParent: TPanel;
+    EdgeBrowser1: TEdgeBrowser;
+    WebBrowser1: TWebBrowser;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -85,6 +86,7 @@ type
     procedure dxBarLargeButtonLaporanClick(Sender: TObject);
     procedure dxBarLargeButtonApprovalClick(Sender: TObject);
     procedure dxBarLargeButtonUtilityClick(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -104,7 +106,7 @@ type
     Procedure btnApplyClick(Sender: TObject);
     Procedure CallFoo(S: string; I: Integer);
     procedure Getsubmenutree(Sender: TObject);
-
+    procedure CloseAllTabsheets;
   end;
 
 var
@@ -125,7 +127,7 @@ var
   MyTreeView : TRzTreeView;
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
-  Nm,loksbu,kdsbu,id_dept,SBU,Kd_SBU,VMenu:string;
+  Nm,loksbu,kdsbu,id_dept,VMenu,kdgdng,format_tgl:string;
   JSFn: string;
   statustr:integer;
 implementation
@@ -228,9 +230,7 @@ begin
       RzTabSheet.PageControl.CloseActiveTab(); 
       RzTabSheet.TabVisible := true;
   end;} 
-
-  //CloseTabs(TabForm); 
-  
+  //CloseTabs(TabForm);
 end;
 
 procedure TFMainMenu.ClearCategoryPanelGroup;
@@ -248,12 +248,12 @@ procedure TFMainMenu.Cleartreview;
   var
   SelNode: TTreeNode;
 begin
-  if TreeView1.Selected <> nil then
+  {if TreeView1.Selected <> nil then
   begin
     SelNode := TreeView1.Selected;
     TreeView1.Selected.Delete;
     TreeView1.SetFocus;
-  end;
+  end; }
 end;
 
 procedure TFMainMenu.GetSubMenu(Sender: TObject);
@@ -324,7 +324,8 @@ end;
 
 procedure TFMainMenu.BitBtn1Click(Sender: TObject);
 begin
-  frxReport1.ShowReport()
+//  frxReport1.ShowReport()
+  ///  ShowMessage(dm.linktest1);
 end;
 
 procedure TFMainMenu.btnApplyClick(Sender: TObject);
@@ -344,13 +345,11 @@ begin
                 QuotedStr(vCaptionButton);
     open;
    end;
-
     if dm.Qtemp.RecordCount<>1 then
     begin
       ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
       exit;
     end;
-
     if dm.Qtemp.RecordCount=1 then
     begin
        //create new Tabsheet
@@ -359,7 +358,6 @@ begin
         ANewTabs.Caption := vCaptionButton;
         ANewTabs.PageControl := PageControl1; 
         PageControl1.ActivePage := ANewTabs;
-
         {//Create Close Tab
         CloseButton := TButton.Create(ANewTabs);
         CloseButton.Parent := ANewTabs;
@@ -367,17 +365,15 @@ begin
         CloseButton.Left := ANewTabs.Width - CloseButton.Width - 5;
         CloseButton.Top := 5;
         CloseButton.OnClick := CloseTabs; }
-
         //Create Panel Dalam Tab
         ApnTabs := TRzPanel.Create(nil);
         ApnTabs.Name := 'Panel'+vNamaButton;
         ApnTabs.Caption := vCaptionButton;
         ApnTabs.Parent := ANewTabs;
         ApnTabs.Align:= alClient;
-
         //Create Form Dalam Panel
-        AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
-        AFormClass := TFormClass(AClass);
+        //AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
+        AFormClass := TFormClass(FindClass('T'+dm.Qtemp.fieldbyname('link').AsString));
         AForm := AFormClass.Create(Application.MainForm);
         AForm.Parent:=ApnTabs;
         AForm.Align:=Alclient;
@@ -386,7 +382,6 @@ begin
         AForm.Show;
     end;
 end;
-
 
 procedure TFMainMenu.TampilTabForm2;
 begin
@@ -461,10 +456,7 @@ begin
       ACategoryPanel.color:=clGradientInactiveCaption;
       //ACategoryPanel.StyleName:='windows';
       //ACategoryPanel.Width:=250;
-
-
       //TreeView1.Items.Add(nil,StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]));
-
      with dm.Qtemp2 do
      begin
           SQL.Clear;
@@ -495,39 +487,33 @@ begin
         AButtonPanel.Color:=clBlue;
         //clGradientInactiveCaption;
         //AButtonPanel.Tag:=1;
-
          TreeView1.Items.AddChild(TreeView1.Selected,StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll])) ;
-
-         dm.Qtemp2.Next;
+          dm.Qtemp2.Next;
       end;
       dm.Qtemp1.Next;
-
-
     end;}
-
     with dm.Qtemp1 do
    begin
        SQL.Clear;
        SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
        ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code '+
-       ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
+       ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
        ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
        ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
-       ' WHERE dd.akses='+QuotedStr('Admin')+' and cc.master_name='+QuotedStr(Menu)+
+       ' WHERE dd.user_name='+QuotedStr('Admin')+' and cc.master_name='+QuotedStr(Menu)+
        ' group by e.created_at,e.id, e.menu'+
        ' Order by e.created_at asc';
       open;
-       First;
+      First;
    end;
    //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
    TCategoryPanelGroup.Create(nil);
    CategoryPanelUtama.Create(nil);
    ClearCategoryPanelGroup;
    //CategoryPanelUtama.Parent := SplitView1;
-   CategoryPanelUtama.Width:=300;
+   CategoryPanelUtama.Width:=260;
    CategoryPanelUtama.HeaderFont.style:=[fsbold];
    //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
-
    while not dm.Qtemp1.Eof do
    begin
     //Create Category Panel
@@ -535,7 +521,7 @@ begin
       ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
       ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
       //ACategoryPanel.Collapsed:=True;
-      ACategoryPanel.Width:=300;
+      ACategoryPanel.Width:=260;
       //ACategoryPanel.Width:=CategoryPanelUtama.Width;
 
      with dm.Qtemp2 do
@@ -544,15 +530,15 @@ begin
           SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
           ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code INNER JOIN t_menu b '+
           ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
-          ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
-          ' WHERE dd.akses='+QuotedStr('Admin')+
+          ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
+          ' WHERE dd.user_name='+QuotedStr('Admin')+
           ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
           ' Order by bb.created_at DESC ';
           open;
           First;
-      end;
-      while not dm.Qtemp2.Eof do
-      begin
+     end;
+     while not dm.Qtemp2.Eof do
+     begin
         //Create Button Dalam Category Panel
         AButtonPanel:= TRzButton.Create(ACategoryPanel);
         //AButtonPanel:= TButton.Create(ACategoryPanel);
@@ -560,7 +546,7 @@ begin
         AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
         AButtonPanel.Parent := ACategoryPanel;
         AButtonPanel.Align := alTop;
-        AButtonPanel.Width:=300;
+        AButtonPanel.Width:=260;
         //AButtonPanel.Width:=ACategoryPanel.Width;
         //AButtonPanel.Width:=Rzsplitter1.Width-2;
         ACategoryPanel.Color:=clSkyBlue;
@@ -580,12 +566,29 @@ begin
             //ACategoryPanel.Height:=ACategoryPanel.Height *dm.Qt
           end;
          dm.Qtemp2.Next;
-      end;
+     end;
       ACategoryPanel.Collapsed:=True;
       dm.Qtemp1.Next;
-    end;
+   end;
 end;
 
+procedure TFMainMenu.CloseAllTabsheets;
+var
+  i: Integer;
+begin
+  // Loop melalui semua tabsheet mulai dari yang terakhir
+  for i := PageControl1.PageCount - 1 downto 1 do
+  begin
+    // Hapus tabsheet dari PageControl
+    PageControl1.Pages[i].Free;
+  end;
+end;
+
+procedure TFMainMenu.dxBarLargeButton2Click(Sender: TObject);
+begin
+  CloseAllTabsheets;
+  PageControl1.ActivePage:=TabForm;
+end;
 
 procedure TFMainMenu.dxBarLargeButtonApprovalClick(Sender: TObject);
 begin
@@ -635,12 +638,11 @@ begin
                    ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
                    ' WHERE dd.akses='+QuotedStr('Admin')+
                    ' Order by cc.id DESC';}
-
         SQL.Text := 'SELECT DISTINCT cc.id, cc.master_name menu FROM t_akses aa '+
                    ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu '+
                    ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code '+
-                   ' INNER JOIN t_user dd ON dd.akses = aa.RoleNama '+
-                   ' WHERE dd.akses='+QuotedStr('Admin')+
+                   ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
+                   ' WHERE dd.user_name='+QuotedStr('Admin')+
                    ' Order by cc.id DESC';
       open;
       First;
@@ -649,8 +651,7 @@ begin
    TCategoryPanelGroup.Create(nil);
    while not dm.Qtemp1.Eof do
    begin
-
-    //Create Button Di Panel Header
+      //Create Button Di Panel Header
         //AButtonPanel:= TButton.Create(PenelHeader);
         //AButtonPanel:= TRzButton.Create(PenelHeader);
         //AButtonPanel:= TButton.Create(ACategoryPanel);
@@ -663,7 +664,6 @@ begin
         AButtonPanel.OnClick := GetSubMenu;
       dm.Qtemp1.Next;
     end;
-
 end;
 
 procedure TFMainMenu.AksesSub(Form: TForm; Akses, Sub: String);
@@ -671,17 +671,10 @@ begin
   with dm.Qtemp1 do
        begin
             SQL.Clear;
-            {SQL.Text := 'SELECT aa.* FROM penjualan.t_akses aa '+
-                        ' INNER JOIN penjualan.t_submenu bb ON aa.SubMenu = bb.SubMenu '+
-                        ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
-                        ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
-                        ' WHERE aa.RoleNama='+QuotedStr('Admin')+
-                        ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');}
-
-             SQL.Text := 'SELECT aa.* FROM t_akses aa '+
+            SQL.Text := 'SELECT aa.* FROM t_akses aa '+
             ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu '+
             ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
-            ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
+            ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
             ' WHERE aa.RoleNama='+QuotedStr('Admin')+
             ' AND aa.SubMenu='+QuotedStr(Sub);
             //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
@@ -765,6 +758,9 @@ begin
   // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('http://www.google.com');
+  kdsbu:='MLB/1';
+  loksbu:='MLB/1';
+  format_tgl:='YYYY/MM/DD';
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

@@ -159,4 +159,8 @@ begin
   DBGridKonvProduk.FinishLoadingStatus();
 end;
 
+initialization
+  // Register TForm1 class
+  RegisterClass(TFListKonvProduk);
+
 end.

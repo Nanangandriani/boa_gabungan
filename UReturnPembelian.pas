@@ -116,4 +116,7 @@ begin
     if QRptDet.Active=False then QRptDet.Active:=True;
 end;
 
+initialization
+registerclass(TFReturnPembelian);
+
 end.

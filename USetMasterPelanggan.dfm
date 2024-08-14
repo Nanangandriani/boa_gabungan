@@ -20,10 +20,10 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     Width = 684
     Height = 450
     Hint = ''
-    ActivePage = TabSetJenisPelanggan
+    ActivePage = TabSetDetail
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 0
     ExplicitWidth = 678
     ExplicitHeight = 441

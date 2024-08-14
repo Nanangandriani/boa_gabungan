@@ -654,7 +654,6 @@ object FDept: TFDept
     SQL.Strings = (
       '-- select dept_code,dept from t_dept order by dept_code Asc'
       'select * from t_dept order by dept_code Asc')
-    Active = True
     Left = 440
     Top = 24
   end
