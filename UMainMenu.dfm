@@ -1,8 +1,8 @@
 object FMainMenu: TFMainMenu
   Left = 0
   Top = 0
-  ClientHeight = 627
-  ClientWidth = 1043
+  ClientHeight = 626
+  ClientWidth = 1039
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,16 @@ object FMainMenu: TFMainMenu
     Left = 169
     Top = 126
     Width = 12
-    Height = 482
+    Height = 481
     ResizeStyle = rsUpdate
     StyleName = 'Windows'
     ExplicitLeft = 160
+    ExplicitHeight = 482
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 608
-    Width = 1043
+    Top = 607
+    Width = 1039
     Height = 19
     BorderInner = fsNone
     BorderOuter = fsNone
@@ -34,8 +35,6 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 607
-    ExplicitWidth = 1039
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -84,13 +83,14 @@ object FMainMenu: TFMainMenu
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1043
+    Width = 1039
     Height = 126
     BarManager = dxBarManager1
     ColorSchemeName = 'Blue'
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 1043
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Main Menu'
@@ -130,7 +130,7 @@ object FMainMenu: TFMainMenu
     Left = 0
     Top = 126
     Width = 169
-    Height = 482
+    Height = 481
     VertScrollBar.Tracking = True
     ChevronHotColor = clSkyBlue
     Color = clGradientInactiveCaption
@@ -141,13 +141,12 @@ object FMainMenu: TFMainMenu
     HeaderFont.Name = 'Segoe UI'
     HeaderFont.Style = []
     TabOrder = 2
-    ExplicitHeight = 481
   end
   object PageControl1: TRzPageControl
     Left = 181
     Top = 126
-    Width = 862
-    Height = 482
+    Width = 858
+    Height = 481
     Hint = ''
     ActivePage = TabForm
     Align = alClient
@@ -155,12 +154,12 @@ object FMainMenu: TFMainMenu
     TabIndex = 0
     TabOrder = 3
     OnClose = PageControl1Close
-    ExplicitWidth = 858
-    ExplicitHeight = 481
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Dashboard'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 854
       ExplicitHeight = 456
       object PanelParent: TPanel
