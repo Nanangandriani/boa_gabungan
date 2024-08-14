@@ -18,69 +18,66 @@ type
     RzPageControl1: TRzPageControl;
     TabSheet1: TRzTabSheet;
     TabSheet2: TRzTabSheet;
-    TabSheet3: TRzTabSheet;
-    StatusBar1: TStatusBar;
-    Panel2: TPanel;
-    Btn_Satuan: TSpeedButton;
-    Cbkdtr: TComboBox;
-    Cbkelompok: TRzComboBox;
-    Ck_NoUrut: TCheckBox;
-    ck_st_penjualan: TCheckBox;
-    EdCategory: TRzComboBox;
     EdDesk: TEdit;
+    EdSatuan: TRzButtonEdit;
+    Cbkdtr: TComboBox;
     Edjenis: TRzComboBox;
-    EdKd: TEdit;
-    Edkd_display: TEdit;
     EdMerk: TRzComboBox;
-    EdNm: TEdit;
+    EdCategory: TRzComboBox;
     Edno: TEdit;
     Edno1: TEdit;
-    EdSatuan: TRzButtonEdit;
-    Label1: TLabel;
-    Label11: TLabel;
-    Label13: TLabel;
+    EdKd: TEdit;
+    EdNm: TEdit;
     Label16: TLabel;
+    Btn_Satuan: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton1: TSpeedButton;
+    Label13: TLabel;
+    Label11: TLabel;
+    Label9: TLabel;
+    Label7: TLabel;
+    Label1: TLabel;
+    Label5: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
-    SpKelompok: TSpeedButton;
-    Panel3: TPanel;
+    TabSheet3: TRzTabSheet;
+    Label19: TLabel;
+    Edkd_akun: TRzEdit;
+    EdNm_akun: TRzButtonEdit;
+    Label22: TLabel;
+    Edkd_akunPemb: TRzEdit;
+    EdNm_akunPemb: TRzButtonEdit;
+    Label24: TLabel;
+    Edkd_akunrt_Pemb: TRzEdit;
+    EdNm_akunRt_Pemb: TRzButtonEdit;
+    Label26: TLabel;
+    Edkd_akunPenj: TRzEdit;
+    EdNm_akunPenj: TRzButtonEdit;
+    Label28: TLabel;
+    Edkd_akunRt_Penj: TRzEdit;
+    EdNm_akunRt_Penj: TRzButtonEdit;
+    Label30: TLabel;
+    Edkd_akunPot_Pemb: TRzEdit;
+    EdNm_akunPot_Pemb: TRzButtonEdit;
     GroupBox1: TGroupBox;
     Label20: TLabel;
-    Label17: TLabel;
     edharga_pemb: TRzNumericEdit;
     eddisc_pemb: TRzNumericEdit;
+    Label17: TLabel;
     GroupBox2: TGroupBox;
     Label23: TLabel;
     Label25: TLabel;
     edharga_penj: TRzNumericEdit;
     eddisc_penj: TRzNumericEdit;
-    Panel4: TPanel;
-    Edkd_akun: TRzEdit;
-    Edkd_akunPemb: TRzEdit;
-    Edkd_akunPenj: TRzEdit;
-    Edkd_akunPot_Pemb: TRzEdit;
-    Edkd_akunrt_Pemb: TRzEdit;
-    Edkd_akunRt_Penj: TRzEdit;
-    EdNm_akun: TRzButtonEdit;
-    EdNm_akunPemb: TRzButtonEdit;
-    EdNm_akunPenj: TRzButtonEdit;
-    EdNm_akunPot_Pemb: TRzButtonEdit;
-    EdNm_akunRt_Pemb: TRzButtonEdit;
-    EdNm_akunRt_Penj: TRzButtonEdit;
-    Label19: TLabel;
-    Label22: TLabel;
-    Label24: TLabel;
-    Label26: TLabel;
-    Label28: TLabel;
-    Label30: TLabel;
+    Label4: TLabel;
+    Cbkelompok: TRzComboBox;
+    SpKelompok: TSpeedButton;
+    Edkd_display: TEdit;
+    StatusBar1: TStatusBar;
+    ck_st_penjualan: TCheckBox;
+    Label6: TLabel;
+    Label8: TLabel;
+    Ck_NoUrut: TCheckBox;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -134,7 +131,6 @@ end;
 Procedure TFNew_Barang.Load;
 begin
   Edjenis.Clear;
-  EdMerk.Clear;
   with dm.Qtemp do
   begin
     close;
@@ -146,19 +142,6 @@ begin
   while not Dm.Qtemp.Eof do
   begin
     Edjenis.Items.Add(Dm.Qtemp['type']);
-    Dm.Qtemp.Next;
-  end;
-    with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select merk from t_merk ';
-    ExecSQL;
-  end;
-  Dm.Qtemp.First;
-  while not Dm.Qtemp.Eof do
-  begin
-    EdMerk.Items.Add(Dm.Qtemp['merk']);
     Dm.Qtemp.Next;
   end;
 end;
@@ -298,10 +281,6 @@ end;
 
 procedure TFNew_Barang.BkonversiClick(Sender: TObject);
 begin
-    FNew_KonvBarang.DBGridEh1.Visible:=true;
-    FNew_KonvBarang.Btambah.Visible:=true;
-    FNew_KonvBarang.BRefresh.Visible:=true;
-    FNew_KonvBarang.PnlNew.Visible:=false;
 {  with FKonversi_Barang do
   begin
     show;
@@ -315,31 +294,18 @@ begin
       open;
     end;
   end;  }
-  if EdKd.Text<>'' then
+  with FNew_KonvBarang do
   begin
-    VMenu:='2';
-    with FNew_KonvBarang do
-    begin
-      Show;
-      Clear;
-      PnlNew.hide;
-      dbgrideh1.show;
-      dbgrideh1.Align:=alClient;
-      kd_barang:=FNew_Barang.Edkd.Text;
-    //  Self.Autonumber;
-      FNew_KonvBarang.Edcategory.Text:=FNew_Barang.Edcategory.Text;
-      FNew_KonvBarang.Edkd.Text:=FNew_Barang.Edkd.Text;
-      FNew_KonvBarang.EdNm.Text:=FNew_Barang.EdNm.Text;
-      FNew_KonvBarang.Edsatuan.Text:=FNew_Barang.EdSatuan.Text;
-      FNew_KonvBarang.Edqty.Text:='1';
-      caption:='New Konversi Barang';
-      Status:=0;
-      BRefreshClick(sender);
-    end;
-  end;
-  if EdKd.Text ='' then
-  begin
-    ShowMessage('Maaf Kode barang tidak boleh kosong');
+    Show;
+    Clear;
+  //  Self.Autonumber;
+    FNew_KonvBarang.Edcategory.Text:=FNew_Barang.Edcategory.Text;
+    FNew_KonvBarang.Edkd.Text:=FNew_Barang.Edkd.Text;
+    FNew_KonvBarang.EdNm.Text:=FNew_Barang.EdNm.Text;
+    FNew_KonvBarang.Edsatuan.Text:=FNew_Barang.EdSatuan.Text;
+    FNew_KonvBarang.Edqty.Text:='1';
+    caption:='New Konversi Barang';
+    Status:=0;
   end;
 end;
 
@@ -434,14 +400,6 @@ begin
             ParamByName('item_code').Value:=EdKd.Text;
             Execute;
          end;
-          with dm.Qtemp do
-          begin
-            close;
-            sql.clear;
-            sql.Text:='insert into t_item_conversion(item_code,qty_unit,unit,qty_conv,unit_conv)'+
-                      'values('+QuotedStr(EdKd.Text)+',''1'','+QuotedStr(Edsatuan.Text)+',''1'','+QuotedStr(Edsatuan.Text)+')';
-            ExecSQL;
-          end;
       end;
       if status_tr=1 then
       begin
@@ -509,12 +467,12 @@ begin
     show;
     Caption:='Form New Satuan';
     Statustr:=0;
-    PnlNew.hide;
+    PnlNew.show;
     PnlAksi.show;
  //   Pnllist.sohw;
     BCari.Hide;
-  //  BSimpan.Show;
-   // BBatal.Show;
+    BSimpan.Show;
+    BBatal.Show;
     jenis_tr:='BARU';
   end;
 end;
@@ -544,14 +502,10 @@ begin
    Edkd_akunPemb.Text:=Dm.Qtemp2['account_code'];
    Edkd_akunrt_Pemb.Text:=Dm.Qtemp2['account_code'];
    Edkd_akunPot_Pemb.Text:=Dm.Qtemp2['account_code'];
-   Edkd_akunPenj.Text:=Dm.Qtemp2['account_code'];
-   Edkd_akunRt_Penj.Text:=Dm.Qtemp2['account_code'];
    EdNm_akun.Text:=Dm.Qtemp2['account_name'];
    Ednm_akunPemb.Text:=Dm.Qtemp2['account_name'];
    Ednm_akunrt_Pemb.Text:=Dm.Qtemp2['account_name'];
    Ednm_akunPot_Pemb.Text:=Dm.Qtemp2['account_name'];
-   EdNm_akunPenj.Text:=Dm.Qtemp2['account_name'];
-   EdNm_akunRt_Penj.Text:=Dm.Qtemp2['account_name'];
    if dm.Qtemp.RecordCount=0 then
     begin
       //Edno.Text:=dm.Qtemp2['order_no'];

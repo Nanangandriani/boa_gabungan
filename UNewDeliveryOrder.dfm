@@ -4,8 +4,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   Caption = 'Delivery Order'
   ClientHeight = 601
   ClientWidth = 1407
-  ClientHeight = 582
-  ClientWidth = 1116
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -34,22 +32,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       Caption = 'Data Muatan'
       ExplicitWidth = 1397
       ExplicitHeight = 567
-    Width = 1116
-    Height = 582
-    Hint = ''
-    ActivePage = TabDataBiaya
-    Align = alClient
-    UseColoredTabs = True
-    TabIndex = 1
-    TabOrder = 0
-    OnClick = RzPageControl1Click
-    ExplicitWidth = 1110
-    ExplicitHeight = 573
-    FixedDimension = 21
-    object TabDataMuatan: TRzTabSheet
-      Caption = 'Data Muatan'
-      ExplicitWidth = 1106
-      ExplicitHeight = 548
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -68,7 +50,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 0
         Width = 1403
-        Width = 1112
         Height = 345
         Align = alTop
         Color = clGradientInactiveCaption
@@ -562,22 +543,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         ExplicitWidth = 1397
         object btNextStep: TRzBitBtn
           Left = 1327
-        Top = 525
-        Width = 1112
-        Height = 32
-        Align = alBottom
-        TabOrder = 1
-        ExplicitTop = 516
-        ExplicitWidth = 1106
-        object btBatalSumberOrder: TRzBitBtn
-          Left = 1036
           Top = 1
           Height = 30
           Align = alRight
           Caption = 'Next'
           TabOrder = 0
           OnClick = btNextStepClick
-          OnClick = btBatalSumberOrderClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000520B0000520B00000001000000000000000000003300
@@ -631,7 +602,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
           ExplicitLeft = 1321
-          ExplicitLeft = 1030
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
@@ -639,8 +609,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Top = 345
         Width = 1403
         Height = 199
-        Width = 1112
-        Height = 180
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>
@@ -691,10 +659,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Footers = <>
             Visible = False
             Width = 100
-            FieldName = 'ket_barang'
-            Footers = <>
-            Title.Caption = 'Keterangan Barang'
-            Width = 300
           end
           item
             CellButtons = <>
@@ -722,10 +686,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Footers = <>
             Title.Caption = 'Satuan'
             Width = 100
-            FieldName = 'ket_muatan'
-            Footers = <>
-            Title.Caption = 'Keterangan Muatan'
-            Width = 300
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -738,14 +698,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 0
         Width = 1403
-        Width = 1112
         Height = 241
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = -1
-        ExplicitTop = 3
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -847,37 +804,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         object Label54: TLabel
           Left = 661
           Top = 116
-        object Label50: TLabel
-          Left = 661
-          Top = 145
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label51: TLabel
-          Left = 661
-          Top = 117
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label52: TLabel
-          Left = 564
-          Top = 117
-          Width = 54
-          Height = 15
-          Caption = 'Akun PPH'
-        end
-        object Label53: TLabel
-          Left = 564
-          Top = 145
-          Width = 54
-          Height = 15
-          Caption = 'Akun PPN'
-        end
-        object Label54: TLabel
-          Left = 661
-          Top = 174
           Width = 3
           Height = 15
           Caption = ':'
@@ -885,24 +811,9 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         object Label55: TLabel
           Left = 564
           Top = 116
-          Top = 174
           Width = 60
           Height = 15
           Caption = 'Keterangan'
-        end
-        object Label64: TLabel
-          Left = 717
-          Top = 113
-          Width = 10
-          Height = 15
-          Caption = '%'
-        end
-        object Label65: TLabel
-          Left = 719
-          Top = 142
-          Width = 10
-          Height = 15
-          Caption = '%'
         end
         object edKodeDOBiaya: TEdit
           Left = 140
@@ -1006,81 +917,17 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 105
           ScrollBars = ssVertical
           TabOrder = 10
-        object edKodeAkunPPH: TRzButtonEdit
-          Left = 735
-          Top = 110
-          Width = 100
-          Height = 23
-          Text = ''
-          TabOrder = 11
-          AltBtnNumGlyphs = 1
-          ButtonNumGlyphs = 1
-          OnButtonClick = edKodeAkunPPHButtonClick
-        end
-        object edKodeAkunPPN: TRzButtonEdit
-          Left = 735
-          Top = 139
-          Width = 100
-          Height = 23
-          Text = ''
-          TabOrder = 14
-          AltBtnNumGlyphs = 1
-          ButtonNumGlyphs = 1
-          OnButtonClick = edKodeAkunPPNButtonClick
-        end
-        object edNamaAkunPPN: TEdit
-          Left = 841
-          Top = 139
-          Width = 254
-          Height = 23
-          ReadOnly = True
-          TabOrder = 15
-        end
-        object edNamaAkunPPH: TEdit
-          Left = 841
-          Top = 110
-          Width = 254
-          Height = 23
-          ReadOnly = True
-          TabOrder = 12
-        end
-        object MemKeteranganBiaya: TMemo
-          Left = 676
-          Top = 171
-          Width = 419
-          Height = 53
-          ScrollBars = ssVertical
-          TabOrder = 16
-        end
-        object edPersenPPH: TRzNumericEdit
-          Left = 676
-          Top = 110
-          Width = 35
-          Height = 23
-          TabOrder = 10
-          DisplayFormat = ',0;(,0)'
-        end
-        object edPersenPPN: TRzNumericEdit
-          Left = 676
-          Top = 140
-          Width = 35
-          Height = 23
-          TabOrder = 13
-          DisplayFormat = ',0;(,0)'
         end
       end
       object Panel1: TPanel
         Left = 0
         Top = 539
         Width = 1403
-        Top = 520
-        Width = 1112
         Height = 37
         Align = alBottom
         TabOrder = 1
         object btBatalSumberJual: TRzBitBtn
           Left = 1327
-          Left = 1036
           Top = 1
           Height = 35
           Align = alRight
@@ -1142,10 +989,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object btSimpanSumberJual: TRzBitBtn
           Left = 1252
-          ExplicitHeight = 30
-        end
-        object btSimpanSumberJual: TRzBitBtn
-          Left = 961
           Top = 1
           Height = 35
           Align = alRight
@@ -1265,7 +1108,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitHeight = 30
         end
       end
       object DBGridSumberPenjualan: TDBGridEh
@@ -1273,8 +1115,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Top = 241
         Width = 1403
         Height = 298
-        Width = 1112
-        Height = 279
         Align = alClient
         DataSource = dsDataBiaya
         DynProps = <>
@@ -1406,7 +1246,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             FieldName = 'nama_pph'
             Footers = <>
             Title.Caption = 'BIAYA | PPH | Nama Akun PPH'
-            Title.Caption = 'BIAYA | PPN'
             Width = 150
           end
           item
@@ -1433,8 +1272,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Footers = <>
             Title.Caption = 'BIAYA | PPH | Nilai PPH'
             Width = 75
-            Title.Caption = 'BIAYA | PPH'
-            Width = 150
           end
           item
             CellButtons = <>
@@ -1478,8 +1315,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Footers = <>
             Title.Caption = 'Data Invoice | Nomor Tagihan'
             Width = 100
-            Title.Caption = 'BIAYA | TOTAL'
-            Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -1491,14 +1326,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 544
         Width = 1403
-        Top = 525
-        Width = 1112
         Height = 32
         Align = alBottom
         TabOrder = 0
         object btBatalParameter: TRzBitBtn
           Left = 1327
-          Left = 1036
           Top = 1
           Height = 30
           Align = alRight
@@ -1560,7 +1392,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object btSaveParameter: TRzBitBtn
           Left = 1252
-          Left = 961
           Top = 1
           Height = 30
           Align = alRight
@@ -1626,8 +1457,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Top = 0
         Width = 1403
         Height = 544
-        Width = 1112
-        Height = 525
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
@@ -1748,7 +1577,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Top = 120
           Width = 200
           Height = 23
-          ReadOnly = True
           TabOrder = 3
         end
         object dtTerimaTagihan: TRzDateTimePicker
@@ -1769,7 +1597,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           TabOrder = 5
           OnExit = edTotalBiayaExit
           DisplayFormat = '0.00#,##'
-          DisplayFormat = ',0;(,0)'
         end
       end
     end
@@ -1783,13 +1610,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Params = <>
     Left = 808
     Top = 88
-    Left = 192
-    Top = 352
-  end
-  object MemDataBiaya: TMemTableEh
-    Params = <>
-    Left = 192
-    Top = 408
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end
@@ -1952,11 +1772,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Params = <>
     Left = 720
     Top = 88
-  object MemDataMuatan: TMemTableEh
-    Active = True
-    Params = <>
-    Left = 80
-    Top = 408
     object MemDataMuatannotrans: TStringField
       FieldName = 'notrans'
       Size = 100
@@ -1990,14 +1805,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object MemDataMuatanpilih: TBooleanField
       FieldName = 'pilih'
     end
-    object MemDataMuatanket_barang: TStringField
-      FieldName = 'ket_barang'
-      Size = 255
-    end
-    object MemDataMuatanket_muatan: TStringField
-      FieldName = 'ket_muatan'
-      Size = 255
-    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object notrans: TMTStringDataFieldEh
@@ -2026,16 +1833,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object kd_barang: TMTStringDataFieldEh
           FieldName = 'kd_barang'
-        object ket_barang: TMTStringDataFieldEh
-          FieldName = 'ket_barang'
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 255
         end
         object nm_barang: TMTStringDataFieldEh
           FieldName = 'nm_barang'
-        object ket_muatan: TMTStringDataFieldEh
-          FieldName = 'ket_muatan'
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 255
@@ -2061,10 +1864,5 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object RecordsList: TRecordsListEh
       end
     end
-  end
-  object dsDataMuatan: TDataSource
-    DataSet = MemDataMuatan
-    Left = 80
-    Top = 352
   end
 end

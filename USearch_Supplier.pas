@@ -96,8 +96,6 @@ begin
        FNewDeliveryOrder.MemDataBiaya['keterangan']:='0';
        FNewDeliveryOrder.MemDataBiaya['no_invoice']:='0';
        FNewDeliveryOrder.MemDataBiaya['tgl_invoice']:=NOW();
-       FNewDeliveryOrder.MemDataBiaya['pph']:='0';
-       FNewDeliveryOrder.MemDataBiaya['total']:='0';
        FNewDeliveryOrder.MemDataBiaya.post;
     end;
 

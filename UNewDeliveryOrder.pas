@@ -26,7 +26,6 @@ type
     edKodeDOMuatan: TEdit;
     Panel2: TPanel;
     btNextStep: TRzBitBtn;
-    btBatalSumberOrder: TRzBitBtn;
     TabDataBiaya: TRzTabSheet;
     Panel6: TPanel;
     Panel1: TPanel;
@@ -96,14 +95,6 @@ type
     Label48: TLabel;
     Label49: TLabel;
     spTotalTitik: TSpinEdit;
-    Label50: TLabel;
-    Label51: TLabel;
-    edKodeAkunPPH: TRzButtonEdit;
-    edKodeAkunPPN: TRzButtonEdit;
-    edNamaAkunPPN: TEdit;
-    edNamaAkunPPH: TEdit;
-    Label52: TLabel;
-    Label53: TLabel;
     MemKeteranganBiaya: TMemo;
     Label54: TLabel;
     Label55: TLabel;
@@ -167,15 +158,6 @@ type
     MemDataBiayano_invoice: TStringField;
     MemDataBiayatgl_invoice: TDateField;
     btBackStep: TRzBitBtn;
-    MemDataMuatanket_barang: TStringField;
-    MemDataMuatanket_muatan: TStringField;
-    dsDataMuatan: TDataSource;
-    DBGrid_SumberOrder: TDBGridEh;
-    Label64: TLabel;
-    Label65: TLabel;
-    edPersenPPH: TRzNumericEdit;
-    edPersenPPN: TRzNumericEdit;
-    edPICMuatan: TEdit;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -186,12 +168,6 @@ type
     procedure edNamaProvinsiButtonClick(Sender: TObject);
     procedure edNamaKabupatenButtonClick(Sender: TObject);
     procedure btNextStepClick(Sender: TObject);
-    procedure edKodeAkunPPHButtonClick(Sender: TObject);
-    procedure edKodeAkunPPNButtonClick(Sender: TObject);
-    procedure edNamaLokasiButtonClick(Sender: TObject);
-    procedure edNamaProvinsiButtonClick(Sender: TObject);
-    procedure edNamaKabupatenButtonClick(Sender: TObject);
-    procedure btBatalSumberOrderClick(Sender: TObject);
     procedure edKodeVendorTransMuatanButtonClick(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
     procedure TabDataBiayaClick(Sender: TObject);
@@ -265,7 +241,6 @@ begin
             ' "notrans", "date_trans", "type_do_code", "type_do_name", "starting_loc_code", '+
             ' "starting_loc_name", "province_code", "province_name", "regency_code", '+
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
-            ' "percent_ppn", "code_ppn", "name_ppn", "description", "formsumbervendor", "order_no", '+
             //' "code_additional", '+
             ' "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
@@ -319,12 +294,6 @@ begin
               ' regency_code='+QuotedStr(edKodeKabupaten.Text)+','+
               ' regency_name='+QuotedStr(edNamaKabupaten.Text)+','+
               ' number_of_points='+QuotedStr(IntToStr(spTotalTitik.Value))+','+
-              ' percent_pph='+QuotedStr(FloatToStr(edPersenPPH.Value))+', '+
-              ' code_pph='+QuotedStr(edKodeAkunPPH.Text)+', '+
-              ' name_pph='+QuotedStr(edNamaAkunPPH.Text)+', '+
-              ' percent_ppn='+QuotedStr(FloatToStr(edPersenPPH.Value))+', '+
-              ' code_ppn='+QuotedStr(edKodeAkunPPN.Text)+', '+
-              ' name_ppn='+QuotedStr(edKodeAkunPPN.Text)+', '+
               ' description='+QuotedStr(MemKeteranganBiaya.Text)+', '+
               ' order_no='+QuotedStr(order_no)+','+
               ' code_additional='+QuotedStr('0')+','+
@@ -377,8 +346,6 @@ begin
     sql.Text:=' INSERT INTO "sale"."t_delivery_order_load" ("notrans", "notrans_load", '+
               ' "code_vendor_load", "name_vendor_load", "no_ref_load", "item_code", '+
               ' "item_name","amount", "unit", "source_load") '+
-              ' "code_vendor_load", "name_vendor_load", "no_ref_load", "item_desc", '+
-              ' "desc_load", "source_load") '+
               ' Values( '+
               ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
               ' '+QuotedStr(MemDataMuatan['notrans'])+', '+
@@ -389,8 +356,6 @@ begin
               ' '+QuotedStr(MemDataMuatan['nm_barang'])+', '+
               ' '+QuotedStr(MemDataMuatan['jumlah'])+', '+
               ' '+QuotedStr(MemDataMuatan['satuan'])+', '+
-              ' '+QuotedStr(MemDataMuatan['ket_barang'])+', '+
-              ' '+QuotedStr(MemDataMuatan['ket_muatan'])+', '+
               ' '+IntToStr(sumber_do)+' );';
     ExecSQL;
     end;
@@ -435,7 +400,6 @@ begin
               ' "cost_code", "cost_name", '+
               ' "percent_pph", "code_pph", "name_pph", "percent_ppn", "code_ppn", "name_ppn", '+
               ' "sub_total", "ppn_value", "pph_value", '+
-              ' "cost_code", "cost_name", "sub_total", "ppn_value", "pph_value", '+
               ' "grand_total") '+
               ' Values( '+
               ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
@@ -450,17 +414,10 @@ begin
               ' '+QuotedStr(stringreplace(MemDataBiaya['dpp'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
               ' '+QuotedStr(stringreplace(MemDataBiaya['ppn'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
               ' '+QuotedStr(stringreplace(MemDataBiaya['pph'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['total'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+' );'
+              ' '+QuotedStr(stringreplace(MemDataBiaya['total'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+' );';
     ExecSQL;
     end;
   Grand_Tot:=Grand_Tot+MemDataBiaya['total'];
-              //' '+QuotedStr(FloatToStr(MemDataBiaya['dpp']))+', '+
-              //' '+QuotedStr(FloatToStr(MemDataBiaya['ppn']))+', '+
-              //' '+QuotedStr(FloatToStr(MemDataBiaya['pph']))+', '+
-              //' '+QuotedStr(FloatToStr(MemDataBiaya['total']))+' );';
-    ExecSQL;
-    end;
-  Grand_Tot:=MemDataBiaya['total'];
   MemDataBiaya.Next;
   end;
 end;
@@ -567,12 +524,6 @@ begin
   edKodeKabupaten.Clear;
   edNamaKabupaten.Clear;
   spTotalTitik.Value:=0;
-  edKodeAkunPPH.Clear;
-  edNamaAkunPPH.Clear;
-  edPersenPPH.Value:=0;
-  edKodeAkunPPN.Clear;
-  edNamaAkunPPN.Clear;
-  edPersenPPN.Value:=0;
   MemKeteranganBiaya.Clear;
 
   //Dokumen
@@ -609,22 +560,6 @@ begin
         if (MemDataBiaya['persen_pph']<>0) and (MemDataBiaya['nama_pph']<>'-') then
         begin
           MemDataBiaya['pph']:=Int(MemDataBiaya['dpp']*(MemDataBiaya['persen_pph']/100));
-        if edPersenPPN.Value=0 then
-        begin
-          MemDataBiaya['ppn']:=0;
-        end;
-        if edPersenPPN.Value<>0 then
-        begin
-          MemDataBiaya['ppn']:=MemDataBiaya['dpp']*(edPersenPPN.Value/100);
-        end;
-        //Validasi PPH
-        if edPersenPPh.Value=0 then
-        begin
-          MemDataBiaya['pph']:=0;
-        end;
-        if edPersenPPh.Value<>0  then
-        begin
-          MemDataBiaya['pph']:=(MemDataBiaya['dpp']+MemDataBiaya['pph'])*(edPersenPPH.Value/100);
         end;
         MemDataBiaya['total']:=MemDataBiaya['dpp']+MemDataBiaya['ppn']-MemDataBiaya['pph'];
         MemDataBiaya.Post;
@@ -688,8 +623,6 @@ begin
      FNewDeliveryOrder.MemDataBiaya['keterangan']:='0';
      FNewDeliveryOrder.MemDataBiaya['no_invoice']:='0';
      FNewDeliveryOrder.MemDataBiaya['tgl_invoice']:=NOW();
-     FNewDeliveryOrder.MemDataBiaya['pph']:='0';
-     FNewDeliveryOrder.MemDataBiaya['total']:='0';
      FNewDeliveryOrder.MemDataBiaya.post;
      Dm.Qtemp.next;
     end;
@@ -712,7 +645,6 @@ begin
    if FNewDeliveryOrder.RzPageControl1.ActivePage=FNewDeliveryOrder.TabDataBiaya  then
    begin
      btNextStepClick(Sender);
-     btBatalSumberOrderClick(Sender);
    end;
 end;
 
@@ -751,7 +683,7 @@ begin
   Close;
 end;
 
-procedure TFNewDeliveryOrder.btBatalSumberOrderClick(Sender: TObject);
+procedure TFNewDeliveryOrder.btNextStepClick(Sender: TObject);
 begin
   FNewDeliveryOrder.RzPageControl1.ActivePage:=FNewDeliveryOrder.TabDataBiaya;
   FNewDeliveryOrder.edKodeDOBiaya.Text:=edKodeDOMuatan.Text;
@@ -771,6 +703,57 @@ begin
   FMasterData.vcall:='do_master_jenis';
   FMasterData.update_grid('code','name','description','t_type_delivery_order','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.Show;
+end;
+
+procedure TFNewDeliveryOrder.btSaveParameterClick(Sender: TObject);
+begin
+  //Cek Tanggal Tagihan Tidak Boleh Dibawah Tanggal Muatan
+  if dtTerimaTagihan.Date < dtTanggalMuatan.date then
+  begin
+    ShowMessage('Tanggal Tagihan Tidak Boleh Dibawah Tanggal Muatan...!!!');
+    exit;
+  end;
+
+  //Cek Balance
+  Grand_Tot:=0;
+  MemDataBiaya.First;
+  while not MemDataBiaya.Eof do
+  begin
+  Grand_Tot:=Grand_Tot+MemDataBiaya['total'];
+  MemDataBiaya.Next;
+  end;
+
+  if Grand_Tot<> edTotalBiaya.Value then
+  begin
+    ShowMessage('Total Biaya Dengan Total Tagihan Tidak Balance...!!!');
+    //ShowMessage(FloatToStr(Grand_Tot)+'LOL'+FloatToStr(edTotalBiaya.Value));
+    exit;
+  end;
+
+
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "sale"."t_delivery_order" SET '+
+              ' updated_at=NOW(), '+
+              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
+      ExecSQL;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "sale"."t_delivery_order_services" SET '+
+              ' date_invoice='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTerimaTagihan.Date))+','+
+              ' no_invoice='+QuotedStr(edNomorTagihanVendor.Text)+','+
+              ' total_cost='+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
+              ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
+      ExecSQL;
+    end;
+
+    ShowMessage('Data Berhasil Diperbarui..');
 end;
 
 procedure TFNewDeliveryOrder.btSimpanSumberJualClick(Sender: TObject);
@@ -867,6 +850,44 @@ begin
   end;
 end;
 
+procedure TFNewDeliveryOrder.DBGridSumberPenjualanColumns4CellButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='do_ppn';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFNewDeliveryOrder.DBGridSumberPenjualanColumns8CellButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='do_pph';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                'left join t_ak_header c on b.header_code=c.header_code';
+      Execute;
+    end;
+  end;
+end;
+
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanEnter(Sender: TObject);
 begin
   HitungGrid;
@@ -875,6 +896,15 @@ end;
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanExit(Sender: TObject);
 begin
   HitungGrid;
+end;
+
+procedure TFNewDeliveryOrder.DBGridSumberPenjualanKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_DELETE then
+  begin
+    MemDataBiaya.Delete;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanKeyPress(Sender: TObject;
@@ -897,7 +927,10 @@ end;
 
 procedure TFNewDeliveryOrder.dtTanggalMuatanChange(Sender: TObject);
 begin
-  FNewDeliveryOrder.Autonumber;
+  if Status=0 then
+  begin
+    Autonumber;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.edKodeVendorMuatanButtonClick(Sender: TObject);
@@ -952,42 +985,6 @@ begin
   FSearch_Supplier.ShowModal;
 end;
 
-procedure TFNewDeliveryOrder.edKodeAkunPPHButtonClick(Sender: TObject);
-begin
-  with FCari_DaftarPerk do
-  begin
-    Show;
-    vpanggil:='do_pph';
-    with QDaftar_Perk do
-    begin
-      close;
-      sql.Clear;
-      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
-                ' left join t_ak_account b on a.account_code=b.code  '+
-                'left join t_ak_header c on b.header_code=c.header_code';
-      Execute;
-    end;
-  end;
-end;
-
-procedure TFNewDeliveryOrder.edKodeAkunPPNButtonClick(Sender: TObject);
-begin
-  with FCari_DaftarPerk do
-  begin
-    Show;
-    vpanggil:='do_ppn';
-    with QDaftar_Perk do
-    begin
-      close;
-      sql.Clear;
-      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
-                ' left join t_ak_account b on a.account_code=b.code  '+
-                'left join t_ak_header c on b.header_code=c.header_code';
-      Execute;
-    end;
-  end;
-end;
-
 procedure TFNewDeliveryOrder.edNamaJenisKendMuatanButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Kendaraan';
@@ -1033,7 +1030,7 @@ end;
 
 procedure TFNewDeliveryOrder.edNoKendMuatanButtonClick(Sender: TObject);
 begin
-  ShowMessage('Master Kendaraan Ready Dimana ??')
+  ShowMessage('Master Kendaraan Ready Dimana ??');
 end;
 
 procedure TFNewDeliveryOrder.edNomorReffUtamaMuatanButtonClick(Sender: TObject);
