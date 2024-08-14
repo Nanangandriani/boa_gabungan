@@ -101,7 +101,39 @@ uses
   UMenu in 'UMenu.pas' {FMenu},
   UNew_Menu in 'UNew_Menu.pas' {FNew_menu},
   UPercampuran_Barang in 'UPercampuran_Barang.pas' {FPerc_Barang},
-  UNew_PercBarang in 'UNew_PercBarang.pas' {FNew_PercBarang};
+  UNew_PercBarang in 'UNew_PercBarang.pas' {FNew_PercBarang},
+  UMasterWilayah in 'UMasterWilayah.pas' {FMasterWilayah},
+  UMasterData in 'UMasterData.pas' {FMasterData},
+  UListSales_Order in 'UListSales_Order.pas' {FSalesOrder},
+  UNew_SalesOrder in 'UNew_SalesOrder.pas' {FNew_SalesOrder},
+  UTambah_Barang in 'UTambah_Barang.pas' {FTambah_Barang},
+  UMasterSales in 'UMasterSales.pas' {FMasterSales},
+  UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
+  UTemplate_Temp in 'UTemplate_Temp.pas' {FTemplate_Temp},
+  UListOrderTelemarketing in 'UListOrderTelemarketing.pas' {FListOrderTelemarketing},
+  UListKontrakJasa in 'UListKontrakJasa.pas' {FListKontrakJasa},
+  UListPenjualan in 'UListPenjualan.pas' {FDataListPenjualan},
+  UNew_DataPenjualan in 'UNew_DataPenjualan.pas' {FNew_Penjualan},
+  URincianPot_Penjualan in 'URincianPot_Penjualan.pas' {FRincianPot_Penjualan},
+  USetMasterPenjulan in 'USetMasterPenjulan.pas' {FSetMasterPenjulan},
+  UDataProspekPelanggan in 'UDataProspekPelanggan.pas' {FDataProspekPelanggan},
+  uLkJSON in 'uLkJSON.pas',
+  uJSON in 'uJSON.pas',
+  UListSalesOrder in 'UListSalesOrder.pas' {FListSalesOrder},
+  UDataListParameter in 'UDataListParameter.pas' {FDataListParameter},
+  UListTujualAwal in 'UListTujualAwal.pas' {FListTujualAwal},
+  UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal},
+  UListMasterBiayaDO in 'UListMasterBiayaDO.pas' {FListMasterBiayaDO},
+  UNew_MasterBiayaDO in 'UNew_MasterBiayaDO.pas' {FNew_MasterBiayaDO},
+  UListKlasifikasi in 'UListKlasifikasi.pas' {FListKlasifikasi},
+  UNewDeliveryOrder in 'UNewDeliveryOrder.pas' {FNewDeliveryOrder},
+  UListDeliveryOrder in 'UListDeliveryOrder.pas' {FListDeliveryOrder},
+  USetDeliveryOrder in 'USetDeliveryOrder.pas' {FSetDeliveryOrder},
+  UDelivery_Order_Sumber in 'UDelivery_Order_Sumber.pas' {FDelivery_Order_Sumber},
+  UListPerintahMuat in 'UListPerintahMuat.pas' {FListPerintahMuat},
+  UDataPerintahMuat in 'UDataPerintahMuat.pas' {FDataPerintahMuat},
+  UListPengajuanApprovePenjualan in 'UListPengajuanApprovePenjualan.pas' {FListPengajuanApprovePenjualan},
+  UPerintahMuat_Sumber in 'UPerintahMuat_Sumber.pas' {FPerintahMuat_Sumber};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -135,6 +167,36 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFImportnocek, FImportnocek);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
   Application.CreateForm(TFNew_UM_Pembelian, FNew_UM_Pembelian);
+  Application.CreateForm(TFMasterWilayah, FMasterWilayah);
+  Application.CreateForm(TFMasterData, FMasterData);
+  Application.CreateForm(TFSalesOrder, FSalesOrder);
+  Application.CreateForm(TFNew_SalesOrder, FNew_SalesOrder);
+  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
+  Application.CreateForm(TFMasterSales, FMasterSales);
+  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
+  Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
+  Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
+  Application.CreateForm(TFListKontrakJasa, FListKontrakJasa);
+  Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);
+  Application.CreateForm(TFNew_Penjualan, FNew_Penjualan);
+  Application.CreateForm(TFRincianPot_Penjualan, FRincianPot_Penjualan);
+  Application.CreateForm(TFSetMasterPenjulan, FSetMasterPenjulan);
+  Application.CreateForm(TFDataProspekPelanggan, FDataProspekPelanggan);
+  Application.CreateForm(TFListSalesOrder, FListSalesOrder);
+  Application.CreateForm(TFDataListParameter, FDataListParameter);
+  Application.CreateForm(TFListTujualAwal, FListTujualAwal);
+  Application.CreateForm(TFNew_TujuanAwal, FNew_TujuanAwal);
+  Application.CreateForm(TFListMasterBiayaDO, FListMasterBiayaDO);
+  Application.CreateForm(TFNew_MasterBiayaDO, FNew_MasterBiayaDO);
+  Application.CreateForm(TFListKlasifikasi, FListKlasifikasi);
+  Application.CreateForm(TFNewDeliveryOrder, FNewDeliveryOrder);
+  Application.CreateForm(TFListDeliveryOrder, FListDeliveryOrder);
+  Application.CreateForm(TFSetDeliveryOrder, FSetDeliveryOrder);
+  Application.CreateForm(TFDelivery_Order_Sumber, FDelivery_Order_Sumber);
+  Application.CreateForm(TFListPerintahMuat, FListPerintahMuat);
+  Application.CreateForm(TFDataPerintahMuat, FDataPerintahMuat);
+  Application.CreateForm(TFListPengajuanApprovePenjualan, FListPengajuanApprovePenjualan);
+  Application.CreateForm(TFPerintahMuat_Sumber, FPerintahMuat_Sumber);
   //Application.CreateForm(TFAkun_Perkiraan, FAkun_Perkiraan);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
   Application.CreateForm(TFUang_Muka_Pembelian, FUang_Muka_Pembelian);
