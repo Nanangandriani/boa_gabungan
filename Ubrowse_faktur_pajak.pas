@@ -20,35 +20,24 @@ type
     { Private declarations }
   public
     { Public declarations }
+  vcall: string;
   end;
 
 var
   Fbrowse_faktur_pajak: TFbrowse_faktur_pajak;
-  Status_fak: Integer;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Penjualan;//, UNewPenjualan_Promosi;
+uses UDataModule, UNew_Penjualan, UNew_DataPenjualan;//, UNewPenjualan_Promosi;
 
 procedure TFbrowse_faktur_pajak.DBGridEh1DblClick(Sender: TObject);
 begin
-  if Status_fak=1 then
+  if vcall='penjualan' then
   begin
-    With Qfaktur do
-    begin
-    //10-10-2023  Fnewpenjualan_promosi.EdFaktur.Text:=FieldByName('no_faktur').AsString;
-    end;
-  end
-  else
-  begin
-    With Qfaktur do
-    begin
-      Finput_penjualan.EdFaktur.Text:=FieldByName('no_faktur').AsString;
-    end;
+    FNew_Penjualan.edNomorFaktur.Text:=Qfaktur.FieldByName('no_invoice_tax').AsString;
   end;
-  Status_fak:=0;
   close;
 end;
 

@@ -4,13 +4,14 @@ object FMasterWilayah: TFMasterWilayah
   Caption = 'Master Wilayah'
   ClientHeight = 336
   ClientWidth = 1022
-  Color = clBtnFace
+  Color = clGradientInactiveCaption
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Label25: TLabel
     Left = 117
@@ -26,26 +27,12 @@ object FMasterWilayah: TFMasterWilayah
     Height = 15
     Caption = 'Area'
   end
-  object Label27: TLabel
-    Left = 20
-    Top = 78
-    Width = 42
-    Height = 15
-    Caption = 'Provinsi'
-  end
-  object Label28: TLabel
-    Left = 117
-    Top = 78
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
   object btMasterArea: TSpeedButton
-    Left = 378
+    Left = 372
     Top = 46
     Width = 23
     Height = 22
-    Caption = '...'
+    Caption = '+'
     OnClick = btMasterAreaClick
   end
   object Wilayah: TLabel
@@ -63,111 +50,58 @@ object FMasterWilayah: TFMasterWilayah
     Caption = ':'
   end
   object btMasterWilayah: TSpeedButton
-    Left = 378
+    Left = 372
     Top = 17
     Width = 23
     Height = 22
-    Caption = '...'
+    Caption = '+'
     OnClick = btMasterWilayahClick
-  end
-  object btMasterProvinsi: TSpeedButton
-    Left = 378
-    Top = 75
-    Width = 23
-    Height = 22
-    Caption = '...'
-    OnClick = btMasterProvinsiClick
   end
   object Label1: TLabel
     Left = 20
-    Top = 106
+    Top = 78
     Width = 88
     Height = 15
     Caption = 'Karesidenan / TP'
   end
   object Label3: TLabel
     Left = 117
-    Top = 106
+    Top = 78
     Width = 3
     Height = 15
     Caption = ':'
   end
   object btMasterKaresidenan: TSpeedButton
-    Left = 378
-    Top = 103
+    Left = 372
+    Top = 75
     Width = 23
     Height = 22
-    Caption = '...'
+    Caption = '+'
     OnClick = btMasterKaresidenanClick
-  end
-  object Cbtypejual: TRzComboBox
-    Left = 132
-    Top = 46
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 0
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
-  end
-  object Cbgolongan: TRzComboBox
-    Left = 132
-    Top = 75
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 1
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
-  end
-  object CbJenisPel: TRzComboBox
-    Left = 132
-    Top = 17
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 2
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
-  end
-  object RzComboBox1: TRzComboBox
-    Left = 132
-    Top = 103
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 3
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 146
+    Top = 105
     Width = 1022
-    Height = 190
+    Height = 231
     ActivePage = TabSDetailData
     Align = alBottom
-    TabOrder = 4
+    TabOrder = 3
+    ExplicitTop = 96
+    ExplicitWidth = 1016
     object TabSDetailData: TTabSheet
       Caption = 'Data Detail'
       object DBGridCustomer: TDBGridEh
         Left = 0
         Top = 0
         Width = 1014
-        Height = 160
+        Height = 201
         Align = alClient
         DataSource = DSDetailMasterWil
         DynProps = <>
         SearchPanel.Enabled = True
         TabOrder = 0
+        OnDblClick = DBGridCustomerDblClick
         Columns = <
           item
             CellButtons = <>
@@ -217,6 +151,63 @@ object FMasterWilayah: TFMasterWilayah
         end
       end
     end
+  end
+  object edWilayah: TRzButtonEdit
+    Left = 132
+    Top = 17
+    Width = 240
+    Height = 23
+    Text = ''
+    TabOrder = 0
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = edWilayahButtonClick
+  end
+  object edArea: TRzButtonEdit
+    Left = 132
+    Top = 46
+    Width = 240
+    Height = 23
+    Text = ''
+    TabOrder = 1
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = edAreaButtonClick
+  end
+  object edKaresidenan: TRzButtonEdit
+    Left = 132
+    Top = 75
+    Width = 240
+    Height = 23
+    Text = ''
+    TabOrder = 2
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = btAmbilKaresidenanClick
+  end
+  object edKode_kares: TEdit
+    Left = 401
+    Top = 76
+    Width = 100
+    Height = 23
+    TabOrder = 4
+    Visible = False
+  end
+  object edKode_area: TEdit
+    Left = 401
+    Top = 46
+    Width = 100
+    Height = 23
+    TabOrder = 5
+    Visible = False
+  end
+  object edKode_wil: TEdit
+    Left = 401
+    Top = 17
+    Width = 100
+    Height = 23
+    TabOrder = 6
+    Visible = False
   end
   object MemDetailMasterWil: TMemTableEh
     Active = True

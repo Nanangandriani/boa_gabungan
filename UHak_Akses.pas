@@ -136,4 +136,7 @@ begin
     end;
 end;
 
+Initialization
+  RegisterClasses([TFHak_Akses]);
+
 end.

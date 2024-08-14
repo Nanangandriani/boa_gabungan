@@ -29,42 +29,45 @@ object FFakturPajak: TFFakturPajak
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'id'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tahun'
+        FieldName = 'years'
         Footers = <>
         Title.Caption = 'Tahun'
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'periode'
+        FieldName = 'starting_number'
         Footers = <>
-        Title.Caption = 'Periode'
+        Title.Caption = 'Nomor Awal'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_faktur'
+        FieldName = 'final_number'
         Footers = <>
-        Title.Caption = 'No Faktur'
-        Width = 200
+        Title.Caption = 'Nomor Akhir'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'status'
+        FieldName = 'jum_nonaktif'
         Footers = <>
-        Title.Caption = 'Status'
+        Title.Caption = 'Jumlah Aktif'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jum_aktif'
+        Footers = <>
+        Title.Caption = 'Jumlah Non Aktif'
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -739,9 +742,47 @@ object FFakturPajak: TFFakturPajak
   object Qfaktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_faktur order by id Asc')
+      
+        'select a.years, a.starting_number, a.final_number, case when jum' +
+        '_nonaktif is null then 0 else jum_nonaktif end jum_nonaktif, cas' +
+        'e when jum_aktif is null then 0 else jum_aktif end jum_aktif'
+      ' from t_invoicetax a '
+      
+        ' LEFT JOIN (SELECT years, starting_number, final_number , COUNT(' +
+        'no_invoice_tax) as jum_nonaktif from t_invoicetax_det '
+      'where status=false'
+      
+        'GROUP BY years, starting_number, final_number  , status) non ON ' +
+        'a.years=non.years and a.starting_number=non.starting_number and ' +
+        'a.final_number=non.final_number  '
+      
+        ' LEFT JOIN (SELECT years, starting_number, final_number , COUNT(' +
+        'no_invoice_tax) as jum_aktif from t_invoicetax_det '
+      'where status=true'
+      
+        'GROUP BY years, starting_number, final_number  , status) aktif O' +
+        'N a.years=aktif.years and a.starting_number=aktif.starting_numbe' +
+        'r and a.final_number=aktif.final_number')
     Left = 324
     Top = 48
+    object Qfakturyears: TStringField
+      FieldName = 'years'
+      Size = 5
+    end
+    object Qfakturstarting_number: TIntegerField
+      FieldName = 'starting_number'
+    end
+    object Qfakturfinal_number: TIntegerField
+      FieldName = 'final_number'
+    end
+    object Qfakturjum_nonaktif: TLargeintField
+      FieldName = 'jum_nonaktif'
+      ReadOnly = True
+    end
+    object Qfakturjum_aktif: TLargeintField
+      FieldName = 'jum_aktif'
+      ReadOnly = True
+    end
   end
   object ActMenu: TActionManager
     Left = 616

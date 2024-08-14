@@ -61,4 +61,7 @@ end;
   //ShellExecute(0, 'open', PChar('https://helpdesk.hastaprimasolusi.com/'), nil, nil, SW_SHOWNORMAL);
 
 
+initialization
+  RegisterClass(TFHomeLogin);
+
 end.

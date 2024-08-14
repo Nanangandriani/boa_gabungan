@@ -7,12 +7,65 @@ Uses SysUtils, frxClass,uni;
   function GenerateNumber(startingNumber, digits: Integer): string;
   function getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
   function GetNourut(tgl:TDateTime;Tablename,kode:string):string;
-  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn:string;
+  //rudy
+  function SelectRow(cSelect: String): String;
+  function UpdateLogErrorAPI(base_url: String; path: String; token: String; lInsert: Boolean; endpoint: String; cKet: String = ''): Boolean;
+  function MyExecuteSQL(cSQL: String): Boolean;
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans:string;
       strday2:TDate;
 
 implementation
 
-uses UDataModule;
+uses UDataModule, UHomeLogin;
+
+function MyExecuteSQL(cSQL: String): Boolean;
+begin
+  Result := True;
+  dm.Qtemp.SQL.Text := cSQL;
+    dm.Qtemp.Execute;
+end;
+
+function UpdateLogErrorAPI(base_url: String; path: String; token: String; lInsert: Boolean; endpoint: String; cKet: String = ''): Boolean;
+var
+  cSQL: String;
+begin
+  if cKet='' then
+    cket := 'null'
+  else
+    cKet := QuotedStr(cKet);
+
+  if lInsert then
+    cSQL := ' insert into "public"."terror_api"  '+
+            ' (user_name, time, base_url, path, token, endpoint) values ( '+
+            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', NOW(), '+QuotedStr(base_url)+', '+
+            ' '+QuotedStr(path)+', '+
+            ' '+QuotedStr(token)+', '+
+            ' '+QuotedStr(endpoint)+')'
+  else
+    cSQL := ' delete from terror_api '+
+            ' where user_name='+QuotedStr(FHomeLogin.Eduser.Text);
+
+  Result := MyExecuteSQL(cSQL);
+  //end;
+end;
+
+
+function SelectRow(cSelect: String): String;
+var
+  UniQuery1: TUniQuery;
+begin
+  UniQuery1 := TUniQuery.Create(nil);
+  UniQuery1.Connection := dm.Koneksi;
+  UniQuery1.SQL.Text := cSelect;
+  if UniQuery1.Active then
+    UniQuery1.Refresh
+  else
+    UniQuery1.Open;
+
+  Result := UniQuery1.Fields.Fields[0].AsString;
+  UniQuery1.Close;
+  UniQuery1.Free;
+end;
 
 function convbulan(nobulan:Integer):string;
 begin

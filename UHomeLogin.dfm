@@ -4619,9 +4619,9 @@ object FHomeLogin: TFHomeLogin
       Visible = False
     end
     object ComboBox1: TComboBox
-      Left = 72
+      Left = 64
       Top = 98
-      Width = 244
+      Width = 261
       Height = 23
       BevelInner = bvNone
       BevelOuter = bvNone

@@ -29,7 +29,6 @@ uses
 
 type
   TFListPelanggan = class(TForm)
-    DBGridCustomer: TDBGridEh;
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
     dxBarButton2: TdxBarButton;
@@ -61,15 +60,8 @@ type
     QPelanggantelp: TStringField;
     QPelangganemail: TStringField;
     QPelangganaddress: TMemoField;
-    QPelanggannpwp: TStringField;
-    QPelangganid: TGuidField;
-    QPelanggancreated_at: TDateTimeField;
-    QPelanggancreated_by: TStringField;
-    QPelangganupdated_at: TDateTimeField;
-    QPelangganupdated_by: TStringField;
-    QPelanggandeleted_at: TDateTimeField;
-    QPelanggandeleted_by: TStringField;
     QPelangganpayment_term: TSmallintField;
+    DBGridCustomer: TDBGridEh;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -92,7 +84,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pelanggan, UDataModule;
+uses UNew_Pelanggan, UDataModule, UMy_Function, UDataProspekPelanggan;
 
 procedure TFListPelanggan.Refresh;
 begin
@@ -100,7 +92,11 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_customer where deleted_at is null order by created_at Desc ';
+       sql.Text:=' select a.customer_code, customer_name, email, address, contact_person1 as telp, '+
+                 ' payment_term from t_customer a '+
+                 ' LEFT JOIN (select customer_code, address, contact_person1 '+
+                   ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
+                 ' where deleted_at is null order by created_at Desc ';
        open;
    end;
    QPelanggan.Active:=False;
@@ -142,14 +138,53 @@ end;
 
 procedure TFListPelanggan.dxBarUpdateClick(Sender: TObject);
 begin
-  with QPelanggan do
+   with Dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from t_customer a '+
+                 ' WHERE customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
+                 ' AND deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  if Dm.Qtemp.RecordCount=0 then
   begin
-    FNew_Pelanggan.Edkode.Text:=QPelanggan.FieldByName('customer_code').AsString;
-    FNew_Pelanggan.Ednama.Text:=QPelanggan.FieldByName('customer_name').AsString;
-    //FNew_Pelanggan.MemAlamat.Text:=QPelanggan.FieldByName('address').AsString;
-    //FNew_Pelanggan.Edtelp.Text:=QPelanggan.FieldByName('telp').AsString;
-    FNew_Pelanggan.Edemail.Text:=QPelanggan.FieldByName('email').AsString;
-    FNew_Pelanggan.Edtempo.Text:=QPelanggan.FieldByName('payment_term').AsString;
+    ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
+    exit;
+  end;
+
+  if Dm.Qtemp.RecordCount<>0 then
+  begin
+  with FNew_Pelanggan do
+  begin
+    Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
+    Edautocode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
+    Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
+    Edemail.Text:=Dm.Qtemp.FieldByName('email').AsString;
+    Edtempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
+    Ednamapkp.Text:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
+    Ednpwp.Text:=Dm.Qtemp.FieldByName('no_npwp').AsString;
+    Ednik.Text:=Dm.Qtemp.FieldByName('no_nik').AsString;
+    Ednomorva.Text:=Dm.Qtemp.FieldByName('number_va').AsString;
+    Edkodewilayah.Text:=Dm.Qtemp.FieldByName('code_region').AsString;
+    Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
+    Edkodepos.Text:=Dm.Qtemp.FieldByName('postal_code').AsString;
+    edKode_jnispel.Text:=Dm.Qtemp.FieldByName('code_type').AsString;
+    edJenisPelanggan.Text:=Dm.Qtemp.FieldByName('name_type').AsString;
+    edKode_typejual.Text:=Dm.Qtemp.FieldByName('code_selling_type').AsString;
+    edTypePenjualan.Text:=Dm.Qtemp.FieldByName('name_selling_type').AsString;
+    edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
+    edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
+    vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
+      if Dm.Qtemp.FieldByName('stat_pkp').AsBoolean=false then
+      begin
+        cbpkp.Checked:=false;
+      end;
+      if Dm.Qtemp.FieldByName('stat_pkp').AsBoolean=true then
+      begin
+        cbpkp.Checked:=true;
+      end;
+  end;
   end;
   FNew_Pelanggan.Edkode.Enabled:=false;
   FNew_Pelanggan.Show;
@@ -180,10 +215,20 @@ end;
 
 procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);
 begin
-  FNew_Pelanggan.ShowModal;
-  FNew_Pelanggan.Clear;
-  FNew_Pelanggan.Edkode.Enabled:=true;
-  Status:=0;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''sys_prospek'' ')= 'ya' then
+  begin
+    FDataProspekPelanggan.showmodal;
+  end else
+  begin
+    FNew_Pelanggan.ShowModal;
+    FNew_Pelanggan.Clear;
+    FNew_Pelanggan.Autocode;
+    FNew_Pelanggan.Edkode.Enabled:=true;
+    Status:=0;
+  end;
 end;
+
+initialization
+  RegisterClass(TFListPelanggan);
 
 end.

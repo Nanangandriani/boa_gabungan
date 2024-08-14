@@ -6,150 +6,185 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS, DBAccess, Uni, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh;
+  GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, MemTableEh, Vcl.StdCtrls,
+  Vcl.ExtCtrls, Vcl.Mask, RzEdit, RzBtnEdt, RzButton;
 
 type
   TFbrowse_data_pelanggan = class(TForm)
-    DBGridEh1: TDBGridEh;
-    DataSource1: TDataSource;
-    UniQuery1: TUniQuery;
-    procedure DBGridEh1DblClick(Sender: TObject);
+    dsMasterData: TDataSource;
+    MemMasterData: TMemTableEh;
+    DBGridCustomer: TDBGridEh;
+    MemMasterDataKD_PELANGGAN: TStringField;
+    MemMasterDataNM_PELANGGAN: TStringField;
+    MemMasterDataKD_WILAYAH: TStringField;
+    MemMasterDataWILAYAH: TStringField;
+    MemMasterDataALAMAT: TStringField;
+    pnlFilter: TPanel;
+    GBType1: TGroupBox;
+    GBType2: TGroupBox;
+    Ednamawilayah: TEdit;
+    Edkodewilayah: TRzButtonEdit;
+    Label24: TLabel;
+    Label23: TLabel;
+    Panel2: TPanel;
+    Edautocode: TEdit;
+    btTampilkan: TRzBitBtn;
+    MemMasterDataKD_KARES: TStringField;
     procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure RefreshGrid;
+    procedure DBGridCustomerDblClick(Sender: TObject);
+    procedure EdkodewilayahButtonClick(Sender: TObject);
+    procedure btTampilkanClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    vcall:string ;
   end;
 
 var
   Fbrowse_data_pelanggan: TFbrowse_data_pelanggan;
-  status_browse_pelanggan: Integer;
+  status_browse_pelanggan:Integer;
 
 implementation
 
 {$R *.dfm}
 
-uses {UDm, UNewRencana_pelunasan_piutang,
-  Ubuku_harian_penerimaan_kas, UNewPenjualan,
-  Urekap_piutang, UNewSPMuat, UNewSPMuat_promosi, UNewPenjualan_Promosi, }
-  UDataModule, UNew_Penjualan;
+uses UDataModule, UNew_Penjualan, UMy_Function, UNew_SalesOrder, UHomeLogin,
+  UMasterWilayah, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_MasterBiayaDO,
+  UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
+  UDelivery_Order_Sumber;
 
-procedure TFbrowse_data_pelanggan.DBGridEh1DblClick(Sender: TObject);
+procedure TFbrowse_data_pelanggan.RefreshGrid;
 begin
-   if status_browse_pelanggan= 1 then
+  with Dm.Qtemp do
   begin
-    with UniQuery1 do
-    begin
-    //  FNew_rencana_pelunasan.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-    end;
+    close;
+    sql.clear;
+    sql.add(' select a.customer_code, customer_name, email, address, contact_person1 as telp, '+
+            ' code_region, name_region, payment_term, '+
+            ' case when code_karesidenan is null then ''0'' else code_karesidenan end code_karesidenan  '+
+            ' from t_customer a '+
+            ' LEFT JOIN (select customer_code, address, contact_person1 '+
+              ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
+            ' LEFT JOIN (SELECT code, name, code_karesidenan from t_region_regency) getkares '+
+              ' ON "left"(a.code_region,4)=getkares.code '+
+            ' where deleted_at is null ');
+      if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
+      begin
+        if ( Edkodewilayah.Text<>'' ) AND ( Edkodewilayah.Text<>'0' ) then
+        begin
+        sql.add(' AND code_region='+QuotedStr(Edkodewilayah.Text)+' ');
+        end;
+      end;
+    sql.add(' ORDER BY created_at Desc ');
+    open;
   end;
-//  if status_browse_pelanggan= 2 then
-//  begin
-//    with UniQuery1 do
-//    begin
-//      FNew_penerimaan_kas_bank_non_dagang.edditerima.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-//    end;
-//  end;
-  if status_browse_pelanggan= 3 then
-  begin
-    with UniQuery1 do
+
+    Fbrowse_data_pelanggan.MemMasterData.active:=false;
+    Fbrowse_data_pelanggan.MemMasterData.active:=true;
+    Fbrowse_data_pelanggan.MemMasterData.EmptyTable;
+
+    if  Dm.Qtemp.RecordCount=0 then
     begin
-    //  Fbuku_harian_penerimaan_kas.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
+      Showmessage('Maaf, Data Tidak Ditemukan..');
     end;
-  end;
-//  if status_browse_pelanggan= 4 then
-//  begin
-//    with UniQuery1 do
-//    begin
-//      FNew_pelunasan_piutang_dgng_nondpp.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-//    end;
-//  end;
-//  if status_browse_pelanggan= 5 then
-//  begin
-//    with UniQuery1 do
-//    begin
-//      FNew_peunasan_piutang_dgng_dpp.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-//    end;
-//  end;
-  if status_browse_pelanggan= 6 then
-  begin
-    with UniQuery1 do
+
+    if  Dm.Qtemp.RecordCount<>0 then
     begin
-   //   Finput_sp_muat.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-    end;
-  end;
-  if status_browse_pelanggan= 7 then
-  begin
-    with dm.Qtemp do
+    Dm.Qtemp.first;
+    while not Dm.Qtemp.Eof do
     begin
-      Close;
-      Sql.Clear;
-      Sql.Text:='SELECT customer_name,payment_term from t_customer where customer_name = '+QuotedStr(UniQuery1.FieldByName('customer_name').AsString);
-      Open;
+     Fbrowse_data_pelanggan.MemMasterData.insert;
+     //ShowMessage(Dm.Qtemp.fieldbyname('customer_name').value);
+     Fbrowse_data_pelanggan.MemMasterData['KD_PELANGGAN']:=Dm.Qtemp.fieldbyname('customer_code').value;
+     Fbrowse_data_pelanggan.MemMasterData['NM_PELANGGAN']:=Dm.Qtemp.fieldbyname('customer_name').value;
+     Fbrowse_data_pelanggan.MemMasterData['KD_WILAYAH']:=Dm.Qtemp.fieldbyname('code_region').value;
+     Fbrowse_data_pelanggan.MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
+     Fbrowse_data_pelanggan.MemMasterData['ALAMAT']:=Dm.Qtemp.fieldbyname('address').value;
+     Fbrowse_data_pelanggan.MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname('code_karesidenan').value;
+     Fbrowse_data_pelanggan.MemMasterData.post;
+     Dm.Qtemp.next;
     end;
-    with dm.Qtemp2 do
-    begin
-      Close;
-      Sql.Clear;
-      Sql.Text:='select CURRENT_DATE + INTEGER '+QuotedStr(DM.Qtemp.FieldByName('payment_term').AsString)+'payment_term';
-      Open;
     end;
-    Finput_penjualan.DTtgl_jatuh_tempo.Text := DM.Qtemp2.FieldByName('payment_term').AsString;
-    with UniQuery1 do
-    begin
-      Finput_penjualan.edpelanggan.Text:=UniQuery1.FieldByName('customer_name').AsString;
-    end;
-  end;
-  if status_browse_pelanggan= 8 then
-  begin
-    with UniQuery1 do
-    begin
-    //  Frekap_piutang.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-    end;
-  end;
-  if status_browse_pelanggan= 9 then
-  begin
-    with UniQuery1 do
-    begin
-    //  Fnewsp_muat_promosi.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-    end;
-  end;
-  if status_browse_pelanggan= 10 then
-  begin
-    with dm.Qtemp do
-    begin
-      Close;
-      Sql.Clear;
-      Sql.Text:='SELECT nama_pelanggan,tempo_pembayaran from t_pelanggan where nama_pelanggan = '+QuotedStr(UniQuery1.FieldByName('nama_pelanggan').AsString);
-      Open;
-    end;
-    with dm.Qtemp2 do
-    begin
-      Close;
-      Sql.Clear;
-      Sql.Text:='select CURRENT_DATE + INTEGER '+QuotedStr(DM.Qtemp.FieldByName('tempo_pembayaran').AsString)+'tempo_pembayaran';
-      Open;
-    end;
-      //Fnewpenjualan_promosi.DTtgl_jatuh_tempo.Text := DM.Qtemp2.FieldByName('tempo_pembayaran').AsString;
-    with UniQuery1 do
-    begin
-    // Fnewpenjualan_promosi.edpelanggan.Text:=UniQuery1.FieldByName('nama_pelanggan').AsString;
-    end;
-  end;
-  Close;
 end;
 
-procedure TFbrowse_data_pelanggan.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TFbrowse_data_pelanggan.btTampilkanClick(Sender: TObject);
 begin
-  UniQuery1.Close;
+  RefreshGrid;
+end;
+
+procedure TFbrowse_data_pelanggan.DBGridCustomerDblClick(Sender: TObject);
+begin
+  //showmessage(vcall);
+  if vcall='delivery_order' then
+  begin
+    FDelivery_Order_Sumber.edKodeVendorMuatan.Text:=MemMasterData['KD_PELANGGAN'];
+    FDelivery_Order_Sumber.edNamaVendorMuatan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+  if vcall='sumber_order' then
+  begin
+    FNew_SalesOrder.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FNew_SalesOrder.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FNew_SalesOrder.kd_kares:=MemMasterData['KD_KARES'];
+    FNew_SalesOrder.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+    FNew_SalesOrder.edNama_Sales.Text:=SelectRow('SELECT name from t_sales  WHERE	code_region='+QuotedStr(MemMasterData['KD_WILAYAH'])+' AND deleted_at IS NULL ORDER BY code desc LIMIT 1');
+    FNew_SalesOrder.edKode_Sales.Text:=SelectRow('SELECT code from t_sales  WHERE	code_region='+QuotedStr(MemMasterData['KD_WILAYAH'])+' AND deleted_at IS NULL ORDER BY code desc LIMIT 1');
+    FNew_SalesOrder.Autonumber;
+  end;
+  if vcall='penjualan' then
+  begin
+    FNew_Penjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FNew_Penjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
+    FNew_Penjualan.Autonumber;
+    FNew_Penjualan.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+  end;
+  if vcall='daftar_klasifikasi' then
+  begin
+    FDaftarKlasifikasi.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FDaftarKlasifikasi.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FDaftarKlasifikasi.jenis_pelanggan:=SelectRow('SELECT code_type from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+  end;
+  if vcall='m_biaya_do' then
+  begin
+    FNew_MasterBiayaDO.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FNew_MasterBiayaDO.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+
+  Fbrowse_data_pelanggan.Close;
+  Fbrowse_data_pelanggan.MemMasterData.EmptyTable;
+end;
+
+procedure TFbrowse_data_pelanggan.EdkodewilayahButtonClick(Sender: TObject);
+begin
+  FMasterWilayah.vcall:='sales_order';
+  FMasterWilayah.Showmodal;
 end;
 
 procedure TFbrowse_data_pelanggan.FormShow(Sender: TObject);
 begin
-  UniQuery1.Close;
-  UniQuery1.Open;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '0' then
+  begin
+    pnlFilter.Visible:=false;
+    RefreshGrid;
+  end else
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
+  begin
+    pnlFilter.Visible:=true;
+    GBType1.Visible:=true;
+    GBType2.Visible:=false;
+  end else
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '2' then
+  begin
+    pnlFilter.Visible:=true;
+    GBType1.Visible:=false;
+    GBType2.Visible:=true;
+  end;
 end;
+
+//Initialization
+  //RegisterClasses([TFNewDeliveryOrder,TFTemplate_Temp,TFbrowse_data_pelanggan]);
+  //RegisterClasses([TFbrowse_data_pelanggan]);
 
 end.

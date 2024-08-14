@@ -195,4 +195,7 @@ begin
    if QdetNo.Active=False then QdetNo.Active:=True;
 end;
 
+Initialization
+  RegisterClasses([TFPenomoran]);
+
 end.

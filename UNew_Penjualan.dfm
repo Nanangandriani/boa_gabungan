@@ -3,8 +3,8 @@ object Finput_penjualan: TFinput_penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Input Data Penjualan'
-  ClientHeight = 518
-  ClientWidth = 768
+  ClientHeight = 485
+  ClientWidth = 837
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,12 +20,12 @@ object Finput_penjualan: TFinput_penjualan
   object pninput: TPanel
     Left = 0
     Top = 0
-    Width = 768
+    Width = 837
     Height = 155
     Align = alTop
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 764
+    ExplicitWidth = 930
     object qty: TLabel
       Left = 8
       Top = 39
@@ -272,15 +272,15 @@ object Finput_penjualan: TFinput_penjualan
   end
   object Panel1: TPanel
     Left = 0
-    Top = 486
-    Width = 768
+    Top = 453
+    Width = 837
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 485
-    ExplicitWidth = 764
+    ExplicitTop = 477
+    ExplicitWidth = 930
     object BBatal: TRzBitBtn
-      Left = 692
+      Left = 761
       Top = 1
       Height = 30
       Align = alRight
@@ -339,10 +339,10 @@ object Finput_penjualan: TFinput_penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 688
+      ExplicitLeft = 854
     end
     object BSimpan: TRzBitBtn
-      Left = 617
+      Left = 686
       Top = 1
       Height = 30
       Align = alRight
@@ -401,7 +401,7 @@ object Finput_penjualan: TFinput_penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 613
+      ExplicitLeft = 779
     end
     object edidjurnal_umum: TEdit
       Left = 124
@@ -415,8 +415,8 @@ object Finput_penjualan: TFinput_penjualan
   object DBGridgrn: TDBGridEh
     Left = 0
     Top = 196
-    Width = 768
-    Height = 220
+    Width = 837
+    Height = 187
     Align = alClient
     AllowedOperations = [alopUpdateEh, alopDeleteEh]
     DataSource = DSdetail
@@ -607,14 +607,14 @@ object Finput_penjualan: TFinput_penjualan
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 416
-    Width = 768
+    Top = 383
+    Width = 837
     Height = 70
     Align = alBottom
     Color = 15987699
     TabOrder = 3
-    ExplicitTop = 415
-    ExplicitWidth = 764
+    ExplicitTop = 407
+    ExplicitWidth = 930
     object Label17: TLabel
       Left = 480
       Top = 36
@@ -913,13 +913,13 @@ object Finput_penjualan: TFinput_penjualan
   object Panel2: TPanel
     Left = 0
     Top = 155
-    Width = 768
+    Width = 837
     Height = 41
     Align = alTop
     ParentBackground = False
     TabOrder = 5
     Visible = False
-    ExplicitWidth = 764
+    ExplicitWidth = 930
     object Btn_show_produk: TRzBitBtn
       Left = 1
       Top = 1

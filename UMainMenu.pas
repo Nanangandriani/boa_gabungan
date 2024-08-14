@@ -27,7 +27,7 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
-  dxBar, cxClasses, dxRibbon;
+  dxBar, cxClasses, dxRibbon, Data.DB, MemDS, DBAccess, Uni;
 
 type
   TFMainMenu = class(TForm)
@@ -64,6 +64,7 @@ type
     dxBarLargeButtonLaporan: TdxBarLargeButton;
     dxBarLargeButtonApproval: TdxBarLargeButton;
     dxBarLargeButtonUtility: TdxBarLargeButton;
+    UniQuery1: TUniQuery;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -98,7 +99,7 @@ type
     Procedure CreateSubMenu(Role,Menu:String);
     Procedure CloseTabs(Sender: TObject);
     Procedure ClearCategoryPanelGroup;
-       Procedure Cleartreview;
+    Procedure Cleartreview;
     Procedure GetSubMenu(Sender: TObject);
     Procedure btnApplyClick(Sender: TObject);
     Procedure CallFoo(S: string; I: Integer);
@@ -131,14 +132,16 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
+{uses UDataModule, UDashboard, UFakturPajak, UPenomoran, UListBarang,
   UListPelanggan, UListSupplier, UListProduk, UListKonversi_Produk, UList_Gudang,
   UListBank_perusahaan, UBarang_Stok, UItem_Type, UKategori_Barang, UListPerusahaan,
   Udaftar_perkiraan,UKonversi_Barang, UJabatan, UDept, UBonPermt_Barang,
   UTransfer_Barang, UKontrakKerjasama,Uuser, UPO, UReturnPembelian,
   UPembelian, UPot_Pembelian, USPB, Udafcek_entry, UHak_Akses, UPeng_stok,
-  UPercampuran_Barang, UMaster_Akun, UMenu, UUang_Muka_Pembelian;
-
+  UPercampuran_Barang, UMaster_Akun, UMenu, UUang_Muka_Pembelian,
+  UListSales_Order, UListPenjualan, USetMasterPenjulan, UDataListParameter,
+  UListTujualAwal, UListMasterBiayaDO, UListKlasifikasi, UListDeliveryOrder; }
+uses UDataModule;
 
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -567,18 +570,13 @@ begin
           if (dm.Qtemp2.RecordCount=1) then
           begin
             //ACategoryPanel.Height:=80;
-            ACategoryPanel.Height:=60;
-          end;
-          if (dm.Qtemp2.RecordCount= 2)then
-          begin
-            //ACategoryPanel.Height:=80;
-            ACategoryPanel.Height:=80;
+            ACategoryPanel.Height:=65;
           end;
 
-          if dm.Qtemp2.RecordCount>2 then
+          if dm.Qtemp2.RecordCount>1 then
           begin
             //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
-            ACategoryPanel.Height:=35+25*dm.Qtemp2.RecordCount;
+            ACategoryPanel.Height:=35+AButtonPanel.Height*dm.Qtemp2.RecordCount;
             //ACategoryPanel.Height:=ACategoryPanel.Height *dm.Qt
           end;
          dm.Qtemp2.Next;
@@ -685,7 +683,8 @@ begin
             ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
             ' INNER JOIN t_user1 dd ON dd.akses = aa.RoleNama '+
             ' WHERE aa.RoleNama='+QuotedStr('Admin')+
-            ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
+            ' AND aa.SubMenu='+QuotedStr(Sub);
+            //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
             open;
        end;
   if dm.Qtemp1.FieldByName('RAdd').AsInteger=2 then
@@ -727,6 +726,27 @@ begin
        if TAction(Form.Components[i]).Name='ActPrint' then
        TAction(Form.Components[i]).Enabled:=true;
   end;
+  if dm.Qtemp1.FieldByName('RRefresh').AsInteger=2 then
+  begin
+       for i:=0 to Form.ComponentCount-1 do
+       if (Form.Components[i] is TAction) then
+       if TAction(Form.Components[i]).Name='ActRO' then
+       TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('rapprove').AsInteger=2 then
+  begin
+       for i:=0 to Form.ComponentCount-1 do
+       if (Form.Components[i] is TAction) then
+       if TAction(Form.Components[i]).Name='ActApp' then
+       TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('rreject').AsInteger=2 then
+  begin
+       for i:=0 to Form.ComponentCount-1 do
+       if (Form.Components[i] is TAction) then
+       if TAction(Form.Components[i]).Name='ActReject' then
+       TAction(Form.Components[i]).Enabled:=true;
+  end;
 end;
 
 procedure TFMainMenu.Exit1Click(Sender: TObject);
@@ -752,11 +772,15 @@ begin
   ShowForm;
 end;
 
-Initialization
+{Initialization
   RegisterClasses([TFDashboard,TFFakturPajak,TFPenomoran,TFlistBarang,TFListPelanggan,TFlistSupplier,TFListProduk,TFKonversi_Barang,
   TFListKonvProduk,TFListGudang,TFListBank,TFBarang_stok,TFItem_Type,TFKategori_Barang,TFPenomoran,
   TFListPerusahaan,TFDaftar_Perkiraan,TFDept,TFJabatan,TFBonPermt_Barang,TFTransfer_Barang,TFKontrakKerjasama,TFUser,TFHak_Akses,TFPO,
   TFReturnPembelian,TFPembelian,TFPot_Pembelian,TFSPB,TFDaf_EntryCek,
-  TFPeng_Stok,TFPerc_Barang,TFMaster_Akun,TFMenu,TFUang_Muka_Pembelian]);
+  TFPeng_Stok,TFPerc_Barang,TFMaster_Akun,TFMenu,TFUang_Muka_Pembelian,
+  TFSalesOrder,TFDataListPenjualan,TFDataListParameter,TFListTujualAwal,TFListMasterBiayaDO,
+  TFListKlasifikasi,TFListDeliveryOrder]); }
+initialization
+RegisterClass(TFMainMenu);
 
 end.

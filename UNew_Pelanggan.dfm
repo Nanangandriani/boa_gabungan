@@ -2,8 +2,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
   Left = 145
   Top = 65
   Caption = 'New Pelanggan'
-  ClientHeight = 478
-  ClientWidth = 1109
+  ClientHeight = 542
+  ClientWidth = 1218
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,290 +11,23 @@ object FNew_Pelanggan: TFNew_Pelanggan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
-  object Label14: TLabel
-    Left = 663
-    Top = 194
-    Width = 22
-    Height = 15
-    Caption = 'Hari'
-  end
-  object Label13: TLabel
-    Left = 20
-    Top = 165
-    Width = 29
-    Height = 15
-    Caption = 'Email'
-  end
-  object Label12: TLabel
-    Left = 117
-    Top = 165
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label11: TLabel
-    Left = 189
-    Top = 505
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label10: TLabel
-    Left = 477
-    Top = 194
-    Width = 54
-    Height = 15
-    Caption = 'Jth Tempo'
-  end
-  object Label6: TLabel
-    Left = 117
-    Top = 49
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label3: TLabel
-    Left = 117
-    Top = 19
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object LabelPelanggan: TLabel
-    Left = 20
-    Top = 19
-    Width = 86
-    Height = 15
-    Caption = 'Kode Pelanggan'
-  end
-  object Label5: TLabel
-    Left = 20
-    Top = 49
-    Width = 91
-    Height = 15
-    Caption = 'Nama Pelanggan'
-  end
-  object Label15: TLabel
-    Left = 20
-    Top = 78
-    Width = 56
-    Height = 15
-    Caption = 'Nama PKP'
-  end
-  object Label16: TLabel
-    Left = 117
-    Top = 78
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label17: TLabel
-    Left = 117
-    Top = 107
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label18: TLabel
-    Left = 20
-    Top = 107
-    Width = 34
-    Height = 15
-    Caption = 'NPWP'
-  end
-  object Label19: TLabel
-    Left = 20
-    Top = 136
-    Width = 19
-    Height = 15
-    Caption = 'NIK'
-  end
-  object Label20: TLabel
-    Left = 117
-    Top = 136
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label21: TLabel
-    Left = 20
-    Top = 194
-    Width = 36
-    Height = 15
-    Caption = 'No. VA'
-  end
-  object Label22: TLabel
-    Left = 117
-    Top = 194
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label23: TLabel
-    Left = 476
-    Top = 19
-    Width = 42
-    Height = 15
-    Caption = 'Wilayah'
-  end
-  object Label24: TLabel
-    Left = 573
-    Top = 19
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label25: TLabel
-    Left = 573
-    Top = 136
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label26: TLabel
-    Left = 476
-    Top = 136
-    Width = 79
-    Height = 15
-    Caption = 'Type Penjualan'
-  end
-  object Label27: TLabel
-    Left = 476
-    Top = 165
-    Width = 52
-    Height = 15
-    Caption = 'Golongan'
-  end
-  object Label28: TLabel
-    Left = 573
-    Top = 165
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object btMasterWilayah: TSpeedButton
-    Left = 779
-    Top = 16
-    Width = 23
-    Height = 22
-    Caption = '...'
-    OnClick = btMasterWilayahClick
-  end
-  object btMasterTypePenjualan: TSpeedButton
-    Left = 834
-    Top = 133
-    Width = 23
-    Height = 22
-    Caption = '...'
-    OnClick = btMasterTypePenjualanClick
-  end
-  object Label1: TLabel
-    Left = 476
-    Top = 107
-    Width = 84
-    Height = 15
-    Caption = 'Jenis Pelanggan'
-  end
-  object Label2: TLabel
-    Left = 573
-    Top = 107
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object btJenisPelanggan: TSpeedButton
-    Left = 834
-    Top = 104
-    Width = 23
-    Height = 22
-    Caption = '...'
-    OnClick = btJenisPelangganClick
-  end
-  object btMasterDetailPel: TSpeedButton
-    Left = 20
-    Top = 220
-    Width = 172
-    Height = 22
-    Caption = 'Master Detail Pelanggan'
-    OnClick = btMasterDetailPelClick
-  end
-  object btMasterGolongan: TSpeedButton
-    Left = 834
-    Top = 162
-    Width = 23
-    Height = 22
-    Caption = '...'
-    OnClick = btMasterGolonganClick
-  end
-  object Label4: TLabel
-    Left = 573
-    Top = 76
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Label7: TLabel
-    Left = 476
-    Top = 76
-    Width = 49
-    Height = 15
-    Caption = 'Kode Pos'
-  end
-  object Label8: TLabel
-    Left = 573
-    Top = 194
-    Width = 3
-    Height = 15
-    Caption = ':'
-  end
-  object Edemail: TEdit
-    Left = 132
-    Top = 162
-    Width = 313
-    Height = 23
-    TabOrder = 0
-    OnKeyPress = EdemailKeyPress
-  end
-  object Edtempo: TEdit
-    Left = 588
-    Top = 191
-    Width = 69
-    Height = 23
-    NumbersOnly = True
-    TabOrder = 1
-  end
-  object Edkode: TEdit
-    Left = 132
-    Top = 16
-    Width = 185
-    Height = 23
-    CharCase = ecUpperCase
-    TabOrder = 2
-    OnKeyPress = EdkodeKeyPress
-  end
-  object Ednama: TEdit
-    Left = 132
-    Top = 46
-    Width = 313
-    Height = 23
-    TabOrder = 3
-    OnKeyPress = EdnamaKeyPress
-  end
   object Panel2: TPanel
     Left = 0
-    Top = 446
-    Width = 1109
+    Top = 510
+    Width = 1218
     Height = 32
     Align = alBottom
-    TabOrder = 4
-    ExplicitTop = 448
+    TabOrder = 0
+    ExplicitTop = 501
+    ExplicitWidth = 1212
     object BBatal: TRzBitBtn
-      Left = 1033
+      Left = 1142
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Batal'
+      Caption = 'Close'
       TabOrder = 1
       OnClick = BBatalClick
       Glyph.Data = {
@@ -349,14 +82,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1027
+      ExplicitLeft = 1136
     end
     object BSave: TRzBitBtn
-      Left = 958
+      Left = 1067
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 0
       OnClick = BSaveClick
       Glyph.Data = {
@@ -411,7 +144,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 952
+      ExplicitLeft = 1061
     end
     object BDataProspek: TRzBitBtn
       Left = 169
@@ -421,6 +154,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Align = alLeft
       Caption = 'Data Prospek'
       TabOrder = 2
+      Visible = False
       OnClick = BDataProspekClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -474,7 +208,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1
     end
     object Edautocode: TEdit
       Left = 712
@@ -549,108 +282,27 @@ object FNew_Pelanggan: TFNew_Pelanggan
       NumGlyphs = 2
     end
   end
-  object Ednamapkp: TEdit
-    Left = 132
-    Top = 75
-    Width = 313
-    Height = 23
-    TabOrder = 5
-    OnKeyPress = EdnamapkpKeyPress
-  end
-  object Ednpwp: TEdit
-    Left = 132
-    Top = 104
-    Width = 313
-    Height = 23
-    TabOrder = 6
-    OnKeyPress = EdnpwpKeyPress
-  end
-  object Ednik: TEdit
-    Left = 132
-    Top = 133
-    Width = 313
-    Height = 23
-    TabOrder = 7
-    OnKeyPress = EdnikKeyPress
-  end
-  object cbpkp: TCheckBox
-    Left = 323
-    Top = 19
-    Width = 142
-    Height = 17
-    Caption = 'PKP'
-    TabOrder = 8
-    OnClick = cbpkpClick
-  end
-  object Ednomorva: TEdit
-    Left = 132
-    Top = 191
-    Width = 313
-    Height = 23
-    TabOrder = 9
-  end
-  object Ednamawilayah: TEdit
-    Left = 588
-    Top = 44
-    Width = 349
-    Height = 23
-    ReadOnly = True
-    TabOrder = 10
-    OnKeyPress = EdemailKeyPress
-  end
-  object Cbtypejual: TRzComboBox
-    Left = 588
-    Top = 133
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 11
-    OnKeyPress = CbtypejualKeyPress
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
-  end
-  object Cbgolongan: TRzComboBox
-    Left = 588
-    Top = 162
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 12
-    OnKeyPress = CbgolonganKeyPress
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
-  end
-  object Edkodewilayah: TEdit
-    Left = 588
-    Top = 16
-    Width = 185
-    Height = 23
-    CharCase = ecUpperCase
-    ReadOnly = True
-    TabOrder = 13
-    OnKeyPress = EdkodeKeyPress
-  end
-  object PageControl1: TPageControl
+  object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 256
-    Width = 1109
-    Height = 190
+    Top = 304
+    Width = 1218
+    Height = 206
+    Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
-    TabOrder = 14
-    ExplicitTop = 247
-    ExplicitWidth = 1103
-    object TabSDetailPel: TTabSheet
-      Caption = 'Detail Pelanggan'
+    UseColoredTabs = True
+    TabIndex = 0
+    TabOrder = 1
+    FixedDimension = 21
+    object TabSDetailPel: TRzTabSheet
+      Caption = 'Detail Alamat Pelanggan'
+      ExplicitWidth = 1208
+      ExplicitHeight = 224
       object DBGridCustomer: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1101
-        Height = 160
+        Width = 1214
+        Height = 181
         Align = alClient
         DataSource = DSDetailPel
         DynProps = <>
@@ -706,34 +358,513 @@ object FNew_Pelanggan: TFNew_Pelanggan
             FieldName = 'URUTAN_KE'
             Footers = <>
             Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'LONGITUDE'
+            Footers = <>
+            Title.Caption = 'Longitude'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'LATITUDE'
+            Footers = <>
+            Title.Caption = 'Latitude'
+            Width = 100
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
     end
   end
-  object CbJenisPel: TRzComboBox
-    Left = 588
-    Top = 104
-    Width = 240
-    Height = 23
-    CharCase = ecUpperCase
-    Enabled = False
-    TabOrder = 15
-    OnKeyPress = CbtypejualKeyPress
-    Items.Strings = (
-      'KKJ'
-      'KKSP')
-  end
-  object Edkodepos: TEdit
-    Left = 588
-    Top = 73
-    Width = 185
-    Height = 23
-    CharCase = ecUpperCase
-    ReadOnly = True
-    TabOrder = 16
-    OnKeyPress = EdkodeKeyPress
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 1218
+    Height = 304
+    Align = alClient
+    Color = clGradientInactiveCaption
+    ParentBackground = False
+    TabOrder = 2
+    ExplicitHeight = 289
+    object Label14: TLabel
+      Left = 663
+      Top = 194
+      Width = 22
+      Height = 15
+      Caption = 'Hari'
+    end
+    object Label13: TLabel
+      Left = 20
+      Top = 165
+      Width = 29
+      Height = 15
+      Caption = 'Email'
+    end
+    object Label12: TLabel
+      Left = 117
+      Top = 165
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label10: TLabel
+      Left = 477
+      Top = 194
+      Width = 54
+      Height = 15
+      Caption = 'Jth Tempo'
+    end
+    object Label6: TLabel
+      Left = 117
+      Top = 49
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label3: TLabel
+      Left = 117
+      Top = 19
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object LabelPelanggan: TLabel
+      Left = 20
+      Top = 19
+      Width = 86
+      Height = 15
+      Caption = 'Kode Pelanggan'
+    end
+    object Label5: TLabel
+      Left = 20
+      Top = 49
+      Width = 91
+      Height = 15
+      Caption = 'Nama Pelanggan'
+    end
+    object Label15: TLabel
+      Left = 20
+      Top = 78
+      Width = 56
+      Height = 15
+      Caption = 'Nama PKP'
+    end
+    object Label16: TLabel
+      Left = 117
+      Top = 78
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label17: TLabel
+      Left = 117
+      Top = 107
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label18: TLabel
+      Left = 20
+      Top = 107
+      Width = 34
+      Height = 15
+      Caption = 'NPWP'
+    end
+    object Label19: TLabel
+      Left = 20
+      Top = 136
+      Width = 19
+      Height = 15
+      Caption = 'NIK'
+    end
+    object Label20: TLabel
+      Left = 117
+      Top = 136
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label21: TLabel
+      Left = 20
+      Top = 194
+      Width = 36
+      Height = 15
+      Caption = 'No. VA'
+    end
+    object Label22: TLabel
+      Left = 117
+      Top = 194
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label23: TLabel
+      Left = 476
+      Top = 19
+      Width = 42
+      Height = 15
+      Caption = 'Wilayah'
+    end
+    object Label24: TLabel
+      Left = 573
+      Top = 19
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label25: TLabel
+      Left = 573
+      Top = 136
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label26: TLabel
+      Left = 476
+      Top = 136
+      Width = 80
+      Height = 15
+      Caption = 'Jenis Penjualan'
+    end
+    object Label27: TLabel
+      Left = 476
+      Top = 165
+      Width = 52
+      Height = 15
+      Caption = 'Golongan'
+    end
+    object Label28: TLabel
+      Left = 573
+      Top = 165
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object btMasterTypePenjualan: TSpeedButton
+      Left = 829
+      Top = 133
+      Width = 23
+      Height = 22
+      Caption = '+'
+      OnClick = btMasterTypePenjualanClick
+    end
+    object Label1: TLabel
+      Left = 476
+      Top = 107
+      Width = 84
+      Height = 15
+      Caption = 'Jenis Pelanggan'
+    end
+    object Label2: TLabel
+      Left = 573
+      Top = 107
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object btJenisPelanggan: TSpeedButton
+      Left = 829
+      Top = 104
+      Width = 23
+      Height = 22
+      Caption = '+'
+      OnClick = btJenisPelangganClick
+    end
+    object btMasterGolongan: TSpeedButton
+      Left = 829
+      Top = 162
+      Width = 23
+      Height = 22
+      Caption = '+'
+      OnClick = btMasterGolonganClick
+    end
+    object Label4: TLabel
+      Left = 573
+      Top = 47
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label7: TLabel
+      Left = 476
+      Top = 47
+      Width = 49
+      Height = 15
+      Caption = 'Kode Pos'
+    end
+    object Label8: TLabel
+      Left = 573
+      Top = 194
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object btMasterDetailPel: TSpeedButton
+      Left = 20
+      Top = 276
+      Width = 172
+      Height = 22
+      Caption = 'Add Master Detail Pelanggan'
+      OnClick = btMasterDetailPelClick
+    end
+    object btJenisUsaha: TSpeedButton
+      Left = 829
+      Top = 73
+      Width = 23
+      Height = 22
+      Caption = '+'
+      OnClick = btJenisPelangganClick
+    end
+    object Label9: TLabel
+      Left = 573
+      Top = 76
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label11: TLabel
+      Left = 476
+      Top = 76
+      Width = 60
+      Height = 15
+      Caption = 'Jenis Usaha'
+    end
+    object Label29: TLabel
+      Left = 20
+      Top = 224
+      Width = 67
+      Height = 15
+      Caption = 'Kantor Pusat'
+    end
+    object Label30: TLabel
+      Left = 117
+      Top = 224
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 235
+      Top = 221
+      Width = 23
+      Height = 22
+      Caption = '+'
+      OnClick = btJenisPelangganClick
+    end
+    object Edemail: TEdit
+      Left = 132
+      Top = 162
+      Width = 313
+      Height = 23
+      TabOrder = 0
+      OnKeyPress = EdemailKeyPress
+    end
+    object Edtempo: TEdit
+      Left = 588
+      Top = 191
+      Width = 69
+      Height = 23
+      NumbersOnly = True
+      TabOrder = 1
+    end
+    object Edkode: TEdit
+      Left = 132
+      Top = 16
+      Width = 185
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 2
+      OnKeyPress = EdkodeKeyPress
+    end
+    object Ednama: TEdit
+      Left = 132
+      Top = 46
+      Width = 313
+      Height = 23
+      TabOrder = 3
+      OnKeyPress = EdnamaKeyPress
+    end
+    object Ednamapkp: TEdit
+      Left = 132
+      Top = 75
+      Width = 313
+      Height = 23
+      TabOrder = 4
+      OnKeyPress = EdnamapkpKeyPress
+    end
+    object Ednpwp: TEdit
+      Left = 132
+      Top = 104
+      Width = 313
+      Height = 23
+      TabOrder = 5
+      OnKeyPress = EdnpwpKeyPress
+    end
+    object Ednik: TEdit
+      Left = 132
+      Top = 133
+      Width = 313
+      Height = 23
+      TabOrder = 6
+      OnKeyPress = EdnikKeyPress
+    end
+    object cbpkp: TCheckBox
+      Left = 323
+      Top = 19
+      Width = 142
+      Height = 17
+      Caption = 'PKP'
+      TabOrder = 7
+      OnClick = cbpkpClick
+    end
+    object Ednomorva: TEdit
+      Left = 132
+      Top = 191
+      Width = 313
+      Height = 23
+      TabOrder = 8
+    end
+    object Ednamawilayah: TEdit
+      Left = 691
+      Top = 15
+      Width = 349
+      Height = 23
+      ReadOnly = True
+      TabOrder = 9
+      OnKeyPress = EdemailKeyPress
+    end
+    object Edkodepos: TEdit
+      Left = 588
+      Top = 44
+      Width = 125
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 10
+      OnKeyPress = EdkodeKeyPress
+    end
+    object edJenisPelanggan: TRzButtonEdit
+      Left = 588
+      Top = 104
+      Width = 240
+      Height = 23
+      Text = ''
+      TabOrder = 11
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edJenisPelangganButtonClick
+    end
+    object edTypePenjualan: TRzButtonEdit
+      Left = 588
+      Top = 133
+      Width = 240
+      Height = 23
+      Text = ''
+      TabOrder = 12
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edTypePenjualanButtonClick
+    end
+    object edGolonganPelanggan: TRzButtonEdit
+      Left = 588
+      Top = 162
+      Width = 240
+      Height = 23
+      Text = ''
+      TabOrder = 13
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edGolonganPelangganButtonClick
+    end
+    object edKode_jnispel: TEdit
+      Left = 859
+      Top = 103
+      Width = 100
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 14
+      Visible = False
+      OnKeyPress = EdkodeKeyPress
+    end
+    object edKode_typejual: TEdit
+      Left = 859
+      Top = 133
+      Width = 100
+      Height = 23
+      ReadOnly = True
+      TabOrder = 15
+      Visible = False
+      OnKeyPress = EdnamaKeyPress
+    end
+    object edKode_gol: TEdit
+      Left = 859
+      Top = 162
+      Width = 100
+      Height = 23
+      ReadOnly = True
+      TabOrder = 16
+      Visible = False
+      OnKeyPress = EdnamapkpKeyPress
+    end
+    object Edkodewilayah: TRzButtonEdit
+      Left = 588
+      Top = 15
+      Width = 97
+      Height = 23
+      Text = ''
+      TabOrder = 17
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = EdkodewilayahButtonClick
+    end
+    object edKode_JenisUsaha: TEdit
+      Left = 859
+      Top = 72
+      Width = 100
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 18
+      Visible = False
+      OnKeyPress = EdkodeKeyPress
+    end
+    object edJenisUsaha: TRzButtonEdit
+      Left = 588
+      Top = 73
+      Width = 240
+      Height = 23
+      Text = ''
+      TabOrder = 19
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edJenisPelangganButtonClick
+    end
+    object edNamaKantorPusat: TEdit
+      Left = 132
+      Top = 249
+      Width = 313
+      Height = 23
+      ReadOnly = True
+      TabOrder = 20
+      OnKeyPress = EdemailKeyPress
+    end
+    object edKodeKantorPusat: TRzButtonEdit
+      Left = 132
+      Top = 220
+      Width = 97
+      Height = 23
+      Text = ''
+      TabOrder = 21
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = EdkodewilayahButtonClick
+    end
   end
   object DSDetailPel: TDataSource
     DataSet = MemDetailPel
@@ -741,6 +872,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Top = 152
   end
   object MemDetailPel: TMemTableEh
+    Active = True
     Params = <>
     Left = 944
     Top = 200
@@ -763,6 +895,12 @@ object FNew_Pelanggan: TFNew_Pelanggan
     object MemDetailPelURUTAN_KE: TIntegerField
       FieldName = 'URUTAN_KE'
     end
+    object MemDetailPelLONGITUDE: TStringField
+      FieldName = 'LONGITUDE'
+    end
+    object MemDetailPelLATITUDE: TStringField
+      FieldName = 'LATITUDE'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KODE_URUTAN_KE: TMTStringDataFieldEh
@@ -775,6 +913,16 @@ object FNew_Pelanggan: TFNew_Pelanggan
           StringDataType = fdtStringEh
           DisplayWidth = 500
           Size = 500
+        end
+        object LONGITUDE: TMTStringDataFieldEh
+          FieldName = 'LONGITUDE'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object LATITUDE: TMTStringDataFieldEh
+          FieldName = 'LATITUDE'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
         object CONTACT_PERSON1: TMTStringDataFieldEh
           FieldName = 'CONTACT_PERSON1'

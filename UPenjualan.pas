@@ -9,7 +9,7 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
   Data.DB, frxClass, frxDBSet, DataDriverEh, MemTableEh, MemDS, DBAccess, Uni,
   dxBar, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, cxClasses, dxRibbon,
-  Vcl.StdCtrls, VCLTee.TeCanvas, dxBarExtItems, cxMaskEdit, cxLabel,
+  Vcl.StdCtrls, dxBarExtItems, cxMaskEdit, cxLabel,
   cxRadioGroup, cxCheckGroup, dxColorEdit, cxSpinEdit, cxImage, cxBarEditItem,
   dxRibbonGallery, dxSkinChooserGallery, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,

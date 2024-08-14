@@ -58,6 +58,11 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
+    Qfakturyears: TStringField;
+    Qfakturstarting_number: TIntegerField;
+    Qfakturfinal_number: TIntegerField;
+    Qfakturjum_nonaktif: TLargeintField;
+    Qfakturjum_aktif: TLargeintField;
     procedure dxBarLargeBaruClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -78,7 +83,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNewFakturPajak, Uupdate_faktur, UDataModule;
+uses UNewFakturPajak, Uupdate_faktur, UDataModule, UHomeLogin;
 
 procedure TFFakturPajak.dxBarRefreshClick(Sender: TObject);
 begin
@@ -94,20 +99,20 @@ end;
 
 procedure TFFakturPajak.dxBarUpdateClick(Sender: TObject);
 begin
-    if Qfaktur.FieldByName('status').AsString='Aktif' then
+    if Qfaktur.FieldByName('jum_aktif').AsLargeInt<>0 then
     begin
       MessageDlg('Maaf faktur tidak dapat diubah, faktur sudah digunakan..!!',mtInformation,[mbRetry],0);
     end
     else
     begin
-      Fupdate_faktur.edid.Text:='';
-      Fupdate_faktur.edfaktur.Text:='';
+      {Finput_faktur_pajak.edid.Text:='';
+      Finput_faktur_pajak.edfaktur.Text:='';
       with Qfaktur do
       begin
-        Fupdate_faktur.edid.Text := FieldByName('id').AsString;
-        Fupdate_faktur.edfaktur.Text := FieldByName('no_faktur').AsString;
-      end;
-      Fupdate_faktur.Show;
+        Finput_faktur_pajak.edid.Text := FieldByName('id').AsString;
+        Finput_faktur_pajak.edfaktur.Text := FieldByName('no_faktur').AsString;
+      end;}
+      Finput_faktur_pajak.Show;
     end;
 end;
 
@@ -118,17 +123,39 @@ end;
 
 procedure TFFakturPajak.Refresh;
 begin
-    with QFaktur do
+   DBGridEh1.StartLoadingStatus();
+   try
+   with QFaktur do
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_Faktur where deleted_at is null order by created_at Desc ';
+       sql.Text:=' select a.years, a.starting_number, a.final_number, '+
+                 ' case when jum_nonaktif is null then 0 else jum_nonaktif end jum_nonaktif, '+
+                 ' case when jum_aktif is null then 0 else jum_aktif end jum_aktif '+
+                 ' from t_invoicetax a '+
+                 ' LEFT JOIN (SELECT years, starting_number, final_number , '+
+                   ' COUNT(no_invoice_tax) as jum_nonaktif from t_invoicetax_det '+
+                   ' where status=false '+
+                   ' GROUP BY years, starting_number, final_number  , status) non '+
+                   ' ON a.years=non.years and '+
+                   ' a.starting_number=non.starting_number and '+
+                   ' a.final_number=non.final_number '+
+                 ' LEFT JOIN (SELECT years, starting_number, final_number , '+
+                   ' COUNT(no_invoice_tax) as jum_aktif from t_invoicetax_det '+
+                   ' where status=true '+
+                   ' GROUP BY years, starting_number, final_number  , status) aktif '+
+                   ' ON a.years=aktif.years and '+
+                   ' a.starting_number=aktif.starting_number and '+
+                   ' a.final_number=aktif.final_number ';
        open;
    end;
-   QFaktur.Active:=False;
+   finally
+   DBGridEh1.FinishLoadingStatus();
+   end;
+   {QFaktur.Active:=False;
    QFaktur.Active:=True;
    QFaktur.Close;
-   QFaktur.Open;
+   QFaktur.Open;}
 
     {DBGridEh1.StartLoadingStatus();
     try
@@ -159,10 +186,10 @@ begin
                 Close;
                 Sql.Clear;
                 //Sql.Text:='Delete from master_data.t_faktur where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
-                Sql.Text:='Update t_faktur set deleted_at=:deleted_at,deleted_by=:deleted_by '+
-                          'where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
-                parambyname('deleted_at').AsDateTime:=Now;
-                parambyname('deleted_by').AsString:='Admin';
+                Sql.Text:=' Update t_invoicetax set '+
+                          ' deleted_at=now(),'+
+                          ' deleted_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                          ' where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
                 ExecSQL;
               end;
             end;
@@ -178,8 +205,10 @@ procedure TFFakturPajak.dxBarLargeBaruClick(Sender: TObject);
 begin
    Finput_faktur_pajak.Clear;
    Status:=0;
-   Finput_faktur_pajak.panel_loader.Visible:=false;
    Finput_faktur_pajak.showmodal;
 end;
+
+initialization
+  RegisterClass(TFFakturPajak);
 
 end.
