@@ -2,8 +2,8 @@ object FTerima_Amplop: TFTerima_Amplop
   Left = 0
   Top = 0
   Caption = 'Form Terima Amplop'
-  ClientHeight = 530
-  ClientWidth = 1101
+  ClientHeight = 529
+  ClientWidth = 1097
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FTerima_Amplop: TFTerima_Amplop
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1101
+    Width = 1097
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -27,6 +27,7 @@ object FTerima_Amplop: TFTerima_Amplop
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1101
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -42,8 +43,8 @@ object FTerima_Amplop: TFTerima_Amplop
   object DBGridPermt_Material: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1101
-    Height = 403
+    Width = 1097
+    Height = 402
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -200,10 +201,8 @@ object FTerima_Amplop: TFTerima_Amplop
       WholeRow = False
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update    '
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update    '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -238,13 +237,10 @@ object FTerima_Amplop: TFTerima_Amplop
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarUpdateClick
     end
     object dxBarBaru: TdxBarLargeButton
-      Caption = 'Baru'
+      Action = ActBaru
       Category = 0
-      Hint = 'Baru'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -377,13 +373,10 @@ object FTerima_Amplop: TFTerima_Amplop
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarBaruClick
     end
     object dxbarRefresh: TdxBarButton
-      Caption = 'Refresh    '
+      Action = ActRO
       Category = 0
-      Hint = 'Refresh    '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -414,14 +407,10 @@ object FTerima_Amplop: TFTerima_Amplop
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxbarRefreshClick
     end
     object dxBarDelete: TdxBarButton
-      Caption = 'Delete     '
+      Action = ActDel
       Category = 0
-      Enabled = False
-      Hint = 'Delete     '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -459,7 +448,6 @@ object FTerima_Amplop: TFTerima_Amplop
         DA8CD6E1B4ABA77376F3CD9987FBB0596FF0DBF6A78FD5E81DB6219848F3BFFB
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
-      OnClick = dxBarDeleteClick
     end
   end
   object QTerima_Material: TUniQuery
@@ -492,5 +480,43 @@ object FTerima_Amplop: TFTerima_Amplop
     ProviderDataSet = QTerima_Material
     Left = 528
     Top = 56
+  end
+  object ActMenu: TActionManager
+    Left = 264
+    Top = 8
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'New      '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = ActUpdateExecute
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActROExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete     '
+      OnExecute = ActDelExecute
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
+    end
   end
 end

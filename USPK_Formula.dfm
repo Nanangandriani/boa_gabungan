@@ -384,7 +384,7 @@ object FSPK_Formula: TFSPK_Formula
     object dxBarManager1Bar2: TdxBar
       Caption = 'Proses'
       CaptionButtons = <>
-      DockedLeft = 131
+      DockedLeft = 127
       DockedTop = 0
       FloatLeft = 1130
       FloatTop = 8
@@ -433,7 +433,7 @@ object FSPK_Formula: TFSPK_Formula
     object dxBarManager1Bar4: TdxBar
       Caption = 'Laporan SPK Timbang'
       CaptionButtons = <>
-      DockedLeft = 296
+      DockedLeft = 292
       DockedTop = 0
       FloatLeft = 1270
       FloatTop = 8
@@ -523,10 +523,8 @@ object FSPK_Formula: TFSPK_Formula
         FFFFFFFFFFFF}
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update    '
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update    '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -561,13 +559,10 @@ object FSPK_Formula: TFSPK_Formula
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarUpdateClick
     end
     object dxBarRefresh: TdxBarButton
-      Caption = 'Refresh   '
+      Action = ActRO
       Category = 0
-      Hint = 'Refresh   '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -598,14 +593,10 @@ object FSPK_Formula: TFSPK_Formula
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxBarRefreshClick
     end
     object dxBarHapus: TdxBarButton
-      Caption = 'Hapus      '
+      Action = ActDel
       Category = 0
-      Enabled = False
-      Hint = 'Hapus      '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -715,10 +706,8 @@ object FSPK_Formula: TFSPK_Formula
       ItemIndex = -1
     end
     object dxBarBaru: TdxBarLargeButton
-      Caption = 'Baru      '
+      Action = ActBaru
       Category = 0
-      Hint = 'Baru      '
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -851,7 +840,6 @@ object FSPK_Formula: TFSPK_Formula
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarBaruClick
     end
     object BPrintBonTepung: TdxBarButton
       Caption = 'Print BON Tepung'
@@ -2516,5 +2504,43 @@ object FSPK_Formula: TFSPK_Formula
     DataSet = QRptSPK
     Left = 470
     Top = 286
+  end
+  object ActMenu: TActionManager
+    Left = 320
+    Top = 8
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'New      '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+      OnExecute = ActUpdateExecute
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActROExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete     '
+      OnExecute = ActDelExecute
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
+    end
   end
 end

@@ -455,7 +455,7 @@ begin
               ' INNER JOIN warehouse.t_master_formula_test E ON A.formula_no=E.formula_no '+
               ' INNER join t_wh f on a.wh_code=f.wh_code'+
               ' where A.formula_no='+QuotedStr(EdNo_Formula.Text) +''+
-              ' order by id Desc ';
+              ' order by a.detail_id Desc ';
     ExecSQL;
   end;
   DtTest.Date:=Dm.Qtemp['trial_date'];
@@ -533,7 +533,7 @@ end;
 procedure TFNew_SPKFormula.BBatalClick(Sender: TObject);
 begin
   FSPK_Formula.Show;
-  FSPK_Formula.dxBarRefreshClick(sender);
+  FSPK_Formula.ActROExecute(sender);
   Close;
 end;
 

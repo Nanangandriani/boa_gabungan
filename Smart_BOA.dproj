@@ -540,6 +540,7 @@
             <Form>FListKlasifikasi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< Updated upstream
         <DCCReference Include="UNewDeliveryOrder.pas">
             <Form>FNewDeliveryOrder</Form>
             <FormType>dfm</FormType>
@@ -570,6 +571,18 @@
         </DCCReference>
         <DCCReference Include="UPerintahMuat_Sumber.pas">
             <Form>FPerintahMuat_Sumber</Form>
+=======
+        <DCCReference Include="UDataListParameter.pas">
+            <Form>FDataListParameter</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USetMasterPenjulan.pas">
+            <Form>FSetMasterPenjulan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UApproval_Trans_For_dan_Prod.pas">
+            <Form>FApproval_Trans_For_dan_Prod</Form>
+>>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

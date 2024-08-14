@@ -26,7 +26,8 @@ uses
   frxDBSet, dxSkinBasic, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
   dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
   dxSkinOffice2019White, dxSkinTheBezier, dxSkinVisualStudio2013Blue,
-  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore,
+  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFSPK_Formula = class(TForm)
@@ -67,9 +68,15 @@ type
     dxBarButton6: TdxBarButton;
     BPrintTimbangKimia: TdxBarButton;
     DsRptSPK: TDataSource;
-    procedure dxBarBaruClick(Sender: TObject);
-    procedure dxBarRefreshClick(Sender: TObject);
-    procedure dxBarUpdateClick(Sender: TObject);
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure FormShow(Sender: TObject);
     procedure BPrintBonTepungClick(Sender: TObject);
     procedure BPrintBonKimiaClick(Sender: TObject);
@@ -81,6 +88,10 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -110,7 +121,26 @@ begin
   if MemSpkFormula['type']='Created' then dxBeri.Enabled:=true else dxBeri.Enabled:=False;
 end;
 
-procedure TFSPK_Formula.dxBarBaruClick(Sender: TObject);
+procedure TFSPK_Formula.BPrintBonTepungClick(Sender: TObject);
+begin
+  QRptSPK.Close;
+  QRptSPK.Open;
+  with QRptSPK do
+  begin
+    Filtered:=False;
+    Filter:=' no_spk='+QuotedStr(Dbgridspk_for.Fields[1].AsString)+' '+
+              ' and category=''BAHAN BAKU''';
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+  QRptSPK.Open;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BonFormula.Fr3');
+  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='BON PERMINTAAN BAHAN TEPUNG ';
+  Rpt.ShowReport();
+end;
+
+procedure TFSPK_Formula.ActBaruExecute(Sender: TObject);
 begin
   with FNew_SPKFormula do
   begin
@@ -136,85 +166,32 @@ begin
   end;
 end;
 
-procedure TFSPK_Formula.BPrintBonTepungClick(Sender: TObject);
+procedure TFSPK_Formula.ActDelExecute(Sender: TObject);
 begin
-  QRptSPK.Close;
-  QRptSPK.Open;
-  with QRptSPK do
-  begin
-    Filtered:=False;
-    Filter:=' no_spk='+QuotedStr(Dbgridspk_for.Fields[1].AsString)+' '+
-              ' and category=''BAHAN BAKU''';
-    FilterOptions:=[];
-    Filtered:=True;
+  if messageDlg ('Anda Yakin Akan Mengahpus Data '+Dbgridspk_for.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+  {  with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    actroexecute(sender);
+    ShowMessage('Data Berhasil di Hapus');    }
   end;
-  QRptSPK.Open;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BonFormula.Fr3');
-  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
-  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='BON PERMINTAAN BAHAN TEPUNG ';
-  Rpt.ShowReport();
 end;
 
-procedure TFSPK_Formula.BPrintBonKimiaClick(Sender: TObject);
+procedure TFSPK_Formula.ActROExecute(Sender: TObject);
 begin
-  QRptSPK.Close;
-  QRptSPK.Open;
-  with QRptSPK do
-  begin
-    Filtered:=False;
-    Filter:=' no_spk='+QuotedStr(Dbgridspk_for.Fields[1].AsString)+' '+
-              ' and category=''KIMIA''';
-    FilterOptions:=[];
-    Filtered:=True;
-  end;
-  QRptSPK.Open;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BonFormula.Fr3');
-  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
-  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='BON PERMINTAAN BAHAN KIMIA';
-  Rpt.ShowReport();
-end;
-
-procedure TFSPK_Formula.BPrintTimbangTepungClick(Sender: TObject);
-begin
-  QRptSPK.Close;
-  QRptSPK.Open;
-  with QRptSPK do
-  begin
-    Filtered:=False;
-    Filter:=' group_name=''BAHAN BAKU'''+
-            ' and spk_no='+QuotedStr(MemSpkFormula['spk_no']);
-    FilterOptions:=[];
-    Filtered:=True;
-  end;
-  QRptSPK.Open;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_SPKTest_Tepung.Fr3');
-//  TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
-  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='SPK TIMBANG TEPUNG';
-  Rpt.ShowReport();
-end;
-
-procedure TFSPK_Formula.BPrintTimbangKimiaClick(Sender: TObject);
-begin
-  QRptSPK.Close;
-  QRptSPK.Open;
-  with QRptSPK do
-  begin
-    Filtered:=False;
-    Filter:=' group_name=''KIMIA'''+
-            ' and spk_no='+QuotedStr(MemSpkFormula['spk_no']);
-    FilterOptions:=[];
-    Filtered:=True;
-  end;
-  QRptSPK.Open;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_SPKTest_Kimia.Fr3');
- // TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
-  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='SPK TIMBANG KIMIA';
-  Rpt.ShowReport();
-end;
-
-procedure TFSPK_Formula.dxBarRefreshClick(Sender: TObject);
-begin
-  if loksbu='' then
+ if loksbu='' then
   begin
   with QSpkFormula do
     begin
@@ -244,9 +221,10 @@ begin
   if QSpkFormuladet2.Active=false then QSpkFormuladet2.Active:=true;
   Dbgridspk_for.StartLoadingStatus();
   Dbgridspk_for.FinishLoadingStatus();
+
 end;
 
-procedure TFSPK_Formula.dxBarUpdateClick(Sender: TObject);
+procedure TFSPK_Formula.ActUpdateExecute(Sender: TObject);
 begin
   with FNew_SPKFormula do
   begin
@@ -339,6 +317,63 @@ begin
     FNew_SPKFormula.DBGriddetailColExit(sender);
     FNew_SPKFormula.Memformuladet.Next;
   end;
+end;
+
+procedure TFSPK_Formula.BPrintBonKimiaClick(Sender: TObject);
+begin
+  QRptSPK.Close;
+  QRptSPK.Open;
+  with QRptSPK do
+  begin
+    Filtered:=False;
+    Filter:=' no_spk='+QuotedStr(Dbgridspk_for.Fields[1].AsString)+' '+
+              ' and category=''KIMIA''';
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+  QRptSPK.Open;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BonFormula.Fr3');
+  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='BON PERMINTAAN BAHAN KIMIA';
+  Rpt.ShowReport();
+end;
+
+procedure TFSPK_Formula.BPrintTimbangTepungClick(Sender: TObject);
+begin
+  QRptSPK.Close;
+  QRptSPK.Open;
+  with QRptSPK do
+  begin
+    Filtered:=False;
+    Filter:=' group_name=''BAHAN BAKU'''+
+            ' and spk_no='+QuotedStr(MemSpkFormula['spk_no']);
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+  QRptSPK.Open;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_SPKTest_Tepung.Fr3');
+//  TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
+  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='SPK TIMBANG TEPUNG';
+  Rpt.ShowReport();
+end;
+
+procedure TFSPK_Formula.BPrintTimbangKimiaClick(Sender: TObject);
+begin
+  QRptSPK.Close;
+  QRptSPK.Open;
+  with QRptSPK do
+  begin
+    Filtered:=False;
+    Filter:=' group_name=''KIMIA'''+
+            ' and spk_no='+QuotedStr(MemSpkFormula['spk_no']);
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+  QRptSPK.Open;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_SPKTest_Kimia.Fr3');
+ // TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
+  Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='SPK TIMBANG KIMIA';
+  Rpt.ShowReport();
 end;
 
 procedure TFSPK_Formula.dxBeriClick(Sender: TObject);

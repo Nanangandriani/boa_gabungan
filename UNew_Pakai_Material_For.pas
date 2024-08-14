@@ -383,7 +383,7 @@ begin
                     ParamByName('parnourut').Value:=order_no;
           ExecSQL;
         end;
-        with dm.QTemp3 do
+       { with dm.QTemp3 do
         begin
           close;
           sql.Clear;
@@ -440,7 +440,7 @@ begin
                       ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
                       ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
                       ParamByName('parno_pakai').Value:=EdNo.Text;
-                      ParamByName('pargudang').Value:=MemKimia['gudang'];
+                      ParamByName('pargudang').Value:=MemKimia['kd_gudang'];
                       ParamByName('parkd_material_stok').Value:=MemKimia['kd_material_stok'];
                       ParamByName('parkd_stok').Value:=MemKimia['kd_stok'];
                       ParamByName('parindex').Value:=MemKimia['index'];
@@ -456,7 +456,7 @@ begin
             Execute;
           end;
           MemKimia.Next;
-        end;
+        end;                }
         dm.koneksi.Commit;
         Messagedlg('Data Behasil Disimpan',MtInformation,[Mbok],0);
         BBatalClick(sender);
@@ -521,6 +521,12 @@ end;
 
 procedure TFNew_PakaiMatFor.EdNo_SPkSelect(Sender: TObject);
 begin
+  Membaku1.Close;
+  Membaku1.Open;
+  Membaku.Close;
+  Membaku.Open;
+  MemKimia.Close;
+  MemKimia.Open;
   with dm.Qtemp do
   begin
     sql.Clear;

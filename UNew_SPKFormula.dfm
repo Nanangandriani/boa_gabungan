@@ -442,7 +442,7 @@ object FNew_SPKFormula: TFNew_SPKFormula
   object DBGriddetail: TDBGridEh
     Left = 12
     Top = 200
-    Width = 1141
+    Width = 1137
     Height = 422
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsFormulaDet

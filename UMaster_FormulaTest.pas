@@ -73,7 +73,6 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
-    procedure dxBbaruClick(Sender: TObject);
     procedure dxBarSetujuClick(Sender: TObject);
     procedure dxBartidaksetujuClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -82,6 +81,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -107,16 +108,48 @@ begin
     Application.CreateForm(TFMaster_FormulaTest, Result);
 end;
 
+procedure TFMaster_FormulaTest.ActBaruExecute(Sender: TObject);
+begin
+  With FNew_MasterFormula do
+  begin
+    show;
+    Clear;
+    BSimpan.Visible:=True;
+    BEdit.Visible:=False;
+    Caption:='New Master Formula';
+   // Autonumber;
+    status:=0;
+    EdTimbangChange(sender);
+  end;
+end;
+
+procedure TFMaster_FormulaTest.ActDelExecute(Sender: TObject);
+begin
+  if messageDlg ('Anda Yakin Akan Mengahpus Data '+Dbgridspk_for.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+  {  with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    actroexecute(sender);
+    ShowMessage('Data Berhasil di Hapus');    }
+  end;
+end;
+
 procedure TFMaster_FormulaTest.ActROExecute(Sender: TObject);
 begin
   Dbgridspk_for.StartLoadingStatus();
   Dbgridspk_for.FinishLoadingStatus();
-  {if kdsbu='' then
-  begin
-    Close;
-    sql.clear;
-    sql.text:='
-  end;}
   if loksbu='' then
   begin
     with QMaster_Formula do
@@ -285,21 +318,6 @@ begin
     ExecSQL;
   end;
   ActROExecute(sender);
-end;
-
-procedure TFMaster_FormulaTest.dxBbaruClick(Sender: TObject);
-begin
-  With FNew_MasterFormula do
-  begin
-    show;
-    Clear;
-    BSimpan.Visible:=True;
-    BEdit.Visible:=False;
-    Caption:='New Master Formula';
-   // Autonumber;
-    status:=0;
-    EdTimbangChange(sender);
-  end;
 end;
 
 procedure TFMaster_FormulaTest.FormClose(Sender: TObject; var Action: TCloseAction);

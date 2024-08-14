@@ -27,7 +27,8 @@ uses
   dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Black,
   dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray, dxSkinOffice2019White,
   dxSkinTheBezier, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
-  dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Light, dxCore, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFTerima_Amplop = class(TForm)
@@ -44,14 +45,23 @@ type
     DsTerima_Material: TDataSource;
     DsdTerima_Material: TDataSetDriverEh;
     DBGridPermt_Material: TDBGridEh;
-    procedure dxBarBaruClick(Sender: TObject);
-    procedure dxBarUpdateClick(Sender: TObject);
-    procedure dxbarRefreshClick(Sender: TObject);
-    procedure dxBarDeleteClick(Sender: TObject);
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,7 +87,7 @@ begin
     Application.CreateForm(TFTerima_Amplop, Result);
 end;
 
-procedure TFTerima_Amplop.dxBarBaruClick(Sender: TObject);
+procedure TFTerima_Amplop.ActBaruExecute(Sender: TObject);
 begin
   with FNew_TerimaAmplop do
   begin
@@ -89,32 +99,32 @@ begin
   end;
 end;
 
-procedure TFTerima_Amplop.dxBarDeleteClick(Sender: TObject);
+procedure TFTerima_Amplop.ActDelExecute(Sender: TObject);
 begin
-if messageDlg ('Anda Yakin Akan Mengahpus Data '+DBGridPermt_Material.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-then begin
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete From t_terima_material2  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
-  Execute;
-end;
-with dm.Qtemp do
-begin
-  Close;
-  sql.Clear;
-  sql.Text:='Delete Fromt_terima_material2_det where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
-  Execute;
-end;
-dxbarRefreshClick(sender);
-ShowMessage('Data Berhasil di Hapus');
-end;
+  if messageDlg ('Anda Yakin Akan Mengahpus Data '+DBGridPermt_Material.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
-procedure TFTerima_Amplop.dxbarRefreshClick(Sender: TObject);
+procedure TFTerima_Amplop.ActROExecute(Sender: TObject);
 begin
-  DBGridPermt_Material.StartLoadingStatus();
+ DBGridPermt_Material.StartLoadingStatus();
   DBGridPermt_Material.FinishLoadingStatus();
   if loksbu='' then
   begin
@@ -145,9 +155,10 @@ begin
   MemTerima_Material.Close;
   QTerima_Material.Open;
   MemTerima_Material.Open;
+
 end;
 
-procedure TFTerima_Amplop.dxBarUpdateClick(Sender: TObject);
+procedure TFTerima_Amplop.ActUpdateExecute(Sender: TObject);
 begin
   with FNew_TerimaAmplop do
   begin
@@ -191,7 +202,7 @@ end;
 
 procedure TFTerima_Amplop.FormShow(Sender: TObject);
 begin
-  dxbarRefreshClick(sender);
+  ActROExecute(sender);
 end;
 
 initialization

@@ -144,55 +144,54 @@ end;
 
 procedure TFNew_menu.BSimpanClick(Sender: TObject);
 begin
-if Edkd.Text='' then
-begin
-  MessageDlg('No Menu Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  Edkd.SetFocus;
-  Exit;
-end;
-if EdNm.Text='' then
-begin
-  MessageDlg('Nama User Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNm.SetFocus;
-  Exit;
-end;
-if not dm.koneksi.InTransaction then
-dm.koneksi.StartTransaction;
-try
-begin
-if status=0 then
-begin
-  with dm.Qtemp do
+  if Edkd.Text='' then
   begin
-    close;
-    sql.Clear;
-    sql.Text:='insert into t_menu_sub(submenu_code,submenu,menu_code,link,created_by,link_unit)values('+QuotedStr(Edkd.Text)+','+
-              ''+QuotedStr(EdNm.Text)+', '+QuotedStr(No_group)+', '+QuotedStr(edlink.Text)+', '+QuotedStr(nm)+','+QuotedStr(edunit.Text)+')';
-    ExecSQL;
+    MessageDlg('No Menu Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Edkd.SetFocus;
+    Exit;
   end;
-end;
-if status=1 then
-begin
-  with dm.Qtemp do
+  if EdNm.Text='' then
   begin
-    close;
-    sql.Clear;
-    sql.Text:=' Update t_menu_sub set submenu='+QuotedStr(EdNm.Text)+',menu_code='+QuotedStr(No_group)+',submenu_code='+QuotedStr(Edkd.Text)+','+
-              ' link='+QuotedStr(Edlink.Text)+',updated_by='+QuotedStr(nm)+',updated_at=now(), link_unit='+QuotedStr(edunit.Text)+' where submenu_code='+QuotedStr(Edkd.Text);
-    ExecSQL;
+    MessageDlg('Nama User Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNm.SetFocus;
+    Exit;
   end;
-end;
-dm.koneksi.Commit;
-Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-BBatalClick(sender);
-end
-Except
-on E :Exception do
-begin
-MessageDlg(E.Message,mtError,[MBok],0);
-dm.koneksi.Rollback;
-end;
-end;
+  if not dm.koneksi.InTransaction then
+  dm.koneksi.StartTransaction;
+  try
+    begin
+      if status=0 then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='insert into t_menu_sub(submenu_code,submenu,menu_code,link,created_by,link_unit)values('+QuotedStr(Edkd.Text)+','+
+                    ''+QuotedStr(EdNm.Text)+', '+QuotedStr(No_group)+', '+QuotedStr(edlink.Text)+', '+QuotedStr(nm)+','+QuotedStr(edunit.Text)+')';
+          ExecSQL;
+        end;
+      end;
+      if status=1 then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:=' Update t_menu_sub set submenu='+QuotedStr(EdNm.Text)+',menu_code='+QuotedStr(No_group)+',submenu_code='+QuotedStr(Edkd.Text)+','+
+                    ' link='+QuotedStr(Edlink.Text)+',updated_by='+QuotedStr(nm)+',updated_at=now(), link_unit='+QuotedStr(edunit.Text)+' where submenu_code='+QuotedStr(Edkd.Text);
+          ExecSQL;
+        end;
+      end;
+      dm.koneksi.Commit;
+      Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+      BBatalClick(sender);
+    end
+    Except on E :Exception do
+      begin
+      MessageDlg(E.Message,mtError,[MBok],0);
+      dm.koneksi.Rollback;
+      end;
+  end;
 end;
 
 procedure TFNew_menu.EdGroupSelect(Sender: TObject);
@@ -210,7 +209,7 @@ end;
 
 procedure TFNew_menu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-Action:=cafree;
+  Action:=cafree;
 end;
 
 procedure TFNew_menu.FormCreate(Sender: TObject);
@@ -220,7 +219,7 @@ end;
 
 procedure TFNew_menu.FormDestroy(Sender: TObject);
 begin
-realfnewmenu:=nil;
+  realfnewmenu:=nil;
 end;
 
 procedure TFNew_menu.FormShow(Sender: TObject);

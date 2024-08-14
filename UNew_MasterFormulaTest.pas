@@ -502,7 +502,7 @@ begin
     ' FROM "warehouse".t_master_spk a INNER JOIN t_item b on  a.product_code=b.item_code2 INNER JOIN t_item c '+
     ' on a.item_code=c.item_code INNER JOIN t_item_conversion d on c.item_code=d.item_code where '+
     ' a.product_code='+QuotedStr(EdProduk.Text)+')a GROUP BY a.item_code,qty,conversion_qty,a.id,product_code,nm_produk,item_name,unit'+
-    ' order by id desc';
+    ' order by a.id desc';
     Execute;
   end;
   DM.Qtemp2.First;

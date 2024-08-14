@@ -418,7 +418,7 @@ object FMenu: TFMenu
     Top = 40
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New    '
       OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction

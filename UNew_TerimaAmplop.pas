@@ -271,7 +271,7 @@ end;
 procedure TFNew_TerimaAmplop.BBatalClick(Sender: TObject);
 begin
   close;
-  FTerima_amplop.dxbarRefreshClick(sender);
+  FTerima_amplop.ActROExecute(sender);
 end;
 
 procedure TFNew_TerimaAmplop.BSimpanClick(Sender: TObject);

@@ -114,6 +114,7 @@ uses
   UListTujualAwal in 'UListTujualAwal.pas' {FListTujualAwal},
   UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal},
   UListMasterBiayaDO in 'UListMasterBiayaDO.pas' {FListMasterBiayaDO},
+<<<<<<< Updated upstream
   UNew_MasterBiayaDO in 'UNew_MasterBiayaDO.pas' {FNew_MasterBiayaDO},
   UListKlasifikasi in 'UListKlasifikasi.pas' {FListKlasifikasi},
   UNewDeliveryOrder in 'UNewDeliveryOrder.pas' {FNewDeliveryOrder},
@@ -124,6 +125,12 @@ uses
   UDataPerintahMuat in 'UDataPerintahMuat.pas' {FDataPerintahMuat},
   UListPengajuanApprovePenjualan in 'UListPengajuanApprovePenjualan.pas' {FListPengajuanApprovePenjualan},
   UPerintahMuat_Sumber in 'UPerintahMuat_Sumber.pas' {FPerintahMuat_Sumber};
+=======
+  UListKlasifikasi in 'UListKlasifikasi.pas' {FListKlasifikasi},
+  UDataListParameter in 'UDataListParameter.pas' {FDataListParameter},
+  USetMasterPenjulan in 'USetMasterPenjulan.pas' {FSetMasterPenjulan},
+  UApproval_Trans_For_dan_Prod in 'UApproval_Trans_For_dan_Prod.pas' {FApproval_Trans_For_dan_Prod};
+>>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -162,6 +169,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_MasterBiayaDO, FNew_MasterBiayaDO);
   Application.CreateForm(TFListMasterBiayaDO, FListMasterBiayaDO);
   Application.CreateForm(TFListKlasifikasi, FListKlasifikasi);
+  Application.CreateForm(TFDataListParameter, FDataListParameter);
+  Application.CreateForm(TFSetMasterPenjulan, FSetMasterPenjulan);
+  Application.CreateForm(TFApproval_Trans_For_dan_Prod, FApproval_Trans_For_dan_Prod);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);

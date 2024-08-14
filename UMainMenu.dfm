@@ -34,8 +34,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 590
-    ExplicitWidth = 1031
+    ExplicitTop = 607
+    ExplicitWidth = 1039
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -79,121 +79,6 @@ object FMainMenu: TFMainMenu
       Caption = ''
       ExplicitLeft = 1043
       ExplicitHeight = 20
-    end
-  end
-  object RzSplitter1: TRzSplitter
-    Left = 0
-    Top = 126
-    Width = 1037
-    Height = 473
-    Position = 242
-    Percent = 23
-    UpperLeft.Color = 15987699
-    UpperLeft.FlatColor = clGradientInactiveCaption
-    LowerRight.Color = 15987699
-    HotSpotVisible = True
-    SplitterWidth = 7
-    Align = alClient
-    Color = 15987699
-    TabOrder = 1
-    ExplicitWidth = 1031
-    ExplicitHeight = 464
-    BarSize = (
-      242
-      0
-      249
-      473)
-    UpperLeftControls = (
-      CategoryPanelUtama
-      TreeView1)
-    LowerRightControls = (
-      PageControl1)
-    object CategoryPanelUtama: TCategoryPanelGroup
-      Left = 0
-      Top = 0
-      Width = 242
-      Height = 473
-      VertScrollBar.Tracking = True
-      Align = alClient
-      ChevronHotColor = clSkyBlue
-      Color = clGradientInactiveCaption
-      GradientColor = clBtnFace
-      HeaderFont.Charset = DEFAULT_CHARSET
-      HeaderFont.Color = clWindowText
-      HeaderFont.Height = -15
-      HeaderFont.Name = 'Segoe UI'
-      HeaderFont.Style = []
-      TabOrder = 0
-      ExplicitHeight = 464
-    end
-    object TreeView1: TRzTreeView
-      Left = 0
-      Top = 304
-      Width = 200
-      Height = 0
-      SelectionPen.Color = clBtnShadow
-      Indent = 19
-      TabOrder = 1
-      Visible = False
-    end
-    object PageControl1: TRzPageControl
-      Left = 0
-      Top = 0
-      Width = 788
-      Height = 473
-      Hint = ''
-      ActivePage = TabForm
-      Align = alClient
-      ShowCloseButtonOnActiveTab = True
-      TabIndex = 0
-      TabOrder = 0
-      OnClose = PageControl1Close
-      ExplicitWidth = 782
-      ExplicitHeight = 464
-      FixedDimension = 21
-      object TabForm: TRzTabSheet
-        Color = 15987699
-        Caption = 'Dashboard'
-        ExplicitWidth = 778
-        ExplicitHeight = 439
-        object PanelParent: TPanel
-          Left = 0
-          Top = 0
-          Width = 784
-          Height = 448
-          Align = alClient
-          TabOrder = 0
-          ExplicitWidth = 778
-          ExplicitHeight = 439
-          object EdgeBrowser1: TEdgeBrowser
-            Left = 1
-            Top = 1
-            Width = 782
-            Height = 446
-            Align = alClient
-            TabOrder = 0
-            UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-            ExplicitWidth = 776
-            ExplicitHeight = 437
-          end
-          object WebBrowser1: TWebBrowser
-            Left = 1
-            Top = 1
-            Width = 782
-            Height = 446
-            Align = alClient
-            TabOrder = 1
-            ExplicitWidth = 776
-            ExplicitHeight = 437
-            ControlData = {
-              4C000000A8400000E02400000000000000000000000000000000000000000000
-              000000004C000000000000000000000001000000E0D057007335CF11AE690800
-              2B2E126208000000000000004C0000000114020000000000C000000000000046
-              8000000000000000000000000000000000000000000000000000000000000000
-              00000000000000000100000000000000000000000000000000000000}
-          end
-        end
-      end
     end
   end
   object dxRibbon1: TdxRibbon
@@ -1048,10 +933,5 @@ object FMainMenu: TFMainMenu
         673E0D0A3C2F7376673E0D0A}
       OnClick = dxBarLargeButton2Click
     end
-  end
-  object UniQuery1: TUniQuery
-    Connection = dm.Koneksi
-    Left = 512
-    Top = 312
   end
 end

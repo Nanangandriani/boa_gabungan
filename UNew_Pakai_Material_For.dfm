@@ -573,6 +573,13 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             Footers = <>
             Title.Caption = 'Sisa'
             Width = 70
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kd_gudang'
+            Footers = <>
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -985,6 +992,12 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
           Size = 100
           Transliterate = True
         end
+        object kd_gudang: TMTStringDataFieldEh
+          FieldName = 'kd_gudang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
       end
       object RecordsList: TRecordsListEh
         Data = (
@@ -1003,7 +1016,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Putusan'
             'Bahan Baku'
-            'Mulyo')
+            'Mulyo'
+            nil)
           (
             'GB-A'
             'WA'
@@ -1019,7 +1033,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung DW'
             'Bahan Baku'
-            'Ampuh Perkasa Jaya')
+            'Ampuh Perkasa Jaya'
+            nil)
           (
             'GB-A'
             'JA'
@@ -1035,7 +1050,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Jati'
             'Bahan Baku'
-            'Allpin')
+            'Allpin'
+            nil)
           (
             ''
             'BA'
@@ -1051,7 +1067,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Batok'
             'Bahan Baku'
-            'Arta Graha')
+            'Arta Graha'
+            nil)
           (
             ''
             'TA'
@@ -1067,7 +1084,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Tapioka'
             'Bahan Baku'
-            'Dua Putra dewa')
+            'Dua Putra dewa'
+            nil)
           (
             'GB-A'
             'OA'
@@ -1083,7 +1101,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Onggok'
             'Bahan Baku'
-            'Arta Graha')
+            'Arta Graha'
+            nil)
           (
             'GB-A'
             'LB'
@@ -1099,7 +1118,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Lengket'
             'Bahan Baku'
-            'Citra Prima Indo Kencana ')
+            'Citra Prima Indo Kencana '
+            nil)
           (
             'GB-B'
             'LA'
@@ -1115,7 +1135,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Lengket'
             'Bahan Baku'
-            'Vietnam')
+            'Vietnam'
+            nil)
           (
             'GB-A'
             'OA'
@@ -1131,7 +1152,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Onggok'
             'Bahan Baku'
-            'Arta Graha')
+            'Arta Graha'
+            nil)
           (
             ''
             'TA'
@@ -1147,7 +1169,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Tapioka'
             'Bahan Baku'
-            'Dua Putra dewa')
+            'Dua Putra dewa'
+            nil)
           (
             ''
             'BA'
@@ -1163,7 +1186,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Batok'
             'Bahan Baku'
-            'Arta Graha')
+            'Arta Graha'
+            nil)
           (
             'GB-A'
             'JA'
@@ -1179,7 +1203,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Jati'
             'Bahan Baku'
-            'Allpin')
+            'Allpin'
+            nil)
           (
             'GB-A'
             'WA'
@@ -1195,7 +1220,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung DW'
             'Bahan Baku'
-            'Ampuh Perkasa Jaya')
+            'Ampuh Perkasa Jaya'
+            nil)
           (
             ''
             'PA'
@@ -1211,7 +1237,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
             0.000000000000000000
             'Tepung Putusan'
             'Bahan Baku'
-            'Mulyo'))
+            'Mulyo'
+            nil))
       end
     end
   end

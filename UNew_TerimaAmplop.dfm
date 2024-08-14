@@ -3,8 +3,8 @@ object FNew_TerimaAmplop: TFNew_TerimaAmplop
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Form New Terima Amplop'
-  ClientHeight = 339
-  ClientWidth = 455
+  ClientHeight = 338
+  ClientWidth = 451
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,13 +19,11 @@ object FNew_TerimaAmplop: TFNew_TerimaAmplop
   TextHeight = 13
   object Panel2: TPanel
     Left = 0
-    Top = 307
-    Width = 455
+    Top = 306
+    Width = 451
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 306
-    ExplicitWidth = 451
     object BBatal: TRzBitBtn
       Left = 379
       Top = 1
@@ -154,12 +152,10 @@ object FNew_TerimaAmplop: TFNew_TerimaAmplop
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 455
-    Height = 307
+    Width = 451
+    Height = 306
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 451
-    ExplicitHeight = 306
     object Label13: TLabel
       Left = 11
       Top = 45

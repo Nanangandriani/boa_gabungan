@@ -475,11 +475,8 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBDelete: TdxBarButton
-      Caption = 'Delete        '
+      Action = ActDel
       Category = 0
-      Enabled = False
-      Hint = 'Delete        '
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -707,10 +704,8 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
       Visible = ivAlways
     end
     object dxBbaru: TdxBarLargeButton
-      Caption = 'Baru'
+      Action = ActBaru
       Category = 0
-      Hint = 'Baru'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -843,7 +838,6 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBbaruClick
     end
     object dxBarSubItem1: TdxBarSubItem
       Caption = 'New SubItem'
@@ -1572,7 +1566,7 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
       'left join t_item C on B.item_code=C.item_code '
       'left join t_supplier D on B.supplier_code=D.supplier_code'
       'left join t_wh e on a.wh_code=e.wh_code'
-      'order by id Asc')
+      'order by a.detail_id Asc')
     MasterSource = DsMaster_Formula
     MasterFields = 'formula_no'
     DetailFields = 'formula_no'
@@ -1602,7 +1596,7 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
       'left join t_item C on B.item_code=C.item_code '
       'left join t_supplier D on B.supplier_code=D.supplier_code'
       'left join t_wh e on a.wh_code=e.wh_code'
-      'order by id Asc')
+      'order by detail_id Asc')
     MasterSource = DsMaster_Formula
     MasterFields = 'formula_no'
     DetailFields = 'formula_no'
@@ -1621,11 +1615,12 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
     Top = 64
   end
   object ActMenu: TActionManager
-    Left = 608
-    Top = 88
+    Left = 168
+    Top = 8
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New      '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '
@@ -1637,6 +1632,7 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '

@@ -26,7 +26,8 @@ uses
   dxSkinBasic, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
   dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
   dxSkinOffice2019White, dxSkinTheBezier, dxSkinVisualStudio2013Blue,
-  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore,
+  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TFPakai_Material_For = class(TForm)
@@ -71,16 +72,28 @@ type
     DBPm4: TfrxDBDataset;
     DBPM5: TfrxDBDataset;
     QRpt5: TUniQuery;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
     procedure dxBarBaruClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure dxBarPrintClick(Sender: TObject);
-    procedure DBGridPakaiCellClick(Column: TColumnEh);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,9 +128,156 @@ begin
     memo.Text := aText;
 end;
 
-procedure TFPakai_Material_For.DBGridPakaiCellClick(Column: TColumnEh);
+procedure TFPakai_Material_For.ActBaruExecute(Sender: TObject);
+begin
+  with FNew_PakaiMatFor do
+  begin
+  //  Clear;
+    BSimpan.Visible:=False;
+    BEdit.Visible:=True;
+    Show;
+    Caption:='New Pemakaian Material untuk Formula';
+  end;
+end;
+
+procedure TFPakai_Material_For.ActDelExecute(Sender: TObject);
+begin
+    if messageDlg ('Anda Yakin Akan Mengahpus Data '+DBGridPakai.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+  {  with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      Execute;
+    end;
+    actroexecute(sender);
+    ShowMessage('Data Berhasil di Hapus');    }
+  end;
+end;
+
+procedure TFPakai_Material_For.ActROExecute(Sender: TObject);
+begin
+   DBGridPakai.StartLoadingStatus();
+   DBGridPakai.FinishLoadingStatus();
+  if loksbu='' then
+  begin
+    with QPakaiMaterial do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' select * from warehouse.t_item_use_for order by use_no desc ';
+      ExecSQL;
+    end;
+     QPakaiMaterial.Open;
+     MemPakaiMaterial.Close;
+     MemPakaiMaterial.Open;
+     QBaku.Close;
+     QBaku.Open;
+     Qkimia.Close;
+     Qkimia.Open;
+  end else
+  if loksbu<>'' then
+  begin
+    with QPakaiMaterial do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' select * from warehouse.t_item_use_for where sbu_code='+QuotedStr(loksbu)+''+
+                ' order by use_no desc  ';
+      ExecSQL;
+    end;
+     QPakaiMaterial.Open;
+     MemPakaiMaterial.Close;
+     MemPakaiMaterial.Open;
+     QBaku.Close;
+     QBaku.Open;
+     Qkimia.Close;
+     Qkimia.Open;
+  end;
+end;
+
+procedure TFPakai_Material_For.ActUpdateExecute(Sender: TObject);
 begin
   ADate:=DBGridPakai.Fields[3].AsDateTime;
+ with FNew_PakaiMatFor do
+  begin
+    Clear;
+    BSimpan.Visible:=False;
+    BEdit.Visible:=True;
+    Show;
+    Caption:='Update Laporan Pemakaian Material untuk Formula';
+    with MemPakaiMaterial do
+    begin
+      FNew_PakaiMatFor.EdNo.Text:=MemPakaiMaterial['use_no'];
+      FNew_PakaiMatFor.EdNo_SPk.Text:=MemPakaiMaterial['spk_no'];
+      FNew_PakaiMatFor.EdNo_Formula.Text:=MemPakaiMaterial['formula_no'];
+      FNew_PakaiMatFor.EdKarton.Text:=MemPakaiMaterial['carton_qty'];
+      FNew_PakaiMatFor.EdShift.Text:=MemPakaiMaterial['shift'];
+      FNew_PakaiMatFor.EdMesin.Text:=MemPakaiMaterial['mc'];
+      FNew_PakaiMatFor.EdProduk.Text:=MemPakaiMaterial['product_code'];
+      FNew_PakaiMatFor.EdTimbang.Text:=MemPakaiMaterial['amount_weight'];
+      FNew_PakaiMatFor.DtTanggal.Text:=MemPakaiMaterial['trans_date'];
+      status:=MemPakaiMaterial['status'];
+    end;
+    QBaku.First;
+    while not QBaku.Eof do
+    begin
+      with QBaku do
+      begin
+        FNew_PakaiMatFor.Membaku.Insert;
+        FNew_PakaiMatFor.Membaku['kd_material_stok']:=QBaku['item_stock_code'];
+        FNew_PakaiMatFor.Membaku['nm_material']:=QBaku['item_name'];
+        FNew_PakaiMatFor.Membaku['kd_supplier']:=QBaku['supplier_code'];
+        FNew_PakaiMatFor.Membaku['nm_supplier']:=QBaku['supplier_name'];
+        FNew_PakaiMatFor.Membaku['kd_stok']:=QBaku['stock_code'];
+        FNew_PakaiMatFor.Membaku['index']:=QBaku['index'];
+        FNew_PakaiMatFor.Membaku['ttlberat']:=QBaku['total_weight'];
+        FNew_PakaiMatFor.Membaku['satuan']:=QBaku['unit'];
+        FNew_PakaiMatFor.Membaku['satuankemasan']:=QBaku['pack_unit'];
+        FNew_PakaiMatFor.Membaku['qtyperkemasan']:=QBaku['pack_qty'];
+        FNew_PakaiMatFor.Membaku['totalkemasan']:=QBaku['total_pack'];
+        FNew_PakaiMatFor.Membaku['gudang']:=QBaku['wh_name'];
+        FNew_PakaiMatFor.Membaku['totalpakai']:=QBaku['total_use'];
+        FNew_PakaiMatFor.Membaku['sisa']:=QBaku['outstanding'];
+        FNew_PakaiMatFor.Membaku.Post;
+        QBaku.Next;
+        end;
+    end;
+    MemKimia.EmptyTable;
+    Qkimia.First;
+    while not Qkimia.Eof do
+    begin
+      with Qkimia do
+      begin
+        FNew_PakaiMatFor.MemKimia.Insert;
+        FNew_PakaiMatFor.MemKimia['kd_material_stok']:=Qkimia['item_stock_code'];
+        FNew_PakaiMatFor.MemKimia['nm_material']:=Qkimia['item_name'];
+        FNew_PakaiMatFor.MemKimia['kd_supplier']:=Qkimia['supplier_code'];
+        FNew_PakaiMatFor.MemKimia['nm_supplier']:=Qkimia['supplier_name'];
+        FNew_PakaiMatFor.MemKimia['kd_stok']:=Qkimia['stock_code'];
+        FNew_PakaiMatFor.MemKimia['index']:=Qkimia['index'];
+        FNew_PakaiMatFor.MemKimia['ttlberat']:=Qkimia['total_weight'];
+        FNew_PakaiMatFor.MemKimia['satuan']:=Qkimia['unit'];
+        FNew_PakaiMatFor.MemKimia['satuankemasan']:=Qkimia['pack_unit'];
+        FNew_PakaiMatFor.MemKimia['qtyperkemasan']:=Qkimia['pack_qty'];
+        FNew_PakaiMatFor.MemKimia['totalkemasan']:=Qkimia['total_pack'];
+        FNew_PakaiMatFor.MemKimia['gudang']:=Qkimia['wh_name'];
+        FNew_PakaiMatFor.MemKimia['totalpakai']:=Qkimia['total_use'];
+        FNew_PakaiMatFor.MemKimia['sisa']:=Qkimia['outstanding'];
+        FNew_PakaiMatFor.MemKimia.Post;
+        Qkimia.Next;
+      end;
+    end;
+  end;
+
 end;
 
 procedure TFPakai_Material_For.dxBarBaruClick(Sender: TObject);

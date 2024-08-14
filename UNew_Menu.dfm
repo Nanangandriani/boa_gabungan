@@ -24,7 +24,7 @@ object FNew_menu: TFNew_menu
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 156
+    ExplicitTop = 215
     ExplicitWidth = 394
     object BBatal: TRzBitBtn
       Left = 322
@@ -161,7 +161,7 @@ object FNew_menu: TFNew_menu
     ParentBackground = False
     TabOrder = 1
     ExplicitWidth = 394
-    ExplicitHeight = 156
+    ExplicitHeight = 215
     object Label1: TLabel
       Left = 10
       Top = 52
