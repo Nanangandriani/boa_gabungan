@@ -176,6 +176,10 @@ begin
     edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
     edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
     vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
+    edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
+    edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
+    edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
+    edJenisUsaha.Text:=Dm.Qtemp.FieldByName('name_type_business').AsString;
       if Dm.Qtemp.FieldByName('stat_pkp').AsBoolean=false then
       begin
         cbpkp.Checked:=false;

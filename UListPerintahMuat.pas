@@ -220,7 +220,7 @@ begin
   FDataPerintahMuat.edKodeMuat.Enabled:=false;
   FDataPerintahMuat.Status := 1;
   FDataPerintahMuat.Show;
-      //ShowMessage(IntToStr(FDataPerintahMuat.Status));
+  //ShowMessage(IntToStr(FDataPerintahMuat.Status));
 end;
 end;
 

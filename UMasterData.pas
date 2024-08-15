@@ -36,7 +36,7 @@ implementation
 uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UMasterWilayahAdministratif, UNew_SalesOrder, UTambah_Barang, UMy_Function,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
-  UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder;
+  UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 begin
@@ -123,6 +123,11 @@ begin
   begin
     FNewDeliveryOrder.edKodeKabupaten.Text:=MemMasterData['KD_MASTER'];
     FNewDeliveryOrder.edNamaKabupaten.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='jns_usaha_pelanggan_klasifikasi' then
+  begin
+    FDaftarKlasifikasi.edkd_jenis_usaha.Text:=MemMasterData['KD_MASTER'];
+    FDaftarKlasifikasi.ednm_jenis_usaha.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='jns_pelanggan_klasifikasi' then
   begin
@@ -285,6 +290,21 @@ begin
   begin
     FSetMasterWilayah.edKDWilayah_setarea.Text:=MemMasterData['KD_MASTER'];
     FSetMasterWilayah.edWilayah_setarea.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='master_jns_usaha_pelanggan' then
+  begin
+    FSetMasterPelanggan.edKode_JenisUsaha.Text:=MemMasterData['KD_MASTER'];
+    FSetMasterPelanggan.edJenisUsaha.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='kantor_pusat' then
+  begin
+    FNew_Pelanggan.edKodeKantorPusat.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edNamaKantorPusat.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='jns_usaha_pelanggan' then
+  begin
+    FNew_Pelanggan.edKode_JenisUsaha.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edJenisUsaha.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='jns_pelanggan' then
   begin

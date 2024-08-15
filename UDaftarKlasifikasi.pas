@@ -120,6 +120,10 @@ type
     MemGroupid_master_det: TStringField;
     MemMasterid_master: TStringField;
     MemMasterid_master_det: TStringField;
+    edkd_jenis_usaha: TEdit;
+    ednm_jenis_usaha: TRzButtonEdit;
+    Label1: TLabel;
+    Label4: TLabel;
   procedure edKode_PelangganButtonClick(Sender: TObject);
   procedure ednm_jenis_pelButtonClick(Sender: TObject);
   procedure ednm_kategoriButtonClick(Sender: TObject);
@@ -140,6 +144,7 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure DBGridMasterDblClick(Sender: TObject);
     procedure DBGridKlasifikasiDblClick(Sender: TObject);
+    procedure ednm_jenis_usahaButtonClick(Sender: TObject);
   private
   { Private declarations }
   public
@@ -239,13 +244,14 @@ begin
     close;
     sql.clear;
     sql.Text:=' INSERT INTO "public"."t_sales_classification" ("created_at", '+
-              ' "created_by", "code_type_customer", "code_item_category", '+
+              ' "created_by", "code_type_business", "code_type_customer", "code_item_category", '+
               ' "code_type_count", "code_customer_selling_type", "code_sell_type", '+
               ' "status_payment", "status_grouping", "status_tax", "status_disc", '+
               ' "status_promo") '+
               ' Values( '+
               ' NOW(), '+
               ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' '+QuotedStr(edkd_jenis_usaha.Text)+', '+
               ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
               ' '+QuotedStr(edkd_kategori.Text)+', '+
               ' '+QuotedStr(edkd_type_hitung.Text)+', '+
@@ -265,11 +271,12 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' SELECT "id" as id_master,"code_type_customer", "code_item_category", "code_type_count", '+
+      sql.add(' SELECT "id" as id_master, "code_type_customer", "code_item_category", "code_type_count", '+
               ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
               ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
               ' FROM "t_sales_classification" '+
-              ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+              ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
+              ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
               ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
               ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
               ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
@@ -345,7 +352,8 @@ begin
               ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
               ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
               ' FROM "t_sales_classification" '+
-              ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+              ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
+              ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
               ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
               ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
               ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
@@ -416,7 +424,8 @@ begin
             ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
             ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
             ' FROM "t_sales_classification" '+
-            ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+            ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
+            ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
             ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
             ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
             ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
@@ -434,7 +443,12 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if (edkd_jenis_pel.Text='') OR (edkd_jenis_pel.Text='0') then
+      if (edkd_jenis_usaha.Text='') OR (edkd_jenis_usaha.Text='0') then
+      begin
+        MessageDlg('Jenis Usaha Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edkd_jenis_usaha.SetFocus;
+      end
+      else if (edkd_jenis_pel.Text='') OR (edkd_jenis_pel.Text='0') then
       begin
         MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edkd_jenis_pel.SetFocus;
@@ -485,7 +499,8 @@ begin
             ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
             ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
             ' FROM "t_sales_classification" '+
-            ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+            ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
+            ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
             ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
             ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
             ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
@@ -676,6 +691,8 @@ begin
   edKode_Pelanggan.Clear;
   ednm_jenis_pel.Clear;
   edkd_jenis_pel.Clear;
+  ednm_jenis_usaha.Clear;
+  edkd_jenis_usaha.Clear;
   ednm_kategori.Clear;
   edkd_kategori.Clear;
   ednm_type_jual.Clear;
@@ -759,7 +776,15 @@ procedure TFDaftarKlasifikasi.ednm_jenis_pelButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Pelanggan';
   FMasterData.vcall:='jns_pelanggan_klasifikasi';
-  FMasterData.update_grid('code','name','description','t_customer_type','WHERE	deleted_at IS NULL Order By code Asc');
+  FMasterData.update_grid('code','name','description','t_customer_type','WHERE code_type_business='+QuotedStr(edkd_jenis_usaha.Text)+' and	deleted_at IS NULL Order By code Asc');
+  FMasterData.ShowModal;
+end;
+
+procedure TFDaftarKlasifikasi.ednm_jenis_usahaButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Jenis Usaha Pelanggan';
+  FMasterData.vcall:='jns_usaha_pelanggan_klasifikasi';
+  FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL Order By code Asc');
   FMasterData.ShowModal;
 end;
 

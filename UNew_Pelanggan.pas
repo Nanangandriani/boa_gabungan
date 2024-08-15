@@ -89,7 +89,7 @@ type
     edNamaKantorPusat: TEdit;
     edKodeKantorPusat: TRzButtonEdit;
     Label30: TLabel;
-    SpeedButton1: TSpeedButton;
+    btKantorPusat: TSpeedButton;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -114,6 +114,10 @@ type
     procedure edGolonganPelangganButtonClick(Sender: TObject);
     procedure EdkodewilayahButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btJenisUsahaClick(Sender: TObject);
+    procedure edJenisUsahaButtonClick(Sender: TObject);
+    procedure edKodeKantorPusatButtonClick(Sender: TObject);
+    procedure btKantorPusatClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -316,6 +320,10 @@ begin
   edGolonganPelanggan.Text:='';
   edKode_gol.Text:='';
   Edtempo.Text:='';
+  edKodeKantorPusat.Text:='';
+  edNamaKantorPusat.Text:='';
+  edKode_JenisUsaha.Text:='';
+  edJenisUsaha.Text:='';
   MemDetailPel.EmptyTable;
 end;
 
@@ -339,7 +347,23 @@ procedure TFNew_Pelanggan.edJenisPelangganButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Pelanggan';
   FMasterData.vcall:='jns_pelanggan';
-  FMasterData.update_grid('code','name','description','t_customer_type','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('code','name','description','t_customer_type','WHERE code_type_business='+QuotedStr(edKode_JenisUsaha.Text)+' and	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edJenisUsahaButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Jenis Usaha';
+  FMasterData.vcall:='jns_usaha_pelanggan';
+  FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edKodeKantorPusatButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Kantor Pusat';
+  FMasterData.vcall:='kantor_pusat';
+  FMasterData.update_grid('code','name','address_nik','t_customer_head_office','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 
@@ -412,12 +436,16 @@ begin
     btMasterTypePenjualan.Visible:=false;
     btMasterGolongan.Visible:=false;
     Edautocode.Visible:=false;
+    btJenisUsaha.Visible:=false;
+    btKantorPusat.Visible:=false;
   end else begin
     btMasterDetailPel.Visible:=true;
     btJenisPelanggan.Visible:=true;
     btMasterTypePenjualan.Visible:=true;
     btMasterGolongan.Visible:=true;
     Edautocode.Visible:=true;
+    btJenisUsaha.Visible:=true;
+    btKantorPusat.Visible:=true;
   end;
 end;
 
@@ -445,6 +473,10 @@ begin
               ' postal_code='+QuotedStr(Edkodepos.Text)+','+
               ' code_type='+QuotedStr(edKode_jnispel.Text)+','+
               ' name_type='+QuotedStr(edJenisPelanggan.Text)+','+
+              ' code_head_office='+QuotedStr(edKodeKantorPusat.Text)+','+
+              ' name_head_office='+QuotedStr(edNamaKantorPusat.Text)+','+
+              ' code_type_business='+QuotedStr(edKode_JenisUsaha.Text)+','+
+              ' name_type_business='+QuotedStr(edJenisUsaha.Text)+','+
               ' code_selling_type='+QuotedStr(edKode_typejual.Text)+','+
               ' name_selling_type='+QuotedStr(edTypePenjualan.Text)+','+
               ' code_group='+QuotedStr(edKode_gol.Text)+','+
@@ -480,6 +512,7 @@ begin
     sql.add(' Insert into t_customer(idprospek,customer_code,customer_name,'+
             ' customer_name_pkp, no_npwp, no_nik, number_va, '+
             ' code_region, name_region, postal_code, code_type, name_type, '+
+            ' code_head_office, name_head_office, code_type_business, name_type_business '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
             ' email,payment_term,created_at,created_by, stat_pkp ) '+
             ' Values( '+
@@ -495,6 +528,10 @@ begin
             ' '+QuotedStr(Edkodepos.Text)+', '+
             ' '+QuotedStr(edKode_jnispel.Text)+', '+
             ' '+QuotedStr(edJenisPelanggan.Text)+', '+
+            ' '+QuotedStr(edKodeKantorPusat.Text)+', '+
+            ' '+QuotedStr(edNamaKantorPusat.Text)+', '+
+            ' '+QuotedStr(edKode_JenisUsaha.Text)+', '+
+            ' '+QuotedStr(edJenisUsaha.Text)+', '+
             ' '+QuotedStr(edKode_typejual.Text)+', '+
             ' '+QuotedStr(edTypePenjualan.Text)+', '+
             ' '+QuotedStr(edKode_gol.Text)+', '+
@@ -580,25 +617,58 @@ end;
 
 procedure TFNew_Pelanggan.btJenisPelangganClick(Sender: TObject);
 begin
+  FSetMasterPelanggan.TabSetKantorPusat.TabVisible:=false;
   FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=true;
   FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
   FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
   FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.TabSetJenisUsaha.TabVisible:=false;
   FSetMasterPelanggan.QJenisPelanggan.Close;
   FSetMasterPelanggan.QJenisPelanggan.Open;
   FSetMasterPelanggan.RzPageControl1.ActivePage:=FSetMasterPelanggan.TabSetJenisPelanggan;
   FSetMasterPelanggan.ShowModal;
 end;
 
+procedure TFNew_Pelanggan.btJenisUsahaClick(Sender: TObject);
+begin
+  FSetMasterPelanggan.TabSetKantorPusat.TabVisible:=false;
+  FSetMasterPelanggan.TabSetJenisUsaha.TabVisible:=true;
+  FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
+  FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.QJenisUsaha.Close;
+  FSetMasterPelanggan.QJenisUsaha.Open;
+  FSetMasterPelanggan.RzPageControl1.ActivePage:=FSetMasterPelanggan.TabSetJenisUsaha;
+  FSetMasterPelanggan.ShowModal;
+end;
+
 procedure TFNew_Pelanggan.btMasterTypePenjualanClick(Sender: TObject);
 begin
+  FSetMasterPelanggan.TabSetKantorPusat.TabVisible:=false;
   FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
   FSetMasterPelanggan.TabSetTypeJual.TabVisible:=true;
   FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
   FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.TabSetJenisUsaha.TabVisible:=false;
   FSetMasterPelanggan.QTypeJual.Close;
   FSetMasterPelanggan.QTypeJual.Open;
   FSetMasterPelanggan.RzPageControl1.ActivePage:=FSetMasterPelanggan.TabSetTypeJual;
+  FSetMasterPelanggan.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.btKantorPusatClick(Sender: TObject);
+begin
+  FSetMasterPelanggan.TabSetKantorPusat.TabVisible:=true;
+  FSetMasterPelanggan.TabSetJenisUsaha.TabVisible:=false;
+  FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
+  FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
+  FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.QKantorPusat.Close;
+  FSetMasterPelanggan.QKantorPusat.Open;
+  FSetMasterPelanggan.RzPageControl1.ActivePage:=FSetMasterPelanggan.TabSetKantorPusat;
+  FSetMasterPelanggan.btBaru_KantorPusatClick(Sender);
   FSetMasterPelanggan.ShowModal;
 end;
 
@@ -611,10 +681,12 @@ end;
 
 procedure TFNew_Pelanggan.btMasterDetailPelClick(Sender: TObject);
 begin
+  FSetMasterPelanggan.TabSetKantorPusat.TabVisible:=false;
   FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
   FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
   FSetMasterPelanggan.TabSetGolongan.TabVisible:=false;
   FSetMasterPelanggan.TabSetDetail.TabVisible:=true;
+  FSetMasterPelanggan.TabSetJenisUsaha.TabVisible:=false;
   FSetMasterPelanggan.QDetailPel.Close;
   FSetMasterPelanggan.QDetailPel.Open;
   FSetMasterPelanggan.RzPageControl1.ActivePage:=FSetMasterPelanggan.TabSetDetail;
@@ -623,10 +695,12 @@ end;
 
 procedure TFNew_Pelanggan.btMasterGolonganClick(Sender: TObject);
 begin
+  FSetMasterPelanggan.TabSetKantorPusat.TabVisible:=false;
   FSetMasterPelanggan.TabSetJenisPelanggan.TabVisible:=false;
   FSetMasterPelanggan.TabSetTypeJual.TabVisible:=false;
   FSetMasterPelanggan.TabSetGolongan.TabVisible:=true;
   FSetMasterPelanggan.TabSetDetail.TabVisible:=false;
+  FSetMasterPelanggan.TabSetJenisUsaha.TabVisible:=false;
   FSetMasterPelanggan.QSettingGolongan.Close;
   FSetMasterPelanggan.QSettingGolongan.Open;
   FSetMasterPelanggan.RzPageControl1.ActivePage:=FSetMasterPelanggan.TabSetGolongan;

@@ -217,6 +217,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       CharCase = ecUpperCase
       TabOrder = 3
       TextHint = 'Autonumber'
+      Visible = False
       OnKeyPress = EdkodeKeyPress
     end
     object btKlasifikasiHargaHargaJual: TRzBitBtn
@@ -293,11 +294,12 @@ object FNew_Pelanggan: TFNew_Pelanggan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
+    ExplicitTop = 295
+    ExplicitWidth = 1212
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Alamat Pelanggan'
       ExplicitWidth = 1208
-      ExplicitHeight = 224
       object DBGridCustomer: TDBGridEh
         Left = 0
         Top = 0
@@ -391,7 +393,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitHeight = 289
+    ExplicitWidth = 1212
+    ExplicitHeight = 295
     object Label14: TLabel
       Left = 663
       Top = 194
@@ -414,7 +417,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Caption = ':'
     end
     object Label10: TLabel
-      Left = 477
+      Left = 465
       Top = 194
       Width = 54
       Height = 15
@@ -505,7 +508,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Caption = ':'
     end
     object Label23: TLabel
-      Left = 476
+      Left = 464
       Top = 19
       Width = 42
       Height = 15
@@ -526,14 +529,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Caption = ':'
     end
     object Label26: TLabel
-      Left = 476
+      Left = 464
       Top = 136
-      Width = 80
+      Width = 103
       Height = 15
-      Caption = 'Jenis Penjualan'
+      Caption = 'Kategori Pelanggan'
     end
     object Label27: TLabel
-      Left = 476
+      Left = 464
       Top = 165
       Width = 52
       Height = 15
@@ -555,7 +558,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       OnClick = btMasterTypePenjualanClick
     end
     object Label1: TLabel
-      Left = 476
+      Left = 464
       Top = 107
       Width = 84
       Height = 15
@@ -592,7 +595,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Caption = ':'
     end
     object Label7: TLabel
-      Left = 476
+      Left = 464
       Top = 47
       Width = 49
       Height = 15
@@ -619,7 +622,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Width = 23
       Height = 22
       Caption = '+'
-      OnClick = btJenisPelangganClick
+      OnClick = btJenisUsahaClick
     end
     object Label9: TLabel
       Left = 573
@@ -629,7 +632,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Caption = ':'
     end
     object Label11: TLabel
-      Left = 476
+      Left = 464
       Top = 76
       Width = 60
       Height = 15
@@ -649,13 +652,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
       Height = 15
       Caption = ':'
     end
-    object SpeedButton1: TSpeedButton
+    object btKantorPusat: TSpeedButton
       Left = 235
       Top = 221
       Width = 23
       Height = 22
       Caption = '+'
-      OnClick = btJenisPelangganClick
+      OnClick = btKantorPusatClick
     end
     object Edemail: TEdit
       Left = 132
@@ -843,7 +846,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       TabOrder = 19
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
-      OnButtonClick = edJenisPelangganButtonClick
+      OnButtonClick = edJenisUsahaButtonClick
     end
     object edNamaKantorPusat: TEdit
       Left = 132
@@ -863,7 +866,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
       TabOrder = 21
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
-      OnButtonClick = EdkodewilayahButtonClick
+      OnButtonClick = edKodeKantorPusatButtonClick
     end
   end
   object DSDetailPel: TDataSource

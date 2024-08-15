@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, DBGridEhGrouping,
   ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, Vcl.ExtCtrls, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, RzButton, Vcl.StdCtrls, Data.DB, MemDS, DBAccess, Uni,
-  RzTabs;
+  RzTabs, Vcl.Mask, RzEdit, RzBtnEdt;
 
 type
   TFSetMasterPelanggan = class(TForm)
@@ -132,6 +132,92 @@ type
     QDetailPelupdated_by: TStringField;
     QDetailPeldeleted_at: TDateTimeField;
     QDetailPeldeleted_by: TStringField;
+    TabSetJenisUsaha: TRzTabSheet;
+    Panel9: TPanel;
+    Label24: TLabel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    EdKode_jnisusaha: TEdit;
+    EdNama_jnisusaha: TEdit;
+    EdKet_jnisusaha: TEdit;
+    cbstatus_jnisusaha: TCheckBox;
+    Panel10: TPanel;
+    btBatal_jnisusaha: TRzBitBtn;
+    btSimpan_jnisusaha: TRzBitBtn;
+    btRefresh_jnisusaha: TRzBitBtn;
+    btBaru_jnisusaha: TRzBitBtn;
+    DBGrid_JnisUsaha: TDBGridEh;
+    QJenisUsaha: TUniQuery;
+    dsJenisUsaha: TDataSource;
+    Label30: TLabel;
+    Label31: TLabel;
+    edJenisUsaha: TRzButtonEdit;
+    edKode_JenisUsaha: TEdit;
+    QJenisPelanggancode_type_business: TStringField;
+    QJenisPelangganname_type_business: TStringField;
+    QJenisUsahacode: TStringField;
+    QJenisUsahaname: TStringField;
+    QJenisUsahadescription: TMemoField;
+    QJenisUsahaid: TGuidField;
+    QJenisUsahacreated_at: TDateTimeField;
+    QJenisUsahacreated_by: TStringField;
+    QJenisUsahaupdated_at: TDateTimeField;
+    QJenisUsahaupdated_by: TStringField;
+    QJenisUsahadeleted_at: TDateTimeField;
+    QJenisUsahadeleted_by: TStringField;
+    TabSetKantorPusat: TRzTabSheet;
+    Panel11: TPanel;
+    Label32: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    Label35: TLabel;
+    Label36: TLabel;
+    Label37: TLabel;
+    Label38: TLabel;
+    Label39: TLabel;
+    edKodeKantorPusat: TEdit;
+    edNamaKantorPusat: TEdit;
+    edTelp1KantorPusat: TEdit;
+    cbStatus_KantorPusat: TCheckBox;
+    edTelp2KantorPusat: TEdit;
+    Panel12: TPanel;
+    btBatal_KantorPusat: TRzBitBtn;
+    btSimpan_KantorPusat: TRzBitBtn;
+    btRefresh_KantorPusat: TRzBitBtn;
+    btBaru_KantorPusat: TRzBitBtn;
+    DBGrid_KantorPusat: TDBGridEh;
+    Label40: TLabel;
+    Label41: TLabel;
+    edNIKKantorPusat: TEdit;
+    Label42: TLabel;
+    Label43: TLabel;
+    MemNIKKantorPusat: TMemo;
+    Label44: TLabel;
+    Label45: TLabel;
+    edNPWPKantorPusat: TEdit;
+    MemNPWPKantorPusat: TMemo;
+    Label46: TLabel;
+    Label47: TLabel;
+    dsKantorPusat: TDataSource;
+    QKantorPusat: TUniQuery;
+    QKantorPusatid: TGuidField;
+    QKantorPusatcreated_at: TDateTimeField;
+    QKantorPusatcreated_by: TStringField;
+    QKantorPusatupdated_at: TDateTimeField;
+    QKantorPusatupdated_by: TStringField;
+    QKantorPusatdeleted_at: TDateTimeField;
+    QKantorPusatdeleted_by: TStringField;
+    QKantorPusatcode: TStringField;
+    QKantorPusatname: TStringField;
+    QKantorPusatphone1: TStringField;
+    QKantorPusatphone2: TStringField;
+    QKantorPusatnik: TStringField;
+    QKantorPusataddress_nik: TMemoField;
+    QKantorPusatnpwp: TStringField;
+    QKantorPusataddress_npwp: TMemoField;
     procedure btBatal_detailpelClick(Sender: TObject);
     procedure btBatal_golpelClick(Sender: TObject);
     procedure btBatal_typejualClick(Sender: TObject);
@@ -162,9 +248,25 @@ type
       DisplayText: Boolean);
     procedure btSimpan_golpelClick(Sender: TObject);
     procedure btSimpan_detailpelClick(Sender: TObject);
+    procedure btBaru_jnisusahaClick(Sender: TObject);
+    procedure btRefresh_jnisusahaClick(Sender: TObject);
+    procedure btBatal_jnisusahaClick(Sender: TObject);
+    procedure btSimpan_jnisusahaClick(Sender: TObject);
+    procedure DBGrid_JnisUsahaDblClick(Sender: TObject);
+    procedure edJenisUsahaButtonClick(Sender: TObject);
+    procedure MemoField1GetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QJenisUsahadescriptionGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure btBatal_KantorPusatClick(Sender: TObject);
+    procedure btRefresh_KantorPusatClick(Sender: TObject);
+    procedure btBaru_KantorPusatClick(Sender: TObject);
+    procedure btSimpan_KantorPusatClick(Sender: TObject);
+    procedure DBGrid_KantorPusatDblClick(Sender: TObject);
   private
     { Private declarations }
     procedure Clear;
+    procedure Autocode_KantorPusat;
   public
     { Public declarations }
   end;
@@ -177,7 +279,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UHomeLogin, UMainMenu;
+uses UDataModule, UHomeLogin, UMainMenu, UMasterData;
 
 {procedure TFSetMasterPelanggan.SaveJenis;
 begin
@@ -205,6 +307,59 @@ begin
   Flistpelanggan.Refresh;
 end; }
 
+procedure TFSetMasterPelanggan.Autocode_KantorPusat;
+var
+  kode : String;
+  Urut : Integer;
+begin
+  With dm.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    Sql.Text := 'select * from t_customer_head_office  ';
+    open;
+  end;
+
+  if dm.Qtemp.RecordCount = 0 then urut := 1 else
+  if dm.Qtemp.RecordCount > 0 then
+  begin
+      With dm.Qtemp do
+      begin
+        Close;
+        Sql.Clear;
+        Sql.Text := 'select count(code) as hasil from t_customer_head_office ';
+        Open;
+      end;
+      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+  end;
+  edKodeKantorPusat.Clear;
+  kode := inttostr(urut);
+  if Length(kode)=1 then
+  begin
+    kode := '0000'+kode;
+  end
+  else
+  if Length(kode)=2 then
+  begin
+    kode := '000'+kode;
+  end
+  else
+  if Length(kode)=3 then
+  begin
+    kode := '00'+kode;
+  end
+  else
+  if Length(kode)=4 then
+  begin
+    kode := '0'+kode;
+  end
+  else
+  if Length(kode)=5 then
+  begin
+    kode := kode;
+  end;
+  edKodeKantorPusat.Text := 'KP-'+Kode;
+end;
 
 procedure TFSetMasterPelanggan.Clear;
 begin
@@ -212,6 +367,8 @@ begin
   EdKode_jnispel.Text:='';
   EdNama_jnispel.Text:='';
   edKet_jnispel.Text:='';
+  edKode_JenisUsaha.Text:='';
+  edJenisUsaha.Text:='';
   cbstatus_jnispel.Checked:=True;
   //Type Penjualan
   edKode_typejual.Text:='';
@@ -228,6 +385,21 @@ begin
   edNama_detailpel.Text:='';
   edKet_detailpel.Text:='';
   cbstatus_detailpel.Checked:=True;
+  //Detail Jenis Usaha
+  EdKode_jnisusaha.Text:='';
+  EdNama_jnisusaha.Text:='';
+  EdKet_jnisusaha.Text:='';
+  cbstatus_jnisusaha.Checked:=True;
+  //Kantor Pusat
+  edKodeKantorPusat.Text:='';
+  edNamaKantorPusat.Text:='';
+  edTelp1KantorPusat.Text:='0';
+  edTelp2KantorPusat.Text:='0';
+  edNIKKantorPusat.Text:='';
+  edNPWPKantorPusat.Text:='';
+  MemNIKKantorPusat.Text:='';
+  MemNPWPKantorPusat.Text:='';
+  cbStatus_KantorPusat.Checked:=True;
 end;
 
 procedure TFSetMasterPelanggan.DBGrid_detailpelDblClick(Sender: TObject);
@@ -254,7 +426,32 @@ begin
   EdKode_jnispel.Text:=QJenisPelanggan.fieldbyname('code').AsString;
   EdNama_jnispel.Text:=QJenisPelanggan.fieldbyname('name').AsString;
   edKet_jnispel.Text:=QJenisPelanggan.fieldbyname('description').AsString;
+  edKode_JenisUsaha.Text:=QJenisPelanggan.fieldbyname('code_type_business').AsString;
+  edJenisUsaha.Text:=QJenisPelanggan.fieldbyname('name_type_business').AsString;
   cbstatus_jnispel.Checked:=True;
+end;
+
+procedure TFSetMasterPelanggan.DBGrid_JnisUsahaDblClick(Sender: TObject);
+begin
+  status:=1;
+  EdKode_jnisusaha.Text:=QJenisUsaha.fieldbyname('code').AsString;
+  EdNama_jnisusaha.Text:=QJenisUsaha.fieldbyname('name').AsString;
+  EdKet_jnisusaha.Text:=QJenisUsaha.fieldbyname('description').AsString;
+  cbstatus_jnisusaha.Checked:=True;
+end;
+
+procedure TFSetMasterPelanggan.DBGrid_KantorPusatDblClick(Sender: TObject);
+begin
+  status:=1;
+  edKodeKantorPusat.Text:=QJenisUsaha.fieldbyname('code').AsString;
+  edNamaKantorPusat.Text:=QJenisUsaha.fieldbyname('name').AsString;
+  edTelp1KantorPusat.Text:=QJenisUsaha.fieldbyname('phone1').AsString;
+  edTelp2KantorPusat.Text:=QJenisUsaha.fieldbyname('phone2').AsString;
+  edNIKKantorPusat.Text:=QJenisUsaha.fieldbyname('nik').AsString;
+  MemNIKKantorPusat.Text:=QJenisUsaha.fieldbyname('address_nik').AsString;
+  edNPWPKantorPusat.Text:=QJenisUsaha.fieldbyname('npwp').AsString;
+  MemNPWPKantorPusat.Text:=QJenisUsaha.fieldbyname('address_npwp').AsString;
+  cbStatus_KantorPusat.Checked:=True;
 end;
 
 procedure TFSetMasterPelanggan.DBGrid_typejualDblClick(Sender: TObject);
@@ -264,6 +461,14 @@ begin
   EdNama_typejual.Text:=QTypeJual.fieldbyname('name').AsString;
   edKet_typejual.Text:=QTypeJual.fieldbyname('description').AsString;
   cbstatus_typejual.Checked:=True;
+end;
+
+procedure TFSetMasterPelanggan.edJenisUsahaButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Jenis Usaha';
+  FMasterData.vcall:='master_jns_usaha_pelanggan';
+  FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
 end;
 
 procedure TFSetMasterPelanggan.FormClose(Sender: TObject;
@@ -281,6 +486,12 @@ begin
   status:=0;
 end;
 
+procedure TFSetMasterPelanggan.MemoField1GetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  Text:=QDetailPel.fieldbyname('description').AsString;
+end;
+
 procedure TFSetMasterPelanggan.QDetailPeldescriptionGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
@@ -291,6 +502,12 @@ procedure TFSetMasterPelanggan.QJenisPelanggandescriptionGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
   Text:=QJenisPelanggan.fieldbyname('description').AsString;
+end;
+
+procedure TFSetMasterPelanggan.QJenisUsahadescriptionGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  Text:=QJenisUsaha.fieldbyname('description').AsString;
 end;
 
 procedure TFSetMasterPelanggan.QSettingGolongandescriptionGetText(
@@ -307,11 +524,25 @@ end;
 
 procedure TFSetMasterPelanggan.btBatal_jnispelClick(Sender: TObject);
 begin
+  status:=0;
+  Close;
+end;
+
+procedure TFSetMasterPelanggan.btBatal_jnisusahaClick(Sender: TObject);
+begin
+  status:=0;
+  Close;
+end;
+
+procedure TFSetMasterPelanggan.btBatal_KantorPusatClick(Sender: TObject);
+begin
+  status:=0;
   Close;
 end;
 
 procedure TFSetMasterPelanggan.btBatal_typejualClick(Sender: TObject);
 begin
+  status:=0;
   Close;
 end;
 
@@ -347,6 +578,30 @@ begin
     QJenisPelanggan.Open;
   finally
   DBGrid_jnispel.FinishLoadingStatus();
+  Clear;
+  end;
+end;
+
+procedure TFSetMasterPelanggan.btRefresh_jnisusahaClick(Sender: TObject);
+begin
+  DBGrid_JnisUsaha.StartLoadingStatus();
+  try
+    QJenisUsaha.Close;
+    QJenisUsaha.Open;
+  finally
+  DBGrid_JnisUsaha.FinishLoadingStatus();
+  Clear;
+  end;
+end;
+
+procedure TFSetMasterPelanggan.btRefresh_KantorPusatClick(Sender: TObject);
+begin
+  DBGrid_KantorPusat.StartLoadingStatus();
+  try
+    QKantorPusat.Close;
+    QKantorPusat.Open;
+  finally
+  DBGrid_KantorPusat.FinishLoadingStatus();
   Clear;
   end;
 end;
@@ -530,7 +785,12 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if EdKode_jnispel.Text='' then
+      if edKode_JenisUsaha.Text='' then
+      begin
+        MessageDlg('Jenis Usaha Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKode_JenisUsaha.SetFocus;
+      end
+      else if EdKode_jnispel.Text='' then
       begin
         MessageDlg('Kode Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         EdKode_jnispel.SetFocus;
@@ -549,11 +809,14 @@ begin
           close;
           sql.clear;
           sql.Text:=' INSERT INTO "t_customer_type" ("code", "name", "description", '+
+                    ' "code_type_business", "name_type_business", '+
                     ' "created_by" ) '+
                     ' Values( '+
                     ' '+QuotedStr(EdKode_jnispel.Text)+', '+
                     ' '+QuotedStr(EdNama_jnispel.Text)+', '+
                     ' '+QuotedStr(edKet_jnispel.Text)+', '+
+                    ' '+QuotedStr(edKode_JenisUsaha.Text)+', '+
+                    ' '+QuotedStr(edJenisUsaha.Text)+', '+
                     ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
           ExecSQL;
         end;
@@ -570,6 +833,8 @@ begin
           close;
           sql.clear;
           sql.Text:=' UPDATE "t_customer_type" SET '+
+                    ' "code_type_business"='+QuotedStr(edKode_JenisUsaha.Text)+', '+
+                    ' "name_type_business"='+QuotedStr(edJenisUsaha.Text)+', '+
                     ' "name"='+QuotedStr(EdNama_jnispel.Text)+', '+
                     ' "description"='+QuotedStr(edKet_jnispel.Text)+', '+
                     ' "updated_at"=now(), '+
@@ -605,6 +870,210 @@ begin
       end;
       btRefresh_jnispelClick(Sender);
 end;
+
+procedure TFSetMasterPelanggan.btSimpan_jnisusahaClick(Sender: TObject);
+begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if EdKode_jnisusaha.Text='' then
+      begin
+        MessageDlg('Kode Jenis Usaha Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        EdKode_jnisusaha.SetFocus;
+      end
+      else if EdNama_jnisusaha.Text='' then
+      begin
+        MessageDlg('Nama Jenis Usaha Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        EdNama_jnisusaha.SetFocus;
+      end
+      else if Status = 0 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' INSERT INTO "t_customer_type_business" ("code", "name", "description", '+
+                    ' "created_by" ) '+
+                    ' Values( '+
+                    ' '+QuotedStr(EdKode_jnisusaha.Text)+', '+
+                    ' '+QuotedStr(EdNama_jnisusaha.Text)+', '+
+                    ' '+QuotedStr(EdKet_jnisusaha.Text)+', '+
+                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+          ExecSQL;
+        end;
+        MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end
+      else if Status = 1 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_customer_type_business" SET '+
+                    ' "name"='+QuotedStr(EdNama_jnisusaha.Text)+', '+
+                    ' "description"='+QuotedStr(EdKet_jnisusaha.Text)+', '+
+                    ' "updated_at"=now(), '+
+                    ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                    ' WHERE "code"='+QuotedStr(EdKode_jnisusaha.Text)+';';
+          ExecSQL;
+        end;
+
+        if cbstatus_detailpel.Checked=false then
+        begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_customer_type_business" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "code"='+QuotedStr(EdKode_jnisusaha.Text)+';';
+          ExecSQL;
+        end;
+        end;
+        MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      btRefresh_jnisusahaClick(Sender);
+end;
+
+procedure TFSetMasterPelanggan.btSimpan_KantorPusatClick(Sender: TObject);
+begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if edKodeKantorPusat.Text='' then
+      begin
+        MessageDlg('Kode Kantor Pusat Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKodeKantorPusat.SetFocus;
+      end
+      else if edNamaKantorPusat.Text='' then
+      begin
+        MessageDlg('Nama Kantor Pusat Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edNamaKantorPusat.SetFocus;
+      end
+      else if edTelp1KantorPusat.Text='' then
+      begin
+        MessageDlg('Nomor Telp Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edTelp1KantorPusat.SetFocus;
+      end
+      else if edTelp2KantorPusat.Text='' then
+      begin
+        MessageDlg('Nomor Telp Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edTelp2KantorPusat.SetFocus;
+      end
+      else if edNIKKantorPusat.Text='' then
+      begin
+        MessageDlg('NIK Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edNIKKantorPusat.SetFocus;
+      end
+      else if edNPWPKantorPusat.Text='' then
+      begin
+        MessageDlg('NPWP Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edNPWPKantorPusat.SetFocus;
+      end
+      else if MemNIKKantorPusat.Text='' then
+      begin
+        MessageDlg('Alamat NIK Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        MemNIKKantorPusat.SetFocus;
+      end
+      else if MemNPWPKantorPusat.Text='' then
+      begin
+        MessageDlg('Alamat NPWP Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        MemNPWPKantorPusat.SetFocus;
+      end
+      else if Status = 0 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' INSERT INTO "t_customer_head_office" ("code", "name", "phone1", '+
+                    ' "phone2", "nik", "address_nik", "npwp", "address_npwp", '+
+                    ' "created_by" ) '+
+                    ' Values( '+
+                    ' '+QuotedStr(edKodeKantorPusat.Text)+', '+
+                    ' '+QuotedStr(edNamaKantorPusat.Text)+', '+
+                    ' '+QuotedStr(edTelp1KantorPusat.Text)+', '+
+                    ' '+QuotedStr(edTelp2KantorPusat.Text)+', '+
+                    ' '+QuotedStr(edNIKKantorPusat.Text)+', '+
+                    ' '+QuotedStr(MemNIKKantorPusat.Text)+', '+
+                    ' '+QuotedStr(edNPWPKantorPusat.Text)+', '+
+                    ' '+QuotedStr(MemNPWPKantorPusat.Text)+', '+
+                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+          ExecSQL;
+        end;
+        MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end
+      else if Status = 1 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_customer_head_office" SET '+
+                    ' "name"='+QuotedStr(edNamaKantorPusat.Text)+', '+
+                    ' "phone1"='+QuotedStr(edTelp1KantorPusat.Text)+', '+
+                    ' "phone2"='+QuotedStr(edTelp2KantorPusat.Text)+', '+
+                    ' "nik"='+QuotedStr(edNIKKantorPusat.Text)+', '+
+                    ' "address_nik"='+QuotedStr(MemNIKKantorPusat.Text)+', '+
+                    ' "npwp"='+QuotedStr(edNPWPKantorPusat.Text)+', '+
+                    ' "address_npwp"='+QuotedStr(MemNPWPKantorPusat.Text)+', '+
+                    ' "updated_at"=now(), '+
+                    ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                    ' WHERE "code"='+QuotedStr(edKodeKantorPusat.Text)+';';
+          ExecSQL;
+        end;
+
+        if cbstatus_jnispel.Checked=false then
+        begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_customer_head_office" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "code"='+QuotedStr(edKodeKantorPusat.Text)+';';
+          ExecSQL;
+        end;
+        end;
+        MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      btRefresh_KantorPusatClick(Sender);
+end;
+
 
 procedure TFSetMasterPelanggan.btSimpan_typejualClick(Sender: TObject);
 begin
@@ -712,6 +1181,21 @@ begin
   status:=0;
   btRefresh_jnispelClick(Sender);
   Clear;
+end;
+
+procedure TFSetMasterPelanggan.btBaru_jnisusahaClick(Sender: TObject);
+begin
+  status:=0;
+  btRefresh_jnispelClick(Sender);
+  Clear;
+end;
+
+procedure TFSetMasterPelanggan.btBaru_KantorPusatClick(Sender: TObject);
+begin
+  status:=0;
+  btRefresh_KantorPusatClick(Sender);
+  Clear;
+  Autocode_KantorPusat;
 end;
 
 procedure TFSetMasterPelanggan.btBaru_typejualClick(Sender: TObject);
