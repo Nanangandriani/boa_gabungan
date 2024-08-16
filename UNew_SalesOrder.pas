@@ -301,6 +301,7 @@ end;
 
 procedure TFNew_SalesOrder.btMasterSumberClick(Sender: TObject);
 begin
+  FSetMasterPenjulan.TabSetJenisReturJual.TabVisible:=false;
   FSetMasterPenjulan.TabSetSumberOrder.TabVisible:=true;
   FSetMasterPenjulan.TabSetSumberJual.TabVisible:=false;
   FSetMasterPenjulan.TabParameter.TabVisible:=false;

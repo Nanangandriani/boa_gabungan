@@ -399,6 +399,7 @@ end;
 
 procedure TFNew_Penjualan.btMasterSumberClick(Sender: TObject);
 begin
+  FSetMasterPenjulan.TabSetJenisReturJual.TabVisible:=false;
   FSetMasterPenjulan.TabSetSumberOrder.TabVisible:=false;
   FSetMasterPenjulan.TabSetSumberJual.TabVisible:=true;
   FSetMasterPenjulan.TabParameter.TabVisible:=false;

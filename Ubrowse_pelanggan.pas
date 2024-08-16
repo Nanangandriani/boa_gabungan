@@ -53,7 +53,7 @@ implementation
 uses UDataModule, UNew_Penjualan, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UMasterWilayah, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_MasterBiayaDO,
   UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
-  UDelivery_Order_Sumber;
+  UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 begin
@@ -117,6 +117,16 @@ end;
 procedure TFbrowse_data_pelanggan.DBGridCustomerDblClick(Sender: TObject);
 begin
   //showmessage(vcall);
+  if vcall='retur_penjualan' then
+  begin
+    FDataReturPenjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FDataReturPenjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+  if vcall='retur_penjualan_sumber' then
+  begin
+    FReturPenjualan_Sumber.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FReturPenjualan_Sumber.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
   if vcall='delivery_order' then
   begin
     FDelivery_Order_Sumber.edKodeVendorMuatan.Text:=MemMasterData['KD_PELANGGAN'];

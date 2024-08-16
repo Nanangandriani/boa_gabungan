@@ -2,8 +2,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
   Left = 0
   Top = 0
   Caption = 'Data Sales Order'
-  ClientHeight = 540
-  ClientWidth = 1073
+  ClientHeight = 531
+  ClientWidth = 1067
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1073
-    Height = 288
+    Width = 1067
+    Height = 279
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1067
-    ExplicitHeight = 279
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -328,13 +326,11 @@ object FNew_SalesOrder: TFNew_SalesOrder
   end
   object Panel2: TPanel
     Left = 0
-    Top = 508
-    Width = 1073
+    Top = 499
+    Width = 1067
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 499
-    ExplicitWidth = 1067
     object BBatal: TRzBitBtn
       Left = 997
       Top = 1
@@ -472,8 +468,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 288
-    Width = 1073
+    Top = 279
+    Width = 1067
     Height = 220
     Hint = ''
     ActivePage = TabSDetailPel
@@ -481,12 +477,13 @@ object FNew_SalesOrder: TFNew_SalesOrder
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 279
-    ExplicitWidth = 1067
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1063
+      ExplicitHeight = 0
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

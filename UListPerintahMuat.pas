@@ -87,7 +87,6 @@ uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin;
 
 procedure TFListPerintahMuat.ActBaruExecute(Sender: TObject);
 begin
-  ShowMessage(FListPerintahMuat.Name);
   FDataPerintahMuat.Clear;
   FDataPerintahMuat.Autonumber;
   FDataPerintahMuat.MemDetail.EmptyTable;

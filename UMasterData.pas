@@ -36,11 +36,17 @@ implementation
 uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UMasterWilayahAdministratif, UNew_SalesOrder, UTambah_Barang, UMy_Function,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
-  UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan;
+  UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
+  UDataReturPenjualan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 begin
   //ShowMessage(vcall);
+  if vcall='jenis_retur' then
+  begin
+    FDataReturPenjualan.edKodeJenis.Text:=MemMasterData['KD_MASTER'];
+    FDataReturPenjualan.edNamaJenis.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_klasifikasi' then
   begin
     FDaftarKlasifikasi.MemKlasifikasi.Edit;

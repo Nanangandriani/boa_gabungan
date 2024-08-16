@@ -265,7 +265,7 @@ begin
   try
   if edKodeVendorMuatan.Text='' then
   begin
-    MessageDlg('Data Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    //MessageDlg('Data Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
     edKodeVendorMuatan.SetFocus;
   end
   else if Status = 0 then

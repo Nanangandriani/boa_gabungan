@@ -93,6 +93,29 @@ type
     QParameterketerangan: TStringField;
     QParametermodul: TStringField;
     edValueParameter: TMemo;
+    TabSetJenisReturJual: TRzTabSheet;
+    Panel7: TPanel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
+    edKodeJenisRetur: TEdit;
+    edNamaJenisRetur: TEdit;
+    edKetJenisRetur: TEdit;
+    cbStatus_JenisRetur: TCheckBox;
+    Panel8: TPanel;
+    btBatal_JenisRetur: TRzBitBtn;
+    btSimpan_JenisRetur: TRzBitBtn;
+    btRefresh_JenisRetur: TRzBitBtn;
+    btBaru_JenisRetur: TRzBitBtn;
+    DBGrid_JenisRetur: TDBGridEh;
+    QJenisRetur: TUniQuery;
+    dsJenisRetur: TDataSource;
+    QJenisReturkd_master: TStringField;
+    QJenisReturnm_master: TMemoField;
+    QJenisReturketerangan: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure DBGrid_SumberOrderDblClick(Sender: TObject);
@@ -119,6 +142,15 @@ type
     procedure QSumberPenjualanketeranganGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
     procedure QParameternm_masterGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure btBatal_JenisReturClick(Sender: TObject);
+    procedure btRefresh_JenisReturClick(Sender: TObject);
+    procedure btBaru_JenisReturClick(Sender: TObject);
+    procedure btSimpan_JenisReturClick(Sender: TObject);
+    procedure DBGrid_JenisReturDblClick(Sender: TObject);
+    procedure QJenisReturnm_masterGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QJenisReturketeranganGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
   private
     { Private declarations }
@@ -158,6 +190,13 @@ begin
   Clear;
 end;
 
+procedure TFSetMasterPenjulan.btBaru_JenisReturClick(Sender: TObject);
+begin
+  status:=0;
+  btRefresh_JenisReturClick(Sender);
+  Clear;
+end;
+
 procedure TFSetMasterPenjulan.btBatalParameterClick(Sender: TObject);
 begin
   status:=0;
@@ -171,6 +210,12 @@ begin
 end;
 
 procedure TFSetMasterPenjulan.btBatalSumberOrderClick(Sender: TObject);
+begin
+  status:=0;
+  Close;
+end;
+
+procedure TFSetMasterPenjulan.btBatal_JenisReturClick(Sender: TObject);
 begin
   status:=0;
   Close;
@@ -208,6 +253,18 @@ begin
     QSumberOrder.Open;
   finally
   DBGrid_SumberOrder.FinishLoadingStatus();
+  Clear;
+  end;
+end;
+
+procedure TFSetMasterPenjulan.btRefresh_JenisReturClick(Sender: TObject);
+begin
+  DBGrid_JenisRetur.StartLoadingStatus();
+  try
+    QJenisRetur.Close;
+    QJenisRetur.Open;
+  finally
+  DBGrid_JenisRetur.FinishLoadingStatus();
   Clear;
   end;
 end;
@@ -446,6 +503,87 @@ begin
       btRefreshSumberOrderClick(Sender);
 end;
 
+procedure TFSetMasterPenjulan.btSimpan_JenisReturClick(Sender: TObject);
+begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if edKodeJenisRetur.Text='' then
+      begin
+        MessageDlg('Kode Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKodeJenisRetur.SetFocus;
+      end
+      else if edNamaJenisRetur.Text='' then
+      begin
+        MessageDlg('Nama Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edNamaJenisRetur.SetFocus;
+      end
+      else if Status = 0 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' INSERT INTO "t_type_sales_return" ("code", "name", "description", '+
+                    ' "created_by" ) '+
+                    ' Values( '+
+                    ' '+QuotedStr(edKodeJenisRetur.Text)+', '+
+                    ' '+QuotedStr(edNamaJenisRetur.Text)+', '+
+                    ' '+QuotedStr(edKetJenisRetur.Text)+', '+
+                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+          ExecSQL;
+        end;
+        MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end
+      else if Status = 1 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_type_sales_return" SET '+
+                    ' "name"='+QuotedStr(edNamaJenisRetur.Text)+', '+
+                    ' "description"='+QuotedStr(edKetJenisRetur.Text)+', '+
+                    ' "updated_at"=now(), '+
+                    ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                    ' WHERE "code"='+QuotedStr(edKodeJenisRetur.Text)+';';
+          ExecSQL;
+        end;
+
+        if cbSumberOrder.Checked=false then
+        begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_type_sales_return" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "code"='+QuotedStr(edKodeJenisRetur.Text)+';';
+          ExecSQL;
+        end;
+        end;
+        MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      btRefresh_JenisReturClick(Sender);
+end;
+
 procedure TFSetMasterPenjulan.Clear;
 begin
   //Sumber Order
@@ -465,6 +603,10 @@ begin
   edValueParameter.Text:='';
   edKetParameter.Text:='';
   edModulParameter.Text:='';}
+  //Jenis Retur
+  edKodeJenisRetur.Clear;
+  edNamaJenisRetur.Clear;
+  edKetJenisRetur.Clear;
 end;
 
 procedure TFSetMasterPenjulan.DBGridEhParameterDblClick(Sender: TObject);
@@ -484,6 +626,15 @@ begin
   edKetSumberJual.Text:=QSumberPenjualan.fieldbyname('keterangan').AsString;
   edLinkSumberJual.Text:=QSumberPenjualan.fieldbyname('form_target').AsString;
   cbSumberJual.Checked:=True;
+end;
+
+procedure TFSetMasterPenjulan.DBGrid_JenisReturDblClick(Sender: TObject);
+begin
+  status:=1;
+  edKodeJenisRetur.Text:=QJenisRetur.fieldbyname('kd_master').AsString;
+  edNamaJenisRetur.Text:=QJenisRetur.fieldbyname('nm_master').AsString;
+  edKetJenisRetur.Text:=QJenisRetur.fieldbyname('keterangan').AsString;
+  cbStatus_JenisRetur.Checked:=True;
 end;
 
 procedure TFSetMasterPenjulan.DBGrid_SumberOrderDblClick(Sender: TObject);
@@ -522,6 +673,18 @@ begin
     Label24.Visible:=true;
     Label25.Visible:=true;
   end;
+end;
+
+procedure TFSetMasterPenjulan.QJenisReturketeranganGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  Text := Copy(QJenisReturketerangan.AsString, 1, 255);
+end;
+
+procedure TFSetMasterPenjulan.QJenisReturnm_masterGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  Text := Copy(QJenisReturnm_master.AsString, 1, 255);
 end;
 
 procedure TFSetMasterPenjulan.QParameternm_masterGetText(Sender: TField;

@@ -127,7 +127,6 @@ uses
   UListSalesOrder in 'UListSalesOrder.pas' {FListSalesOrder},
   UListSales_Order in 'UListSales_Order.pas' {FSalesOrder},
   UNew_SalesOrder in 'UNew_SalesOrder.pas' {FNew_SalesOrder},
-  Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
   Ubrowse_faktur_pajak in 'Ubrowse_faktur_pajak.pas' {Fbrowse_faktur_pajak},
   UMasterData in 'UMasterData.pas' {FMasterData},
   UMasterWilayah in 'UMasterWilayah.pas' {FMasterWilayah},
@@ -144,7 +143,13 @@ uses
   UListPengajuanApprovePenjualan in 'UListPengajuanApprovePenjualan.pas' {FListPengajuanApprovePenjualan},
   UDataPerintahMuat in 'UDataPerintahMuat.pas' {FDataPerintahMuat},
   UListPerintahMuat in 'UListPerintahMuat.pas' {FListPerintahMuat},
-  UDelivery_Order_Sumber in 'UDelivery_Order_Sumber.pas' {FDelivery_Order_Sumber};
+  UDelivery_Order_Sumber in 'UDelivery_Order_Sumber.pas' {FDelivery_Order_Sumber},
+  UListReturPenjualan in 'UListReturPenjualan.pas' {FListReturPenjualan},
+  UDataReturPenjualan in 'UDataReturPenjualan.pas' {FDataReturPenjualan},
+  UTambah_Barang in 'UTambah_Barang.pas' {FTambah_Barang},
+  UTemplate_Temp in 'UTemplate_Temp.pas' {FTemplate_Temp},
+  Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
+  UReturPenjualan_Sumber in 'UReturPenjualan_Sumber.pas' {FReturPenjualan_Sumber};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -191,6 +196,11 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListPengajuanApprovePenjualan, FListPengajuanApprovePenjualan);
   Application.CreateForm(TFDataPerintahMuat, FDataPerintahMuat);
   Application.CreateForm(TFDelivery_Order_Sumber, FDelivery_Order_Sumber);
+  Application.CreateForm(TFListReturPenjualan, FListReturPenjualan);
+  Application.CreateForm(TFDataReturPenjualan, FDataReturPenjualan);
+  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
+  Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
+  Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
@@ -233,7 +243,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Dept, FNew_Dept);
   Application.CreateForm(TFNew_Jabatan, FNew_Jabatan);
   Application.CreateForm(TFNew_KelompokBarang, FNew_KelompokBarang);
-  Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);
   Application.CreateForm(TFbrowse_faktur_pajak, Fbrowse_faktur_pajak);
   Application.CreateForm(TFDaftarKlasifikasi, FDaftarKlasifikasi);
   Application.CreateForm(TFSetMasterPelanggan, FSetMasterPelanggan);
