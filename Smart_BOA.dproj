@@ -631,12 +631,15 @@
         </DCCReference>
         <DCCReference Include="UPerintahMuat_Sumber.pas">
             <Form>FPerintahMuat_Sumber</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListPengajuanApprovePenjualan.pas">
             <Form>FListPengajuanApprovePenjualan</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataPerintahMuat.pas">
             <Form>FDataPerintahMuat</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListPerintahMuat.pas">
             <Form>FListPerintahMuat</Form>
@@ -648,15 +651,19 @@
         </DCCReference>
         <DCCReference Include="UListReturPenjualan.pas">
             <Form>FListReturPenjualan</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataReturPenjualan.pas">
             <Form>FDataReturPenjualan</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UTambah_Barang.pas">
             <Form>FTambah_Barang</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UTemplate_Temp.pas">
             <Form>FTemplate_Temp</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Ubrowse_pelanggan.pas">
             <Form>Fbrowse_data_pelanggan</Form>
@@ -664,6 +671,19 @@
         </DCCReference>
         <DCCReference Include="UReturPenjualan_Sumber.pas">
             <Form>FReturPenjualan_Sumber</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UHak_Akses.pas">
+            <Form>FHak_Akses</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPenjualan.pas">
+            <Form>FDataListPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListTujualAwal.pas">
+            <Form>FListTujualAwal</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_TujuanAwal.pas">
             <Form>FNew_TujuanAwal</Form>

@@ -150,6 +150,8 @@ uses
   UTemplate_Temp in 'UTemplate_Temp.pas' {FTemplate_Temp},
   Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
   UReturPenjualan_Sumber in 'UReturPenjualan_Sumber.pas' {FReturPenjualan_Sumber},
+  UListPenjualan in 'UListPenjualan.pas' {FDataListPenjualan},
+  UListTujualAwal in 'UListTujualAwal.pas' {FListTujualAwal},
   UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal};
 
 // UMy_Function in 'UMy_Function.pas';
@@ -202,6 +204,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
+  Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);
+  Application.CreateForm(TFListTujualAwal, FListTujualAwal);
   Application.CreateForm(TFNew_TujuanAwal, FNew_TujuanAwal);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
