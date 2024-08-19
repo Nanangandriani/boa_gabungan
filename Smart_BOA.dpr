@@ -85,7 +85,6 @@ uses
   UReturnPembelian in 'UReturnPembelian.pas' {FReturnPembelian},
   UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
   USupp_Pembelian in 'USupp_Pembelian.pas' {FSupp_Pembelian},
-  UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
   UNew_HakAkses in 'UNew_HakAkses.pas' {FNew_Hak_Akses},
   UPeng_stok in 'UPeng_stok.pas' {FPeng_Stok},
   UNew_PengStok in 'UNew_PengStok.pas' {FNew_PengStok},
@@ -150,6 +149,10 @@ uses
   UTemplate_Temp in 'UTemplate_Temp.pas' {FTemplate_Temp},
   Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
   UReturPenjualan_Sumber in 'UReturPenjualan_Sumber.pas' {FReturPenjualan_Sumber},
+<<<<<<< Updated upstream
+=======
+  UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
+>>>>>>> Stashed changes
   UListPenjualan in 'UListPenjualan.pas' {FDataListPenjualan},
   UListTujualAwal in 'UListTujualAwal.pas' {FListTujualAwal},
   UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal};
@@ -225,7 +228,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
+<<<<<<< Updated upstream
 //  Application.CreateForm(TFHak_Akses, FHak_Akses);
+=======
+>>>>>>> Stashed changes
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);

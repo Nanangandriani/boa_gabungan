@@ -32,6 +32,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 209
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1073
         object Label9: TLabel
           Left = 117
           Top = 77
@@ -314,9 +315,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alClient
         Caption = 'Daftar Klasifikasi'
         TabOrder = 1
-        ExplicitTop = 225
         ExplicitWidth = 1073
-        ExplicitHeight = 303
+        ExplicitHeight = 287
         object DBGridDetail: TDBGridEh
           Left = 2
           Top = 17
@@ -411,7 +411,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
               EditButtons = <>
               FieldName = 'disc1'
               Footers = <>
-              Title.Caption = 'Potongan | Kesatu'
+              Title.Caption = 'Potongan | Ke- 1'
               Width = 100
             end
             item
@@ -420,7 +420,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
               EditButtons = <>
               FieldName = 'disc2'
               Footers = <>
-              Title.Caption = 'Potongan | Kedua'
+              Title.Caption = 'Potongan | Ke- 2'
               Width = 100
             end
             item
@@ -429,7 +429,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
               EditButtons = <>
               FieldName = 'disc3'
               Footers = <>
-              Title.Caption = 'Potongan | Ketiga'
+              Title.Caption = 'Potongan | Ke- 3'
               Width = 100
             end
             item
@@ -438,7 +438,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
               EditButtons = <>
               FieldName = 'disc4'
               Footers = <>
-              Title.Caption = 'Potongan | Keempat'
+              Title.Caption = 'Potongan | Ke- 4'
               Width = 100
             end>
           object RowDetailData: TRowDetailPanelControlEh
@@ -452,7 +452,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 32
         Align = alTop
         TabOrder = 2
-        ExplicitTop = 193
         ExplicitWidth = 1073
         object bt_m_batal: TRzBitBtn
           Left = 1003

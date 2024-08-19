@@ -40,7 +40,6 @@ type
     BSave: TRzBitBtn;
     DSDetail: TDataSource;
     MemDetail: TMemTableEh;
-    MemDetailNO_SUMBER: TStringField;
     MemDetailKD_ITEM: TStringField;
     MemDetailNM_ITEM: TStringField;
     MemDetailJUMLAH: TFloatField;
@@ -52,13 +51,14 @@ type
     MemDetailNAMA_PPH: TStringField;
     MemDetailPPH_PERSEN: TFloatField;
     MemDetailPPH_NILAI: TCurrencyField;
-    MemDetailPOTONGAN_NILAI: TCurrencyField;
-    MemDetailPOTONGAN_PERSEN: TFloatField;
     MemDetailGRAND_TOTAL: TCurrencyField;
     MemDetailPPN_AKUN: TStringField;
     MemDetailHARGA_SATUAN: TCurrencyField;
     MemDetailNM_SATUAN: TStringField;
     MemKeterangan: TMemo;
+    MemDetailJUMLAH_JUAL: TCurrencyField;
+    MemDetailHARGA_SATUAN_JUAL: TFloatField;
+    MemDetailNO_JUAL: TStringField;
     procedure btMasterJenisReturClick(Sender: TObject);
     procedure edNamaJenisButtonClick(Sender: TObject);
     procedure edKode_PelangganButtonClick(Sender: TObject);
@@ -66,6 +66,12 @@ type
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edNoPenjualanButtonClick(Sender: TObject);
+    procedure DBGridDetailCellClick(Column: TColumnEh);
+    procedure DBGridDetailColEnter(Sender: TObject);
+    procedure DBGridDetailColExit(Sender: TObject);
+    procedure DBGridDetailEnter(Sender: TObject);
+    procedure DBGridDetailExit(Sender: TObject);
+    procedure DBGridDetailMouseEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,6 +81,7 @@ type
     Status: Integer;
     procedure Clear;
     procedure Autonumber;
+    procedure HitungGrid;
   end;
 
 var
@@ -86,6 +93,56 @@ implementation
 
 uses UListReturPenjualan, UMy_Function, USetMasterPenjulan, UMasterData,
   Ubrowse_pelanggan, UReturPenjualan_Sumber;
+
+procedure TFDataReturPenjualan.HitungGrid;
+begin
+   try
+      begin
+      {if MemDetail['JUMLAH']>MemDetail['JUMLAH_JUAL'] then
+      begin
+        ShowMessage('Jumlah Quantum Retur Melebihi Jumlah Penjualan...!!!');
+        exit;
+      end;
+      if MemDetail['HARGA_SATUAN']>MemDetail['HARGA_SATUAN'] then
+      begin
+        ShowMessage('Harga Satuan Retur Melebihi Harga Satuan Penjualan...!!!');
+        exit;
+      end;}
+      if MemDetail['KD_ITEM']<>'0' then
+      begin
+        MemDetail.Edit;
+        MemDetail['SUB_TOTAL']:=MemDetail['JUMLAH']*MemDetail['HARGA_SATUAN'];
+        //Validasi PPN
+        if MemDetail['PPN_PERSEN']=0 then
+        begin
+          MemDetail['PPN_NILAI']:=0;
+          MemDetail['PPN_AKUN']:=0;
+          MemDetail['PPN_PERSEN']:=0;
+        end;
+        if MemDetail['PPN_PERSEN']<>0 then
+        begin
+          MemDetail['PPN_NILAI']:=MemDetail['SUB_TOTAL']*(MemDetail['PPN_PERSEN']/100);
+        end;
+        //Validasi PPH
+        if (MemDetail['NAMA_PPH']='0') AND (MemDetail['PPH_PERSEN']=0) then
+        begin
+          MemDetail['PPH_NILAI']:=0;
+          MemDetail['PPH_AKUN']:=0;
+          MemDetail['NAMA_PPH']:=0;
+          MemDetail['PPH_PERSEN']:=0;
+        end;
+        if (MemDetail['PPH_PERSEN']<>0)  OR (MemDetail['PPH_PERSEN']<>'0')  then
+        begin
+          MemDetail['PPH_NILAI']:=(MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI'])*(MemDetail['PPH_PERSEN']/100);
+        end;
+        MemDetail['GRAND_TOTAL']:=MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI']-MemDetail['PPH_NILAI']-MemDetail['POTONGAN_NILAI'];
+
+        MemDetail.Post;
+      end;
+      end;
+        Except;
+   end;
+end;
 
 procedure TFDataReturPenjualan.BBatalClick(Sender: TObject);
 begin
@@ -167,6 +224,36 @@ begin
   edNamaJenis.Clear;
   MemKeterangan.Clear;
   MemDetail.EmptyTable;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailCellClick(Column: TColumnEh);
+begin
+  HitungGrid;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailColEnter(Sender: TObject);
+begin
+  HitungGrid;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailColExit(Sender: TObject);
+begin
+  HitungGrid;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailEnter(Sender: TObject);
+begin
+  HitungGrid;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailExit(Sender: TObject);
+begin
+  HitungGrid;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailMouseEnter(Sender: TObject);
+begin
+  HitungGrid;
 end;
 
 procedure TFDataReturPenjualan.edKode_PelangganButtonClick(Sender: TObject);

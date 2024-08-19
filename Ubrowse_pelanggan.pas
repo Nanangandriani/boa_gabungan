@@ -50,10 +50,11 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Penjualan, UMy_Function, UNew_SalesOrder, UHomeLogin,
-  UMasterWilayah, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_MasterBiayaDO,
+uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
+  UMasterWilayah, UDaftarKlasifikasi, UNew_MasterBiayaDO,
   UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
-  UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber;
+  UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber,
+  UNew_DataPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 begin

@@ -119,9 +119,9 @@ implementation
 {$R *.dfm}
 
 uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
-  Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan, UMy_Function,
+  Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan,
   UListPenjualan, UTemplate_Temp, UTambah_Barang, UListSalesOrder,
-  UCari_DaftarPerk, UHomeLogin;
+  UCari_DaftarPerk, UHomeLogin, UMy_Function;
 
 function GetFakturPajak(vtahun:string): string;
 begin
@@ -257,8 +257,8 @@ procedure TFNew_Penjualan.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FDataListPenjualan.Name)+'');
    strday2:=dtTanggal.Date;
-   edNomorTrans.Text:=getNourut(strday2,'sale.t_selling',kd_kares);
-   edSuratJalanTrans.Text:=getNourut(strday2,'sale.t_selling',kd_kares);
+   edNomorTrans.Text:=getNourut(strday2,'sale.t_selling',FNew_Penjualan.kd_kares);
+   edSuratJalanTrans.Text:=getNourut(strday2,'sale.t_selling',FNew_Penjualan.kd_kares);
 end;
 
 procedure TFNew_Penjualan.BBatalClick(Sender: TObject);

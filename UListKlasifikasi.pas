@@ -77,6 +77,8 @@ type
     QMasterKlasifikasiname_disc: TMemoField;
     QMasterKlasifikasistatus_promo: TIntegerField;
     QMasterKlasifikasiname_promo: TMemoField;
+    QMasterKlasifikasicode_type_business: TStringField;
+    QMasterKlasifikasiname_type_business: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -165,7 +167,9 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' SELECT a."id" AS id_master, "code_type_customer", b.NAME AS "name_type_customer", '+
+       sql.Text:=' SELECT a."id" AS id_master, '+
+                 ' a."code_type_business", g.NAME AS "name_type_business", '+
+                 ' "code_type_customer", b.NAME AS "name_type_customer", '+
                  ' "code_item_category", c.category as "name_item_category", '+
                  ' "code_type_count",	d.name as "name_type_count", "code_customer_selling_type", '+
                  ' e.name as "name_customer_selling_type", "code_sell_type", f.name as "name_sell_type", '+
@@ -180,6 +184,7 @@ begin
                  ' LEFT JOIN t_sell_type_count d ON a.code_type_count = d.code '+
                  ' LEFT JOIN t_customer_selling_type e ON a.code_customer_selling_type = e.code '+
                  ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+
+                 ' LEFT JOIN t_customer_type_business g ON a.code_type_business = g.code '+
                  ' Order By b.NAME asc ';
        open;
    end;
@@ -194,6 +199,27 @@ begin
   FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
   FDaftarKlasifikasi.PageControl1.ActivePage:=FDaftarKlasifikasi.TabMasterKlasifikasi;
   FDaftarKlasifikasi.Clear;
+  with FDaftarKlasifikasi do
+  begin
+    ednm_jenis_usaha.Text:=QMasterKlasifikasi.FieldByName('name_type_business').AsString;
+    edkd_jenis_usaha.Text:=QMasterKlasifikasi.FieldByName('code_type_business').AsString;
+    ednm_jenis_pel.Text:=QMasterKlasifikasi.FieldByName('name_type_customer').AsString;
+    edkd_jenis_pel.Text:=QMasterKlasifikasi.FieldByName('code_type_customer').AsString;
+    ednm_kategori.Text:=QMasterKlasifikasi.FieldByName('name_item_category').AsString;
+    edkd_kategori.Text:=QMasterKlasifikasi.FieldByName('code_item_category').AsString;
+    ednm_type_hitung.Text:=QMasterKlasifikasi.FieldByName('name_type_count').AsString;
+    edkd_type_hitung.Text:=QMasterKlasifikasi.FieldByName('code_type_count').AsString;
+    ednm_type_jual.Text:=QMasterKlasifikasi.FieldByName('name_customer_selling_type').AsString;
+    edkd_type_jual.Text:=QMasterKlasifikasi.FieldByName('code_customer_selling_type').AsString;
+    ednm_jenis_jual.Text:=QMasterKlasifikasi.FieldByName('name_sell_type').AsString;
+    edkd_jenis_jual.Text:=QMasterKlasifikasi.FieldByName('code_sell_type').AsString;
+		rgPembayaran.ItemIndex:=QMasterKlasifikasi.FieldByName('status_payment').AsInteger;
+		rgGrouping.ItemIndex:=QMasterKlasifikasi.FieldByName('status_grouping').AsInteger;
+		rgPajak.ItemIndex:=QMasterKlasifikasi.FieldByName('status_tax').AsInteger;
+		rgPotongan.ItemIndex:=QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
+		rgPromo.ItemIndex:=QMasterKlasifikasi.FieldByName('status_promo').AsInteger;
+  end;
+
   FDaftarKlasifikasi.ShowModal;
 end;
 

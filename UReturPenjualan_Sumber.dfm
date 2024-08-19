@@ -21,8 +21,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -170
-    ExplicitWidth = 1292
+    ExplicitWidth = 1116
     object Label38: TLabel
       Left = 124
       Top = 29
@@ -178,6 +177,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
       Height = 30
       Caption = 'Proses'
       TabOrder = 5
+      OnClick = btProsesClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000520B0000520B00000001000000000000000000003300

@@ -146,7 +146,8 @@ begin
                    ' GROUP BY years, starting_number, final_number  , status) aktif '+
                    ' ON a.years=aktif.years and '+
                    ' a.starting_number=aktif.starting_number and '+
-                   ' a.final_number=aktif.final_number ';
+                   ' a.final_number=aktif.final_number '+
+                 ' where a.deleted_at is null';
        open;
    end;
    finally
@@ -181,6 +182,26 @@ begin
             begin
               //GotoBookmark(Pointer(DBGridEh1.SelectedRows.Items[i]));
               GotoBookmark(DBGridEh1.SelectedRows.Items[i]);
+              with dm.Qtemp1 do
+              begin
+                Close;
+                Sql.Clear;
+                //Sql.Text:='Delete from master_data.t_faktur where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
+                Sql.Text:=' Select * from t_invoicetax_det '+
+                          ' where years='+QuotedStr(DBGridEh1.Fields[0].AsString)+' '+
+                          ' AND status=true AND starting_number='+QuotedStr(DBGridEh1.Fields[1].AsString)+' '+
+                          ' AND final_number='+QuotedStr(DBGridEh1.Fields[2].AsString) ;
+                Open;
+              end;
+
+              if dm.Qtemp1.RecordCount<>0 then
+              begin
+                ShowMessage('Proses Hapus Tidak Dapat Dilanjutkan, Detail Faktur Sudah Digunakan... !!!');
+                Exit;
+              end;
+
+              if dm.Qtemp1.RecordCount=0 then
+              begin
               with dm.qtemp do
               begin
                 Close;
@@ -189,8 +210,11 @@ begin
                 Sql.Text:=' Update t_invoicetax set '+
                           ' deleted_at=now(),'+
                           ' deleted_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
-                          ' where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
+                          ' where years='+QuotedStr(DBGridEh1.Fields[0].AsString)+' '+
+                          ' AND starting_number='+QuotedStr(DBGridEh1.Fields[1].AsString)+' '+
+                          ' AND final_number='+QuotedStr(DBGridEh1.Fields[2].AsString) ;
                 ExecSQL;
+              end;
               end;
             end;
           end;

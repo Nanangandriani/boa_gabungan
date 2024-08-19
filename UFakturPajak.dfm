@@ -762,7 +762,8 @@ object FFakturPajak: TFFakturPajak
       
         'GROUP BY years, starting_number, final_number  , status) aktif O' +
         'N a.years=aktif.years and a.starting_number=aktif.starting_numbe' +
-        'r and a.final_number=aktif.final_number')
+        'r and a.final_number=aktif.final_number'
+      'where a.deleted_at is null')
     Left = 324
     Top = 48
     object Qfakturyears: TStringField

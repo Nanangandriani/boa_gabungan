@@ -422,10 +422,6 @@
             <Form>FSupp_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UHak_Akses.pas">
-            <Form>FHak_Akses</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UNew_HakAkses.pas">
             <Form>FNew_Hak_Akses</Form>
             <FormType>dfm</FormType>

@@ -797,6 +797,8 @@ object FListKlasifikasi: TFListKlasifikasi
       ''
       'SELECT'
       #9'a."id" AS id_master,'
+      #9'a."code_type_business",'
+      #9'g.NAME AS "name_type_business",'
       #9'"code_type_customer",'
       #9'b.NAME AS "name_type_customer",'
       #9'"code_item_category",'
@@ -835,7 +837,10 @@ object FListKlasifikasi: TFListKlasifikasi
       
         #9'LEFT JOIN t_customer_selling_type e ON a.code_customer_selling_' +
         'type = e.code'
-      #9'LEFT JOIN t_sell_type f ON a.code_sell_type = f.code')
+      #9'LEFT JOIN t_sell_type f ON a.code_sell_type = f.code'
+      
+        '        LEFT JOIN t_customer_type_business g ON a.code_type_busi' +
+        'ness = g.code')
     Left = 428
     Top = 56
     object QMasterKlasifikasiid_master: TGuidField
@@ -933,6 +938,15 @@ object FListKlasifikasi: TFListKlasifikasi
       ReadOnly = True
       OnGetText = QMasterKlasifikasiname_promoGetText
       BlobType = ftMemo
+    end
+    object QMasterKlasifikasicode_type_business: TStringField
+      FieldName = 'code_type_business'
+      Size = 100
+    end
+    object QMasterKlasifikasiname_type_business: TStringField
+      FieldName = 'name_type_business'
+      ReadOnly = True
+      Size = 255
     end
   end
   object DsMasterKlasifikasi: TDataSource

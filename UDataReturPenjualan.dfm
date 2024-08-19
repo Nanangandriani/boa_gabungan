@@ -219,6 +219,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnCellClick = DBGridDetailCellClick
+        OnColEnter = DBGridDetailColEnter
+        OnColExit = DBGridDetailColExit
+        OnEnter = DBGridDetailEnter
+        OnExit = DBGridDetailExit
+        OnMouseEnter = DBGridDetailMouseEnter
         Columns = <
           item
             CellButtons = <>
@@ -326,6 +332,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             FieldName = 'NAMA_PPH'
             Footers = <>
             Title.Caption = 'PPH | Nama PPH'
+            Visible = False
             Width = 150
           end
           item
@@ -335,6 +342,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             FieldName = 'PPH_PERSEN'
             Footers = <>
             Title.Caption = 'PPH | PPH (%)'
+            Visible = False
           end
           item
             CellButtons = <>
@@ -343,24 +351,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
             FieldName = 'PPH_NILAI'
             Footers = <>
             Title.Caption = 'PPH | Nilai'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'POTONGAN_NILAI'
-            Footers = <>
-            Title.Caption = 'Potongan'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'POTONGAN_PERSEN'
-            Footers = <>
             Visible = False
+            Width = 100
           end
           item
             CellButtons = <>
@@ -516,13 +508,9 @@ object FDataReturPenjualan: TFDataReturPenjualan
     Top = 473
   end
   object MemDetail: TMemTableEh
-    Active = True
     Params = <>
     Left = 96
     Top = 473
-    object MemDetailNO_SUMBER: TStringField
-      FieldName = 'NO_SUMBER'
-    end
     object MemDetailKD_ITEM: TStringField
       FieldName = 'KD_ITEM'
       Size = 50
@@ -564,13 +552,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
       FieldName = 'PPH_NILAI'
       DisplayFormat = '#,##0.##'
     end
-    object MemDetailPOTONGAN_NILAI: TCurrencyField
-      FieldName = 'POTONGAN_NILAI'
-      DisplayFormat = '#,##0.##'
-    end
-    object MemDetailPOTONGAN_PERSEN: TFloatField
-      FieldName = 'POTONGAN_PERSEN'
-    end
     object MemDetailGRAND_TOTAL: TCurrencyField
       FieldName = 'GRAND_TOTAL'
       DisplayFormat = '#,##0.##'
@@ -586,10 +567,19 @@ object FDataReturPenjualan: TFDataReturPenjualan
       FieldName = 'NM_SATUAN'
       Size = 500
     end
+    object MemDetailJUMLAH_JUAL: TCurrencyField
+      FieldName = 'JUMLAH_JUAL'
+    end
+    object MemDetailHARGA_SATUAN_JUAL: TFloatField
+      FieldName = 'HARGA_SATUAN_JUAL'
+    end
+    object MemDetailNO_JUAL: TStringField
+      FieldName = 'NO_JUAL'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
-        object NO_SUMBER: TMTStringDataFieldEh
-          FieldName = 'NO_SUMBER'
+        object NO_JUAL: TMTStringDataFieldEh
+          FieldName = 'NO_JUAL'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
@@ -693,16 +683,16 @@ object FDataReturPenjualan: TFDataReturPenjualan
           currency = False
           Precision = 15
         end
-        object POTONGAN_NILAI: TMTNumericDataFieldEh
-          FieldName = 'POTONGAN_NILAI'
+        object JUMLAH_JUAL: TMTNumericDataFieldEh
+          FieldName = 'JUMLAH_JUAL'
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
           Precision = 15
         end
-        object POTONGAN_PERSEN: TMTNumericDataFieldEh
-          FieldName = 'POTONGAN_PERSEN'
+        object HARGA_SATUAN_JUAL: TMTNumericDataFieldEh
+          FieldName = 'HARGA_SATUAN_JUAL'
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20

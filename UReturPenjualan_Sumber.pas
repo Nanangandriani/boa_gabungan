@@ -40,6 +40,7 @@ type
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
+    procedure btProsesClick(Sender: TObject);
   private
     Status:Integer;
     { Private declarations }
@@ -55,7 +56,7 @@ implementation
 
 {$R *.dfm}
 
-uses Ubrowse_pelanggan, UDataModule;
+uses Ubrowse_pelanggan, UDataModule, UDataReturPenjualan, UMy_Function;
 
 procedure TFReturPenjualan_Sumber.FormShow(Sender: TObject);
 begin
@@ -64,6 +65,7 @@ begin
   dtTanggal1.Date:=Now();
   dtTanggal2.Date:=Now();
   ckTandai.Checked:=true;
+  MemDetail.EmptyTable;
 end;
 
 procedure TFReturPenjualan_Sumber.RefreshGrid;
@@ -117,6 +119,113 @@ begin
      Dm.Qtemp.next;
     end;
     end;
+end;
+
+procedure TFReturPenjualan_Sumber.btProsesClick(Sender: TObject);
+var
+  rec: Integer;
+begin
+  Status:=0;
+  rec:=0;
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if edKode_Pelanggan.Text='' then
+      begin
+        MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKode_Pelanggan.SetFocus;
+      end
+      else if Status = 0 then
+      begin
+         //cek ada yang di tandai tidak
+         MemDetail.First;
+         while not MemDetail.Eof do
+         begin
+           if MemDetail['pilih']=true then
+           begin
+            rec:=rec+1;
+           end;
+         MemDetail.Next;
+         end;
+
+         if rec=0 then
+         begin
+           ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
+           exit;
+         end;
+
+         //data di tandai kirm ke do
+         if rec>0 then
+         begin
+           FDataReturPenjualan.MemDetail.active:=false;
+           FDataReturPenjualan.MemDetail.active:=true;
+           FDataReturPenjualan.MemDetail.EmptyTable;
+
+           MemDetail.First;
+           while not MemDetail.Eof do
+           begin
+             if MemDetail['pilih']=true then
+             begin
+              with Dm.Qtemp do //Cari Penjualan
+              begin
+                close;
+                sql.clear;
+                sql.add(' SELECT * from ( SELECT "no_trans", "code_item", "name_item", '+
+                        ' "amount", "code_unit",  "name_unit", "no_reference", "unit_price", '+
+                        ' "sub_total", "ppn_percent",  "ppn_value", "pph_account", "pph_name", '+
+                        ' "pph_percent", "pph_value",  "tot_piece_value", "tot_piece_percent", '+
+                        ' "grand_tot", "ppn_account"  FROM  "sale"."t_selling_det"  WHERE deleted_at IS NULL ) a '+
+                        ' WHERE no_trans='+QuotedStr(MemDetail['no_trans'])+'  '+
+                        ' Order By no_trans, code_item desc');
+                open;
+              end;
+              if  Dm.Qtemp.RecordCount<>0 then
+              begin
+              Dm.Qtemp.first;
+              FDataReturPenjualan.MemDetail.active:=false;
+              FDataReturPenjualan.MemDetail.active:=true;
+              while not Dm.Qtemp.Eof do
+              begin
+                FDataReturPenjualan.MemDetail.insert;
+                FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('no_trans').AsString;
+                FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
+                FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
+                FDataReturPenjualan.MemDetail['JUMLAH']:=Dm.Qtemp.FieldByName('amount').AsFloat;
+                FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=Dm.Qtemp.FieldByName('amount').AsFloat;
+                FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('unit_price').AsFloat;
+                FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=Dm.Qtemp.FieldByName('unit_price').AsFloat;
+                FDataReturPenjualan.MemDetail['KD_SATUAN']:=Dm.Qtemp.FieldByName('code_unit').AsString;
+                FDataReturPenjualan.MemDetail['NM_SATUAN']:=Dm.Qtemp.FieldByName('name_unit').AsString;
+                FDataReturPenjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('unit_price').AsFloat;
+                FDataReturPenjualan.MemDetail['PPN_AKUN']:=Dm.Qtemp.fieldbyname('ppn_account').value;
+                FDataReturPenjualan.MemDetail['PPN_PERSEN']:=Dm.Qtemp.fieldbyname('ppn_percent').value;
+                FDataReturPenjualan.MemDetail['PPN_NILAI']:=Dm.Qtemp.fieldbyname('ppn_value').value;
+                FDataReturPenjualan.MemDetail['PPH_AKUN']:=Dm.Qtemp.fieldbyname('pph_account').value;
+                FDataReturPenjualan.MemDetail['NAMA_PPH']:=Dm.Qtemp.fieldbyname('pph_name').value;
+                FDataReturPenjualan.MemDetail['PPH_PERSEN']:=Dm.Qtemp.fieldbyname('pph_percent').value;
+                FDataReturPenjualan.MemDetail['PPH_NILAI']:=Dm.Qtemp.fieldbyname('pph_value').value;
+                FDataReturPenjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
+                FDataReturPenjualan.MemDetail.post;
+                FDataReturPenjualan.HitungGrid;
+              Dm.Qtemp.next;
+              end;
+            end;
+
+             end;
+           MemDetail.Next;
+         end;
+         end;
+
+      end
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      Close;
 end;
 
 procedure TFReturPenjualan_Sumber.btTampilkanClick(Sender: TObject);
