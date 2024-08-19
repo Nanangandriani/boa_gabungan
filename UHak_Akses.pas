@@ -65,7 +65,7 @@ type
     { Public declarations }
   end;
 
-function FHak_Akses: TFHak_Akses;
+Function FHak_Akses: TFHak_Akses;
 
 implementation
 
@@ -73,11 +73,11 @@ implementation
 
 uses UNew_HakAkses, UDataModule;
 
-var  RealFCari_menu : TFHak_Akses;
+var  RealFHak_Akses : TFHak_Akses;
 // implementasi function
-function FCari_Menu: TFHak_Akses;
+function FHak_Akses: TFHak_Akses;
 begin
-  if RealFCari_Menu <> nil then FCari_Menu:= RealFCari_menu
+  if RealFHak_Akses <> nil then FHak_Akses:= RealFHak_Akses
   else
     Application.CreateForm(TFHak_Akses, Result);
 end;
@@ -151,17 +151,17 @@ end;
 
 procedure TFHak_Akses.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action:=caFree;
+  Action:=cafree;
 end;
 
 procedure TFHak_Akses.FormCreate(Sender: TObject);
 begin
-  RealFCari_menu:=self;
+  RealFHak_Akses:=self;
 end;
 
 procedure TFHak_Akses.FormDestroy(Sender: TObject);
 begin
-  RealFCari_menu:=nil;
+  RealFHak_Akses:=nil;
 end;
 
 Initialization

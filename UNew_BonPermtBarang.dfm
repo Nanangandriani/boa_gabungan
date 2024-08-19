@@ -70,7 +70,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 68
-    Width = 682
+    Width = 678
     Height = 251
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
@@ -206,8 +206,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 640
-      ExplicitTop = 0
+      ExplicitLeft = 630
     end
     object BSimpan: TRzBitBtn
       Left = 559

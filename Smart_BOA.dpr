@@ -149,7 +149,8 @@ uses
   UTambah_Barang in 'UTambah_Barang.pas' {FTambah_Barang},
   UTemplate_Temp in 'UTemplate_Temp.pas' {FTemplate_Temp},
   Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
-  UReturPenjualan_Sumber in 'UReturPenjualan_Sumber.pas' {FReturPenjualan_Sumber};
+  UReturPenjualan_Sumber in 'UReturPenjualan_Sumber.pas' {FReturPenjualan_Sumber},
+  UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -201,6 +202,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
+  Application.CreateForm(TFNew_TujuanAwal, FNew_TujuanAwal);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
@@ -219,7 +221,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
-  Application.CreateForm(TFHak_Akses, FHak_Akses);
+//  Application.CreateForm(TFHak_Akses, FHak_Akses);
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);

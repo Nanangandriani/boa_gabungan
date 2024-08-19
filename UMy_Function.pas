@@ -120,36 +120,36 @@ begin
    end;
    if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']='0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional isnull';//where cast(trans_month as integer)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where  Additional_code isnull';//where cast(trans_month as integer)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']='0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and  trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
-       //strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and  cast(trans_day as INTEGER)='+ quotedstr(strday)+' and cast(trans_month as INTEGER)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+'  where  Additional_code isnull and  trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       //strbukti:='Select max(order_no) urut from '+Tablename+'  where  Additional_code isnull and  cast(trans_day as INTEGER)='+ quotedstr(strday)+' and cast(trans_month as INTEGER)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']='0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+'  where  Additional_code isnull and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']='0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+'  where code_additional isnull and trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+'  where Additional_code isnull and trans_year='+quotedstr(strtahun);
    end;
       if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename +' where code_additional='+ quotedstr(kode);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename +' where Additional_code='+ quotedstr(kode);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional='+ quotedstr(kode)+' and trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where  Additional_code='+ quotedstr(kode)+' and trans_day='+ quotedstr(strday)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where Additional_code='+ quotedstr(kode)+' and trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and trans_year='+quotedstr(strtahun);
+       strbukti:='Select max(order_no) urut from '+Tablename+' where Additional_code='+ quotedstr(kode)+' and trans_year='+quotedstr(strtahun);
    end;
     with dm.Qtemp do
     begin
@@ -226,36 +226,39 @@ begin
    end;
    if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']='0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional isnull';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code isnull';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']='0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and  cast(trans_day as integer) ='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where  additional_code isnull and  cast(trans_day as integer) ='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']='0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+'  where  code_additional isnull and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where  additional_code isnull and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']='0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+'  where code_additional isnull and cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where additional_code isnull and cast(trans_year as integer)='+quotedstr(strtahun);
    end;
       if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename +' where code_additional='+ quotedstr(kode);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where  code_additional='+ quotedstr(kode)+' and cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select max(order_no) urut from '+Tablename+' where code_additional='+ quotedstr(kode)+' and cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_year as integer)='+quotedstr(strtahun);
    end;
+    Vthn:=FormatDateTime('yyyy',strday2);
+    Vbln:=FormatDateTime('mm',strday2);
+    Vtgl:=FormatDateTime('dd',strday2);
     with dm.Qtemp do
     begin
       close;
