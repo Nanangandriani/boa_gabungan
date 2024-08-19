@@ -196,12 +196,19 @@ begin
   if Dbgridspk_for.Fields[8].AsString='DISETUJUI'  then
   begin
     Messagedlg('Tidak bisa di Update,Data sudah Disetujui',MtInformation,[Mbok],0);
+    Exit;
   end;
   if Dbgridspk_for.Fields[8].AsString='TIDAK DISETUJUI'  then
   begin
     Messagedlg('Tidak bisa di Update,Data sudah Tidak Disetujui',MtInformation,[Mbok],0);
+    Exit;
   end;
-  if Dbgridspk_for.Fields[9].AsString='0' then
+    if MemMaster_Formula['spk_status']='1'  then
+  begin
+    Messagedlg('Tidak bisa di Update,Data sudah Dipakai Untuk SPK',MtInformation,[Mbok],0);
+    Exit;
+  end;
+  if MemMaster_Formula['spk_status']='0' then
   begin
     with FNew_MasterFormula do
     begin

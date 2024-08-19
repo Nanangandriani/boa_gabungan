@@ -119,6 +119,7 @@ procedure TFSPK_Formula.Dbgridspk_forCellClick(Column: TColumnEh);
 begin
   if MemSpkFormula['type']<>'In-Proses' then dxTerima.Enabled:=False else dxTerima.Enabled:=True;
   if MemSpkFormula['type']='Created' then dxBeri.Enabled:=true else dxBeri.Enabled:=False;
+  if MemSpkFormula['type']='Created' then ActUpdate.Enabled:=true else ActUpdate.Enabled:=false;
 end;
 
 procedure TFSPK_Formula.BPrintBonTepungClick(Sender: TObject);

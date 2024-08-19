@@ -23,7 +23,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 459
+    ExplicitTop = 445
     ExplicitWidth = 540
     object BBatal: TRzBitBtn
       Left = 468

@@ -56,20 +56,31 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FHak_Akses: TFHak_Akses;
+function FHak_Akses: TFHak_Akses;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_HakAkses, UDataModule;
+
+var  RealFCari_menu : TFHak_Akses;
+// implementasi function
+function FCari_Menu: TFHak_Akses;
+begin
+  if RealFCari_Menu <> nil then FCari_Menu:= RealFCari_menu
+  else
+    Application.CreateForm(TFHak_Akses, Result);
+end;
 
 procedure TFHak_Akses.ActBaruExecute(Sender: TObject);
 begin
@@ -92,15 +103,15 @@ procedure TFHak_Akses.ActDelExecute(Sender: TObject);
 begin
     if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridAkses.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
     then begin
-    with dm.Qtemp do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text:='Delete From t_akses where akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString);
-      Execute;
-    end;
-    ActROExecute(sender);
-    ShowMessage('Data Berhasil di Hapus');
+      with dm.Qtemp do
+      begin
+        Close;
+        sql.Clear;
+        sql.Text:='Delete From t_akses where akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString);
+        Execute;
+      end;
+      ActROExecute(sender);
+      ShowMessage('Data Berhasil di Hapus');
     end;
 end;
 
@@ -136,6 +147,21 @@ begin
       EdNm.Text:=MemAkses['dept'];
       EdNmSelect(sender);
     end;
+end;
+
+procedure TFHak_Akses.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFHak_Akses.FormCreate(Sender: TObject);
+begin
+  RealFCari_menu:=self;
+end;
+
+procedure TFHak_Akses.FormDestroy(Sender: TObject);
+begin
+  RealFCari_menu:=nil;
 end;
 
 Initialization

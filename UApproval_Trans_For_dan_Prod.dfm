@@ -2,8 +2,8 @@ object FApproval_Trans_For_dan_Prod: TFApproval_Trans_For_dan_Prod
   Left = 0
   Top = 0
   Caption = 'Form Approval Transaksi Formula dan Produksi'
-  ClientHeight = 442
-  ClientWidth = 748
+  ClientHeight = 441
+  ClientWidth = 744
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FApproval_Trans_For_dan_Prod: TFApproval_Trans_For_dan_Prod
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 748
+    Width = 744
     Height = 124
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,8 +22,7 @@ object FApproval_Trans_For_dan_Prod: TFApproval_Trans_For_dan_Prod
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -279
-    ExplicitWidth = 1027
+    ExplicitWidth = 748
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -37,13 +36,13 @@ object FApproval_Trans_For_dan_Prod: TFApproval_Trans_For_dan_Prod
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 124
-    Width = 748
-    Height = 318
+    Width = 744
+    Height = 317
     Hint = ''
     ActivePage = TabMasterFormula
     Align = alClient
     TabIndex = 0
-    TabOrder = 5
+    TabOrder = 1
     ExplicitLeft = 200
     ExplicitTop = 216
     ExplicitWidth = 300
