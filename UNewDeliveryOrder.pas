@@ -241,7 +241,7 @@ begin
             ' "notrans", "date_trans", "type_do_code", "type_do_name", "starting_loc_code", '+
             ' "starting_loc_name", "province_code", "province_name", "regency_code", '+
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
-            //' "code_additional", '+
+            //' "additional_code", '+
             ' "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
@@ -296,7 +296,7 @@ begin
               ' number_of_points='+QuotedStr(IntToStr(spTotalTitik.Value))+','+
               ' description='+QuotedStr(MemKeteranganBiaya.Text)+', '+
               ' order_no='+QuotedStr(order_no)+','+
-              ' code_additional='+QuotedStr('0')+','+
+              ' additional_code='+QuotedStr('0')+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+

@@ -89,7 +89,7 @@ begin
     sql.add(' Insert into "sale"."t_spm" ("created_at", "created_by", '+
             ' "notrans", "loading_date", "delivery_date", "code_vendor", '+
             ' "name_vendor", "number_of_vehicles", "description", "order_no", '+
-            //' "code_additional", '+
+            //' "additional_code", '+
             ' "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
@@ -131,7 +131,7 @@ begin
               ' number_of_vehicles='+QuotedStr(edNoKendMuatan.Text)+','+
               ' description='+QuotedStr(MemKeterangan.Text)+','+
               ' order_no='+QuotedStr(order_no)+','+
-              ' code_additional='+QuotedStr('0')+','+
+              ' additional_code='+QuotedStr('0')+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+

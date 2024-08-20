@@ -2,8 +2,8 @@ object FListReturPenjualan: TFListReturPenjualan
   Left = 0
   Top = 0
   Caption = 'Retur Penjualan'
-  ClientHeight = 537
-  ClientWidth = 943
+  ClientHeight = 487
+  ClientWidth = 1192
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListReturPenjualan: TFListReturPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 943
+    Width = 1192
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListReturPenjualan: TFListReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 943
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,8 +35,8 @@ object FListReturPenjualan: TFListReturPenjualan
   object DBGridList: TDBGridEh
     Left = 0
     Top = 127
-    Width = 943
-    Height = 410
+    Width = 1192
+    Height = 360
     Align = alClient
     DataSource = DsReturJual
     DynProps = <>
@@ -48,10 +49,10 @@ object FListReturPenjualan: TFListReturPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'notrans'
+        FieldName = 'no_return'
         Footers = <>
-        Title.Caption = 'No Transaksi'
-        Width = 100
+        Title.Caption = 'No Retur'
+        Width = 200
       end
       item
         CellButtons = <>
@@ -66,37 +67,57 @@ object FListReturPenjualan: TFListReturPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'type_do_name'
+        FieldName = 'code_cust'
         Footers = <>
-        Title.Caption = 'Jenis DO'
+        Title.Caption = 'Kode Pelanggan'
+        Visible = False
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_cust'
+        Footers = <>
+        Title.Caption = 'Nama Pelanggan'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'code_type_return'
+        Footers = <>
+        Title.Caption = 'Kode Jenis Retur'
+        Visible = False
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_type_return'
+        Footers = <>
+        Title.Caption = 'Jenis Retur'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'grand_tot'
+        Footers = <>
+        Title.Caption = 'Total'
         Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'starting_loc_name'
+        FieldName = 'description'
         Footers = <>
-        Title.Caption = 'Lokasi Awal'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'province_name'
-        Footers = <>
-        Title.Caption = 'Tujuan | Provinsi'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'regency_name'
-        Footers = <>
-        Title.Caption = 'Tujuan | Kabupaten'
-        Width = 200
+        Title.Caption = 'Keterangan'
+        Width = 300
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -672,32 +693,91 @@ object FListReturPenjualan: TFListReturPenjualan
   object QReturJual: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_delivery_order"  '
+      'select * from "sale"."t_sales_returns"  '
       'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56
-    object QReturJualnotrans: TStringField
-      FieldName = 'notrans'
+    object QReturJualid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object QReturJualcreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QReturJualcreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object QReturJualupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QReturJualupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QReturJualdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QReturJualdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QReturJualno_return: TStringField
+      FieldName = 'no_return'
+      Required = True
       Size = 100
     end
     object QReturJualdate_trans: TDateField
       FieldName = 'date_trans'
     end
-    object QReturJualtype_do_name: TStringField
-      FieldName = 'type_do_name'
+    object QReturJualcode_cust: TStringField
+      FieldName = 'code_cust'
+      Size = 100
+    end
+    object QReturJualname_cust: TStringField
+      FieldName = 'name_cust'
       Size = 255
     end
-    object QReturJualstarting_loc_name: TStringField
-      FieldName = 'starting_loc_name'
+    object QReturJualcode_type_return: TStringField
+      FieldName = 'code_type_return'
+      Size = 100
+    end
+    object QReturJualname_type_return: TStringField
+      FieldName = 'name_type_return'
       Size = 255
     end
-    object QReturJualprovince_name: TStringField
-      FieldName = 'province_name'
-      Size = 255
+    object QReturJualdescription: TMemoField
+      FieldName = 'description'
+      OnGetText = QReturJualdescriptionGetText
+      BlobType = ftMemo
     end
-    object QReturJualregency_name: TStringField
-      FieldName = 'regency_name'
-      Size = 255
+    object QReturJualorder_no: TIntegerField
+      FieldName = 'order_no'
+    end
+    object QReturJualtrans_day: TStringField
+      FieldName = 'trans_day'
+      Size = 10
+    end
+    object QReturJualtrans_month: TStringField
+      FieldName = 'trans_month'
+      Size = 10
+    end
+    object QReturJualtrans_year: TStringField
+      FieldName = 'trans_year'
+      Size = 10
+    end
+    object QReturJualsub_total: TFloatField
+      FieldName = 'sub_total'
+    end
+    object QReturJualppn_value: TFloatField
+      FieldName = 'ppn_value'
+    end
+    object QReturJualpph_value: TFloatField
+      FieldName = 'pph_value'
+    end
+    object QReturJualgrand_tot: TFloatField
+      FieldName = 'grand_tot'
     end
   end
   object DsReturJual: TDataSource

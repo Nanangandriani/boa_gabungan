@@ -747,6 +747,7 @@ begin
   //ShowMessage(IntToStr(rgPembayaran.ItemIndex));
   Clear;
   MemKlasifikasi.EmptyTable;
+  Close;
 end;
 
 procedure TFDaftarKlasifikasi.edKode_PelangganButtonClick(Sender: TObject);

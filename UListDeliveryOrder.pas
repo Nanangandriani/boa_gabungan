@@ -200,7 +200,7 @@ begin
     spTotalTitik.Value:=Dm.Qtemp.FieldByName('number_of_points').Value;
     MemKeteranganBiaya.Text:=Dm.Qtemp.FieldByName('description').AsString;
     order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-    kd_kares:=Dm.Qtemp.FieldByName('code_additional').AsString;
+    kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;

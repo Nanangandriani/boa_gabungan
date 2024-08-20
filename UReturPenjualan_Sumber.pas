@@ -225,6 +225,8 @@ begin
           end;
         end;
       end;
+      FDataReturPenjualan.edKode_Pelanggan.Text:=FReturPenjualan_Sumber.edKode_Pelanggan.Text;
+      FDataReturPenjualan.edNama_Pelanggan.Text:=FReturPenjualan_Sumber.edNama_Pelanggan.Text;
       Close;
 end;
 

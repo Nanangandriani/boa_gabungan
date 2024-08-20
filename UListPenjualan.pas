@@ -201,7 +201,7 @@ begin
     edNoReff.Text:=Dm.Qtemp.FieldByName('no_reference').AsString;
     vFormSumber:=SelectRow('SELECT form_target from t_selling_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_source').AsString)+' ');
     order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-    kd_kares:=Dm.Qtemp.FieldByName('code_additional').AsString;
+    kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;

@@ -2,8 +2,8 @@ object FListDeliveryOrder: TFListDeliveryOrder
   Left = 0
   Top = 0
   Caption = 'Delivery Order'
-  ClientHeight = 556
-  ClientWidth = 986
+  ClientHeight = 547
+  ClientWidth = 980
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 986
+    Width = 980
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 986
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,8 +35,8 @@ object FListDeliveryOrder: TFListDeliveryOrder
   object DBGridList: TDBGridEh
     Left = 0
     Top = 127
-    Width = 986
-    Height = 429
+    Width = 980
+    Height = 420
     Align = alClient
     DataSource = DsDeliveryOrder
     DynProps = <>

@@ -2,8 +2,8 @@ object FDataPerintahMuat: TFDataPerintahMuat
   Left = 0
   Top = 0
   Caption = 'Data Perintah Muat'
-  ClientHeight = 527
-  ClientWidth = 1239
+  ClientHeight = 518
+  ClientWidth = 1233
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,14 +15,12 @@ object FDataPerintahMuat: TFDataPerintahMuat
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1239
-    Height = 275
+    Width = 1233
+    Height = 266
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1233
-    ExplicitHeight = 266
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -247,13 +245,11 @@ object FDataPerintahMuat: TFDataPerintahMuat
   end
   object Panel2: TPanel
     Left = 0
-    Top = 495
-    Width = 1239
+    Top = 486
+    Width = 1233
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 486
-    ExplicitWidth = 1233
     object BBatal: TRzBitBtn
       Left = 1163
       Top = 1
@@ -390,8 +386,8 @@ object FDataPerintahMuat: TFDataPerintahMuat
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 275
-    Width = 1239
+    Top = 266
+    Width = 1233
     Height = 220
     Hint = ''
     ActivePage = TabSDetailPel
@@ -399,12 +395,13 @@ object FDataPerintahMuat: TFDataPerintahMuat
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 266
-    ExplicitWidth = 1233
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Muatan'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1229
+      ExplicitHeight = 0
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

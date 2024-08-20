@@ -233,7 +233,7 @@ begin
     vFormSumber:=SelectRow('SELECT form_target from t_order_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_source').AsString)+' ');
     Edautocode.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
     order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-    kd_kares:=Dm.Qtemp.FieldByName('code_additional').AsString;
+    kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;

@@ -2,8 +2,8 @@ object FListPerintahMuat: TFListPerintahMuat
   Left = 0
   Top = 0
   Caption = 'Perintah Muat'
-  ClientHeight = 561
-  ClientWidth = 960
+  ClientHeight = 552
+  ClientWidth = 954
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListPerintahMuat: TFListPerintahMuat
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 960
+    Width = 954
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListPerintahMuat: TFListPerintahMuat
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 960
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,8 +35,8 @@ object FListPerintahMuat: TFListPerintahMuat
   object DBGridList: TDBGridEh
     Left = 0
     Top = 127
-    Width = 960
-    Height = 434
+    Width = 954
+    Height = 425
     Align = alClient
     DataSource = DsListPerintahMuat
     DynProps = <>

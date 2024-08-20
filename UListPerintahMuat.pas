@@ -173,7 +173,7 @@ begin
     edNoKendMuatan.Text:=Dm.Qtemp.FieldByName('number_of_vehicles').AsString;
     MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
     order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-    //_kares:=Dm.Qtemp.FieldByName('code_additional').AsString;
+    //_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;

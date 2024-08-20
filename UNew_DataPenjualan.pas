@@ -552,7 +552,7 @@ begin
             ' "no_inv_tax", "no_trans", "no_traveldoc", "date_trans", "code_cust", '+
             ' "name_cust", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "grand_tot", '+
-            ' "order_no", "code_additional", "trans_day", "trans_month", "trans_year") '+
+            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -611,7 +611,7 @@ begin
               ' tot_piece_value='+QuotedStr(FloatToStr(tot_pot))+', '+
               ' grand_tot='+QuotedStr(FloatToStr(tot_grand))+', '+
               ' order_no='+QuotedStr(order_no)+','+
-              ' code_additional='+QuotedStr(kd_kares)+','+
+              ' additional_code='+QuotedStr(kd_kares)+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+

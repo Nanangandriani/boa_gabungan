@@ -55,17 +55,35 @@ type
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     QReturJual: TUniQuery;
-    QReturJualnotrans: TStringField;
-    QReturJualdate_trans: TDateField;
-    QReturJualtype_do_name: TStringField;
-    QReturJualstarting_loc_name: TStringField;
-    QReturJualprovince_name: TStringField;
-    QReturJualregency_name: TStringField;
     DsReturJual: TDataSource;
+    QReturJualid: TGuidField;
+    QReturJualcreated_at: TDateTimeField;
+    QReturJualcreated_by: TStringField;
+    QReturJualupdated_at: TDateTimeField;
+    QReturJualupdated_by: TStringField;
+    QReturJualdeleted_at: TDateTimeField;
+    QReturJualdeleted_by: TStringField;
+    QReturJualno_return: TStringField;
+    QReturJualdate_trans: TDateField;
+    QReturJualcode_cust: TStringField;
+    QReturJualname_cust: TStringField;
+    QReturJualcode_type_return: TStringField;
+    QReturJualname_type_return: TStringField;
+    QReturJualdescription: TMemoField;
+    QReturJualorder_no: TIntegerField;
+    QReturJualtrans_day: TStringField;
+    QReturJualtrans_month: TStringField;
+    QReturJualtrans_year: TStringField;
+    QReturJualsub_total: TFloatField;
+    QReturJualppn_value: TFloatField;
+    QReturJualpph_value: TFloatField;
+    QReturJualgrand_tot: TFloatField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure QReturJualdescriptionGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -80,31 +98,111 @@ implementation
 
 {$R *.dfm}
 
-uses UDataReturPenjualan;
+uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function;
 
 procedure TFListReturPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FDataReturPenjualan.Clear;
   FDataReturPenjualan.Autonumber;
   FDataReturPenjualan.MemDetail.EmptyTable;
-  Status:=0;
+  FDataReturPenjualan.Status:=0;
   FDataReturPenjualan.edNoTrans.Enabled:=true;
   FDataReturPenjualan.ShowModal;
 end;
 
 procedure TFListReturPenjualan.ActDelExecute(Sender: TObject);
 begin
-  ShowMessage('Delete');
+  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
+  if MessageDlg('Apakah anda yakin ingin Membatalkan Retur ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "sale"."t_selling"  SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "no_trans"='+QuotedStr(QReturJual.FieldByName('no_return').AsString);
+          ExecSQL;
+        end;
+        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+  end;
 end;
 
 procedure TFListReturPenjualan.ActROExecute(Sender: TObject);
 begin
-  ShowMessage('Refresh');
+  DBGridList.StartLoadingStatus();
+  try
+   with QReturJual do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from "sale"."t_sales_returns"   '+
+                 ' where deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  finally
+  DBGridList.FinishLoadingStatus();
+  end;
 end;
 
 procedure TFListReturPenjualan.ActUpdateExecute(Sender: TObject);
 begin
-  ShowMessage('Ubah');
+   FDataReturPenjualan.Clear;
+   with Dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from "sale"."t_sales_returns" a '+
+                 ' WHERE "no_return"='+QuotedSTr(QReturJual.FieldByName('no_return').AsString)+' '+
+                 ' AND deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  if Dm.Qtemp.RecordCount=0 then
+  begin
+    ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
+    exit;
+  end;
+  if Dm.Qtemp.RecordCount<>0 then
+  begin
+  with FDataReturPenjualan do
+  begin
+    edNoTrans.Text:=Dm.Qtemp.FieldByName('no_return').AsString;
+    dtTanggal.Date:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+    edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
+    edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
+    edKodeJenis.Text:=Dm.Qtemp.FieldByName('code_type_return').AsString;
+    edNamaJenis.Text:=Dm.Qtemp.FieldByName('name_type_return').AsString;
+    MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
+    order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
+    //kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
+    strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
+    strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
+    strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+  end;
+  end;
+  FDataReturPenjualan.edNoTrans.Enabled:=false;
+  FDataReturPenjualan.RefreshGrid;
+  FDataReturPenjualan.Show;
+  FDataReturPenjualan.Status := 1;
+end;
+
+procedure TFListReturPenjualan.QReturJualdescriptionGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+   Text := Copy(QReturJualdescription.AsString, 1, 255);
 end;
 
 initialization

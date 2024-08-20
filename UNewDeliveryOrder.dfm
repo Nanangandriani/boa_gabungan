@@ -2,8 +2,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   Left = 0
   Top = 0
   Caption = 'Delivery Order'
-  ClientHeight = 601
-  ClientWidth = 1407
+  ClientHeight = 592
+  ClientWidth = 1401
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 1407
-    Height = 601
+    Width = 1401
+    Height = 592
     Hint = ''
     ActivePage = TabDataMuatan
     Align = alClient
@@ -25,11 +25,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     TabIndex = 0
     TabOrder = 0
     OnClick = RzPageControl1Click
-    ExplicitWidth = 1401
-    ExplicitHeight = 592
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1397
       ExplicitHeight = 567
       object Label12: TLabel
@@ -694,6 +694,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object TabDataBiaya: TRzTabSheet
       Caption = 'Data Biaya'
       OnClick = TabDataBiayaClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -1322,6 +1326,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object TabDokumenPendukung: TRzTabSheet
       Caption = 'Dokumen Pendukung'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel3: TPanel
         Left = 0
         Top = 544

@@ -386,7 +386,7 @@ begin
     sql.add(' Insert into "sale"."t_sales_order" ("created_at", "created_by", "notrans", '+
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
-            ' "order_no", "code_additional", "trans_day", "trans_month", "trans_year") '+
+            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -435,7 +435,7 @@ begin
               ' code_source='+QuotedStr(edKodeSumber.Text)+','+
               ' name_source='+QuotedStr(edNamaSumber.Text)+','+
               ' order_no='+QuotedStr(order_no)+','+
-              ' code_additional='+QuotedStr(kd_kares)+','+
+              ' additional_code='+QuotedStr(kd_kares)+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+

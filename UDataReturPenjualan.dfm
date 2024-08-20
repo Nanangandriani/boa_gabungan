@@ -17,13 +17,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
     Left = 0
     Top = 0
     Width = 1061
-    Height = 184
+    Height = 144
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1055
-    ExplicitHeight = 175
+    ExplicitHeight = 137
     object Label39: TLabel
       Left = 20
       Top = 80
@@ -79,20 +78,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
-    end
-    object Label1: TLabel
-      Left = 21
-      Top = 138
-      Width = 74
-      Height = 15
-      Caption = 'No. Penjualan'
-    end
-    object Label2: TLabel
-      Left = 118
-      Top = 138
-      Width = 3
-      Height = 15
-      Caption = ':'
     end
     object Label15: TLabel
       Left = 590
@@ -171,47 +156,35 @@ object FDataReturPenjualan: TFDataReturPenjualan
       CharCase = ecUpperCase
       TabOrder = 5
     end
-    object edNoPenjualan: TRzButtonEdit
-      Left = 132
-      Top = 135
-      Width = 250
-      Height = 23
-      Text = ''
-      TabOrder = 6
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      OnButtonClick = edNoPenjualanButtonClick
-    end
     object MemKeterangan: TMemo
       Left = 604
       Top = 49
       Width = 344
       Height = 67
-      TabOrder = 7
+      TabOrder = 6
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 184
+    Top = 144
     Width = 1061
-    Height = 389
+    Height = 429
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 175
-    ExplicitWidth = 1055
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1051
+      ExplicitHeight = 364
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 1057
-        Height = 364
+        Height = 404
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -229,10 +202,15 @@ object FDataReturPenjualan: TFDataReturPenjualan
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
-            FieldName = 'NO_SUMBER'
+            EditButtons = <
+              item
+                Style = ebsGlyphEh
+                OnClick = DBGridDetailColumns0EditButtons0Click
+              end>
+            FieldName = 'NO_JUAL'
             Footers = <>
-            Visible = False
+            Title.Caption = 'Nomor Sumber'
+            Width = 200
           end
           item
             CellButtons = <>
@@ -275,6 +253,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <>
             FieldName = 'KD_SATUAN'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Satuan'
             Width = 100
           end
@@ -284,6 +263,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <>
             FieldName = 'NM_ SATUAN'
             Footers = <>
+            ReadOnly = True
             Visible = False
           end
           item
@@ -292,6 +272,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <>
             FieldName = 'SUB_TOTAL'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Sub Total'
             Width = 150
           end
@@ -309,6 +290,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <>
             FieldName = 'PPN_NILAI'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'PPN|Nilai'
             Width = 100
           end
@@ -350,6 +332,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <>
             FieldName = 'PPH_NILAI'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'PPH | Nilai'
             Visible = False
             Width = 100
@@ -360,6 +343,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <>
             FieldName = 'GRAND_TOTAL'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Grand Total'
             Width = 150
           end>
