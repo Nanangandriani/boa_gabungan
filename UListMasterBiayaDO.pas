@@ -154,6 +154,7 @@ begin
   end;
   end;
   //FNew_MasterBiayaDO.btPreviewClick(Sender);
+  FNew_MasterBiayaDO.RefreshGrid;
   FNew_MasterBiayaDO.ShowModal;
 end;
 

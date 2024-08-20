@@ -219,7 +219,7 @@ begin
 		rgPotongan.ItemIndex:=QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
 		rgPromo.ItemIndex:=QMasterKlasifikasi.FieldByName('status_promo').AsInteger;
   end;
-
+  FDaftarKlasifikasi.RefreshGrid;
   FDaftarKlasifikasi.ShowModal;
 end;
 
