@@ -37,11 +37,16 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UMasterWilayahAdministratif, UNew_SalesOrder, UTambah_Barang, UMy_Function,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
   UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
-  UDataReturPenjualan;
+  UDataReturPenjualan, UDataMasterAkunTrans;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 begin
   //ShowMessage(vcall);
+  if vcall='m_modul' then
+  begin
+    FDataMasterAkunTrans.edKodeModul.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaModul.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='jenis_retur' then
   begin
     FDataReturPenjualan.edKodeJenis.Text:=MemMasterData['KD_MASTER'];
