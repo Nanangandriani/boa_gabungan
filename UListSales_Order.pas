@@ -92,21 +92,19 @@ uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin;
 
 procedure TFSalesOrder.Refresh;
 begin
+  DBGridOrder.StartLoadingStatus();
+  try
+   Sys_Batas_Data('order_date');
    with QSalesOrder do
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_sales_order"   '+
-                 ' where deleted_at is null order by created_at Desc ';
+       sql.add(' select * from "sale"."t_sales_order"   '+
+               ' where deleted_at is null ');
+       sql.add( vBatas_Data );
+       sql.add(' order by created_at Desc ');
        open;
    end;
-   QSalesOrder.Active:=False;
-   QSalesOrder.Active:=True;
-
-  DBGridOrder.StartLoadingStatus();
-  try
-   QSalesOrder.Close;
-   QSalesOrder.Open;
   finally
   DBGridOrder.FinishLoadingStatus();
   end;
@@ -180,19 +178,19 @@ end;
 
 procedure TFSalesOrder.ActROExecute(Sender: TObject);
 begin
+  DBGridOrder.StartLoadingStatus();
+  try
+   Sys_Batas_Data('order_date');
    with QSalesOrder do
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_sales_order"   '+
-                 ' where deleted_at is null order by created_at Desc ';
+       sql.add(' select * from "sale"."t_sales_order"   '+
+               ' where deleted_at is null ');
+       sql.add( vBatas_Data );
+       sql.add(' order by created_at Desc ');
        open;
    end;
-
-  DBGridOrder.StartLoadingStatus();
-  try
-    QSalesOrder.Close;
-    QSalesOrder.Open;
   finally
   DBGridOrder.FinishLoadingStatus();
   end;

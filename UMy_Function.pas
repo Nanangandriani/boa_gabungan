@@ -9,9 +9,10 @@ Uses SysUtils, frxClass,uni;
   function GetNourut(tgl:TDateTime;Tablename,kode:string):string;
   //rudy
   function SelectRow(cSelect: String): String;
+  function Sys_Batas_Data(fieldtanggal: String): String;
   function UpdateLogErrorAPI(base_url: String; path: String; token: String; lInsert: Boolean; endpoint: String; cKet: String = ''): Boolean;
   function MyExecuteSQL(cSQL: String): Boolean;
-  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans:string;
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data:string;
       strday2:TDate;
 
 implementation
@@ -49,7 +50,6 @@ begin
   //end;
 end;
 
-
 function SelectRow(cSelect: String): String;
 var
   UniQuery1: TUniQuery;
@@ -65,6 +65,37 @@ begin
   Result := UniQuery1.Fields.Fields[0].AsString;
   UniQuery1.Close;
   UniQuery1.Free;
+end;
+
+function Sys_Batas_Data(fieldtanggal: String): String;
+var
+  maxdate:TDateTime;
+  tahun, bulan, tanggal:integer;
+begin
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''sys_batas_data'' ')<> 'ya' then
+  begin
+    vBatas_Data:='';
+  end;
+
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''sys_batas_data'' ')= 'ya' then
+  begin
+    tahun:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''year_batas_data'' '));
+    bulan:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''month_batas_data'' '));
+    tanggal:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''date_batas_data'' '));
+    maxdate := EncodeDate(tahun, bulan, tanggal);
+    if SelectRow('select value_parameter from t_parameter where key_parameter=''type_batas_data'' ')= '0' then
+    begin
+      vBatas_Data:=' AND '+fieldtanggal+' BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',maxdate))+' and now() ';
+    end;
+    if SelectRow('select value_parameter from t_parameter where key_parameter=''type_batas_data'' ')= '1' then
+    begin
+      vBatas_Data:=' AND '+fieldtanggal+' >= DATE_TRUNC('+QuotedSTR('months')+', NOW()) - INTERVAL '+QuotedSTR(''+IntToStr(bulan)+' months')+' ';
+    end;
+    if SelectRow('select value_parameter from t_parameter where key_parameter=''type_batas_data'' ')= '2' then
+    begin
+      vBatas_Data:=' AND '+fieldtanggal+' >= DATE_TRUNC('+QuotedSTR('years')+' - INTERVAL '+QuotedSTR(''+IntToStr(tahun)+' years')+' ';
+    end;
+  end;
 end;
 
 function convbulan(nobulan:Integer):string;

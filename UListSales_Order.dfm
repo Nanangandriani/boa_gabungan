@@ -23,7 +23,6 @@ object FSalesOrder: TFSalesOrder
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1208
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
