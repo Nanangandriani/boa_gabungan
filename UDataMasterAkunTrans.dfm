@@ -2,8 +2,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   Left = 0
   Top = 0
   Caption = 'Data Master Akun Transaksi'
-  ClientHeight = 466
-  ClientWidth = 641
+  ClientHeight = 504
+  ClientWidth = 655
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,15 +15,15 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 641
-    Height = 214
+    Width = 655
+    Height = 264
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -433
-    ExplicitWidth = 1061
-    ExplicitHeight = 270
+    ExplicitLeft = 1
+    ExplicitTop = -6
+    ExplicitHeight = 286
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -40,45 +40,73 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object Label1: TLabel
       Left = 20
-      Top = 106
+      Top = 162
       Width = 60
       Height = 15
       Caption = 'Keterangan'
     end
     object Label2: TLabel
       Left = 117
-      Top = 106
+      Top = 162
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label6: TLabel
       Left = 20
-      Top = 48
+      Top = 104
       Width = 27
       Height = 15
       Caption = 'Kode'
     end
     object Label7: TLabel
       Left = 117
-      Top = 48
+      Top = 104
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 117
-      Top = 77
+      Top = 133
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label11: TLabel
       Left = 20
-      Top = 77
+      Top = 133
       Width = 82
       Height = 15
       Caption = 'Nama Transaksi'
+    end
+    object Label4: TLabel
+      Left = 117
+      Top = 47
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label5: TLabel
+      Left = 20
+      Top = 47
+      Width = 26
+      Height = 15
+      Caption = 'Bank'
+    end
+    object Label8: TLabel
+      Left = 117
+      Top = 75
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label9: TLabel
+      Left = 20
+      Top = 75
+      Width = 71
+      Height = 15
+      Caption = 'No. Rekening'
     end
     object edNamaModul: TRzButtonEdit
       Left = 132
@@ -101,8 +129,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object edKodeTrans: TEdit
       Left = 132
-      Top = 45
-      Width = 109
+      Top = 101
+      Width = 173
       Height = 23
       CharCase = ecUpperCase
       ReadOnly = True
@@ -110,7 +138,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object edNamaTrans: TEdit
       Left = 132
-      Top = 74
+      Top = 130
       Width = 344
       Height = 23
       CharCase = ecUpperCase
@@ -118,28 +146,47 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object MemKeterangan: TMemo
       Left = 132
-      Top = 103
+      Top = 159
       Width = 344
       Height = 89
       TabOrder = 4
     end
+    object edNamaBank: TRzButtonEdit
+      Left = 132
+      Top = 44
+      Width = 173
+      Height = 23
+      Text = ''
+      TabOrder = 5
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edNamaBankButtonClick
+    end
+    object edNorekening: TEdit
+      Left = 132
+      Top = 72
+      Width = 344
+      Height = 23
+      TabOrder = 6
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 434
-    Width = 641
+    Top = 472
+    Width = 655
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 445
-    ExplicitWidth = 632
+    ExplicitTop = 425
+    ExplicitWidth = 635
     object BBatal: TRzBitBtn
-      Left = 565
+      Left = 579
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Close'
       TabOrder = 1
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -192,15 +239,16 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 985
+      ExplicitLeft = 559
     end
     object BSave: TRzBitBtn
-      Left = 490
+      Left = 504
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Save'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -253,7 +301,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 910
+      ExplicitLeft = 484
     end
     object Edautocode: TEdit
       Left = 712
@@ -268,27 +316,25 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 214
-    Width = 641
-    Height = 220
+    Top = 264
+    Width = 655
+    Height = 208
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitLeft = -433
-    ExplicitTop = 222
-    ExplicitWidth = 1061
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 1057
+      ExplicitWidth = 631
+      ExplicitHeight = 195
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 637
-        Height = 195
+        Width = 651
+        Height = 183
         Align = alClient
         DataSource = DSDetail
         DynProps = <>

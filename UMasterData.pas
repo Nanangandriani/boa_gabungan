@@ -42,6 +42,11 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 begin
   //ShowMessage(vcall);
+  if vcall='m_bank' then
+  begin
+    FDataMasterAkunTrans.edNorekening.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaBank.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_modul' then
   begin
     FDataMasterAkunTrans.edKodeModul.Text:=MemMasterData['KD_MASTER'];

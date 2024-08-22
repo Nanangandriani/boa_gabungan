@@ -22,8 +22,6 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -574
-    ExplicitWidth = 1202
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -48,64 +46,62 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'notrans'
+        FieldName = 'code_module'
         Footers = <>
-        Title.Caption = 'No Transaksi'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_module'
+        Footers = <>
+        Title.Caption = 'Nama Module'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'order_date'
+        FieldName = 'account_name_bank'
         Footers = <>
-        Title.Caption = 'Tanggal Order'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_source'
-        Footers = <>
-        Title.Caption = 'Sumber'
-        Width = 150
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_cust'
-        Footers = <>
-        Title.Caption = 'Pelanggan'
+        Title.Caption = 'Bank'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_sales'
+        FieldName = 'account_number_bank'
         Footers = <>
-        Title.Caption = 'Nama Sales'
+        Title.Caption = 'Nomor Rekening'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_reference'
+        FieldName = 'code_trans'
         Footers = <>
-        Title.Caption = 'No Reference'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_trans'
+        Footers = <>
+        Title.Caption = 'Nama Transaksi'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'payment_term'
+        FieldName = 'description'
         Footers = <>
-        Title.Caption = 'Jatuh Tempo (Hari)'
-        Width = 150
+        Title.Caption = 'Keterangan'
+        Width = 250
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -639,6 +635,7 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
     object dxBarDelete: TdxBarButton
       Action = ActDel
       Category = 0
+      Enabled = False
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -681,53 +678,65 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
   object QAkunTransaksi: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_sales_order"  '
+      'select * from "public"."t_master_trans_account"'
       'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56
-    object QAkunTransaksinotrans: TStringField
-      FieldName = 'notrans'
-      Size = 255
+    object QAkunTransaksiid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
     end
-    object QAkunTransaksiorder_date: TDateField
-      FieldName = 'order_date'
+    object QAkunTransaksicreated_at: TDateTimeField
+      FieldName = 'created_at'
     end
-    object QAkunTransaksisent_date: TDateField
-      FieldName = 'sent_date'
-      Visible = False
+    object QAkunTransaksicreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
     end
-    object QAkunTransaksicode_cust: TStringField
-      FieldName = 'code_cust'
-      Visible = False
+    object QAkunTransaksiupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QAkunTransaksiupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QAkunTransaksideleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QAkunTransaksideleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QAkunTransaksicode_module: TStringField
+      FieldName = 'code_module'
+      Required = True
       Size = 100
     end
-    object QAkunTransaksiname_cust: TStringField
-      FieldName = 'name_cust'
+    object QAkunTransaksiname_module: TStringField
+      FieldName = 'name_module'
       Size = 255
     end
-    object QAkunTransaksicode_sales: TStringField
-      FieldName = 'code_sales'
-      Visible = False
+    object QAkunTransaksicode_trans: TStringField
+      FieldName = 'code_trans'
+      Required = True
       Size = 100
     end
-    object QAkunTransaksiname_sales: TStringField
-      FieldName = 'name_sales'
+    object QAkunTransaksiname_trans: TStringField
+      FieldName = 'name_trans'
       Size = 255
     end
-    object QAkunTransaksipayment_term: TSmallintField
-      FieldName = 'payment_term'
+    object QAkunTransaksidescription: TMemoField
+      FieldName = 'description'
+      OnGetText = QAkunTransaksidescriptionGetText
+      BlobType = ftMemo
     end
-    object QAkunTransaksino_reference: TStringField
-      FieldName = 'no_reference'
-      Size = 255
-    end
-    object QAkunTransaksicode_source: TStringField
-      FieldName = 'code_source'
-      Visible = False
+    object QAkunTransaksiaccount_number_bank: TStringField
+      FieldName = 'account_number_bank'
       Size = 100
     end
-    object QAkunTransaksiname_source: TStringField
-      FieldName = 'name_source'
+    object QAkunTransaksiaccount_name_bank: TStringField
+      FieldName = 'account_name_bank'
       Size = 255
     end
   end

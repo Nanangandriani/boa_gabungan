@@ -2,8 +2,8 @@ object FNew_Penjualan: TFNew_Penjualan
   Left = 0
   Top = 0
   Caption = 'Data Penjualan'
-  ClientHeight = 603
-  ClientWidth = 1193
+  ClientHeight = 594
+  ClientWidth = 1187
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,12 @@ object FNew_Penjualan: TFNew_Penjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1193
-    Height = 280
+    Width = 1187
+    Height = 271
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1187
-    ExplicitHeight = 271
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -322,13 +320,11 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 571
-    Width = 1193
+    Top = 562
+    Width = 1187
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 562
-    ExplicitWidth = 1187
     object BBatal: TRzBitBtn
       Left = 1117
       Top = 1
@@ -518,8 +514,8 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 280
-    Width = 1193
+    Top = 271
+    Width = 1187
     Height = 291
     Hint = ''
     ActivePage = TabSDetailPel
@@ -527,12 +523,13 @@ object FNew_Penjualan: TFNew_Penjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 271
-    ExplicitWidth = 1187
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1183
+      ExplicitHeight = 0
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

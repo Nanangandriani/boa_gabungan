@@ -55,22 +55,27 @@ type
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     QAkunTransaksi: TUniQuery;
-    QAkunTransaksinotrans: TStringField;
-    QAkunTransaksiorder_date: TDateField;
-    QAkunTransaksisent_date: TDateField;
-    QAkunTransaksicode_cust: TStringField;
-    QAkunTransaksiname_cust: TStringField;
-    QAkunTransaksicode_sales: TStringField;
-    QAkunTransaksiname_sales: TStringField;
-    QAkunTransaksipayment_term: TSmallintField;
-    QAkunTransaksino_reference: TStringField;
-    QAkunTransaksicode_source: TStringField;
-    QAkunTransaksiname_source: TStringField;
     DsAkunTransaksi: TDataSource;
+    QAkunTransaksiid: TGuidField;
+    QAkunTransaksicreated_at: TDateTimeField;
+    QAkunTransaksicreated_by: TStringField;
+    QAkunTransaksiupdated_at: TDateTimeField;
+    QAkunTransaksiupdated_by: TStringField;
+    QAkunTransaksideleted_at: TDateTimeField;
+    QAkunTransaksideleted_by: TStringField;
+    QAkunTransaksicode_module: TStringField;
+    QAkunTransaksiname_module: TStringField;
+    QAkunTransaksicode_trans: TStringField;
+    QAkunTransaksiname_trans: TStringField;
+    QAkunTransaksidescription: TMemoField;
+    QAkunTransaksiaccount_number_bank: TStringField;
+    QAkunTransaksiaccount_name_bank: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure QAkunTransaksidescriptionGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -84,15 +89,20 @@ implementation
 
 {$R *.dfm}
 
-uses UDataMasterAkunTrans;
+uses UDataMasterAkunTrans, UDataModule;
 
 procedure TFListMasterAkunTrans.ActBaruExecute(Sender: TObject);
 begin
   FDataMasterAkunTrans.Clear;
-  //FNew_SalesOrder.Autonumber;
+  //FDataMasterAkunTrans.Autocode;
   FDataMasterAkunTrans.MemDetail.EmptyTable;
-  Status:=0;
+  FDataMasterAkunTrans.Status:=0;
+  FDataMasterAkunTrans.edKodeModul.Enabled:=true;
+  FDataMasterAkunTrans.edNamaModul.Enabled:=true;
   FDataMasterAkunTrans.edKodeTrans.Enabled:=true;
+  FDataMasterAkunTrans.edNamaTrans.Enabled:=true;
+  FDataMasterAkunTrans.edNamaBank.Enabled:=true;
+  FDataMasterAkunTrans.edNorekening.Enabled:=true;
   FDataMasterAkunTrans.MemDetail.active:=false;
   FDataMasterAkunTrans.MemDetail.active:=true;
   FDataMasterAkunTrans.ShowModal;
@@ -105,12 +115,68 @@ end;
 
 procedure TFListMasterAkunTrans.ActROExecute(Sender: TObject);
 begin
-  ShowMessage('Refresh');
+  DBGridOrder.StartLoadingStatus();
+  try
+   with QAkunTransaksi do
+   begin
+       close;
+       sql.Clear;
+       sql.add(' select * from "public"."t_master_trans_account"   '+
+               ' where deleted_at is null ');
+       sql.add(' order by code_module, account_number_bank, code_trans asc ');
+       open;
+   end;
+  finally
+  DBGridOrder.FinishLoadingStatus();
+  end;
 end;
 
 procedure TFListMasterAkunTrans.ActUpdateExecute(Sender: TObject);
 begin
-  ShowMessage('Ubah');
+   FDataMasterAkunTrans.Clear;
+   with Dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from "public"."t_master_trans_account"  a '+
+                 ' WHERE code_module='+QuotedSTr(QAkunTransaksi.FieldByName('code_module').AsString)+' '+
+                 ' AND code_trans='+QuotedSTr(QAkunTransaksi.FieldByName('code_trans').AsString)+' '+
+                 ' AND account_number_bank='+QuotedSTr(QAkunTransaksi.FieldByName('account_number_bank').AsString)+'' ;
+       open;
+   end;
+  if Dm.Qtemp.RecordCount=0 then
+  begin
+    ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
+    exit;
+  end;
+  if Dm.Qtemp.RecordCount<>0 then
+  begin
+  with FDataMasterAkunTrans do
+  begin
+    edKodeModul.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+    edNamaModul.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+    edKodeTrans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+    edNamaTrans.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+    edNamaBank.Text:=Dm.Qtemp.FieldByName('account_name_bank').AsString;
+    edNorekening.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
+    MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
+  end;
+  end;
+  FDataMasterAkunTrans.edKodeModul.Enabled:=false;
+  FDataMasterAkunTrans.edNamaModul.Enabled:=false;
+  FDataMasterAkunTrans.edKodeTrans.Enabled:=false;
+  FDataMasterAkunTrans.edNamaTrans.Enabled:=false;
+  FDataMasterAkunTrans.edNamaBank.Enabled:=false;
+  FDataMasterAkunTrans.edNorekening.Enabled:=false;
+  FDataMasterAkunTrans.RefreshGrid;
+  FDataMasterAkunTrans.Show;
+  FDataMasterAkunTrans.Status := 1;
+end;
+
+procedure TFListMasterAkunTrans.QAkunTransaksidescriptionGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+   Text := Copy(QAkunTransaksidescription.AsString, 1, 255);
 end;
 
 initialization

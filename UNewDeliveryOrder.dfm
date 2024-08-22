@@ -2,8 +2,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   Left = 0
   Top = 0
   Caption = 'Delivery Order'
-  ClientHeight = 592
-  ClientWidth = 1401
+  ClientHeight = 583
+  ClientWidth = 1395
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 1401
-    Height = 592
+    Width = 1395
+    Height = 583
     Hint = ''
     ActivePage = TabDataMuatan
     Align = alClient
@@ -25,13 +25,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     TabIndex = 0
     TabOrder = 0
     OnClick = RzPageControl1Click
+    ExplicitWidth = 1401
+    ExplicitHeight = 592
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
       ExplicitLeft = 0
       ExplicitTop = 0
-      ExplicitWidth = 1397
-      ExplicitHeight = 567
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -49,13 +49,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1403
+        Width = 1397
         Height = 345
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1397
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -534,13 +533,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       end
       object Panel2: TPanel
         Left = 0
-        Top = 544
-        Width = 1403
+        Top = 535
+        Width = 1397
         Height = 32
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 535
-        ExplicitWidth = 1397
         object btNextStep: TRzBitBtn
           Left = 1327
           Top = 1
@@ -607,8 +604,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
         Top = 345
-        Width = 1403
-        Height = 199
+        Width = 1397
+        Height = 190
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>
@@ -701,12 +698,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1403
+        Width = 1397
         Height = 241
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1403
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -925,11 +923,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       end
       object Panel1: TPanel
         Left = 0
-        Top = 539
-        Width = 1403
+        Top = 530
+        Width = 1397
         Height = 37
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 539
+        ExplicitWidth = 1403
         object btBatalSumberJual: TRzBitBtn
           Left = 1327
           Top = 1
@@ -1117,8 +1117,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object DBGridSumberPenjualan: TDBGridEh
         Left = 0
         Top = 241
-        Width = 1403
-        Height = 298
+        Width = 1397
+        Height = 289
         Align = alClient
         DataSource = dsDataBiaya
         DynProps = <>
@@ -1332,11 +1332,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       ExplicitHeight = 0
       object Panel3: TPanel
         Left = 0
-        Top = 544
-        Width = 1403
+        Top = 535
+        Width = 1397
         Height = 32
         Align = alBottom
         TabOrder = 0
+        ExplicitTop = 544
+        ExplicitWidth = 1403
         object btBatalParameter: TRzBitBtn
           Left = 1327
           Top = 1
@@ -1463,12 +1465,14 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1403
-        Height = 544
+        Width = 1397
+        Height = 535
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1403
+        ExplicitHeight = 544
         object Label14: TLabel
           Left = 133
           Top = 94
