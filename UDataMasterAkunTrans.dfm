@@ -21,8 +21,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = -6
+    ExplicitWidth = 649
+    ExplicitHeight = 279
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -175,6 +175,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       Height = 89
       Caption = 'Tagihan'
       Color = 15987699
+      ItemHeight = 17
       ItemIndex = 0
       Items.Strings = (
         'Tidak'
@@ -337,11 +338,12 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
+    ExplicitTop = 279
+    ExplicitWidth = 649
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 645
-      ExplicitHeight = 183
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

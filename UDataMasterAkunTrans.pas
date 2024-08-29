@@ -220,8 +220,8 @@ begin
     Close;
     SQL.Clear;
     Sql.Text :=' select * from t_master_trans_account'+
-               ' #where code_module='+QuotedStr(edKodeModul.Text)+''+
-               ' #AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
+               ' -- where code_module='+QuotedStr(edKodeModul.Text)+''+
+               ' -- AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
     open;
   end;
 
@@ -234,8 +234,8 @@ begin
         Sql.Clear;
         Sql.Text :=' select count(code_trans) as hasil '+
                    ' from t_master_trans_account '+
-                   ' #where code_module='+QuotedStr(edKodeModul.Text)+' '+
-                   ' #AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
+                   ' -- where code_module='+QuotedStr(edKodeModul.Text)+' '+
+                   ' -- AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
         Open;
       end;
       Urut :=  Dm.Qtemp.FieldByName('hasil').AsInteger + 1;

@@ -22,8 +22,6 @@ object FListPenerimaanKas: TFListPenerimaanKas
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -40
-    ExplicitWidth = 1029
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

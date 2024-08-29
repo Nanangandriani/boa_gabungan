@@ -82,5 +82,7 @@ var
 implementation
 
 {$R *.dfm}
+Initialization
+  RegisterClasses([TFListPenerimaanKas]);
 
 end.

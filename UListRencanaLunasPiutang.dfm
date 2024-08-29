@@ -22,8 +22,6 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -197
-    ExplicitWidth = 1233
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
