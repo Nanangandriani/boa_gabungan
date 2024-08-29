@@ -16,14 +16,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Left = 0
     Top = 0
     Width = 655
-    Height = 264
+    Height = 288
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
     ExplicitLeft = 1
     ExplicitTop = -6
-    ExplicitHeight = 286
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -40,14 +39,14 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object Label1: TLabel
       Left = 20
-      Top = 162
+      Top = 160
       Width = 60
       Height = 15
       Caption = 'Keterangan'
     end
     object Label2: TLabel
       Left = 117
-      Top = 162
+      Top = 160
       Width = 3
       Height = 15
       Caption = ':'
@@ -68,14 +67,14 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object Label10: TLabel
       Left = 117
-      Top = 133
+      Top = 131
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label11: TLabel
       Left = 20
-      Top = 133
+      Top = 131
       Width = 82
       Height = 15
       Caption = 'Nama Transaksi'
@@ -138,7 +137,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object edNamaTrans: TEdit
       Left = 132
-      Top = 130
+      Top = 128
       Width = 344
       Height = 23
       CharCase = ecUpperCase
@@ -146,8 +145,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object MemKeterangan: TMemo
       Left = 132
-      Top = 159
-      Width = 344
+      Top = 157
+      Width = 261
       Height = 89
       TabOrder = 4
     end
@@ -169,6 +168,19 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       Height = 23
       TabOrder = 6
     end
+    object rgTagihan: TRzRadioGroup
+      Left = 405
+      Top = 157
+      Width = 71
+      Height = 89
+      Caption = 'Tagihan'
+      Color = 15987699
+      ItemIndex = 0
+      Items.Strings = (
+        'Tidak'
+        'Ya')
+      TabOrder = 7
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -177,8 +189,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 425
-    ExplicitWidth = 635
+    ExplicitTop = 463
+    ExplicitWidth = 649
     object BBatal: TRzBitBtn
       Left = 579
       Top = 1
@@ -239,7 +251,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 559
+      ExplicitLeft = 573
     end
     object BSave: TRzBitBtn
       Left = 504
@@ -301,7 +313,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 484
+      ExplicitLeft = 498
     end
     object Edautocode: TEdit
       Left = 712
@@ -316,9 +328,9 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 264
+    Top = 288
     Width = 655
-    Height = 208
+    Height = 184
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
@@ -328,13 +340,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 631
-      ExplicitHeight = 195
+      ExplicitWidth = 645
+      ExplicitHeight = 183
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 651
-        Height = 183
+        Height = 159
         Align = alClient
         DataSource = DSDetail
         DynProps = <>

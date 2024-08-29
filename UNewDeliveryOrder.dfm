@@ -19,19 +19,19 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1395
     Height = 583
     Hint = ''
-    ActivePage = TabDataMuatan
+    ActivePage = TabDokumenPendukung
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     OnClick = RzPageControl1Click
-    ExplicitWidth = 1401
-    ExplicitHeight = 592
+    ExplicitWidth = 1389
+    ExplicitHeight = 574
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      ExplicitWidth = 1385
+      ExplicitHeight = 549
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -49,12 +49,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1397
+        Width = 1391
         Height = 345
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1385
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -533,13 +534,15 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       end
       object Panel2: TPanel
         Left = 0
-        Top = 535
-        Width = 1397
+        Top = 526
+        Width = 1391
         Height = 32
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 517
+        ExplicitWidth = 1385
         object btNextStep: TRzBitBtn
-          Left = 1327
+          Left = 1315
           Top = 1
           Height = 30
           Align = alRight
@@ -598,14 +601,14 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1321
+          ExplicitLeft = 1309
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
         Top = 345
-        Width = 1397
-        Height = 190
+        Width = 1391
+        Height = 181
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>
@@ -691,20 +694,15 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object TabDataBiaya: TRzTabSheet
       Caption = 'Data Biaya'
       OnClick = TabDataBiayaClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1397
+        Width = 1391
         Height = 241
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1403
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -923,15 +921,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       end
       object Panel1: TPanel
         Left = 0
-        Top = 530
-        Width = 1397
+        Top = 521
+        Width = 1391
         Height = 37
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 539
-        ExplicitWidth = 1403
         object btBatalSumberJual: TRzBitBtn
-          Left = 1327
+          Left = 1315
           Top = 1
           Height = 35
           Align = alRight
@@ -992,7 +988,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           NumGlyphs = 2
         end
         object btSimpanSumberJual: TRzBitBtn
-          Left = 1252
+          Left = 1240
           Top = 1
           Height = 35
           Align = alRight
@@ -1117,8 +1113,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object DBGridSumberPenjualan: TDBGridEh
         Left = 0
         Top = 241
-        Width = 1397
-        Height = 289
+        Width = 1391
+        Height = 280
         Align = alClient
         DataSource = dsDataBiaya
         DynProps = <>
@@ -1326,21 +1322,15 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object TabDokumenPendukung: TRzTabSheet
       Caption = 'Dokumen Pendukung'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel3: TPanel
         Left = 0
-        Top = 535
-        Width = 1397
+        Top = 526
+        Width = 1391
         Height = 32
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 544
-        ExplicitWidth = 1403
         object btBatalParameter: TRzBitBtn
-          Left = 1327
+          Left = 1315
           Top = 1
           Height = 30
           Align = alRight
@@ -1401,7 +1391,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           NumGlyphs = 2
         end
         object btSaveParameter: TRzBitBtn
-          Left = 1252
+          Left = 1240
           Top = 1
           Height = 30
           Align = alRight
@@ -1465,14 +1455,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1397
-        Height = 535
+        Width = 1391
+        Height = 526
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 1403
-        ExplicitHeight = 544
         object Label14: TLabel
           Left = 133
           Top = 94

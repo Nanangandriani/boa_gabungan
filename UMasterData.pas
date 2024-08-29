@@ -37,11 +37,48 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UMasterWilayahAdministratif, UNew_SalesOrder, UTambah_Barang, UMy_Function,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
   UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
-  UDataReturPenjualan, UDataMasterAkunTrans;
+  UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 begin
   //ShowMessage(vcall);
+  if vcall='m_jns_transaksi' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      edKode_Pelanggan.Clear;
+      edNama_Pelanggan.Clear;
+      edKodeJenisTrans.Text:=MemMasterData['KD_MASTER'];
+      edNamaJenisTrans.Text:=MemMasterData['NM_MASTER'];
+      edNamaBank.Text:=SelectRow('select account_name_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
+      edNoRek.Text:=SelectRow('select account_number_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
+    end;
+
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      gbDataPiutang.Visible:=false;
+      TabDetailFaktur.TabVisible:=false;
+      Panel1.Height:=230;
+    end;
+  end;
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      gbDataPiutang.Visible:=true;
+      TabDetailFaktur.TabVisible:=true;
+      Panel1.Height:=340;
+    end;
+  end;
+
+  end;
+  if vcall='m_mata_uang' then
+  begin
+    FDataPenerimaanBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
+    FDataPenerimaanBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_bank' then
   begin
     FDataMasterAkunTrans.edNorekening.Text:=MemMasterData['KD_MASTER'];
@@ -382,6 +419,7 @@ begin
      FMasterData.MemMasterData.post;
      Dm.Qtemp.next;
     end;
+    FMasterData.MemMasterData.SortByFields('KD_MASTER asc');
     end;
 
 

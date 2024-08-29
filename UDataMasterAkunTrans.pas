@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, RzPanel, RzRadGrp;
 
 type
   TFDataMasterAkunTrans = class(TForm)
@@ -44,6 +44,7 @@ type
     Label5: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    rgTagihan: TRzRadioGroup;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -162,11 +163,12 @@ begin
     close;
     sql.clear;
     sql.add(' Insert into "public"."t_master_trans_account" ("created_at", "created_by",  '+
-            ' "code_module", "name_module", "code_trans", "name_trans", "description", '+
+            ' "status_bill", "code_module", "name_module", "code_trans", "name_trans", "description", '+
             ' "account_number_bank", "account_name_bank") '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+IntToStr(rgTagihan.ItemIndex)+', '+
             ' '+QuotedStr(edKodeModul.Text)+', '+
             ' '+QuotedStr(edNamaModul.Text)+', '+
             ' '+QuotedStr(edKodeTrans.Text)+', '+
@@ -192,6 +194,7 @@ begin
       sql.add(' UPDATE "public"."t_master_trans_account" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' status_bill='+IntToStr(rgTagihan.ItemIndex)+','+
               ' name_module='+QuotedStr(edNamaModul.Text)+','+
               ' name_trans='+QuotedStr(edNamaTrans.Text)+','+
               ' account_name_bank='+QuotedStr(edNamaBank.Text)+','+
@@ -217,8 +220,8 @@ begin
     Close;
     SQL.Clear;
     Sql.Text :=' select * from t_master_trans_account'+
-               ' where code_module='+QuotedStr(edKodeModul.Text)+''+
-               ' AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
+               ' #where code_module='+QuotedStr(edKodeModul.Text)+''+
+               ' #AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
     open;
   end;
 
@@ -231,8 +234,8 @@ begin
         Sql.Clear;
         Sql.Text :=' select count(code_trans) as hasil '+
                    ' from t_master_trans_account '+
-                   ' where code_module='+QuotedStr(edKodeModul.Text)+' '+
-                   ' AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
+                   ' #where code_module='+QuotedStr(edKodeModul.Text)+' '+
+                   ' #AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
         Open;
       end;
       Urut :=  Dm.Qtemp.FieldByName('hasil').AsInteger + 1;
@@ -253,7 +256,7 @@ begin
   begin
     kode := kode;
   end;
-  edKodeTrans.Text := Kode;
+  edKodeTrans.Text := edKodeModul.Text+'.'+Kode;
 end;
 
 procedure TFDataMasterAkunTrans.BBatalClick(Sender: TObject);

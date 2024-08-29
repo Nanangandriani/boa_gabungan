@@ -334,6 +334,7 @@ begin
           end;
         end;
       end;
+      Close;
       btRefreshParameterClick(Sender);
 end;
 

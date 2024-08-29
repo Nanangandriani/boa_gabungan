@@ -54,7 +54,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UMasterWilayah, UDaftarKlasifikasi, UNew_MasterBiayaDO,
   UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
   UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber,
-  UNew_DataPenjualan;
+  UNew_DataPenjualan, UDataPenerimaanBank;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 begin
@@ -118,6 +118,12 @@ end;
 procedure TFbrowse_data_pelanggan.DBGridCustomerDblClick(Sender: TObject);
 begin
   //showmessage(vcall);
+  if vcall='terima_bank' then
+  begin
+    FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FDataPenerimaanBank.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FDataPenerimaanBank.edUntukPengiriman.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
   if vcall='retur_penjualan' then
   begin
     FDataReturPenjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
