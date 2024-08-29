@@ -149,13 +149,16 @@ uses
   UTemplate_Temp in 'UTemplate_Temp.pas' {FTemplate_Temp},
   Ubrowse_pelanggan in 'Ubrowse_pelanggan.pas' {Fbrowse_data_pelanggan},
   UReturPenjualan_Sumber in 'UReturPenjualan_Sumber.pas' {FReturPenjualan_Sumber},
-<<<<<<< Updated upstream
-=======
-  UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
->>>>>>> Stashed changes
   UListPenjualan in 'UListPenjualan.pas' {FDataListPenjualan},
   UListTujualAwal in 'UListTujualAwal.pas' {FListTujualAwal},
-  UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal};
+  UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal},
+  UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans},
+  UDataMasterAkunTrans in 'UDataMasterAkunTrans.pas' {FDataMasterAkunTrans},
+  UListRencanaLunasPiutang in 'UListRencanaLunasPiutang.pas' {FListRencanaLunasPiutang},
+  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
+  UListPenerimaanKas in 'UListPenerimaanKas.pas' {FListPenerimaanKas},
+  UDataPenerimaanBank in 'UDataPenerimaanBank.pas' {FDataPenerimaanBank},
+  UDaftarTagihan in 'UDaftarTagihan.pas' {FDaftarTagihan};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -210,6 +213,13 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);
   Application.CreateForm(TFListTujualAwal, FListTujualAwal);
   Application.CreateForm(TFNew_TujuanAwal, FNew_TujuanAwal);
+  Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
+  Application.CreateForm(TFDataMasterAkunTrans, FDataMasterAkunTrans);
+  Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
+  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
+  Application.CreateForm(TFListPenerimaanKas, FListPenerimaanKas);
+  Application.CreateForm(TFDataPenerimaanBank, FDataPenerimaanBank);
+  Application.CreateForm(TFDaftarTagihan, FDaftarTagihan);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
@@ -228,10 +238,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
-<<<<<<< Updated upstream
-//  Application.CreateForm(TFHak_Akses, FHak_Akses);
-=======
->>>>>>> Stashed changes
+
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
