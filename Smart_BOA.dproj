@@ -627,15 +627,12 @@
         </DCCReference>
         <DCCReference Include="UPerintahMuat_Sumber.pas">
             <Form>FPerintahMuat_Sumber</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListPengajuanApprovePenjualan.pas">
             <Form>FListPengajuanApprovePenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataPerintahMuat.pas">
             <Form>FDataPerintahMuat</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListPerintahMuat.pas">
             <Form>FListPerintahMuat</Form>
@@ -647,19 +644,15 @@
         </DCCReference>
         <DCCReference Include="UListReturPenjualan.pas">
             <Form>FListReturPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataReturPenjualan.pas">
             <Form>FDataReturPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UTambah_Barang.pas">
             <Form>FTambah_Barang</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UTemplate_Temp.pas">
             <Form>FTemplate_Temp</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Ubrowse_pelanggan.pas">
             <Form>Fbrowse_data_pelanggan</Form>
@@ -667,7 +660,6 @@
         </DCCReference>
         <DCCReference Include="UReturPenjualan_Sumber.pas">
             <Form>FReturPenjualan_Sumber</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListPenjualan.pas">
             <Form>FDataListPenjualan</Form>
@@ -678,32 +670,36 @@
         <DCCReference Include="UNew_TujuanAwal.pas">
             <Form>FNew_TujuanAwal</Form>
         </DCCReference>
-        <DCCReference Include="UListMasterAkunTrans.pas">
-            <Form>FListMasterAkunTrans</Form>
+        <DCCReference Include="UItem_MasterFormula.pas">
+            <Form>FItem_MasterFormula</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataMasterAkunTrans.pas">
             <Form>FDataMasterAkunTrans</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListRencanaLunasPiutang.pas">
-            <Form>FListRencanaLunasPiutang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPenerimaanBank.pas">
-            <Form>FListPenerimaanBank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPenerimaanKas.pas">
-            <Form>FListPenerimaanKas</Form>
+        <DCCReference Include="UDaftarTagihan.pas">
+            <Form>FDaftarTagihan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataPenerimaanBank.pas">
             <Form>FDataPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDaftarTagihan.pas">
-            <Form>FDaftarTagihan</Form>
+        <DCCReference Include="UListRencanaLunasPiutang.pas">
+            <Form>FListRencanaLunasPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPenerimaanKas.pas">
+            <Form>FListPenerimaanKas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPenerimaanBank.pas">
+            <Form>FListPenerimaanBank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListMasterAkunTrans.pas">
+            <Form>FListMasterAkunTrans</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

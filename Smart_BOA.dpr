@@ -152,13 +152,14 @@ uses
   UListPenjualan in 'UListPenjualan.pas' {FDataListPenjualan},
   UListTujualAwal in 'UListTujualAwal.pas' {FListTujualAwal},
   UNew_TujuanAwal in 'UNew_TujuanAwal.pas' {FNew_TujuanAwal},
-  UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans},
+  UItem_MasterFormula in 'UItem_MasterFormula.pas' {FItem_MasterFormula},
   UDataMasterAkunTrans in 'UDataMasterAkunTrans.pas' {FDataMasterAkunTrans},
-  UListRencanaLunasPiutang in 'UListRencanaLunasPiutang.pas' {FListRencanaLunasPiutang},
-  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
-  UListPenerimaanKas in 'UListPenerimaanKas.pas' {FListPenerimaanKas},
+  UDaftarTagihan in 'UDaftarTagihan.pas' {FDaftarTagihan},
   UDataPenerimaanBank in 'UDataPenerimaanBank.pas' {FDataPenerimaanBank},
-  UDaftarTagihan in 'UDaftarTagihan.pas' {FDaftarTagihan};
+  UListRencanaLunasPiutang in 'UListRencanaLunasPiutang.pas' {FListRencanaLunasPiutang},
+  UListPenerimaanKas in 'UListPenerimaanKas.pas' {FListPenerimaanKas},
+  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
+  UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -213,13 +214,14 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);
   Application.CreateForm(TFListTujualAwal, FListTujualAwal);
   Application.CreateForm(TFNew_TujuanAwal, FNew_TujuanAwal);
-  Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
+  Application.CreateForm(TFItem_MasterFormula, FItem_MasterFormula);
   Application.CreateForm(TFDataMasterAkunTrans, FDataMasterAkunTrans);
-  Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
-  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
-  Application.CreateForm(TFListPenerimaanKas, FListPenerimaanKas);
-  Application.CreateForm(TFDataPenerimaanBank, FDataPenerimaanBank);
   Application.CreateForm(TFDaftarTagihan, FDaftarTagihan);
+  Application.CreateForm(TFDataPenerimaanBank, FDataPenerimaanBank);
+  Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
+  Application.CreateForm(TFListPenerimaanKas, FListPenerimaanKas);
+  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
+  Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
@@ -238,7 +240,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
   Application.CreateForm(TFSupp_Pembelian, FSupp_Pembelian);
-
+//<<<<<<< Updated upstream
+//  Application.CreateForm(TFHak_Akses, FHak_Akses);
+//=======
+//>>>>>>> Stashed changes
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
