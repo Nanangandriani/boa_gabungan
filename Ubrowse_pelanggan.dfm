@@ -85,6 +85,7 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 1108
     object GBType1: TGroupBox
       Left = 1
       Top = 1

@@ -70,6 +70,10 @@ type
     QPenerimaanKasaccount_number_bank: TStringField;
     QPenerimaanKasaccount_name_bank: TStringField;
     DsPenerimaanKas: TDataSource;
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,6 +86,26 @@ var
 implementation
 
 {$R *.dfm}
+procedure TFListPenerimaanKas.ActBaruExecute(Sender: TObject);
+begin
+  ShowMessage('Baru');
+end;
+
+procedure TFListPenerimaanKas.ActDelExecute(Sender: TObject);
+begin
+  ShowMessage('Delete');
+end;
+
+procedure TFListPenerimaanKas.ActROExecute(Sender: TObject);
+begin
+  ShowMessage('Refreesh');
+end;
+
+procedure TFListPenerimaanKas.ActUpdateExecute(Sender: TObject);
+begin
+  ShowMessage('Ubah');
+end;
+
 Initialization
   RegisterClasses([TFListPenerimaanKas]);
 

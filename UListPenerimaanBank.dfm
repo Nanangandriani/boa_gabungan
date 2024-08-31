@@ -635,7 +635,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
     object dxBarDelete: TdxBarButton
       Action = ActDel
       Category = 0
-      Enabled = False
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D

@@ -2,8 +2,8 @@ object FDaftarTagihan: TFDaftarTagihan
   Left = 0
   Top = 0
   Caption = 'Daftar Tagihan'
-  ClientHeight = 494
-  ClientWidth = 837
+  ClientHeight = 493
+  ClientWidth = 1001
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object FDaftarTagihan: TFDaftarTagihan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 837
-    Height = 462
+    Width = 1001
+    Height = 461
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
@@ -33,8 +33,8 @@ object FDaftarTagihan: TFDaftarTagihan
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 833
-        Height = 437
+        Width = 997
+        Height = 436
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -49,7 +49,16 @@ object FDaftarTagihan: TFDaftarTagihan
             EditButtons = <>
             FieldName = 'tgl_faktur'
             Footers = <>
-            Title.Caption = 'Tanggal'
+            Title.Caption = 'Tanggal | Tagihan'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tgl_tempo'
+            Footers = <>
+            Title.Caption = 'Tanggal | Tempo'
             Width = 100
           end
           item
@@ -95,15 +104,15 @@ object FDaftarTagihan: TFDaftarTagihan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 462
-    Width = 837
+    Top = 461
+    Width = 1001
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 453
     ExplicitWidth = 831
     object BBatal: TRzBitBtn
-      Left = 761
+      Left = 925
       Top = 1
       Height = 30
       Align = alRight
@@ -164,7 +173,7 @@ object FDaftarTagihan: TFDaftarTagihan
       ExplicitLeft = 755
     end
     object BSave: TRzBitBtn
-      Left = 686
+      Left = 850
       Top = 1
       Height = 30
       Align = alRight
@@ -252,6 +261,9 @@ object FDaftarTagihan: TFDaftarTagihan
       FieldName = 'jum_piutang'
       DisplayFormat = '#,##0.00'
     end
+    object MemDetailPiutangtgl_tempo: TDateField
+      FieldName = 'tgl_tempo'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object tgl_faktur: TMTDateTimeDataFieldEh
@@ -278,6 +290,11 @@ object FDaftarTagihan: TFDaftarTagihan
           DisplayFormat = '#,##0.00'
           currency = False
           Precision = 15
+        end
+        object tgl_tempo: TMTDateTimeDataFieldEh
+          FieldName = 'tgl_tempo'
+          DateTimeDataType = fdtDateEh
+          DisplayWidth = 20
         end
         object pilih: TMTBooleanDataFieldEh
           FieldName = 'pilih'

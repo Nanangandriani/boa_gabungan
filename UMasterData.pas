@@ -48,6 +48,8 @@ begin
     begin
       edKode_Pelanggan.Clear;
       edNama_Pelanggan.Clear;
+      MemDetailAkun.EmptyTable;
+      MemDetailPiutang.EmptyTable;
       edKodeJenisTrans.Text:=MemMasterData['KD_MASTER'];
       edNamaJenisTrans.Text:=MemMasterData['NM_MASTER'];
       edNamaBank.Text:=SelectRow('select account_name_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));

@@ -112,15 +112,19 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRO: TAction
       Caption = 'Refresh  '
+      OnExecute = ActROExecute
     end
     object ActDel: TAction
       Caption = 'Delete'
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -631,7 +635,6 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
     object dxBarDelete: TdxBarButton
       Action = ActDel
       Category = 0
-      Enabled = False
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D

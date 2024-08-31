@@ -255,6 +255,9 @@ begin
   ShowMessage('Buat Validasi Jumlah Debit Kredit Balance');
   ShowMessage('Buat Validasi Jumlah Akun Kredit dengan Total Faktur Balance');
   ShowMessage('Save/update');
+  //t_bank_acceptance
+  //t_bank_acceptance_det
+  //t_bank_acceptance_invoice
 
 end;
 
@@ -287,6 +290,7 @@ procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
 begin
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
   begin
+    FDaftarTagihan.vcall:='terima_bank';
     FDaftarTagihan.kd_outlet:=edKode_Pelanggan.Text;
     FDaftarTagihan.RefreshGrid;
     FDaftarTagihan.show;

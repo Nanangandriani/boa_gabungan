@@ -70,6 +70,10 @@ type
     QRencanaLunasHutangaccount_number_bank: TStringField;
     QRencanaLunasHutangaccount_name_bank: TStringField;
     DsRencanaLunasHutang: TDataSource;
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,6 +86,32 @@ var
 implementation
 
 {$R *.dfm}
+
+uses UDataRencanaLunasPiutang;
+procedure TFListRencanaLunasPiutang.ActBaruExecute(Sender: TObject);
+begin
+  FDataRencanaLunasPiutang.Clear;
+  //FDataRencanaLunasPiutang.Autocode;
+  FDataRencanaLunasPiutang.Status:=0;
+  FDataRencanaLunasPiutang.edNoTrans.Enabled:=true;
+  FDataRencanaLunasPiutang.ShowModal;
+end;
+
+procedure TFListRencanaLunasPiutang.ActDelExecute(Sender: TObject);
+begin
+  ShowMessage('Delete');
+end;
+
+procedure TFListRencanaLunasPiutang.ActROExecute(Sender: TObject);
+begin
+  ShowMessage('Refresh');
+end;
+
+procedure TFListRencanaLunasPiutang.ActUpdateExecute(Sender: TObject);
+begin
+  ShowMessage('Ubah');
+end;
+
 Initialization
   RegisterClasses([TFListRencanaLunasPiutang]);
 
