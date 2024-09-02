@@ -105,7 +105,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function;
+uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
+  UDaftarRencanaLunasPiutang;
 
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
@@ -297,7 +298,16 @@ begin
   end;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '1' then
   begin
-    ShowMessage('Tampil Rencana');
+    FDaftarRencanaLunasPiutang.vcall:='rencana_lunas_piutang';
+    FDaftarRencanaLunasPiutang.kd_outlet:=edKode_Pelanggan.Text;
+    FDaftarRencanaLunasPiutang.periode1:=dtPeriode1.Date;
+    FDaftarRencanaLunasPiutang.periode2:=dtPeriode2.Date;
+    FDaftarRencanaLunasPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
+    FDaftarRencanaLunasPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
+    FDaftarRencanaLunasPiutang.dtPeriode1.Date:=dtPeriode1.Date;
+    FDaftarRencanaLunasPiutang.dtPeriode2.Date:=dtPeriode2.Date;
+    FDaftarRencanaLunasPiutang.RefreshGrid;
+    FDaftarRencanaLunasPiutang.show;
   end;
 end;
 

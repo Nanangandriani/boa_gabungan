@@ -46,6 +46,7 @@ type
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure DBGridTagihanColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure BSaveClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,6 +63,11 @@ implementation
 {$R *.dfm}
 
 uses UDaftarTagihan, Ubrowse_pelanggan;
+procedure TFDataRencanaLunasPiutang.BSaveClick(Sender: TObject);
+begin
+  ShowMessage('Save/update');
+end;
+
 procedure TFDataRencanaLunasPiutang.Clear;
 begin
   edNoTrans.Clear;

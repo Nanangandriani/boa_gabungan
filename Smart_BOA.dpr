@@ -160,7 +160,8 @@ uses
   UListPenerimaanKas in 'UListPenerimaanKas.pas' {FListPenerimaanKas},
   UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
   UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans},
-  UDataRencanaLunasPiutang in 'UDataRencanaLunasPiutang.pas' {FDataRencanaLunasPiutang};
+  UDataRencanaLunasPiutang in 'UDataRencanaLunasPiutang.pas' {FDataRencanaLunasPiutang},
+  UDaftarRencanaLunasPiutang in 'UDaftarRencanaLunasPiutang.pas' {FDaftarRencanaLunasPiutang};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -224,6 +225,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
   Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
   Application.CreateForm(TFDataRencanaLunasPiutang, FDataRencanaLunasPiutang);
+  Application.CreateForm(TFDaftarRencanaLunasPiutang, FDaftarRencanaLunasPiutang);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);

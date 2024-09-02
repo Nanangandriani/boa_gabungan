@@ -25,6 +25,7 @@ type
     MemDetailPiutangjum_piutang: TCurrencyField;
     MemDetailPiutangtgl_tempo: TDateField;
     procedure BSaveClick(Sender: TObject);
+    procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -185,6 +186,11 @@ begin
       Close;
 end;
 
+procedure TFDaftarTagihan.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure TFDaftarTagihan.BSaveClick(Sender: TObject);
 begin
   if vcall='terima_bank' then
@@ -216,23 +222,6 @@ begin
     end;
   end;
 
-
-  if vcall='rencana_lunas_piutang' then
-  begin
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' SELECT * from ('+
-              ' SELECT * '+
-              ' FROM "cash_banks"."vget_piutang") a '+
-              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
-              ' AND date_tempo between '+QuotedStr(formatdatetime('yyyy-mm-dd',periode1))+' '+
-              ' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',periode2))+' '+
-              ' ORDER BY date_tempo desc');
-      open;
-    end;
-  end;
 
     FDaftarTagihan.MemDetailPiutang.active:=false;
     FDaftarTagihan.MemDetailPiutang.active:=true;

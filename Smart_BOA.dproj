@@ -713,6 +713,10 @@
             <Form>FDataRencanaLunasPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UDaftarRencanaLunasPiutang.pas">
+            <Form>FDaftarRencanaLunasPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

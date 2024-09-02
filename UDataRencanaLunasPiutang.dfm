@@ -21,6 +21,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1127
     object Label8: TLabel
       Left = 21
       Top = 43
@@ -78,7 +79,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
       Caption = ':'
     end
     object Label5: TLabel
-      Left = 10
+      Left = 22
       Top = 122
       Width = 60
       Height = 15
@@ -133,7 +134,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     object MemKeterangan: TMemo
       Left = 132
       Top = 119
-      Width = 344
+      Width = 354
       Height = 76
       TabOrder = 5
     end
@@ -145,9 +146,8 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = -524
-    ExplicitTop = 410
-    ExplicitWidth = 1152
+    ExplicitTop = 518
+    ExplicitWidth = 1127
     object BBatal: TRzBitBtn
       Left = 1057
       Top = 1
@@ -207,7 +207,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1076
+      ExplicitLeft = 1051
     end
     object BSave: TRzBitBtn
       Left = 982
@@ -216,6 +216,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
       Align = alRight
       Caption = 'Save'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -268,7 +269,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1001
+      ExplicitLeft = 976
     end
     object Edautocode: TEdit
       Left = 712
@@ -292,13 +293,13 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 153
-    ExplicitHeight = 374
+    ExplicitWidth = 1127
+    ExplicitHeight = 317
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1148
-      ExplicitHeight = 224
+      ExplicitWidth = 1123
+      ExplicitHeight = 292
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
