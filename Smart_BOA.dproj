@@ -717,6 +717,14 @@
             <Form>FDaftarRencanaLunasPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListKolektor.pas">
+            <Form>FListKolektor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataProspekPelanggan.pas">
+            <Form>FDataProspekPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

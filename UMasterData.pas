@@ -63,6 +63,14 @@ begin
       gbDataPiutang.Visible:=false;
       TabDetailFaktur.TabVisible:=false;
       Panel1.Height:=230;
+      lbSumberTagihan.Visible:=false;
+      lbSumberTagihann.Visible:=false;
+      lbJenisBayar.Visible:=false;
+      lbJenisBayarr.Visible:=false;
+      cbSumberTagihan.Visible:=false;
+      cbJenisBayar.Visible:=false;
+      cbSumberTagihan.ItemIndex:=0;
+      cbJenisBayar.ItemIndex:=0;
     end;
   end;
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
@@ -72,6 +80,14 @@ begin
       gbDataPiutang.Visible:=true;
       TabDetailFaktur.TabVisible:=true;
       Panel1.Height:=340;
+      lbSumberTagihan.Visible:=true;
+      lbSumberTagihann.Visible:=true;
+      lbJenisBayar.Visible:=true;
+      lbJenisBayarr.Visible:=true;
+      cbSumberTagihan.Visible:=true;
+      cbJenisBayar.Visible:=true;
+      cbSumberTagihan.ItemIndex:=0;
+      cbJenisBayar.ItemIndex:=0;
     end;
   end;
 

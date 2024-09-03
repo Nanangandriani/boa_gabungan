@@ -161,7 +161,9 @@ uses
   UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
   UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans},
   UDataRencanaLunasPiutang in 'UDataRencanaLunasPiutang.pas' {FDataRencanaLunasPiutang},
-  UDaftarRencanaLunasPiutang in 'UDaftarRencanaLunasPiutang.pas' {FDaftarRencanaLunasPiutang};
+  UDaftarRencanaLunasPiutang in 'UDaftarRencanaLunasPiutang.pas' {FDaftarRencanaLunasPiutang},
+  UListKolektor in 'UListKolektor.pas' {FListKolektor},
+  UDataProspekPelanggan in 'UDataProspekPelanggan.pas' {FDataProspekPelanggan};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -226,6 +228,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
   Application.CreateForm(TFDataRencanaLunasPiutang, FDataRencanaLunasPiutang);
   Application.CreateForm(TFDaftarRencanaLunasPiutang, FDaftarRencanaLunasPiutang);
+  Application.CreateForm(TFListKolektor, FListKolektor);
+  Application.CreateForm(TFDataProspekPelanggan, FDataProspekPelanggan);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);

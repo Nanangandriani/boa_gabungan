@@ -184,6 +184,34 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Height = 15
       Caption = 'Jumlah'
     end
+    object lbSumberTagihan: TLabel
+      Left = 324
+      Top = 126
+      Width = 85
+      Height = 15
+      Caption = 'Sumber Tagihan'
+    end
+    object lbSumberTagihann: TLabel
+      Left = 421
+      Top = 126
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object lbJenisBayarr: TLabel
+      Left = 421
+      Top = 152
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object lbJenisBayar: TLabel
+      Left = 324
+      Top = 152
+      Width = 94
+      Height = 15
+      Caption = 'Jenis Pembayaran'
+    end
     object edNoTrans: TEdit
       Left = 132
       Top = 16
@@ -348,6 +376,29 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         TabOrder = 1
       end
+    end
+    object cbSumberTagihan: TComboBox
+      Left = 430
+      Top = 123
+      Width = 103
+      Height = 23
+      TabOrder = 15
+      Items.Strings = (
+        ''
+        'Non DPP'
+        'DPP')
+    end
+    object cbJenisBayar: TComboBox
+      Left = 430
+      Top = 149
+      Width = 103
+      Height = 23
+      TabOrder = 16
+      Items.Strings = (
+        ''
+        'Tunai'
+        'Resi'
+        'Cheque / Giro')
     end
   end
   object Panel2: TPanel
@@ -526,7 +577,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridAkunColumns0EditButtons0Click
+              end>
             FieldName = 'kd_akun'
             Footers = <>
             Title.Caption = 'Kode Akun'

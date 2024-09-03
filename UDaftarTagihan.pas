@@ -222,6 +222,22 @@ begin
     end;
   end;
 
+  if vcall='rencana_lunas_piutang' then
+  begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * '+
+              ' FROM "cash_banks"."vget_piutang") a '+
+              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
+              ' AND date_tempo BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',periode1))+' '+
+              ' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',periode2))+' '+
+              ' ORDER BY date_tempo desc');
+      open;
+    end;
+  end;
 
     FDaftarTagihan.MemDetailPiutang.active:=false;
     FDaftarTagihan.MemDetailPiutang.active:=true;

@@ -36,7 +36,7 @@ implementation
 
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
-  UDataMasterAkunTrans;
+  UDataMasterAkunTrans, UDataPenerimaanBank;
 
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
@@ -48,6 +48,18 @@ end;
 
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
 begin
+    if (vpanggil = 'terima_bank')then
+    begin
+      FDataPenerimaanBank.MemDetailAkun.edit;
+      FDataPenerimaanBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FDataPenerimaanBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
+      FDataPenerimaanBank.MemDetailAkun['debit']:=0;
+      FDataPenerimaanBank.MemDetailAkun['keterangan']:='-';
+      FDataPenerimaanBank.MemDetailAkun.post;
+      QDaftar_Perk.Close;
+    end;
+
     if (vpanggil = 'do_ppn')then
     begin
       //FNewDeliveryOrder.edKodeAkunPPN.Text:=QDaftar_Perk.fieldbyname('code').AsString;

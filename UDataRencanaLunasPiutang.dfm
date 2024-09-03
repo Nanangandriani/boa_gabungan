@@ -16,43 +16,42 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     Left = 0
     Top = 0
     Width = 1133
-    Height = 201
+    Height = 161
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1127
     object Label8: TLabel
       Left = 21
-      Top = 43
+      Top = 69
       Width = 40
       Height = 15
       Caption = 'Periode'
     end
     object Label9: TLabel
       Left = 118
-      Top = 43
+      Top = 69
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 324
-      Top = 43
+      Top = 69
       Width = 17
       Height = 15
       Caption = 's/d'
     end
     object Label21: TLabel
       Left = 22
-      Top = 69
+      Top = 95
       Width = 56
       Height = 15
       Caption = 'Pelanggan'
     end
     object Label22: TLabel
       Left = 119
-      Top = 69
+      Top = 95
       Width = 3
       Height = 15
       Caption = ':'
@@ -72,22 +71,36 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
       Caption = 'Nomor'
     end
     object Label4: TLabel
-      Left = 117
-      Top = 122
+      Left = 645
+      Top = 17
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
-      Left = 22
-      Top = 122
+      Left = 550
+      Top = 17
       Width = 60
       Height = 15
       Caption = 'Keterangan'
     end
+    object Label1: TLabel
+      Left = 118
+      Top = 43
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label2: TLabel
+      Left = 21
+      Top = 43
+      Width = 91
+      Height = 15
+      Caption = 'Tanggal Transaksi'
+    end
     object dtPeriode1: TRzDateTimePicker
       Left = 132
-      Top = 40
+      Top = 66
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -97,7 +110,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     end
     object dtPeriode2: TRzDateTimePicker
       Left = 347
-      Top = 40
+      Top = 66
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -107,7 +120,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     end
     object edKode_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 66
+      Top = 92
       Width = 151
       Height = 23
       Text = ''
@@ -118,7 +131,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     end
     object edNama_Pelanggan: TEdit
       Left = 132
-      Top = 92
+      Top = 118
       Width = 354
       Height = 23
       TabOrder = 3
@@ -132,11 +145,21 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
       TabOrder = 4
     end
     object MemKeterangan: TMemo
-      Left = 132
-      Top = 119
+      Left = 660
+      Top = 14
       Width = 354
       Height = 76
       TabOrder = 5
+    end
+    object dtTrans: TRzDateTimePicker
+      Left = 132
+      Top = 40
+      Width = 186
+      Height = 23
+      Date = 45405.000000000000000000
+      Format = ''
+      Time = 0.597438842589326700
+      TabOrder = 6
     end
   end
   object Panel2: TPanel
@@ -284,15 +307,16 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 201
+    Top = 161
     Width = 1133
-    Height = 326
+    Height = 366
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
+    ExplicitTop = 201
     ExplicitWidth = 1127
     ExplicitHeight = 317
     FixedDimension = 21
@@ -304,7 +328,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
         Left = 0
         Top = 0
         Width = 1129
-        Height = 301
+        Height = 341
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>

@@ -43,6 +43,9 @@ type
     Label4: TLabel;
     Label5: TLabel;
     MemKeterangan: TMemo;
+    dtTrans: TRzDateTimePicker;
+    Label1: TLabel;
+    Label2: TLabel;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure DBGridTagihanColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -71,6 +74,7 @@ end;
 procedure TFDataRencanaLunasPiutang.Clear;
 begin
   edNoTrans.Clear;
+  dtTrans.date:=now();
   dtPeriode1.date:=now();
   dtPeriode2.date:=now();
   edKode_Pelanggan.Clear;
