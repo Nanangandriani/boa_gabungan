@@ -61,7 +61,6 @@ type
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure DBGridDetailCellClick(Column: TColumnEh);
     procedure DBGridDetailColEnter(Sender: TObject);
     procedure DBGridDetailColExit(Sender: TObject);
@@ -484,16 +483,6 @@ begin
   FMasterData.vcall:='jenis_retur';
   FMasterData.update_grid('code','name','description','t_type_sales_return','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.ShowModal;
-end;
-
-procedure TFDataReturPenjualan.FormShow(Sender: TObject);
-begin
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
-  begin
-    btMasterJenisRetur.Visible:=false;
-  end else begin
-    btMasterJenisRetur.Visible:=true;
-  end;
 end;
 
 procedure TFDataReturPenjualan.Autonumber;

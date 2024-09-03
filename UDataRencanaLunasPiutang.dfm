@@ -1,7 +1,7 @@
 object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
   Left = 0
   Top = 0
-  Caption = 'Data Rencana Lunas Piutang'
+  Caption = 'Data Rencana Pembayaran Piutang'
   ClientHeight = 559
   ClientWidth = 1133
   Color = clBtnFace

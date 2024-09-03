@@ -864,11 +864,13 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
     end
     object TabParameter: TRzTabSheet
       Caption = 'Parameter'
+      ExplicitWidth = 618
+      ExplicitHeight = 408
       object DBGridEhParameter: TDBGridEh
         Left = 0
-        Top = 233
+        Top = 241
         Width = 624
-        Height = 184
+        Height = 176
         Align = alClient
         DataSource = dsParameter
         DynProps = <>
@@ -915,11 +917,13 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
       end
       object Panel3: TPanel
         Left = 0
-        Top = 201
+        Top = 209
         Width = 624
         Height = 32
         Align = alTop
         TabOrder = 1
+        ExplicitTop = 201
+        ExplicitWidth = 618
         object btBatalParameter: TRzBitBtn
           Left = 548
           Top = 1
@@ -980,6 +984,7 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 542
         end
         object btSaveParameter: TRzBitBtn
           Left = 473
@@ -1041,6 +1046,7 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 467
         end
         object btRefreshParameter: TRzBitBtn
           Left = 398
@@ -1103,6 +1109,7 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 392
         end
         object btBaruParameter: TRzBitBtn
           Left = 323
@@ -1165,13 +1172,14 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 317
         end
       end
       object Panel4: TPanel
         Left = 0
         Top = 0
         Width = 624
-        Height = 201
+        Height = 209
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
@@ -1185,28 +1193,28 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
         end
         object Label15: TLabel
           Left = 20
-          Top = 106
+          Top = 122
           Width = 28
           Height = 15
           Caption = 'Value'
         end
         object Label16: TLabel
           Left = 20
-          Top = 48
+          Top = 77
           Width = 60
           Height = 15
           Caption = 'Keterangan'
         end
         object Label17: TLabel
           Left = 117
-          Top = 48
+          Top = 77
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label22: TLabel
           Left = 117
-          Top = 106
+          Top = 122
           Width = 3
           Height = 15
           Caption = ':'
@@ -1220,14 +1228,14 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
         end
         object Label24: TLabel
           Left = 117
-          Top = 77
+          Top = 48
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label25: TLabel
           Left = 20
-          Top = 77
+          Top = 48
           Width = 35
           Height = 15
           Caption = 'Modul'
@@ -1240,7 +1248,7 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
           ReadOnly = True
           TabOrder = 0
         end
-        object edKetParameter: TEdit
+        object edModulParameter: TEdit
           Left = 132
           Top = 45
           Width = 313
@@ -1248,28 +1256,29 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
           ReadOnly = True
           TabOrder = 1
         end
-        object edModulParameter: TEdit
-          Left = 132
-          Top = 74
-          Width = 313
-          Height = 23
-          ReadOnly = True
-          TabOrder = 2
-        end
         object edValueParameter: TMemo
           Left = 132
-          Top = 103
+          Top = 119
           Width = 313
           Height = 82
           ScrollBars = ssVertical
+          TabOrder = 2
+        end
+        object edKetParameter: TMemo
+          Left = 132
+          Top = 74
+          Width = 313
+          Height = 39
+          ParentShowHint = False
+          ReadOnly = True
+          ScrollBars = ssVertical
+          ShowHint = True
           TabOrder = 3
         end
       end
     end
     object TabSetJenisReturJual: TRzTabSheet
       Caption = 'Setiing Jenis Retur'
-      ExplicitWidth = 618
-      ExplicitHeight = 408
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -1279,7 +1288,6 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 618
         object Label26: TLabel
           Left = 20
           Top = 19
@@ -1360,7 +1368,6 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitWidth = 618
         object btBatal_JenisRetur: TRzBitBtn
           Left = 548
           Top = 1
@@ -1421,7 +1428,6 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 542
         end
         object btSimpan_JenisRetur: TRzBitBtn
           Left = 398
@@ -1483,7 +1489,6 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 392
         end
         object btRefresh_JenisRetur: TRzBitBtn
           Left = 473
@@ -1545,7 +1550,6 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 467
         end
         object btBaru_JenisRetur: TRzBitBtn
           Left = 323
@@ -1607,7 +1611,6 @@ object FSetMasterPenjulan: TFSetMasterPenjulan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 317
         end
       end
       object DBGrid_JenisRetur: TDBGridEh

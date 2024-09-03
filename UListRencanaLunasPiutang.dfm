@@ -1,7 +1,7 @@
 object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
   Left = 0
   Top = 0
-  Caption = 'Rencana Lunas Piutang'
+  Caption = 'Rencana Pembayaran Piutang'
   ClientHeight = 692
   ClientWidth = 1036
   Color = clBtnFace

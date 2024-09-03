@@ -129,6 +129,8 @@ end;
 
 procedure TFDataListParameter.ActROExecute(Sender: TObject);
 begin
+  DBGrid.StartLoadingStatus();
+  try
    with QParameter do
    begin
        close;
@@ -138,11 +140,6 @@ begin
                  ' WHERE deleted_at IS NULL ORDER BY key_parameter asc ';
        open;
    end;
-
-  DBGrid.StartLoadingStatus();
-  try
-    QParameter.Close;
-    QParameter.Open;
   finally
   DBGrid.FinishLoadingStatus();
   end;
@@ -170,13 +167,14 @@ begin
       begin
       with FSetMasterPenjulan do
       begin
+        TabSetJenisReturJual.TabVisible:=false;
         TabSetSumberOrder.TabVisible:=false;
         TabSetSumberJual.TabVisible:=false;
         TabParameter.TabVisible:=true;
         RzPageControl1.ActivePage:=FSetMasterPenjulan.TabParameter;
         status:=1;
         DBGridEhParameter.Visible:=false;
-        ClientHeight:=320;
+        ClientHeight:=330;
         edKeyParameter.Text:=Dm.Qtemp.fieldbyname('kd_master').AsString;
         edValueParameter.Text:=Dm.Qtemp.fieldbyname('nm_master').AsString;
         edKetParameter.Text:=Dm.Qtemp.fieldbyname('keterangan').AsString;

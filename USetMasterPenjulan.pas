@@ -76,7 +76,6 @@ type
     Label24: TLabel;
     Label25: TLabel;
     edKeyParameter: TEdit;
-    edKetParameter: TEdit;
     edModulParameter: TEdit;
     QParameter: TUniQuery;
     dsParameter: TDataSource;
@@ -116,6 +115,7 @@ type
     QJenisReturkd_master: TStringField;
     QJenisReturnm_master: TMemoField;
     QJenisReturketerangan: TStringField;
+    edKetParameter: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure DBGrid_SumberOrderDblClick(Sender: TObject);
@@ -167,7 +167,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UHomeLogin, UMy_Function;
+uses UDataModule, UHomeLogin, UMy_Function, UDataListParameter;
 
 procedure TFSetMasterPenjulan.btBaruParameterClick(Sender: TObject);
 begin
@@ -334,8 +334,9 @@ begin
           end;
         end;
       end;
+      FDataListParameter.Refresh;
+      //btRefreshParameterClick(Sender);
       Close;
-      btRefreshParameterClick(Sender);
 end;
 
 procedure TFSetMasterPenjulan.btSimpanSumberJualClick(Sender: TObject);

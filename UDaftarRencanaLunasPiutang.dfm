@@ -1,7 +1,7 @@
 object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
   Left = 0
   Top = 0
-  Caption = 'Daftar Rencana Lunas Piutang'
+  Caption = 'Daftar Rencana Pembayaran Piutang'
   ClientHeight = 568
   ClientWidth = 940
   Color = clBtnFace
@@ -20,6 +20,7 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 934
     object Label8: TLabel
       Left = 21
       Top = 74
@@ -166,14 +167,13 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitLeft = 96
-    ExplicitTop = 95
-    ExplicitHeight = 367
+    ExplicitWidth = 934
+    ExplicitHeight = 422
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
-      ExplicitWidth = 997
-      ExplicitHeight = 436
+      ExplicitWidth = 930
+      ExplicitHeight = 397
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -258,9 +258,8 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = -61
-    ExplicitTop = 461
-    ExplicitWidth = 1001
+    ExplicitTop = 527
+    ExplicitWidth = 934
     object BBatal: TRzBitBtn
       Left = 864
       Top = 1
@@ -321,7 +320,7 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 925
+      ExplicitLeft = 858
     end
     object BSave: TRzBitBtn
       Left = 789
@@ -382,7 +381,7 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 850
+      ExplicitLeft = 783
     end
   end
   object MemDetailPiutang: TMemTableEh

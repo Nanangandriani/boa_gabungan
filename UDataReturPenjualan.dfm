@@ -11,7 +11,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -22,7 +21,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 137
+    ExplicitWidth = 1055
+    ExplicitHeight = 135
     object Label39: TLabel
       Left = 20
       Top = 80
@@ -39,17 +39,19 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object Label8: TLabel
       Left = 492
-      Top = 24
+      Top = 118
       Width = 25
       Height = 15
       Caption = 'Jenis'
+      Visible = False
     end
     object Label9: TLabel
       Left = 590
-      Top = 24
+      Top = 118
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label10: TLabel
       Left = 21
@@ -81,24 +83,25 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object Label15: TLabel
       Left = 590
-      Top = 52
+      Top = 24
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label16: TLabel
       Left = 492
-      Top = 52
+      Top = 24
       Width = 60
       Height = 15
       Caption = 'Keterangan'
     end
     object btMasterJenisRetur: TSpeedButton
       Left = 819
-      Top = 21
+      Top = 115
       Width = 23
       Height = 22
       Caption = '+'
+      Visible = False
       OnClick = btMasterJenisReturClick
     end
     object edKode_Pelanggan: TRzButtonEdit
@@ -121,18 +124,19 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object edNamaJenis: TRzButtonEdit
       Left = 604
-      Top = 21
+      Top = 115
       Width = 209
       Height = 23
       Text = ''
       TabOrder = 2
+      Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaJenisButtonClick
     end
     object edKodeJenis: TEdit
       Left = 848
-      Top = 20
+      Top = 114
       Width = 100
       Height = 23
       TabOrder = 3
@@ -158,9 +162,9 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object MemKeterangan: TMemo
       Left = 604
-      Top = 49
+      Top = 21
       Width = 344
-      Height = 67
+      Height = 87
       TabOrder = 6
     end
   end
@@ -175,11 +179,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
+    ExplicitTop = 135
+    ExplicitWidth = 1055
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1051
-      ExplicitHeight = 364
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
