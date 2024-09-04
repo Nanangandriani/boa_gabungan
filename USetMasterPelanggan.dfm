@@ -25,13 +25,11 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     UseColoredTabs = True
     TabIndex = 5
     TabOrder = 0
-    ExplicitWidth = 678
-    ExplicitHeight = 441
+    ExplicitWidth = 804
+    ExplicitHeight = 444
     FixedDimension = 21
     object TabSetJenisPelanggan: TRzTabSheet
       Caption = 'Seting Jenis Pelanggan'
-      ExplicitWidth = 674
-      ExplicitHeight = 416
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -41,7 +39,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 704
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -157,8 +154,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 113
-        ExplicitWidth = 674
         object btBatal_jnispel: TRzBitBtn
           Left = 730
           Top = 1
@@ -219,7 +214,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 598
         end
         object btSimpan_jnispel: TRzBitBtn
           Left = 580
@@ -281,7 +275,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 448
         end
         object btRefresh_jnispel: TRzBitBtn
           Left = 655
@@ -343,7 +336,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 523
         end
         object btBaru_jnispel: TRzBitBtn
           Left = 505
@@ -405,7 +397,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 373
         end
       end
       object DBGrid_jnispel: TDBGridEh
@@ -463,8 +454,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     end
     object TabSetTypeJual: TRzTabSheet
       Caption = 'Seting Type Jual'
-      ExplicitWidth = 680
-      ExplicitHeight = 425
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -474,7 +463,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 704
         object Label1: TLabel
           Left = 20
           Top = 19
@@ -555,7 +543,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitWidth = 704
         object btBatal_typejual: TRzBitBtn
           Left = 730
           Top = 1
@@ -616,7 +603,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 628
         end
         object btSimpan_typejual: TRzBitBtn
           Left = 580
@@ -678,7 +664,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 478
         end
         object btRefresh_typejual: TRzBitBtn
           Left = 655
@@ -740,7 +725,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 553
         end
         object btBaru_typejual: TRzBitBtn
           Left = 505
@@ -802,7 +786,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 403
         end
       end
       object DBGrid_typejual: TDBGridEh
@@ -851,8 +834,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     end
     object TabSetGolongan: TRzTabSheet
       Caption = 'Seting Golongan'
-      ExplicitWidth = 680
-      ExplicitHeight = 425
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -862,7 +843,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 704
         object Label8: TLabel
           Left = 20
           Top = 19
@@ -943,7 +923,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitWidth = 704
         object btBatal_golpel: TRzBitBtn
           Left = 730
           Top = 1
@@ -1004,7 +983,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 628
         end
         object btSimpan_golpel: TRzBitBtn
           Left = 580
@@ -1066,7 +1044,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 478
         end
         object btRefresh_golpel: TRzBitBtn
           Left = 655
@@ -1128,7 +1105,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 553
         end
         object btBaru_golpel: TRzBitBtn
           Left = 505
@@ -1190,7 +1166,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 403
         end
       end
       object DBGrid_golpel: TDBGridEh
@@ -1239,8 +1214,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     end
     object TabSetDetail: TRzTabSheet
       Caption = 'Setting Detail Pelanggan'
-      ExplicitWidth = 680
-      ExplicitHeight = 425
       object Panel8: TPanel
         Left = 0
         Top = 0
@@ -1250,7 +1223,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 680
         object Label12: TLabel
           Left = 20
           Top = 19
@@ -1331,7 +1303,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitWidth = 680
         object btBatal_detailpel: TRzBitBtn
           Left = 730
           Top = 1
@@ -1392,7 +1363,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 604
         end
         object btSimpan_detailpel: TRzBitBtn
           Left = 580
@@ -1454,7 +1424,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 454
         end
         object btRefresh_detailpel: TRzBitBtn
           Left = 655
@@ -1516,7 +1485,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 529
         end
         object btBaru_detailpel: TRzBitBtn
           Left = 505
@@ -1578,7 +1546,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 379
         end
       end
       object DBGrid_detailpel: TDBGridEh
@@ -1627,10 +1594,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     end
     object TabSetJenisUsaha: TRzTabSheet
       Caption = 'Setiing Jenis Usaha'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel9: TPanel
         Left = 0
         Top = 0
@@ -1640,8 +1603,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 704
         object Label24: TLabel
           Left = 20
           Top = 19
@@ -1722,8 +1683,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 121
-        ExplicitWidth = 704
         object btBatal_jnisusaha: TRzBitBtn
           Left = 730
           Top = 1
@@ -1784,7 +1743,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 628
         end
         object btSimpan_jnisusaha: TRzBitBtn
           Left = 580
@@ -1846,7 +1804,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 478
         end
         object btRefresh_jnisusaha: TRzBitBtn
           Left = 655
@@ -1908,7 +1865,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 553
         end
         object btBaru_jnisusaha: TRzBitBtn
           Left = 505
@@ -1970,7 +1926,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 403
         end
       end
       object DBGrid_JnisUsaha: TDBGridEh
@@ -2019,10 +1974,8 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     end
     object TabSetKantorPusat: TRzTabSheet
       Caption = 'Setting Kantor Pusat'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 800
+      ExplicitHeight = 419
       object Panel11: TPanel
         Left = 0
         Top = 0
@@ -2032,8 +1985,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = -5
-        ExplicitWidth = 788
+        ExplicitWidth = 800
         object Label32: TLabel
           Left = 20
           Top = 19
@@ -2222,8 +2174,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 153
-        ExplicitWidth = 704
+        ExplicitWidth = 800
         object btBatal_KantorPusat: TRzBitBtn
           Left = 730
           Top = 1
@@ -2284,7 +2235,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 628
+          ExplicitLeft = 724
         end
         object btSimpan_KantorPusat: TRzBitBtn
           Left = 580
@@ -2346,7 +2297,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 478
+          ExplicitLeft = 574
         end
         object btRefresh_KantorPusat: TRzBitBtn
           Left = 655
@@ -2408,7 +2359,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 553
+          ExplicitLeft = 649
         end
         object btBaru_KantorPusat: TRzBitBtn
           Left = 505
@@ -2470,7 +2421,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 403
+          ExplicitLeft = 499
         end
       end
       object DBGrid_KantorPusat: TDBGridEh

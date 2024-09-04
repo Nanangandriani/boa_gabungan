@@ -19,10 +19,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1395
     Height = 583
     Hint = ''
-    ActivePage = TabDataBiaya
+    ActivePage = TabDataMuatan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1389

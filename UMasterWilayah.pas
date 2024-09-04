@@ -63,7 +63,7 @@ implementation
 
 uses USetMasterWilayah, UMasterData, UDataModule, UNew_Pelanggan, UMy_Function,
   Ubrowse_pelanggan, UDataProspekPelanggan, UListOrderTelemarketing,
-  UMasterSales, UListSalesOrder;
+  UMasterSales, UListSalesOrder, UDataKolektor;
 
 procedure TFMasterWilayah.RefreshGrid;
 begin
@@ -177,6 +177,13 @@ end;
 
 procedure TFMasterWilayah.DBGridCustomerDblClick(Sender: TObject);
 begin
+  if vcall='m_kolektor' then
+  begin
+    FDataKolektor.edKodeKares.text:= edKode_kares.Text;
+    FDataKolektor.edNamaKares.text:= edKaresidenan.Text;
+    FDataKolektor.edKodeKab.text:= MemDetailMasterWil['KODE_KABUPATEN'];
+    FDataKolektor.edNameKab.text:= MemDetailMasterWil['NAMA_KABUPATEN'];
+  end;
   if vcall='m_salesorder' then
   begin
     FListSalesOrder.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];

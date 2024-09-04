@@ -163,7 +163,11 @@ uses
   UDataRencanaLunasPiutang in 'UDataRencanaLunasPiutang.pas' {FDataRencanaLunasPiutang},
   UDaftarRencanaLunasPiutang in 'UDaftarRencanaLunasPiutang.pas' {FDaftarRencanaLunasPiutang},
   UListKolektor in 'UListKolektor.pas' {FListKolektor},
-  UDataProspekPelanggan in 'UDataProspekPelanggan.pas' {FDataProspekPelanggan};
+  UDataProspekPelanggan in 'UDataProspekPelanggan.pas' {FDataProspekPelanggan},
+  UDataKolektor in 'UDataKolektor.pas' {FDataKolektor},
+  UMasterSales in 'UMasterSales.pas' {FMasterSales},
+  UListPenagihanPiutang in 'UListPenagihanPiutang.pas' {FListPenagihanPiutang},
+  UDataPenagihanPiutang in 'UDataPenagihanPiutang.pas' {FDataPenagihanPiutang};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -230,6 +234,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarRencanaLunasPiutang, FDaftarRencanaLunasPiutang);
   Application.CreateForm(TFListKolektor, FListKolektor);
   Application.CreateForm(TFDataProspekPelanggan, FDataProspekPelanggan);
+  Application.CreateForm(TFDataKolektor, FDataKolektor);
+  Application.CreateForm(TFMasterSales, FMasterSales);
+  Application.CreateForm(TFListPenagihanPiutang, FListPenagihanPiutang);
+  Application.CreateForm(TFDataPenagihanPiutang, FDataPenagihanPiutang);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
