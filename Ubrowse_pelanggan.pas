@@ -54,7 +54,8 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UMasterWilayah, UDaftarKlasifikasi, UNew_MasterBiayaDO,
   UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
   UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber,
-  UNew_DataPenjualan, UDataPenerimaanBank, UDataRencanaLunasPiutang;
+  UNew_DataPenjualan, UDataPenerimaanBank, UDataRencanaLunasPiutang,
+  UDataPenagihanPiutang;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 begin
@@ -118,6 +119,27 @@ end;
 procedure TFbrowse_data_pelanggan.DBGridCustomerDblClick(Sender: TObject);
 begin
   //showmessage(vcall);
+  if vcall='dpp' then
+  begin
+     FDataPenagihanPiutang.MemDetail.insert;
+     FDataPenagihanPiutang.MemDetail['kode_pel']:=Dm.Qtemp.fieldbyname('customer_code').value;
+     FDataPenagihanPiutang.MemDetail['nama_pel']:=Dm.Qtemp.fieldbyname('customer_name').value;
+     FDataPenagihanPiutang.MemDetail['no_invoice']:='0';
+     FDataPenagihanPiutang.MemDetail['no_invoice_tax']:='0';
+     //FDataPenagihanPiutang.MemDetail['tgl_faktur']:='';
+     //FDataPenagihanPiutang.MemDetail['tgl_tempo']:='';
+     FDataPenagihanPiutang.MemDetail['jum_piutang']:='0';
+     FDataPenagihanPiutang.MemDetail['tunai']:='0';
+     FDataPenagihanPiutang.MemDetail['bank_resi']:='0';
+     //FDataPenagihanPiutang.MemDetail['tgl_resi']:='';
+     FDataPenagihanPiutang.MemDetail['resi']:='0';
+     FDataPenagihanPiutang.MemDetail['nama_bank']:='';
+     FDataPenagihanPiutang.MemDetail['no_cek']:='';
+     //FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:='';
+     FDataPenagihanPiutang.MemDetail['nilai_cek']:='0';
+     FDataPenagihanPiutang.MemDetail['kontra_bon']:='0';
+     FDataPenagihanPiutang.MemDetail.post;
+  end;
   if vcall='rencana_lunas_piutang' then
   begin
     FDataRencanaLunasPiutang.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];

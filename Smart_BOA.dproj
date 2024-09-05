@@ -725,6 +725,22 @@
             <Form>FDataProspekPelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UDataKolektor.pas">
+            <Form>FDataKolektor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMasterSales.pas">
+            <Form>FMasterSales</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPenagihanPiutang.pas">
+            <Form>FListPenagihanPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataPenagihanPiutang.pas">
+            <Form>FDataPenagihanPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

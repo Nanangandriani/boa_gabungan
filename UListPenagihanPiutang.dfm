@@ -1,9 +1,9 @@
-object FListKolektor: TFListKolektor
+object FListPenagihanPiutang: TFListPenagihanPiutang
   Left = 0
   Top = 0
-  Caption = 'List Kolektor'
-  ClientHeight = 679
-  ClientWidth = 1013
+  Caption = 'List Penagihan Piutang'
+  ClientHeight = 582
+  ClientWidth = 1092
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListKolektor: TFListKolektor
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1013
+    Width = 1092
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,8 +22,7 @@ object FListKolektor: TFListKolektor
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -53
-    ExplicitWidth = 1066
+    ExplicitWidth = 1036
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -33,13 +32,13 @@ object FListKolektor: TFListKolektor
       Index = 0
     end
   end
-  object DBGridData: TDBGridEh
+  object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1013
-    Height = 552
+    Width = 1092
+    Height = 455
     Align = alClient
-    DataSource = DsKolektor
+    DataSource = DsListPenagihanPiutang
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -48,7 +47,7 @@ object FListKolektor: TFListKolektor
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code_kares'
+        FieldName = 'code_module'
         Footers = <>
         Visible = False
       end
@@ -56,16 +55,34 @@ object FListKolektor: TFListKolektor
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_kares'
+        FieldName = 'name_module'
         Footers = <>
-        Title.Caption = 'Karesidenan'
+        Title.Caption = 'Nama Module'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code_regency'
+        FieldName = 'account_name_bank'
+        Footers = <>
+        Title.Caption = 'Bank'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_number_bank'
+        Footers = <>
+        Title.Caption = 'Nomor Rekening'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'code_trans'
         Footers = <>
         Visible = False
       end
@@ -73,59 +90,25 @@ object FListKolektor: TFListKolektor
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_regency'
+        FieldName = 'name_trans'
         Footers = <>
-        Title.Caption = 'Kabupaten'
+        Title.Caption = 'Nama Transaksi'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code'
+        FieldName = 'description'
         Footers = <>
-        Title.Caption = 'Kode Kolektor'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name'
-        Footers = <>
-        Title.Caption = 'Nama Kolektor'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nik_employee'
-        Footers = <>
-        Title.Caption = 'NIK Karyawan'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'phone_number'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'address'
-        Footers = <>
-        Visible = False
+        Title.Caption = 'Keterangan'
+        Width = 250
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object ActMenu: TActionManager
-    Left = 560
+    Left = 600
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
@@ -174,7 +157,7 @@ object FListKolektor: TFListKolektor
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 560
+    Left = 600
     Top = 72
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -692,53 +675,73 @@ object FListKolektor: TFListKolektor
         0000000049454E44AE426082}
     end
   end
-  object QKolektor: TUniQuery
+  object QListPenagihanPiutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_collector"'
+      'select * from "public"."t_master_trans_account"'
       'where deleted_at is null order by created_at Desc')
-    Left = 388
+    Left = 428
     Top = 56
-    object QKolektorcode_kares: TStringField
-      FieldName = 'code_kares'
-      Size = 100
-    end
-    object QKolektorname_kares: TStringField
-      FieldName = 'name_kares'
-      Size = 255
-    end
-    object QKolektorcode_regency: TStringField
-      FieldName = 'code_regency'
-      Size = 100
-    end
-    object QKolektorname_regency: TStringField
-      FieldName = 'name_regency'
-      Size = 255
-    end
-    object QKolektorcode: TStringField
-      FieldName = 'code'
+    object QListPenagihanPiutangid: TGuidField
+      FieldName = 'id'
       Required = True
+      Size = 38
+    end
+    object QListPenagihanPiutangcreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QListPenagihanPiutangcreated_by: TStringField
+      FieldName = 'created_by'
       Size = 50
     end
-    object QKolektorname: TStringField
-      FieldName = 'name'
-      Size = 255
+    object QListPenagihanPiutangupdated_at: TDateTimeField
+      FieldName = 'updated_at'
     end
-    object QKolektornik_employee: TStringField
-      FieldName = 'nik_employee'
+    object QListPenagihanPiutangupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QListPenagihanPiutangdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QListPenagihanPiutangdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QListPenagihanPiutangcode_module: TStringField
+      FieldName = 'code_module'
+      Required = True
       Size = 100
     end
-    object QKolektorphone_number: TStringField
-      FieldName = 'phone_number'
+    object QListPenagihanPiutangname_module: TStringField
+      FieldName = 'name_module'
+      Size = 255
     end
-    object QKolektoraddress: TMemoField
-      FieldName = 'address'
+    object QListPenagihanPiutangcode_trans: TStringField
+      FieldName = 'code_trans'
+      Required = True
+      Size = 100
+    end
+    object QListPenagihanPiutangname_trans: TStringField
+      FieldName = 'name_trans'
+      Size = 255
+    end
+    object QListPenagihanPiutangdescription: TMemoField
+      FieldName = 'description'
       BlobType = ftMemo
     end
+    object QListPenagihanPiutangaccount_number_bank: TStringField
+      FieldName = 'account_number_bank'
+      Size = 100
+    end
+    object QListPenagihanPiutangaccount_name_bank: TStringField
+      FieldName = 'account_name_bank'
+      Size = 255
+    end
   end
-  object DsKolektor: TDataSource
-    DataSet = QKolektor
-    Left = 473
+  object DsListPenagihanPiutang: TDataSource
+    DataSet = QListPenagihanPiutang
+    Left = 489
     Top = 32
   end
 end

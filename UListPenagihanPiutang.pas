@@ -1,4 +1,4 @@
-unit UListKolektor;
+unit UListPenagihanPiutang;
 
 interface
 
@@ -28,10 +28,10 @@ uses
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
 
 type
-  TFListKolektor = class(TForm)
+  TFListPenagihanPiutang = class(TForm)
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
-    DBGridData: TDBGridEh;
+    DBGridOrder: TDBGridEh;
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -54,17 +54,22 @@ type
     dxBarUpdate: TdxBarButton;
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
-    QKolektor: TUniQuery;
-    DsKolektor: TDataSource;
-    QKolektorcode: TStringField;
-    QKolektorname: TStringField;
-    QKolektornik_employee: TStringField;
-    QKolektorphone_number: TStringField;
-    QKolektoraddress: TMemoField;
-    QKolektorcode_kares: TStringField;
-    QKolektorname_kares: TStringField;
-    QKolektorcode_regency: TStringField;
-    QKolektorname_regency: TStringField;
+    QListPenagihanPiutang: TUniQuery;
+    QListPenagihanPiutangid: TGuidField;
+    QListPenagihanPiutangcreated_at: TDateTimeField;
+    QListPenagihanPiutangcreated_by: TStringField;
+    QListPenagihanPiutangupdated_at: TDateTimeField;
+    QListPenagihanPiutangupdated_by: TStringField;
+    QListPenagihanPiutangdeleted_at: TDateTimeField;
+    QListPenagihanPiutangdeleted_by: TStringField;
+    QListPenagihanPiutangcode_module: TStringField;
+    QListPenagihanPiutangname_module: TStringField;
+    QListPenagihanPiutangcode_trans: TStringField;
+    QListPenagihanPiutangname_trans: TStringField;
+    QListPenagihanPiutangdescription: TMemoField;
+    QListPenagihanPiutangaccount_number_bank: TStringField;
+    QListPenagihanPiutangaccount_name_bank: TStringField;
+    DsListPenagihanPiutang: TDataSource;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -72,82 +77,41 @@ type
   private
     { Private declarations }
   public
-    Status : integer;
     { Public declarations }
   end;
 
 var
-  FListKolektor: TFListKolektor;
+  FListPenagihanPiutang: TFListPenagihanPiutang;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataKolektor, UDataModule;
+uses UDataModule, UDataPenagihanPiutang;
 
-procedure TFListKolektor.ActBaruExecute(Sender: TObject);
+procedure TFListPenagihanPiutang.ActBaruExecute(Sender: TObject);
 begin
-    FDataKolektor.Clear;
-    FDataKolektor.Autocode;
-    FDataKolektor.Edkode.Enabled:=false;
-    FDataKolektor.Status:=0;
-    FDataKolektor.ShowModal;
+  FDataPenagihanPiutang.Clear;
+  FDataPenagihanPiutang.Status:=0;
+  FDataPenagihanPiutang.ShowModal;
 end;
 
-procedure TFListKolektor.ActDelExecute(Sender: TObject);
+procedure TFListPenagihanPiutang.ActDelExecute(Sender: TObject);
 begin
   ShowMessage('Delete');
 end;
 
-procedure TFListKolektor.ActROExecute(Sender: TObject);
+procedure TFListPenagihanPiutang.ActROExecute(Sender: TObject);
 begin
-  DBGridData.StartLoadingStatus();
-  try
-    QKolektor.Close;
-    QKolektor.Open;
-  finally
-  DBGridData.FinishLoadingStatus();
-  end;
+  ShowMessage('Refresh');
 end;
 
-procedure TFListKolektor.ActUpdateExecute(Sender: TObject);
+procedure TFListPenagihanPiutang.ActUpdateExecute(Sender: TObject);
 begin
-   with Dm.Qtemp do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_collector" a '+
-                 ' WHERE code='+QuotedSTr(Qkolektor.FieldByName('code').AsString)+' '+
-                 ' AND deleted_at is null order by code,created_at Desc ';
-       open;
-   end;
-  if Dm.Qtemp.RecordCount=0 then
-  begin
-    ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
-    exit;
-  end;
-
-  if Dm.Qtemp.RecordCount<>0 then
-  begin
-  with FDataKolektor do
-  begin
-    Edkode.Text:=Dm.Qtemp.FieldByName('code').AsString;
-    Ednama.Text:=Dm.Qtemp.FieldByName('name').AsString;
-    edNikKaryawan.Text:=Dm.Qtemp.FieldByName('nik_employee').AsString;
-    EdNoTelp.Text:=Dm.Qtemp.FieldByName('phone_number').AsString;
-    MemAlamat.Text:=Dm.Qtemp.FieldByName('address').AsString;
-    edKodeKares.Text:=Dm.Qtemp.FieldByName('code_kares').AsString;
-    edKodeKab.Text:=Dm.Qtemp.FieldByName('code_regency').AsString;
-    edNamaKares.Text:=Dm.Qtemp.FieldByName('name_kares').AsString;
-    edNameKab.Text:=Dm.Qtemp.FieldByName('name_regency').AsString;
-  end;
-  end;
-  FDataKolektor.Edkode.Enabled:=false;
-  FDataKolektor.Show;
-  FDataKolektor.Status := 1;
+  ShowMessage('Update');
 end;
 
 Initialization
-  RegisterClasses([TFListKolektor]);
+  RegisterClasses([TFListPenagihanPiutang]);
 
 end.

@@ -443,14 +443,14 @@ end;
 procedure TFSetMasterPelanggan.DBGrid_KantorPusatDblClick(Sender: TObject);
 begin
   status:=1;
-  edKodeKantorPusat.Text:=QJenisUsaha.fieldbyname('code').AsString;
-  edNamaKantorPusat.Text:=QJenisUsaha.fieldbyname('name').AsString;
-  edTelp1KantorPusat.Text:=QJenisUsaha.fieldbyname('phone1').AsString;
-  edTelp2KantorPusat.Text:=QJenisUsaha.fieldbyname('phone2').AsString;
-  edNIKKantorPusat.Text:=QJenisUsaha.fieldbyname('nik').AsString;
-  MemNIKKantorPusat.Text:=QJenisUsaha.fieldbyname('address_nik').AsString;
-  edNPWPKantorPusat.Text:=QJenisUsaha.fieldbyname('npwp').AsString;
-  MemNPWPKantorPusat.Text:=QJenisUsaha.fieldbyname('address_npwp').AsString;
+  edKodeKantorPusat.Text:=QKantorPusat.fieldbyname('code').AsString;
+  edNamaKantorPusat.Text:=QKantorPusat.fieldbyname('name').AsString;
+  edTelp1KantorPusat.Text:=QKantorPusat.fieldbyname('phone1').AsString;
+  edTelp2KantorPusat.Text:=QKantorPusat.fieldbyname('phone2').AsString;
+  edNIKKantorPusat.Text:=QKantorPusat.fieldbyname('nik').AsString;
+  MemNIKKantorPusat.Text:=QKantorPusat.fieldbyname('address_nik').AsString;
+  edNPWPKantorPusat.Text:=QKantorPusat.fieldbyname('npwp').AsString;
+  MemNPWPKantorPusat.Text:=QKantorPusat.fieldbyname('address_npwp').AsString;
   cbStatus_KantorPusat.Checked:=True;
 end;
 
