@@ -47,10 +47,14 @@ type
     MemDetailkontra_bon: TCurrencyField;
     MemDetailno_invoice: TStringField;
     MemDetailno_invoice_tax: TStringField;
+    btTampilkan: TRzBitBtn;
     procedure edNamaKolektorButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridDetailColumns1EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure DBGridDetailColumns2EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
+    procedure btTampilkanClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,10 +69,18 @@ var
 implementation
 
 {$R *.dfm}
+
+uses Ubrowse_pelanggan, UMasterData;
 procedure TFDataPenagihanPiutang.BBatalClick(Sender: TObject);
 begin
   Clear;
   Close;
+end;
+
+procedure TFDataPenagihanPiutang.btTampilkanClick(Sender: TObject);
+begin
+  MemDetail.EmptyTable;
+  MemDetail.Active:=true;
 end;
 
 procedure TFDataPenagihanPiutang.Clear;
@@ -84,14 +96,22 @@ end;
 procedure TFDataPenagihanPiutang.DBGridDetailColumns1EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-  Showm
+  Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+  Fbrowse_data_pelanggan.vcall:='dpp';
+  Fbrowse_data_pelanggan.ShowModal;
+end;
+
+procedure TFDataPenagihanPiutang.DBGridDetailColumns2EditButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  ShowMessage('Data Piutang');
 end;
 
 procedure TFDataPenagihanPiutang.edNamaKolektorButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Kolektor';
   FMasterData.vcall:='m_kolektor';
-  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_province='+QuotedStr(edKodeProvinsi.text)+'');
+  FMasterData.update_grid('code','name','concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency) ','"public"."t_collector"','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal;
 end;
 
