@@ -189,8 +189,8 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1113
-        Height = 247
+        Width = 1074
+        Height = 229
         Align = alClient
         DataSource = DsDetail_Formula
         DynProps = <>
@@ -1523,6 +1523,7 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
     end
   end
   object MemMaster_Formula: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdMaster_Formula
@@ -1546,6 +1547,7 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
       
         ' a.wh_code=b.wh_code INNER JOIN t_wh c on a.wh_code2=c.wh_code o' +
         'rder by formula_no Desc')
+    Active = True
     Left = 328
     Top = 64
   end

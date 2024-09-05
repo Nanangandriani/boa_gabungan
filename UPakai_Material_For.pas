@@ -133,10 +133,10 @@ begin
   with FNew_PakaiMatFor do
   begin
   //  Clear;
-    BSimpan.Visible:=False;
-    BEdit.Visible:=True;
+    BSimpan.Visible:=true;
     Show;
     Caption:='New Pemakaian Material untuk Formula';
+    statustr:=0;
   end;
 end;
 
@@ -206,12 +206,12 @@ end;
 
 procedure TFPakai_Material_For.ActUpdateExecute(Sender: TObject);
 begin
+  statustr:=1;
   ADate:=DBGridPakai.Fields[3].AsDateTime;
  with FNew_PakaiMatFor do
   begin
     Clear;
-    BSimpan.Visible:=False;
-    BEdit.Visible:=True;
+   // BSimpan.Visible:=False;
     Show;
     Caption:='Update Laporan Pemakaian Material untuk Formula';
     with MemPakaiMaterial do
@@ -245,6 +245,7 @@ begin
         FNew_PakaiMatFor.Membaku['qtyperkemasan']:=QBaku['pack_qty'];
         FNew_PakaiMatFor.Membaku['totalkemasan']:=QBaku['total_pack'];
         FNew_PakaiMatFor.Membaku['gudang']:=QBaku['wh_name'];
+        FNew_PakaiMatFor.Membaku['kd_gudang']:=QBaku['wh_code'];
         FNew_PakaiMatFor.Membaku['totalpakai']:=QBaku['total_use'];
         FNew_PakaiMatFor.Membaku['sisa']:=QBaku['outstanding'];
         FNew_PakaiMatFor.Membaku.Post;
@@ -287,7 +288,6 @@ begin
   Clear;
   Show;
   BSimpan.Visible:=true;
-  BEdit.Visible:=false;
   Caption:='New Laporan Pemakaian Material untuk Formula';
 end;
 end;
@@ -425,7 +425,6 @@ begin
   begin
     Clear;
     BSimpan.Visible:=False;
-    BEdit.Visible:=True;
     Show;
     Caption:='Update Laporan Pemakaian Material untuk Formula';
     with MemPakaiMaterial do

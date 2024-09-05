@@ -126,7 +126,7 @@ var
   MyTreeView : TRzTreeView;
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
-  Nm,loksbu,kdsbu,id_dept,VMenu,kdgdng,format_tgl:string;
+  Nm,loksbu,kdsbu,dept_code,VMenu,kdgdng,format_tgl:string;
   JSFn: string;
   statustr:integer;
 implementation
@@ -480,15 +480,23 @@ begin
       end;
       dm.Qtemp1.Next;
     end;}
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
+      ExecSQL;
+    end;
+    dept_code:=dm.Qtemp['dept_code'];
     with dm.Qtemp1 do
    begin
        SQL.Clear;
        SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
        ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code '+
-       ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
+       ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
        ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
        ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
-       ' WHERE dd.user_name='+QuotedStr('Admin')+' and cc.master_name='+QuotedStr(Menu)+
+       ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+
        ' group by e.created_at,e.id, e.menu'+
        ' Order by e.created_at asc';
       open;
@@ -518,10 +526,10 @@ begin
           SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
           ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code INNER JOIN t_menu b '+
           ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
-          ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
-          ' WHERE dd.user_name='+QuotedStr('Admin')+
+          ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+          ' WHERE dd.dept_code='+QuotedStr(dept_code)+
           ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
-          ' Order by bb.created_at DESC ';
+          ' Order by bb.created_at desc ';
           open;
           First;
      end;
@@ -616,6 +624,14 @@ end;
 
 procedure TFMainMenu.CreateMenu(Role:String);
 begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
+      ExecSQL;
+    end;
+    dept_code:=dm.Qtemp['dept_code'];
  with dm.Qtemp1 do
    begin
        SQL.Clear;
@@ -628,9 +644,9 @@ begin
         SQL.Text := 'SELECT DISTINCT cc.id, cc.master_name menu FROM t_akses aa '+
                    ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu '+
                    ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code '+
-                   ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
-                   ' WHERE dd.user_name='+QuotedStr('Admin')+
-                   ' Order by cc.id DESC';
+                   ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+                   ' WHERE dd.dept_code='+QuotedStr(dept_code)+
+                   ' Order by cc.created_at asc';
       open;
       First;
    end;
@@ -661,8 +677,8 @@ begin
             SQL.Text := 'SELECT aa.* FROM t_akses aa '+
             ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu '+
             ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
-            ' INNER JOIN t_user dd ON dd.user_name = aa.RoleNama '+
-            ' WHERE aa.RoleNama='+QuotedStr('Admin')+
+            ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+            ' WHERE aa.dept_code='+QuotedStr(dept_code)+
             ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
             open;
        end;
@@ -742,8 +758,4 @@ end;
   TFSPK_Formula,TFPakai_Material_For,TFResult_Formula,TFFor_TestBakar]);
   //RegisterClass([myclass]); }
   // pakai material for 14-06-2024
-
-
-
-
 end.

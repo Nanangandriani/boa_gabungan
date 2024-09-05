@@ -150,6 +150,14 @@ object FNew_MasterFormula: TFNew_MasterFormula
     Height = 13
     Caption = ':'
   end
+  object SpeedButton1: TSpeedButton
+    Left = 313
+    Top = 35
+    Width = 23
+    Height = 22
+    Caption = '---'
+    OnClick = SpeedButton1Click
+  end
   object EdTimbang: TRzEdit
     Left = 576
     Top = 36
@@ -449,7 +457,7 @@ object FNew_MasterFormula: TFNew_MasterFormula
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Batal'
+      Caption = 'Close'
       TabOrder = 0
       OnClick = BBatalClick
       Glyph.Data = {
@@ -511,7 +519,7 @@ object FNew_MasterFormula: TFNew_MasterFormula
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 1
       OnClick = BSimpanClick
       Glyph.Data = {
@@ -573,7 +581,7 @@ object FNew_MasterFormula: TFNew_MasterFormula
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 2
       Visible = False
       Glyph.Data = {

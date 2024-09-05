@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, MemTableDataEh, Data.DB,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, MemTableEh, Vcl.StdCtrls, RzCmboBx, RzEdit,
-  Vcl.Mask, RzButton, Vcl.ExtCtrls;
+  Vcl.Mask, RzButton, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
   TFNew_MasterFormula = class(TForm)
@@ -49,6 +49,7 @@ type
     Label14: TLabel;
     Label18: TLabel;
     EdProduk: TRzComboBox;
+    SpeedButton1: TSpeedButton;
     procedure EdShiftSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure DBGridEh2ColEnter(Sender: TObject);
@@ -65,6 +66,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure EdProdukSelect(Sender: TObject);
     procedure CbGdBakuSelect(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,7 +86,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UMaster_FormulaTest,UMainmenu, UCari_Barang2, UMy_Function;//USearch_SuppSPKFor, UMainmenu, USearch_MatSpkFor;
+uses UDatamodule, UMaster_FormulaTest,UMainmenu, UCari_Barang2, UMy_Function,
+  UItem_MasterFormula;//USearch_SuppSPKFor, UMainmenu, USearch_MatSpkFor;
 var RealFNew_MasterFormula: TFNew_MasterFormula;
 function FNew_MasterFormula: TFNew_MasterFormula;
 begin
@@ -300,6 +303,14 @@ begin
   end;
 end;
 
+procedure TFNew_MasterFormula.SpeedButton1Click(Sender: TObject);
+begin
+  FItem_MasterFormula.Show;
+  FItem_MasterFormula.DBGridEh2.Visible:=true;
+  fitem_masterformula.Panel2.Visible:=false;
+  FItem_MasterFormula.BrefreshClick(sender);
+end;
+
 Procedure TFNew_MasterFormula.Update;
 begin
   with dm.Qtemp do
@@ -499,7 +510,7 @@ begin
     close;
     sql.Clear;
     sql.Text:='Select * from (SELECT a.item_code,qty,conversion_qty,a.id,product_code,b.item_name nm_produk,c.item_name,c.unit  '+
-    ' FROM "warehouse".t_master_spk a INNER JOIN t_item b on  a.product_code=b.item_code2 INNER JOIN t_item c '+
+    ' FROM "warehouse".t_master_test a INNER JOIN t_item b on  a.product_code=b.item_code2 INNER JOIN t_item c '+
     ' on a.item_code=c.item_code INNER JOIN t_item_conversion d on c.item_code=d.item_code where '+
     ' a.product_code='+QuotedStr(EdProduk.Text)+')a GROUP BY a.item_code,qty,conversion_qty,a.id,product_code,nm_produk,item_name,unit'+
     ' order by a.id desc';

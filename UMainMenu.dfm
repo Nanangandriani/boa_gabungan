@@ -190,6 +190,8 @@ object FMainMenu: TFMainMenu
           Height = 455
           Align = alClient
           TabOrder = 1
+          ExplicitWidth = 852
+          ExplicitHeight = 454
           ControlData = {
             4C00000078580000072F00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800

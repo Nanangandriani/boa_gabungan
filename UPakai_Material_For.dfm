@@ -302,6 +302,10 @@ object FPakai_Material_For: TFPakai_Material_For
         end
         object TabKimia: TRzTabSheet
           Caption = 'Bahan Kimia'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object DBGridEh2: TDBGridEh
             Left = 0
             Top = 0

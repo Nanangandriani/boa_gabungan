@@ -30,7 +30,6 @@ type
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BSimpan: TRzBitBtn;
-    BEdit: TRzBitBtn;
     Label9: TLabel;
     Label10: TLabel;
     EdMesin: TRzComboBox;
@@ -79,7 +78,6 @@ type
     procedure DBGridBakuColEnter(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
-    procedure BEditClick(Sender: TObject);
     procedure EdTimbangChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -91,6 +89,8 @@ type
     procedure Clear;
     Procedure Load;
     Procedure Autonumber;
+    Procedure Simpan;
+    Procedure Update;
   end;
 
 Function FNew_PakaiMatFor: TFNew_PakaiMatFor;
@@ -165,49 +165,123 @@ with dm.Qtemp do
   EdNo.Text:= EditComplete+ '/'+maxmy + '/' + kdsbu;
 end;
 
-procedure TFNew_PakaiMatFor.BBatalClick(Sender: TObject);
+Procedure TFNew_PakaiMatFor.Simpan;
 begin
-  close;
- ///10-06-2024 FPakai_Material_For.dxBarRefreshClick(sender);
+   with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_menu_sub where link=''FPakai_Material_For''';
+    ExecSQL;
+  end;
+  idmenu:=dm.Qtemp['submenu_code'];
+  strday2:=DtTanggal.Date;
+  Edno.Text:=getNourut(strday2,'warehouse.t_item_use_for','');
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=' insert into warehouse.t_item_use_for(use_no,spk_no,formula_no,trans_date,amount_weight,mc,product_code,'+
+      ' shift,carton_qty,trans_year,status,sbu_code,trans_month,trans_day,order_no,created_by) '+
+      ' values(:parno_pakai,:parno_spk,:parno_formula,:partanggal,:parjmlh_timbang,:parmc,:parnm_produk,'+
+      ' :parshift,:parjmlh_karton,:partahun,:parstatus,:parkd_sbu,:parbln,:partglno,:parnourut,:parpic)';
+        ParamByName('parno_pakai').Value:=EdNo.Text;
+        ParamByName('parno_spk').Value:=EdNo_SPk.Text;
+        ParamByName('parno_formula').Value:=EdNo_formula.Text;
+        ParamByName('partanggal').Value:=FormatDateTime('yyyy-mm-dd',DtTanggal.date);
+        ParamByName('parjmlh_timbang').Value:=Edtimbang.Text;
+        ParamByName('parmc').Value:=EdMesin.Text;
+        ParamByName('parnm_produk').Value:=EdProduk.Text;
+        ParamByName('parshift').Value:=EdShift.Text;
+        ParamByName('parjmlh_karton').Value:=EdKarton.Text;
+        ParamByName('partahun').Value:=vthn;
+        ParamByName('parstatus').Value:='1';
+        ParamByName('parkd_sbu').Value:=loksbu;
+        ParamByName('parbln').Value:=vbln;
+        ParamByName('partglno').Value:=vtgl;
+        ParamByName('parnourut').Value:=order_no;
+        ParamByName('parpic').Value:=Nm;
+      ExecSQL;
+    end;
+    with dm.QTemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='update warehouse.t_spk_formula set status=''0'' where spk_no='+QuotedStr(EdNo_SPk.Text);
+      ExecSQL;
+    end;
+    with dm.Qtemp2 do
+    begin
+     close;
+     sql.Clear;
+     sql.text:='select * from warehouse.t_item_use_for_det';
+     ExecSQL;
+    end;
+    Membaku.First;
+    while not Membaku.Eof do
+    begin
+      with Dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
+        ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,total_use '+
+        ' ,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
+        ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
+        ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
+        ParamByName('parno_pakai').Value:=EdNo.Text;
+        ParamByName('pargudang').Value:=Membaku['kd_gudang'];
+        ParamByName('parkd_material_stok').Value:=Membaku['kd_material_stok'];
+        ParamByName('parkd_stok').Value:=Membaku['kd_stok'];
+        ParamByName('parindex').Value:=Membaku['index'];
+        ParamByName('parsatuan').Value:=Membaku['satuan'];
+        ParamByName('parkd_supplier').Value:=Membaku['kd_supplier'];
+        ParamByName('parttlberat').Value:=Membaku['ttlberat'];
+        ParamByName('parqtyperkemasan').Value:=Membaku['qtyperkemasan'];
+        ParamByName('partotalkemasan').Value:=Membaku['totalkemasan'];
+        ParamByName('parsatuankemasan').Value:=Membaku['satuankemasan'];
+        ParamByName('partotalpakai').Value:=Membaku['totalpakai'];
+        ParamByName('parsisa').Value:=Membaku['sisa'];
+        ParamByName('parstatus').Value:='1';
+        Execute;
+      end;
+      Membaku.Next;
+    end;
+      MemKimia.First;
+      while not MemKimia.Eof do
+      begin
+          with Dm.Qtemp2 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
+                      ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,total_use '+
+                      ' ,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
+                      ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
+                      ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
+                      ParamByName('parno_pakai').Value:=EdNo.Text;
+                      ParamByName('pargudang').Value:=MemKimia['kd_gudang'];
+                      ParamByName('parkd_material_stok').Value:=MemKimia['kd_material_stok'];
+                      ParamByName('parkd_stok').Value:=MemKimia['kd_stok'];
+                      ParamByName('parindex').Value:=MemKimia['index'];
+                      ParamByName('parsatuan').Value:=MemKimia['satuan'];
+                      ParamByName('parkd_supplier').Value:=MemKimia['kd_supplier'];
+                      ParamByName('parttlberat').Value:=MemKimia['ttlberat'];
+                      ParamByName('parqtyperkemasan').Value:=MemKimia['qtyperkemasan'];
+                      ParamByName('partotalkemasan').Value:=MemKimia['totalkemasan'];
+                      ParamByName('parsatuankemasan').Value:=MemKimia['satuankemasan'];
+                      ParamByName('partotalpakai').Value:=MemKimia['totalpakai'];
+                      ParamByName('parsisa').Value:=MemKimia['sisa'];
+                      ParamByName('parstatus').Value:='1';
+            Execute;
+          end;
+          MemKimia.Next;
+      end;
 end;
 
-procedure TFNew_PakaiMatFor.BEditClick(Sender: TObject);
+Procedure TFNew_PakaiMatFor.Update;
 begin
-  if EdNo_spk.Text='' then
-begin
-  MessageDlg('SPK Test Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNo_spk.SetFocus;
-  Exit;
-end;
-if EdProduk.Text='' then
-begin
-  MessageDlg('Nama Produk Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdProduk.SetFocus;
-  Exit;
-end;
-if EdNo_Formula.Text='' then
-begin
-  messagedlg('No Formula Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdNo_Formula.SetFocus;
-  Exit;
-end;
-if EdTimbang.Text='' then
-begin
-  MessageDlg('Jumlah Timbang Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdTimbang.SetFocus;
-  Exit;
-end;
-if EdKarton.Text='' then
-begin
-  MessageDlg('Jumlah Karton Tidak boleh Kosong ',MtWarning,[MbOk],0);
-  EdTimbang.SetFocus;
-  Exit;
-end;
-  if not dm.koneksi.InTransaction then
-  dm.koneksi.StartTransaction;
-  try
-    begin
-      with Dm.Qtemp do
+   with Dm.Qtemp do
       begin
         close;
         sql.Clear;
@@ -236,77 +310,72 @@ end;
         sql.Text:='delete from warehouse.t_item_use_for_det where use_no='+QuotedStr(edno.Text);
         ExecSQL;
       end;
-      Membaku.First;
-      while not Membaku.Eof do
+    Membaku.First;
+    while not Membaku.Eof do
+    begin
+      with Dm.Qtemp2 do
       begin
-        with Dm.Qtemp2 do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
-                    ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit, '+
-                    ' total_use,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
-                    ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
-                    ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
-                    ParamByName('parno_pakai').Value:=EdNo.Text;
-                    ParamByName('pargudang').Value:=Membaku['gudang'];
-                    ParamByName('parkd_material_stok').Value:=Membaku['kd_material_stok'];
-                    ParamByName('parkd_stok').Value:=Membaku['kd_stok'];
-                    ParamByName('parindex').Value:=Membaku['index'];
-                    ParamByName('parsatuan').Value:=Membaku['satuan'];
-                    ParamByName('parkd_supplier').Value:=Membaku['kd_supplier'];
-                    ParamByName('parttlberat').Value:=Membaku['ttlberat'];
-                    ParamByName('parqtyperkemasan').Value:=Membaku['qtyperkemasan'];
-                    ParamByName('partotalkemasan').Value:=Membaku['totalkemasan'];
-                    ParamByName('parsatuankemasan').Value:=Membaku['satuankemasan'];
-                    ParamByName('partotalpakai').Value:=Membaku['totalpakai'];
-                    ParamByName('parsisa').Value:=Membaku['sisa'];
-                    ParamByName('parstatus').Value:=status;
-          Execute;
-        end;
-        Membaku.Next;
+        close;
+        sql.Clear;
+        sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
+        ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,total_use '+
+        ' ,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
+        ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
+        ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
+        ParamByName('parno_pakai').Value:=EdNo.Text;
+        ParamByName('pargudang').Value:=Membaku['kd_gudang'];
+        ParamByName('parkd_material_stok').Value:=Membaku['kd_material_stok'];
+        ParamByName('parkd_stok').Value:=Membaku['kd_stok'];
+        ParamByName('parindex').Value:=Membaku['index'];
+        ParamByName('parsatuan').Value:=Membaku['satuan'];
+        ParamByName('parkd_supplier').Value:=Membaku['kd_supplier'];
+        ParamByName('parttlberat').Value:=Membaku['ttlberat'];
+        ParamByName('parqtyperkemasan').Value:=Membaku['qtyperkemasan'];
+        ParamByName('partotalkemasan').Value:=Membaku['totalkemasan'];
+        ParamByName('parsatuankemasan').Value:=Membaku['satuankemasan'];
+        ParamByName('partotalpakai').Value:=Membaku['totalpakai'];
+        ParamByName('parsisa').Value:=Membaku['sisa'];
+        ParamByName('parstatus').Value:='1';
+        Execute;
       end;
+      Membaku.Next;
+    end;
       MemKimia.First;
       while not MemKimia.Eof do
       begin
-        with Dm.Qtemp2 do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
-                    ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit, '+
-                    ' total_use,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
-                    ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
-                    ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
-                    ParamByName('parno_pakai').Value:=EdNo.Text;
-                    ParamByName('pargudang').Value:=MemKimia['gudang'];
-                    ParamByName('parkd_material_stok').Value:=MemKimia['kd_material_stok'];
-                    ParamByName('parkd_stok').Value:=MemKimia['kd_stok'];
-                    ParamByName('parindex').Value:=MemKimia['index'];
-                    ParamByName('parsatuan').Value:=MemKimia['satuan'];
-                    ParamByName('parkd_supplier').Value:=MemKimia['kd_supplier'];
-                    ParamByName('parttlberat').Value:=MemKimia['ttlberat'];
-                    ParamByName('parqtyperkemasan').Value:=MemKimia['qtyperkemasan'];
-                    ParamByName('partotalkemasan').Value:=MemKimia['totalkemasan'];
-                    ParamByName('parsatuankemasan').Value:=MemKimia['satuankemasan'];
-                    ParamByName('partotalpakai').Value:=MemKimia['totalpakai'];
-                    ParamByName('parsisa').Value:=MemKimia['sisa'];
-                    ParamByName('parstatus').Value:=Status;
-          Execute;
-        end;
-        MemKimia.Next;
+          with Dm.Qtemp2 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
+                      ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,total_use '+
+                      ' ,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
+                      ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
+                      ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
+                      ParamByName('parno_pakai').Value:=EdNo.Text;
+                      ParamByName('pargudang').Value:=MemKimia['kd_gudang'];
+                      ParamByName('parkd_material_stok').Value:=MemKimia['kd_material_stok'];
+                      ParamByName('parkd_stok').Value:=MemKimia['kd_stok'];
+                      ParamByName('parindex').Value:=MemKimia['index'];
+                      ParamByName('parsatuan').Value:=MemKimia['satuan'];
+                      ParamByName('parkd_supplier').Value:=MemKimia['kd_supplier'];
+                      ParamByName('parttlberat').Value:=MemKimia['ttlberat'];
+                      ParamByName('parqtyperkemasan').Value:=MemKimia['qtyperkemasan'];
+                      ParamByName('partotalkemasan').Value:=MemKimia['totalkemasan'];
+                      ParamByName('parsatuankemasan').Value:=MemKimia['satuankemasan'];
+                      ParamByName('partotalpakai').Value:=MemKimia['totalpakai'];
+                      ParamByName('parsisa').Value:=MemKimia['sisa'];
+                      ParamByName('parstatus').Value:='1';
+            Execute;
+          end;
+          MemKimia.Next;
       end;
-    dm.koneksi.Commit;
-    Messagedlg('Data Behasil Disimpan',MtInformation,[Mbok],0);
-    BBatalClick(sender);
-    end
-    Except
-    on E :Exception do
-    begin
-    MessageDlg(E.Message,mtError,[MBok],0);
-    dm.koneksi.Rollback;
-    end;
-  end;
+end;
+
+procedure TFNew_PakaiMatFor.BBatalClick(Sender: TObject);
+begin
+  close;
+ ///10-06-2024 FPakai_Material_For.dxBarRefreshClick(sender);
 end;
 
 procedure TFNew_PakaiMatFor.BSimpanClick(Sender: TObject);
@@ -342,122 +411,22 @@ begin
     Exit;
   end;
 //Self.Autonumber;
-  with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select * from t_menu_sub where link=''FPakai_Material_For''';
-    ExecSQL;
-  end;
-  idmenu:=dm.Qtemp['submenu_code'];
-  strday2:=DtTanggal.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_use_for','');
   if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
     if not dm.koneksi.InTransaction then
     dm.koneksi.StartTransaction;
     try
       begin
-        with Dm.Qtemp do
+        if statustr=0 then
         begin
-          close;
-          sql.Clear;
-          sql.Text:=' insert into warehouse.t_item_use_for(use_no,spk_no,formula_no,trans_date,amount_weight,mc,product_code,'+
-                    ' shift,carton_qty,trans_year,status,sbu_code,trans_month,trans_day,order_no) '+
-                    ' values(:parno_pakai,:parno_spk,:parno_formula,:partanggal,:parjmlh_timbang,'+
-                    ' :parmc,:parnm_produk,:parshift,:parjmlh_karton,:partahun,:parstatus,:parkd_sbu,:parbln,:partglno,:parnourut)';
-                    ParamByName('parno_pakai').Value:=EdNo.Text;
-                    ParamByName('parno_spk').Value:=EdNo_SPk.Text;
-                    ParamByName('parno_formula').Value:=EdNo_formula.Text;
-                    ParamByName('partanggal').Value:=FormatDateTime('yyyy-mm-dd',DtTanggal.date);
-                    ParamByName('parjmlh_timbang').Value:=Edtimbang.Text;
-                    ParamByName('parmc').Value:=EdMesin.Text;
-                    ParamByName('parnm_produk').Value:=EdProduk.Text;
-                    ParamByName('parshift').Value:=EdShift.Text;
-                    ParamByName('parjmlh_karton').Value:=EdKarton.Text;
-                    ParamByName('partahun').Value:=vthn;
-                    ParamByName('parstatus').Value:='1';
-                    ParamByName('parkd_sbu').Value:=loksbu;
-                    ParamByName('parbln').Value:=vbln;
-                    ParamByName('partglno').Value:=vtgl;
-                    ParamByName('parnourut').Value:=order_no;
-          ExecSQL;
+          simpan;
+          dm.koneksi.Commit;
         end;
-       { with dm.QTemp3 do
+        if statustr=1 then
         begin
-          close;
-          sql.Clear;
-          sql.Text:='update warehouse.t_spk_formula set status=''0'' where spk_no='+QuotedStr(EdNo_SPk.Text);
-          ExecSQL;
+          update;
+          dm.koneksi.Commit;
         end;
-        with dm.Qtemp2 do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:='select * from warehouse.t_item_use_for_det';
-          ExecSQL;
-        end;
-        Membaku.First;
-        while not Membaku.Eof do
-        begin
-          with Dm.Qtemp2 do
-          begin
-            close;
-            sql.Clear;
-            sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
-                      ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,total_use '+
-                      ' ,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
-                      ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
-                      ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
-                      ParamByName('parno_pakai').Value:=EdNo.Text;
-                      ParamByName('pargudang').Value:=Membaku['kd_gudang'];
-                      ParamByName('parkd_material_stok').Value:=Membaku['kd_material_stok'];
-                      ParamByName('parkd_stok').Value:=Membaku['kd_stok'];
-                      ParamByName('parindex').Value:=Membaku['index'];
-                      ParamByName('parsatuan').Value:=Membaku['satuan'];
-                      ParamByName('parkd_supplier').Value:=Membaku['kd_supplier'];
-                      ParamByName('parttlberat').Value:=Membaku['ttlberat'];
-                      ParamByName('parqtyperkemasan').Value:=Membaku['qtyperkemasan'];
-                      ParamByName('partotalkemasan').Value:=Membaku['totalkemasan'];
-                      ParamByName('parsatuankemasan').Value:=Membaku['satuankemasan'];
-                      ParamByName('partotalpakai').Value:=Membaku['totalpakai'];
-                      ParamByName('parsisa').Value:=Membaku['sisa'];
-                      ParamByName('parstatus').Value:='1';
-            Execute;
-          end;
-          Membaku.Next;
-        end;
-        MemKimia.First;
-        while not MemKimia.Eof do
-        begin
-          with Dm.Qtemp2 do
-          begin
-            close;
-            sql.Clear;
-            sql.Text:=' insert into warehouse.t_item_use_for_det(use_no,wh_code,item_stock_code,stock_code,'+
-                      ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,total_use '+
-                      ' ,outstanding,status)values(:parno_pakai,:pargudang,:parkd_material_stok, '+
-                      ' :parkd_stok,:parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
-                      ' :partotalkemasan,:parsatuankemasan,:partotalpakai,:parsisa,:parstatus)';
-                      ParamByName('parno_pakai').Value:=EdNo.Text;
-                      ParamByName('pargudang').Value:=MemKimia['kd_gudang'];
-                      ParamByName('parkd_material_stok').Value:=MemKimia['kd_material_stok'];
-                      ParamByName('parkd_stok').Value:=MemKimia['kd_stok'];
-                      ParamByName('parindex').Value:=MemKimia['index'];
-                      ParamByName('parsatuan').Value:=MemKimia['satuan'];
-                      ParamByName('parkd_supplier').Value:=MemKimia['kd_supplier'];
-                      ParamByName('parttlberat').Value:=MemKimia['ttlberat'];
-                      ParamByName('parqtyperkemasan').Value:=MemKimia['qtyperkemasan'];
-                      ParamByName('partotalkemasan').Value:=MemKimia['totalkemasan'];
-                      ParamByName('parsatuankemasan').Value:=MemKimia['satuankemasan'];
-                      ParamByName('partotalpakai').Value:=MemKimia['totalpakai'];
-                      ParamByName('parsisa').Value:=MemKimia['sisa'];
-                      ParamByName('parstatus').Value:='1';
-            Execute;
-          end;
-          MemKimia.Next;
-        end;                }
-        dm.koneksi.Commit;
         Messagedlg('Data Behasil Disimpan',MtInformation,[Mbok],0);
         BBatalClick(sender);
       end
