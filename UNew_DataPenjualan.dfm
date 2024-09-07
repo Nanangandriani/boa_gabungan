@@ -22,6 +22,8 @@ object FNew_Penjualan: TFNew_Penjualan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1181
+    ExplicitHeight = 262
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -325,8 +327,10 @@ object FNew_Penjualan: TFNew_Penjualan
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 553
+    ExplicitWidth = 1181
     object BBatal: TRzBitBtn
-      Left = 1117
+      Left = 1111
       Top = 1
       Height = 30
       Align = alRight
@@ -385,10 +389,10 @@ object FNew_Penjualan: TFNew_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1111
+      ExplicitLeft = 1105
     end
     object BSave: TRzBitBtn
-      Left = 1042
+      Left = 1036
       Top = 1
       Height = 30
       Align = alRight
@@ -447,7 +451,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1036
+      ExplicitLeft = 1030
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -523,17 +527,16 @@ object FNew_Penjualan: TFNew_Penjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
+    ExplicitTop = 262
+    ExplicitWidth = 1181
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1183
-      ExplicitHeight = 0
+      ExplicitWidth = 1177
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1189
+        Width = 1183
         Height = 266
         Align = alClient
         DataSource = DSDetail

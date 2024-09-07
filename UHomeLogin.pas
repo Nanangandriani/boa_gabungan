@@ -25,6 +25,7 @@ type
   private
     { Private declarations }
   public
+    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH : string;
     { Public declarations }
    // nm,loksbu,kdsbu,id_dept:string;
   end;
@@ -55,6 +56,24 @@ end;
 
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
+   //Buat Variable Perusahaan
+   with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
+             ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
+             ' "tax_status", "currency" FROM "t_company" ');
+     open;
+    end;
+    if dm.Qtemp.RecordCount<>0 then
+    begin
+      vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
+      vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
+      vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
+      vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
+      vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+    end;
    Nm:=Eduser.Text;
    FMainMenu.showmodal;
 //   Nm:=Eduser.Text;

@@ -741,6 +741,10 @@
             <Form>FDataPenagihanPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="URincianPot_Penjualan.pas">
+            <Form>FRincianPot_Penjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

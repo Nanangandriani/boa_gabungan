@@ -12,12 +12,23 @@ Uses SysUtils, frxClass,uni;
   function Sys_Batas_Data(fieldtanggal: String): String;
   function UpdateLogErrorAPI(base_url: String; path: String; token: String; lInsert: Boolean; endpoint: String; cKet: String = ''): Boolean;
   function MyExecuteSQL(cSQL: String): Boolean;
-  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data:string;
+  procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
+
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation:string;
       strday2:TDate;
 
 implementation
 
 uses UDataModule, UHomeLogin;
+
+procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
+var
+  memo: TfrxMemoView;
+begin
+  memo := aReport.FindObject(aMemoName) as TfrxMemoView;
+  if memo <> nil then
+    memo.Text := aText;
+end;
 
 function MyExecuteSQL(cSQL: String): Boolean;
 begin

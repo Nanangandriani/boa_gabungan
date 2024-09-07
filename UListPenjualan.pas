@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFDataListPenjualan = class(TForm)
@@ -64,10 +64,46 @@ type
     QPenjualanname_source: TStringField;
     DsPenjualan: TDataSource;
     QPenjualandate_trans: TDateField;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton3: TdxBarLargeButton;
+    QCetak: TUniQuery;
+    frxDBDPenjualan: TfrxDBDataset;
+    Report: TfrxReport;
+    QCetakno_trans: TStringField;
+    QCetakno_inv_tax: TStringField;
+    QCetakdate_trans: TDateField;
+    QCetakcode_cust: TStringField;
+    QCetakname_cust: TStringField;
+    QCetakaddress: TMemoField;
+    QCetakcode_item: TStringField;
+    QCetakname_item: TStringField;
+    QCetakamount: TFloatField;
+    QCetakcode_unit: TStringField;
+    QCetakname_unit: TStringField;
+    QCetakno_reference: TStringField;
+    QCetakunit_price: TFloatField;
+    QCetaksub_total: TFloatField;
+    QCetakppn_account: TStringField;
+    QCetakppn_percent: TFloatField;
+    QCetakppn_value: TFloatField;
+    QCetakpph_account: TStringField;
+    QCetakpph_name: TStringField;
+    QCetakpph_percent: TFloatField;
+    QCetakpph_value: TFloatField;
+    QCetaktot_piece_value: TFloatField;
+    QCetaktot_piece_percent: TFloatField;
+    QCetakgrand_tot: TFloatField;
+    QCetakpiece_first: TFloatField;
+    QCetakpiece_second: TFloatField;
+    QCetakpiece_third: TFloatField;
+    QCetakpiece_fourth: TFloatField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -90,6 +126,7 @@ begin
   FNew_Penjualan.MemDetail.EmptyTable;
   Status:=0;
   FNew_Penjualan.edKode_Trans.Enabled:=true;
+  FNew_Penjualan.edSuratJalanTrans.Enabled:=true;
   FNew_Penjualan.ShowModal;
 end;
 
@@ -211,6 +248,51 @@ begin
   FNew_Penjualan.edSuratJalanTrans.Enabled:=false;
   FNew_Penjualan.Show;
   Status := 1;
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton3Click(Sender: TObject);
+begin
+   with QCetak do
+    begin
+     close;
+     sql.clear;
+     sql.add(' select a."no_trans", "no_inv_tax", "date_trans", a."code_cust", a."name_cust", '+
+             ' d."address", b."code_item", b."name_item", '+
+             ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
+             ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
+             ' b."pph_name", b."pph_percent", b."pph_value", b."tot_piece_value", '+
+             ' b."tot_piece_percent", b."grand_tot",  "piece_first", "piece_second", '+
+             ' "piece_third", "piece_fourth" from "sale"."t_selling" a '+
+             ' LEFT JOIN "sale"."t_selling_det" b ON a.no_trans=b.no_trans '+
+             ' LEFT JOIN "sale"."t_selling_piece" c ON a.no_trans=c.no_trans '+
+             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
+             ' where a.deleted_at is null and '+
+             ' a.no_trans='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString)+' '+
+             ' order by b.created_at Desc');
+     open;
+    end;
+
+
+ if QCetak.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetak.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
+   SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
+   SetMemo(Report,'telp',FHomeLogin.vTelpPRSH);
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
 end;
 
 initialization

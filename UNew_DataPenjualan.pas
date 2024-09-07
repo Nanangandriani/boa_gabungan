@@ -194,7 +194,8 @@ begin
               ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
               ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
               ' '+QuotedStr(MemDetail['NM_SATUAN'])+', '+
-              ' '+QuotedStr(edNoReff.Text)+', '+
+              //' '+QuotedStr(edNoReff.Text)+', '+
+              ' '+QuotedStr('0')+', '+
               ' '+QuotedStr(MemDetail['HARGA_SATUAN'])+', '+
               ' '+QuotedStr(MemDetail['SUB_TOTAL'])+', '+
               ' '+QuotedStr(MemDetail['PPN_PERSEN'])+', '+

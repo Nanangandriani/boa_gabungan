@@ -20,7 +20,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 763
+    ExplicitWidth = 874
     object Label39: TLabel
       Left = 19
       Top = 43
@@ -183,8 +183,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = -313
-    ExplicitWidth = 1193
+    ExplicitTop = 377
+    ExplicitWidth = 874
     object BBatal: TRzBitBtn
       Left = 804
       Top = 1
@@ -245,7 +245,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1117
+      ExplicitLeft = 798
     end
     object BSave: TRzBitBtn
       Left = 729
@@ -306,7 +306,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1042
+      ExplicitLeft = 723
     end
   end
   object dsMasterData: TDataSource
