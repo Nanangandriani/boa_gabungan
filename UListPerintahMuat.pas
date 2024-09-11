@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFListPerintahMuat = class(TForm)
@@ -63,12 +63,30 @@ type
     QListPerintahMuatname_vendor: TStringField;
     QListPerintahMuatnumber_of_vehicles: TStringField;
     QListPerintahMuatdescription: TMemoField;
+    dxBarLargeButton1: TdxBarLargeButton;
+    QCetak: TUniQuery;
+    frxDBDPerintahMuat: TfrxDBDataset;
+    Report: TfrxReport;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton2: TdxBarLargeButton;
+    QCetaknotrans: TStringField;
+    QCetaknotrans_do: TStringField;
+    QCetaknotrans_sale: TStringField;
+    QCetakcust_vendor: TStringField;
+    QCetakcust_name_vendor: TStringField;
+    QCetakan_terima: TStringField;
+    QCetakcode_items: TStringField;
+    QCetakname_item: TStringField;
+    QCetakamount: TFloatField;
+    QCetakunit: TStringField;
+    QCetakbanyaknya: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure QListPerintahMuatdescriptionGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -223,6 +241,43 @@ begin
 end;
 end;
 
+
+procedure TFListPerintahMuat.dxBarLargeButton2Click(Sender: TObject);
+begin
+   with QCetak do
+    begin
+     close;
+     sql.clear;
+     sql.add(' select "notrans", "notrans_do", "notrans_sale", a."code_cust" as cust_vendor, '+
+             ' a."name_cust" as cust_name_vendor, b."name_cust" as an_terima, "code_items", '+
+             ' "name_item", "amount", "unit", '+
+             ' concat("name_item",'' = '',CAST("amount" AS INTEGER),'' '',"unit") as banyaknya '+
+             ' from "sale"."t_spm_det" a '+
+             ' LEFT JOIN "sale"."t_selling" b ON a."notrans_sale"=b."no_trans" '+
+             ' WHERE a."notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
+             ' order by a."notrans" Desc');
+     open;
+    end;
+
+
+ if QCetak.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetak.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_perintahmuat'+ '.fr3');
+   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
+end;
 
 procedure TFListPerintahMuat.QListPerintahMuatdescriptionGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);

@@ -99,11 +99,29 @@ type
     QCetakpiece_second: TFloatField;
     QCetakpiece_third: TFloatField;
     QCetakpiece_fourth: TFloatField;
+    dxBarLargeButton4: TdxBarLargeButton;
+    QCetakSJ: TUniQuery;
+    frxDBDCetakSJ: TfrxDBDataset;
+    QCetakSJno_trans: TStringField;
+    QCetakSJno_traveldoc: TStringField;
+    QCetakSJdate_trans: TDateField;
+    QCetakSJcode_cust: TStringField;
+    QCetakSJname_cust: TStringField;
+    QCetakSJaddress: TMemoField;
+    QCetakSJcode_item: TStringField;
+    QCetakSJname_item: TStringField;
+    QCetakSJamount: TFloatField;
+    QCetakSJcode_unit: TStringField;
+    QCetakSJname_unit: TStringField;
+    QCetakSJno_reference: TStringField;
+    QCetakSJket: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure ReportGetValue(const VarName: string; var Value: Variant);
   private
     { Private declarations }
   public
@@ -261,8 +279,12 @@ begin
              ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
              ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
              ' b."pph_name", b."pph_percent", b."pph_value", b."tot_piece_value", '+
-             ' b."tot_piece_percent", b."grand_tot",  "piece_first", "piece_second", '+
-             ' "piece_third", "piece_fourth" from "sale"."t_selling" a '+
+             ' b."tot_piece_percent", b."grand_tot",  '+
+             ' case when "piece_first" is null then 0 else "piece_first" end "piece_first", '+
+             ' case when "piece_second" is null then 0 else "piece_second" end "piece_second", '+
+             ' case when "piece_third" is null then 0 else "piece_third" end "piece_third", '+
+             ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth" '+
+             ' from "sale"."t_selling" a '+
              ' LEFT JOIN "sale"."t_selling_det" b ON a.no_trans=b.no_trans '+
              ' LEFT JOIN "sale"."t_selling_piece" c ON a.no_trans=c.no_trans '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
@@ -281,18 +303,83 @@ begin
 
  if QCetak.RecordCount<>0 then
  begin
+   // Dapetin Grand Total
+   with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add(' select * '+
+             ' from "sale"."t_selling" a '+
+             ' where a.deleted_at is null and '+
+             ' a.no_trans='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString)+' ');
+     open;
+    end;
+    //
+
    cLocation := ExtractFilePath(Application.ExeName);
 
-   ShowMessage(cLocation);
+   //ShowMessage(cLocation);
    Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
    SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
    SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
-   SetMemo(Report,'telp',FHomeLogin.vTelpPRSH);
+   SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+   SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
    //Report.DesignReport();
    Report.ShowReport();
  end;
 
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton4Click(Sender: TObject);
+begin
+   with QCetakSJ do
+    begin
+     close;
+     sql.clear;
+     sql.add(' select a."no_trans", "no_traveldoc", "date_trans", a."code_cust", '+
+             ' a."name_cust",  d."address", b."code_item", b."name_item",  b."amount", '+
+             ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket from "sale"."t_selling" a  '+
+             ' LEFT JOIN "sale"."t_selling_det" b ON a.no_trans=b.no_trans  '+
+             ' LEFT JOIN "sale"."t_selling_piece" c ON a.no_trans=c.no_trans  '+
+             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
+             ' where "code_details"=''001'') d on a.code_cust=d.customer_code  '+
+             ' where a.deleted_at is null and  '+
+             ' a.no_trans='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString)+'  '+
+             ' order by b.created_at Desc');
+     open;
+    end;
+
+
+ if QCetakSJ.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetakSJ.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_suratjalan'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+   SetMemo(Report,'alamat_pt',FHomeLogin.vAlamatPRSH);
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
+end;
+
+procedure TFDataListPenjualan.ReportGetValue(const VarName: string;
+  var Value: Variant);
+begin
+if CompareText(VarName, 'vTerbilang_qty') = 0 then
+  begin
+    status_pakai_terbilang:= 2;
+    Value := '(  '+terbilang(FloatToStr(QCetakSJ.FieldByName('amount').AsFloat))+'  )  '+ QCetakSJ.FieldByName('code_unit').Asstring;
+  end;
 end;
 
 initialization

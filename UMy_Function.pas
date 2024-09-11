@@ -12,14 +12,274 @@ Uses SysUtils, frxClass,uni;
   function Sys_Batas_Data(fieldtanggal: String): String;
   function UpdateLogErrorAPI(base_url: String; path: String; token: String; lInsert: Boolean; endpoint: String; cKet: String = ''): Boolean;
   function MyExecuteSQL(cSQL: String): Boolean;
+  function UraikanAngka(S:String):String;
+  function terbilang(sValue: string):string;
   procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
 
   var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation:string;
       strday2:TDate;
+      status_pakai_terbilang : Integer;
+      Voice:array[1..100] of string;
 
 implementation
 
 uses UDataModule, UHomeLogin;
+function terbilang(sValue: string):string;
+const
+Angka : array [1..20] of string =
+('', 'Satu', 'Dua', 'Tiga', 'Empat',
+'Lima', 'Enam', 'Tujuh', 'Delapan',
+'Sembilan', 'Sepuluh', 'Sebelas',
+'Dua Belas', 'Tiga Belas', 'Empat Belas',
+'Lima Belas', 'Enam Belas', 'Tujuh Belas',
+'Delapan Belas', 'Sembilan Belas');
+sPattern: string = '000000000000000';
+
+var
+S,Rupiah : string;
+Satu, Dua, Tiga, Belas, Gabung: string;
+Sen, Sen1, Sen2: string;
+Hitung : integer;
+one, two, three: integer;
+begin
+  One := 4;
+  Two := 5;
+  Three := 6;
+  Hitung := 1;
+  Rupiah := '';
+  S := copy(sPattern, 1, length(sPattern) - length(trim(sValue))) + sValue;
+  Sen1 := Copy(S, 14, 1);
+  Sen2 := Copy(S, 15, 1);
+  Sen := Sen1 + Sen2;
+  while Hitung < 5 do
+  begin
+    Satu := Copy(S, One, 1);
+    Dua := Copy(S, Two, 1);
+    Tiga := Copy(S, Three, 1);
+    Gabung := Satu + Dua + Tiga;
+
+    if StrToInt(Satu) = 1 then
+    Rupiah := Rupiah + 'Seratus '
+    else
+    if StrToInt(Satu) > 1 Then
+    Rupiah := Rupiah + Angka[StrToInt(satu)+1] + ' Ratus ';
+
+    if StrToInt(Dua) = 1 then
+    begin
+      Belas := Dua + Tiga;
+      Rupiah := Rupiah + Angka[StrToInt(Belas)+1];
+    end
+    else
+    if StrToInt(Dua) > 1 Then
+    Rupiah := Rupiah + Angka[StrToInt(Dua)+1] + ' Puluh ' +
+    Angka[StrToInt(Tiga)+1]
+    else
+    if (StrToInt(Dua) = 0) and (StrToInt(Tiga) > 0) Then
+    begin
+      if ((Hitung = 3) and (Gabung = '001')) or
+      ((Hitung = 3) and (Gabung = ' 1')) then
+      Rupiah := Rupiah + 'Seribu '
+      else
+      Rupiah := Rupiah + Angka[StrToInt(Tiga)+1];
+    end;
+
+    if (hitung = 1) and (StrToInt(Gabung) > 0) then
+    Rupiah := Rupiah + ' Milyar '
+    else
+    if (Hitung = 2) and (StrToInt(Gabung) > 0) then
+    Rupiah := Rupiah + ' Juta '
+    else
+    if (Hitung = 3) and (StrToInt(Gabung) > 0) then
+    begin
+      if (Gabung = '001') or (Gabung = ' 1') then
+      Rupiah := Rupiah + ''
+      else
+      Rupiah := Rupiah + ' Ribu ';
+    end;
+    Hitung := Hitung + 1;
+    One := One + 3;
+    Two := Two + 3;
+    Three := Three + 3;
+  end;
+  if status_pakai_terbilang=1 then
+  begin
+    if length(Rupiah) > 1 then Rupiah := Rupiah + ' Rupiah ';
+  end
+  else if status_pakai_terbilang = 2 then
+  begin
+    if length(Rupiah) > 1 then Rupiah := Rupiah ;
+  end;
+  Result := Rupiah;
+end;
+
+function RIGHT(S: string; j:Integer): string;
+begin
+  RIGHT := Copy(s,(length(s)-(j-1)),j);
+end;
+
+function rubah(masukan:string):String ;
+Var
+   Nilai : Array[1..3] of integer;
+   kata : Array[1..3] of string;
+   Tabelkata  : Array[1..9] of string;
+   TabelSufix : Array[1..4] of String;
+   nilaiis,suffix : String;
+   Counter,indexnilai,a,lahe : Integer;
+   keluar: string;
+Begin
+     lahe :=1;
+     if (masukan='')
+     then begin Voice[lahe]:='Kosong';exit; end;
+     tabelkata[1]:='Satu ';
+     tabelkata[2]:='Dua ';
+     tabelkata[3]:='Tiga ';
+     tabelkata[4]:='Empat ';
+     tabelkata[5]:='Lima ';
+     tabelkata[6]:='Enam ';
+     tabelkata[7]:='Tujuh ';
+     tabelkata[8]:='Delapan ';
+     tabelkata[9]:='Sembilan ';
+     tabelsufix[1]:='Milyar ' ;
+     tabelsufix[2]:='Juta ';
+     tabelsufix[3]:='Ribu ';
+     tabelsufix[4]:=''     ;
+     keluar := right('00000000000'+masukan,12);
+     counter :=1;
+     while counter<=4 do
+     Begin
+        nilaiis := Copy(keluar,(counter-1)*3+1,3);
+        indexnilai:=1;
+        while indexnilai<=3 do
+        Begin
+           nilai[indexnilai]:=StrToInt(Copy(nilaiis,indexnilai,1))  ;
+           if nilai[indexnilai]<>0
+           then kata[indexnilai]:=tabelkata[nilai[indexnilai]];
+           indexnilai:=indexnilai+1;
+        end;
+        suffix := tabelsufix[counter];
+        if nilai[1]<>0 then
+        Begin
+             if nilai[1]=1
+             Then begin
+                  Voice[lahe]:='Seratus ';
+                  inc(lahe);
+                  End{Return}
+             Else
+             if nilai[1] > 1 Then
+             Begin
+              Voice[lahe]:=kata[1];
+                inc(lahe);
+               Voice[lahe]:='Ratus ';
+                inc(lahe);
+             End;
+
+        End;
+        if nilai[2]<>0 then
+        Begin
+           if (nilai[2]=1) and (nilai[3]=0 )
+           then begin
+                Voice[lahe]:='Sepuluh ';
+                inc(lahe);
+                end {retu ;}
+           Else if (nilai[2]=1) and (nilai[3]=1)
+                then  begin
+                      Voice[lahe]:='Sebelas ';
+                      inc(lahe);
+                      end
+                       {retu;}
+                Else if (nilai[2]=1) and (nilai[3] > 1)
+                     then begin
+                          Voice[lahe]:=kata[3];
+                          inc(lahe);
+                          Voice[lahe]:='Belas ';
+                          inc(lahe);
+                          end
+                           {Retu}
+                     Else  begin
+                           Voice[lahe]:=kata[2];
+                           inc(lahe);
+                           Voice[lahe]:='Puluh ';
+                           inc(lahe);
+                           end;
+        End;
+        if (nilai[3]<>0) and (nilai[2]<>1) then
+        Begin
+           if ((nilai[2]=0) and (nilai[3]=0)) or
+              ((nilai[2]=1) and (nilai[3]=0)) or
+              ((nilai[2]=1) and (nilai[3]=1)) or
+              ((nilai[2]=1) and (nilai[3]=1))
+           Then {retu}
+           Else Begin
+                  If (Counter = 3) and (nilai[1]=0) and (nilai[2]=0) and (nilai[3]=1)
+                  Then  begin
+                        Voice[lahe]:='Se';
+                        inc(lahe);
+                        end {Retu;}
+                  Else  If (Counter = 3) and (nilai[1]=0) and (nilai[2]=0) and (nilai[3]>1)
+                        Then begin
+                             Voice[lahe]:=kata[3];
+                             inc(lahe);
+                             end {Retu;}
+                        Else If (Counter = 4) and (nilai[1]=0) and (nilai[2]=0) and  (nilai[3]=1)
+                             Then begin
+                                  Voice[lahe]:=kata[3];
+                                  inc(lahe);
+                                  end {Retu}
+                             Else If (nilai[2] <> 1) and (nilai[3] > 0 )
+                                  Then begin
+                                       Voice[lahe]:=kata[3];
+                                       inc(lahe);
+                                       end {Retu}
+                                  Else If (counter < 5) and (nilai[3]>0)
+                                       Then begin
+                                            Voice[lahe]:=kata[3];
+                                            inc(lahe);
+                                            End; {Retu}
+                End;
+        End;
+        if (strtoint(nilaiis) <> 0) and (counter < 4)
+        then begin
+             Voice[lahe]:=suffix;
+             inc(lahe);
+             end;
+        counter :=counter+1;
+     End;
+     keluar:= keluar;
+     A:=LENGTH(keluar)  ;
+     keluar :=RIGHT(keluar,A-12);
+End;
+
+function UraikanAngka(S:String):String;
+var
+  i:integer;
+  Hasil:String;
+begin
+    {listbox1.clear;}
+    Hasil:='';
+    for i:=1 to 100 do  voice[i]:='';
+    rubah(S);
+    i:=1;
+    While i<= 100 do
+    begin
+       if voice[i]='' then break;
+       if ((voice[i+1]='Ratus ') or
+           (voice[i+1]='Puluh ') or
+           (voice[i+1]='Belas '))
+       then begin
+            Hasil:=Hasil+voice[i]+voice[i+1];
+            i:=i+1;
+       end Else
+       if ((voice[1]='Se') And
+           (voice[i+1]='Ribu '))
+       then begin
+            Hasil:=Hasil+voice[i]+voice[i+1];
+            i:=i+1;
+       End
+       else Hasil:=Hasil+voice[i];
+       Inc(i);
+    end;
+    UraikanAngka:=Hasil+'Rupiah';
+end;
 
 procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
 var
