@@ -354,5 +354,186 @@ begin
         result:=notif;
 end;
 
+ // Fucntion Untuk Bahasa Inggris
+const
+  Digits: array [1 .. 9] of string = (
+    'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
+
+  Teens: array [1 .. 9] of string = (
+    'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen');
+
+  TenTimes: array [1 .. 9] of string = (
+    'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety');
+function DoTriplet(TheNumber: Integer): string;
+var
+  Digit, Num: Integer;
+begin
+  Result := '';
+  Num := TheNumber mod 100;
+  if (Num > 10) and (Num < 20) then
+  begin
+    Result := Teens[Num - 10];
+    Num := TheNumber div 100;
+  end
+  else
+  begin
+    Num := TheNumber;
+    Digit := Num mod 10;
+    Num := Num div 10;
+    if Digit > 0 then Result := Digits[Digit];
+    Digit := Num mod 10;
+    Num := Num div 10;
+    if Digit > 0 then Result := TenTimes[Digit] + ' ' + Result;
+    Result := Trim(Result);
+  end;
+  Digit := Num mod 10;
+ // if (Result <> '') and (Digit > 0) then Result := '- ' + Result;
+  if Digit > 0 then Result := Digits[Digit] + ' hundred ' + Result;
+  Result := Trim(Result);
+end;
+
+function NumberInWords(TheNumber: Integer): string;
+var
+  Num, Triplet, Pass: Integer;
+begin
+  if TheNumber < 0 then Result := 'Minus ' + NumberInWords(-TheNumber)
+  else
+  begin
+    Result := '';
+    Num := TheNumber;
+    if Num > 999999999 then
+        raise Exception.Create('Can''t express more than 999,999,999 in words');
+    for Pass := 1 to 3 do
+    begin
+      Triplet := Num mod 1000;
+      Num := Num div 1000;
+      if Triplet > 0 then
+      begin
+        if (Pass > 1) and (Result <> '') then Result := ' ' + Result;
+        case Pass of
+          2: Result := ' thousand' + Result;
+          3: Result := ' million' + Result;
+        end;
+        Result := Trim(DoTriplet(Triplet) + Result);
+      end;
+    end;
+  end;
+end;
+
+// Terbilang Indonesia
+function Terbilang(sValue: string):string;
+const
+Angka : array [1..20] of string =
+('', 'Satu', 'Dua', 'Tiga', 'Empat',
+'Lima', 'Enam', 'Tujuh', 'Delapan',
+'Sembilan', 'Sepuluh', 'Sebelas',
+'Duabelas', 'Tigabelas', 'Empatbelas',
+'Limabelas', 'Enambelas', 'Tujuhbelas',
+'Delapanbelas', 'Sembilanbelas');
+sPattern: string = '000000000000000';
+var
+S,kata : string;
+Satu, Dua, Tiga, Belas, Gabung: string;
+Sen, Sen1, Sen2: string;
+Hitung : integer;
+one, two, three: integer;
+begin
+One := 4;
+Two := 5;
+Three := 6;
+Hitung := 1;
+Kata := '';
+S := copy(sPattern, 1, length(sPattern) - length(trim(sValue))) + sValue;
+Sen1 := Copy(S, 14, 1);
+Sen2 := Copy(S, 15, 1);
+Sen := Sen1 + Sen2;
+while Hitung < 5 do
+begin
+Satu := Copy(S, One, 1);
+Dua := Copy(S, Two, 1);
+Tiga := Copy(S, Three, 1);
+Gabung := Satu + Dua + Tiga;
+
+if StrToInt(Satu) = 1 then
+Kata := Kata + 'Seratus '
+else
+if StrToInt(Satu) > 1 Then
+Kata := Kata + Angka[StrToInt(satu)+1] + ' Ratus ';
+
+if StrToInt(Dua) = 1 then
+begin
+Belas := Dua + Tiga;
+Kata := Kata + Angka[StrToInt(Belas)+1];
+end
+else
+if StrToInt(Dua) > 1 Then
+Kata := Kata + Angka[StrToInt(Dua)+1] + ' Puluh ' +
+Angka[StrToInt(Tiga)+1]
+else
+if (StrToInt(Dua) = 0) and (StrToInt(Tiga) > 0) Then
+begin
+if ((Hitung = 3) and (Gabung = '001')) or
+((Hitung = 3) and (Gabung = ' 1')) then
+Kata := Kata + 'Seribu '
+else
+Kata := Kata + Angka[StrToInt(Tiga)+1];
+end;
+if (hitung = 1) and (StrToInt(Gabung) > 0) then
+Kata := Kata + ' Milyar '
+else
+if (Hitung = 2) and (StrToInt(Gabung) > 0) then
+Kata := Kata + ' Juta '
+else
+if (Hitung = 3) and (StrToInt(Gabung) > 0) then
+begin
+if (Gabung = '001') or (Gabung = ' 1') then
+Kata := Kata + ''
+else
+Kata := Kata + ' Ribu ';
+end;
+Hitung := Hitung + 1;
+One := One + 3;
+Two := Two + 3;
+Three := Three + 3;
+end;
+if length(Kata) > 1 then Kata := Kata;
+Result := Kata;
+end;
+
+// Fungsi Untuk Convert Angka Jadi Huruf
+function ConvKeHuruf(inp: string): string;
+var
+a,b,c,Poskoma,PosTitik : integer;
+temp,angka,dpnKoma,BlkKoma : string;
+AdaKoma: boolean;
+begin
+  PosKoma:= pos(',',Inp);
+  PosTitik:= pos('.',Inp);
+    if (Poskoma<>0) or (posTitik<> 0) then
+        begin
+        adaKoma:= true;
+        if PosKoma= 0 then posKoma:= PosTitik;
+        end else
+        begin
+        adakoma:= False;
+        DpnKoma:= inp;
+        end;
+// Jika ada Koma
+if adakoma then
+   begin
+    dpnkoma:= copy(inp,1,posKoma-1);
+    blkKoma:= Copy(inp,posKoma+1,length(inp)-posKoma);
+    if trim(DpnKoma)='0' then
+       temp:= 'Nol'+ ' Koma ' + terbilang(blkKoma)
+        else
+          temp:= Terbilang(dpnKoma)+ ' Koma ' + Terbilang(blkKoma);
+// Jika Tidak ada Koma
+   end else begin
+   temp:=Terbilang(dpnKoma);
+   end;
+   Result:= temp;
+end;
+
+
 
 end.

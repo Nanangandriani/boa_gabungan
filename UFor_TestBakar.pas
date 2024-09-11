@@ -139,7 +139,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select * from t_formula_testbakar Order by no_test Desc ';
+      sql.Text:=' select * from "warehouse".t_formula_burn_test Order by test_no Desc ';
       ExecSQL;
     end;
   end else
@@ -149,8 +149,8 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select * from t_formula_testbakar where kd_sbu='+QuotedStr(loksbu)+''+
-                ' Order by no_test Desc ';
+      sql.Text:=' select * from "warehouse".t_formula_burn_test  where sbu_code='+QuotedStr(loksbu)+''+
+                ' Order by test_no Desc ';
       ExecSQL;
     end;
   end;
@@ -176,23 +176,23 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from t_formula_testbakar where no_test='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
+        sql.Text:='select * from "warehouse".tformula_burn_test  where test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
         ExecSQL;
       end;
       with Dm.Qtemp do
       begin
-        FNew_ForTestBakar.EdProduk.Text:=Dm.Qtemp['nm_produk'];
-        FNew_ForTestBakar.edregu.Text:=Dm.Qtemp['regu'];
+        FNew_ForTestBakar.EdProduk.Text:=Dm.Qtemp['product_code'];
+        FNew_ForTestBakar.edregu.Text:=Dm.Qtemp['shift'];
         FNew_ForTestBakar.EdMesin.Text:=Dm.Qtemp['mc'];
         FNew_ForTestBakar.EdKet.Text:=Dm.Qtemp['notes'];
-        FNew_ForTestBakar.Edno.Text:=Dm.Qtemp['no_test'];
-        FNew_ForTestBakar.DtPMulai.Text:=Dm.Qtemp['tgl_mulai_prod'];
-        FNew_ForTestBakar.DtPSelesai.Text:=Dm.Qtemp['tgl_selesai_prod'];
-        FNew_ForTestBakar.EdNo_Formula.Text:=Dm.Qtemp['no_formula'];
-        FNew_ForTestBakar.DtTest.Text:=Dm.Qtemp['tgl_test'];
-        FNew_ForTestBakar.EdNo_Spk.Text:=Dm.Qtemp['no_spk'];
+        FNew_ForTestBakar.Edno.Text:=Dm.Qtemp['test_no'];
+        FNew_ForTestBakar.DtPMulai.Text:=Dm.Qtemp['prod_start_date'];
+        FNew_ForTestBakar.DtPSelesai.Text:=Dm.Qtemp['prod_end_date'];
+        FNew_ForTestBakar.EdNo_Formula.Text:=Dm.Qtemp['formula_no'];
+        FNew_ForTestBakar.DtTest.Text:=Dm.Qtemp['test_date'];
+        FNew_ForTestBakar.EdNo_Spk.Text:=Dm.Qtemp['spk_no)'];
         st:=DM.qtemp['status'];
-      thn:=DM.Qtemp['thn'];
+      thn:=DM.Qtemp['trans_year'];
       end;
       QTestBakarDet.First;
       while not QTestBakarDet.Eof do
@@ -200,23 +200,23 @@ begin
         with QTestBakarDet do
         begin
           FNew_ForTestBakar.MemBakarDet.Insert;
-          FNew_ForTestBakar.MemBakarDet['no_gotrok']:=QTestBakarDet['no_gotrok'];
-          FNew_ForTestBakar.MemBakarDet['berat']:=QTestBakarDet['berat'];
-          FNew_ForTestBakar.MemBakarDet['kadar_air']:=QTestBakarDet['kadar_air'];
-          FNew_ForTestBakar.MemBakarDet['jam_mulai']:=QTestBakarDet['jam_mulai'];
-          FNew_ForTestBakar.MemBakarDet['jam_mati']:=QTestBakarDet['jam_mati'];
-          FNew_ForTestBakar.MemBakarDet['lama_bakar']:=QTestBakarDet['lama_bakar'];
-          FNew_ForTestBakar.MemBakarDet['keterangan']:=QTestBakarDet['keterangan'];
-          FNew_ForTestBakar.MemBakarDet['warna_abu']:=QTestBakarDet['warna_abu'];
-          FNew_ForTestBakar.MemBakarDet['bentuk_api']:=QTestBakarDet['bentuk_api'];
-          FNew_ForTestBakar.MemBakarDet['bentuk_abu']:=QTestBakarDet['bentuk_abu'];
+          FNew_ForTestBakar.MemBakarDet['no_gotrok']:=QTestBakarDet['gotrok_no'];
+          FNew_ForTestBakar.MemBakarDet['berat']:=QTestBakarDet['weight'];
+          FNew_ForTestBakar.MemBakarDet['kadar_air']:=QTestBakarDet['water_contect'];
+          FNew_ForTestBakar.MemBakarDet['jam_mulai']:=QTestBakarDet['start_time'];
+          FNew_ForTestBakar.MemBakarDet['jam_mati']:=QTestBakarDet['end_time'];
+          FNew_ForTestBakar.MemBakarDet['lama_bakar']:=QTestBakarDet['long_burn'];
+          FNew_ForTestBakar.MemBakarDet['keterangan']:=QTestBakarDet['notes'];
+          FNew_ForTestBakar.MemBakarDet['warna_abu']:=QTestBakarDet['gray_color'];
+          FNew_ForTestBakar.MemBakarDet['bentuk_api']:=QTestBakarDet['fire_shape'];
+          FNew_ForTestBakar.MemBakarDet['bentuk_abu']:=QTestBakarDet['ash-form'];
           FNew_ForTestBakar.MemBakarDet['tensile']:=QTestBakarDet['tensile'];
           FNew_ForTestBakar.MemBakarDet['strength']:=QTestBakarDet['strength'];
-          FNew_ForTestBakar.MemBakarDet['ket1']:=QTestBakarDet['ket1'];
-          FNew_ForTestBakar.MemBakarDet['ket2']:=QTestBakarDet['ket2'];
-          FNew_ForTestBakar.MemBakarDet['ket3']:=QTestBakarDet['ket3'];
-          FNew_ForTestBakar.MemBakarDet['ket4']:=QTestBakarDet['ket4'];
-          FNew_ForTestBakar.MemBakarDet['ket_rata2']:=QTestBakarDet['ket_rata2'];
+          FNew_ForTestBakar.MemBakarDet['ket1']:=QTestBakarDet['note1'];
+          FNew_ForTestBakar.MemBakarDet['ket2']:=QTestBakarDet['note2'];
+          FNew_ForTestBakar.MemBakarDet['ket3']:=QTestBakarDet['note3'];
+          FNew_ForTestBakar.MemBakarDet['ket4']:=QTestBakarDet['note4'];
+          FNew_ForTestBakar.MemBakarDet['ket_rata2']:=QTestBakarDet['note_avg'];
           FNew_ForTestBakar.MemBakarDet.Post;
           DBGridDetailColEnter(sender);
           QTestBakarDet.Next;

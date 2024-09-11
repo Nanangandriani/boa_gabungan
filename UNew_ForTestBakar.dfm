@@ -426,10 +426,10 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
     Height = 32
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 435
-    ExplicitWidth = 1201
+    ExplicitTop = 432
+    ExplicitWidth = 1189
     object BBatal: TRzBitBtn
-      Left = 1125
+      Left = 1117
       Top = 1
       Height = 30
       Align = alRight
@@ -488,9 +488,10 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 1113
     end
     object BSimpan: TRzBitBtn
-      Left = 1050
+      Left = 1042
       Top = 1
       Height = 30
       Align = alRight
@@ -549,9 +550,10 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 1038
     end
     object BEdit: TRzBitBtn
-      Left = 975
+      Left = 967
       Top = 1
       Height = 30
       Align = alRight
@@ -611,6 +613,7 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 963
     end
   end
   object Edno: TEdit

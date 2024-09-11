@@ -2,8 +2,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   Left = 0
   Top = 0
   Caption = 'Data Penagihan Piutang'
-  ClientHeight = 551
-  ClientWidth = 1477
+  ClientHeight = 550
+  ClientWidth = 1370
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1477
+    Width = 1370
     Height = 113
     Align = alTop
     Color = clGradientInactiveCaption
@@ -228,8 +228,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 519
-    Width = 1477
+    Top = 518
+    Width = 1370
     Height = 32
     Align = alBottom
     TabOrder = 1
@@ -364,8 +364,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 113
-    Width = 1477
-    Height = 406
+    Width = 1370
+    Height = 405
     Hint = ''
     ActivePage = TabSDetail
     Align = alClient
@@ -379,6 +379,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     FixedDimension = 21
     object TabSDetail: TRzTabSheet
       Caption = 'Data'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1183
       ExplicitHeight = 266
       object DBGridDetail: TDBGridEh

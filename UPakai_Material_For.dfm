@@ -302,10 +302,6 @@ object FPakai_Material_For: TFPakai_Material_For
         end
         object TabKimia: TRzTabSheet
           Caption = 'Bahan Kimia'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object DBGridEh2: TDBGridEh
             Left = 0
             Top = 0
@@ -952,9 +948,8 @@ object FPakai_Material_For: TFPakai_Material_For
         FFFFFFFFFFFF}
     end
     object dxBarPrint: TdxBarLargeButton
-      Caption = 'Print'
+      Caption = 'Print  '
       Category = 0
-      Hint = 'Print'
       Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -1032,7 +1027,6 @@ object FPakai_Material_For: TFPakai_Material_For
         FDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFC
         FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
         FDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFDFDFDFF}
-      OnClick = dxBarPrintClick
     end
   end
   object QPakaiMaterial: TUniQuery
@@ -1983,7 +1977,7 @@ object FPakai_Material_For: TFPakai_Material_For
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 154.960730000000000000
+        Top = 185.196970000000000000
         Width = 529.134200000000000000
         DataSet = DBPakai_Material
         DataSetName = 'DBPakai_Material'
@@ -2116,7 +2110,7 @@ object FPakai_Material_For: TFPakai_Material_For
         FillGap.Right = 0
         Frame.Typ = []
         Height = 117.165430000000000000
-        Top = 521.575140000000000000
+        Top = 506.457020000000000000
         Width = 529.134200000000000000
         object Memo24: TfrxMemoView
           AllowVectorExport = True
@@ -2245,7 +2239,7 @@ object FPakai_Material_For: TFPakai_Material_For
         FillGap.Right = 0
         Frame.Typ = []
         Height = 37.779517800000000000
-        Top = 207.874150000000000000
+        Top = 226.771800000000000000
         Width = 529.134200000000000000
         DataSetName = 'DBPm2'
         RowCount = 0
@@ -2367,7 +2361,7 @@ object FPakai_Material_For: TFPakai_Material_For
         FillGap.Right = 0
         Frame.Typ = []
         Height = 56.692937800000000000
-        Top = 272.126160000000000000
+        Top = 287.244280000000000000
         Width = 529.134200000000000000
         DataSetName = 'DBPm3'
         RowCount = 0
@@ -2597,7 +2591,7 @@ object FPakai_Material_For: TFPakai_Material_For
         FillGap.Right = 0
         Frame.Typ = []
         Height = 37.795300000000000000
-        Top = 351.496290000000000000
+        Top = 366.614410000000000000
         Width = 529.134200000000000000
         DataSetName = 'DBPm4'
         RowCount = 0
@@ -2719,7 +2713,7 @@ object FPakai_Material_For: TFPakai_Material_For
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 411.968770000000000000
+        Top = 427.086890000000000000
         Width = 529.134200000000000000
         DataSetName = 'DBPm5'
         RowCount = 0
@@ -3532,6 +3526,7 @@ object FPakai_Material_For: TFPakai_Material_For
     end
     object ActPrint: TAction
       Caption = 'Print  '
+      OnExecute = ActPrintExecute
     end
     object ActApp: TAction
       Caption = 'Approve  '

@@ -86,7 +86,6 @@ type
     procedure dxBarUpdateClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure dxBarPrintClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -94,6 +93,7 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -161,6 +161,92 @@ begin
     actroexecute(sender);
     ShowMessage('Data Berhasil di Hapus');    }
   end;
+end;
+
+procedure TFPakai_Material_For.ActPrintExecute(Sender: TObject);
+begin
+ QRptPakai_Materail.Close;
+{with QRptPakai_Materail do
+begin
+  close;
+  sql.Clear;
+  sql.Text:=' SELECT kd_material,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1" '+
+             ' where no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
+             ' UNION '+
+             ' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
+             ' WHERE jenis=''TEPUNG DW'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
+             ' UNION '+
+             ' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
+             ' WHERE jenis=''PREMIX'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
+             ' UNION '+
+             ' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis  from "V_PakaiBahanFormula2" '+
+             ' WHERE jenis=''PARFUM'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
+             ' ORDER BY kd_material ASC';
+  ExecSQL;
+  end;
+  QRptPakai_Materail.Open;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PakaiMaterialFormula.Fr3');
+//  SetMemo(Rpt,'MHari',':  '+nm_hari);
+ // TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=fmainmenu.vKODEPRSH;
+  Rpt.ShowReport();       }
+with dm.Qtemp do
+begin
+ close;
+ sql.Clear;
+ sql.Text:=' SELECT ROW_NUMBER() OVER (ORDER BY kd_material)AS no_urut,kd_material,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1" '+
+           ' where no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+' and category=''BAHAN BAKU'''+
+           ' ORDER BY kd_material Desc limit 1';
+ open;
+end;
+with QRptPakai_Materail do
+begin
+ close;
+ sql.Clear;
+ sql.Text:=' SELECT kd_material,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1" '+
+           ' where no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+' and category=''BAHAN BAKU'''+
+           ' ORDER BY kd_material ASC';
+ open;
+end;
+with QRpt2 do
+begin
+ close;
+ sql.Clear;
+ sql.Text:=' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
+           ' WHERE jenis=''TEPUNG DW'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai']);
+ open;
+end;
+with QRpt3 do
+begin
+ close;
+ sql.Clear;
+ sql.Text:=' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
+           ' WHERE jenis=''PARFUM'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai']);
+ Open;
+end;
+with QRpt4 do
+begin
+ close;
+ sql.Clear;
+ sql.Text:=' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
+           ' WHERE jenis=''PREMIX'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai']);
+ Open;
+end;
+with QRpt5 do
+begin
+ close;
+ sql.Clear;
+ sql.Text:='SELECT ROW_NUMBER() OVER (ORDER BY kd_material) + 10 AS no_urut,kd_material,no_pakai,tanggal,shift,mc,'+
+ ' nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1"  where '+
+ ' no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+' and category=''KIMIA'''+
+ ' ORDER BY kd_material ASC';
+ ExecSQL;
+end;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PakaiMaterialfor.Fr3');
+//  SetMemo(Rpt,'MHari',':  '+nm_hari);
+ // SetMemo(rpt,'MPT',''+fmainmenu.vKODEPRSH);
+  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+  Rpt.ShowReport();
 end;
 
 procedure TFPakai_Material_For.ActROExecute(Sender: TObject);
@@ -290,92 +376,6 @@ begin
   BSimpan.Visible:=true;
   Caption:='New Laporan Pemakaian Material untuk Formula';
 end;
-end;
-
-procedure TFPakai_Material_For.dxBarPrintClick(Sender: TObject);
-begin
-QRptPakai_Materail.Close;
-{with QRptPakai_Materail do
-begin
-  close;
-  sql.Clear;
-  sql.Text:=' SELECT kd_material,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1" '+
-             ' where no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
-             ' UNION '+
-             ' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
-             ' WHERE jenis=''TEPUNG DW'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
-             ' UNION '+
-             ' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
-             ' WHERE jenis=''PREMIX'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
-             ' UNION '+
-             ' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis  from "V_PakaiBahanFormula2" '+
-             ' WHERE jenis=''PARFUM'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+''+
-             ' ORDER BY kd_material ASC';
-  ExecSQL;
-  end;
-  QRptPakai_Materail.Open;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PakaiMaterialFormula.Fr3');
-//  SetMemo(Rpt,'MHari',':  '+nm_hari);
- // TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
-  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=fmainmenu.vKODEPRSH;
-  Rpt.ShowReport();       }
-with dm.Qtemp do
-begin
- close;
- sql.Clear;
- sql.Text:=' SELECT ROW_NUMBER() OVER (ORDER BY kd_material)AS no_urut,kd_material,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1" '+
-           ' where no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+' and category=''BAHAN BAKU'''+
-           ' ORDER BY kd_material Desc limit 1';
- open;
-end;
-with QRptPakai_Materail do
-begin
- close;
- sql.Clear;
- sql.Text:=' SELECT kd_material,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1" '+
-           ' where no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+' and category=''BAHAN BAKU'''+
-           ' ORDER BY kd_material ASC';
- open;
-end;
-with QRpt2 do
-begin
- close;
- sql.Clear;
- sql.Text:=' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
-           ' WHERE jenis=''TEPUNG DW'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai']);
- open;
-end;
-with QRpt3 do
-begin
- close;
- sql.Clear;
- sql.Text:=' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
-           ' WHERE jenis=''PARFUM'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai']);
- Open;
-end;
-with QRpt4 do
-begin
- close;
- sql.Clear;
- sql.Text:=' SELECT kd_mat,no_pakai,tanggal,shift,mc,nm_produk,jmlh_timbang,nm_material,qty,satuan,ttl,'''',ws,ttlpakai,jenis from "V_PakaiBahanFormula2" '+
-           ' WHERE jenis=''PREMIX'' AND no_pakai='+quotedstr(MemPakaiMaterial['no_pakai']);
- Open;
-end;
-with QRpt5 do
-begin
- close;
- sql.Clear;
- sql.Text:='SELECT ROW_NUMBER() OVER (ORDER BY kd_material) + 10 AS no_urut,kd_material,no_pakai,tanggal,shift,mc,'+
- ' nm_produk,jmlh_timbang,nm_material,index,satuan,ttlpakai,category,ws,qtypk,jenis from "V_PakaiBahanFormula1"  where '+
- ' no_pakai='+quotedstr(MemPakaiMaterial['no_pakai'])+' and category=''KIMIA'''+
- ' ORDER BY kd_material ASC';
- ExecSQL;
-end;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PakaiMaterialfor.Fr3');
-//  SetMemo(Rpt,'MHari',':  '+nm_hari);
- // SetMemo(rpt,'MPT',''+fmainmenu.vKODEPRSH);
-  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
-  Rpt.ShowReport();
 end;
 
 procedure TFPakai_Material_For.dxBarRefreshClick(Sender: TObject);

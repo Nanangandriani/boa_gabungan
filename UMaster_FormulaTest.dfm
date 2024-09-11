@@ -190,7 +190,7 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
         Left = 0
         Top = 0
         Width = 1074
-        Height = 229
+        Height = 230
         Align = alClient
         DataSource = DsDetail_Formula
         DynProps = <>
