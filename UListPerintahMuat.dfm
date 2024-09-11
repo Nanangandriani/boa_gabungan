@@ -169,7 +169,6 @@ object FListPerintahMuat: TFListPerintahMuat
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedDockingStyle = dsNone
       DockedLeft = 0
       DockedTop = 0
       FloatLeft = 930
@@ -193,8 +192,8 @@ object FListPerintahMuat: TFListPerintahMuat
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -213,7 +212,7 @@ object FListPerintahMuat: TFListPerintahMuat
           Visible = True
           ItemName = 'dxBarLargeButton2'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
