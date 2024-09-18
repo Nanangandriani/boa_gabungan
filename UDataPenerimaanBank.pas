@@ -320,7 +320,7 @@ procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
 begin
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
   begin
-    if cbSumberTagihan.ItemIndex=1 then
+    if cbSumberTagihan.ItemIndex=0 then
     begin
       ShowMessage('Silkan Pilih Sumber Tagihan...!!!');
       Exit;

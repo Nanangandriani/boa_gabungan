@@ -22,6 +22,7 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1030
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -41,12 +42,49 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 1
+    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code_module'
+        FieldName = 'notrans'
+        Footers = <>
+        Title.Caption = 'No Transaksi'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'date_trans'
+        Footers = <>
+        Title.Caption = 'Tanggal Transaksi'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'period_date1'
+        Footers = <>
+        Title.Caption = 'Tanggal | Periode 1'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'period_date2'
+        Footers = <>
+        Title.Caption = 'Tanggal | Periode 2'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'code_cust'
         Footers = <>
         Visible = False
       end
@@ -54,45 +92,19 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_module'
+        FieldName = 'name_cust'
         Footers = <>
-        Title.Caption = 'Nama Module'
-        Width = 200
+        Title.Caption = 'Nama Pelanggan'
+        Width = 300
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'account_name_bank'
+        FieldName = 'tot_paid_amount'
         Footers = <>
-        Title.Caption = 'Bank'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_number_bank'
-        Footers = <>
-        Title.Caption = 'Nomor Rekening'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code_trans'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_trans'
-        Footers = <>
-        Title.Caption = 'Nama Transaksi'
-        Width = 200
+        Title.Caption = 'Jumlah'
+        Width = 150
       end
       item
         CellButtons = <>
@@ -100,8 +112,7 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
         EditButtons = <>
         FieldName = 'description'
         Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 250
+        Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -677,70 +688,43 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
   object QRencanaLunasHutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_master_trans_account"'
+      'select * from "cash_banks"."t_plan_receivable"'
       'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56
-    object QRencanaLunasHutangid: TGuidField
-      FieldName = 'id'
+    object QRencanaLunasHutangnotrans: TStringField
+      FieldName = 'notrans'
       Required = True
-      Size = 38
-    end
-    object QRencanaLunasHutangcreated_at: TDateTimeField
-      FieldName = 'created_at'
-    end
-    object QRencanaLunasHutangcreated_by: TStringField
-      FieldName = 'created_by'
-      Size = 50
-    end
-    object QRencanaLunasHutangupdated_at: TDateTimeField
-      FieldName = 'updated_at'
-    end
-    object QRencanaLunasHutangupdated_by: TStringField
-      FieldName = 'updated_by'
-      Size = 50
-    end
-    object QRencanaLunasHutangdeleted_at: TDateTimeField
-      FieldName = 'deleted_at'
-    end
-    object QRencanaLunasHutangdeleted_by: TStringField
-      FieldName = 'deleted_by'
-      Size = 50
-    end
-    object QRencanaLunasHutangcode_module: TStringField
-      FieldName = 'code_module'
-      Required = True
-      Size = 100
-    end
-    object QRencanaLunasHutangname_module: TStringField
-      FieldName = 'name_module'
       Size = 255
     end
-    object QRencanaLunasHutangcode_trans: TStringField
-      FieldName = 'code_trans'
-      Required = True
+    object QRencanaLunasHutangdate_trans: TDateField
+      FieldName = 'date_trans'
+    end
+    object QRencanaLunasHutangperiod_date1: TDateField
+      FieldName = 'period_date1'
+    end
+    object QRencanaLunasHutangperiod_date2: TDateField
+      FieldName = 'period_date2'
+    end
+    object QRencanaLunasHutangcode_cust: TStringField
+      FieldName = 'code_cust'
       Size = 100
     end
-    object QRencanaLunasHutangname_trans: TStringField
-      FieldName = 'name_trans'
+    object QRencanaLunasHutangname_cust: TStringField
+      FieldName = 'name_cust'
       Size = 255
+    end
+    object QRencanaLunasHutangtot_paid_amount: TFloatField
+      FieldName = 'tot_paid_amount'
     end
     object QRencanaLunasHutangdescription: TMemoField
       FieldName = 'description'
       BlobType = ftMemo
     end
-    object QRencanaLunasHutangaccount_number_bank: TStringField
-      FieldName = 'account_number_bank'
-      Size = 100
-    end
-    object QRencanaLunasHutangaccount_name_bank: TStringField
-      FieldName = 'account_name_bank'
-      Size = 255
-    end
   end
   object DsRencanaLunasHutang: TDataSource
     DataSet = QRencanaLunasHutang
-    Left = 489
+    Left = 513
     Top = 32
   end
 end

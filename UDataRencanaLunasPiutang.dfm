@@ -21,6 +21,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1127
     object Label8: TLabel
       Left = 21
       Top = 69
@@ -160,6 +161,7 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 6
+      OnChange = dtTransChange
     end
   end
   object Panel2: TPanel
@@ -316,14 +318,13 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 201
     ExplicitWidth = 1127
-    ExplicitHeight = 317
+    ExplicitHeight = 357
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
       ExplicitWidth = 1123
-      ExplicitHeight = 292
+      ExplicitHeight = 332
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -336,6 +337,15 @@ object FDataRencanaLunasPiutang: TFDataRencanaLunasPiutang
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnCellClick = DBGridTagihanCellClick
+        OnColEnter = DBGridTagihanColEnter
+        OnColExit = DBGridTagihanColExit
+        OnEnter = DBGridTagihanEnter
+        OnExit = DBGridTagihanExit
+        OnKeyDown = DBGridTagihanKeyDown
+        OnKeyPress = DBGridTagihanKeyPress
+        OnMouseDown = DBGridTagihanMouseDown
+        OnMouseEnter = DBGridTagihanMouseEnter
         Columns = <
           item
             CellButtons = <>

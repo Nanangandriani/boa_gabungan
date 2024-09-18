@@ -156,7 +156,6 @@ begin
     end;
 end;
 
-
 procedure TFDataReturPenjualan.Save;
 begin
   with dm.Qtemp do

@@ -22,7 +22,7 @@ object FListReturPenjualan: TFListReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 943
+    ExplicitWidth = 1186
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

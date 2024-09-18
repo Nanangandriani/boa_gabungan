@@ -39,6 +39,7 @@ type
     BSave: TRzBitBtn;
     procedure btTampilkanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
+    procedure BSaveClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,7 +58,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule;
+uses UDataModule, UDataPenerimaanBank;
 
 procedure TFDaftarRencanaLunasPiutang.Clear;
 begin
@@ -72,6 +73,87 @@ end;
 procedure TFDaftarRencanaLunasPiutang.BBatalClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TFDaftarRencanaLunasPiutang.BSaveClick(Sender: TObject);
+var
+  rec: Integer;
+begin
+  Status:=0;
+  rec:=0;
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if MemDetailPiutang.RecordCount=0 then
+      begin
+        MessageDlg('Tidak Ada Data',mtInformation,[mbRetry],0);
+        //edKodeVendorMuatan.SetFocus;
+      end
+      else if Status = 0 then
+      begin
+         //cek ada yang di tandai tidak
+         MemDetailPiutang.First;
+         while not MemDetailPiutang.Eof do
+         begin
+           if MemDetailPiutang['pilih']=true then
+           begin
+            rec:=rec+1;
+           end;
+         MemDetailPiutang.Next;
+         end;
+
+         if rec=0 then
+         begin
+           ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
+           exit;
+         end;
+
+         //data di tandai kirm ke do
+         if rec>0 then
+         begin
+           FDataPenerimaanBank.MemDetailPiutang.active:=false;
+           FDataPenerimaanBank.MemDetailPiutang.active:=true;
+           FDataPenerimaanBank.MemDetailPiutang.EmptyTable;
+
+           MemDetailPiutang.First;
+           while not MemDetailPiutang.Eof do
+           begin
+             if MemDetailPiutang['pilih']=true then
+             begin
+              with Dm.Qtemp do
+              begin
+                close;
+                sql.clear;
+                sql.add(' SELECT * from ('+
+                        ' SELECT "notrans", "no_invoice", "no_invoice_tax", '+
+                        ' "date_trans", "date_tempo", "paid_amount", "description"'+
+                        ' FROM  "cash_banks"."t_plan_receivable_det") a '+
+                        ' WHERE "notrans"='+QuotedStr(MemDetailPiutang['notrans'])+' '+
+                        ' Order By "notrans", "no_invoice" desc');
+                open;
+              end;
+                  FDataPenerimaanBank.MemDetailPiutang.insert;
+                  FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+                  FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp.FieldByName('no_invoice_tax').AsString;
+                  FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
+                  FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('paid_amount').AsFloat;
+                  FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp.FieldByName('paid_amount').AsFloat;
+                  FDataPenerimaanBank.MemDetailPiutang['keterangan']:=Dm.Qtemp.FieldByName('description').AsString;
+                  FDataPenerimaanBank.MemDetailPiutang.post;
+             end;
+           MemDetailPiutang.Next;
+           end;
+         end;
+      end
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      Close;
 end;
 
 procedure TFDaftarRencanaLunasPiutang.btTampilkanClick(Sender: TObject);
@@ -115,6 +197,7 @@ begin
       FDaftarRencanaLunasPiutang.MemDetailPiutang.active:=false;
       FDaftarRencanaLunasPiutang.MemDetailPiutang.active:=true;
       FDaftarRencanaLunasPiutang.MemDetailPiutang.EmptyTable;
+      ShowMessage('Tidak Ditemukan Data...');
     end;
 
     if  Dm.Qtemp.RecordCount<>0 then

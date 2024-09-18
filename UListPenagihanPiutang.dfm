@@ -22,7 +22,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1036
+    ExplicitWidth = 1086
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

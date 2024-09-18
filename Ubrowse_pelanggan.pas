@@ -122,8 +122,8 @@ begin
   if vcall='dpp' then
   begin
      FDataPenagihanPiutang.MemDetail.insert;
-     FDataPenagihanPiutang.MemDetail['kode_pel']:=Dm.Qtemp.fieldbyname('customer_code').value;
-     FDataPenagihanPiutang.MemDetail['nama_pel']:=Dm.Qtemp.fieldbyname('customer_name').value;
+     FDataPenagihanPiutang.MemDetail['kode_pel']:=MemMasterData['KD_PELANGGAN'];
+     FDataPenagihanPiutang.MemDetail['nama_pel']:=MemMasterData['NM_PELANGGAN'];
      FDataPenagihanPiutang.MemDetail['no_invoice']:='0';
      FDataPenagihanPiutang.MemDetail['no_invoice_tax']:='0';
      //FDataPenagihanPiutang.MemDetail['tgl_faktur']:='';

@@ -37,11 +37,22 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UMasterWilayahAdministratif, UNew_SalesOrder, UTambah_Barang, UMy_Function,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
   UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
-  UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank;
+  UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank,
+  UDataPenagihanPiutang, UMovingDPP;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 begin
   //ShowMessage(vcall);
+  if vcall='m_kolektor_moving' then
+  begin
+    FMovingDPP.edKodeKolektor.Text:=MemMasterData['KD_MASTER'];
+    FMovingDPP.edNamaKolektor.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='m_kolektor' then
+  begin
+    FDataPenagihanPiutang.edKodeKolektor.Text:=MemMasterData['KD_MASTER'];
+    FDataPenagihanPiutang.edNamaKolektor.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_jns_transaksi' then
   begin
     with FDataPenerimaanBank do

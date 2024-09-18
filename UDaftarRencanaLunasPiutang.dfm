@@ -2,19 +2,20 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
   Left = 0
   Top = 0
   Caption = 'Daftar Rencana Pembayaran Piutang'
-  ClientHeight = 568
-  ClientWidth = 940
+  ClientHeight = 559
+  ClientWidth = 1033
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 940
+    Width = 1033
     Height = 105
     Align = alTop
     Color = clGradientInactiveCaption
@@ -159,8 +160,8 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 105
-    Width = 940
-    Height = 431
+    Width = 1033
+    Height = 422
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
@@ -168,17 +169,15 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     TabIndex = 0
     TabOrder = 1
     ExplicitWidth = 934
-    ExplicitHeight = 422
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
       ExplicitWidth = 930
-      ExplicitHeight = 397
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 936
-        Height = 406
+        Width = 1029
+        Height = 397
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -187,6 +186,15 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'notrans'
+            Footers = <>
+            Title.Caption = 'No Transaksi'
+            Width = 200
+          end
           item
             CellButtons = <>
             DynProps = <>
@@ -238,13 +246,6 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
             FieldName = 'pilih'
             Footers = <>
             Title.Caption = 'Pilih'
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'notrans'
-            Footers = <>
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -253,15 +254,14 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 536
-    Width = 940
+    Top = 527
+    Width = 1033
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 527
     ExplicitWidth = 934
     object BBatal: TRzBitBtn
-      Left = 864
+      Left = 957
       Top = 1
       Height = 30
       Align = alRight
@@ -323,12 +323,13 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
       ExplicitLeft = 858
     end
     object BSave: TRzBitBtn
-      Left = 789
+      Left = 882
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Process'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
