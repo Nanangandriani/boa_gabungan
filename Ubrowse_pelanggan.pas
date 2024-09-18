@@ -133,7 +133,7 @@ begin
      FDataPenagihanPiutang.MemDetail['bank_resi']:='0';
      //FDataPenagihanPiutang.MemDetail['tgl_resi']:='';
      FDataPenagihanPiutang.MemDetail['resi']:='0';
-     FDataPenagihanPiutang.MemDetail['nama_bank']:='';
+     FDataPenagihanPiutang.MemDetail['nama_bank_cek']:='';
      FDataPenagihanPiutang.MemDetail['no_cek']:='';
      //FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:='';
      FDataPenagihanPiutang.MemDetail['nilai_cek']:='0';

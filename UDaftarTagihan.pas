@@ -151,9 +151,14 @@ begin
            ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
            exit;
          end;
+         if rec>1 then
+         begin
+           ShowMessage('Lakukan Tandai Per Satu Tagihan.. !!');
+           exit;
+         end;
 
          //data di tandai kirm ke do
-         if rec>0 then
+         if rec=1 then
          begin
            FDataPenagihanPiutang.MemDetail.active:=false;
            FDataPenagihanPiutang.MemDetail.active:=true;
@@ -172,9 +177,9 @@ begin
                   FDataPenagihanPiutang.MemDetail['jum_piutang']:=MemDetailPiutang['jum_piutang'];
                   FDataPenagihanPiutang.MemDetail['tunai']:='0';
                   FDataPenagihanPiutang.MemDetail['bank_resi']:='0';
-                  //FDataPenagihanPiutang.MemDetail['tgl_resi']:='';
+                  FDataPenagihanPiutang.MemDetail['tgl_resi']:=null;
                   FDataPenagihanPiutang.MemDetail['resi']:='0';
-                  FDataPenagihanPiutang.MemDetail['nama_bank']:='';
+                  FDataPenagihanPiutang.MemDetail['nama_bank_cek']:='';
                   FDataPenagihanPiutang.MemDetail['no_cek']:='';
                   //FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:='';
                   FDataPenagihanPiutang.MemDetail['nilai_cek']:='0';

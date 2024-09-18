@@ -2,8 +2,8 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   Left = 0
   Top = 0
   Caption = 'List Penagihan Piutang'
-  ClientHeight = 582
-  ClientWidth = 1092
+  ClientHeight = 581
+  ClientWidth = 1381
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1092
+    Width = 1381
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,7 +22,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1086
+    ExplicitWidth = 1092
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -35,74 +35,77 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1092
-    Height = 455
+    Width = 1381
+    Height = 454
     Align = alClient
     DataSource = DsListPenagihanPiutang
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 1
+    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code_module'
+        FieldName = 'date_dpp'
         Footers = <>
-        Visible = False
+        Title.Caption = 'Tanggal | DPP'
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_module'
+        FieldName = 'date_print'
         Footers = <>
-        Title.Caption = 'Nama Module'
-        Width = 200
+        Title.Caption = 'Tanggal | Cetak'
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'account_name_bank'
+        FieldName = 'code_collector'
         Footers = <>
-        Title.Caption = 'Bank'
-        Width = 200
+        Title.Caption = 'Kode Kolektor'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'account_number_bank'
+        FieldName = 'name_collector'
         Footers = <>
-        Title.Caption = 'Nomor Rekening'
-        Width = 200
+        Title.Caption = 'Nama Kolektor'
+        Width = 300
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code_trans'
+        FieldName = 'wilayah'
         Footers = <>
-        Visible = False
+        Title.Caption = 'Wilayah'
+        Width = 500
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_trans'
+        FieldName = 'tot_lmbr_invoice'
         Footers = <>
-        Title.Caption = 'Nama Transaksi'
-        Width = 200
+        Title.Caption = 'Total Tagihan | Lembar'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'description'
+        FieldName = 'jum_tagihan'
         Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 250
+        Title.Caption = 'Total Tagihan | Jumlah'
+        Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -678,70 +681,78 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   object QListPenagihanPiutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_master_trans_account"'
-      'where deleted_at is null order by created_at Desc')
+      'SELECT'
+      #9'"date_dpp",'
+      #9'"date_print",'
+      #9'"code_collector",'
+      #9'"name_collector",'
+      #9'b."wilayah",'
+      #9'COUNT ( no_invoice ) AS tot_lmbr_invoice,'
+      #9'SUM ( "paid_amount" ) jum_tagihan '
+      'FROM'
+      #9'"cash_banks"."t_dpp"'
+      #9'A LEFT JOIN ('
+      #9'SELECT'
+      #9#9'code AS kd_master,'
+      #9#9'NAME AS nm_master,'
+      
+        #9#9'concat ( '#39'Kares. '#39', name_kares, '#39', Kabupaten. '#39', name_regency ' +
+        ') AS wilayah '
+      #9'FROM'
+      #9#9'"public"."t_collector" '
+      #9'WHERE'
+      #9#9'deleted_at IS NULL '
+      #9') b ON A."code_collector" = b."kd_master" '
+      'WHERE'
+      #9'deleted_at IS NULL '
+      'GROUP BY'
+      #9'"date_dpp",'
+      #9'"date_print",'
+      #9'"code_collector",'
+      #9'"name_collector",'
+      #9'b."wilayah" '
+      'ORDER BY'
+      #9'"date_dpp",'
+      #9'"date_print",'
+      #9'"code_collector",'
+      #9'"name_collector",'
+      #9'b."wilayah" DESC')
     Left = 428
     Top = 56
-    object QListPenagihanPiutangid: TGuidField
-      FieldName = 'id'
+    object QListPenagihanPiutangdate_dpp: TDateField
+      FieldName = 'date_dpp'
+    end
+    object QListPenagihanPiutangdate_print: TDateField
+      FieldName = 'date_print'
+    end
+    object QListPenagihanPiutangcode_collector: TStringField
+      FieldName = 'code_collector'
       Required = True
-      Size = 38
-    end
-    object QListPenagihanPiutangcreated_at: TDateTimeField
-      FieldName = 'created_at'
-    end
-    object QListPenagihanPiutangcreated_by: TStringField
-      FieldName = 'created_by'
       Size = 50
     end
-    object QListPenagihanPiutangupdated_at: TDateTimeField
-      FieldName = 'updated_at'
-    end
-    object QListPenagihanPiutangupdated_by: TStringField
-      FieldName = 'updated_by'
-      Size = 50
-    end
-    object QListPenagihanPiutangdeleted_at: TDateTimeField
-      FieldName = 'deleted_at'
-    end
-    object QListPenagihanPiutangdeleted_by: TStringField
-      FieldName = 'deleted_by'
-      Size = 50
-    end
-    object QListPenagihanPiutangcode_module: TStringField
-      FieldName = 'code_module'
-      Required = True
-      Size = 100
-    end
-    object QListPenagihanPiutangname_module: TStringField
-      FieldName = 'name_module'
+    object QListPenagihanPiutangname_collector: TStringField
+      FieldName = 'name_collector'
       Size = 255
     end
-    object QListPenagihanPiutangcode_trans: TStringField
-      FieldName = 'code_trans'
-      Required = True
-      Size = 100
-    end
-    object QListPenagihanPiutangname_trans: TStringField
-      FieldName = 'name_trans'
-      Size = 255
-    end
-    object QListPenagihanPiutangdescription: TMemoField
-      FieldName = 'description'
+    object QListPenagihanPiutangwilayah: TMemoField
+      FieldName = 'wilayah'
+      ReadOnly = True
+      OnGetText = QListPenagihanPiutangwilayahGetText
       BlobType = ftMemo
     end
-    object QListPenagihanPiutangaccount_number_bank: TStringField
-      FieldName = 'account_number_bank'
-      Size = 100
+    object QListPenagihanPiutangtot_lmbr_invoice: TLargeintField
+      FieldName = 'tot_lmbr_invoice'
+      ReadOnly = True
     end
-    object QListPenagihanPiutangaccount_name_bank: TStringField
-      FieldName = 'account_name_bank'
-      Size = 255
+    object QListPenagihanPiutangjum_tagihan: TFloatField
+      FieldName = 'jum_tagihan'
+      ReadOnly = True
+      DisplayFormat = '#,##0.##'
     end
   end
   object DsListPenagihanPiutang: TDataSource
     DataSet = QListPenagihanPiutang
-    Left = 489
+    Left = 529
     Top = 32
   end
 end

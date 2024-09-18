@@ -45,6 +45,9 @@ type
     Label8: TLabel;
     Label9: TLabel;
     rgTagihan: TRzRadioGroup;
+    Label12: TLabel;
+    EdKodeInitial: TEdit;
+    Label13: TLabel;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -220,7 +223,7 @@ begin
     Close;
     SQL.Clear;
     Sql.Text :=' select * from t_master_trans_account'+
-               ' -- where code_module='+QuotedStr(edKodeModul.Text)+''+
+               ' where code_module='+QuotedStr(edKodeModul.Text)+''+
                ' -- AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
     open;
   end;
@@ -234,7 +237,7 @@ begin
         Sql.Clear;
         Sql.Text :=' select count(code_trans) as hasil '+
                    ' from t_master_trans_account '+
-                   ' -- where code_module='+QuotedStr(edKodeModul.Text)+' '+
+                   ' where code_module='+QuotedStr(edKodeModul.Text)+' '+
                    ' -- AND account_number_bank='+QuotedStr(edNorekening.Text)+'';
         Open;
       end;

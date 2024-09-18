@@ -563,7 +563,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nama_bank'
+            FieldName = 'nama_bank_cek'
             Footers = <>
             Title.Caption = 'Bank Cek/Giro'
             Width = 100
@@ -615,7 +615,6 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     Top = 473
   end
   object MemDetail: TMemTableEh
-    Active = True
     Params = <>
     Left = 96
     Top = 473
@@ -633,9 +632,11 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object MemDetailjum_piutang: TCurrencyField
       FieldName = 'jum_piutang'
+      DisplayFormat = '#,##0.##'
     end
     object MemDetailtunai: TCurrencyField
       FieldName = 'tunai'
+      DisplayFormat = '#,##0.##'
     end
     object MemDetailbank_resi: TStringField
       FieldName = 'bank_resi'
@@ -645,9 +646,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object MemDetailresi: TCurrencyField
       FieldName = 'resi'
-    end
-    object MemDetailnama_bank: TStringField
-      FieldName = 'nama_bank'
+      DisplayFormat = '#,##0.##'
     end
     object MemDetailno_cek: TStringField
       FieldName = 'no_cek'
@@ -657,9 +656,11 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object MemDetailnilai_cek: TCurrencyField
       FieldName = 'nilai_cek'
+      DisplayFormat = '#,##0.##'
     end
     object MemDetailkontra_bon: TCurrencyField
       FieldName = 'kontra_bon'
+      DisplayFormat = '#,##0.##'
     end
     object MemDetailno_invoice: TStringField
       FieldName = 'no_invoice'
@@ -667,6 +668,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object MemDetailno_invoice_tax: TStringField
       FieldName = 'no_invoice_tax'
+    end
+    object MemDetailnama_bank_cek: TStringField
+      FieldName = 'nama_bank_cek'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -738,8 +742,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           currency = False
           Precision = 15
         end
-        object nama_bank: TMTStringDataFieldEh
-          FieldName = 'nama_bank'
+        object nama_bank_cek: TMTStringDataFieldEh
+          FieldName = 'nama_bank_cek'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end

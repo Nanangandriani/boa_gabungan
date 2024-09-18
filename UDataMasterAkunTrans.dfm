@@ -107,6 +107,20 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       Height = 15
       Caption = 'No. Rekening'
     end
+    object Label12: TLabel
+      Left = 117
+      Top = 255
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label13: TLabel
+      Left = 20
+      Top = 255
+      Width = 59
+      Height = 15
+      Caption = 'Kode Initial'
+    end
     object edNamaModul: TRzButtonEdit
       Left = 132
       Top = 16
@@ -181,6 +195,15 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         'Tidak'
         'Ya')
       TabOrder = 7
+    end
+    object EdKodeInitial: TEdit
+      Left = 132
+      Top = 252
+      Width = 173
+      Height = 23
+      CharCase = ecUpperCase
+      MaxLength = 5
+      TabOrder = 8
     end
   end
   object Panel2: TPanel
