@@ -1,0 +1,6 @@
+1. table transaksi di tambahakan additional_code2,additional_code3,additional_code4,additional_code5
+2. di tabel pembelian no_lpb=>trans_no, tgl_lpb=>trans_date
+3. di tabel detail Pembelian kd_akunppn=>ak_ppn,kd_akunpph=>ak_pph
+4. di tabel penjualan no_inv=>trans_no, tgl_inv=>trans_date
+5. di tabel detail penjualan kd_akunppn=>ak_ppn,kd_akunpph=>ak_pph
+

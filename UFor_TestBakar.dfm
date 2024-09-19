@@ -51,13 +51,13 @@ object FFor_Testbakar: TFFor_Testbakar
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_10_thn'
+        ColumnName = 'Column_10_trans_year'
       end
       item
-        ColumnName = 'Column_11_bln'
+        ColumnName = 'Column_11_trans_month'
       end
       item
-        ColumnName = 'Column_12_tgl_no'
+        ColumnName = 'Column_12_trans_day'
       end>
     DataSource = DsTestBakar
     DynProps = <>
@@ -71,7 +71,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_test'
+        FieldName = 'test_no'
         Footers = <>
         Title.Caption = 'No. Test'
         Width = 100
@@ -80,7 +80,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_produk'
+        FieldName = 'product_code'
         Footers = <>
         Title.Caption = 'Nama Produk'
         Width = 109
@@ -89,7 +89,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_spk'
+        FieldName = 'spk_no'
         Footers = <>
         Title.Caption = 'No. SPK Test'
         Width = 150
@@ -98,7 +98,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_formula'
+        FieldName = 'formula_no'
         Footers = <>
         Title.Caption = 'No. Formula'
         Width = 153
@@ -107,7 +107,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'regu'
+        FieldName = 'shift'
         Footers = <>
         Title.Caption = 'Regu'
         Width = 60
@@ -125,7 +125,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_test'
+        FieldName = 'test_date'
         Footers = <>
         Title.Caption = 'Tanggal Test Bakar'
         Width = 150
@@ -134,7 +134,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_prod'
+        FieldName = 'prod_date'
         Footers = <>
         Title.Caption = 'Tanggal Produksi'
         Width = 168
@@ -161,7 +161,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'thn'
+        FieldName = 'trans_year'
         Footers = <>
         Title.Caption = 'Tahun'
         Visible = False
@@ -170,7 +170,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'bln'
+        FieldName = 'trans_month'
         Footers = <>
         Title.Caption = 'Bulan'
         Visible = False
@@ -179,7 +179,7 @@ object FFor_Testbakar: TFFor_Testbakar
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_no'
+        FieldName = 'trans_day'
         Footers = <>
         Title.Caption = 'Tanggal'
         Visible = False
@@ -381,7 +381,7 @@ object FFor_Testbakar: TFFor_Testbakar
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 248
+    Left = 344
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'

@@ -102,6 +102,7 @@ procedure TFFor_Testbakar.ActBaruExecute(Sender: TObject);
 begin
   with FNew_ForTestBakar do
   begin
+    statustr:=0;
     FNew_ForTestBakar.Show;
     FNew_ForTestBakar.BSimpan.Visible:=True;
     FNew_ForTestBakar.BEdit.Visible:=False;
@@ -166,9 +167,10 @@ procedure TFFor_Testbakar.ActUpdateExecute(Sender: TObject);
 begin
   with FNew_ForTestBakar do
   begin
+      statustr:=1;
       FNew_ForTestBakar.Show;
-      FNew_ForTestBakar.BSimpan.Visible:=False;
-      FNew_ForTestBakar.BEdit.Visible:=True;
+    //  FNew_ForTestBakar.BSimpan.Visible:=;
+   //   FNew_ForTestBakar.BEdit.Visible:=True;
       FNew_ForTestBakar.Clear;
       FNew_ForTestBakar.load;
       FNew_ForTestBakar.Caption:='Update QC Bakar Satu Coil';
@@ -176,7 +178,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from "warehouse".tformula_burn_test  where test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
+        sql.Text:='select * from "warehouse".t_formula_burn_test  where test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
         ExecSQL;
       end;
       with Dm.Qtemp do
@@ -188,11 +190,12 @@ begin
         FNew_ForTestBakar.Edno.Text:=Dm.Qtemp['test_no'];
         FNew_ForTestBakar.DtPMulai.Text:=Dm.Qtemp['prod_start_date'];
         FNew_ForTestBakar.DtPSelesai.Text:=Dm.Qtemp['prod_end_date'];
+        FNew_ForTestBakar.DtProduksi.Text:=Dm.Qtemp['prod_date'];
         FNew_ForTestBakar.EdNo_Formula.Text:=Dm.Qtemp['formula_no'];
         FNew_ForTestBakar.DtTest.Text:=Dm.Qtemp['test_date'];
-        FNew_ForTestBakar.EdNo_Spk.Text:=Dm.Qtemp['spk_no)'];
+        FNew_ForTestBakar.EdNo_Spk.Text:=Dm.Qtemp['spk_no'];
         st:=DM.qtemp['status'];
-      thn:=DM.Qtemp['trans_year'];
+        thn:=DM.Qtemp['trans_year'];
       end;
       QTestBakarDet.First;
       while not QTestBakarDet.Eof do
@@ -202,14 +205,14 @@ begin
           FNew_ForTestBakar.MemBakarDet.Insert;
           FNew_ForTestBakar.MemBakarDet['no_gotrok']:=QTestBakarDet['gotrok_no'];
           FNew_ForTestBakar.MemBakarDet['berat']:=QTestBakarDet['weight'];
-          FNew_ForTestBakar.MemBakarDet['kadar_air']:=QTestBakarDet['water_contect'];
+          FNew_ForTestBakar.MemBakarDet['kadar_air']:=QTestBakarDet['water_content'];
           FNew_ForTestBakar.MemBakarDet['jam_mulai']:=QTestBakarDet['start_time'];
           FNew_ForTestBakar.MemBakarDet['jam_mati']:=QTestBakarDet['end_time'];
           FNew_ForTestBakar.MemBakarDet['lama_bakar']:=QTestBakarDet['long_burn'];
           FNew_ForTestBakar.MemBakarDet['keterangan']:=QTestBakarDet['notes'];
           FNew_ForTestBakar.MemBakarDet['warna_abu']:=QTestBakarDet['gray_color'];
           FNew_ForTestBakar.MemBakarDet['bentuk_api']:=QTestBakarDet['fire_shape'];
-          FNew_ForTestBakar.MemBakarDet['bentuk_abu']:=QTestBakarDet['ash-form'];
+          FNew_ForTestBakar.MemBakarDet['bentuk_abu']:=QTestBakarDet['ash_form'];
           FNew_ForTestBakar.MemBakarDet['tensile']:=QTestBakarDet['tensile'];
           FNew_ForTestBakar.MemBakarDet['strength']:=QTestBakarDet['strength'];
           FNew_ForTestBakar.MemBakarDet['ket1']:=QTestBakarDet['note1'];

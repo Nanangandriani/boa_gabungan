@@ -84,10 +84,8 @@ procedure TFHomeLogin.RzPanel1Paint(Sender: TObject);
 begin
 
 end;
-
 //ShowMessage('A');
-  //ShellExecute(0, 'open', PChar('https://helpdesk.hastaprimasolusi.com/'), nil, nil, SW_SHOWNORMAL);
-
+//ShellExecute(0, 'open', PChar('https://helpdesk.hastaprimasolusi.com/'), nil, nil, SW_SHOWNORMAL);
 
 initialization
   RegisterClass(TFHomeLogin);

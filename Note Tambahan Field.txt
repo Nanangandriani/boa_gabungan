@@ -1,0 +1,24 @@
+ALTER TABLE t_item_group
+--ALTER COLUMN "id" DROP DEFAULT, 
+ADD COLUMN "id" UUID,
+--ADD COLUMN "id" UUID PRIMARY KEY,
+--ALTER COLUMN "id" SET uuid_generate_v4(), 
+ALTER COLUMN "id" SET DEFAULT uuid_generate_v4(),
+-- ALTER COLUMN "id" set GENERATEd uuid,
+-- ALTER COLUMN "id" SET PRIMARY KEY,
+ADD COLUMN created_at TIMESTAMP,
+ALTER COLUMN created_at SET DEFAULT now(),
+ADD COLUMN created_by VARCHAR(50),
+ADD COLUMN updated_at TIMESTAMP,
+ADD COLUMN updated_by VARCHAR(50),
+ADD COLUMN deleted_at TIMESTAMP,
+ADD COLUMN deleted_by VARCHAR(50);
+
+
+-- Khusus untuk tabel transaksi saja
+ALTER TABLE t_item_request
+ADD COLUMN trans_day VARCHAR(2),
+ADD COLUMN trans_month VARCHAR(2),
+ADD COLUMN trans_year VARCHAR(5),
+ADD COLUMN code_additional VARCHAR(5);
+

@@ -69,6 +69,8 @@ type
     procedure Autonumber;
     Procedure load;
     Procedure Clear;
+    Procedure Simpan;
+    Procedure Update;
   end;
 
 Function FNew_ForTestBakar: TFNew_ForTestBakar;
@@ -77,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UFor_TestBakar, UMainmenu;
+uses UDatamodule, UFor_TestBakar, UMainmenu, UMy_Function;
 var
   RealFNew_ForTestBakar: TFNew_ForTestBakar;
 function FNew_ForTestBakar: TFNew_ForTestBakar;
@@ -157,6 +159,303 @@ begin
   EdNo_Formula.Text:='';
   DtTest.Text:='';
   MemBakarDet.EmptyTable;
+end;
+
+Procedure TFNew_forTestBakar.simpan;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_menu_sub where link=''FPakai_Material_For''';
+    ExecSQL;
+  end;
+  idmenu:=dm.Qtemp['submenu_code'];
+  strday2:=DtTest.Date;
+  Edno.Text:=getNourut(strday2,'warehouse.t_item_use_for','');
+  if messageDlg ('Anda Yakin Simpan No.'+EdNo.text+' '+'?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    if EdNo_Spk.Text='' then
+    begin
+      MessageDlg('No SPK Test  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdNo_Spk.SetFocus;
+      Exit;
+    end;
+    if EdNo_Formula.Text='' then
+    begin
+      MessageDlg('No Formula  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdNo_Formula.SetFocus;
+      Exit;
+    end;
+    if edregu.Text='' then
+    begin
+      MessageDlg('Regu Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      edregu.SetFocus;
+      Exit;
+    end;
+    if EdMesin.Text='' then
+    begin
+      MessageDlg('Mesin  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdMesin.SetFocus;
+      Exit;
+    end;
+    if DtTest.Text='' then
+    begin
+      MessageDlg('Tanggal Test  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtTest.SetFocus;
+      Exit;
+    end;
+    if DtPMulai.Text='' then
+    begin
+      MessageDlg('Tanggal Perkiraan Produksi  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtPMulai.SetFocus;
+      Exit;
+    end;
+    if DtPSelesai.Text='' then
+    begin
+      MessageDlg('Tanggal Perkiraan Produksi  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtPSelesai.SetFocus;
+      Exit;
+    end;
+    if not dm.koneksi.InTransaction then
+    dm.koneksi.StartTransaction;
+      try
+        begin
+          with dm.Qtemp do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:='select * from "warehouse".t_formula_burn_test';
+            ExecSQL;
+          end;
+          with dm.Qtemp do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into "warehouse".t_formula_burn_test(formula_no,test_no,test_date,shift,mc,notes,pic,'+
+                      ' product_code,spk_no,prod_start_date,prod_end_date,sbu_code,trans_year,status,prod_date,trans_month,trans_day,order_no)'+
+                      ' values(:parno_formula,:parno_test,:partgl_test,:parregu,:parmc,:parnotes,:parpic,'+
+                      ' :parnm_produk,:parno_spk,:partgl_mulai_prod,:partgl_selesai_prod,:parkd_sbu,'+
+                      ' :parthn,:parstatus,:partgl_prod,:parbln,:partglno,:parnourut)';
+                      ParamByName('parno_formula').Value:=EdNo_Formula.Text;
+                      ParamByName('parno_test').Value:=Edno.Text;
+                      ParamByName('partgl_test').Value:=FormatDateTime('yyy-mm-dd',DtTest.date);
+                      ParamByName('parregu').Value:=edregu.Text;
+                      ParamByName('parmc').Value:=EdMesin.Text;
+                      ParamByName('parnotes').Value:=edket.Text;
+                      ParamByName('parpic').Value:=nm;
+                      ParamByName('parnm_produk').Value:=EdProduk.Text;
+                      ParamByName('parno_spk').Value:=EdNo_Spk.Text;
+                      ParamByName('partgl_mulai_prod').Value:=FormatDateTime('yyy-mm-dd',DtPMulai.date);
+                      ParamByName('partgl_selesai_prod').Value:=FormatDateTime('yyy-mm-dd',DtPSelesai.date);
+                      ParamByName('parkd_sbu').Value:=loksbu;
+                      ParamByName('parthn').value:=Vthn;
+                      ParamByName('parstatus').Value:='1';
+                      ParamByName('partgl_prod').Value:=FormatDateTime('yyy-mm-dd',DtProduksi.date);
+                      ParamByName('parbln').Value:=Vbln;
+                      ParamByName('partglno').Value:=Vtgl;
+                      ParamByName('parnourut').Value:=order_no;
+            ExecSQL;
+          end;
+          with dm.Qtemp2 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:='select * from "warehouse".t_formula_burn_test_det';
+            ExecSQL;
+          end;
+          MemBakarDet.First;
+          while not MemBakarDet.Eof do
+          begin
+            with dm.Qtemp2 do
+            begin
+              close;
+              sql.Clear;
+              sql.Text:='insert into "warehouse".t_formula_burn_test_det(test_no,gotrok_no,weight,water_content,start_time,'+
+                        ' end_time,long_burn,notes,gray_color,fire_shape,ash_form,tensile, '+
+                        ' strength,note1,note2,note3,note4,note_avg)values(:parno_test,:parno_gotrok,'+
+                        ' :parberat,:parkadar_air,:parjam_mulai,:parjam_mati,:parlama_bakar,:parketerangan,'+
+                        ' :parwarna_abu,:parbentuk_api,:parbentuk_abu,:partensile,:parstrength,:parket1,'+
+                        ' :parket2,:parket3,:parket4,:parket_rata2)';
+                        ParamByName('parno_test').Value:=Edno.Text;
+                        ParamByName('parno_gotrok').Value:=MemBakarDet['no_gotrok'];
+                        ParamByName('parberat').Value:=MemBakarDet['berat'];
+                        ParamByName('parkadar_air').Value:=MemBakarDet['kadar_air'];
+                      //  ParamByName('parjam_mulai').AsString:=formatdatetime('yyyy-mm-dd hh:mm:ss',MemBakarDet['jam_mulai']);
+                      //  ParamByName('parjam_mati').value:=formatdatetime('yyyy-mm-dd hh:nn:ss',MemBakarDet['jam_mati']);
+                        ParamByName('parlama_bakar').Value:=MemBakarDet['lama_bakar'];
+                        ParamByName('parketerangan').Value:=MemBakarDet['keterangan'];
+                        ParamByName('parwarna_abu').Value:=MemBakarDet['warna_abu'];
+                        ParamByName('parbentuk_api').Value:=MemBakarDet['bentuk_api'];
+                        ParamByName('parbentuk_abu').Value:=MemBakarDet['bentuk_abu'];
+                        ParamByName('partensile').Value:=MemBakarDet['tensile'];
+                        ParamByName('parstrength').Value:=MemBakarDet['strength'];
+                        ParamByName('parket1').Value:=MemBakarDet['ket1'];
+                        ParamByName('parket2').Value:=MemBakarDet['ket2'];
+                        ParamByName('parket3').Value:=MemBakarDet['ket3'];
+                        ParamByName('parket4').Value:=MemBakarDet['ket4'];
+                        ParamByName('parket_rata2').Value:=MemBakarDet['ket_rata2'];
+              ExecSQL;
+              MemBakarDet.Next;
+            end;
+          end;
+          with dm.Qtemp do
+          begin
+            close;
+            sql.clear;
+            sql.Text:='update "warehouse".t_item_use_for set Status=''0'' where spk_no='+QuotedStr(EdNo_Spk.Text);
+            ExecSQL;
+          end;
+          Dm.koneksi.Commit;
+          Messagedlg('Data Berhasil Disimpan',MtInformation,[Mbok],0);
+         // BBatalClick(sender);
+      end
+      Except
+      on E :Exception do
+      begin
+        MessageDlg(E.Message,mtError,[MBok],0);
+        dm.koneksi.Rollback;
+      end;
+    end;
+  end;
+end;
+
+Procedure TFNew_ForTestBakar.Update;
+begin
+    if EdNo_Spk.Text='' then
+  begin
+    MessageDlg('No SPK Test  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNo_Spk.SetFocus;
+    Exit;
+  end;
+  if EdNo_Formula.Text='' then
+  begin
+    MessageDlg('No Formula  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNo_Formula.SetFocus;
+    Exit;
+  end;
+  if edregu.Text='' then
+  begin
+    MessageDlg('Regu Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    edregu.SetFocus;
+    Exit;
+  end;
+  if EdMesin.Text='' then
+  begin
+    MessageDlg('Mesin  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdMesin.SetFocus;
+    Exit;
+  end;
+  if DtTest.Text='' then
+  begin
+    MessageDlg('Tanggal Test  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    DtTest.SetFocus;
+    Exit;
+  end;
+  if DtPMulai.Text='' then
+  begin
+    MessageDlg('Tanggal Perkiraan Produksi  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    DtPMulai.SetFocus;
+    Exit;
+  end;
+  if DtPSelesai.Text='' then
+  begin
+    MessageDlg('Tanggal Perkiraan Produksi  Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    DtPSelesai.SetFocus;
+    Exit;
+  end;
+  if not dm.koneksi.InTransaction then
+  dm.koneksi.StartTransaction;
+  try
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' update "warehouse".t_formula_burn_test set formula_no=:parno_formula,test_date=:partgl_test,'+
+                  ' shift=:parregu,mc=:parmc,notes=:parnotes,pic=:parpic,product_code=:parnm_produk,'+
+                  ' spk_no=:parno_spk,prod_start_date=:partgl_mulai_prod,prod_end_date='+
+                  ' :partgl_selesai_prod,sbu_code=:parkd_sbu,trans_year=:parthn,status=:parst, '+
+                  ' prod_date=:partgl_prod where test_no=:parno_test';
+                  ParamByName('parno_formula').Value:=EdNo_Formula.Text;
+                  ParamByName('partgl_test').Value:=FormatDateTime('yyy-mm-dd',DtTest.date);
+                  ParamByName('parregu').Value:=edregu.Text;
+                  ParamByName('parmc').Value:=EdMesin.Text;
+                  ParamByName('parnotes').Value:=edket.Text;
+                  ParamByName('parpic').Value:=nm;
+                  ParamByName('parnm_produk').Value:=EdProduk.Text;
+                  ParamByName('parno_spk').Value:=EdNo_Spk.Text;
+                  ParamByName('partgl_mulai_prod').Value:=FormatDateTime('yyy-mm-dd',DtPMulai.date);
+                  ParamByName('partgl_selesai_prod').Value:=FormatDateTime('yyy-mm-dd',DtPSelesai.date);
+                  ParamByName('parno_test').Value:=Edno.Text;
+                  ParamByName('parkd_sbu').Value:=loksbu;
+                  ParamByName('parthn').AsString:=thn;
+                  ParamByName('parst').AsString:=st;
+                  ParamByName('partgl_prod').Value:=FormatDateTime('yyy-mm-dd',DtProduksi.date);
+        ExecSQL;
+      end;
+
+     { with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='delete from t_formula_testbakar_det where no_test='+QuotedStr(Edno.Text);
+        ExecSQL;
+      end;
+
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_formula_testbakar_det';
+        ExecSQL;
+      end;
+
+      MemBakarDet.First;
+      while not MemBakarDet.Eof do
+      begin
+        with dm.Qtemp2 do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='insert into t_formula_testbakar_det(no_test,no_gotrok,berat,kadar_air,jam_mulai,'+
+                    ' jam_mati,lama_bakar,keterangan,warna_abu,bentuk_api,bentuk_abu,tensile, '+
+                    ' strength,ket1,ket2,ket3,ket4,ket_rata2)values(:parno_test,:parno_gotrok,'+
+                    ' :parberat,:parkadar_air,:parjam_mulai,:parjam_mati,:parlama_bakar,:parketerangan,'+
+                    ' :parwarna_abu,:parbentuk_api,:parbentuk_abu,:partensile,:parstrength,:parket1,'+
+                    ' :parket2,:parket3,:parket4,:parket_rata2)';
+                    ParamByName('parno_test').Value:=Edno.Text;
+                    ParamByName('parno_gotrok').Value:=MemBakarDet['no_gotrok'];
+                    ParamByName('parberat').Value:=MemBakarDet['berat'];
+                    ParamByName('parkadar_air').Value:=MemBakarDet['kadar_air'];
+                    ParamByName('parjam_mulai').Value:=MemBakarDet['jam_mulai'];
+                    ParamByName('parjam_mati').Value:=MemBakarDet['jam_mati'];
+                    ParamByName('parlama_bakar').Value:=MemBakarDet['lama_bakar'];
+                    ParamByName('parketerangan').Value:=MemBakarDet['keterangan'];
+                    ParamByName('parwarna_abu').Value:=MemBakarDet['warna_abu'];
+                    ParamByName('parbentuk_api').Value:=MemBakarDet['bentuk_api'];
+                    ParamByName('parbentuk_abu').Value:=MemBakarDet['bentuk_abu'];
+                    ParamByName('partensile').Value:=MemBakarDet['tensile'];
+                    ParamByName('parstrength').Value:=MemBakarDet['strength'];
+                    ParamByName('parket1').Value:=MemBakarDet['ket1'];
+                    ParamByName('parket2').Value:=MemBakarDet['ket2'];
+                    ParamByName('parket3').Value:=MemBakarDet['ket3'];
+                    ParamByName('parket4').Value:=MemBakarDet['ket4'];
+                    ParamByName('parket_rata2').Value:=MemBakarDet['ket_rata2'];
+          ExecSQL;
+          MemBakarDet.Next;
+        end;
+      end;     }
+       dm.koneksi.Commit;
+      Messagedlg('Data Berhasil Disimpan',MtInformation,[Mbok],0);
+    //   BBatalClick(sender);
+    end
+    Except on E :Exception do
+    begin
+      MessageDlg(E.Message,mtError,[MBok],0);
+      dm.koneksi.Rollback;
+    end;
+  end;
 end;
 
 procedure TFNew_ForTestBakar.DBGridDetailCellClick(Column: TColumnEh);
@@ -397,149 +696,31 @@ end;
 
 procedure TFNew_ForTestBakar.BSimpanClick(Sender: TObject);
 begin
-  Autonumber;
-  if messageDlg ('Anda Yakin Simpan No.'+EdNo.text+' '+'?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  //Autonumber;
+   if messageDlg ('Anda Yakin Menyimpan Data ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
-  if EdNo_Spk.Text='' then
-  begin
-    MessageDlg('No SPK Test  Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    EdNo_Spk.SetFocus;
-    Exit;
-  end;
-  if EdNo_Formula.Text='' then
-  begin
-    MessageDlg('No Formula  Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    EdNo_Formula.SetFocus;
-    Exit;
-  end;
-  if edregu.Text='' then
-  begin
-    MessageDlg('Regu Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    edregu.SetFocus;
-    Exit;
-  end;
-  if EdMesin.Text='' then
-  begin
-    MessageDlg('Mesin  Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    EdMesin.SetFocus;
-    Exit;
-  end;
-  if DtTest.Text='' then
-  begin
-    MessageDlg('Tanggal Test  Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    DtTest.SetFocus;
-    Exit;
-  end;
-  if DtPMulai.Text='' then
-  begin
-    MessageDlg('Tanggal Perkiraan Produksi  Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    DtPMulai.SetFocus;
-    Exit;
-  end;
-  if DtPSelesai.Text='' then
-  begin
-    MessageDlg('Tanggal Perkiraan Produksi  Tidak boleh Kosong ',MtWarning,[MbOk],0);
-    DtPSelesai.SetFocus;
-    Exit;
-  end;
-  if not dm.koneksi.InTransaction then
-  dm.koneksi.StartTransaction;
+    if not dm.koneksi.InTransaction then
+    dm.koneksi.StartTransaction;
     try
       begin
-        with dm.Qtemp do
+        if statustr=0 then
         begin
-          close;
-          sql.Clear;
-          sql.Text:='select * from "warehouse".t_formula_burn_test';
-          ExecSQL;
+          simpan;
+          dm.koneksi.Commit;
         end;
-        with dm.Qtemp do
+        if statustr=1 then
         begin
-          close;
-          sql.Clear;
-          sql.Text:=' insert into "warehouse".t_formula_burn_test(formula_no,test_no,test_date,shift,mc,notes,pic,'+
-                    ' product_code,spk_no,prod_start_date,prod_end_date,sbu_code,trans_year,status,prod_date,trans_month,trans_day,order_no)'+
-                    ' values(:parno_formula,:parno_test,:partgl_test,:parregu,:parmc,:parnotes,:parpic,'+
-                    ' :parnm_produk,:parno_spk,:partgl_mulai_prod,:partgl_selesai_prod,:parkd_sbu,'+
-                    ' :parthn,:parstatus,:partgl_prod,:parbln,:partglno,:parnourut)';
-                    ParamByName('parno_formula').Value:=EdNo_Formula.Text;
-                    ParamByName('parno_test').Value:=Edno.Text;
-                    ParamByName('partgl_test').Value:=FormatDateTime('yyy-mm-dd',DtTest.date);
-                    ParamByName('parregu').Value:=edregu.Text;
-                    ParamByName('parmc').Value:=EdMesin.Text;
-                    ParamByName('parnotes').Value:=edket.Text;
-                    ParamByName('parpic').Value:=nm;
-                    ParamByName('parnm_produk').Value:=EdProduk.Text;
-                    ParamByName('parno_spk').Value:=EdNo_Spk.Text;
-                    ParamByName('partgl_mulai_prod').Value:=FormatDateTime('yyy-mm-dd',DtPMulai.date);
-                    ParamByName('partgl_selesai_prod').Value:=FormatDateTime('yyy-mm-dd',DtPSelesai.date);
-                    ParamByName('parkd_sbu').Value:=loksbu;
-                    ParamByName('parthn').value:=thn;
-                    ParamByName('parstatus').Value:='1';
-                    ParamByName('partgl_prod').Value:=FormatDateTime('yyy-mm-dd',DtProduksi.date);
-                    ParamByName('parbln').Value:=bln;
-                    ParamByName('partglno').Value:=tglno;
-                    ParamByName('parnourut').Value:=nourut;
-          ExecSQL;
+          update;
+          dm.koneksi.Commit;
         end;
-        {with dm.Qtemp2 do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:='select * from "warehouse".t_formula_burn_test_det';
-          ExecSQL;
-        end;
-        MemBakarDet.First;
-        while not MemBakarDet.Eof do
-        begin
-          with dm.Qtemp2 do
-          begin
-            close;
-            sql.Clear;
-            sql.Text:='insert into "warehouse".t_formula_burn_test_det(test_no,gotrok_no,weight,water_contect,start_time,'+
-                      ' edn_time,long_burn,notest,gray_water,firea_shape,ash_form,tensile, '+
-                      ' strength,note1,note2,note3,note4,note_avg)values(:parno_test,:parno_gotrok,'+
-                      ' :parberat,:parkadar_air,:parjam_mulai,:parjam_mati,:parlama_bakar,:parketerangan,'+
-                      ' :parwarna_abu,:parbentuk_api,:parbentuk_abu,:partensile,:parstrength,:parket1,'+
-                      ' :parket2,:parket3,:parket4,:parket_rata2)';
-                      ParamByName('parno_test').Value:=Edno.Text;
-                      ParamByName('parno_gotrok').Value:=MemBakarDet['no_gotrok'];
-                      ParamByName('parberat').Value:=MemBakarDet['berat'];
-                      ParamByName('parkadar_air').Value:=MemBakarDet['kadar_air'];
-                      ParamByName('parjam_mulai').Value:=MemBakarDet['jam_mulai'];
-                      ParamByName('parjam_mati').Value:=MemBakarDet['jam_mati'];
-                      ParamByName('parlama_bakar').Value:=MemBakarDet['lama_bakar'];
-                      ParamByName('parketerangan').Value:=MemBakarDet['keterangan'];
-                      ParamByName('parwarna_abu').Value:=MemBakarDet['warna_abu'];
-                      ParamByName('parbentuk_api').Value:=MemBakarDet['bentuk_api'];
-                      ParamByName('parbentuk_abu').Value:=MemBakarDet['bentuk_abu'];
-                      ParamByName('partensile').Value:=MemBakarDet['tensile'];
-                      ParamByName('parstrength').Value:=MemBakarDet['strength'];
-                      ParamByName('parket1').Value:=MemBakarDet['ket1'];
-                      ParamByName('parket2').Value:=MemBakarDet['ket2'];
-                      ParamByName('parket3').Value:=MemBakarDet['ket3'];
-                      ParamByName('parket4').Value:=MemBakarDet['ket4'];
-                      ParamByName('parket_rata2').Value:=MemBakarDet['ket_rata2'];
-            ExecSQL;
-            MemBakarDet.Next;
-          end;
-        end;      }
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:='update "warehouse".t_material_use_for set Status=''0'' where spk_no='+QuotedStr(EdNo_Spk.Text);
-          ExecSQL;
-        end;
-        Dm.koneksi.Commit;
-        Messagedlg('Data Berhasil Disimpan',MtInformation,[Mbok],0);
+        Messagedlg('Data Behasil Disimpan',MtInformation,[Mbok],0);
         BBatalClick(sender);
       end
       Except
       on E :Exception do
       begin
-        MessageDlg(E.Message,mtError,[MBok],0);
-        dm.koneksi.Rollback;
+      MessageDlg(E.Message,mtError,[MBok],0);
+      dm.koneksi.Rollback;
       end;
     end;
   end;
