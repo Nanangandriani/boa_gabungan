@@ -160,6 +160,7 @@ begin
     edNamaBank.Text:=Dm.Qtemp.FieldByName('account_name_bank').AsString;
     edNorekening.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
     MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
+    EdKodeInitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
     rgTagihan.ItemIndex:=Dm.Qtemp.FieldByName('status_bill').AsInteger;
   end;
   end;

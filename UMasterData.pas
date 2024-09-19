@@ -112,9 +112,16 @@ begin
   begin
     FDataMasterAkunTrans.edNorekening.Text:=MemMasterData['KD_MASTER'];
     FDataMasterAkunTrans.edNamaBank.Text:=MemMasterData['NM_MASTER'];
+    //Insert Default Akun
+    FDataMasterAkunTrans.MemDetail.EmptyTable;
+    FDataMasterAkunTrans.MemDetail.Insert;
+    FDataMasterAkunTrans.MemDetail['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+    FDataMasterAkunTrans.MemDetail['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+    FDataMasterAkunTrans.MemDetail.post;
   end;
   if vcall='m_modul' then
   begin
+    FDataMasterAkunTrans.Clear;
     FDataMasterAkunTrans.edKodeModul.Text:=MemMasterData['KD_MASTER'];
     FDataMasterAkunTrans.edNamaModul.Text:=MemMasterData['NM_MASTER'];
   end;

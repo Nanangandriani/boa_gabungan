@@ -90,9 +90,9 @@ begin
             ' SELECT "code_module", "code_trans", "code_account", "name_account", '+
             ' "position", "account_number_bank" '+
             ' FROM  "public"."t_master_trans_account_det") a '+
-            ' WHERE code_module='+QuotedStr(edKodeModul.Text)+' '+
-            ' AND code_trans='+QuotedStr(edKodeTrans.Text)+' '+
-            ' AND account_number_bank='+QuotedStr(edNorekening.Text)+' '+
+            ' WHERE code_trans='+QuotedStr(edKodeTrans.Text)+''+
+            ' -- AND code_module='+QuotedStr(edKodeModul.Text)+''+
+            ' -- AND account_number_bank='+QuotedStr(edNorekening.Text)+' '+
             ' Order By code_module, code_trans, position desc');
     open;
   end;
@@ -130,9 +130,9 @@ begin
   close;
   sql.clear;
   sql.Text:=' DELETE FROM  "public"."t_master_trans_account_det"  '+
-            ' WHERE code_module='+QuotedStr(edKodeModul.Text)+' '+
-            ' AND code_trans='+QuotedStr(edKodeTrans.Text)+' '+
-            ' AND account_number_bank='+QuotedStr(edNorekening.Text);
+            ' WHERE code_trans='+QuotedStr(edKodeTrans.Text)+' '+
+            ' -- AND code_module='+QuotedStr(edKodeModul.Text)+' '+
+            ' -- AND account_number_bank='+QuotedStr(edNorekening.Text);
   ExecSQL;
   end;
 
@@ -167,7 +167,7 @@ begin
     sql.clear;
     sql.add(' Insert into "public"."t_master_trans_account" ("created_at", "created_by",  '+
             ' "status_bill", "code_module", "name_module", "code_trans", "name_trans", "description", '+
-            ' "account_number_bank", "account_name_bank") '+
+            ' "account_number_bank", "account_name_bank", "initial_code") '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -178,7 +178,8 @@ begin
             ' '+QuotedStr(edNamaTrans.Text)+', '+
             ' '+QuotedStr(MemKeterangan.Text)+', '+
             ' '+QuotedStr(edNorekening.Text)+', '+
-            ' '+QuotedStr(edNamaBank.Text)+' );');
+            ' '+QuotedStr(edNamaBank.Text)+', '+
+            ' '+QuotedStr(EdKodeInitial.Text)+' );');
     ExecSQL;
   end;
   InsertDetail;
@@ -201,6 +202,7 @@ begin
               ' name_module='+QuotedStr(edNamaModul.Text)+','+
               ' name_trans='+QuotedStr(edNamaTrans.Text)+','+
               ' account_name_bank='+QuotedStr(edNamaBank.Text)+','+
+              ' initial_code='+QuotedStr(EdKodeInitial.Text)+','+
               ' description='+QuotedStr(MemKeterangan.Text)+' '+
               ' Where code_module='+QuotedStr(edKodeModul.Text)+' '+
               ' AND code_trans='+QuotedStr(edKodeTrans.Text)+' '+
@@ -325,6 +327,7 @@ begin
   edKodeTrans.Clear;
   edNamaTrans.Clear;
   MemKeterangan.Clear;
+  EdKodeInitial.Clear;
   MemDetail.EmptyTable;
 end;
 
@@ -354,11 +357,19 @@ end;
 
 procedure TFDataMasterAkunTrans.edNamaBankButtonClick(Sender: TObject);
 begin
+  if Length(edKodeModul.Text)=0 then
+  begin
+    ShowMessage('Silakan Pilih Modul');
+  end;
+
+  if Length(edKodeModul.Text)<>0 then
+  begin
   FMasterData.Caption:='Master Data Bank';
   FMasterData.vcall:='m_bank';
   FMasterData.update_grid('rekening_no','bank_name','currency','t_Bank','WHERE	deleted_at IS NULL ORDER BY id desc');
   FMasterData.ShowModal;
   Autocode;
+  end;
 end;
 
 procedure TFDataMasterAkunTrans.edNamaModulButtonClick(Sender: TObject);

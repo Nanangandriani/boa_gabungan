@@ -363,7 +363,7 @@ procedure TFDataPenerimaanBank.edNamaJenisTransButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Transaksi';
   FMasterData.vcall:='m_jns_transaksi';
-  FMasterData.update_grid('code_trans','name_trans','CONCAT(description,'' No.Rek. '',account_number_bank) ','t_master_trans_account','WHERE code_module=''3'' and deleted_at IS NULL ORDER BY name_trans desc');
+  FMasterData.update_grid('code_trans','name_trans','CONCAT('' Bank. '',account_name_bank,'' No.Rek. '',account_number_bank,'' '',description) ','t_master_trans_account','WHERE code_module=''3'' and deleted_at IS NULL ORDER BY name_trans desc');
   FMasterData.ShowModal;
   RefreshGridDetailAkun;
 end;
