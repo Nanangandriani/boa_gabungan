@@ -100,6 +100,7 @@ type
   public
     Status : Integer;
     akun_d, akun_k : String;
+    additional_code1, additional_code2, additional_code3, additional_code4, additional_code5 : String;
     { Public declarations }
     procedure Clear;
     procedure RefreshGridDetailAkun;

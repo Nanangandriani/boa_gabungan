@@ -65,6 +65,7 @@ begin
       edNamaJenisTrans.Text:=MemMasterData['NM_MASTER'];
       edNamaBank.Text:=SelectRow('select account_name_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
       edNoRek.Text:=SelectRow('select account_number_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
+      additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
     end;
 
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
