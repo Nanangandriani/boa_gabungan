@@ -176,6 +176,8 @@ begin
     edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
     edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
     vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
+    edKodePerkiraan.Text:=Dm.Qtemp.FieldByName('account_no').AsString;
+    KodeHeaderPerkiraan:=Dm.Qtemp.FieldByName('account_header_no').AsString;
     edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
     edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
     edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
@@ -191,6 +193,8 @@ begin
   end;
   end;
   FNew_Pelanggan.Edkode.Enabled:=false;
+  FNew_Pelanggan.edKodePerkiraan.Enabled:=false;
+  FNew_Pelanggan.edKodePerkiraan.ReadOnly:=true;
   FNew_Pelanggan.Show;
   Status := 1;
 end;
@@ -224,10 +228,12 @@ begin
     FDataProspekPelanggan.showmodal;
   end else
   begin
-    FNew_Pelanggan.ShowModal;
     FNew_Pelanggan.Clear;
-    FNew_Pelanggan.Autocode;
     FNew_Pelanggan.Edkode.Enabled:=true;
+    FNew_Pelanggan.edKodePerkiraan.Enabled:=true;
+    FNew_Pelanggan.edKodePerkiraan.ReadOnly:=false;
+    FNew_Pelanggan.Autocode;
+    FNew_Pelanggan.ShowModal;
     Status:=0;
   end;
 end;

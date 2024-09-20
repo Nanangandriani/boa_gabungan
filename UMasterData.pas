@@ -66,6 +66,10 @@ begin
       edNamaBank.Text:=SelectRow('select account_name_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
       edNoRek.Text:=SelectRow('select account_number_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
       additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
+      additional_code2:='0';
+      additional_code3:='0';
+      additional_code4:='0';
+      additional_code5:='0';
     end;
 
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
@@ -385,6 +389,11 @@ begin
   begin
     FSetMasterPelanggan.edKode_JenisUsaha.Text:=MemMasterData['KD_MASTER'];
     FSetMasterPelanggan.edJenisUsaha.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='perkiraan_pelanggan' then
+  begin
+    FNew_Pelanggan.edKodePerkiraan.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.KodeHeaderPerkiraan:=MemMasterData['KD_MASTER'];
   end;
   if vcall='kantor_pusat' then
   begin

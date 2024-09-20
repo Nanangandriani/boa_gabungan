@@ -87,9 +87,12 @@ type
     Label11: TLabel;
     Label29: TLabel;
     edNamaKantorPusat: TEdit;
-    edKodeKantorPusat: TRzButtonEdit;
+    edKodePerkiraan: TRzButtonEdit;
     Label30: TLabel;
     btKantorPusat: TSpeedButton;
+    Label31: TLabel;
+    Label32: TLabel;
+    edKodeKantorPusat: TRzButtonEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -116,17 +119,20 @@ type
     procedure FormShow(Sender: TObject);
     procedure btJenisUsahaClick(Sender: TObject);
     procedure edJenisUsahaButtonClick(Sender: TObject);
-    procedure edKodeKantorPusatButtonClick(Sender: TObject);
+    procedure edKodePerkiraanButtonClick(Sender: TObject);
     procedure btKantorPusatClick(Sender: TObject);
+    procedure edKodeKantorPusatButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vid_prospek :Integer;
+    KodeHeaderPerkiraan :string;
     procedure Clear;
     procedure Save;
     procedure Update;
     procedure Autocode;
+    procedure Autocode_perkiraan;
     procedure RefreshGrid;
     procedure InsertDetailAlamat;
   end;
@@ -286,10 +292,96 @@ begin
       Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
   end;
   Edkode.Clear;
+  Edautocode.Clear;
   kode := inttostr(urut);
-  kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
-  Edautocode.Text := 'PL'+Kode;
-  Edkode.Text := 'PL'+Kode;
+  //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
+
+  if Length(kode)=1 then
+  begin
+    kode := '0000'+kode;
+  end
+  else
+  if Length(kode)=2 then
+  begin
+    kode := '000'+kode;
+  end
+  else
+  if Length(kode)=3 then
+  begin
+    kode := '00'+kode;
+  end
+  else
+  if Length(kode)=4 then
+  begin
+    kode := '0'+kode;
+  end
+  else
+  if Length(kode)=5 then
+  begin
+    kode := kode;
+  end;
+
+  Edautocode.Text := 'PL'+kode;
+  Edkode.Text := 'PL'+kode;
+end;
+
+procedure TFNew_Pelanggan.Autocode_perkiraan;
+var
+  kode : String;
+  Urut : Integer;
+begin
+  With DM.Qtemp2 do
+  begin
+    Close;
+    SQL.Clear;
+    Sql.Text :=' select * from t_ak_account '+
+               ' where header_code='+QuotedSTR(KodeHeaderPerkiraan)+'  ';
+    open;
+  end;
+
+  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
+  if Dm.Qtemp2.RecordCount > 0 then
+  begin
+      With Dm.Qtemp do
+      begin
+        Close;
+        Sql.Clear;
+        Sql.Text :=' select count(header_code) as hasil '+
+                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPerkiraan)+'  ';
+        Open;
+      end;
+      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+  end;
+  edKodePerkiraan.Clear;
+  kode := inttostr(urut);
+  //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
+
+  if Length(kode)=1 then
+  begin
+    kode := '0000'+kode;
+  end
+  else
+  if Length(kode)=2 then
+  begin
+    kode := '000'+kode;
+  end
+  else
+  if Length(kode)=3 then
+  begin
+    kode := '00'+kode;
+  end
+  else
+  if Length(kode)=4 then
+  begin
+    kode := '0'+kode;
+  end
+  else
+  if Length(kode)=5 then
+  begin
+    kode := kode;
+  end;
+
+  edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+kode;
 end;
 
 procedure TFNew_Pelanggan.CbtypejualKeyPress(Sender: TObject; var Key: Char);
@@ -303,6 +395,8 @@ end;
 procedure TFNew_Pelanggan.Clear;
 begin
   Edkode.Text:='';
+  edKodePerkiraan.Text:='';
+  KodeHeaderPerkiraan:='';
   Ednama.Text:='';
   Ednamapkp.Text:='';
   Ednpwp.Text:='';
@@ -364,6 +458,14 @@ begin
   FMasterData.Caption:='Master Data Kantor Pusat';
   FMasterData.vcall:='kantor_pusat';
   FMasterData.update_grid('code','name','address_nik','t_customer_head_office','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edKodePerkiraanButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Perkiraan';
+  FMasterData.vcall:='perkiraan_pelanggan';
+  FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 
@@ -473,6 +575,8 @@ begin
               ' postal_code='+QuotedStr(Edkodepos.Text)+','+
               ' code_type='+QuotedStr(edKode_jnispel.Text)+','+
               ' name_type='+QuotedStr(edJenisPelanggan.Text)+','+
+              ' account_no='+QuotedStr(edKodePerkiraan.Text)+','+
+              ' account_header_no='+QuotedStr(KodeHeaderPerkiraan)+','+
               ' code_head_office='+QuotedStr(edKodeKantorPusat.Text)+','+
               ' name_head_office='+QuotedStr(edNamaKantorPusat.Text)+','+
               ' code_type_business='+QuotedStr(edKode_JenisUsaha.Text)+','+
@@ -504,7 +608,6 @@ end;
 
 procedure TFNew_Pelanggan.Save;
 begin
-  Autocode;
   with dm.Qtemp do
   begin
     close;
@@ -512,7 +615,8 @@ begin
     sql.add(' Insert into t_customer(idprospek,customer_code,customer_name,'+
             ' customer_name_pkp, no_npwp, no_nik, number_va, '+
             ' code_region, name_region, postal_code, code_type, name_type, '+
-            ' code_head_office, name_head_office, code_type_business, name_type_business '+
+            ' account_no, account_header_no, code_head_office, name_head_office, '+
+            ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
             ' email,payment_term,created_at,created_by, stat_pkp ) '+
             ' Values( '+
@@ -528,6 +632,8 @@ begin
             ' '+QuotedStr(Edkodepos.Text)+', '+
             ' '+QuotedStr(edKode_jnispel.Text)+', '+
             ' '+QuotedStr(edJenisPelanggan.Text)+', '+
+            ' '+QuotedStr(edKodePerkiraan.Text)+', '+
+            ' '+QuotedStr(KodeHeaderPerkiraan)+', '+
             ' '+QuotedStr(edKodeKantorPusat.Text)+', '+
             ' '+QuotedStr(edNamaKantorPusat.Text)+', '+
             ' '+QuotedStr(edKode_JenisUsaha.Text)+', '+
@@ -573,7 +679,12 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if Edkode.Text='' then
+      if edKodePerkiraan.Text='' then
+      begin
+        MessageDlg('Kode Perkiraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKodePerkiraan.SetFocus;
+      end
+      else if Edkode.Text='' then
       begin
         MessageDlg('Kode Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         Edkode.SetFocus;
@@ -592,6 +703,8 @@ begin
       begin
       if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
+        Autocode;
+        Autocode_perkiraan;
         Save;
         Dm.Koneksi.Commit;
       end;

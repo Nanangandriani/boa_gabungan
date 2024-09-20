@@ -133,7 +133,7 @@ begin
                 open;
               end;
                   FDataPenerimaanBank.MemDetailPiutang.insert;
-                  FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+                  FDataPenerimaanBank.MemDetailPiutang['tgl_tempo']:=Dm.Qtemp.FieldByName('date_tempo').AsDateTime;
                   FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp.FieldByName('no_invoice_tax').AsString;
                   FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
                   FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('paid_amount').AsFloat;

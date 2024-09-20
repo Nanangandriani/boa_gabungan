@@ -115,7 +115,7 @@ implementation
 {$R *.dfm}
 
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
-  UDaftarRencanaLunasPiutang, UCari_DaftarPerk;
+  UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang;
 
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
@@ -335,7 +335,14 @@ begin
     end;
     if cbSumberTagihan.ItemIndex=2 then
     begin
-      ShowMessage('Daftar Penagihan Piutang..');
+    FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
+    FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
+    FDaftarPenagihanPiutang.tglTagih:=dtPeriode1.Date;
+    FDaftarPenagihanPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
+    FDaftarPenagihanPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
+    FDaftarPenagihanPiutang.dtPeriode1.Date:=dtPeriode1.Date;
+    FDaftarPenagihanPiutang.RefreshGrid;
+    FDaftarPenagihanPiutang.show;
     end;
   end;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '1' then
@@ -379,17 +386,34 @@ end;
 
 procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
-  gbDataPiutang.Visible:=false;
-  TabDetailFaktur.TabVisible:=false;
-  Panel1.Height:=230;
-  lbSumberTagihan.Visible:=false;
-  lbSumberTagihann.Visible:=false;
-  lbJenisBayar.Visible:=false;
-  lbJenisBayarr.Visible:=false;
-  cbSumberTagihan.Visible:=false;
-  cbJenisBayar.Visible:=false;
-  cbSumberTagihan.ItemIndex:=0;
-  cbJenisBayar.ItemIndex:=0;
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
+  begin
+    gbDataPiutang.Visible:=false;
+    TabDetailFaktur.TabVisible:=false;
+    Panel1.Height:=230;
+    lbSumberTagihan.Visible:=true;
+    lbSumberTagihann.Visible:=true;
+    lbJenisBayar.Visible:=true;
+    lbJenisBayarr.Visible:=true;
+    cbSumberTagihan.Visible:=true;
+    cbJenisBayar.Visible:=true;
+    cbSumberTagihan.ItemIndex:=0;
+    cbJenisBayar.ItemIndex:=0;
+  end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
+  begin
+    gbDataPiutang.Visible:=false;
+    TabDetailFaktur.TabVisible:=false;
+    Panel1.Height:=230;
+    lbSumberTagihan.Visible:=false;
+    lbSumberTagihann.Visible:=false;
+    lbJenisBayar.Visible:=false;
+    lbJenisBayarr.Visible:=false;
+    cbSumberTagihan.Visible:=false;
+    cbJenisBayar.Visible:=false;
+    cbSumberTagihan.ItemIndex:=0;
+    cbJenisBayar.ItemIndex:=0;
+  end;
 end;
 
 end.

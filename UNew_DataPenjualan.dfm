@@ -659,6 +659,7 @@ object FNew_Penjualan: TFNew_Penjualan
             FieldName = 'NAMA_PPH'
             Footers = <>
             Title.Caption = 'PPH | Nama PPH'
+            Visible = False
             Width = 150
           end
           item
@@ -668,6 +669,7 @@ object FNew_Penjualan: TFNew_Penjualan
             FieldName = 'PPH_PERSEN'
             Footers = <>
             Title.Caption = 'PPH | PPH (%)'
+            Visible = False
           end
           item
             CellButtons = <>
@@ -676,6 +678,7 @@ object FNew_Penjualan: TFNew_Penjualan
             FieldName = 'PPH_NILAI'
             Footers = <>
             Title.Caption = 'PPH | Nilai'
+            Visible = False
             Width = 100
           end
           item

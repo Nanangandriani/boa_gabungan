@@ -1,21 +1,20 @@
-object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
+object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   Left = 0
   Top = 0
-  Caption = 'Daftar Rencana Pembayaran Piutang'
-  ClientHeight = 559
-  ClientWidth = 1033
+  Caption = 'Daftar Penagihan Piutang'
+  ClientHeight = 567
+  ClientWidth = 1076
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1033
+    Width = 1076
     Height = 105
     Align = alTop
     Color = clGradientInactiveCaption
@@ -25,9 +24,9 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     object Label8: TLabel
       Left = 21
       Top = 74
-      Width = 40
+      Width = 72
       Height = 15
-      Caption = 'Periode'
+      Caption = 'Tanggal Tagih'
     end
     object Label9: TLabel
       Left = 118
@@ -35,13 +34,6 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
       Width = 3
       Height = 15
       Caption = ':'
-    end
-    object Label10: TLabel
-      Left = 324
-      Top = 74
-      Width = 17
-      Height = 15
-      Caption = 's/d'
     end
     object Label21: TLabel
       Left = 22
@@ -67,23 +59,13 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
       Time = 0.597438842589326700
       TabOrder = 0
     end
-    object dtPeriode2: TRzDateTimePicker
-      Left = 347
-      Top = 71
-      Width = 186
-      Height = 23
-      Date = 45405.000000000000000000
-      Format = ''
-      Time = 0.597438842589326700
-      TabOrder = 1
-    end
     object edKode_Pelanggan: TRzButtonEdit
       Left = 132
       Top = 18
       Width = 151
       Height = 23
       Text = ''
-      TabOrder = 2
+      TabOrder = 1
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
@@ -92,16 +74,16 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
       Top = 44
       Width = 354
       Height = 23
-      TabOrder = 3
+      TabOrder = 2
     end
     object btTampilkan: TRzBitBtn
-      Left = 552
-      Top = 67
+      Left = 339
+      Top = 69
       Width = 147
       Height = 30
       Align = alCustom
       Caption = 'Preview'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = btTampilkanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -160,8 +142,8 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 105
-    Width = 1033
-    Height = 422
+    Width = 1076
+    Height = 430
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
@@ -173,13 +155,13 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
-      ExplicitWidth = 1023
-      ExplicitHeight = 388
+      ExplicitWidth = 1029
+      ExplicitHeight = 397
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1029
-        Height = 397
+        Width = 1072
+        Height = 405
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -256,21 +238,20 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 527
-    Width = 1033
+    Top = 535
+    Width = 1076
     Height = 32
     Align = alBottom
     TabOrder = 2
     ExplicitTop = 518
     ExplicitWidth = 1027
     object BBatal: TRzBitBtn
-      Left = 957
+      Left = 1000
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Close'
       TabOrder = 1
-      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -323,16 +304,15 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 951
+      ExplicitLeft = 957
     end
     object BSave: TRzBitBtn
-      Left = 882
+      Left = 925
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Process'
       TabOrder = 0
-      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -385,19 +365,16 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 876
+      ExplicitLeft = 882
     end
   end
   object MemDetailPiutang: TMemTableEh
     Params = <>
     Left = 552
     Top = 330
-    object MemDetailPiutangpilih: TBooleanField
-      FieldName = 'pilih'
-    end
-    object MemDetailPiutangjum_piutang: TCurrencyField
-      FieldName = 'jum_piutang'
-      DisplayFormat = '#,##0.00'
+    object MemDetailPiutangnotrans: TStringField
+      FieldName = 'notrans'
+      Size = 100
     end
     object MemDetailPiutangkode_pelanggan: TStringField
       FieldName = 'kode_pelanggan'
@@ -407,15 +384,19 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
       FieldName = 'nama_pelanggan'
       Size = 200
     end
-    object MemDetailPiutangperiode1: TDateField
-      FieldName = 'periode1'
+    object MemDetailPiutangtgltagih: TDateField
+      FieldName = 'tgltagih'
     end
-    object MemDetailPiutangperiode2: TDateField
-      FieldName = 'periode2'
+    object MemDetailPiutangjum_piutang: TCurrencyField
+      FieldName = 'jum_piutang'
     end
-    object MemDetailPiutangnotrans: TStringField
-      FieldName = 'notrans'
-      Size = 100
+    object MemDetailPiutangno_tagihan: TStringField
+      FieldName = 'no_tagihan'
+      Size = 200
+    end
+    object MemDetailPiutangno_Faktur: TStringField
+      FieldName = 'no_Faktur'
+      Size = 200
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -437,8 +418,8 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
           DisplayWidth = 200
           Size = 200
         end
-        object periode1: TMTDateTimeDataFieldEh
-          FieldName = 'periode1'
+        object tgltagih: TMTDateTimeDataFieldEh
+          FieldName = 'tgltagih'
           DateTimeDataType = fdtDateEh
           DisplayWidth = 100
         end
@@ -451,14 +432,17 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
           currency = False
           Precision = 15
         end
-        object periode2: TMTDateTimeDataFieldEh
-          FieldName = 'periode2'
-          DateTimeDataType = fdtDateEh
-          DisplayWidth = 20
+        object no_tagihan: TMTStringDataFieldEh
+          FieldName = 'no_tagihan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 200
+          Size = 200
         end
-        object pilih: TMTBooleanDataFieldEh
-          FieldName = 'pilih'
-          DisplayWidth = 20
+        object no_Faktur: TMTStringDataFieldEh
+          FieldName = 'no_Faktur'
+          StringDataType = fdtStringEh
+          DisplayWidth = 200
+          Size = 200
         end
       end
       object RecordsList: TRecordsListEh
