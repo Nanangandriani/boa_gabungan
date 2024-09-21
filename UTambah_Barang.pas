@@ -108,6 +108,7 @@ begin
            FNew_Penjualan.MemDetail['NM_ITEM']:=edNamaBarang.Text;
            FNew_Penjualan.MemDetail['JUMLAH']:=edJumlah.Value;
            FNew_Penjualan.MemDetail['HARGA_SATUAN']:=SelectRow('SELECT sell from t_item where item_code='+QuotedStr(edKodeBarang.Text)+' ');
+           FNew_Penjualan.MemDetail['AKUN_PERK_ITEM']:=SelectRow('SELECT account_code from t_item where item_code='+QuotedStr(edKodeBarang.Text)+' ');
            FNew_Penjualan.MemDetail['KD_SATUAN']:=edKodeSatuan.Text;
            FNew_Penjualan.MemDetail['NM_SATUAN']:=edSatuan.Text;
            FNew_Penjualan.MemDetail['SUB_TOTAL']:= FNew_Penjualan.MemDetail['JUMLAH']*FNew_Penjualan.MemDetail['HARGA_SATUAN'];

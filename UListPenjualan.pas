@@ -55,7 +55,6 @@ type
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     QPenjualan: TUniQuery;
-    QPenjualanno_trans: TStringField;
     QPenjualancode_cust: TStringField;
     QPenjualanname_cust: TStringField;
     QPenjualanpayment_term: TSmallintField;
@@ -71,9 +70,7 @@ type
     QCetak: TUniQuery;
     frxDBDPenjualan: TfrxDBDataset;
     Report: TfrxReport;
-    QCetakno_trans: TStringField;
     QCetakno_inv_tax: TStringField;
-    QCetakdate_trans: TDateField;
     QCetakcode_cust: TStringField;
     QCetakname_cust: TStringField;
     QCetakaddress: TMemoField;
@@ -102,9 +99,7 @@ type
     dxBarLargeButton4: TdxBarLargeButton;
     QCetakSJ: TUniQuery;
     frxDBDCetakSJ: TfrxDBDataset;
-    QCetakSJno_trans: TStringField;
     QCetakSJno_traveldoc: TStringField;
-    QCetakSJdate_trans: TDateField;
     QCetakSJcode_cust: TStringField;
     QCetakSJname_cust: TStringField;
     QCetakSJaddress: TMemoField;
@@ -115,6 +110,11 @@ type
     QCetakSJname_unit: TStringField;
     QCetakSJno_reference: TStringField;
     QCetakSJket: TStringField;
+    QPenjualantrans_no: TStringField;
+    QCetakSJtrans_no: TStringField;
+    QCetaktrans_no: TStringField;
+    QCetaktrans_date: TDateField;
+    QCetakSJtrans_date: TDateField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -179,7 +179,7 @@ begin
           sql.Text:=' UPDATE "sale"."t_selling"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "no_trans"='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString);
+                    ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
           ExecSQL;
         end;
         with dm.Qtemp do
@@ -189,7 +189,7 @@ begin
           sql.Text:=' UPDATE "sale"."t_selling_det"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "no_trans"='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString);
+                    ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
           ExecSQL;
         end;
         MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
@@ -230,7 +230,7 @@ begin
        close;
        sql.Clear;
        sql.Text:=' select * from "sale"."t_selling" a '+
-                 ' WHERE "no_trans"='+QuotedSTr(QPenjualan.FieldByName('no_trans').AsString)+' '+
+                 ' WHERE "trans_no"='+QuotedSTr(QPenjualan.FieldByName('trans_no').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -245,9 +245,9 @@ begin
   begin
     edKode_Trans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
     edNomorFaktur.Text:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
-    edNomorTrans.Text:=Dm.Qtemp.FieldByName('no_trans').AsString;
+    edNomorTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
     edSuratJalanTrans.Text:=Dm.Qtemp.FieldByName('no_traveldoc').AsString;
-    dtTanggal.Date:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+    dtTanggal.Date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
     edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
     edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
     edKodeSumber.Text:=Dm.Qtemp.FieldByName('code_source').AsString;
@@ -274,7 +274,7 @@ begin
     begin
      close;
      sql.clear;
-     sql.add(' select a."no_trans", "no_inv_tax", "date_trans", a."code_cust", a."name_cust", '+
+     sql.add(' select a."trans_no", "no_inv_tax", "trans_date", a."code_cust", a."name_cust", '+
              ' d."address", b."code_item", b."name_item", '+
              ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
              ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
@@ -285,11 +285,11 @@ begin
              ' case when "piece_third" is null then 0 else "piece_third" end "piece_third", '+
              ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth" '+
              ' from "sale"."t_selling" a '+
-             ' LEFT JOIN "sale"."t_selling_det" b ON a.no_trans=b.no_trans '+
-             ' LEFT JOIN "sale"."t_selling_piece" c ON a.no_trans=c.no_trans '+
+             ' LEFT JOIN "sale"."t_selling_det" b ON a.trans_no=b.trans_no '+
+             ' LEFT JOIN "sale"."t_selling_piece" c ON a.trans_no=c.trans_no '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
              ' where a.deleted_at is null and '+
-             ' a.no_trans='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString)+' '+
+             ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
              ' order by b.created_at Desc');
      open;
     end;
@@ -311,7 +311,7 @@ begin
      sql.add(' select * '+
              ' from "sale"."t_selling" a '+
              ' where a.deleted_at is null and '+
-             ' a.no_trans='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString)+' ');
+             ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
      open;
     end;
     //
@@ -337,15 +337,15 @@ begin
     begin
      close;
      sql.clear;
-     sql.add(' select a."no_trans", "no_traveldoc", "date_trans", a."code_cust", '+
+     sql.add(' select a."trans_no", "no_traveldoc", "trans_date", a."code_cust", '+
              ' a."name_cust",  d."address", b."code_item", b."name_item",  b."amount", '+
              ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket from "sale"."t_selling" a  '+
-             ' LEFT JOIN "sale"."t_selling_det" b ON a.no_trans=b.no_trans  '+
-             ' LEFT JOIN "sale"."t_selling_piece" c ON a.no_trans=c.no_trans  '+
+             ' LEFT JOIN "sale"."t_selling_det" b ON a.trans_no=b.trans_no  '+
+             ' LEFT JOIN "sale"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
              ' where "code_details"=''001'') d on a.code_cust=d.customer_code  '+
              ' where a.deleted_at is null and  '+
-             ' a.no_trans='+QuotedStr(QPenjualan.FieldByName('no_trans').AsString)+'  '+
+             ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'  '+
              ' order by b.created_at Desc');
      open;
     end;

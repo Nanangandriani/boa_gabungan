@@ -575,8 +575,8 @@ begin
               ' postal_code='+QuotedStr(Edkodepos.Text)+','+
               ' code_type='+QuotedStr(edKode_jnispel.Text)+','+
               ' name_type='+QuotedStr(edJenisPelanggan.Text)+','+
-              ' account_no='+QuotedStr(edKodePerkiraan.Text)+','+
-              ' account_header_no='+QuotedStr(KodeHeaderPerkiraan)+','+
+              ' account_code='+QuotedStr(edKodePerkiraan.Text)+','+
+              ' header_code='+QuotedStr(KodeHeaderPerkiraan)+','+
               ' code_head_office='+QuotedStr(edKodeKantorPusat.Text)+','+
               ' name_head_office='+QuotedStr(edNamaKantorPusat.Text)+','+
               ' code_type_business='+QuotedStr(edKode_JenisUsaha.Text)+','+
@@ -615,7 +615,7 @@ begin
     sql.add(' Insert into t_customer(idprospek,customer_code,customer_name,'+
             ' customer_name_pkp, no_npwp, no_nik, number_va, '+
             ' code_region, name_region, postal_code, code_type, name_type, '+
-            ' account_no, account_header_no, code_head_office, name_head_office, '+
+            ' account_code, header_code, code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
             ' email,payment_term,created_at,created_by, stat_pkp ) '+

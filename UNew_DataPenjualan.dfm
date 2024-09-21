@@ -788,6 +788,9 @@ object FNew_Penjualan: TFNew_Penjualan
       FieldName = 'NM_SATUAN'
       Size = 500
     end
+    object MemDetailAKUN_PERK_ITEM: TStringField
+      FieldName = 'AKUN_PERK_ITEM'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object NO_SUMBER: TMTStringDataFieldEh
@@ -918,6 +921,11 @@ object FNew_Penjualan: TFNew_Penjualan
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object AKUN_PERK_ITEM: TMTStringDataFieldEh
+          FieldName = 'AKUN_PERK_ITEM'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

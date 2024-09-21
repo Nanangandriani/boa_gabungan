@@ -49,7 +49,7 @@ object FDataListPenjualan: TFDataListPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_trans'
+        FieldName = 'trans_no'
         Footers = <>
         Title.Caption = 'No Transaksi'
         Width = 200
@@ -58,7 +58,7 @@ object FDataListPenjualan: TFDataListPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'date_trans'
+        FieldName = 'trans_date'
         Footers = <>
         Title.Caption = 'Tanggal'
         Width = 100
@@ -835,10 +835,6 @@ object FDataListPenjualan: TFDataListPenjualan
       'where deleted_at is null order by created_at Desc')
     Left = 660
     Top = 16
-    object QPenjualanno_trans: TStringField
-      FieldName = 'no_trans'
-      Size = 255
-    end
     object QPenjualancode_cust: TStringField
       FieldName = 'code_cust'
       Visible = False
@@ -865,7 +861,11 @@ object FDataListPenjualan: TFDataListPenjualan
       Size = 255
     end
     object QPenjualandate_trans: TDateField
-      FieldName = 'date_trans'
+      FieldName = 'trans_date'
+    end
+    object QPenjualantrans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 255
     end
   end
   object DsPenjualan: TDataSource
@@ -878,9 +878,9 @@ object FDataListPenjualan: TFDataListPenjualan
     SQL.Strings = (
       ''
       'SELECT A'
-      #9'."no_trans",'
+      #9'."trans_no",'
       #9'"no_inv_tax",'
-      #9'"date_trans",'
+      #9'"trans_date",'
       #9'A."code_cust",'
       #9'A."name_cust",'
       #9'd."address",'
@@ -908,30 +908,22 @@ object FDataListPenjualan: TFDataListPenjualan
       #9'"piece_fourth" '
       'FROM'
       #9'"sale"."t_selling"'
-      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.no_trans = b.no_trans'
-      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.no_trans = C.no_trans'
+      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.trans_no = b.trans_no'
+      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.trans_no = C.trans_no'
       
         #9'LEFT JOIN ( SELECT "customer_code", "address" FROM "public"."t_' +
         'customer_address" WHERE "code_details" = '#39'001'#39' ) d ON A.code_cus' +
         't = d.customer_code '
       'WHERE'
       #9'A.deleted_at IS NULL '
-      #9'AND A.no_trans = '#39'001-2024/IX/05-PWK2'#39' '
+      #9'AND A.trans_no = '#39'001-2024/IX/05-PWK2'#39' '
       'ORDER BY'
       #9'A.created_at DESC')
-    Active = True
     Left = 332
     Top = 16
-    object QCetakno_trans: TStringField
-      FieldName = 'no_trans'
-      Size = 255
-    end
     object QCetakno_inv_tax: TStringField
       FieldName = 'no_inv_tax'
       Size = 255
-    end
-    object QCetakdate_trans: TDateField
-      FieldName = 'date_trans'
     end
     object QCetakcode_cust: TStringField
       FieldName = 'code_cust'
@@ -1041,14 +1033,19 @@ object FDataListPenjualan: TFDataListPenjualan
       FieldName = 'piece_fourth'
       ReadOnly = True
     end
+    object QCetaktrans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 255
+    end
+    object QCetaktrans_date: TDateField
+      FieldName = 'trans_date'
+    end
   end
   object frxDBDPenjualan: TfrxDBDataset
     UserName = 'frxDBDPenjualan'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'no_trans=no_trans'
       'no_inv_tax=no_inv_tax'
-      'date_trans=date_trans'
       'code_cust=code_cust'
       'name_cust=name_cust'
       'address=address'
@@ -1073,7 +1070,9 @@ object FDataListPenjualan: TFDataListPenjualan
       'piece_first=piece_first'
       'piece_second=piece_second'
       'piece_third=piece_third'
-      'piece_fourth=piece_fourth')
+      'piece_fourth=piece_fourth'
+      'trans_no=trans_no'
+      'trans_date=trans_date')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
@@ -1089,7 +1088,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45546.431786180600000000
+    ReportOptions.LastChange = 45546.447428356500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1111,7 +1110,7 @@ object FDataListPenjualan: TFDataListPenjualan
       end
       item
         Name = 'vTerbilang_qty'
-        Value = ''
+        Value = Null
       end>
     Style = <>
     object Data: TfrxDataPage
@@ -1669,9 +1668,9 @@ object FDataListPenjualan: TFDataListPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT A'
-      #9'."no_trans",'
+      #9'."trans_no",'
       #9'"no_traveldoc",'
-      #9'"date_trans",'
+      #9'"trans_date",'
       #9'A."code_cust",'
       #9'A."name_cust",'
       #9'd."address",'
@@ -1684,30 +1683,22 @@ object FDataListPenjualan: TFDataListPenjualan
       '        b."code_unit" as ket'
       'FROM'
       #9'"sale"."t_selling"'
-      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.no_trans = b.no_trans'
-      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.no_trans = C.no_trans'
+      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.trans_no = b.trans_no'
+      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.trans_no = C.trans_no'
       
         #9'LEFT JOIN ( SELECT "customer_code", "address" FROM "public"."t_' +
         'customer_address" WHERE "code_details" = '#39'001'#39' ) d ON A.code_cus' +
         't = d.customer_code '
       'WHERE'
       #9'A.deleted_at IS NULL '
-      #9'AND A.no_trans = '#39'001-2024/IX/05-PWK2'#39' '
+      #9'AND A.trans_no = '#39'001-2024/IX/05-PWK2'#39' '
       'ORDER BY'
       #9'b.created_at DESC')
-    Active = True
     Left = 332
     Top = 72
-    object QCetakSJno_trans: TStringField
-      FieldName = 'no_trans'
-      Size = 255
-    end
     object QCetakSJno_traveldoc: TStringField
       FieldName = 'no_traveldoc'
       Size = 255
-    end
-    object QCetakSJdate_trans: TDateField
-      FieldName = 'date_trans'
     end
     object QCetakSJcode_cust: TStringField
       FieldName = 'code_cust'
@@ -1755,14 +1746,19 @@ object FDataListPenjualan: TFDataListPenjualan
       ReadOnly = True
       Size = 100
     end
+    object QCetakSJtrans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 255
+    end
+    object QCetakSJtrans_date: TDateField
+      FieldName = 'trans_date'
+    end
   end
   object frxDBDCetakSJ: TfrxDBDataset
     UserName = 'frxDBDCetakSJ'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'no_trans=no_trans'
       'no_traveldoc=no_traveldoc'
-      'date_trans=date_trans'
       'code_cust=code_cust'
       'name_cust=name_cust'
       'address=address'
@@ -1772,7 +1768,9 @@ object FDataListPenjualan: TFDataListPenjualan
       'code_unit=code_unit'
       'name_unit=name_unit'
       'no_reference=no_reference'
-      'ket=ket')
+      'ket=ket'
+      'trans_no=trans_no'
+      'trans_date=trans_date')
     DataSet = QCetakSJ
     BCDToCurrency = False
     DataSetOptions = []

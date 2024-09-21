@@ -176,8 +176,8 @@ begin
     edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
     edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
     vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
-    edKodePerkiraan.Text:=Dm.Qtemp.FieldByName('account_no').AsString;
-    KodeHeaderPerkiraan:=Dm.Qtemp.FieldByName('account_header_no').AsString;
+    edKodePerkiraan.Text:=Dm.Qtemp.FieldByName('account_code').AsString;
+    KodeHeaderPerkiraan:=Dm.Qtemp.FieldByName('header_code').AsString;
     edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
     edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
     edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;

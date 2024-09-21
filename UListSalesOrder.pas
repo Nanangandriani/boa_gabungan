@@ -215,6 +215,7 @@ begin
       FNew_Penjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
       FNew_Penjualan.MemDetail['JUMLAH']:=Dm.Qtemp.FieldByName('amount').AsFloat;
       FNew_Penjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('selling_price').AsFloat;
+      FNew_Penjualan.MemDetail['AKUN_PERK_ITEM']:=SelectRow('SELECT account_code from t_item where item_code='+QuotedStr(Dm.Qtemp.FieldByName('code_item').AsString)+' ');
       FNew_Penjualan.MemDetail['KD_SATUAN']:=Dm.Qtemp.FieldByName('code_unit').AsString;
       FNew_Penjualan.MemDetail['NM_SATUAN']:=Dm.Qtemp.FieldByName('name_unit').AsString;
       FNew_Penjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('selling_price').AsFloat;

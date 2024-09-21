@@ -70,6 +70,7 @@ type
     MemDetailPPN_AKUN: TStringField;
     MemDetailHARGA_SATUAN: TCurrencyField;
     MemDetailNM_SATUAN: TStringField;
+    MemDetailAKUN_PERK_ITEM: TStringField;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -94,7 +95,7 @@ type
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_grand : real;
   public
     { Public declarations }
-    vFormSumber,vHasilGetFakturPajak, kd_kares: string;
+    vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel: string;
     strtgl, strbulan, strtahun: string;
     Year, Month, Day: Word;
     procedure Clear;
@@ -172,7 +173,7 @@ begin
   close;
   sql.clear;
   sql.Text:=' DELETE FROM  "sale"."t_selling_det" '+
-            ' WHERE "no_trans"='+QuotedStr(edNomorTrans.Text)+';';
+            ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+';';
   ExecSQL;
   end;
 
@@ -183,7 +184,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_selling_det" ("no_trans", "code_item", "name_item", '+
+    sql.Text:=' INSERT INTO "sale"."t_selling_det" ("trans_no", "code_item", "name_item", "account_code", '+
               ' "amount", "code_unit", "name_unit", "no_reference", "unit_price", "sub_total", '+
               ' "ppn_percent", "ppn_account", "ppn_value", "pph_account", "pph_name", "pph_percent", '+
               ' "pph_value", "tot_piece_value", "tot_piece_percent", "grand_tot") '+
@@ -191,6 +192,7 @@ begin
               ' '+QuotedStr(edNomorTrans.Text)+', '+
               ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
               ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
+              ' '+QuotedStr(MemDetail['AKUN_PERK_ITEM'])+', '+
               ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
               ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
               ' '+QuotedStr(MemDetail['NM_SATUAN'])+', '+
@@ -425,6 +427,7 @@ begin
   edNoReff.Text:='-';
   vFormSumber:='0';
   kd_kares:='0';
+  kd_perkiraan_pel:='0';
 end;
 
 procedure TFNew_Penjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -552,8 +555,8 @@ begin
     close;
     sql.clear;
     sql.add(' Insert into "sale"."t_selling" ("created_at", "created_by", "code_trans", '+
-            ' "no_inv_tax", "no_trans", "no_traveldoc", "date_trans", "code_cust", '+
-            ' "name_cust", "payment_term", "code_source", "name_source", "no_reference", '+
+            ' "no_inv_tax", "trans_no", "no_traveldoc", "trans_date", "code_cust", '+
+            ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "grand_tot", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
@@ -566,6 +569,7 @@ begin
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+', '+
             ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
             ' '+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' '+QuotedStr(kd_perkiraan_pel)+', '+
             ' '+QuotedStr(spJatuhTempo.Text)+', '+
             ' '+QuotedStr(edKodeSumber.Text)+', '+
             ' '+QuotedStr(edNamaSumber.Text)+', '+
@@ -598,9 +602,10 @@ begin
       sql.add(' UPDATE "sale"."t_selling" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-              ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
+              ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
               ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
               ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
+              ' account_code='+QuotedStr(kd_perkiraan_pel)+','+
               ' code_trans='+QuotedStr(edKode_Trans.Text)+','+
               ' no_inv_tax='+QuotedStr(edNomorFaktur.Text)+','+
               ' no_traveldoc='+QuotedStr(edSuratJalanTrans.Text)+','+
@@ -618,7 +623,7 @@ begin
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+
-              ' Where no_trans='+QuotedStr(edNomorTrans.Text)+'');
+              ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');
       ExecSQL;
     end;
     InsertDetailJU;
@@ -636,14 +641,14 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT "no_trans", "code_item", "name_item", "amount", "code_unit", '+
+            ' SELECT "trans_no", "code_item", "name_item", "amount", "code_unit", '+
             ' "name_unit", "no_reference", "unit_price", "sub_total", "ppn_percent", '+
             ' "ppn_value", "pph_account", "pph_name", "pph_percent", "pph_value", '+
-            ' "tot_piece_value", "tot_piece_percent", "grand_tot", "ppn_account" '+
+            ' "tot_piece_value", "tot_piece_percent", "grand_tot", "ppn_account", "account_code" '+
             ' FROM  "sale"."t_selling_det" '+
             ' WHERE deleted_at IS NULL ) a '+
-            ' WHERE no_trans='+QuotedStr(edNomorTrans.Text)+' '+
-            ' Order By no_trans, code_item desc');
+            ' WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' '+
+            ' Order By trans_no, code_item desc');
     open;
   end;
 
@@ -669,6 +674,7 @@ begin
      FNew_Penjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.fieldbyname('name_item').value;
      FNew_Penjualan.MemDetail['JUMLAH']:=Dm.Qtemp.fieldbyname('amount').value;
      FNew_Penjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.fieldbyname('unit_price').value;
+     FNew_Penjualan.MemDetail['AKUN_PERK_ITEM']:=Dm.Qtemp.fieldbyname('account_code').value;
      FNew_Penjualan.MemDetail['KD_SATUAN']:=Dm.Qtemp.fieldbyname('code_unit').value;
      FNew_Penjualan.MemDetail['NM_SATUAN']:=Dm.Qtemp.fieldbyname('name_unit').value;
      FNew_Penjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.fieldbyname('sub_total').value;
