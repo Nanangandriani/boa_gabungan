@@ -22,7 +22,6 @@ object FListReturPenjualan: TFListReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1186
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -49,7 +48,7 @@ object FListReturPenjualan: TFListReturPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_return'
+        FieldName = 'trans_no'
         Footers = <>
         Title.Caption = 'No Retur'
         Width = 200
@@ -58,7 +57,7 @@ object FListReturPenjualan: TFListReturPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'date_trans'
+        FieldName = 'trans_date'
         Footers = <>
         Title.Caption = 'Tanggal'
         Width = 100
@@ -84,25 +83,7 @@ object FListReturPenjualan: TFListReturPenjualan
       end
       item
         CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code_type_return'
-        Footers = <>
-        Title.Caption = 'Kode Jenis Retur'
-        Visible = False
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_type_return'
-        Footers = <>
-        Title.Caption = 'Jenis Retur'
-        Width = 200
-      end
-      item
-        CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'grand_tot'
@@ -723,14 +704,6 @@ object FListReturPenjualan: TFListReturPenjualan
       FieldName = 'deleted_by'
       Size = 50
     end
-    object QReturJualno_return: TStringField
-      FieldName = 'no_return'
-      Required = True
-      Size = 100
-    end
-    object QReturJualdate_trans: TDateField
-      FieldName = 'date_trans'
-    end
     object QReturJualcode_cust: TStringField
       FieldName = 'code_cust'
       Size = 100
@@ -778,6 +751,15 @@ object FListReturPenjualan: TFListReturPenjualan
     end
     object QReturJualgrand_tot: TFloatField
       FieldName = 'grand_tot'
+      DisplayFormat = '#,##0.##'
+    end
+    object QReturJualtrans_no: TStringField
+      FieldName = 'trans_no'
+      Required = True
+      Size = 100
+    end
+    object QReturJualtrans_date: TDateField
+      FieldName = 'trans_date'
     end
   end
   object DsReturJual: TDataSource

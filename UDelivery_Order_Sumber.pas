@@ -69,14 +69,14 @@ begin
       close;
       sql.clear;
       sql.add(' select *  from ('+
-              ' SELECT date_trans, "code_cust", "name_cust", a."no_trans", '+
+              ' SELECT trans_date, "code_cust", "name_cust", a."trans_no", '+
               ' b."no_reference", "code_item", "name_item", "amount", "code_unit" '+
               ' from "sale"."t_selling" a LEFT JOIN "sale"."t_selling_det" b ON '+
-              ' a.no_trans=b.no_trans where a.deleted_at  is null) jual '+
-              ' where no_trans not in (SELECT notrans_load from "sale"."t_delivery_order" a '+
+              ' a.trans_no=b.trans_no where a.deleted_at  is null) jual '+
+              ' where trans_no not in (SELECT notrans_load from "sale"."t_delivery_order" a '+
               ' LEFT JOIN "sale"."t_delivery_order_load" b ON a.notrans=b.notrans '+
               ' where a.deleted_at  is null) ');
-      sql.add(' AND date_trans between '+
+      sql.add(' AND trans_date between '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal2.Date))+' ');
       if Length(edKodeVendorMuatan.Text)<>0 then
