@@ -63,8 +63,6 @@ type
     QReturJualupdated_by: TStringField;
     QReturJualdeleted_at: TDateTimeField;
     QReturJualdeleted_by: TStringField;
-    QReturJualno_return: TStringField;
-    QReturJualdate_trans: TDateField;
     QReturJualcode_cust: TStringField;
     QReturJualname_cust: TStringField;
     QReturJualcode_type_return: TStringField;
@@ -78,6 +76,8 @@ type
     QReturJualppn_value: TFloatField;
     QReturJualpph_value: TFloatField;
     QReturJualgrand_tot: TFloatField;
+    QReturJualtrans_no: TStringField;
+    QReturJualtrans_date: TDateField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -125,7 +125,7 @@ begin
           sql.Text:=' UPDATE "sale"."t_selling"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "no_trans"='+QuotedStr(QReturJual.FieldByName('no_return').AsString);
+                    ' WHERE "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString);
           ExecSQL;
         end;
         MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
@@ -166,7 +166,7 @@ begin
        close;
        sql.Clear;
        sql.Text:=' select * from "sale"."t_sales_returns" a '+
-                 ' WHERE "no_return"='+QuotedSTr(QReturJual.FieldByName('no_return').AsString)+' '+
+                 ' WHERE "trans_no"='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -179,10 +179,11 @@ begin
   begin
   with FDataReturPenjualan do
   begin
-    edNoTrans.Text:=Dm.Qtemp.FieldByName('no_return').AsString;
-    dtTanggal.Date:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+    edNoTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
+    dtTanggal.Date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
     edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
     edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
+    kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
     edKodeJenis.Text:=Dm.Qtemp.FieldByName('code_type_return').AsString;
     edNamaJenis.Text:=Dm.Qtemp.FieldByName('name_type_return').AsString;
     MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;

@@ -2,8 +2,8 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
   Left = 0
   Top = 0
   Caption = 'Sumber Delivery Order'
-  ClientHeight = 562
-  ClientWidth = 1292
+  ClientHeight = 553
+  ClientWidth = 1286
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +16,12 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
   object Panel5: TPanel
     Left = 0
     Top = 0
-    Width = 1292
+    Width = 1286
     Height = 145
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1286
     object Label38: TLabel
       Left = 124
       Top = 29
@@ -244,8 +243,8 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
   object DBGrid_SumberOrder: TDBGridEh
     Left = 0
     Top = 145
-    Width = 1292
-    Height = 417
+    Width = 1286
+    Height = 408
     Align = alClient
     DataSource = dsDetail
     DynProps = <>

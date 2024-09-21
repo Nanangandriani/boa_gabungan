@@ -565,6 +565,10 @@ object FDataReturPenjualan: TFDataReturPenjualan
     object MemDetailNO_JUAL: TStringField
       FieldName = 'NO_JUAL'
     end
+    object MemDetailAKUN_PERK_ITEM: TStringField
+      FieldName = 'AKUN_PERK_ITEM'
+      Size = 50
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object NO_JUAL: TMTStringDataFieldEh
@@ -695,6 +699,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object AKUN_PERK_ITEM: TMTStringDataFieldEh
+          FieldName = 'AKUN_PERK_ITEM'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
         end
       end
       object RecordsList: TRecordsListEh

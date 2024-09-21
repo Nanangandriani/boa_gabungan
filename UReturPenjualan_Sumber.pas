@@ -75,17 +75,17 @@ begin
       close;
       sql.clear;
       sql.add(' select *  from ('+
-              ' select no_trans, date_trans, code_cust, name_cust, code_source, '+
+              ' select trans_no, trans_date, code_cust, name_cust, code_source, '+
               ' name_source, no_reference from "sale"."t_selling" '+
               ' where deleted_at is null order by created_at Desc) aa ');
-      sql.add(' Where date_trans between '+
+      sql.add(' Where trans_date between '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal2.Date))+' ');
       if Length(edKode_Pelanggan.Text)<>0 then
       begin
         sql.add(' AND code_cust='+QuotedStr(edKode_Pelanggan.Text)+' ');
       end;
-      sql.add(' ORDER BY aa.no_trans desc');
+      sql.add(' ORDER BY aa.trans_no desc');
       open;
     end;
 
@@ -107,8 +107,8 @@ begin
     while not Dm.Qtemp.Eof do
     begin
      FReturPenjualan_Sumber.MemDetail.insert;
-     FReturPenjualan_Sumber.MemDetail['no_trans']:=Dm.Qtemp.fieldbyname('no_trans').value;
-     FReturPenjualan_Sumber.MemDetail['date_trans']:=Dm.Qtemp.fieldbyname('date_trans').value;
+     FReturPenjualan_Sumber.MemDetail['no_trans']:=Dm.Qtemp.fieldbyname('trans_no').value;
+     FReturPenjualan_Sumber.MemDetail['date_trans']:=Dm.Qtemp.fieldbyname('trans_date').value;
      FReturPenjualan_Sumber.MemDetail['code_cust']:=Dm.Qtemp.fieldbyname('code_cust').value;
      FReturPenjualan_Sumber.MemDetail['name_cust']:=Dm.Qtemp.fieldbyname('name_cust').value;
      FReturPenjualan_Sumber.MemDetail['code_source']:=Dm.Qtemp.fieldbyname('code_source').value;
@@ -170,13 +170,13 @@ begin
               begin
                 close;
                 sql.clear;
-                sql.add(' SELECT * from ( SELECT "no_trans", "code_item", "name_item", '+
+                sql.add(' SELECT * from ( SELECT "trans_no", "code_item", "name_item", '+
                         ' "amount", "code_unit",  "name_unit", "no_reference", "unit_price", '+
                         ' "sub_total", "ppn_percent",  "ppn_value", "pph_account", "pph_name", '+
                         ' "pph_percent", "pph_value",  "tot_piece_value", "tot_piece_percent", '+
-                        ' "grand_tot", "ppn_account"  FROM  "sale"."t_selling_det"  WHERE deleted_at IS NULL ) a '+
-                        ' WHERE no_trans='+QuotedStr(MemDetail['no_trans'])+'  '+
-                        ' Order By no_trans, code_item desc');
+                        ' "grand_tot", "ppn_account", "account_code"  FROM  "sale"."t_selling_det"  WHERE deleted_at IS NULL ) a '+
+                        ' WHERE trans_no='+QuotedStr(MemDetail['no_trans'])+'  '+
+                        ' Order By trans_no, code_item desc');
                 open;
               end;
               if  Dm.Qtemp.RecordCount<>0 then
@@ -187,7 +187,7 @@ begin
               while not Dm.Qtemp.Eof do
               begin
                 FDataReturPenjualan.MemDetail.insert;
-                FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('no_trans').AsString;
+                FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('trans_no').AsString;
                 FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
                 FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
                 FDataReturPenjualan.MemDetail['JUMLAH']:=Dm.Qtemp.FieldByName('amount').AsFloat;
@@ -205,6 +205,7 @@ begin
                 FDataReturPenjualan.MemDetail['PPH_PERSEN']:=Dm.Qtemp.fieldbyname('pph_percent').value;
                 FDataReturPenjualan.MemDetail['PPH_NILAI']:=Dm.Qtemp.fieldbyname('pph_value').value;
                 FDataReturPenjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
+                FDataReturPenjualan.MemDetail['AKUN_PERK_ITEM']:=Dm.Qtemp.fieldbyname('account_code').value;
                 FDataReturPenjualan.MemDetail.post;
                 FDataReturPenjualan.HitungGrid;
               Dm.Qtemp.next;

@@ -155,11 +155,13 @@ begin
   begin
     FDataReturPenjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FDataReturPenjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FDataReturPenjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
   if vcall='retur_penjualan_sumber' then
   begin
     FReturPenjualan_Sumber.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FReturPenjualan_Sumber.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FDataReturPenjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
   if vcall='delivery_order' then
   begin
@@ -183,6 +185,7 @@ begin
     FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
     FNew_Penjualan.Autonumber;
     FNew_Penjualan.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+    FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
   if vcall='daftar_klasifikasi' then
   begin

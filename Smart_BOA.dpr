@@ -169,7 +169,8 @@ uses
   UListPenagihanPiutang in 'UListPenagihanPiutang.pas' {FListPenagihanPiutang},
   UDataPenagihanPiutang in 'UDataPenagihanPiutang.pas' {FDataPenagihanPiutang},
   URincianPot_Penjualan in 'URincianPot_Penjualan.pas' {FRincianPot_Penjualan},
-  UMovingDPP in 'UMovingDPP.pas' {FMovingDPP};
+  UMovingDPP in 'UMovingDPP.pas' {FMovingDPP},
+  UDaftarPenagihanPiutang in 'UDaftarPenagihanPiutang.pas' {FDaftarPenagihanPiutang};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -242,6 +243,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataPenagihanPiutang, FDataPenagihanPiutang);
   Application.CreateForm(TFRincianPot_Penjualan, FRincianPot_Penjualan);
   Application.CreateForm(TFMovingDPP, FMovingDPP);
+  Application.CreateForm(TFDaftarPenagihanPiutang, FDaftarPenagihanPiutang);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);

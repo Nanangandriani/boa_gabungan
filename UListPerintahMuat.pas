@@ -253,7 +253,7 @@ begin
              ' "name_item", "amount", "unit", '+
              ' concat("name_item",'' = '',CAST("amount" AS INTEGER),'' '',"unit") as banyaknya '+
              ' from "sale"."t_spm_det" a '+
-             ' LEFT JOIN "sale"."t_selling" b ON a."notrans_sale"=b."no_trans" '+
+             ' LEFT JOIN "sale"."t_selling" b ON a."notrans_sale"=b."trans_no" '+
              ' WHERE a."notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
              ' order by a."notrans" Desc');
      open;

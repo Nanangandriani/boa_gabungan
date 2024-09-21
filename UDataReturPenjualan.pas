@@ -56,6 +56,7 @@ type
     MemDetailJUMLAH_JUAL: TCurrencyField;
     MemDetailHARGA_SATUAN_JUAL: TFloatField;
     MemDetailNO_JUAL: TStringField;
+    MemDetailAKUN_PERK_ITEM: TStringField;
     procedure btMasterJenisReturClick(Sender: TObject);
     procedure edNamaJenisButtonClick(Sender: TObject);
     procedure edKode_PelangganButtonClick(Sender: TObject);
@@ -74,7 +75,7 @@ type
   tot_dpp, tot_ppn, tot_pph, tot_grand : real;
   public
     { Public declarations }
-    strtgl, strbulan, strtahun: string;
+    strtgl, strbulan, strtahun,kd_perkiraan_pel: string;
     Year, Month, Day: Word;
     Status: Integer;
     procedure Clear;
@@ -105,12 +106,12 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT "no_return", "code_item", "name_item", "amount", "amount_sale", "code_unit", '+
+            ' SELECT "trans_no", "code_item", "name_item", "amount", "amount_sale", "code_unit", '+
             ' "name_unit", "unit_price", "unit_price_sale", "sub_total", "ppn_account", "ppn_percent", '+
-            ' "ppn_value", "pph_account", "pph_value", "pph_name", "pph_percent", "grand_tot" '+
+            ' "ppn_value", "pph_account", "pph_value", "pph_name", "pph_percent", "grand_tot", "account_code" '+
             ' FROM  "sale"."t_sales_returns_det") a '+
-            ' WHERE no_return='+QuotedStr(edNoTrans.Text)+' '+
-            ' Order By no_return, code_item desc');
+            ' WHERE trans_no='+QuotedStr(edNoTrans.Text)+' '+
+            ' Order By trans_no, code_item desc');
     open;
   end;
 
@@ -131,7 +132,7 @@ begin
     while not Dm.Qtemp.Eof do
     begin
      FDataReturPenjualan.MemDetail.insert;
-     FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('no_return').AsString;
+     FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('trans_no').AsString;
      FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
      FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
      FDataReturPenjualan.MemDetail['JUMLAH']:=Dm.Qtemp.FieldByName('amount').AsFloat;
@@ -149,6 +150,7 @@ begin
      FDataReturPenjualan.MemDetail['PPH_PERSEN']:=Dm.Qtemp.fieldbyname('pph_percent').value;
      FDataReturPenjualan.MemDetail['PPH_NILAI']:=Dm.Qtemp.fieldbyname('pph_value').value;
      FDataReturPenjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
+     FDataReturPenjualan.MemDetail['AKUN_PERK_ITEM']:=Dm.Qtemp.fieldbyname('account_code').value;
      FDataReturPenjualan.MemDetail.post;
      FDataReturPenjualan.HitungGrid;
      Dm.Qtemp.next;
@@ -163,7 +165,7 @@ begin
     close;
     sql.clear;
     sql.add(' Insert into "sale"."t_sales_returns" ("created_at", "created_by", '+
-            ' "no_return", "date_trans", "code_cust", "name_cust", "code_type_return", '+
+            ' "trans_no", "trans_date", "code_cust", "name_cust", "account_code", "code_type_return", '+
             ' "name_type_return", "description", "order_no", "additional_code", '+
             ' "trans_day", "trans_month", "trans_year", "sub_total", "ppn_value", '+
             ' "pph_value", "grand_tot") '+
@@ -174,6 +176,7 @@ begin
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+', '+
             ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
             ' '+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' '+QuotedStr(kd_perkiraan_pel)+', '+
             ' '+QuotedStr(edKodeJenis.Text)+', '+
             ' '+QuotedStr(edNamaJenis.Text)+', '+
             ' '+QuotedStr(MemKeterangan.Text)+', '+
@@ -204,9 +207,10 @@ begin
       sql.add(' UPDATE "sale"."t_sales_returns" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-              ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
+              ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
               ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
               ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
+              ' account_code='+QuotedStr(kd_perkiraan_pel)+','+
               ' code_type_return='+QuotedStr(edKodeJenis.Text)+','+
               ' name_type_return='+QuotedStr(edNamaJenis.Text)+','+
               ' description='+QuotedStr(MemKeterangan.Text)+','+
@@ -219,7 +223,7 @@ begin
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+
-              ' Where no_return='+QuotedStr(edNoTrans.Text)+'');
+              ' Where trans_no='+QuotedStr(edNoTrans.Text)+'');
       ExecSQL;
     end;
     InsertDetailRet;
@@ -236,7 +240,7 @@ begin
   close;
   sql.clear;
   sql.Text:=' DELETE FROM  "sale"."t_sales_returns_det" '+
-            ' WHERE "no_return"='+QuotedStr(edNoTrans.Text)+';';
+            ' WHERE "trans_no"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
 
@@ -247,8 +251,8 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_sales_returns_det" ("no_return", "no_trans_sale", "code_item", '+
-              ' "name_item", "amount", "code_unit", "name_unit", "unit_price", '+
+    sql.Text:=' INSERT INTO "sale"."t_sales_returns_det" ("trans_no", "no_trans_sale", "code_item", '+
+              ' "name_item", "account_code", "amount", "code_unit", "name_unit", "unit_price", '+
               ' "sub_total", "ppn_account", "ppn_percent", "ppn_value", "pph_account", '+
               ' "pph_value", "pph_name", "pph_percent", "amount_sale", "unit_price_sale", "grand_tot") '+
               ' Values( '+
@@ -256,6 +260,7 @@ begin
               ' '+QuotedStr(MemDetail['NO_JUAL'])+', '+
               ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
               ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
+              ' '+QuotedStr(MemDetail['AKUN_PERK_ITEM'])+', '+
               ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
               ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
               ' '+QuotedStr(MemDetail['NM_SATUAN'])+', '+
@@ -374,11 +379,11 @@ begin
         MessageDlg('Data Penjualan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edNoTrans.SetFocus;
       end
-      else if edKodeJenis.Text='' then
+      {else if edKodeJenis.Text='' then
       begin
         MessageDlg('Data Jenis Retur Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeJenis.SetFocus;
-      end
+      end}
       else if Status = 0 then
       begin
       FDataReturPenjualan.Autonumber;
@@ -425,6 +430,7 @@ begin
   dtTanggal.Date:=Now();
   edKode_Pelanggan.Clear;
   edNama_Pelanggan.Clear;
+  kd_perkiraan_pel:='0';
   edKodeJenis.Clear;
   edNamaJenis.Clear;
   MemKeterangan.Clear;

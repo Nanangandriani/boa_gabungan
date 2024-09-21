@@ -22,7 +22,6 @@ object FListPerintahMuat: TFListPerintahMuat
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 948
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -830,13 +829,12 @@ object FListPerintahMuat: TFListPerintahMuat
       'FROM'
       #9'"sale"."t_spm_det"'
       
-        #9'A LEFT JOIN "sale"."t_selling" b ON A."notrans_sale" = b."no_tr' +
-        'ans" '
+        #9'A LEFT JOIN "sale"."t_selling" b ON A."notrans_sale" = b."trans' +
+        '_no" '
       'WHERE'
       #9'A."notrans" = '#39'SPM/0001/13/VIII/2024'#39' '
       'ORDER BY'
       #9'A."notrans" DESC')
-    Active = True
     Left = 276
     Top = 40
     object QCetaknotrans: TStringField
