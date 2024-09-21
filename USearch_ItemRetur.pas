@@ -14,6 +14,7 @@ type
     Qmaterial: TUniQuery;
     DBGridEh1: TDBGridEh;
     procedure DBGridEh1CellClick(Column: TColumnEh);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -88,6 +89,11 @@ begin
       end;
     end;
     Close;
+end;
+
+procedure TFSearch_MaterialRetur.FormShow(Sender: TObject);
+begin
+   if Qmaterial.Active=false then Qmaterial.Active:=true;
 end;
 
 end.

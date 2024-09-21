@@ -126,7 +126,7 @@ var
   MyTreeView : TRzTreeView;
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
-  Nm,loksbu,kdsbu,dept_code,VMenu,kdgdng,format_tgl:string;
+  Nm,loksbu,kdsbu,dept_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl:string;
   JSFn: string;
   statustr:integer;
 implementation
@@ -739,9 +739,10 @@ begin
   // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('http://www.google.com');
-  kdsbu:='MLB/1';
+
+  {kdsbu:='MLB/1';
   loksbu:='MLB/1';
-  format_tgl:='YYYY/MM/DD';
+  format_tgl:='YYYY/MM/DD'; } //Tes default loksbu
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

@@ -19,6 +19,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+      jenis_tr:string;
+      stat:string;
   end;
 
 var
@@ -28,7 +30,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pembelian, UNew_ReturnPembelian;
+uses UNew_Pembelian, UNew_ReturnPembelian, UNew_Pot_Pembelian,
+  UNew_TerimaMaterial;
 
 procedure TFSupp_Pembelian.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -42,12 +45,49 @@ begin
       Edkd_supp.Text:=Qsupplier['kd_supplier'];
       ednm_supp.text:=Qsupplier['nm_supplier'];
     end; }
-    with FNew_returnPemb do
+    if jenis_tr='tr_pemb' then
     begin
-      Edkd_supp.Text:=Qsupplier['supplier_code'];
-      ednm_supp.text:=Qsupplier['supplier_name'];
+      with FNew_TerimaMaterial do
+      begin
+        Edkd_supp.Text:=Qsupplier['supplier_code'];
+        ednm_supp.text:=Qsupplier['supplier_name'];
+      end;
+    end;
+    if jenis_tr='pot_pemb' then
+    begin
+      with FNew_Pot_Pembelian do
+      begin
+        Edkd_supp.Text:=Qsupplier['supplier_code'];
+        ednm_supp.text:=Qsupplier['supplier_name'];
+      end;
+    end;
+    if jenis_tr='rt_pemb' then
+    begin
+      with FNew_returnPemb do
+      begin
+        Edkd_supp.Text:=Qsupplier['supplier_code'];
+        ednm_supp.text:=Qsupplier['supplier_name'];
+      end;
+    end;
+    if jenis_tr='pemb' then
+    begin
+      with FNew_Pembelian do
+      begin
+        Edkd_supp.Text:=Qsupplier['supplier_code'];
+        ednm_supp.text:=Qsupplier['supplier_name'];
+      end;
     end;
     close;
+
+    {if stat='kolektif_po' then
+    begin
+      with fcetakkolektifpo do
+      begin
+       Edkd_supp.Text:=Qsupplier['kd_supplier'];
+       ednm_supp.text:=Qsupplier['nm_supplier'];
+      end;
+    end;}
+      close;
 end;
 
 procedure TFSupp_Pembelian.FormShow(Sender: TObject);
@@ -56,7 +96,7 @@ begin
     begin
        close ;
        sql.Clear;
-       sql.Text:='select * from t_supplier';
+       sql.Text:='select * from t_supplier Order by supplier_code ASC';
        open;
     end;
     qsupplier.close;

@@ -1,262 +1,123 @@
-object FNew_UM_Pembelian: TFNew_UM_Pembelian
+object FSearch_Matterima: TFSearch_Matterima
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
-  Caption = 'Form Input Uang Muka'
-  ClientHeight = 269
-  ClientWidth = 602
+  Caption = 'Search Material'
+  ClientHeight = 317
+  ClientWidth = 588
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poMainFormCenter
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
-  object RzPanel1: TRzPanel
+  object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 602
-    Height = 236
+    Width = 588
+    Height = 285
     Align = alClient
-    BorderOuter = fsFlat
-    Color = 15987699
+    DataSource = DSMaterial
+    DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh, gioShowRowselCheckboxesEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SearchPanel.Enabled = True
     TabOrder = 0
-    ExplicitWidth = 596
-    ExplicitHeight = 227
-    object Label1: TLabel
-      Left = 34
-      Top = 81
-      Width = 37
-      Height = 15
-      Caption = 'No. Trx'
-    end
-    object Label2: TLabel
-      Left = 136
-      Top = 81
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label3: TLabel
-      Left = 34
-      Top = 110
-      Width = 41
-      Height = 15
-      Caption = 'Tanggal'
-    end
-    object Label4: TLabel
-      Left = 136
-      Top = 110
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label5: TLabel
-      Left = 34
-      Top = 21
-      Width = 43
-      Height = 15
-      Caption = 'Supplier'
-    end
-    object Label6: TLabel
-      Left = 136
-      Top = 21
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label7: TLabel
-      Left = 34
-      Top = 140
-      Width = 88
-      Height = 15
-      Caption = 'Nilai Uang Muka'
-    end
-    object Label8: TLabel
-      Left = 136
-      Top = 140
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label38: TLabel
-      Left = 34
-      Top = 170
-      Width = 57
-      Height = 15
-      Caption = 'Akun Perk.'
-    end
-    object Label9: TLabel
-      Left = 136
-      Top = 169
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object Label10: TLabel
-      Left = 34
-      Top = 52
-      Width = 38
-      Height = 15
-      Caption = 'No. PO'
-    end
-    object Label11: TLabel
-      Left = 136
-      Top = 52
-      Width = 3
-      Height = 15
-      Caption = ':'
-    end
-    object EdNm_supp: TRzButtonEdit
-      Left = 222
-      Top = 18
-      Width = 211
-      Height = 23
-      Text = ''
-      TabOrder = 0
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      OnButtonClick = EdNm_suppButtonClick
-    end
-    object EdKd_supp: TEdit
-      Left = 143
-      Top = 18
-      Width = 73
-      Height = 23
-      CharCase = ecUpperCase
-      Color = clInfoBk
-      ReadOnly = True
-      TabOrder = 1
-      OnChange = EdKd_suppChange
-    end
-    object DTP_UM: TRzDateTimeEdit
-      Left = 143
-      Top = 108
-      Width = 121
-      Height = 23
-      EditType = etDate
-      TabOrder = 2
-      OnChange = DTP_UMChange
-    end
-    object Ed_No_trans: TRzEdit
-      Left = 143
-      Top = 78
-      Width = 170
-      Height = 23
-      Text = ''
-      Color = clInfoBk
-      ReadOnly = True
-      TabOrder = 3
-    end
-    object Edurut: TEdit
-      Left = 320
-      Top = 78
-      Width = 97
-      Height = 23
-      TabOrder = 4
-      Visible = False
-    end
-    object EdUM: TRzNumericEdit
-      Left = 143
-      Top = 137
-      Width = 121
-      Height = 23
-      DisabledColor = clWindow
-      TabOrder = 5
-      OnKeyPress = EdUMKeyPress
-      DisplayFormat = '#,##0.00'
-    end
-    object Ednm_akun: TRzButtonEdit
-      Left = 222
-      Top = 166
-      Width = 211
-      Height = 23
-      Text = ''
-      TabOrder = 6
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      OnButtonClick = Ednm_akunButtonClick
-    end
-    object Edkd_akun: TRzEdit
-      Left = 143
-      Top = 166
-      Width = 71
-      Height = 23
-      Text = ''
-      Color = clInfoBk
-      ReadOnly = True
-      TabOrder = 7
-      OnChange = Edkd_akunChange
-    end
-    object Edbln: TEdit
-      Left = 677
-      Top = 170
-      Width = 58
-      Height = 23
-      TabOrder = 8
-      Visible = False
-    end
-    object Edth: TEdit
-      Left = 613
-      Top = 170
-      Width = 58
-      Height = 23
-      TabOrder = 9
-      Visible = False
-    end
-    object Edhari: TEdit
-      Left = 741
-      Top = 170
-      Width = 58
-      Height = 23
-      TabOrder = 10
-      Visible = False
-    end
-    object CbPo: TRzComboBox
-      Left = 143
-      Top = 48
-      Width = 170
-      Height = 23
-      TabOrder = 11
-    end
-    object Cb_Curr: TRzComboBox
-      Left = 452
-      Top = 18
-      Width = 45
-      Height = 23
-      TabOrder = 12
-      Text = 'IDR'
-      OnChange = Cb_CurrChange
-      OnSelect = Cb_CurrChange
-    end
-    object Ed_kurs: TRzNumericEdit
-      Left = 505
-      Top = 18
-      Width = 82
-      Height = 23
-      TabOrder = 13
-      DisplayFormat = ',0;(,0)'
+    OnDblClick = DBGridEh1DblClick
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'po_no'
+        Footers = <>
+        Title.Caption = 'No. PO'
+        Width = 111
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_code'
+        Footers = <>
+        Title.Caption = 'Kode Barang'
+        Width = 96
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_name'
+        Footers = <>
+        Title.Caption = 'Nama Material'
+        Width = 194
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty'
+        Footers = <>
+        Title.Caption = 'Kuantum'
+        Width = 62
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 56
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_stock_code'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_code'
+        Footers = <>
+        Width = 0
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
     end
   end
-  object RzPanel2: TRzPanel
-    Left = 0
-    Top = 236
-    Width = 602
-    Height = 33
-    Align = alBottom
-    BorderOuter = fsFlat
-    Color = 15987699
+  object DTth: TRzDateTimeEdit
+    Left = 433
+    Top = 64
+    Width = 69
+    Height = 23
+    EditType = etDate
+    Format = 'yyy'
     TabOrder = 1
-    ExplicitTop = 227
-    ExplicitWidth = 596
+    Visible = False
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 285
+    Width = 588
+    Height = 32
+    Align = alBottom
+    TabOrder = 2
+    OnClick = Panel1Click
+    ExplicitTop = 276
+    ExplicitWidth = 582
     object BBatal: TRzBitBtn
-      Left = 526
+      Left = 512
       Top = 1
-      Height = 31
+      Height = 30
       Align = alRight
-      Caption = 'Close'
+      Caption = 'Batal'
       TabOrder = 0
       OnClick = BBatalClick
       Glyph.Data = {
@@ -311,83 +172,19 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 520
-    end
-    object BSimpan: TRzBitBtn
-      Left = 451
-      Top = 1
-      Height = 31
-      Align = alRight
-      Caption = 'Save'
-      TabOrder = 1
-      Visible = False
-      OnClick = BSimpanClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
-        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
-        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
-        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
-        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
-        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
-        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 445
+      ExplicitLeft = 506
     end
     object BEdit: TRzBitBtn
-      Left = 376
+      Left = 437
       Top = 1
-      Height = 31
+      Height = 30
       Align = alRight
-      Caption = 'Save'
-      TabOrder = 2
-      Visible = False
+      Caption = 'OK'
+      TabOrder = 1
       OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
+        08000000000000020000630B0000630B00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -420,34 +217,126 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
-        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
-        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
-        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
-        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
-        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
-        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
-        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
+        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
+        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
+        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
+        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
+        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
+        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
+        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
+        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
+        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 370
+      ExplicitLeft = 431
+      ExplicitTop = 6
     end
-    object BitBtn1: TBitBtn
-      Left = 2
-      Top = 4
-      Width = 75
-      Height = 25
-      Caption = 'BitBtn1'
-      TabOrder = 3
+    object BSelectAll: TRzBitBtn
+      Left = 114
+      Top = 1
+      Width = 80
+      Height = 30
+      Caption = 'Select All'
+      TabOrder = 2
       Visible = False
-      OnClick = BitBtn1Click
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000930E0000930E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E
+        5E5E5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E85ED7D7D7
+        D7D7D7D7D7D7D75EE8E8E8E881ACACACACACACACACACAC81E8E8E8E85ED7D7D7
+        09D7D7D7D7D7D75EE8E8E8E881ACACAC81ACACACACACAC81E8E8E8E85ED7D709
+        0909D7D7D7D7D75EE8E8E8E881ACAC818181ACACACACAC81E8E8E8E85ED70909
+        090909D7D7D7D75EE8E8E8E881AC8181818181ACACACAC81E8E8E8E85ED70909
+        D7090909D7D7D75EE8E8E8E881AC8181AC818181ACACAC81E8E8E8E85ED709D7
+        D7D7090909D7D75EE8E8E8E881AC81ACACAC818181ACAC81E8E8E8E85ED7D7D7
+        D7D7D70909D7D75EE8E8E8E881ACACACACACAC8181ACAC81E8E8E8E85ED7D7D7
+        D7D7D7D709D7D75EE8E8E8E881ACACACACACACAC81ACAC81E8E8E8E85ED7D7D7
+        D7D7D7D7D7D7D75EE8E8E8E881ACACACACACACACACACAC81E8E8E8E85ED7D7D7
+        D7D7D7D75E5E5E5EE8E8E8E881ACACACACACACAC81818181E8E8E8E85ED7D7D7
+        D7D7D7D75EE35EE8E8E8E8E881ACACACACACACAC81AC81E8E8E8E8E85ED7D7D7
+        D7D7D7D75E5EE8E8E8E8E8E881ACACACACACACAC8181E8E8E8E8E8E85E5E5E5E
+        5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
     end
+    object CkAll: TRzCheckBox
+      Left = 6
+      Top = 6
+      Width = 71
+      Height = 19
+      AlignmentVertical = avCenter
+      Caption = 'Select All'
+      State = cbUnchecked
+      TabOrder = 3
+      OnClick = CkAllClick
+    end
+  end
+  object DSMaterial: TDataSource
+    DataSet = QMaterial
+    Left = 259
+    Top = 149
+  end
+  object QMaterial: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.item_stock_code,a.item_code, a.item_name, a.order_no,b.' +
+        'price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,b.' +
+        'pph,'
+      'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code'
+      'from warehouse.t_item_stock a '
+      
+        'inner join purchase.t_podetail b on a.item_stock_code=b.item_sto' +
+        'ck_code'
+      'inner join purchase.t_po C on b.po_no=c.po_no'
+      'left join  purchase.t_spb_det d on c.po_no=d.po_no'
+      'inner join t_item e on a.item_code=e.item_code'
+      'inner join t_wh f on b.wh_code=f.wh_code '
+      
+        'GROUP BY a.item_stock_code,a.item_code, a.item_name, a.order_no,' +
+        'b.price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,' +
+        'b.pph,'
+      'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code')
+    Left = 259
+    Top = 104
   end
 end

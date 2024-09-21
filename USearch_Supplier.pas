@@ -47,7 +47,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,
+uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew_ReturnPembelian,
   UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber;
 
 procedure TFSearch_Supplier.DBGridEh1DblClick(Sender: TObject);
@@ -119,6 +119,12 @@ begin
     begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
+    end;
+
+    with FNew_returnPemb do
+    begin
+      Edkd_supp.Text:=Qsupplier['supplier_code'];
+      ednm_supp.text:=Qsupplier['supplier_name'];
     end;
 
     close;

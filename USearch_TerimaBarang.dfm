@@ -29,6 +29,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -146,11 +147,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       ExplicitLeft = 427
     end
     object BSelectAll: TRzBitBtn
-      Left = 1
+      Left = 114
       Top = 1
       Width = 80
       Height = 30
-      Align = alLeft
       Caption = 'Select All'
       TabOrder = 2
       Visible = False
@@ -209,17 +209,15 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       NumGlyphs = 2
     end
     object CkAll: TRzCheckBox
-      Left = 81
-      Top = 1
+      Left = 6
+      Top = 6
       Width = 71
-      Height = 30
-      Align = alLeft
+      Height = 19
       AlignmentVertical = avCenter
       Caption = 'Select All'
       State = cbUnchecked
       TabOrder = 3
       OnClick = CkAllClick
-      ExplicitHeight = 19
     end
   end
   object DTth: TRzDateTimeEdit
@@ -232,27 +230,28 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     TabOrder = 1
     Visible = False
   end
-  object DBGridEh1: TDBGridEh
+  object DBGridEh2: TDBGridEh
     Left = 0
     Top = 0
     Width = 584
     Height = 386
     Align = alClient
-    DataSource = DSMaterial
+    DataSource = DSMaterial2
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh, gioShowRowselCheckboxesEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
-    TabOrder = 2
+    TabOrder = 3
+    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'po_no'
+        FieldName = 'receive_no'
         Footers = <>
-        Title.Caption = 'No. PO'
+        Title.Caption = 'No. Ref'
         Width = 111
       end
       item
@@ -298,6 +297,93 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         FieldName = 'item_stock_code'
         Footers = <>
         Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_code'
+        Footers = <>
+        Width = 0
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object DBGridEh1: TDBGridEh
+    Left = 0
+    Top = 0
+    Width = 584
+    Height = 386
+    Align = alClient
+    DataSource = DSMaterial
+    DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh, gioShowRowselCheckboxesEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SearchPanel.Enabled = True
+    TabOrder = 2
+    OnDblClick = DBGridEh1DblClick
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'po_no'
+        Footers = <>
+        Title.Caption = 'No. Ref'
+        Width = 111
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_code'
+        Footers = <>
+        Title.Caption = 'Kode Barang'
+        Width = 96
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_name'
+        Footers = <>
+        Title.Caption = 'Nama Material'
+        Width = 194
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty'
+        Footers = <>
+        Title.Caption = 'Kuantum'
+        Width = 62
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 56
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_stock_code'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_code'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -312,7 +398,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     SQL.Strings = (
       
         'select a.item_stock_code,a.item_code, a.item_name, a.order_no,b.' +
-        'price,d.qty, b.unit,b.warehouse,b.remaining_qty,b.ppn,b.pph,'
+        'price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,b.' +
+        'pph,'
       'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code'
       'from warehouse.t_item_stock a '
       
@@ -321,12 +408,55 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       'inner join purchase.t_po C on b.po_no=c.po_no'
       'left join  purchase.t_spb_det d on c.po_no=d.po_no'
       'inner join t_item e on a.item_code=e.item_code'
-      'inner join t_wh f on b.warehouse=f.wh_name '
+      'inner join t_wh f on b.wh_code=f.wh_code '
       
         'GROUP BY a.item_stock_code,a.item_code, a.item_name, a.order_no,' +
-        'b.price,d.qty, b.unit,b.warehouse,b.remaining_qty,b.ppn,b.pph,'
+        'b.price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,' +
+        'b.pph,'
       'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code')
-    Left = 251
-    Top = 80
+    Left = 259
+    Top = 104
+  end
+  object QMaterial2: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.p' +
+        'rice,d.qty,  '
+      
+        'b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.su' +
+        'pplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pe' +
+        'mb_dpp,b.subtotalrp,'
+      
+        'b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.va' +
+        'las,c.valas_value'
+      'from warehouse.t_item_stock a  '
+      
+        'inner join purchase.t_item_receive_det b on a.item_stock_code=b.' +
+        'item_stock_code  '
+      
+        'inner join purchase.t_item_receive C on b.receive_no=c.receive_n' +
+        'o  '
+      'inner join purchase.t_spb_det d on d.spb_no=c.spb_no'
+      'inner join t_item e on a.item_code=e.item_code  '
+      'inner join t_wh f on b.wh_code=f.wh_code'
+      
+        'inner join purchase.t_item_receive_det g on d.item_stock_code=g.' +
+        'item_stock_code   '
+      
+        'GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b' +
+        '.price,d.qty, b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pp' +
+        'h,b.po_no, c.supplier_code, d.spb_no,e.account_code,b.subtotal,b' +
+        '.grandtotal,b.pemb_dpp,'
+      
+        'b.subtotalrp,b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,f.' +
+        'wh_code,b.pemb_dpp;')
+    Left = 355
+    Top = 120
+  end
+  object DSMaterial2: TDataSource
+    DataSet = QMaterial2
+    Left = 355
+    Top = 189
   end
 end

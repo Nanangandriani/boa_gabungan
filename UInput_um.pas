@@ -74,8 +74,7 @@ implementation
 
 {$R *.dfm}
 
-uses USearch_Supplier//, UAkun_Perkiraan_UM
-, UDataModule, UMainMenu, UMy_Function,
+uses USearch_Supplier, UAkun_Perkiraan_UM, UDataModule, UMainMenu, UMy_Function,
   UCari_DaftarPerk;
 
 procedure TFNew_UM_Pembelian.update;

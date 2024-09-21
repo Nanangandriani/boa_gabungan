@@ -31,22 +31,22 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Caption = 'No. LPB'
   end
   object Label17: TLabel
-    Left = 725
+    Left = 712
     Top = 411
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label14: TLabel
-    Left = 653
+    Left = 640
     Top = 411
     Width = 60
     Height = 15
     Caption = 'Grand Total'
   end
   object Label13: TLabel
-    Left = 778
-    Top = 376
+    Left = 765
+    Top = 383
     Width = 10
     Height = 15
     Caption = '%'
@@ -80,15 +80,15 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Caption = 'No. Faktur'
   end
   object Label10: TLabel
-    Left = 725
-    Top = 376
+    Left = 712
+    Top = 383
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label9: TLabel
-    Left = 653
-    Top = 376
+    Left = 640
+    Top = 383
     Width = 21
     Height = 15
     Caption = 'PPn'
@@ -158,22 +158,14 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 0
     OnChange = edno_terimaChange
   end
-  object Edgrandtotal: TRzEdit
-    Left = 793
-    Top = 408
-    Width = 127
-    Height = 23
-    Text = '0'
-    Alignment = taRightJustify
-    TabOrder = 1
-  end
   object edppn: TRzEdit
-    Left = 735
-    Top = 373
+    Left = 722
+    Top = 380
     Width = 39
     Height = 23
     Text = '10'
-    TabOrder = 2
+    TabOrder = 1
+    OnChange = edppnChange
   end
   object EdNoFaktur: TRzComboBox
     Left = 655
@@ -181,7 +173,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Width = 265
     Height = 23
     CharCase = ecUpperCase
-    TabOrder = 3
+    TabOrder = 2
   end
   object DtFaktur: TRzDateTimeEdit
     Left = 655
@@ -192,12 +184,12 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     CharCase = ecUpperCase
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 4
+    TabOrder = 3
   end
   object DBGridEh3: TDBGridEh
     Left = 9
     Top = 140
-    Width = 920
+    Width = 881
     Height = 227
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -207,7 +199,9 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SumList.Active = True
-    TabOrder = 5
+    TabOrder = 4
+    OnCellClick = DBGridEh3CellClick
+    OnColEnter = DBGridEh3ColEnter
     Columns = <
       item
         CellButtons = <>
@@ -215,6 +209,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         EditButtons = <
           item
             Style = ebsEllipsisEh
+            OnClick = DBGridEh3Columns0EditButtons0Click
           end>
         FieldName = 'no_terima'
         Footers = <>
@@ -285,23 +280,15 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
-  object Edppnrp: TRzEdit
-    Left = 793
-    Top = 373
-    Width = 127
-    Height = 23
-    Text = '0'
-    Alignment = taRightJustify
-    TabOrder = 6
-  end
   object Panel1: TPanel
     Left = 0
     Top = 453
     Width = 937
     Height = 36
     Align = alBottom
-    TabOrder = 7
-    ExplicitTop = 496
+    TabOrder = 5
+    ExplicitTop = 444
+    ExplicitWidth = 931
     object BBatal: TRzBitBtn
       Left = 861
       Top = 1
@@ -362,8 +349,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 716
-      ExplicitHeight = 30
+      ExplicitLeft = 855
     end
     object BSimpan: TRzBitBtn
       Left = 786
@@ -425,14 +411,14 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 641
-      ExplicitHeight = 30
+      ExplicitLeft = 780
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 528
+      Left = 700
       Top = 4
       Caption = 'RzBitBtn1'
       TabOrder = 2
+      Visible = False
       OnClick = RzBitBtn1Click
     end
   end
@@ -445,7 +431,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     CharCase = ecUpperCase
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 8
+    TabOrder = 6
   end
   object DtReturn: TRzDateTimeEdit
     Left = 387
@@ -455,7 +441,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'dd/mm/yyyy'
     CharCase = ecUpperCase
-    TabOrder = 9
+    TabOrder = 7
     OnChange = DtReturnChange
   end
   object Ednm_supp: TRzButtonEdit
@@ -466,7 +452,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Text = ''
     CharCase = ecUpperCase
     Color = clWhite
-    TabOrder = 10
+    TabOrder = 8
     OnChange = Ednm_suppChange
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
@@ -481,29 +467,30 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     CharCase = ecUpperCase
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 11
+    TabOrder = 9
   end
   object Edurut: TEdit
     Left = 387
     Top = 82
     Width = 121
     Height = 23
-    TabOrder = 12
+    TabOrder = 10
+    Visible = False
   end
-  object RzNumericEdit1: TRzNumericEdit
+  object Edvls: TRzNumericEdit
     Left = 655
     Top = 82
     Width = 120
     Height = 23
-    TabOrder = 13
+    TabOrder = 11
     DisplayFormat = ',0;(,0)'
   end
-  object RzNumericEdit2: TRzNumericEdit
+  object ednilai_vls: TRzNumericEdit
     Left = 781
     Top = 82
     Width = 139
     Height = 23
-    TabOrder = 14
+    TabOrder = 12
     DisplayFormat = ',0;(,0)'
   end
   object DtTh: TRzDateTimeEdit
@@ -514,7 +501,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'yyyy'
     CharCase = ecUpperCase
-    TabOrder = 15
+    TabOrder = 13
+    Visible = False
   end
   object DtBln: TRzDateTimeEdit
     Left = 165
@@ -524,7 +512,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'mm'
     CharCase = ecUpperCase
-    TabOrder = 16
+    TabOrder = 14
+    Visible = False
   end
   object DtHr: TRzDateTimeEdit
     Left = 102
@@ -534,18 +523,39 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'dd'
     CharCase = ecUpperCase
+    TabOrder = 15
+    Visible = False
+  end
+  object Edppnrp: TRzNumericEdit
+    Left = 780
+    Top = 380
+    Width = 141
+    Height = 23
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 16
+    DisplayFormat = ',0;(,0)'
+  end
+  object Edgrandtotal: TRzNumericEdit
+    Left = 780
+    Top = 408
+    Width = 141
+    Height = 23
+    Color = clInfoBk
+    ReadOnly = True
     TabOrder = 17
+    DisplayFormat = '#,##0.0000'
   end
   object DsDetail: TDataSource
     DataSet = MemDetail
-    Left = 112
-    Top = 288
+    Left = 128
+    Top = 376
   end
   object MemDetail: TMemTableEh
     Active = True
     Params = <>
-    Left = 176
-    Top = 288
+    Left = 192
+    Top = 379
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object no_terima: TMTStringDataFieldEh
@@ -620,8 +630,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object QFaktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_terima_material')
-    Left = 584
-    Top = 112
+      'select * from purchase.t_item_receive')
+    Left = 56
+    Top = 376
   end
 end

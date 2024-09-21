@@ -50,7 +50,8 @@ object FSupp_Pembelian: TFSupp_Pembelian
   object Qsupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'Select supplier_code, supplier_name from t_supplier')
+      'Select supplier_code, supplier_name from t_supplier'
+      'order by supplier_code ASC')
     Left = 208
     Top = 64
   end

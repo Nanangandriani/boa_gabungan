@@ -61,21 +61,59 @@ type
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure  refresh;
+    procedure clear;
   end;
 
-var
-  FListPerusahaan: TFListPerusahaan;
 
+function FListPerusahaan: TFListPerusahaan;
+{var
+  FListPerusahaan: TFListPerusahaan;
+  status:integer;}
 implementation
 
 {$R *.dfm}
 
 uses UNew_Perusahaan, UDataModule, UMainMenu;
+
+var
+  realFListPerusahaan: TFListPerusahaan;
+  status:integer;
+
+// implementasi function
+function FListPerusahaan: TFListPerusahaan;
+begin
+  if RealFListPerusahaan <> nil then
+     FListPerusahaan := RealFListPerusahaan
+  else
+    Application.CreateForm(TFListPerusahaan, Result);
+end;
+
+
+ procedure TFListPerusahaan.clear;
+ begin
+    with FNewPerusahaan do
+    begin
+      Ed_kode.Text:='';
+      Ed_nama.Text:='';
+      cb_jenis_usaha.Text:='';
+      Ed_alamat.Text:='';
+      Ed_telp.Text:='';
+      Ed_email.Text:='';
+      Ed_npwp.Text:='';
+      cb_status_pajak.Text:='';
+      cb_mata_uang.Text:='';
+      //Ed_kode.SetFocus;
+    end;
+
+ end;
 
 procedure TFListPerusahaan.refresh;
 begin
@@ -92,9 +130,12 @@ end;
 
 procedure TFListPerusahaan.ActBaruExecute(Sender: TObject);
 begin
-  FNewPerusahaan.Caption:='New Perusahaan';
-  FNewPerusahaan.Show;
-
+     status:=0;
+     FNewPerusahaan.Caption:='New Perusahaan';
+     FNewPerusahaan.Show;
+     Clear;
+     FNewPerusahaan.BSimpan.Visible:=True;
+     FNewPerusahaan.BEdit.Visible:=False;
 end;
 
 procedure TFListPerusahaan.ActDelExecute(Sender: TObject);
@@ -126,6 +167,7 @@ end;
 
 procedure TFListPerusahaan.ActUpdateExecute(Sender: TObject);
 begin
+    status:=1;
     FNewPerusahaan.Show;
     FNewPerusahaan.BSimpan.Visible:=False;
     FNewPerusahaan.BEdit.Visible:=True;
@@ -140,10 +182,26 @@ begin
       FNewPerusahaan.Ed_telp.Text:=Qperusahaan.FieldByName('telp').AsString;
       FNewPerusahaan.Ed_email.Text:=Qperusahaan.FieldByName('email').AsString;
       FNewPerusahaan.Ed_NPWP.Text:=Qperusahaan.FieldByName('npwp').AsString;
-      FNewPerusahaan.Cb_status_pajak.Text:=Qperusahaan.FieldByName('tax_status').AsString;
+      //FNewPerusahaan.Cb_status_pajak.Text:=Qperusahaan.FieldByName('tax_status').AsString;
+      FNewPerusahaan.Ed_status_tax.Text:=Qperusahaan.FieldByName('tax_status').AsString;
       FNewPerusahaan.Cb_mata_uang.Text:=Qperusahaan.FieldByName('currency').AsString;
 
     end;
+end;
+
+procedure TFListPerusahaan.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   Action:=cafree;
+end;
+
+procedure TFListPerusahaan.FormCreate(Sender: TObject);
+begin
+  realFListPerusahaan:=self;
+end;
+
+procedure TFListPerusahaan.FormDestroy(Sender: TObject);
+begin
+   realFListPerusahaan:=nil;
 end;
 
 procedure TFListPerusahaan.FormShow(Sender: TObject);
@@ -153,7 +211,8 @@ begin
     Qperusahaan.Open;
 end;
 
-initialization
-RegisterClass(TFListPerusahaan);
+// Contoh RegisterClass
+Initialization
+  RegisterClass(TFListPerusahaan);
 
 end.

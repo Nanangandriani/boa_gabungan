@@ -10,6 +10,9 @@ object FListPerusahaan: TFListPerusahaan
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object DBGridPerusahaan: TDBGridEh
@@ -132,7 +135,7 @@ object FListPerusahaan: TFListPerusahaan
     Top = 40
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New'
       OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
@@ -699,7 +702,9 @@ object FListPerusahaan: TFListPerusahaan
     SQL.Strings = (
       
         'select * from t_company where deleted_at is null Order by compan' +
-        'y_code')
+        'y_code'
+      ''
+      '')
     Left = 380
     Top = 56
   end
