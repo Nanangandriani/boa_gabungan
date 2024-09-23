@@ -37,7 +37,6 @@ uses
   UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
   UListSupplier in 'UListSupplier.pas' {FListSupplier},
   UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
-  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
   UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan},
   UPenomoran in 'UPenomoran.pas' {FPenomoran},
   UNew_Penomoran in 'UNew_Penomoran.pas' {FNew_Penomoran},
@@ -80,7 +79,6 @@ uses
   UNew_Kategori_Gudang in 'UNew_Kategori_Gudang.pas' {FNew_Kategori_Gudang},
   Udafcek_entry in 'Udafcek_entry.pas' {FDaf_EntryCek},
   Uimportnocek in 'Uimportnocek.pas' {FImportnocek},
-  UListItempo in 'UListItempo.pas' {Flistitempo},
   Ulist_materialstok in 'Ulist_materialstok.pas' {Flistmaterialstok},
   UReturnPembelian in 'UReturnPembelian.pas' {FReturnPembelian},
   UNew_ReturnPembelian in 'UNew_ReturnPembelian.pas' {FNew_ReturnPemb},
@@ -170,7 +168,9 @@ uses
   UDataPenagihanPiutang in 'UDataPenagihanPiutang.pas' {FDataPenagihanPiutang},
   URincianPot_Penjualan in 'URincianPot_Penjualan.pas' {FRincianPot_Penjualan},
   UMovingDPP in 'UMovingDPP.pas' {FMovingDPP},
-  UDaftarPenagihanPiutang in 'UDaftarPenagihanPiutang.pas' {FDaftarPenagihanPiutang};
+  UDaftarPenagihanPiutang in 'UDaftarPenagihanPiutang.pas' {FDaftarPenagihanPiutang},
+  UListItempo in 'UListItempo.pas' {Flistitempo},
+  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -257,7 +257,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Additional, FNew_Additional);
   Application.CreateForm(TFNew_Kategori_Gudang, FNew_Kategori_Gudang);
   Application.CreateForm(TFImportnocek, FImportnocek);
-  Application.CreateForm(TFlistitempo, Flistitempo);
   Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
@@ -282,7 +281,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
-  Application.CreateForm(TFListPerusahaan, FListPerusahaan);
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
   Application.CreateForm(TFDept, FDept);
   Application.CreateForm(TFJabatan, FJabatan);

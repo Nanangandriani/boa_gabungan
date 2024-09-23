@@ -21,10 +21,8 @@ object FMovingDPP: TFMovingDPP
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -24
-    ExplicitTop = -5
-    ExplicitWidth = 745
-    ExplicitHeight = 287
+    ExplicitWidth = 530
+    ExplicitHeight = 276
     object GroupBox1: TGroupBox
       Left = 14
       Top = 16
@@ -178,9 +176,8 @@ object FMovingDPP: TFMovingDPP
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = -742
-    ExplicitTop = 410
-    ExplicitWidth = 1370
+    ExplicitTop = 276
+    ExplicitWidth = 530
     object BBatal: TRzBitBtn
       Left = 460
       Top = 1
@@ -241,7 +238,7 @@ object FMovingDPP: TFMovingDPP
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1294
+      ExplicitLeft = 454
     end
     object BSave: TRzBitBtn
       Left = 385
@@ -302,7 +299,7 @@ object FMovingDPP: TFMovingDPP
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1219
+      ExplicitLeft = 379
     end
   end
 end

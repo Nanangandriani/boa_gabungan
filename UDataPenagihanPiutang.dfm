@@ -76,7 +76,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       OnButtonClick = edNamaKolektorButtonClick
     end
     object edKodeKolektor: TEdit
-      Left = 681
+      Left = 705
       Top = 74
       Width = 200
       Height = 23

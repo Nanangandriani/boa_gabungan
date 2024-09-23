@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFListReturPenjualan = class(TForm)
@@ -78,6 +78,39 @@ type
     QReturJualgrand_tot: TFloatField;
     QReturJualtrans_no: TStringField;
     QReturJualtrans_date: TDateField;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    QCetak: TUniQuery;
+    QCetakno_inv_tax: TStringField;
+    QCetakcode_cust: TStringField;
+    QCetakname_cust: TStringField;
+    QCetakaddress: TMemoField;
+    QCetakcode_item: TStringField;
+    QCetakname_item: TStringField;
+    QCetakamount: TFloatField;
+    QCetakcode_unit: TStringField;
+    QCetakname_unit: TStringField;
+    QCetakno_reference: TStringField;
+    QCetakunit_price: TFloatField;
+    QCetaksub_total: TFloatField;
+    QCetakppn_account: TStringField;
+    QCetakppn_percent: TFloatField;
+    QCetakppn_value: TFloatField;
+    QCetakpph_account: TStringField;
+    QCetakpph_name: TStringField;
+    QCetakpph_percent: TFloatField;
+    QCetakpph_value: TFloatField;
+    QCetaktot_piece_value: TFloatField;
+    QCetaktot_piece_percent: TFloatField;
+    QCetakgrand_tot: TFloatField;
+    QCetakpiece_first: TFloatField;
+    QCetakpiece_second: TFloatField;
+    QCetakpiece_third: TFloatField;
+    QCetakpiece_fourth: TFloatField;
+    QCetaktrans_no: TStringField;
+    QCetaktrans_date: TDateField;
+    frxDBDPenjualan: TfrxDBDataset;
+    Report: TfrxReport;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
