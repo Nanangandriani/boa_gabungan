@@ -1,10 +1,11 @@
 object FNewPerusahaan: TFNewPerusahaan
   Left = 0
   Top = 0
+  Anchors = []
   Caption = 'Form New Perusahaan'
   ClientHeight = 349
-  ClientWidth = 510
-  Color = clBtnFace
+  ClientWidth = 524
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -15,56 +16,56 @@ object FNewPerusahaan: TFNewPerusahaan
   TextHeight = 15
   object Label19: TLabel
     Left = 24
-    Top = 234
+    Top = 202
     Width = 63
     Height = 15
     Caption = 'Status Pajak'
   end
   object Label20: TLabel
     Left = 126
-    Top = 234
+    Top = 202
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label12: TLabel
     Left = 126
-    Top = 201
+    Top = 232
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label11: TLabel
     Left = 24
-    Top = 201
+    Top = 232
     Width = 34
     Height = 15
     Caption = 'NPWP'
   end
   object Label10: TLabel
     Left = 126
-    Top = 168
+    Top = 171
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label9: TLabel
     Left = 24
-    Top = 168
+    Top = 171
     Width = 29
     Height = 15
     Caption = 'Email'
   end
   object Label4: TLabel
     Left = 126
-    Top = 139
+    Top = 140
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label2: TLabel
     Left = 24
-    Top = 139
+    Top = 140
     Width = 21
     Height = 15
     Caption = 'Telp'
@@ -139,21 +140,26 @@ object FNewPerusahaan: TFNewPerusahaan
     Height = 15
     Caption = 'Mata Uang'
   end
+  object Label17: TLabel
+    Left = 305
+    Top = 232
+    Width = 28
+    Height = 15
+    Caption = 'NIK  :'
+  end
   object Panel1: TPanel
     Left = 0
-    Top = 308
-    Width = 510
-    Height = 41
+    Top = 312
+    Width = 524
+    Height = 37
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 245
-    ExplicitWidth = 435
     object BBatal: TRzBitBtn
-      Left = 438
+      Left = 448
       Top = 1
-      Height = 39
+      Height = 35
       Align = alRight
-      Caption = 'Batal'
+      Caption = 'Close'
       TabOrder = 2
       OnClick = BBatalClick
       Glyph.Data = {
@@ -208,16 +214,16 @@ object FNewPerusahaan: TFNewPerusahaan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 444
+      ExplicitLeft = 442
+      ExplicitHeight = 39
     end
     object BSimpan: TRzBitBtn
-      Left = 288
+      Left = 298
       Top = 1
-      Height = 39
+      Height = 35
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 0
-      Visible = False
       OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -271,16 +277,16 @@ object FNewPerusahaan: TFNewPerusahaan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 215
+      ExplicitLeft = 292
+      ExplicitHeight = 39
     end
     object BEdit: TRzBitBtn
-      Left = 363
+      Left = 373
       Top = 1
-      Height = 39
+      Height = 35
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 1
-      Visible = False
       OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -334,7 +340,8 @@ object FNewPerusahaan: TFNewPerusahaan
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 290
+      ExplicitLeft = 367
+      ExplicitHeight = 39
     end
   end
   object Ed_kode: TEdit
@@ -344,60 +351,144 @@ object FNewPerusahaan: TFNewPerusahaan
     Height = 23
     TabOrder = 1
   end
-  object Ed_nama: TEdit
-    Left = 135
-    Top = 44
-    Width = 228
-    Height = 23
-    TabOrder = 2
-  end
   object Ed_alamat: TEdit
     Left = 135
     Top = 106
     Width = 371
     Height = 23
-    TabOrder = 3
+    TabOrder = 2
   end
   object Ed_telp: TEdit
     Left = 135
-    Top = 136
+    Top = 137
     Width = 121
     Height = 23
-    TabOrder = 4
+    TabOrder = 3
   end
   object Ed_email: TEdit
     Left = 135
-    Top = 165
+    Top = 168
     Width = 228
     Height = 23
-    TabOrder = 5
+    TabOrder = 4
   end
   object Ed_NPWP: TEdit
     Left = 135
-    Top = 198
-    Width = 228
+    Top = 229
+    Width = 145
     Height = 23
-    TabOrder = 6
+    Enabled = False
+    TabOrder = 5
   end
   object cb_jenis_usaha: TRzComboBox
     Left = 135
     Top = 75
     Width = 145
     Height = 23
-    TabOrder = 7
+    TabOrder = 6
+    OnClick = cb_jenis_usahaClick
   end
   object Cb_Status_Pajak: TRzComboBox
     Left = 135
-    Top = 231
+    Top = 199
     Width = 145
     Height = 23
-    TabOrder = 8
+    TabOrder = 7
+    Text = 'PKP'
+    OnSelect = Cb_Status_PajakSelect
   end
   object Cb_Mata_uang: TRzComboBox
     Left = 135
     Top = 261
     Width = 145
     Height = 23
+    TabOrder = 8
+    Text = 'IDR'
+  end
+  object Ed_status_tax: TEdit
+    Left = 289
+    Top = 199
+    Width = 74
+    Height = 23
     TabOrder = 9
+    Visible = False
+    OnChange = Ed_status_taxChange
+  end
+  object Ed_nama: TEdit
+    Left = 135
+    Top = 44
+    Width = 228
+    Height = 23
+    TabOrder = 10
+  end
+  object EdNik: TEdit
+    Left = 338
+    Top = 229
+    Width = 133
+    Height = 23
+    Enabled = False
+    TabOrder = 11
+  end
+  object RzBitBtn1: TRzBitBtn
+    Left = 289
+    Top = 75
+    Width = 32
+    Height = 23
+    Caption = 'Insert Record'
+    TabOrder = 12
+    OnClick = RzBitBtn1Click
+    Glyph.Data = {
+      76060000424D7606000000000000360000002800000014000000140000000100
+      2000000000004006000000000000000000000000000000000000FFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFF7FCF5FFBCEBB7FF60D45DFF2EC730FF1AC3
+      1EFF1CC420FF2EC72FFF60D45DFFBCEBB7FFF7FCF5FFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFECBAFF2BC9
+      2CFF00C519FF0BDB55FF1AE985FF22F1A0FF22F1A1FF1AE885FF0BDB57FF00C6
+      19FF2BC82CFFC0EDBBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFF8CDE84FF08C315FF12E274FF2AF9BBFF2DFFCBFF2DFEC9FF2AFC
+      C4FF29FCC4FF2BFDC8FF2EFECBFF2AF9BCFF13E376FF08C315FF8DDF86FFFFFE
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF94E08DFF09C722FF1FEF9DFF2CFB
+      C1FF27F6B2FF25F4ABFF25F4ABFF1AF3A7FF15F2A3FF1BF2A5FF25F4AAFF27F5
+      B1FF2CFAC1FF20F19FFF0AC722FF93DF8CFFFFFFFFFFFFFFFFFFFFFFFFFFD3F0
+      CEFF17C622FF1FEE99FF27F6B2FF23F09FFF23F0A1FF22EFA0FF16EE9AFFA1F8
+      D7FFDCFCF0FF83F6CAFF18EE9AFF22EF9FFF23EF9DFF28F5B2FF1FEF9CFF17C6
+      22FFD2F0CDFFFFFFFFFFFDFEFCFF4BD44AFF0DE069FF26F3AFFF1FEA91FF20EB
+      94FF21EB94FF1FEB93FF11E98BFFD2FAE9FFFFFFFFFFA9F6D5FF11E98AFF1FEA
+      92FF21EA92FF1EE98DFF27F2ADFF0DDF6BFF49D348FFFDFEFCFFDFF4DBFF03C6
+      24FF24F0A6FF1FE990FF1DE686FF17E584FF17E584FF15E583FF07E47BFFCCF9
+      E4FFFFFFFFFF9FF4CBFF07E37AFF16E583FF17E683FF18E581FF1FE78BFF24F0
+      A3FF04C624FFE1F5DCFF99E396FF00D23EFF26EFA5FF19E179FF19E37BFF25E2
+      81FF22E380FF1EE37DFF12E176FFCEF8E4FFFFFFFFFF9FF2C7FF0DDF72FF1AE1
+      7AFF1BE17AFF1AE17AFF18DF75FF24ED9FFF00D23CFF9AE397FF64D564FF10E0
+      6CFF22E993FF13DB68FF11DD6DFFD7F9E7FFD1F8E3FFCEF8E1FFCAF7DFFFF5FD
+      F9FFFFFFFFFFEAFCF2FFC6F7DCFFC9F7DDFFD0F8E3FFA6F0C7FF0DDA62FF1DE6
+      8AFF0FDF6AFF6BD86CFF43CE46FF19E785FF1DE383FF0ED75CFF11D762FFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFE3FAEDFF07D554FF17DF78FF17E680FF52D357FF43CE48FF18E7
+      83FF1BE07AFF0FD24FFF11D657FF69E393FF68E393FF66E491FF61E28EFFE4FA
+      ECFFFFFFFFFFC1F4D2FF6CE495FF78E69DFF84E9A6FF6AE494FF0AD14AFF17DC
+      6EFF17E67EFF51D356FF66D766FF0FDF68FF1EE385FF0DCD42FF0FD04BFF00CC
+      3DFF00CC3CFF00CC38FF00C92FFFD0F5DCFFFFFFFFFF89E8A6FF00C82BFF00CC
+      39FF00CB38FF00CC3CFF0ECD41FF1BDE75FF0DDD63FF6CD86CFF9DE498FF00D1
+      38FF25ECA0FF0DCA3DFF0DCB3FFF0FCC41FF0FCC42FF0BCB3EFF01C936FFD8F7
+      E0FFFFFFFFFF92E9A9FF00C831FF0FCC3FFF0FCB40FF0ECA3DFF0BC937FF20E6
+      8CFF00D035FF9DE499FFE3F6DFFF04C41CFF25F0ABFF13D254FF08C52CFF0BC8
+      34FF0BC834FF07C732FF00C52AFFE5F9EBFFFFFFFFFF97E8A9FF00C324FF0BC7
+      33FF0BC733FF09C42AFF0FCE48FF23EEA0FF05C51EFFE3F6DFFFFEFEFDFF4FD2
+      47FF08DA5BFF29F1B0FF05BD17FF07C124FF08C32AFF06C327FF02C223FF7FDF
+      8FFFA2E8AEFF55D56BFF00C01EFF08C228FF06C123FF03BB12FF25EDA4FF08DA
+      5BFF4FD248FFFEFEFDFFFFFFFFFFD9F1D7FF17BF13FF1CEC93FF29F3B5FF02B9
+      0FFF02BA0EFF04BC15FF05BD17FF00B703FF00B500FF00B908FF04BC15FF02B9
+      0DFF01BA0CFF28F2AFFF1CEC94FF18C114FFD9F2D7FFFFFFFFFFFFFFFFFFFFFF
+      FFFF9EE79BFF06BF09FF1CEA90FF2AF5B7FF0FCD48FF04BB14FF00B505FF00B6
+      03FF00B603FF00B606FF04BC16FF11CF4DFF2BF5B9FF1CEC90FF06BF08FF9DE4
+      9AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF97E293FF08BD02FF0BD9
+      58FF26F2A8FF26EEA1FF1CDF7BFF17D865FF18D867FF1DE281FF27F0A7FF26F3
+      AAFF0ADA56FF08BD02FF97E394FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFC9F0C7FF34CA2DFF00BF06FF02D137FF10DD5EFF19E4
+      76FF18E476FF11DD60FF02D137FF00C006FF35C92EFFCAF1C8FFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFD
+      FAFFC6EEC3FF71D86CFF3CCB39FF1FC41FFF1FC41FFF3CCB39FF71D86CFFC6EF
+      C3FFFAFDFAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
   end
 end

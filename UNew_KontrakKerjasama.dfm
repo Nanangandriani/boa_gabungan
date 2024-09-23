@@ -1,6 +1,7 @@
 object FNewKontrak_ks: TFNewKontrak_ks
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'New Kontrak Kerjasama'
   ClientHeight = 601
   ClientWidth = 1024
@@ -167,6 +168,8 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Width = 145
       Height = 23
       CharCase = ecUpperCase
+      Color = clInfoBk
+      ReadOnly = True
       TabOrder = 0
     end
     object EdKd_supp: TEdit
@@ -178,6 +181,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 1
+      OnChange = EdKd_suppChange
     end
     object Edtempo: TEdit
       Left = 189
@@ -187,6 +191,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       CharCase = ecUpperCase
       NumbersOnly = True
       TabOrder = 2
+      OnKeyPress = EdtempoKeyPress
     end
     object DtKontrak: TRzDateTimeEdit
       Left = 189
@@ -215,6 +220,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       CharCase = ecUpperCase
       TabOrder = 5
       Text = 'EDNO'
+      Visible = False
     end
     object DtBln: TRzDateTimeEdit
       Left = 423
@@ -241,10 +247,10 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Width = 76
       Height = 23
       TabOrder = 8
+      OnChange = EdCurrChange
       OnSelect = EdCurrSelect
       Items.Strings = (
-        'Rp'
-        'USD')
+        '')
     end
     object DtPengiriman: TRzDateTimeEdit
       Left = 477
@@ -282,9 +288,9 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Width = 145
       Height = 23
       TabOrder = 12
+      OnSelect = CbJenisSelect
       Items.Strings = (
-        'IMPORT'
-        'LOKAL')
+        '')
     end
     object CB_kirim: TComboBox
       Left = 189
@@ -339,7 +345,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
     object DtTahun: TRzDateTimeEdit
       Left = 487
       Top = 52
-      Width = 57
+      Width = 58
       Height = 23
       EditType = etDate
       Format = 'yyyy'
@@ -362,7 +368,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Batal'
+      Caption = 'Close'
       TabOrder = 0
       OnClick = BBatalClick
       Glyph.Data = {
@@ -424,7 +430,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 1
       OnClick = BSimpanClick
       Glyph.Data = {
@@ -486,7 +492,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 2
       Visible = False
       OnClick = BEditClick
@@ -551,6 +557,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
+      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -564,8 +571,9 @@ object FNewKontrak_ks: TFNewKontrak_ks
     DynProps = <>
     FooterRowCount = 1
     HorzScrollBar.ExtraPanel.Visible = True
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SumList.Active = True
     TabOrder = 2
     TitleParams.MultiTitle = True
@@ -791,7 +799,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         FieldName = 'pemb_ppn_us'
         Footers = <>
         Title.Caption = 'USD|PPN|Pembulatan'
-        Width = 64
+        Width = 100
       end
       item
         CellButtons = <>
@@ -835,7 +843,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         FieldName = 'pemb_dpp'
         Footers = <>
         Title.Caption = 'Rupiah|Pembulatan'
-        Width = 63
+        Width = 100
       end
       item
         CellButtons = <>
@@ -901,6 +909,15 @@ object FNewKontrak_ks: TFNewKontrak_ks
         Footers = <>
         Title.Caption = 'Rupiah|Grand Total'
         Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kd_material_supp'
+        Footers = <>
+        Title.Caption = 'Kode Barang Supp'
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -1081,6 +1098,11 @@ object FNewKontrak_ks: TFNewKontrak_ks
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object kd_material_supp: TMTStringDataFieldEh
+          FieldName = 'kd_material_supp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

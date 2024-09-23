@@ -12,7 +12,9 @@ type
   TFAkun_Perkiraan_TerimaMat = class(TForm)
     DBGridEh1: TDBGridEh;
     QAkun: TUniQuery;
+    DsAkun: TDataSource;
     procedure FormShow(Sender: TObject);
+    procedure DBGridEh1DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -21,14 +23,55 @@ type
 
 var
   FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat;
-
 implementation
 
 {$R *.dfm}
 
+uses UNew_Pembelian;
+
+procedure TFAkun_Perkiraan_TerimaMat.DBGridEh1DblClick(Sender: TObject);
+begin
+  { with FNew_Pembelian do
+   begin
+       MemterimaDet.Edit;
+       MemterimaDet['kd_akunpph']:=QAkun['code'];
+       MemterimaDet.Post;
+       kd_akpph:=QAkun['code'];
+   end;
+   Close;}
+
+    if statustr='pphpemb' then
+    begin
+      with FNew_Pembelian do
+      begin
+        MemterimaDet.Edit;
+        MemterimaDet['kd_akunpph']:=QAkun['code'];
+        MemterimaDet.Post;
+        kd_akpph:=QAkun['code'];
+      end;
+    end;
+
+    if statustr='beapemb' then
+    begin
+      with FNew_Pembelian do
+      begin
+        MemterimaDet.Edit;
+        MemterimaDet['kd_akunbea']:=QAkun['code'];
+        MemterimaDet.Post;
+        kd_akbea:=QAkun['code'];
+      end;
+    end;
+
+  Close;
+
+
+end;
+
 procedure TFAkun_Perkiraan_TerimaMat.FormShow(Sender: TObject);
 begin
   if QAkun.Active=false then QAkun.Active:=True;
+  QAkun.Close;
+  QAkun.Open;
 end;
 
 end.

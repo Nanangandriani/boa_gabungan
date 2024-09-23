@@ -11,6 +11,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -41,38 +42,23 @@ object FKontrakkerjasama: TFKontrakkerjasama
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_0_trans_year'
+        ColumnName = 'Column_12_trans_year'
       end
       item
-        ColumnName = 'Column_1_trans_month'
+        ColumnName = 'Column_13_trans_month'
       end>
     DataSource = DsKerjasama
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
+    RowDetailPanel.Height = 150
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     OnCellClick = DBGridKontrakCellClick
+    OnRowDetailPanelShow = DBGridKontrakRowDetailPanelShow
     Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_year'
-        Footers = <>
-        Title.Caption = 'Tahun'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_month'
-        Footers = <>
-        Title.Caption = 'Bulan'
-        Width = 49
-      end
       item
         CellButtons = <>
         DynProps = <>
@@ -181,17 +167,48 @@ object FKontrakkerjasama: TFKontrakkerjasama
         FieldName = 'remarks'
         Footers = <>
         Width = 166
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_year'
+        Footers = <>
+        Title.Caption = 'Tahun'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_month'
+        Footers = <>
+        Title.Caption = 'Bulan'
+        Visible = False
+        Width = 49
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_day'
+        Footers = <>
+        Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
         Width = 789
-        Height = 118
+        Height = 148
         Align = alClient
         DataSource = DsKerjasama_det
         DynProps = <>
+        FooterRowCount = 1
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+        SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
@@ -199,7 +216,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_stock_code'
+            FieldName = 'item_code'
             Footers = <>
             Title.Caption = 'Kode Barang'
             Width = 60
@@ -208,7 +225,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_name'
+            FieldName = 'item_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 126
@@ -283,15 +300,35 @@ object FKontrakkerjasama: TFKontrakkerjasama
             EditButtons = <>
             FieldName = 'price'
             Footers = <>
-            Title.Caption = 'Harga'
+            Title.Caption = 'Harga|Satuan'
             Width = 120
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'total_price'
+            Footers = <>
+            Title.Caption = 'Harga|Sub Total '
+            Width = 91
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pemb_dpp'
+            Footers = <>
+            Title.Caption = 'Harga|Pembulatan'
+            Width = 100
           end
           item
             CellButtons = <>
             DisplayFormat = '0.00#,##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'total_price'
+            FieldName = 'subtotal_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Sub Total Harga'
             Width = 100
@@ -311,9 +348,20 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'PPN|Nominal'
             Width = 84
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pemb_ppn'
+            Footers = <>
+            Title.Caption = 'PPN|Pembulatan'
+            Width = 100
           end
           item
             CellButtons = <>
@@ -321,6 +369,8 @@ object FKontrakkerjasama: TFKontrakkerjasama
             DynProps = <>
             EditButtons = <>
             FieldName = 'grandtotal'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Grand Total Harga'
             Width = 123
@@ -344,6 +394,14 @@ object FKontrakkerjasama: TFKontrakkerjasama
             Footers = <>
             Title.Caption = 'Sisa Kuantum'
             Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'contract_no'
+            Footers = <>
+            Visible = False
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -5360,40 +5418,50 @@ object FKontrakkerjasama: TFKontrakkerjasama
   object QKerjasama_det: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT'#9'a.contract_no, '
-      #9'a.material_stock_code, '
+      'SELECT'#9'a.contract_no,'
+      '        c.item_code, '
+      #9'a.item_stock_code, '
       #9'a.qty, '
       #9'a.price, '
       #9'a.unit, '
       #9'a.total_price, '
       #9'a.remaining_qty, '
-      #9'c.material_name, '
+      #9'c.item_name, '
       #9'(A.remaining_qty/A.qty) AS total, '
-      #9'c.category, '
+      #9'd.category, '
       #9'a.totalpo, '
-      #9'a.ppn, '
-      #9'a.ppn_rp, '
-      #9'a."specification",a.subtotal_rp,a.grandtotal'
+      #9'a.ppn,'
+      #9'a.pph,'
+      #9'a.pph_rp,'
+      #9'a.pemb_ppn, '
+      #9'a.ppn_rp,'
+      #9'a.pemb_dpp,'
+      #9'a."specification",a.subtotal_rp,a.grandtotal,a.price2'
       'FROM'#9'purchase.t_coop_contract_det AS "a"'
       
-        #9'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_c' +
-        'ode = b.material_stock_code'
-      
-        #9'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.ma' +
-        'terial_code and b.material_no=c.material_no'
-      'GROUP BY a.contract_no, '
-      #9'a.material_stock_code, '
+        #9'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b' +
+        '.item_stock_code'
+      #9'INNER JOIN t_item AS "c" ON b.item_code = c.item_code '
+      #9'and b.item_code=c.item_code'
+      #9'INNER JOIN t_item_category d on d.category_id = c.category_id'
+      'GROUP BY a.contract_no,'
+      '        c.item_code,  '
+      #9'a.item_stock_code, '
       #9'a.qty, '
       #9'a.price, '
       #9'a.unit, '
       #9'a.total_price, '
       #9'a.remaining_qty, '
-      #9'c.material_name, '
-      #9'c.category, '
+      #9'c.item_name, '
+      #9'd.category, '
       #9'a.totalpo, '
-      #9'a.ppn, '
-      #9'a.ppn_rp, '
-      #9'a."specification",a.subtotal_rp,a.grandtotal')
+      #9'a.ppn,'
+      #9'a.pph,'
+      #9'a.pph_rp,'
+      #9'a.pemb_ppn,  '
+      #9'a.ppn_rp,'
+      #9'a.pemb_dpp, '
+      #9'a."specification",a.subtotal_rp,a.grandtotal,a.price2')
     MasterSource = DsKerjasama
     MasterFields = 'contract_no'
     DetailFields = 'contract_no'
@@ -5401,8 +5469,9 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Top = 40
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftString
         Name = 'contract_no'
+        ParamType = ptInput
         Value = nil
       end>
   end
@@ -5432,7 +5501,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New'
       OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction

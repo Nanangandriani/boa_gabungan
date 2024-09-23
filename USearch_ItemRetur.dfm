@@ -12,6 +12,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnShow = FormShow
   TextHeight = 15
   object DBGridEh1: TDBGridEh
     Left = 0
@@ -30,7 +31,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_terima'
+        FieldName = 'receive_no'
         Footers = <>
         Title.Caption = 'No. LPB'
         Width = 102
@@ -39,7 +40,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nofaktur'
+        FieldName = 'faktur_no'
         Footers = <>
         Title.Caption = 'No. Faktur'
         Width = 100
@@ -48,7 +49,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_faktur'
+        FieldName = 'faktur_date'
         Footers = <>
         Title.Caption = 'Tanggal Faktur'
         Width = 81
@@ -57,7 +58,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nopo'
+        FieldName = 'po_no'
         Footers = <>
         Width = 113
       end
@@ -65,7 +66,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_stok'
+        FieldName = 'stock_code'
         Footers = <>
         Title.Caption = 'Kode Stok'
         Width = 150
@@ -75,14 +76,14 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'harga'
+        FieldName = 'price'
         Footers = <>
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_material_stok'
+        FieldName = 'item_stock_code'
         Footers = <>
         Visible = False
         Width = 87
@@ -91,7 +92,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'item_name'
         Footers = <>
         Visible = False
       end>
@@ -120,6 +121,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
       
         'inner join warehouse.t_item_stock d on a.item_stock_code=d.item_' +
         'stock_code')
+    Active = True
     Left = 376
     Top = 96
   end

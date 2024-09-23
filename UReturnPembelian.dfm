@@ -10,6 +10,7 @@ object FReturnPembelian: TFReturnPembelian
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -190,7 +191,7 @@ object FReturnPembelian: TFReturnPembelian
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_name'
+            FieldName = 'item_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 150
@@ -675,9 +676,8 @@ object FReturnPembelian: TFReturnPembelian
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update  '
+      Action = ActUpdate
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -714,9 +714,8 @@ object FReturnPembelian: TFReturnPembelian
         82}
     end
     object dxbarRefresh: TdxBarButton
-      Caption = 'Refresh  '
+      Action = ActRo
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -747,7 +746,6 @@ object FReturnPembelian: TFReturnPembelian
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxbarRefreshClick
     end
     object dxBarDelete: TdxBarButton
       Caption = 'Delete  '
@@ -906,6 +904,7 @@ object FReturnPembelian: TFReturnPembelian
         CB53228C564703F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3
         FD77EC2BF95211609209DC78B818F9E4F10F4824A6D94EC853CD000000004945
         4E44AE426082}
+      OnClick = dxBarLargeButton1Click
     end
   end
   object ActMenu: TActionManager
@@ -918,9 +917,11 @@ object FReturnPembelian: TFReturnPembelian
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRo: TAction
       Caption = 'Refresh  '
+      OnExecute = ActRoExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
@@ -947,14 +948,26 @@ object FReturnPembelian: TFReturnPembelian
     UserName = 'DBPerusahaan'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'kode_perusahaan=kode_perusahaan'
-      'nama_perusahaan=nama_perusahaan'
-      'alamat=alamat'
-      'no_telpon=no_telpon'
+      'company_code=company_code'
+      'company_name=company_name'
+      'address=address'
+      'telp=telp'
       'email=email'
-      'no_npwp=no_npwp'
-      'kab_kota=kab_kota'
-      'id=id')
+      'npwp=npwp'
+      'city=city'
+      'address2=address2'
+      'id=id'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'type_of_business=type_of_business'
+      'latitude=latitude'
+      'longitude=longitude'
+      'tax_status=tax_status'
+      'currency=currency')
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
@@ -964,7 +977,7 @@ object FReturnPembelian: TFReturnPembelian
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_data_perusahaan')
+      'select * from t_company where deleted_at is Null')
     Left = 733
     Top = 80
   end
@@ -977,7 +990,7 @@ object FReturnPembelian: TFReturnPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44112.640537094900000000
-    ReportOptions.LastChange = 44285.641278113400000000
+    ReportOptions.LastChange = 45426.364998518500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -991,12 +1004,12 @@ object FReturnPembelian: TFReturnPembelian
         DataSetName = 'DBPerusahaan'
       end
       item
-        DataSet = DbrptDet
-        DataSetName = 'ReportDet'
-      end
-      item
         DataSet = frxDBReturnPemb
         DataSetName = 'frxDBDo'
+      end
+      item
+        DataSet = DbrptDet
+        DataSetName = 'ReportDet'
       end>
     Variables = <>
     Style = <>
@@ -1153,7 +1166,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Tegal, [frxDBDo."tgl_return"]  ')
+            'Tegal, [frxDBDo."return_date"]  ')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1272,7 +1285,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '   [frxDBDo."totalharga"]  ')
+            '   [frxDBDo."total_price"]  ')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1292,7 +1305,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<DbrptDet."total_harga">,DetailData1)]')
+            '[SUM(<DbrptDet."total_price">,DetailData1)]')
           ParentFont = False
         end
       end
@@ -1680,12 +1693,12 @@ object FReturnPembelian: TFReturnPembelian
           Top = 58.375077270000000000
           Width = 335.821583320000000000
           Height = 18.897650000000000000
-          DataField = 'no_return'
+          DataField = 'return_no'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDo."no_return"]')
+            '[frxDBDo."return_no"]')
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
@@ -1693,12 +1706,12 @@ object FReturnPembelian: TFReturnPembelian
           Top = 85.041743940000000000
           Width = 335.727034120000000000
           Height = 18.897650000000000000
-          DataField = 'nofaktur'
+          DataField = 'faktur_no'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDo."nofaktur"]')
+            '[frxDBDo."faktur_no"]')
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
@@ -1706,12 +1719,12 @@ object FReturnPembelian: TFReturnPembelian
           Top = 111.708410610000000000
           Width = 335.727034120000000000
           Height = 18.897650000000000000
-          DataField = 'tgl_faktur'
+          DataField = 'faktur_date'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDo."tgl_faktur"]')
+            '[frxDBDo."faktur_date"]')
         end
         object MPT: TfrxMemoView
           AllowVectorExport = True
@@ -1726,7 +1739,7 @@ object FReturnPembelian: TFReturnPembelian
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[DBPerusahaan."nama_perusahaan"]')
+            '[DBPerusahaan."company_name"]')
           ParentFont = False
         end
         object MAlamatPt: TfrxMemoView
@@ -1737,7 +1750,7 @@ object FReturnPembelian: TFReturnPembelian
           Height = 18.897650000000000000
           Frame.Typ = []
           Memo.UTF8W = (
-            '[DBPerusahaan."alamat"]')
+            '[DBPerusahaan."address"]')
         end
         object MNPWPPt: TfrxMemoView
           AllowVectorExport = True
@@ -1747,7 +1760,7 @@ object FReturnPembelian: TFReturnPembelian
           Height = 18.897650000000000000
           Frame.Typ = []
           Memo.UTF8W = (
-            '[DBPerusahaan."no_npwp"]')
+            '[DBPerusahaan."npwp"]')
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
@@ -1755,7 +1768,7 @@ object FReturnPembelian: TFReturnPembelian
           Top = 244.708410600000000000
           Width = 336.393700790000000000
           Height = 18.897650000000000000
-          DataField = 'nm_supplier'
+          DataField = 'supplier_name'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Font.Charset = DEFAULT_CHARSET
@@ -1765,7 +1778,7 @@ object FReturnPembelian: TFReturnPembelian
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDo."nm_supplier"]')
+            '[frxDBDo."supplier_name"]')
           ParentFont = False
         end
         object Memo47: TfrxMemoView
@@ -1774,12 +1787,12 @@ object FReturnPembelian: TFReturnPembelian
           Top = 265.708410610000000000
           Width = 579.727034120000000000
           Height = 41.564316660000000000
-          DataField = 'alamat'
-          DataSet = frxDBReturnPemb
-          DataSetName = 'frxDBDo'
+          DataField = 'total_price'
+          DataSet = DbrptDet
+          DataSetName = 'ReportDet'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDo."alamat"]')
+            '[ReportDet."total_price"]')
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
@@ -1876,7 +1889,7 @@ object FReturnPembelian: TFReturnPembelian
           Left = 44.000000000000000000
           Width = 206.488250000000000000
           Height = 36.897650000000000000
-          DataField = 'nm_material'
+          DataField = 'item_name'
           DataSet = DbrptDet
           DataSetName = 'ReportDet'
           Font.Charset = DEFAULT_CHARSET
@@ -1886,7 +1899,7 @@ object FReturnPembelian: TFReturnPembelian
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[DbrptDet."nm_material"]')
+            '[ReportDet."item_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1906,7 +1919,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[DbrptDet."qty"]')
+            '[ReportDet."qty"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1915,7 +1928,7 @@ object FReturnPembelian: TFReturnPembelian
           Left = 401.333333330000000000
           Width = 161.821583330000000000
           Height = 36.897650000000000000
-          DataField = 'harga'
+          DataField = 'price'
           DataSet = DbrptDet
           DataSetName = 'ReportDet'
           DisplayFormat.FormatStr = '%2.2n'
@@ -1928,7 +1941,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[DbrptDet."harga"]')
+            '[ReportDet."price"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1938,6 +1951,7 @@ object FReturnPembelian: TFReturnPembelian
           Top = 0.666666660000000000
           Width = 165.154916660000000000
           Height = 36.897650000000000000
+          DataField = 'total_price'
           DataSet = DbrptDet
           DataSetName = 'ReportDet'
           DisplayFormat.FormatStr = '%2.2n'
@@ -1950,7 +1964,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[DbrptDet."total_harga"]')
+            '[ReportDet."total_price"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1985,8 +1999,8 @@ object FReturnPembelian: TFReturnPembelian
     DataSet = QRptReturnPemb
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 728
-    Top = 16
+    Left = 752
+    Top = 8
   end
   object DsRptReturnPemb: TDataSource
     DataSet = QRptReturnPemb
@@ -2009,9 +2023,7 @@ object FReturnPembelian: TFReturnPembelian
       #9'a.price '
       'from purchase.t_purchase_return A '
       'inner join t_supplier D on A.supplier_code=D.supplier_code'
-      
-        'inner join purchase.t_material_receive f on a.faktur_no=f.faktur' +
-        '_no'
+      'inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no'
       'Group by d.supplier_name, '
       #9'f.faktur_date, '
       #9'd.address, '
@@ -2032,7 +2044,7 @@ object FReturnPembelian: TFReturnPembelian
       'qty=qty'
       'price=price'
       'total_price=total_price'
-      'material_name=material_name'
+      'item_name=item_name'
       'return_no=return_no')
     DataSet = QRptDet
     BCDToCurrency = False
@@ -2044,11 +2056,11 @@ object FReturnPembelian: TFReturnPembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.qty,a.price,a.total_price,b.material_name,a.return_no f' +
-        'rom purchase.t_purchase_return_det a '
+        'select a.qty,a.price,a.total_price,b.item_name,a.return_no from ' +
+        'purchase.t_purchase_return_det a '
       
-        'inner join purchase.t_material_stock b on a.material_stock_code=' +
-        'b.material_stock_code')
+        'inner join warehouse.t_item_stock b on a.item_stock_code=b.item_' +
+        'stock_code')
     MasterSource = DsRptReturnPemb
     MasterFields = 'return_no'
     DetailFields = 'return_no'
@@ -2056,9 +2068,10 @@ object FReturnPembelian: TFReturnPembelian
     Top = 20
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftString
         Name = 'return_no'
-        Value = nil
+        ParamType = ptInput
+        Value = '0001/07/V/24/PR'
       end>
   end
   object DsDetail: TDataSource
@@ -2069,9 +2082,9 @@ object FReturnPembelian: TFReturnPembelian
   object QDetail: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT A.*,b.material_name from purchase.t_purchase_return_det a'
-      'inner join purchase.t_material_stock AS b '
-      'ON a.material_stock_code = b.material_stock_code'
+      'SELECT a.*,b.item_name from purchase.t_purchase_return_det a'
+      'inner join warehouse.t_item_stock AS b '
+      'ON a.item_stock_code = b.item_stock_code'
       'ORDER BY  id asc')
     MasterSource = DsReturnPembelian
     MasterFields = 'return_no'
@@ -2080,8 +2093,9 @@ object FReturnPembelian: TFReturnPembelian
     Top = 32
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftString
         Name = 'return_no'
+        ParamType = ptInput
         Value = nil
       end>
   end
@@ -2108,6 +2122,9 @@ object FReturnPembelian: TFReturnPembelian
       '        a.trans_month,'
       '        a.trans_year,'
       '        a.supplier_code,'
+      '        a.valas,'
+      '        a.valas_value,'
+      '        a.receive_no,'
       #9'd.supplier_name, '
       #9'a.return_no, '
       #9'a.return_date, '
@@ -2118,17 +2135,19 @@ object FReturnPembelian: TFReturnPembelian
       #9'purchase.t_purchase_return AS "a"'
       #9'INNER JOIN'
       #9't_supplier AS d'
-      #9'ON '
-      #9#9'a.supplier_code = d.supplier_code'
+      #9'ON a.supplier_code = d.supplier_code'
       'Group by '
       '        a.trans_day,'
       '        a.trans_month,'
       '        a.trans_year,'
-      #9'a.supplier_code, '
+      #9'a.supplier_code,'
+      '        a.valas,'
+      '        a.valas_value,'
+      '        a.receive_no, '
       #9'd.supplier_name, '
       #9'a.return_no, '
       #9'a.return_date, '
-      #9'a.faktur_no, a.price,a.total_price,a.ppn'
+      #9'a.faktur_no,a.price,a.total_price,a.ppn'
       'ORDER BY'
       #9'a.return_no DESC'
       '')

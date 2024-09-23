@@ -58,10 +58,10 @@ type
     DBGridPO: TDBGridEh;
     RzPanel1: TRzPanel;
     Label1: TLabel;
-    DateTimePicker1: TDateTimePicker;
+    DTP1: TDateTimePicker;
     Label2: TLabel;
-    DateTimePicker2: TDateTimePicker;
-    RzBitBtn1: TRzBitBtn;
+    DTP2: TDateTimePicker;
+    Cari: TRzBitBtn;
     RptPO: TfrxReport;
     Qrptdetailpo2: TUniQuery;
     Dbrpt: TfrxDBDataset;
@@ -75,9 +75,13 @@ type
     Mempo: TMemTableEh;
     QPo: TUniQuery;
     DBGridEh3: TDBGridEh;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -95,6 +99,360 @@ implementation
 
 uses UNew_PO, UDataModule;
 
+
+procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
+var
+  memo: TfrxMemoView;
+begin
+  memo := aReport.FindObject(aMemoName) as TfrxMemoView;
+  if memo <> nil then
+    memo.Text := aText;
+end;
+
+// Terbilang Indonesia
+function Terbilang(sValue: string):string;
+const
+Angka : array [1..20] of string =
+('', 'Satu', 'Dua', 'Tiga', 'Empat',
+'Lima', 'Enam', 'Tujuh', 'Delapan',
+'Sembilan', 'Sepuluh', 'Sebelas',
+'Duabelas', 'Tigabelas', 'Empatbelas',
+'Limabelas', 'Enambelas', 'Tujuhbelas',
+'Delapanbelas', 'Sembilanbelas');
+sPattern: string = '000000000000000';
+var
+S,kata : string;
+Satu, Dua, Tiga, Belas, Gabung: string;
+Sen, Sen1, Sen2: string;
+Hitung : integer;
+one, two, three: integer;
+begin
+One := 4;
+Two := 5;
+Three := 6;
+Hitung := 1;
+Kata := '';
+S := copy(sPattern, 1, length(sPattern) - length(trim(sValue))) + sValue;
+Sen1 := Copy(S, 14, 1);
+Sen2 := Copy(S, 15, 1);
+Sen := Sen1 + Sen2;
+while Hitung < 5 do
+begin
+Satu := Copy(S, One, 1);
+Dua := Copy(S, Two, 1);
+Tiga := Copy(S, Three, 1);
+Gabung := Satu + Dua + Tiga;
+
+if StrToInt(Satu) = 1 then
+Kata := Kata + 'Seratus '
+else
+if StrToInt(Satu) > 1 Then
+Kata := Kata + Angka[StrToInt(satu)+1] + ' Ratus ';
+
+if StrToInt(Dua) = 1 then
+begin
+Belas := Dua + Tiga;
+Kata := Kata + Angka[StrToInt(Belas)+1];
+end
+else
+if StrToInt(Dua) > 1 Then
+Kata := Kata + Angka[StrToInt(Dua)+1] + ' Puluh ' +
+Angka[StrToInt(Tiga)+1]
+else
+if (StrToInt(Dua) = 0) and (StrToInt(Tiga) > 0) Then
+begin
+if ((Hitung = 3) and (Gabung = '001')) or
+((Hitung = 3) and (Gabung = ' 1')) then
+Kata := Kata + 'Seribu '
+else
+Kata := Kata + Angka[StrToInt(Tiga)+1];
+end;
+if (hitung = 1) and (StrToInt(Gabung) > 0) then
+Kata := Kata + ' Milyar '
+else
+if (Hitung = 2) and (StrToInt(Gabung) > 0) then
+Kata := Kata + ' Juta '
+else
+if (Hitung = 3) and (StrToInt(Gabung) > 0) then
+begin
+if (Gabung = '001') or (Gabung = ' 1') then
+Kata := Kata + ''
+else
+Kata := Kata + ' Ribu ';
+end;
+Hitung := Hitung + 1;
+One := One + 3;
+Two := Two + 3;
+Three := Three + 3;
+end;
+if length(Kata) > 1 then Kata := Kata;
+Result := Kata;
+end;
+
+// Fungsi Untuk Convert Angka Jadi Huruf
+function ConvKeHuruf(inp: string): string;
+var
+a,b,c,Poskoma,PosTitik : integer;
+temp,angka,dpnKoma,BlkKoma : string;
+AdaKoma: boolean;
+begin
+  PosKoma:= pos(',',Inp);
+  PosTitik:= pos('.',Inp);
+    if (Poskoma<>0) or (posTitik<> 0) then
+        begin
+        adaKoma:= true;
+        if PosKoma= 0 then posKoma:= PosTitik;
+        end else
+        begin
+        adakoma:= False;
+        DpnKoma:= inp;
+        end;
+// Jika ada Koma
+if adakoma then
+   begin
+    dpnkoma:= copy(inp,1,posKoma-1);
+    blkKoma:= Copy(inp,posKoma+1,length(inp)-posKoma);
+    if trim(DpnKoma)='0' then
+       temp:= 'Nol'+ ' Koma ' + terbilang(blkKoma)
+        else
+          temp:= Terbilang(dpnKoma)+ ' Koma ' + Terbilang(blkKoma);
+// Jika Tidak ada Koma
+   end else begin
+   temp:=Terbilang(dpnKoma);
+   end;
+   Result:= temp;
+end;
+
+// Fucntion Untuk Bahasa Inggris
+const
+  Digits: array [1 .. 9] of string = (
+    'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
+
+  Teens: array [1 .. 9] of string = (
+    'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen');
+
+  TenTimes: array [1 .. 9] of string = (
+    'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety');
+
+function DoTriplet(TheNumber: Integer): string;
+var
+  Digit, Num: Integer;
+begin
+  Result := '';
+  Num := TheNumber mod 100;
+  if (Num > 10) and (Num < 20) then
+  begin
+    Result := Teens[Num - 10];
+    Num := TheNumber div 100;
+  end
+  else
+  begin
+    Num := TheNumber;
+    Digit := Num mod 10;
+    Num := Num div 10;
+    if Digit > 0 then Result := Digits[Digit];
+    Digit := Num mod 10;
+    Num := Num div 10;
+    if Digit > 0 then Result := TenTimes[Digit] + ' ' + Result;
+    Result := Trim(Result);
+  end;
+  Digit := Num mod 10;
+ // if (Result <> '') and (Digit > 0) then Result := '- ' + Result;
+  if Digit > 0 then Result := Digits[Digit] + ' hundred ' + Result;
+  Result := Trim(Result);
+end;
+
+function NumberInWords(TheNumber: Integer): string;
+var
+  Num, Triplet, Pass: Integer;
+begin
+  if TheNumber < 0 then Result := 'Minus ' + NumberInWords(-TheNumber)
+  else
+  begin
+    Result := '';
+    Num := TheNumber;
+    if Num > 999999999 then
+        raise Exception.Create('Can''t express more than 999,999,999 in words');
+    for Pass := 1 to 3 do
+    begin
+      Triplet := Num mod 1000;
+      Num := Num div 1000;
+      if Triplet > 0 then
+      begin
+        if (Pass > 1) and (Result <> '') then Result := ' ' + Result;
+        case Pass of
+          2: Result := ' thousand' + Result;
+          3: Result := ' million' + Result;
+        end;
+        Result := Trim(DoTriplet(Triplet) + Result);
+      end;
+    end;
+  end;
+end;
+
+procedure TFPO.ActPrintExecute(Sender: TObject);
+begin
+    if DBGridPO.Fields[15].AsString='LOKAL' then
+    begin
+      QRptPO.Close;
+      with QRptPO do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' SELECT	a.item_name,h.category,a.detail_id,a.po_no,a.item_stock_code,a.qty,a.price,a.unit,a.wh_code,d.trans_category,'+
+                  ' a.conv_currency,a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp, '+
+                  ' a.subtotal,a.status,a.grandtotal,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.po_date,'+
+                  ' d.delivery_date, E.supplier_name,e.address,d.valas,d.remarks,d.delivery2_date,d.po2_no,sumtotal, '+
+                  ' c.category_id '+
+                  ' FROM purchase.t_podetail AS "a" '+
+                  ' INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
+                  ' INNER JOIN t_item AS "c" ON b.item_code = c.item_code  '+
+                  ' INNER JOIN t_item_category h on c.category_id=h.category_id '+
+                  ' INNER JOIN purchase.t_po d on a.po_no=d.po_no '+
+                  ' INNER JOIN t_supplier e on d.supplier_code=e.supplier_code '+
+                  ' INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purchase.t_podetail GROUP BY po_no) f on d.po_no=f.po_no '+
+                  ' LEFT JOIN t_user g on d.approval=g.user_name'+
+                  ' WHERE a.po_no='+QuotedStr(Mempo['po_no'])+''+
+                  ' GROUP BY a.item_name,h.category,a.detail_id,a.po_no,a.item_stock_code,a.qty,a.price,a.unit, '+
+                  ' a.wh_code,d.type,a.conv_currency,a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph, '+
+                  ' a.pph_rp,a.subtotal,a.status,a.grandtotal,d.po_date,d.delivery_date, e.supplier_name,e.address,d.valas,'+
+                  ' d.remarks,d.delivery2_date,d.po2_no,sumtotal,c.category_id,g.user_name,d.trans_category '+
+                  ' Order By a.detail_id asc ';
+        ExecSQL;
+      end;
+      QRptPO.Open;
+      Qrptdetailpo2.Open;
+      if QRptPO.FieldByName('po_no').AsString=''  then
+      begin
+         ShowMessage('Maaf data po kosong');
+      end
+      else
+      if ((QRptPO['valas']='IDR') and (QRptPO['trans_category']='PRODUKSI') and (QRptPO['ppn']='0') ) then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PONoPPN.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        SetMemo(Rptpo,'MTerbilang',' '+ConvKeHuruf(Qrptdetailpo2['qtysum'])+' ');
+        SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' Rupiah ');
+        RptPO.ShowReport();
+      end;
+      if ((QRptPO['valas']='IDR') and (QRptPO['trans_category']='PRODUKSI') and (QRptPO['ppn']<>'0') ) then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PO1.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        SetMemo(Rptpo,'MTerbilang',' '+ConvKeHuruf(Qrptdetailpo2['qtysum'])+' ');
+        SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' Rupiah ');
+        RptPO.ShowReport();
+      end;
+      if (QRptPO['valas']='USD') and (QRptPO['trans_category']='PRODUKSI')and (QRptPO['ppn']<>'0') then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PO1.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        SetMemo(Rptpo,'MTerbilang',' '+ConvKeHuruf(Qrptdetailpo2['qtysum'])+' ');
+        SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' US Dolar  ');
+        RptPO.ShowReport();
+      end;
+      if (QRptPO['valas']='USD') and (QRptPO['trans_category']='PRODUKSI') and (QRptPO['ppn']='0') then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PONoPPN.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        SetMemo(Rptpo,'MTerbilang',' '+ConvKeHuruf(Qrptdetailpo2['qtysum'])+' ');
+        SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' US Dolar  ');
+        RptPO.ShowReport();
+      end;
+      if ((QRptPO['valas']='IDR') and (QRptPO['trans_category']<>'PRODUKSI')and (QRptPO['ppn']<>'0')) then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PO1.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        TfrxPictureView(RptPO.FindObject('Sumqty')).Visible:=False;
+        SetMemo(Rptpo,'MTerbilang','  ');
+        SetMemo(Rptpo,'MTerbilang2','  '+ConvKeHuruf(Qrptpo['sumtotal'])+' Rupiah ');
+        RptPO.ShowReport();
+      end;
+      if ((QRptPO['valas']='IDR') and (QRptPO['trans_category']<>'PRODUKSI') and (QRptPO['ppn']='0')) then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PONoPPN.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        TfrxPictureView(RptPO.FindObject('Sumqty')).Visible:=False;
+        SetMemo(Rptpo,'MTerbilang','  ');
+        SetMemo(Rptpo,'MTerbilang2','  '+ConvKeHuruf(Qrptpo['sumtotal'])+' Rupiah ');
+        RptPO.ShowReport();
+      end;
+      if (QRptPO['valas']='USD') and (QRptPO['trans_category']<>'PRODUKSI')and (QRptPO['ppn']<>'0') then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PO1.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        TfrxPictureView(RptPO.FindObject('Sumqty')).Visible:=False;
+        SetMemo(Rptpo,'MTerbilang',' ');
+        SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' US Dolar  ');
+        RptPO.ShowReport();
+      end;
+      if (QRptPO['valas']='USD') and (QRptPO['trans_category']<>'PRODUKSI') and (QRptPO['ppn']='0') then
+      begin
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_PONoPPN.Fr3');
+        TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+        TfrxPictureView(RptPO.FindObject('Sumqty')).Visible:=False;
+        SetMemo(Rptpo,'MTerbilang',' ');
+        SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' US Dolar ');
+        RptPO.ShowReport();
+      end;
+    end;
+    if DBGridPO.Fields[15].AsString='IMPORT' then
+    begin
+      QRptPO.Close;
+      with QRptPO do
+      begin
+          close;
+          sql.Clear;
+          sql.Text:=' SELECT	c.item_name,h.category,a.detail_id,a.po_no,a.item_stock_code,a.qty,a.price,a.unit,a.wh_code,i.wh_name, '+
+                    ' a.conv_currency,a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp, '+
+                    ' a.subtotal,a.status,a.grandtotal,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.po_date,'+
+                    ' d.delivery_date, e.supplier_name,e.address,d.valas,d.remarks,d.delivery2_date,d.po2_no,sumtotal, '+
+                    ' c.category_id,g.user_name,d.trans_category,d."type" '+
+                    ' FROM purchase.t_podetail AS "a" '+
+                    ' INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
+                    ' INNER JOIN t_item AS "c" ON b.item_code = c.item_code '+
+                    ' INNER JOIN purchase.t_po d on a.po_no=d.po_no '+
+                    ' INNER JOIN t_wh i on a.wh_code=i.wh_code '+
+                    ' INNER JOIN t_supplier e on d.supplier_code=e.supplier_code '+
+                    ' INNER JOIN t_item_category h on c.category_id=h.category_id '+
+                    ' INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purchase.t_podetail GROUP BY po_no) f on '+
+                    ' d.po_no=f.po_no INNER JOIN t_user g on d.approval=g.user_name '+
+                    ' WHERE a.po_no='+QuotedStr(Mempo['po_no'])+''+
+                    ' GROUP BY c.item_name,h.category,a.detail_id,a.po_no,a.item_stock_code,a.qty,a.price,a.unit,a.wh_code,i.wh_name, '+
+                    ' a.conv_currency,a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph, '+
+                    ' a.pph_rp,a.subtotal,a.status,a.grandtotal,d.po_date,d.delivery_date,e.supplier_name,e.address,d.valas,'+
+                    ' d.remarks,d.delivery2_date,d.po2_no,sumtotal,c.category_id,g.user_name,d.trans_category,d."type" '+
+                    ' ORDER by a.detail_id ASC ';
+          ExecSQL;
+      end;
+      QRptPO.Open;
+      Qrptdetailpo2.Open;
+      if QRptPO.FieldByName('po_no').AsString=''  then
+      begin
+        ShowMessage('Maaf data kosong');
+      end;
+      if QRptPO.FieldByName('nopo').AsString<>''  then
+      begin
+         if QRptPO['ppn']<>'0' then
+         begin
+           RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_po_import.Fr3');
+           TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+           SetMemo(Rptpo,'MTerbilang',' '+NumberInWords(Qrptdetailpo2['qtysum'])+' ');
+           SetMemo(Rptpo,'MTerbilang2',' '+NumberInWords(Qrptpo['sumtotal'])+' US Dolar ');
+           RptPO.ShowReport();
+         end;
+         if QRptPO['ppn']='0' then
+         begin
+           RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_po_import2.Fr3');
+           TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+           SetMemo(Rptpo,'MTerbilang',' '+NumberInWords(Qrptdetailpo2['qtysum'])+' ');
+           SetMemo(Rptpo,'MTerbilang2',' '+NumberInWords(Qrptpo['sumtotal'])+' US Dolar ');
+           RptPO.ShowReport();
+         end;
+      end;
+    end;
+end;
+
 procedure TFPO.ActRoExecute(Sender: TObject);
 begin
     DBGridPO.StartLoadingStatus();
@@ -111,6 +469,7 @@ end;
 
 procedure TFPO.ActUpdateExecute(Sender: TObject);
 begin
+    try
     with FNew_PO do
     begin
       Show;
@@ -118,60 +477,123 @@ begin
       Caption:='Update Purchase Order';
       BSimpan.Visible:=false;
       BEdit.Visible:=true;
-      // cb_gudang.Enabled:=False;
       Self.Clear;
+
+      if ((DBGridPO.Fields[12].AsString='APPROVE') and (DBGridPO.Fields[20].AsString = '1')) then
+      begin
+        Statustr2:=1;
+      end;
+      if (DBGridPO.Fields[12].AsString<>'APPROVE') then
+      begin
+        Statustr2:=0;
+      end;
 
       with Mempo do
       begin
-        FNew_PO.EdNopo.Text:=Mempo.FieldByName('nopo').AsString;
-        FNew_PO.EdNm_supp.Text:=Mempo.FieldByName('nm_supplier').AsString;
-        FNew_PO.EdKd_supp.Text:=Mempo.FieldByName('kd_supplier').AsString;
-        FNew_PO.EdStatus.Text:=Mempo.FieldByName('jenispo').AsString;
-        FNew_PO.EdNo.Text:=Mempo.FieldByName('no_urut').AsString;
-        FNew_PO.DtPO.Text:=Mempo.FieldByName('tgl_po').AsString;
-        FNew_PO.Edno_kontrak.Text:=Mempo.FieldByName('no_kontrak').AsString;
+        FNew_PO.EdNopo.Text:=Mempo.FieldByName('po_no').AsString;
+        FNew_PO.EdNm_supp.Text:=Mempo.FieldByName('supplier_name').AsString;
+        FNew_PO.EdKd_supp.Text:=Mempo.FieldByName('supplier_code').AsString;
+        FNew_PO.EdStatus.Text:=Mempo.FieldByName('po_type').AsString;
+        FNew_PO.EdNo.Text:=Mempo.FieldByName('order_no').AsString;
+        FNew_PO.DtPO.Text:=Mempo.FieldByName('po_date').AsString;
+        FNew_PO.Edno_kontrak.Text:=Mempo.FieldByName('contract_no').AsString;
         FNew_PO.EdPPh23.Text:=Mempo.FieldByName('pph23').AsString;
         FNew_PO.EdPPn.Text:=Mempo.FieldByName('ppn').AsString;
         FNew_PO.EdCurr.Text:=Mempo.FieldByName('valas').AsString;
-        FNew_PO.Ednilai_curr.Text:=Mempo.FieldByName('nilai_valas').AsString;
-        FNew_PO.EdKet.Text:=Mempo.FieldByName('keterangan').AsString;
-        FNew_PO.Edjenispo.Text:=Mempo.FieldByName('jenis').AsString;
-        FNew_PO.EdJenisAngkut.Text:=Mempo.FieldByName('jenisangkutan').AsString;
-       // FNew_PO.EdDivisi.Text:=Mempo.FieldByName('nm_divisi').AsString;
-        FNew_PO.Edjatuh_tempo.Text:=Mempo.FieldByName('jatuh_tempo').AsString;
+        FNew_PO.Ednilai_curr.Text:=Mempo.FieldByName('valas_value').AsString;
+        FNew_PO.EdKet.Text:=Mempo.FieldByName('remarks').AsString;
+        FNew_PO.Edjenispo.Text:=Mempo.FieldByName('type').AsString;
+        FNew_PO.EdJenisAngkut.Text:=Mempo.FieldByName('transportation_type').AsString;
+        FNew_PO.Edjatuh_tempo.Text:=Mempo.FieldByName('due_date').AsString;
         status:=Mempo.FieldByName('status').AsString;
-        FNew_PO.cb_gudang.Text:=Mempo.FieldByName('gudang').AsString;
-        FNew_PO.DtDelivery.Date:=Mempo['tgl_delivery'];
-        FNew_PO.DtDelivery2.Date:=Mempo['tgl_delivery2'];
+        FNew_PO.Ed_category.Text:=Mempo.FieldByName('trans_category').AsString;
+        FNew_PO.Ed_kd_wh.Text:=Mempo.FieldByName('wh_code').AsString;
+        Ed_kd_whChange(sender);
+        FNew_PO.DtDelivery.Date:=Mempo['delivery_date'];
+        FNew_PO.DtDelivery2.Date:=Mempo['delivery2_date'];
+        FNew_PO.Edsbu.Text:=Mempo['sbu_code'];
+        FNew_PO.NoTransUM.Text:=Mempo.FieldByName('um_no').AsString;
+        FNew_PO.EdUM.Text:=Mempo.FieldByName('um_value').AsString;
+        FNew_PO.Edkd_akun.Text:=Mempo.FieldByName('um_account_code').AsString;
+        CkUangmk.Checked:=Mempo.FieldByName('um_status').AsBoolean;
+        ckAs.Checked:=Mempo.FieldByName('as_status').AsBoolean;
+      end;
+      EdCurrChange(sender);
+
+      if EdCurr.Text<>'IDR' then
+      begin
+          Qdetailpo.First;
+          while not Qdetailpo.eof do
+          begin
+            with Qdetailpo do
+            begin
+              FNew_PO.MemItempo.Insert;
+              FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('item_stock_code').AsString;
+              FNew_PO.MemItempo['kd_material']:=Qdetailpo.FieldByName('item_code').AsString;
+              FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('item_name').AsString;
+              FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
+              FNew_PO.MemItempo['harga']:=Qdetailpo.FieldByName('price').AsString;
+              FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('unit').AsString;
+              FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('wh_code').AsString;
+              FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('total_payment').AsString;
+              FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('remaining_payment').AsString;
+              FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('remaining_qty').AsString;
+              FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qty_sent').AsString;
+              FNew_PO.MemItempo['subtotal']:=Qdetailpo.FieldByName('subtotal').Value-Qdetailpo.FieldByName('pemb_dpp').value;
+              FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').AsString;
+              FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
+              FNew_PO.MemItempo['ppn_us']:=Qdetailpo.FieldByName('ppn_rp').AsString;
+              FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').Value;
+              FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
+              FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
+              //FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').AsString;
+              FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
+              FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+              FNew_PO.MemItempo.Post;
+              Qdetailpo.Next;
+            end;
+          end;
       end;
 
-      Qdetailpo.First;
-      while not Qdetailpo.eof do
+      if EdCurr.Text='IDR' then
       begin
-        with Qdetailpo do
+        Qdetailpo.First;
+        while not Qdetailpo.eof do
         begin
-          FNew_PO.MemItempo.Insert;
-          FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('kd_materialstok').AsString;
-          FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('nm_material').AsString;
-          FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
-          FNew_PO.MemItempo['harga']:=Qdetailpo.FieldByName('harga').AsString;
-          FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('satuan').AsString;
-          FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('gudang').AsString;
-          FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('totalbayar').AsString;
-          FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('sisabayar').AsString;
-          FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('sisaqty').AsString;
-          FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qtyterkirim').AsString;
-          FNew_PO.MemItempo['subtotal']:=Qdetailpo.FieldByName('subtotal').AsString;
-          FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
-          FNew_PO.MemItempo['ppn_rp']:=Qdetailpo.FieldByName('ppn_rp').AsString;
-          FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
-          FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
-          FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').AsString;
-          FNew_PO.MemItempo.Post;
-          Qdetailpo.Next;
+            with Qdetailpo do
+            begin
+              FNew_PO.MemItempo.Insert;
+              FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('item_stock_code').AsString;
+              FNew_PO.MemItempo['kd_material']:=Qdetailpo.FieldByName('item_code').AsString;
+              FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('item_name').AsString;
+              FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
+              FNew_PO.MemItempo['harga_rp']:=Qdetailpo.FieldByName('price').AsString;
+              FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('unit').AsString;
+              FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('wh_code').AsString;
+              FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('total_payment').AsString;
+
+              FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('remaining_payment').AsString;
+
+              FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('remaining_qty').AsString;
+              FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qty_sent').AsString;
+              FNew_PO.MemItempo['subtotal_rp']:=Qdetailpo.FieldByName('subtotal').Value-Qdetailpo.FieldByName('pemb_dpp').Value;
+              FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').AsString;
+
+              FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
+              FNew_PO.MemItempo['ppn_rp']:=Qdetailpo.FieldByName('ppn_rp').AsString;
+              FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
+              FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
+
+              //FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').AsString;
+              FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').Value;
+              FNew_PO.MemItempo['pemb_ppn']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+
+              FNew_PO.MemItempo.Post;
+              Qdetailpo.Next;
+            end;
         end;
-      //FNew_PO.Edno_kontrakSelect(sender);
       end;
+
       if FNew_PO.EdStatus.Text='Kontrak Kerjasama' then
       begin
         FNew_PO.Edno_kontrak.ReadOnly:=false;
@@ -180,6 +602,7 @@ begin
         FNew_PO.Edno_kontrak.ReadOnly:=True;
         FNew_PO.Totalpo;
     end;
+
     with FNew_PO do
     begin
       if Edno_kontrak.Text<>'0' then
@@ -191,12 +614,14 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Select * from t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text)+''+
-                      ' and material_stock_code='+QuotedStr(MemItempo['material_stock']);
+            sql.Text:=' select * from purchase.t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text)+''+
+                      ' and item_stock_code='+QuotedStr(MemItempo['kd_material_stok']);
             Execute;
           end;
           MemItempo.Edit;
-          MemItempo['qtykontrak']:=Dm.Qtemp['sisaqty'];
+          if dm.QTemp['remaining_qty']=Null then
+          MemItempo['qtykontrak']:=0
+          else MemItempo['qtykontrak']:=Dm.Qtemp['remaining_qty'];
           MemItempo.Post;
           MemItempo.Next;
         end;
@@ -210,6 +635,9 @@ begin
           MemItempo.Post;
           MemItempo.Next;
       end;
+    end;
+    finally
+
     end;
 end;
 
@@ -236,6 +664,13 @@ begin
   end;
 end;
 
+procedure TFPO.FormShow(Sender: TObject);
+begin
+   ActRoExecute(sender);
+   DTP1.Date:=Now;
+   DTP2.Date:=Now;
+end;
+
 procedure TFPO.load;
 begin
     FNew_PO.EdNm_supp.Clear;
@@ -251,6 +686,7 @@ begin
       // FNew_PO.EdNm_supp.Items.Add(Dm.Qtemp.FieldByName('nm_supplier').AsString);
        Dm.Qtemp.Next;
     end;
+
     FNew_PO.cb_gudang.Clear;
     with Dm.Qtemp do
     begin
@@ -261,8 +697,22 @@ begin
     Dm.Qtemp.First;
     while not dm.Qtemp.Eof do
     begin
-    FNew_PO.cb_gudang.Items.Add(Dm.Qtemp.FieldByName('wh_name').AsString);
-    Dm.Qtemp.Next;
+      FNew_PO.cb_gudang.Items.Add(Dm.Qtemp.FieldByName('wh_name').AsString);
+      Dm.Qtemp.Next;
+    end;
+
+    FNew_PO.edsbu.Clear;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Text:='select sbu_code from t_sbu order by sbu_code Asc';
+      ExecSQL;
+    end;
+    Dm.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+      FNew_PO.edsbu.Items.Add(Dm.Qtemp.FieldByName('sbu_code').AsString);
+      Dm.Qtemp.Next;
     end;
 end;
 
@@ -272,15 +722,21 @@ begin
     begin
       Show;
       Self.Clear;
+      CkUangmk.Checked:=false;
+      ckAs.Checked:=false;
       BSimpan.visible:=true;
       BEdit.Visible:=false;
       Caption:='New Purchase Order';
       StatusTr:=0;
+      load_currency;
+      load_ref_po;
 
     end;
 end;
 
-initialization
-RegisterClass(TFPO);
+
+// Contoh RegisterClass
+Initialization
+  RegisterClass(TFPO);
 
 end.

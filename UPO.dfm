@@ -2,19 +2,20 @@ object FPO: TFPO
   Left = 0
   Top = 0
   Caption = 'Form Purchase Order'
-  ClientHeight = 433
-  ClientWidth = 826
+  ClientHeight = 489
+  ClientWidth = 863
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 826
+    Width = 863
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -27,6 +28,9 @@ object FPO: TFPO
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
@@ -34,23 +38,25 @@ object FPO: TFPO
   object DBGridPO: TDBGridEh
     Left = 0
     Top = 169
-    Width = 826
-    Height = 264
+    Width = 863
+    Height = 320
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_0_trans_year'
+        ColumnName = 'Column_16_trans_year'
       end
       item
-        ColumnName = 'Column_1_trans_month'
+        ColumnName = 'Column_17_trans_month'
       end>
     DataSource = DsPo
     DrawMemoText = True
     DynProps = <>
+    FooterRowCount = 1
     IndicatorTitle.TitleButton = True
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
+    RowDetailPanel.Height = 160
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     SearchPanel.FilterOnTyping = True
@@ -59,22 +65,6 @@ object FPO: TFPO
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_year'
-        Footers = <>
-        Title.Caption = 'Tahun'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_month'
-        Footers = <>
-        Title.Caption = 'Bulan'
-      end
       item
         CellButtons = <>
         DynProps = <>
@@ -88,7 +78,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_divisi'
+        FieldName = 'division_code'
         Footers = <>
         Title.Caption = 'Divisi'
         Visible = False
@@ -107,7 +97,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'warehouse'
+        FieldName = 'wh_name'
         Footers = <>
         Title.Caption = 'Gudang'
         Width = 150
@@ -192,7 +182,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'status_app'
+        FieldName = 'approval_status'
         Footers = <>
         Title.Caption = 'Status Approval'
         Width = 100
@@ -219,22 +209,67 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jenis'
+        FieldName = 'type'
+        Footers = <>
+        Title.Caption = 'Jenis'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_year'
+        Footers = <>
+        Title.Caption = 'Tahun'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_month'
+        Footers = <>
+        Title.Caption = 'Bulan'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_day'
+        Footers = <>
+        Title.Caption = 'Hari'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_code'
         Footers = <>
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'correction_status'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 789
-        Height = 118
+        Width = 826
+        Height = 158
         Align = alClient
         DataSource = DsDetailPo
         DynProps = <>
         FooterRowCount = 1
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
@@ -243,7 +278,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_stock_code'
+            FieldName = 'item_code'
             Footers = <>
             Title.Caption = 'Kode Barang'
             Width = 84
@@ -252,7 +287,7 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'material_name'
+            FieldName = 'item_name'
             Footers = <>
             Title.Caption = 'Nama Barang'
             Width = 135
@@ -324,6 +359,8 @@ object FPO: TFPO
             DynProps = <>
             EditButtons = <>
             FieldName = 'subtotal'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Sub Total'
             Width = 100
@@ -343,6 +380,8 @@ object FPO: TFPO
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'PPN|Nominal'
             Width = 80
@@ -437,10 +476,27 @@ object FPO: TFPO
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'warehouse'
+            FieldName = 'wh_name'
             Footers = <>
             Title.Caption = 'Gudang'
-            Width = 90
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_stock_code'
+            Footers = <>
+            Title.Caption = 'Kode Barang Supp'
+            Width = 0
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pemb_ppn'
+            Footers = <>
+            Width = 0
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -450,12 +506,12 @@ object FPO: TFPO
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 826
+    Width = 863
     Height = 42
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 822
+    ExplicitWidth = 857
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -470,7 +526,7 @@ object FPO: TFPO
       Height = 15
       Caption = 'S/D'
     end
-    object DateTimePicker1: TDateTimePicker
+    object DTP1: TDateTimePicker
       Left = 75
       Top = 10
       Width = 81
@@ -479,7 +535,7 @@ object FPO: TFPO
       Time = 0.399360370371141500
       TabOrder = 0
     end
-    object DateTimePicker2: TDateTimePicker
+    object DTP2: TDateTimePicker
       Left = 194
       Top = 10
       Width = 81
@@ -488,7 +544,7 @@ object FPO: TFPO
       Time = 0.399360370371141500
       TabOrder = 1
     end
-    object RzBitBtn1: TRzBitBtn
+    object Cari: TRzBitBtn
       Left = 291
       Top = 9
       Width = 70
@@ -549,11 +605,11 @@ object FPO: TFPO
     end
   end
   object ActMenu: TActionManager
-    Left = 752
-    Top = 40
+    Left = 784
+    Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New'
       OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
@@ -569,6 +625,7 @@ object FPO: TFPO
     end
     object ActPrint: TAction
       Caption = 'Print  '
+      OnExecute = ActPrintExecute
     end
     object ActApp: TAction
       Caption = 'Approve  '
@@ -599,8 +656,8 @@ object FPO: TFPO
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 688
-    Top = 48
+    Left = 712
+    Top = 32
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -628,7 +685,27 @@ object FPO: TFPO
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Report'
+      CaptionButtons = <>
+      DockedLeft = 125
+      DockedTop = 0
+      FloatLeft = 887
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -1116,6 +1193,63 @@ object FPO: TFPO
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Action = ActPrint
+      Category = 0
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+    end
   end
   object RptPO: TfrxReport
     Version = '2022.2.7'
@@ -1126,13 +1260,13 @@ object FPO: TFPO
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44110.458141956000000000
-    ReportOptions.LastChange = 44399.570499629630000000
+    ReportOptions.LastChange = 44399.570499629600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 614
+    Left = 630
     Top = 82
     Datasets = <
       item
@@ -40727,8 +40861,8 @@ object FPO: TFPO
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
-        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
+        'SELECT'#9'c.item_name,d.category,a.detail_id,a.po_no,a.item_stock_c' +
+        'ode,a.qty,a.price,a.unit,a.wh_code,a.conv_currency, '
       
         #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
         'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
@@ -40736,54 +40870,50 @@ object FPO: TFPO
       ''
       'FROM purchase.t_podetail AS "a" '
       
-        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
-        'de = b.material_stock_code'
+        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
+        'item_stock_code'
+      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code '
+      'INNER JOIN t_item_category d on c.category_id=d.category_id'
       
-        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
-        'erial_code and b.material_no=c.material_no'
-      
-        '-- INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purc' +
-        'hase.t_podetail GROUP BY po_no) f on f.po_no=a.po_no'
-      
-        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
-        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,'
+        'GROUP BY c.item_name,d.category,a.detail_id,a.po_no,a.item_stock' +
+        '_code,a.qty,a.price,a.unit,a.wh_code,a.conv_currency,'
       
         '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
         'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
         'dtotal'
       ''
-      '-- where A.nopo='#39'PO/002/XI/20/HKJ'#39)
+      '')
     MasterSource = DsRptPO
-    MasterFields = 'nopo'
-    DetailFields = 'nopo'
+    MasterFields = 'po_no'
+    DetailFields = 'po_no'
     Left = 632
     Top = 32
     ParamData = <
       item
-        DataType = ftString
-        Name = 'nopo'
-        ParamType = ptInput
-        Value = 'PO/023/IV/21/PMA'
+        DataType = ftUnknown
+        Name = 'po_no'
+        Value = nil
       end>
   end
   object Dbrpt: TfrxDBDataset
     UserName = 'Dbrpt'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'nm_material=nm_material'
+      'item_name=item_name'
       'category=category'
-      'iddetail=iddetail'
-      'nopo=nopo'
-      'kd_materialstok=kd_materialstok'
+      'detail_id=detail_id'
+      'po_no=po_no'
+      'item_stock_code=item_stock_code'
       'qty=qty'
-      'harga=harga'
-      'satuan=satuan'
-      'gudang=gudang'
+      'price=price'
+      'unit=unit'
+      'wh_code=wh_code'
+      'wh_name=wh_name'
       'conv_currency=conv_currency'
-      'qtyterkirim=qtyterkirim'
-      'totalbayar=totalbayar'
-      'sisabayar=sisabayar'
-      'sisaqty=sisaqty'
+      'qty_sent=qty_sent'
+      'total_payment=total_payment'
+      'remaining_payment=remaining_payment'
+      'remaining_qty=remaining_qty'
       'ppn=ppn'
       'ppn_rp=PPn_Rp'
       'pph=pph'
@@ -40793,52 +40923,31 @@ object FPO: TFPO
       'grandtotal=Grandtotal'
       'qtysum=qtysum'
       'subtotalsum=subtotalsum'
-      'tgl_po=tgl_po'
-      'tgl_delivery=tgl_delivery'
-      'nm_supplier=nm_supplier'
-      'alamat=alamat'
+      'po_date=po_date'
+      'delivery_date=delivery_date'
+      'supplier_name=supplier_name'
+      'address=address'
       'valas=valas'
-      'keterangan=keterangan'
-      'tgl_delivery2=tgl_delivery2'
-      'nopo2=nopo2')
+      'remarks=remarks'
+      'delivery2_date=delivery2_date'
+      'po2_no=po2_no'
+      'sumtotal=sumtotal'
+      'category_id=category_id'
+      'user_name=user_name')
     DataSet = QRptPO
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 560
-    Top = 88
+    Left = 576
+    Top = 80
   end
   object DbRptDetailpo: TfrxDBDataset
     UserName = 'DbRptDetailpo'
     CloseDataSource = False
-    FieldAliases.Strings = (
-      'nm_material=nm_material'
-      'category=category'
-      'iddetail=iddetail'
-      'nopo=nopo'
-      'kd_materialstok=kd_materialstok'
-      'qty=qty'
-      'harga=harga'
-      'satuan=satuan'
-      'gudang=gudang'
-      'conv_currency=conv_currency'
-      'qtyterkirim=qtyterkirim'
-      'totalbayar=totalbayar'
-      'sisabayar=sisabayar'
-      'sisaqty=sisaqty'
-      'ppn=ppn'
-      'ppn_rp=ppn_rp'
-      'pph=pph'
-      'pph_rp=pph_rp'
-      'subtotal=subtotal'
-      'status=status'
-      'grandtotal=grandtotal'
-      'qtysum=qtysum'
-      'subtotalsum=subtotalsum')
     DataSet = Qrptdetailpo2
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 558
-    Top = 42
+    Left = 574
+    Top = 34
   end
   object DsRptPO: TDataSource
     DataSet = QRptPO
@@ -40848,47 +40957,54 @@ object FPO: TFPO
   object QRptPO: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ''
       
-        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
-        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
+        'SELECT'#9'c.item_name,g.category,a.detail_id,a.po_no,a.item_stock_c' +
+        'ode,a.qty,a.price,a.unit,a.wh_code,i.wh_name,a.conv_currency, '
       
         #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
         'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
       
         ',sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.po_date,d.' +
-        'delivery_date, E.supplier_name,e.address,d.valas,d.remarks'
-      ',d.delivery2_date,d.po2_no,sumtotal,c.type'
+        'delivery_date, e.supplier_name,e.address,d.valas,d.remarks'
+      ',d.delivery2_date,d.po2_no,sumtotal ,c.category_id ,j.user_name'
+      '--,c."type"'
       'FROM purchase.t_podetail AS "a" '
       
-        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
-        'de = b.material_stock_code'
+        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
+        'item_stock_code'
       
-        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
-        'erial_code and b.material_no=c.material_no'
-      'Inner join purchase.t_po D on a.po_no=d.po_no'
-      'INNER JOIN t_supplier E on D.supplier_code=E.supplier_code'
+        'INNER JOIN t_item AS "c" ON b.item_code = c.item_code --and b.it' +
+        'em_no=c.item_no'
+      'Inner join purchase.t_po d on a.po_no=d.po_no'
+      'INNER JOIN t_wh i on a.wh_code=i.wh_code '
+      'INNER JOIN t_supplier e on d.supplier_code=e.supplier_code'
+      'INNER JOIN t_item_category g on c.category_id=g.category_id'
       
         'INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purchas' +
         'e.t_podetail GROUP BY po_no) f on d.po_no=f.po_no'
+      'LEFT JOIN t_user j on d.approval=j.user_name'
       '-- where a.nopo='#39'PO/105/E2/MLB/VII/21'#39
       
-        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
-        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,d' +
+        'GROUP BY c.item_name,g.category,a.detail_id,a.po_no,a.item_stock' +
+        '_code,a.qty,a.price,a.unit,a.wh_code,i.wh_name,a.conv_currency,d' +
         '.po_date,'
       
         '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
         'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
         'dtotal'
       
-        ',d.po_no,d.delivery_date, E.supplier_name,e.address,d.valas,d.re' +
-        'marks,d.delivery2_date,d.po2_no,sumtotal,c.type'
+        ',d.po_no,d.delivery_date, e.supplier_name,e.address,d.valas,d.re' +
+        'marks,d.delivery2_date,d.po2_no,sumtotal,c.category_id ,j.user_n' +
+        'ame'
+      ' --,c."type"'
       'order by a.po_no desc')
     Left = 504
     Top = 32
   end
   object DsDetailPo: TDataSource
     DataSet = Qdetailpo
-    Left = 424
+    Left = 440
     Top = 80
   end
   object Qdetailpo: TUniQuery
@@ -40896,48 +41012,47 @@ object FPO: TFPO
     SQL.Strings = (
       #9#9#9#9' '
       
-        'SELECT'#9'c.material_name,c.category,a.detail_id,a.po_no,a.material' +
-        '_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency, '
+        'SELECT'#9'c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.item_' +
+        'code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency, '
       
         #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
-        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
+        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,'
       '        a.status,a.grandtotal'
       '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
       'FROM purchase.t_podetail AS "a" '
       
-        'INNER JOIN purchase.t_material_stock AS b ON a.material_stock_co' +
-        'de = b.material_stock_code'
+        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
+        'item_stock_code'
+      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
+      'INNER JOIN t_wh d on a.wh_code=d.wh_code  '
       
-        'INNER JOIN purchase.t_material AS "c" ON b.material_code = c.mat' +
-        'erial_code and b.material_no=c.material_no'
-      
-        'GROUP BY c.material_name,c.category,a.detail_id,a.po_no,a.materi' +
-        'al_stock_code,a.qty,a.price,a.unit,a.warehouse,a.conv_currency,'
+        'GROUP BY c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.ite' +
+        'm_code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency,'
       
         '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
-        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.gran' +
-        'dtotal'#9#9#9)
+        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
+      '         a.pemb_dpp,a.pemb_ppn,a.status,a.grandtotal'#9#9#9)
     MasterSource = DsPo
     MasterFields = 'po_no'
     DetailFields = 'po_no'
-    Left = 424
-    Top = 40
+    Left = 440
+    Top = 32
     ParamData = <
       item
         DataType = ftString
         Name = 'po_no'
         ParamType = ptInput
-        Value = 'PO/2023/XII/0001'
+        Value = 'PO/2024/II/0001/'
       end>
   end
   object DsdPO: TDataSetDriverEh
     ProviderDataSet = QPo
-    Left = 368
+    Left = 376
     Top = 80
   end
   object DsPo: TDataSource
     DataSet = Mempo
-    Left = 368
+    Left = 376
     Top = 32
   end
   object Mempo: TMemTableEh
@@ -40962,12 +41077,15 @@ object FPO: TFPO
         'order_no,a.valas_value,a.po_type,'
       
         'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.divisi' +
-        'on_code,a.delivery_date,B.supplier_name,--C.nm_divisi,'
+        'on_code,a.delivery_date,B.supplier_name,a.trans_category,'
       
-        ' a.due_date,a."approval_status",a.approval,a.wh_code,a.delivery2' +
-        '_date,a.id,a.trans_day,a.trans_month,a.trans_year'
+        ' a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a' +
+        '.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sb' +
+        'u_code,a.correction_status,a.um_status,a.um_value,'
+      'a.um_account_code,a.as_status,um_no'
       'from purchase.t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
+      'INNER JOIN t_wh c on a.wh_code=c.wh_code'
       'order by A.id desc')
     Left = 320
     Top = 32

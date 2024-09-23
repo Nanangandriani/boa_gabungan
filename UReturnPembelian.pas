@@ -74,6 +74,10 @@ type
     QReturnPembelian: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ActRoExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -102,6 +106,99 @@ begin
     end;
 end;
 
+procedure TFReturnPembelian.ActRoExecute(Sender: TObject);
+begin
+    DBGridReturnPemb.StartLoadingStatus();
+    DBGridReturnPemb.FinishLoadingStatus();
+    QReturnPembelian.Close;
+    MemReturn.Close;
+    QDetail.Close;
+    if QReturnPembelian.Active=false then QReturnPembelian.Active:=True;
+    if MemReturn.Active=False then MemReturn.Active:=True;
+    if QDetail.Active=False then QDetail.Active:=True;
+    if QRptReturnPemb.Active=False then QRptReturnPemb.Active:=True;
+    if QRptDet.Active=False then QRptDet.Active:=True;
+end;
+
+procedure TFReturnPembelian.ActUpdateExecute(Sender: TObject);
+begin
+    with FNew_returnPemb do
+    begin
+      Clear;
+      Show;
+      status:=1;
+      Caption:='Update Retur Pembelian';
+      Edkd_supp.Text:=MemReturn['supplier_code'];
+      Ednm_supp.Text:=MemReturn['supplier_name'];
+      Edno.Text:=MemReturn['return_no'];
+      DtReturn.Date:=MemReturn['return_date'];
+      Ednofaktur.Text:=MemReturn['faktur_no'];
+      edppn.Text:=MemReturn['ppn'];
+      edvls.Text:=MemReturn['valas'];
+      ednilai_vls.Text:=MemReturn['valas_value'];
+      edno_terima.Text:=MemReturn['receive_no'];
+
+      QDetail.First;
+      while not QDetail.Eof do
+      begin
+        MemDetail.Insert;
+        Memdetail['no_terima']:=QDetail['receive_no'];
+        Memdetail['nofaktur']:=QDetail['faktur_no'];
+        MemDetail['kd_material']:=QDetail['item_stock_code'];
+        MemDetail['nopo']:=QDetail['po_no'];
+        MemDetail['kd_stok']:=QDetail['stock_code'];
+        MemDetail['nm_material']:=QDetail['item_name'];
+        MemDetail['harga']:=QDetail['price'];
+        MemDetail['satuan']:=QDetail['unit'];
+        MemDetail['totalharga']:=QDetail['total_price'];
+        MemDetail['qty']:=QDetail['qty'];
+        MemDetail.Post;
+        QDetail.Next;
+      end;
+    end;
+    FNew_returnPemb.DBGridEh3ColEnter(sender);
+end;
+
+procedure TFReturnPembelian.dxBarLargeButton1Click(Sender: TObject);
+begin
+   {with QPerusahaan do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_company where deleted_at is Null ';
+      Open;
+   end;
+   QPerusahaan.Close;
+   QPerusahaan.Open;
+
+   with QRptDet do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.qty,a.price,a.total_price,b.item_name,a.return_no from purchase.t_purchase_return_det a '+
+                'inner join warehouse.t_item_stock b on a.item_stock_code=b.item_stock_code ';
+      Open;
+   end;
+   QRptDet.Close;
+   QRptDet.Open;}
+
+   QPerusahaan.Close;
+   QPerusahaan.Open;
+   with QRptReturnPemb do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:=' select	d.supplier_name,f.faktur_date,d.address,d.npwp,((a.price/100)*a.ppn) AS ppn_rp,a.return_no,a.return_date,a.faktur_no,a.total_price,'+
+                ' a.ppn,a.price,a.valas,a.valas_value from purchase.t_purchase_return a inner join t_supplier d on a.supplier_code=d.supplier_code '+
+                ' inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no  where a.return_no='+QuotedStr(DBGridReturnPemb.Fields[3].asstring)+''+
+                ' Group by d.supplier_name,f.faktur_date,d.address,d.npwp,a.return_no,a.return_date,a.faktur_no,a.total_price,a.ppn,a.price,a.valas,a.valas_value ';
+      ExecSQL;
+   end;
+   QRptReturnPemb.Open;
+   //frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_ReturnPembelian.Fr3');
+   frxReport1.ShowReport();
+end;
+
 procedure TFReturnPembelian.dxbarRefreshClick(Sender: TObject);
 begin
     DBGridReturnPemb.StartLoadingStatus();
@@ -116,7 +213,14 @@ begin
     if QRptDet.Active=False then QRptDet.Active:=True;
 end;
 
-initialization
-registerclass(TFReturnPembelian);
+procedure TFReturnPembelian.FormShow(Sender: TObject);
+begin
+   ActRoExecute(sender);
+end;
+
+
+// Contoh RegisterClass
+Initialization
+  RegisterClass(TFReturnPembelian);
 
 end.

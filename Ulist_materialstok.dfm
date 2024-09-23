@@ -3,8 +3,8 @@ object Flistmaterialstok: TFlistmaterialstok
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'List Material'
-  ClientHeight = 335
-  ClientWidth = 512
+  ClientHeight = 344
+  ClientWidth = 516
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,25 +12,27 @@ object Flistmaterialstok: TFlistmaterialstok
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnShow = FormShow
   TextHeight = 15
   object DBGridMaterial: TDBGridEh
     Left = 0
-    Top = 0
-    Width = 512
-    Height = 303
+    Top = 303
+    Width = 516
+    Height = 9
     Align = alClient
     DataSource = DsMaterial_stok
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SearchPanel.Enabled = True
     TabOrder = 0
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'item_stock_code'
+        FieldName = 'item_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
         Width = 91
@@ -61,24 +63,35 @@ object Flistmaterialstok: TFlistmaterialstok
         Footers = <>
         Title.Caption = 'Satuan'
         Width = 60
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'buy'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel1: TPanel
     Left = 0
-    Top = 303
-    Width = 512
+    Top = 312
+    Width = 516
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 303
+    ExplicitWidth = 510
     object BBatal: TRzBitBtn
-      Left = 442
+      Left = 440
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -131,10 +144,10 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 436
+      ExplicitLeft = 434
     end
     object BEdit: TRzBitBtn
-      Left = 367
+      Left = 365
       Top = 1
       Height = 30
       Align = alRight
@@ -193,7 +206,71 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 361
+      ExplicitLeft = 359
+    end
+  end
+  object DBGridEh1: TDBGridEh
+    Left = 0
+    Top = 0
+    Width = 516
+    Height = 303
+    Align = alTop
+    DataSource = DsMaterial_stok
+    DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    SearchPanel.Enabled = True
+    SearchPanel.FilterEnabled = False
+    TabOrder = 2
+    Visible = False
+    OnDblClick = DBGridEh1DblClick
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_code'
+        Footers = <>
+        Title.Caption = 'Kode Barang'
+        Width = 91
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_name'
+        Footers = <>
+        Title.Caption = 'Nama Barang'
+        Width = 116
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'supplier_name'
+        Footers = <>
+        Title.Caption = 'Nama Supplier'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+        Width = 60
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'buy'
+        Footers = <>
+        Width = 0
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object DsMaterial_stok: TDataSource
@@ -206,27 +283,55 @@ object Flistmaterialstok: TFlistmaterialstok
     SQL.Strings = (
       'select '
       
-        'a.item_name,b.supplier_code,b.supplier_name,a.item_stock_code,a.' +
-        'order_no,a.kd_urut, a.qty,a.unit,a.merk,'
-      'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,'
+        'a.item_name,b.supplier_code,b.supplier_name,a.item_code,a.item_s' +
+        'tock_code,a.order_no, a.qty,a.unit,a.merk,'
+      'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,c.buy,'
       'e.category,f."type",g.group_name  '
       ''
       'from warehouse.t_item_stock a  '
       'inner join t_supplier b on a.supplier_code=b.supplier_code  '
       'inner join t_item c on a.item_code=c.item_code  '
-      'left  join t_item_conversion d on a.item_code=d.item_code'
-      'left  join t_item_category e on c.category_id=e.category_id'
-      'left  join t_item_type f on e.type_id=f.type_id '
-      'left  join t_item_group g on c.group_id=g.group_id'
-      'where b.supplier_code='#39'S0004'#39' and f.type='#39'PERSEDIAAN'#39' '
-      ''
+      'inner join t_item_conversion d on a.item_code=d.item_code'
+      'inner join t_item_category e on c.category_id=e.category_id'
+      'inner join t_item_type f on e.type_id=f.type_id '
+      'inner join t_item_group g on c.group_id=g.group_id'
+      ' '
       
         'group by a.item_code,b.supplier_code,b.supplier_name,a.item_stoc' +
-        'k_code,a.order_no, a.kd_urut,a.qty,a.unit,a.merk,a.item_name,d.u' +
-        'nit,d.qty_unit,d.qty_conv,'
-      'd.unit_conv,a.item_name,e.category,g.group_name,f."type"  '
+        'k_code,a.order_no,a.qty,a.unit,a.merk,a.item_name,d.unit,d.qty_u' +
+        'nit,d.qty_conv,'
+      'd.unit_conv,c.buy,a.item_name,e.category,g.group_name,f."type"  '
       'order by item_stock_code Desc')
     Left = 236
     Top = 101
+  end
+  object MemMt_stok: TMemTableEh
+    Params = <>
+    DataDriver = DsdMaterial
+    Left = 232
+    Top = 179
+  end
+  object DsdMaterial: TDataSetDriverEh
+    ProviderDataSet = QMaterial_stok
+    Left = 152
+    Top = 179
+  end
+  object Qjenis_pajak: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_tax_type')
+    Left = 48
+    Top = 74
+    object Qjenis_pajakid: TSmallintField
+      FieldName = 'id'
+      Required = True
+    end
+    object Qjenis_pajaktype: TStringField
+      FieldName = 'type'
+      Size = 255
+    end
+    object Qjenis_pajakpercentage: TFloatField
+      FieldName = 'percentage'
+    end
   end
 end

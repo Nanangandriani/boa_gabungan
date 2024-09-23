@@ -32,7 +32,6 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Ed_kode: TEdit;
-    Ed_nama: TEdit;
     Ed_alamat: TEdit;
     Ed_telp: TEdit;
     Ed_email: TEdit;
@@ -40,14 +39,25 @@ type
     cb_jenis_usaha: TRzComboBox;
     Cb_Mata_uang: TRzComboBox;
     Cb_Status_Pajak: TRzComboBox;
+    Ed_status_tax: TEdit;
+    Ed_nama: TEdit;
+    EdNik: TEdit;
+    RzBitBtn1: TRzBitBtn;
+    Label17: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BEditClick(Sender: TObject);
+    procedure Ed_status_taxChange(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure cb_jenis_usahaClick(Sender: TObject);
+    procedure Cb_Status_PajakSelect(Sender: TObject);
   private
     { Private declarations }
     procedure clear;
     procedure showtypebusiness;
+    procedure Load_currency;
+    procedure Load_status_pajak;
   public
     { Public declarations }
   end;
@@ -59,14 +69,30 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu;
+uses UDataModule, UMainMenu, UNew_JenisUsaha;
 
+procedure TFNewPerusahaan.Load_currency;
+begin
+      with Dm.Qtemp do
+      begin
+        close;
+        sql.Text:='SELECT * from t_currency WHERE status=''true'' ';
+        Open;
+      end;
+      Dm.Qtemp.First;
+      CB_mata_uang.Items.Clear;
+      while not dm.Qtemp.Eof do
+      begin
+         CB_mata_uang.Items.Add(Dm.Qtemp.FieldByName('currency_code').AsString);
+         Dm.Qtemp.Next;
+      end;
+end;
 procedure TFNewPerusahaan. showtypebusiness;
 begin
-   With dm.qtemp do
+   with dm.qtemp do
    begin
      sql.Clear;
-     sql.Text:=' select business_name FROM t_business_type ';
+     sql.Text:=' select business_name FROM t_business_type WHERE status_active=''true'' ';
      Open;
    end;
    Cb_jenis_usaha.Items.Clear;
@@ -76,11 +102,40 @@ begin
        Cb_jenis_usaha.Items.Add(dm.qtemp.FieldByName('business_name').AsString);
        dm.qtemp.Next;
    end;
+   
 end;
 
 
 
- procedure TFNewPerusahaan.clear;
+procedure TFNewPerusahaan.cb_jenis_usahaClick(Sender: TObject);
+begin
+     with  FNew_Jenis_Usaha.QJenis_Usaha do
+     begin
+       close;
+       sql.clear;
+       sql.Text:='SELECT * FROM t_business_type WHERE status_active=''true'' ';
+       Open;
+     end;
+     FNew_Jenis_Usaha.QJenis_Usaha.close;
+     FNew_Jenis_Usaha.QJenis_Usaha.open;
+end;
+
+procedure TFNewPerusahaan.Cb_Status_PajakSelect(Sender: TObject);
+begin
+   if Cb_Status_Pajak.Text='PKP' then
+   begin
+     showmessage('NPWP wajib diisi');
+     Ed_NPWP.Enabled:=true;
+   end
+   else
+   begin
+      Ed_NPWP.Enabled:=false;
+      showmessage('NIK wajib diisi');
+      EdNik.Enabled:=true;
+   end;
+end;
+
+procedure TFNewPerusahaan.clear;
  begin
     Ed_kode.Text:='';
     Ed_nama.Text:='';
@@ -91,9 +146,23 @@ end;
     Ed_npwp.Text:='';
     cb_status_pajak.Text:='';
     cb_mata_uang.Text:='';
-    Ed_kode.SetFocus;
+    //Ed_kode.SetFocus;
 
  end;
+
+procedure TFNewPerusahaan.Ed_status_taxChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select a.*,b.status_tax_name from t_company a '+
+                 'INNER JOIN  t_tax_status_company b on a.tax_status=b.status '+
+                 'where tax_status='+Quotedstr(Ed_status_tax.Text)+' and deleted_at is null Order by company_code ';
+       open;
+   end;
+   Cb_Status_Pajak.Text:=dm.Qtemp.FieldByName('status_tax_name').AsString;
+end;
 
 procedure TFNewPerusahaan.BBatalClick(Sender: TObject);
 begin
@@ -176,8 +245,19 @@ begin
         close;
         sql.clear;
         sql.Text:=' Update t_company set company_name='+QuotedStr(Ed_nama.Text)+ ' ,type_of_business='+QuotedStr(cb_jenis_usaha.Text)+', address='+QuotedStr(Ed_Alamat.Text)+' ,telp='+QuotedStr(Ed_telp.Text)+''+
-                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status='+QuotedStr(cb_status_pajak.Text)+',currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
                   ' Where company_code='+QuotedStr(Ed_kode.Text);
+
+        if Cb_Status_Pajak.Text='PKP' then
+        begin
+           parambyname('partax_status').AsString:='1';
+        end
+        else
+        if Cb_Status_Pajak.Text='NON PKP' then
+        begin
+           parambyname('partax_status').AsString:='0';
+        end;
+
         parambyname('updated_at').AsDateTime:=Now;
         parambyname('updated_by').AsString:='Admin';
 
@@ -220,7 +300,7 @@ begin
     end;
     if Ed_alamat.Text='' then
     begin
-      MessageDlg('alamat Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      MessageDlg('Alamat Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
       Ed_alamat.SetFocus;
       Exit;
     end;
@@ -236,11 +316,26 @@ begin
       Ed_email.SetFocus;
       Exit;
     end;
-    if Ed_npwp.Text='' then
+
+    {if Ed_npwp.Text='' then
     begin
       MessageDlg('NPWP Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
       Ed_npwp.SetFocus;
       Exit;
+    end;}
+    if cb_status_pajak.Text='PKP' then
+    begin
+      MessageDlg('NPWP Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ed_npwp.SetFocus;
+      Exit;
+    end;
+    if cb_status_pajak.Text='NON PKP' then
+    begin
+      MessageDlg('NIK Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      EdNik.SetFocus;
+      Exit;
+      //Ed_npwp.Text:='';
+      //Exit;
     end;
     if cb_status_pajak.Text='' then
     begin
@@ -274,14 +369,24 @@ begin
         sql.Text:='Insert into t_company (company_code,company_name,type_of_business,address,Telp,email,npwp,tax_status,currency,created_at,created_by) values'+
                   '('+QuotedStr(Ed_kode.Text)+','+QuotedStr(Ed_Nama.Text)+','+QuotedStr(cb_jenis_usaha.Text)+','+QuotedStr(Ed_Alamat.Text)+','+
                   //''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+','+QuotedStr(cb_status_pajak.Text)+','+QuotedStr(cb_mata_uang.Text)+' ,now(),''Admin''  )';
-                  ''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+','+QuotedStr(cb_status_pajak.Text)+','+QuotedStr(cb_mata_uang.Text)+' ,:created_at,:created_by )';
+                  ''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+',:par_status_pajak,'+QuotedStr(cb_mata_uang.Text)+' ,:created_at,:created_by )';
+
+                  if Cb_Status_Pajak.Text='PKP' then
+                  begin
+                     parambyname('par_status_pajak').AsString:='1';
+                  end
+                  else
+                  if Cb_Status_Pajak.Text='NON PKP' then
+                  begin
+                     parambyname('par_status_pajak').AsString:='0';
+                  end;
                   parambyname('created_at').AsDateTime:=Now;
                   parambyname('created_by').AsString:='Admin';
         ExecSQL;
       end;
       dm.koneksi.Commit;
       Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-      end
+    end
     Except
     on E :Exception do
     begin
@@ -295,9 +400,37 @@ end;
 
 procedure TFNewPerusahaan.FormShow(Sender: TObject);
 begin
+    FNew_Jenis_Usaha.QJenis_Usaha.Close;
+    FNew_Jenis_Usaha.QJenis_Usaha.Open;
+    //clear;
     Showtypebusiness;
-    BSimpan.Visible:=True;
-    BEdit.Visible:=False;
+    Load_status_pajak;
+    load_currency;
+    //BSimpan.Visible:=True;
+    //BEdit.Visible:=False;
+end;
+
+procedure TFNewPerusahaan.Load_status_pajak;
+begin
+   with dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='SELECT status_tax_name from t_tax_status_company ';
+       open;
+   end;
+   Cb_Status_Pajak.items.clear;
+   dm.Qtemp.First;
+   while not dm.Qtemp.Eof do
+   begin
+      Cb_Status_Pajak.Items.Add(dm.Qtemp['status_tax_name']);
+      dm.Qtemp.Next;
+   end;
+end;
+
+procedure TFNewPerusahaan.RzBitBtn1Click(Sender: TObject);
+begin
+   FNew_Jenis_Usaha.Show;
 end;
 
 end.
