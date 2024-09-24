@@ -8,7 +8,7 @@ uses
   Vcl.Menus, Vcl.ToolWin, Vcl.WinXCalendars, System.Actions, Vcl.ActnList,
   Vcl.WinXCtrls, Vcl.StdCtrls, RzPanel, RzButton, RzStatus, RzDBStat,
   System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, RzTabs, Vcl.OleCtrls,
-  SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge,MSHTML, ShellAPI, frxClass,
+  SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge,MSHTML, ShellAPI,// frxClass,
   Vcl.Buttons, RzSplit, RzTreeVw, dxSkinsCore, dxSkinBasic, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
@@ -38,7 +38,6 @@ type
     RzClockStatus1: TRzClockStatus;
     RzGlyphStatus1: TRzGlyphStatus;
     ImageList1: TImageList;
-    frxReport1: TfrxReport;
     dxBarManager1: TdxBarManager;
     dxRibbon1Tab1: TdxRibbonTab;
     dxRibbon1: TdxRibbon;

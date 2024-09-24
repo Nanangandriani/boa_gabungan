@@ -131,21 +131,21 @@ end;
 
 Procedure TFNew_ResultFormula.Load;
 begin
-EdNo_spk.Clear;
-  with dm.Qtemp do
+  EdNo_spk.Clear;
+  { with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_spk_formula WHERE no_spk in (select no_spk from t_spk_formula EXCEPT select nospk from t_result_formula) and kd_sbu='+QuotedStr(loksbu)+'';
+    sql.Text:='select * from "warehouse".t_spk_formula WHERE spk_no in (select spk_no from "warehouse".t_spk_formula EXCEPT select spk_no from t_result_formula) and sbu_code='+QuotedStr(loksbu)+'';
     //sql.Text:='select * from t_spk_formula WHERE status=''1''';
     ExecSQL;
   end;
   Dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
-    EdNo_spk.Items.Add(Dm.Qtemp['no_spk']);
+    EdNo_spk.Items.Add(Dm.Qtemp['spk_no']);
     Dm.Qtemp.Next;
-  end;
+  end; }
 end;
 
 procedure TFNew_resultFormula.BBatalClick(Sender: TObject);
@@ -336,18 +336,18 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_spk_formula where no_spk='+QuotedStr(EdNo_spk.Text);
+      sql.Text:='select * from "warehouse".t_spk_formula where spk_no='+QuotedStr(EdNo_spk.Text);
       ExecSQL;
     end;
-  EdNo_Formula.Text:=dm.Qtemp['no_formula'];
-  EdProduk.Text:=dm.Qtemp['nm_produk'];
-  DtTrial.Date:=dm.Qtemp['tgl_trial'];
-EdProdukChange(sender);
+  EdNo_Formula.Text:=dm.Qtemp['formula_no'];
+  EdProduk.Text:=dm.Qtemp['product_code'];
+  DtTrial.Date:=dm.Qtemp['trial_date'];
+  EdProdukChange(sender);
 end;
 
 procedure TFNew_resultFormula.EdProdukChange(Sender: TObject);
 begin
-with dm.Qtemp do
+{with dm.Qtemp do
 begin
   close;
   sql.Clear;
@@ -389,7 +389,7 @@ if MemResult_for['Kode']='KT' then MemResult_for['Trial']:=Dm.Qtemp['tebal'];
 if MemResult_for['Kode']='' then MemResult_for['Trial']:=MemResult_for['Standard'];
 MemResult_for.Post;
 MemResult_for.Next;
-end;
+end;       }
 end;
 
 procedure TFNew_resultFormula.FormClose(Sender: TObject;

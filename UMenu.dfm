@@ -25,7 +25,7 @@ object FMenu: TFMenu
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_0_menu'
+        ColumnName = 'Column_1_menu'
       end>
     DataSource = DsMenu
     DynProps = <>
@@ -34,6 +34,13 @@ object FMenu: TFMenu
     TabOrder = 0
     TitleParams.MultiTitle = True
     Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Width = 80
+      end
       item
         CellButtons = <>
         DynProps = <>
@@ -390,8 +397,9 @@ object FMenu: TFMenu
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select b.menu,a.* from t_menu_sub a inner join t_menu b on a.men' +
-        'u_code=b.menu_code'
+        'select c.master_name,b.menu,a.* from t_menu_sub a inner join t_m' +
+        'enu b on a.menu_code=b.menu_code inner join t_menu_master c on b' +
+        '.master_code=c.master_code'
       'order by a.menu_code,a.submenu_code Asc')
     Left = 440
     Top = 24

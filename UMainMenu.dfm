@@ -1,8 +1,8 @@
 object FMainMenu: TFMainMenu
   Left = 0
   Top = 0
-  ClientHeight = 609
-  ClientWidth = 1031
+  ClientHeight = 608
+  ClientWidth = 1027
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FMainMenu: TFMainMenu
     Left = 169
     Top = 126
     Width = 12
-    Height = 464
+    Height = 463
     ResizeStyle = rsUpdate
     StyleName = 'Windows'
     ExplicitLeft = 160
@@ -26,8 +26,8 @@ object FMainMenu: TFMainMenu
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 590
-    Width = 1031
+    Top = 589
+    Width = 1027
     Height = 19
     BorderInner = fsNone
     BorderOuter = fsNone
@@ -35,8 +35,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 581
-    ExplicitWidth = 1025
+    ExplicitTop = 588
+    ExplicitWidth = 1023
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -47,7 +47,7 @@ object FMainMenu: TFMainMenu
       ExplicitHeight = 20
     end
     object RzVersionInfoStatus1: TRzVersionInfoStatus
-      Left = 931
+      Left = 927
       Top = 0
       Height = 19
       Align = alRight
@@ -67,7 +67,7 @@ object FMainMenu: TFMainMenu
       ExplicitHeight = 20
     end
     object RzClockStatus1: TRzClockStatus
-      Left = 781
+      Left = 777
       Top = 0
       Height = 19
       Align = alRight
@@ -86,7 +86,7 @@ object FMainMenu: TFMainMenu
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1031
+    Width = 1027
     Height = 126
     BarManager = dxBarManager1
     ColorSchemeName = 'Blue'
@@ -132,7 +132,7 @@ object FMainMenu: TFMainMenu
     Left = 0
     Top = 126
     Width = 169
-    Height = 464
+    Height = 463
     VertScrollBar.Tracking = True
     ChevronHotColor = clSkyBlue
     Color = clGradientInactiveCaption
@@ -143,13 +143,13 @@ object FMainMenu: TFMainMenu
     HeaderFont.Name = 'Segoe UI'
     HeaderFont.Style = []
     TabOrder = 2
-    ExplicitHeight = 455
+    ExplicitHeight = 462
   end
   object PageControl1: TRzPageControl
     Left = 181
     Top = 126
-    Width = 850
-    Height = 464
+    Width = 846
+    Height = 463
     Hint = ''
     ActivePage = TabForm
     Align = alClient
@@ -157,45 +157,45 @@ object FMainMenu: TFMainMenu
     TabIndex = 0
     TabOrder = 3
     OnClose = PageControl1Close
-    ExplicitWidth = 844
-    ExplicitHeight = 455
+    ExplicitWidth = 842
+    ExplicitHeight = 462
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Dashboard'
-      ExplicitWidth = 840
-      ExplicitHeight = 430
+      ExplicitWidth = 838
+      ExplicitHeight = 437
       object PanelParent: TPanel
         Left = 0
         Top = 0
-        Width = 846
-        Height = 439
+        Width = 842
+        Height = 438
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 840
-        ExplicitHeight = 430
+        ExplicitWidth = 838
+        ExplicitHeight = 437
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 1
-          Width = 844
-          Height = 437
+          Width = 840
+          Height = 436
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 838
-          ExplicitHeight = 428
+          ExplicitWidth = 836
+          ExplicitHeight = 435
         end
         object WebBrowser1: TWebBrowser
           Left = 1
           Top = 1
-          Width = 844
-          Height = 437
+          Width = 840
+          Height = 436
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 838
-          ExplicitHeight = 428
+          ExplicitWidth = 836
+          ExplicitHeight = 435
           ControlData = {
-            4C000000C9450000222400000000000000000000000000000000000000000000
+            4C000000D1560000102D00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -347,73 +347,6 @@ object FMainMenu: TFMainMenu
       00000067000000000000807F0000000000000000000000000000000000000000
       000000000000}
   end
-  object frxReport1: TfrxReport
-    Version = '2022.2.7'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45096.618494004600000000
-    ReportOptions.LastChange = 45096.618494004600000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      'begin'
-      ''
-      'end.')
-    Left = 616
-    Top = 48
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
-      MirrorMode = []
-      object PageHeader1: TfrxPageHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 98.267780000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 26.456710000000000000
-          Top = 3.779530000000000000
-          Width = 90.708720000000000000
-          Height = 22.677180000000000000
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'test')
-        end
-        object Memo2: TfrxMemoView
-          AllowVectorExport = True
-          Left = 340.157700000000000000
-          Top = 56.692950000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Test 2')
-        end
-      end
-    end
-  end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -428,8 +361,8 @@ object FMainMenu: TFMainMenu
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 610
-    Top = 110
+    Left = 618
+    Top = 46
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'File'

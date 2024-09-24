@@ -167,7 +167,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_menu_sub where link=''FPakai_Material_For''';
+    sql.Text:='select * from t_menu_sub where link=''FFor_Testbakar''';
     ExecSQL;
   end;
   idmenu:=dm.Qtemp['submenu_code'];
@@ -217,10 +217,6 @@ begin
       DtPSelesai.SetFocus;
       Exit;
     end;
-    if not dm.koneksi.InTransaction then
-    dm.koneksi.StartTransaction;
-      try
-        begin
           with dm.Qtemp do
           begin
             close;
@@ -306,17 +302,6 @@ begin
             sql.Text:='update "warehouse".t_item_use_for set Status=''0'' where spk_no='+QuotedStr(EdNo_Spk.Text);
             ExecSQL;
           end;
-          Dm.koneksi.Commit;
-          Messagedlg('Data Berhasil Disimpan',MtInformation,[Mbok],0);
-         // BBatalClick(sender);
-      end
-      Except
-      on E :Exception do
-      begin
-        MessageDlg(E.Message,mtError,[MBok],0);
-        dm.koneksi.Rollback;
-      end;
-    end;
   end;
 end;
 
@@ -364,10 +349,6 @@ begin
     DtPSelesai.SetFocus;
     Exit;
   end;
-  if not dm.koneksi.InTransaction then
-  dm.koneksi.StartTransaction;
-  try
-    begin
       with dm.Qtemp do
       begin
         close;
@@ -395,67 +376,49 @@ begin
         ExecSQL;
       end;
 
-     { with dm.Qtemp2 do
+     with dm.Qtemp2 do
       begin
         close;
         sql.Clear;
-        sql.Text:='delete from t_formula_testbakar_det where no_test='+QuotedStr(Edno.Text);
+        sql.Text:='delete from "warehouse".t_formula_burn_test_det where test_no='+QuotedStr(Edno.Text);
         ExecSQL;
       end;
 
-      with dm.Qtemp2 do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from t_formula_testbakar_det';
-        ExecSQL;
-      end;
-
-      MemBakarDet.First;
-      while not MemBakarDet.Eof do
-      begin
-        with dm.Qtemp2 do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:='insert into t_formula_testbakar_det(no_test,no_gotrok,berat,kadar_air,jam_mulai,'+
-                    ' jam_mati,lama_bakar,keterangan,warna_abu,bentuk_api,bentuk_abu,tensile, '+
-                    ' strength,ket1,ket2,ket3,ket4,ket_rata2)values(:parno_test,:parno_gotrok,'+
-                    ' :parberat,:parkadar_air,:parjam_mulai,:parjam_mati,:parlama_bakar,:parketerangan,'+
-                    ' :parwarna_abu,:parbentuk_api,:parbentuk_abu,:partensile,:parstrength,:parket1,'+
-                    ' :parket2,:parket3,:parket4,:parket_rata2)';
-                    ParamByName('parno_test').Value:=Edno.Text;
-                    ParamByName('parno_gotrok').Value:=MemBakarDet['no_gotrok'];
-                    ParamByName('parberat').Value:=MemBakarDet['berat'];
-                    ParamByName('parkadar_air').Value:=MemBakarDet['kadar_air'];
-                    ParamByName('parjam_mulai').Value:=MemBakarDet['jam_mulai'];
-                    ParamByName('parjam_mati').Value:=MemBakarDet['jam_mati'];
-                    ParamByName('parlama_bakar').Value:=MemBakarDet['lama_bakar'];
-                    ParamByName('parketerangan').Value:=MemBakarDet['keterangan'];
-                    ParamByName('parwarna_abu').Value:=MemBakarDet['warna_abu'];
-                    ParamByName('parbentuk_api').Value:=MemBakarDet['bentuk_api'];
-                    ParamByName('parbentuk_abu').Value:=MemBakarDet['bentuk_abu'];
-                    ParamByName('partensile').Value:=MemBakarDet['tensile'];
-                    ParamByName('parstrength').Value:=MemBakarDet['strength'];
-                    ParamByName('parket1').Value:=MemBakarDet['ket1'];
-                    ParamByName('parket2').Value:=MemBakarDet['ket2'];
-                    ParamByName('parket3').Value:=MemBakarDet['ket3'];
-                    ParamByName('parket4').Value:=MemBakarDet['ket4'];
-                    ParamByName('parket_rata2').Value:=MemBakarDet['ket_rata2'];
-          ExecSQL;
-          MemBakarDet.Next;
-        end;
-      end;     }
-       dm.koneksi.Commit;
-      Messagedlg('Data Berhasil Disimpan',MtInformation,[Mbok],0);
-    //   BBatalClick(sender);
-    end
-    Except on E :Exception do
-    begin
-      MessageDlg(E.Message,mtError,[MBok],0);
-      dm.koneksi.Rollback;
-    end;
-  end;
+       MemBakarDet.First;
+          while not MemBakarDet.Eof do
+          begin
+            with dm.Qtemp2 do
+            begin
+              close;
+              sql.Clear;
+              sql.Text:='insert into "warehouse".t_formula_burn_test_det(test_no,gotrok_no,weight,water_content,start_time,'+
+                        ' end_time,long_burn,notes,gray_color,fire_shape,ash_form,tensile, '+
+                        ' strength,note1,note2,note3,note4,note_avg)values(:parno_test,:parno_gotrok,'+
+                        ' :parberat,:parkadar_air,:parjam_mulai,:parjam_mati,:parlama_bakar,:parketerangan,'+
+                        ' :parwarna_abu,:parbentuk_api,:parbentuk_abu,:partensile,:parstrength,:parket1,'+
+                        ' :parket2,:parket3,:parket4,:parket_rata2)';
+                        ParamByName('parno_test').Value:=Edno.Text;
+                        ParamByName('parno_gotrok').Value:=MemBakarDet['no_gotrok'];
+                        ParamByName('parberat').Value:=MemBakarDet['berat'];
+                        ParamByName('parkadar_air').Value:=MemBakarDet['kadar_air'];
+                      //  ParamByName('parjam_mulai').AsString:=formatdatetime('yyyy-mm-dd hh:mm:ss',MemBakarDet['jam_mulai']);
+                      //  ParamByName('parjam_mati').value:=formatdatetime('yyyy-mm-dd hh:nn:ss',MemBakarDet['jam_mati']);
+                        ParamByName('parlama_bakar').Value:=MemBakarDet['lama_bakar'];
+                        ParamByName('parketerangan').Value:=MemBakarDet['keterangan'];
+                        ParamByName('parwarna_abu').Value:=MemBakarDet['warna_abu'];
+                        ParamByName('parbentuk_api').Value:=MemBakarDet['bentuk_api'];
+                        ParamByName('parbentuk_abu').Value:=MemBakarDet['bentuk_abu'];
+                        ParamByName('partensile').Value:=MemBakarDet['tensile'];
+                        ParamByName('parstrength').Value:=MemBakarDet['strength'];
+                        ParamByName('parket1').Value:=MemBakarDet['ket1'];
+                        ParamByName('parket2').Value:=MemBakarDet['ket2'];
+                        ParamByName('parket3').Value:=MemBakarDet['ket3'];
+                        ParamByName('parket4').Value:=MemBakarDet['ket4'];
+                        ParamByName('parket_rata2').Value:=MemBakarDet['ket_rata2'];
+              ExecSQL;
+              MemBakarDet.Next;
+            end;
+          end;
 end;
 
 procedure TFNew_ForTestBakar.DBGridDetailCellClick(Column: TColumnEh);

@@ -188,7 +188,7 @@ object FFor_Testbakar: TFFor_Testbakar
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1192
+        Width = 1138
         Height = 118
         Align = alClient
         DataSource = DsTestBakarDet
@@ -201,7 +201,7 @@ object FFor_Testbakar: TFFor_Testbakar
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_gotrok'
+            FieldName = 'gotrok_no'
             Footers = <>
             Title.Caption = 'No. Gotrok'
             Width = 71
@@ -211,7 +211,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'berat'
+            FieldName = 'weight'
             Footers = <>
             Title.Caption = 'Berat (gr)'
             Width = 60
@@ -221,7 +221,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kadar_air'
+            FieldName = 'water_content'
             Footers = <>
             Title.Caption = 'Kadar Air(%)'
             Width = 59
@@ -231,7 +231,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = 'hh.mm'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'jam_mulai'
+            FieldName = 'start_time'
             Footers = <>
             Title.Caption = 'Bakar|Jam Mulai'
             Width = 60
@@ -241,7 +241,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = 'hh.mm'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'jam_mati'
+            FieldName = 'end_time'
             Footers = <>
             Title.Caption = 'Bakar|Jam Mati'
             Width = 60
@@ -251,7 +251,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.00'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'lama_bakar'
+            FieldName = 'long_burn'
             Footers = <>
             Title.Caption = 'Bakar|Lama'
             Width = 75
@@ -260,7 +260,7 @@ object FFor_Testbakar: TFFor_Testbakar
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'keterangan'
+            FieldName = 'notes'
             Footers = <>
             Title.Caption = 'Keterangan'
             Width = 139
@@ -269,7 +269,7 @@ object FFor_Testbakar: TFFor_Testbakar
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'warna_abu'
+            FieldName = 'gray_color'
             Footers = <>
             Title.Caption = 'Warna Abu'
             Width = 67
@@ -278,7 +278,7 @@ object FFor_Testbakar: TFFor_Testbakar
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'bentuk_api'
+            FieldName = 'fire_shape'
             Footers = <>
             Title.Caption = 'Bentuk Api'
             Width = 70
@@ -287,7 +287,7 @@ object FFor_Testbakar: TFFor_Testbakar
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'bentuk_abu'
+            FieldName = 'ash_form'
             Footers = <>
             Title.Caption = 'Bentuk Abu'
             Width = 70
@@ -317,7 +317,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'ket1'
+            FieldName = 'note1'
             Footers = <>
             Title.Caption = 'Ketebalan|1'
             Width = 45
@@ -327,7 +327,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'ket2'
+            FieldName = 'note2'
             Footers = <>
             Title.Caption = 'Ketebalan|2'
             Width = 45
@@ -337,7 +337,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'ket3'
+            FieldName = 'note3'
             Footers = <>
             Title.Caption = 'Ketebalan|3'
             Width = 45
@@ -347,7 +347,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'ket4'
+            FieldName = 'note4'
             Footers = <>
             Title.Caption = 'Ketebalan|4'
             Width = 45
@@ -357,7 +357,7 @@ object FFor_Testbakar: TFFor_Testbakar
             DisplayFormat = '0.0'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'ket_rata2'
+            FieldName = 'note_avg'
             Footers = <>
             Title.Caption = 'Ketebalan|Rata-Rata'
             Width = 72
@@ -775,6 +775,7 @@ object FFor_Testbakar: TFFor_Testbakar
       
         'select * from "warehouse".t_formula_burn_test Order by test_no D' +
         'esc')
+    Active = True
     Left = 448
     Top = 16
   end
@@ -784,6 +785,7 @@ object FFor_Testbakar: TFFor_Testbakar
     Top = 64
   end
   object MemTestBakar: TMemTableEh
+    Active = True
     Params = <>
     DataDriver = DsdTestBakar
     Left = 520
@@ -801,13 +803,15 @@ object FFor_Testbakar: TFFor_Testbakar
     MasterSource = DsTestBakar
     MasterFields = 'test_no'
     DetailFields = 'test_no'
+    Active = True
     Left = 616
     Top = 24
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftString
         Name = 'test_no'
-        Value = nil
+        ParamType = ptInput
+        Value = 'PK/00003/24/MLB'
       end>
   end
   object DsTestBakarDet: TDataSource
@@ -823,20 +827,17 @@ object FFor_Testbakar: TFFor_Testbakar
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 44246.597381713000000000
-    ReportOptions.LastChange = 44789.630883518520000000
+    ReportOptions.CreateDate = 45559.617607291660000000
+    ReportOptions.LastChange = 45559.617607291660000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
       'begin'
       ''
       'end.')
     Left = 352
     Top = 312
-    Datasets = <
-      item
-        DataSet = DbQCBakar
-        DataSetName = 'DbQCBakar'
-      end>
+    Datasets = <>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -844,638 +845,25 @@ object FFor_Testbakar: TFFor_Testbakar
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
-      PaperWidth = 330.000000000000000000
-      PaperHeight = 210.000000000000000000
-      PaperSize = 256
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
-      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      Frame.Typ = []
       MirrorMode = []
-      object PageHeader1: TfrxPageHeader
+      object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 105.826771650000000000
+        Height = 22.677180000000000000
         Top = 18.897650000000000000
-        Width = 1171.654300000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Width = 77.480314960629900000
-          Height = 72.188976380000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          ParentFont = False
-        end
-        object Memo2: TfrxMemoView
-          AllowVectorExport = True
-          Left = 77.480314960000000000
-          Width = 1094.173228346460000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'QC BAKAR SATU COIL')
-          ParentFont = False
-        end
-        object Memo3: TfrxMemoView
-          AllowVectorExport = True
-          Left = 77.480314960000000000
-          Top = 18.897637800000000000
-          Width = 177.637795280000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Nama Produk')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo4: TfrxMemoView
-          AllowVectorExport = True
-          Left = 255.118110240000000000
-          Top = 18.897637800000000000
-          Width = 136.440944880000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'No. Formula/ No. Test Formula')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo5: TfrxMemoView
-          AllowVectorExport = True
-          Left = 524.598425196850000000
-          Top = 18.897637800000000000
-          Width = 188.976377950000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Tanggal Produksi')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo6: TfrxMemoView
-          AllowVectorExport = True
-          Left = 714.330708661417000000
-          Top = 18.897637800000000000
-          Width = 245.669291340000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Tanggal Test Bakar')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo7: TfrxMemoView
-          AllowVectorExport = True
-          Left = 959.500000000000000000
-          Top = 18.897637800000000000
-          Width = 211.653543307087000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo8: TfrxMemoView
-          AllowVectorExport = True
-          Left = 77.480314960000000000
-          Top = 52.913385830000000000
-          Width = 177.637795280000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."nm_produk"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo9: TfrxMemoView
-          AllowVectorExport = True
-          Left = 255.118110240000000000
-          Top = 52.913385830000000000
-          Width = 136.440944880000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."no_formula"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo10: TfrxMemoView
-          AllowVectorExport = True
-          Left = 392.314960630000000000
-          Top = 52.913385830000000000
-          Width = 132.283464570000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."regu"]')
-          ParentFont = False
-          VAlign = vaCenter
-          Formats = <
-            item
-            end
-            item
-            end>
-        end
-        object Memo11: TfrxMemoView
-          AllowVectorExport = True
-          Left = 524.598425196850000000
-          Top = 52.913385830000000000
-          Width = 188.976377950000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."tgl_prod"]')
-          ParentFont = False
-          VAlign = vaCenter
-          Formats = <
-            item
-              FormatStr = 'dd/mm/yyyy'
-              Kind = fkDateTime
-            end
-            item
-              FormatStr = 'dd/mm/yyyy'
-              Kind = fkDateTime
-            end>
-        end
-        object Memo12: TfrxMemoView
-          AllowVectorExport = True
-          Left = 959.500000000000000000
-          Top = 52.913385830000000000
-          Width = 211.653543307087000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Ketebalan (mm)')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo13: TfrxMemoView
-          AllowVectorExport = True
-          Top = 71.811023620000000000
-          Width = 27.968503940000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Mc')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo14: TfrxMemoView
-          AllowVectorExport = True
-          Left = 28.000000000000000000
-          Top = 71.811023620000000000
-          Width = 49.133858270000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'No. Gotrok')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo15: TfrxMemoView
-          AllowVectorExport = True
-          Left = 77.480314960000000000
-          Top = 71.811023620000000000
-          Width = 56.692913390000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Berat (Gr)')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo16: TfrxMemoView
-          AllowVectorExport = True
-          Left = 134.173228346457000000
-          Top = 71.811023620000000000
-          Width = 56.692913390000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Kadar Air (%)')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo17: TfrxMemoView
-          AllowVectorExport = True
-          Left = 190.866141730000000000
-          Top = 71.811023620000000000
-          Width = 64.251968500000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Jam Mulai Bakar')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo18: TfrxMemoView
-          AllowVectorExport = True
-          Left = 255.118110240000000000
-          Top = 71.811023620000000000
-          Width = 68.031496060000000000
-          Height = 34.015748030000000000
-          DisplayFormat.FormatStr = 'hh:mm'
-          DisplayFormat.Kind = fkDateTime
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Jam Mati')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo19: TfrxMemoView
-          AllowVectorExport = True
-          Left = 323.905511810000000000
-          Top = 71.811023620000000000
-          Width = 68.031496060000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Lama Jam Bakar')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo20: TfrxMemoView
-          AllowVectorExport = True
-          Left = 392.314960630000000000
-          Top = 18.897637800000000000
-          Width = 132.283464570000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Regu')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo21: TfrxMemoView
-          AllowVectorExport = True
-          Left = 392.314960630000000000
-          Top = 71.811023620000000000
-          Width = 132.283464570000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Keterangan')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo23: TfrxMemoView
-          AllowVectorExport = True
-          Left = 524.598425196850000000
-          Top = 71.811023620000000000
-          Width = 94.488188980000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Warna Abu')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo24: TfrxMemoView
-          AllowVectorExport = True
-          Left = 619.086614170000000000
-          Top = 71.811023620000000000
-          Width = 94.488188980000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Bentuk Api')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo22: TfrxMemoView
-          AllowVectorExport = True
-          Left = 714.330708660000000000
-          Top = 52.913385830000000000
-          Width = 245.669291338583000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = 'dd/mm/yyyy'
-          DisplayFormat.Kind = fkDateTime
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."tgl_test"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo25: TfrxMemoView
-          AllowVectorExport = True
-          Left = 714.330708661417000000
-          Top = 71.811023620000000000
-          Width = 94.488188980000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Bentuk Abu')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo26: TfrxMemoView
-          AllowVectorExport = True
-          Left = 809.444960000000000000
-          Top = 71.811023620000000000
-          Width = 75.590551180000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Tensile')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo27: TfrxMemoView
-          AllowVectorExport = True
-          Left = 884.842610000000000000
-          Top = 71.811023620000000000
-          Width = 75.590551180000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Strength')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo34: TfrxMemoView
-          AllowVectorExport = True
-          Left = 959.622047240000000000
-          Top = 71.811023620000000000
-          Width = 37.795275590000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '1')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo35: TfrxMemoView
-          AllowVectorExport = True
-          Left = 997.039370078740000000
-          Top = 71.811023620000000000
-          Width = 37.795275590000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '2')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo36: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1035.118120000000000000
-          Top = 71.811023620000000000
-          Width = 37.795275590000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '3')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo28: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1072.677180000000000000
-          Top = 71.811023620000000000
-          Width = 37.795275590000000000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '4')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo29: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1110.236240000000000000
-          Top = 71.811023620000000000
-          Width = 60.472440944881900000
-          Height = 34.015748030000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Rata-rata')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Picture1: TfrxPictureView
-          AllowVectorExport = True
-          Left = 4.000000000000000000
-          Top = 3.102350000000000000
-          Width = 69.488250000000000000
-          Height = 64.251968500000000000
-          Visible = False
-          Frame.Typ = []
-          HightQuality = False
-          Transparent = False
-          TransparentColor = clWhite
-        end
-        object Mpt: TfrxMemoView
-          AllowVectorExport = True
-          Top = 7.559060000000000000
-          Width = 75.590600000000000000
-          Height = 41.574830000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -32
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'MLB')
-          ParentFont = False
-          VAlign = vaCenter
-        end
+        Width = 718.110700000000000000
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -1484,377 +872,10 @@ object FFor_Testbakar: TFFor_Testbakar
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 26.956710000000000000
-        Top = 185.196970000000000000
-        Width = 1171.654300000000000000
-        DataSet = DbQCBakar
-        DataSetName = 'DbQCBakar'
+        Height = 22.677180000000000000
+        Top = 102.047310000000000000
+        Width = 718.110700000000000000
         RowCount = 0
-        object Memo31: TfrxMemoView
-          AllowVectorExport = True
-          Left = 28.000000000000000000
-          Width = 49.133858270000000000
-          Height = 26.456692910000000000
-          DataField = 'no_gotrok'
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."no_gotrok"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo32: TfrxMemoView
-          AllowVectorExport = True
-          Left = 77.480314960000000000
-          Width = 56.692913390000000000
-          Height = 26.456710000000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.1n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."berat"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo33: TfrxMemoView
-          AllowVectorExport = True
-          Left = 134.173228346457000000
-          Width = 56.692913390000000000
-          Height = 26.456710000000000000
-          DataField = 'kadar_air'
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."kadar_air"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo37: TfrxMemoView
-          AllowVectorExport = True
-          Left = 190.866141730000000000
-          Width = 64.251968500000000000
-          Height = 26.456710000000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = 'hh,mm'
-          DisplayFormat.Kind = fkDateTime
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."jam_mulai"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo38: TfrxMemoView
-          AllowVectorExport = True
-          Left = 255.118110240000000000
-          Width = 68.031496060000000000
-          Height = 26.456710000000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = 'hh,mm'
-          DisplayFormat.Kind = fkDateTime
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."jam_mati"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo39: TfrxMemoView
-          AllowVectorExport = True
-          Left = 323.905511810000000000
-          Width = 68.031496060000000000
-          Height = 26.456710000000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."lama_bakar"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo40: TfrxMemoView
-          AllowVectorExport = True
-          Left = 392.314960630000000000
-          Width = 132.283464570000000000
-          Height = 26.456710000000000000
-          DataField = 'keterangan'
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."keterangan"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo41: TfrxMemoView
-          AllowVectorExport = True
-          Left = 524.598425196850000000
-          Width = 94.488188980000000000
-          Height = 26.456692910000000000
-          DataField = 'warna_abu'
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."warna_abu"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo42: TfrxMemoView
-          AllowVectorExport = True
-          Left = 619.086614173228000000
-          Width = 94.488188980000000000
-          Height = 26.456692910000000000
-          DataField = 'bentuk_api'
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."bentuk_api"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo43: TfrxMemoView
-          AllowVectorExport = True
-          Left = 714.370130000000000000
-          Width = 94.488188980000000000
-          Height = 26.456692910000000000
-          DataField = 'bentuk_abu'
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."bentuk_abu"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo44: TfrxMemoView
-          AllowVectorExport = True
-          Left = 809.444960000000000000
-          Width = 75.590551180000000000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."tensile"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo45: TfrxMemoView
-          AllowVectorExport = True
-          Left = 884.842610000000000000
-          Width = 75.590551180000000000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."strength"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo46: TfrxMemoView
-          AllowVectorExport = True
-          Left = 959.622047240000000000
-          Width = 37.795275590000000000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.1n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."ket1"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo47: TfrxMemoView
-          AllowVectorExport = True
-          Left = 997.039370080000000000
-          Width = 37.795275590000000000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.1n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."ket2"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo48: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1035.118120000000000000
-          Width = 37.795275590000000000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.1n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."ket3"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo49: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1072.677180000000000000
-          Width = 37.795275590000000000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.1n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."ket4"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo50: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1110.236240000000000000
-          Width = 60.472440944881900000
-          Height = 26.456692910000000000
-          DataSet = DbQCBakar
-          DataSetName = 'DbQCBakar'
-          DisplayFormat.FormatStr = '%2.1n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."ket_rata2"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo62: TfrxMemoView
-          AllowVectorExport = True
-          Width = 27.968503940000000000
-          Height = 26.456692910000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbQCBakar."mc"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
@@ -1863,181 +884,18 @@ object FFor_Testbakar: TFFor_Testbakar
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 112.110080000000000000
-        Top = 272.126160000000000000
-        Width = 1171.654300000000000000
-        object Memo51: TfrxMemoView
+        Height = 22.677180000000000000
+        Top = 185.196970000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Width = 323.149606300000000000
+          Left = 642.520100000000000000
+          Width = 75.590600000000000000
           Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftTop, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Dibuat oleh')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo52: TfrxMemoView
-          AllowVectorExport = True
-          Top = 74.137600000000000000
-          Width = 323.149606300000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Qc. Test Bakar')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo53: TfrxMemoView
-          AllowVectorExport = True
-          Top = 19.137600000000000000
-          Width = 323.149606300000000000
-          Height = 54.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo54: TfrxMemoView
-          AllowVectorExport = True
-          Left = 323.905511810000000000
-          Top = 0.137600000000000000
-          Width = 294.803149610000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Diketahui oleh')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo55: TfrxMemoView
-          AllowVectorExport = True
-          Left = 323.905511810000000000
-          Top = 74.275200000000000000
-          Width = 294.803149610000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Ka. QC')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo56: TfrxMemoView
-          AllowVectorExport = True
-          Left = 323.905511810000000000
-          Top = 19.275200000000000000
-          Width = 294.803149610000000000
-          Height = 54.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo59: TfrxMemoView
-          AllowVectorExport = True
-          Left = 619.086614170000000000
-          Top = 0.137600000000000000
-          Width = 551.811023620000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Catatan')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo60: TfrxMemoView
-          AllowVectorExport = True
-          Left = 619.086614170000000000
-          Top = 74.137600000000000000
-          Width = 551.811023620000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo61: TfrxMemoView
-          AllowVectorExport = True
-          Left = 619.086614170000000000
-          Top = 19.137600000000000000
-          Width = 551.811023620000000000
-          Height = 54.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          Memo.UTF8W = (
-            '[DbQCBakar."notes"]')
-          ParentFont = False
-        end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Left = 891.000000000000000000
-          Top = 26.637600000000000000
-          Height = 0.500000000000000000
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Memo30: TfrxMemoView
-          AllowVectorExport = True
-          Top = 93.212430000000000000
-          Width = 1171.744280000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
           Frame.Typ = []
+          HAlign = haRight
           Memo.UTF8W = (
-            'F-C3 2-07')
-          ParentFont = False
+            '[Page#]')
         end
       end
     end
@@ -2046,40 +904,50 @@ object FFor_Testbakar: TFFor_Testbakar
     UserName = 'DbQCBakar'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'no_formula=no_formula'
-      'no_test=no_test'
-      'tgl_test=tgl_test'
-      'regu=regu'
+      'formula_no=formula_no'
+      'test_no=test_no'
+      'test_date=test_date'
+      'shift=shift'
       'mc=mc'
       'notes=notes'
       'pic=pic'
-      'nm_produk=nm_produk'
-      'no_spk=no_spk'
-      'tgl_mulai_prod=tgl_mulai_prod'
-      'tgl_selesai_prod=tgl_selesai_prod'
-      'kd_sbu=kd_sbu'
-      'thn=thn'
+      'product_code=product_code'
+      'spk_no=spk_no'
+      'prod_start_date=prod_start_date'
+      'prod_end_date=prod_end_date'
+      'sbu_code=sbu_code'
+      'trans_year=trans_year'
       'status=status'
-      'tgl_prod=tgl_prod'
-      'no_test_1=no_test_1'
-      'no_gotrok=no_gotrok'
-      'berat=berat'
-      'kadar_air=kadar_air'
-      'lama_bakar=lama_bakar'
-      'keterangan=keterangan'
-      'warna_abu=warna_abu'
-      'bentuk_api=bentuk_api'
-      'bentuk_abu=bentuk_abu'
+      'prod_date=prod_date'
+      'trans_month=trans_month'
+      'trans_day=trans_day'
+      'order_no=order_no'
+      'id=id'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'test_no_1=test_no_1'
+      'gotrok_no=gotrok_no'
+      'weight=weight'
+      'water_content=water_content'
+      'long_burn=long_burn'
+      'notes_1=notes_1'
+      'gray_color=gray_color'
+      'fire_shape=fire_shape'
+      'ash_form=ash_form'
       'tensile=tensile'
       'strength=strength'
-      'ket1=ket1'
-      'ket2=ket2'
-      'ket3=ket3'
-      'ket4=ket4'
-      'ket_rata2=ket_rata2'
-      'iddetail=iddetail'
-      'jam_mulai=jam_mulai'
-      'jam_mati=jam_mati')
+      'note1=note1'
+      'note2=note2'
+      'note3=note3'
+      'note4=note4'
+      'note_avg=note_avg'
+      'start_time=start_time'
+      'end_time=end_time'
+      'id_1=id_1')
     DataSet = QRpt_QCBakar
     BCDToCurrency = False
     DataSetOptions = []
@@ -2090,11 +958,11 @@ object FFor_Testbakar: TFFor_Testbakar
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select * from t_formula_testbakar A inner join t_formula_testbak' +
-        'ar_det B on a.no_test=b.no_test'
+        'select * from "warehouse".t_formula_burn_test A inner join "ware' +
+        'house".t_formula_burn_test_det B on a.test_no=b.test_no'
       '--where a.no_test='#39'002/II/21/MLB'#39)
     DetailFields = 'no_test'
-    Left = 440
+    Left = 448
     Top = 264
   end
   object ActMenu: TActionManager

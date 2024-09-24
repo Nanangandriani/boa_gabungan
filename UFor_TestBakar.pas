@@ -238,12 +238,12 @@ begin
   Filtered:=True; }
   CLOSE;
   sql.Clear;
-  sql.Text:='select * from t_formula_testbakar A inner join t_formula_testbakar_det B on a.no_test=b.no_test where a.no_test='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
+  sql.Text:='select * from "warehouse".t_formula_burn_test A inner join "warehouse".t_formula_burn_test_det B on a.test_no=b.test_no where a.test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
   ExecSQL;
 end;
   QRpt_QCBakar.Open;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_QCBakarFormula.Fr3');
-  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_TestBakar.Fr3');
+//  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
   //Tfrxmemoview(Rpt.FindObject('MJudul')).Memo.Text:='QC ';
   Rpt.ShowReport();
 end;
