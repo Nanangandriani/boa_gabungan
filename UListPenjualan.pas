@@ -115,6 +115,18 @@ type
     QCetaktrans_no: TStringField;
     QCetaktrans_date: TDateField;
     QCetakSJtrans_date: TDateField;
+    QJurnal: TUniQuery;
+    frxDBDJurnal: TfrxDBDataset;
+    dxBarLargeButton5: TdxBarLargeButton;
+    QJurnaltrans_no: TStringField;
+    QJurnalaccount_code: TStringField;
+    QJurnalmodule_id: TSmallintField;
+    QJurnalmodule_name: TStringField;
+    QJurnalstatus_dk: TStringField;
+    QJurnalaccount_name: TStringField;
+    QJurnaldb: TFloatField;
+    QJurnalkd: TFloatField;
+    QJurnaltrans_date: TDateField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -122,6 +134,7 @@ type
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -366,6 +379,37 @@ begin
    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
    SetMemo(Report,'alamat_pt',FHomeLogin.vAlamatPRSH);
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton5Click(Sender: TObject);
+begin
+   with QJurnal do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'');
+     open;
+    end;
+
+
+ if QJurnal.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QJurnal.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
    //Report.DesignReport();
    Report.ShowReport();
  end;

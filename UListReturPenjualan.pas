@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFListReturPenjualan = class(TForm)
@@ -78,12 +78,55 @@ type
     QReturJualgrand_tot: TFloatField;
     QReturJualtrans_no: TStringField;
     QReturJualtrans_date: TDateField;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    QCetak: TUniQuery;
+    frxDBDRetPenjualan: TfrxDBDataset;
+    Report: TfrxReport;
+    QCetaktrans_no: TStringField;
+    QCetakcode_item: TStringField;
+    QCetakname_item: TStringField;
+    QCetakamount: TFloatField;
+    QCetakamount_sale: TFloatField;
+    QCetakcode_unit: TStringField;
+    QCetakname_unit: TStringField;
+    QCetakunit_price: TFloatField;
+    QCetakunit_price_sale: TFloatField;
+    QCetaksub_total: TFloatField;
+    QCetakppn_account: TStringField;
+    QCetakppn_percent: TFloatField;
+    QCetakppn_value: TFloatField;
+    QCetakpph_account: TStringField;
+    QCetakpph_value: TFloatField;
+    QCetakpph_name: TStringField;
+    QCetakpph_percent: TFloatField;
+    QCetakgrand_tot: TFloatField;
+    QCetakaccount_code: TStringField;
+    QCetakcode_cust: TStringField;
+    QCetakname_cust: TStringField;
+    QCetakno_trans_sale: TStringField;
+    QCetaktrans_date: TDateField;
+    QCetakaddress: TMemoField;
+    dxBarLargeButton2: TdxBarLargeButton;
+    QJurnal: TUniQuery;
+    QJurnaltrans_no: TStringField;
+    QJurnalaccount_code: TStringField;
+    QJurnalmodule_id: TSmallintField;
+    QJurnalmodule_name: TStringField;
+    QJurnalstatus_dk: TStringField;
+    QJurnalaccount_name: TStringField;
+    QJurnaldb: TFloatField;
+    QJurnalkd: TFloatField;
+    QJurnaltrans_date: TDateField;
+    frxDBDJurnal: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure QReturJualdescriptionGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -198,6 +241,94 @@ begin
   FDataReturPenjualan.RefreshGrid;
   FDataReturPenjualan.Show;
   FDataReturPenjualan.Status := 1;
+end;
+
+procedure TFListReturPenjualan.dxBarLargeButton1Click(Sender: TObject);
+begin
+   with QCetak do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * from '+
+             ' ( SELECT "trans_no", "code_item", "name_item", "amount", "amount_sale", '+
+             ' "code_unit",  "name_unit", "unit_price", "unit_price_sale", "sub_total", '+
+             ' "ppn_account", "ppn_percent",  "ppn_value", "pph_account", "pph_value", '+
+             ' "pph_name", "pph_percent", "grand_tot", "account_code", "no_trans_sale"  '+
+             ' FROM  "sale"."t_sales_returns_det") a  '+
+             ' LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_cust" '+
+             ' from "sale"."t_sales_returns") b  ON a.trans_no=b.trans_no '+
+             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on b.code_cust=d.customer_code '+
+             ' WHERE a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' '+
+             ' Order By a.trans_no, code_item desc');
+     open;
+    end;
+
+
+ if QCetak.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetak.RecordCount<>0 then
+ begin
+   // Dapetin Grand Total
+   with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add(' select * '+
+             ' from "sale"."t_sales_returns" a '+
+             ' where a.deleted_at is null and '+
+             ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
+     open;
+    end;
+    //
+
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt__retur_penjualan'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
+   SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
+   SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+   SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
+end;
+
+procedure TFListReturPenjualan.dxBarLargeButton2Click(Sender: TObject);
+begin
+   with QJurnal do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+'');
+     open;
+    end;
+
+
+ if QJurnal.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QJurnal.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
 end;
 
 procedure TFListReturPenjualan.QReturJualdescriptionGetText(Sender: TField;
