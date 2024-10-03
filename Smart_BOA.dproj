@@ -236,10 +236,6 @@
             <Form>FNew_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UNew_Perusahaan.pas">
             <Form>FNewPerusahaan</Form>
             <FormType>dfm</FormType>
@@ -403,10 +399,6 @@
         </DCCReference>
         <DCCReference Include="Uimportnocek.pas">
             <Form>FImportnocek</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListItempo.pas">
-            <Form>Flistitempo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Ulist_materialstok.pas">
@@ -756,6 +748,7 @@
             <Form>FDaftarPenagihanPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< HEAD
         <DCCReference Include="Unew_spb.pas">
             <Form>FNew_SPB</Form>
             <FormType>dfm</FormType>
@@ -802,6 +795,14 @@
         </DCCReference>
         <DCCReference Include="u_rencana_lunas_hutang_input.pas">
             <Form>frmrencanalunashutang</Form>
+=======
+        <DCCReference Include="UListItempo.pas">
+            <Form>Flistitempo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+>>>>>>> 3a05723c6a0c6a565ff4d9c88e0e76e48b18fc21
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
