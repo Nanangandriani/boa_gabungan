@@ -169,8 +169,8 @@ uses
   URincianPot_Penjualan in 'URincianPot_Penjualan.pas' {FRincianPot_Penjualan},
   UMovingDPP in 'UMovingDPP.pas' {FMovingDPP},
   UDaftarPenagihanPiutang in 'UDaftarPenagihanPiutang.pas' {FDaftarPenagihanPiutang},
-  UListItempo in 'UListItempo.pas' {Flistitempo},
-  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan};
+  URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
+  UMaster_DataHeader in 'UMaster_DataHeader.pas' {FMaster_DataHeader};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -244,6 +244,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFRincianPot_Penjualan, FRincianPot_Penjualan);
   Application.CreateForm(TFMovingDPP, FMovingDPP);
   Application.CreateForm(TFDaftarPenagihanPiutang, FDaftarPenagihanPiutang);
+  Application.CreateForm(TFMaster_DataHeader, FMaster_DataHeader);
   //  Application.CreateForm(TFListProduk, FListProduk);
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);

@@ -526,8 +526,8 @@ begin
           ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code INNER JOIN t_menu b '+
           ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
           ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-          ' WHERE dd.dept_code='+QuotedStr(dept_code)+
-          ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+          ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+          ' and cc.master_name='+QuotedStr(Menu)+
           ' Order by bb.created_at desc ';
           open;
           First;

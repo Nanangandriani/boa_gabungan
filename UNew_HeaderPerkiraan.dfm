@@ -3,8 +3,8 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Input Header Perkiraan'
-  ClientHeight = 100
-  ClientWidth = 345
+  ClientHeight = 220
+  ClientWidth = 389
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,36 +17,78 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
   OnDestroy = FormDestroy
   TextHeight = 13
   object Label14: TLabel
-    Left = 8
-    Top = 11
-    Width = 62
+    Left = 24
+    Top = 118
+    Width = 68
     Height = 13
-    Caption = 'Kode Header'
+    Caption = 'Kode Header4'
   end
   object Label15: TLabel
-    Left = 91
-    Top = 11
+    Left = 107
+    Top = 118
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label17: TLabel
-    Left = 91
-    Top = 38
+    Left = 107
+    Top = 150
     Width = 4
     Height = 13
     Caption = ':'
   end
   object Label16: TLabel
-    Left = 8
-    Top = 38
-    Width = 65
+    Left = 24
+    Top = 150
+    Width = 71
     Height = 13
-    Caption = 'Nama Header'
+    Caption = 'Nama Header4'
+  end
+  object Label1: TLabel
+    Left = 24
+    Top = 16
+    Width = 71
+    Height = 13
+    Caption = 'Nama Header1'
+  end
+  object Label2: TLabel
+    Left = 107
+    Top = 16
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label3: TLabel
+    Left = 107
+    Top = 48
+    Width = 4
+    Height = 13
+    Caption = ':'
+  end
+  object Label4: TLabel
+    Left = 24
+    Top = 48
+    Width = 71
+    Height = 13
+    Caption = 'Nama Header2'
+  end
+  object Label5: TLabel
+    Left = 24
+    Top = 84
+    Width = 71
+    Height = 13
+    Caption = 'Nama Header3'
+  end
+  object Label6: TLabel
+    Left = 107
+    Top = 84
+    Width = 4
+    Height = 13
+    Caption = ':'
   end
   object edkode_header: TEdit
-    Left = 103
-    Top = 8
+    Left = 119
+    Top = 115
     Width = 234
     Height = 21
     BiDiMode = bdLeftToRight
@@ -56,8 +98,8 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
     TabOrder = 0
   end
   object ednama_header: TEdit
-    Left = 103
-    Top = 35
+    Left = 119
+    Top = 147
     Width = 234
     Height = 21
     CharCase = ecUpperCase
@@ -65,15 +107,15 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 68
-    Width = 345
+    Top = 188
+    Width = 389
     Height = 32
     Align = alBottom
     TabOrder = 2
     ExplicitTop = 67
     ExplicitWidth = 341
     object BBatal: TRzBitBtn
-      Left = 269
+      Left = 313
       Top = 1
       Height = 30
       Align = alRight
@@ -135,7 +177,7 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
       ExplicitLeft = 265
     end
     object BSave: TRzBitBtn
-      Left = 184
+      Left = 228
       Top = 1
       Width = 85
       Height = 30
@@ -197,5 +239,36 @@ object FNewHeaderPerkiraan: TFNewHeaderPerkiraan
       NumGlyphs = 2
       ExplicitLeft = 180
     end
+  end
+  object EdNm_Header1: TRzButtonEdit
+    Left = 119
+    Top = 16
+    Width = 234
+    Height = 21
+    Text = ''
+    TabOrder = 3
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = EdNm_Header1ButtonClick
+  end
+  object EdNm_Header2: TRzButtonEdit
+    Left = 119
+    Top = 48
+    Width = 234
+    Height = 21
+    Text = ''
+    TabOrder = 4
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+  end
+  object EdNm_header3: TRzButtonEdit
+    Left = 119
+    Top = 81
+    Width = 234
+    Height = 21
+    Text = ''
+    TabOrder = 5
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
   end
 end

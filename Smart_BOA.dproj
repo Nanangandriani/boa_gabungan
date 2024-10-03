@@ -738,22 +738,19 @@
         </DCCReference>
         <DCCReference Include="URincianPot_Penjualan.pas">
             <Form>FRincianPot_Penjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UMovingDPP.pas">
             <Form>FMovingDPP</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDaftarPenagihanPiutang.pas">
             <Form>FDaftarPenagihanPiutang</Form>
+        </DCCReference>
+        <DCCReference Include="URpt_BukuHarianPembelian.pas">
+            <Form>FRpt_BukuHarianPembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListItempo.pas">
-            <Form>Flistitempo</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
+        <DCCReference Include="UMaster_DataHeader.pas">
+            <Form>FMaster_DataHeader</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
