@@ -172,6 +172,8 @@ begin
         EdNm_supp.Text:=Memterima_material.FieldByName('supplier_name').AsString;
         Edkd_supp.Text:=Memterima_material.FieldByName('supplier_code').AsString;
         Edjatuhtempo.Text:=Memterima_material.FieldByName('due_date').AsString;
+        Cb_Sumber.Text:='';
+        Cb_Ref.Text:=Memterima_material.FieldByName('ref_no').AsString;
         Edkd_akun.Text:=Memterima_material.FieldByName('account_code').AsString;
         EdNm_akun.Text:=Memterima_material.FieldByName('account_name').AsString;
         Edjenis.Text:=Memterima_material.FieldByName('purchase_type').AsString;
@@ -235,6 +237,7 @@ begin
           MemterimaDet['bea_masuk']:=QTerimaDet.FieldByName('import_duty').AsString;
           MemterimaDet['nourut']:=QTerimaDet.FieldByName('order_no').AsString;
           MemterimaDet['pemb_dpp']:=QTerimaDet.FieldByName('pemb_dpp').AsString;
+          MemterimaDet['ref_no']:=QTerimaDet.FieldByName('ref_no').AsString;
           MemterimaDet.Post;
           QTerimaDet.Next;
         end;

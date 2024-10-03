@@ -25,6 +25,7 @@ object FSPB: TFSPB
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
+      Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
@@ -1280,7 +1281,7 @@ object FSPB: TFSPB
         FillGap.Right = 0
         Frame.Typ = []
         Height = 410.636363640000000000
-        Top = 18.897650000000000000
+        Top = 16.000000000000000000
         Width = 718.110700000000000000
         DataSet = DBSPB
         DataSetName = 'DBSPB'

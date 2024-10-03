@@ -850,16 +850,15 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 1117
       Height = 213
       Hint = ''
-      ActivePage = Tab_UM
+      ActivePage = TabBarang2
       Align = alTop
-      TabIndex = 1
+      TabIndex = 0
       TabOrder = 8
       ExplicitWidth = 1111
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
-        ExplicitWidth = 1107
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -1116,6 +1115,7 @@ object FNew_Pembelian: TFNew_Pembelian
               DynProps = <>
               EditButtons = <
                 item
+                  OnClick = DBGridDetailpoColumns22EditButtons0Click
                 end>
               FieldName = 'kd_akunpph'
               Footers = <>
@@ -1139,6 +1139,7 @@ object FNew_Pembelian: TFNew_Pembelian
               DynProps = <>
               EditButtons = <
                 item
+                  OnClick = DBGridDetailpoColumns24EditButtons0Click
                 end>
               FieldName = 'kd_akunbea'
               Footer.FieldName = 'kd_akunbea'
@@ -1203,6 +1204,7 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
+        ExplicitWidth = 1107
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1781,8 +1783,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Align = alTop
       Color = 15987699
       TabOrder = 9
-      ExplicitLeft = 3
-      ExplicitTop = 218
+      ExplicitWidth = 1111
       object Label28: TLabel
         Left = 26
         Top = 81
@@ -1996,6 +1997,9 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object MemterimaDetwh_code: TStringField
       FieldName = 'wh_code'
+    end
+    object MemterimaDetref_no: TStringField
+      FieldName = 'ref_no'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -2246,6 +2250,11 @@ object FNew_Pembelian: TFNew_Pembelian
         end
         object wh_code: TMTStringDataFieldEh
           FieldName = 'wh_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object ref_no: TMTStringDataFieldEh
+          FieldName = 'ref_no'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end

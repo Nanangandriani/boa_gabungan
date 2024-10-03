@@ -756,6 +756,54 @@
             <Form>FDaftarPenagihanPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Unew_spb.pas">
+            <Form>FNew_SPB</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_Po.pas">
+            <Form>Fsearch_po</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_Purchase_Order.pas">
+            <Form>FUSearch_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_TerimaMaterial.pas">
+            <Form>FNew_TerimaMaterial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UTerima_Material.pas">
+            <Form>FTerima_Material</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_TerimaBarang.pas">
+            <Form>FSearch_TerimaBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Usearch_MatTerima.pas">
+            <Form>FSearch_Matterima</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_ItemRetur.pas">
+            <Form>FSearch_MaterialRetur</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_rencana_lunas_hutang.pas">
+            <Form>Frencanalunashutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="udafajuankeluarkasbank.pas">
+            <Form>Fdafajuankeluarkasbank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_daf_keluar_kas_bank.pas">
+            <Form>Fdaf_pengeluaran_kas_bank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_rencana_lunas_hutang_input.pas">
+            <Form>frmrencanalunashutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

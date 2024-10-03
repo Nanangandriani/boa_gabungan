@@ -99,7 +99,7 @@ begin
       FNew_TerimaMaterial.BSimpan.Visible:=true;
       FNew_TerimaMaterial.BEdit.Visible:=false;
       EdNoSPB.Enabled:=True;
-      Caption:='New Terima Material';
+      Caption:='New Terima Barang';
     end;
 end;
 

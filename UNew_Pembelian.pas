@@ -162,6 +162,7 @@ type
     EdJum_ReturPemb: TRzNumericEdit;
     EdJum_totalhut: TRzNumericEdit;
     Label29: TLabel;
+    MemterimaDetref_no: TStringField;
     procedure Button1Click(Sender: TObject);
     procedure EdjenisSelect(Sender: TObject);
     procedure FormShow(Sender: TObject);

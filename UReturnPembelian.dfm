@@ -25,6 +25,7 @@ object FReturnPembelian: TFReturnPembelian
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
+      Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
