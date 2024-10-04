@@ -25,7 +25,7 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     TabOrder = 0
-    OnCellClick = DBGridEh1CellClick
+    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>

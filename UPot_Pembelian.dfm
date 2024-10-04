@@ -25,6 +25,7 @@ object FPot_Pembelian: TFPot_Pembelian
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
+      Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
@@ -1842,7 +1843,6 @@ object FPot_Pembelian: TFPot_Pembelian
         'Group by d.supplier_name,f.faktur_date,  d.address,d.npwp,a.disc' +
         'ount_no, a.discount_date,a.faktur_no, a.price, g.item_name,f.pib' +
         '_no,f.receive_date,h.price')
-    Active = True
     Left = 672
     Top = 65528
   end

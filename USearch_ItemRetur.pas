@@ -13,8 +13,8 @@ type
     DsMaterial: TDataSource;
     Qmaterial: TUniQuery;
     DBGridEh1: TDBGridEh;
-    procedure DBGridEh1CellClick(Column: TColumnEh);
     procedure FormShow(Sender: TObject);
+    procedure DBGridEh1DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,7 +31,7 @@ implementation
 
 uses UNew_ReturnPembelian, UNew_Pot_Pembelian, UPot_Pembelian;
 
-procedure TFSearch_MaterialRetur.DBGridEh1CellClick(Column: TColumnEh);
+procedure TFSearch_MaterialRetur.DBGridEh1DblClick(Sender: TObject);
 begin
     if jenis_tr='rt_pemb' then
     begin

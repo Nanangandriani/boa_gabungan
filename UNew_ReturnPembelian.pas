@@ -323,7 +323,7 @@ begin
       with Qmaterial do
       begin
         Filtered:=false;
-        Filter:=' supplier_code='+QuotedStr(Edkd_supp.Text)+' and ';
+        Filter:='supplier_code='+QuotedStr(Edkd_supp.Text)+' and receive_no='+QuotedStr(Edno_terima.Text)+' ';
         FilterOptions:=[];
         Filtered:=True;
       end;
