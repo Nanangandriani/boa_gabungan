@@ -2908,6 +2908,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         'ase_invoice_det b on a.trans_no=b.trans_no INNER JOIN t_supplier' +
         ' c on a.supplier_code=c.supplier_code INNER JOIN warehouse.t_ite' +
         'm_stock d on b.item_stock_code=d.item_stock_code')
+    Active = True
     Left = 195
     Top = 157
   end
@@ -3248,6 +3249,43 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   object Rpt_BHP: TfrxDBDataset
     UserName = 'Rpt_BHP'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'supp=supp'
+      'qty=qty'
+      'subtotalrp=subtotalrp'
+      'akunum=akunum'
+      'um=um'
+      'sisa_hutang=sisa_hutang'
+      'ppnrp=ppnrp'
+      'nm_material=nm_material'
+      'kd_material_stok=kd_material_stok'
+      'tgl_terima=tgl_terima'
+      'no_terima=no_terima'
+      'ket=ket'
+      'nosj=nosj'
+      'nofaktur=nofaktur'
+      'kd_supplier=kd_supplier'
+      'kd_akun=kd_akun'
+      'jenis_pembelian=jenis_pembelian'
+      'jmlh_bayar=jmlh_bayar'
+      'valas=valas'
+      'nilai_valas=nilai_valas'
+      'no_perk=no_perk'
+      'nm_perk=nm_perk'
+      'grandtotal=grandtotal'
+      'category=category'
+      'pph_rp=pph_rp'
+      'totalbaku=totalbaku'
+      'totalkm=totalkm'
+      'totalpnl=totalpnl'
+      'totalkms=totalkms'
+      'total2=total2'
+      'ppnrp2=ppnrp2'
+      'hutang=hutang'
+      'kd_sbu=kd_sbu'
+      'id=id'
+      'ppn2=ppn2'
+      'kdakunpph=kdakunpph')
     DataSet = QRptBHP
     BCDToCurrency = False
     DataSetOptions = []
@@ -3287,11 +3325,11 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       PaperWidth = 355.600000000000000000
       PaperHeight = 215.900000000000000000
       PaperSize = 5
-      LeftMargin = 5.000000000000000000
-      RightMargin = 5.000000000000000000
-      TopMargin = 5.000000000000000000
-      BottomMargin = 5.000000000000000000
-      Frame.Typ = []
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
       object PageHeader1: TfrxPageHeader
         FillType = ftBrush
@@ -3302,7 +3340,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         Frame.Typ = []
         Height = 103.937007870000000000
         Top = 18.897650000000000000
-        Width = 1306.205568000000000000
+        Width = 1268.410268000000000000
         object Memo16: TfrxMemoView
           AllowVectorExport = True
           Left = 599.055118110000000000
@@ -3451,7 +3489,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           AllowVectorExport = True
           Left = 950.551181100000000000
           Top = 62.362204720000000000
-          Width = 266.456692913386000000
+          Width = 319.370112910000000000
           Height = 15.986404350000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3467,9 +3505,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo47: TfrxMemoView
           AllowVectorExport = True
-          Left = 950.551181102362000000
+          Left = 950.551181100000000000
           Top = 78.257814130000000000
-          Width = 41.574803150000000000
+          Width = 56.692913385826800000
           Height = 26.032319310000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3485,9 +3523,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
-          Left = 992.125984251969000000
+          Left = 1007.244104250000000000
           Top = 77.912986540000000000
-          Width = 94.488188980000000000
+          Width = 98.267716540000000000
           Height = 26.377146900000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3503,9 +3541,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo69: TfrxMemoView
           AllowVectorExport = True
-          Left = 1086.614173230000000000
+          Left = 1105.511823230000000000
           Top = 77.912986540000000000
-          Width = 71.811023622047200000
+          Width = 86.929133858267700000
           Height = 26.377146900000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3521,9 +3559,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo70: TfrxMemoView
           AllowVectorExport = True
-          Left = 1158.425196850000000000
+          Left = 1192.440966850000000000
           Top = 77.669578830000000000
-          Width = 58.582677165354300000
+          Width = 75.590551180000000000
           Height = 26.620554610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3595,7 +3633,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           AllowVectorExport = True
           Left = 599.055118110000000000
           Top = 45.435683330000000000
-          Width = 616.818897640000000000
+          Width = 669.732317640000000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3665,7 +3703,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         object Memo3: TfrxMemoView
           AllowVectorExport = True
           Left = 195.023622050000000000
-          Width = 1021.658087990000000000
+          Width = 1074.571507990000000000
           Height = 45.354330710000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3690,7 +3728,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = [ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            ' ML')
+            ' MLB')
           ParentFont = False
           VAlign = vaBottom
         end
@@ -3797,8 +3835,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         FillGap.Right = 0
         Frame.Typ = []
         Height = 26.456710000000000000
-        Top = 185.196970000000000000
-        Width = 1306.205568000000000000
+        Top = 343.937230000000000000
+        Width = 1268.410268000000000000
         DataSet = Rpt_BHP
         DataSetName = 'Rpt_BHP'
         RowCount = 0
@@ -3927,8 +3965,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo83: TfrxMemoView
           AllowVectorExport = True
-          Left = 950.551181102362000000
-          Width = 41.574803150000000000
+          Left = 950.551181100000000000
+          Width = 56.692913385826800000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
           DataField = 'no_perk'
@@ -3947,8 +3985,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo84: TfrxMemoView
           AllowVectorExport = True
-          Left = 992.125984251969000000
-          Width = 94.488188980000000000
+          Left = 1007.244104250000000000
+          Width = 98.267716540000000000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
           DataField = 'nm_perk'
@@ -3968,8 +4006,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo86: TfrxMemoView
           AllowVectorExport = True
-          Left = 1158.425196850000000000
-          Width = 58.582677170000000000
+          Left = 1192.440966850000000000
+          Width = 75.590551180000000000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
           DataField = 'ppnrp2'
@@ -4166,8 +4204,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo53: TfrxMemoView
           AllowVectorExport = True
-          Left = 1086.614173230000000000
-          Width = 71.811023622047200000
+          Left = 1105.511823230000000000
+          Width = 86.929133858267700000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
           DataField = 'total2'
@@ -4187,6 +4225,18 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           ParentFont = False
           VAlign = vaCenter
         end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 136.063080000000000000
+        Top = 185.196970000000000000
+        Width = 1268.410268000000000000
+        Condition = 'Rpt_BHP."category"'
       end
     end
   end
