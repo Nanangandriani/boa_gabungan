@@ -176,8 +176,13 @@ begin
     edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
     edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
     vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
-    edKodePerkiraan.Text:=Dm.Qtemp.FieldByName('account_code').AsString;
-    KodeHeaderPerkiraan:=Dm.Qtemp.FieldByName('header_code').AsString;
+    edAkunPiutang.Text:=Dm.Qtemp.FieldByName('account_code').AsString;
+    edNamaPiutang.Text:=SelectRow('select account_name from t_ak_account where code='+QuotedSTR(Dm.Qtemp.FieldByName('account_code').AsString));
+    KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code').AsString;
+    edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
+    edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account where code='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
+    KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code2').AsString;
+    Edkodeinitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
     edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
     edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
     edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
@@ -193,8 +198,11 @@ begin
   end;
   end;
   FNew_Pelanggan.Edkode.Enabled:=false;
-  FNew_Pelanggan.edKodePerkiraan.Enabled:=false;
-  FNew_Pelanggan.edKodePerkiraan.ReadOnly:=true;
+  FNew_Pelanggan.edAkunPiutang.Enabled:=false;
+  FNew_Pelanggan.edAkunPiutangLainLain.Enabled:=false;
+  FNew_Pelanggan.edAkunPiutang.ReadOnly:=true;
+  FNew_Pelanggan.edAkunPiutangLainLain.ReadOnly:=true;
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabMasterPelanggan;
   FNew_Pelanggan.Show;
   Status := 1;
 end;
@@ -230,8 +238,11 @@ begin
   begin
     FNew_Pelanggan.Clear;
     FNew_Pelanggan.Edkode.Enabled:=true;
-    FNew_Pelanggan.edKodePerkiraan.Enabled:=true;
-    FNew_Pelanggan.edKodePerkiraan.ReadOnly:=false;
+    FNew_Pelanggan.edAkunPiutang.Enabled:=true;
+    FNew_Pelanggan.edAkunPiutang.ReadOnly:=false;
+    FNew_Pelanggan.edAkunPiutangLainLain.Enabled:=true;
+    FNew_Pelanggan.edAkunPiutangLainLain.ReadOnly:=false;
+    FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabMasterPelanggan;
     FNew_Pelanggan.Autocode;
     FNew_Pelanggan.ShowModal;
     Status:=0;

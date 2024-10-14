@@ -98,15 +98,6 @@ begin
       QDaftar_Perk.Close;
     end;
 
-    if (vpanggil = 'm_akuntrans')then
-    begin
-      FDataMasterAkunTrans.MemDetail.Edit;
-      FDataMasterAkunTrans.MemDetail['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
-      FDataMasterAkunTrans.MemDetail['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
-      FDataMasterAkunTrans.MemDetail.post;
-
-      QDaftar_Perk.Close;
-    end;
     if (vpanggil = 'kategorimaterial')then
     begin
       FNew_KategoriBarang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;

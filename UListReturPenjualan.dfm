@@ -1112,7 +1112,7 @@ object FListReturPenjualan: TFListReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 45559.585954837960000000
+    ReportOptions.LastChange = 45562.614461828710000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1529,7 +1529,7 @@ object FListReturPenjualan: TFListReturPenjualan
           AllowVectorExport = True
           Left = 514.016080000000000000
           Top = 253.228510000000000000
-          Height = 667.086614173228000000
+          Height = 640.629921259842500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1547,7 +1547,7 @@ object FListReturPenjualan: TFListReturPenjualan
           AllowVectorExport = True
           Left = 755.906000000000000000
           Top = 253.228510000000000000
-          Height = 667.086614173228000000
+          Height = 640.629921259842500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1926,7 +1926,7 @@ object FListReturPenjualan: TFListReturPenjualan
         object Line12: TfrxLineView
           AllowVectorExport = True
           Left = 514.016080000000000000
-          Top = 79.370078740157500000
+          Top = 79.370078740000000000
           Width = 241.889920000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2112,7 +2112,6 @@ object FListReturPenjualan: TFListReturPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Active = True
     Left = 28
     Top = 256
     object QJurnaltrans_no: TStringField

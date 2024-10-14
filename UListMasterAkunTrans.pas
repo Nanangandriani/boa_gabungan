@@ -95,16 +95,41 @@ procedure TFListMasterAkunTrans.ActBaruExecute(Sender: TObject);
 begin
   FDataMasterAkunTrans.Clear;
   //FDataMasterAkunTrans.Autocode;
-  FDataMasterAkunTrans.MemDetail.EmptyTable;
   FDataMasterAkunTrans.Status:=0;
-  FDataMasterAkunTrans.edKodeModul.Enabled:=true;
-  FDataMasterAkunTrans.edNamaModul.Enabled:=true;
-  FDataMasterAkunTrans.edKodeTrans.Enabled:=true;
-  FDataMasterAkunTrans.edNamaTrans.Enabled:=true;
-  FDataMasterAkunTrans.edNamaBank.Enabled:=true;
-  FDataMasterAkunTrans.edNorekening.Enabled:=true;
-  FDataMasterAkunTrans.MemDetail.active:=false;
-  FDataMasterAkunTrans.MemDetail.active:=true;
+  //Beli
+    FDataMasterAkunTrans.edKodeModulBeli.Enabled:=true;
+    FDataMasterAkunTrans.edNamaModulBeli.Enabled:=true;
+    FDataMasterAkunTrans.edKodeTransBeli.Enabled:=true;
+    FDataMasterAkunTrans.edNamaTransBeli.Enabled:=true;
+    FDataMasterAkunTrans.TabPembelian.TabVisible:=true;
+  //Jual
+    FDataMasterAkunTrans.edKodeModulJual.Enabled:=true;
+    FDataMasterAkunTrans.edNamaModulJual.Enabled:=true;
+    FDataMasterAkunTrans.edKodeTransJual.Enabled:=true;
+    FDataMasterAkunTrans.edNamaTransJual.Enabled:=true;
+    FDataMasterAkunTrans.TabPenjualan.TabVisible:=true;
+  //Bank
+    FDataMasterAkunTrans.edKodeModul.Enabled:=true;
+    FDataMasterAkunTrans.edNamaModul.Enabled:=true;
+    FDataMasterAkunTrans.edKodeTrans.Enabled:=true;
+    FDataMasterAkunTrans.edNamaTrans.Enabled:=true;
+    FDataMasterAkunTrans.edNamaBank.Enabled:=true;
+    FDataMasterAkunTrans.edNorekening.Enabled:=true;
+    FDataMasterAkunTrans.MemDetail.EmptyTable;
+    FDataMasterAkunTrans.MemDetail.active:=false;
+    FDataMasterAkunTrans.MemDetail.active:=true;
+    FDataMasterAkunTrans.TabBank.TabVisible:=true;
+  //Kas
+    FDataMasterAkunTrans.edKodeModulKas.Enabled:=true;
+    FDataMasterAkunTrans.edNamaModulKas.Enabled:=true;
+    FDataMasterAkunTrans.edKodeTransKas.Enabled:=true;
+    FDataMasterAkunTrans.edNamaTransKas.Enabled:=true;
+    FDataMasterAkunTrans.MemDetailKas.EmptyTable;
+    FDataMasterAkunTrans.MemDetailKas.active:=false;
+    FDataMasterAkunTrans.MemDetailKas.active:=true;
+    FDataMasterAkunTrans.TabKas.TabVisible:=true;
+  //
+  FDataMasterAkunTrans.RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPembelian;
   FDataMasterAkunTrans.ShowModal;
 end;
 
@@ -151,26 +176,122 @@ begin
   end;
   if Dm.Qtemp.RecordCount<>0 then
   begin
-  with FDataMasterAkunTrans do
-  begin
-    edKodeModul.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
-    edNamaModul.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
-    edKodeTrans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
-    edNamaTrans.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
-    edNamaBank.Text:=Dm.Qtemp.FieldByName('account_name_bank').AsString;
-    edNorekening.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
-    MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
-    EdKodeInitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
-    rgTagihan.ItemIndex:=Dm.Qtemp.FieldByName('status_bill').AsInteger;
+    //Pembelian
+    if (QAkunTransaksi.FieldByName('code_module').AsString='2') then
+    begin
+      with FDataMasterAkunTrans do
+      begin
+        edKodeModulBeli.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModulBeli.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTransBeli.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTransBeli.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        MemKeteranganBeli.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitialBeli.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+        edKodeModulBeli.Enabled:=false;
+        edNamaModulBeli.Enabled:=false;
+        edKodeTransBeli.Enabled:=false;
+        edNamaTransBeli.Enabled:=false;
+        RefreshPembelian;
+        TabPembelian.TabVisible:=true;
+        TabPenjualan.TabVisible:=false;
+        TabBank.TabVisible:=false;
+        TabKas.TabVisible:=false;
+        RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPembelian;
+      end;
+    end;
+    //Penjualan
+    if (QAkunTransaksi.FieldByName('code_module').AsString='1') then
+    begin
+      with FDataMasterAkunTrans do
+      begin
+        edKodeModulJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModulJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTransJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTransJual.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        MemKeteranganJual.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitialJual.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+        edKodeModulJual.Enabled:=false;
+        edNamaModulJual.Enabled:=false;
+        edKodeTransJual.Enabled:=false;
+        edNamaTransJual.Enabled:=false;
+        RefreshPenjualan;
+        TabPembelian.TabVisible:=false;
+        TabPenjualan.TabVisible:=true;
+        TabBank.TabVisible:=false;
+        TabKas.TabVisible:=false;
+        RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPenjualan;
+      end;
+    end;
+    //Bank
+    if (QAkunTransaksi.FieldByName('code_module').AsString='3') or (QAkunTransaksi.FieldByName('code_module').AsString='5') then
+    begin
+      with FDataMasterAkunTrans do
+      begin
+        edKodeModul.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModul.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTrans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTrans.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        edNamaBank.Text:=Dm.Qtemp.FieldByName('account_name_bank').AsString;
+        edNorekening.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
+        MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+        rgTagihan.ItemIndex:=Dm.Qtemp.FieldByName('status_bill').AsInteger;
+        edKodeModul.Enabled:=false;
+        edNamaModul.Enabled:=false;
+        edKodeTrans.Enabled:=false;
+        edNamaTrans.Enabled:=false;
+        edNamaBank.Enabled:=false;
+        edNorekening.Enabled:=false;
+        TabPembelian.TabVisible:=false;
+        TabPenjualan.TabVisible:=false;
+        TabBank.TabVisible:=true;
+        TabKas.TabVisible:=false;
+        RefreshGridBank;
+        if edKodeModul.Text='3' then
+        begin
+          rgTagihan.Caption:='Ambil Data Piutang';
+        end;
+        if edKodeModul.Text='5' then
+        begin
+          rgTagihan.Caption:='Ambil Data Hutang';
+        end;
+        RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabBank;
+      end;
+    end;
+    //Kas
+    if (QAkunTransaksi.FieldByName('code_module').AsString='4') or (QAkunTransaksi.FieldByName('code_module').AsString='6') then
+    begin
+      with FDataMasterAkunTrans do
+      begin
+        edKodeModulKas.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModulKas.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTransKas.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTransKas.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        MemKeteranganKas.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitialKas.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+        rgTagihanKas.ItemIndex:=Dm.Qtemp.FieldByName('status_bill').AsInteger;
+        edKodeModulKas.Enabled:=false;
+        edNamaModulKas.Enabled:=false;
+        edKodeTransKas.Enabled:=false;
+        edNamaTransKas.Enabled:=false;
+        RefreshGridKas;
+        TabPembelian.TabVisible:=false;
+        TabPenjualan.TabVisible:=false;
+        TabBank.TabVisible:=false;
+        TabKas.TabVisible:=true;
+        if edKodeModulKas.Text='4' then
+        begin
+          rgTagihanKas.Caption:='Ambil Data Piutang';
+        end;
+        if edKodeModulKas.Text='6' then
+        begin
+          rgTagihanKas.Caption:='Ambil Data Hutang';
+        end;
+        RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabKas;
+      end;
+    end;
+
   end;
-  end;
-  FDataMasterAkunTrans.edKodeModul.Enabled:=false;
-  FDataMasterAkunTrans.edNamaModul.Enabled:=false;
-  FDataMasterAkunTrans.edKodeTrans.Enabled:=false;
-  FDataMasterAkunTrans.edNamaTrans.Enabled:=false;
-  FDataMasterAkunTrans.edNamaBank.Enabled:=false;
-  FDataMasterAkunTrans.edNorekening.Enabled:=false;
-  FDataMasterAkunTrans.RefreshGrid;
   FDataMasterAkunTrans.Show;
   FDataMasterAkunTrans.Status := 1;
 end;

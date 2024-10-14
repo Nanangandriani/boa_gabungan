@@ -11,9 +11,6 @@ uses
 
 type
   TFNew_Pelanggan = class(TForm)
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BSave: TRzBitBtn;
     DSDetailPel: TDataSource;
     MemDetailPel: TMemTableEh;
     MemDetailPelKODE_URUTAN_KE: TStringField;
@@ -22,12 +19,17 @@ type
     MemDetailPelCONTACT_PERSON2: TStringField;
     MemDetailPelCONTACT_PERSON3: TStringField;
     MemDetailPelURUTAN_KE: TIntegerField;
-    BDataProspek: TRzBitBtn;
-    Edautocode: TEdit;
-    btKlasifikasiHargaHargaJual: TRzBitBtn;
-    RzPageControl1: TRzPageControl;
-    TabSDetailPel: TRzTabSheet;
-    DBGridCustomer: TDBGridEh;
+    MemDetailPelLONGITUDE: TStringField;
+    MemDetailPelLATITUDE: TStringField;
+    RzPageControl2: TRzPageControl;
+    TabMasterPelanggan: TRzTabSheet;
+    Panel3: TPanel;
+    btNextStep: TRzBitBtn;
+    TabDetailPelanggan: TRzTabSheet;
+    Panel4: TPanel;
+    btBackStep: TRzBitBtn;
+    RzBitBtn1: TRzBitBtn;
+    TabAkunPerkiraan: TRzTabSheet;
     Panel1: TPanel;
     Label14: TLabel;
     Label13: TLabel;
@@ -45,8 +47,6 @@ type
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
-    Label23: TLabel;
-    Label24: TLabel;
     Label25: TLabel;
     Label26: TLabel;
     Label27: TLabel;
@@ -56,9 +56,10 @@ type
     Label2: TLabel;
     btJenisPelanggan: TSpeedButton;
     btMasterGolongan: TSpeedButton;
-    Label4: TLabel;
-    Label7: TLabel;
     Label8: TLabel;
+    btJenisUsaha: TSpeedButton;
+    Label9: TLabel;
+    Label11: TLabel;
     Edemail: TEdit;
     Edtempo: TEdit;
     Edkode: TEdit;
@@ -68,31 +69,51 @@ type
     Ednik: TEdit;
     cbpkp: TCheckBox;
     Ednomorva: TEdit;
-    Ednamawilayah: TEdit;
-    Edkodepos: TEdit;
     edJenisPelanggan: TRzButtonEdit;
     edTypePenjualan: TRzButtonEdit;
     edGolonganPelanggan: TRzButtonEdit;
     edKode_jnispel: TEdit;
     edKode_typejual: TEdit;
     edKode_gol: TEdit;
-    Edkodewilayah: TRzButtonEdit;
-    btMasterDetailPel: TSpeedButton;
-    MemDetailPelLONGITUDE: TStringField;
-    MemDetailPelLATITUDE: TStringField;
     edKode_JenisUsaha: TEdit;
-    btJenisUsaha: TSpeedButton;
     edJenisUsaha: TRzButtonEdit;
-    Label9: TLabel;
-    Label11: TLabel;
-    Label29: TLabel;
-    edNamaKantorPusat: TEdit;
-    edKodePerkiraan: TRzButtonEdit;
+    RzPageControl1: TRzPageControl;
+    TabSDetailPel: TRzTabSheet;
+    DBGridCustomer: TDBGridEh;
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSave: TRzBitBtn;
+    BDataProspek: TRzBitBtn;
+    Edautocode: TEdit;
+    btKlasifikasiHargaHargaJual: TRzBitBtn;
+    Label33: TLabel;
+    Label34: TLabel;
+    Edkodeinitial: TEdit;
+    MemDetailPelALAMAT_UNTUK: TStringField;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Label36: TLabel;
     Label30: TLabel;
-    btKantorPusat: TSpeedButton;
-    Label31: TLabel;
+    edAkunPiutang: TRzButtonEdit;
+    edAkunPiutangLainLain: TRzButtonEdit;
+    edNamaPiutangLain: TEdit;
+    edNamaPiutang: TEdit;
+    Label35: TLabel;
+    Label29: TLabel;
     Label32: TLabel;
+    Label24: TLabel;
+    Label4: TLabel;
+    Edkodepos: TEdit;
+    Edkodewilayah: TRzButtonEdit;
+    edNamaKantorPusat: TEdit;
     edKodeKantorPusat: TRzButtonEdit;
+    btKantorPusat: TSpeedButton;
+    Ednamawilayah: TEdit;
+    btMasterDetailPel: TSpeedButton;
+    Label7: TLabel;
+    Label23: TLabel;
+    Label31: TLabel;
+    RzBitBtn2: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -119,20 +140,26 @@ type
     procedure FormShow(Sender: TObject);
     procedure btJenisUsahaClick(Sender: TObject);
     procedure edJenisUsahaButtonClick(Sender: TObject);
-    procedure edKodePerkiraanButtonClick(Sender: TObject);
+    procedure edAkunPiutangButtonClick(Sender: TObject);
     procedure btKantorPusatClick(Sender: TObject);
     procedure edKodeKantorPusatButtonClick(Sender: TObject);
+    procedure edAkunPiutangLainLainButtonClick(Sender: TObject);
+    procedure btNextStepClick(Sender: TObject);
+    procedure btBackStepClick(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure RzBitBtn2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vid_prospek :Integer;
-    KodeHeaderPerkiraan :string;
+    KodeHeaderPiutang,KodeHeaderPiutangLain :string;
     procedure Clear;
     procedure Save;
     procedure Update;
     procedure Autocode;
-    procedure Autocode_perkiraan;
+    procedure Autocode_AkPiutang;
+    procedure Autocode_AkPiutangLain;
     procedure RefreshGrid;
     procedure InsertDetailAlamat;
   end;
@@ -238,6 +265,7 @@ begin
       begin
        FNew_Pelanggan.MemDetailPel.insert;
        FNew_Pelanggan.MemDetailPel['KODE_URUTAN_KE']:=Dm.Qtemp1.fieldbyname('code_details').value;
+       FNew_Pelanggan.MemDetailPel['ALAMAT_UNTUK']:=Dm.Qtemp1.fieldbyname('name_details').value;
        FNew_Pelanggan.MemDetailPel['ALAMAT']:='';
        FNew_Pelanggan.MemDetailPel['CONTACT_PERSON1']:='0';
        FNew_Pelanggan.MemDetailPel['CONTACT_PERSON2']:='0';
@@ -252,6 +280,7 @@ begin
       begin
        FNew_Pelanggan.MemDetailPel.insert;
        FNew_Pelanggan.MemDetailPel['KODE_URUTAN_KE']:=Dm.Qtemp1.fieldbyname('code_details').value;
+       FNew_Pelanggan.MemDetailPel['ALAMAT_UNTUK']:=Dm.Qtemp1.fieldbyname('name_details').value;
        FNew_Pelanggan.MemDetailPel['ALAMAT']:=Dm.Qtemp.fieldbyname('address').value;
        FNew_Pelanggan.MemDetailPel['CONTACT_PERSON1']:=Dm.Qtemp.fieldbyname('contact_person1').value;
        FNew_Pelanggan.MemDetailPel['CONTACT_PERSON2']:=Dm.Qtemp.fieldbyname('contact_person2').value;
@@ -264,6 +293,16 @@ begin
        Dm.Qtemp1.next;
       end;
   end;
+end;
+
+procedure TFNew_Pelanggan.RzBitBtn1Click(Sender: TObject);
+begin
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabAkunPerkiraan;
+end;
+
+procedure TFNew_Pelanggan.RzBitBtn2Click(Sender: TObject);
+begin
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabDetailPelanggan;
 end;
 
 procedure TFNew_Pelanggan.Autocode;
@@ -323,9 +362,10 @@ begin
 
   Edautocode.Text := 'PL'+kode;
   Edkode.Text := 'PL'+kode;
+  Edkodeinitial.Text := 'PL'+kode;
 end;
 
-procedure TFNew_Pelanggan.Autocode_perkiraan;
+procedure TFNew_Pelanggan.Autocode_AkPiutang;
 var
   kode : String;
   Urut : Integer;
@@ -335,7 +375,7 @@ begin
     Close;
     SQL.Clear;
     Sql.Text :=' select * from t_ak_account '+
-               ' where header_code='+QuotedSTR(KodeHeaderPerkiraan)+'  ';
+               ' where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
     open;
   end;
 
@@ -347,12 +387,12 @@ begin
         Close;
         Sql.Clear;
         Sql.Text :=' select count(header_code) as hasil '+
-                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPerkiraan)+'  ';
+                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
         Open;
       end;
       Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
   end;
-  edKodePerkiraan.Clear;
+  edAkunPiutang.Clear;
   kode := inttostr(urut);
   //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
 
@@ -381,7 +421,66 @@ begin
     kode := kode;
   end;
 
-  edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+kode;
+  edAkunPiutang.Text := KodeHeaderPiutang+'.'+kode;
+end;
+
+procedure TFNew_Pelanggan.Autocode_AkPiutangLain;
+var
+  kode : String;
+  Urut : Integer;
+begin
+  With DM.Qtemp2 do
+  begin
+    Close;
+    SQL.Clear;
+    Sql.Text :=' select * from t_ak_account '+
+               ' where header_code='+QuotedSTR(KodeHeaderPiutangLain)+'  ';
+    open;
+  end;
+
+  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
+  if Dm.Qtemp2.RecordCount > 0 then
+  begin
+      With Dm.Qtemp do
+      begin
+        Close;
+        Sql.Clear;
+        Sql.Text :=' select count(header_code) as hasil '+
+                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutangLain)+'  ';
+        Open;
+      end;
+      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+  end;
+  edAkunPiutangLainLain.Clear;
+  kode := inttostr(urut);
+  //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
+
+  if Length(kode)=1 then
+  begin
+    kode := '0000'+kode;
+  end
+  else
+  if Length(kode)=2 then
+  begin
+    kode := '000'+kode;
+  end
+  else
+  if Length(kode)=3 then
+  begin
+    kode := '00'+kode;
+  end
+  else
+  if Length(kode)=4 then
+  begin
+    kode := '0'+kode;
+  end
+  else
+  if Length(kode)=5 then
+  begin
+    kode := kode;
+  end;
+
+  edAkunPiutangLainLain.Text := KodeHeaderPiutangLain+'.'+kode;
 end;
 
 procedure TFNew_Pelanggan.CbtypejualKeyPress(Sender: TObject; var Key: Char);
@@ -395,8 +494,7 @@ end;
 procedure TFNew_Pelanggan.Clear;
 begin
   Edkode.Text:='';
-  edKodePerkiraan.Text:='';
-  KodeHeaderPerkiraan:='';
+  Edkodeinitial.Text:='';
   Ednama.Text:='';
   Ednamapkp.Text:='';
   Ednpwp.Text:='';
@@ -419,6 +517,27 @@ begin
   edKode_JenisUsaha.Text:='';
   edJenisUsaha.Text:='';
   MemDetailPel.EmptyTable;
+
+  with Dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * FROM (SELECT "code_module", "name_module", '+
+            ' "code_trans", "name_trans", "description", "account_number_bank", '+
+            ' "account_name_bank", "status_bill", "initial_code", "code_account", '+
+            ' "name_account", "code_account2", "name_account2" '+
+            ' from "public"."t_master_trans_account" '+
+            ' where deleted_at is null and code_module=''1'' '+
+            ' order by code_module, account_number_bank, code_trans asc)xx ');
+    open;
+  end;
+
+  edAkunPiutang.Text:=Dm.Qtemp.FieldByName('code_account').AsString;
+  KodeHeaderPiutang:=Dm.Qtemp.FieldByName('code_account').AsString;
+  edNamaPiutang.Text:=Dm.Qtemp.FieldByName('name_account').AsString;
+  edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('code_account2').AsString;
+  KodeHeaderPiutangLain:=Dm.Qtemp.FieldByName('code_account2').AsString;
+  edNamaPiutangLain.Text:=Dm.Qtemp.FieldByName('name_account2').AsString;
 end;
 
 procedure TFNew_Pelanggan.EdemailKeyPress(Sender: TObject; var Key: Char);
@@ -461,10 +580,18 @@ begin
   FMasterData.ShowModal;
 end;
 
-procedure TFNew_Pelanggan.edKodePerkiraanButtonClick(Sender: TObject);
+procedure TFNew_Pelanggan.edAkunPiutangButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Perkiraan';
-  FMasterData.vcall:='perkiraan_pelanggan';
+  FMasterData.vcall:='ak_piutang_pel';
+  FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edAkunPiutangLainLainButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Perkiraan';
+  FMasterData.vcall:='ak_piutang_lain_pel';
   FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
@@ -575,8 +702,11 @@ begin
               ' postal_code='+QuotedStr(Edkodepos.Text)+','+
               ' code_type='+QuotedStr(edKode_jnispel.Text)+','+
               ' name_type='+QuotedStr(edJenisPelanggan.Text)+','+
-              ' account_code='+QuotedStr(edKodePerkiraan.Text)+','+
-              ' header_code='+QuotedStr(KodeHeaderPerkiraan)+','+
+              ' account_code='+QuotedStr(edAkunPiutang.Text)+','+
+              ' header_code='+QuotedStr(KodeHeaderPiutang)+','+
+              ' account_code2='+QuotedStr(edAkunPiutangLainLain.Text)+','+
+              ' header_code2='+QuotedStr(KodeHeaderPiutangLain)+','+
+              ' initial_code='+QuotedStr(Edkodeinitial.Text)+','+
               ' code_head_office='+QuotedStr(edKodeKantorPusat.Text)+','+
               ' name_head_office='+QuotedStr(edNamaKantorPusat.Text)+','+
               ' code_type_business='+QuotedStr(edKode_JenisUsaha.Text)+','+
@@ -615,7 +745,8 @@ begin
     sql.add(' Insert into t_customer(idprospek,customer_code,customer_name,'+
             ' customer_name_pkp, no_npwp, no_nik, number_va, '+
             ' code_region, name_region, postal_code, code_type, name_type, '+
-            ' account_code, header_code, code_head_office, name_head_office, '+
+            ' account_code, header_code, account_code2, header_code2, initial_code, '+
+            ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
             ' email,payment_term,created_at,created_by, stat_pkp ) '+
@@ -632,8 +763,11 @@ begin
             ' '+QuotedStr(Edkodepos.Text)+', '+
             ' '+QuotedStr(edKode_jnispel.Text)+', '+
             ' '+QuotedStr(edJenisPelanggan.Text)+', '+
-            ' '+QuotedStr(edKodePerkiraan.Text)+', '+
-            ' '+QuotedStr(KodeHeaderPerkiraan)+', '+
+            ' '+QuotedStr(edAkunPiutang.Text)+', '+
+            ' '+QuotedStr(KodeHeaderPiutang)+', '+
+            ' '+QuotedStr(edAkunPiutangLainLain.Text)+', '+
+            ' '+QuotedStr(KodeHeaderPiutangLain)+', '+
+            ' '+QuotedStr(Edkodeinitial.Text)+', '+
             ' '+QuotedStr(edKodeKantorPusat.Text)+', '+
             ' '+QuotedStr(edNamaKantorPusat.Text)+', '+
             ' '+QuotedStr(edKode_JenisUsaha.Text)+', '+
@@ -679,12 +813,7 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if edKodePerkiraan.Text='' then
-      begin
-        MessageDlg('Kode Perkiraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKodePerkiraan.SetFocus;
-      end
-      else if Edkode.Text='' then
+      if Edkode.Text='' then
       begin
         MessageDlg('Kode Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         Edkode.SetFocus;
@@ -699,12 +828,23 @@ begin
         MessageDlg('Tempo Pembayaran Wajib Diisi..!!',mtInformation,[mbRetry],0);
         Ednama.SetFocus;
       end
+      else if edAkunPiutang.Text='' then
+      begin
+        MessageDlg('Kode Perkiraan Piutang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edAkunPiutang.SetFocus;
+      end
+      else if edAkunPiutangLainLain.Text='' then
+      begin
+        MessageDlg('Kode Perkiraan Piutang Lain - Lain Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edAkunPiutangLainLain.SetFocus;
+      end
       else if Status = 0 then
       begin
       if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         Autocode;
-        Autocode_perkiraan;
+        Autocode_AkPiutang;
+        Autocode_AkPiutangLain;
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -726,6 +866,11 @@ begin
         end;
       end;
       FMainMenu.TampilTabForm2;
+end;
+
+procedure TFNew_Pelanggan.btBackStepClick(Sender: TObject);
+begin
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabMasterPelanggan;
 end;
 
 procedure TFNew_Pelanggan.btJenisPelangganClick(Sender: TObject);
@@ -823,6 +968,11 @@ end;
 procedure TFNew_Pelanggan.btMasterWilayahClick(Sender: TObject);
 begin
   FMasterWilayah.Showmodal;
+end;
+
+procedure TFNew_Pelanggan.btNextStepClick(Sender: TObject);
+begin
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabDetailPelanggan;
 end;
 
 procedure TFNew_Pelanggan.CbgolonganKeyPress(Sender: TObject; var Key: Char);

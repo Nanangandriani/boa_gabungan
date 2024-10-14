@@ -150,6 +150,23 @@ begin
     FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FDataPenerimaanBank.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
     FDataPenerimaanBank.edUntukPengiriman.Text:=MemMasterData['NM_PELANGGAN'];
+
+    //Ganti Akun Header bank Menjadi Akun Piutang Pelanggan
+    with FDataPenerimaanBank do
+    begin
+      MemDetailAkun.First;
+      while not MemDetailAkun.Eof do
+      begin
+        if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])) then
+        begin
+        MemDetailAkun.Edit;
+        MemDetailAkun['kd_akun']:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+        MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_customer b ON a.code=b.account_code where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+        MemDetailAkun.post;
+      end;
+    MemDetailAkun.Next;
+    end;
+    end;
   end;
   if vcall='retur_penjualan' then
   begin

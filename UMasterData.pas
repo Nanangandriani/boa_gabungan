@@ -41,6 +41,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UDataPenagihanPiutang, UMovingDPP;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
+var 
+  vid_modul: string;
 begin
   //ShowMessage(vcall);
   if vcall='m_kolektor_moving' then
@@ -52,66 +54,109 @@ begin
   begin
     FDataPenagihanPiutang.edKodeKolektor.Text:=MemMasterData['KD_MASTER'];
     FDataPenagihanPiutang.edNamaKolektor.Text:=MemMasterData['NM_MASTER'];
+  end;         
+  if vcall='sumber_terima' then
+  begin
+    FDataPenerimaanBank.edKodeSumberTagihan.Text:=MemMasterData['KD_MASTER'];
+    FDataPenerimaanBank.edNMSumberTagihan.Text:=MemMasterData['NM_MASTER'];
+  end;               
+  if vcall='jenis_terima' then
+  begin
+    FDataPenerimaanBank.edKodeJenisBayar.Text:=MemMasterData['KD_MASTER'];
+    FDataPenerimaanBank.edNMJenisBayar.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='m_jns_transaksi' then
   begin
     with FDataPenerimaanBank do
     begin
       edKode_Pelanggan.Clear;
-      edNama_Pelanggan.Clear;
+      edNama_Pelanggan.Clear;  
+      edNoRek.Clear;
+      edNamaBank.Clear;
+      edKodeSumberTagihan.Clear;
+      edNMSumberTagihan.Clear;  
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
       MemDetailAkun.EmptyTable;
       MemDetailPiutang.EmptyTable;
+      Clear;
       edKodeJenisTrans.Text:=MemMasterData['KD_MASTER'];
       edNamaJenisTrans.Text:=MemMasterData['NM_MASTER'];
-      edNamaBank.Text:=SelectRow('select account_name_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
-      edNoRek.Text:=SelectRow('select account_number_bank from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
       additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
       additional_code2:='0';
       additional_code3:='0';
       additional_code4:='0';
       additional_code5:='0';
-    end;
-
+    end;  
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+  if vid_modul='3' then // Bank
+  begin
+    FDataPenerimaanBank.gbDataBank.Visible:=True;
+  end;  
+  if vid_modul='4' then // Kas
+  begin
+    FDataPenerimaanBank.gbDataBank.Visible:=False;
+  end;
+    
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
   begin
     with FDataPenerimaanBank do
-    begin
+    begin  
+      Panel5.Visible:=true;
       gbDataPiutang.Visible:=false;
       TabDetailFaktur.TabVisible:=false;
-      Panel1.Height:=230;
+      //Panel1.Height:=230;     
+      //Panel1.Height:=340;
       lbSumberTagihan.Visible:=false;
       lbSumberTagihann.Visible:=false;
       lbJenisBayar.Visible:=false;
       lbJenisBayarr.Visible:=false;
-      cbSumberTagihan.Visible:=false;
-      cbJenisBayar.Visible:=false;
-      cbSumberTagihan.ItemIndex:=0;
-      cbJenisBayar.ItemIndex:=0;
+      edKodeSumberTagihan.Visible:=false; 
+      edNMSumberTagihan.Visible:=false;  
+      edKodeJenisBayar.Visible:=false; 
+      edNMJenisBayar.Visible:=false;      
+      edKodeSumberTagihan.Clear;
+      edNMSumberTagihan.Clear;  
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
     end;
   end;
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
   begin
     with FDataPenerimaanBank do
-    begin
+    begin            
+      Panel5.Visible:=true;
       gbDataPiutang.Visible:=true;
       TabDetailFaktur.TabVisible:=true;
-      Panel1.Height:=340;
+      //Panel1.Height:=340;
       lbSumberTagihan.Visible:=true;
       lbSumberTagihann.Visible:=true;
       lbJenisBayar.Visible:=true;
       lbJenisBayarr.Visible:=true;
-      cbSumberTagihan.Visible:=true;
-      cbJenisBayar.Visible:=true;
-      cbSumberTagihan.ItemIndex:=0;
-      cbJenisBayar.ItemIndex:=0;
+      edKodeSumberTagihan.Visible:=false; 
+      edNMSumberTagihan.Visible:=true;  
+      edKodeJenisBayar.Visible:=false; 
+      edNMJenisBayar.Visible:=true;      
+      edKodeSumberTagihan.Clear;
+      edNMSumberTagihan.Clear;  
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
     end;
-  end;
 
+    if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
+      FDataPenerimaanBank.Panel5.Visible:=false
+    else    
+      FDataPenerimaanBank.Panel5.Visible:=true;  
+  
+  
+    
+  end;
   end;
   if vcall='m_mata_uang' then
   begin
     FDataPenerimaanBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
-    FDataPenerimaanBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
+    FDataPenerimaanBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];  
+    FDataPenerimaanBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
   end;
   if vcall='m_bank' then
   begin
@@ -124,11 +169,88 @@ begin
     FDataMasterAkunTrans.MemDetail['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
     FDataMasterAkunTrans.MemDetail.post;
   end;
-  if vcall='m_modul' then
+  if vcall='terima_bank' then
+  begin
+    FDataPenerimaanBank.edNorek.Text:=MemMasterData['KD_MASTER'];
+    FDataPenerimaanBank.edNamaBank.Text:=MemMasterData['NM_MASTER'];
+    //Ganti Akun Header bank Menjadi Akun No Rekening
+    with FDataPenerimaanBank do
+    begin
+      MemDetailAkun.First;
+      while not MemDetailAkun.Eof do
+      begin
+        if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])) then
+        begin
+        MemDetailAkun.Edit;
+        MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+        MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+        MemDetailAkun.post;
+      end;
+    MemDetailAkun.Next;
+    end;
+    end;
+  end;
+  if vcall='set_ak_trans_jual' then
+  begin
+    FDataMasterAkunTrans.edAkunPiutang.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaPiutang.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='set_ak_lain_trans_jual' then
+  begin
+    FDataMasterAkunTrans.edAkunPiutangLainLain.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaPiutangLain.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='m_akuntrans_bank' then
+  begin
+      FDataMasterAkunTrans.MemDetail.Edit;
+      FDataMasterAkunTrans.MemDetail['kd_akun']:=MemMasterData['KD_MASTER'];
+      FDataMasterAkunTrans.MemDetail['nm_akun']:=MemMasterData['NM_MASTER'];
+      FDataMasterAkunTrans.MemDetail.post;
+  end;
+  if vcall='m_akuntrans_kas' then
+  begin
+      FDataMasterAkunTrans.MemDetailKas.Edit;
+      FDataMasterAkunTrans.MemDetailKas['kd_akun']:=MemMasterData['KD_MASTER'];
+      FDataMasterAkunTrans.MemDetailKas['nm_akun']:=MemMasterData['NM_MASTER'];
+      FDataMasterAkunTrans.MemDetailKas.post;
+  end;
+
+
+  if vcall='set_ak_trans_beli' then
+  begin
+    FDataMasterAkunTrans.edAkunHutang.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaHutang.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='set_ak_lain_trans_beli' then
+  begin
+    FDataMasterAkunTrans.edAkunUangMukaHutang.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaUangMukaHutang.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='trans_bank' then
   begin
     FDataMasterAkunTrans.Clear;
     FDataMasterAkunTrans.edKodeModul.Text:=MemMasterData['KD_MASTER'];
     FDataMasterAkunTrans.edNamaModul.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='trans_kas' then
+  begin
+    FDataMasterAkunTrans.Clear;
+    FDataMasterAkunTrans.edKodeModulKas.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaModulKas.Text:=MemMasterData['NM_MASTER'];
+    FDataMasterAkunTrans.MemDetailKas.EmptyTable;
+    FDataMasterAkunTrans.MemDetailKas.EmptyTable;
+  end;
+  if vcall='trans_beli' then
+  begin
+    FDataMasterAkunTrans.Clear;
+    FDataMasterAkunTrans.edKodeModulBeli.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaModulBeli.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='trans_jual' then
+  begin
+    FDataMasterAkunTrans.Clear;
+    FDataMasterAkunTrans.edKodeModulJual.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaModulJual.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='jenis_retur' then
   begin
@@ -390,10 +512,17 @@ begin
     FSetMasterPelanggan.edKode_JenisUsaha.Text:=MemMasterData['KD_MASTER'];
     FSetMasterPelanggan.edJenisUsaha.Text:=MemMasterData['NM_MASTER'];
   end;
-  if vcall='perkiraan_pelanggan' then
+  if vcall='ak_piutang_pel' then
   begin
-    FNew_Pelanggan.edKodePerkiraan.Text:=MemMasterData['KD_MASTER'];
-    FNew_Pelanggan.KodeHeaderPerkiraan:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edAkunPiutang.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.KodeHeaderPiutang:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edNamaPiutang.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='ak_piutang_lain_pel' then
+  begin
+    FNew_Pelanggan.edAkunPiutangLainLain.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.KodeHeaderPiutangLain:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edNamaPiutangLain.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='kantor_pusat' then
   begin

@@ -17,14 +17,11 @@ type
     Label3: TLabel;
     Label39: TLabel;
     Label38: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
     Label12: TLabel;
     Label13: TLabel;
     edNoTrans: TEdit;
     edNamaJenisTrans: TRzButtonEdit;
     edKodeJenisTrans: TEdit;
-    edNamaBank: TEdit;
     dtTrans: TRzDateTimePicker;
     Panel2: TPanel;
     BBatal: TRzBitBtn;
@@ -38,9 +35,6 @@ type
     MemDetailAkunkd_akun: TStringField;
     MemDetailAkunnm_akun: TStringField;
     MemDetailAkunketerangan: TStringField;
-    Label1: TLabel;
-    Label2: TLabel;
-    edNoRek: TEdit;
     Label4: TLabel;
     Label5: TLabel;
     MemKeterangan: TMemo;
@@ -58,15 +52,9 @@ type
     edKurs: TRzNumericEdit;
     Label17: TLabel;
     Label18: TLabel;
-    edUntukPengiriman: TEdit;
     edJumlah: TRzNumericEdit;
     Label19: TLabel;
     Label20: TLabel;
-    gbDataPiutang: TGroupBox;
-    Label21: TLabel;
-    Label22: TLabel;
-    edKode_Pelanggan: TRzButtonEdit;
-    edNama_Pelanggan: TEdit;
     TabDetailFaktur: TRzTabSheet;
     DBGridTagihan: TDBGridEh;
     dsDetailPiutang: TDataSource;
@@ -79,12 +67,29 @@ type
     MemDetailAkunkredit: TCurrencyField;
     MemDetailPiutangjum_piutang: TCurrencyField;
     MemDetailPiutangjum_piutang_real: TCurrencyField;
-    lbSumberTagihan: TLabel;
-    lbSumberTagihann: TLabel;
+    MemDetailAkunkd_header_akun: TStringField;
+    edUntukPengiriman: TMemo;
+    Panel5: TPanel;
+    gbDataPiutang: TGroupBox;
+    Label21: TLabel;
+    Label22: TLabel;
+    edKode_Pelanggan: TRzButtonEdit;
+    edNama_Pelanggan: TEdit;
+    gbDataBank: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
     lbJenisBayarr: TLabel;
+    lbSumberTagihann: TLabel;
     lbJenisBayar: TLabel;
-    cbSumberTagihan: TComboBox;
-    cbJenisBayar: TComboBox;
+    lbSumberTagihan: TLabel;
+    edNamaBank: TRzButtonEdit;
+    edNoRek: TEdit;
+    edNMSumberTagihan: TRzButtonEdit;
+    edNMJenisBayar: TRzButtonEdit;
+    edKodeSumberTagihan: TEdit;
+    edKodeJenisBayar: TEdit;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -95,7 +100,11 @@ type
     procedure BSaveClick(Sender: TObject);
     procedure DBGridAkunColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure edNamaBankButtonClick(Sender: TObject);
+    procedure edNMSumberTagihanButtonClick(Sender: TObject);
+    procedure edNMJenisBayarButtonClick(Sender: TObject);
   private
+    vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
   public
     Status : Integer;
@@ -105,6 +114,7 @@ type
     procedure Clear;
     procedure RefreshGridDetailAkun;
     procedure RefreshGridDetailPiutang;
+    procedure VCekBalance;
   end;
 
 var
@@ -159,6 +169,7 @@ begin
   end;
 end;
 
+
 procedure TFDataPenerimaanBank.RefreshGridDetailAkun;
 var
 URUTAN_KE : Integer;
@@ -171,7 +182,6 @@ begin
             ' "name_account",  "position", "account_number_bank"  '+
             ' FROM  "public"."t_master_trans_account_det") a  '+
             ' WHERE code_trans='+QuotedStr(edKodeJenisTrans.Text)+'  '+
-            ' AND account_number_bank='+QuotedStr(edNoRek.Text)+' '+
             ' Order By "code_account", "name_account" desc');
     open;
   end;
@@ -212,6 +222,7 @@ begin
       begin
        FDataPenerimaanBank.MemDetailAkun.insert;
        FDataPenerimaanBank.MemDetailAkun['kd_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
+       FDataPenerimaanBank.MemDetailAkun['kd_header_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
        FDataPenerimaanBank.MemDetailAkun['nm_akun']:=Dm.Qtemp1.fieldbyname('name_account').value;
         if Dm.Qtemp1.fieldbyname('position').Value='D' then
         begin
@@ -233,6 +244,7 @@ begin
       begin
        FDataPenerimaanBank.MemDetailAkun.insert;
        FDataPenerimaanBank.MemDetailAkun['kd_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
+       FDataPenerimaanBank.MemDetailAkun['kd_header_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
        FDataPenerimaanBank.MemDetailAkun['nm_akun']:=Dm.Qtemp1.fieldbyname('name_account').value;
         if Dm.Qtemp1.fieldbyname('position').Value='D' then
         begin
@@ -262,12 +274,63 @@ end;
 
 procedure TFDataPenerimaanBank.BSaveClick(Sender: TObject);
 begin
-  ShowMessage('Buat Validasi Jumlah Debit Kredit Balance');
+  VCekBalance;
+  {ShowMessage('Buat Validasi Jumlah Debit Kredit Balance');
   ShowMessage('Buat Validasi Jumlah Akun Kredit dengan Total Faktur Balance');
-  ShowMessage('Save/update');
+  ShowMessage('Save/update');}
   //t_bank_acceptance
   //t_bank_acceptance_det
   //t_bank_acceptance_invoice
+
+end;
+
+procedure TFDataPenerimaanBank.VCekBalance;
+begin
+  //Cek Balance Debit Kredit
+  vtotal_debit:=0;
+  vtotal_kredit:=0;
+  MemDetailAkun.First;
+  while not MemDetailAkun.Eof do
+  begin
+    vtotal_debit:=vtotal_debit+MemDetailAkun['debit'];
+    vtotal_kredit:=vtotal_kredit+MemDetailAkun['kredit'];
+    MemDetailAkun.Next;
+  end;
+
+  if vtotal_debit <> vtotal_kredit then
+  begin
+    ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Anda Sudah Benar...!!!');
+    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    exit;
+  end;
+
+  if vtotal_debit <> edJumlah.Value then
+  begin
+    ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Dengan Total Penerimaan Anda Sudah Benar...!!!');
+    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    exit;
+  end;
+
+
+  //Cek Piutang Dengan Pernerimaan Balance
+  if MemDetailPiutang.RecordCount<>0 then
+  begin
+    vtotal_piutang:=0;
+    MemDetailPiutang.First;
+    while not MemDetailPiutang.Eof do
+    begin
+      vtotal_piutang:=vtotal_piutang+MemDetailPiutang['jum_piutang'];
+      MemDetailPiutang.Next;
+    end;
+
+    if vtotal_kredit <> vtotal_piutang then
+    begin
+      ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Dengan Total Piutang Anda Sudah Benar...!!!');
+      //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+      exit;
+    end;
+  end;
+
 
 end;
 
@@ -285,8 +348,11 @@ begin
   edNoRek.Clear;
   edKode_Pelanggan.Clear;
   edNama_Pelanggan.Clear;
+  edNoRek.Clear;
+  edNamaBank.Clear;
   edKodeMataUang.Clear;
   edNamaMataUang.Clear;
+  edUntukPengiriman.Clear;
   edKurs.value:=0.00;
   edJumlah.value:=0.00;
   MemKeterangan.Clear;
@@ -321,19 +387,19 @@ procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
 begin
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
   begin
-    if cbSumberTagihan.ItemIndex=0 then
+    if (edKodeSumberTagihan.Text='0') OR (Length(edKodeSumberTagihan.Text)=0) then
     begin
       ShowMessage('Silkan Pilih Sumber Tagihan...!!!');
       Exit;
     end;
-    if cbSumberTagihan.ItemIndex=1 then
+    if edKodeSumberTagihan.Text='1' then
     begin
       FDaftarTagihan.vcall:='terima_bank';
       FDaftarTagihan.kd_outlet:=edKode_Pelanggan.Text;
       FDaftarTagihan.RefreshGrid;
       FDaftarTagihan.show;
     end;
-    if cbSumberTagihan.ItemIndex=2 then
+    if edKodeSumberTagihan.Text='2' then
     begin
     FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
     FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
@@ -360,6 +426,23 @@ begin
   end;
 end;
 
+procedure TFDataPenerimaanBank.edNMJenisBayarButtonClick(Sender: TObject);
+begin
+  if Length(edKodeJenisTrans.Text)=0 then
+  begin
+    ShowMessage('Silakan Pilih Modul');
+  end;
+
+  if Length(edKodeJenisTrans.Text)<>0 then
+  begin
+  FMasterData.Caption:='Master Jenis Pembayaran';
+  FMasterData.vcall:='jenis_terima';
+  FMasterData.update_grid('code','name','description','"cash_banks"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.ShowModal;
+  //Autocode;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.edKode_PelangganButtonClick(Sender: TObject);
 begin
   Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
@@ -367,12 +450,30 @@ begin
   Fbrowse_data_pelanggan.ShowModal;
 end;
 
+procedure TFDataPenerimaanBank.edNamaBankButtonClick(Sender: TObject);
+begin
+  if Length(edKodeJenisTrans.Text)=0 then
+  begin
+    ShowMessage('Silakan Pilih Modul');
+  end;
+
+  if Length(edKodeJenisTrans.Text)<>0 then
+  begin
+  FMasterData.Caption:='Master Data Bank';
+  FMasterData.vcall:='terima_bank';
+  FMasterData.update_grid('rekening_no','bank_name','currency','t_Bank','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.ShowModal;
+  //Autocode;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.edNamaJenisTransButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Transaksi';
   FMasterData.vcall:='m_jns_transaksi';
-  FMasterData.update_grid('code_trans','name_trans','CONCAT('' Bank. '',account_name_bank,'' No.Rek. '',account_number_bank,'' '',description) ','t_master_trans_account','WHERE code_module=''3'' and deleted_at IS NULL ORDER BY name_trans desc');
+  FMasterData.update_grid('code_trans','CONCAT(name_module,'+QuotedStr(' - ')+',name_trans)','description','t_master_trans_account','WHERE code_module IN (''3'',''4'') and deleted_at IS NULL ORDER BY name_trans desc');
   FMasterData.ShowModal;
+  FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
   RefreshGridDetailAkun;
 end;
 
@@ -384,35 +485,67 @@ begin
   FMasterData.ShowModal;
 end;
 
+procedure TFDataPenerimaanBank.edNMSumberTagihanButtonClick(Sender: TObject);
+begin
+  if Length(edKodeJenisTrans.Text)=0 then
+  begin
+    ShowMessage('Silakan Pilih Modul');
+  end;
+
+  if Length(edKodeJenisTrans.Text)<>0 then
+  begin
+  FMasterData.Caption:='Master Sumber Tagihan';
+  FMasterData.vcall:='sumber_terima';
+  FMasterData.update_grid('code','name','description','"cash_banks"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.ShowModal;
+  //Autocode;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
   if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
   begin
+    Panel5.Visible:=false;
     gbDataPiutang.Visible:=false;
+    gbDataBank.Visible:=false;
     TabDetailFaktur.TabVisible:=false;
-    Panel1.Height:=230;
+    //Panel1.Height:=230;
     lbSumberTagihan.Visible:=true;
     lbSumberTagihann.Visible:=true;
     lbJenisBayar.Visible:=true;
     lbJenisBayarr.Visible:=true;
-    cbSumberTagihan.Visible:=true;
-    cbJenisBayar.Visible:=true;
-    cbSumberTagihan.ItemIndex:=0;
-    cbJenisBayar.ItemIndex:=0;
+    edKodeSumberTagihan.Visible:=false;
+    edNMSumberTagihan.Visible:=false;
+    edKodeJenisBayar.Visible:=false;
+    edNMJenisBayar.Visible:=false;
+    edKodeSumberTagihan.Clear;
+    edNMSumberTagihan.Clear;
+    edKodeJenisBayar.Clear;
+    edNMJenisBayar.Clear;
   end;
   if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
   begin
+    Panel5.Visible:=false;
     gbDataPiutang.Visible:=false;
+    gbDataBank.Visible:=false;
     TabDetailFaktur.TabVisible:=false;
-    Panel1.Height:=230;
+    Label15.Visible:=false;
+    Label16.Visible:=false;
+    edKurs.Visible:=false;
+    //Panel1.Height:=230;
     lbSumberTagihan.Visible:=false;
     lbSumberTagihann.Visible:=false;
     lbJenisBayar.Visible:=false;
     lbJenisBayarr.Visible:=false;
-    cbSumberTagihan.Visible:=false;
-    cbJenisBayar.Visible:=false;
-    cbSumberTagihan.ItemIndex:=0;
-    cbJenisBayar.ItemIndex:=0;
+    edKodeSumberTagihan.Visible:=true;
+    edNMSumberTagihan.Visible:=true;
+    edKodeJenisBayar.Visible:=true;
+    edNMJenisBayar.Visible:=true;
+    edKodeSumberTagihan.Clear;
+    edNMSumberTagihan.Clear;
+    edKodeJenisBayar.Clear;
+    edNMJenisBayar.Clear;
   end;
 end;
 

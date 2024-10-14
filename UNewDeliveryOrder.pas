@@ -726,7 +726,7 @@ begin
   if Grand_Tot<> edTotalBiaya.Value then
   begin
     ShowMessage('Total Biaya Dengan Total Tagihan Tidak Balance...!!!');
-    //ShowMessage(FloatToStr(Grand_Tot)+'LOL'+FloatToStr(edTotalBiaya.Value));
+    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
     exit;
   end;
 

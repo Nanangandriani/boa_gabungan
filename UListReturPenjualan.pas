@@ -288,7 +288,7 @@ begin
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt__retur_penjualan'+ '.fr3');
+   Report.LoadFromFile(cLocation +'report/rpt_retur_penjualan'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
    SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
    SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
