@@ -60,17 +60,18 @@ begin
             Memdetail['nopo']:=QPo['po_no'];
             Memdetail['qty']:=QPo['remaining_sp'];
             Memdetail['satuan']:=QPo['unit'];
-            Memdetail['gudang']:=QPo['warehouse'];
-            if QPo['sbu_code']<>'' then kdsb:=QPO['sbu_code'] else kdsb:='MLB';
+            Memdetail['gudang']:=QPo['wh_name'];
+            Memdetail['wh_code']:=QPo['wh_code'];
+            if QPo['sbu_code']<>'' then kdsb:=QPO['sbu_code'] ;//else kdsb:='MLB';
             Memdetail.Post;
           end;
         end;
       end;
     end;
-  close;
   end;
     except;
   end;
+  close;
 end;
 
 procedure TFUSearch_PO.FormShow(Sender: TObject);

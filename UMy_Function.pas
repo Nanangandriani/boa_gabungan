@@ -16,7 +16,7 @@ Uses SysUtils, frxClass,uni;
   function terbilang(sValue: string):string;
   procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
 
-  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation:string;
+  var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation,statustr:string;
       strday2:TDate;
       status_pakai_terbilang : Integer;
       Voice:array[1..100] of string;

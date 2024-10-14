@@ -189,7 +189,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object DBGridEh3: TDBGridEh
     Left = 9
     Top = 140
-    Width = 881
+    Width = 875
     Height = 227
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail

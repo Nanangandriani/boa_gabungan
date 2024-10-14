@@ -38,7 +38,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
   UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
   UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank,
-  UDataPenagihanPiutang, UMovingDPP;
+  UDataPenagihanPiutang, UMovingDPP, UNew_Supplier;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -548,6 +548,16 @@ begin
   begin
     FNew_Pelanggan.edKode_gol.Text:=MemMasterData['KD_MASTER'];
     FNew_Pelanggan.edGolonganPelanggan.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='perkiraan_supplier' then
+  begin
+    FNew_supplier.edKodePerkiraan.Text:=MemMasterData['KD_MASTER'];
+    FNew_supplier.KodeHeaderPerkiraan:=MemMasterData['KD_MASTER'];
+  end;
+  if vcall='perkiraan_supplier_um' then
+  begin
+    FNew_supplier.edKodePerkiraan_um.Text:=MemMasterData['KD_MASTER'];
+    FNew_supplier.KodeHeaderPerkiraan_um:=MemMasterData['KD_MASTER'];
   end;
 
   //ShowMessage(FTambah_Barang.edKodeBarang.Text);

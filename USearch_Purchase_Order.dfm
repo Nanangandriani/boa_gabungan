@@ -20,8 +20,8 @@ object FUSearch_PO: TFUSearch_PO
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -6
-    ExplicitWidth = 627
+    ExplicitTop = 298
+    ExplicitWidth = 615
     object BBatal: TRzBitBtn
       Left = 545
       Top = 1
@@ -82,7 +82,7 @@ object FUSearch_PO: TFUSearch_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 551
+      ExplicitLeft = 539
     end
     object BSimpan: TRzBitBtn
       Left = 470
@@ -144,7 +144,7 @@ object FUSearch_PO: TFUSearch_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 476
+      ExplicitLeft = 464
     end
     object BSelectAll: TRzBitBtn
       Left = 1
@@ -279,7 +279,7 @@ object FUSearch_PO: TFUSearch_PO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'warehouse'
+        FieldName = 'wh_name'
         Footers = <>
         Title.Caption = 'Gudang'
         Width = 133
@@ -291,6 +291,13 @@ object FUSearch_PO: TFUSearch_PO
         FieldName = 'sbu_code'
         Footers = <>
         Title.Caption = 'SBU'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_code'
+        Footers = <>
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -301,12 +308,13 @@ object FUSearch_PO: TFUSearch_PO
       ''
       
         'SELECT c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit' +
-        ',b.warehouse,c.item_name,a.supplier_code,a.sbu_code,'
+        ',b.wh_code,d.wh_name,c.item_name,a.supplier_code,a.sbu_code,'
       'a.approval_status from purchase.t_po a '
       'INNER JOIN purchase.t_podetail b on a.po_no=b.po_no'
       
         'inner join warehouse.t_item_stock c on b.item_stock_code=c.item_' +
         'stock_code'
+      'INNER JOIN t_wh d on d.wh_code=a.wh_code'
       'where b.remaining_sp <>0 and a.approval_status='#39'1'#39)
     Left = 304
     Top = 80

@@ -1,30 +1,54 @@
-object FPenomoran: TFPenomoran
+object Frencanalunashutang: TFrencanalunashutang
   Left = 0
   Top = 0
-  Caption = 'FPenomoran'
-  ClientHeight = 491
-  ClientWidth = 905
+  Caption = 'Form Rencana Pelunasan Hutang'
+  ClientHeight = 442
+  ClientWidth = 822
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
-  WindowState = wsMaximized
-  OnShow = FormShow
   TextHeight = 15
+  object DBGridSupplier: TDBGridEh
+    Left = 0
+    Top = 222
+    Width = 822
+    Height = 220
+    Align = alClient
+    DynProps = <>
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    RowDetailPanel.Active = True
+    SearchPanel.Enabled = True
+    TabOrder = 0
+    object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 30
+        Height = 118
+        Align = alClient
+        DynProps = <>
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+        TabOrder = 0
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 905
+    Width = 822
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 0
+    TabOrder = 1
     TabStop = False
+    ExplicitLeft = -1
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -35,124 +59,271 @@ object FPenomoran: TFPenomoran
       Index = 0
     end
   end
-  object DBGridNo: TDBGridEh
+  object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 905
-    Height = 364
-    Align = alClient
-    DataSource = DSNo
-    DrawMemoText = True
-    DynProps = <>
-    IndicatorTitle.TitleButton = True
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    RowDetailPanel.Active = True
-    SearchPanel.Enabled = True
-    SearchPanel.CaseSensitive = True
-    SearchPanel.FilterOnTyping = True
-    STFilter.Location = stflInTitleFilterEh
-    STFilter.Visible = True
-    TabOrder = 1
-    TitleParams.MultiTitle = True
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_no'
-        Footers = <>
-        Title.Caption = 'No Trans'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'numb_type'
-        Footers = <>
-        Title.Caption = 'Kode Modul'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_type'
-        Footers = <>
-        Title.Caption = 'Nama Modul'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'component_description'
-        Footers = <>
-        Title.Caption = 'Deskripsi Penomoran'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'digit_counter'
-        Footers = <>
-        Title.Caption = 'Digit Counter'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'description'
-        Footers = <>
-        Title.Caption = 'Jenis Reset'
-        Width = 150
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-      object DBGridNodet: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 815
-        Height = 118
-        Align = alClient
-        DataSource = DsDetNo
-        DynProps = <>
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SumList.Active = True
-        TabOrder = 0
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'urutan'
-            Footers = <>
-            Title.Caption = 'No Urut'
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'param_name'
-            Footers = <>
-            Title.Caption = 'Parameter'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'description'
-            Footers = <>
-            Title.Caption = 'Keterangan'
-            Width = 150
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
+    Width = 822
+    Height = 95
+    Align = alTop
+    TabOrder = 6
+    object Label3: TLabel
+      Left = 13
+      Top = 6
+      Width = 48
+      Height = 17
+      Caption = 'Supplier'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label1: TLabel
+      Left = 13
+      Top = 36
+      Width = 121
+      Height = 17
+      Caption = 'Periode Pembayaran'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label6: TLabel
+      Left = 13
+      Top = 62
+      Width = 35
+      Height = 17
+      Caption = 'Status'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 286
+      Top = 38
+      Width = 19
+      Height = 18
+      Caption = 's/d'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Trebuchet MS'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 144
+      Top = 8
+      Width = 5
+      Height = 16
+      Caption = ':'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 144
+      Top = 37
+      Width = 5
+      Height = 16
+      Caption = ':'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label7: TLabel
+      Left = 144
+      Top = 63
+      Width = 5
+      Height = 16
+      Caption = ':'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Button5: TButton
+      Left = 568
+      Top = 5
+      Width = 25
+      Height = 24
+      Caption = '...'
+      TabOrder = 0
+    end
+    object txtkdsupp: TEdit
+      Left = 159
+      Top = 5
+      Width = 84
+      Height = 24
+      CharCase = ecUpperCase
+      Ctl3D = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Trebuchet MS'
+      Font.Style = []
+      ImeName = 'US'
+      ParentCtl3D = False
+      ParentFont = False
+      TabOrder = 1
+    end
+    object txtnmsupp: TEdit
+      Left = 249
+      Top = 5
+      Width = 317
+      Height = 24
+      CharCase = ecUpperCase
+      Ctl3D = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Trebuchet MS'
+      Font.Style = []
+      ImeName = 'US'
+      ParentCtl3D = False
+      ParentFont = False
+      TabOrder = 2
+    end
+    object DateTimePicker2: TDateTimePicker
+      Left = 312
+      Top = 35
+      Width = 121
+      Height = 21
+      Date = 38346.000000000000000000
+      Format = 'dd/MM/yyyy'
+      Time = 0.189661342599720200
+      ImeName = 'US'
+      TabOrder = 3
+    end
+    object BCari: TRzBitBtn
+      Left = 439
+      Top = 32
+      Width = 112
+      Height = 30
+      Caption = 'Cari ...'
+      TabOrder = 4
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000330B0000330B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8ACDEE3E8E8
+        E8E8E8E8E8E8E8E8E8E8E8ACDEE3E8E8E8E8E8E8E8E8E8E8E8E8AC807A81E3E8
+        E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8E8CEA37A81E3
+        E8E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A81
+        E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A
+        81E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA3
+        7AACAD82828288E3E8E8E8E8E8E3ACE281ACE3818181E2E3E8E8E8E8E8E8D0CE
+        E28288E6B3E6E682EBE8E8E8E8E8E3ACE281E2ACACACAC81E3E8E8E8E8E8E8E3
+        8289B3B3B3D7D7D782E3E8E8E8E8E8E381E3ACACACE3E3E381E3E8E8E8E8E8AD
+        88B3E6B3B3D7D7D7E688E8E8E8E8E8E3E2ACACACACE3E3E3ACE2E8E8E8E8E888
+        89E6E6B3B3B3D7D7E682E8E8E8E8E8E2E3ACACACACACE3E3AC81E8E8E8E8E882
+        E6E6E6E6B3B3B3B3B382E8E8E8E8E881ACACACACACACACACAC81E8E8E8E8E888
+        E6B3E6E6E6B3B3B3E682E8E8E8E8E8E2ACACACACACACACACAC81E8E8E8E8E8AD
+        88D7D7E6E6E6E6B38888E8E8E8E8E8E3E2E3E3ACACACACACE2E2E8E8E8E8E8E3
+        82EBD7B3E6E6E68982E3E8E8E8E8E8E381E3E3ACACACACE381E3E8E8E8E8E8E8
+        AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
+        E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
+      NumGlyphs = 2
+    end
+    object CBstatus: TComboBox
+      Left = 159
+      Top = 62
+      Width = 145
+      Height = 23
+      TabOrder = 5
+      Text = 'Sudah Lunas'
+      Items.Strings = (
+        'Belum Lunas'
+        'Sudah Lunas')
+    end
+    object DateTimePicker1: TDateTimePicker
+      Left = 159
+      Top = 35
+      Width = 123
+      Height = 21
+      Date = 38346.000000000000000000
+      Format = 'dd/MM/yyyy'
+      Time = 0.189661342599720200
+      ImeName = 'US'
+      TabOrder = 6
+    end
+  end
+  object ActMenu: TActionManager
+    Left = 561
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+      OnExecute = ActBaruExecute
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
     end
   end
   object dxBarManager1: TdxBarManager
@@ -169,8 +340,8 @@ object FPenomoran: TFPenomoran
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 744
-    Top = 48
+    Left = 642
+    Top = 40
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -179,24 +350,24 @@ object FPenomoran: TFPenomoran
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 51
+      FloatClientHeight = 151
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'dxBarBaru'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton8'
+          ItemName = 'dxBarUpdate'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton9'
+          ItemName = 'dxbarRefresh'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton10'
+          ItemName = 'dxBarDelete'
         end>
       OneOnRow = True
       Row = 0
@@ -267,7 +438,6 @@ object FPenomoran: TFPenomoran
         05E60567412852BEACBAE94267CDEE1B6375AD77646D4BEFDB554DE72F1595C6
         2A8050F58E5E948850B856EFBA094AF8BFEF80058481A22091011CC0AD6ABE6A
         44E03B805C64CDB4C3E1300000000049454E44AE426082}
-      OnClick = dxBarButton1Click
     end
     object dxBarButton3: TdxBarButton
       Caption = 'Refresh'
@@ -437,11 +607,9 @@ object FPenomoran: TFPenomoran
         A27DAF95ADEB22B15CD883808984208E209A8F859A9C6F6078F0145684BF98E8
         BFC080A205F60000000049454E44AE426082}
     end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'New'
+    object dxBarBaru: TdxBarLargeButton
+      Action = ActBaru
       Category = 0
-      Hint = 'New'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -574,9 +742,8 @@ object FPenomoran: TFPenomoran
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
     end
-    object dxBarButton8: TdxBarButton
+    object dxBarUpdate: TdxBarButton
       Caption = 'Update'
       Category = 0
       Hint = 'Update'
@@ -616,9 +783,11 @@ object FPenomoran: TFPenomoran
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
     end
-    object dxBarButton9: TdxBarButton
-      Action = ActRo
+    object dxbarRefresh: TdxBarButton
+      Caption = 'Refresh'
       Category = 0
+      Hint = 'Refresh'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -650,7 +819,7 @@ object FPenomoran: TFPenomoran
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
-    object dxBarButton10: TdxBarButton
+    object dxBarDelete: TdxBarButton
       Caption = 'Delete'
       Category = 0
       Hint = 'Delete'
@@ -692,102 +861,6 @@ object FPenomoran: TFPenomoran
         DA8CD6E1B4ABA77376F3CD9987FBB0596FF0DBF6A78FD5E81DB6219848F3BFFB
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
-    end
-  end
-  object QDetNo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'SELECT  a.*,c.description from t_numb_det a '
-      'LEFT JOIN t_numb_component c on a.id_param=c.id'
-      
-        'GROUP BY a.trans_no,a.id,a.param_name,a.urutan,a.id_param,a.deli' +
-        'miter,c.description'
-      'order by a.trans_no,a.urutan ASC')
-    MasterSource = DSNo
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Left = 488
-    Top = 33
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'TR20231006-1'
-      end>
-  end
-  object DsDetNo: TDataSource
-    DataSet = QDetNo
-    Left = 488
-    Top = 88
-  end
-  object QNo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      ''
-      'SELECT  a.*,c.submenu,d.description from t_numb a'
-      'INNER JOIN t_numb_det b on a.trans_no=b.trans_no'
-      'LEFT JOIN t_menu_sub c  on a.numb_type=c.submenu_code'
-      'LEFT JOIN t_numb_type d on a.reset_type=d.id'
-      
-        'GROUP BY a.trans_no,a.trans_type,a.numb_type,a.digit_counter,a.c' +
-        'omponent_description,'
-      
-        'a.reset_type,a.additional_status,a.active_status,c.submenu,d.des' +
-        'cription,a.remarks'
-      'order by a.trans_no ASC')
-    Left = 384
-    Top = 32
-  end
-  object DSDNo: TDataSetDriverEh
-    ProviderDataSet = QNo
-    Left = 424
-    Top = 88
-  end
-  object MemNo: TMemTableEh
-    Params = <>
-    DataDriver = DSDNo
-    Left = 384
-    Top = 88
-  end
-  object DSNo: TDataSource
-    DataSet = MemNo
-    Left = 424
-    Top = 32
-  end
-  object ActMenu: TActionManager
-    Left = 656
-    Top = 32
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'Baru  '
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-    end
-    object ActRo: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActRoExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      Enabled = False
-      Visible = False
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-      Visible = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose Kontrak    '
-      Enabled = False
     end
   end
 end

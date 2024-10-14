@@ -25,6 +25,9 @@ object FMenu: TFMenu
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
+        ColumnName = 'Column_0_master_name'
+      end
+      item
         ColumnName = 'Column_1_menu'
       end>
     DataSource = DsMenu
@@ -38,7 +41,9 @@ object FMenu: TFMenu
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'master_name'
         Footers = <>
+        Title.Caption = 'Group'
         Width = 80
       end
       item
@@ -47,7 +52,7 @@ object FMenu: TFMenu
         EditButtons = <>
         FieldName = 'menu'
         Footers = <>
-        Title.Caption = 'Nama Group'
+        Title.Caption = 'Kelompok'
         Width = 97
       end
       item
@@ -401,10 +406,12 @@ object FMenu: TFMenu
         'enu b on a.menu_code=b.menu_code inner join t_menu_master c on b' +
         '.master_code=c.master_code'
       'order by a.menu_code,a.submenu_code Asc')
+    Active = True
     Left = 440
     Top = 24
   end
   object MemMenu: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DsdMenu

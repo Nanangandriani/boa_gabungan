@@ -23,8 +23,8 @@ object FNew_Supplier: TFNew_Supplier
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 490
-    ExplicitWidth = 863
+    ExplicitTop = 482
+    ExplicitWidth = 861
     object BBatal: TRzBitBtn
       Left = 791
       Top = 1
@@ -85,7 +85,7 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 787
+      ExplicitLeft = 785
     end
     object BSimpan: TRzBitBtn
       Left = 716
@@ -147,7 +147,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 712
+      ExplicitLeft = 710
     end
     object BEdit: TRzBitBtn
       Left = 641
@@ -210,7 +210,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 637
+      ExplicitLeft = 635
     end
   end
   object Panel1: TPanel
@@ -222,80 +222,95 @@ object FNew_Supplier: TFNew_Supplier
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 863
     object Label1: TLabel
       Left = 30
-      Top = 29
+      Top = 19
       Width = 73
       Height = 15
       Caption = 'Kode Supplier'
     end
     object Label2: TLabel
       Left = 30
-      Top = 57
+      Top = 52
       Width = 78
       Height = 15
       Caption = 'Nama Supplier'
     end
     object Label3: TLabel
       Left = 30
-      Top = 89
+      Top = 84
       Width = 38
       Height = 15
       Caption = 'Alamat'
     end
     object Label4: TLabel
       Left = 30
-      Top = 119
+      Top = 114
       Width = 21
       Height = 15
       Caption = 'Telp'
     end
     object Label5: TLabel
       Left = 30
-      Top = 153
+      Top = 148
       Width = 34
       Height = 15
       Caption = 'NPWP'
     end
     object Label6: TLabel
       Left = 120
-      Top = 26
+      Top = 19
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label7: TLabel
       Left = 120
-      Top = 59
+      Top = 54
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label8: TLabel
       Left = 120
-      Top = 89
+      Top = 84
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label9: TLabel
       Left = 120
-      Top = 119
+      Top = 114
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 120
-      Top = 153
+      Top = 148
       Width = 3
       Height = 15
       Caption = ':'
     end
+    object Label30: TLabel
+      Left = 618
+      Top = 20
+      Width = 3
+      Height = 15
+      Caption = ':'
+      Visible = False
+    end
+    object Label29: TLabel
+      Left = 526
+      Top = 20
+      Width = 79
+      Height = 15
+      Caption = 'Kode Perkiraan'
+      Visible = False
+    end
     object Edno: TEdit
       Left = 279
-      Top = 25
+      Top = 18
       Width = 132
       Height = 23
       TabOrder = 0
@@ -303,117 +318,221 @@ object FNew_Supplier: TFNew_Supplier
     end
     object EdNm: TEdit
       Left = 137
-      Top = 54
+      Top = 49
       Width = 374
       Height = 23
       TabOrder = 1
     end
     object EdAlamat: TEdit
       Left = 137
-      Top = 86
+      Top = 81
       Width = 374
       Height = 23
       TabOrder = 2
     end
     object EdTelp: TEdit
       Left = 137
-      Top = 118
+      Top = 113
       Width = 374
       Height = 23
       TabOrder = 3
     end
     object EdNPWP: TEdit
       Left = 137
-      Top = 150
+      Top = 145
       Width = 374
       Height = 23
       TabOrder = 4
     end
     object Edkd: TEdit
       Left = 137
-      Top = 25
+      Top = 18
       Width = 136
       Height = 23
       TabOrder = 5
     end
+    object edKodePerkiraan_x: TRzButtonEdit
+      Left = 633
+      Top = 16
+      Width = 136
+      Height = 23
+      Text = ''
+      TabOrder = 6
+      Visible = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edKodePerkiraan_xButtonClick
+    end
   end
-  object DBGridEh1: TDBGridEh
+  object PG_Supplier: TRzPageControl
     Left = 0
     Top = 201
     Width = 867
     Height = 290
+    Hint = ''
+    ActivePage = TabSheet2
     Align = alClient
-    AutoFitColWidths = True
-    DataSource = DsMaterial
-    DynProps = <>
-    HorzScrollBar.ExtraPanel.Visible = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    TabIndex = 1
     TabOrder = 2
-    TitleParams.MultiTitle = True
-    Columns = <
-      item
-        CellButtons = <>
+    ExplicitLeft = 80
+    ExplicitTop = 248
+    ExplicitWidth = 300
+    ExplicitHeight = 150
+    FixedDimension = 21
+    object TabSheet1: TRzTabSheet
+      Caption = 'Barang'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 863
+        Height = 265
+        Align = alClient
+        AutoFitColWidths = True
+        DataSource = DsMaterial
         DynProps = <>
-        EditButtons = <
+        HorzScrollBar.ExtraPanel.Visible = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+        TabOrder = 0
+        TitleParams.MultiTitle = True
+        Columns = <
           item
-            Style = ebsEllipsisEh
-            OnClick = DBGridEh1Columns0EditButtons0Click
-          end>
-        FieldName = 'kd_material'
-        Footers = <>
-        Title.Caption = 'Kode Barang'
-        Width = 102
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+                Style = ebsEllipsisEh
+                OnClick = DBGridEh1Columns0EditButtons0Click
+              end>
+            FieldName = 'kd_material'
+            Footers = <>
+            Title.Caption = 'Kode Barang'
+            Width = 102
+          end
           item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+              end>
+            FieldName = 'nm_material'
+            Footers = <>
+            Title.Caption = 'Nama Barang'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '0.00#,##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'qty'
+            Footers = <>
+            Title.Caption = 'Kuantum'
+            Visible = False
+            Width = 82
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'satuan'
+            Footers = <>
+            Title.Caption = 'Satuan'
+            Width = 65
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ket'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 173
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kode'
+            Footers = <>
+            Visible = False
           end>
-        FieldName = 'nm_material'
-        Footers = <>
-        Title.Caption = 'Nama Barang'
-        Width = 200
+        object RowDetailData: TRowDetailPanelControlEh
+        end
       end
-      item
-        CellButtons = <>
-        DisplayFormat = '0.00#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'qty'
-        Footers = <>
-        Title.Caption = 'Kuantum'
-        Visible = False
-        Width = 82
+    end
+    object TabSheet2: TRzTabSheet
+      Caption = 'Lain-lain'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object RzPanel1: TRzPanel
+        Left = 0
+        Top = 0
+        Width = 863
+        Height = 265
+        Align = alClient
+        TabOrder = 0
+        ExplicitLeft = 104
+        ExplicitTop = 32
+        ExplicitWidth = 185
+        ExplicitHeight = 41
+        object Label11: TLabel
+          Left = 177
+          Top = 20
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label12: TLabel
+          Left = 29
+          Top = 20
+          Width = 122
+          Height = 15
+          Caption = 'Kode Perkiraan Hutang'
+        end
+        object Label13: TLabel
+          Left = 177
+          Top = 51
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label14: TLabel
+          Left = 29
+          Top = 51
+          Width = 143
+          Height = 15
+          Caption = 'Kode Perkiraan Uang Muka'
+        end
+        object edKodePerkiraan: TRzButtonEdit
+          Left = 186
+          Top = 16
+          Width = 136
+          Height = 23
+          Text = ''
+          TabOrder = 0
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edKodePerkiraanButtonClick
+        end
+        object edKodePerkiraan_um: TRzButtonEdit
+          Left = 186
+          Top = 48
+          Width = 136
+          Height = 23
+          Text = ''
+          TabOrder = 1
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edKodePerkiraan_umButtonClick
+        end
       end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'satuan'
-        Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 65
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ket'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 173
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kode'
-        Footers = <>
-        Visible = False
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object MemMaterial: TMemTableEh

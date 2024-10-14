@@ -27,7 +27,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pembelian;
+uses UNew_Pembelian, UMy_Function, URpt_BukuHarianPembelian;
 
 procedure TFAkun_Perkiraan_TerimaMat.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -39,7 +39,6 @@ begin
        kd_akpph:=QAkun['code'];
    end;
    Close;}
-
     if statustr='pphpemb' then
     begin
       with FNew_Pembelian do
@@ -62,9 +61,15 @@ begin
       end;
     end;
 
+    if statustr='1' then
+    begin
+      with FRpt_BukuHarianPembelian do
+      begin
+        edkd_akun.Text:=QAkun['code'];
+        ednm_akun.text:=QAkun['account_name'];
+      end;
+    end;
   Close;
-
-
 end;
 
 procedure TFAkun_Perkiraan_TerimaMat.FormShow(Sender: TObject);

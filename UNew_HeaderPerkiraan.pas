@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls,
+  Vcl.Mask, RzEdit, RzBtnEdt;
 
 type
   TFNewHeaderPerkiraan = class(TForm)
@@ -17,15 +18,26 @@ type
     Panel2: TPanel;
     BBatal: TRzBitBtn;
     BSave: TRzBitBtn;
+    EdNm_Header1: TRzButtonEdit;
+    EdNm_Header2: TRzButtonEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    EdNm_header3: TRzButtonEdit;
+    Label5: TLabel;
+    Label6: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure EdNm_Header1ButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    kdheader1,kdheader2,kdheader3:string;
   end;
 
 Function FNewHeaderPerkiraan: TFNewHeaderPerkiraan;
@@ -34,7 +46,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNewDaftar_perkiraan, UDataModule;
+uses UNewDaftar_perkiraan, UDataModule, UMaster_DataHeader;
 var
   realFNewHeaderPerkiraan : TFNewHeaderPerkiraan;
 // implementasi function
@@ -89,6 +101,16 @@ begin
     DM.Qtemp.Next;
   end;
   Close;
+end;
+
+procedure TFNewHeaderPerkiraan.EdNm_Header1ButtonClick(Sender: TObject);
+begin
+  with FMaster_DataHeader do
+  begin
+    Show;
+    Qheader1.Close;
+    Qheader1.Open;
+  end;
 end;
 
 procedure TFNewHeaderPerkiraan.FormClose(Sender: TObject;

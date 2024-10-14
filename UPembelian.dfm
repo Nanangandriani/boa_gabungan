@@ -25,6 +25,7 @@ object FPembelian: TFPembelian
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
+      Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
@@ -2895,30 +2896,16 @@ object FPembelian: TFPembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT'
-      '        a.trans_no,'
-      #9'a.item_stock_code, '
-      #9'a.stock_code, '
-      #9'a.qty, '
-      #9'a.unit, '
-      #9'a.wh_code, '
-      #9'a.trans_year, '
-      #9'a.qty_difference, '
-      #9'a.unit_po, '
-      #9'a.qty_po, '
-      #9'a.notes, '
-      #9'a.receive_no, '
-      #9'a.po_no, '
-      #9'b.item_name, '
-      #9'a.pph_rp, '
-      #9'a.ppn_rp, '
-      #9'a.grandtotal, '
-      #9'a.subtotal, '
-      #9'a.price, '
-      #9'a.ppn, '
+      
+        '        a.trans_no,a.item_stock_code, a.stock_code, a.qty, a.uni' +
+        't, a.wh_code, a.trans_year, a.qty_difference, a.unit_po, '
+      
+        #9'a.qty_po, a.notes, a.receive_no, a.po_no, b.item_name, a.pph_rp' +
+        ', a.ppn_rp, a.grandtotal, a.subtotal, a.price, a.ppn, '
       
         #9'a.pph ,a.account_code,a.ppn_pembulatan,a.account_pph_code,a.dut' +
-        'y_account_code,a.import_duty,a.order_no,a.subtotalrp,a.pemb_dpp,' +
-        'c.wh_name'
+        'y_account_code,a.import_duty,a.order_no,a.subtotalrp,'
+      '        a.pemb_dpp,c.wh_name,d.ref_no'
       ''
       'FROM'
       #9'purchase.t_purchase_invoice_det AS "a"'
@@ -2926,19 +2913,13 @@ object FPembelian: TFPembelian
         #9'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b' +
         '.item_stock_code'
       '        INNER JOIN t_wh'#9'c on a.wh_code=c.wh_code'
+      
+        '        INNER JOIN purchase.t_purchase_invoice d on a.trans_no=d' +
+        '.trans_no'
       'ORDER BY a.id desc')
     MasterSource = Dsterima_material
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
     Left = 560
     Top = 8
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'INV/0001/20/VI/24'
-      end>
   end
   object DataSetDriverEh1: TDataSetDriverEh
     ProviderDataSet = Qterima_material
@@ -2966,9 +2947,10 @@ object FPembelian: TFPembelian
         'app,a.*, b.supplier_name,'
       
         ' c.account_name, d.account_name as nm_perk,to_char(trans_date,'#39'd' +
-        'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln from purchase.t_purchase_in' +
-        'voice a Left join t_supplier b on a.supplier_code=b.supplier_cod' +
-        'e'
+        'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln from '
+      
+        'purchase.t_purchase_invoice a Left join t_supplier b on a.suppli' +
+        'er_code=b.supplier_code'
       'left join t_ak_account c on a.account_code=c.code'
       'left join t_ak_account d on a.account_um_code=d.code'
       'order by a.id desc')
