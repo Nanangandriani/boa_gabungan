@@ -36,7 +36,7 @@ implementation
 
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
-  UDataMasterAkunTrans, UDataPenerimaanBank;
+  UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function;
 
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
@@ -55,7 +55,9 @@ begin
       FDataPenerimaanBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
       FDataPenerimaanBank.MemDetailAkun['debit']:=0;
+      FDataPenerimaanBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
       FDataPenerimaanBank.MemDetailAkun['keterangan']:='-';
+      FDataPenerimaanBank.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       FDataPenerimaanBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;

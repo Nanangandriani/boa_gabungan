@@ -738,77 +738,22 @@
         </DCCReference>
         <DCCReference Include="URincianPot_Penjualan.pas">
             <Form>FRincianPot_Penjualan</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UMovingDPP.pas">
             <Form>FMovingDPP</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDaftarPenagihanPiutang.pas">
             <Form>FDaftarPenagihanPiutang</Form>
-        </DCCReference>
-        <DCCReference Include="URpt_BukuHarianPembelian.pas">
-            <Form>FRpt_BukuHarianPembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< HEAD
-        <DCCReference Include="UMaster_DataHeader.pas">
-            <Form>FMaster_DataHeader</Form>
-=======
-<<<<<<< HEAD
-        <DCCReference Include="Unew_spb.pas">
-            <Form>FNew_SPB</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="USearch_Po.pas">
-            <Form>Fsearch_po</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="USearch_Purchase_Order.pas">
-            <Form>FUSearch_PO</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNew_TerimaMaterial.pas">
-            <Form>FNew_TerimaMaterial</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UTerima_Material.pas">
-            <Form>FTerima_Material</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="USearch_TerimaBarang.pas">
-            <Form>FSearch_TerimaBarang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Usearch_MatTerima.pas">
-            <Form>FSearch_Matterima</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="USearch_ItemRetur.pas">
-            <Form>FSearch_MaterialRetur</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="u_rencana_lunas_hutang.pas">
-            <Form>Frencanalunashutang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="udafajuankeluarkasbank.pas">
-            <Form>Fdafajuankeluarkasbank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="u_daf_keluar_kas_bank.pas">
-            <Form>Fdaf_pengeluaran_kas_bank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="u_rencana_lunas_hutang_input.pas">
-            <Form>frmrencanalunashutang</Form>
-=======
         <DCCReference Include="UListItempo.pas">
             <Form>Flistitempo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListPerusahaan.pas">
             <Form>FListPerusahaan</Form>
->>>>>>> 3a05723c6a0c6a565ff4d9c88e0e76e48b18fc21
->>>>>>> eb348e11c99f970a728a5cd24d6b820028fd3e34
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

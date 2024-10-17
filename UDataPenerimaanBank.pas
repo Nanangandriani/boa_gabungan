@@ -90,6 +90,7 @@ type
     edNMJenisBayar: TRzButtonEdit;
     edKodeSumberTagihan: TEdit;
     edKodeJenisBayar: TEdit;
+    MemDetailAkunjumlah_hasil_kurs: TCurrencyField;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -103,18 +104,30 @@ type
     procedure edNamaBankButtonClick(Sender: TObject);
     procedure edNMSumberTagihanButtonClick(Sender: TObject);
     procedure edNMJenisBayarButtonClick(Sender: TObject);
+    procedure DBGridAkunColEnter(Sender: TObject);
+    procedure DBGridAkunColExit(Sender: TObject);
+    procedure edKursChange(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
   public
     Status : Integer;
-    akun_d, akun_k : String;
+    akun_d, akun_k, kd_ak_pelanggan, vid_modul : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5 : String;
+    strtgl, strbulan, strtahun: string;
+    Year, Month, Day: Word;
+    next_proses:boolean;
     { Public declarations }
+    procedure Autonumber;
+    procedure Save;
+    procedure Update;
+    procedure InsertDetailAkun;
+    procedure InsertDetailPiutang;
     procedure Clear;
     procedure RefreshGridDetailAkun;
     procedure RefreshGridDetailPiutang;
     procedure VCekBalance;
+    procedure HitungKurs;
   end;
 
 var
@@ -125,8 +138,255 @@ implementation
 {$R *.dfm}
 
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
-  UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang;
+  UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
+  UListPenerimaanBank, UHomeLogin;
 
+
+procedure TFDataPenerimaanBank.HitungKurs;
+begin
+   try
+    begin
+      if MemDetailAkun['kd_akun']<>'0' then
+      begin
+        MemDetailAkun.Edit;
+        MemDetailAkun['jumlah_hasil_kurs']:=(MemDetailAkun['debit']+MemDetailAkun['kredit'])*edKurs.Value;
+        MemDetailAkun.Post;
+      end;
+    end;
+   Except;
+   end;
+end;
+
+procedure TFDataPenerimaanBank.Update;
+begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "cash_banks"."t_cash_bank_acceptance" SET '+
+              ' updated_at=NOW(),'+
+              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' ,'+
+              ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
+              ' period_date1='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+
+              ' period_date2='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+
+              ' code_type_trans='+QuotedStr(edKodeJenisTrans.Text)+','+
+              ' name_type_trans='+QuotedStr(edNamaJenisTrans.Text)+','+
+              ' account_number_bank='+QuotedStr(edNoRek.Text)+','+
+              ' account_name_bank='+QuotedStr(edNamaBank.Text)+','+
+              ' code_currency='+QuotedStr(edKodeMataUang.Text)+','+
+              ' name_currency='+QuotedStr(edNamaMataUang.Text)+','+
+              ' kurs='+QuotedStr(FloatToStr(edKurs.value))+','+
+              ' paid_amount='+QuotedStr(FloatToStr(edKurs.value))+','+
+              ' for_acceptance='+QuotedStr(edUntukPengiriman.Text)+','+
+              ' description='+QuotedStr(MemKeterangan.Text)+', '+
+              ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
+              ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+', '+
+              ' payment_code='+QuotedStr(edKodeSumberTagihan.Text)+','+
+              ' payment_name='+QuotedStr(edNMSumberTagihan.Text)+', '+
+              ' bill_code='+QuotedStr(edKodeJenisBayar.Text)+','+
+              ' bill_name='+QuotedStr(edNMJenisBayar.Text)+', '+
+              ' order_no='+QuotedStr(order_no)+','+
+              ' additional_code='+QuotedStr('0')+','+
+              ' trans_day='+QuotedStr(strtgl)+','+
+              ' trans_month='+QuotedStr(strbulan)+','+
+              ' trans_year='+QuotedStr(strtahun)+' '+
+              ' Where voucher_no='+QuotedStr(edNoTrans.Text)+'');
+      ExecSQL;
+    end;
+    if MemDetailAkun.RecordCount<>0 then
+    begin
+      InsertDetailAkun;
+    end;
+
+    if MemDetailPiutang.RecordCount<>0 then
+    begin
+      InsertDetailPiutang;
+    end;
+    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+    Close;
+    FListPenerimaanBank.Refresh;
+end;
+
+procedure TFDataPenerimaanBank.InsertDetailAkun;
+begin
+  with Dm.Qtemp1 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * from ('+
+            ' SELECT * from "cash_banks"."t_cash_bank_acceptance_det"'+
+            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
+            ' Order By voucher_no desc');
+    open;
+  end;
+
+  if Dm.Qtemp1.RecordCount>0 then
+  begin
+  with dm.Qtemp do
+  begin
+  close;
+  sql.clear;
+  sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_acceptance_det" '+
+            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+  ExecSQL;
+  end;
+  end;
+
+  MemDetailAkun.First;
+  while not MemDetailAkun.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+    close;
+    sql.clear;
+    sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_det" ("voucher_no", '+
+            ' "code_account", "name_account", "position", "paid_amount", "amount_rate_results", "description", '+
+            ' "code_account_header") '+
+            ' Values( '+
+            ' '+QuotedStr(edNoTrans.Text)+', '+
+            ' '+QuotedStr(MemDetailAkun['kd_akun'])+', '+
+            ' '+QuotedStr(MemDetailAkun['nm_akun'])+', ');
+            if MemDetailAkun['debit']<>0 then
+            begin
+              sql.Add(' '+QuotedStr('D')+', ');
+              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['debit']))+', ');
+            end;
+            if MemDetailAkun['kredit']<>0 then
+            begin
+              sql.Add(' '+QuotedStr('K')+', ');
+              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['kredit']))+', ');
+            end;
+    sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['jumlah_hasil_kurs']))+', '+
+            ' '+QuotedStr(MemDetailAkun['keterangan'])+', '+
+            ' '+QuotedStr(MemDetailAkun['kd_header_akun'])+'  );');
+    ExecSQL;
+    end;
+  MemDetailAkun.Next;
+  end;
+end;
+
+procedure TFDataPenerimaanBank.InsertDetailPiutang;
+begin
+  with Dm.Qtemp1 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * from ('+
+            ' SELECT * from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
+            ' Order By voucher_no desc');
+    open;
+  end;
+
+  if Dm.Qtemp1.RecordCount>0 then
+  begin
+  with dm.Qtemp do
+  begin
+  close;
+  sql.clear;
+  sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+  ExecSQL;
+  end;
+  end;
+
+  MemDetailPiutang.First;
+  while not MemDetailPiutang.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+    close;
+    sql.clear;
+    sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
+            ' "no_invoice", "no_invoice_tax", "code_cust", "name_cust", "date_trans", "date_invoice_tax", '+
+            ' "code_type_trans", "name_type_trans", "account_number_bank", "account_name_bank", '+
+            ' "paid_amount", "description", "account_acc") '+
+            ' Values( '+
+            ' '+QuotedStr(edNoTrans.Text)+', '+
+            ' '+QuotedStr(MemDetailPiutang['no_tagihan'])+', '+
+            ' '+QuotedStr(MemDetailPiutang['no_faktur'])+', '+
+            ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
+            ' '+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetailPiutang['tgl_faktur']))+', '+
+            ' '+QuotedStr(edKodeJenisTrans.Text)+', '+
+            ' '+QuotedStr(edNamaJenisTrans.Text)+', '+
+            ' '+QuotedStr(edNoRek.Text)+', '+
+            ' '+QuotedStr(edNamaBank.Text)+', '+
+            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
+            ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
+            ' '+QuotedStr(kd_ak_pelanggan)+') ');
+    ExecSQL;
+    end;
+  MemDetailPiutang.Next;
+  end;
+end;
+
+procedure TFDataPenerimaanBank.Save;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' Insert into "cash_banks"."t_cash_bank_acceptance" ("created_at", "created_by", '+
+            ' "voucher_no", "date_trans", "period_date1", "period_date2", "code_type_trans", '+
+            ' "name_type_trans", "account_number_bank", "account_name_bank", "code_currency", '+
+            ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
+            ' "code_cust", "name_cust", "payment_code", "payment_name", "bill_code", "bill_name", '+
+            //' "additional_code", '+
+            ' "order_no", "trans_day", "trans_month", "trans_year") '+
+            ' VALUES ( '+
+            ' NOW(), '+
+            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+QuotedStr(edNoTrans.Text)+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+', '+
+            ' '+QuotedStr(edKodeJenisTrans.Text)+', '+
+            ' '+QuotedStr(edNamaJenisTrans.Text)+', '+
+            ' '+QuotedStr(edNoRek.Text)+', '+
+            ' '+QuotedStr(edNamaBank.Text)+', '+
+            ' '+QuotedStr(edKodeMataUang.Text)+', '+
+            ' '+QuotedStr(edNamaMataUang.Text)+', '+
+            ' '+QuotedStr(FloatToStr(edKurs.value))+', '+
+            ' '+QuotedStr(FloatToStr(edJumlah.value))+', '+
+            ' '+QuotedStr(edUntukPengiriman.Text)+', '+
+            ' '+QuotedStr(MemKeterangan.Text)+', '+
+            ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
+            ' '+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' '+QuotedStr(edKodeSumberTagihan.Text)+', '+
+            ' '+QuotedStr(edNMSumberTagihan.Text)+', '+
+            ' '+QuotedStr(edKodeJenisBayar.Text)+', '+
+            ' '+QuotedStr(edNMJenisBayar.Text)+', '+
+            ' '+QuotedStr(order_no)+', '+
+            //' '+QuotedStr('0')+', '+
+            ' '+QuotedStr(strtgl)+', '+
+            ' '+QuotedStr(strbulan)+', '+
+            ' '+QuotedStr(strtahun)+'  );');
+    ExecSQL;
+  end;
+  if MemDetailAkun.RecordCount<>0 then
+  begin
+    InsertDetailAkun;
+  end;
+
+  if MemDetailPiutang.RecordCount<>0 then
+  begin
+    InsertDetailPiutang;
+  end;
+  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  Clear;
+  Close;
+  FListPenerimaanBank.Refresh;
+end;
+
+procedure TFDataPenerimaanBank.Autonumber;
+begin
+   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
+   strday2:=dtTrans.Date;
+   edNoTrans.Text:=getNourut(strday2,'cash_banks.t_cash_bank_acceptance','0');
+end;
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
 var
@@ -136,11 +396,11 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT "no_voucher", "no_invoice", "no_invoice_tax", "code_cust", '+
+    sql.add(' SELECT "voucher_no", "no_invoice", "no_invoice_tax", "code_cust", '+
             ' "name_cust", "date_trans", "code_type_trans", "name_type_trans", '+
             ' "account_number_bank", "account_name_bank", "paid_amount", "description", "account_acc" '+
-            ' from "cash_banks"."t_bank_acceptance_invoice" '+
-            ' WHERE "no_voucher"='+QuotedStr(edNoTrans.Text)+' '+
+            ' from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
             '  Order BY no_invoice_tax asc');
     open;
   end;
@@ -201,18 +461,18 @@ begin
       begin
         close;
         sql.clear;
-        sql.add(' SELECT a."no_voucher", "account_number_bank", "code_account", '+
+        sql.add(' SELECT a."voucher_no", "account_number_bank", "code_account", '+
                 ' "name_account", "position", b."paid_amount", b."description" from ( '+
-                ' SELECT "no_voucher", "date_trans", "period_date1", "period_date2", '+
+                ' SELECT "voucher_no", "date_trans", "period_date1", "period_date2", '+
                 ' "code_type_trans", "name_type_trans", "account_number_bank", '+
                 ' "account_name_bank", "code_currency", "name_currency", "kurs", '+
                 ' "paid_amount", "for_acceptance", "description", "code_cust", "name_cust" '+
-                ' from "cash_banks"."t_bank_acceptance") a '+
-                ' LEFT JOIN (SELECT "no_voucher", "code_account", "name_account", '+
-                ' "position", "paid_amount", "description" from "cash_banks"."t_bank_acceptance_det") b '+
-                ' ON a."no_voucher"=b."no_voucher" '+
-                ' WHERE a."no_voucher"='+QuotedStr(edNoTrans.Text)+' '+
-                ' AND a."no_voucher"='+QuotedStr(Dm.Qtemp1.fieldbyname('code_account').value)+''+
+                ' from "cash_banks"."t_cash_bank_acceptance") a '+
+                ' LEFT JOIN (SELECT "voucher_no", "code_account", "name_account", '+
+                ' "position", "paid_amount", "description" from "cash_banks"."t_cash_bank_acceptance_det") b '+
+                ' ON a."voucher_no"=b."voucher_no" '+
+                ' WHERE a."voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
+                ' AND a."voucher_no"='+QuotedStr(Dm.Qtemp1.fieldbyname('code_account').value)+''+
                 ' ORDER BY "position" desc ');
         open;
       end;
@@ -273,20 +533,95 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.BSaveClick(Sender: TObject);
+var
+  Year, Month, Day: Word;
 begin
-  VCekBalance;
-  {ShowMessage('Buat Validasi Jumlah Debit Kredit Balance');
-  ShowMessage('Buat Validasi Jumlah Akun Kredit dengan Total Faktur Balance');
-  ShowMessage('Save/update');}
-  //t_bank_acceptance
-  //t_bank_acceptance_det
-  //t_bank_acceptance_invoice
+  //Rferesh hasil Kurs
+  MemDetailAkun.First;
+  while not MemDetailAkun.Eof do
+  begin
+    HitungKurs;
+    MemDetailAkun.Next;
+  end;
 
+  VCekBalance;
+  //t_cash_bank_acceptance
+  //t_cash_bank_acceptance_det
+  //t_cash_bank_acceptance_invoice
+  DecodeDate(dtTrans.Date, Year, Month, Day);
+  strtgl:=IntToStr(Day);
+  strbulan:=inttostr(Month);
+  strtahun:=inttostr(Year);
+  //refresh grid
+      //ShowMessage(IntToStr(Status));
+    if next_proses=true then
+    begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if edKodeJenisTrans.Text='' then
+      begin
+        MessageDlg('Pastikan Jenis Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+        edKodeJenisTrans.SetFocus;
+      end
+      else if edNoTrans.Text='' then
+      begin
+        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+        edNoTrans.SetFocus;
+      end
+      else if edKodeMataUang.Text='' then
+      begin
+        MessageDlg('Data Mata Uang Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+        edKodeMataUang.SetFocus;
+      end
+      else if (vid_modul='3')and (Length(edNoRek.Text)=0) then
+      begin
+        MessageDlg('Pastikan Data Bank Anda Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+        edNoRek.SetFocus;
+      end
+      else if MemDetailAkun.RecordCount=0 then
+      begin
+        MessageDlg('Pastikan Akun Anda Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+        edNoTrans.SetFocus;
+      end
+      else if (MemDetailPiutang.RecordCount=0) and (Length(edKode_Pelanggan.Text)<>0) then
+      begin
+        MessageDlg('Pastikan Detail Piutang Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+        edNoTrans.SetFocus;
+      end
+      else if FDataPenerimaanBank.Status = 0 then
+      begin
+      FDataPenerimaanBank.Autonumber;
+      //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      begin
+        Save;
+        Dm.Koneksi.Commit;
+      end;
+      end
+      else if FDataPenerimaanBank.Status = 1 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        Update;
+        Dm.Koneksi.Commit;
+      end;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+    end;
 end;
 
 procedure TFDataPenerimaanBank.VCekBalance;
 begin
   //Cek Balance Debit Kredit
+  next_proses:=true;
   vtotal_debit:=0;
   vtotal_kredit:=0;
   MemDetailAkun.First;
@@ -300,14 +635,14 @@ begin
   if vtotal_debit <> vtotal_kredit then
   begin
     ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Anda Sudah Benar...!!!');
-    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    next_proses:=false;
     exit;
   end;
 
   if vtotal_debit <> edJumlah.Value then
   begin
     ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Dengan Total Penerimaan Anda Sudah Benar...!!!');
-    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    next_proses:=false;
     exit;
   end;
 
@@ -326,7 +661,7 @@ begin
     if vtotal_kredit <> vtotal_piutang then
     begin
       ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Dengan Total Piutang Anda Sudah Benar...!!!');
-      //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+      next_proses:=false;
       exit;
     end;
   end;
@@ -361,6 +696,16 @@ begin
 
 end;
 
+procedure TFDataPenerimaanBank.DBGridAkunColEnter(Sender: TObject);
+begin
+  HitungKurs;
+end;
+
+procedure TFDataPenerimaanBank.DBGridAkunColExit(Sender: TObject);
+begin
+  HitungKurs;
+end;
+
 procedure TFDataPenerimaanBank.DBGridAkunColumns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
@@ -385,6 +730,12 @@ end;
 procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
+  if (edKode_Pelanggan.Text='0') OR (Length(edKode_Pelanggan.Text)=0) then
+  begin
+   ShowMessage('Silkan Pilih Pelanggan...!!!');
+   Exit;
+  end;
+
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
   begin
     if (edKodeSumberTagihan.Text='0') OR (Length(edKodeSumberTagihan.Text)=0) then
@@ -450,6 +801,16 @@ begin
   Fbrowse_data_pelanggan.ShowModal;
 end;
 
+procedure TFDataPenerimaanBank.edKursChange(Sender: TObject);
+begin
+  MemDetailAkun.First;
+  while not MemDetailAkun.Eof do
+  begin
+    HitungKurs;
+    MemDetailAkun.Next;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.edNamaBankButtonClick(Sender: TObject);
 begin
   if Length(edKodeJenisTrans.Text)=0 then
@@ -475,6 +836,8 @@ begin
   FMasterData.ShowModal;
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
   RefreshGridDetailAkun;
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
+
 end;
 
 procedure TFDataPenerimaanBank.edNamaMataUangButtonClick(Sender: TObject);

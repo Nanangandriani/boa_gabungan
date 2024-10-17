@@ -23,7 +23,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1152
+    ExplicitWidth = 1127
     object LabelPelanggan: TLabel
       Left = 10
       Top = 46
@@ -246,6 +246,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Width = 93
       Height = 23
       TabOrder = 9
+      OnChange = edKursChange
       DisplayFormat = '0.00#,##'
     end
     object edJumlah: TRzNumericEdit
@@ -272,7 +273,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 513
-    ExplicitWidth = 1146
+    ExplicitWidth = 1127
     object BBatal: TRzBitBtn
       Left = 1057
       Top = 1
@@ -333,7 +334,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1070
+      ExplicitLeft = 1051
     end
     object BSave: TRzBitBtn
       Left = 982
@@ -395,7 +396,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 995
+      ExplicitLeft = 976
     end
     object Edautocode: TEdit
       Left = 712
@@ -414,19 +415,16 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1133
     Height = 224
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 328
-    ExplicitWidth = 1152
-    ExplicitHeight = 194
+    ExplicitWidth = 1127
+    ExplicitHeight = 215
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1142
-      ExplicitHeight = 215
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -439,6 +437,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnColEnter = DBGridAkunColEnter
+        OnColExit = DBGridAkunColExit
         Columns = <
           item
             CellButtons = <>
@@ -496,6 +496,15 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             FieldName = 'kd_header_akun'
             Footers = <>
             Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'jumlah_hasil_kurs'
+            Footers = <>
+            Title.Caption = 'Hasil Kurs'
+            Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -503,8 +512,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1148
-      ExplicitHeight = 224
+      ExplicitWidth = 1123
+      ExplicitHeight = 190
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -584,8 +593,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
-    ExplicitTop = 180
-    ExplicitWidth = 1152
+    ExplicitWidth = 1127
     object gbDataPiutang: TGroupBox
       Left = 0
       Top = 0
@@ -594,9 +602,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Align = alLeft
       Caption = 'Data Tagihan'
       TabOrder = 0
-      ExplicitLeft = 15
-      ExplicitTop = 10
-      ExplicitHeight = 87
       object Label21: TLabel
         Left = 20
         Top = 30
@@ -790,6 +795,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object MemDetailAkunkd_header_akun: TStringField
       FieldName = 'kd_header_akun'
     end
+    object MemDetailAkunjumlah_hasil_kurs: TCurrencyField
+      FieldName = 'jumlah_hasil_kurs'
+      DisplayFormat = '#,##0.00'
+      EditFormat = '#,##0.00'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kd_akun: TMTStringDataFieldEh
@@ -832,6 +842,15 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
           FieldName = 'kd_header_akun'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object jumlah_hasil_kurs: TMTNumericDataFieldEh
+          FieldName = 'jumlah_hasil_kurs'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.00'
+          currency = False
+          Precision = 15
         end
       end
       object RecordsList: TRecordsListEh
