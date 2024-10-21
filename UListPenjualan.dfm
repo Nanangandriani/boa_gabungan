@@ -1637,7 +1637,6 @@ object FDataListPenjualan: TFDataListPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Active = True
     Left = 332
     Top = 136
     object QJurnaltrans_no: TStringField

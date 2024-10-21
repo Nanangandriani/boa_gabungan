@@ -397,6 +397,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 976
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -425,6 +426,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1123
+      ExplicitHeight = 190
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -512,8 +515,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1123
-      ExplicitHeight = 190
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

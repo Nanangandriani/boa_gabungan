@@ -273,6 +273,7 @@ begin
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+    kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
   end;
   end;
   FNew_Penjualan.edNomorTrans.Enabled:=false;
