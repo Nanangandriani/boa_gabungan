@@ -193,6 +193,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 3
+      OnChange = dtTransChange
     end
     object MemKeterangan: TMemo
       Left = 694
@@ -397,10 +398,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 976
-<<<<<<< Updated upstream
-      ExplicitTop = 3
-=======
->>>>>>> Stashed changes
     end
     object Edautocode: TEdit
       Left = 712
@@ -419,21 +416,18 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1133
     Height = 224
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 1127
     ExplicitHeight = 215
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-<<<<<<< Updated upstream
       ExplicitWidth = 1123
       ExplicitHeight = 190
-=======
->>>>>>> Stashed changes
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -513,6 +507,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             FieldName = 'jumlah_hasil_kurs'
             Footers = <>
             Title.Caption = 'Hasil Kurs'
+            Visible = False
             Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -521,11 +516,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-<<<<<<< Updated upstream
-=======
-      ExplicitWidth = 1123
-      ExplicitHeight = 190
->>>>>>> Stashed changes
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -650,7 +640,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object gbDataBank: TGroupBox
       Left = 514
       Top = 0
-      Width = 591
+      Width = 567
       Height = 113
       Align = alLeft
       Caption = 'Data Bank'
@@ -754,7 +744,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         OnButtonClick = edNMJenisBayarButtonClick
       end
       object edKodeSumberTagihan: TEdit
-        Left = 575
+        Left = 555
         Top = 27
         Width = 50
         Height = 23
@@ -763,7 +753,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         TabOrder = 4
       end
       object edKodeJenisBayar: TEdit
-        Left = 575
+        Left = 555
         Top = 56
         Width = 50
         Height = 23
