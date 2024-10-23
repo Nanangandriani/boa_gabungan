@@ -107,6 +107,7 @@ type
     procedure DBGridAkunColEnter(Sender: TObject);
     procedure DBGridAkunColExit(Sender: TObject);
     procedure edKursChange(Sender: TObject);
+    procedure dtTransChange(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -775,6 +776,11 @@ begin
     FDaftarRencanaLunasPiutang.RefreshGrid;
     FDaftarRencanaLunasPiutang.show;
   end;
+end;
+
+procedure TFDataPenerimaanBank.dtTransChange(Sender: TObject);
+begin
+  FDataPenerimaanBank.Autonumber;
 end;
 
 procedure TFDataPenerimaanBank.edNMJenisBayarButtonClick(Sender: TObject);
