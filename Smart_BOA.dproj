@@ -233,6 +233,10 @@
             <Form>FNew_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="UNew_Perusahaan.pas">
             <Form>FNewPerusahaan</Form>
             <FormType>dfm</FormType>
@@ -649,11 +653,18 @@
         <DCCReference Include="UDaftarRencanaLunasPiutang.pas">
             <Form>FDaftarRencanaLunasPiutang</Form>
         </DCCReference>
+<<<<<<< Updated upstream
         <DCCReference Include="UListKolektor.pas">
             <Form>FListKolektor</Form>
         </DCCReference>
+=======
+>>>>>>> Stashed changes
         <DCCReference Include="UDataProspekPelanggan.pas">
             <Form>FDataProspekPelanggan</Form>
+        </DCCReference>
+        <DCCReference Include="UListKolektor.pas">
+            <Form>FListKolektor</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataKolektor.pas">
             <Form>FDataKolektor</Form>
@@ -722,6 +733,7 @@
             <Form>Flistitempo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< Updated upstream
         <DCCReference Include="UListPerusahaan.pas">
             <Form>FListPerusahaan</Form>
 <<<<<<< Updated upstream
@@ -749,6 +761,8 @@
 >>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
+=======
+>>>>>>> Stashed changes
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
