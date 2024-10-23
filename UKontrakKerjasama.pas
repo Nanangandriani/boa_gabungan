@@ -79,6 +79,8 @@ type
     procedure DBGridKontrakRowDetailPanelShow(Sender: TCustomDBGridEh;
       var CanShow: Boolean);
     procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,8 +94,8 @@ type
     procedure Load_contract;
   end;
 
+function FKontrakkerjasama: TFKontrakkerjasama;
 var
-  FKontrakkerjasama: TFKontrakkerjasama;
   urut:integer;
   Bln,th,kode:string;
 
@@ -102,6 +104,17 @@ implementation
 {$R *.dfm}
 
 uses UNew_KontrakKerjasama, UDataModule;
+
+var
+  RealFKontrakkerjasama: TFKontrakkerjasama;
+// implementasi function
+function FKontrakkerjasama: TFKontrakkerjasama;
+begin
+  if RealFKontrakkerjasama <> nil then
+    FKontrakkerjasama:= RealFKontrakkerjasama
+  else
+    Application.CreateForm(TFKontrakkerjasama, Result);
+end;
 
 function terbilang(dNumber: Extended): string;
 const
@@ -264,6 +277,17 @@ procedure TFKontrakkerjasama.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     Dm.Koneksi.Close;
+    Action:=cafree;
+end;
+
+procedure TFKontrakkerjasama.FormCreate(Sender: TObject);
+begin
+  RealFKontrakkerjasama:=self;
+end;
+
+procedure TFKontrakkerjasama.FormDestroy(Sender: TObject);
+begin
+  RealFKontrakkerjasama:=nil;
 end;
 
 procedure TFKontrakkerjasama.FormShow(Sender: TObject);
@@ -460,6 +484,7 @@ begin
               FNewKontrak_ks.MemMaterial.Insert;
               //FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
               FNewKontrak_ks.MemMaterial['kd_material']:=QKerjasama_det.FieldByName('item_code').AsString;
+              FNewKontrak_ks.MemMaterial['kd_material_supp']:=QKerjasama_det.FieldByName('item_stock_code').AsString;
               FNewKontrak_ks.MemMaterial['nm_material']:=QKerjasama_det.FieldByName('item_name').AsString;
               FNewKontrak_ks.MemMaterial['qty']:=QKerjasama_det.FieldByName('qty').AsString;
               FNewKontrak_ks.MemMaterial['harga2']:=QKerjasama_det.FieldByName('price').AsString;

@@ -2,8 +2,8 @@ object FPerc_Barang: TFPerc_Barang
   Left = 0
   Top = 0
   Caption = 'Form Permintaan Barang Untuk Dicampur'
-  ClientHeight = 450
-  ClientWidth = 931
+  ClientHeight = 449
+  ClientWidth = 927
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FPerc_Barang: TFPerc_Barang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 931
+    Width = 927
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,6 +26,7 @@ object FPerc_Barang: TFPerc_Barang
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 931
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -45,8 +46,8 @@ object FPerc_Barang: TFPerc_Barang
   object DBGridPermt: TDBGridEh
     Left = 0
     Top = 127
-    Width = 931
-    Height = 323
+    Width = 927
+    Height = 322
     Align = alClient
     AutoFitColWidths = True
     DataGrouping.Active = True

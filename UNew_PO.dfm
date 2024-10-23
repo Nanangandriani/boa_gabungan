@@ -3,7 +3,7 @@ object FNew_PO: TFNew_PO
   Top = 49
   BorderIcons = [biSystemMenu]
   Caption = 'Form New Purchase Order'
-  ClientHeight = 699
+  ClientHeight = 680
   ClientWidth = 1210
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,17 +11,18 @@ object FNew_PO: TFNew_PO
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnShow = FormShow
   TextHeight = 15
   object pninput: TPanel
     Left = 0
     Top = 0
     Width = 1210
-    Height = 261
+    Height = 243
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1204
+    ExplicitLeft = 8
+    ExplicitTop = -5
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -205,8 +206,8 @@ object FNew_PO: TFNew_PO
       Caption = ':'
     end
     object Label38: TLabel
-      Left = 859
-      Top = 186
+      Left = 660
+      Top = 185
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
@@ -394,10 +395,10 @@ object FNew_PO: TFNew_PO
       TabOrder = 13
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 729
-      Top = 221
+      Left = 564
+      Top = 208
       Width = 121
-      Height = 35
+      Height = 30
       Caption = 'Tambah Barang'
       TabOrder = 14
       Visible = False
@@ -472,7 +473,7 @@ object FNew_PO: TFNew_PO
       OnSelect = cb_gudangSelect
     end
     object Nopo: TEdit
-      Left = 383
+      Left = 360
       Top = 7
       Width = 121
       Height = 23
@@ -481,7 +482,7 @@ object FNew_PO: TFNew_PO
     end
     object DateTimePicker1: TDateTimePicker
       Left = 383
-      Top = 183
+      Top = 131
       Width = 121
       Height = 23
       Date = 45238.000000000000000000
@@ -490,9 +491,9 @@ object FNew_PO: TFNew_PO
       Visible = False
     end
     object Edurut: TEdit
-      Left = 856
-      Top = 232
-      Width = 121
+      Left = 487
+      Top = 7
+      Width = 71
       Height = 23
       TabOrder = 19
       Visible = False
@@ -523,7 +524,7 @@ object FNew_PO: TFNew_PO
     end
     object Cb_Code: TComboBox
       Left = 383
-      Top = 154
+      Top = 102
       Width = 121
       Height = 23
       TabOrder = 23
@@ -552,8 +553,8 @@ object FNew_PO: TFNew_PO
       Visible = False
     end
     object ckAs: TCheckBox
-      Left = 564
-      Top = 212
+      Left = 870
+      Top = 10
       Width = 153
       Height = 17
       Caption = 'Approve Supplier'
@@ -570,20 +571,19 @@ object FNew_PO: TFNew_PO
       OnClick = CkUangmkClick
     end
     object Ednm_akun: TRzButtonEdit
-      Left = 994
-      Top = 183
-      Width = 187
+      Left = 805
+      Top = 182
+      Width = 285
       Height = 23
       Text = ''
-      Enabled = False
       FocusColor = clInfoBk
       TabOrder = 28
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
     object Edkd_akun: TRzEdit
-      Left = 917
-      Top = 183
+      Left = 728
+      Top = 182
       Width = 71
       Height = 23
       Text = ''
@@ -594,9 +594,9 @@ object FNew_PO: TFNew_PO
       OnChange = Edkd_akunChange
     end
     object EdUM: TRzNumericEdit
-      Left = 729
-      Top = 183
-      Width = 121
+      Left = 899
+      Top = 153
+      Width = 191
       Height = 23
       Enabled = False
       ReadOnly = True
@@ -608,8 +608,6 @@ object FNew_PO: TFNew_PO
       Top = 154
       Width = 164
       Height = 23
-      Enabled = False
-      ReadOnly = True
       TabOrder = 31
       OnSelect = NoTransUMSelect
     end
@@ -623,7 +621,7 @@ object FNew_PO: TFNew_PO
     end
     object Edit1: TEdit
       Left = 383
-      Top = 208
+      Top = 156
       Width = 121
       Height = 23
       TabOrder = 33
@@ -631,15 +629,15 @@ object FNew_PO: TFNew_PO
     end
     object Edit2: TEdit
       Left = 383
-      Top = 233
+      Top = 181
       Width = 121
       Height = 23
       TabOrder = 34
       Visible = False
     end
     object Edit3: TEdit
-      Left = 510
-      Top = 233
+      Left = 383
+      Top = 210
       Width = 121
       Height = 23
       TabOrder = 35
@@ -684,12 +682,12 @@ object FNew_PO: TFNew_PO
   end
   object Panel2: TPanel
     Left = 0
-    Top = 526
+    Top = 508
     Width = 1210
-    Height = 143
+    Height = 139
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1204
+    ExplicitWidth = 1206
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -850,23 +848,23 @@ object FNew_PO: TFNew_PO
       Left = 190
       Top = 13
       Width = 540
-      Height = 113
+      Height = 92
       TabOrder = 6
     end
   end
   object Panel1: TPanel
     Left = 0
-    Top = 669
+    Top = 647
     Width = 1210
-    Height = 30
+    Height = 33
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1204
-    ExplicitHeight = 21
+    ExplicitWidth = 1206
+    ExplicitHeight = 32
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
-      Height = 28
+      Height = 31
       Align = alRight
       Caption = 'Close'
       TabOrder = 0
@@ -923,13 +921,13 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1128
-      ExplicitHeight = 19
+      ExplicitLeft = 1130
+      ExplicitHeight = 30
     end
     object BSimpan: TRzBitBtn
       Left = 1059
       Top = 1
-      Height = 28
+      Height = 31
       Align = alRight
       Caption = 'Save'
       TabOrder = 1
@@ -987,13 +985,13 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1053
-      ExplicitHeight = 19
+      ExplicitLeft = 1055
+      ExplicitHeight = 30
     end
     object BEdit: TRzBitBtn
       Left = 984
       Top = 1
-      Height = 28
+      Height = 31
       Align = alRight
       Caption = 'Save'
       TabOrder = 2
@@ -1051,8 +1049,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 978
-      ExplicitHeight = 19
+      ExplicitLeft = 980
+      ExplicitHeight = 30
     end
     object Button1: TButton
       Left = 856
@@ -1067,12 +1065,12 @@ object FNew_PO: TFNew_PO
   end
   object Panel3: TPanel
     Left = 0
-    Top = 261
+    Top = 243
     Width = 1210
     Height = 265
     Align = alTop
     TabOrder = 3
-    ExplicitWidth = 1204
+    ExplicitWidth = 1206
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1

@@ -11,6 +11,9 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object DBGrid_um: TDBGridEh

@@ -78,6 +78,9 @@ type
     procedure EdKd_suppChange(Sender: TObject);
     procedure CbJenisSelect(Sender: TObject);
     procedure EdCurrChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -86,9 +89,8 @@ type
 
   end;
 
-var
-  FNewKontrak_ks: TFNewKontrak_ks;
-  Status2,status_App:String;
+Function FNewKontrak_ks: TFNewKontrak_ks;
+ var Status2,status_App:String;
 
 implementation
 
@@ -97,6 +99,16 @@ implementation
 uses USearch_Supplier, UDataModule, UKontrakKerjasama, UMainMenu, UMy_Function,
   Ulist_materialstok;
 
+var
+  RealFNewKontrak_ks: TFNewKontrak_ks;
+// implementasi function
+function FNewKontrak_ks: TFNewKontrak_ks;
+begin
+  if RealFNewKontrak_ks <> nil then
+    FNewKontrak_ks:= RealFNewKontrak_ks
+  else
+    Application.CreateForm(TFNewKontrak_ks, Result);
+end;
 
 function IntToRoman(Value : Longint):String;  // fungsi
     const
@@ -132,8 +144,8 @@ end;
 
 procedure TFNewKontrak_ks.BBatalClick(Sender: TObject);
 begin
-   Close;
    FKontrakkerjasama.ActROExecute(sender);
+   Close;
 end;
 
 
@@ -252,7 +264,7 @@ begin
                           ' :parsisaqty,:parstatus,:parppn,:parppn_rp,:parSpesifikasi,'+
                           ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:parpph,:parpph_rp,:parpemb_dpp)';
                           ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
-                          ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material'];
+                          ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                           ParamByName('parqty').Value:=MemMaterial['qty'];
                           ParamByName('parharga').Value:=MemMaterial['harga2'];
                           ParamByName('parsatuan').Value:=MemMaterial['satuan'];
@@ -393,7 +405,7 @@ begin
                         ' :parharga,:parsatuan,:partotal_harga,:partotalpo,:parsisaqty,:parstatus,'+
                         ' :parppn,:parppn_rp,:parSpesifikasi,:parsubtotal_rp,:pargrandtotal,:parpemb)';
                         ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
-                        ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material'];
+                        ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                         ParamByName('parqty').Value:=MemMaterial['qty'];
                         ParamByName('parharga').Value:=MemMaterial['harga2'];
                         ParamByName('parsatuan').Value:=MemMaterial['satuan'];
@@ -512,7 +524,7 @@ begin
                     ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month,trans_day,input_date)'+
                     ' values(:parno_kontrak,:parkd_supplier,:partgl_kontrak,:partgl_selesai, '+
                     ' :parjatuh_tempo,:parno_urut,:partahun,:parketerangan,:parstatus,:parcurrency,:parnilaicurrency,:parjenis,'+
-                    ' :parStatus_Approval,:parkategori,:parbln_kirim,:parth_kirim,:parpic,:parbulan,:partgl,:parinput_date)';
+                    ' :parStatus_Approval,:parkategori,:parbln_kirim,:parth_kirim,:parpic,:parbulan,:partgl,now())';
                     ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                     ParamByName('parkd_supplier').Value:=EdKd_supp.Text;
                     ParamByName('partgl_kontrak').Value:=FormatDateTime('yyy-mm-dd',DtKontrak.Date);
@@ -532,7 +544,7 @@ begin
                     ParamByName('parpic').Value:=Nm;
                     ParamByName('parbulan').Value:=DtBln.Text;
                     ParamByName('partgl').Value:=DtHr.Text;
-                    ParamByName('parinput_date').AsDateTime:=Now;
+                 //   ParamByName('parinput_date').AsDateTime:=Now;
 
           ExecSQL;
         end;
@@ -1007,6 +1019,21 @@ begin
     Key:=#0;
     ShowMessage('Inputan hanya angka saja');
   end;
+end;
+
+procedure TFNewKontrak_ks.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNewKontrak_ks.FormCreate(Sender: TObject);
+begin
+  RealFNewKontrak_ks:=self;
+end;
+
+procedure TFNewKontrak_ks.FormDestroy(Sender: TObject);
+begin
+  RealFNewKontrak_ks:=nil;
 end;
 
 procedure TFNewKontrak_ks.FormShow(Sender: TObject);

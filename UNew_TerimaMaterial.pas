@@ -703,6 +703,19 @@ begin
     loadtype;
     MemterimaDet.Close;
     if MemterimaDet.Active=false then MemterimaDet.Active:=true;
+    Edsbu.Clear;
+    with Dm.Qtemp do
+      begin
+       close;
+       sql.Text:=' select * from t_sbu';
+       ExecSQL;
+      end;
+      Dm.Qtemp.First;
+      while not dm.Qtemp.Eof do
+       begin
+        Edsbu.Items.Add(Dm.Qtemp.FieldByName('sbu_code').AsString);
+        Dm.Qtemp.Next;
+       end;
 end;
 
 procedure TFNew_TerimaMaterial.Load;

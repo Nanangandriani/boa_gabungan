@@ -41,6 +41,9 @@ type
     Label11: TLabel;
     Cb_Curr: TRzComboBox;
     Ed_kurs: TRzNumericEdit;
+    Label12: TLabel;
+    Label13: TLabel;
+    ednilai_po: TRzNumericEdit;
     procedure BBatalClick(Sender: TObject);
     procedure EdUMKeyPress(Sender: TObject; var Key: Char);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -53,6 +56,10 @@ type
     procedure Edkd_akunChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Cb_CurrChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure CbPoSelect(Sender: TObject);
   private
     { Private declarations }
 
@@ -66,16 +73,27 @@ type
     procedure load_currency;
   end;
 
-var
-  FNew_UM_Pembelian: TFNew_UM_Pembelian;
-  StatusTr:integer;
+function FNew_UM_Pembelian: TFNew_UM_Pembelian;
+var  StatusTr:integer;
   status_um,user,orderno:string;
+ // hg_po:real;
 implementation
 
 {$R *.dfm}
 
 uses USearch_Supplier, UAkun_Perkiraan_UM, UDataModule, UMainMenu, UMy_Function,
-  UCari_DaftarPerk;
+  UCari_DaftarPerk, UUang_Muka_Pembelian;
+
+var
+  RealFNew_UM_Pembelian: TFNew_UM_Pembelian;
+// implementasi function
+function FNew_UM_Pembelian: TFNew_UM_Pembelian;
+begin
+  if RealFNew_UM_Pembelian <> nil then
+    FNew_UM_Pembelian:= RealFNew_UM_Pembelian
+  else
+    Application.CreateForm(TFNew_UM_Pembelian, Result);
+end;
 
 procedure TFNew_UM_Pembelian.update;
 begin
@@ -98,6 +116,7 @@ begin
         parambyname('partrans_day').AsString:=Edhari.Text;
         parambyname('partrans_month').AsString:=Edbln.Text;
         parambyname('partrans_year').AsString:=Edth.Text;
+        parambyname('parpo_no').AsString:=cbpo.Text;       //update ds 07-10-2024
         //parambyname('parpic').AsString:=user;
         parambyname('parinput_date').AsString:=Formatdatetime('yyyy-mm-dd',Now());
         //parambyname('parorder_no').AsString:=orderno;
@@ -118,7 +137,8 @@ begin
       close;
       sql.Clear;
       sql.Text:='select * from purchase.t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
-                'and po_no not in (select po_no from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' )';
+      ' and po_no in (select po_no from purchase.t_po except select po_no from purchase.t_advance_payment )';
+         //       'and po_no not in (select po_no from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' )';
 
       //sql.Text:='select * from purchase.t_po where um_status=''true'' and supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
                 //' and po_no not in (select po_no from purchase.t_advance_payment)';
@@ -151,7 +171,7 @@ begin
                   ' trans_day,trans_month,trans_year,pic,input_date,order_no,po_no,currency,exchange_rate,created_at,created_by) '+
                   ' values(:parno_trans,:partrans_date,:parkd_supplier,:parum_status,:parum_value,'+
                   ' :parum_account_code,:partrans_day,:partrans_month,:partrans_year,:parpic,:parinput_date,'+
-                  ' :parorder_no,:parpo_no,:parcurrency,:exchange_rate,:created_at,:created_by)';
+                  ' :parorder_no,:parpo_no,:parcurrency,:exchange_rate,now(),:created_by)';
                   ParamByName('parno_trans').Value:=Ed_No_trans.Text;
                   ParamByName('partrans_date').Value:=FormatDateTime('yyy-mm-dd',DTP_UM.Date);
                   ParamByName('parkd_supplier').Value:=EdKd_supp.Text;
@@ -167,7 +187,7 @@ begin
                   ParamByName('parpo_no').Value:=CbPo.text;
                   ParamByName('parcurrency').Value:=Cb_Curr.text;
                   ParamByName('exchange_rate').Value:=Ed_kurs.text;
-                  parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+              //    parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   parambyname('created_by').AsString:='Admin';
         ExecSQL;
       end;
@@ -177,6 +197,14 @@ procedure TFNew_UM_Pembelian.BSimpanClick(Sender: TObject);
 begin
   if messageDlg ('Anda Yakin akan Menyimpan Transaksi ini.'+Ed_No_trans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
   begin
+      if CbPo.Text<>'' then
+      begin
+        if EdUM.Value>ednilai_po.Value then
+        begin
+          MessageDlg('Uang Muka Tidak Boleh melebihi PO ',MtWarning,[MbOk],0);
+          Exit;
+        end;
+      end;
     if DTP_UM.Date=null then
     begin
       MessageDlg('Tanggal transaksi Tidak Boleh Kosong ',MtWarning,[MbOk],0);
@@ -203,6 +231,19 @@ begin
     end;
     Close;
 end;
+end;
+
+procedure TFNew_UM_Pembelian.CbPoSelect(Sender: TObject);
+begin
+  with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select sum(grandtotal) total from purchase.t_podetail where po_no='+QuotedStr(CbPo.Text);
+      Execute;
+    end;
+//    hg_po:=dm.Qtemp['total'];
+    ednilai_po.Value:=dm.Qtemp['total'];
 end;
 
 procedure TFNew_UM_Pembelian.Cb_CurrChange(Sender: TObject);
@@ -268,6 +309,7 @@ end;
 
 procedure TFNew_UM_Pembelian.BBatalClick(Sender: TObject);
 begin
+  FUang_Muka_Pembelian.ActRoExecute(sender);
   Close;
 end;
 
@@ -275,6 +317,14 @@ procedure TFNew_UM_Pembelian.BEditClick(Sender: TObject);
 begin
   if messageDlg ('Anda Yakin Update Transaksi No.'+Ed_No_trans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
   begin
+    if CbPo.Text<>'' then
+      begin
+        if EdUM.Value>ednilai_po.Value then
+        begin
+          MessageDlg('Uang Muka Tidak Boleh melebihi PO ',MtWarning,[MbOk],0);
+          Exit;
+        end;
+      end;
     if not dm.koneksi.InTransaction then
     dm.koneksi.StartTransaction;
     try
@@ -291,7 +341,6 @@ begin
         dm.koneksi.Rollback;
       end;
     end;
-    Close;
   end;
 end;
 
@@ -363,6 +412,22 @@ procedure TFNew_UM_Pembelian.EdUMKeyPress(Sender: TObject; var Key: Char);
 begin
    if key=#13 then
    Ednm_akun.SetFocus;
+end;
+
+procedure TFNew_UM_Pembelian.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNew_UM_Pembelian.FormCreate(Sender: TObject);
+begin
+  RealFNew_UM_Pembelian:=self;
+end;
+
+procedure TFNew_UM_Pembelian.FormDestroy(Sender: TObject);
+begin
+  RealFNew_UM_Pembelian:=nil;
 end;
 
 procedure TFNew_UM_Pembelian.FormShow(Sender: TObject);

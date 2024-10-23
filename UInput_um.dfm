@@ -4,7 +4,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
   BorderStyle = bsDialog
   Caption = 'Form Input Uang Muka'
   ClientHeight = 269
-  ClientWidth = 602
+  ClientWidth = 512
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,19 +12,21 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 602
+    Width = 512
     Height = 236
     Align = alClient
     BorderOuter = fsFlat
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 596
-    ExplicitHeight = 227
+    ExplicitTop = -2
     object Label1: TLabel
       Left = 34
       Top = 81
@@ -83,14 +85,14 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Label38: TLabel
       Left = 34
-      Top = 170
+      Top = 201
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
     end
     object Label9: TLabel
       Left = 136
-      Top = 169
+      Top = 200
       Width = 3
       Height = 15
       Caption = ':'
@@ -109,10 +111,24 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       Height = 15
       Caption = ':'
     end
+    object Label12: TLabel
+      Left = 34
+      Top = 169
+      Width = 50
+      Height = 15
+      Caption = 'Curenccy'
+    end
+    object Label13: TLabel
+      Left = 136
+      Top = 169
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object EdNm_supp: TRzButtonEdit
       Left = 222
       Top = 18
-      Width = 211
+      Width = 235
       Height = 23
       Text = ''
       TabOrder = 0
@@ -122,7 +138,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object EdKd_supp: TEdit
       Left = 143
-      Top = 18
+      Top = 19
       Width = 73
       Height = 23
       CharCase = ecUpperCase
@@ -134,7 +150,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     object DTP_UM: TRzDateTimeEdit
       Left = 143
       Top = 108
-      Width = 121
+      Width = 138
       Height = 23
       EditType = etDate
       TabOrder = 2
@@ -161,7 +177,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     object EdUM: TRzNumericEdit
       Left = 143
       Top = 137
-      Width = 121
+      Width = 138
       Height = 23
       DisabledColor = clWindow
       TabOrder = 5
@@ -170,8 +186,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Ednm_akun: TRzButtonEdit
       Left = 222
-      Top = 166
-      Width = 211
+      Top = 197
+      Width = 235
       Height = 23
       Text = ''
       TabOrder = 6
@@ -181,7 +197,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Edkd_akun: TRzEdit
       Left = 143
-      Top = 166
+      Top = 197
       Width = 71
       Height = 23
       Text = ''
@@ -220,10 +236,11 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       Width = 170
       Height = 23
       TabOrder = 11
+      OnSelect = CbPoSelect
     end
     object Cb_Curr: TRzComboBox
-      Left = 452
-      Top = 18
+      Left = 143
+      Top = 166
       Width = 45
       Height = 23
       TabOrder = 12
@@ -232,27 +249,39 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       OnSelect = Cb_CurrChange
     end
     object Ed_kurs: TRzNumericEdit
-      Left = 505
-      Top = 18
+      Left = 199
+      Top = 166
       Width = 82
       Height = 23
       TabOrder = 13
       DisplayFormat = ',0;(,0)'
     end
+    object ednilai_po: TRzNumericEdit
+      Left = 319
+      Top = 48
+      Width = 138
+      Height = 23
+      Color = clInfoBk
+      DisabledColor = clWindow
+      ReadOnly = True
+      TabOrder = 14
+      OnKeyPress = EdUMKeyPress
+      DisplayFormat = '#,##0.00'
+    end
   end
   object RzPanel2: TRzPanel
     Left = 0
     Top = 236
-    Width = 602
+    Width = 512
     Height = 33
     Align = alBottom
     BorderOuter = fsFlat
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 227
-    ExplicitWidth = 596
+    ExplicitTop = 235
+    ExplicitWidth = 598
     object BBatal: TRzBitBtn
-      Left = 526
+      Left = 436
       Top = 1
       Height = 31
       Align = alRight
@@ -311,10 +340,10 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 520
+      ExplicitLeft = 522
     end
     object BSimpan: TRzBitBtn
-      Left = 451
+      Left = 361
       Top = 1
       Height = 31
       Align = alRight
@@ -374,10 +403,10 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 445
+      ExplicitLeft = 447
     end
     object BEdit: TRzBitBtn
-      Left = 376
+      Left = 286
       Top = 1
       Height = 31
       Align = alRight
@@ -437,7 +466,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 370
+      ExplicitLeft = 280
+      ExplicitTop = 6
     end
     object BitBtn1: TBitBtn
       Left = 2

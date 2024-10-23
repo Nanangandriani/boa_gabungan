@@ -410,6 +410,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Top = 182
       Width = 78
       Height = 23
+      ReadOnly = True
       TabOrder = 17
     end
     object IdComp: TEdit

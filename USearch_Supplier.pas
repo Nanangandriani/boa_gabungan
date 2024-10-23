@@ -103,6 +103,7 @@ begin
     begin
       EdKd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
+      MemItempo.EmptyTable;
     end;
     with FNewKontrak_ks do
     begin

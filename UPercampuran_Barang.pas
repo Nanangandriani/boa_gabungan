@@ -106,7 +106,7 @@ begin
   //  BSimpan.Visible:=true;
     Caption:='New Permintaan Barang Untuk Dicampur';
     Load;
-    statustr:=0;
+    statustr:='0';
   end;
 end;
 
@@ -164,7 +164,7 @@ begin
   // FNew_PercBarang.BSimpan.Visible:=False;
   FNew_PercBarang.Show;
   FNew_PercBarang.Load;
-  statustr:=1;
+  statustr:='1';
   QPermt_Material_det.First;
   FNew_PercBarang.Caption:='Update Permintaan Barang Untuk Campur';
   while NOT QPermt_Material_det.Eof do

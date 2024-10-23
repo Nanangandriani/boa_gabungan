@@ -151,8 +151,6 @@ begin
        Open;
     end;
     FUSearch_PO.Show; }
-
-
 end;
 
 procedure TFNew_SPB.DtSpbChange(Sender: TObject);

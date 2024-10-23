@@ -3,8 +3,8 @@ object FMaster_PercBarang: TFMaster_PercBarang
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Form Master Percampuran Barang'
-  ClientHeight = 447
-  ClientWidth = 581
+  ClientHeight = 446
+  ClientWidth = 577
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,11 @@ object FMaster_PercBarang: TFMaster_PercBarang
   TextHeight = 15
   object PnlAksi: TPanel
     Left = 0
-    Top = 406
-    Width = 581
+    Top = 405
+    Width = 577
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 405
-    ExplicitWidth = 577
     object BBatal: TRzBitBtn
       Left = 505
       Top = 1
@@ -336,14 +334,13 @@ object FMaster_PercBarang: TFMaster_PercBarang
   object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 581
+    Width = 577
     Height = 324
     Align = alTop
     Color = clGradientActiveCaption
     FullRepaint = False
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 577
     object Label6: TLabel
       Left = 106
       Top = 35
@@ -450,12 +447,10 @@ object FMaster_PercBarang: TFMaster_PercBarang
   object Pnllist: TPanel
     Left = 0
     Top = 324
-    Width = 581
-    Height = 82
+    Width = 577
+    Height = 81
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 577
-    ExplicitHeight = 81
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1

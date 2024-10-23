@@ -2,8 +2,8 @@ object FUSearch_PO: TFUSearch_PO
   Left = 0
   Top = 0
   Caption = 'FUSearch_PO'
-  ClientHeight = 339
-  ClientWidth = 621
+  ClientHeight = 338
+  ClientWidth = 617
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object FUSearch_PO: TFUSearch_PO
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 307
-    Width = 621
+    Top = 306
+    Width = 617
     Height = 32
     Align = alBottom
     TabOrder = 0
@@ -211,8 +211,8 @@ object FUSearch_PO: TFUSearch_PO
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 621
-    Height = 307
+    Width = 617
+    Height = 306
     Align = alClient
     DataSource = DsPO
     DynProps = <>

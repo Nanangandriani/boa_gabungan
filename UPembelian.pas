@@ -112,9 +112,10 @@ begin
       sql.Clear;
       sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
                 ' END) AS status_app,a.*,b.supplier_name,c.account_name,d.account_name as nm_perk ,to_char(trans_date,''dd'') tgl '+
-                ' ,to_char(trans_date,''mm'') bln from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                ' ,to_char(trans_date,''mm'') bln,e.ref_name from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
-                ' left join t_ak_account d on a.account_um_code=d.code order by a.id desc';
+                ' left join t_ak_account d on a.account_um_code=d.code '+
+                ' left join purchase.t_ref_item_receive e on a.ref_code=e.ref_code order by a.id desc';
       ExecSQL;
     end;
     end else
@@ -126,9 +127,10 @@ begin
       sql.Clear;
       sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
                 ' END) AS status_app,a.*, b.supplier_name, c.account_name,d.account_name as nm_perk,to_char(trans_date,''dd'') tgl '+
-                ' ,to_char(trans_date,''mm'') bln from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                ' ,to_char(trans_date,''mm'') bln,e.ref_name from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
                 ' left join t_ak_account d on a.account_um_code=d.code '+
+                ' left join purchase.t_ref_item_receive e on a.ref_code=e.ref_code'+
                 ' where a.sbu_code='+QuotedStr(kdsbu)+''+
                 ' order by a.ref_no Desc ';
       ExecSQL;
@@ -158,6 +160,8 @@ begin
     begin
       with FNew_Pembelian do
       begin
+        Edkd_sumber.Text:=Memterima_material.FieldByName('ref_code').AsString;
+        Cb_Sumber.Text:=Memterima_material.FieldByName('ref_name').AsString;
         EdPIB.Text:=Memterima_material.FieldByName('pib_no').AsString;
         EdNoSPB.Text:=Memterima_material.FieldByName('spb_no').AsString;
         //EdNo.Text:=Memterima_material.FieldByName('receive_no').AsString;

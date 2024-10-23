@@ -16,9 +16,9 @@ object Flistmaterialstok: TFlistmaterialstok
   TextHeight = 15
   object DBGridMaterial: TDBGridEh
     Left = 0
-    Top = 303
+    Top = 209
     Width = 516
-    Height = 9
+    Height = 103
     Align = alClient
     DataSource = DsMaterial_stok
     DynProps = <>
@@ -27,6 +27,7 @@ object Flistmaterialstok: TFlistmaterialstok
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 0
+    OnDblClick = DBGridMaterialDblClick
     Columns = <
       item
         CellButtons = <>
@@ -82,8 +83,8 @@ object Flistmaterialstok: TFlistmaterialstok
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 303
-    ExplicitWidth = 510
+    ExplicitTop = 311
+    ExplicitWidth = 512
     object BBatal: TRzBitBtn
       Left = 440
       Top = 1
@@ -144,7 +145,7 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 434
+      ExplicitLeft = 436
     end
     object BEdit: TRzBitBtn
       Left = 365
@@ -206,14 +207,14 @@ object Flistmaterialstok: TFlistmaterialstok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 359
+      ExplicitLeft = 361
     end
   end
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
     Width = 516
-    Height = 303
+    Height = 209
     Align = alTop
     DataSource = DsMaterial_stok
     DynProps = <>

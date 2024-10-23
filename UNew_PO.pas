@@ -207,7 +207,7 @@ type
 
 var
   FNew_PO: TFNew_PO;
-  Status,kd_gd,kdsb,nopo,status_um,status_as,No_Um:string;
+  Status,kd_gd,kdsb,nopo,status_um,status_as,No_Um,ref_code:string;
   subtotal,ppn,pph,grandtotal:Real;
   StatusTr,Statustr2:integer;
 implementation
@@ -228,7 +228,6 @@ begin
     Application.CreateForm(TFNew_PO, Result);
 end;}
 
-
 Procedure TFNew_Po.load_category;
 begin
       with Dm.Qtemp do
@@ -245,6 +244,7 @@ begin
          Dm.Qtemp.Next;
       end;
 end;
+
 Procedure TFNew_Po.load_ref_po;
 begin
     with Dm.Qtemp do
@@ -331,7 +331,7 @@ begin
    begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text);
+      sql.Text:='select * from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' and po_no=''''';
                // ' and po_no isnull ';
                 //' and po_no not in (select po_no from purchase.t_po)';
       Open;
@@ -718,7 +718,9 @@ begin
     end;
     Flistitempo.QMaterial_stok2.Open;
     Flistitempo.DBGridMaterial2.Show;
-    Flistitempo.DBGridMaterial.Hide;
+    Flistitempo.DBGridMaterial.Hide;    
+    Flistitempo.DBGridMaterial3.HIDE;
+    Flistitempo.DBGridMaterial4.Hide;
     Flistitempo.Bedit2.Visible:=true;
     Flistitempo.BEdit.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
@@ -730,17 +732,22 @@ begin
     if CkUangmk.Checked=True then
     begin
       Status_um:='1';
-      NoTransUM.Enabled:=true;
-      Ednm_akun.Enabled:=true;
-      EdUM.Enabled:=true;
-      Edkd_akun.Enabled:=true;
+      NoTransUM.visible:=true;
+      NoTransUM.ReadOnly:=false;
+      Ednm_akun.visible:=true;
+      EdUM.visible:=true;
+      Edkd_akun.visible:=true;
+      Label38.Visible:=true;
     end
      else
     if CkUangmk.Checked=False then
     begin
       status_um:='0';
-       NoTransUM.Enabled:=false;
-       Ednm_akun.Enabled:=false;
+      NoTransUM.visible:=false;
+      Ednm_akun.visible:=false;
+      Edkd_akun.Visible:=false;
+      Label38.Visible:=false;
+      EdUM.visible:=false;
     end;
 end;
 
@@ -768,6 +775,12 @@ begin
   EdNopo.Text:='';
   Cb_bon.Text:='';
   CbKategori.Text:='';
+  status_um:='0';
+  NoTransUM.visible:=false;
+  Ednm_akun.visible:=false;
+  Edkd_akun.Visible:=false;
+  Label38.Visible:=false;
+  EdUM.visible:=false;
 end;
 
 procedure TFNew_PO.DBGridDetailCellClick(Column: TColumnEh);
@@ -784,11 +797,15 @@ procedure TFNew_PO.DBGridDetailColumns0EditButtons0Click(Sender: TObject;
   var Handled: Boolean);
 begin
   Flistitempo.Show;
-  if EdStatus.Text='KONTRAK KERJASAMA' then
+  //if EdStatus.Text='KONTRAK KERJASAMA' then
+  if ref_code='KK' then
   begin
     Self.Loaditem
-  end else
+  end;
+  if ref_code='NR' then
+  begin
     Self.Loaditem2;
+  end;
 end;
 
 procedure TFNew_PO.DBGridDetailColumns1EditButtons0Click(Sender: TObject;
@@ -831,7 +848,6 @@ begin
        Flistitempo.DBGridMaterial3.Visible:=false;
        Flistitempo.DBGridMaterial4.Visible:=true;
     end;}
-
 end;
 
 procedure TFNew_PO.DBGridDetailKeyPress(Sender: TObject; var Key: Char);
@@ -968,7 +984,9 @@ begin
     EdKd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
     Edno_kontrak.Clear;
 
-    if EdStatus.Text='KONTRAK KERJASAMA' then
+    //if EdStatus.Text='KONTRAK KERJASAMA' then
+    if ref_code='KK' then //ds 08-10-2024
+    
     begin
         with dm.QTemp2 do
         begin
@@ -987,7 +1005,8 @@ begin
           Dm.QTemp2.Next;
         end;
     end;
-    if EdStatus.Text='BON PERMINTAAN BARANG' then
+    //if EdStatus.Text='BON PERMINTAAN BARANG' then
+    if ref_code='BPB' then //ds 08-10-2024//
     begin
         with dm.Qtemp do
         begin
@@ -1120,7 +1139,18 @@ begin
     DtPO.Date:=now;
     EdKd_supp.Text:='';
     EdNm_supp.Text:='';
-    if EdStatus.Text='NON REFERENSI' then
+    // created ds 08-10-2024
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='select * from "purchase".t_ref_po where ref_name='+QuotedStr(EdStatus.Text)+' order by id';
+      ExecSQL;
+    end;
+      ref_code:=dm.Qtemp['ref_code'];
+    //
+    //if EdStatus.Text='NON REFERENSI' then
+    if ref_code='NR' then         //DS 
     begin
       Edno_kontrak.ReadOnly:=True;
       FNew_PO.Edno_kontrak.Text:='0';
@@ -1138,7 +1168,8 @@ begin
       CbKategori.Enabled:=true;
       load_category;
     end;
-    if EdStatus.Text='KONTRAK KERJASAMA' then
+    //if EdStatus.Text='KONTRAK KERJASAMA' then
+    if ref_code='KK' then  //DS        
     begin
       Edno_kontrak.Text:='';
       Edno_kontrak.ReadOnly:=False;
@@ -1150,7 +1181,8 @@ begin
       load_no_kontrak;
       CbKategori.Enabled:=false;
     end;
-    if EdStatus.Text='BON PERMINTAAN BARANG' then
+    //if EdStatus.Text='BON PERMINTAAN BARANG' then
+    if ref_code='BPB' then    
     begin
       Edno_kontrak.ReadOnly:=false;
       //Edno_kontrak.Text:='';
@@ -1163,6 +1195,10 @@ begin
       Cb_bon.Enabled:=true;
       Edno_kontrak.Items.Clear;
       load_no_bon;
+    end;
+    if ref_code='DO' then
+    begin
+
     end;
     EdCurrChange(sender);
 end;

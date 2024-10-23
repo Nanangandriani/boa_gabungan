@@ -20,7 +20,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 241
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1024
+    ExplicitWidth = 1026
     object Label1: TLabel
       Left = 24
       Top = 42
@@ -512,8 +512,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 481
-    ExplicitWidth = 1024
+    ExplicitTop = 489
+    ExplicitWidth = 1026
     object BBatal: TRzBitBtn
       Left = 954
       Top = 1
@@ -574,7 +574,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 948
+      ExplicitLeft = 950
     end
     object BSimpan: TRzBitBtn
       Left = 879
@@ -636,7 +636,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 873
+      ExplicitLeft = 875
     end
     object BEdit: TRzBitBtn
       Left = 804
@@ -697,7 +697,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 798
+      ExplicitLeft = 800
     end
     object BitBtn1: TBitBtn
       Left = 597
@@ -718,8 +718,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1024
-    ExplicitHeight = 240
+    ExplicitWidth = 1026
+    ExplicitHeight = 248
     object DBGridDetailpo: TDBGridEh
       Left = 2
       Top = 2

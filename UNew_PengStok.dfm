@@ -2,8 +2,8 @@ object FNew_PengStok: TFNew_PengStok
   Left = 0
   Top = 0
   Caption = 'Form New Penggabungan Stok'
-  ClientHeight = 433
-  ClientWidth = 613
+  ClientHeight = 432
+  ClientWidth = 609
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -102,8 +102,8 @@ object FNew_PengStok: TFNew_PengStok
   end
   object DBGriddetail: TDBGridEh
     Left = 0
-    Top = 175
-    Width = 613
+    Top = 174
+    Width = 609
     Height = 226
     Align = alBottom
     DataSource = DsDetail
@@ -181,13 +181,11 @@ object FNew_PengStok: TFNew_PengStok
   end
   object Panel2: TPanel
     Left = 0
-    Top = 401
-    Width = 613
+    Top = 400
+    Width = 609
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 400
-    ExplicitWidth = 609
     object BBatal: TRzBitBtn
       Left = 537
       Top = 1

@@ -193,6 +193,8 @@ type
     procedure DBGridDetailpoColumns24EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure EdJum_HutangChange(Sender: TObject);
+    procedure EdJum_PotPemChange(Sender: TObject);
+    procedure EdJum_ReturPembChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -225,7 +227,7 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UMainMenu, UMy_Function, USearch_TerimaBarang,
-  UAkun_Perkiraan_TerimaMat, UPembelian,USupp_Pembelian;
+  UAkun_Perkiraan_TerimaMat, UPembelian,USupp_Pembelian, UCari_UM;
 
 //var
   //realfnew_pemb : TFNew_Pembelian;
@@ -458,6 +460,9 @@ begin
         Exit;
       end;
       Autonumber;
+      Edth.Text:=vthn;
+      Edbln.Text:=vbln;
+      edhari.Text:=vtgl;
       MemterimaDet.First;
       while not MemterimaDet.Eof do
       begin
@@ -569,11 +574,11 @@ begin
                   sql.Text:=' insert into purchase.t_purchase_invoice(trans_no_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                             ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                             ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                            ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no)values(:parno_terima,'+
+                            ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no,ref_code)values(:parno_terima,'+
                             ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                             ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
                             ' :parsisa_hutang,:parppn_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                            ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,:parorder_no,:parref_no)';
+                            ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,:parorder_no,:parref_no,:ref_code)';
                             ParamByName('parno_terima').Value:=EdNo.Text;
                             //ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                             ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtfaktur.Date);
@@ -609,6 +614,7 @@ begin
                             ParamByName('parpic2').Value:=Nm;
                             ParamByName('parorder_no').Value:=Edurut.text;
                             ParamByName('parref_no').Value:=Cb_Ref.text;
+                            ParamByName('ref_code').Value:=Edkd_sumber.text;
                   ExecSQL;
               end;
               MemterimaDet.First;
@@ -777,16 +783,16 @@ begin
                 sql.Text:=' insert into purchase.t_purchase_invoice(trans_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                           ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                           ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                          ' sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,order_no,ref_no)values(:parno_terima,'+
+                          ' sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,order_no,ref_no,ref_code)values(:parno_terima,'+
                           ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                           ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
                           ' :parsisa_hutang,:parppn_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                          ' :parthn,:parbea,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parorder_no,:parref_no)';
+                          ' :parthn,:parbea,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parorder_no,:parref_no,:ref_code)';
                           ParamByName('parno_terima').Value:=EdNo.Text;
                           //ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                           ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtfaktur.Date);
                           ParamByName('parket').Value:=EdKet.Text;
-                          ParamByName('parnospb').Value:=EdNoSPB.Text;
+                      //    ParamByName('parnospb').Value:=EdNoSPB.Text;
                           ParamByName('parnosj').Value:=EdSJ.Text;
                           ParamByName('parnofaktur').Value:=Edno_Faktur.Text;
                           ParamByName('parkd_supplier').Value:=Edkd_supp.Text;
@@ -803,18 +809,19 @@ begin
                           ParamByName('parvalas').Value:=EdValas.Text;
                           ParamByName('parnilai_valas').Value:=EdNilai_Valas.Text;
                           ParamByName('parkd_akun').Value:=Edkd_akun.Text;
-                          ParamByName('parbln').Value:=Edbln.Text;
-                          ParamByName('parthn').Value:=edth.Text;
+                          ParamByName('parbln').Value:=vbln;//Edbln.Text;
+                          ParamByName('parthn').Value:=vthn;
                           ParamByName('parbea').Value:=DBGridDetailpo.Columns[23].Footer.sumvalue;
                           ParamByName('parsbu').Value:=edsbu.text;
                           ParamByName('parpib').Value:=EdPIB.text;
                           ParamByName('parjenispo').Value:=Edjenispo.Text;
                           ParamByName('parkd_akunum').Value:=Edkd_akunum.Text;
                           ParamByName('parum').Value:=EdNilai_um.Value;
-                          ParamByName('partgl_no').Value:=Edhari.Text;
+                          ParamByName('partgl_no').Value:=vtgl;//Edhari.Text;
                           //ParamByName('partgl_no').Value:=FormatDateTime('dd',Dtterima.Date);
-                          ParamByName('parorder_no').Value:=Edurut.text;
+                          ParamByName('parorder_no').Value:=order_no;
                           ParamByName('parref_no').Value:=Cb_Ref.text;
+                          ParamByName('ref_code').Value:=Edkd_sumber.text;
                 ExecSQL;
               end;
               MemterimaDet.First;
@@ -970,7 +977,22 @@ begin
      begin
 
      end;
-
+      // TArik UAng Muka Pembelian
+    with QUM do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='select a.*,b.supplier_name from purchase.t_advance_payment a LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
+      '  where a.po_no ='+QuotedStr(cb_ref.Text)+' group by a.supplier_code,b.supplier_name,a.no_trans'+
+      ' order by a.no_trans DESC';
+      open;
+    end;
+      if qum.RecordCount > 0 then
+      begin
+        edjum_um.value:=QUM['um_value'];
+      end;
+      EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+      EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
 end;
 
 procedure TFNew_Pembelian.Cb_SumberSelect(Sender: TObject);
@@ -1137,7 +1159,9 @@ begin
       MemterimaDet.Post;
     END;
   end;
-Except;
+   EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+   EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
+ Except;
 END;
 end;
 
@@ -1178,6 +1202,8 @@ begin
         MemterimaDet.Post;
       end;
     end;
+      EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+      EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
     Except;
     end;
 end;
@@ -1493,7 +1519,7 @@ begin
   idmenu:='M11004';
   //strday2:=Dtterima.Date;
   strday2:=Dtfaktur.Date;
-  EdNo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_purchase_invoice','');
+  EdNo.Text:=getNourut(strday2,'purchase.t_purchase_invoice','');
   Edurut.Text:=order_no;
 end;
 
@@ -1763,6 +1789,16 @@ end;
 procedure TFNew_Pembelian.EdJum_HutangChange(Sender: TObject);
 begin
    EdJum_Hutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue;
+end;
+
+procedure TFNew_Pembelian.EdJum_PotPemChange(Sender: TObject);
+begin
+  EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
+end;
+
+procedure TFNew_Pembelian.EdJum_ReturPembChange(Sender: TObject);
+begin
+  EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
 end;
 
 procedure TFNew_Pembelian.Edkd_akunBeaButtonClick(Sender: TObject);
