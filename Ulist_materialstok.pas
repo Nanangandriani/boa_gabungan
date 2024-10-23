@@ -28,6 +28,7 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DBGridMaterialDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,7 +80,6 @@ begin
                 MemMaterial['pemb_dpp']:='0';
                 MemMaterial['pph']:='0';
                 MemMaterial.Post;
-
              end;
            end;
         end;
@@ -92,7 +92,7 @@ procedure TFlistmaterialstok.DBGridEh1DblClick(Sender: TObject);
 begin
     with FNewKontrak_ks do
     begin
-      MemMaterial.edit;
+      MemMaterial.Insert;
       MemMaterial['kd_material_supp']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
       MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_code').AsString;
       MemMaterial['nm_material']:=QMaterial_stok.FieldByName('item_name').AsString;
@@ -100,8 +100,33 @@ begin
       MemMaterial['satuan']:=QMaterial_stok.FieldByName('unit').AsString;
       MemMaterial['qty']:='0';
       MemMaterial['harga']:='0';
-      MemMaterial['harga2']:='0';
-      MemMaterial['ppn']:=Qjenis_pajak['percentage'];
+      //MemMaterial['harga2']:='0';
+      MemMaterial['harga2']:=QMaterial_stok.FieldByName('buy').AsString;
+      MemMaterial['ppn']:= Qjenis_pajak['percentage'];
+      MemMaterial['pemb_ppn']:='0';
+      MemMaterial['pemb_ppn_us']:='0';
+      MemMaterial['pemb_dpp']:='0';
+      MemMaterial['pph']:='0';
+      MemMaterial.Post;
+    end;
+    Close;
+end;
+
+procedure TFlistmaterialstok.DBGridMaterialDblClick(Sender: TObject);
+begin
+    with FNewKontrak_ks do
+    begin
+      MemMaterial.Insert;
+      MemMaterial['kd_material_supp']:=QMaterial_stok.FieldByName('item_stock_code').AsString;
+      MemMaterial['kd_material']:=QMaterial_stok.FieldByName('item_code').AsString;
+      MemMaterial['nm_material']:=QMaterial_stok.FieldByName('item_name').AsString;
+      MemMaterial['nm_supplier']:=QMaterial_stok.FieldByName('supplier_name').AsString;
+      MemMaterial['satuan']:=QMaterial_stok.FieldByName('unit').AsString;
+      MemMaterial['qty']:='0';
+      MemMaterial['harga']:='0';
+      //MemMaterial['harga2']:='0';
+      MemMaterial['harga2']:=QMaterial_stok.FieldByName('buy').AsString;
+      MemMaterial['ppn']:= Qjenis_pajak['percentage'];
       MemMaterial['pemb_ppn']:='0';
       MemMaterial['pemb_ppn_us']:='0';
       MemMaterial['pemb_dpp']:='0';

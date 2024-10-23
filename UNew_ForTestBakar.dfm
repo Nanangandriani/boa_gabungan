@@ -2,8 +2,8 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
   Left = 0
   Top = 0
   Caption = 'FORM NEW QC BAKAR SATU COIL'
-  ClientHeight = 465
-  ClientWidth = 1193
+  ClientHeight = 464
+  ClientWidth = 1189
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -212,8 +212,8 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
   end
   object DBGridDetail: TDBGridEh
     Left = 0
-    Top = 151
-    Width = 1193
+    Top = 150
+    Width = 1189
     Height = 282
     Align = alBottom
     DataSource = DsBakarDet
@@ -421,13 +421,11 @@ object FNew_ForTestBakar: TFNew_ForTestBakar
   end
   object Panel1: TPanel
     Left = 0
-    Top = 433
-    Width = 1193
+    Top = 432
+    Width = 1189
     Height = 32
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 432
-    ExplicitWidth = 1189
     object BBatal: TRzBitBtn
       Left = 1117
       Top = 1

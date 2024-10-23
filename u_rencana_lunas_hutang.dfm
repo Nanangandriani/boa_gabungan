@@ -1,9 +1,9 @@
-object Frencanalunashutang: TFrencanalunashutang
+object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
   Left = 0
   Top = 0
   Caption = 'Form Rencana Pelunasan Hutang'
-  ClientHeight = 442
-  ClientWidth = 822
+  ClientHeight = 433
+  ClientWidth = 816
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object Frencanalunashutang: TFrencanalunashutang
   object DBGridSupplier: TDBGridEh
     Left = 0
     Top = 222
-    Width = 822
-    Height = 220
+    Width = 816
+    Height = 211
     Align = alClient
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
@@ -40,7 +40,7 @@ object Frencanalunashutang: TFrencanalunashutang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 822
+    Width = 816
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -48,7 +48,6 @@ object Frencanalunashutang: TFrencanalunashutang
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = -1
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -62,10 +61,12 @@ object Frencanalunashutang: TFrencanalunashutang
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 822
+    Width = 816
     Height = 95
     Align = alTop
-    TabOrder = 6
+    Color = 15987699
+    TabOrder = 2
+    ExplicitWidth = 810
     object Label3: TLabel
       Left = 13
       Top = 6

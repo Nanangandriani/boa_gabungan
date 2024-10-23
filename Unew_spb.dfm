@@ -335,7 +335,7 @@ object FNew_SPB: TFNew_SPB
   object DBGridEh1: TDBGridEh
     Left = 669
     Top = -3
-    Width = 457
+    Width = 453
     Height = 364
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColumnDefValues.AlwaysShowEditButton = True
@@ -422,8 +422,8 @@ object FNew_SPB: TFNew_SPB
     Height = 32
     Align = alBottom
     TabOrder = 14
-    ExplicitTop = 434
-    ExplicitWidth = 649
+    ExplicitTop = 442
+    ExplicitWidth = 651
     object BBatal: TRzBitBtn
       Left = 579
       Top = 1
@@ -484,7 +484,7 @@ object FNew_SPB: TFNew_SPB
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 573
+      ExplicitLeft = 575
     end
     object BSimpan: TRzBitBtn
       Left = 504
@@ -546,7 +546,7 @@ object FNew_SPB: TFNew_SPB
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 498
+      ExplicitLeft = 500
     end
     object BEdit: TRzBitBtn
       Left = 429
@@ -608,7 +608,7 @@ object FNew_SPB: TFNew_SPB
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 423
+      ExplicitLeft = 425
     end
     object BitBtn1: TBitBtn
       Left = 312

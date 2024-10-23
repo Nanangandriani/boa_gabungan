@@ -2,8 +2,8 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
   Left = 0
   Top = 0
   Caption = 'FORM NEW LAPORAN PEMAKAIAN MATERIAL FORMULA'
-  ClientHeight = 560
-  ClientWidth = 1159
+  ClientHeight = 559
+  ClientWidth = 1155
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -213,13 +213,11 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
   end
   object Panel1: TPanel
     Left = 0
-    Top = 528
-    Width = 1159
+    Top = 527
+    Width = 1155
     Height = 32
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 527
-    ExplicitWidth = 1155
     object BBatal: TRzBitBtn
       Left = 1083
       Top = 1
@@ -395,6 +393,10 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
     FixedDimension = 19
     object TabBaku: TRzTabSheet
       Caption = 'Bahan Baku'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGridBaku: TDBGridEh
         Left = 0
         Top = 0
@@ -524,6 +526,10 @@ object FNew_PakaiMatFor: TFNew_PakaiMatFor
     end
     object TabKimia: TRzTabSheet
       Caption = 'Bahan Kimia'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGridKimia: TDBGridEh
         Left = 0
         Top = 0

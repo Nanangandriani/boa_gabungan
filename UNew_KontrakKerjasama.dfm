@@ -12,6 +12,9 @@ object FNewKontrak_ks: TFNewKontrak_ks
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object pninput: TPanel
@@ -21,7 +24,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Height = 361
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1018
+    ExplicitWidth = 1020
     object Label1: TLabel
       Left = 24
       Top = 86
@@ -361,8 +364,8 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 560
-    ExplicitWidth = 1018
+    ExplicitTop = 568
+    ExplicitWidth = 1020
     object BBatal: TRzBitBtn
       Left = 948
       Top = 1
@@ -423,7 +426,8 @@ object FNewKontrak_ks: TFNewKontrak_ks
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 942
+      ExplicitLeft = 949
+      ExplicitTop = 6
     end
     object BSimpan: TRzBitBtn
       Left = 873
@@ -485,7 +489,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 867
+      ExplicitLeft = 869
     end
     object BEdit: TRzBitBtn
       Left = 798
@@ -548,7 +552,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 792
+      ExplicitLeft = 794
     end
     object BitBtn1: TBitBtn
       Left = 671

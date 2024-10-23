@@ -28,7 +28,7 @@ uses
   Vcl.StdCtrls, RzButton, Vcl.ComCtrls, Vcl.ExtCtrls, RzPanel;
 
 type
-  TFrencanalunashutang = class(TForm)
+  TFList_Rencana_Lunas_Hutang = class(TForm)
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -78,7 +78,7 @@ type
   end;
 
 var
-  Frencanalunashutang: TFrencanalunashutang;
+  FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang;
 
 implementation
 
@@ -87,12 +87,12 @@ implementation
 uses u_rencana_lunas_hutang_input;
 
 
-procedure TFrencanalunashutang.ActBaruExecute(Sender: TObject);
+procedure TFList_Rencana_Lunas_Hutang.ActBaruExecute(Sender: TObject);
 begin
-   frmrencanalunashutang.Show;
+   FRencana_Lunas_Hutang.Show;
 end;
 
 initialization
-RegisterClass(TFrencanalunashutang);
+RegisterClass(TFList_Rencana_Lunas_Hutang);
 
 end.

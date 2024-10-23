@@ -3,8 +3,8 @@ object FNew_PercBarang: TFNew_PercBarang
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'New Percampuran Barang'
-  ClientHeight = 388
-  ClientWidth = 1093
+  ClientHeight = 376
+  ClientWidth = 1085
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object FNew_PercBarang: TFNew_PercBarang
   OnDestroy = FormDestroy
   OnShow = FormShow
   DesignSize = (
-    1093
-    388)
+    1085
+    376)
   TextHeight = 13
   object Label1: TLabel
     Left = 24
@@ -105,8 +105,8 @@ object FNew_PercBarang: TFNew_PercBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 94
-    Width = 1045
-    Height = 257
+    Width = 1029
+    Height = 245
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
     DataSource = DsMaterial
@@ -232,13 +232,11 @@ object FNew_PercBarang: TFNew_PercBarang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 356
-    Width = 1093
+    Top = 344
+    Width = 1085
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 344
-    ExplicitWidth = 1085
     object BBatal: TRzBitBtn
       Left = 1017
       Top = 1

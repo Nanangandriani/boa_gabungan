@@ -61,20 +61,33 @@ type
     procedure ActRoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FUang_Muka_Pembelian: TFUang_Muka_Pembelian;
+Function FUang_Muka_Pembelian: TFUang_Muka_Pembelian;
 
 implementation
 
 {$R *.dfm}
 
 uses UInput_um, UDataModule;
+
+var
+  RealFUang_Muka_Pembelian: TFUang_Muka_Pembelian;
+// implementasi function
+function FUang_Muka_Pembelian: TFUang_Muka_Pembelian;
+begin
+  if RealFUang_Muka_Pembelian <> nil then
+    FUang_Muka_Pembelian:= RealFUang_Muka_Pembelian
+  else
+    Application.CreateForm(TFUang_Muka_Pembelian, Result);
+end;
 
 procedure TFUang_Muka_Pembelian.ActBaruExecute(Sender: TObject);
 begin
@@ -105,7 +118,6 @@ begin
      StatusTr:=1;
      BSimpan.Visible:=false;
      BEdit.Visible:=true;
-
      Ed_No_trans.Text:=QUM.fieldbyname('no_trans').AsString;
      DTP_UM.Date:=QUM.fieldbyname('trans_date').Value;
      EdKd_supp.Text:=QUM.fieldbyname('supplier_code').AsString;
@@ -118,11 +130,27 @@ begin
      CbPo.text:=QUM.fieldbyname('po_no').AsString;
      Cb_Curr.Text:=QUM.fieldbyname('currency').Value;
      Ed_kurs.Text:=QUM.fieldbyname('exchange_rate').Value;
-
+     if QUM['po_no']<>'' then
+     begin
+      CbPoSelect(sender);
+     end;
    end;
+end;
 
+procedure TFUang_Muka_Pembelian.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
 
+procedure TFUang_Muka_Pembelian.FormCreate(Sender: TObject);
+begin
+  RealFUang_Muka_Pembelian:=self;
+end;
 
+procedure TFUang_Muka_Pembelian.FormDestroy(Sender: TObject);
+begin
+  RealFUang_Muka_Pembelian:=nil;
 end;
 
 procedure TFUang_Muka_Pembelian.FormShow(Sender: TObject);

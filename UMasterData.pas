@@ -38,7 +38,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UTemplate_Temp, UNew_DataPenjualan, UDaftarKlasifikasi, UNew_TujuanAwal,
   UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
   UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank,
-  UDataPenagihanPiutang, UMovingDPP, UNew_Supplier;
+  UDataPenagihanPiutang, UMovingDPP, UNew_Supplier, UDataPengeluaranKasBank;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -70,11 +70,11 @@ begin
     with FDataPenerimaanBank do
     begin
       edKode_Pelanggan.Clear;
-      edNama_Pelanggan.Clear;  
+      edNama_Pelanggan.Clear;
       edNoRek.Clear;
       edNamaBank.Clear;
       edKodeSumberTagihan.Clear;
-      edNMSumberTagihan.Clear;  
+      edNMSumberTagihan.Clear;
       edKodeJenisBayar.Clear;
       edNMJenisBayar.Clear;
       MemDetailAkun.EmptyTable;
@@ -87,36 +87,36 @@ begin
       additional_code3:='0';
       additional_code4:='0';
       additional_code5:='0';
-    end;  
+    end;
   vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
   if vid_modul='3' then // Bank
   begin
     FDataPenerimaanBank.gbDataBank.Visible:=True;
-  end;  
+  end;
   if vid_modul='4' then // Kas
   begin
     FDataPenerimaanBank.gbDataBank.Visible:=False;
   end;
-    
+
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
   begin
     with FDataPenerimaanBank do
-    begin  
+    begin
       Panel5.Visible:=true;
       gbDataPiutang.Visible:=false;
       TabDetailFaktur.TabVisible:=false;
-      //Panel1.Height:=230;     
+      //Panel1.Height:=230;
       //Panel1.Height:=340;
       lbSumberTagihan.Visible:=false;
       lbSumberTagihann.Visible:=false;
       lbJenisBayar.Visible:=false;
       lbJenisBayarr.Visible:=false;
-      edKodeSumberTagihan.Visible:=false; 
-      edNMSumberTagihan.Visible:=false;  
-      edKodeJenisBayar.Visible:=false; 
-      edNMJenisBayar.Visible:=false;      
+      edKodeSumberTagihan.Visible:=false;
+      edNMSumberTagihan.Visible:=false;
+      edKodeJenisBayar.Visible:=false;
+      edNMJenisBayar.Visible:=false;
       edKodeSumberTagihan.Clear;
-      edNMSumberTagihan.Clear;  
+      edNMSumberTagihan.Clear;
       edKodeJenisBayar.Clear;
       edNMJenisBayar.Clear;
     end;
@@ -124,7 +124,7 @@ begin
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
   begin
     with FDataPenerimaanBank do
-    begin            
+    begin
       Panel5.Visible:=true;
       gbDataPiutang.Visible:=true;
       TabDetailFaktur.TabVisible:=true;
@@ -133,23 +133,23 @@ begin
       lbSumberTagihann.Visible:=true;
       lbJenisBayar.Visible:=true;
       lbJenisBayarr.Visible:=true;
-      edKodeSumberTagihan.Visible:=false; 
-      edNMSumberTagihan.Visible:=true;  
-      edKodeJenisBayar.Visible:=false; 
-      edNMJenisBayar.Visible:=true;      
+      edKodeSumberTagihan.Visible:=false;
+      edNMSumberTagihan.Visible:=true;
+      edKodeJenisBayar.Visible:=false;
+      edNMJenisBayar.Visible:=true;
       edKodeSumberTagihan.Clear;
-      edNMSumberTagihan.Clear;  
+      edNMSumberTagihan.Clear;
       edKodeJenisBayar.Clear;
       edNMJenisBayar.Clear;
     end;
 
     if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
       FDataPenerimaanBank.Panel5.Visible:=false
-    else    
-      FDataPenerimaanBank.Panel5.Visible:=true;  
-  
-  
-    
+    else
+      FDataPenerimaanBank.Panel5.Visible:=true;
+
+
+
   end;
   end;
   if vcall='m_mata_uang' then
@@ -559,6 +559,96 @@ begin
     FNew_supplier.edKodePerkiraan_um.Text:=MemMasterData['KD_MASTER'];
     FNew_supplier.KodeHeaderPerkiraan_um:=MemMasterData['KD_MASTER'];
   end;
+  if vcall='klkas_mata_uang' then
+  begin
+    FDataPengeluaranKasBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
+    FDataPengeluaranKasBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
+    FDataPengeluaranKasBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
+  end;
+  if vcall='KL_kasbank_jns_transaksi' then //pengeluaran kas
+  begin
+    with FDataPengeluaranKasBank do
+    begin
+      edKode_Supplier.Clear;
+      edNama_supplier.Clear;
+      edNoRek.Clear;
+      edNamaBank.Clear;
+      edKodeSumberTagihan.Clear;
+      edNMSumberHutang.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
+      MemDetailAkun.EmptyTable;
+      MemDetailHutang.EmptyTable;
+      Clear;
+      edKodeJenisTrans.Text:=MemMasterData['KD_MASTER'];
+      edNamaJenisTrans.Text:=MemMasterData['NM_MASTER'];
+      additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER']));
+      additional_code2:='0';
+      additional_code3:='0';
+      additional_code4:='0';
+      additional_code5:='0';
+    end;
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+  if vid_modul='5' then // Bank
+  begin
+    FDataPengeluaranKasBank.gbDataBank.Visible:=True;
+  end;
+  if vid_modul='6' then // Kas
+  begin
+    FDataPengeluaranKasBank.gbDataBank.Visible:=False;
+  end;
+
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
+  begin
+    with FDataPengeluaranKasBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataHutang.Visible:=false;
+      TabDetailFaktur.TabVisible:=false;
+      //Panel1.Height:=230;
+      //Panel1.Height:=340;
+      lbSumberTagihan.Visible:=false;
+      lbSumberTagihann.Visible:=false;
+      lbJenisBayar.Visible:=false;
+      lbJenisBayarr.Visible:=false;
+      edKodeSumberTagihan.Visible:=false;
+      edNMSumberHutang.Visible:=false;
+      edKodeJenisBayar.Visible:=false;
+      edNMJenisBayar.Visible:=false;
+      edKodeSumberTagihan.Clear;
+      edNMSumberHutang.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
+    end;
+  end;
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
+  begin
+    with FDataPengeluaranKasBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataHutang.Visible:=true;
+      TabDetailFaktur.TabVisible:=true;
+      //Panel1.Height:=340;
+      lbSumberTagihan.Visible:=true;
+      lbSumberTagihann.Visible:=true;
+      lbJenisBayar.Visible:=true;
+      lbJenisBayarr.Visible:=true;
+      edKodeSumberTagihan.Visible:=false;
+      edNMSumberHutang.Visible:=true;
+      edKodeJenisBayar.Visible:=false;
+      edNMJenisBayar.Visible:=true;
+      edKodeSumberTagihan.Clear;
+      edNMSumberHutang.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
+    end;
+
+    if (FDataPengeluaranKasBank.gbDataHutang.Visible=false) and (FDataPengeluaranKasBank.gbDataBank.Visible=false) then
+      FDataPengeluaranKasBank.Panel5.Visible:=false
+    else
+      FDataPengeluaranKasBank.Panel5.Visible:=true;
+  end;
+  end; //pengeluaran kas
 
   //ShowMessage(FTambah_Barang.edKodeBarang.Text);
   FMasterData.Close;

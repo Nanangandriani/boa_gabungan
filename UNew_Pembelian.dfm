@@ -27,8 +27,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 597
-    ExplicitWidth = 1115
+    ExplicitTop = 605
+    ExplicitWidth = 1117
     object BBatal: TRzBitBtn
       Left = 1045
       Top = 1
@@ -89,7 +89,7 @@ object FNew_Pembelian: TFNew_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1039
+      ExplicitLeft = 1041
     end
     object BSimpan: TRzBitBtn
       Left = 970
@@ -151,7 +151,7 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 964
+      ExplicitLeft = 966
     end
     object BEdit: TRzBitBtn
       Left = 895
@@ -213,7 +213,7 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 889
+      ExplicitLeft = 891
     end
     object BPosting: TRzBitBtn
       Left = 820
@@ -276,7 +276,7 @@ object FNew_Pembelian: TFNew_Pembelian
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 814
+      ExplicitLeft = 816
     end
     object Button1: TButton
       Left = 745
@@ -288,7 +288,7 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 4
       Visible = False
       OnClick = Button1Click
-      ExplicitLeft = 739
+      ExplicitLeft = 741
     end
   end
   object Panel2: TPanel
@@ -298,7 +298,7 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 241
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1115
+    ExplicitWidth = 1117
     object Label1: TLabel
       Left = 27
       Top = 376
@@ -664,7 +664,6 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 58
       Height = 23
       TabOrder = 21
-      Visible = False
     end
     object Edbln: TEdit
       Left = 857
@@ -672,7 +671,6 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 58
       Height = 23
       TabOrder = 22
-      Visible = False
     end
     object Edhari: TEdit
       Left = 792
@@ -680,7 +678,6 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 58
       Height = 23
       TabOrder = 23
-      Visible = False
     end
     object Cb_Sumber: TRzComboBox
       Left = 175
@@ -716,7 +713,6 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 89
       Height = 23
       TabOrder = 27
-      Visible = False
     end
   end
   object RzPanel1: TRzPanel
@@ -727,8 +723,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1115
-    ExplicitHeight = 356
+    ExplicitWidth = 1117
+    ExplicitHeight = 364
     object Label26: TLabel
       Left = 63
       Top = 482
@@ -854,11 +850,12 @@ object FNew_Pembelian: TFNew_Pembelian
       Align = alTop
       TabIndex = 0
       TabOrder = 8
-      ExplicitWidth = 1111
+      ExplicitWidth = 1113
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
+        ExplicitWidth = 1109
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -1204,7 +1201,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
-        ExplicitWidth = 1107
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1213,7 +1209,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Align = alClient
           DataGrouping.GroupLevels = <
             item
-              ColumnName = 'Column_0_supplier_name'
+              ColumnName = 'Column_1_supplier_name'
             end>
           DataSource = DS_UM
           DynProps = <>
@@ -1224,6 +1220,15 @@ object FNew_Pembelian: TFNew_Pembelian
           TabOrder = 0
           TitleParams.MultiTitle = True
           Columns = <
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'no_trans'
+              Footers = <>
+              Title.Caption = 'No Trans'
+              Width = 121
+            end
             item
               CellButtons = <>
               DynProps = <>
@@ -1262,15 +1267,6 @@ object FNew_Pembelian: TFNew_Pembelian
               Footers = <>
               Title.Caption = 'No.PO'
               Width = 150
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'no_trans'
-              Footers = <>
-              Title.Caption = 'No Trans'
-              Width = 121
             end>
           object RowDetailData: TRowDetailPanelControlEh
             object DBGridEh2: TDBGridEh
@@ -1316,6 +1312,7 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'no_terima'
               Footers = <>
               Title.Caption = 'No. LPB'
+              Visible = False
               Width = 100
             end
             item
@@ -1325,6 +1322,7 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'NoFaktur'
               Footers = <>
               Title.Caption = 'No. Faktur'
+              Visible = False
               Width = 96
             end
             item
@@ -1334,7 +1332,16 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'nopo'
               Footers = <>
               Title.Caption = 'No. PO'
+              Visible = False
               Width = 142
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              Footers = <>
+              Title.Caption = 'Tanggal'
+              Width = 83
             end
             item
               CellButtons = <>
@@ -1343,6 +1350,7 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'kd_stok'
               Footers = <>
               Title.Caption = 'Kode Stok'
+              Visible = False
               Width = 157
             end
             item
@@ -1363,7 +1371,7 @@ object FNew_Pembelian: TFNew_Pembelian
               Footer.Value = 'Sub Total         :'
               Footer.ValueType = fvtStaticText
               Footers = <>
-              Title.Caption = 'Harga'
+              Title.Caption = 'Harga satuan'
               Width = 115
             end
             item
@@ -1375,7 +1383,7 @@ object FNew_Pembelian: TFNew_Pembelian
               Footer.DisplayFormat = '#,##0.00'
               Footer.ValueType = fvtSum
               Footers = <>
-              Title.Caption = 'Total Harga'
+              Title.Caption = 'Total harga'
               Width = 148
             end>
           object RowDetailData: TRowDetailPanelControlEh
@@ -1400,6 +1408,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               Footers = <>
               Title.Caption = 'No Potongan'
+              Visible = False
               Width = 100
             end
             item
@@ -1416,6 +1425,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               Footers = <>
               Title.Caption = 'No Faktur'
+              Visible = False
               Width = 100
             end
             item
@@ -1424,6 +1434,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               Footers = <>
               Title.Caption = 'Nama Supplier'
+              Visible = False
               Width = 200
             end
             item
@@ -1432,7 +1443,15 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               Footers = <>
               Title.Caption = 'Harga Satuan'
-              Width = 100
+              Width = 101
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              Footers = <>
+              Title.Caption = 'Total Harga'
+              Width = 160
             end>
           object RowDetailData: TRowDetailPanelControlEh
           end
@@ -1783,7 +1802,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Align = alTop
       Color = 15987699
       TabOrder = 9
-      ExplicitWidth = 1111
+      ExplicitWidth = 1113
       object Label28: TLabel
         Left = 26
         Top = 81
@@ -1842,6 +1861,7 @@ object FNew_Pembelian: TFNew_Pembelian
         Width = 157
         Height = 23
         TabOrder = 2
+        OnChange = EdJum_PotPemChange
         DisplayFormat = '#,##0.00'
       end
       object EdJum_ReturPemb: TRzNumericEdit
@@ -1850,6 +1870,7 @@ object FNew_Pembelian: TFNew_Pembelian
         Width = 157
         Height = 23
         TabOrder = 3
+        OnChange = EdJum_ReturPembChange
         DisplayFormat = '#,##0.00'
       end
       object EdJum_totalhut: TRzNumericEdit
@@ -2273,8 +2294,10 @@ object FNew_Pembelian: TFNew_Pembelian
     SQL.Strings = (
       'select a.*,b.supplier_name '
       'from purchase.t_advance_payment a'
-      'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code'
-      'group by a.supplier_code,b.supplier_name,a.no_trans'
+      
+        'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code where' +
+        ' a.supplier_code='#39#39
+      '-- group by a.supplier_code,b.supplier_name,a.no_trans'
       'order by a.no_trans DESC')
     Left = 912
     Top = 304

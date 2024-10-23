@@ -1,7 +1,7 @@
-object FDataPenerimaanBank: TFDataPenerimaanBank
+object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   Left = 0
   Top = 0
-  Caption = 'Data Penerimaan Bank'
+  Caption = 'Data Pengeluaran Kas'
   ClientHeight = 554
   ClientWidth = 1133
   Color = clBtnFace
@@ -11,7 +11,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -132,9 +131,9 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object Label17: TLabel
       Left = 572
       Top = 19
-      Width = 98
+      Width = 101
       Height = 15
-      Caption = 'Untuk Penerimaan'
+      Caption = 'Untuk Pengeluaran'
     end
     object Label18: TLabel
       Left = 685
@@ -193,7 +192,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 3
-      OnChange = dtTransChange
     end
     object MemKeterangan: TMemo
       Left = 694
@@ -247,7 +245,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Width = 93
       Height = 23
       TabOrder = 9
-      OnChange = edKursChange
       DisplayFormat = '0.00#,##'
     end
     object edJumlah: TRzNumericEdit
@@ -258,7 +255,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       TabOrder = 10
       DisplayFormat = '0.00#,##'
     end
-    object edUntukPengiriman: TMemo
+    object edUntukPengeluaran: TMemo
       Left = 694
       Top = 16
       Width = 344
@@ -410,181 +407,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Visible = False
     end
   end
-  object RzPageControl1: TRzPageControl
-    Left = 0
-    Top = 298
-    Width = 1133
-    Height = 224
-    Hint = ''
-    ActivePage = TabDetailFaktur
-    Align = alClient
-    UseColoredTabs = True
-    TabIndex = 1
-    TabOrder = 2
-    ExplicitWidth = 1127
-    ExplicitHeight = 215
-    FixedDimension = 21
-    object TabDetailAkun: TRzTabSheet
-      Caption = 'Detail Akun'
-      ExplicitWidth = 1123
-      ExplicitHeight = 190
-      object DBGridAkun: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 1129
-        Height = 199
-        Align = alClient
-        DataSource = DSDetailAkun
-        DynProps = <>
-        HorzScrollBar.ExtraPanel.Visible = True
-        SearchPanel.Enabled = True
-        TabOrder = 0
-        TitleParams.MultiTitle = True
-        OnColEnter = DBGridAkunColEnter
-        OnColExit = DBGridAkunColExit
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <
-              item
-                Style = ebsPlusEh
-                OnClick = DBGridAkunColumns0EditButtons0Click
-              end>
-            FieldName = 'kd_akun'
-            Footers = <>
-            Title.Caption = 'Kode Akun'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'nm_akun'
-            Footers = <>
-            Title.Caption = 'Nama Akun'
-            Width = 250
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'debit'
-            Footers = <>
-            Title.Caption = 'Jumlah | Debit'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kredit'
-            Footers = <>
-            Title.Caption = 'Jumlah | Kredit'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'keterangan'
-            Footers = <>
-            Title.Caption = 'Keterangan'
-            Width = 300
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_header_akun'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'jumlah_hasil_kurs'
-            Footers = <>
-            Title.Caption = 'Hasil Kurs'
-            Visible = False
-            Width = 150
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
-    end
-    object TabDetailFaktur: TRzTabSheet
-      Caption = 'Detail Tagihan'
-      object DBGridTagihan: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 1129
-        Height = 199
-        Align = alClient
-        DataSource = dsDetailPiutang
-        DynProps = <>
-        HorzScrollBar.ExtraPanel.Visible = True
-        SearchPanel.Enabled = True
-        TabOrder = 0
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <
-              item
-                Style = ebsPlusEh
-                OnClick = DBGridTagihanColumns0EditButtons0Click
-              end>
-            FieldName = 'no_tagihan'
-            Footers = <>
-            Title.Caption = 'Nomor | Tagihan'
-            Width = 200
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'no_faktur'
-            Footers = <>
-            Title.Caption = 'Nomor | Faktur'
-            Width = 200
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <
-              item
-              end>
-            FieldName = 'tgl_faktur'
-            Footers = <>
-            Title.Caption = 'Tanggal'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'jum_piutang'
-            Footers = <>
-            Title.Caption = 'Jumlah Piutang'
-            Width = 200
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'keterangan'
-            Footers = <>
-            Title.Caption = 'Keterangan'
-            Width = 400
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
-    end
-  end
   object Panel5: TPanel
     Left = 0
     Top = 185
@@ -594,22 +416,22 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
-    TabOrder = 3
+    TabOrder = 2
     ExplicitWidth = 1127
-    object gbDataPiutang: TGroupBox
+    object gbDataHutang: TGroupBox
       Left = 0
       Top = 0
       Width = 514
       Height = 113
       Align = alLeft
-      Caption = 'Data Tagihan'
+      Caption = 'Data Hutang'
       TabOrder = 0
       object Label21: TLabel
         Left = 20
         Top = 30
-        Width = 56
+        Width = 43
         Height = 15
-        Caption = 'Pelanggan'
+        Caption = 'Supplier'
       end
       object Label22: TLabel
         Left = 117
@@ -618,7 +440,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 15
         Caption = ':'
       end
-      object edKode_Pelanggan: TRzButtonEdit
+      object edKode_supplier: TRzButtonEdit
         Left = 130
         Top = 27
         Width = 199
@@ -627,9 +449,9 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         TabOrder = 0
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
-        OnButtonClick = edKode_PelangganButtonClick
+        OnButtonClick = edKode_supplierButtonClick
       end
-      object edNama_Pelanggan: TEdit
+      object edNama_Supplier: TEdit
         Left = 130
         Top = 53
         Width = 354
@@ -697,9 +519,9 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object lbSumberTagihan: TLabel
         Left = 340
         Top = 30
-        Width = 85
+        Width = 84
         Height = 15
-        Caption = 'Sumber Tagihan'
+        Caption = 'Sumber Hutang'
       end
       object edNamaBank: TRzButtonEdit
         Left = 136
@@ -721,7 +543,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         ReadOnly = True
         TabOrder = 1
       end
-      object edNMSumberTagihan: TRzButtonEdit
+      object edNMSumberHutang: TRzButtonEdit
         Left = 446
         Top = 27
         Width = 103
@@ -730,7 +552,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         TabOrder = 2
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
-        OnButtonClick = edNMSumberTagihanButtonClick
       end
       object edNMJenisBayar: TRzButtonEdit
         Left = 446
@@ -751,6 +572,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 4
+        Visible = False
       end
       object edKodeJenisBayar: TEdit
         Left = 555
@@ -760,13 +582,172 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 5
+        Visible = False
       end
     end
   end
-  object DSDetailAkun: TDataSource
-    DataSet = MemDetailAkun
-    Left = 504
-    Top = 424
+  object RzPageControl1: TRzPageControl
+    Left = 0
+    Top = 298
+    Width = 1133
+    Height = 224
+    Hint = ''
+    ActivePage = TabDetailFaktur
+    Align = alClient
+    UseColoredTabs = True
+    TabIndex = 1
+    TabOrder = 3
+    ExplicitWidth = 1127
+    ExplicitHeight = 215
+    FixedDimension = 21
+    object TabDetailAkun: TRzTabSheet
+      Caption = 'Detail Akun'
+      object DBGridAkun: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1129
+        Height = 199
+        Align = alClient
+        DataSource = DSDetailAkun
+        DynProps = <>
+        HorzScrollBar.ExtraPanel.Visible = True
+        SearchPanel.Enabled = True
+        TabOrder = 0
+        TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridAkunColumns0EditButtons0Click
+              end>
+            FieldName = 'kd_akun'
+            Footers = <>
+            Title.Caption = 'Kode Akun'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'nm_akun'
+            Footers = <>
+            Title.Caption = 'Nama Akun'
+            Width = 250
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'debit'
+            Footers = <>
+            Title.Caption = 'Jumlah | Debit'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kredit'
+            Footers = <>
+            Title.Caption = 'Jumlah | Kredit'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'keterangan'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 300
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kd_header_akun'
+            Footers = <>
+            Visible = False
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+    object TabDetailFaktur: TRzTabSheet
+      Caption = 'Detail Hutang'
+      ExplicitWidth = 1123
+      ExplicitHeight = 190
+      object DBGridTagihan: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1129
+        Height = 199
+        Align = alClient
+        DataSource = dsDetailHutang
+        DynProps = <>
+        HorzScrollBar.ExtraPanel.Visible = True
+        SearchPanel.Enabled = True
+        TabOrder = 0
+        TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridTagihanColumns0EditButtons0Click
+              end>
+            FieldName = 'no_tagihan'
+            Footers = <>
+            Title.Caption = 'Nomor | Voucher'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_faktur'
+            Footers = <>
+            Title.Caption = 'Nomor | Faktur'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+              end>
+            FieldName = 'tgl_faktur'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'jum_piutang'
+            Footers = <>
+            Title.Caption = 'Jumlah Hutang'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'keterangan'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 400
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
@@ -796,11 +777,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object MemDetailAkunkd_header_akun: TStringField
       FieldName = 'kd_header_akun'
-    end
-    object MemDetailAkunjumlah_hasil_kurs: TCurrencyField
-      FieldName = 'jumlah_hasil_kurs'
-      DisplayFormat = '#,##0.00'
-      EditFormat = '#,##0.00'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -845,48 +821,34 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object jumlah_hasil_kurs: TMTNumericDataFieldEh
-          FieldName = 'jumlah_hasil_kurs'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          DisplayFormat = '#,##0.00'
-          currency = False
-          Precision = 15
-        end
       end
       object RecordsList: TRecordsListEh
       end
     end
   end
-  object dsDetailPiutang: TDataSource
-    DataSet = MemDetailPiutang
-    Left = 672
-    Top = 424
-  end
-  object MemDetailPiutang: TMemTableEh
+  object MemDetailHutang: TMemTableEh
     Params = <>
     Left = 776
     Top = 424
-    object MemDetailPiutangno_tagihan: TStringField
+    object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
       Size = 500
     end
-    object MemDetailPiutangtgl_faktur: TDateField
+    object MemDetailHutangtgl_faktur: TDateField
       FieldName = 'tgl_faktur'
     end
-    object MemDetailPiutangketerangan: TStringField
+    object MemDetailHutangketerangan: TStringField
       FieldName = 'keterangan'
     end
-    object MemDetailPiutangno_faktur: TStringField
+    object MemDetailHutangno_faktur: TStringField
       FieldName = 'no_faktur'
     end
-    object MemDetailPiutangjum_piutang: TCurrencyField
+    object MemDetailHutangjum_piutang: TCurrencyField
       FieldName = 'jum_piutang'
       DisplayFormat = '#,##0.00'
       EditFormat = '#,##0.00'
     end
-    object MemDetailPiutangjum_piutang_real: TCurrencyField
+    object MemDetailHutangjum_piutang_real: TCurrencyField
       FieldName = 'jum_piutang_real'
       DisplayFormat = '#,##0.00'
       EditFormat = '#,##0.00'
@@ -936,5 +898,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object dsDetailHutang: TDataSource
+    Left = 672
+    Top = 424
+  end
+  object DSDetailAkun: TDataSource
+    DataSet = MemDetailAkun
+    Left = 504
+    Top = 424
   end
 end

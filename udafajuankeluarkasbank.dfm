@@ -48,9 +48,6 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 822
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -69,6 +66,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Align = alTop
     Color = 15987699
     TabOrder = 2
+    ExplicitWidth = 860
     object Label1: TLabel
       Left = 15
       Top = 13
@@ -197,6 +195,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '

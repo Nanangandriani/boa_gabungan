@@ -121,7 +121,7 @@ begin
     dm.koneksi.StartTransaction;
     try
       begin
-        if statustr=0 then
+        if statustr='0' then
         begin
           Autonumber;
           Memdetail.First;
@@ -147,7 +147,7 @@ begin
               Memdetail.Next;
           end;
         end;
-        if statustr=1 then
+        if statustr='1' then
         begin
             with dm.Qtemp do
             begin
@@ -197,12 +197,12 @@ begin
   clear;
   Pnllist.Visible:=False;
   edkd.SetFocus;
-  statustr:=0;
+  statustr:='0';
 end;
 
 procedure TFMaster_PercBarang.BUpdateClick(Sender: TObject);
 begin
-  statustr:=1;
+  statustr:='1';
   PnlNew.Visible:=true;
   Memdetail.Close;
   Memdetail.Open;

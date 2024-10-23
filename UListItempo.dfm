@@ -4,7 +4,7 @@ object Flistitempo: TFlistitempo
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Form List Item PO'
-  ClientHeight = 319
+  ClientHeight = 589
   ClientWidth = 583
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -107,7 +107,7 @@ object Flistitempo: TFlistitempo
     Left = 0
     Top = 282
     Width = 583
-    Height = 5
+    Height = 275
     Align = alClient
     DataSource = DsMaterial_stok2
     DynProps = <>
@@ -169,13 +169,13 @@ object Flistitempo: TFlistitempo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 287
+    Top = 557
     Width = 583
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 278
-    ExplicitWidth = 577
+    ExplicitTop = 286
+    ExplicitWidth = 579
     object BBatal: TRzBitBtn
       Left = 507
       Top = 1
@@ -236,7 +236,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 501
+      ExplicitLeft = 503
     end
     object BEdit: TRzBitBtn
       Left = 432
@@ -298,7 +298,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 426
+      ExplicitLeft = 428
     end
     object Bedit2: TRzBitBtn
       Left = 357
@@ -360,7 +360,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 351
+      ExplicitLeft = 353
     end
     object BEdit3: TRzBitBtn
       Left = 282
@@ -422,7 +422,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 276
+      ExplicitLeft = 278
     end
     object BEdit4: TRzBitBtn
       Left = 207
@@ -484,15 +484,14 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 201
+      ExplicitLeft = 203
     end
   end
   object DBGridMaterial3: TDBGridEh
     Left = 0
     Top = 282
-    Width = 583
-    Height = 5
-    Align = alClient
+    Width = 579
+    Height = 4
     DataSource = DsMaterial3
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
@@ -549,11 +548,10 @@ object Flistitempo: TFlistitempo
     end
   end
   object DBGridMaterial4: TDBGridEh
-    Left = 0
-    Top = 282
+    Left = -8
+    Top = 338
     Width = 583
-    Height = 5
-    Align = alClient
+    Height = 104
     DataSource = DsMaterial4
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]

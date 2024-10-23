@@ -11,6 +11,9 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -20,8 +23,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 377
-    ExplicitWidth = 578
+    ExplicitTop = 385
+    ExplicitWidth = 580
     object BBatal: TRzBitBtn
       Left = 508
       Top = 1
@@ -82,7 +85,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 502
+      ExplicitLeft = 504
     end
     object BEdit: TRzBitBtn
       Left = 433
@@ -145,6 +148,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 427
+      ExplicitTop = 6
     end
     object BSelectAll: TRzBitBtn
       Left = 114

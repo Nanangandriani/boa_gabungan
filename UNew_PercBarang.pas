@@ -333,12 +333,12 @@ begin
     dm.koneksi.StartTransaction;
     try
       begin
-      if statustr=0 then
+      if statustr='0' then
       begin
         simpan;
         dm.koneksi.Commit;
       end;
-      if statustr=1 then
+      if statustr='1' then
       begin
         Update;
         dm.koneksi.Commit;

@@ -322,12 +322,12 @@ begin
       EdNm_Barang.SetFocus;
       Exit;
     end;
-    if statustr=0 then
+    if statustr='0' then
     begin
       simpan;
       Dm.Koneksi.Commit;
     end;
-    if statustr=1 then
+    if statustr='1' then
     begin
       update;
       Dm.Koneksi.Commit;

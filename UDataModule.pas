@@ -11,7 +11,7 @@ uses
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Moni.Base,
   FireDAC.Moni.RemoteClient, FireDAC.Moni.Custom, FireDAC.Moni.FlatFile,
   UniProvider, PostgreSQLUniProvider, DBAccess, Uni, MemDS, DASQLMonitor,
-  UniSQLMonitor,Generics.Collections,TypInfo;
+  UniSQLMonitor,Generics.Collections,TypInfo, frxClass, frxDBSet;
 
 type
   Tdm = class(TDataModule)
@@ -28,6 +28,8 @@ type
     Qtemp3: TUniQuery;
     UniConnection1: TUniConnection;
     QLink: TUniQuery;
+    QPerusahaan: TUniQuery;
+    DBPerusahaan: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

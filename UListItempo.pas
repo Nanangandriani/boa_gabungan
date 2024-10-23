@@ -326,6 +326,7 @@ begin
   begin
     MemItempo.Insert;
     MemItempo['kd_material_stok']:=QMaterial_stok2['item_stock_code'];
+    MemItempo['kd_material']:=QMaterial_stok2['item_code'];
     MemItempo['nm_material']:=QMaterial_stok2['item_name'];
     MemItempo['satuan']:=QMaterial_stok2['unit'];
     MemItempo['harga']:='0';

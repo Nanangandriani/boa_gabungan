@@ -300,7 +300,7 @@ object FPembelian: TFPembelian
         Left = 0
         Top = 0
         Width = 789
-        Height = 178
+        Height = 182
         Align = alClient
         DataSource = DsTerimaDet
         DynProps = <>
@@ -2947,12 +2947,13 @@ object FPembelian: TFPembelian
         'app,a.*, b.supplier_name,'
       
         ' c.account_name, d.account_name as nm_perk,to_char(trans_date,'#39'd' +
-        'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln from '
+        'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln,e.ref_name from '
       
         'purchase.t_purchase_invoice a Left join t_supplier b on a.suppli' +
         'er_code=b.supplier_code'
       'left join t_ak_account c on a.account_code=c.code'
       'left join t_ak_account d on a.account_um_code=d.code'
+      'left join purchase.t_ref_item_receive e on a.ref_code=e.ref_code'
       'order by a.id desc')
     Left = 336
     Top = 24

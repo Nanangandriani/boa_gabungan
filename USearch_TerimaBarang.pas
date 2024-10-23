@@ -29,6 +29,9 @@ type
     procedure CkAllClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -37,17 +40,25 @@ type
     procedure Autonumber2;
   end;
 
-var
-  FSearch_TerimaBarang: TFSearch_TerimaBarang;
+function FSearch_TerimaBarang: TFSearch_TerimaBarang;
   //category:string;
-  lotstatus:boolean;
+var  lotstatus:boolean;
 
 implementation
 
 {$R *.dfm}
 
-uses UNew_Pembelian, UDataModule, UMainMenu;
+uses UDataModule, UMainMenu,UNew_Pembelian;
 
+var
+  RealFSearch_TerimaBarang: TFSearch_TerimaBarang;
+function FSearch_TerimaBarang: TFSearch_TerimaBarang;
+begin
+  if RealFSearch_TerimaBarang <> nil then
+    FSearch_TerimaBarang:= RealFSearch_TerimaBarang
+  else
+    Application.CreateForm(TFSearch_TerimaBarang, Result);
+end;
 
 function IntToRoman(Value : Longint):String;  // fungsi
  const
@@ -62,7 +73,6 @@ begin
       Result:= Result + Romans[i];
     end;
 end;
-
 
 procedure TFSearch_TerimaBarang.Autonumber2;
 var i      : integer;
@@ -110,7 +120,6 @@ begin
         MemterimaDet.Post;
         kd_urut:=EditComplete+'/'+maxmy+'/' + Kd_SBU;
     end;
-
 end;
 
 procedure TFSearch_TerimaBarang.Autonumberlot;
@@ -602,6 +611,22 @@ begin
   DBGridEh2.SelectedRows.SelectAll;
 end;
 
+procedure TFSearch_TerimaBarang.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  action:=cafree;
+end;
+
+procedure TFSearch_TerimaBarang.FormCreate(Sender: TObject);
+begin
+  RealFSearch_TerimaBarang:=self;
+end;
+
+procedure TFSearch_TerimaBarang.FormDestroy(Sender: TObject);
+begin
+  RealFSearch_TerimaBarang:=nil;
+end;
+
 procedure TFSearch_TerimaBarang.FormShow(Sender: TObject);
 begin
    DTth.Date:=now;
@@ -751,6 +776,8 @@ begin
       begin
         Autonumberlot;
         FNew_Pembelian.DBGridDetailpoColEnter(sender);
+        FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+        FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
         Close;
       end;
    end;

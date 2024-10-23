@@ -6,10 +6,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons,
-  RzButton, Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+  RzButton, Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
+  MemTableDataEh, Data.DB, MemTableEh;
 
 type
-  Tfrmrencanalunashutang = class(TForm)
+  TFRencana_Lunas_Hutang = class(TForm)
     DBGridEh1: TDBGridEh;
     lblrencanake: TPanel;
     Btutup: TRzBitBtn;
@@ -44,6 +45,10 @@ type
     cbjenishutang: TComboBox;
     CBrencanake: TComboBox;
     Edit1: TEdit;
+    MemRencana: TMemTableEh;
+    DSRencana: TDataSource;
+    procedure BdaftarClick(Sender: TObject);
+    procedure BtutupClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -51,10 +56,22 @@ type
   end;
 
 var
-  frmrencanalunashutang: Tfrmrencanalunashutang;
+  FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang;
 
 implementation
 
 {$R *.dfm}
+
+uses U_daftar_hutang;
+
+procedure TFRencana_Lunas_Hutang.BdaftarClick(Sender: TObject);
+begin
+   FDaftar_Hutang.Show;
+end;
+
+procedure TFRencana_Lunas_Hutang.BtutupClick(Sender: TObject);
+begin
+   Close;
+end;
 
 end.

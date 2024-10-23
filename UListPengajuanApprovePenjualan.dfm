@@ -22,8 +22,6 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -332
-    ExplicitWidth = 960
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -44,16 +42,13 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     ShowCloseButtonOnActiveTab = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitLeft = 144
-    ExplicitTop = 184
-    ExplicitWidth = 788
-    ExplicitHeight = 473
+    ExplicitTop = 133
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Klasifikasi Penjualan'
-      ExplicitWidth = 784
-      ExplicitHeight = 448
+      ExplicitWidth = 1102
+      ExplicitHeight = 423
       object PanelParent: TPanel
         Left = 0
         Top = 0
@@ -61,8 +56,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
         Height = 432
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 784
-        ExplicitHeight = 448
+        ExplicitWidth = 1102
+        ExplicitHeight = 423
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 1
@@ -71,8 +66,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 782
-          ExplicitHeight = 446
+          ExplicitWidth = 1100
+          ExplicitHeight = 421
         end
         object WebBrowser1: TWebBrowser
           Left = 1
@@ -81,8 +76,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
           Height = 430
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 776
-          ExplicitHeight = 437
+          ExplicitWidth = 1100
+          ExplicitHeight = 421
           ControlData = {
             4C000000725B00008E2300000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -100,7 +95,7 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
           DynProps = <>
           RowDetailPanel.Active = True
           SearchPanel.Enabled = True
-          TabOrder = 5
+          TabOrder = 2
           TitleParams.MultiTitle = True
           Columns = <
             item
@@ -353,10 +348,6 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     end
     object TabSheet1: TRzTabSheet
       Caption = 'TabSheet1'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object ActMenu: TActionManager

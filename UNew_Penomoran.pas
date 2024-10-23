@@ -1547,6 +1547,11 @@ begin
          Ed_comp.Text:=FieldByName('note').AsString;
       end;
    end;
+   if CBKomponen_No.ItemIndex=6 then
+   begin
+    Ed_comp.ReadOnly:=false;
+   end else
+    Ed_comp.ReadOnly:=true;
 end;
 
 procedure TFNew_Penomoran.CbTipeNoSelect(Sender: TObject);
