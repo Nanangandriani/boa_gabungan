@@ -48,9 +48,6 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 866
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -69,7 +66,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 866
+    ExplicitWidth = 887
     object Label1: TLabel
       Left = 21
       Top = 13
@@ -198,6 +195,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '

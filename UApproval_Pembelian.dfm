@@ -1,0 +1,2085 @@
+object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
+  Left = 0
+  Top = 0
+  Caption = 'Approve Pembelian'
+  ClientHeight = 442
+  ClientWidth = 947
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  TextHeight = 15
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 947
+    Height = 127
+    BarManager = dxBarManager1
+    Style = rs2010
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 0
+    TabStop = False
+    object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
+      Groups = <
+        item
+          ToolbarName = 'dxBarManager1Bar1'
+        end>
+      Index = 0
+    end
+  end
+  object PG1: TRzPageControl
+    Left = 0
+    Top = 127
+    Width = 947
+    Height = 315
+    Hint = ''
+    ActivePage = Tabkontrak
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 1
+    ExplicitWidth = 941
+    ExplicitHeight = 306
+    FixedDimension = 21
+    object Tabkontrak: TRzTabSheet
+      OnShow = TabkontrakShow
+      Caption = 'Kontrak Kerjasama'
+      object RzPanel1: TRzPanel
+        Left = 0
+        Top = 0
+        Width = 943
+        Height = 33
+        Align = alTop
+        Color = 15987699
+        TabOrder = 0
+        object Cbkontrak: TRzCheckBox
+          Left = 856
+          Top = 2
+          Width = 85
+          Height = 29
+          Align = alRight
+          AlignmentVertical = avCenter
+          Caption = 'Pilih Semua'
+          State = cbUnchecked
+          TabOrder = 0
+          OnClick = CbkontrakClick
+          ExplicitLeft = 860
+          ExplicitHeight = 19
+        end
+      end
+      object DBGridKontrak: TDBGridEh
+        Left = 0
+        Top = 33
+        Width = 943
+        Height = 257
+        Align = alClient
+        DataGrouping.Active = True
+        DataGrouping.GroupLevels = <
+          item
+          end
+          item
+          end>
+        DataSource = DsKerjasama
+        DrawMemoText = True
+        DynProps = <>
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+        RowDetailPanel.Active = True
+        RowDetailPanel.Height = 150
+        SearchPanel.Enabled = True
+        TabOrder = 1
+        TitleParams.MultiTitle = True
+        OnDblClick = DBGridKontrakDblClick
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_trans'
+            Footers = <>
+            Title.Caption = 'No Kontrak'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_trans'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kt'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ket'
+            Footers = <>
+            Title.Caption = 'Supplier'
+            Width = 300
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tgl_mulai'
+            Footers = <>
+            Title.Caption = 'Tanggal Mulai'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'finish_date'
+            Footers = <>
+            Title.Caption = 'Tanggal Selesai'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '0.00#,##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'harga'
+            Footers = <>
+            Title.Caption = 'Total Harga'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'thn'
+            Footers = <>
+            Title.Caption = 'Tahun'
+            Visible = False
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_result'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tanggal'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'bulan'
+            Footers = <>
+            Title.Caption = 'Bulan'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tahun'
+            Footers = <>
+            Title.Caption = 'Tahun'
+            Width = 100
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+          object DBGridEh3: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 884
+            Height = 148
+            Align = alClient
+            DataSource = DsKerjasama_det
+            DynProps = <>
+            FooterRowCount = 1
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+            SumList.Active = True
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_code'
+                Footers = <>
+                Title.Caption = 'Kode Barang'
+                Width = 60
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_name'
+                Footers = <>
+                Title.Caption = 'Nama Barang'
+                Width = 126
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalqty'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Quantum'
+                Visible = False
+                Width = 87
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'total'
+                Footer.FieldName = 'total'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Outstanding'
+                Visible = False
+                Width = 80
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'satuan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Satuan'
+                Visible = False
+                Width = 55
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qtyperkonversi'
+                Footers = <>
+                Title.Caption = 'Barat(@)'
+                Visible = False
+                Width = 70
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qty'
+                Footers = <>
+                Title.Caption = 'Kuantum'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'unit'
+                Footers = <>
+                Title.Caption = 'Satuan'
+                Width = 79
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'price'
+                Footers = <>
+                Title.Caption = 'Harga'
+                Width = 120
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'subtotal_rp'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Sub Total Harga'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ppn'
+                Footers = <>
+                Title.Caption = 'PPN|%'
+                Width = 40
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ppn_rp'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'PPN|Nominal'
+                Width = 84
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'grandtotal'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Grand Total Harga'
+                Width = 123
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalpo'
+                Footers = <>
+                Title.Caption = 'Total PO'
+                Width = 95
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'remaining_qty'
+                Footers = <>
+                Title.Caption = 'Sisa Kuantum'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'contract_no'
+                Footers = <>
+                Visible = False
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+    end
+    object TabSheet2: TRzTabSheet
+      TabVisible = False
+      Caption = 'Uang Muka Pembelian'
+      ExplicitWidth = 937
+      ExplicitHeight = 281
+      object RzPanel4: TRzPanel
+        Left = 0
+        Top = 0
+        Width = 943
+        Height = 33
+        Align = alTop
+        Color = 15987699
+        TabOrder = 0
+        ExplicitWidth = 937
+        object Cb_Um: TRzCheckBox
+          Left = 856
+          Top = 2
+          Width = 85
+          Height = 29
+          Align = alRight
+          AlignmentVertical = avCenter
+          Caption = 'Pilih Semua'
+          State = cbUnchecked
+          TabOrder = 0
+          OnClick = CbkontrakClick
+          ExplicitLeft = 860
+          ExplicitHeight = 19
+        end
+      end
+      object DBGridEh2: TDBGridEh
+        Left = 0
+        Top = 33
+        Width = 943
+        Height = 257
+        Align = alClient
+        DataGrouping.Active = True
+        DataGrouping.GroupLevels = <
+          item
+          end
+          item
+          end>
+        DrawMemoText = True
+        DynProps = <>
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+        RowDetailPanel.Active = True
+        RowDetailPanel.Height = 150
+        SearchPanel.Enabled = True
+        TabOrder = 1
+        TitleParams.MultiTitle = True
+        OnDblClick = DBGridKontrakDblClick
+        object RowDetailData: TRowDetailPanelControlEh
+          object DBGridEh4: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 30
+            Height = 148
+            Align = alClient
+            DynProps = <>
+            FooterRowCount = 1
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+            SumList.Active = True
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+    end
+    object TabPO: TRzTabSheet
+      Caption = 'PO'
+      object RzPanel2: TRzPanel
+        Left = 0
+        Top = 0
+        Width = 943
+        Height = 33
+        Align = alTop
+        Color = 15987699
+        TabOrder = 0
+        object Cb_po: TRzCheckBox
+          Left = 860
+          Top = 2
+          Width = 81
+          Height = 29
+          Align = alRight
+          AlignmentVertical = avCenter
+          Caption = 'Pilih Semua'
+          State = cbUnchecked
+          TabOrder = 0
+          OnClick = Cb_poClick
+          ExplicitLeft = 856
+          ExplicitHeight = 17
+        end
+      end
+      object DBGridPO: TDBGridEh
+        Left = 0
+        Top = 33
+        Width = 943
+        Height = 257
+        Align = alClient
+        DataGrouping.Active = True
+        DataGrouping.GroupLevels = <
+          item
+          end
+          item
+          end>
+        DataSource = DsPo
+        DrawMemoText = True
+        DynProps = <>
+        FooterRowCount = 1
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+        IndicatorTitle.TitleButton = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+        RowDetailPanel.Active = True
+        RowDetailPanel.Height = 160
+        SearchPanel.Enabled = True
+        SearchPanel.CaseSensitive = True
+        SearchPanel.FilterOnTyping = True
+        STFilter.Location = stflInTitleFilterEh
+        STFilter.Visible = True
+        TabOrder = 1
+        TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'po_no'
+            Footers = <>
+            Title.Caption = 'No.PO'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'modul'
+            Footers = <>
+            Visible = False
+            Width = 100
+            WordWrap = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ket'
+            Footers = <>
+            Title.Caption = 'Supplier'
+            Width = 250
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'po_date'
+            Footers = <>
+            Title.Caption = 'Tanggal PO'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'delivery_date'
+            Footers = <>
+            Title.Caption = 'Tanggal Kirim'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '0.00#,##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'harga'
+            Footers = <>
+            Title.Caption = 'Harga'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_result'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ket_1'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tanggal'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'bulan'
+            Footers = <>
+            Title.Caption = 'Bulan'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tahun'
+            Footers = <>
+            Title.Caption = 'Tahun'
+            Width = 100
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+          object DBGridEh1: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 863
+            Height = 138
+            Align = alClient
+            DataSource = DsDetailPo
+            DynProps = <>
+            FooterRowCount = 1
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+            OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+            SumList.Active = True
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_code'
+                Footers = <>
+                Title.Caption = 'Kode Barang'
+                Width = 84
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_name'
+                Footers = <>
+                Title.Caption = 'Nama Barang'
+                Width = 135
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qty'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Quantum'
+                Visible = False
+                Width = 90
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'unit'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Satuan'
+                Visible = False
+                Width = 45
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qtyperkonversi'
+                Footers = <>
+                Title.Caption = 'Berat(@)'
+                Visible = False
+                Width = 70
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qty'
+                Footers = <>
+                Title.Caption = 'Kuantum'
+                Width = 87
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'unit'
+                Footers = <>
+                Title.Caption = 'Satuan'
+                Width = 68
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'price'
+                Footers = <>
+                Title.Caption = 'Harga'
+                Width = 90
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '#,##0.00'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'subtotal'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Sub Total'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ppn'
+                Footers = <>
+                Title.Caption = 'PPN|%'
+                Width = 30
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '#,##0.00'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ppn_rp'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'PPN|Nominal'
+                Width = 80
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'pph'
+                Footers = <>
+                Title.Caption = 'PPH|%'
+                Visible = False
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '#,##0.00'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'pph_rp'
+                Footers = <>
+                Title.Caption = 'PPH|Nominal'
+                Visible = False
+                Width = 80
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'grandtotal'
+                Footer.DisplayFormat = '0.00#,##'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Grand Total'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qty_sent'
+                Footers = <>
+                Title.Caption = 'Kuantum|Terkirim'
+                Width = 90
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'total_payment'
+                Footer.DisplayFormat = '0.00#,##'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Terkirim|Total Bayar'
+                Visible = False
+                Width = 107
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'po_no'
+                Footers = <>
+                Visible = False
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'remaining_qty'
+                Footers = <>
+                Title.Caption = 'Kuantum|Belum Dikirim'
+                Width = 90
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'remaining_payment'
+                Footer.DisplayFormat = '0.00#,##'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Belum Dikirim|Total Belum Dibayar'
+                Visible = False
+                Width = 102
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'wh_name'
+                Footers = <>
+                Title.Caption = 'Gudang'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_stock_code'
+                Footers = <>
+                Title.Caption = 'Kode Barang Supp'
+                Width = 0
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'pemb_ppn'
+                Footers = <>
+                Width = 0
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+    end
+    object TabSPB: TRzTabSheet
+      Caption = 'SPB'
+      object RzPanel3: TRzPanel
+        Left = 0
+        Top = 0
+        Width = 943
+        Height = 33
+        Align = alTop
+        Color = 15987699
+        TabOrder = 0
+        object Cb_spb: TRzCheckBox
+          Left = 860
+          Top = 2
+          Width = 81
+          Height = 29
+          Align = alRight
+          AlignmentVertical = avCenter
+          Caption = 'Pilih Semua'
+          State = cbUnchecked
+          TabOrder = 0
+          OnClick = CbkontrakClick
+          ExplicitLeft = 856
+          ExplicitHeight = 17
+        end
+      end
+      object DBGridSPB: TDBGridEh
+        Left = 0
+        Top = 33
+        Width = 943
+        Height = 257
+        Align = alClient
+        DataGrouping.Active = True
+        DataGrouping.GroupLevels = <
+          item
+            ColumnName = 'Column_8_trans_year'
+          end
+          item
+            ColumnName = 'Column_9_trans_month'
+          end
+          item
+            ColumnName = 'Column_10_trans_day'
+          end>
+        DataSource = DsSPB
+        DrawMemoText = True
+        DynProps = <>
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+        RowDetailPanel.Active = True
+        SearchPanel.Enabled = True
+        TabOrder = 1
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'spb_no'
+            Footers = <>
+            Title.Caption = 'No. SP'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'supplier_name'
+            Footer.FieldName = 'nm_supplier'
+            Footers = <>
+            Title.Caption = 'Nama Supplier'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'po_no'
+            Footers = <>
+            Title.Caption = 'No. PO'
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'spb_date'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 76
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pic'
+            Footers = <>
+            Title.Caption = 'PIC'
+            Visible = False
+            Width = 143
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'vehicle_no'
+            Footers = <>
+            Title.Caption = 'No. Kendaraan'
+            Width = 158
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'driver'
+            Footers = <>
+            Title.Caption = 'Driver'
+            Width = 155
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'status_app'
+            Footers = <>
+            Title.Caption = 'Status Approval'
+            Width = 102
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_year'
+            Footers = <>
+            Title.Caption = 'Tahun'
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_month'
+            Footers = <>
+            Title.Caption = 'Bulan'
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_day'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Visible = False
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+          object DBGridEh5: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 776
+            Height = 118
+            Align = alClient
+            DataSource = DSDetailspb
+            DynProps = <>
+            TabOrder = 0
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_stock_code'
+                Footers = <>
+                Title.Caption = 'kode Material'
+                Visible = False
+                Width = 84
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'item_name'
+                Footers = <>
+                Title.Caption = 'Nama Barang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'po_no'
+                Footers = <>
+                Title.Caption = 'No. PO'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qty'
+                Footers = <>
+                Title.Caption = 'Kuantum'
+                Width = 101
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'unit'
+                Footers = <>
+                Title.Caption = 'Satuan'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'wh_name'
+                Footers = <>
+                Title.Caption = 'Gudang'
+                Width = 150
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+    end
+  end
+  object ActMenu: TActionManager
+    Left = 600
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'New'
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRo: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActRoExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      OnExecute = ActAppExecute
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
+    end
+  end
+  object dxBarManager1: TdxBarManager
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Categories.Strings = (
+      'Default')
+    Categories.ItemsVisibles = (
+      2)
+    Categories.Visibles = (
+      True)
+    PopupMenuLinks = <>
+    UseSystemFont = True
+    Left = 672
+    Top = 80
+    PixelsPerInch = 96
+    object dxBarManager1Bar1: TdxBar
+      Caption = 'Action'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 930
+      FloatTop = 3
+      FloatClientWidth = 51
+      FloatClientHeight = 151
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarBaru'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarButton2: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton1: TdxBarButton
+      Caption = 'New'
+      Category = 0
+      Hint = 'New'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        610000002C744558745469746C65004164643B4974656D3B4164644974656D3B
+        426172733B526962626F6E3B4974656D3B506C75734E32EF8100000286494441
+        54785E5D915D48545B14C77FFB9C199D11CDA264A2C828B2A44891B844491924
+        A441915020611045742F04D14B11D1439015193E28652541057D125CEFBDF8D0
+        43D017D8BDE0EDC1BC57ED8331106AC6907072C673CEDEAB98738686D9ECBDD8
+        9BCDFFBF7E6B2D05D8B7FF1C7962DB768320002020E2DF252F8880E7382F0EEE
+        A9691411072004584AA986BDDB5700148A0005FC34BBD537BA09B00172064A6B
+        01C0714D8E01113F0882BF15C5610BCF330056BE01DA8000264F1DE803A2E01F
+        411B0D4001819BAB3B10E5F74005068288CA11A8020300C1989F225028019409
+        5E0631B0A8A204C06ABBF88AD9B4830528CFD501B2600013D4EE89C7B3A1043D
+        8FE3B4FF1EA7AB3F4E32AD299BBF387AE7C4068504CD7082261A14C677427B2E
+        97FF7ACF6832C3968D0BF9AD75395BEA63A4EC302DC7EFFFB1B8BA3EFAE84C83
+        CA1218CF030163C4CF2E86FE810954B14D63C312929922B6ED7F80A722346FAD
+        64CDCA8AF5EB769E3C05D85903D71F9F2F3682D6FA077A92BADA1803EF1C1229
+        8D339B617246F37ADCA5B6268656E17D40289435D006117F9C205862484CCEF0
+        E1AB45C7B9BB686310ED71F8C8358CD6F474FD8AEB780B013B9882017C7CB225
+        0891B0E1E3C4341DED6D84141C3A7A8587D78F90CA0883EFA648CFA43FE7C628
+        3982D2888D88C218F8A56A0EFF0CC50947A3D8B6C24967F8EFB3CB976F9A91D7
+        1F989EFAD20778214067BEA59E9FEE7CB9591044A0BC2CCCD2452564129FF8F7
+        E9104B5757D2DD7D8CBFDF24181F1E67622C3EFC71F0DE59C005B08028500ECC
+        05E60567412852BEACBAE94267CDEE1B6375AD77646D4BEFDB554DE72F1595C6
+        2A8050F58E5E948850B856EFBA094AF8BFEF80058481A22091011CC0AD6ABE6A
+        44E03B805C64CDB4C3E1300000000049454E44AE426082}
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        610000002C744558745469746C65004164643B4974656D3B4164644974656D3B
+        426172733B526962626F6E3B4974656D3B506C75734E32EF8100000286494441
+        54785E5D915D48545B14C77FFB9C199D11CDA264A2C828B2A44891B844491924
+        A441915020611045742F04D14B11D1439015193E28652541057D125CEFBDF8D0
+        43D017D8BDE0EDC1BC57ED8331106AC6907072C673CEDEAB98738686D9ECBDD8
+        9BCDFFBF7E6B2D05D8B7FF1C7962DB768320002020E2DF252F8880E7382F0EEE
+        A9691411072004584AA986BDDB5700148A0005FC34BBD537BA09B00172064A6B
+        01C0714D8E01113F0882BF15C5610BCF330056BE01DA8000264F1DE803A2E01F
+        411B0D4001819BAB3B10E5F74005068288CA11A8020300C1989F225028019409
+        5E0631B0A8A204C06ABBF88AD9B4830528CFD501B2600013D4EE89C7B3A1043D
+        8FE3B4FF1EA7AB3F4E32AD299BBF387AE7C4068504CD7082261A14C677427B2E
+        97FF7ACF6832C3968D0BF9AD75395BEA63A4EC302DC7EFFFB1B8BA3EFAE84C83
+        CA1218CF030163C4CF2E86FE810954B14D63C312929922B6ED7F80A722346FAD
+        64CDCA8AF5EB769E3C05D85903D71F9F2F3682D6FA077A92BADA1803EF1C1229
+        8D339B617246F37ADCA5B6268656E17D40289435D006117F9C205862484CCEF0
+        E1AB45C7B9BB686310ED71F8C8358CD6F474FD8AEB780B013B9882017C7CB225
+        0891B0E1E3C4341DED6D84141C3A7A8587D78F90CA0883EFA648CFA43FE7C628
+        3982D2888D88C218F8A56A0EFF0CC50947A3D8B6C24967F8EFB3CB976F9A91D7
+        1F989EFAD20778214067BEA59E9FEE7CB9591044A0BC2CCCD2452564129FF8F7
+        E9104B5757D2DD7D8CBFDF24181F1E67622C3EFC71F0DE59C005B08028500ECC
+        05E60567412852BEACBAE94267CDEE1B6375AD77646D4BEFDB554DE72F1595C6
+        2A8050F58E5E948850B856EFBA094AF8BFEF80058481A22091011CC0AD6ABE6A
+        44E03B805C64CDB4C3E1300000000049454E44AE426082}
+    end
+    object dxBarButton3: TdxBarButton
+      Caption = 'Refresh'
+      Category = 0
+      Hint = 'Refresh'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        6100000027744558745469746C6500526566726573683B5265706561743B4261
+        72733B526962626F6E3B52656C6F6164CD4DF6E90000030249444154785EA593
+        6D4C926B18C76F018114A40D6D619DE98433AAE3F16D7CB173AC43666FE69C7A
+        D4F48825339D4E6136D314EB2C23B46C332B957484A0522E5B6E2C31B537B437
+        319BCECC17B2652D672FC715E03194AEEE875A6BB53E796DBFDDCF7EF7FFFFE1
+        DAB3DB0500D052C6E5A7FEC73B70F2FDC89A4D48D664FA5A5AF5DB1FE4E8928B
+        E2226D9F11FB0F04459A7B3D052A63DE0E71B11B91C10E77FA9D5D94DF70DF59
+        4E93EB7EC957DF1B4F935FE009B3EBB7A59FE8704C59E6E185E503DC9D7C0B9A
+        5B66D8A7BA33243AD4E087F3A4E9F98F683FD1959EBD8BF0B8E6D418BB1F3C9B
+        855DA57A23871BC00C15D755FD99D508E1521DE49EB90E833356B8D4F71C726A
+        7A460285F11EC48A92CF5D44D973CC50A8BDF504C6FE7780F2CA3044481AFEF5
+        FE3598C1DD24F5E10A73F88109958A8DD94DF69E171638D53E0AA2A36D07885E
+        E6E95E8476E6D5090AD57D0B66DB02F45B1661DC6A87B4B2F685E0D8C3422284
+        21619605FC5DA148ADE884F303D3905C6630112EF5C40D449AB550D5BDBDA314
+        D9C99BC862B52379ED6DF478E215C595B9AAFE4B9918D2CC4857CBE4F834A22D
+        672287831C881D4B9B2F74232EE918CFA81283FDDA4B1B241CE9062F7E441076
+        0C0C19438B2CD63F8A3AD8017187BB4033F61E88EFA8920E882CD24F92F8D1D5
+        F3383467B3D846269EFE877CBC5928707372CAB7FFFFF9F01D890783BE98951E
+        8628542ACACDDC88ACAF5E3B4C8656090ACBBD4C846802514DE9DEDAFBD038F4
+        06E28F742F083395C7F91B44416BFEDACDA731BD38214995E519AA01A837CF41
+        A2A213BC422455B8C744828C56E78E8C956B3921E226739666109A47DE81E4DC
+        0024286E424CE935F83DA95A87337E41A92A93ECEA14B043F63F2451591CE78A
+        01BB5B50DB14B105725D199C28F0FF47FD24EEF86D28D19B4139340BCAC15908
+        2F6807DFF042317BCD9650FF14ED33EA8AB0F5384F65AC2B40889FD48CD1394F
+        42D2D9BCD53E5BE515BC98DA21EC017BE0C52A877DB797CBC8547716CE786068
+        74AE1411E0F90132C61DC3C67030DE18CF2F8EFC7D78C9CFF9136643522887EA
+        10230000000049454E44AE426082}
+    end
+    object dxBarButton4: TdxBarButton
+      Caption = 'Delete'
+      Category = 0
+      Hint = 'Delete'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        6100000023744558745469746C650043616E63656C3B53746F703B457869743B
+        426172733B526962626F6E3B4C9696B20000038849444154785E1D906B4C5367
+        18C7FF3DBD40CB1A2E32B55C9D598B4CA675D8D13836652E9B0359B67D589665
+        3259E644A52571644474CB4CB6ECC23770C4449DD38D2885005E4683AB69C616
+        8DA12384264EC8AAAC0C9149A1175ACEE9E939CFDE9EE7E477F2CBFFB924E720
+        E6E943CC3B8895D12B00A0FEE3D08167A75A5BBAEEB71D9D081E6B4DA549FBDD
+        A3CEEFDD1F3658016818AA98A71FD1915E202DE980A19D741E3EF6E0F8A7FC7F
+        673B6979E002C5BC43B4C2581EB8480BE7BA68E6441BEF3B72F03300990C8E1D
+        5016554E7B55D6C1ED9543C6C2B5BB739FDF025988838424E4240F10A0D2EAA0
+        D26540AD37203CFE17C2C187A3EDBFDE7CF3DAD4748403A06EA8A8E830AC5FB3
+        3B7BAB1901B717AE23DFE1CEC5EBEC90A0E0EB71A3CFD981C0B017C6F252180B
+        D6BD74BCFA856E003A0CBDFD966DF250532AD4FF038DB734D18557DF21CFB08F
+        2E37B5D370ED5E72D7D52BEEF9654CE9F91C1FD392EB0C4D3A0E4BE7F6ECD909
+        CFDEFAD381AF4ED0A3D35FD399E272BA3F3D478F971234FD2044BDCE930AF798
+        CF2FAED0DF5373CACCFCA92F2970B29DDCAFD7F56B48945E918201C41738945A
+        2D581C7461ADA3192AB50AD64F9A010272730CC8D4AA313BE44289D58CF85D3F
+        2411504BB28D93845489145E041F9CC1863C09A11BD7E1EFEA86240339463DB2
+        B3F59025C0DFD98DD0C83594E6886C360831F408523265D208BC0021B20A35A7
+        82B8BC0429C2239A10D812417988007088B14C8A8421EA75A094044A8A48F200
+        17E78587629220B370E69F2884EA3750F07E23245946868E43A64EA3B8695F23
+        F8EA7A046763EC780AC9640AF155FEB1269AE0BD91AC8CFDF910108E26F15A5B
+        33788D1E860CF6CDE7CF225D45FB3F02A0C7CE36076E5CBD84825C3562A20E4B
+        097E0CAD051B5FFCA97C9BE4ABAEA05B2FDBE9E6BE0F880F8568FCDB0E1AA9AA
+        646C579C654AEF564D15FDB96333FDBCC94A8E751B6A0140DF5168B9E42A7B86
+        266AB6D2ED1A1BF559CAC853B58DFCB576F2D7D9D3AE64B777D96862D716EA2F
+        2BA76F4CE62B008C1A00C2F9C57F9D8DA2C99212C5E72C85323699F320A77FD2
+        72040021DF9885F56BF2204457706F9EC74C4CF2F744169A012430DBF21E00A8
+        2B754F98BEC82EEEED7AF2291A306FA451EBD3346633938FF13BF341969D62BD
+        CF738AAF6ED6EA4B006882CE77A14ABFD255D2799903606830E4EF28E274070C
+        1C67D74255041044C25C9CE43B4149F8B16735F41B8038DB9300E07F6924ECFB
+        01D589CC0000000049454E44AE426082}
+    end
+    object dxBarButton5: TdxBarButton
+      Caption = 'Update'
+      Category = 0
+      Hint = 'Update'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        6100000022744558745469746C65005570646174655461626C654F66436F6E74
+        656E74733B5461626C653BEFA5E0D80000025549444154785E85526D48535118
+        7EEE36C3849ACDF9B18470FDEB0B9641D4A06CAE7F4912513F8432F0C7E88F65
+        D81CD48FF0C7D60429964441069251B00AD9922CCC204BEA4F7EC0C490626E7D
+        6C1024C8D0B5CE793BF7DC4B1769D2C37DDE735EEE3DCF79DEF7BD0A0442439F
+        C6A0281EE2042202172482B6E77A2ED6C2AFFC78F88CCB4B4405E8B0082AE2F1
+        048E3AF13F0406670FE867560B702299AC143800ED76B923994A07CB7906CE39
+        044C30201345B507FD40389646389E925485AFC692528C412B47730C1475A0AE
+        BEC3357AED9A6067D3161087CC19A7620E0C0135F6BDF8A6F38B140C0E7D962B
+        230EC6F81A0EB417F2E6B35E0748F6411104FCCD5BF52900EEED76DC28E2C064
+        9400449EA7111949E3FAB305A4171770EB6D0F5A061AE18E54A3F7CD716C6C35
+        BB6D7EB3D5D669DE6B94C00C81AE66A7E4698F0577DE87F178E6367EE45238E2
+        6A404B831BDB76399F82A31BC0C0DF1218374A5045080AC6E68751B1BE167DC7
+        E2720AF19947984CBE43D37E174AF8A1F6D093FE7FA790CB3390FEE72928C5A9
+        FA8B60FA78DBF675E142D407E6E0F86DFE0A90D144B69C5B7ADD7177FAA01C9D
+        08EE1D768446CF2138DA2EEBAA28AB83B7CE8744E6D5CA443253AADD47AB1A59
+        26582E6813AC10B4575E5A4723E99BD43F7D996CE74B0601D4E8DF581ECC76A3
+        BC436923D5A91A8AA14A08044FFA91CDCF616A3EB9F4726AB297085145FBB54F
+        80F073F11A8F98B00638612EF0301C898E4F60B3CDBAA171E79E2B0E6B65A2DA
+        6A4FD46EAADACD0931AD076B81A895183EA632D9E8BDEFD91E22AA07E1031186
+        01BA0F4212027F001ABA574BB80B6B080000000049454E44AE426082}
+    end
+    object dxBarButton6: TdxBarButton
+      Caption = 'Refresh'
+      Category = 0
+      Hint = 'Refresh'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        610000002A744558745469746C650052656672657368416C6C5069766F745461
+        626C653B526566726573683B5570646174653B80B9A4FD000002714944415478
+        5E5D936B48536118C775373D8D3235D7583A576ACB9A49105B17A274122E5D33
+        8DCDCD5C6E2DC12E7633ED02D6666464B58D2E2BA304175A560C4B12AB6F19B4
+        3EA8501059D482A8BE46DF6AF0F43C87F7C838077E7BDEE7FF9EFDDFCB9F9326
+        7AD21912448AC85895902E42FCF0A2D4D3BDD6EEF31B07F6F6983EB69E33FDA5
+        4A3DE9382F27535FC0E8171B496ABCFAFCC66365A1A6AEF2E4D86404DE2726E0
+        C7EF29BE524FBAE3685998BD036C67E9C2CAF2BAFDA5A1BBA3A7E0C3CF18449F
+        77C1F1A0051A3B5653E57B5E7F7606E98686432BC9408148F8D5AB3D45CEED6D
+        CB93F12F57E0EC6D2B58BCC5239BEAB54DAA02653155EAAFC59A219EB8046F12
+        7D80EF924126DB459A6C6BCBB2C148CC05171F58A1CABD742447CD15A09EC3C8
+        AB74E9C2A7FB2BE0D1740B8FC55744069C602037BB0B67AB76EB803059350ED4
+        16201C51E1D29E275D4CEA0E144836B29860ABCE63BA9CC66C5E8DE4231A6411
+        9221DC8102E30231185D802263464AC791F206610E639C4DBDC40C8AE5D79F69
+        9EE8B81FEC870D7D6C65391994ACC9CDC60887C65E5F87D15761C071947421C6
+        4C8A25FE2DCC7367FC20D8F6AD18B6784B761836A8726B5BF5D6BA03A5F74243
+        6DF0F66B84224C567B4ADC642E1870144BCF600DCF939976B8F5D4079D97B7C1
+        CE76039C0CDAE0FE8B1330F9A9170203B58091DFC045B310D9DC0E28167393EE
+        26C6D58FE364F0613D4C4C75C0BBEF17E0E54C275C7D6C07D2CDBB7491551BF3
+        F4EC7812C140B1C5A9EDA5BC11F53A9B66CF66A776B8B2B9F033C6F58F2AF5EB
+        6D4BBC2C2165EAF60929C2B189F9C84216938AC5AA627D56CAC54AC45FA18C10
+        6E5D304C8163BA54FC29FF073A900E21C7F057FD0000000049454E44AE426082}
+    end
+    object dxBarButton7: TdxBarButton
+      Caption = 'Delete'
+      Category = 0
+      Hint = 'Refresh'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        6100000029744558745469746C650052656D6F76653B44656C6574653B426172
+        733B526962626F6E3B5374616E646172643B635648300000026449444154785E
+        A551494C5351146568194A2B583746627F458902118892AAB811369246043462
+        8556D032A82D831664486D8C3FB40B8128E3C68998A289625720314469022591
+        26566BC484681C22C6012B5A1556C7F73EBF507FDCF193F3DFBBE7DC7BDE7BF7
+        86005811B820E80B2310F16B6880E4F7E10462AAF3F1B2014F889E961FBB307D
+        AAE2EBC8FEDC137C72280FB1AB546BA0DAE4F11296C491940F36089F2CD5593F
+        DFE8C682771453E71B31909D6D207C044D76166B8C339D1789E6C4A76B5D18D7
+        15D9A869B04184A744E7FBED72C03FD08EF9B13BF09CADC1F50C55CDE08182DA
+        B7ED562CB807E1BFDB06FF701F3C47753E52131D6C20B2EFCA343C31EAF1D3D1
+        89B93E167F1EF5E37155255ED92C989F70E0C74D96E3C734F9B89498749A1E2A
+        EC41644F4A6AF5B8F6107C7D2D98ED6D847FE80A7EDDBF8A6FBD4D98ED69C088
+        3A0BD678A589E44A843D089844DB141B4D0FF3D5F8D251878FAC9EA08C5B87F6
+        EC44B37C6D23C991F2530AF99F81E472BAAA7E42AFC307B612EFEA0E2FC1A52D
+        446B5A4633C991090D968A5B93D24D4EAD06336DF5982E5363BA9C07D9BF674F
+        62B4F020AC9B53976EF1CF145A36249B1EE4E5E28DA5022F8AB23045706B1383
+        DB498974CFE1F599620CAB736061B63409A720ED5624CFBD341E81B760379EE5
+        65A23F410183487ACE208EB1F42728E1CDCFE4F0BC641FBA9894395213176C10
+        655EA3EC706CDF06778E0A76C57A5447C8E87B63298C91B166BB92817BEF0EDC
+        4BDB8A0639D34DF8986083309A58278BEFB0C631BEAAC5E255940F6886A8D566
+        A27DAF95ADEB22B15CD883808984208E209A8F859A9C6F6078F0145684BF98E8
+        BFC080A205F60000000049454E44AE426082}
+    end
+    object dxBarBaru: TdxBarLargeButton
+      Action = ActRo
+      Category = 0
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F400000023744558745469746C6500436F6E766572743B5265706561743B4172
+        726F773B45786368616E6765762368D20000096949444154785EAD560B7054E5
+        15FEEE637793CDE6615E98C0929010C233C8A3BC331110854210B485DAFA0415
+        19C60748B5BED1B10DAFD18A55AAB5D5A91541333289A8C8148C0222798A0193
+        401E246CD86C7693DD64F7EEDDBBF7BFF7EFE6CEBD99DBA6D3DAB12773E63FF7
+        9F93FFFBCEB7E7FEE732F8FFD8BF9E43F1038D37827D47966BA7503AE414548F
+        31146B0103AA0EEFEB7BDA031E5B779C293BB8545155FAB138286F7BF18193ED
+        00E88B7F5B4C8D5C6DD5F2552D7EFE9EAFCC04A01D7EEFF2FDF8A1661469B7E6
+        3300982172AB176C29AD6A38B46CC7DB25BBEBBF72EF7AFAF62F22006838DA46
+        A9499CB2BF6E18A9408C3D142A816178FC2773580B9891F28389950FE7B53958
+        BF6C4B5C43F3D96759F6F3DBA7CCC97CB86CF3A9A331922A001A925AA886A5A8
+        230950150845AF209E1F058EB599AA6490689BC898C08CD8BCB2AA42112521F4
+        8B0D9858908B02E7A3795575951F3FF1262A07BC916DAF3F55DBE9B0156A441E
+        DFBF908E689E3DE537E097376ED5B6ACDC35C84898FF4FA0BFDEB720C7916459
+        4319660E033A0180838229D07BE412050A36FFEC29F4866A00001C1B87245B1E
+        BA7BFCA8AAAD8878FB7A77551FEBDE7BEA932B22008D889900761DBA01BF5AF1
+        88B63D2679955129FBCC5BC5BFE0ADDCC684F8C4EB73464D44767A3ED292B360
+        B5C421C591AE8105823E446411890E0EEEE0197397209E4F85C33A1EF5176A50
+        DDF8656B7040DCBAFFC9BACF012800E83081B2F7976A04C6A6943200B858C533
+        1DC9D6D746A58D9E3D7DFC22E48D9E02590D211CF542243EC88AA03951A3E0D9
+        7858621ED59E23467F42510942D1010891009212B290C8E6A1A6A101975D1D87
+        F73D5ABD0E80C20346B23A04CE02609F7C63D17D29498E57674D29E1C66639D1
+        17BE8433974F80A8122C5C1C78D60A96E563A0360D2C02410394150944952113
+        09128920428461324421F046BCE87479D0D1E6E1FEDD05C202E062E08FA4A7A6
+        ED5E3AB71484EDC395401D42913E50CA80672DE0391B3886070B0E60585018F7
+        04B47820DC6B7A0638D60A0B138FE60B3E34D4765F1606A2DBAADE737F0A8000
+        50797327C7645F939898B47BD9C23508484D70F9CE435622E0591BE278077ABD
+        02BA2EF7C0E70D21188C408A2860591676BB0579F9A330797A86A62428C0322C
+        E22C76B8BAC2F8E664ABD4EF0DBF2C7A6CAFD61C77FB4D4D485983C08215CE78
+        AB9D7B65D18CA508449AD0E96B40541661E512D0DFA3A2E2F077F8A4B2D17DAE
+        BE7B5757FBC02DFD3D5271D3D781F473557D993D9DE292407F04E98E71A014E0
+        B93848611B8E56B4A2E283F3475B1AFAE77E75C05376E7863F4DBD7FCFD177A6
+        16AF8D37BDD25AC06F7D69DE86378EDC4D6BAFECA207EB4BE9DBDF2CA6076A57
+        D2A7FF3C8FAE7AD0E959B661F4CF01D801D80058F43B84036005E07870EF1C7A
+        B2ED19FA97D33FA50FFDFE3A3A7F7D4647D14D29EB0124DFB6F99EDC7B7756EE
+        7EEE9DAF237B0ED5D1BB5E28DFA8FF1FC3EB0438DEC6DC31CE99076FB00D2169
+        1016360EAECE30BEAD77B7F8AF46D79E3EEC6907A098E4339BAA2A148DDFB7E3
+        C3F27AC9E711F64158BCB7F164A578E773074A53D2B376CE2D1AE39C31310B9D
+        EE015CECEABD03C00100841F6E4030D3EC092CBA023DDA55C9F336B45CE88638
+        A86C8F817700202660C6145383C0EB7FA83816F62B8FB7578B2D4025BD75DBFE
+        E9D76464BF77D7EA2230160B3AFC114458168ACA4E05C0190A401F26692C0F08
+        5210AA3EBA422119C7DF75D5E9550300A73BD5D550F498EC7FB2364E2766ECB1
+        1DDF55B9329D132081479B5B80ACA848B0719024394DCF05AB070C21B44F080F
+        82283278C6864060A801357E4E3DCFB672D3CE49F7EDF9ECF0A6978E4700588C
+        4374501940D44480CB2D2A9969B5B01AB0242B50548AC160149214ED836EAC21
+        219195F32E970F09D65474348770ACB2EDAA42D8BB01B48C299C9D74C78EF2A7
+        27CF5C507DDB8AE9CB894C8C41C68E988C7A634EBB7EDDB58EF49C9D0B67E420
+        1C55202B5453B6AF6F001141F85EC7056F101043E4BDB3358D254238447ADDA1
+        3F369F75EEEEBCF0B578F3C3AFFD343D6B5C59F1ACBC9CE299395A99B2AC4057
+        40364D485607B7ACDCB26F697266EEEE05D373F3B247A7A2CD1B065114F0E070
+        A9B91B21BFEF7D4329DE90F0CC67AE0FC7CDB6DFE4ED12F7567FD2DB366FCD5A
+        E7825BB7FF7672C1E8E5AB4A26C09E6043B720412688B982159BCAE69E2ADF57
+        CF30ACBA68DDA3452C6349B125A6CEE7AD09EB32D2929C4BE7E5233333056DBE
+        30FC82AC31ECEBF5A3A3DDEDF9EEF85B1F0120E661C4E915D926CF2A4E2E5CBC
+        717376F698AD2B4B0A6D13C6A5C31796634EB426B2F10CFE7EAC11A20284C351
+        288A020BC7222D391ED99949C873A6626C760A3CA1283AFB44089256285499E0
+        C4A7D5F05E69BDBBF6A3E73E042019C3C890D072E3FD2FDF94919DB773C9BCF1
+        E316CECE4158A6B8E80BC756151400544D67DC5A3A03A9760B4001455121AB40
+        94A8084A04FE908C331D01842545FBCD399681188CE0F4893AF8DCAE1762E087
+        F5865561FAEDAC6B1F3BF841617E76E9EA25936077C4A3478862502450F48F4A
+        A250AD8B6559854C5444C91000341214548BB54AF57C76E88F01BA3AAEE2DCD9
+        1665C0D3F5C4B9233BDE04201AF29B7B800985444E084BB8E28F20D41F852011
+        501D40FF4AD60F0718866AABA26A2BA03FB360B49805E0EEF2A0F97C3B3C2ECF
+        85C19EE6AD6DA7DE380B20620687497E1E40FCEC5B76AC4ACA70964D292A185B
+        30652C14309AC454AF9252683D10F00BE02D3CE2EC368D9C1014218912FCFD21
+        78DD7DB8EAEA85303050130DF7BFDB7C6CE7010DD874474CBD792F3D5FB11DE6
+        D79000106B3FDA51919439BE6AB0EFDEED179B3AB74C9F33D13A6A740688AA18
+        D26A63F6C467755008E91143C2B59A320A715385F4AB847412229E0BF6345576
+        9F2BBFA883464D33045FB606E8A687DE1CF955AC9350077B5B496DF96F9ECFFD
+        C96D877AAFF6FC2E677CEE92A23993604B8807512958502844C1E9B737160310
+        4C879BAF67A2BBAA3BAA2E05A8964031447E04013A6BFDABA83BF4A0AA77A872
+        B9E6FDC698AF0B963CBCBAABCDF5FCA41985CEF1D3F22133D01A124018C0A09E
+        6F1E4C66C7171AB0CE8252E3F36FA402244AF04DE7009D9793ACE5180DD3FAE5
+        2BE58ECCC22F82FEB55BDB9B2E3F306DFE342B218AA198ACBBD97022060A981B
+        98C26CD444803182A9A57BF55749D5D29B8E3C66BEA47800F6CCC9374F49CCBA
+        EE85C48CACEBBF3DF8C03500420094FC1B5E1CC2192E5C8BFF8B759C78163FD4
+        8CBBC2022001400A80640071C3D3F44718F33FE69901D5E1927F84FD03EF8804
+        FDEBAEB9D10000000049454E44AE426082}
+    end
+    object dxBarUpdate: TdxBarButton
+      Action = ActUpdate
+      Category = 0
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
+        0D00000009704859730000136100001361011D7D0BC7000000206348524D0000
+        7A25000080830000F9FF000080E9000075300000EA6000003A980000176F925F
+        C546000003674944415478DAAC956D6C935514C77F4F9F87BED197B5C96698A3
+        84CD4C0C8E0515944C88463F181533247341867398810BBE0CB3A8335111A726
+        26644A34230B9861826F89224618388CC100716108CA52B46CB8AEEDB6D2B88E
+        BDB55DDBE7F845E7BA17F10337B9C9C93DE7FC72EFB9FF7BAE22225CCFA14CB1
+        55E0266033700AF8FD3FF28680F06C0E6D8A5D9E5378F3017732816978887E77
+        36BB76EE60B03FC4D5E161545545D334144561F7074DA96030F414F0F15C3B7C
+        7D7DD192DA8A95CBB316582D2C76D868E9F88550E152DEDFFDE1B49434A56B1F
+        229D8CF3EDB1130DC0AB53BDAA41510E7C575DF16CEDEA95E6F64E2FD18924F9
+        2E27AD274F71F86217ABEFBB07B32644C27D4C24C6888D8FE2FDCDC7B2E26292
+        C9D49A9E1EFF25E0C22471CFA30FCAF75B36CA0287AD776BDD767DE18DB95260
+        D2A4FEED0649495CDE7DA7415EACAB95FA97EAA4DBD729A3C3574452A3222272
+        F2449B00DB336A181E19E3E9AF8EAC03FAAAD697B6AF2A5A86584C3C59B68196
+        7D7BE80D0430A80620C1E123AD6CABD9CAF8F83856FB7C0606C200E319C0378E
+        FF9800BE06D676777553F9441541BF8FF6D33F60B3DB292959F56FB0A672F6E7
+        73E8BACED2A2628C26E3CC5BD6455AFFB6DD3939D99C3FD7416363232282C56C
+        C6A0AA93C1BAAE138BC55050D8F64C0D6EB77B56D96CFA273E9148E07038B965
+        49E135059C95E52218F04F5DCA03FED480D10C1D29A028866B020D060564F241
+        003403A1A9C2C66C32138D46F9F542E7AC101141749D458B3C58AD16B4791A40
+        04C0A4A9773BCDE6400670301A65C55D256CA9DE3C03964EA77039B3C8CB2FA0
+        6EC79B3435EFA562E30680AB40F95B0FDC6B6F3A7DD69B018CC7E3381C59DC71
+        FBF269301D87CB8DA0515BFF0AC1835FF293AA110847B8F586ECCFF6953DEC6A
+        0FF4D13D186DD632EB62008491918CB262B7DBF05DEEE1CEDB5650E93071B4A6
+        8A56EF2562BD3E3E7AA1DAF58DB78BE70E1DDB0BB419FE4F4B9A984862351929
+        2B7F0CBF289CBFDC83324FE3626C82FB9B3FF963DDFE2F9E07AAA7E76DFAFCD3
+        FD2222327825903123037E191B0A8B8848CBA183E2B1CD977C4F9EBCF6DE2E01
+        1E9FAB7D398D461300168B65E60D23C44622543E52CAE2E3470987FA292A2C60
+        27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
+        30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
+        82}
+    end
+    object dxbarRefresh: TdxBarButton
+      Action = ActRo
+      Category = 0
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
+        0D00000009704859730000136100001361011D7D0BC7000000206348524D0000
+        7A25000080830000F9FF000080E9000075300000EA6000003A980000176F925F
+        C546000002FE4944415478DAAC95CD8B5C4514C57FB75EBD7A6927743B93C964
+        662492C46C020A3119246A364A247EEB2622B80BA81B17A22EFC03DCB90BBA10
+        7125B85286E84211348E814451277E04B131A26432EA74263D5FDD9D7EFD5ED5
+        75F15E4FC72181282928A85ADC7BCF3DE7DC2A51556EE4B2579C9F021E043A80
+        BFCEF808A8011F03EF0188AA62EA6BDBF6D5574FFD11745716FE3B2AAFA41D0D
+        9F93C7CF89AA124FCF9D96343F8035FFBF57AFA88BBEB70036CD0FE00C848D7C
+        16F74A64187686952CD0CEF5DAE4F97CAF0588626DA37E08110405010DF0F4CE
+        2A2FEEAE3159898804BCC242D7F3C6B915DE3DB784460615037D6185B6057026
+        8492505EBD7D8C2D4E487DE0D189CDCC5CBCCC6B3FB758E8668C6EB23C3EB199
+        37F78DF2CCCE2A8F7D7601950CCC3A55C102C426ACB75891C0D11DC3009C59EA
+        F2CA99791401115881937FAFF27A7D911F0FEFE2F8A15B38F2C5EF14688A0C06
+        20164F2C1E2B810FE69A347B9E1F96534E345A6CB245C1583CB1F1D808963B5D
+        F67F5AE7E0CD0987C76B38930F721409075E71165E98FD93D3175741401462D9
+        20400CCB69CE6FAD1E2FEF19E6CBC54BA8CAC0D88396E1EDA9ED7CDD6CF3EDA5
+        A5A20FB9BAA8224A7DB5C3A1F11A56B4A8DC4FE8CC6030D6B29CBB478648A2C0
+        55A752C094F67A7FAEC9F47CF35FF1162029111A0D1CFBB5C15B533BD85D55CE
+        AF0514B902A4E2303C7CDB56EEAD5599A8C43C3FFB0B8919542E443125E14639
+        DB6AF0CD7287E97BEE64AB8BA84419CEF8720754728E6E1FE5FEF12A7B6A158E
+        8C8DE0CAF8D894A22452423682F19E97BEFA89635377F0C97D7B393EDF6066A1
+        C9629AB225711C1C1DA112457CD858649B750C571C89C9D7451155E58113A75A
+        C01014A63746B126F0D0D8244FDE3AC988737DFA58EA654CCFFDC547E72F4024
+        C4B125CD425FBCB6A82A8FCC9C2CE6AD9CDDFE49110C4A624CAF12D9EE659F27
+        DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
+        211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
+        02FE19007E4E40427BAAAF350000000049454E44AE426082}
+    end
+    object dxBarDelete: TdxBarButton
+      Action = ActDel
+      Category = 0
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
+        0D00000009704859730000136100001361011D7D0BC7000000206348524D0000
+        7A25000080830000F9FF000080E9000075300000EA6000003A980000176F925F
+        C546000003D24944415478DAAC954D6C945514869FFBF7FDCC74DA426768490B
+        05943682092BA389898924C4880B8DC10D1B16155DB1616D24685C023B636264
+        6320514360638824C6445D1058A9D4084A143A949F5A3A9DCE37DFCCF7738F8B
+        16D00571C3494E727317EF79CF7DDF73AE12119E64689E702801E6D6D7B9BA7D
+        DBF8B0F40FA98AD96F22B5C9860A13ADE5DAF9D11D9840B7ED5079D6A4958FC3
+        E93B97DC2BB380605B51441A84BBB570A1B4DAD8D5427F80F440AD7520807A40
+        42008392299FBA03AA3007BC7787690F9F6010D40F5B9F192FE2B019ADB239A2
+        AD3A6E2A745CE8D115C1040E1B80AA2854CDE3ACC1198D8B2C6A40F69BD09F32
+        3A22A8B2D7EEFBF6BC96521F574A81F71F96A97C405E7694F214DEE2FB355CA9
+        1172BC29A92D0E112701B901B18AB0969F3661B11B11BC2F3F07D085B5FB8C78
+        4C2F3BA2BB295A79147EB444EF889736B0A4074807AB4CCC4F30727D1341D76D
+        290399EA9516AF342692EF08F31BA047565516AF1564194EF46048311AE3B5F9
+        32D2E9ACB1ED77EF879A321C265CA8938FB45E5CAE277F9A9EBE2AF794EA2F1A
+        284294577328BF6A1BB5F6CAFD3854BEE779F6FB2B0CDCE89CE85407286A773E
+        0983CEFB516A284616F7CC4D367FCC5602D68D27EF6D3874512A532DCA851A88
+        720F347BE84327855A0E63E2C504DBCCCE5DAB4D3F9F3B978E76BB478364E9EB
+        E6C6F90B00639DC1B72BE32B1FB9890496D64390F36F0B3C04D4DE43A1F8757C
+        33C9F6802C8D2F35FC538D6A1EB47359D99BE399B0D53D71A83FA380FEE569CA
+        DB43A8387BCCA428F00B8AA1173A98D7045912BA6AF9A0173FA8D188163A65F9
+        165E40811E6B812DC13F66F48ACC5119EE31FEDC7DE2326334BBFD69479A27FE
+        AEC992768DBD2349EDFC5DD57967A1C82E4A616B6ED35DDCF46D7C27FE0FA07D
+        E0FE52F0B57539CD2B93745BD5335BA3BFDE8CD2C1EBF33A7C291808E7B7FDD2
+        38EF4339B732BAFCBABEB6EE9639BD73C8A0C5461EA07CC45029005BF55DCA65
+        68DEDA489A557F2E943A6356C6760569349FDB04C4D0F87DF28DA1D49DECF6D4
+        37ADCB1B28162B98E104B4B7C8AA2ED697FE2698CDCAE99DBE50B35AE798AA3F
+        EAFB016925A39127D0EE716F4BC1F0429DA01DCC24F53EE15842BC31470C4839
+        B003B70AA80B678F66C6610C5FB9AAA94A69A10BCE9614C37771BA47D8135AD5
+        3677A6E648EA3D82C2118AC3979E52CB29E9055592CA170076B2D73AD996685F
+        3A14BF1A38160DC531D03FA124D3822AD1A021C82DCA2A7C2062510627DBB285
+        DA8CD6E1B4ABA77376F3CD9987FBB0596FF0DBF6A78FD5E81DB6219848F3BFFB
+        3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
+        0000000049454E44AE426082}
+    end
+    object dxBarSubItem1: TdxBarSubItem
+      Caption = 'New SubItem'
+      Category = 0
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F400000023744558745469746C6500436F6E766572743B5265706561743B4172
+        726F773B45786368616E6765762368D20000096949444154785EAD560B7054E5
+        15FEEE637793CDE6615E98C0929010C233C8A3BC331110854210B485DAFA0415
+        19C60748B5BED1B10DAFD18A55AAB5D5A91541333289A8C8148C0222798A0193
+        401E246CD86C7693DD64F7EEDDBBF7BFF7EFE6CEBD99DBA6D3DAB12773E63FF7
+        9F93FFFBCEB7E7FEE732F8FFD8BF9E43F1038D37827D47966BA7503AE414548F
+        31146B0103AA0EEFEB7BDA031E5B779C293BB8545155FAB138286F7BF18193ED
+        00E88B7F5B4C8D5C6DD5F2552D7EFE9EAFCC04A01D7EEFF2FDF8A1661469B7E6
+        3300982172AB176C29AD6A38B46CC7DB25BBEBBF72EF7AFAF62F22006838DA46
+        A9499CB2BF6E18A9408C3D142A816178FC2773580B9891F28389950FE7B53958
+        BF6C4B5C43F3D96759F6F3DBA7CCC97CB86CF3A9A331922A001A925AA886A5A8
+        230950150845AF209E1F058EB599AA6490689BC898C08CD8BCB2AA42112521F4
+        8B0D9858908B02E7A3795575951F3FF1262A07BC916DAF3F55DBE9B0156A441E
+        DFBF908E689E3DE537E097376ED5B6ACDC35C84898FF4FA0BFDEB720C7916459
+        4319660E033A0180838229D07BE412050A36FFEC29F4866A00001C1B87245B1E
+        BA7BFCA8AAAD8878FB7A77551FEBDE7BEA932B22008D889900761DBA01BF5AF1
+        88B63D2679955129FBCC5BC5BFE0ADDCC684F8C4EB73464D44767A3ED292B360
+        B5C421C591AE8105823E446411890E0EEEE0197397209E4F85C33A1EF5176A50
+        DDF8656B7040DCBAFFC9BACF012800E83081B2F7976A04C6A6943200B858C533
+        1DC9D6D746A58D9E3D7DFC22E48D9E02590D211CF542243EC88AA03951A3E0D9
+        7858621ED59E23467F42510942D1010891009212B290C8E6A1A6A101975D1D87
+        F73D5ABD0E80C20346B23A04CE02609F7C63D17D29498E57674D29E1C66639D1
+        17BE8433974F80A8122C5C1C78D60A96E563A0360D2C02410394150944952113
+        09128920428461324421F046BCE87479D0D1E6E1FEDD05C202E062E08FA4A7A6
+        ED5E3AB71484EDC395401D42913E50CA80672DE0391B3886070B0E60585018F7
+        04B47820DC6B7A0638D60A0B138FE60B3E34D4765F1606A2DBAADE737F0A8000
+        50797327C7645F939898B47BD9C23508484D70F9CE435622E0591BE278077ABD
+        02BA2EF7C0E70D21188C408A2860591676BB0579F9A330797A86A62428C0322C
+        E22C76B8BAC2F8E664ABD4EF0DBF2C7A6CAFD61C77FB4D4D485983C08215CE78
+        AB9D7B65D18CA508449AD0E96B40541661E512D0DFA3A2E2F077F8A4B2D17DAE
+        BE7B5757FBC02DFD3D5271D3D781F473557D993D9DE292407F04E98E71A014E0
+        B93848611B8E56B4A2E283F3475B1AFAE77E75C05376E7863F4DBD7FCFD177A6
+        16AF8D37BDD25AC06F7D69DE86378EDC4D6BAFECA207EB4BE9DBDF2CA6076A57
+        D2A7FF3C8FAE7AD0E959B661F4CF01D801D80058F43B84036005E07870EF1C7A
+        B2ED19FA97D33FA50FFDFE3A3A7F7D4647D14D29EB0124DFB6F99EDC7B7756EE
+        7EEE9DAF237B0ED5D1BB5E28DFA8FF1FC3EB0438DEC6DC31CE99076FB00D2169
+        1016360EAECE30BEAD77B7F8AF46D79E3EEC6907A098E4339BAA2A148DDFB7E3
+        C3F27AC9E711F64158BCB7F164A578E773074A53D2B376CE2D1AE39C31310B9D
+        EE015CECEABD03C00100841F6E4030D3EC092CBA023DDA55C9F336B45CE88638
+        A86C8F817700202660C6145383C0EB7FA83816F62B8FB7578B2D4025BD75DBFE
+        E9D76464BF77D7EA2230160B3AFC114458168ACA4E05C0190A401F26692C0F08
+        5210AA3EBA422119C7DF75D5E9550300A73BD5D550F498EC7FB2364E2766ECB1
+        1DDF55B9329D132081479B5B80ACA848B0719024394DCF05AB070C21B44F080F
+        82283278C6864060A801357E4E3DCFB672D3CE49F7EDF9ECF0A6978E4700588C
+        4374501940D44480CB2D2A9969B5B01AB0242B50548AC160149214ED836EAC21
+        219195F32E970F09D65474348770ACB2EDAA42D8BB01B48C299C9D74C78EF2A7
+        27CF5C507DDB8AE9CB894C8C41C68E988C7A634EBB7EDDB58EF49C9D0B67E420
+        1C55202B5453B6AF6F001141F85EC7056F101043E4BDB3358D254238447ADDA1
+        3F369F75EEEEBCF0B578F3C3AFFD343D6B5C59F1ACBC9CE299395A99B2AC4057
+        40364D485607B7ACDCB26F697266EEEE05D373F3B247A7A2CD1B065114F0E070
+        A9B91B21BFEF7D4329DE90F0CC67AE0FC7CDB6DFE4ED12F7567FD2DB366FCD5A
+        E7825BB7FF7672C1E8E5AB4A26C09E6043B720412688B982159BCAE69E2ADF57
+        CF30ACBA68DDA3452C6349B125A6CEE7AD09EB32D2929C4BE7E5233333056DBE
+        30FC82AC31ECEBF5A3A3DDEDF9EEF85B1F0120E661C4E915D926CF2A4E2E5CBC
+        717376F698AD2B4B0A6D13C6A5C31796634EB426B2F10CFE7EAC11A20284C351
+        288A020BC7222D391ED99949C873A6626C760A3CA1283AFB44089256285499E0
+        C4A7D5F05E69BDBBF6A3E73E042019C3C890D072E3FD2FDF94919DB773C9BCF1
+        E316CECE4158A6B8E80BC756151400544D67DC5A3A03A9760B4001455121AB40
+        94A8084A04FE908C331D01842545FBCD399681188CE0F4893AF8DCAE1762E087
+        F5865561FAEDAC6B1F3BF841617E76E9EA25936077C4A3478862502450F48F4A
+        A250AD8B6559854C5444C91000341214548BB54AF57C76E88F01BA3AAEE2DCD9
+        1665C0D3F5C4B9233BDE04201AF29B7B800985444E084BB8E28F20D41F852011
+        501D40FF4AD60F0718866AABA26A2BA03FB360B49805E0EEF2A0F97C3B3C2ECF
+        85C19EE6AD6DA7DE380B20620687497E1E40FCEC5B76AC4ACA70964D292A185B
+        30652C14309AC454AF9252683D10F00BE02D3CE2EC368D9C1014218912FCFD21
+        78DD7DB8EAEA85303050130DF7BFDB7C6CE7010DD874474CBD792F3D5FB11DE6
+        D79000106B3FDA51919439BE6AB0EFDEED179B3AB74C9F33D13A6A740688AA18
+        D26A63F6C467755008E91143C2B59A320A715385F4AB847412229E0BF6345576
+        9F2BBFA883464D33045FB606E8A687DE1CF955AC9350077B5B496DF96F9ECFFD
+        C96D877AAFF6FC2E677CEE92A23993604B8807512958502844C1E9B737160310
+        4C879BAF67A2BBAA3BAA2E05A8964031447E04013A6BFDABA83BF4A0AA77A872
+        B9E6FDC698AF0B963CBCBAABCDF5FCA41985CEF1D3F22133D01A124018C0A09E
+        6F1E4C66C7171AB0CE8252E3F36FA402244AF04DE7009D9793ACE5180DD3FAE5
+        2BE58ECCC22F82FEB55BDB9B2E3F306DFE342B218AA198ACBBD97022060A981B
+        98C26CD444803182A9A57BF55749D5D29B8E3C66BEA47800F6CCC9374F49CCBA
+        EE85C48CACEBBF3DF8C03500420094FC1B5E1CC2192E5C8BFF8B759C78163FD4
+        8CBBC2022001400A80640071C3D3F44718F33FE69901D5E1927F84FD03EF8804
+        FDEBAEB9D10000000049454E44AE426082}
+      ItemLinks = <>
+    end
+    object dxBarSubItem2: TdxBarSubItem
+      Caption = 'New SubItem'
+      Category = 0
+      Visible = ivAlways
+      ItemLinks = <>
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Action = ActApp
+      Category = 0
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F400000021744558745469746C65004170706C793B4F4B3B436865636B3B4261
+        72733B526962626F6E3B6463C8680000098749444154785E8D570B7054D519FE
+        CEDDBB9BCD6349480C7910214882488804C25B5E2518F041A5D5215550192D30
+        BCA28E531D713A6851C6B1EA0C68950A5A2B2275C096F2465AE340B0BC820931
+        40020979BFC826FBCA66F73ECEE9B967EF4D769C71DAFFCE37FF393B9BFBFDFF
+        F7FFE73F1BB2E5E3FB21D98880CD80046BCF01489201BE2600B111AC7FF008C1
+        CF1BDE3FB284E99482E90C3A87C641752ABCAE510ED3F3FDDB1BBF87CCC0F0EC
+        F29520C643220020F6109F0169714F58A4E4278836C6814D0F9F30BC40AB7F2F
+        63E00F63A0CCF0D45C53ECFC72B7E09169E42B0695F0E235661019F183C41207
+        D9B6A7E8DE78977D991C438A2409B184907BB987A6EAD58C61203CA07FEBED0B
+        1F7CFDB767AE00A059AE1514006BF6EE315F6D1A231C919D0C33326A0621C819
+        9099F0B495A5EDADBD45BF8A75C96FB8E25DB9A3D2C6202D39030ED981C4F814
+        18E6EDEF2D50B4103ADCEDB39A3B6FBDFAEE3F8A6E04BCCAEB5B569D3900401F
+        95F8246DF47C4605970188A5A90035369A491CE1CC723D6B2CA49777CCCEBE23
+        3D6E6F7AEA88199372272325291903AA07612D00151A3AFC4D4235598A059125
+        64676660FCE809E8F5F5E656D5557CF1E6BE79CFDDBAEA796AF7D62B0DD949AB
+        3400ECA67B1783A9BA59021D0688F98C1EB65664BD79E79C5F240D777E559857
+        387C4C56167CA14EB4795BCDEA987D42221969340C4A19FCAC87EFEBE1B02560
+        56C16C34B6B64C03BBF07DE91F0B57EEF85DC5BF01A83929AB51DBB393314A87
+        14A0D0203182ECA48D82FCA5EDB3162627C71D9E3F6D8EC319CF33F55E15C406
+        3B61C259120A0C351A85A1685077C31FEA414A4A06164E2F1A5E76BEECE0FA6D
+        05CB3EDC5C2982E0ECFC311550354D9460CCF01784EC6B5F9F9CE31A1EF3E5FC
+        69331DD4EE86271830B32591004874374522B10415C930030C7575DDB878E93C
+        1E7D6406164C9F6F3F1E3AB5A7E4B9F10BBEDA7EBD767CEA7AADF4DD422A0208
+        0407409906ABE192D3623E2D9C383145957B785BFB20116236272049569FB021
+        723320EB34793D611C3D5A8B8CC44528C85E8CBF1FFA14CB1F9330F5DE29C9FD
+        81EF770158C44177BC58218E2A79F2F779D8B3B5469097BE3DA564D4E8115FCC
+        9B33017DC15608498814A580F05607588D14E96C063434F4A2EC9B3E3CB6E80D
+        E48D9B02095EBCB4A318C50FDC85FCDC3C949FBD8ADADAB6673EDB5AB30F80C2
+        4165C6E860F676A76DCBA4BC1CB8032D42154244001C881C52CA4186C80931BC
+        8800577FBC8DCA0B4E6C28D983D1776622CEA9E0B50F4BB172F922C4247AD0ED
+        6FC0A4BCF168EBE87E15C0D71C9A50C0225FFEC2B84513F2338F2F583016DE60
+        A718BBD663B0F22D303425ADDCC52B2A2A3A50579D8875251F223B2B034E8782
+        57B69760EEBC4C0CBBA31FFD8A579C92E4F82C9C2D6F407545EB23073FBA7912
+        802A5B93CEE69016DF91928EF6BE7638EC549C0A227120527BCAF792352BC810
+        7979791BBA1A33B0E1F10F90959106BB1CC6CBEF95A0707A3212520308843DA0
+        0CE23EE8F6B6237D443A6E24741603304E84260356A9C9F4D804825E7F801332
+        24C5C7F04024681AC3951FDC98322D15B24D1A9A011C953FDC46676326D6977C
+        809199A9888BB1E1FDBD9B917127436636833FDC2732D7548A605813AAC7B952
+        20C9642A001B07061560C0DD924383AE68D028438F974296249CFDB60B0E9A8B
+        43CD4DB8FFE1118875CAA2048DB7FCB85AE944E98AF79099910A1B9170F1C723
+        B8D57916CB7F5300777F1B544D87A2E8DC3350508083385443D15C3300622940
+        18C3308D0C40339A8F49A0D071E17437D212E6E08987DEC08DC6CB38786033E6
+        172741A70CE5653EACFEF527B833331386296A37761D780DCB4BA6A0C5DD24AE
+        5C0AF3F603336704A02304C6E0B2782D0508A380AA0D80722F1106354CE0F3A8
+        D8B86C1D46A6A72039693E626376E08B63CF43D1827862C976DC33F61ED1974E
+        07C1B68F5FC4CCD963D0A7B440D535733282830ECD09468DBF1565B16A29C134
+        5D67BE50488D1C30CA9010EFC4234B67E283FD1B40582F9C4E3BF22714E29965
+        BBF1C07DAF60EAC4D9B0C936714CCF5CDA075FB81EA923091435049D52014A75
+        3026BC088401E01C06971F51F73C33A02BAC2E1460002542AE012500D5D18BFB
+        E66463CBCE1590A5001C7619E3C78EC7FC69CB6077D845869AEEC65F0FBF85D9
+        7373D117EC86C684DC11586B911405A180C1A186683D00CAC12C05286F964BBE
+        3E5D9C320A26E00FF6C296E0C3DD79097873D72A0C8B6590650971713142E218
+        AEC09747B76162FE48045997208B266783DE04213038C203FA65003A0793AD00
+        825EF55F5D6DC14D29A362C0A80A888621F004DC189E9A8AB410C53B9FAFC18B
+        4FED465F4087615D3D55A8AA3F85E287F278F6ED436319885A47C8B913B3A5AB
+        AD1F7E8F5A2602889E841CF14BD7E55E2E98EBBA2B2E915A3FD306EF80545726
+        6EDDF023D1968F358FBE87B0A2E10F1F2F436E5E0CB418237B8B58500A811933
+        F72C32B6FBBD12AACAFD8D87FE543703809743911E5C9BCBCC7AA8813EE5AD5B
+        D7544844162FA48C1A10EBDBBE768C1D9784AEFE0A7C75722B2ED57C0D6AEB86
+        1CDF0F4DD323B2EB3A984E394CF961958342820D4DD71478BA43EF0008997701
+        64668509A8657F6BDAFFE09A9C351D4D646A6A9604C62C251828083A3C4DC89F
+        340615178FE1C4B9CF515434113E437A625E4E11A5C51AE2D8411881848E6605
+        3D9D0355A7F737EF07101E6C42C6DDF19A0DCCAC49B8BD3EB0A9A126DCD7EFA5
+        919751F33C9B8DD4D2DB80A9D34763E5E30B11827B5025F613C5740630018280
+        97A1A17AC0D37CCD5B0A2028B2378D2C7E36079B9EBF5FE4B834FFCF3200E7CC
+        5F662D4ECF8EDB973359B6BB9225B31798353B84271187E84F59D4860976C0D7
+        ABA3BE52535B6F069EBE78B4FD38807E0E6DC9EA1C7662D74D4888324B857387
+        5A4FB537F4AFB87E5EF576B7E8603055B0BA1A667DAD7F340C44D79C463EEF6E
+        D570FDBCE66BAD0DACE2E427ADEC0F57AF638C12444D420ACB4C79062E1C693B
+        515FE929BE79395C59F31F05FE3E5112F35C4380320C0560B63277E2BB57CFA9
+        A8BBA45CA9AB703F70F144FB3100010E75888F5901584BE048F55A161DC4B573
+        B76B4E7EDA50DC7C2DB8B1FA74B8B9EABB305AAE6BF0BA75881E31874C90AF7D
+        BD142DB52AAABE53507D5A6969AA09967EF397FAC57517DDD5427693FC30E720
+        1832D99AC804148C7B439EA5F91F1100BA755CCEFDB3750F8003050BD3A7BBDB
+        9D4B1C4EDB1C02E6B4D9A571A26E2AAB63602125A49FF576874F5695755E3012
+        883A6EBA450ECBA29BF0E7ECE42737AD60257358D92D98FBC1516E428D826E02
+        9C83FDCCFB41F0FF1989F292E94D086316A20B2CFCFFB0FF02A614B488B3A126
+        BC0000000049454E44AE426082}
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Reject'
+      Category = 0
+      Hint = 'Reject'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F400000023744558745469746C650043616E63656C3B53746F703B457869743B
+        426172733B526962626F6E3B4C9696B2000009AA49444154785E8D96097054D7
+        9946CF7DBD6869ADAD1648AC025B8AC35694C106EC84C910E2B552C626768D17
+        927126953126D86106B298941D3B4E4219882B95C2E5D8659C541687C5186C27
+        98D8C090106C30036637C8C6420809099044AB97F7FADD25AF6EF54B75854A25
+        57F5EBEB5BAA7AE7FB37BD165D2B9E020460E5CA63C00840DB0BA3BFFBB8E01F
+        1F3A9E586E0C06A30D020255F633068CD14198E25DD3B6FAA744D186E6871610
+        3A305C79A2C996102A4AE34AABD0F2E40F0D60C3EF395E2483556D306830868F
+        57BD0440545B57DAC229C50B1180C785100710FB962D995253563E2FE2389F17
+        980A4730C56883D2EA089ABC2BFD1D17B3D9CD739E7BE130A063CD13B435D27D
+        D4A035C69AB181560A6BC028EBE8CAAC1BC68759460E7D67E99D8978FCE9584D
+        756BA2ED2ACAC78EC089C5890F6B000C5EEFC5A9DAF3C87774CDAA3AD1BEFCF8
+        D225ED97F3F92767AD797E23A0622326E942D7618D36802D3F4A692C474985D1
+        BAA4C286D8B03601383B163DD432B2AEEE378991CD33EA6E9846D9F006E4E020
+        EAF265D4904FA6F323301AA722018E43D55523A9BB6E326EEFA5D6F23FEDFDF5
+        A1C58B1E3D70AEFBCB0F6E7AED747CD4140918AF63BFB11590B2D802A5213400
+        C49AAEB159BFF7E8E27F4F5627D6A566CFAC4FB4B550E83E47F683330060DB66
+        15B4467A0356FDBEF3D650A4A696E6DBFE8DC4C933D74D7BE7CF7BB6DCFB1F0F
+        DCF1CAEFB6037E59CB74BCF6778D94AA68404A821B08417CE4440BDFFDF0C239
+        C9DA9A379ABE38371E118ADCD143608A6C0CA258CA709AB193AD8350A034FE85
+        3E0AE7CF53317A0CA3EFB9BD5EADFFFDE64D5F9A3FEFAE8DAF5A135A29A38B06
+        C489258F32FE9B0F523676AA2DFBE6FF5CD0DA3A7CF8EED1F36F6D3099016450
+        EED2F10C81188A6A570BAC81623B95C2DE038DD62711A966DA7FB5A57F5F67E7
+        E716BFFDF64940EEB9F73E7DC32BBF255AB89C06290907AEA5BA766DEAC6E90D
+        7AE042001FF8BBD5B4E0A2DA08E1816A9BBD3514A8D1D2DEBDA01231AFC08839
+        B392535ECFBD08CC057400B72938856C9EB2ABA6DBEC777DEDAB775734266755
+        D49653B8D887F16510BE0D7730CDBEF56FF187956B39F8C6FF21F36EF837A4EB
+        72F0CD3FF1FAAA5FB267C31F71D343185FA17D89917ED08E6E2A130E95C31B66
+        BC72CB6D7703514060B74029C2EC134EF489E4B409E43B3B402A8C1000F83997
+        FD01544D9A49E382A50CFE7E3DFB376FE7DADB3E0BC6F0FE9BBB709BAE66C4D3
+        4BC8ECDCCABB9B7670FDED3752561643DB762872A73E64C48CC9F4779C5B0EBC
+        0A48C08810BEE1E65BE7B64D6CDB3A6AF654BCDE1E848563F5E05B7BF0DAA691
+        BAEB7E9A5235F852717CF50AE2E74E5903B9003EFCBFBEC1F0C65A9C489413CF
+        FD0C3ED8CDB573A75938520722291F398A8F769FE0E0F153772C7EFFDD6D801F
+        05009C84706E8E2562648E7C40A4B61E1171084B933E7F91D9CFFE377911A3BE
+        B60A84C159F65D8EAEFC315269863DB888A6A624A9861A6B68F6D247D93C770B
+        F805B432D8E194926C7B3B895435754EE426603B209D22C38918737D141FB7E3
+        1332C70E2107FA318502DAF71976750BA75F584373633560D01A1A1AEB98B8EC
+        31C62E5C4273006FA8AFB66B99288B7078D533345D3D06E54BB45F406632B83D
+        3D76AEE2514D0C311D8800FCAD0228FD29BC1CD22F8067C89CFC9068A28A6843
+        8AB6191338B6F3001FACF81153BFF318195701D010649C0C02C000D5017CFF53
+        DF277DF400533E772D7E4F376A68085570ED7A8220EA7B08655A8B0644388D42
+        6A5D433E87F61438B6F7F84369FCCC106E572757B58EE1E4FB7BD8F7E4F7B9E6
+        5BCB01A7F41D82569AF77EFC14E9FD7B98785D1BD96347304A85AB6A0D0442D4
+        CBA095AA0EB9610584F25500CBDA61C1080402843562F73ADB711AE3BAF4F70F
+        71E14286C692CC35964376286FFB9E3DD381830583213460CDF8D92C526ACB2C
+        6D014AC9B497F71A1C5DFCC7220442601504672FE429B44DA7E6FE8731029431
+        166EF106C061F423DFE6D4CA1FF0F1F1BD8C1B596D096883C15805819BF19052
+        0E855C073080710BEA9497F7D15A61DF904AA203D552D2D3EFE15F731DD50F2C
+        64585392645D0263347595116A2B6318FB7C4D32594DEBFF2EC74C9C41674F06
+        2D354A29B4AFB0AA35D94C81BC941F87850B2BA0B385C2FE4C363A2B562940FA
+        48276C8320EFC3E4FF5946D644B17008E0B1600D7F64E193826DE8CFF800D427
+        6B98F9F813ECBAF3566BDE846F4E6D6CC3D3699F21AF700050941AE875F3EFD4
+        A5A38B6BE2805416AE1D70105426AA70B7BF4ECB82AF9175253515514EAC5E41
+        FF5F76D9FE1E133061E963A4733E5515713E59BB96EA9A4A942C20B4C1983060
+        60C0A5CF7377961A30805A7EEAC8AEB59F9E763A1D33E3AB2B44F125031A8761
+        C3CAE97C6D0300E3EF9CCFB155CF7369CF2E4635558380AEDD3B396E0C931E5A
+        48FBCB1BE8D8B88E31236BF12EF4DACC2DD97118E8CF3230A43A56F77EB21390
+        80717E71CDB47090FDEE7C7E45DFA0414A85B2FD0F5449DCBEF334A712F4BCB1
+        8977EEBD9BF4FBBB696AA820DBDD4DEE5C37231A135CDEBB9BADF3EFA27BCB46
+        468F08E07D7D685F15E748E37B92AE8B8AB36E6E15E002B2F832D2E136F9DFEB
+        38BE61CDF8C95FAFECD7D31BAA852D3F8E00A9C805B0D4B01491541299CB920F
+        C0DA1800B2E77A48A5523407215D975C4F8F5D6761849D01AD0D3DFD3E035973
+        68F5C5331B008F70089552EC9833DDCCD9B15F01DEFFA707160B5DFB878828D4
+        D7C4238888C0FE488FA1B3DD200CE28A6FE5866C770F082C102300835D55A519
+        C848BA07C5E0DE5CFA112017660F209E1B3B91D66601C017DE3B1A05CA97348E
+        BDB9B5BCF295E15585586D854324E2E0005A08AB06AC6A4A8F097F833156A52F
+        83AC15E70622FE312FF7959786CE6F05B2805C59DF62960D7410B5BBEAC9F061
+        B60ACF5E38F3F6A2E4E8FB0B7EC58BAE57A8ADAB8078DCC1118E3541291C1366
+        5C1461E7C79392FE0C9CCF88F4875E66E1CBD9BE6D61F69B278D33273BC3AFE5
+        5A53F02518C22381FC9AFEB36FCDAB4ADD34D3AFF9F9E5BC999A2CF7A98C1B9C
+        88433C0810441C0703282DC1807D9654643DB8948D30503087F714D20BB7B983
+        C78B701F40157C947100103F69BC9AF1F52E1A8363605EFBB9B0B911A00CA85C
+        5C33E29EE648FC5B15113326115354C634424059545BB02705DA0872BE20E339
+        E42567BB7461E5F3D9DE0D40B674EAD78F6B366068EF8BB13C7B16B1AA613C2D
+        355944883530FF93DEF0E600D1A2918AFB2A1BAF1F1589DD5249E4330EA23C26
+        68C340C1E853DAE0668CFA4B00DEB6CEBDB40FC8978015C0BA318D619DF9E852
+        5960A00BF14CFDB87068AC2208BF72F3ED7467A99108102B8948D120802E865F
+        12AA18FC3031CA70E5C11AE05F3BA2449DA28601604A421715ABFFE4FC153983
+        B3D2BAD003AD0000000049454E44AE426082}
+    end
+    object dxBarSubItem3: TdxBarSubItem
+      Caption = 'New SubItem'
+      Category = 0
+      Visible = ivAlways
+      ItemLinks = <>
+    end
+  end
+  object DsKerjasama: TDataSource
+    DataSet = QKerjasama
+    Left = 217
+    Top = 72
+  end
+  object QKerjasama: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      ''
+      
+        'select '#39'KONTRAK'#39' as modul ,A.contract_no as no_trans,a.supplier_' +
+        'name as Ket,a.contract_date as tgl_mulai,a.finish_date,t.harga,d' +
+        'ate_part('#39'YEAR'#39',contract_date) thn,'
+      
+        ' '#39#39' no_result,'#39#39' kt,a.trans_year Tahun,a.trans_month Bulan,a.tra' +
+        'ns_day Tanggal from '
+      
+        ' (select a.*,b.supplier_code,b.supplier_name from purchase. t_co' +
+        'op_contract a '
+      
+        ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ORDE' +
+        'R BY contract_no ASC) a '
+      
+        ' INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no ' +
+        'from purchase.t_coop_contract_det WHERE contract_no=a.contract_n' +
+        'o '
+      
+        ' GROUP BY contract_no ORDER BY contract_no ASC) as t on 1=1 WHER' +
+        'E a."approval_status"=0 and a."status"='#39'1'#39' order by a.id')
+    Left = 220
+    Top = 24
+  end
+  object DsKerjasama_det: TDataSource
+    DataSet = QKerjasama_det
+    Left = 265
+    Top = 72
+  end
+  object QKerjasama_det: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.to' +
+        'tal_price,c.item_code,c.item_name,'
+      
+        'd.category,a.ppn,a.ppn_rp,a."specification",a.subtotal_rp,a.gran' +
+        'dtotal,a.pemb_ppn,a.pph,a.pph_rp,a.detail_id'
+      'FROM purchase.t_coop_contract_det AS "a"'
+      
+        'INNER JOIN warehouse.t_item_stock AS b'#9'ON a.item_stock_code = b.' +
+        'item_stock_code'
+      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
+      'INNER JOIN t_item_category d ON c.category_id=d.category_id '
+      
+        'GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.' +
+        'total_price,c.item_code,c.item_name,'
+      
+        'd.category,a.totalpo,a.ppn,a.ppn_rp,a."specification",a.subtotal' +
+        '_rp,a.grandtotal,a.pemb_ppn,a.pph,a.pph_rp,a.detail_id')
+    MasterSource = DsKerjasama
+    MasterFields = 'no_trans'
+    DetailFields = 'contract_no'
+    Active = True
+    Left = 264
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'no_trans'
+        ParamType = ptInput
+        Value = 'KK/007/II/24'
+      end>
+  end
+  object DsDetailPo: TDataSource
+    DataSet = Qdetailpo
+    Left = 384
+    Top = 72
+  end
+  object Qdetailpo: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      #9#9#9#9' '
+      
+        'SELECT'#9'c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.item_' +
+        'code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency, '
+      
+        #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
+        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,'
+      '        a.status,a.grandtotal'
+      '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
+      'FROM purchase.t_podetail AS "a" '
+      
+        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
+        'item_stock_code'
+      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
+      'INNER JOIN t_wh d on a.wh_code=d.wh_code  '
+      
+        'GROUP BY c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.ite' +
+        'm_code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency,'
+      
+        '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
+        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
+      '         a.pemb_dpp,a.pemb_ppn,a.status,a.grandtotal'#9#9#9)
+    MasterSource = DsPo
+    MasterFields = 'po_no'
+    DetailFields = 'po_no'
+    Active = True
+    Left = 384
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'po_no'
+        ParamType = ptInput
+        Value = 'PO/2024/VII/0003/'
+      end>
+  end
+  object DsPo: TDataSource
+    DataSet = QPo
+    Left = 336
+    Top = 72
+  end
+  object QPo: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      ''
+      
+        'select '#39'PO'#39' as modul,A.po_no,b.supplier_name as Ket,a.po_date,a.' +
+        'delivery_date,t.harga,'#39#39' no_result,'#39#39' ket '
+      
+        ',a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from' +
+        ' purchase.t_po a INNER JOIN t_supplier b on a.supplier_code=b.su' +
+        'pplier_code '
+      
+        'INNER JOIN LATERAL(SELECT sum(subtotal)as harga,po_no from purch' +
+        'ase.t_podetail WHERE po_no=a.po_no GROUP BY po_no) as t on 1=1'
+      
+        'WHERE a."approval_status"=0 and a."status"='#39'1'#39' order by a.po_dat' +
+        'e,a.po_no asc'
+      ''
+      ''
+      ''
+      
+        '-- select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN' +
+        ' a."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
+      
+        '-- END) AS status_app, (case WHEN a.status='#39'1'#39' THEN '#39'AKTIF'#39' WHEN' +
+        ' a.status='#39'0'#39' THEN '#39'SELESAI'#39
+      '-- END) AS status,'
+      
+        '-- a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn' +
+        ',a.order_no,a.valas_value,a.po_type,'
+      
+        '-- a.valas,a.remarks,a.type,a.status,a.transportation_type,a.div' +
+        'ision_code,a.delivery_date,B.supplier_name,a.trans_category,'
+      
+        '-- a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name' +
+        ',a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.' +
+        'sbu_code,a.correction_status,a.um_status,a.um_value,'
+      '-- a.um_account_code,a.as_status,um_no'
+      '-- from purchase.t_po A '
+      '-- Inner join t_supplier B on A.supplier_code=B.supplier_code'
+      '-- INNER JOIN t_wh c on a.wh_code=c.wh_code'
+      '-- WHERE a."approval_status"='#39'0'#39
+      '-- order by A.id desc')
+    Active = True
+    Left = 336
+    Top = 24
+  end
+  object DSDetailspb: TDataSource
+    DataSet = Qdetailspb
+    Left = 483
+    Top = 72
+  end
+  object Qdetailspb: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      '-- SELECT a.*,b.item_name from purchase.t_spb_det a inner join'
+      
+        '-- warehouse.t_item_stock b on b.item_stock_code=a.item_stock_co' +
+        'de'
+      
+        'SELECT a.spb_no,a.po_no,a.status,a.item_stock_code,a.qty,a.unit,' +
+        'a.wh_code,wh_name,b.item_name  from purchase.t_spb_det a '
+      
+        'inner join warehouse.t_item_stock b on b.item_stock_code=a.item_' +
+        'stock_code'
+      'inner join t_wh c on a.wh_code=c.wh_code')
+    MasterSource = DsSPB
+    Active = True
+    Left = 484
+    Top = 24
+  end
+  object QSPB: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      ' '
+      
+        ' Select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a' +
+        '."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
+      
+        'END) AS status_app,A.*, B.supplier_name from purchase.t_spb a in' +
+        'ner join t_supplier b on A.supplier_code=b.supplier_code'
+      'where a."approval_status"=0 '
+      'order by spb_no desc'
+      '')
+    Active = True
+    Left = 440
+    Top = 24
+  end
+  object DsSPB: TDataSource
+    DataSet = QSPB
+    Left = 440
+    Top = 72
+  end
+end

@@ -48,7 +48,8 @@ implementation
 {$R *.dfm}
 
 uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew_ReturnPembelian,
-  UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber;
+  UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber,
+  UDataPengeluaranKasBank;
 
 procedure TFSearch_Supplier.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -77,6 +78,11 @@ begin
     begin
       FNewDeliveryOrder.edKodeVendorTransMuatan.Text:=QSupplier['supplier_code'];
       FNewDeliveryOrder.edNamaVendorTransMuatan.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='keluar_kas_bank' then
+    begin
+      FDataPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];
+      FDataPengeluaranKasBank.edNama_Supplier.Text:=QSupplier['supplier_name'];
     end;
     if vcall='delivery_order_reimburst' then
     begin

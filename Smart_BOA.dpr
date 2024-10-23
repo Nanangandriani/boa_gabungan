@@ -169,8 +169,30 @@ uses
   URincianPot_Penjualan in 'URincianPot_Penjualan.pas' {FRincianPot_Penjualan},
   UMovingDPP in 'UMovingDPP.pas' {FMovingDPP},
   UDaftarPenagihanPiutang in 'UDaftarPenagihanPiutang.pas' {FDaftarPenagihanPiutang},
+<<<<<<< Updated upstream
   UListItempo in 'UListItempo.pas' {Flistitempo},
   UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan};
+=======
+  Unew_spb in 'Unew_spb.pas' {FNew_SPB},
+  USearch_Po in 'USearch_Po.pas' {Fsearch_po},
+  USearch_Purchase_Order in 'USearch_Purchase_Order.pas' {FUSearch_PO},
+  UNew_TerimaMaterial in 'UNew_TerimaMaterial.pas' {FNew_TerimaMaterial},
+  UTerima_Material in 'UTerima_Material.pas' {FTerima_Material},
+  USearch_TerimaBarang in 'USearch_TerimaBarang.pas' {FSearch_TerimaBarang},
+  Usearch_MatTerima in 'Usearch_MatTerima.pas' {FSearch_Matterima},
+  USearch_ItemRetur in 'USearch_ItemRetur.pas' {FSearch_MaterialRetur},
+  u_rencana_lunas_hutang in 'u_rencana_lunas_hutang.pas' {FList_Rencana_Lunas_Hutang},
+  udafajuankeluarkasbank in 'udafajuankeluarkasbank.pas' {Fdafajuankeluarkasbank},
+  u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
+  u_rencana_lunas_hutang_input in 'u_rencana_lunas_hutang_input.pas' {FRencana_Lunas_Hutang},
+  UListItempo in 'UListItempo.pas' {Flistitempo},
+  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
+  UApproval_Pembelian in 'UApproval_Pembelian.pas' {FListPengajuanApprovePembelian},
+  U_rencana_lunas_hutang_pengajuan in 'U_rencana_lunas_hutang_pengajuan.pas' {FRencana_Pengajuan_Pelunasan_Hutang},
+  U_keluarkasbank_ajuan in 'U_keluarkasbank_ajuan.pas' {FKeluarKasBank_Ajuan},
+  U_daftar_hutang in 'U_daftar_hutang.pas' {FDaftar_Hutang},
+  UDataPengeluaranKasBank in 'UDataPengeluaranKasBank.pas' {FDataPengeluaranKasBank};
+>>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -244,7 +266,29 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFRincianPot_Penjualan, FRincianPot_Penjualan);
   Application.CreateForm(TFMovingDPP, FMovingDPP);
   Application.CreateForm(TFDaftarPenagihanPiutang, FDaftarPenagihanPiutang);
+<<<<<<< Updated upstream
   //  Application.CreateForm(TFListProduk, FListProduk);
+=======
+  Application.CreateForm(TFNew_SPB, FNew_SPB);
+  Application.CreateForm(TFUSearch_PO, FUSearch_PO);
+  Application.CreateForm(TFNew_TerimaMaterial, FNew_TerimaMaterial);
+  Application.CreateForm(TFTerima_Material, FTerima_Material);
+  Application.CreateForm(TFSearch_TerimaBarang, FSearch_TerimaBarang);
+  Application.CreateForm(TFSearch_Matterima, FSearch_Matterima);
+  Application.CreateForm(TFSearch_MaterialRetur, FSearch_MaterialRetur);
+  Application.CreateForm(TFList_Rencana_Lunas_Hutang, FList_Rencana_Lunas_Hutang);
+  Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
+  Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
+  Application.CreateForm(TFRencana_Lunas_Hutang, FRencana_Lunas_Hutang);
+  Application.CreateForm(TFDaftar_Hutang, FDaftar_Hutang);
+  Application.CreateForm(TFRencana_Pengajuan_Pelunasan_Hutang, FRencana_Pengajuan_Pelunasan_Hutang);
+  Application.CreateForm(TFKeluarKasBank_Ajuan, FKeluarKasBank_Ajuan);
+  Application.CreateForm(TFRencana_Pengajuan_Pelunasan_Hutang, FRencana_Pengajuan_Pelunasan_Hutang);
+  Application.CreateForm(TFKeluarKasBank_Ajuan, FKeluarKasBank_Ajuan);
+  Application.CreateForm(TFDaftar_Hutang, FDaftar_Hutang);
+  Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
+  //Application.CreateForm(TFListProduk, FListProduk);
+>>>>>>> Stashed changes
   Application.CreateForm(TFInput_Produk, FInput_Produk);
  // Application.CreateForm(TFListKonvProduk, FListKonvProduk);
   Application.CreateForm(TFNewKonv_produk, FNewKonv_produk);
@@ -257,6 +301,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Additional, FNew_Additional);
   Application.CreateForm(TFNew_Kategori_Gudang, FNew_Kategori_Gudang);
   Application.CreateForm(TFImportnocek, FImportnocek);
+<<<<<<< Updated upstream
+=======
+  //Application.CreateForm(TFlistitempo, Flistitempo);
+>>>>>>> Stashed changes
   Application.CreateForm(TFlistmaterialstok, Flistmaterialstok);
   Application.CreateForm(TFReturnPembelian, FReturnPembelian);
   Application.CreateForm(TFNew_ReturnPemb, FNew_ReturnPemb);
@@ -281,6 +329,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);
+<<<<<<< Updated upstream
+=======
+  //Application.CreateForm(TFListPerusahaan, FListPerusahaan);
+>>>>>>> Stashed changes
   Application.CreateForm(TFNewPerusahaan, FNewPerusahaan);
   Application.CreateForm(TFDept, FDept);
   Application.CreateForm(TFJabatan, FJabatan);

@@ -1,4 +1,4 @@
-object frmrencanalunashutang: Tfrmrencanalunashutang
+object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   Left = 0
   Top = 0
   Caption = 'Rencana Pelunasan Hutang'
@@ -18,6 +18,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
     Width = 857
     Height = 259
     Align = alClient
+    DataSource = DSRencana
     DynProps = <>
     FooterRowCount = 1
     SumList.Active = True
@@ -152,8 +153,8 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
     Align = alBottom
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = -8
-    ExplicitWidth = 916
+    ExplicitTop = 475
+    ExplicitWidth = 851
     object Btutup: TRzBitBtn
       Left = 756
       Top = 1
@@ -162,6 +163,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
       Align = alRight
       Caption = 'Tutup'
       TabOrder = 0
+      OnClick = BtutupClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -214,7 +216,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 815
+      ExplicitLeft = 750
     end
     object BHapus: TRzBitBtn
       Left = 556
@@ -276,7 +278,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 615
+      ExplicitLeft = 550
     end
     object BSimpan: TRzBitBtn
       Left = 656
@@ -338,7 +340,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 715
+      ExplicitLeft = 650
     end
   end
   object Panel2: TPanel
@@ -349,6 +351,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
     Align = alTop
     ParentBackground = False
     TabOrder = 2
+    ExplicitWidth = 851
     object Label2: TLabel
       Left = 25
       Top = 14
@@ -430,7 +433,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
       Left = 450
       Top = 127
       Width = 45
-      Height = 18
+      Height = 17
       Caption = 'Tgl. Cek'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -691,6 +694,7 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
       Height = 34
       Caption = 'Daftar Hutang'
       TabOrder = 10
+      OnClick = BdaftarClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000330B0000330B00000001000000000000000000003300
@@ -790,5 +794,85 @@ object frmrencanalunashutang: Tfrmrencanalunashutang
       TabOrder = 13
       Visible = False
     end
+  end
+  object MemRencana: TMemTableEh
+    Params = <>
+    Left = 712
+    Top = 288
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object kd_sup: TMTStringDataFieldEh
+          FieldName = 'kd_sup'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object noinv: TMTStringDataFieldEh
+          FieldName = 'noinv'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nofaktur: TMTStringDataFieldEh
+          FieldName = 'nofaktur'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object tglfaktur: TMTDateTimeDataFieldEh
+          FieldName = 'tglfaktur'
+          DateTimeDataType = fdtDateEh
+          DisplayWidth = 20
+        end
+        object jumlah: TMTNumericDataFieldEh
+          FieldName = 'jumlah'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object npph: TMTNumericDataFieldEh
+          FieldName = 'npph'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object akun_pph: TMTStringDataFieldEh
+          FieldName = 'akun_pph'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object kurs: TMTStringDataFieldEh
+          FieldName = 'kurs'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object jumlah_dolar: TMTNumericDataFieldEh
+          FieldName = 'jumlah_dolar'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object nosj: TMTStringDataFieldEh
+          FieldName = 'nosj'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nm_akun_pph: TMTStringDataFieldEh
+          FieldName = 'nm_akun_pph'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DSRencana: TDataSource
+    DataSet = MemRencana
+    Left = 760
+    Top = 288
   end
 end

@@ -887,11 +887,11 @@ begin
         MessageDlg('Data Faktur Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeTrans.SetFocus;
       end
-      else if edNorekening.text='' then
+      {else if edNorekening.text='' then
       begin
         MessageDlg('Nomor Rekening Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
         edNorekening.SetFocus;
-      end
+      end}
       else if FDataMasterAkunTrans.Status = 0 then
       begin
       id_modul:=edKodeModul.Text;

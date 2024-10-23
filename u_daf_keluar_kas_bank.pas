@@ -62,6 +62,7 @@ type
     DateTimePicker2: TDateTimePicker;
     BCari: TRzBitBtn;
     DateTimePicker1: TDateTimePicker;
+    procedure ActBaruExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,6 +76,13 @@ implementation
 
 {$R *.dfm}
 
+uses UDataPengeluaranKasBank;
+
+
+procedure TFdaf_pengeluaran_kas_bank.ActBaruExecute(Sender: TObject);
+begin
+   FDataPengeluaranKasBank.Show;
+end;
 
 initialization
 RegisterClass(TFdaf_pengeluaran_kas_bank);
