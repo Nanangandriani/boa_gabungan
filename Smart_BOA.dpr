@@ -37,7 +37,6 @@ uses
   UNewFakturPajak in 'UNewFakturPajak.pas' {Finput_faktur_pajak},
   UListSupplier in 'UListSupplier.pas' {FListSupplier},
   UNew_Supplier in 'UNew_Supplier.pas' {FNew_Supplier},
-  UListPerusahaan in 'UListPerusahaan.pas' {FListPerusahaan},
   UNew_Perusahaan in 'UNew_Perusahaan.pas' {FNewPerusahaan},
   UPenomoran in 'UPenomoran.pas' {FPenomoran},
   UNew_Penomoran in 'UNew_Penomoran.pas' {FNew_Penomoran},
@@ -169,7 +168,7 @@ uses
   UNew_KontrakKerjasama in 'UNew_KontrakKerjasama.pas' {FNewKontrak_ks},
   UUang_Muka_Pembelian in 'UUang_Muka_Pembelian.pas' {FUang_Muka_Pembelian},
   UNew_Pembelian in 'UNew_Pembelian.pas' {FNew_Pembelian},
-  UKontrakKerjasama in 'UKontrakKerjasama.pas' {FKontrakkerjasama};
+  UKontrakKerjasama in 'UKontrakKerjasama.pas' {FKontrakkerjasama},
   UListItempo in 'UListItempo.pas' {Flistitempo},
   Unew_spb in 'Unew_spb.pas' {FNew_SPB},
   USearch_Po in 'USearch_Po.pas' {Fsearch_po},

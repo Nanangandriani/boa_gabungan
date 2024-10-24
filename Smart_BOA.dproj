@@ -236,10 +236,6 @@
             <Form>FNew_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UNew_Perusahaan.pas">
             <Form>FNewPerusahaan</Form>
             <FormType>dfm</FormType>
@@ -696,13 +692,6 @@
             <Form>FDaftarRencanaLunasPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
-        <DCCReference Include="UListKolektor.pas">
-            <Form>FListKolektor</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-=======
->>>>>>> Stashed changes
         <DCCReference Include="UDataProspekPelanggan.pas">
             <Form>FDataProspekPelanggan</Form>
             <FormType>dfm</FormType>
@@ -739,13 +728,6 @@
             <Form>FDaftarPenagihanPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListItempo.pas">
-            <Form>Flistitempo</Form>
-        </DCCReference>
-<<<<<<< Updated upstream
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
-        </DCCReference>
         <DCCReference Include="UInput_um.pas">
             <Form>FNew_UM_Pembelian</Form>
             <FormType>dfm</FormType>
@@ -766,8 +748,65 @@
             <Form>FKontrakkerjasama</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-=======
->>>>>>> Stashed changes
+        <DCCReference Include="UListItempo.pas">
+            <Form>Flistitempo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unew_spb.pas">
+            <Form>FNew_SPB</Form>
+        </DCCReference>
+        <DCCReference Include="USearch_Po.pas">
+            <Form>Fsearch_po</Form>
+        </DCCReference>
+        <DCCReference Include="USearch_Purchase_Order.pas">
+            <Form>FUSearch_PO</Form>
+        </DCCReference>
+        <DCCReference Include="UNew_TerimaMaterial.pas">
+            <Form>FNew_TerimaMaterial</Form>
+        </DCCReference>
+        <DCCReference Include="UTerima_Material.pas">
+            <Form>FTerima_Material</Form>
+        </DCCReference>
+        <DCCReference Include="USearch_TerimaBarang.pas">
+            <Form>FSearch_TerimaBarang</Form>
+        </DCCReference>
+        <DCCReference Include="Usearch_MatTerima.pas">
+            <Form>FSearch_Matterima</Form>
+        </DCCReference>
+        <DCCReference Include="USearch_ItemRetur.pas">
+            <Form>FSearch_MaterialRetur</Form>
+        </DCCReference>
+        <DCCReference Include="u_rencana_lunas_hutang.pas">
+            <Form>FList_Rencana_Lunas_Hutang</Form>
+        </DCCReference>
+        <DCCReference Include="udafajuankeluarkasbank.pas">
+            <Form>Fdafajuankeluarkasbank</Form>
+        </DCCReference>
+        <DCCReference Include="u_daf_keluar_kas_bank.pas">
+            <Form>Fdaf_pengeluaran_kas_bank</Form>
+        </DCCReference>
+        <DCCReference Include="u_rencana_lunas_hutang_input.pas">
+            <Form>FRencana_Lunas_Hutang</Form>
+        </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UApproval_Pembelian.pas">
+            <Form>FListPengajuanApprovePembelian</Form>
+        </DCCReference>
+        <DCCReference Include="U_rencana_lunas_hutang_pengajuan.pas">
+            <Form>FRencana_Pengajuan_Pelunasan_Hutang</Form>
+        </DCCReference>
+        <DCCReference Include="U_keluarkasbank_ajuan.pas">
+            <Form>FKeluarKasBank_Ajuan</Form>
+        </DCCReference>
+        <DCCReference Include="U_daftar_hutang.pas">
+            <Form>FDaftar_Hutang</Form>
+        </DCCReference>
+        <DCCReference Include="UDataPengeluaranKasBank.pas">
+            <Form>FDataPengeluaranKasBank</Form>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -97,7 +97,6 @@ type
     procedure DBGridTagihanColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure BBatalClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure DBGridAkunColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -108,6 +107,7 @@ type
     procedure DBGridAkunColExit(Sender: TObject);
     procedure edKursChange(Sender: TObject);
     procedure dtTransChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -694,6 +694,10 @@ begin
   MemKeterangan.Clear;
   MemDetailAkun.Active:=true;
   MemDetailPiutang.Active:=true;
+  edKodeSumberTagihan.Clear;
+  edNMSumberTagihan.Clear;
+  edKodeJenisBayar.Clear;
+  edNMJenisBayar.Clear;
 
 end;
 
@@ -873,49 +877,9 @@ end;
 
 procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
-  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
-  begin
-    Panel5.Visible:=false;
-    gbDataPiutang.Visible:=false;
-    gbDataBank.Visible:=false;
-    TabDetailFaktur.TabVisible:=false;
-    //Panel1.Height:=230;
-    lbSumberTagihan.Visible:=true;
-    lbSumberTagihann.Visible:=true;
-    lbJenisBayar.Visible:=true;
-    lbJenisBayarr.Visible:=true;
-    edKodeSumberTagihan.Visible:=false;
-    edNMSumberTagihan.Visible:=false;
-    edKodeJenisBayar.Visible:=false;
-    edNMJenisBayar.Visible:=false;
-    edKodeSumberTagihan.Clear;
-    edNMSumberTagihan.Clear;
-    edKodeJenisBayar.Clear;
-    edNMJenisBayar.Clear;
-  end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
-  begin
-    Panel5.Visible:=false;
-    gbDataPiutang.Visible:=false;
-    gbDataBank.Visible:=false;
-    TabDetailFaktur.TabVisible:=false;
-    Label15.Visible:=false;
-    Label16.Visible:=false;
-    edKurs.Visible:=false;
-    //Panel1.Height:=230;
-    lbSumberTagihan.Visible:=false;
-    lbSumberTagihann.Visible:=false;
-    lbJenisBayar.Visible:=false;
-    lbJenisBayarr.Visible:=false;
-    edKodeSumberTagihan.Visible:=true;
-    edNMSumberTagihan.Visible:=true;
-    edKodeJenisBayar.Visible:=true;
-    edNMJenisBayar.Visible:=true;
-    edKodeSumberTagihan.Clear;
-    edNMSumberTagihan.Clear;
-    edKodeJenisBayar.Clear;
-    edNMJenisBayar.Clear;
-  end;
+  Panel5.Visible:=false;
+  gbDataPiutang.Visible:=false;
+  TabDetailFaktur.TabVisible:=false;
 end;
 
 end.

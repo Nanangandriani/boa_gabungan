@@ -751,6 +751,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 4
+        Visible = False
       end
       object edKodeJenisBayar: TEdit
         Left = 555
@@ -760,6 +761,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 5
+        Visible = False
       end
     end
   end

@@ -98,6 +98,38 @@ begin
     FDataPenerimaanBank.gbDataBank.Visible:=False;
   end;
 
+
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      //ShowMessage('0');
+      //edKodeSumberTagihan.Visible:=true;
+      //edKodeJenisBayar.Visible:=true;
+      lbSumberTagihan.Visible:=true;
+      lbSumberTagihann.Visible:=true;
+      lbJenisBayar.Visible:=true;
+      lbJenisBayarr.Visible:=true;
+      edNMSumberTagihan.Visible:=true;
+      edNMJenisBayar.Visible:=true;
+    end;
+  end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      //ShowMessage('1');
+      //edKodeSumberTagihan.Visible:=false;
+      //edKodeJenisBayar.Visible:=false;
+      lbSumberTagihan.Visible:=false;
+      lbSumberTagihann.Visible:=false;
+      lbJenisBayar.Visible:=false;
+      lbJenisBayarr.Visible:=false;
+      edNMSumberTagihan.Visible:=false;
+      edNMJenisBayar.Visible:=false;
+    end;
+  end;
+
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
   begin
     with FDataPenerimaanBank do
@@ -105,20 +137,6 @@ begin
       Panel5.Visible:=true;
       gbDataPiutang.Visible:=false;
       TabDetailFaktur.TabVisible:=false;
-      //Panel1.Height:=230;
-      //Panel1.Height:=340;
-      lbSumberTagihan.Visible:=false;
-      lbSumberTagihann.Visible:=false;
-      lbJenisBayar.Visible:=false;
-      lbJenisBayarr.Visible:=false;
-      edKodeSumberTagihan.Visible:=false;
-      edNMSumberTagihan.Visible:=false;
-      edKodeJenisBayar.Visible:=false;
-      edNMJenisBayar.Visible:=false;
-      edKodeSumberTagihan.Clear;
-      edNMSumberTagihan.Clear;
-      edKodeJenisBayar.Clear;
-      edNMJenisBayar.Clear;
     end;
   end;
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
@@ -128,30 +146,17 @@ begin
       Panel5.Visible:=true;
       gbDataPiutang.Visible:=true;
       TabDetailFaktur.TabVisible:=true;
-      //Panel1.Height:=340;
-      lbSumberTagihan.Visible:=true;
-      lbSumberTagihann.Visible:=true;
-      lbJenisBayar.Visible:=true;
-      lbJenisBayarr.Visible:=true;
-      edKodeSumberTagihan.Visible:=false;
-      edNMSumberTagihan.Visible:=true;
-      edKodeJenisBayar.Visible:=false;
-      edNMJenisBayar.Visible:=true;
-      edKodeSumberTagihan.Clear;
-      edNMSumberTagihan.Clear;
-      edKodeJenisBayar.Clear;
-      edNMJenisBayar.Clear;
     end;
 
     if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
       FDataPenerimaanBank.Panel5.Visible:=false
     else
       FDataPenerimaanBank.Panel5.Visible:=true;
-
+  end;
 
 
   end;
-  end;
+
   if vcall='m_mata_uang' then
   begin
     FDataPenerimaanBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
