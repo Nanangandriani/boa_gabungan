@@ -758,7 +758,7 @@ begin
     FDaftarPenagihanPiutang.tglTagih:=dtPeriode1.Date;
     FDaftarPenagihanPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
     FDaftarPenagihanPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
-    FDaftarPenagihanPiutang.dtPeriode1.Date:=dtPeriode1.Date;
+    FDaftarPenagihanPiutang.dtTagih.Date:=dtPeriode1.Date;
     FDaftarPenagihanPiutang.RefreshGrid;
     FDaftarPenagihanPiutang.show;
     end;
