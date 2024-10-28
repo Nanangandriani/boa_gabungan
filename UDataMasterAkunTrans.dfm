@@ -18,10 +18,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Width = 781
     Height = 556
     Hint = ''
-    ActivePage = TabBank
+    ActivePage = TabPenjualan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 0
     ExplicitWidth = 775
     ExplicitHeight = 547
@@ -370,28 +370,28 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         TabOrder = 0
         object Label30: TLabel
           Left = 178
-          Top = 236
+          Top = 246
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label36: TLabel
           Left = 178
-          Top = 265
+          Top = 275
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label35: TLabel
           Left = 28
-          Top = 264
+          Top = 274
           Width = 124
           Height = 15
           Caption = 'Akun Piutang Lain-Lain'
         end
         object Label29: TLabel
           Left = 28
-          Top = 236
+          Top = 246
           Width = 72
           Height = 15
           Caption = 'Akun Piutang'
@@ -466,9 +466,58 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Height = 15
           Caption = 'Kode Initial'
         end
+        object Label50: TLabel
+          Left = 178
+          Top = 390
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label51: TLabel
+          Left = 28
+          Top = 390
+          Width = 56
+          Height = 15
+          Caption = 'Jenis Pajak'
+        end
+        object Label52: TLabel
+          Left = 28
+          Top = 358
+          Width = 35
+          Height = 15
+          Caption = 'Persen'
+        end
+        object Label53: TLabel
+          Left = 178
+          Top = 358
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label56: TLabel
+          Left = 239
+          Top = 358
+          Width = 10
+          Height = 15
+          Caption = '%'
+        end
+        object Label57: TLabel
+          Left = 29
+          Top = 419
+          Width = 54
+          Height = 15
+          Caption = 'Akun PPN'
+        end
+        object Label58: TLabel
+          Left = 179
+          Top = 419
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
         object edAkunPiutangLainLain: TRzButtonEdit
           Left = 193
-          Top = 261
+          Top = 271
           Width = 185
           Height = 23
           Text = ''
@@ -479,7 +528,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         end
         object edAkunPiutang: TRzButtonEdit
           Left = 193
-          Top = 232
+          Top = 242
           Width = 185
           Height = 23
           Text = ''
@@ -490,7 +539,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         end
         object edNamaPiutang: TEdit
           Left = 385
-          Top = 232
+          Top = 242
           Width = 349
           Height = 23
           ReadOnly = True
@@ -498,7 +547,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         end
         object edNamaPiutangLain: TEdit
           Left = 385
-          Top = 261
+          Top = 271
           Width = 349
           Height = 23
           ReadOnly = True
@@ -657,7 +706,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Left = 193
           Top = 138
           Width = 261
-          Height = 89
+          Height = 98
           TabOrder = 7
         end
         object edNamaTransJual: TEdit
@@ -685,6 +734,94 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           CharCase = ecUpperCase
           MaxLength = 5
           TabOrder = 10
+        end
+        object rgPPH: TRzRadioGroup
+          Left = 460
+          Top = 138
+          Width = 186
+          Height = 46
+          Caption = 'Default PPH'
+          Color = 15987699
+          Columns = 2
+          ItemIndex = 1
+          Items.Strings = (
+            'Tidak'
+            'Ya')
+          TabOrder = 11
+        end
+        object rgPPN: TRzRadioGroup
+          Left = 28
+          Top = 296
+          Width = 186
+          Height = 46
+          Caption = 'Default PPN'
+          Color = 15987699
+          Columns = 2
+          ItemIndex = 1
+          Items.Strings = (
+            'Tidak'
+            'Ya')
+          TabOrder = 12
+          OnClick = rgPPNClick
+        end
+        object rgPotongan: TRzRadioGroup
+          Left = 460
+          Top = 190
+          Width = 186
+          Height = 46
+          Caption = 'System Potongan Klasifikasi'
+          Color = 15987699
+          Columns = 2
+          ItemIndex = 1
+          Items.Strings = (
+            'Tidak'
+            'Ya')
+          TabOrder = 13
+        end
+        object edAkunJenisTax: TRzButtonEdit
+          Left = 193
+          Top = 386
+          Width = 185
+          Height = 23
+          Text = ''
+          TabOrder = 14
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edAkunJenisTaxButtonClick
+        end
+        object edNamaJenisTax: TEdit
+          Left = 385
+          Top = 386
+          Width = 349
+          Height = 23
+          ReadOnly = True
+          TabOrder = 15
+        end
+        object edPersenPPNJual: TEdit
+          Left = 193
+          Top = 355
+          Width = 40
+          Height = 23
+          TabOrder = 16
+        end
+        object edAkunPPNJual: TRzButtonEdit
+          Left = 194
+          Top = 415
+          Width = 185
+          Height = 23
+          Text = ''
+          TabOrder = 17
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edAkunPPNJualButtonClick
+        end
+        object edNamaPPNJual: TEdit
+          Left = 386
+          Top = 415
+          Width = 349
+          Height = 23
+          ReadOnly = True
+          TabOrder = 18
         end
       end
     end
@@ -1093,7 +1230,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
           ExplicitLeft = 620
-          ExplicitTop = 3
         end
       end
     end
@@ -1445,13 +1581,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   end
   object DSDetail: TDataSource
     DataSet = MemDetail
-    Left = 16
-    Top = 438
+    Left = 456
+    Top = 86
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 88
-    Top = 438
+    Left = 528
+    Top = 86
     object MemDetailkd_akun: TStringField
       FieldName = 'kd_akun'
       Size = 50
@@ -1489,13 +1625,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   end
   object DSDetailKas: TDataSource
     DataSet = MemDetailKas
-    Left = 176
-    Top = 438
+    Left = 616
+    Top = 86
   end
   object MemDetailKas: TMemTableEh
     Params = <>
-    Left = 248
-    Top = 438
+    Left = 688
+    Top = 86
     object StringField1: TStringField
       FieldName = 'kd_akun'
       Size = 50

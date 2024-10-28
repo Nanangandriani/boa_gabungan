@@ -195,6 +195,16 @@ begin
     end;
     end;
   end;
+  if vcall='setting_penjualan_tax' then
+  begin
+    FDataMasterAkunTrans.edAkunJenisTax.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaJenisTax.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='set_ak_ppn_jual' then
+  begin
+    FDataMasterAkunTrans.edAkunPPNJual.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaPPNJual.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='set_ak_trans_jual' then
   begin
     FDataMasterAkunTrans.edAkunPiutang.Text:=MemMasterData['KD_MASTER'];

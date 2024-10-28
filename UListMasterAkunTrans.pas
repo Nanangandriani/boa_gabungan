@@ -89,7 +89,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataMasterAkunTrans, UDataModule;
+uses UDataMasterAkunTrans, UDataModule, UMy_Function;
 
 procedure TFListMasterAkunTrans.ActBaruExecute(Sender: TObject);
 begin
@@ -204,6 +204,14 @@ begin
     begin
       with FDataMasterAkunTrans do
       begin
+        rgPPH.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual'' '));
+        rgPPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_ppn_jual'' '));
+        rgPotongan.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' '));
+        edPersenPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' ');
+        edAkunJenisTax.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
+        edNamaJenisTax.Text:=SelectRow('select name from t_parameter a LEFT JOIN t_sales_transaction_source b ON a.value_parameter=b.code where key_parameter=''default_kode_tax'' ');
+        edAkunPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_jual'' ');
+        edNamaPPNJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_jual'' ');
         edKodeModulJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
         edNamaModulJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
         edKodeTransJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;

@@ -540,11 +540,21 @@ begin
   end else begin
     btMasterSumber.Visible:=true;
   end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''jual_klasifikasi'' ')<> 'ya' then
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' ')<> '1' then
   begin
     btHitungPotongan.Visible:=false;
   end else begin
     btHitungPotongan.Visible:=true;
+  end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual'' ')= '0' then
+  begin
+    DBGridDetail.Columns[11].Visible:=false;
+    DBGridDetail.Columns[12].Visible:=false;
+    DBGridDetail.Columns[13].Visible:=false;
+  end else begin
+    DBGridDetail.Columns[11].Visible:=true;
+    DBGridDetail.Columns[12].Visible:=true;
+    DBGridDetail.Columns[13].Visible:=true;
   end;
 end;
 

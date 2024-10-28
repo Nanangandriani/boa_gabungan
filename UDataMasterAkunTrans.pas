@@ -137,6 +137,21 @@ type
     StringField1: TStringField;
     StringField2: TStringField;
     StringField3: TStringField;
+    rgPPH: TRzRadioGroup;
+    rgPPN: TRzRadioGroup;
+    rgPotongan: TRzRadioGroup;
+    Label50: TLabel;
+    Label51: TLabel;
+    edAkunJenisTax: TRzButtonEdit;
+    edNamaJenisTax: TEdit;
+    Label52: TLabel;
+    Label53: TLabel;
+    edPersenPPNJual: TEdit;
+    Label56: TLabel;
+    Label57: TLabel;
+    Label58: TLabel;
+    edAkunPPNJual: TRzButtonEdit;
+    edNamaPPNJual: TEdit;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -158,6 +173,9 @@ type
     procedure btClose_KasClick(Sender: TObject);
     procedure btSave_JualClick(Sender: TObject);
     procedure btSave_KasClick(Sender: TObject);
+    procedure edAkunJenisTaxButtonClick(Sender: TObject);
+    procedure edAkunPPNJualButtonClick(Sender: TObject);
+    procedure rgPPNClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -180,6 +198,7 @@ type
     procedure RefreshPenjualan;
     procedure RefreshGridBank;
     procedure RefreshGridKas;
+    procedure UpdateParameterJual;
   end;
 
 var
@@ -192,6 +211,80 @@ implementation
 uses UCari_DaftarPerk, UMasterData, UDataModule, UHomeLogin,
   UListMasterAkunTrans;
 
+procedure TFDataMasterAkunTrans.UpdateParameterJual;
+begin
+  with dm.Qtemp do //Default Status Potongan
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(IntToStr(rgPotongan.ItemIndex))+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('stat_klasifikasi_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Status PPH
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(IntToStr(rgPPH.ItemIndex))+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('stat_pph_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Status PPN
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(IntToStr(rgPPN.ItemIndex))+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('stat_ppn_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Akun PPN
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(edAkunPPNJual.Text)+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('akun_pajak_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Persen PPN
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(edPersenPPNJual.Text)+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('persen_pajak_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Jenis PPN TAX
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(edAkunJenisTax.Text)+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('default_kode_tax')+';';
+    ExecSQL;
+  end;
+end;
 
 procedure TFDataMasterAkunTrans.RefreshGridBank;
 var
@@ -302,6 +395,67 @@ begin
     end;
 end;
 
+procedure TFDataMasterAkunTrans.rgPPNClick(Sender: TObject);
+begin
+  if rgPPN.ItemIndex=0 then
+  begin
+    rgPPN.ItemIndex:=0;
+    edPersenPPNJual.Clear;
+    edAkunJenisTax.Clear;
+    edNamaJenisTax.Clear;
+    edAkunPPNJual.Clear;
+    edNamaPPNJual.Clear;
+    edPersenPPNJual.Enabled:=false;
+    edAkunJenisTax.Enabled:=false;
+    edNamaJenisTax.Enabled:=false;
+    edAkunPPNJual.Enabled:=false;
+    edNamaPPNJual.Enabled:=false;
+  end;
+  if rgPPN.ItemIndex=1 then
+  begin
+    rgPPN.ItemIndex:=1;
+    edPersenPPNJual.Clear;
+    edAkunJenisTax.Clear;
+    edNamaJenisTax.Clear;
+    edAkunPPNJual.Clear;
+    edNamaPPNJual.Clear;
+    edPersenPPNJual.Enabled:=true;
+    edAkunJenisTax.Enabled:=true;
+    edNamaJenisTax.Enabled:=true;
+    edAkunPPNJual.Enabled:=true;
+    edNamaPPNJual.Enabled:=true;
+  end;
+end;
+
+procedure TFDataMasterAkunTrans.edAkunJenisTaxButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Sumber Kode Transaksi';
+  FMasterData.vcall:='setting_penjualan_tax';
+  FMasterData.update_grid('code','name','description','t_sales_transaction_source','WHERE	deleted_at IS NULL ORDER BY code desc');
+  FMasterData.ShowModal;
+end;
+
+procedure TFDataMasterAkunTrans.edAkunPPNJualButtonClick(Sender: TObject);
+begin
+    if Length(edKodeModulJual.Text)=0 then
+    begin
+      ShowMessage('Silakan Pilih Modul..!!');
+      exit;
+    end;
+
+      FMasterData.Caption:='Master Data Perkiraan';
+      FMasterData.vcall:='set_ak_ppn_jual';
+      FMasterData.update_grid('account_code','account_name','journal_name','(SELECT a.account_code,'+
+                              ' b.account_name,c.journal_name  FROM t_ak_account_det a  '+
+                              ' LEFT JOIN t_ak_account b on a.account_code=b.code  '+
+                              ' LEFT JOIN t_ak_header c on b.header_code=c.header_code  '+
+                              ' LEFT JOIN t_ak_module d on a.module_id=d.id  '+
+                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+' '+
+                              ' GROUP BY a.account_code ,b.account_name,c.journal_name  '+
+                              ' ORDER BY a.account_code ,b.account_name,c.journal_name asc)a ','where account_code <>'''' ');
+      FMasterData.ShowModal;
+end;
+
 procedure TFDataMasterAkunTrans.btClose_BeliClick(Sender: TObject);
 begin
   Clear;
@@ -387,6 +541,7 @@ begin
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeTransJual.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
         SaveJual;
+        UpdateParameterJual;
         Dm.Koneksi.Commit;
       end;
       end
@@ -395,6 +550,7 @@ begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         UpdateJual;
+        UpdateParameterJual;
         Dm.Koneksi.Commit;
       end;
       end;
@@ -945,6 +1101,15 @@ begin
   edNamaPiutang.Clear;
   edAkunPiutangLainLain.Clear;
   edNamaPiutangLain.Clear;
+
+  rgPPH.ItemIndex:=0;
+  rgPPN.ItemIndex:=0;
+  rgPotongan.ItemIndex:=0;
+  edPersenPPNJual.Clear;
+  edAkunJenisTax.Clear;
+  edNamaJenisTax.Clear;
+  edAkunPPNJual.Clear;
+  edNamaPPNJual.Clear;
   //Bank
   edNamaModul.Clear;
   edKodeModul.Clear;
