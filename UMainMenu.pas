@@ -27,7 +27,7 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
-  dxBar, cxClasses, dxRibbon;
+  dxBar, cxClasses, dxRibbon, frxClass, frxDBSet, Data.DB, MemDS, DBAccess, Uni;
 
 type
   TFMainMenu = class(TForm)
@@ -64,6 +64,18 @@ type
     EdgeBrowser1: TEdgeBrowser;
     WebBrowser1: TWebBrowser;
     dxBarLargeButton2: TdxBarLargeButton;
+    QJurnal: TUniQuery;
+    QJurnaltrans_no: TStringField;
+    QJurnalaccount_code: TStringField;
+    QJurnalmodule_id: TSmallintField;
+    QJurnalmodule_name: TStringField;
+    QJurnalstatus_dk: TStringField;
+    QJurnalaccount_name: TStringField;
+    QJurnaldb: TFloatField;
+    QJurnalkd: TFloatField;
+    QJurnaltrans_date: TDateField;
+    frxDBDJurnal: TfrxDBDataset;
+    Report: TfrxReport;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

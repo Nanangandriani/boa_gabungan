@@ -65,6 +65,8 @@ type
     Edbln: TEdit;
     Edhr: TEdit;
     Edkd_sbu: TEdit;
+    CbCategori: TComboBox;
+    Label21: TLabel;
     procedure EdnopoButtonClick(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
@@ -76,6 +78,7 @@ type
     procedure BSimpanClick(Sender: TObject);
     procedure DtSpbChange(Sender: TObject);
     procedure BEditClick(Sender: TObject);
+    procedure Ednm_suppButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -83,6 +86,7 @@ type
     kategori_tr:string;
     procedure autonumber;
     Procedure Clear;
+    Procedure Load;
   end;
 
 var
@@ -95,13 +99,32 @@ implementation
 
 {$R *.dfm}
 
-uses USearch_Po, UMy_Function, USearch_Purchase_Order, UDataModule, UMainMenu;
+uses USearch_Po, UMy_Function, USearch_Purchase_Order, UDataModule, UMainMenu,
+  USearch_Supplier;
 
 {function Fnew_spb: TFnew_spb;
 begin
   if RealFnew_spb <> nil then Fnew_spb:= RealFnew_spb
   else  Application.CreateForm(TFnew_spb, Result);
 end;}
+
+Procedure TFNew_SPB.Load;
+begin
+  CbCategori.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_item_type order by type_id';
+    execute;
+  end;
+  dm.Qtemp.First;
+  while not Dm.Qtemp.eof do
+  begin
+    CbCategori.Items.Add(dm.Qtemp['type']);
+    dm.Qtemp.Next;
+  end;
+end;
 
 procedure TFNew_SPB.Clear;
 begin
@@ -125,32 +148,39 @@ end;
 procedure TFNew_SPB.DBGridEh2Columns1EditButtons0Click(Sender: TObject;
   var Handled: Boolean);
 begin
-    with FUSearch_PO do
-    begin
-      Show;
-      with QPo do
+  if loksbu='' then
+  begin
+      with FUSearch_PO.QPo do
       begin
-        Filtered:=false;
-        Filter:='supplier_code='+QuotedStr(Edkd_supp.Text)+' AND po_no='+QuotedStr(Ednopo.Text);
-        FilterOptions:=[];
-        Filtered:=true;
+         close;
+         sql.Clear;
+         sql.Text:='SELECT a.statusby,c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit,b.wh_code,'+
+         ' d.wh_name,c.item_name,a.supplier_code,a.sbu_code,a.approval_status from (select a.*,'+
+         ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from purchase.t_po a left join purchase.t_purchase_invoice b on a.po_no=b.ref_no)  a '+
+         ' INNER JOIN purchase.t_podetail b on a.po_no=b.po_no '+
+         ' inner join warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code  '+
+         ' INNER JOIN t_wh d on d.wh_code=a.wh_code where b.remaining_sp <>0 and a.approval_status=''1'''+
+         ' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND trans_category='+QuotedStr(CbCategori.Text)+' ';
+         Open;
       end;
-      QPo.Open;
-    end;
-
-    {with FUSearch_PO.QPo do
-    begin
-       close;
-       sql.Clear;
-       sql.Text:='SELECT c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit,b.warehouse,c.item_name,a.supplier_code,a.sbu_code, '+
-                 'a.approval_status from purchase.t_po a '+
-                 'INNER JOIN purchase.t_podetail b on a.po_no=b.po_no '+
-                 'INNER JOIN warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code '+
-                 'WHERE b.remaining_sp <>0 and a.approval_status=''1'' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' '+
-                 'AND po_no='+QuotedStr(Ednopo.Text)+' ';
-       Open;
-    end;
-    FUSearch_PO.Show; }
+  end;
+  if loksbu<>'' then
+  begin
+      with FUSearch_PO.QPo do
+      begin
+         close;
+         sql.Clear;
+         sql.Text:='SELECT a.statusby,c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit,b.wh_code,'+
+         ' d.wh_name,c.item_name,a.supplier_code,a.sbu_code,a.approval_status from (select a.*,'+
+         ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from purchase.t_po a left join purchase.t_purchase_invoice b on a.po_no=b.ref_no)  a '+
+         ' INNER JOIN purchase.t_podetail b on a.po_no=b.po_no '+
+         ' inner join warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code  '+
+         ' INNER JOIN t_wh d on d.wh_code=a.wh_code where b.remaining_sp <>0 and a.approval_status=''1'''+
+         ' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND trans_category='+QuotedStr(CbCategori.Text)+' and a.sbu_code='+QuotedStr(loksbu);
+         Open;
+      end;
+  end;
+  FUSearch_PO.Show;
 end;
 
 procedure TFNew_SPB.DtSpbChange(Sender: TObject);
@@ -330,7 +360,7 @@ begin
                   ParamByName('parth').Value:=Edth.Text;
                   ParamByName('parnopo').Value:=Ednopo.Text;
                   ParamByName('parorder_no').Value:=Edurut.Text;
-                  ParamByName('parkt').Value:=kategori_tr;
+                  ParamByName('parkt').Value:=CbCategori.Text;
         ExecSQL;
       end;
       Memdetail.First;
@@ -367,6 +397,17 @@ begin
     end;
 end;
 
+procedure TFNew_SPB.Ednm_suppButtonClick(Sender: TObject);
+begin
+  with FSearch_Supplier do
+  begin
+    QSupplier.Close;
+    QSupplier.Open;
+    Show;
+    vcall:='spb';
+  end;
+end;
+
 procedure TFNew_SPB.EdnopoButtonClick(Sender: TObject);
 begin
   with Fsearch_po do
@@ -388,6 +429,7 @@ end;
 procedure TFNew_SPB.FormShow(Sender: TObject);
 begin
    DtSpb.Date:=Now;
+   Load;
    //if Memdetail.Active=false then
       //Memdetail.Active:=true;
 end;

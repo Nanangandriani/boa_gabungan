@@ -145,6 +145,10 @@ begin
         Edalamat.Text:=QSupplier.FieldByName('address').AsString;
         Edtelp.Text:=QSupplier.FieldByName('telp').AsString;
         EdNPWP.Text:=QSupplier.FieldByName('npwp').AsString;
+        KodeHeaderPerkiraan:=QSupplier.FieldByName('header_code').AsString;
+        KodeHeaderPerkiraan_um:=QSupplier.FieldByName('header_code_um').AsString;
+        edKodePerkiraan.Text:=QSupplier.FieldByName('account_code').AsString;
+        edKodePerkiraan_um.Text:=QSupplier.FieldByName('account_code_um').AsString;
       end;
       QBarang.First;
       while not QBarang.eof do

@@ -65,10 +65,14 @@ type
     Dsterima_material: TDataSource;
     Memterima_material: TMemTableEh;
     Qterima_material: TUniQuery;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,7 +86,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pembelian, UMy_Function, UMainMenu;
+uses UNew_Pembelian, UMy_Function, UMainMenu, UHomeLogin, UDataModule;
 
 procedure TFPembelian.ActBaruExecute(Sender: TObject);
 begin
@@ -143,6 +147,12 @@ end;
 
 procedure TFPembelian.ActUpdateExecute(Sender: TObject);
 begin
+ if Memterima_material['purchase_type']='' then
+ begin
+    ShowMessage('Maaf data kosong');
+    Exit;
+ end else
+
     with FNew_Pembelian do
     begin
       Clear;
@@ -160,8 +170,6 @@ begin
     begin
       with FNew_Pembelian do
       begin
-        Edkd_sumber.Text:=Memterima_material.FieldByName('ref_code').AsString;
-        Cb_Sumber.Text:=Memterima_material.FieldByName('ref_name').AsString;
         EdPIB.Text:=Memterima_material.FieldByName('pib_no').AsString;
         EdNoSPB.Text:=Memterima_material.FieldByName('spb_no').AsString;
         //EdNo.Text:=Memterima_material.FieldByName('receive_no').AsString;
@@ -176,13 +184,15 @@ begin
         EdNm_supp.Text:=Memterima_material.FieldByName('supplier_name').AsString;
         Edkd_supp.Text:=Memterima_material.FieldByName('supplier_code').AsString;
         Edjatuhtempo.Text:=Memterima_material.FieldByName('due_date').AsString;
-        Cb_Sumber.Text:='';
+        //Cb_Sumber.Text:='';
         Cb_Ref.Text:=Memterima_material.FieldByName('ref_no').AsString;
         Edkd_akun.Text:=Memterima_material.FieldByName('account_code').AsString;
         EdNm_akun.Text:=Memterima_material.FieldByName('account_name').AsString;
         Edjenis.Text:=Memterima_material.FieldByName('purchase_type').AsString;
         Edjenispo.Text:=Memterima_material.FieldByName('po_type').AsString;
         EdValas.Text:=Memterima_material.FieldByName('valas').AsString;
+        Edkd_sumber.Text:=Memterima_material.FieldByName('ref_code').AsString;
+        Cb_Sumber.Text:=Memterima_material.FieldByName('ref_name').AsString;
         Ednilai_valas.Text:=Memterima_material.FieldByName('valas_value').AsString;
         if Memterima_material['sj_status']=0 then
            Cksj.Checked:=False
@@ -216,7 +226,8 @@ begin
         begin
           MemterimaDet.insert;
           MemterimaDet['nopo']:=QTerimaDet.FieldByName('po_no').AsString;
-          MemterimaDet['kd_material']:=QTerimaDet.FieldByName('item_stock_code').AsString;
+          MemterimaDet['kd_material']:=QTerimaDet.FieldByName('item_code').AsString;
+          MemterimaDet['item_stock_code']:=QTerimaDet.FieldByName('item_stock_code').AsString;
           MemterimaDet['nm_material']:=QTerimaDet.FieldByName('item_name').AsString;
           MemterimaDet['kd_stok']:=QTerimaDet.FieldByName('stock_code').AsString;
           MemterimaDet['qty']:=QTerimaDet.FieldByName('qty').AsString;
@@ -241,14 +252,45 @@ begin
           MemterimaDet['bea_masuk']:=QTerimaDet.FieldByName('import_duty').AsString;
           MemterimaDet['nourut']:=QTerimaDet.FieldByName('order_no').AsString;
           MemterimaDet['pemb_dpp']:=QTerimaDet.FieldByName('pemb_dpp').AsString;
-          MemterimaDet['ref_no']:=QTerimaDet.FieldByName('ref_no').AsString;
+          MemterimaDet['ref_no']:=Memterima_material.FieldByName('ref_code').AsString;
           MemterimaDet.Post;
           QTerimaDet.Next;
         end;
       end;
     end;
     //FNew_Pembelian.EdNilai_ValasChange(sender);
+    FNew_Pembelian.DBGridDetailpoColEnter(Sender);
+    FNew_Pembelian.Cb_RefSelect(sender);
+end;
 
+procedure TFPembelian.dxBarLargeButton2Click(Sender: TObject);
+begin
+   with FMainMenu.QJurnal do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(Memterima_material.FieldByName('trans_no').AsString)+'');
+     open;
+    end;
+
+
+ if FMainMenu.QJurnal.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if FMainMenu.QJurnal.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   FMainMenu.Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(FMainMenu.Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   //Report.DesignReport();
+   FMainMenu.Report.ShowReport();
+ end;
 end;
 
 procedure TFPembelian.FormShow(Sender: TObject);

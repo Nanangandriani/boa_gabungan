@@ -553,8 +553,8 @@ begin
     else
     with FNew_Pembelian do
     begin
-      Edkd_akun.Text:=DM.Qtemp['account_code'];
-      EdNm_akun.Text:=dm.Qtemp['account_name'];
+    //  Edkd_akun.Text:=DM.Qtemp['account_code']; 29-10-2024
+     // EdNm_akun.Text:=dm.Qtemp['account_name'];
     end;
     FNew_Pembelian.DBGridDetailpoColEnter(sender);
     Close;
@@ -716,8 +716,6 @@ begin
       else
       begin
         Autonumberlot;
-        FNew_Pembelian.DBGridDetailpoColEnter(sender);
-        Close;
       end;
    end;
 
@@ -775,12 +773,16 @@ begin
       else
       begin
         Autonumberlot;
-        FNew_Pembelian.DBGridDetailpoColEnter(sender);
+{        FNew_Pembelian.DBGridDetailpoColEnter(sender);
         FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
         FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
         Close;
-      end;
+ }    end;
    end;
+   FNew_Pembelian.DBGridDetailpoColEnter(sender);
+   FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+   FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
+   Close;
 end;
 
 end.

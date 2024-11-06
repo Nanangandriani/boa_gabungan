@@ -634,7 +634,7 @@ begin
       sql.Text:=' SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.total_price,'+
                 ' a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal  FROM purchase.t_coop_contract_det AS "a" '+
                 ' INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
-                ' where A.contract_no='+QuotedStr(Edno_kontrak.Text)+''+
+                ' where a.remaining_qty>0 and A.contract_no='+QuotedStr(Edno_kontrak.Text)+''+
                 ' GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit, '+
                 ' a.total_price, a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,ppn_rp,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal '+
                 ' ORDER BY item_stock_code DESC ';
@@ -647,6 +647,10 @@ begin
     Flistitempo.BEdit2.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
     Flistitempo.BEdit4.Visible:=False;
+    Flistitempo.DBGridMaterial.Visible:=true;
+    flistitempo.DBGridMaterial2.Visible:=false;
+    Flistitempo.DBGridMaterial3.Visible:=false;
+    flistitempo.DBGridMaterial4.Visible:=false;
 end;
 
 procedure TFNew_PO.Loaditem2;
@@ -1095,6 +1099,7 @@ begin
       Ednilai_curr.Text:=Dm.Qtemp['currency_value'];
       Edjenispo.Text:=Dm.Qtemp['type'];
       kategori_tr:=DM.Qtemp['category'];
+      CbKategori.Text:=DM.Qtemp['category'];
       EdCurrChange(sender);
     end;
     if EdStatus.Text<>'KONTRAK KERJASAMA' then
@@ -1114,6 +1119,7 @@ begin
       Edjenispo.Text:='LOKAL';
       //kategori_tr:='NON PRODUKSI';
       kategori_tr:=CbKategori.Text;
+      CbKategori.Text:=DM.Qtemp['category'];
       EdCurrChange(sender);
     end;
 end;
@@ -1195,10 +1201,26 @@ begin
       Cb_bon.Enabled:=true;
       Edno_kontrak.Items.Clear;
       load_no_bon;
+      load_category;
     end;
     if ref_code='DO' then
     begin
-
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='select * from sale.t_delivery_order oder by notrans';
+        Execute;
+      end;
+       Edno_kontrak.Items.Clear;
+       dm.Qtemp.First;
+       while not dm.Qtemp.Eof do
+       begin
+         //cb_bon.Items.Add(dm.Qtemp['trans_no']);
+         Edno_kontrak.Items.Add(dm.Qtemp['notrans']);
+         dm.Qtemp.Next;
+       end;
+      load_category;
     end;
     EdCurrChange(sender);
 end;
@@ -1938,7 +1960,7 @@ begin
                   ParamByName('parn_um').Value:=EdUM.Value;
                   ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
                   ParamByName('parstatus_as').Value:=status_as;
-                  ParamByName('parkt').Value:=Ed_category.Text;
+                  ParamByName('parkt').Value:=CbKategori.Text;
                   ParamByName('parst_kr').AsString:='0';
                   ParamByName('parkd_sbu').AsString:=Edsbu.Text;
                   ParamByName('parstatus').Value:='0';
@@ -1996,7 +2018,7 @@ begin
                     ParamByName('parn_um').Value:=EdUM.Value;
                     ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
                     ParamByName('parstatus_as').Value:=status_as;
-                    ParamByName('parkt').Value:=Ed_category.Text;
+                    ParamByName('parkt').Value:=CbKategori.Text;
                     ParamByName('parst_kr').AsString:='0';
                     ParamByName('parkd_sbu').AsString:=Edsbu.Text;
                     ParamByName('parum_no').Value:=NoTransUM.Text;

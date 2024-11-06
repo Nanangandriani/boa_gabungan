@@ -20,6 +20,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
+    procedure DBGridEh1AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -72,6 +75,29 @@ begin
     except;
   end;
   close;
+end;
+
+procedure TFUSearch_PO.DBGridEh1AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+  AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+  var Params: TColCellParamsEh; var Processed: Boolean);
+var
+t: String;
+begin
+//sesuaikan dengan nama field yang ingin dibuat kondisi
+//t := Column.Field.DataSet.FieldByName('tgl_jatuhtempo').AsString;
+
+ if (QPo.RecordCount<>0) then //cegah error jika tidak ada record
+ begin
+    if (qpo['statusby']=1) then //kondisi : jika tanggal jatuh tempo kurang dari 3 hari
+    begin
+    //font style
+    //Params.Font.Style := [fsBold];
+    //warna font
+    Params.Font.Color := clWindow;
+    //warna cell di grid, untuk mendapat kode warna ambil komponen sembarang klik bagian color
+    Params.Background := $004080FF;
+    end;
+end;
 end;
 
 procedure TFUSearch_PO.FormShow(Sender: TObject);

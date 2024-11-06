@@ -25,7 +25,8 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
   Data.DB, DataDriverEh, MemTableEh, frxClass, frxDBSet, MemDS, DBAccess, Uni,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBar, cxClasses,
-  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
+  RzButton, Vcl.StdCtrls, Vcl.Mask, RzEdit, Vcl.ExtCtrls;
 
 type
   TFSPB = class(TForm)
@@ -75,6 +76,12 @@ type
     BReject: TdxBarButton;
     dxBarLargeButton3: TdxBarLargeButton;
     Rpt: TfrxReport;
+    Panel1: TPanel;
+    DtMulai: TRzDateTimeEdit;
+    DtSelesai: TRzDateTimeEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    RzBitBtn1: TRzBitBtn;
     procedure ActBaruExecute(Sender: TObject);
     procedure BApproveClick(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
@@ -180,6 +187,7 @@ begin
        sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 '+
                  ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
                  ' purchase.t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
+                 ' where spb_date>='+quotedstr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+''+
                  ' order by spb_no desc';
        ExecSQL;
      end;
@@ -195,6 +203,7 @@ begin
                  ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
                  ' purchase.t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
                  ' where (sbu_code='+QuotedStr(loksbu)+' or sbu_code=''MLB'' or sbu_code='''') '+
+                 ' and (spb_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+')'+
                  ' order by spb_no desc';
        ExecSQL;
      end;
@@ -232,6 +241,7 @@ begin
         no_urut:=MemSPB.FieldByName('order_no').value;
         kategori_tr:=MemSPB.FieldByName('trans_category').value;
         EdKepada.Text:=MemSPB.FieldByName('to_at').AsString;
+        CbCategori.Text:=MemSPB.FieldByName('trans_category').AsString;
       end;
       Qdetailspb.First;
       while not Qdetailspb.Eof do

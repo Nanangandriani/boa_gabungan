@@ -131,7 +131,8 @@ begin
   idmenu:=dm.Qtemp['submenu_code'];
   //idmenu:='M11008';
   strday2:=Dtterima.Date;
-  EdNo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_item_receive','');
+  //EdNo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_item_receive','');
+  EdNo.Text:=getNourut(strday2,'purchase.t_item_receive','');
   Edurut.Text:=order_no;
 end;
 
@@ -666,12 +667,13 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.*,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um'+
-                ' ,d.account_name,c.um_value umpo FROM purchase.t_spb a inner join t_supplier b on a.supplier_code=b.supplier_code '+
-                ' Left join purchase.t_po c on a.po_no=c.po_no '+
-                ' Left join (SELECT AVG(a.pay)as um ,a.account_code,a.voucher_no,b.account_name FROM purchase.t_payment_detail_real a inner join'+
-                ' t_ak_account b on a.account_code=b.code GROUP BY a.account_code,a.voucher_no,b.account_name) as d on a.po_no=d.voucher_no '+
-                ' where spb_no='+QuotedStr(EdNoSPB.Text);
+      sql.Text:='SELECT c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name,avg(c.um_value) umpo'+
+      ' FROM purchase.t_spb a inner join t_supplier b on a.supplier_code=b.supplier_code '+
+      ' Left join (select a.*,b.spb_no from purchase.t_po A INNER JOIN purchase.t_spb_det b on a.po_no=b.po_no ) c on a.spb_no=c.spb_no '+
+      ' Left join (SELECT AVG(a.pay)as um ,a.account_code,a.voucher_no,b.account_name FROM purchase.t_payment_detail_real a inner join'+
+      ' t_ak_account b on a.account_code=b.code GROUP BY a.account_code,a.voucher_no,b.account_name) as d on a.po_no=d.voucher_no '+
+      ' where a.spb_no='+QuotedStr(EdNoSPB.Text)+''+
+      ' GROUP BY  c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name';
       ExecSQL;
     end;
     Edkd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
@@ -680,7 +682,7 @@ begin
     EdNilai_Valas.Text:=Dm.Qtemp.FieldByName('valas_value').Value;
     Edjenispo.Text:=Dm.Qtemp.FieldByName('type').AsString;
     Edjatuhtempo.Text:=Dm.Qtemp.FieldByName('due_date').AsString;
-    nopo:=Dm.Qtemp.FieldByName('po_no').AsString;
+   // nopo:=Dm.Qtemp.FieldByName('po_no').AsString;
 
     if Dm.Qtemp.FieldByName('um').Asfloat > 0 then
        EdNilai_um.Value:=Dm.Qtemp.FieldByName('um').value

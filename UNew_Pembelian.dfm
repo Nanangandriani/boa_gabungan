@@ -295,13 +295,13 @@ object FNew_Pembelian: TFNew_Pembelian
     Left = 0
     Top = 0
     Width = 1121
-    Height = 241
+    Height = 217
     Align = alTop
     TabOrder = 1
     ExplicitWidth = 1117
     object Label1: TLabel
       Left = 27
-      Top = 376
+      Top = 256
       Width = 35
       Height = 15
       Caption = 'No. SP'
@@ -322,7 +322,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label6: TLabel
       Left = 26
-      Top = 405
+      Top = 285
       Width = 79
       Height = 15
       Caption = 'Tanggal Terima'
@@ -363,8 +363,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Supplier'
     end
     object Label21: TLabel
-      Left = 27
-      Top = 347
+      Left = 394
+      Top = 187
       Width = 84
       Height = 15
       Caption = 'Jenis Pembelian'
@@ -436,7 +436,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdNoSPB: TRzComboBox
       Left = 174
-      Top = 376
+      Top = 256
       Width = 210
       Height = 23
       TabOrder = 0
@@ -453,7 +453,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Dtterima: TRzDateTimeEdit
       Left = 174
-      Top = 405
+      Top = 285
       Width = 121
       Height = 23
       EditType = etDate
@@ -522,12 +522,13 @@ object FNew_Pembelian: TFNew_Pembelian
       OnButtonClick = EdNm_suppButtonClick
     end
     object Edjenis: TRzComboBox
-      Left = 174
-      Top = 347
+      Left = 494
+      Top = 184
       Width = 210
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 10
+      OnChange = EdjenisSelect
       OnSelect = EdjenisSelect
       Items.Strings = (
         '')
@@ -608,7 +609,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edjenispo: TRzComboBox
       Left = 387
-      Top = 99
+      Top = 71
       Width = 89
       Height = 23
       CharCase = ecUpperCase
@@ -664,6 +665,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 58
       Height = 23
       TabOrder = 21
+      Visible = False
     end
     object Edbln: TEdit
       Left = 857
@@ -671,6 +673,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 58
       Height = 23
       TabOrder = 22
+      Visible = False
     end
     object Edhari: TEdit
       Left = 792
@@ -678,6 +681,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 58
       Height = 23
       TabOrder = 23
+      Visible = False
     end
     object Cb_Sumber: TRzComboBox
       Left = 175
@@ -714,55 +718,75 @@ object FNew_Pembelian: TFNew_Pembelian
       Height = 23
       TabOrder = 27
     end
+    object Edkd_akun: TRzEdit
+      Left = 713
+      Top = 184
+      Width = 101
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 28
+    end
+    object Edkd_akunum: TRzEdit
+      Left = 830
+      Top = 184
+      Width = 101
+      Height = 23
+      Text = ''
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 29
+    end
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 241
+    Top = 217
     Width = 1121
-    Height = 365
+    Height = 389
     Align = alClient
     Color = 15987699
     TabOrder = 2
     ExplicitWidth = 1117
-    ExplicitHeight = 364
+    ExplicitHeight = 388
     object Label26: TLabel
-      Left = 63
-      Top = 482
+      Left = 41
+      Top = 185
       Width = 144
       Height = 15
       Caption = 'Akun Perkiraan Uang Muka'
     end
     object Label19: TLabel
-      Left = 66
-      Top = 517
+      Left = 41
+      Top = 185
       Width = 80
       Height = 15
       Caption = 'Akun Perkiraan'
     end
     object Label10: TLabel
-      Left = 509
-      Top = 501
+      Left = 28
+      Top = 155
       Width = 63
       Height = 15
       Caption = 'Sisa Hutang'
     end
     object Label11: TLabel
-      Left = 679
-      Top = 463
+      Left = 0
+      Top = 129
       Width = 89
       Height = 15
       Caption = 'Total Uang Muka'
     end
     object Label8: TLabel
-      Left = 509
-      Top = 462
+      Left = 41
+      Top = 206
       Width = 157
       Height = 15
       Caption = 'Uang Muka yang sudah bayar'
     end
     object edum: TRzNumericEdit
-      Left = 679
-      Top = 478
+      Left = 108
+      Top = 156
       Width = 145
       Height = 23
       Color = clInfoBk
@@ -770,97 +794,79 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 0
       DisplayFormat = '#,##0.00'
     end
-    object Edkd_akunum: TRzEdit
-      Left = 210
-      Top = 478
-      Width = 101
-      Height = 23
-      Text = ''
-      Color = clInfoBk
-      ReadOnly = True
-      TabOrder = 1
-    end
-    object Edkd_akun: TRzEdit
-      Left = 210
-      Top = 516
-      Width = 101
-      Height = 23
-      Text = ''
-      Color = clInfoBk
-      ReadOnly = True
-      TabOrder = 2
-    end
     object EdNm_akunum: TRzButtonEdit
-      Left = 315
-      Top = 478
+      Left = 90
+      Top = 116
       Width = 185
       Height = 23
       Text = ''
       Color = clInfoBk
       ReadOnlyColorOnFocus = True
-      TabOrder = 3
+      TabOrder = 1
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = EdNm_akunumButtonClick
     end
     object EdNm_akun: TRzButtonEdit
-      Left = 315
-      Top = 516
+      Left = 68
+      Top = 79
       Width = 185
       Height = 23
       Text = ''
       Color = clInfoBk
       ReadOnlyColorOnFocus = True
-      TabOrder = 4
+      TabOrder = 2
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
     object EdNilai_um: TRzNumericEdit
-      Left = 508
-      Top = 478
+      Left = 23
+      Top = 35
       Width = 145
       Height = 23
-      TabOrder = 5
+      TabOrder = 3
       DisplayFormat = '#,##0.00'
     end
     object EdSisaHutang: TRzNumericEdit
-      Left = 508
-      Top = 516
+      Left = 41
+      Top = 264
       Width = 146
       Height = 23
-      TabOrder = 6
+      TabOrder = 4
       DisplayFormat = '#,##0.00'
     end
     object Button2: TButton
-      Left = 679
-      Top = 514
+      Left = 41
+      Top = 233
       Width = 75
       Height = 25
       Caption = 'Button2'
-      TabOrder = 7
+      TabOrder = 5
       Visible = False
     end
     object PGFaktur: TRzPageControl
       Left = 2
       Top = 2
       Width = 1117
-      Height = 213
+      Height = 246
       Hint = ''
       ActivePage = TabBarang2
-      Align = alTop
+      Align = alClient
       TabIndex = 0
-      TabOrder = 8
+      TabOrder = 6
       ExplicitWidth = 1113
+      ExplicitHeight = 245
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
         ExplicitWidth = 1109
+        ExplicitHeight = 220
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
           Width = 1113
-          Height = 188
+          Height = 221
           Align = alClient
           DataSource = DsTerimadet
           DynProps = <>
@@ -1205,7 +1211,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1113
-          Height = 188
+          Height = 221
           Align = alClient
           DataGrouping.GroupLevels = <
             item
@@ -1292,7 +1298,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1113
-          Height = 188
+          Height = 221
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1397,7 +1403,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1113
-          Height = 188
+          Height = 221
           Align = alClient
           DynProps = <>
           TabOrder = 0
@@ -1465,7 +1471,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1113
-          Height = 188
+          Height = 221
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1796,12 +1802,13 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object RzPanel2: TRzPanel
       Left = 2
-      Top = 215
+      Top = 248
       Width = 1117
-      Height = 154
-      Align = alTop
+      Height = 139
+      Align = alBottom
       Color = 15987699
-      TabOrder = 9
+      TabOrder = 7
+      ExplicitTop = 247
       ExplicitWidth = 1113
       object Label28: TLabel
         Left = 26

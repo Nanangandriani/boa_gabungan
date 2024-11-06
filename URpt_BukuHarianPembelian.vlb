@@ -28,9 +28,6 @@ Coordinates=917,586,143,58
 [fmainmenu.QPerusahaan]
 Coordinates=652,518,161,58
 
-[DBGridEh1]
-Coordinates=365,654,79,36
-
 [fmainmenu.takunkredit2]
 Coordinates=496,10,152,124
 
@@ -135,5 +132,5 @@ Visible=True
 Coordinates=185,10,114,256
 
 []
-Coordinates=796,166,91,36
+Coordinates=365,654,79,36
 

@@ -394,6 +394,10 @@ procedure TFlistitempo.FormShow(Sender: TObject);
 begin
    Flistmaterialstok.Qjenis_pajak.Close;
    Flistmaterialstok.Qjenis_pajak.Open;
+   DBGridMaterial.Align:=alClient;
+   DBGridMaterial2.Align:=alClient;
+   DBGridMaterial3.Align:=alClient;
+   DBGridMaterial4.Align:=alClient;
 end;
 
 end.

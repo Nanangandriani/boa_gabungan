@@ -1,16 +1,17 @@
 object dm: Tdm
+  OnCreate = DataModuleCreate
   Height = 239
   Width = 342
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_boa_hps'
+    Database = 'db_gabungan2'
     Username = 'postgres'
-    Server = '10.10.10.110'
+    Server = 'localhost'
     Connected = True
     Left = 157
     Top = 13
-    EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
+    EncryptedPassword = '9EFF9BFF92FF96FF91FF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
     Left = 246

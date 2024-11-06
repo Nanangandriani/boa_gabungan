@@ -194,6 +194,8 @@ begin
    EdNPWP.Text:='';
    edKodePerkiraan.Text:='';
    edKodePerkiraan_um.Text:='';
+   KodeHeaderPerkiraan:='';
+   KodeHeaderPerkiraan_um:='';
 end;
 
 Procedure TFNew_supplier.Autonumber;
@@ -244,14 +246,16 @@ end;
 
 procedure TFNew_Supplier.edKodePerkiraanButtonClick(Sender: TObject);
 begin
+   FMasterData.DBGridCustomer.SearchPanel.SearchingText:='';
    FMasterData.Caption:='Master Data Perkiraan';
    FMasterData.vcall:='perkiraan_supplier';
    FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
-   FMasterData.ShowModal;
+   FMasterData.Showmodal;
 end;
 
 procedure TFNew_Supplier.edKodePerkiraan_umButtonClick(Sender: TObject);
 begin
+   FMasterData.DBGridCustomer.SearchPanel.SearchingText:='';
    FMasterData.Caption:='Master Data Perkiraan';
    FMasterData.vcall:='perkiraan_supplier_um';
    FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
@@ -312,15 +316,24 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Select * from t_supplier';
+        sql.Text:='Select * from t_supplier where supplier_code='+QuotedStr(Edno.Text);
         ExecSQL;
       end;
+      if (dm.Qtemp['header_code']=null) and (dm.Qtemp['header_code_um']=null) then
+      begin
+        Autocode_perkiraan;
+        Autocode_perkiraan_um;
+      end;
+
       with dm.Qtemp do
       begin
         close;
         sql.clear;
         sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
                   ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+                  ' ,header_code='+quotedstr(KodeHeaderPerkiraan)+',account_code='+Quotedstr(edKodePerkiraan.Text)+''+
+                  ' ,header_code_um='+quotedstr(KodeHeaderPerkiraan_um)+''+
+                  ' ,account_code_um='+quotedstr(edKodePerkiraan_um.Text)+''+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
                   parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   parambyname('updated_by').AsString:='Admin';

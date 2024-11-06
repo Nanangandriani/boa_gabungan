@@ -23,7 +23,6 @@ type
     Label3: TLabel;
     QRptBHP: TUniQuery;
     MemBHP: TMemTableEh;
-    DBGridEh1: TDBGridEh;
     dsbph: TDataSource;
     QCategory: TUniQuery;
     RzBitBtn2: TRzBitBtn;
@@ -39,7 +38,6 @@ type
     DbRptSPdet: TfrxDBDataset;
     BPrint2: TRzBitBtn;
     Rpt_BHP: TfrxDBDataset;
-    frxReport1: TfrxReport;
     procedure BprintClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -69,7 +67,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UMainmenu, UAkun_Perkiraan_TerimaMat, UMy_Function;
+uses UDatamodule, UMainmenu, UAkun_Perkiraan_TerimaMat;
 var
   realfbhp : TFRpt_BukuHarianPembelian;
 // implementasi function
@@ -2353,26 +2351,22 @@ end;
 
 procedure TFRpt_BukuHarianPembelian.Ednm_akunButtonClick(Sender: TObject);
 begin
-  with  FAkun_Perkiraan_TerimaMat do
+with  FAkun_Perkiraan_TerimaMat do
+begin
+  Show;
+  with qakun do
   begin
-    Show;
-    with qakun do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a left join '+
-      ' t_ak_account b on a.account_code=b.code left join t_ak_header c on '+
-      ' b.header_code=c.header_code where a.module_id=2 and b.account_name like ''%HUTANG%'''+
-      ' ORDER BY b.code asc';
-      Open;
-    end;
-    statustr:='1';
-    //if QAkun.Active=false then QAkun.Active:=True;
-    QAkun.Active:=True;
+    close;
+    sql.Clear;
+    sql.Text:='SELECT b.kode,b.nama_perkiraan,c.nama_header FROM t_daftar_perkiraan_detail a left join t_daftar_perkiraan b'+
+    ' on a.kode_perkiraan=b.kode left join t_header_perkiraan c on b.kode_header=c.kode_header  '+
+    ' where a.id_modul=''2'' and b.nama_perkiraan like ''%HUTANG%'' ORDER BY b.kode asc';
+    Open;
   end;
+//  statustr:='bhp';
+  //if QAkun.Active=false then QAkun.Active:=True;
+  QAkun.Active:=True;
 end;
-
-initialization
-RegisterClass(TFRpt_BukuHarianPembelian);
+end;
 
 end.

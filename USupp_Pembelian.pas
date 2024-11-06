@@ -31,7 +31,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Pembelian, UNew_ReturnPembelian, UNew_Pot_Pembelian,
-  UNew_TerimaMaterial;
+  UNew_TerimaMaterial, UDataModule;
 
 procedure TFSupp_Pembelian.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -75,6 +75,17 @@ begin
       begin
         Edkd_supp.Text:=Qsupplier['supplier_code'];
         ednm_supp.text:=Qsupplier['supplier_name'];
+        with dm.Qtemp do
+        begin
+              close;
+              sql.Clear;
+              sql.Text:='SELECT a.account_code,b.account_name FROM t_supplier a '+
+                        'INNER JOIN t_ak_account B ON A.account_code=b.code '+
+                        'where a.supplier_code='+QuotedStr(Edkd_supp.Text);
+              Execute;
+            end;
+            Edkd_akun.Text:=DM.Qtemp['account_code'];
+            EdNm_akun.Text:=DM.Qtemp['account_name'];
       end;
     end;
     close;

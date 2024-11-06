@@ -59,6 +59,11 @@ begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
     end;}
+    if vcall='spb' then
+    begin
+      FNew_SPB.edkd_supp.Text:=QSupplier['supplier_code'];
+      FNew_SPB.Ednm_supp.Text:=QSupplier['supplier_name'];
+    end;
     if vcall='perintah_muat_sumber' then
     begin
       FPerintahMuat_Sumber.edKodeVendorMuatan.Text:=QSupplier['supplier_code'];

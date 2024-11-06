@@ -4,7 +4,7 @@ object Flistitempo: TFlistitempo
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Form List Item PO'
-  ClientHeight = 589
+  ClientHeight = 403
   ClientWidth = 583
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object Flistitempo: TFlistitempo
     Left = 0
     Top = 0
     Width = 583
-    Height = 282
+    Height = 129
     Align = alTop
     DataSource = DsMaterial_stok
     DynProps = <>
@@ -97,18 +97,17 @@ object Flistitempo: TFlistitempo
         EditButtons = <>
         FieldName = 'remaining_qty'
         Footers = <>
-        Title.Caption = 'Sisa Kuantum Kontrak'
+        Title.Caption = 'Sisa Kuantum Referensi'
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object DBGridMaterial2: TDBGridEh
-    Left = 0
-    Top = 282
+    Left = -8
+    Top = 274
     Width = 583
-    Height = 275
-    Align = alClient
+    Height = 151
     DataSource = DsMaterial_stok2
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
@@ -169,12 +168,12 @@ object Flistitempo: TFlistitempo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 557
+    Top = 371
     Width = 583
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 286
+    ExplicitTop = 556
     ExplicitWidth = 579
     object BBatal: TRzBitBtn
       Left = 507
@@ -488,10 +487,10 @@ object Flistitempo: TFlistitempo
     end
   end
   object DBGridMaterial3: TDBGridEh
-    Left = 0
-    Top = 282
+    Left = -4
+    Top = 135
     Width = 579
-    Height = 4
+    Height = 87
     DataSource = DsMaterial3
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
@@ -549,7 +548,7 @@ object Flistitempo: TFlistitempo
   end
   object DBGridMaterial4: TDBGridEh
     Left = -8
-    Top = 338
+    Top = 204
     Width = 583
     Height = 104
     DataSource = DsMaterial4

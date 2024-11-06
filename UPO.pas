@@ -491,176 +491,168 @@ end;
 procedure TFPO.ActUpdateExecute(Sender: TObject);
 begin
     try
-    with FNew_PO do
-    begin
-      Show;
-      EdStatus.Enabled:=false;
-      EdNm_supp.Enabled:=false;
-      StatusTr:=1;
-      Caption:='Update Purchase Order';
-      BSimpan.Visible:=false;
-      BEdit.Visible:=true;
-      Self.Clear;
+      with FNew_PO do
+      begin
+        Show;
+        EdStatus.Enabled:=false;
+        EdNm_supp.Enabled:=false;
+        StatusTr:=1;
+        Caption:='Update Purchase Order';
+        BSimpan.Visible:=false;
+        BEdit.Visible:=true;
+        Self.Clear;
+        if ((DBGridPO.Fields[12].AsString='APPROVE') and (DBGridPO.Fields[20].AsString = '1')) then
+        begin
+          Statustr2:=1;
+        end;
+        if (DBGridPO.Fields[12].AsString<>'APPROVE') then
+        begin
+          Statustr2:=0;
+        end;
+        with Mempo do
+        begin
+          FNew_PO.EdNopo.Text:=Mempo.FieldByName('po_no').AsString;
+          FNew_PO.EdNm_supp.Text:=Mempo.FieldByName('supplier_name').AsString;
+          FNew_PO.EdKd_supp.Text:=Mempo.FieldByName('supplier_code').AsString;
+          FNew_PO.EdStatus.Text:=Mempo.FieldByName('po_type').AsString;
+          FNew_PO.EdNo.Text:=Mempo.FieldByName('order_no').AsString;
+          FNew_PO.DtPO.Text:=Mempo.FieldByName('po_date').AsString;
+          FNew_PO.Edno_kontrak.Text:=Mempo.FieldByName('contract_no').AsString;
+          FNew_PO.EdPPh23.Text:=Mempo.FieldByName('pph23').AsString;
+          FNew_PO.EdPPn.Text:=Mempo.FieldByName('ppn').AsString;
+          FNew_PO.EdCurr.Text:=Mempo.FieldByName('valas').AsString;
+          FNew_PO.Ednilai_curr.Text:=Mempo.FieldByName('valas_value').AsString;
+          FNew_PO.EdKet.Text:=Mempo.FieldByName('remarks').AsString;
+          FNew_PO.Edjenispo.Text:=Mempo.FieldByName('type').AsString;
+          FNew_PO.EdJenisAngkut.Text:=Mempo.FieldByName('transportation_type').AsString;
+          FNew_PO.Edjatuh_tempo.Text:=Mempo.FieldByName('due_date').AsString;
+          status:=Mempo.FieldByName('status').AsString;
+          FNew_PO.CbKategori.Text:=Mempo.FieldByName('trans_category').AsString;
+          FNew_PO.Ed_kd_wh.Text:=Mempo.FieldByName('wh_code').AsString;
+          Ed_kd_whChange(sender);
+          FNew_PO.DtDelivery.Date:=Mempo['delivery_date'];
+          FNew_PO.DtDelivery2.Date:=Mempo['delivery2_date'];
+          FNew_PO.Edsbu.Text:=Mempo['sbu_code'];
+          FNew_PO.NoTransUM.Text:=Mempo.FieldByName('um_no').AsString;
+          FNew_PO.EdUM.Text:=Mempo.FieldByName('um_value').AsString;
+          FNew_PO.Edkd_akun.Text:=Mempo.FieldByName('um_account_code').AsString;
+          CkUangmk.Checked:=Mempo.FieldByName('um_status').AsBoolean;
+          ckAs.Checked:=Mempo.FieldByName('as_status').AsBoolean;
+        end;
+        EdCurrChange(sender);
 
-      if ((DBGridPO.Fields[12].AsString='APPROVE') and (DBGridPO.Fields[20].AsString = '1')) then
-      begin
-        Statustr2:=1;
-      end;
-      if (DBGridPO.Fields[12].AsString<>'APPROVE') then
-      begin
-        Statustr2:=0;
-      end;
+        if EdCurr.Text<>'IDR' then
+        begin
+            Qdetailpo.First;
+            while not Qdetailpo.eof do
+            begin
+              with Qdetailpo do
+              begin
+                FNew_PO.MemItempo.Insert;
+                FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('item_stock_code').AsString;
+                FNew_PO.MemItempo['kd_material']:=Qdetailpo.FieldByName('item_code').AsString;
+                FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('item_name').AsString;
+                FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
+                FNew_PO.MemItempo['harga']:=Qdetailpo.FieldByName('price').AsString;
+                FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('unit').AsString;
+                FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('wh_code').AsString;
+                FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('total_payment').AsString;
+                FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('remaining_payment').AsString;
+                FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('remaining_qty').AsString;
+                FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qty_sent').AsString;
+                FNew_PO.MemItempo['subtotal']:=Qdetailpo.FieldByName('subtotal').Value-Qdetailpo.FieldByName('pemb_dpp').value;
+                FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').AsString;
+                FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
+                FNew_PO.MemItempo['ppn_us']:=Qdetailpo.FieldByName('ppn_rp').AsString;
+                FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').Value;
+                FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
+                FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
+                //FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').AsString;
+                FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
+                FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+                FNew_PO.MemItempo.Post;
+                Qdetailpo.Next;
+              end;
+            end;
+        end;
 
-      with Mempo do
-      begin
-        FNew_PO.EdNopo.Text:=Mempo.FieldByName('po_no').AsString;
-        FNew_PO.EdNm_supp.Text:=Mempo.FieldByName('supplier_name').AsString;
-        FNew_PO.EdKd_supp.Text:=Mempo.FieldByName('supplier_code').AsString;
-        FNew_PO.EdStatus.Text:=Mempo.FieldByName('po_type').AsString;
-        FNew_PO.EdNo.Text:=Mempo.FieldByName('order_no').AsString;
-        FNew_PO.DtPO.Text:=Mempo.FieldByName('po_date').AsString;
-        FNew_PO.Edno_kontrak.Text:=Mempo.FieldByName('contract_no').AsString;
-        FNew_PO.EdPPh23.Text:=Mempo.FieldByName('pph23').AsString;
-        FNew_PO.EdPPn.Text:=Mempo.FieldByName('ppn').AsString;
-        FNew_PO.EdCurr.Text:=Mempo.FieldByName('valas').AsString;
-        FNew_PO.Ednilai_curr.Text:=Mempo.FieldByName('valas_value').AsString;
-        FNew_PO.EdKet.Text:=Mempo.FieldByName('remarks').AsString;
-        FNew_PO.Edjenispo.Text:=Mempo.FieldByName('type').AsString;
-        FNew_PO.EdJenisAngkut.Text:=Mempo.FieldByName('transportation_type').AsString;
-        FNew_PO.Edjatuh_tempo.Text:=Mempo.FieldByName('due_date').AsString;
-        status:=Mempo.FieldByName('status').AsString;
-        FNew_PO.Ed_category.Text:=Mempo.FieldByName('trans_category').AsString;
-        FNew_PO.Ed_kd_wh.Text:=Mempo.FieldByName('wh_code').AsString;
-        Ed_kd_whChange(sender);
-        FNew_PO.DtDelivery.Date:=Mempo['delivery_date'];
-        FNew_PO.DtDelivery2.Date:=Mempo['delivery2_date'];
-        FNew_PO.Edsbu.Text:=Mempo['sbu_code'];
-        FNew_PO.NoTransUM.Text:=Mempo.FieldByName('um_no').AsString;
-        FNew_PO.EdUM.Text:=Mempo.FieldByName('um_value').AsString;
-        FNew_PO.Edkd_akun.Text:=Mempo.FieldByName('um_account_code').AsString;
-        CkUangmk.Checked:=Mempo.FieldByName('um_status').AsBoolean;
-        ckAs.Checked:=Mempo.FieldByName('as_status').AsBoolean;
-      end;
-      EdCurrChange(sender);
-
-      if EdCurr.Text<>'IDR' then
-      begin
+        if EdCurr.Text='IDR' then
+        begin
           Qdetailpo.First;
           while not Qdetailpo.eof do
           begin
-            with Qdetailpo do
-            begin
-              FNew_PO.MemItempo.Insert;
-              FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('item_stock_code').AsString;
-              FNew_PO.MemItempo['kd_material']:=Qdetailpo.FieldByName('item_code').AsString;
-              FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('item_name').AsString;
-              FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
-              FNew_PO.MemItempo['harga']:=Qdetailpo.FieldByName('price').AsString;
-              FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('unit').AsString;
-              FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('wh_code').AsString;
-              FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('total_payment').AsString;
-              FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('remaining_payment').AsString;
-              FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('remaining_qty').AsString;
-              FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qty_sent').AsString;
-              FNew_PO.MemItempo['subtotal']:=Qdetailpo.FieldByName('subtotal').Value-Qdetailpo.FieldByName('pemb_dpp').value;
-              FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').AsString;
-              FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
-              FNew_PO.MemItempo['ppn_us']:=Qdetailpo.FieldByName('ppn_rp').AsString;
-              FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').Value;
-              FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
-              FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
-              //FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').AsString;
-              FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
-              FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
-              FNew_PO.MemItempo.Post;
-              Qdetailpo.Next;
-            end;
+              with Qdetailpo do
+              begin
+                FNew_PO.MemItempo.Insert;
+                FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('item_stock_code').AsString;
+                FNew_PO.MemItempo['kd_material']:=Qdetailpo.FieldByName('item_code').AsString;
+                FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('item_name').AsString;
+                FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
+                FNew_PO.MemItempo['harga_rp']:=Qdetailpo.FieldByName('price').AsString;
+                FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('unit').AsString;
+                FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('wh_code').AsString;
+                FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('total_payment').AsString;
+                FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('remaining_payment').AsString;
+                FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('remaining_qty').AsString;
+                FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qty_sent').AsString;
+                FNew_PO.MemItempo['subtotal_rp']:=Qdetailpo.FieldByName('subtotal').Value-Qdetailpo.FieldByName('pemb_dpp').Value;
+                FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').AsString;
+                FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
+                FNew_PO.MemItempo['ppn_rp']:=Qdetailpo.FieldByName('ppn_rp').AsString;
+                FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
+                FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
+                //FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').AsString;
+                FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').Value;
+                FNew_PO.MemItempo['pemb_ppn']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+                FNew_PO.MemItempo.Post;
+                Qdetailpo.Next;
+              end;
           end;
-      end;
-
-      if EdCurr.Text='IDR' then
-      begin
-        Qdetailpo.First;
-        while not Qdetailpo.eof do
-        begin
-            with Qdetailpo do
-            begin
-              FNew_PO.MemItempo.Insert;
-              FNew_PO.MemItempo['kd_material_stok']:=Qdetailpo.FieldByName('item_stock_code').AsString;
-              FNew_PO.MemItempo['kd_material']:=Qdetailpo.FieldByName('item_code').AsString;
-              FNew_PO.MemItempo['nm_material']:=Qdetailpo.FieldByName('item_name').AsString;
-              FNew_PO.MemItempo['qty']:=Qdetailpo.FieldByName('qty').AsString;
-              FNew_PO.MemItempo['harga_rp']:=Qdetailpo.FieldByName('price').AsString;
-              FNew_PO.MemItempo['satuan']:=Qdetailpo.FieldByName('unit').AsString;
-              FNew_PO.MemItempo['gudang']:=Qdetailpo.FieldByName('wh_code').AsString;
-              FNew_PO.MemItempo['totalbayar']:=Qdetailpo.FieldByName('total_payment').AsString;
-
-              FNew_PO.MemItempo['sisabayar']:=Qdetailpo.FieldByName('remaining_payment').AsString;
-
-              FNew_PO.MemItempo['sisaqty']:=Qdetailpo.FieldByName('remaining_qty').AsString;
-              FNew_PO.MemItempo['qtyterkirim']:=Qdetailpo.FieldByName('qty_sent').AsString;
-              FNew_PO.MemItempo['subtotal_rp']:=Qdetailpo.FieldByName('subtotal').Value-Qdetailpo.FieldByName('pemb_dpp').Value;
-              FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').AsString;
-
-              FNew_PO.MemItempo['ppn']:=Qdetailpo.FieldByName('ppn').AsString;
-              FNew_PO.MemItempo['ppn_rp']:=Qdetailpo.FieldByName('ppn_rp').AsString;
-              FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
-              FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
-
-              //FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').AsString;
-              FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').Value;
-              FNew_PO.MemItempo['pemb_ppn']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
-
-              FNew_PO.MemItempo.Post;
-              Qdetailpo.Next;
-            end;
         end;
+
+        if FNew_PO.EdStatus.Text='Kontrak Kerjasama' then
+        begin
+          FNew_PO.Edno_kontrak.ReadOnly:=false;
+        end
+        else
+          FNew_PO.Edno_kontrak.ReadOnly:=True;
+          FNew_PO.Totalpo;
       end;
 
-      if FNew_PO.EdStatus.Text='Kontrak Kerjasama' then
+      with FNew_PO do
       begin
-        FNew_PO.Edno_kontrak.ReadOnly:=false;
-      end
-      else
-        FNew_PO.Edno_kontrak.ReadOnly:=True;
-        FNew_PO.Totalpo;
-    end;
-
-    with FNew_PO do
-    begin
-      if Edno_kontrak.Text<>'0' then
-      begin
+        if Edno_kontrak.Text<>'0' then
+        begin
+          MemItempo.First;
+          while not MemItempo.Eof do
+          begin
+            with dm.Qtemp do
+            begin
+              close;
+              sql.Clear;
+              sql.Text:=' select * from purchase.t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text)+''+
+                        ' and item_stock_code='+QuotedStr(MemItempo['kd_material_stok']);
+              Execute;
+            end;
+            MemItempo.Edit;
+            if dm.QTemp['remaining_qty']=Null then
+            MemItempo['qtykontrak']:=0
+            else MemItempo['qtykontrak']:=Dm.Qtemp['remaining_qty'];
+            MemItempo.Post;
+            MemItempo.Next;
+          end;
+        end
+        else
         MemItempo.First;
         while not MemItempo.Eof do
         begin
-          with dm.Qtemp do
-          begin
-            close;
-            sql.Clear;
-            sql.Text:=' select * from purchase.t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text)+''+
-                      ' and item_stock_code='+QuotedStr(MemItempo['kd_material_stok']);
-            Execute;
-          end;
-          MemItempo.Edit;
-          if dm.QTemp['remaining_qty']=Null then
-          MemItempo['qtykontrak']:=0
-          else MemItempo['qtykontrak']:=Dm.Qtemp['remaining_qty'];
-          MemItempo.Post;
-          MemItempo.Next;
+            MemItempo.Edit;
+            MemItempo['qtykontrak']:=0;
+            MemItempo.Post;
+            MemItempo.Next;
         end;
-      end
-      else
-      MemItempo.First;
-      while not MemItempo.Eof do
-      begin
-          MemItempo.Edit;
-          MemItempo['qtykontrak']:=0;
-          MemItempo.Post;
-          MemItempo.Next;
       end;
-    end;
-    finally
-
+      finally
     end;
 end;
 

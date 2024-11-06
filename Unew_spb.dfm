@@ -3,7 +3,7 @@ object FNew_SPB: TFNew_SPB
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form New Surat Perintah Bongkar'
-  ClientHeight = 475
+  ClientHeight = 562
   ClientWidth = 655
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,192 +17,202 @@ object FNew_SPB: TFNew_SPB
   OnShow = FormShow
   DesignSize = (
     655
-    475)
+    562)
   TextHeight = 15
   object Label17: TLabel
     Left = 25
-    Top = 182
+    Top = 193
     Width = 60
     Height = 15
     Caption = 'Keterangan'
   end
   object Label20: TLabel
     Left = 353
-    Top = 64
+    Top = 102
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label19: TLabel
     Left = 298
-    Top = 64
+    Top = 102
     Width = 39
     Height = 15
     Caption = 'Kepada'
   end
   object Label18: TLabel
     Left = 137
-    Top = 182
+    Top = 193
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label16: TLabel
     Left = 137
-    Top = 153
+    Top = 164
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label15: TLabel
     Left = 25
-    Top = 152
+    Top = 163
     Width = 109
     Height = 15
     Caption = 'Tgl / Jam SP Kembali'
   end
   object Label8: TLabel
     Left = 137
-    Top = 64
+    Top = 102
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label7: TLabel
     Left = 25
-    Top = 64
+    Top = 102
     Width = 98
     Height = 15
     Caption = 'Jam SP Diserhakan'
   end
   object Label14: TLabel
     Left = 137
-    Top = 94
+    Top = 17
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label13: TLabel
     Left = 25
-    Top = 94
+    Top = 17
     Width = 43
     Height = 15
     Caption = 'Supplier'
   end
   object Label12: TLabel
     Left = 353
-    Top = 123
+    Top = 134
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label11: TLabel
     Left = 298
-    Top = 123
+    Top = 134
     Width = 31
     Height = 15
     Caption = 'Driver'
   end
   object Label10: TLabel
     Left = 137
-    Top = 123
+    Top = 134
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label9: TLabel
     Left = 25
-    Top = 123
+    Top = 134
     Width = 78
     Height = 15
     Caption = 'No. Kendaraan'
   end
   object Label6: TLabel
     Left = 353
-    Top = 37
+    Top = 75
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label5: TLabel
     Left = 298
-    Top = 38
+    Top = 76
     Width = 35
     Height = 15
     Caption = 'No. SP'
   end
   object Label4: TLabel
     Left = 137
-    Top = 37
+    Top = 75
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label3: TLabel
     Left = 25
-    Top = 37
+    Top = 75
     Width = 57
     Height = 15
     Caption = 'Tanggal SP'
   end
   object Label2: TLabel
-    Left = 137
-    Top = 9
+    Left = 470
+    Top = 162
     Width = 3
     Height = 15
     Caption = ':'
+    Visible = False
   end
   object Label1: TLabel
-    Left = 25
-    Top = 9
+    Left = 434
+    Top = 168
     Width = 35
     Height = 15
     Caption = 'No PO'
+    Visible = False
+  end
+  object Label21: TLabel
+    Left = 25
+    Top = 47
+    Width = 44
+    Height = 15
+    Caption = 'Kategori'
   end
   object Edurut: TEdit
     Left = 504
-    Top = 179
+    Top = 190
     Width = 121
     Height = 23
     TabOrder = 0
     Visible = False
   end
   object Ednopo: TRzButtonEdit
-    Left = 152
-    Top = 7
+    Left = 485
+    Top = 160
     Width = 178
     Height = 23
     Text = ''
     CharCase = ecUpperCase
     TabOrder = 1
+    Visible = False
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
     OnButtonClick = EdnopoButtonClick
   end
   object EdKepada: TEdit
     Left = 368
-    Top = 62
+    Top = 100
     Width = 135
     Height = 23
     TabOrder = 2
   end
   object Edjam_kembali: TEdit
     Left = 293
-    Top = 149
+    Top = 160
     Width = 135
     Height = 23
     TabOrder = 3
   end
   object EdJam_Serah: TEdit
     Left = 152
-    Top = 62
+    Top = 100
     Width = 135
     Height = 23
     TabOrder = 4
   end
   object Edket: TMemo
     Left = 152
-    Top = 178
+    Top = 189
     Width = 351
     Height = 60
     Lines.Strings = (
@@ -211,7 +221,7 @@ object FNew_SPB: TFNew_SPB
   end
   object dttgl_kembali: TRzDateTimeEdit
     Left = 152
-    Top = 149
+    Top = 160
     Width = 135
     Height = 23
     EditType = etDate
@@ -219,23 +229,23 @@ object FNew_SPB: TFNew_SPB
     TabOrder = 6
   end
   object Ednm_supp: TRzButtonEdit
-    Left = 205
-    Top = 91
-    Width = 298
+    Left = 261
+    Top = 14
+    Width = 282
     Height = 23
     Text = ''
     CharCase = ecUpperCase
     Color = clInfoBk
-    ReadOnly = True
     ReadOnlyColorOnFocus = True
     TabOrder = 7
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
+    OnButtonClick = Ednm_suppButtonClick
   end
   object Edkd_supp: TRzEdit
     Left = 152
-    Top = 91
-    Width = 47
+    Top = 14
+    Width = 103
     Height = 23
     Text = ''
     CharCase = ecUpperCase
@@ -245,9 +255,9 @@ object FNew_SPB: TFNew_SPB
   end
   object DBGridEh2: TDBGridEh
     Left = 0
-    Top = 244
+    Top = 264
     Width = 655
-    Height = 199
+    Height = 266
     Align = alBottom
     DataSource = DsDetail
     DynProps = <>
@@ -335,8 +345,8 @@ object FNew_SPB: TFNew_SPB
   object DBGridEh1: TDBGridEh
     Left = 669
     Top = -3
-    Width = 453
-    Height = 364
+    Width = 449
+    Height = 451
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColumnDefValues.AlwaysShowEditButton = True
     Ctl3D = False
@@ -358,7 +368,7 @@ object FNew_SPB: TFNew_SPB
   end
   object EdPo: TDBLookupComboboxEh
     Left = 368
-    Top = 8
+    Top = 46
     Width = 175
     Height = 21
     AlwaysShowBorder = True
@@ -399,7 +409,7 @@ object FNew_SPB: TFNew_SPB
   end
   object Eddriver: TRzEdit
     Left = 368
-    Top = 120
+    Top = 131
     Width = 135
     Height = 23
     Text = ''
@@ -408,7 +418,7 @@ object FNew_SPB: TFNew_SPB
   end
   object EdnoKend: TRzEdit
     Left = 152
-    Top = 120
+    Top = 131
     Width = 135
     Height = 23
     Text = ''
@@ -417,7 +427,7 @@ object FNew_SPB: TFNew_SPB
   end
   object Panel1: TPanel
     Left = 0
-    Top = 443
+    Top = 530
     Width = 655
     Height = 32
     Align = alBottom
@@ -623,7 +633,7 @@ object FNew_SPB: TFNew_SPB
   end
   object EdnoSpb: TRzEdit
     Left = 368
-    Top = 34
+    Top = 72
     Width = 135
     Height = 23
     Text = ''
@@ -634,7 +644,7 @@ object FNew_SPB: TFNew_SPB
   end
   object DtSpb: TRzDateTimeEdit
     Left = 152
-    Top = 34
+    Top = 72
     Width = 135
     Height = 23
     EditType = etDate
@@ -644,7 +654,7 @@ object FNew_SPB: TFNew_SPB
   end
   object DTJam_Serah: TRzDateTimeEdit
     Left = 152
-    Top = 62
+    Top = 100
     Width = 135
     Height = 23
     EditType = etTime
@@ -653,7 +663,7 @@ object FNew_SPB: TFNew_SPB
   end
   object DTJam_Kembali: TRzDateTimeEdit
     Left = 293
-    Top = 149
+    Top = 160
     Width = 135
     Height = 23
     EditType = etTime
@@ -662,7 +672,7 @@ object FNew_SPB: TFNew_SPB
   end
   object Edth: TEdit
     Left = 579
-    Top = 64
+    Top = 96
     Width = 58
     Height = 23
     TabOrder = 19
@@ -670,7 +680,7 @@ object FNew_SPB: TFNew_SPB
   end
   object Edbln: TEdit
     Left = 579
-    Top = 36
+    Top = 68
     Width = 58
     Height = 23
     TabOrder = 20
@@ -678,7 +688,7 @@ object FNew_SPB: TFNew_SPB
   end
   object Edhr: TEdit
     Left = 579
-    Top = 8
+    Top = 40
     Width = 58
     Height = 23
     TabOrder = 21
@@ -686,22 +696,30 @@ object FNew_SPB: TFNew_SPB
   end
   object Edkd_sbu: TEdit
     Left = 504
-    Top = 208
+    Top = 219
     Width = 121
     Height = 23
     TabOrder = 22
     Visible = False
   end
+  object CbCategori: TComboBox
+    Left = 152
+    Top = 44
+    Width = 135
+    Height = 23
+    TabOrder = 23
+    Text = 'CbCategori'
+  end
   object DsDetail: TDataSource
     DataSet = Memdetail
-    Left = 504
-    Top = 128
+    Left = 536
+    Top = 131
   end
   object Memdetail: TMemTableEh
     Active = True
     Params = <>
-    Left = 464
-    Top = 128
+    Left = 544
+    Top = 239
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kd_material: TMTStringDataFieldEh
@@ -752,20 +770,20 @@ object FNew_SPB: TFNew_SPB
   end
   object DataSetDriverEh1: TDataSetDriverEh
     ProviderDataSet = QPo1
-    Left = 464
-    Top = 69
+    Left = 592
+    Top = 117
   end
   object DsPo: TDataSource
     DataSet = Mempo
-    Left = 464
-    Top = 65533
+    Left = 584
+    Top = 109
   end
   object Mempo: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
     Options = [mtoTextFieldsCaseInsensitive]
-    Left = 528
-    Top = 69
+    Left = 592
+    Top = 204
   end
   object QPo1: TUniQuery
     Connection = dm.Koneksi
@@ -774,7 +792,7 @@ object FNew_SPB: TFNew_SPB
         'Select A.*, B.nm_supplier from t_po A inner join t_supplier B on' +
         ' A.kd_supplier=B.kd_supplier'
       ' order by A.nopo desc')
-    Left = 504
-    Top = 65533
+    Left = 544
+    Top = 77
   end
 end

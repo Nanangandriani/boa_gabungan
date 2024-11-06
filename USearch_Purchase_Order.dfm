@@ -3,7 +3,7 @@ object FUSearch_PO: TFUSearch_PO
   Top = 0
   Caption = 'FUSearch_PO'
   ClientHeight = 338
-  ClientWidth = 617
+  ClientWidth = 745
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,14 @@ object FUSearch_PO: TFUSearch_PO
   object Panel1: TPanel
     Left = 0
     Top = 306
-    Width = 617
+    Width = 745
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 298
-    ExplicitWidth = 615
+    ExplicitTop = 305
+    ExplicitWidth = 613
     object BBatal: TRzBitBtn
-      Left = 545
+      Left = 669
       Top = 1
       Height = 30
       Align = alRight
@@ -82,10 +82,10 @@ object FUSearch_PO: TFUSearch_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 539
+      ExplicitLeft = 537
     end
     object BSimpan: TRzBitBtn
-      Left = 470
+      Left = 594
       Top = 1
       Height = 30
       Align = alRight
@@ -144,7 +144,7 @@ object FUSearch_PO: TFUSearch_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 464
+      ExplicitLeft = 462
     end
     object BSelectAll: TRzBitBtn
       Left = 1
@@ -211,15 +211,28 @@ object FUSearch_PO: TFUSearch_PO
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 617
+    Width = 745
     Height = 306
     Align = alClient
     DataSource = DsPO
     DynProps = <>
+    FooterParams.Font.Charset = DEFAULT_CHARSET
+    FooterParams.Font.Color = clWindowText
+    FooterParams.Font.Height = -12
+    FooterParams.Font.Name = 'Segoe UI'
+    FooterParams.Font.Style = []
+    FooterParams.ParentFont = False
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     SearchPanel.Enabled = True
     TabOrder = 1
+    TitleParams.Font.Charset = DEFAULT_CHARSET
+    TitleParams.Font.Color = clWindowText
+    TitleParams.Font.Height = -12
+    TitleParams.Font.Name = 'Segoe UI'
+    TitleParams.Font.Style = [fsBold]
+    TitleParams.ParentFont = False
+    OnAdvDrawDataCell = DBGridEh1AdvDrawDataCell
     Columns = <
       item
         CellButtons = <>
@@ -228,7 +241,7 @@ object FUSearch_PO: TFUSearch_PO
         FieldName = 'po_no'
         Footers = <>
         Title.Caption = 'No. PO'
-        Width = 100
+        Width = 108
       end
       item
         CellButtons = <>
@@ -237,7 +250,7 @@ object FUSearch_PO: TFUSearch_PO
         FieldName = 'po_date'
         Footers = <>
         Title.Caption = 'Tanggal'
-        Width = 63
+        Width = 73
       end
       item
         CellButtons = <>
@@ -298,6 +311,7 @@ object FUSearch_PO: TFUSearch_PO
         EditButtons = <>
         FieldName = 'wh_code'
         Footers = <>
+        Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -316,6 +330,7 @@ object FUSearch_PO: TFUSearch_PO
         'stock_code'
       'INNER JOIN t_wh d on d.wh_code=a.wh_code'
       'where b.remaining_sp <>0 and a.approval_status='#39'1'#39)
+    Active = True
     Left = 304
     Top = 80
   end

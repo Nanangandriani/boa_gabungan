@@ -75,7 +75,8 @@ begin
     close;
     sql.Clear;
     sql.Text:='select left(menu_code,3) kode,cast(cast(max(right(menu_code,3)) as INTEGER) as VARCHAR) as no from '+
-    ' t_menu WHERE menu='+QuotedStr(EdGroup.Text)+' GROUP BY left(menu_code,3)';
+    ' t_menu a INNER JOIN t_menu_master b on a.master_code=b.master_code where concat(b.master_name, '' - '',a.menu)='+QuotedStr(EdGroup.Text)+' '+
+    ' GROUP BY left(menu_code,3)';
     Execute;
   end;
   with dm.Qtemp do
@@ -111,7 +112,7 @@ EdGroup.Clear;
   begin
     close;
     sql.Clear;
-    sql.Text:='Select * from t_menu';
+    sql.Text:='Select concat(b.master_name, '' - '',a.menu) menu, a.menu_code from t_menu a INNER JOIN t_menu_master b on a.master_code=b.master_code';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -127,7 +128,7 @@ begin
   with FMaster_Menu do
   begin
     Show;
-    btambah.enabled:=false;
+   // btambah.enabled:=false;
     Cbmaster.Text:='';
     Edkd.Clear;
     EdDesk.Clear;
@@ -200,7 +201,7 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:='select * from t_menu where menu='+QuotedStr(EdGroup.Text);
+    sql.Text:='Select concat(b.master_name, '' - '',a.menu), a.menu_code from t_menu a INNER JOIN t_menu_master b on a.master_code=b.master_code where concat(b.master_name, '' - '',a.menu)='+QuotedStr(EdGroup.Text);
     ExecSQL;
   end;
   No_group:=Dm.Qtemp['menu_code'];

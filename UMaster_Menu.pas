@@ -87,7 +87,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_menu(master_code,menu_code,menu)vaues('+QuotedStr(kdmaster)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdDesk.Text)+')';
+      sql.Text:='insert into t_menu(master_code,menu_code,menu)values('+QuotedStr(kdmaster)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdDesk.Text)+')';
       ExecSQL;
     end;
   end;
@@ -114,7 +114,7 @@ begin
   begin
     close;
     sql.Clear;
-    SQL.Text:='select cast(cast(max(left(right(menu_code,5),2) )as integer)+1 as VARCHAR) urut from t_submenu';
+    SQL.Text:='select cast(cast(max(left(right(menu_code,5),2) )as integer)+1 as VARCHAR) urut from t_menu';
     Execute;
   end;
   Edkd.Text:='M'+dm.Qtemp['urut']+'000';

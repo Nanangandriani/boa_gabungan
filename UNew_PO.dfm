@@ -21,8 +21,7 @@ object FNew_PO: TFNew_PO
     Height = 243
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = -5
+    ExplicitWidth = 1206
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -1120,10 +1119,10 @@ object FNew_PO: TFNew_PO
           DisplayFormat = '#,##0.00'
           DynProps = <>
           EditButtons = <>
-          FieldName = 'qtykonversi'
+          FieldName = 'qtykontrak'
           Footers = <>
           ReadOnly = True
-          Title.Caption = 'Sisa Kuantum Kontrak'
+          Title.Caption = 'Sisa Kuantum Referensi'
           Width = 90
         end
         item
