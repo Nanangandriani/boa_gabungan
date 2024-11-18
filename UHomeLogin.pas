@@ -40,8 +40,8 @@ type
     procedure ImgTransaksiClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure EdPassKeyPress(Sender: TObject; var Key: Char);
-    procedure FormCreate(Sender: TObject);
     procedure CbSBUClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -90,12 +90,11 @@ begin
   end;
 end;
 
-procedure TFHomeLogin.FormCreate(Sender: TObject);
+procedure TFHomeLogin.FormShow(Sender: TObject);
 begin
   // Misalnya menggunakan query untuk mendapatkan item di TcxDBComboBox
   DM.ABSTable1.Open;
   CbSBU.Clear;
-  CbSBU.Properties.items.Add('');
   while not DM.ABSTable1.Eof do
   begin
     CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
@@ -115,13 +114,15 @@ begin
    begin
      MessageDlg('Username Wajib Diisi..!!',mtInformation,[mbRetry],0);
      Eduser.SetFocus;
+     exit;
    end
    else if (EdPass.Text='') and (Length(EdPass.Text)=0) then
    begin
      MessageDlg('Password Wajib Diisi..!!',mtInformation,[mbRetry],0);
      EdPass.SetFocus;
+     exit;
    end
-   else if (EdPass.Text='') and (Eduser.Text<>'') then
+   else if (EdPass.Text<>'') and (Eduser.Text<>'') then
    begin
    //cek User
    with dm.Qtemp do

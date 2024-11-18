@@ -11,7 +11,7 @@ object FHomeLogin: TFHomeLogin
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pnApproval: TRzPanel
     Left = 0
@@ -4601,14 +4601,14 @@ object FHomeLogin: TFHomeLogin
     end
     object CbSBU: TcxComboBox
       Left = 66
-      Top = 90
+      Top = 95
       ParentFont = False
       Style.BorderColor = clGradientActiveCaption
       Style.BorderStyle = ebsNone
       Style.Color = 16445656
       Style.Font.Charset = DEFAULT_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -22
+      Style.Font.Height = -17
       Style.Font.Name = 'Segoe UI'
       Style.Font.Style = []
       Style.ButtonStyle = btsFlat
