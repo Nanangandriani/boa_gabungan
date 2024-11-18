@@ -4597,8 +4597,7 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      Text = 'Admin'
-      TextHint = 'USERNAME'
+      TextHint = 'Username'
     end
     object CbSBU: TcxComboBox
       Left = 66
@@ -4621,110 +4620,8 @@ object FHomeLogin: TFHomeLogin
       StyleDisabled.TextColor = clGradientActiveCaption
       StyleDisabled.ButtonStyle = btsFlat
       TabOrder = 2
-      Text = 'CbSBU'
       OnClick = CbSBUClick
       Width = 265
-    end
-  end
-  object ABSDatabase1: TABSDatabase
-    Connected = True
-    CurrentVersion = '7.95 '
-    DatabaseFileName = 
-      'D:\DATA HPS\Development\back_office_automation\Win32\Release\Con' +
-      'ectdb.abs'
-    DatabaseName = 't_konfigurasi'
-    Exclusive = False
-    Password = 'smart_boa2024'
-    MaxConnections = 500
-    MultiUser = False
-    SessionName = 'Default'
-    Left = 370
-    Top = 16
-  end
-  object ABSTable1: TABSTable
-    CurrentVersion = '7.95 '
-    DatabaseName = 't_konfigurasi'
-    InMemory = False
-    ReadOnly = False
-    Active = True
-    StoreDefs = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftAutoInc
-      end
-      item
-        Name = 'Sbu_Code'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Nama_Sbu'
-        DataType = ftString
-        Size = 50
-      end
-      item
-        Name = 'Ip_db'
-        DataType = ftString
-        Size = 100
-      end
-      item
-        Name = 'Port_db'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Db_Name'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Password'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Ip_db_Pusat'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'User_db'
-        DataType = ftString
-        Size = 20
-      end>
-    TableName = 't_konfigurasi'
-    Exclusive = False
-    Left = 370
-    Top = 88
-    object ABSTable1id: TAutoIncField
-      FieldName = 'id'
-    end
-    object ABSTable1Sbu_Code: TStringField
-      FieldName = 'Sbu_Code'
-    end
-    object ABSTable1Nama_Sbu: TStringField
-      FieldName = 'Nama_Sbu'
-      Size = 50
-    end
-    object ABSTable1Ip_db: TStringField
-      FieldName = 'Ip_db'
-      Size = 100
-    end
-    object ABSTable1Port_db: TStringField
-      FieldName = 'Port_db'
-    end
-    object ABSTable1Db_Name: TStringField
-      FieldName = 'Db_Name'
-    end
-    object ABSTable1Password: TStringField
-      FieldName = 'Password'
-    end
-    object ABSTable1Ip_db_Pusat: TStringField
-      FieldName = 'Ip_db_Pusat'
-    end
-    object ABSTable1User_db: TStringField
-      FieldName = 'User_db'
     end
   end
 end

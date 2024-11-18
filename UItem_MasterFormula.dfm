@@ -20,10 +20,10 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Height = 35
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 406
-    ExplicitWidth = 579
+    ExplicitTop = 312
+    ExplicitWidth = 591
     object BClose: TRzBitBtn
-      Left = 525
+      Left = 521
       Top = 1
       Height = 33
       Align = alRight
@@ -82,10 +82,10 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 532
+      ExplicitLeft = 515
     end
     object BSimpan: TRzBitBtn
-      Left = 450
+      Left = 446
       Top = 1
       Height = 33
       Align = alRight
@@ -144,10 +144,10 @@ object FItem_MasterFormula: TFItem_MasterFormula
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 457
+      ExplicitLeft = 440
     end
     object Brefresh: TRzBitBtn
-      Left = 300
+      Left = 296
       Top = 1
       Height = 33
       Align = alRight
@@ -206,10 +206,10 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 382
+      ExplicitLeft = 290
     end
     object BNew: TRzBitBtn
-      Left = 225
+      Left = 221
       Top = 1
       Height = 33
       Align = alRight
@@ -268,11 +268,10 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 219
-      ExplicitTop = 6
+      ExplicitLeft = 215
     end
     object BUpdate: TRzBitBtn
-      Left = 375
+      Left = 371
       Top = 1
       Height = 33
       Align = alRight
@@ -331,8 +330,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
         10171710101010101009E8E8E8E8E8E8568181DFDFDFDFDFDF56E8E8E8E8E8E8
         E8101717101010101010E8E8E8E8E8E8E8568181DFDFDFDFDFDF}
       NumGlyphs = 2
-      ExplicitLeft = 369
-      ExplicitTop = 6
+      ExplicitLeft = 365
     end
   end
   object Panel2: TPanel
@@ -343,6 +341,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Align = alTop
     TabOrder = 1
     Visible = False
+    ExplicitWidth = 591
     object Label14: TLabel
       Left = 22
       Top = 19
@@ -469,7 +468,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
     end
   end
   object MemMaterial: TMemTableEh
-    Active = True
     Params = <>
     Left = 408
     Top = 8
@@ -517,7 +515,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
       
         'select a.*,b.item_name from "warehouse".t_master_test a inner jo' +
         'in t_item b on a.item_code=b.item_code')
-    Active = True
     Left = 344
     Top = 88
   end
@@ -527,7 +524,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Top = 144
   end
   object MemMasterTest: TMemTableEh
-    Active = True
     Params = <>
     DataDriver = DsdMasterTest
     Left = 448

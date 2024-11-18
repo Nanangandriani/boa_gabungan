@@ -36,17 +36,6 @@ type
     ImgTransaksi: TImage;
     Image1: TImage;
     CbSBU: TcxComboBox;
-    ABSDatabase1: TABSDatabase;
-    ABSTable1: TABSTable;
-    ABSTable1id: TAutoIncField;
-    ABSTable1Sbu_Code: TStringField;
-    ABSTable1Nama_Sbu: TStringField;
-    ABSTable1Ip_db: TStringField;
-    ABSTable1Port_db: TStringField;
-    ABSTable1Db_Name: TStringField;
-    ABSTable1Password: TStringField;
-    ABSTable1Ip_db_Pusat: TStringField;
-    ABSTable1User_db: TStringField;
     procedure RzPanel1Paint(Sender: TObject);
     procedure ImgTransaksiClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);

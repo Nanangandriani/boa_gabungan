@@ -1,27 +1,17 @@
 object dm: Tdm
   OnCreate = DataModuleCreate
-<<<<<<< Updated upstream
-  Height = 365
-  Width = 467
-=======
   Height = 322
   Width = 635
   PixelsPerInch = 120
->>>>>>> Stashed changes
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
     Database = 'db_boa_hps'
     Username = 'postgres'
     Server = '10.10.10.110'
-<<<<<<< Updated upstream
-    Left = 157
-    Top = 13
-=======
     Connected = True
     Left = 196
     Top = 16
->>>>>>> Stashed changes
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
@@ -118,15 +108,17 @@ object dm: Tdm
   object ABSDatabase1: TABSDatabase
     Connected = True
     CurrentVersion = '7.95 '
-    DatabaseFileName = 'D:\back_office_automation\Win32\Release\Conectdb.abs'
+    DatabaseFileName = 
+      'D:\DATA HPS\Development\back_office_automation\Win32\Release\Con' +
+      'ectdb.abs'
     DatabaseName = 't_konfigurasi'
     Exclusive = False
-    Password = '123456'
+    Password = 'smart_boa2024'
     MaxConnections = 500
     MultiUser = False
     SessionName = 'Default'
-    Left = 352
-    Top = 232
+    Left = 466
+    Top = 16
   end
   object ABSTable1: TABSTable
     CurrentVersion = '7.95 '
@@ -134,10 +126,56 @@ object dm: Tdm
     InMemory = False
     ReadOnly = False
     Active = True
+    StoreDefs = True
+    FieldDefs = <
+      item
+        Name = 'id'
+        DataType = ftAutoInc
+      end
+      item
+        Name = 'Sbu_Code'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Nama_Sbu'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'Ip_db'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'Port_db'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Db_Name'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Password'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Ip_db_Pusat'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'User_db'
+        DataType = ftString
+        Size = 20
+      end>
     TableName = 't_konfigurasi'
     Exclusive = False
-    Left = 344
-    Top = 160
+    Left = 466
+    Top = 88
     object ABSTable1id: TAutoIncField
       FieldName = 'id'
     end
