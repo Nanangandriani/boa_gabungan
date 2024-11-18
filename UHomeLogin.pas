@@ -70,7 +70,7 @@ begin
   FilterOptions:=[];
   Filtered:=true;
   end;
-
+  TRY
     DM.Koneksi.Connected:=False;
     DM.Koneksi.Server:=dm.abstable1Ip_db.AsString;
     DM.Koneksi.ProviderName:='PostgreSQL';
@@ -80,6 +80,10 @@ begin
     Dm.Koneksi.Port:=dm.abstable1Port_db.AsInteger;
     DM.Koneksi.Connected:=True;
     //Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
+  EXCEPT
+    showmessage('Tidak terkoneksi dengan server !');
+    exit;
+  END;
 end;
 
 procedure TFHomeLogin.EdPassKeyPress(Sender: TObject; var Key: Char);
@@ -111,7 +115,13 @@ end;
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
    //Cek User
-   if Eduser.Text='' then
+   if CbSBU.Text='' then
+   begin
+     MessageDlg('Silakan Pilih Koneksi..!!',mtInformation,[mbRetry],0);
+     CbSBU.SetFocus;
+     exit;
+   end
+   else if Eduser.Text='' then
    begin
      MessageDlg('Username Wajib Diisi..!!',mtInformation,[mbRetry],0);
      Eduser.SetFocus;

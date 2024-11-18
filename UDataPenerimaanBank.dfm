@@ -426,8 +426,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1123
-      ExplicitHeight = 207
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -516,6 +514,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
+      ExplicitWidth = 1123
+      ExplicitHeight = 207
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -640,7 +640,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object gbDataBank: TGroupBox
       Left = 501
       Top = 0
-      Width = 556
+      Width = 612
       Height = 96
       Align = alLeft
       Caption = 'Data Bank'
@@ -722,7 +722,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         TabOrder = 1
       end
       object edKodeSumberTagihan: TEdit
-        Left = 532
+        Left = 572
         Top = 27
         Width = 50
         Height = 23
@@ -732,7 +732,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Visible = False
       end
       object edKodeJenisBayar: TEdit
-        Left = 532
+        Left = 572
         Top = 56
         Width = 50
         Height = 23
@@ -744,7 +744,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object edNMJenisBayar: TRzButtonEdit
         Left = 438
         Top = 56
-        Width = 103
+        Width = 128
         Height = 23
         Text = ''
         TabOrder = 4
@@ -755,7 +755,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object edNMSumberTagihan: TRzButtonEdit
         Left = 438
         Top = 27
-        Width = 103
+        Width = 128
         Height = 23
         Text = ''
         TabOrder = 5

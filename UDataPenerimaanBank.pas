@@ -112,7 +112,7 @@ type
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
   public
-    Status : Integer;
+    Status,KetemuCekPosisiDK : Integer;
     akun_d, akun_k, kd_ak_pelanggan, vid_modul : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5 : String;
     strtgl, strbulan, strtahun: string;
@@ -181,10 +181,12 @@ begin
         if (Dm.Qtemp1.fieldbyname('position').AsString='D') and (MemDetailAkun['kredit']<>0)  then
         begin
           ShowMessage('Akun '+MemDetailAkun['nm_akun']+' Tersetting Sebagai Akun Debit');
+          KetemuCekPosisiDK:=1;
         end;
         if (Dm.Qtemp1.fieldbyname('position').AsString='K') and (MemDetailAkun['Debit']<>0)  then
         begin
           ShowMessage('Akun '+MemDetailAkun['nm_akun']+' Tersetting Sebagai Akun Kredit');
+          KetemuCekPosisiDK:=1;
         end;
       end;
 
@@ -213,7 +215,7 @@ begin
               ' code_currency='+QuotedStr(edKodeMataUang.Text)+','+
               ' name_currency='+QuotedStr(edNamaMataUang.Text)+','+
               ' kurs='+QuotedStr(FloatToStr(edKurs.value))+','+
-              ' paid_amount='+QuotedStr(FloatToStr(edKurs.value))+','+
+              ' paid_amount='+QuotedStr(FloatToStr(edJumlah.value))+','+
               ' for_acceptance='+QuotedStr(edUntukPengiriman.Text)+','+
               ' description='+QuotedStr(MemKeterangan.Text)+', '+
               ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
@@ -278,12 +280,15 @@ begin
     close;
     sql.clear;
     sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_det" ("voucher_no", '+
-            ' "code_account", "name_account", "position", "paid_amount", "amount_rate_results", "description", '+
+            ' "code_account", "name_account", "module_id", "trans_date", "position", '+
+            ' "paid_amount", "amount_rate_results", "description", '+
             ' "code_account_header") '+
             ' Values( '+
             ' '+QuotedStr(edNoTrans.Text)+', '+
             ' '+QuotedStr(MemDetailAkun['kd_akun'])+', '+
-            ' '+QuotedStr(MemDetailAkun['nm_akun'])+', ');
+            ' '+QuotedStr(MemDetailAkun['nm_akun'])+', '+
+            ' '+QuotedStr(vid_modul)+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', ' );
             if MemDetailAkun['debit']<>0 then
             begin
               sql.Add(' '+QuotedStr('D')+', ');
@@ -575,6 +580,7 @@ var
   Year, Month, Day: Word;
 begin
   //Rferesh hasil Kurs, cek posisi DK
+  KetemuCekPosisiDK:=0;
   MemDetailAkun.First;
   while not MemDetailAkun.Eof do
   begin
@@ -582,11 +588,14 @@ begin
     CekPosisiDK;
     MemDetailAkun.Next;
   end;
+  //Cek Posisi Akun DK
+  if KetemuCekPosisiDK<>0 then
+  begin
+    Exit;
+  end;
 
   VCekBalance;
-  //t_cash_bank_acceptance
-  //t_cash_bank_acceptance_det
-  //t_cash_bank_acceptance_invoice
+
   DecodeDate(dtTrans.Date, Year, Month, Day);
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
@@ -786,7 +795,7 @@ begin
       ShowMessage('Silkan Pilih Sumber Tagihan...!!!');
       Exit;
     end;
-    if edKodeSumberTagihan.Text='1' then
+    if (edKodeSumberTagihan.Text='1') OR (vid_modul='4') then  //Kas Piutang Auto Ambil Piutang
     begin
       FDaftarTagihan.vcall:='terima_bank';
       FDaftarTagihan.kd_outlet:=edKode_Pelanggan.Text;
@@ -823,6 +832,8 @@ end;
 procedure TFDataPenerimaanBank.dtTransChange(Sender: TObject);
 begin
   FDataPenerimaanBank.Autonumber;
+  dtPeriode1.Date:=dtTrans.Date;
+  dtPeriode2.Date:=dtTrans.Date;
 end;
 
 procedure TFDataPenerimaanBank.edNMJenisBayarButtonClick(Sender: TObject);
@@ -884,6 +895,7 @@ begin
   FMasterData.ShowModal;
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
   RefreshGridDetailAkun;
+  FDataPenerimaanBank.Autonumber;
   vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
 
 end;
@@ -917,6 +929,7 @@ procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
   if FDataPenerimaanBank.Status = 0 then
   begin
+    //showmessage('Baru');
     Panel5.Visible:=false;
     gbDataPiutang.Visible:=false;
     TabDetailFaktur.TabVisible:=false;

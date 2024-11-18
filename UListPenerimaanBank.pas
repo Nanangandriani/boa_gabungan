@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFListPenerimaanBank = class(TForm)
@@ -66,12 +66,42 @@ type
     QPenerimaanBankdescription: TMemoField;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
+    QBukti_Terima: TUniQuery;
+    frxDBDQBukti_Terima: TfrxDBDataset;
+    Report: TfrxReport;
+    QBukti_Terimavoucher_no: TStringField;
+    QBukti_Terimatrans_date: TDateField;
+    QBukti_Terimacode_cust: TStringField;
+    QBukti_Terimaname_cust: TStringField;
+    QBukti_Terimaaccount_number_bank: TStringField;
+    QBukti_Terimaaccount_name_bank: TStringField;
+    QBukti_Terimafor_acceptance: TStringField;
+    QBukti_Terimadescription: TMemoField;
+    QBukti_Terimamodule_id: TIntegerField;
+    QBukti_Terimacode_account_header: TStringField;
+    QBukti_Terimaaccount_name: TStringField;
+    QBukti_Terimapaid_amount: TFloatField;
+    QBukti_Terimadesc_akun: TMemoField;
+    dxBarLargeButton2: TdxBarLargeButton;
+    frxDBDJurnal: TfrxDBDataset;
+    QJurnal: TUniQuery;
+    QJurnaltrans_no: TStringField;
+    QJurnalaccount_code: TStringField;
+    QJurnalmodule_id: TSmallintField;
+    QJurnalmodule_name: TStringField;
+    QJurnalstatus_dk: TStringField;
+    QJurnalaccount_name: TStringField;
+    QJurnaldb: TFloatField;
+    QJurnalkd: TFloatField;
+    QJurnaltrans_date: TDateField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure QPenerimaanBankdescriptionGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,6 +122,7 @@ begin
   FDataPenerimaanBank.Clear;
   //FDataPenerimaanBank.Autocode;
   FDataPenerimaanBank.Status:=0;
+  FDataPenerimaanBank.edNamaJenisTrans.Enabled:=true;
   FDataPenerimaanBank.edNoTrans.Enabled:=true;
   FDataPenerimaanBank.ShowModal;
 end;
@@ -325,9 +356,111 @@ begin
 
   end;
   end;
+  FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
+  FDataPenerimaanBank.edNamaJenisTrans.Enabled:=false;
   FDataPenerimaanBank.edNoTrans.Enabled:=false;
-  FDataPenerimaanBank.Show;
   FDataPenerimaanBank.Status := 1;
+  FDataPenerimaanBank.Show;
+end;
+
+procedure TFListPenerimaanBank.dxBarLargeButton1Click(Sender: TObject);
+begin
+   with QBukti_Terima do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT a.*, "code_account_header", "account_name", "paid_amount", "desc_akun" from ('+
+             ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
+             ' "account_name_bank", "for_acceptance", "description", "module_id" '+
+             ' from "cash_banks"."t_cash_bank_acceptance"  a  '+
+             ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+             ' AND deleted_at is null) a '+
+             ' LEFT JOIN (SELECT  "voucher_no", "code_account", "name_account", "position", '+
+             ' "paid_amount", "description" as desc_akun, "code_account_header", "account_name" , '+
+             ' "amount_rate_results" from "cash_banks"."t_cash_bank_acceptance_det" aa '+
+             ' LEFT JOIN t_ak_account bb ON aa."code_account_header"=bb.code) b ON a."voucher_no"=b."voucher_no" '+
+             ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
+             ' and "position"=''K'' '+
+             ' order by position asc');
+     open;
+    end;
+
+
+ if QBukti_Terima.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QBukti_Terima.RecordCount<>0 then
+ begin
+   // Dapetin Grand Total
+   with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add(' select * '+
+             ' from "cash_banks"."t_cash_bank_acceptance" a '+
+             ' where a.deleted_at is null and '+
+             ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+     open;
+    end;
+    //
+
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+   SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat)));
+   if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
+   begin
+    SetMemo(Report,'vkas','X');
+    SetMemo(Report,'vbank','');
+   end;
+   if QBukti_Terima.FieldByName('module_id').AsString='3' then//bank
+   begin
+    SetMemo(Report,'vkas','');
+    SetMemo(Report,'vbank','X');
+   end;
+
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
+end;
+
+procedure TFListPenerimaanBank.dxBarLargeButton2Click(Sender: TObject);
+begin
+   with QJurnal do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'');
+     open;
+    end;
+
+
+ if QJurnal.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QJurnal.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(Report,'nm_judul','DAFTAR JURNAL PENERIMAAN');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+
 end;
 
 procedure TFListPenerimaanBank.QPenerimaanBankdescriptionGetText(Sender: TField;
