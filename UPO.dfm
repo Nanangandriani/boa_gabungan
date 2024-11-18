@@ -1572,7 +1572,6 @@ object FPO: TFPO
         'ame'
       ' --,c."type"'
       'order by a.po_no desc')
-    Active = True
     Left = 504
     Top = 32
   end
