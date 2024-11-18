@@ -55,25 +55,23 @@ type
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     QPenerimaanBank: TUniQuery;
-    QPenerimaanBankid: TGuidField;
-    QPenerimaanBankcreated_at: TDateTimeField;
-    QPenerimaanBankcreated_by: TStringField;
-    QPenerimaanBankupdated_at: TDateTimeField;
-    QPenerimaanBankupdated_by: TStringField;
-    QPenerimaanBankdeleted_at: TDateTimeField;
-    QPenerimaanBankdeleted_by: TStringField;
-    QPenerimaanBankcode_module: TStringField;
-    QPenerimaanBankname_module: TStringField;
-    QPenerimaanBankcode_trans: TStringField;
-    QPenerimaanBankname_trans: TStringField;
-    QPenerimaanBankdescription: TMemoField;
+    DsPenerimaanBank: TDataSource;
+    QPenerimaanBankvoucher_no: TStringField;
+    QPenerimaanBanktrans_date: TDateField;
+    QPenerimaanBankcode_type_trans: TStringField;
+    QPenerimaanBankname_type_trans: TStringField;
     QPenerimaanBankaccount_number_bank: TStringField;
     QPenerimaanBankaccount_name_bank: TStringField;
-    DsPenerimaanBank: TDataSource;
+    QPenerimaanBankpaid_amount: TFloatField;
+    QPenerimaanBankdescription: TMemoField;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure QPenerimaanBankdescriptionGetText(Sender: TField;
+      var Text: string; DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -87,7 +85,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPenerimaanBank;
+uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin;
 
 procedure TFListPenerimaanBank.ActBaruExecute(Sender: TObject);
 begin
@@ -100,17 +98,242 @@ end;
 
 procedure TFListPenerimaanBank.ActDelExecute(Sender: TObject);
 begin
-ShowMessage('delete');
+  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
+
+  if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "cash_banks"."t_cash_bank_acceptance" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString);
+          ExecSQL;
+        end;
+        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+  end;
 end;
 
 procedure TFListPenerimaanBank.ActROExecute(Sender: TObject);
 begin
-ShowMessage('refresh');
+  DBGridOrder.StartLoadingStatus();
+  try
+   with QPenerimaanBank do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from "cash_banks"."t_cash_bank_acceptance"   '+
+                 ' where deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  finally
+  DBGridOrder.FinishLoadingStatus();
+  end;
 end;
 
 procedure TFListPenerimaanBank.ActUpdateExecute(Sender: TObject);
 begin
-ShowMessage('Ubah');
+   FDataPenerimaanBank.Clear;
+   with Dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from "cash_banks"."t_cash_bank_acceptance"  a '+
+                 ' WHERE "voucher_no"='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+                 ' AND deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  if Dm.Qtemp.RecordCount=0 then
+  begin
+    ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
+    exit;
+  end;
+  if Dm.Qtemp.RecordCount<>0 then
+  begin
+  with FDataPenerimaanBank do
+  begin
+    //Master
+    edNoTrans.Text:=Dm.Qtemp.FieldByName('voucher_no').AsString;
+    dtTrans.date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
+    dtPeriode1.date:=Dm.Qtemp.FieldByName('period_date1').AsDateTime;
+    dtPeriode2.date:=Dm.Qtemp.FieldByName('period_date2').AsDateTime;
+    edKodeJenisTrans.Text:=Dm.Qtemp.FieldByName('code_type_trans').AsString;
+    edNamaJenisTrans.Text:=Dm.Qtemp.FieldByName('name_type_trans').AsString;
+    edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
+    edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
+    edNoRek.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
+    edNamaBank.Text:=Dm.Qtemp.FieldByName('account_name_bank').AsString;
+    edKodeMataUang.Text:=Dm.Qtemp.FieldByName('code_currency').AsString;
+    edNamaMataUang.Text:=Dm.Qtemp.FieldByName('name_currency').AsString;
+    edUntukPengiriman.Text:=Dm.Qtemp.FieldByName('for_acceptance').AsString;
+    edKurs.value:=Dm.Qtemp.FieldByName('kurs').Value;
+    edJumlah.value:=Dm.Qtemp.FieldByName('paid_amount').Value;
+    MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
+    edKodeSumberTagihan.Text:=Dm.Qtemp.FieldByName('payment_code').AsString;
+    edNMSumberTagihan.Text:=Dm.Qtemp.FieldByName('payment_name').AsString;
+    edKodeJenisBayar.Text:=Dm.Qtemp.FieldByName('bill_code').AsString;
+    edNMJenisBayar.Text:=Dm.Qtemp.FieldByName('bill_name').AsString;
+    FDataPenerimaanBank.vid_modul:=Dm.Qtemp.FieldByName('module_id').Value;
+    order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
+    strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
+    strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
+    strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+
+    //Refresh Form
+    if FDataPenerimaanBank.vid_modul='3' then // Bank
+    begin
+      FDataPenerimaanBank.gbDataBank.Visible:=True;
+    end;
+    if FDataPenerimaanBank.vid_modul='4' then // Kas
+    begin
+      FDataPenerimaanBank.gbDataBank.Visible:=False;
+    end;
+
+
+    if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
+    begin
+      with FDataPenerimaanBank do
+      begin
+        //ShowMessage('0');
+        //edKodeSumberTagihan.Visible:=true;
+        //edKodeJenisBayar.Visible:=true;
+        lbSumberTagihan.Visible:=true;
+        lbSumberTagihann.Visible:=true;
+        lbJenisBayar.Visible:=true;
+        lbJenisBayarr.Visible:=true;
+        edNMSumberTagihan.Visible:=true;
+        edNMJenisBayar.Visible:=true;
+      end;
+    end;
+    if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
+    begin
+      with FDataPenerimaanBank do
+      begin
+        //ShowMessage('1');
+        //edKodeSumberTagihan.Visible:=false;
+        //edKodeJenisBayar.Visible:=false;
+        lbSumberTagihan.Visible:=false;
+        lbSumberTagihann.Visible:=false;
+        lbJenisBayar.Visible:=false;
+        lbJenisBayarr.Visible:=false;
+        edNMSumberTagihan.Visible:=false;
+        edNMJenisBayar.Visible:=false;
+      end;
+    end;
+
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp.FieldByName('code_type_trans').AsString)+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataPiutang.Visible:=false;
+      TabDetailFaktur.TabVisible:=false;
+    end;
+  end;
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp.FieldByName('code_type_trans').AsString)+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataPiutang.Visible:=true;
+      TabDetailFaktur.TabVisible:=true;
+    end;
+
+    if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
+      FDataPenerimaanBank.Panel5.Visible:=false
+    else
+      FDataPenerimaanBank.Panel5.Visible:=true;
+  end;
+
+
+    //detailakun
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from "cash_banks"."t_cash_bank_acceptance_det"'+
+              ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
+              ' Order By position asc');
+      open;
+    end;
+
+    MemDetailAkun.EmptyTable;
+    Dm.Qtemp1.First;
+    while not Dm.Qtemp1.Eof do
+    begin
+        FDataPenerimaanBank.MemDetailAkun.Insert;
+        FDataPenerimaanBank.MemDetailAkun['kd_akun']:=Dm.Qtemp1.fieldbyname('code_account').AsString;
+        FDataPenerimaanBank.MemDetailAkun['nm_akun']:=Dm.Qtemp1.fieldbyname('name_account').AsString;
+        if Dm.Qtemp1.fieldbyname('position').AsString='D' then
+        begin
+          FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
+          FDataPenerimaanBank.MemDetailAkun['debit']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
+        end;
+        if Dm.Qtemp1.fieldbyname('position').AsString='K' then
+        begin
+          FDataPenerimaanBank.MemDetailAkun['kredit']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
+          FDataPenerimaanBank.MemDetailAkun['debit']:=0;
+        end;
+        FDataPenerimaanBank.MemDetailAkun['jumlah_hasil_kurs']:=Dm.Qtemp1.fieldbyname('amount_rate_results').Value;
+        FDataPenerimaanBank.MemDetailAkun['keterangan']:=Dm.Qtemp1.fieldbyname('description').AsString;
+        FDataPenerimaanBank.MemDetailAkun['kd_header_akun']:=Dm.Qtemp1.fieldbyname('code_account_header').AsString;
+        FDataPenerimaanBank.MemDetailAkun.post;
+    Dm.Qtemp1.Next;
+    end;
+
+    //detail faktur
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+              ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
+              ' Order By voucher_no desc');
+      open;
+    end;
+
+    MemDetailPiutang.EmptyTable;
+    Dm.Qtemp1.First;
+    while not Dm.Qtemp1.Eof do
+    begin
+        FDataPenerimaanBank.MemDetailPiutang.insert;
+        FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp1.fieldbyname('date_invoice_tax').AsDateTime;
+        FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').AsString;
+        FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
+        FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
+        FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
+        FDataPenerimaanBank.MemDetailPiutang['keterangan']:=Dm.Qtemp1.fieldbyname('description').AsString;
+        FDataPenerimaanBank.MemDetailPiutang.post;
+    Dm.Qtemp1.Next;
+    end;
+
+  end;
+  end;
+  FDataPenerimaanBank.edNoTrans.Enabled:=false;
+  FDataPenerimaanBank.Show;
+  FDataPenerimaanBank.Status := 1;
+end;
+
+procedure TFListPenerimaanBank.QPenerimaanBankdescriptionGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  Text := Copy(QPenerimaanBankdescription.AsString, 1, 255);
 end;
 
 Initialization

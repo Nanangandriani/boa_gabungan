@@ -410,6 +410,7 @@ begin
 
    //ShowMessage(cLocation);
    Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(Report,'nm_judul','DAFTAR JURNAL PENJUALAN');
    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
    //Report.DesignReport();
    Report.ShowReport();

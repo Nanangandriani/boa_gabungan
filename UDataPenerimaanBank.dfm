@@ -599,7 +599,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object gbDataPiutang: TGroupBox
       Left = 0
       Top = 0
-      Width = 514
+      Width = 713
       Height = 113
       Align = alLeft
       Caption = 'Data Tagihan'
@@ -613,6 +613,34 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       end
       object Label22: TLabel
         Left = 117
+        Top = 30
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object lbSumberTagihan: TLabel
+        Left = 500
+        Top = 30
+        Width = 85
+        Height = 15
+        Caption = 'Sumber Tagihan'
+      end
+      object lbJenisBayar: TLabel
+        Left = 500
+        Top = 59
+        Width = 94
+        Height = 15
+        Caption = 'Jenis Pembayaran'
+      end
+      object lbJenisBayarr: TLabel
+        Left = 597
+        Top = 59
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object lbSumberTagihann: TLabel
+        Left = 597
         Top = 30
         Width = 3
         Height = 15
@@ -636,15 +664,58 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         TabOrder = 1
       end
+      object edNMJenisBayar: TRzButtonEdit
+        Left = 606
+        Top = 56
+        Width = 103
+        Height = 23
+        Text = ''
+        TabOrder = 2
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edNMJenisBayarButtonClick
+      end
+      object edNMSumberTagihan: TRzButtonEdit
+        Left = 606
+        Top = 27
+        Width = 103
+        Height = 23
+        Text = ''
+        TabOrder = 3
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edNMSumberTagihanButtonClick
+      end
+      object edKodeSumberTagihan: TEdit
+        Left = 715
+        Top = 27
+        Width = 50
+        Height = 23
+        CharCase = ecUpperCase
+        ReadOnly = True
+        TabOrder = 4
+        Visible = False
+      end
+      object edKodeJenisBayar: TEdit
+        Left = 715
+        Top = 56
+        Width = 50
+        Height = 23
+        CharCase = ecUpperCase
+        ReadOnly = True
+        TabOrder = 5
+        Visible = False
+      end
     end
     object gbDataBank: TGroupBox
-      Left = 514
+      Left = 713
       Top = 0
-      Width = 567
+      Width = 351
       Height = 113
       Align = alLeft
       Caption = 'Data Bank'
       TabOrder = 1
+      ExplicitLeft = 514
       object Label1: TLabel
         Left = 128
         Top = 59
@@ -673,34 +744,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 15
         Caption = ':'
       end
-      object lbJenisBayarr: TLabel
-        Left = 437
-        Top = 59
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object lbSumberTagihann: TLabel
-        Left = 437
-        Top = 30
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object lbJenisBayar: TLabel
-        Left = 340
-        Top = 59
-        Width = 94
-        Height = 15
-        Caption = 'Jenis Pembayaran'
-      end
-      object lbSumberTagihan: TLabel
-        Left = 340
-        Top = 30
-        Width = 85
-        Height = 15
-        Caption = 'Sumber Tagihan'
-      end
       object edNamaBank: TRzButtonEdit
         Left = 136
         Top = 27
@@ -720,48 +763,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 1
-      end
-      object edNMSumberTagihan: TRzButtonEdit
-        Left = 446
-        Top = 27
-        Width = 103
-        Height = 23
-        Text = ''
-        TabOrder = 2
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = edNMSumberTagihanButtonClick
-      end
-      object edNMJenisBayar: TRzButtonEdit
-        Left = 446
-        Top = 56
-        Width = 103
-        Height = 23
-        Text = ''
-        TabOrder = 3
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = edNMJenisBayarButtonClick
-      end
-      object edKodeSumberTagihan: TEdit
-        Left = 555
-        Top = 27
-        Width = 50
-        Height = 23
-        CharCase = ecUpperCase
-        ReadOnly = True
-        TabOrder = 4
-        Visible = False
-      end
-      object edKodeJenisBayar: TEdit
-        Left = 555
-        Top = 56
-        Width = 50
-        Height = 23
-        CharCase = ecUpperCase
-        ReadOnly = True
-        TabOrder = 5
-        Visible = False
       end
     end
   end
