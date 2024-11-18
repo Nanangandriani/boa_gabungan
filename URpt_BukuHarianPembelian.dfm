@@ -61,7 +61,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     TabOrder = 0
     OnClick = Panel1Click
     ExplicitTop = 232
-    ExplicitWidth = 405
+    ExplicitWidth = 477
     object Bprint: TRzBitBtn
       Left = 93
       Top = 1
@@ -250,7 +250,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 404
+      ExplicitLeft = 394
     end
     object BPrint2: TRzBitBtn
       Left = 175
@@ -314,7 +314,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 238
     end
     object BPrint11: TRzBitBtn
       Left = 323
@@ -376,9 +375,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 317
-      ExplicitTop = 8
-      ExplicitHeight = 25
+      ExplicitLeft = 319
     end
   end
   object DtMulai: TRzDateTimeEdit
@@ -1983,7 +1980,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       'LEFT JOIN t_ak_account F on b.ppn_account=f.code  '
       'LEFT JOIN t_ak_account g on a.account_um_code=g.code'
       'INNER JOIN t_supplier h on a.supplier_code=h.supplier_code')
-    Active = True
     Left = 163
     Top = 109
   end
