@@ -106,11 +106,8 @@ object dm: Tdm
     Top = 220
   end
   object ABSDatabase1: TABSDatabase
-    Connected = True
     CurrentVersion = '7.95 '
-    DatabaseFileName = 
-      'D:\DATA HPS\Development\back_office_automation\Win32\Release\Con' +
-      'ectdb.abs'
+    DatabaseFileName = 'Conectdb.abs'
     DatabaseName = 't_konfigurasi'
     Exclusive = False
     Password = 'smart_boa2024'
@@ -125,7 +122,6 @@ object dm: Tdm
     DatabaseName = 't_konfigurasi'
     InMemory = False
     ReadOnly = False
-    Active = True
     StoreDefs = True
     FieldDefs = <
       item

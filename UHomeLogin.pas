@@ -57,7 +57,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMainMenu, UDataModule;
+uses UMainMenu, UDataModule, UMy_Function;
     //FMainMenu.show;
     //FHomeLogin.Close;
 
@@ -71,15 +71,15 @@ begin
   Filtered:=true;
   end;
 
-    {DM.Koneksi.Connected:=False;
+    DM.Koneksi.Connected:=False;
     DM.Koneksi.Server:=dm.abstable1Ip_db.AsString;
     DM.Koneksi.ProviderName:='PostgreSQL';
     DM.Koneksi.Database:=dm.abstable1Db_Name.AsString;
     DM.Koneksi.Password:=dm.abstable1Password.AsString;
     DM.Koneksi.Username:=dm.abstable1User_db.AsString;
     Dm.Koneksi.Port:=dm.abstable1Port_db.AsInteger;
-    DM.Koneksi.Connected:=True;}
-    Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
+    DM.Koneksi.Connected:=True;
+    //Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
 end;
 
 procedure TFHomeLogin.EdPassKeyPress(Sender: TObject; var Key: Char);
@@ -93,6 +93,7 @@ end;
 procedure TFHomeLogin.FormShow(Sender: TObject);
 begin
   // Misalnya menggunakan query untuk mendapatkan item di TcxDBComboBox
+  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
   DM.ABSTable1.Open;
   CbSBU.Clear;
   while not DM.ABSTable1.Eof do
