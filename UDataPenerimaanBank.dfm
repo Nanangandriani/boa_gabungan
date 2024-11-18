@@ -412,9 +412,9 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 298
+    Top = 281
     Width = 1133
-    Height = 224
+    Height = 241
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
@@ -422,15 +422,17 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 1127
-    ExplicitHeight = 215
+    ExplicitHeight = 232
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1123
+      ExplicitHeight = 207
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
         Width = 1129
-        Height = 199
+        Height = 216
         Align = alClient
         DataSource = DSDetailAkun
         DynProps = <>
@@ -514,13 +516,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1123
-      ExplicitHeight = 190
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
         Width = 1129
-        Height = 199
+        Height = 216
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -589,7 +589,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Left = 0
     Top = 185
     Width = 1133
-    Height = 113
+    Height = 96
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
@@ -599,8 +599,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object gbDataPiutang: TGroupBox
       Left = 0
       Top = 0
-      Width = 713
-      Height = 113
+      Width = 501
+      Height = 96
       Align = alLeft
       Caption = 'Data Tagihan'
       TabOrder = 0
@@ -613,34 +613,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       end
       object Label22: TLabel
         Left = 117
-        Top = 30
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object lbSumberTagihan: TLabel
-        Left = 500
-        Top = 30
-        Width = 85
-        Height = 15
-        Caption = 'Sumber Tagihan'
-      end
-      object lbJenisBayar: TLabel
-        Left = 500
-        Top = 59
-        Width = 94
-        Height = 15
-        Caption = 'Jenis Pembayaran'
-      end
-      object lbJenisBayarr: TLabel
-        Left = 597
-        Top = 59
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object lbSumberTagihann: TLabel
-        Left = 597
         Top = 30
         Width = 3
         Height = 15
@@ -664,58 +636,15 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         TabOrder = 1
       end
-      object edNMJenisBayar: TRzButtonEdit
-        Left = 606
-        Top = 56
-        Width = 103
-        Height = 23
-        Text = ''
-        TabOrder = 2
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = edNMJenisBayarButtonClick
-      end
-      object edNMSumberTagihan: TRzButtonEdit
-        Left = 606
-        Top = 27
-        Width = 103
-        Height = 23
-        Text = ''
-        TabOrder = 3
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = edNMSumberTagihanButtonClick
-      end
-      object edKodeSumberTagihan: TEdit
-        Left = 715
-        Top = 27
-        Width = 50
-        Height = 23
-        CharCase = ecUpperCase
-        ReadOnly = True
-        TabOrder = 4
-        Visible = False
-      end
-      object edKodeJenisBayar: TEdit
-        Left = 715
-        Top = 56
-        Width = 50
-        Height = 23
-        CharCase = ecUpperCase
-        ReadOnly = True
-        TabOrder = 5
-        Visible = False
-      end
     end
     object gbDataBank: TGroupBox
-      Left = 713
+      Left = 501
       Top = 0
-      Width = 351
-      Height = 113
+      Width = 556
+      Height = 96
       Align = alLeft
       Caption = 'Data Bank'
       TabOrder = 1
-      ExplicitLeft = 514
       object Label1: TLabel
         Left = 128
         Top = 59
@@ -744,6 +673,34 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 15
         Caption = ':'
       end
+      object lbSumberTagihann: TLabel
+        Left = 429
+        Top = 30
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object lbJenisBayarr: TLabel
+        Left = 429
+        Top = 59
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object lbJenisBayar: TLabel
+        Left = 332
+        Top = 59
+        Width = 94
+        Height = 15
+        Caption = 'Jenis Pembayaran'
+      end
+      object lbSumberTagihan: TLabel
+        Left = 332
+        Top = 30
+        Width = 85
+        Height = 15
+        Caption = 'Sumber Tagihan'
+      end
       object edNamaBank: TRzButtonEdit
         Left = 136
         Top = 27
@@ -763,6 +720,48 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 1
+      end
+      object edKodeSumberTagihan: TEdit
+        Left = 532
+        Top = 27
+        Width = 50
+        Height = 23
+        CharCase = ecUpperCase
+        ReadOnly = True
+        TabOrder = 2
+        Visible = False
+      end
+      object edKodeJenisBayar: TEdit
+        Left = 532
+        Top = 56
+        Width = 50
+        Height = 23
+        CharCase = ecUpperCase
+        ReadOnly = True
+        TabOrder = 3
+        Visible = False
+      end
+      object edNMJenisBayar: TRzButtonEdit
+        Left = 438
+        Top = 56
+        Width = 103
+        Height = 23
+        Text = ''
+        TabOrder = 4
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edNMJenisBayarButtonClick
+      end
+      object edNMSumberTagihan: TRzButtonEdit
+        Left = 438
+        Top = 27
+        Width = 103
+        Height = 23
+        Text = ''
+        TabOrder = 5
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edNMSumberTagihanButtonClick
       end
     end
   end

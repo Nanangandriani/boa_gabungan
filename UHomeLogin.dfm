@@ -2,8 +2,8 @@ object FHomeLogin: TFHomeLogin
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  ClientHeight = 372
-  ClientWidth = 394
+  ClientHeight = 374
+  ClientWidth = 398
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,12 +11,13 @@ object FHomeLogin: TFHomeLogin
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnCreate = FormCreate
   TextHeight = 15
   object pnApproval: TRzPanel
     Left = 0
     Top = 0
-    Width = 394
-    Height = 372
+    Width = 398
+    Height = 374
     Align = alClient
     BorderOuter = fsNone
     Color = 15987699
@@ -25,8 +26,8 @@ object FHomeLogin: TFHomeLogin
     object ImgApproval: TImage
       Left = 0
       Top = 0
-      Width = 394
-      Height = 372
+      Width = 398
+      Height = 374
       Align = alClient
       AutoSize = True
       Center = True
@@ -4356,6 +4357,7 @@ object FHomeLogin: TFHomeLogin
         0000000049454E44AE426082}
       Proportional = True
       ExplicitWidth = 377
+      ExplicitHeight = 372
     end
     object ImgTransaksi: TImage
       Left = 53
@@ -4598,38 +4600,131 @@ object FHomeLogin: TFHomeLogin
       Text = 'Admin'
       TextHint = 'USERNAME'
     end
-    object Edit3: TEdit
-      Left = 79
-      Top = 67
-      Width = 246
-      Height = 25
-      BevelInner = bvNone
-      BevelOuter = bvNone
-      BorderStyle = bsNone
-      Color = 16445656
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -22
-      Font.Name = 'Segoe UI'
-      Font.Style = []
+    object CbSBU: TcxComboBox
+      Left = 66
+      Top = 90
       ParentFont = False
-      PasswordChar = '*'
+      Style.BorderColor = clGradientActiveCaption
+      Style.BorderStyle = ebsNone
+      Style.Color = 16445656
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -22
+      Style.Font.Name = 'Segoe UI'
+      Style.Font.Style = []
+      Style.ButtonStyle = btsFlat
+      Style.ButtonTransparency = ebtNone
+      Style.IsFontAssigned = True
+      StyleDisabled.BorderColor = clGradientActiveCaption
+      StyleDisabled.BorderStyle = ebsNone
+      StyleDisabled.Color = clGradientActiveCaption
+      StyleDisabled.TextColor = clGradientActiveCaption
+      StyleDisabled.ButtonStyle = btsFlat
       TabOrder = 2
-      TextHint = 'ID SBU'
-      Visible = False
+      Text = 'CbSBU'
+      OnClick = CbSBUClick
+      Width = 265
     end
-    object ComboBox1: TComboBox
-      Left = 64
-      Top = 98
-      Width = 261
-      Height = 23
-      BevelInner = bvNone
-      BevelOuter = bvNone
-      Color = 16445656
-      Ctl3D = False
-      ParentCtl3D = False
-      TabOrder = 3
-      Text = 'ComboBox1'
+  end
+  object ABSDatabase1: TABSDatabase
+    Connected = True
+    CurrentVersion = '7.95 '
+    DatabaseFileName = 
+      'D:\DATA HPS\Development\back_office_automation\Win32\Release\Con' +
+      'ectdb.abs'
+    DatabaseName = 't_konfigurasi'
+    Exclusive = False
+    Password = 'smart_boa2024'
+    MaxConnections = 500
+    MultiUser = False
+    SessionName = 'Default'
+    Left = 370
+    Top = 16
+  end
+  object ABSTable1: TABSTable
+    CurrentVersion = '7.95 '
+    DatabaseName = 't_konfigurasi'
+    InMemory = False
+    ReadOnly = False
+    Active = True
+    StoreDefs = True
+    FieldDefs = <
+      item
+        Name = 'id'
+        DataType = ftAutoInc
+      end
+      item
+        Name = 'Sbu_Code'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Nama_Sbu'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'Ip_db'
+        DataType = ftString
+        Size = 100
+      end
+      item
+        Name = 'Port_db'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Db_Name'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Password'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Ip_db_Pusat'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'User_db'
+        DataType = ftString
+        Size = 20
+      end>
+    TableName = 't_konfigurasi'
+    Exclusive = False
+    Left = 370
+    Top = 88
+    object ABSTable1id: TAutoIncField
+      FieldName = 'id'
+    end
+    object ABSTable1Sbu_Code: TStringField
+      FieldName = 'Sbu_Code'
+    end
+    object ABSTable1Nama_Sbu: TStringField
+      FieldName = 'Nama_Sbu'
+      Size = 50
+    end
+    object ABSTable1Ip_db: TStringField
+      FieldName = 'Ip_db'
+      Size = 100
+    end
+    object ABSTable1Port_db: TStringField
+      FieldName = 'Port_db'
+    end
+    object ABSTable1Db_Name: TStringField
+      FieldName = 'Db_Name'
+    end
+    object ABSTable1Password: TStringField
+      FieldName = 'Password'
+    end
+    object ABSTable1Ip_db_Pusat: TStringField
+      FieldName = 'Ip_db_Pusat'
+    end
+    object ABSTable1User_db: TStringField
+      FieldName = 'User_db'
     end
   end
 end

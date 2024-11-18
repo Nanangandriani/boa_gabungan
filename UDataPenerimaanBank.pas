@@ -83,14 +83,14 @@ type
     edNamaBank: TRzButtonEdit;
     edNoRek: TEdit;
     MemDetailAkunjumlah_hasil_kurs: TCurrencyField;
-    lbSumberTagihan: TLabel;
-    lbJenisBayar: TLabel;
-    lbJenisBayarr: TLabel;
-    lbSumberTagihann: TLabel;
-    edNMJenisBayar: TRzButtonEdit;
-    edNMSumberTagihan: TRzButtonEdit;
     edKodeSumberTagihan: TEdit;
     edKodeJenisBayar: TEdit;
+    edNMJenisBayar: TRzButtonEdit;
+    edNMSumberTagihan: TRzButtonEdit;
+    lbSumberTagihann: TLabel;
+    lbJenisBayarr: TLabel;
+    lbJenisBayar: TLabel;
+    lbSumberTagihan: TLabel;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -781,7 +781,7 @@ begin
 
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
   begin
-    if (edKodeSumberTagihan.Text='0') OR (Length(edKodeSumberTagihan.Text)=0) then
+    if (vid_modul='3') AND ((edKodeSumberTagihan.Text='0') OR (Length(edKodeSumberTagihan.Text)=0)) then
     begin
       ShowMessage('Silkan Pilih Sumber Tagihan...!!!');
       Exit;

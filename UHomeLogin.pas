@@ -6,7 +6,26 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.StdCtrls,
   Vcl.Imaging.pngimage, Vcl.ExtCtrls, RzPanel, Vcl.Mask, RzEdit, ShellAPI,
-  RzCmboBx, RzLabel, Vcl.ComCtrls;
+  RzCmboBx, RzLabel, Vcl.ComCtrls, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore, dxSkinBasic,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkroom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinOffice2016Colorful,
+  dxSkinOffice2016Dark, dxSkinOffice2019Black, dxSkinOffice2019Colorful,
+  dxSkinOffice2019DarkGray, dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinTheBezier, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue, cxDBEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, ABSMain,
+  Vcl.DBCtrls, Data.DB;
 
 type
   TFHomeLogin = class(TForm)
@@ -16,12 +35,24 @@ type
     Eduser: TEdit;
     ImgTransaksi: TImage;
     Image1: TImage;
-    Edit3: TEdit;
-    ComboBox1: TComboBox;
+    CbSBU: TcxComboBox;
+    ABSDatabase1: TABSDatabase;
+    ABSTable1: TABSTable;
+    ABSTable1id: TAutoIncField;
+    ABSTable1Sbu_Code: TStringField;
+    ABSTable1Nama_Sbu: TStringField;
+    ABSTable1Ip_db: TStringField;
+    ABSTable1Port_db: TStringField;
+    ABSTable1Db_Name: TStringField;
+    ABSTable1Password: TStringField;
+    ABSTable1Ip_db_Pusat: TStringField;
+    ABSTable1User_db: TStringField;
     procedure RzPanel1Paint(Sender: TObject);
     procedure ImgTransaksiClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure EdPassKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
+    procedure CbSBUClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,11 +72,45 @@ uses UMainMenu, UDataModule;
     //FMainMenu.show;
     //FHomeLogin.Close;
 
+procedure TFHomeLogin.CbSBUClick(Sender: TObject);
+begin
+  with dm.abstable1 do
+  begin
+  Filtered:=false;
+  Filter:='Nama_Sbu='+QuotedStr(CbSBU.Text);
+  FilterOptions:=[];
+  Filtered:=true;
+  end;
+
+    {DM.Koneksi.Connected:=False;
+    DM.Koneksi.Server:=dm.abstable1Ip_db.AsString;
+    DM.Koneksi.ProviderName:='PostgreSQL';
+    DM.Koneksi.Database:=dm.abstable1Db_Name.AsString;
+    DM.Koneksi.Password:=dm.abstable1Password.AsString;
+    DM.Koneksi.Username:=dm.abstable1User_db.AsString;
+    Dm.Koneksi.Port:=dm.abstable1Port_db.AsInteger;
+    DM.Koneksi.Connected:=True;}
+    Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
+end;
+
 procedure TFHomeLogin.EdPassKeyPress(Sender: TObject; var Key: Char);
 begin
   if key=#13 then
   begin
      ImgTransaksiClick(sender);
+  end;
+end;
+
+procedure TFHomeLogin.FormCreate(Sender: TObject);
+begin
+  // Misalnya menggunakan query untuk mendapatkan item di TcxDBComboBox
+  DM.ABSTable1.Open;
+  CbSBU.Clear;
+  CbSBU.Properties.items.Add('');
+  while not DM.ABSTable1.Eof do
+  begin
+    CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
+    DM.ABSTable1.Next;
   end;
 end;
 
@@ -56,6 +121,59 @@ end;
 
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
+   //Cek User
+   if Eduser.Text='' then
+   begin
+     MessageDlg('Username Wajib Diisi..!!',mtInformation,[mbRetry],0);
+     Eduser.SetFocus;
+   end
+   else if (EdPass.Text='') and (Length(EdPass.Text)=0) then
+   begin
+     MessageDlg('Password Wajib Diisi..!!',mtInformation,[mbRetry],0);
+     EdPass.SetFocus;
+   end
+   else if (EdPass.Text='') and (Eduser.Text<>'') then
+   begin
+   //cek User
+   with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+             ' "password", "role_id", "is_active", "last_login", "last_logout", '+
+             ' "signature", "position", "status", "created_at", "updated_at", '+
+             ' "deleted_at", "job_level_id", "created_by", "updated_by", '+
+             ' "deleted_by", "dept_code", "position_code", "ttd" '+
+             ' FROM "public"."t_user" '+
+             ' where "user_name"='+QuotedStr(Eduser.Text)+' ');
+     open;
+    end;
+    if dm.Qtemp.RecordCount=0 then
+    begin
+      ShowMessage('User Anda Tidak Terdaftar..!!!');
+      Exit;
+    end;
+
+   with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+             ' "password", "role_id", "is_active", "last_login", "last_logout", '+
+             ' "signature", "position", "status", "created_at", "updated_at", '+
+             ' "deleted_at", "job_level_id", "created_by", "updated_by", '+
+             ' "deleted_by", "dept_code", "position_code", "ttd" '+
+             ' FROM "public"."t_user" '+
+             ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
+             ' and "password"='+QuotedStr(EdPass.Text)+'  ');
+     open;
+    end;
+    if dm.Qtemp.RecordCount=0 then
+    begin
+      ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');
+      Exit;
+    end;
+
    //Buat Variable Perusahaan
    with dm.Qtemp do
     begin
@@ -74,9 +192,10 @@ begin
       vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
       vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
     end;
-   Nm:=Eduser.Text;
+    Nm:=Eduser.Text;
+   end;
+
    FMainMenu.showmodal;
-//   Nm:=Eduser.Text;
    FHomeLogin.Close;
 end;
 
