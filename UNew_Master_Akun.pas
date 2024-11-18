@@ -41,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-uses UCari_DaftarPerk, UMainMenu, UDataModule, UMaster_Akun;
+uses UCari_DaftarPerk, UMainMenu, UDataModule, UMaster_Akun, UMy_Function;
 
 var RealFNew_Master_Akun : TFNew_Master_Akun;
 
@@ -85,7 +85,7 @@ begin
     dm.koneksi.StartTransaction;
     try
       begin
-        if statustr=0 then
+        if statustr='0' then
         begin
           with dm.qtemp do
           begin
@@ -95,7 +95,7 @@ begin
             execute;
           end;
         end;
-        if statustr=1 then
+        if statustr='1' then
         begin
           with dm.qtemp do
           begin

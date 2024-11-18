@@ -3,8 +3,8 @@ object FNew_Barang: TFNew_Barang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form New Barang'
-  ClientHeight = 375
-  ClientWidth = 561
+  ClientHeight = 374
+  ClientWidth = 557
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object FNew_Barang: TFNew_Barang
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 334
-    Width = 561
+    Top = 333
+    Width = 557
     Height = 41
     Align = alBottom
     TabOrder = 0
@@ -277,8 +277,8 @@ object FNew_Barang: TFNew_Barang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 561
-    Height = 334
+    Width = 557
+    Height = 333
     Hint = ''
     ActivePage = TabSheet3
     Align = alClient
@@ -291,6 +291,8 @@ object FNew_Barang: TFNew_Barang
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Umum'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 551
       ExplicitHeight = 302
       object Label16: TLabel
@@ -527,8 +529,8 @@ object FNew_Barang: TFNew_Barang
       end
       object StatusBar1: TStatusBar
         Left = 0
-        Top = 292
-        Width = 557
+        Top = 291
+        Width = 553
         Height = 19
         Panels = <>
         ExplicitTop = 283
@@ -556,6 +558,10 @@ object FNew_Barang: TFNew_Barang
     object TabSheet2: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
@@ -636,6 +642,10 @@ object FNew_Barang: TFNew_Barang
     object TabSheet3: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Akun'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label19: TLabel
         Left = 27
         Top = 28

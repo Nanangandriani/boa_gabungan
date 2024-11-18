@@ -2,8 +2,8 @@ object FPakai_Material_For: TFPakai_Material_For
   Left = 0
   Top = 0
   Caption = 'Form Pemakaian Material Untuk Formula Test'
-  ClientHeight = 588
-  ClientWidth = 1092
+  ClientHeight = 587
+  ClientWidth = 1088
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FPakai_Material_For: TFPakai_Material_For
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1092
+    Width = 1088
     Height = 124
     BarManager = dxBarManager1
     Style = rs2010
@@ -27,6 +27,7 @@ object FPakai_Material_For: TFPakai_Material_For
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1092
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -43,8 +44,8 @@ object FPakai_Material_For: TFPakai_Material_For
   object DBGridPakai: TDBGridEh
     Left = 0
     Top = 124
-    Width = 1092
-    Height = 464
+    Width = 1088
+    Height = 463
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -179,6 +180,10 @@ object FPakai_Material_For: TFPakai_Material_For
         FixedDimension = 19
         object TabBaku: TRzTabSheet
           Caption = 'Bahan Baku'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object DBGridEh1: TDBGridEh
             Left = 0
             Top = 0
@@ -302,6 +307,10 @@ object FPakai_Material_For: TFPakai_Material_For
         end
         object TabKimia: TRzTabSheet
           Caption = 'Bahan Kimia'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object DBGridEh2: TDBGridEh
             Left = 0
             Top = 0

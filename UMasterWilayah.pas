@@ -63,7 +63,7 @@ implementation
 
 uses USetMasterWilayah, UMasterData, UDataModule, UNew_Pelanggan, UMy_Function,
   Ubrowse_pelanggan, UDataProspekPelanggan, UListOrderTelemarketing,
-  UMasterSales, UListSalesOrder, UDataKolektor;
+  UMasterSales, UListSalesOrder, UDataKolektor, UPengajuanApproval_JurnalTrans;
 
 procedure TFMasterWilayah.RefreshGrid;
 begin
@@ -213,6 +213,11 @@ begin
   begin
     FNew_Pelanggan.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
     FNew_Pelanggan.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+  end;
+  if vcall='m_jurnalPenj' then
+  begin
+    FPengajuan_AppJurnal_Trans.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
+    FPengajuan_AppJurnal_Trans.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
   end;
   FMasterWilayah.MemDetailMasterWil.EmptyTable;
   FMasterWilayah.close;

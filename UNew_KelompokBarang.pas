@@ -63,7 +63,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UCari_DaftarPerk, UMainMenu;
+uses UDataModule, UCari_DaftarPerk, UMainMenu, UMy_Function;
 
 procedure TFNew_KelompokBarang.clear;
 begin
@@ -77,7 +77,7 @@ end;
 
 procedure TFNew_KelompokBarang.DBGridEh7DblClick(Sender: TObject);
 begin
-    statustr:=1;
+    statustr:='1';
     group_id:=QKelompok['group_id'];
     EdKd.Text:=QKelompok['code'];
     EdJenis.Text:=QKelompok['type'];
@@ -122,7 +122,7 @@ end;
 
 procedure TFNew_KelompokBarang.BSimpanClick(Sender: TObject);
 begin
-  if statustr=0 then
+  if statustr='0' then
   begin
     with dm.Qtemp do
     begin
@@ -139,7 +139,7 @@ begin
       ExecSQL;
     end;
   end;
-  if statustr=1 then
+  if statustr='1' then
   begin
     with dm.Qtemp do
     begin
@@ -167,7 +167,7 @@ begin
   clear;
   Load;
   edjenis.SetFocus;
-  statustr:=0;
+  statustr:='0';
 end;
 
 procedure TFNew_KelompokBarang.CbKategoriSelect(Sender: TObject);

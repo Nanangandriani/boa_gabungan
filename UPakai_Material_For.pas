@@ -108,7 +108,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pakai_Material_For, umainmenu, UDataModule;
+uses UNew_Pakai_Material_For, umainmenu, UDataModule, UMy_Function;
 var
   RealFPakai_Material_For: TFPakai_Material_For;
 function FPakai_Material_For: TFPakai_Material_For;
@@ -136,7 +136,7 @@ begin
     BSimpan.Visible:=true;
     Show;
     Caption:='New Pemakaian Material untuk Formula';
-    statustr:=0;
+    statustr:='0';
   end;
 end;
 
@@ -292,7 +292,7 @@ end;
 
 procedure TFPakai_Material_For.ActUpdateExecute(Sender: TObject);
 begin
-  statustr:=1;
+  statustr:='1';
   ADate:=DBGridPakai.Fields[3].AsDateTime;
  with FNew_PakaiMatFor do
   begin

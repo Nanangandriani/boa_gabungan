@@ -4,7 +4,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   BorderStyle = bsDialog
   Caption = 'Form Laporan Buku Harian Pembelian'
   ClientHeight = 268
-  ClientWidth = 409
+  ClientWidth = 481
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -37,7 +37,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Width = 17
     Height = 13
     Caption = 'S/D'
-    Visible = False
   end
   object Label4: TLabel
     Left = 11
@@ -56,12 +55,12 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   object Panel1: TPanel
     Left = 0
     Top = 233
-    Width = 409
+    Width = 481
     Height = 35
     Align = alBottom
     TabOrder = 0
     OnClick = Panel1Click
-    ExplicitTop = 88
+    ExplicitTop = 232
     ExplicitWidth = 405
     object Bprint: TRzBitBtn
       Left = 93
@@ -190,13 +189,14 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       NumGlyphs = 2
     end
     object BBatal: TRzBitBtn
-      Left = 326
+      Left = 398
       Top = 1
       Width = 82
       Height = 33
       Align = alRight
       Caption = 'Batal'
       TabOrder = 2
+      Visible = False
       OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -250,16 +250,17 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 322
+      ExplicitLeft = 404
     end
     object BPrint2: TRzBitBtn
-      Left = 242
+      Left = 175
       Top = 1
       Width = 84
       Height = 33
-      Align = alRight
+      Align = alLeft
       Caption = 'Print'
       TabOrder = 3
+      Visible = False
       OnClick = BPrint2Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -315,6 +316,70 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       NumGlyphs = 2
       ExplicitLeft = 238
     end
+    object BPrint11: TRzBitBtn
+      Left = 323
+      Top = 1
+      Height = 33
+      Align = alRight
+      Caption = 'Print'
+      TabOrder = 4
+      OnClick = BPrint11Click
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000730E0000730E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
+        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
+        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
+        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
+        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
+        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
+        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
+        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
+        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
+        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
+        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
+        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
+        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
+        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 317
+      ExplicitTop = 8
+      ExplicitHeight = 25
+    end
   end
   object DtMulai: TRzDateTimeEdit
     Left = 99
@@ -331,7 +396,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Height = 21
     EditType = etDate
     TabOrder = 2
-    Visible = False
   end
   object edkd_akun: TRzEdit
     Left = 99
@@ -448,6 +512,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 113.385826770000000000
           Height = 26.456710000000000000
           StretchMode = smMaxHeight
+          DataField = 'supplier_name'
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           Font.Charset = DEFAULT_CHARSET
@@ -456,6 +521,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[Rpt_BHP."supplier_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1019,9 +1086,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object MPeriode: TfrxMemoView
           AllowVectorExport = True
-          Left = 571.397616220000000000
+          Left = 465.570776220000000000
           Top = 20.677180000000000000
-          Width = 266.257664100000000000
+          Width = 428.777454100000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1031,7 +1098,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Periode :  18 November 2021')
+            'Periode :  18 November 2021 - 31 November 2021')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1724,6 +1791,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."ak_um"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1889,13 +1958,17 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   object QRptBHP: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ''
       
         'select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remainin' +
         'g,a.um_value,a.account_code ak_htng,c.item_stock_code,c.item_nam' +
         'e,b.account_code,b.ppn_account,b.subtotalrp,b.ppn_rp,b.grandtota' +
         'l,concat(a.account_code,'#39' ('#39',d.account_name,'#39')'#39') ak_ht_name,conc' +
-        'at(b.account_code,'#39' ('#39',e.account_name,'#39')'#39') ak_detail,concat(b.pp' +
-        'n_account,'#39' ('#39',f.account_name,'#39')'#39') ak_ppn,c.group_name'
+        'at(b.account_code,'#39' ('#39',e.account_name,'#39')'#39') ak_detail,case when b' +
+        '.ppn_account <> '#39#39' then concat(b.ppn_account,'#39' ('#39',f.account_name' +
+        ','#39')'#39') else '#39#39' end ak_ppn,case when a.account_um_code <> '#39#39' then ' +
+        'concat(a.account_um_code,'#39' ('#39',g.account_name,'#39')'#39') else '#39#39' end ak' +
+        '_um,c.group_name,h.supplier_name'
       'from purchase.t_purchase_invoice a'
       
         'INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.tr' +
@@ -1907,7 +1980,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         'tem_stock_code'#9
       'INNER JOIN t_ak_account d on a.account_code=d.code '
       'INNER JOIN t_ak_account E on b.account_code=e.code'
-      'INNER JOIN t_ak_account F on b.ppn_account=f.code  ')
+      'LEFT JOIN t_ak_account F on b.ppn_account=f.code  '
+      'LEFT JOIN t_ak_account g on a.account_um_code=g.code'
+      'INNER JOIN t_supplier h on a.supplier_code=h.supplier_code')
     Active = True
     Left = 163
     Top = 109
@@ -2267,7 +2342,9 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       'ak_ht_name=ak_ht_name'
       'ak_detail=ak_detail'
       'ak_ppn=ak_ppn'
-      'group_name=group_name')
+      'ak_um=ak_um'
+      'group_name=group_name'
+      'supplier_name=supplier_name')
     DataSet = QRptBHP
     BCDToCurrency = False
     DataSetOptions = []

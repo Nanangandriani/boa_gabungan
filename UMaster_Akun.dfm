@@ -2,8 +2,8 @@ object FMaster_Akun: TFMaster_Akun
   Left = 0
   Top = 0
   Caption = 'Form Master Akun'
-  ClientHeight = 442
-  ClientWidth = 674
+  ClientHeight = 441
+  ClientWidth = 670
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FMaster_Akun: TFMaster_Akun
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 674
+    Width = 670
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -25,6 +25,7 @@ object FMaster_Akun: TFMaster_Akun
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 674
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -43,8 +44,8 @@ object FMaster_Akun: TFMaster_Akun
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 674
-    Height = 315
+    Width = 670
+    Height = 314
     Align = alClient
     DataSource = Ds_Master_Akun
     DynProps = <>

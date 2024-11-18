@@ -53,7 +53,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UCari_Barang, UMainMenu;
+uses UDataModule, UCari_Barang, UMainMenu, UMy_Function;
 
 procedure TFItem_MasterFormula.clear;
 begin
@@ -130,7 +130,7 @@ end;
 
 procedure TFItem_MasterFormula.BSimpanClick(Sender: TObject);
 begin
-  if statustr=0 then
+  if statustr='0' then
   begin
     simpan;
   end else
@@ -144,7 +144,7 @@ end;
 procedure TFItem_MasterFormula.BUpdateClick(Sender: TObject);
 begin
   clear;
-  statustr:=1;
+  statustr:='1';
   BNew.Enabled:=false;
   BUpdate.Enabled:=false;
   Brefresh.Enabled:=false;
@@ -220,7 +220,7 @@ begin
 //  DBGridEh1.Visible:=true;
   DBGridEh2.Visible:=false;
   clear;
-  statustr:=0;
+  statustr:='0';
   BNew.Enabled:=false;
   BUpdate.Enabled:=false;
   Brefresh.Enabled:=false;

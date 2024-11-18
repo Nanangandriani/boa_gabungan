@@ -79,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu, UNew_PengStok;
+uses UDataModule, UMainMenu, UNew_PengStok, UMy_Function;
 
 //Udm, UItemTransferAntar_Gdng, UNew_PengStok, USearch_Brng, umainmenu;
 var
@@ -98,7 +98,7 @@ begin
   begin
     Show;
     //Autonumber;
-    statustr:=0;
+    statustr:='0';
   end;
 end;
 
@@ -146,7 +146,7 @@ begin
   with FNew_PengStok do
   begin
     Show;
-    statustr:=1;
+    statustr:='1';
     Edno.Text:=MemPeng_stok['trans_no'];
     EdKet.Text:=MemPeng_stok['note'];
     Edkd_stok.Text:=MemPeng_stok['stock_code'];

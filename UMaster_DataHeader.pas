@@ -51,7 +51,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu;
+uses UDataModule, UMainMenu, UMy_Function;
 
 procedure TFMaster_DataHeader.BtambahClick(Sender: TObject);
 begin
@@ -69,7 +69,7 @@ MessageDlg('Pilih tindakan yang ingin dilakukan:', mtConfirmation,
   Btambah.Enabled:=false;
   edkode_header.Text:=Qheader1['header_code1'];
   ednama_header.Text:=Qheader1['header_name1'];
-  statustr:=0;
+  statustr:='0';
   DBGrid_header1.Visible:=False;
 end;
 

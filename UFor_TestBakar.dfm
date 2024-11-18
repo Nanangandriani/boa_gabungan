@@ -2,8 +2,8 @@ object FFor_Testbakar: TFFor_Testbakar
   Left = 0
   Top = 0
   Caption = 'Form QC Bakar Satu Coil'
-  ClientHeight = 555
-  ClientWidth = 1229
+  ClientHeight = 554
+  ClientWidth = 1225
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FFor_Testbakar: TFFor_Testbakar
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1229
+    Width = 1225
     Height = 124
     BarManager = dxBarManager1
     Style = rs2010
@@ -27,6 +27,7 @@ object FFor_Testbakar: TFFor_Testbakar
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -45,8 +46,8 @@ object FFor_Testbakar: TFFor_Testbakar
   object DBGridTestBakar: TDBGridEh
     Left = 0
     Top = 124
-    Width = 1229
-    Height = 431
+    Width = 1225
+    Height = 430
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -775,7 +776,6 @@ object FFor_Testbakar: TFFor_Testbakar
       
         'select * from "warehouse".t_formula_burn_test Order by test_no D' +
         'esc')
-    Active = True
     Left = 448
     Top = 16
   end
@@ -785,7 +785,6 @@ object FFor_Testbakar: TFFor_Testbakar
     Top = 64
   end
   object MemTestBakar: TMemTableEh
-    Active = True
     Params = <>
     DataDriver = DsdTestBakar
     Left = 520
@@ -803,7 +802,6 @@ object FFor_Testbakar: TFFor_Testbakar
     MasterSource = DsTestBakar
     MasterFields = 'test_no'
     DetailFields = 'test_no'
-    Active = True
     Left = 616
     Top = 24
     ParamData = <

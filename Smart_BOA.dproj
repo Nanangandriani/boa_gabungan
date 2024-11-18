@@ -95,9 +95,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <DCC_UnitSearchPath>C:\Program Files (x86)\Embarcadero\Studio\22.0\Components\CEF4Delphi-master;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -236,6 +233,10 @@
             <Form>FNew_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="UNew_Perusahaan.pas">
             <Form>FNewPerusahaan</Form>
             <FormType>dfm</FormType>
@@ -352,8 +353,20 @@
             <Form>FSearch_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UKontrakKerjasama.pas">
+            <Form>FKontrakkerjasama</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_KontrakKerjasama.pas">
+            <Form>FNewKontrak_ks</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="UPembelian.pas">
             <Form>FPembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Pembelian.pas">
+            <Form>FNew_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UPot_Pembelian.pas">
@@ -530,10 +543,18 @@
             <Form>FNew_User</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UInput_um.pas">
+            <Form>FNew_UM_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="uLkJSON.pas"/>
         <DCCReference Include="uJSON.pas"/>
         <DCCReference Include="USetDeliveryOrder.pas">
             <Form>FSetDeliveryOrder</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UUang_Muka_Pembelian.pas">
+            <Form>FUang_Muka_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListSPmuat.pas">
@@ -668,10 +689,6 @@
             <Form>FDataPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListRencanaLunasPiutang.pas">
-            <Form>FListRencanaLunasPiutang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UListPenerimaanKas.pas">
             <Form>FListPenerimaanKas</Form>
             <FormType>dfm</FormType>
@@ -728,84 +745,69 @@
             <Form>FDaftarPenagihanPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UInput_um.pas">
-            <Form>FNew_UM_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNew_KontrakKerjasama.pas">
-            <Form>FNewKontrak_ks</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UUang_Muka_Pembelian.pas">
-            <Form>FUang_Muka_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UNew_Pembelian.pas">
-            <Form>FNew_Pembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UKontrakKerjasama.pas">
-            <Form>FKontrakkerjasama</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UListItempo.pas">
             <Form>Flistitempo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Unew_spb.pas">
-            <Form>FNew_SPB</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_Po.pas">
-            <Form>Fsearch_po</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_Purchase_Order.pas">
-            <Form>FUSearch_PO</Form>
-        </DCCReference>
-        <DCCReference Include="UNew_TerimaMaterial.pas">
-            <Form>FNew_TerimaMaterial</Form>
-        </DCCReference>
-        <DCCReference Include="UTerima_Material.pas">
-            <Form>FTerima_Material</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_TerimaBarang.pas">
-            <Form>FSearch_TerimaBarang</Form>
-        </DCCReference>
-        <DCCReference Include="Usearch_MatTerima.pas">
-            <Form>FSearch_Matterima</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_ItemRetur.pas">
-            <Form>FSearch_MaterialRetur</Form>
-        </DCCReference>
-        <DCCReference Include="u_rencana_lunas_hutang.pas">
-            <Form>FList_Rencana_Lunas_Hutang</Form>
-        </DCCReference>
-        <DCCReference Include="udafajuankeluarkasbank.pas">
-            <Form>Fdafajuankeluarkasbank</Form>
-        </DCCReference>
-        <DCCReference Include="u_daf_keluar_kas_bank.pas">
-            <Form>Fdaf_pengeluaran_kas_bank</Form>
-        </DCCReference>
         <DCCReference Include="u_rencana_lunas_hutang_input.pas">
             <Form>FRencana_Lunas_Hutang</Form>
-        </DCCReference>
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
             <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UApproval_Pembelian.pas">
-            <Form>FListPengajuanApprovePembelian</Form>
         </DCCReference>
         <DCCReference Include="U_rencana_lunas_hutang_pengajuan.pas">
             <Form>FRencana_Pengajuan_Pelunasan_Hutang</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="U_keluarkasbank_ajuan.pas">
-            <Form>FKeluarKasBank_Ajuan</Form>
+        <DCCReference Include="UListRencanaLunasPiutang.pas">
+            <Form>FListRencanaLunasPiutang</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="U_daftar_hutang.pas">
-            <Form>FDaftar_Hutang</Form>
+        <DCCReference Include="u_rencana_lunas_hutang.pas">
+            <Form>FList_Rencana_Lunas_Hutang</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDataPengeluaranKasBank.pas">
-            <Form>FDataPengeluaranKasBank</Form>
+        <DCCReference Include="USearch_TerimaBarang.pas">
+            <Form>FSearch_TerimaBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UTerima_Material.pas">
+            <Form>FTerima_Material</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_TerimaMaterial.pas">
+            <Form>FNew_TerimaMaterial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Usearch_MatTerima.pas">
+            <Form>FSearch_Matterima</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unew_spb.pas">
+            <Form>FNew_SPB</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_Po.pas">
+            <Form>Fsearch_po</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_Purchase_Order.pas">
+            <Form>FUSearch_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPengajuan_Approval_Pembelian.pas">
+            <Form>FListPengajuanApprovePembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_Jurnal_Khusus.pas">
+            <Form>FRpt_Jurnal_Khusus</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_BukuHarianPembelian.pas">
+            <Form>FRpt_BukuHarianPembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
+            <Form>FPengajuan_AppJurnal_Trans</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

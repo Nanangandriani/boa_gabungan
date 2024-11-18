@@ -53,7 +53,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu;
+uses UDataModule, UMainMenu, UMy_Function;
 
 var RealFMaster_Menu: TFMaster_Menu;
 
@@ -81,7 +81,7 @@ end;
 
 procedure TFMaster_Menu.BSimpanClick(Sender: TObject);
 begin
-  if statustr=0 then
+  if statustr='0' then
   begin
     with dm.Qtemp do
     begin
@@ -91,7 +91,7 @@ begin
       ExecSQL;
     end;
   end;
-  if statustr=1 then
+  if statustr='1' then
   begin
     with dm.Qtemp do
     begin
@@ -119,7 +119,7 @@ begin
   end;
   Edkd.Text:='M'+dm.Qtemp['urut']+'000';
   Cbmaster.SetFocus;
-  statustr:=0;
+  statustr:='0';
 end;
 
 procedure TFMaster_Menu.CbmasterSelect(Sender: TObject);
@@ -140,7 +140,7 @@ begin
   Edkd.Text:=Qmenu['menu_code'];
   EdDesk.Text:=Qmenu['menu'];
   Cbmaster.Text:=Qmenu['master_name'];
-  statustr:=1;
+  statustr:='1';
   Btambah.Enabled:=False;
 end;
 

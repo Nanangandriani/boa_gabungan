@@ -2,8 +2,8 @@ object FItem_MasterFormula: TFItem_MasterFormula
   Left = 0
   Top = 0
   Caption = 'Form Item Master Formula'
-  ClientHeight = 357
-  ClientWidth = 601
+  ClientHeight = 356
+  ClientWidth = 597
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object FItem_MasterFormula: TFItem_MasterFormula
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 322
-    Width = 601
+    Top = 321
+    Width = 597
     Height = 35
     Align = alBottom
     TabOrder = 0
@@ -338,14 +338,11 @@ object FItem_MasterFormula: TFItem_MasterFormula
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 601
+    Width = 597
     Height = 321
     Align = alTop
     TabOrder = 1
     Visible = False
-    ExplicitLeft = -1
-    ExplicitTop = 8
-    ExplicitWidth = 612
     object Label14: TLabel
       Left = 22
       Top = 19
@@ -363,7 +360,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 64
-      Width = 599
+      Width = 595
       Height = 256
       Align = alBottom
       DataSource = DataSource1
@@ -417,8 +414,8 @@ object FItem_MasterFormula: TFItem_MasterFormula
   object DBGridEh2: TDBGridEh
     Left = 0
     Top = 321
-    Width = 601
-    Height = 1
+    Width = 597
+    Height = 0
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -520,6 +517,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
       
         'select a.*,b.item_name from "warehouse".t_master_test a inner jo' +
         'in t_item b on a.item_code=b.item_code')
+    Active = True
     Left = 344
     Top = 88
   end

@@ -3105,9 +3105,8 @@ object FPembelian: TFPembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a.' +
-        '"approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' END) AS status_' +
-        'app,a.*, b.supplier_name,'
+        'select (case WHEN a."approval_status"='#39'0'#39' THEN '#39'PENGAJUAN'#39' else ' +
+        #39'REJECT'#39' END) AS status_app,a.*, b.supplier_name,'
       
         ' c.account_name, d.account_name as nm_perk,to_char(trans_date,'#39'd' +
         'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln,e.ref_name from '

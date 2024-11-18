@@ -2,8 +2,8 @@ object FMaster_Menu: TFMaster_Menu
   Left = 0
   Top = 0
   Caption = 'Form Master Menu'
-  ClientHeight = 444
-  ClientWidth = 467
+  ClientHeight = 443
+  ClientWidth = 463
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,11 +19,10 @@ object FMaster_Menu: TFMaster_Menu
   object PnlAksi: TPanel
     Left = 0
     Top = 145
-    Width = 467
+    Width = 463
     Height = 35
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 463
     object BBatal: TRzBitBtn
       Left = 391
       Top = 1
@@ -338,13 +337,12 @@ object FMaster_Menu: TFMaster_Menu
   object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 467
+    Width = 463
     Height = 145
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 463
     object Label6: TLabel
       Left = 106
       Top = 59
@@ -416,12 +414,10 @@ object FMaster_Menu: TFMaster_Menu
   object Pnllist: TPanel
     Left = 0
     Top = 180
-    Width = 467
-    Height = 264
+    Width = 463
+    Height = 263
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 463
-    ExplicitHeight = 263
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1

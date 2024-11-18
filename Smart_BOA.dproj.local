@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< Updated upstream
 <BorlandProject>
 	<Transactions>
     <Transaction>1899/12/30 00.00.00.000.908,D:\DATA HPS\Development\back_office_automation\UDataPenerimaanBank.pas=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
@@ -240,3 +241,6 @@
     <Transaction>1899/12/30 00.00.00.000.289,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
+=======
+<BorlandProject/>
+>>>>>>> Stashed changes

@@ -11,7 +11,7 @@ uses
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Moni.Base,
   FireDAC.Moni.RemoteClient, FireDAC.Moni.Custom, FireDAC.Moni.FlatFile,
   UniProvider, PostgreSQLUniProvider, DBAccess, Uni, MemDS, DASQLMonitor,
-  UniSQLMonitor,Generics.Collections,TypInfo, frxClass, frxDBSet;
+  UniSQLMonitor,Generics.Collections,TypInfo, frxClass, frxDBSet, ABSMain;
 
 type
   Tdm = class(TDataModule)
@@ -30,6 +30,17 @@ type
     QLink: TUniQuery;
     QPerusahaan: TUniQuery;
     DBPerusahaan: TfrxDBDataset;
+    ABSDatabase1: TABSDatabase;
+    ABSTable1: TABSTable;
+    ABSTable1id: TAutoIncField;
+    ABSTable1Sbu_Code: TStringField;
+    ABSTable1Nama_Sbu: TStringField;
+    ABSTable1Ip_db: TStringField;
+    ABSTable1Port_db: TStringField;
+    ABSTable1Db_Name: TStringField;
+    ABSTable1Password: TStringField;
+    ABSTable1Ip_db_Pusat: TStringField;
+    ABSTable1User_db: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

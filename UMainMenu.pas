@@ -139,7 +139,7 @@ var
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
   Nm,loksbu,kdsbu,dept_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl:string;
   JSFn: string;
-  statustr:integer;
+ // statustr:integer;
 implementation
 
 {$R *.dfm}

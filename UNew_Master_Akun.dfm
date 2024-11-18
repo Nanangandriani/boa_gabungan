@@ -2,8 +2,8 @@ object FNew_Master_Akun: TFNew_Master_Akun
   Left = 0
   Top = 0
   Caption = 'Form New Master Akun'
-  ClientHeight = 201
-  ClientWidth = 487
+  ClientHeight = 200
+  ClientWidth = 483
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,11 @@ object FNew_Master_Akun: TFNew_Master_Akun
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 160
-    Width = 487
+    Top = 159
+    Width = 483
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 159
-    ExplicitWidth = 483
     object BBatal: TRzBitBtn
       Left = 411
       Top = 1
@@ -153,8 +151,8 @@ object FNew_Master_Akun: TFNew_Master_Akun
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 487
-    Height = 160
+    Width = 483
+    Height = 159
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False

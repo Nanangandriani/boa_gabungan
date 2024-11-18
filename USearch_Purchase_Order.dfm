@@ -11,6 +11,9 @@ object FUSearch_PO: TFUSearch_PO
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -21,7 +24,7 @@ object FUSearch_PO: TFUSearch_PO
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 305
-    ExplicitWidth = 613
+    ExplicitWidth = 741
     object BBatal: TRzBitBtn
       Left = 669
       Top = 1
@@ -82,7 +85,7 @@ object FUSearch_PO: TFUSearch_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 537
+      ExplicitLeft = 665
     end
     object BSimpan: TRzBitBtn
       Left = 594
@@ -144,7 +147,7 @@ object FUSearch_PO: TFUSearch_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 462
+      ExplicitLeft = 590
     end
     object BSelectAll: TRzBitBtn
       Left = 1
@@ -330,7 +333,6 @@ object FUSearch_PO: TFUSearch_PO
         'stock_code'
       'INNER JOIN t_wh d on d.wh_code=a.wh_code'
       'where b.remaining_sp <>0 and a.approval_status='#39'1'#39)
-    Active = True
     Left = 304
     Top = 80
   end

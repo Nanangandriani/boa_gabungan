@@ -119,7 +119,8 @@ implementation
 
 uses  umainmenu, UDataModule, UAkun_Perkiraan_TerimaMat, UKategori_Barang,
   UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk,
-  UNew_Satuan, UKonversi_Barang, UNew_KonvBarang, UNew_KelompokBarang;
+  UNew_Satuan, UKonversi_Barang, UNew_KonvBarang, UNew_KelompokBarang,
+  UMy_Function;
 
 var RealFNew_barang: TFNew_barang;
 function FNew_Barang: TFNew_Barang;
@@ -268,7 +269,7 @@ end;
 procedure TFNew_Barang.SpKelompokClick(Sender: TObject);
 begin
   FNew_KelompokBarang.Show;
-  statustr:=0;
+  statustr:='0';
   FNew_KelompokBarang.Caption:='Form Kelompok Barang';
 end;
 

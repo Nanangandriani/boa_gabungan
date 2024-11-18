@@ -61,7 +61,7 @@ begin
       end;
     end;
 
-    if statustr='1' then
+    if statustr='1' then    // bhp pembelian
     begin
       with FRpt_BukuHarianPembelian do
       begin

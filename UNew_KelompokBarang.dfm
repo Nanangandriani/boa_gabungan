@@ -3,8 +3,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'FNew_KelompokBarang'
-  ClientHeight = 546
-  ClientWidth = 638
+  ClientHeight = 545
+  ClientWidth = 634
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,12 +16,11 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 183
-    Width = 638
+    Top = 182
+    Width = 634
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 182
     ExplicitWidth = 572
     object BTutup: TRzBitBtn
       Left = 562
@@ -336,8 +335,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 224
-    Width = 638
+    Top = 223
+    Width = 634
     Height = 322
     Align = alBottom
     DataSource = DsKelompok
@@ -409,14 +408,13 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 638
-    Height = 183
+    Width = 634
+    Height = 182
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
     ExplicitWidth = 572
-    ExplicitHeight = 182
     object Label6: TLabel
       Left = 106
       Top = 17

@@ -1,17 +1,16 @@
 object dm: Tdm
   OnCreate = DataModuleCreate
-  Height = 239
-  Width = 342
+  Height = 365
+  Width = 467
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_gabungan2'
+    Database = 'db_boa_hps'
     Username = 'postgres'
-    Server = 'localhost'
-    Connected = True
+    Server = '10.10.10.110'
     Left = 157
     Top = 13
-    EncryptedPassword = '9EFF9BFF92FF96FF91FF'
+    EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
     Left = 246
@@ -103,5 +102,58 @@ object dm: Tdm
     DataSetOptions = []
     Left = 168
     Top = 176
+  end
+  object ABSDatabase1: TABSDatabase
+    Connected = True
+    CurrentVersion = '7.95 '
+    DatabaseFileName = 'D:\back_office_automation\Win32\Release\Conectdb.abs'
+    DatabaseName = 't_konfigurasi'
+    Exclusive = False
+    Password = '123456'
+    MaxConnections = 500
+    MultiUser = False
+    SessionName = 'Default'
+    Left = 352
+    Top = 232
+  end
+  object ABSTable1: TABSTable
+    CurrentVersion = '7.95 '
+    DatabaseName = 't_konfigurasi'
+    InMemory = False
+    ReadOnly = False
+    Active = True
+    TableName = 't_konfigurasi'
+    Exclusive = False
+    Left = 344
+    Top = 160
+    object ABSTable1id: TAutoIncField
+      FieldName = 'id'
+    end
+    object ABSTable1Sbu_Code: TStringField
+      FieldName = 'Sbu_Code'
+    end
+    object ABSTable1Nama_Sbu: TStringField
+      FieldName = 'Nama_Sbu'
+      Size = 50
+    end
+    object ABSTable1Ip_db: TStringField
+      FieldName = 'Ip_db'
+      Size = 100
+    end
+    object ABSTable1Port_db: TStringField
+      FieldName = 'Port_db'
+    end
+    object ABSTable1Db_Name: TStringField
+      FieldName = 'Db_Name'
+    end
+    object ABSTable1Password: TStringField
+      FieldName = 'Password'
+    end
+    object ABSTable1Ip_db_Pusat: TStringField
+      FieldName = 'Ip_db_Pusat'
+    end
+    object ABSTable1User_db: TStringField
+      FieldName = 'User_db'
+    end
   end
 end

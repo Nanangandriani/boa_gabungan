@@ -2,8 +2,8 @@ object FPeng_Stok: TFPeng_Stok
   Left = 0
   Top = 0
   Caption = 'Form Penggabungan Stok'
-  ClientHeight = 547
-  ClientWidth = 998
+  ClientHeight = 546
+  ClientWidth = 994
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FPeng_Stok: TFPeng_Stok
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 998
+    Width = 994
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,6 +26,7 @@ object FPeng_Stok: TFPeng_Stok
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 998
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -44,8 +45,8 @@ object FPeng_Stok: TFPeng_Stok
   object DBGridTransfer: TDBGridEh
     Left = 0
     Top = 127
-    Width = 998
-    Height = 420
+    Width = 994
+    Height = 419
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <

@@ -23,20 +23,33 @@ type
     procedure DBGridEh1AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FUSearch_PO: TFUSearch_PO;
+Function FUSearch_PO: TFUSearch_PO;
 
 implementation
 
 {$R *.dfm}
 
 uses Unew_spb;
+
+var
+  RealFUSearch_PO: TFUSearch_PO;
+// implementasi function
+function FUSearch_PO: TFUSearch_PO;
+begin
+  if RealFUSearch_PO <> nil then
+    FUSearch_PO:= RealFUSearch_PO
+  else
+    Application.CreateForm(TFUSearch_PO, Result);
+end;
 
 procedure TFUSearch_PO.BBatalClick(Sender: TObject);
 begin
@@ -98,6 +111,21 @@ begin
     Params.Background := $004080FF;
     end;
 end;
+end;
+
+procedure TFUSearch_PO.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFUSearch_PO.FormCreate(Sender: TObject);
+begin
+  RealFUSearch_PO:=self;
+end;
+
+procedure TFUSearch_PO.FormDestroy(Sender: TObject);
+begin
+  RealFUSearch_PO:=nil;
 end;
 
 procedure TFUSearch_PO.FormShow(Sender: TObject);

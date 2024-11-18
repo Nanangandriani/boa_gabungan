@@ -38,6 +38,7 @@ type
     DbRptSPdet: TfrxDBDataset;
     BPrint2: TRzBitBtn;
     Rpt_BHP: TfrxDBDataset;
+    BPrint11: TRzBitBtn;
     procedure BprintClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -49,6 +50,7 @@ type
     procedure RptGetValue(const VarName: string; var Value: Variant);
     procedure Panel1Click(Sender: TObject);
     procedure BPrint2Click(Sender: TObject);
+    procedure BPrint11Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,7 +69,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UMainmenu, UAkun_Perkiraan_TerimaMat;
+uses UDatamodule, UMainmenu, UAkun_Perkiraan_TerimaMat, UMy_Function;
 var
   realfbhp : TFRpt_BukuHarianPembelian;
 // implementasi function
@@ -1948,6 +1950,64 @@ end;
   end; }
 end;
 
+procedure TFRpt_BukuHarianPembelian.BPrint11Click(Sender: TObject);
+begin
+if edkd_akun.Text<>'' then
+begin
+  with QRptBHP do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
+    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
+    ' b.ppn_rp,b.grandtotal,concat(a.account_code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
+    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
+    ' from purchase.t_purchase_invoice a INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from warehouse.t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN t_ak_account d on a.account_code=d.code '+
+    ' INNER JOIN t_ak_account E on b.account_code=e.code '+
+    ' LEFT JOIN t_ak_account F on b.ppn_account=f.code  '+
+    ' LEFT JOIN t_ak_account g on a.account_um_code=g.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where a.account_code='+QuotedStr(edkd_akun.Text)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.date))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.date));
+    Execute;
+  end;
+end;
+if edkd_akun.Text='' then
+begin
+  with QRptBHP do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
+    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
+    ' b.ppn_rp,b.grandtotal,concat(a.account_code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
+    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
+    ' from purchase.t_purchase_invoice a INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from warehouse.t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN t_ak_account d on a.account_code=d.code '+
+    ' INNER JOIN t_ak_account E on b.account_code=e.code '+
+    ' LEFT JOIN t_ak_account F on b.ppn_account=f.code  '+
+    ' LEFT JOIN t_ak_account g on a.account_um_code=g.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.date))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.date));
+    Execute;
+  end;
+end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian.Fr3');
+  // Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptBukuHarianPembelianProduksi.Fr3');
+    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));
+  //  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));
+  //  SetMemo(Rpt,'nmsbu',' '+Kd_SBU);
+    rpt.ShowReport();
+end;
+
 procedure TFRpt_BukuHarianPembelian.BPrint2Click(Sender: TObject);
 var subqr,subqr2,subqr3,subqr4:string;
 begin
@@ -2351,22 +2411,29 @@ end;
 
 procedure TFRpt_BukuHarianPembelian.Ednm_akunButtonClick(Sender: TObject);
 begin
-with  FAkun_Perkiraan_TerimaMat do
-begin
-  Show;
-  with qakun do
+  with  FAkun_Perkiraan_TerimaMat do
   begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT b.kode,b.nama_perkiraan,c.nama_header FROM t_daftar_perkiraan_detail a left join t_daftar_perkiraan b'+
-    ' on a.kode_perkiraan=b.kode left join t_header_perkiraan c on b.kode_header=c.kode_header  '+
-    ' where a.id_modul=''2'' and b.nama_perkiraan like ''%HUTANG%'' ORDER BY b.kode asc';
-    Open;
+    Show;
+    statustr:='1';
+    with qakun do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.code,a.header_code,a.account_name,a.posisi_dk,b.module_id,header_name  from t_ak_account a '+
+      ' INNER JOIN t_ak_account_det b on a.code=b.account_code '+
+      ' INNER JOIN t_ak_header c on a.header_code=c.header_code WHERE module_id=''2''  '+
+      ' GROUP BY a.code,a.header_code,a.account_name,a.posisi_dk,b.module_id,header_name ORDER BY a.code asc';
+     // ' where a.id_modul=''2'' and b.nama_perkiraan like ''%HUTANG%'' ORDER BY b.kode asc';
+      Open;
+    end;
+  //  statustr:='bhp';
+    //if QAkun.Active=false then QAkun.Active:=True;
+    QAkun.Active:=True;
   end;
-//  statustr:='bhp';
-  //if QAkun.Active=false then QAkun.Active:=True;
-  QAkun.Active:=True;
 end;
-end;
+
+// Contoh RegisterClass
+Initialization
+  RegisterClass(TFRpt_BukuHarianPembelian);
 
 end.

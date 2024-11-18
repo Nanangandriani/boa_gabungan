@@ -86,7 +86,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_ForTestBakar, UDatamodule, umainmenu;
+uses UNew_ForTestBakar, UDatamodule, umainmenu, UMy_Function;
 var
   realFFor_Testbakar : TFFor_Testbakar;
 // implementasi function
@@ -102,7 +102,7 @@ procedure TFFor_Testbakar.ActBaruExecute(Sender: TObject);
 begin
   with FNew_ForTestBakar do
   begin
-    statustr:=0;
+    statustr:='0';
     FNew_ForTestBakar.Show;
     FNew_ForTestBakar.BSimpan.Visible:=True;
     FNew_ForTestBakar.BEdit.Visible:=False;
@@ -167,7 +167,7 @@ procedure TFFor_Testbakar.ActUpdateExecute(Sender: TObject);
 begin
   with FNew_ForTestBakar do
   begin
-      statustr:=1;
+      statustr:='1';
       FNew_ForTestBakar.Show;
     //  FNew_ForTestBakar.BSimpan.Visible:=;
    //   FNew_ForTestBakar.BEdit.Visible:=True;

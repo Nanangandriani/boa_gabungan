@@ -114,7 +114,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+      sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''approved'' '+
                 ' END) AS status_app,a.*,b.supplier_name,c.account_name,d.account_name as nm_perk ,to_char(trans_date,''dd'') tgl '+
                 ' ,to_char(trans_date,''mm'') bln,e.ref_name from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
@@ -129,7 +129,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+      sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN''else ''APPROVE'' '+
                 ' END) AS status_app,a.*, b.supplier_name, c.account_name,d.account_name as nm_perk,to_char(trans_date,''dd'') tgl '+
                 ' ,to_char(trans_date,''mm'') bln,e.ref_name from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+

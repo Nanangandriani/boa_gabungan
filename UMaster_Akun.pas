@@ -69,7 +69,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Master_Akun, UMainMenu;
+uses UDataModule, UNew_Master_Akun, UMainMenu, UMy_Function;
 
 var RealFMaster_Akun: TFMaster_Akun;
 
@@ -84,7 +84,7 @@ begin
   with FNew_Master_Akun do
   begin
     Show;
-    statustr:=0;
+    statustr:='0';
   end;
 end;
 
@@ -101,7 +101,7 @@ begin
   with FNew_Master_Akun do
   begin
     Show;
-    statustr:=1;
+    statustr:='1';
     EdDesk.Text:=QMaster_akun['description'];
     Edkd.Text:=QMaster_akun['master_id'];
     Ednm_akun.Text:=QMaster_akun['account_name'];
