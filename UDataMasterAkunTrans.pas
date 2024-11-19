@@ -953,7 +953,7 @@ begin
               ' AND code_trans='+QuotedStr(edKodeTransKas.Text)+'');
       ExecSQL;
     end;
-    InsertDetailBank;
+    InsertDetailKas;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Close;
     FListMasterAkunTrans.Refresh;

@@ -18,10 +18,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Width = 781
     Height = 556
     Hint = ''
-    ActivePage = TabPenjualan
+    ActivePage = TabKas
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 3
     TabOrder = 0
     ExplicitWidth = 775
     ExplicitHeight = 547
@@ -359,6 +359,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Setting Transaksi Penjualan'
+      ExplicitWidth = 771
+      ExplicitHeight = 522
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -368,6 +370,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 771
+        ExplicitHeight = 522
         object Label30: TLabel
           Left = 178
           Top = 246
@@ -560,6 +564,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Height = 32
           Align = alBottom
           TabOrder = 4
+          ExplicitTop = 489
+          ExplicitWidth = 769
           object btClose_Close: TRzBitBtn
             Left = 699
             Top = 1
@@ -620,6 +626,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 693
           end
           object btSave_Jual: TRzBitBtn
             Left = 624
@@ -681,6 +688,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
               090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 618
           end
         end
         object edNamaModulJual: TRzButtonEdit
@@ -743,6 +751,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Caption = 'Default PPH'
           Color = 15987699
           Columns = 2
+          ItemHeight = 17
           ItemIndex = 1
           Items.Strings = (
             'Tidak'
@@ -757,6 +766,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Caption = 'Default PPN'
           Color = 15987699
           Columns = 2
+          ItemHeight = 17
           ItemIndex = 1
           Items.Strings = (
             'Tidak'
@@ -772,6 +782,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Caption = 'System Potongan Klasifikasi'
           Color = 15987699
           Columns = 2
+          ItemHeight = 17
           ItemIndex = 1
           Items.Strings = (
             'Tidak'
@@ -827,8 +838,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object TabBank: TRzTabSheet
       Caption = 'Setting Transaksi Bank'
-      ExplicitWidth = 771
-      ExplicitHeight = 522
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -838,7 +847,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 771
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -1039,14 +1047,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         UseColoredTabs = True
         TabIndex = 0
         TabOrder = 1
-        ExplicitWidth = 771
-        ExplicitHeight = 257
         FixedDimension = 21
         object TabSDetailPel: TRzTabSheet
           Color = clGradientInactiveCaption
           Caption = 'Detail Order'
-          ExplicitWidth = 767
-          ExplicitHeight = 232
           object DBGridDetail: TDBGridEh
             Left = 0
             Top = 0
@@ -1105,8 +1109,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         Height = 32
         Align = alBottom
         TabOrder = 2
-        ExplicitTop = 490
-        ExplicitWidth = 771
         object BBatal: TRzBitBtn
           Left = 701
           Top = 1
@@ -1167,7 +1169,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 695
         end
         object BSave: TRzBitBtn
           Left = 626
@@ -1229,7 +1230,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 620
         end
       end
     end
