@@ -68,6 +68,8 @@ type
     Label9: TLabel;
     MemKas: TMemTableEh;
     DsKas: TDataSource;
+    DsDetail_kas: TDataSource;
+    QDetail_kas: TUniQuery;
     procedure EdkodewilayahButtonClick(Sender: TObject);
     procedure BTampil_PembClick(Sender: TObject);
     procedure BTampil_PenjClick(Sender: TObject);
@@ -302,6 +304,8 @@ begin
     Memkas.Post;
     dm.Qtemp.Next;
   end;
+  QDetail_kas.Close;
+  QDetail_kas.Open;
 end;
 
 initialization

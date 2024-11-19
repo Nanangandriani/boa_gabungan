@@ -1355,7 +1355,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             Width = 739
             Height = 118
             Align = alClient
-            DataSource = Ds_DetailPembelian
+            DataSource = DsDetail_kas
             DynProps = <>
             FooterRowCount = 1
             SumList.Active = True
@@ -1787,8 +1787,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Active = True
     FetchAllOnOpen = True
     Params = <>
-    Left = 352
-    Top = 272
+    Left = 384
+    Top = 256
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object jumlah: TMTNumericDataFieldEh
@@ -1840,7 +1840,38 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   end
   object DsKas: TDataSource
     DataSet = MemKas
-    Left = 417
-    Top = 296
+    Left = 449
+    Top = 248
+  end
+  object DsDetail_kas: TDataSource
+    DataSet = QDetail_kas
+    Left = 455
+    Top = 302
+  end
+  object QDetail_kas: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT a.Trans_no,a.trans_date,a.account_code,b.account_name,a.s' +
+        'tatus_dk,sum(db) db,sum(kd) kd FROM (select trans_no,trans_date,' +
+        'account_code,amount,status_dk,case when status_dk ='#39'D'#39'then amoun' +
+        't else '#39'0'#39' end db,case when status_dk ='#39'K'#39'then amount else '#39'0'#39' e' +
+        'nd kd  from t_general_ledger) A INNER JOIN t_ak_account b on a.a' +
+        'ccount_code=b.code where a.account_code is not null '
+      
+        'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
+        '.status_dk order by status_dk asc')
+    MasterSource = DsKas
+    MasterFields = 'trans_no'
+    DetailFields = 'trans_no'
+    Left = 385
+    Top = 318
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'trans_no'
+        ParamType = ptInput
+        Value = 'RCV/0001/04/XI/24'
+      end>
   end
 end

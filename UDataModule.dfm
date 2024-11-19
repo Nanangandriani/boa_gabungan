@@ -1,13 +1,7 @@
 object dm: Tdm
-<<<<<<< Updated upstream
   OnCreate = DataModuleCreate
-  Height = 322
-  Width = 635
-=======
-  Height = 299
-  Width = 428
->>>>>>> Stashed changes
-  PixelsPerInch = 120
+  Height = 365
+  Width = 467
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
@@ -15,57 +9,57 @@ object dm: Tdm
     Username = 'postgres'
     Server = '10.10.10.110'
     Connected = True
-    Left = 196
-    Top = 16
+    Left = 157
+    Top = 13
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
-    Left = 308
-    Top = 16
+    Left = 246
+    Top = 13
   end
   object Qtemp: TUniQuery
     Connection = Koneksi
-    Left = 23
-    Top = 8
+    Left = 18
+    Top = 6
   end
   object dsQtemp: TDataSource
     DataSet = Qtemp
-    Left = 94
-    Top = 8
+    Left = 75
+    Top = 6
   end
   object dsQtemp1: TDataSource
     DataSet = Qtemp1
-    Left = 94
-    Top = 74
+    Left = 75
+    Top = 59
   end
   object Qtemp1: TUniQuery
     Connection = Koneksi
-    Left = 23
-    Top = 74
+    Left = 18
+    Top = 59
   end
   object dsQtemp2: TDataSource
     DataSet = Qtemp2
-    Left = 104
-    Top = 148
+    Left = 83
+    Top = 118
   end
   object Qtemp2: TUniQuery
     Connection = Koneksi
-    Left = 23
-    Top = 148
+    Left = 18
+    Top = 118
   end
   object UniSQLMonitor1: TUniSQLMonitor
-    Left = 196
-    Top = 80
+    Left = 157
+    Top = 64
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 284
-    Top = 150
+    Left = 227
+    Top = 120
   end
   object Qtemp3: TUniQuery
     Connection = Koneksi
-    Left = 203
-    Top = 150
+    Left = 162
+    Top = 120
   end
   object UniConnection1: TUniConnection
     ProviderName = 'PostgreSQL'
@@ -73,8 +67,8 @@ object dm: Tdm
     Database = 'db_boa_hps'
     Username = 'postgres'
     Server = '10.10.10.110'
-    Left = 316
-    Top = 86
+    Left = 253
+    Top = 69
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object QLink: TUniQuery
@@ -91,95 +85,15 @@ object dm: Tdm
         ' select concat('#39'T'#39', link) link1, string_agg(concat('#39#39', link_unit' +
         ') , '#39','#39') link2 from t_menu_sub'
       '')
-    Left = 16
-    Top = 216
+    Left = 13
+    Top = 173
   end
   object QPerusahaan: TUniQuery
     Connection = Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 100
-    Top = 220
-<<<<<<< Updated upstream
-=======
-    object QPerusahaancompany_code: TStringField
-      FieldName = 'company_code'
-      Required = True
-      Size = 10
-    end
-    object QPerusahaancompany_name: TStringField
-      FieldName = 'company_name'
-      Size = 255
-    end
-    object QPerusahaanaddress: TStringField
-      FieldName = 'address'
-      Size = 255
-    end
-    object QPerusahaantelp: TStringField
-      FieldName = 'telp'
-    end
-    object QPerusahaanemail: TStringField
-      FieldName = 'email'
-      Size = 255
-    end
-    object QPerusahaannpwp: TStringField
-      FieldName = 'npwp'
-      Size = 50
-    end
-    object QPerusahaancity: TStringField
-      FieldName = 'city'
-      Size = 255
-    end
-    object QPerusahaanaddress2: TStringField
-      FieldName = 'address2'
-      Size = 255
-    end
-    object QPerusahaanid: TGuidField
-      FieldName = 'id'
-      Required = True
-      Size = 38
-    end
-    object QPerusahaancreated_at: TDateTimeField
-      FieldName = 'created_at'
-    end
-    object QPerusahaancreated_by: TStringField
-      FieldName = 'created_by'
-      Size = 50
-    end
-    object QPerusahaanupdated_at: TDateTimeField
-      FieldName = 'updated_at'
-    end
-    object QPerusahaanupdated_by: TStringField
-      FieldName = 'updated_by'
-      Size = 50
-    end
-    object QPerusahaandeleted_at: TDateTimeField
-      FieldName = 'deleted_at'
-    end
-    object QPerusahaandeleted_by: TStringField
-      FieldName = 'deleted_by'
-      Size = 50
-    end
-    object QPerusahaantype_of_business: TStringField
-      FieldName = 'type_of_business'
-      Size = 255
-    end
-    object QPerusahaanlatitude: TStringField
-      FieldName = 'latitude'
-      Size = 255
-    end
-    object QPerusahaanlongitude: TStringField
-      FieldName = 'longitude'
-      Size = 255
-    end
-    object QPerusahaantax_status: TBooleanField
-      FieldName = 'tax_status'
-    end
-    object QPerusahaancurrency: TStringField
-      FieldName = 'currency'
-      Size = 10
-    end
->>>>>>> Stashed changes
+    Left = 80
+    Top = 176
   end
   object DBPerusahaan: TfrxDBDataset
     UserName = 'DBPerusahaan'
@@ -187,77 +101,30 @@ object dm: Tdm
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 210
-    Top = 220
-<<<<<<< Updated upstream
+    Left = 168
+    Top = 176
   end
   object ABSDatabase1: TABSDatabase
     CurrentVersion = '7.95 '
     DatabaseFileName = 'Conectdb.abs'
     DatabaseName = 't_konfigurasi'
     Exclusive = False
-    Password = 'smart_boa2024'
+    Password = '123456'
     MaxConnections = 500
     MultiUser = False
     SessionName = 'Default'
-    Left = 466
-    Top = 16
+    Left = 344
+    Top = 216
   end
   object ABSTable1: TABSTable
     CurrentVersion = '7.95 '
     DatabaseName = 't_konfigurasi'
     InMemory = False
     ReadOnly = False
-    StoreDefs = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftAutoInc
-      end
-      item
-        Name = 'Sbu_Code'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Nama_Sbu'
-        DataType = ftString
-        Size = 50
-      end
-      item
-        Name = 'Ip_db'
-        DataType = ftString
-        Size = 100
-      end
-      item
-        Name = 'Port_db'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Db_Name'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Password'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'Ip_db_Pusat'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'User_db'
-        DataType = ftString
-        Size = 20
-      end>
     TableName = 't_konfigurasi'
     Exclusive = False
-    Left = 466
-    Top = 88
+    Left = 344
+    Top = 160
     object ABSTable1id: TAutoIncField
       FieldName = 'id'
     end
@@ -287,7 +154,5 @@ object dm: Tdm
     object ABSTable1User_db: TStringField
       FieldName = 'User_db'
     end
-=======
->>>>>>> Stashed changes
   end
 end

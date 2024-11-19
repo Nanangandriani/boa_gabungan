@@ -1,8 +1,8 @@
 object FMainMenu: TFMainMenu
   Left = 0
   Top = 0
-  ClientHeight = 608
-  ClientWidth = 1027
+  ClientHeight = 607
+  ClientWidth = 1023
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FMainMenu: TFMainMenu
     Left = 169
     Top = 126
     Width = 12
-    Height = 463
+    Height = 462
     ResizeStyle = rsUpdate
     StyleName = 'Windows'
     ExplicitLeft = 160
@@ -26,8 +26,8 @@ object FMainMenu: TFMainMenu
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 589
-    Width = 1027
+    Top = 588
+    Width = 1023
     Height = 19
     BorderInner = fsNone
     BorderOuter = fsNone
@@ -86,13 +86,14 @@ object FMainMenu: TFMainMenu
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1027
+    Width = 1023
     Height = 126
     BarManager = dxBarManager1
     ColorSchemeName = 'Blue'
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 1027
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Main Menu'
@@ -132,7 +133,7 @@ object FMainMenu: TFMainMenu
     Left = 0
     Top = 126
     Width = 169
-    Height = 463
+    Height = 462
     VertScrollBar.Tracking = True
     ChevronHotColor = clSkyBlue
     Color = clGradientInactiveCaption
@@ -148,8 +149,8 @@ object FMainMenu: TFMainMenu
   object PageControl1: TRzPageControl
     Left = 181
     Top = 126
-    Width = 846
-    Height = 463
+    Width = 842
+    Height = 462
     Hint = ''
     ActivePage = TabForm
     Align = alClient
@@ -163,6 +164,8 @@ object FMainMenu: TFMainMenu
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Dashboard'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 836
       ExplicitHeight = 429
       object PanelParent: TPanel

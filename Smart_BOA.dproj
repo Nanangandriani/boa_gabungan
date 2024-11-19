@@ -233,6 +233,10 @@
             <Form>FNew_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListPerusahaan.pas">
+            <Form>FListPerusahaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="UNew_Perusahaan.pas">
             <Form>FNewPerusahaan</Form>
             <FormType>dfm</FormType>
@@ -343,6 +347,10 @@
         </DCCReference>
         <DCCReference Include="UNew_PO.pas">
             <Form>FNew_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USearch_Supplier.pas">
+            <Form>FSearch_Supplier</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UKontrakKerjasama.pas">
@@ -701,14 +709,12 @@
             <Form>FDaftarRencanaLunasPiutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
-=======
-        <DCCReference Include="UListKolektor.pas">
-            <Form>FListKolektor</Form>
-        </DCCReference>
->>>>>>> Stashed changes
         <DCCReference Include="UDataProspekPelanggan.pas">
             <Form>FDataProspekPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListKolektor.pas">
+            <Form>FListKolektor</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataKolektor.pas">
@@ -729,68 +735,22 @@
         </DCCReference>
         <DCCReference Include="URincianPot_Penjualan.pas">
             <Form>FRincianPot_Penjualan</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UMovingDPP.pas">
             <Form>FMovingDPP</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDaftarPenagihanPiutang.pas">
             <Form>FDaftarPenagihanPiutang</Form>
-<<<<<<< Updated upstream
             <FormType>dfm</FormType>
-=======
-        </DCCReference>
-        <DCCReference Include="Unew_spb.pas">
-            <Form>FNew_SPB</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_Po.pas">
-            <Form>Fsearch_po</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_Purchase_Order.pas">
-            <Form>FUSearch_PO</Form>
-        </DCCReference>
-        <DCCReference Include="UNew_TerimaMaterial.pas">
-            <Form>FNew_TerimaMaterial</Form>
-        </DCCReference>
-        <DCCReference Include="UTerima_Material.pas">
-            <Form>FTerima_Material</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_TerimaBarang.pas">
-            <Form>FSearch_TerimaBarang</Form>
-        </DCCReference>
-        <DCCReference Include="Usearch_MatTerima.pas">
-            <Form>FSearch_Matterima</Form>
-        </DCCReference>
-        <DCCReference Include="USearch_ItemRetur.pas">
-            <Form>FSearch_MaterialRetur</Form>
-        </DCCReference>
-        <DCCReference Include="u_rencana_lunas_hutang.pas">
-            <Form>FList_Rencana_Lunas_Hutang</Form>
-        </DCCReference>
-        <DCCReference Include="udafajuankeluarkasbank.pas">
-            <Form>Fdafajuankeluarkasbank</Form>
-        </DCCReference>
-        <DCCReference Include="u_daf_keluar_kas_bank.pas">
-            <Form>Fdaf_pengeluaran_kas_bank</Form>
-        </DCCReference>
-        <DCCReference Include="u_rencana_lunas_hutang_input.pas">
-            <Form>FRencana_Lunas_Hutang</Form>
->>>>>>> Stashed changes
         </DCCReference>
         <DCCReference Include="UListItempo.pas">
             <Form>Flistitempo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
         <DCCReference Include="u_rencana_lunas_hutang_input.pas">
             <Form>FRencana_Lunas_Hutang</Form>
-=======
-        <DCCReference Include="UListPerusahaan.pas">
-            <Form>FListPerusahaan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UApproval_Pembelian.pas">
-            <Form>FListPengajuanApprovePembelian</Form>
->>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="U_rencana_lunas_hutang_pengajuan.pas">
@@ -805,7 +765,6 @@
             <Form>FList_Rencana_Lunas_Hutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
         <DCCReference Include="USearch_TerimaBarang.pas">
             <Form>FSearch_TerimaBarang</Form>
             <FormType>dfm</FormType>
@@ -850,28 +809,6 @@
             <Form>FPengajuan_AppJurnal_Trans</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-=======
-        <DCCReference Include="UDataPengeluaranKasBank.pas">
-            <Form>FDataPengeluaranKasBank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="U_daftar_Nocek.pas">
-            <Form>Fdaftar_nocek</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="USearch_Supplier.pas">
-            <Form>FSearch_Supplier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UApproval_Keluar_Kas_Bank.pas">
-            <Form>FApproval_Keluar_Kas_Bank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="U_Data_rencana_lunas_hutang_pengajuan.pas">
-            <Form>FDataRenanaLunasHutangPengajuan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
->>>>>>> Stashed changes
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
