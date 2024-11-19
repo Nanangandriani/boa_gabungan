@@ -30,6 +30,7 @@ type
     QLink: TUniQuery;
     QPerusahaan: TUniQuery;
     DBPerusahaan: TfrxDBDataset;
+<<<<<<< Updated upstream
     ABSDatabase1: TABSDatabase;
     ABSTable1: TABSTable;
     ABSTable1id: TAutoIncField;
@@ -41,6 +42,28 @@ type
     ABSTable1Password: TStringField;
     ABSTable1Ip_db_Pusat: TStringField;
     ABSTable1User_db: TStringField;
+=======
+    QPerusahaancompany_code: TStringField;
+    QPerusahaancompany_name: TStringField;
+    QPerusahaanaddress: TStringField;
+    QPerusahaantelp: TStringField;
+    QPerusahaanemail: TStringField;
+    QPerusahaannpwp: TStringField;
+    QPerusahaancity: TStringField;
+    QPerusahaanaddress2: TStringField;
+    QPerusahaanid: TGuidField;
+    QPerusahaancreated_at: TDateTimeField;
+    QPerusahaancreated_by: TStringField;
+    QPerusahaanupdated_at: TDateTimeField;
+    QPerusahaanupdated_by: TStringField;
+    QPerusahaandeleted_at: TDateTimeField;
+    QPerusahaandeleted_by: TStringField;
+    QPerusahaantype_of_business: TStringField;
+    QPerusahaanlatitude: TStringField;
+    QPerusahaanlongitude: TStringField;
+    QPerusahaantax_status: TBooleanField;
+    QPerusahaancurrency: TStringField;
+>>>>>>> Stashed changes
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

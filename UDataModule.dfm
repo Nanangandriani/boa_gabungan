@@ -1,7 +1,12 @@
 object dm: Tdm
+<<<<<<< Updated upstream
   OnCreate = DataModuleCreate
   Height = 322
   Width = 635
+=======
+  Height = 299
+  Width = 428
+>>>>>>> Stashed changes
   PixelsPerInch = 120
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
@@ -95,6 +100,86 @@ object dm: Tdm
       'select * from t_company')
     Left = 100
     Top = 220
+<<<<<<< Updated upstream
+=======
+    object QPerusahaancompany_code: TStringField
+      FieldName = 'company_code'
+      Required = True
+      Size = 10
+    end
+    object QPerusahaancompany_name: TStringField
+      FieldName = 'company_name'
+      Size = 255
+    end
+    object QPerusahaanaddress: TStringField
+      FieldName = 'address'
+      Size = 255
+    end
+    object QPerusahaantelp: TStringField
+      FieldName = 'telp'
+    end
+    object QPerusahaanemail: TStringField
+      FieldName = 'email'
+      Size = 255
+    end
+    object QPerusahaannpwp: TStringField
+      FieldName = 'npwp'
+      Size = 50
+    end
+    object QPerusahaancity: TStringField
+      FieldName = 'city'
+      Size = 255
+    end
+    object QPerusahaanaddress2: TStringField
+      FieldName = 'address2'
+      Size = 255
+    end
+    object QPerusahaanid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object QPerusahaancreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QPerusahaancreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object QPerusahaanupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QPerusahaanupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QPerusahaandeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QPerusahaandeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QPerusahaantype_of_business: TStringField
+      FieldName = 'type_of_business'
+      Size = 255
+    end
+    object QPerusahaanlatitude: TStringField
+      FieldName = 'latitude'
+      Size = 255
+    end
+    object QPerusahaanlongitude: TStringField
+      FieldName = 'longitude'
+      Size = 255
+    end
+    object QPerusahaantax_status: TBooleanField
+      FieldName = 'tax_status'
+    end
+    object QPerusahaancurrency: TStringField
+      FieldName = 'currency'
+      Size = 10
+    end
+>>>>>>> Stashed changes
   end
   object DBPerusahaan: TfrxDBDataset
     UserName = 'DBPerusahaan'
@@ -104,6 +189,7 @@ object dm: Tdm
     DataSetOptions = []
     Left = 210
     Top = 220
+<<<<<<< Updated upstream
   end
   object ABSDatabase1: TABSDatabase
     CurrentVersion = '7.95 '
@@ -201,5 +287,7 @@ object dm: Tdm
     object ABSTable1User_db: TStringField
       FieldName = 'User_db'
     end
+=======
+>>>>>>> Stashed changes
   end
 end

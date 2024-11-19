@@ -282,10 +282,10 @@ begin
       Refresh;
    Except
    on E :Exception do
-   begin
-     MessageDlg(E.Message,mtError,[MBok],0);
-     dm.koneksi.Rollback;
-   end;
+     begin
+       MessageDlg(E.Message,mtError,[MBok],0);
+       dm.koneksi.Rollback;
+     end;
    end;
 
 end;

@@ -3,7 +3,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   Top = 0
   Caption = 'Rencana Pelunasan Hutang'
   ClientHeight = 520
-  ClientWidth = 857
+  ClientWidth = 868
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,18 +11,22 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
-  object DBGridEh1: TDBGridEh
+  object DBGrid_Rencana: TDBGridEh
     Left = 0
     Top = 225
-    Width = 857
+    Width = 868
     Height = 259
     Align = alClient
     DataSource = DSRencana
     DynProps = <>
     FooterRowCount = 1
+    HorzScrollBar.ExtraPanel.NavigatorButtons = [nbFirstEh, nbPriorEh, nbNextEh, nbLastEh, nbDeleteEh, nbEditEh, nbPostEh, nbCancelEh, nbRefreshEh]
+    HorzScrollBar.ExtraPanel.Visible = True
     SumList.Active = True
     TabOrder = 0
+    TitleParams.RowHeight = 40
     Columns = <
       item
         CellButtons = <>
@@ -43,6 +47,20 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'noinv'
+        Footers = <>
+        Title.Caption = 'No. Invoice'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = [fsBold]
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'nosj'
         Footers = <>
         Title.Alignment = taCenter
@@ -52,7 +70,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 166
+        Width = 130
       end
       item
         CellButtons = <>
@@ -67,7 +85,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 138
+        Width = 130
       end
       item
         CellButtons = <>
@@ -82,7 +100,25 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 95
+        Width = 100
+      end
+      item
+        CellButtons = <
+          item
+            OnClick = DBGrid_RencanaColumns10CellButtons0Click
+          end>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'akun_pph'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Akun Pph'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = [fsBold]
+        Width = 80
       end
       item
         CellButtons = <>
@@ -104,7 +140,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 131
+        Width = 100
       end
       item
         CellButtons = <>
@@ -140,7 +176,23 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 150
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kurs'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jumlah_dolar'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -148,7 +200,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   object lblrencanake: TPanel
     Left = 0
     Top = 484
-    Width = 857
+    Width = 868
     Height = 36
     Align = alBottom
     ParentBackground = False
@@ -156,7 +208,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     ExplicitTop = 475
     ExplicitWidth = 851
     object Btutup: TRzBitBtn
-      Left = 756
+      Left = 767
       Top = 1
       Width = 100
       Height = 34
@@ -219,13 +271,14 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       ExplicitLeft = 750
     end
     object BHapus: TRzBitBtn
-      Left = 556
+      Left = 567
       Top = 1
       Width = 100
       Height = 34
       Align = alRight
       Caption = 'Hapus'
       TabOrder = 1
+      OnClick = BHapusClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630E0000630E00000001000000000000000000003300
@@ -281,13 +334,14 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       ExplicitLeft = 550
     end
     object BSimpan: TRzBitBtn
-      Left = 656
+      Left = 667
       Top = 1
       Width = 100
       Height = 34
       Align = alRight
       Caption = 'Simpan'
       TabOrder = 2
+      OnClick = BSimpanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -340,13 +394,14 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 650
+      ExplicitLeft = 662
+      ExplicitTop = 6
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 857
+    Width = 868
     Height = 225
     Align = alTop
     ParentBackground = False
@@ -406,7 +461,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object lbnabank: TLabel
       Left = 416
-      Top = 128
+      Top = 127
       Width = 4
       Height = 18
       Font.Charset = DEFAULT_CHARSET
@@ -449,6 +504,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Width = 23
       Height = 22
       Caption = '...'
+      OnClick = btncekClick
     end
     object Label7: TLabel
       Left = 25
@@ -575,6 +631,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       ImeName = 'US'
       ParentFont = False
       TabOrder = 2
+      OnSelect = cbbankSelect
     end
     object dpperiode2: TDateTimePicker
       Left = 425
@@ -611,7 +668,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     object dptglcek: TDateTimePicker
       Left = 531
       Top = 123
-      Width = 164
+      Width = 169
       Height = 26
       Date = 42042.000000000000000000
       Time = 0.416255162039306000
@@ -796,8 +853,9 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
   end
   object MemRencana: TMemTableEh
+    Active = True
     Params = <>
-    Left = 712
+    Left = 672
     Top = 288
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -819,13 +877,13 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         object tglfaktur: TMTDateTimeDataFieldEh
           FieldName = 'tglfaktur'
           DateTimeDataType = fdtDateEh
-          DisplayWidth = 20
+          DisplayWidth = 18
         end
         object jumlah: TMTNumericDataFieldEh
           FieldName = 'jumlah'
           NumericDataType = fdtFloatEh
           AutoIncrement = False
-          DisplayWidth = 20
+          DisplayWidth = 10
           currency = False
           Precision = 15
         end
@@ -833,7 +891,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
           FieldName = 'npph'
           NumericDataType = fdtFloatEh
           AutoIncrement = False
-          DisplayWidth = 20
+          DisplayWidth = 10
           currency = False
           Precision = 15
         end
@@ -842,16 +900,19 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object kurs: TMTStringDataFieldEh
+        object kurs: TMTNumericDataFieldEh
           FieldName = 'kurs'
-          StringDataType = fdtStringEh
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
           DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
         object jumlah_dolar: TMTNumericDataFieldEh
           FieldName = 'jumlah_dolar'
           NumericDataType = fdtFloatEh
           AutoIncrement = False
-          DisplayWidth = 20
+          DisplayWidth = 10
           currency = False
           Precision = 15
         end

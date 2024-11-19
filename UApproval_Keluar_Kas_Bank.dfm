@@ -1,8 +1,8 @@
-object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
+object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
   Left = 0
   Top = 0
-  Caption = 'Approve Pembelian'
-  ClientHeight = 442
+  Caption = 'Approval Keluar Kas dan Bank'
+  ClientHeight = 602
   ClientWidth = 947
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,71 +15,260 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
-  object dxRibbon1: TdxRibbon
-    Left = 0
-    Top = 0
-    Width = 947
-    Height = 127
-    BarManager = dxBarManager1
-    Style = rs2010
-    ColorSchemeName = 'Blue'
-    Contexts = <>
-    TabOrder = 0
-    TabStop = False
-    object dxRibbon1Tab1: TdxRibbonTab
-      Active = True
-      Caption = 'Home'
-      Groups = <
-        item
-          ToolbarName = 'dxBarManager1Bar1'
-        end>
-      Index = 0
-    end
-  end
   object PG1: TRzPageControl
     Left = 0
     Top = 127
     Width = 947
-    Height = 315
+    Height = 475
     Hint = ''
-    ActivePage = TabPO
+    ActivePage = TabPengajuan_Keluar_KasBank
     Align = alClient
     TabIndex = 1
-    TabOrder = 1
+    TabOrder = 0
     ExplicitWidth = 941
-    ExplicitHeight = 306
+    ExplicitHeight = 466
     FixedDimension = 21
-    object Tabkontrak: TRzTabSheet
-      OnShow = TabkontrakShow
-      Caption = 'Kontrak Kerjasama'
+    object Tab_Rencana_Pelunasan: TRzTabSheet
+      Caption = 'Rencana Pelunasan Hutang'
+      ExplicitWidth = 937
+      ExplicitHeight = 441
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
         Width = 943
-        Height = 33
+        Height = 145
         Align = alTop
+        AlignmentVertical = avBottom
         Color = 15987699
         TabOrder = 0
-        object Cbkontrak: TRzCheckBox
-          Left = 860
+        ExplicitWidth = 937
+        object Label1: TLabel
+          Left = 26
+          Top = 14
+          Width = 36
+          Height = 15
+          Caption = 'Suplier'
+        end
+        object Label2: TLabel
+          Left = 26
+          Top = 43
+          Width = 61
+          Height = 15
+          Caption = 'Rencana Ke'
+        end
+        object Label3: TLabel
+          Left = 25
+          Top = 72
+          Width = 109
+          Height = 15
+          Caption = 'Periode Pembayaran'
+        end
+        object Label4: TLabel
+          Left = 229
+          Top = 43
+          Width = 68
+          Height = 15
+          Caption = 'Jenis Hutang'
+          Visible = False
+        end
+        object Label5: TLabel
+          Left = 277
+          Top = 72
+          Width = 17
+          Height = 15
+          Caption = 's/d'
+        end
+        object Combo_Approve: TRzCheckBox
+          Left = 856
           Top = 2
-          Width = 81
-          Height = 29
+          Width = 85
+          Height = 141
           Align = alRight
-          AlignmentVertical = avCenter
+          AlignmentVertical = avBottom
           Caption = 'Pilih Semua'
           State = cbUnchecked
           TabOrder = 0
-          OnClick = CbkontrakClick
-          ExplicitLeft = 856
-          ExplicitHeight = 17
+          OnClick = Combo_ApproveClick
+          ExplicitLeft = 860
+          ExplicitHeight = 19
+        end
+        object cblunas: TCheckBox
+          Left = 25
+          Top = 113
+          Width = 200
+          Height = 17
+          Caption = 'Tampilkan yang Sudah Diapprove'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+        end
+        object BCari: TRzBitBtn
+          Left = 433
+          Top = 70
+          Width = 96
+          Caption = 'Cari ...'
+          TabOrder = 2
+          OnClick = BCariClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000330B0000330B00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8ACDEE3E8E8
+            E8E8E8E8E8E8E8E8E8E8E8ACDEE3E8E8E8E8E8E8E8E8E8E8E8E8AC807A81E3E8
+            E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8E8CEA37A81E3
+            E8E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A81
+            E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A
+            81E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA3
+            7AACAD82828288E3E8E8E8E8E8E3ACE281ACE3818181E2E3E8E8E8E8E8E8D0CE
+            E28288E6B3E6E682EBE8E8E8E8E8E3ACE281E2ACACACAC81E3E8E8E8E8E8E8E3
+            8289B3B3B3D7D7D782E3E8E8E8E8E8E381E3ACACACE3E3E381E3E8E8E8E8E8AD
+            88B3E6B3B3D7D7D7E688E8E8E8E8E8E3E2ACACACACE3E3E3ACE2E8E8E8E8E888
+            89E6E6B3B3B3D7D7E682E8E8E8E8E8E2E3ACACACACACE3E3AC81E8E8E8E8E882
+            E6E6E6E6B3B3B3B3B382E8E8E8E8E881ACACACACACACACACAC81E8E8E8E8E888
+            E6B3E6E6E6B3B3B3E682E8E8E8E8E8E2ACACACACACACACACAC81E8E8E8E8E8AD
+            88D7D7E6E6E6E6B38888E8E8E8E8E8E3E2E3E3ACACACACACE2E2E8E8E8E8E8E3
+            82EBD7B3E6E6E68982E3E8E8E8E8E8E381E3E3ACACACACE381E3E8E8E8E8E8E8
+            AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
+            E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
+          NumGlyphs = 2
+        end
+        object Ed_KdAkun: TEdit
+          Left = 459
+          Top = 41
+          Width = 70
+          Height = 23
+          TabOrder = 3
+          Visible = False
+        end
+        object CBJenisHutang: TComboBox
+          Left = 302
+          Top = 41
+          Width = 151
+          Height = 23
+          TabOrder = 4
+          Visible = False
+        end
+        object CbRencanake: TComboBox
+          Left = 146
+          Top = 41
+          Width = 61
+          Height = 23
+          TabOrder = 5
+          Items.Strings = (
+            '1'
+            '2'
+            '3'
+            '4'
+            '5'
+            '6'
+            '7'
+            '8'
+            '9'
+            '10')
+        end
+        object Button5: TButton
+          Left = 533
+          Top = 11
+          Width = 25
+          Height = 24
+          Caption = '...'
+          TabOrder = 6
+          OnClick = Button5Click
+        end
+        object txtnmsupp: TEdit
+          Left = 237
+          Top = 11
+          Width = 292
+          Height = 24
+          CharCase = ecUpperCase
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Trebuchet MS'
+          Font.Style = []
+          ImeName = 'US'
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 7
+        end
+        object txtkdsupp: TEdit
+          Left = 146
+          Top = 11
+          Width = 84
+          Height = 24
+          CharCase = ecUpperCase
+          Ctl3D = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Trebuchet MS'
+          Font.Style = []
+          ImeName = 'US'
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 8
+        end
+        object DTP1: TRzDateTimePicker
+          Left = 146
+          Top = 70
+          Width = 125
+          Height = 23
+          Date = 45604.000000000000000000
+          Format = ''
+          Time = 0.409629756941285500
+          TabOrder = 9
+        end
+        object DTP2: TRzDateTimePicker
+          Left = 302
+          Top = 70
+          Width = 125
+          Height = 23
+          Date = 45604.000000000000000000
+          Format = ''
+          Time = 0.409629756941285500
+          TabOrder = 10
         end
       end
-      object DBGridKontrak: TDBGridEh
+      object DBGrid_Rencana_Pelunasan: TDBGridEh
         Left = 0
-        Top = 33
+        Top = 145
         Width = 943
-        Height = 257
+        Height = 305
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -87,379 +276,120 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           end
           item
           end>
-        DataSource = DsKerjasama
+        DataSource = DSRencana
         DrawMemoText = True
         DynProps = <>
         IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        RowDetailPanel.Active = True
         RowDetailPanel.Height = 150
         SearchPanel.Enabled = True
         TabOrder = 1
         TitleParams.MultiTitle = True
-        OnDblClick = DBGridKontrakDblClick
         Columns = <
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_trans'
-            Footers = <>
-            Title.Caption = 'No Kontrak'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'no_trans'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kt'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ket'
+            FieldName = 'supplier_name'
             Footers = <>
             Title.Caption = 'Supplier'
-            Width = 300
+            Width = 200
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'tgl_mulai'
+            FieldName = 'sj_no'
             Footers = <>
-            Title.Caption = 'Tanggal Mulai'
+            Title.Caption = 'No. Surat Jalan'
+            Width = 120
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'faktur_no'
+            Footers = <>
+            Title.Caption = 'No.Faktur'
+            Width = 120
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'faktur_date'
+            Footers = <>
+            Title.Caption = 'Tanggal Faktur'
+            Width = 120
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'paid_date'
+            Footers = <>
+            Title.Caption = 'Tanggal Pelunasan'
             Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'finish_date'
+            FieldName = 'periode1'
             Footers = <>
-            Title.Caption = 'Tanggal Selesai'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '0.00#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'harga'
-            Footers = <>
-            Title.Caption = 'Total Harga'
+            Title.Caption = 'periode 1'
             Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'thn'
+            FieldName = 'periode2'
             Footers = <>
-            Title.Caption = 'Tahun'
-            Visible = False
+            Title.Caption = 'periode 2'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'jumlah'
+            Footers = <>
+            Title.Caption = 'Jumlah'
             Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_result'
+            FieldName = 'plan_to'
             Footers = <>
-            Visible = False
+            Title.Caption = 'Rencana Ke'
+            Width = 50
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'tanggal'
+            FieldName = 'supplier_code'
             Footers = <>
-            Title.Caption = 'Tanggal'
-            Width = 100
+            Width = 0
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'bulan'
+            FieldName = 'id'
             Footers = <>
-            Title.Caption = 'Bulan'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'tahun'
-            Footers = <>
-            Title.Caption = 'Tahun'
-            Width = 100
+            Width = 0
           end>
         object RowDetailData: TRowDetailPanelControlEh
-          object DBGridEh3: TDBGridEh
-            Left = 0
-            Top = 0
-            Width = 884
-            Height = 148
-            Align = alClient
-            DataSource = DsKerjasama_det
-            DynProps = <>
-            FooterRowCount = 1
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-            SumList.Active = True
-            TabOrder = 0
-            TitleParams.MultiTitle = True
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_code'
-                Footers = <>
-                Title.Caption = 'Kode Barang'
-                Width = 60
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_name'
-                Footers = <>
-                Title.Caption = 'Nama Barang'
-                Width = 126
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'totalqty'
-                Footers = <>
-                Title.Caption = 'Karung/Botol|Quantum'
-                Visible = False
-                Width = 87
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'total'
-                Footer.FieldName = 'total'
-                Footers = <>
-                Title.Caption = 'Karung/Botol|Outstanding'
-                Visible = False
-                Width = 80
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'satuan'
-                Footers = <>
-                Title.Caption = 'Karung/Botol|Satuan'
-                Visible = False
-                Width = 55
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qtyperkonversi'
-                Footers = <>
-                Title.Caption = 'Barat(@)'
-                Visible = False
-                Width = 70
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Kuantum'
-                Width = 100
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'unit'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 79
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'price'
-                Footers = <>
-                Title.Caption = 'Harga'
-                Width = 120
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'subtotal_rp'
-                Footer.DisplayFormat = '#,##0.00'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'Sub Total Harga'
-                Width = 100
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'ppn'
-                Footers = <>
-                Title.Caption = 'PPN|%'
-                Width = 40
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'ppn_rp'
-                Footer.DisplayFormat = '#,##0.00'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'PPN|Nominal'
-                Width = 84
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'grandtotal'
-                Footer.DisplayFormat = '#,##0.00'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'Grand Total Harga'
-                Width = 123
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'totalpo'
-                Footers = <>
-                Title.Caption = 'Total PO'
-                Width = 95
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'remaining_qty'
-                Footers = <>
-                Title.Caption = 'Sisa Kuantum'
-                Width = 100
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'contract_no'
-                Footers = <>
-                Visible = False
-              end>
-            object RowDetailData: TRowDetailPanelControlEh
-            end
-          end
         end
       end
     end
-    object TabSheet2: TRzTabSheet
-      TabVisible = False
-      Caption = 'Uang Muka Pembelian'
-      object RzPanel4: TRzPanel
-        Left = 0
-        Top = 0
-        Width = 943
-        Height = 33
-        Align = alTop
-        Color = 15987699
-        TabOrder = 0
-        object Cb_Um: TRzCheckBox
-          Left = 860
-          Top = 2
-          Width = 81
-          Height = 29
-          Align = alRight
-          AlignmentVertical = avCenter
-          Caption = 'Pilih Semua'
-          State = cbUnchecked
-          TabOrder = 0
-          OnClick = CbkontrakClick
-          ExplicitLeft = 856
-          ExplicitHeight = 17
-        end
-      end
-      object DBGridEh2: TDBGridEh
-        Left = 0
-        Top = 33
-        Width = 943
-        Height = 257
-        Align = alClient
-        DataGrouping.Active = True
-        DataGrouping.GroupLevels = <
-          item
-          end
-          item
-          end>
-        DrawMemoText = True
-        DynProps = <>
-        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-        RowDetailPanel.Active = True
-        RowDetailPanel.Height = 150
-        SearchPanel.Enabled = True
-        TabOrder = 1
-        TitleParams.MultiTitle = True
-        OnDblClick = DBGridKontrakDblClick
-        object RowDetailData: TRowDetailPanelControlEh
-          object DBGridEh4: TDBGridEh
-            Left = 0
-            Top = 0
-            Width = 30
-            Height = 148
-            Align = alClient
-            DynProps = <>
-            FooterRowCount = 1
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-            SumList.Active = True
-            TabOrder = 0
-            TitleParams.MultiTitle = True
-            object RowDetailData: TRowDetailPanelControlEh
-            end
-          end
-        end
-      end
-    end
-    object TabPO: TRzTabSheet
-      Caption = 'PO'
+    object TabPengajuan_Keluar_KasBank: TRzTabSheet
+      Caption = 'Pengajuan Keluar Kas dan Bank'
       object RzPanel2: TRzPanel
         Left = 0
         Top = 0
@@ -478,16 +408,15 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           Caption = 'Pilih Semua'
           State = cbUnchecked
           TabOrder = 0
-          OnClick = Cb_poClick
           ExplicitLeft = 860
           ExplicitHeight = 19
         end
       end
-      object DBGridPO: TDBGridEh
+      object DBGridPengajuan: TDBGridEh
         Left = 0
         Top = 33
         Width = 943
-        Height = 257
+        Height = 417
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -495,7 +424,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           end
           item
           end>
-        DataSource = DsPo
         DrawMemoText = True
         DynProps = <>
         FooterRowCount = 1
@@ -511,114 +439,13 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         STFilter.Visible = True
         TabOrder = 1
         TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'po_no'
-            Footers = <>
-            Title.Caption = 'No.PO'
-            Width = 200
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'modul'
-            Footers = <>
-            Visible = False
-            Width = 100
-            WordWrap = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ket'
-            Footers = <>
-            Title.Caption = 'Supplier'
-            Width = 250
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'po_date'
-            Footers = <>
-            Title.Caption = 'Tanggal PO'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'delivery_date'
-            Footers = <>
-            Title.Caption = 'Tanggal Kirim'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '0.00#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'harga'
-            Footers = <>
-            Title.Caption = 'Harga'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'no_result'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ket_1'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'tanggal'
-            Footers = <>
-            Title.Caption = 'Tanggal'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'bulan'
-            Footers = <>
-            Title.Caption = 'Bulan'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'tahun'
-            Footers = <>
-            Title.Caption = 'Tahun'
-            Width = 100
-          end>
         object RowDetailData: TRowDetailPanelControlEh
           object DBGridEh1: TDBGridEh
             Left = 0
             Top = 0
-            Width = 884
-            Height = 138
+            Width = 30
+            Height = 158
             Align = alClient
-            DataSource = DsDetailPo
             DynProps = <>
             FooterRowCount = 1
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
@@ -626,241 +453,14 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
             SumList.Active = True
             TabOrder = 0
             TitleParams.MultiTitle = True
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_code'
-                Footers = <>
-                Title.Caption = 'Kode Barang'
-                Width = 84
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_name'
-                Footers = <>
-                Title.Caption = 'Nama Barang'
-                Width = 135
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Karung/Botol|Quantum'
-                Visible = False
-                Width = 90
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'unit'
-                Footers = <>
-                Title.Caption = 'Karung/Botol|Satuan'
-                Visible = False
-                Width = 45
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qtyperkonversi'
-                Footers = <>
-                Title.Caption = 'Berat(@)'
-                Visible = False
-                Width = 70
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Kuantum'
-                Width = 87
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'unit'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 68
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'price'
-                Footers = <>
-                Title.Caption = 'Harga'
-                Width = 90
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'subtotal'
-                Footer.DisplayFormat = '#,##0.00'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'Sub Total'
-                Width = 100
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'ppn'
-                Footers = <>
-                Title.Caption = 'PPN|%'
-                Width = 30
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'ppn_rp'
-                Footer.DisplayFormat = '#,##0.00'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'PPN|Nominal'
-                Width = 80
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'pph'
-                Footers = <>
-                Title.Caption = 'PPH|%'
-                Visible = False
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '#,##0.00'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'pph_rp'
-                Footers = <>
-                Title.Caption = 'PPH|Nominal'
-                Visible = False
-                Width = 80
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'grandtotal'
-                Footer.DisplayFormat = '0.00#,##'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'Grand Total'
-                Width = 100
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty_sent'
-                Footers = <>
-                Title.Caption = 'Kuantum|Terkirim'
-                Width = 90
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'total_payment'
-                Footer.DisplayFormat = '0.00#,##'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'Terkirim|Total Bayar'
-                Visible = False
-                Width = 107
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'po_no'
-                Footers = <>
-                Visible = False
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'remaining_qty'
-                Footers = <>
-                Title.Caption = 'Kuantum|Belum Dikirim'
-                Width = 90
-              end
-              item
-                CellButtons = <>
-                DisplayFormat = '0.00#,##'
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'remaining_payment'
-                Footer.DisplayFormat = '0.00#,##'
-                Footer.ValueType = fvtSum
-                Footers = <>
-                Title.Caption = 'Belum Dikirim|Total Belum Dibayar'
-                Visible = False
-                Width = 102
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'wh_name'
-                Footers = <>
-                Title.Caption = 'Gudang'
-                Width = 100
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_stock_code'
-                Footers = <>
-                Title.Caption = 'Kode Barang Supp'
-                Width = 0
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'pemb_ppn'
-                Footers = <>
-                Width = 0
-              end>
             object RowDetailData: TRowDetailPanelControlEh
             end
           end
         end
       end
     end
-    object TabSPB: TRzTabSheet
-      Caption = 'SPB'
-      ExplicitWidth = 937
-      ExplicitHeight = 281
+    object TabPengeluaran_KasBank: TRzTabSheet
+      Caption = 'Pengeluaran Kas dan Bank'
       object RzPanel3: TRzPanel
         Left = 0
         Top = 0
@@ -869,7 +469,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         Align = alTop
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 937
         object Cb_spb: TRzCheckBox
           Left = 856
           Top = 2
@@ -880,29 +479,24 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           Caption = 'Pilih Semua'
           State = cbUnchecked
           TabOrder = 0
-          OnClick = CbkontrakClick
           ExplicitLeft = 860
           ExplicitHeight = 19
         end
       end
-      object DBGridSPB: TDBGridEh
+      object DBGridPengeluaran: TDBGridEh
         Left = 0
         Top = 33
         Width = 943
-        Height = 257
+        Height = 417
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
           item
-            ColumnName = 'Column_8_trans_year'
           end
           item
-            ColumnName = 'Column_9_trans_month'
           end
           item
-            ColumnName = 'Column_10_trans_day'
           end>
-        DataSource = DsSPB
         DrawMemoText = True
         DynProps = <>
         IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
@@ -910,174 +504,15 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
         TabOrder = 1
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'spb_no'
-            Footers = <>
-            Title.Caption = 'No. SP'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'supplier_name'
-            Footer.FieldName = 'nm_supplier'
-            Footers = <>
-            Title.Caption = 'Nama Supplier'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'po_no'
-            Footers = <>
-            Title.Caption = 'No. PO'
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'spb_date'
-            Footers = <>
-            Title.Caption = 'Tanggal'
-            Width = 76
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pic'
-            Footers = <>
-            Title.Caption = 'PIC'
-            Visible = False
-            Width = 143
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'vehicle_no'
-            Footers = <>
-            Title.Caption = 'No. Kendaraan'
-            Width = 158
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'driver'
-            Footers = <>
-            Title.Caption = 'Driver'
-            Width = 155
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'status_app'
-            Footers = <>
-            Title.Caption = 'Status Approval'
-            Width = 102
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_year'
-            Footers = <>
-            Title.Caption = 'Tahun'
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_month'
-            Footers = <>
-            Title.Caption = 'Bulan'
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_day'
-            Footers = <>
-            Title.Caption = 'Tanggal'
-            Visible = False
-          end>
         object RowDetailData: TRowDetailPanelControlEh
           object DBGridEh5: TDBGridEh
             Left = 0
             Top = 0
-            Width = 776
+            Width = 30
             Height = 118
             Align = alClient
-            DataSource = DSDetailspb
             DynProps = <>
             TabOrder = 0
-            Columns = <
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_stock_code'
-                Footers = <>
-                Title.Caption = 'kode Material'
-                Visible = False
-                Width = 84
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'item_name'
-                Footers = <>
-                Title.Caption = 'Nama Barang'
-                Width = 150
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'po_no'
-                Footers = <>
-                Title.Caption = 'No. PO'
-                Width = 150
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'qty'
-                Footers = <>
-                Title.Caption = 'Kuantum'
-                Width = 101
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'unit'
-                Footers = <>
-                Title.Caption = 'Satuan'
-                Width = 150
-              end
-              item
-                CellButtons = <>
-                DynProps = <>
-                EditButtons = <>
-                FieldName = 'wh_name'
-                Footers = <>
-                Title.Caption = 'Gudang'
-                Width = 150
-              end>
             object RowDetailData: TRowDetailPanelControlEh
             end
           end
@@ -1085,38 +520,25 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       end
     end
   end
-  object ActMenu: TActionManager
-    Left = 600
-    Top = 32
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'New'
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-    end
-    object ActRo: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActRoExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      OnExecute = ActAppExecute
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-      Visible = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose Kontrak    '
-      Enabled = False
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 947
+    Height = 127
+    BarManager = dxBarManager1
+    Style = rs2010
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 1
+    TabStop = False
+    object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
+      Caption = 'Home'
+      Groups = <
+        item
+          ToolbarName = 'dxBarManager1Bar1'
+        end>
+      Index = 0
     end
   end
   object dxBarManager1: TdxBarManager
@@ -1143,8 +565,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 51
-      FloatClientHeight = 151
+      FloatClientWidth = 83
+      FloatClientHeight = 201
       ItemLinks = <
         item
           Visible = True
@@ -1869,217 +1291,141 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       ItemLinks = <>
     end
   end
-  object DsKerjasama: TDataSource
-    DataSet = QKerjasama
-    Left = 217
-    Top = 72
+  object ActMenu: TActionManager
+    Left = 600
+    Top = 32
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'New'
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRo: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActRoExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      OnExecute = ActAppExecute
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
+    end
   end
-  object QKerjasama: TUniQuery
+  object QRencana: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       ''
-      
-        'select '#39'KONTRAK'#39' as modul ,A.contract_no as no_trans,a.supplier_' +
-        'name as Ket,a.contract_date as tgl_mulai,a.finish_date,t.harga,d' +
-        'ate_part('#39'YEAR'#39',contract_date) thn,'
-      
-        ' '#39#39' no_result,'#39#39' kt,a.trans_year Tahun,a.trans_month Bulan,a.tra' +
-        'ns_day Tanggal from '
-      
-        ' (select a.*,b.supplier_code,b.supplier_name from purchase. t_co' +
-        'op_contract a '
-      
-        ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ORDE' +
-        'R BY contract_no ASC) a '
-      
-        ' INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no ' +
-        'from purchase.t_coop_contract_det WHERE contract_no=a.contract_n' +
-        'o '
-      
-        ' GROUP BY contract_no ORDER BY contract_no ASC) as t on 1=1 WHER' +
-        'E a."approval_status"=0 and a."status"='#39'1'#39' order by a.id')
-    Left = 220
-    Top = 24
-  end
-  object DsKerjasama_det: TDataSource
-    DataSet = QKerjasama_det
-    Left = 265
-    Top = 72
-  end
-  object QKerjasama_det: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.to' +
-        'tal_price,c.item_code,c.item_name,'
-      
-        'd.category,a.ppn,a.ppn_rp,a."specification",a.subtotal_rp,a.gran' +
-        'dtotal,a.pemb_ppn,a.pph,a.pph_rp,a.detail_id'
-      'FROM purchase.t_coop_contract_det AS "a"'
-      
-        'INNER JOIN warehouse.t_item_stock AS b'#9'ON a.item_stock_code = b.' +
-        'item_stock_code'
-      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
-      'INNER JOIN t_item_category d ON c.category_id=d.category_id '
-      
-        'GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.' +
-        'total_price,c.item_code,c.item_name,'
-      
-        'd.category,a.totalpo,a.ppn,a.ppn_rp,a."specification",a.subtotal' +
-        '_rp,a.grandtotal,a.pemb_ppn,a.pph,a.pph_rp,a.detail_id')
-    MasterSource = DsKerjasama
-    MasterFields = 'no_trans'
-    DetailFields = 'contract_no'
-    Left = 264
-    Top = 24
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'no_trans'
-        ParamType = ptInput
-        Value = 'KK/007/II/24'
-      end>
-  end
-  object DsDetailPo: TDataSource
-    DataSet = Qdetailpo
-    Left = 384
-    Top = 72
-  end
-  object Qdetailpo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      #9#9#9#9' '
-      
-        'SELECT'#9'c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.item_' +
-        'code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency, '
-      
-        #9'a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,' +
-        'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,'
-      '        a.status,a.grandtotal'
-      '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
-      'FROM purchase.t_podetail AS "a" '
-      
-        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
-        'item_stock_code'
-      'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
-      'INNER JOIN t_wh d on a.wh_code=d.wh_code  '
-      
-        'GROUP BY c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.ite' +
-        'm_code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency,'
-      
-        '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
-        'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
-      '         a.pemb_dpp,a.pemb_ppn,a.status,a.grandtotal'#9#9#9)
-    MasterSource = DsPo
-    MasterFields = 'po_no'
-    DetailFields = 'po_no'
-    Active = True
-    Left = 384
-    Top = 24
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'po_no'
-        ParamType = ptInput
-        Value = nil
-      end>
-  end
-  object DsPo: TDataSource
-    DataSet = QPo
-    Left = 336
-    Top = 72
-  end
-  object QPo: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
       ''
       
-        'select '#39'PO'#39' as modul,A.po_no,b.supplier_name as Ket,a.po_date,a.' +
-        'delivery_date,t.harga,'#39#39' no_result,'#39#39' ket '
+        'select * from cash_banks.v_plan_paid_debt where paid_status=0 an' +
+        'd approve_status=false  '
+      'and periode1='#39'2024-01-01'#39' and periode2='#39'2024-01-31'#39
+      ''
       
-        ',a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from' +
-        ' purchase.t_po a INNER JOIN t_supplier b on a.supplier_code=b.su' +
-        'pplier_code '
-      
-        'INNER JOIN LATERAL(SELECT sum(subtotal)as harga,po_no from purch' +
-        'ase.t_podetail WHERE po_no=a.po_no GROUP BY po_no) as t on 1=1'
-      
-        'WHERE a."approval_status"=0 and a."status"='#39'1'#39' order by a.po_dat' +
-        'e,a.po_no asc'
+        '-- select * from cash_banks.t_paid_debt_det where paid_status=0 ' +
+        'and approve_status=false '
       ''
       ''
       ''
-      
-        '-- select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN' +
-        ' a."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
-      
-        '-- END) AS status_app, (case WHEN a.status='#39'1'#39' THEN '#39'AKTIF'#39' WHEN' +
-        ' a.status='#39'0'#39' THEN '#39'SELESAI'#39
-      '-- END) AS status,'
-      
-        '-- a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn' +
-        ',a.order_no,a.valas_value,a.po_type,'
-      
-        '-- a.valas,a.remarks,a.type,a.status,a.transportation_type,a.div' +
-        'ision_code,a.delivery_date,B.supplier_name,a.trans_category,'
-      
-        '-- a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name' +
-        ',a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.' +
-        'sbu_code,a.correction_status,a.um_status,a.um_value,'
-      '-- a.um_account_code,a.as_status,um_no'
-      '-- from purchase.t_po A '
-      '-- Inner join t_supplier B on A.supplier_code=B.supplier_code'
-      '-- INNER JOIN t_wh c on a.wh_code=c.wh_code'
-      '-- WHERE a."approval_status"='#39'0'#39
-      '-- order by A.id desc')
-    Active = True
-    Left = 336
-    Top = 24
-  end
-  object DSDetailspb: TDataSource
-    DataSet = Qdetailspb
-    Left = 483
-    Top = 72
-  end
-  object Qdetailspb: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      '-- SELECT a.*,b.item_name from purchase.t_spb_det a inner join'
-      
-        '-- warehouse.t_item_stock b on b.item_stock_code=a.item_stock_co' +
-        'de'
-      
-        'SELECT a.spb_no,a.po_no,a.status,a.item_stock_code,a.qty,a.unit,' +
-        'a.wh_code,wh_name,b.item_name  from purchase.t_spb_det a '
-      
-        'inner join warehouse.t_item_stock b on b.item_stock_code=a.item_' +
-        'stock_code'
-      'inner join t_wh c on a.wh_code=c.wh_code')
-    MasterSource = DsSPB
-    Active = True
-    Left = 484
-    Top = 24
-  end
-  object QSPB: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      ' '
-      
-        ' Select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a' +
-        '."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
-      
-        'END) AS status_app,A.*, B.supplier_name from purchase.t_spb a in' +
-        'ner join t_supplier b on A.supplier_code=b.supplier_code'
-      'where a."approval_status"=0 '
-      'order by spb_no desc'
       '')
-    Active = True
     Left = 440
-    Top = 24
+    Top = 32
+    object QRencanajumlah: TFloatField
+      FieldName = 'jumlah'
+    end
+    object QRencanaid: TLargeintField
+      FieldName = 'id'
+    end
+    object QRencanafaktur_no: TStringField
+      FieldName = 'faktur_no'
+      Size = 35
+    end
+    object QRencanainv_no: TStringField
+      FieldName = 'inv_no'
+      Size = 35
+    end
+    object QRencanasj_no: TStringField
+      FieldName = 'sj_no'
+      Size = 35
+    end
+    object QRencanafaktur_date: TDateField
+      FieldName = 'faktur_date'
+    end
+    object QRencanaperiode1: TDateField
+      FieldName = 'periode1'
+    end
+    object QRencanaperiode2: TDateField
+      FieldName = 'periode2'
+    end
+    object QRencanabank: TStringField
+      FieldName = 'bank'
+    end
+    object QRencanacek_no: TStringField
+      FieldName = 'cek_no'
+      Size = 35
+    end
+    object QRencanaplan_to: TSmallintField
+      FieldName = 'plan_to'
+    end
+    object QRencanasupplier_code: TStringField
+      FieldName = 'supplier_code'
+      Size = 25
+    end
+    object QRencanasupplier_name: TStringField
+      FieldName = 'supplier_name'
+      Size = 100
+    end
+    object QRencanapaid_date: TDateField
+      FieldName = 'paid_date'
+    end
+    object QRencanaperiodetempo1: TDateField
+      FieldName = 'periodetempo1'
+    end
+    object QRencanaperiodetempo2: TDateField
+      FieldName = 'periodetempo2'
+    end
+    object QRencanapaid_status: TSmallintField
+      FieldName = 'paid_status'
+    end
+    object QRencanaapprove_status: TBooleanField
+      FieldName = 'approve_status'
+    end
+    object QRencanadebt_type: TIntegerField
+      FieldName = 'debt_type'
+    end
+    object QRencanaaccount_code: TStringField
+      FieldName = 'account_code'
+      Size = 50
+    end
+    object QRencanaaccount_name: TStringField
+      FieldName = 'account_name'
+      Size = 100
+    end
+    object QRencanatrans_date: TDateField
+      FieldName = 'trans_date'
+    end
+    object QRencanatrans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 50
+    end
   end
-  object DsSPB: TDataSource
-    DataSet = QSPB
-    Left = 440
-    Top = 72
+  object DSRencana: TDataSource
+    DataSet = QRencana
+    Left = 496
+    Top = 64
   end
 end

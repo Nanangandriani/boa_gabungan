@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,7 +37,8 @@ implementation
 
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
-  UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function;
+  UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
+  U_keluarkasbank_ajuan;
 
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
@@ -167,6 +169,12 @@ begin
       FNew_UM_Pembelian.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
+    if (vpanggil = 'ajuankeluarkasbank')then
+    begin
+      FKeluarKasBank_Ajuan.txtkdakunkredit.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FKeluarKasBank_Ajuan.txtnmakunkredit.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
     close;
 end;
 
@@ -184,6 +192,13 @@ end;
 procedure TFCari_DaftarPerk.FormDestroy(Sender: TObject);
 begin
   RealFCari_DaftarPerk:=nil;
+end;
+
+procedure TFCari_DaftarPerk.FormShow(Sender: TObject);
+begin
+   if QDaftar_Perk.Active=false then
+      QDaftar_Perk.Active:=true;
+
 end;
 
 end.

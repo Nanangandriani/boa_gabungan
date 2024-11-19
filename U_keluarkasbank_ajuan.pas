@@ -11,7 +11,7 @@ uses
 
 type
   TFKeluarKasBank_Ajuan = class(TForm)
-    RzPageControl1: TRzPageControl;
+    PGC1: TRzPageControl;
     TabSheet1: TRzTabSheet;
     TabSheet2: TRzTabSheet;
     RzPanel2: TRzPanel;
@@ -72,7 +72,7 @@ type
     Label7: TLabel;
     Label1: TLabel;
     RzPanel3: TRzPanel;
-    RzPageControl2: TRzPageControl;
+    PGC2: TRzPageControl;
     TabSheet3: TRzTabSheet;
     DBGridEh1: TDBGridEh;
     RzBitBtn1: TRzBitBtn;
@@ -81,10 +81,17 @@ type
     DBGridEh2: TDBGridEh;
     ComboBox1: TComboBox;
     Label10: TLabel;
+    procedure FormShow(Sender: TObject);
+    procedure cbsumberdataSelect(Sender: TObject);
+    procedure BtutupClick(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure cbbayarhutangClick(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure load_sumber_data;
   end;
 
 var
@@ -93,5 +100,63 @@ var
 implementation
 
 {$R *.dfm}
+
+uses UDataModule, U_Data_rencana_lunas_hutang_pengajuan, UCari_DaftarPerk;
+
+
+procedure TFKeluarKasBank_Ajuan.BtutupClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFKeluarKasBank_Ajuan.Button6Click(Sender: TObject);
+begin
+   PGC2.ActivePage:=tabsheet4;
+end;
+
+procedure TFKeluarKasBank_Ajuan.cbbayarhutangClick(Sender: TObject);
+begin
+   if cbbayarhutang.Checked=true then
+  gbbayarhutang.Enabled:=true
+  else
+  gbbayarhutang.Enabled:=false;
+end;
+
+procedure TFKeluarKasBank_Ajuan.cbsumberdataSelect(Sender: TObject);
+begin
+  if cbsumberdata.ItemIndex=0 then
+  begin
+    FDataRenanaLunasHutangPengajuan.Show;
+  end;
+end;
+
+procedure TFKeluarKasBank_Ajuan.FormShow(Sender: TObject);
+begin
+  self.load_sumber_data;
+  PGC2.ActivePage:= tabsheet3;
+end;
+
+procedure TFKeluarKasBank_Ajuan.load_sumber_data;
+begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Text:='SELECT * from t_settlement_data_source where status=''true'' ';
+      Open;
+    end;
+    Dm.Qtemp.First;
+    cbsumberdata.Items.Clear;
+    while not dm.Qtemp.Eof do
+    begin
+      cbsumberdata.Items.Add(Dm.Qtemp.FieldByName('source_name').AsString);
+      Dm.Qtemp.Next;
+    end;
+end;
+
+procedure TFKeluarKasBank_Ajuan.SpeedButton4Click(Sender: TObject);
+begin
+    FCari_DaftarPerk.vpanggil:='ajuankeluarkasbank';
+    FCari_DaftarPerk.show;
+end;
 
 end.

@@ -11,8 +11,9 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
-  object RzPageControl1: TRzPageControl
+  object PGC1: TRzPageControl
     Left = 0
     Top = 0
     Width = 958
@@ -23,12 +24,12 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
     TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 952
-    ExplicitHeight = 754
+    ExplicitHeight = 735
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
       Caption = 'TabSheet1'
       ExplicitWidth = 948
-      ExplicitHeight = 729
+      ExplicitHeight = 710
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -39,13 +40,13 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
         Color = 15987699
         TabOrder = 0
         ExplicitWidth = 948
-        ExplicitHeight = 496
+        ExplicitHeight = 477
         DesignSize = (
           954
           486)
         object lbkurs: TLabel
-          Left = 518
-          Top = 431
+          Left = 618
+          Top = 426
           Width = 62
           Height = 17
           Anchors = [akTop]
@@ -57,11 +58,10 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Style = []
           ParentFont = False
           Visible = False
-          ExplicitLeft = 526
         end
         object Label14: TLabel
-          Left = 348
-          Top = 432
+          Left = 449
+          Top = 426
           Width = 63
           Height = 17
           Anchors = [akTop]
@@ -72,11 +72,10 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 354
         end
         object Label9: TLabel
           Left = 17
-          Top = 431
+          Top = 426
           Width = 76
           Height = 17
           Caption = 'Sumber Data'
@@ -119,6 +118,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Width = 27
           Height = 25
           Caption = '...'
+          OnClick = SpeedButton4Click
         end
         object SpeedButton2: TSpeedButton
           Left = 383
@@ -286,8 +286,8 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Caption = 'Sumber'
         end
         object Edkurs: TRzNumericEdit
-          Left = 596
-          Top = 428
+          Left = 700
+          Top = 424
           Width = 168
           Height = 26
           Font.Charset = DEFAULT_CHARSET
@@ -301,8 +301,8 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           DisplayFormat = '#,##0.00'
         end
         object cbmatauang: TComboBox
-          Left = 423
-          Top = 428
+          Left = 527
+          Top = 424
           Width = 75
           Height = 26
           Font.Charset = DEFAULT_CHARSET
@@ -319,21 +319,15 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
             'USD')
         end
         object cbsumberdata: TComboBox
-          Left = 101
-          Top = 433
+          Left = 190
+          Top = 425
           Width = 172
           Height = 23
           Style = csDropDownList
           TabOrder = 2
+          OnSelect = cbsumberdataSelect
           Items.Strings = (
-            ''
-            'Hutang Kredit'
-            'Uang Muka Pembelian'
-            'Delivery Order'
-            'Import'
-            'Kas Kecil'
-            'Memorial'
-            'Catatan PPH PS 21')
+            '')
         end
         object Edrencanake: TComboBox
           Left = 191
@@ -407,7 +401,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
             ParentFont = False
           end
           object txtkdsupp: TEdit
-            Left = 3
+            Left = 1
             Top = 15
             Width = 88
             Height = 24
@@ -458,10 +452,11 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Style = []
           ParentFont = False
           TabOrder = 6
+          OnClick = cbbayarhutangClick
         end
         object txtket: TMemo
           Left = 190
-          Top = 262
+          Top = 259
           Width = 520
           Height = 46
           TabOrder = 7
@@ -709,7 +704,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
         Height = 35
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 694
+        ExplicitTop = 675
         ExplicitWidth = 948
         object Btutup: TRzBitBtn
           Left = 853
@@ -725,6 +720,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
+          OnClick = BtutupClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000630B0000630B00000001000000000000000000003300
@@ -997,6 +993,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 4
+          OnClick = Button6Click
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
             08000000000000020000830B0000830B00000001000000000000000000003300
@@ -1209,21 +1206,23 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
         Align = alClient
         Color = 15987699
         TabOrder = 2
-        ExplicitTop = 496
+        ExplicitTop = 477
         ExplicitWidth = 948
-        object RzPageControl2: TRzPageControl
+        object PGC2: TRzPageControl
           Left = 2
           Top = 2
           Width = 950
           Height = 194
           Hint = ''
+          ActivePage = TabSheet3
           Align = alClient
+          TabIndex = 0
           TabOrder = 0
           ExplicitWidth = 944
           FixedDimension = 21
           object TabSheet3: TRzTabSheet
             Color = 15987699
-            Caption = 'Daftar Akun Hutang balikan'
+            Caption = 'Data Hutang'
             object DBGridEh1: TDBGridEh
               Left = 0
               Top = 0
@@ -1397,7 +1396,6 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
     end
     object TabSheet2: TRzTabSheet
       Caption = 'TabSheet2'
-      ExplicitHeight = 738
       object RzPanel2: TRzPanel
         Left = 0
         Top = 0
@@ -1406,7 +1404,6 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
         Align = alClient
         Color = 15987699
         TabOrder = 0
-        ExplicitHeight = 738
       end
     end
   end

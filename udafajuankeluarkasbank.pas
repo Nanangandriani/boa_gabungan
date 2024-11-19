@@ -63,6 +63,7 @@ type
     BCari: TRzBitBtn;
     DateTimePicker1: TDateTimePicker;
     procedure ActBaruExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,6 +82,12 @@ uses U_keluarkasbank_ajuan;
 procedure TFdafajuankeluarkasbank.ActBaruExecute(Sender: TObject);
 begin
    FKeluarKasBank_Ajuan.show;
+end;
+
+procedure TFdafajuankeluarkasbank.FormShow(Sender: TObject);
+begin
+   DateTimePicker1.Date:=Now;
+   DateTimePicker2.Date:=Now;
 end;
 
 initialization

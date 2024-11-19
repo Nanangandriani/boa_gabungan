@@ -33,6 +33,9 @@ type
     QSupplierdeleted_by: TStringField;
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,7 +43,8 @@ type
     vcall : string;
   end;
 
-var
+//var
+function
   FSearch_Supplier: TFSearch_Supplier;
 
 implementation
@@ -49,7 +53,19 @@ implementation
 
 uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew_ReturnPembelian,
   UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber,
-  UDataPengeluaranKasBank;
+  UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
+  UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan;
+
+var
+  RealFSearch_Supplier: TFSearch_Supplier;
+
+function FSearch_Supplier: TFSearch_Supplier;
+begin
+  if RealFSearch_Supplier <> nil then
+     FSearch_Supplier:= RealFSearch_Supplier
+  else
+    Application.CreateForm(TFSearch_Supplier, Result);
+end;
 
 procedure TFSearch_Supplier.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -89,6 +105,27 @@ begin
       FDataPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];
       FDataPengeluaranKasBank.edNama_Supplier.Text:=QSupplier['supplier_name'];
     end;
+    if vcall='daftar_hutang' then
+    begin
+      FDaftar_Hutang.Cbsupp.text:=QSupplier['supplier_code'];
+      FDaftar_Hutang.txtnmsupp.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='rencanalunashutang' then
+    begin
+      FList_Rencana_Lunas_Hutang.txtkdsupp.text:=QSupplier['supplier_code'];
+      FList_Rencana_Lunas_Hutang.txtnmsupp.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='rencana_approve' then
+    begin
+      FApproval_Keluar_Kas_Bank.txtkdsupp.text:=QSupplier['supplier_code'];
+      FApproval_Keluar_Kas_Bank.txtnmsupp.Text:=QSupplier['supplier_name'];
+      //showmessage(QSupplier['supplier_code']);
+    end;
+    if vcall='Datarencanalunashutangajuan' then
+    begin
+      FDataRenanaLunasHutangPengajuan.cbsupp.text:=QSupplier['supplier_code'];
+      FDataRenanaLunasHutangPengajuan.txtnmsupp.Text:=QSupplier['supplier_name'];
+    end;
     if vcall='delivery_order_reimburst' then
     begin
        FNewDeliveryOrder.MemDataBiaya.insert;
@@ -122,11 +159,6 @@ begin
       ednm_supp.Text:=QSupplier['supplier_name'];
     end;
 
-    {with FNew_do do
-    begin
-      Edkd_supp_Angkutan.Text:=QSupplier['supplier_code'];
-      ednm_supp_Angkutan.Text:=QSupplier['supplier_name'];
-    end;}
     with FNew_UM_Pembelian do
     begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
@@ -140,6 +172,22 @@ begin
     end;
 
     close;
+end;
+
+procedure TFSearch_Supplier.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    Action:=cafree;
+end;
+
+procedure TFSearch_Supplier.FormCreate(Sender: TObject);
+begin
+   RealFSearch_Supplier:=self;
+end;
+
+procedure TFSearch_Supplier.FormDestroy(Sender: TObject);
+begin
+   RealFSearch_Supplier:=nil;
 end;
 
 procedure TFSearch_Supplier.FormShow(Sender: TObject);

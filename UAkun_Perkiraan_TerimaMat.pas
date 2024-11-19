@@ -27,18 +27,20 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pembelian, UMy_Function, URpt_BukuHarianPembelian;
+uses UNew_Pembelian, UMy_Function, URpt_BukuHarianPembelian,
+  u_rencana_lunas_hutang_input;
 
 procedure TFAkun_Perkiraan_TerimaMat.DBGridEh1DblClick(Sender: TObject);
 begin
-  { with FNew_Pembelian do
-   begin
-       MemterimaDet.Edit;
-       MemterimaDet['kd_akunpph']:=QAkun['code'];
-       MemterimaDet.Post;
-       kd_akpph:=QAkun['code'];
-   end;
-   Close;}
+    if statustr='rencana_pelunasan_hutang' then
+    with FRencana_Lunas_Hutang do
+    begin
+         Memrencana.Edit;
+         Memrencana['akun_pph']:=QAkun['code'];
+         Memrencana['nm_akun_pph']:=QAkun['account_name'];
+         Memrencana.Post;
+
+    end;
     if statustr='pphpemb' then
     begin
       with FNew_Pembelian do

@@ -73,7 +73,7 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
       '-- where a.module_id='#39'2'#39
       ''
       ''
-      'SELECT * FROM v_search_account'
+      'SELECT DISTINCT * FROM v_search_account'
       ''
       ''
       '')

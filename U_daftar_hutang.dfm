@@ -130,7 +130,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Top = 44
       Width = 121
       Height = 23
-      Date = 38346.000000000000000000
+      Date = 45614.000000000000000000
       Format = 'dd/MM/yyyy'
       Time = 0.189661342599720200
       ImeName = 'US'
@@ -141,7 +141,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Top = 44
       Width = 123
       Height = 23
-      Date = 38346.000000000000000000
+      Date = 45614.000000000000000000
       Format = 'dd/MM/yyyy'
       Time = 0.189661342599720200
       ImeName = 'US'
@@ -168,7 +168,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
     end
     object BCari: TRzBitBtn
       Left = 552
-      Top = 55
+      Top = 57
       Width = 134
       Height = 39
       Caption = 'Cari'
@@ -229,11 +229,12 @@ object FDaftar_Hutang: TFDaftar_Hutang
     end
     object Button4: TButton
       Left = 957
-      Top = 13
+      Top = 11
       Width = 27
       Height = 21
       Caption = '...'
       TabOrder = 7
+      OnClick = Button4Click
     end
   end
   object Panel1: TPanel
@@ -391,7 +392,6 @@ object FDaftar_Hutang: TFDaftar_Hutang
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
       ExplicitLeft = 773
-      ExplicitTop = 4
     end
     object BitBtn1: TBitBtn
       Left = 16
@@ -533,7 +533,6 @@ object FDaftar_Hutang: TFDaftar_Hutang
       DataSource = DSdaftarhutang
       DrawMemoText = True
       DynProps = <>
-      IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
       TabOrder = 0
       TitleParams.RowHeight = 40
@@ -554,7 +553,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
           Footers = <>
           Title.Alignment = taCenter
           Title.Caption = 'Supplier'
-          Width = 220
+          Width = 200
         end
         item
           CellButtons = <>
@@ -564,7 +563,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
           Footers = <>
           Title.Alignment = taCenter
           Title.Caption = 'No. Faktur '
-          Width = 150
+          Width = 130
           OnGetCellParams = DBGridEh1Columns2GetCellParams
         end
         item
@@ -575,7 +574,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
           Footers = <>
           Title.Alignment = taCenter
           Title.Caption = 'No.Invoice'
-          Width = 139
+          Width = 130
         end
         item
           CellButtons = <>
@@ -585,7 +584,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
           Footers = <>
           Title.Alignment = taCenter
           Title.Caption = 'No. Surat Jalan'
-          Width = 150
+          Width = 130
         end
         item
           CellButtons = <>
@@ -631,30 +630,30 @@ object FDaftar_Hutang: TFDaftar_Hutang
           CellButtons = <>
           DynProps = <>
           EditButtons = <>
+          FieldName = 'npph'
           Footers = <>
-          Title.Alignment = taCenter
-          Title.Caption = 'Bayar'
-          Width = 100
-        end
-        item
-          CellButtons = <>
-          DynProps = <>
-          EditButtons = <>
-          Footers = <>
-          Title.Alignment = taCenter
-          Title.Caption = 'Sisa Hutang'
-          Width = 100
+          Width = 0
         end
         item
           CellButtons = <>
           Checkboxes = True
           DynProps = <>
           EditButtons = <>
-          FieldName = 'plan_stat'
+          FieldName = 'pilih'
           Footers = <>
           TextEditing = True
           Title.Alignment = taCenter
           Title.Caption = 'Pilih'
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'akun_pph'
+          Footers = <>
+          Title.Caption = 'Akun PPH'
+          Visible = False
+          Width = 0
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
@@ -664,10 +663,26 @@ object FDaftar_Hutang: TFDaftar_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktu' +
-        'r,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah-nilai_um as' +
-        ' jumlah,npph,'#39#39'::text as akun_pph,plan_stat,status,approval_stat' +
-        'us '
+        'SELECT  tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfakt' +
+        'ur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_' +
+        'pph,plan_stat,status,urutan,approval_status,bayar,rencanake,juml' +
+        'ah-bayar as sisa'
+      'FROM'
+      ''
+      
+        '(SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfakt' +
+        'ur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_' +
+        'pph,'
+      
+        '       plan_stat,status,approval_status,urutan,(case when pay IS' +
+        'NULL then 0 else pay end)bayar,(case when plan_to ISNULL then 0 ' +
+        'else plan_to  end)rencanake'
+      'FROM'
+      
+        '(select tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfakt' +
+        'ur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah-nilai_um a' +
+        's jumlah,npph,'#39#39'::text as akun_pph,plan_stat,status,approval_sta' +
+        'tus,urutan '
       'from '
       ''
       
@@ -685,7 +700,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       '(case when ppn_rp is null then 0 else ppn_rp end)ppn_rp,'
       
         '(case when npph is null then 0 else npph end)npph,'#39#39'::text as ak' +
-        'un_pph,plan_stat,status,approval_status'
+        'un_pph,plan_stat,status,approval_status,urutan'
       ' FROM'
       ''
       
@@ -707,7 +722,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
         '_dolar end)pot_beli_dolar,'
       
         '(case when do1.harga is null then 0 else do1.harga end)harga_do1' +
-        ',status,approval_status'
+        ',status,approval_status,urutan'
       ' FROM'
       ''
       
@@ -715,8 +730,9 @@ object FDaftar_Hutang: TFDaftar_Hutang
         'trans_no as no_inv,faktur_no as nofakturpajak,faktur_date,sj_no,' +
         'valas,valas_value,due_date,plan_stat,(case when sj_status=1 and ' +
         'fk_status=1 and invoice_status=1 then 1 else 0 end)status,0 as p' +
-        'pnrp,id,approval_status  from purchase.t_purchase_invoice where ' +
-        '(faktur_date + due_date) between '#39'2024-06-20'#39' and '#39'2024-10-10'#39' '
+        'pnrp,id as urutan,approval_status  from purchase.t_purchase_invo' +
+        'ice where (faktur_date + due_date) between '#39'2024-06-20'#39' and '#39'202' +
+        '4-10-10'#39' '
       '   '
       'union all  '
       
@@ -785,9 +801,18 @@ object FDaftar_Hutang: TFDaftar_Hutang
       ''
       ')zzz'
       ''
-      'ORDER BY --urutan,'
-      'tglfaktur,nofakturpajak ASC ')
-    Active = True
+      'ORDER BY '
+      'tglfaktur,nofakturpajak,urutan ASC)y'
+      ''
+      'left join '
+      
+        '(select faktur_no,plan_to from cash_banks.v_plan_paid_debt where' +
+        ' paid_status=0  and periode1 between '#39'2024-06-20'#39' and '#39'2024-10-1' +
+        '0'#39')yy on y.nofakturpajak=yy.faktur_no'
+      'left join'
+      
+        '(select lpb_no,pay from cash_banks.t_buy_pay)z on y.no_inv=z.lpb' +
+        '_no ORDER BY y.urutan) zz')
     Left = 744
     Top = 40
     object QdaftarHutangtanggal: TDateField
@@ -874,7 +899,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
   object DSdaftarhutang: TDataSource
     DataSet = Memdaftarhutang
     Left = 968
-    Top = 64
+    Top = 56
   end
   object Memdaftarhutang: TMemTableEh
     Params = <>
@@ -895,7 +920,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
         object nasup: TMTStringDataFieldEh
           FieldName = 'nasup'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 200
+          Size = 50
         end
         object no_inv: TMTStringDataFieldEh
           FieldName = 'no_inv'
@@ -953,7 +979,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
         end
         object jumlah: TMTNumericDataFieldEh
           FieldName = 'jumlah'
-          NumericDataType = fdtSmallintEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
@@ -985,6 +1011,10 @@ object FDaftar_Hutang: TFDaftar_Hutang
         object approval_status: TMTStringDataFieldEh
           FieldName = 'approval_status'
           StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object pilih: TMTBooleanDataFieldEh
+          FieldName = 'pilih'
           DisplayWidth = 20
         end
       end

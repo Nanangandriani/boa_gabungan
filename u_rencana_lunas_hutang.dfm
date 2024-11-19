@@ -3,31 +3,121 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
   Top = 0
   Caption = 'Form Rencana Pelunasan Hutang'
   ClientHeight = 433
-  ClientWidth = 816
+  ClientWidth = 961
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
-  object DBGridSupplier: TDBGridEh
+  object DBGrid_List_Rencana: TDBGridEh
     Left = 0
     Top = 222
-    Width = 816
+    Width = 961
     Height = 211
     Align = alClient
+    DataSource = DSRencana
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
+    TitleParams.MultiTitle = True
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'supplier_name'
+        Footers = <>
+        Title.Caption = 'Supplier'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'paid_date'
+        Footers = <>
+        Title.Caption = 'Tgl Pelunasan'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'periode1'
+        Footers = <>
+        Title.Caption = 'Periode 1'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'periode2'
+        Footers = <>
+        Title.Caption = 'Periode 2'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jumlah'
+        Footers = <>
+        Title.Caption = 'Jumlah'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bank'
+        Footers = <>
+        Title.Caption = 'Bank'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'cek_no'
+        Footers = <>
+        Title.Caption = 'No. Cek'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'plan_to'
+        Footers = <>
+        Title.Caption = 'Rencana Ke'
+        Width = 60
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'approve_status'
+        Footers = <>
+        Title.Caption = 'Status Approve'
+        Width = 100
+      end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 30
-        Height = 118
+        Width = 924
+        Height = 98
         Align = alClient
         DynProps = <>
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
@@ -40,7 +130,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 816
+    Width = 961
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -61,12 +151,12 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 816
+    Width = 961
     Height = 95
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 810
+    ExplicitWidth = 955
     object Label3: TLabel
       Left = 13
       Top = 6
@@ -158,13 +248,14 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Button5: TButton
+    object Cari_supp: TButton
       Left = 568
       Top = 5
       Width = 25
       Height = 24
       Caption = '...'
       TabOrder = 0
+      OnClick = Cari_suppClick
     end
     object txtkdsupp: TEdit
       Left = 159
@@ -218,6 +309,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       Height = 30
       Caption = 'Cari ...'
       TabOrder = 4
+      OnClick = BCariClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000330B0000330B00000001000000000000000000003300
@@ -307,6 +399,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     end
     object ActRO: TAction
       Caption = 'Refresh  '
+      OnExecute = ActROExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
@@ -785,10 +878,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
         82}
     end
     object dxbarRefresh: TdxBarButton
-      Caption = 'Refresh'
+      Action = ActRO
       Category = 0
-      Hint = 'Refresh'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -863,5 +954,80 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+  end
+  object QRencana: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select * from cash_banks.v_plan_paid_debt where paid_status=0 an' +
+        'd approve_status=false  '
+      'and periode1='#39'2024-01-01'#39' and periode2='#39'2024-01-31'#39)
+    Left = 640
+    Top = 175
+    object QRencanajumlah: TFloatField
+      FieldName = 'jumlah'
+    end
+    object QRencanaid: TLargeintField
+      FieldName = 'id'
+    end
+    object QRencanafaktur_no: TStringField
+      FieldName = 'faktur_no'
+      Size = 35
+    end
+    object QRencanaperiode1: TDateField
+      FieldName = 'periode1'
+    end
+    object QRencanaperiode2: TDateField
+      FieldName = 'periode2'
+    end
+    object QRencanabank: TStringField
+      FieldName = 'bank'
+    end
+    object QRencanacek_no: TStringField
+      FieldName = 'cek_no'
+      Size = 35
+    end
+    object QRencanaplan_to: TSmallintField
+      FieldName = 'plan_to'
+    end
+    object QRencanasupplier_code: TStringField
+      FieldName = 'supplier_code'
+      Size = 25
+    end
+    object QRencanasupplier_name: TStringField
+      FieldName = 'supplier_name'
+      Size = 100
+    end
+    object QRencanapaid_date: TDateField
+      FieldName = 'paid_date'
+    end
+    object QRencanaperiodetempo1: TDateField
+      FieldName = 'periodetempo1'
+    end
+    object QRencanaperiodetempo2: TDateField
+      FieldName = 'periodetempo2'
+    end
+    object QRencanapaid_status: TSmallintField
+      FieldName = 'paid_status'
+    end
+    object QRencanaapprove_status: TBooleanField
+      FieldName = 'approve_status'
+    end
+    object QRencanadebt_type: TIntegerField
+      FieldName = 'debt_type'
+    end
+    object QRencanaaccount_code: TStringField
+      FieldName = 'account_code'
+      Size = 50
+    end
+    object QRencanaaccount_name: TStringField
+      FieldName = 'account_name'
+      Size = 100
+    end
+  end
+  object DSRencana: TDataSource
+    DataSet = QRencana
+    Left = 696
+    Top = 175
   end
 end

@@ -14,6 +14,7 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object Label1: TLabel
     Left = 28
