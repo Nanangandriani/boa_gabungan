@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   RzTabs, MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, MemDS, DBAccess,
   Uni, RzButton, Vcl.StdCtrls, Vcl.Mask, RzEdit, Vcl.ExtCtrls, RzBtnEdt,
-  Vcl.Samples.Gauges, Vcl.Grids, Vcl.DBGrids;
+  Vcl.Samples.Gauges, Vcl.Grids, Vcl.DBGrids, frxClass;
 
 type
   TFPengajuan_AppJurnal_Trans = class(TForm)
@@ -38,14 +38,14 @@ type
     Ednamawilayah: TEdit;
     Panel3: TPanel;
     BTampil_Penj: TRzBitBtn;
-    Bselect: TRzBitBtn;
-    BApprove: TRzBitBtn;
-    RzBitBtn4: TRzBitBtn;
+    Bselect_Penj: TRzBitBtn;
+    BApp_Penj: TRzBitBtn;
+    BPrint_Penj: TRzBitBtn;
     Panel4: TPanel;
     BTampil_Pemb: TRzBitBtn;
-    RzBitBtn6: TRzBitBtn;
-    RzBitBtn7: TRzBitBtn;
-    RzBitBtn8: TRzBitBtn;
+    BSelect_Pemb: TRzBitBtn;
+    BApp_Pemb: TRzBitBtn;
+    BPrint_Pemb: TRzBitBtn;
     Qdetail_Pembelian: TUniQuery;
     Panel7: TPanel;
     Label7: TLabel;
@@ -79,9 +79,15 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Btampil_kasClick(Sender: TObject);
     procedure CbmoduleSelect(Sender: TObject);
-    procedure RzBitBtn6Click(Sender: TObject);
-    procedure BselectClick(Sender: TObject);
+    procedure BSelect_PembClick(Sender: TObject);
+    procedure Bselect_PenjClick(Sender: TObject);
     procedure RzBitBtn11Click(Sender: TObject);
+    procedure BApp_PembClick(Sender: TObject);
+    procedure BApp_PenjClick(Sender: TObject);
+    procedure RzBitBtn12Click(Sender: TObject);
+    procedure RzBitBtn13Click(Sender: TObject);
+    procedure BPrint_PenjClick(Sender: TObject);
+    procedure BPrint_PembClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -95,7 +101,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMasterData, UMasterWilayah;
+uses UDataModule, UMasterData, UMasterWilayah, UMy_Function, UMainMenu,
+  URpt_Jurnal_Khusus;
 
 var
   RealFPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans;
@@ -117,15 +124,16 @@ begin
   begin
     close;
     sql.clear;
-    sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn,status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approval_status,trans_date from ('+
+    sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn,status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status approval_status,trans_date from ('+
     ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
-    ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(trans_date,''dd'') tgl,to_char(trans_date,''mm'') bln,a.approval_status,a.trans_date from   '+
+    ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
     ' purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
     ' left join t_ak_account c on a.account_code=c.code'+
     ' left join t_ak_account d on a.account_um_code=d.code'+
-    ' left join purchase.t_purchase_invoice_det f on a.trans_no=f.trans_no where a.deleted_at isnull  '+
+    ' left join purchase.t_purchase_invoice_det f on a.trans_no=f.trans_no '+
+    ' INNER JOIN t_general_ledger g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
     ' order by a.id desc) a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
-    ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln ,approval_status,trans_date';
+    ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status,trans_date';
     Execute;
   end;
   dm.Qtemp.First;
@@ -250,7 +258,148 @@ begin
   end;
 end;
 
-procedure TFPengajuan_AppJurnal_Trans.RzBitBtn6Click(Sender: TObject);
+procedure TFPengajuan_AppJurnal_Trans.RzBitBtn12Click(Sender: TObject);
+begin
+   MemKas.First;
+   while not Memkas.Eof do
+   begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='delete from t_general_ledger_real where trans_no='+QuotedStr(Memkas['trans_no']);
+          Execute;
+        end;
+      if MemKas['status_app']= true then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''1'' where trans_no='+QuotedStr(MemKas['trans_no']);
+          Execute;
+        end;
+       end;
+    MemKas.Next;
+  end;
+  ShowMessage('Data Berhasil di Approve');
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.RzBitBtn13Click(Sender: TObject);
+begin
+   with FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' where module_name='+QuotedStr(Cbmodule.Text)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai_kas.Date))+''+
+      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai_kas.Date))+''+
+      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
+      ' order by a.trans_no,status_dk ASC';
+      Execute;
+   end;
+   FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.Open;
+    if FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.FieldByName('trans_no').AsString=''  then
+    begin
+      ShowMessage('Maaf data kosong');
+    end else
+      FRpt_Jurnal_Khusus.Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_jurnal_khusus.Fr3');
+      Tfrxmemoview(FRpt_Jurnal_Khusus.Rpt.FindObject('MPeriode')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',DtMulai_kas.Date)+' - '+FormatDateTime('dd MMMM yyy',DtSelesai_kas.Date);
+    //  Tfrxmemoview(Rpt.FindObject('Memo2')).Memo.Text:=''+SBU;
+     // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+    //  SetMemo(Rpt,'MPT',' '+SBU+' ');
+      //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
+    FRpt_Jurnal_Khusus.Rpt.ShowReport();
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.BApp_PenjClick(Sender: TObject);
+begin
+   MemPenjualan.First;
+   while not MemPenjualan.Eof do
+   begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='delete from t_general_ledger_real where trans_no='+QuotedStr(MemPenjualan['trans_no']);
+          Execute;
+        end;
+      if MemPenjualan['approval_status']= true then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''1'' where trans_no='+QuotedStr(MemPenjualan['trans_no']);
+          Execute;
+        end;
+       end;
+    MemPenjualan.Next;
+  end;
+  ShowMessage('Data Berhasil di Approve');
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.BPrint_PembClick(Sender: TObject);
+begin
+    with FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' where module_name=''PEMBELIAN'' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtmulai.Date))+''+
+      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.Date))+''+
+      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
+      ' order by a.trans_no,status_dk ASC';
+      Execute;
+   end;
+   FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.Open;
+    if FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.FieldByName('trans_no').AsString=''  then
+    begin
+      ShowMessage('Maaf data kosong');
+    end else
+      FRpt_Jurnal_Khusus.Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_jurnal_khusus.Fr3');
+      Tfrxmemoview(FRpt_Jurnal_Khusus.Rpt.FindObject('MPeriode')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',dtmulai.Date)+' - '+FormatDateTime('dd MMMM yyy',dtselesai.Date);
+    //  Tfrxmemoview(Rpt.FindObject('Memo2')).Memo.Text:=''+SBU;
+     // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+    //  SetMemo(Rpt,'MPT',' '+SBU+' ');
+      //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
+    FRpt_Jurnal_Khusus.Rpt.ShowReport();
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.BPrint_PenjClick(Sender: TObject);
+begin
+   with FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' where module_name=''PENJUALAN'' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtmulaipenj.Date))+''+
+      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesaipenj.Date))+''+
+      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
+      ' order by a.trans_no,status_dk ASC';
+      Execute;
+   end;
+   FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.Open;
+    if FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.FieldByName('trans_no').AsString=''  then
+    begin
+      ShowMessage('Maaf data kosong');
+    end else
+      FRpt_Jurnal_Khusus.Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_jurnal_khusus.Fr3');
+      Tfrxmemoview(FRpt_Jurnal_Khusus.Rpt.FindObject('MPeriode')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',dtmulaipenj.Date)+' - '+FormatDateTime('dd MMMM yyy',dtselesaipenj.Date);
+    //  Tfrxmemoview(Rpt.FindObject('Memo2')).Memo.Text:=''+SBU;
+     // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+    //  SetMemo(Rpt,'MPT',' '+SBU+' ');
+      //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
+    FRpt_Jurnal_Khusus.Rpt.ShowReport();
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.BSelect_PembClick(Sender: TObject);
 begin
   MemPembelian.First;
   while not MemPembelian.Eof do
@@ -262,7 +411,34 @@ begin
   end;
 end;
 
-procedure TFPengajuan_AppJurnal_Trans.BselectClick(Sender: TObject);
+procedure TFPengajuan_AppJurnal_Trans.BApp_PembClick(Sender: TObject);
+begin
+   MemPembelian.First;
+   while not MemPembelian.Eof do
+   begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='delete from t_general_ledger_real where trans_no='+QuotedStr(MemPembelian['trans_no']);
+          Execute;
+        end;
+      if MemPembelian['approval_status']= true then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''1'' where trans_no='+QuotedStr(MemPembelian['trans_no']);
+          Execute;
+        end;
+       end;
+    MemPembelian.Next;
+  end;
+  ShowMessage('Data Berhasil di Approve');
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.Bselect_PenjClick(Sender: TObject);
 begin
   MemPenjualan.First;
   while not MemPenjualan.Eof do

@@ -490,7 +490,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='SELECT * FROM purchase.t_buy_pay where inv_supp_no='+quotedstr(Edno_Faktur.text);
+          sql.Text:='SELECT * FROM cash_banks.t_buy_pay where inv_supp_no='+quotedstr(Edno_Faktur.text);
           ExecSQL;
         end;
         if dm.Qtemp.RecordCount > 0 then

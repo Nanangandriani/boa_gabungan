@@ -809,6 +809,18 @@
             <Form>FPengajuan_AppJurnal_Trans</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="URpt_Buku_Besar.pas">
+            <Form>FRpt_Buku_Besar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekap_Kontrakks.pas">
+            <Form>FRekapKontrak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekap_PO.pas">
+            <Form>FRekap_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

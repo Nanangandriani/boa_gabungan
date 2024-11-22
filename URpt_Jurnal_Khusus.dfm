@@ -77,8 +77,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Height = 35
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 60
-    ExplicitWidth = 358
+    ExplicitTop = 109
+    ExplicitWidth = 405
     object BBatal: TRzBitBtn
       Left = 337
       Top = 1
@@ -139,7 +139,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 282
+      ExplicitLeft = 329
     end
     object BPrint: TRzBitBtn
       Left = 258
@@ -202,7 +202,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 203
+      ExplicitLeft = 250
     end
   end
   object CbModul: TRzComboBox
@@ -318,14 +318,13 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         'select A.trans_no,a.trans_date,sum(case when status_dk ='#39'D'#39' then' +
         ' amount else 0 end) db, sum(case when status_dk ='#39'K'#39' then amount' +
         ' else 0 end) kd, a.account_code,B.account_name,c.module_name,a.m' +
-        'odule_id from t_general_ledger a inner join t_ak_account b'
+        'odule_id from t_general_ledger_real a inner join t_ak_account b'
       
         'on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id' +
         '=c.id GROUP BY a.trans_no,a.trans_date , a.account_code,b.accoun' +
         't_name,c.module_name,a.module_id  '
       ',status_dk  order by a.trans_no,status_dk ASC')
     DetailFields = 'no_trans'
-    Active = True
     Left = 15
     Top = 65532
   end

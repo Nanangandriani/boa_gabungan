@@ -239,9 +239,9 @@ begin
         Close;
         sql.Clear;
         //sql.Text:='Delete From t_supplier where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
-        sql.Text:=' Update t_supplier set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+        sql.Text:=' Update t_supplier set deleted_at=now(),deleted_by=:deleted_by '+
                   ' where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
-        parambyname('deleted_at').AsDateTime:=Now;
+        //parambyname('deleted_at').AsDateTime:=Now;
         parambyname('deleted_by').AsString:='Admin';
         Execute;
       end;

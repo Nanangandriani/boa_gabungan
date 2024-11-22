@@ -184,7 +184,10 @@ uses
   UPengajuan_Approval_Pembelian in 'UPengajuan_Approval_Pembelian.pas' {FListPengajuanApprovePembelian},
   URpt_Jurnal_Khusus in 'URpt_Jurnal_Khusus.pas' {FRpt_Jurnal_Khusus},
   URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
-  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans};
+  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
+  URpt_Buku_Besar in 'URpt_Buku_Besar.pas' {FRpt_Buku_Besar},
+  URekap_Kontrakks in 'URekap_Kontrakks.pas' {FRekapKontrak},
+  URekap_PO in 'URekap_PO.pas' {FRekap_PO};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -283,7 +286,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
-//  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
+  Application.CreateForm(TFRekap_PO, FRekap_PO);
+  //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);

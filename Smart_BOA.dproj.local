@@ -1,2 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899/12/30 00.00.00.000.130,D:\back_office_automation\URekap_Kontrakks.pas=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.130,D:\back_office_automation\URekap_Kontrakks.dfm=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.666,=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.222,D:\back_office_automation\Unit1.pas=D:\back_office_automation\URekap_PO.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.979,=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.222,D:\back_office_automation\Unit1.dfm=D:\back_office_automation\URekap_PO.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.336,D:\back_office_automation\URpt_Buku_Besar.pas=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.906,D:\back_office_automation\URpt_RekapKontrak.dfm=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.336,D:\back_office_automation\URpt_Buku_Besar.dfm=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.973,=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.464,=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\URpt_RekapKontrak.pas=</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.906,D:\back_office_automation\URpt_RekapKontrak.pas=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.pas</Transaction>
+  </Transactions>
+</BorlandProject>
