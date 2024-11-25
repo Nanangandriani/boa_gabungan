@@ -77,11 +77,12 @@ implementation
 
 {$R *.dfm}
 
-uses U_keluarkasbank_ajuan;
+uses U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank;
 
 procedure TFdafajuankeluarkasbank.ActBaruExecute(Sender: TObject);
 begin
-   FKeluarKasBank_Ajuan.show;
+   FDataPengajuanPengeluaranKasBank.show;
+   //FKeluarKasBank_Ajuan.show;
 end;
 
 procedure TFdafajuankeluarkasbank.FormShow(Sender: TObject);

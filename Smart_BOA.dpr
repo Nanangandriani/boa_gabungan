@@ -184,7 +184,15 @@ uses
   UPengajuan_Approval_Pembelian in 'UPengajuan_Approval_Pembelian.pas' {FListPengajuanApprovePembelian},
   URpt_Jurnal_Khusus in 'URpt_Jurnal_Khusus.pas' {FRpt_Jurnal_Khusus},
   URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
-  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans};
+  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
+  U_daftar_hutang in 'U_daftar_hutang.pas' {FDaftar_Hutang},
+  U_daftar_Nocek in 'U_daftar_Nocek.pas' {Fdaftar_nocek},
+  udafajuankeluarkasbank in 'udafajuankeluarkasbank.pas' {Fdafajuankeluarkasbank},
+  U_keluarkasbank_ajuan in 'U_keluarkasbank_ajuan.pas' {FKeluarKasBank_Ajuan},
+  U_Data_rencana_lunas_hutang_pengajuan in 'U_Data_rencana_lunas_hutang_pengajuan.pas' {FDataRencanaLunasHutangPengajuan},
+  u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
+  UDataPengajuanPengeluaranKasBank in 'UDataPengajuanPengeluaranKasBank.pas' {FDataPengajuanPengeluaranKasBank},
+  UDataPengeluaranKasBank in 'UDataPengeluaranKasBank.pas' {FDataPengeluaranKasBank};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -283,7 +291,15 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
-//  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
+  Application.CreateForm(TFDaftar_Hutang, FDaftar_Hutang);
+  Application.CreateForm(TFdaftar_nocek, Fdaftar_nocek);
+  Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
+  Application.CreateForm(TFKeluarKasBank_Ajuan, FKeluarKasBank_Ajuan);
+  Application.CreateForm(TFDataRencanaLunasHutangPengajuan, FDataRencanaLunasHutangPengajuan);
+  Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
+  Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
+  Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
+  //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);

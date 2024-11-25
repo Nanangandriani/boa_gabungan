@@ -1,7 +1,8 @@
 object dm: Tdm
   OnCreate = DataModuleCreate
-  Height = 365
-  Width = 467
+  Height = 456
+  Width = 584
+  PixelsPerInch = 120
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
@@ -9,57 +10,57 @@ object dm: Tdm
     Username = 'postgres'
     Server = '10.10.10.110'
     Connected = True
-    Left = 157
-    Top = 13
+    Left = 196
+    Top = 16
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
-    Left = 246
-    Top = 13
+    Left = 308
+    Top = 16
   end
   object Qtemp: TUniQuery
     Connection = Koneksi
-    Left = 18
-    Top = 6
+    Left = 23
+    Top = 8
   end
   object dsQtemp: TDataSource
     DataSet = Qtemp
-    Left = 75
-    Top = 6
+    Left = 94
+    Top = 8
   end
   object dsQtemp1: TDataSource
     DataSet = Qtemp1
-    Left = 75
-    Top = 59
+    Left = 94
+    Top = 74
   end
   object Qtemp1: TUniQuery
     Connection = Koneksi
-    Left = 18
-    Top = 59
+    Left = 23
+    Top = 74
   end
   object dsQtemp2: TDataSource
     DataSet = Qtemp2
-    Left = 83
-    Top = 118
+    Left = 104
+    Top = 148
   end
   object Qtemp2: TUniQuery
     Connection = Koneksi
-    Left = 18
-    Top = 118
+    Left = 23
+    Top = 148
   end
   object UniSQLMonitor1: TUniSQLMonitor
-    Left = 157
-    Top = 64
+    Left = 196
+    Top = 80
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 227
-    Top = 120
+    Left = 284
+    Top = 150
   end
   object Qtemp3: TUniQuery
     Connection = Koneksi
-    Left = 162
-    Top = 120
+    Left = 203
+    Top = 150
   end
   object UniConnection1: TUniConnection
     ProviderName = 'PostgreSQL'
@@ -67,8 +68,8 @@ object dm: Tdm
     Database = 'db_boa_hps'
     Username = 'postgres'
     Server = '10.10.10.110'
-    Left = 253
-    Top = 69
+    Left = 316
+    Top = 86
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object QLink: TUniQuery
@@ -85,15 +86,15 @@ object dm: Tdm
         ' select concat('#39'T'#39', link) link1, string_agg(concat('#39#39', link_unit' +
         ') , '#39','#39') link2 from t_menu_sub'
       '')
-    Left = 13
-    Top = 173
+    Left = 16
+    Top = 216
   end
   object QPerusahaan: TUniQuery
     Connection = Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 80
-    Top = 176
+    Left = 100
+    Top = 220
   end
   object DBPerusahaan: TfrxDBDataset
     UserName = 'DBPerusahaan'
@@ -101,20 +102,20 @@ object dm: Tdm
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 168
-    Top = 176
+    Left = 210
+    Top = 220
   end
   object ABSDatabase1: TABSDatabase
     CurrentVersion = '7.95 '
     DatabaseFileName = 'Conectdb.abs'
     DatabaseName = 't_konfigurasi'
     Exclusive = False
-    Password = '123456'
+    Password = 'smart_boa2024'
     MaxConnections = 500
     MultiUser = False
     SessionName = 'Default'
-    Left = 344
-    Top = 216
+    Left = 430
+    Top = 270
   end
   object ABSTable1: TABSTable
     CurrentVersion = '7.95 '
@@ -123,8 +124,8 @@ object dm: Tdm
     ReadOnly = False
     TableName = 't_konfigurasi'
     Exclusive = False
-    Left = 344
-    Top = 160
+    Left = 430
+    Top = 200
     object ABSTable1id: TAutoIncField
       FieldName = 'id'
     end

@@ -87,6 +87,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure cbbayarhutangClick(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,7 +102,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, U_Data_rencana_lunas_hutang_pengajuan, UCari_DaftarPerk;
+uses UDataModule, U_Data_rencana_lunas_hutang_pengajuan, UCari_DaftarPerk,
+  USearch_Supplier;
 
 
 procedure TFKeluarKasBank_Ajuan.BtutupClick(Sender: TObject);
@@ -117,23 +119,26 @@ end;
 procedure TFKeluarKasBank_Ajuan.cbbayarhutangClick(Sender: TObject);
 begin
    if cbbayarhutang.Checked=true then
-  gbbayarhutang.Enabled:=true
+      gbbayarhutang.Enabled:=true
   else
-  gbbayarhutang.Enabled:=false;
+      gbbayarhutang.Enabled:=false;
 end;
 
 procedure TFKeluarKasBank_Ajuan.cbsumberdataSelect(Sender: TObject);
 begin
   if cbsumberdata.ItemIndex=0 then
   begin
-    FDataRenanaLunasHutangPengajuan.Show;
+    FDataRencanaLunasHutangPengajuan.Show;
   end;
 end;
 
 procedure TFKeluarKasBank_Ajuan.FormShow(Sender: TObject);
 begin
   self.load_sumber_data;
-  PGC2.ActivePage:= tabsheet3;
+  cbtanggal.Date:=Now;
+  periode1.Date:=Now;
+  periode2.Date:=Now;
+  PGC2.ActivePage:=tabsheet3;
 end;
 
 procedure TFKeluarKasBank_Ajuan.load_sumber_data;
@@ -151,6 +156,12 @@ begin
       cbsumberdata.Items.Add(Dm.Qtemp.FieldByName('source_name').AsString);
       Dm.Qtemp.Next;
     end;
+end;
+
+procedure TFKeluarKasBank_Ajuan.SpeedButton1Click(Sender: TObject);
+begin
+   FSearch_Supplier.vcall:= 'Datarencanalunashutangajuan';
+   FSearch_Supplier.Show;
 end;
 
 procedure TFKeluarKasBank_Ajuan.SpeedButton4Click(Sender: TObject);

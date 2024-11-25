@@ -39,13 +39,13 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
         Anchors = [akLeft, akTop, akRight, akBottom]
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 948
-        ExplicitHeight = 477
+        ExplicitLeft = 1
+        ExplicitTop = -4
         DesignSize = (
           954
           486)
         object lbkurs: TLabel
-          Left = 618
+          Left = 614
           Top = 426
           Width = 62
           Height = 17
@@ -58,9 +58,10 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Style = []
           ParentFont = False
           Visible = False
+          ExplicitLeft = 618
         end
         object Label14: TLabel
-          Left = 449
+          Left = 446
           Top = 426
           Width = 63
           Height = 17
@@ -72,6 +73,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
+          ExplicitLeft = 449
         end
         object Label9: TLabel
           Left = 17
@@ -122,7 +124,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
         end
         object SpeedButton2: TSpeedButton
           Left = 383
-          Top = 126
+          Top = 123
           Width = 27
           Height = 24
           Caption = '...'
@@ -386,6 +388,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
             Height = 24
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = '...'
+            OnClick = SpeedButton1Click
           end
           object SpeedButton3: TSpeedButton
             Left = 3
@@ -624,14 +627,14 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Left = 363
           Top = 96
           Width = 140
-          Height = 26
+          Height = 25
           Date = 38119.000000000000000000
           Format = 'dd/MM/yyyy'
           Time = 0.407572569398325900
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
-          Font.Name = 'Trebuchet MS'
+          Font.Name = 'Segoe UI'
           Font.Style = []
           ImeName = 'US'
           ParentFont = False
@@ -641,14 +644,14 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Left = 190
           Top = 96
           Width = 140
-          Height = 26
+          Height = 25
           Date = 38119.000000000000000000
           Format = 'dd/MM/yyyy'
           Time = 0.407572569398325900
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
-          Font.Name = 'Trebuchet MS'
+          Font.Name = 'Segoe UI'
           Font.Style = []
           ImeName = 'US'
           ParentFont = False
@@ -658,14 +661,14 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           Left = 190
           Top = 68
           Width = 140
-          Height = 26
+          Height = 25
           Date = 38119.000000000000000000
           Format = 'dd/MM/yyyy'
           Time = 0.407572569398325900
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
-          Font.Name = 'Trebuchet MS'
+          Font.Name = 'Segoe UI'
           Font.Style = []
           ImeName = 'US'
           ParentFont = False
@@ -1223,6 +1226,7 @@ object FKeluarKasBank_Ajuan: TFKeluarKasBank_Ajuan
           object TabSheet3: TRzTabSheet
             Color = 15987699
             Caption = 'Data Hutang'
+            ExplicitWidth = 940
             object DBGridEh1: TDBGridEh
               Left = 0
               Top = 0

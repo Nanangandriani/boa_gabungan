@@ -20,7 +20,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1072
+    ExplicitWidth = 1070
     object Label8: TLabel
       Left = 21
       Top = 74
@@ -150,13 +150,13 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1072
-    ExplicitHeight = 429
+    ExplicitWidth = 1070
+    ExplicitHeight = 421
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
-      ExplicitWidth = 1068
-      ExplicitHeight = 404
+      ExplicitWidth = 1066
+      ExplicitHeight = 396
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -243,8 +243,8 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 534
-    ExplicitWidth = 1072
+    ExplicitTop = 526
+    ExplicitWidth = 1070
     object BBatal: TRzBitBtn
       Left = 1000
       Top = 1
@@ -304,7 +304,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 996
+      ExplicitLeft = 994
     end
     object BSave: TRzBitBtn
       Left = 925
@@ -313,6 +313,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
       Align = alRight
       Caption = 'Process'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -365,7 +366,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 921
+      ExplicitLeft = 919
     end
   end
   object MemDetailPiutang: TMemTableEh

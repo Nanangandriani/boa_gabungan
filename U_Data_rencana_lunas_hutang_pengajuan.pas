@@ -10,7 +10,7 @@ uses
   Uni, RzButton, MemTableDataEh, MemTableEh;
 
 type
-  TFDataRenanaLunasHutangPengajuan = class(TForm)
+  TFDataRencanaLunasHutangPengajuan = class(TForm)
     RzPanel1: TRzPanel;
     Button4: TButton;
     txtnmsupp: TEdit;
@@ -60,33 +60,41 @@ type
     QdataRencanaapprove_name: TStringField;
     QdataRencanasupplier_name: TStringField;
     BCari: TRzBitBtn;
-    RzBitBtn1: TRzBitBtn;
-    Memdatarencana: TMemTableEh;
+    MemDataRencana: TMemTableEh;
+    DSMemRencana: TDataSource;
+    RzPanel3: TRzPanel;
+    btn_proses: TRzBitBtn;
     procedure FormShow(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure BCariClick(Sender: TObject);
+    procedure btn_prosesClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+     vcall: string;
+     Status: Integer;
+     periode1, periode2: TDate;
   end;
 
 var
-  FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan;
+  FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataKolektor, UDataModule, USearch_Supplier;
+uses UDataKolektor, UDataModule, USearch_Supplier,
+  UDataPengajuanPengeluaranKasBank;
 
-procedure TFDataRenanaLunasHutangPengajuan.BCariClick(Sender: TObject);
+procedure TFDataRencanaLunasHutangPengajuan.BCariClick(Sender: TObject);
 var query :string;
+    URUTAN_KE : Integer;
 begin
     query:='SELECT a.*,b.supplier_name FROM cash_banks.t_paid_debt_det A '+
            'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ';
 
-    with QdataRencana do
+    with dm.Qtemp do
     begin
        close;
        sql.clear;
@@ -98,16 +106,48 @@ begin
          end
          else
          begin
-           sql.add('where a.supplier_code='+QuotedStr(cbsupp.Text)+'  and stat_approve=true and  (a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
-           sql.add('order by a.supplier_ode,a.faktur_date,a.faktur_no');
+           sql.add('where a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+           sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
          end;
        open;
     end;
-    QdataRencana.Close;
-    QdataRencana.Open;
+    MemDataRencana.active:=false;
+    MemDataRencana.active:=true;
+    MemDataRencana.EmptyTable;
+
+    if  Dm.Qtemp.RecordCount<>0 then
+    begin
+      Dm.Qtemp.first;
+      while not Dm.Qtemp.Eof do
+      begin
+         MemDataRencana.insert;
+         MemDataRencana['supplier_code']:=Dm.Qtemp.FieldByName('supplier_code').AsString;
+         MemDataRencana['supplier_name']:=Dm.Qtemp.FieldByName('supplier_name').AsString;
+         MemDataRencana['sj_no']:=Dm.Qtemp.FieldByName('sj_no').AsString;
+         MemDataRencana['inv_no']:=Dm.Qtemp.FieldByName('inv_no').AsString;
+         MemDataRencana['faktur_no']:=Dm.Qtemp.FieldByName('faktur_no').AsString;
+         MemDataRencana['faktur_date']:=Dm.Qtemp.FieldByName('faktur_date').AsString;
+         MemDataRencana['paid_date']:=Dm.Qtemp.FieldByName('paid_date').AsString;
+         MemDataRencana['periode1']:=Dm.Qtemp.FieldByName('periode1').AsDateTime;
+         MemDataRencana['periode2']:=Dm.Qtemp.FieldByName('periode2').AsDateTime;
+         MemDataRencana['amount']:=Dm.Qtemp.FieldByName('amount').value;
+         MemDataRencana['plan_to']:=Dm.Qtemp.FieldByName('plan_to').AsString;
+         MemDataRencana['pilih']:=0;
+         MemDataRencana.post;
+         Dm.Qtemp.next;
+      end;
+    end;
+
+    {if  Dm.Qtemp.RecordCount=0 then
+    begin
+      MemDataRencana.active:=false;
+      MemDataRencana.active:=true;
+      MemDataRencana.EmptyTable;
+      ShowMessage('Tidak Ditemukan Data...');
+    end;}
 end;
 
-procedure TFDataRenanaLunasHutangPengajuan.Button4Click(Sender: TObject);
+procedure TFDataRencanaLunasHutangPengajuan.Button4Click(Sender: TObject);
 begin
   with FSearch_Supplier do
     begin
@@ -119,7 +159,7 @@ begin
     FSearch_Supplier.ShowModal;
 end;
 
-procedure TFDataRenanaLunasHutangPengajuan.FormShow(Sender: TObject);
+procedure TFDataRencanaLunasHutangPengajuan.FormShow(Sender: TObject);
 begin
    TabSheet2.TabVisible:=false;
    TabSheet3.TabVisible:=false;
@@ -128,6 +168,79 @@ begin
    dtmulai.Date:=Now;
    dtselesai.Date:=Now;
    BCariClick(sender);
+end;
+
+procedure TFDataRencanaLunasHutangPengajuan.btn_prosesClick(Sender: TObject);
+var
+  rec: Integer;
+begin
+   Status:=0;
+   rec:=0;
+      {if not dm.Koneksi.InTransaction then
+             dm.Koneksi.StartTransaction;
+      try}
+        if MemDataRencana.RecordCount=0 then
+        begin
+          MessageDlg('Tidak Ada Data',mtInformation,[mbRetry],0);
+
+        end
+        else if Status = 0 then
+        begin
+           //cek ada yang di tandai tidak
+           MemDataRencana.First;
+           while not MemDataRencana.Eof do
+           begin
+             if MemDataRencana['pilih']=true then
+             begin
+              rec:=rec+1;
+             end;
+           MemDataRencana.Next;
+           end;
+
+           if rec=0 then
+           begin
+             ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
+             exit;
+           end;
+
+           //data di tandai kirm ke daftar rencana pelunasan
+           if rec>0 then
+           begin
+             FDataPengajuanPengeluaranKasBank.MemDetailHutang.active:=false;
+             FDataPengajuanPengeluaranKasBank.MemDetailHutang.active:=true;
+             FDataPengajuanPengeluaranKasBank.MemDetailHutang.EmptyTable;
+
+             MemDataRencana.First;
+             while not MemDataRencana.Eof do
+             begin
+               if MemDataRencana['pilih']=true then
+               begin
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang.insert;
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_tagihan']:=MemDataRencana['inv_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_sj']:=MemDataRencana['sj_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_faktur']:=MemDataRencana['faktur_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['tgl_faktur']:=MemDataRencana['faktur_date'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['jum_hutang']:=MemDataRencana['amount'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang.post;
+               end;
+             MemDataRencana.Next;
+             end;
+             FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=MemDataRencana['supplier_code'];
+             FDataPengajuanPengeluaranKasBank.ednama_supplier.Text:=MemDataRencana['supplier_name'];
+             FDataPengajuanPengeluaranKasBank.CbRencana.Text:=MemDataRencana['plan_to'];
+
+           end;
+      {end
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;}
+      end;
+      Close;
+
 end;
 
 end.

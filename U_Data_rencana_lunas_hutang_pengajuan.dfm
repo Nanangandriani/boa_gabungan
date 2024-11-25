@@ -1,4 +1,4 @@
-object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
+object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   Left = 0
   Top = 0
   Caption = 'Daftar  Rencana Pelunasan Hutang'
@@ -17,14 +17,15 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
     Left = 0
     Top = 0
     Width = 879
-    Height = 115
+    Height = 97
     Align = alTop
+    Color = 15987699
     TabOrder = 0
-    ExplicitTop = -4
+    ExplicitWidth = 873
     object Label3: TLabel
       Left = 21
       Top = 21
-      Width = 55
+      Width = 48
       Height = 17
       Caption = 'Supplier'
       Font.Charset = ANSI_CHARSET
@@ -187,103 +188,42 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
         E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
       NumGlyphs = 2
     end
-    object RzBitBtn1: TRzBitBtn
-      Left = 768
-      Top = 84
-      Width = 99
-      Caption = 'Proses'
-      TabOrder = 6
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000630B0000630B00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
-        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
-        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
-        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
-        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
-        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
-        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
-        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
-        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
-        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-    end
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 115
+    Top = 97
     Width = 879
-    Height = 327
+    Height = 345
     Align = alClient
+    Color = 15987699
     TabOrder = 1
-    ExplicitLeft = 96
-    ExplicitTop = 120
-    ExplicitWidth = 185
-    ExplicitHeight = 41
+    ExplicitWidth = 873
+    ExplicitHeight = 336
     object PGC1: TRzPageControl
       Left = 2
       Top = 2
       Width = 875
-      Height = 323
+      Height = 341
       Hint = ''
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
       TabOrder = 0
-      ExplicitLeft = 0
-      ExplicitTop = 6
+      ExplicitWidth = 869
+      ExplicitHeight = 332
       FixedDimension = 21
       object TabSheet1: TRzTabSheet
-        Caption = 'TabSheet1'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        Color = 15987699
+        Caption = 'Data Rencana'
+        ExplicitWidth = 865
+        ExplicitHeight = 307
         object DBGridEh1: TDBGridEh
           Left = 0
           Top = 0
           Width = 871
-          Height = 298
+          Height = 272
           Align = alClient
-          DataSource = DSRenana
+          DataSource = DSMemRencana
           DynProps = <>
           SearchPanel.Enabled = True
           TabOrder = 0
@@ -388,22 +328,101 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
               Footers = <>
               Title.Caption = 'Kode Supplier'
               Width = 0
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'pilih'
+              Footers = <>
+              Title.Caption = 'Pilih'
             end>
           object RowDetailData: TRowDetailPanelControlEh
           end
         end
+        object RzPanel3: TRzPanel
+          Left = 0
+          Top = 272
+          Width = 871
+          Height = 44
+          Align = alBottom
+          Color = 15987699
+          TabOrder = 1
+          ExplicitTop = 263
+          ExplicitWidth = 865
+          object btn_proses: TRzBitBtn
+            Left = 744
+            Top = 2
+            Width = 125
+            Height = 40
+            Align = alRight
+            Caption = 'Proses'
+            TabOrder = 0
+            OnClick = btn_prosesClick
+            Glyph.Data = {
+              36060000424D3606000000000000360400002800000020000000100000000100
+              08000000000000020000630B0000630B00000001000000000000000000003300
+              00006600000099000000CC000000FF0000000033000033330000663300009933
+              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+              000000990000339900006699000099990000CC990000FF99000000CC000033CC
+              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+              330000333300333333006633330099333300CC333300FF333300006633003366
+              33006666330099663300CC663300FF6633000099330033993300669933009999
+              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+              66006600660099006600CC006600FF0066000033660033336600663366009933
+              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+              660000996600339966006699660099996600CC996600FF99660000CC660033CC
+              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+              990000339900333399006633990099339900CC339900FF339900006699003366
+              99006666990099669900CC669900FF6699000099990033999900669999009999
+              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+              000000808000800000008000800080800000C0C0C00080808000191919004C4C
+              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
+              0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
+              120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
+              12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
+              1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
+              181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
+              E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
+              E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
+              E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
+              E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
+              E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+            NumGlyphs = 2
+            ExplicitLeft = 738
+          end
+        end
       end
       object TabSheet2: TRzTabSheet
+        Color = 15987699
         Caption = 'TabSheet2'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridEh2: TDBGridEh
           Left = 0
           Top = 0
           Width = 871
-          Height = 298
+          Height = 316
           Align = alClient
           DynProps = <>
           SearchPanel.Enabled = True
@@ -413,16 +432,13 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
         end
       end
       object TabSheet3: TRzTabSheet
+        Color = 15987699
         Caption = 'TabSheet3'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridEh3: TDBGridEh
           Left = 0
           Top = 0
           Width = 871
-          Height = 298
+          Height = 316
           Align = alClient
           DynProps = <>
           SearchPanel.Enabled = True
@@ -543,14 +559,14 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
     end
   end
   object DSRenana: TDataSource
-    DataSet = Memdatarencana
+    DataSet = MemDataRencana
     Left = 704
     Top = 8
   end
-  object Memdatarencana: TMemTableEh
+  object MemDataRencana: TMemTableEh
     Params = <>
-    Left = 656
-    Top = 72
+    Left = 400
+    Top = 224
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object supplier_code: TMTStringDataFieldEh
@@ -562,6 +578,7 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
           FieldName = 'supplier_name'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+          Size = 100
         end
         object bank: TMTStringDataFieldEh
           FieldName = 'bank'
@@ -630,7 +647,7 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
         end
         object amount: TMTNumericDataFieldEh
           FieldName = 'amount'
-          NumericDataType = fdtSmallintEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
@@ -638,7 +655,7 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
         end
         object npph: TMTNumericDataFieldEh
           FieldName = 'npph'
-          NumericDataType = fdtSmallintEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
@@ -661,7 +678,7 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
         end
         object exchange_rate: TMTNumericDataFieldEh
           FieldName = 'exchange_rate'
-          NumericDataType = fdtSmallintEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
@@ -669,7 +686,7 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
         end
         object dolar_amount: TMTNumericDataFieldEh
           FieldName = 'dolar_amount'
-          NumericDataType = fdtSmallintEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
@@ -685,13 +702,10 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object plant_to: TMTNumericDataFieldEh
-          FieldName = 'plant_to'
-          NumericDataType = fdtSmallintEh
-          AutoIncrement = False
+        object plan_to: TMTStringDataFieldEh
+          FieldName = 'plan_to'
+          StringDataType = fdtStringEh
           DisplayWidth = 20
-          currency = False
-          Precision = 15
         end
         object voucher_no: TMTStringDataFieldEh
           FieldName = 'voucher_no'
@@ -708,14 +722,18 @@ object FDataRenanaLunasHutangPengajuan: TFDataRenanaLunasHutangPengajuan
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object pilih: TMTStringDataFieldEh
+        object pilih: TMTBooleanDataFieldEh
           FieldName = 'pilih'
-          StringDataType = fdtStringEh
           DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object DSMemRencana: TDataSource
+    DataSet = MemDataRencana
+    Left = 419
+    Top = 283
   end
 end

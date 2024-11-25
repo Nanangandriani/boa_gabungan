@@ -54,7 +54,8 @@ implementation
 uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew_ReturnPembelian,
   UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber,
   UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
-  UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan;
+  UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
+  UDataPengajuanPengeluaranKasBank;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -100,6 +101,11 @@ begin
       FNewDeliveryOrder.edKodeVendorTransMuatan.Text:=QSupplier['supplier_code'];
       FNewDeliveryOrder.edNamaVendorTransMuatan.Text:=QSupplier['supplier_name'];
     end;
+    if vcall='keluar_kas_bank_ajuan' then
+    begin
+      FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];
+      FDataPengajuanPengeluaranKasBank.edNama_Supplier.Text:=QSupplier['supplier_name'];
+    end;
     if vcall='keluar_kas_bank' then
     begin
       FDataPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];
@@ -123,8 +129,8 @@ begin
     end;
     if vcall='Datarencanalunashutangajuan' then
     begin
-      FDataRenanaLunasHutangPengajuan.cbsupp.text:=QSupplier['supplier_code'];
-      FDataRenanaLunasHutangPengajuan.txtnmsupp.Text:=QSupplier['supplier_name'];
+      FDataRencanaLunasHutangPengajuan.cbsupp.text:=QSupplier['supplier_code'];
+      FDataRencanaLunasHutangPengajuan.txtnmsupp.Text:=QSupplier['supplier_name'];
     end;
     if vcall='delivery_order_reimburst' then
     begin
@@ -192,6 +198,9 @@ end;
 
 procedure TFSearch_Supplier.FormShow(Sender: TObject);
 begin
+   if QSupplier.Active=false then
+      QSupplier.Active:=true;
+
    DBGridEh1.SearchPanel.SearchingText:='';
 end;
 

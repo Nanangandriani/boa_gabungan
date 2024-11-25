@@ -38,7 +38,7 @@ implementation
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
-  U_keluarkasbank_ajuan;
+  U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank;
 
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
@@ -173,6 +173,19 @@ begin
     begin
       FKeluarKasBank_Ajuan.txtkdakunkredit.Text:=QDaftar_Perk.fieldbyname('code').AsString;
       FKeluarKasBank_Ajuan.txtnmakunkredit.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      QDaftar_Perk.Close;
+    end;
+    if (vpanggil ='pengajuankeluarkasbank')then
+    begin
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun.edit;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['kredit']:=0;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['debit']:=0;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
     close;

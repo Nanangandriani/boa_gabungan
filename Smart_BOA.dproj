@@ -809,6 +809,38 @@
             <Form>FPengajuan_AppJurnal_Trans</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="U_daftar_hutang.pas">
+            <Form>FDaftar_Hutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_daftar_Nocek.pas">
+            <Form>Fdaftar_nocek</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="udafajuankeluarkasbank.pas">
+            <Form>Fdafajuankeluarkasbank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_keluarkasbank_ajuan.pas">
+            <Form>FKeluarKasBank_Ajuan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_Data_rencana_lunas_hutang_pengajuan.pas">
+            <Form>FDataRencanaLunasHutangPengajuan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_daf_keluar_kas_bank.pas">
+            <Form>Fdaf_pengeluaran_kas_bank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataPengajuanPengeluaranKasBank.pas">
+            <Form>FDataPengajuanPengeluaranKasBank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataPengeluaranKasBank.pas">
+            <Form>FDataPengeluaranKasBank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
