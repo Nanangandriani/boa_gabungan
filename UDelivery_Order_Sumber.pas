@@ -83,7 +83,7 @@ begin
       begin
         sql.add(' AND code_cust='+QuotedStr(edKodeVendorMuatan.Text)+' ');
       end;
-      sql.add(' ORDER BY jual.no_trans,jual.code_item desc');
+      sql.add(' ORDER BY jual.trans_no,jual.code_item desc');
 
       {sql.add(' select  a."no_trans", "no_reference", "code_cust", "name_cust", '+
               ' total_detail as ket_barang  from "sale"."t_selling" a '+
@@ -109,14 +109,14 @@ begin
       close;
       sql.clear;
       sql.add(' select *  from (SELECT po_date, a.supplier_code  as "code_cust", '+
-              ' supplier_name as "name_cust", a."po_no" as "no_trans", '+
+              ' supplier_name as "name_cust", a."po_no" as "trans_no", '+
               ' "contract_no" as "no_reference", item_stock_code as "code_item", '+
               ' item_name as "name_item", qty as "amount",unit as "code_unit" '+
               ' from "purchase"."t_po" a '+
               ' left JOIN purchase.t_podetail b ON a.po_no=b.po_no '+
               ' LEFT join t_supplier c on a.supplier_code=c.supplier_code '+
               ' where a.deleted_at  is null) beli '+
-               ' where no_trans not in (SELECT notrans_load from "sale"."t_delivery_order" a '+
+               ' where trans_no not in (SELECT notrans_load from "sale"."t_delivery_order" a '+
                ' LEFT JOIN "sale"."t_delivery_order_load" b ON a.notrans=b.notrans '+
                ' where a.deleted_at  is null)  ');
       sql.add(' AND po_date between '+
@@ -126,7 +126,7 @@ begin
       begin
         sql.add(' AND code_cust='+QuotedStr(edKodeVendorMuatan.Text)+' ');
       end;
-      sql.add(' ORDER BY beli.no_trans,beli.code_item desc ');
+      sql.add(' ORDER BY beli.trans_no,beli.code_item desc ');
 
       {sql.add(' select  a."po_no" as no_trans, "contract_no" as no_reference, '+
               ' a.supplier_code as code_cust, supplier_name as name_cust, total_detail as ket_barang  '+
@@ -165,7 +165,7 @@ begin
     while not Dm.Qtemp.Eof do
     begin
      FDelivery_Order_Sumber.MemDetail.insert;
-     FDelivery_Order_Sumber.MemDetail['notrans']:=Dm.Qtemp.fieldbyname('no_trans').value;
+     FDelivery_Order_Sumber.MemDetail['notrans']:=Dm.Qtemp.fieldbyname('trans_no').value;
      FDelivery_Order_Sumber.MemDetail['kode_vendor']:=Dm.Qtemp.fieldbyname('code_cust').value;
      FDelivery_Order_Sumber.MemDetail['name_vendor']:=Dm.Qtemp.fieldbyname('name_cust').value;
      FDelivery_Order_Sumber.MemDetail['no_reff']:=Dm.Qtemp.fieldbyname('no_reference').value;

@@ -1,36 +1,36 @@
-object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
+object FListStockBarang: TFListStockBarang
   Left = 0
   Top = 0
-  Caption = 'Daftar Penagihan Piutang'
-  ClientHeight = 567
-  ClientWidth = 1076
+  Caption = 'Daftar Persediaan Barang'
+  ClientHeight = 506
+  ClientWidth = 965
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1076
-    Height = 105
+    Width = 965
+    Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1070
     object Label8: TLabel
-      Left = 21
-      Top = 74
-      Width = 72
+      Left = 22
+      Top = 50
+      Width = 42
       Height = 15
-      Caption = 'Tanggal Tagih'
+      Caption = 'Gudang'
     end
     object Label9: TLabel
-      Left = 118
-      Top = 74
+      Left = 119
+      Top = 50
       Width = 3
       Height = 15
       Caption = ':'
@@ -38,9 +38,9 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     object Label21: TLabel
       Left = 22
       Top = 21
-      Width = 56
+      Width = 43
       Height = 15
-      Caption = 'Pelanggan'
+      Caption = 'Supplier'
     end
     object Label22: TLabel
       Left = 119
@@ -49,41 +49,33 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
       Height = 15
       Caption = ':'
     end
-    object dtTagih: TRzDateTimePicker
-      Left = 132
-      Top = 71
-      Width = 186
-      Height = 23
-      Date = 45405.000000000000000000
-      Format = ''
-      Time = 0.597438842589326700
-      TabOrder = 0
-    end
-    object edKode_Pelanggan: TRzButtonEdit
+    object edNamaSupplier: TRzButtonEdit
       Left = 132
       Top = 18
-      Width = 151
+      Width = 293
       Height = 23
       Text = ''
-      TabOrder = 1
+      TabOrder = 0
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
+      OnButtonClick = edNamaSupplierButtonClick
     end
-    object edNama_Pelanggan: TEdit
-      Left = 132
-      Top = 44
-      Width = 354
+    object edKodeSupplier: TEdit
+      Left = 599
+      Top = 18
+      Width = 96
       Height = 23
-      TabOrder = 2
+      TabOrder = 1
+      Visible = False
     end
     object btTampilkan: TRzBitBtn
-      Left = 339
-      Top = 69
+      Left = 431
+      Top = 40
       Width = 147
       Height = 30
       Align = alCustom
       Caption = 'Preview'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btTampilkanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -138,32 +130,53 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
     end
+    object edNamaGudang: TRzButtonEdit
+      Left = 132
+      Top = 47
+      Width = 293
+      Height = 23
+      Text = ''
+      TabOrder = 3
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edNamaGudangButtonClick
+    end
+    object edKodeGudang: TEdit
+      Left = 599
+      Top = 47
+      Width = 96
+      Height = 23
+      TabOrder = 4
+      Visible = False
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 105
-    Width = 1076
-    Height = 430
+    Top = 81
+    Width = 965
+    Height = 393
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDataBarang
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1070
-    ExplicitHeight = 421
+    ExplicitLeft = -448
+    ExplicitTop = 12
+    ExplicitWidth = 1076
+    ExplicitHeight = 430
     FixedDimension = 21
-    object TabDetailFaktur: TRzTabSheet
-      Caption = 'Data Rencana'
-      ExplicitWidth = 1066
-      ExplicitHeight = 396
+    object TabDataBarang: TRzTabSheet
+      Caption = 'Data Barang'
+      ExplicitWidth = 1072
+      ExplicitHeight = 405
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1072
-        Height = 405
+        Width = 961
+        Height = 368
         Align = alClient
-        DataSource = dsDetailPiutang
+        DataSource = dsDetail
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
@@ -174,54 +187,97 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kode_pelanggan'
+            FieldName = 'item_stock_code'
+            Footers = <>
+            ReadOnly = True
+            Visible = False
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'stock_code'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Kode Stock'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'supplier_name'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Supplier'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'wh_name'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Gudang'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_code'
             Footers = <>
             Visible = False
+            Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nama_pelanggan'
+            FieldName = 'item_name'
             Footers = <>
-            Title.Caption = 'Pelanggan'
-            Width = 300
+            ReadOnly = True
+            Title.Caption = 'Nama Barang'
+            Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_tagihan'
+            FieldName = 'unit'
             Footers = <>
-            Title.Caption = 'Nomor Invoice'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'no_Faktur'
-            Footers = <>
-            Title.Caption = 'Nomor Faktur'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'tglfaktur'
-            Footers = <>
-            Title.Caption = 'Tanggal Faktur'
+            ReadOnly = True
+            Title.Caption = 'Satuan'
             Width = 75
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'jum_piutang'
+            FieldName = 'qty'
             Footers = <>
-            Title.Caption = 'Total'
-            Width = 150
+            ReadOnly = True
+            Title.Caption = 'Jumlah | Saldo Akhir'
+            Width = 75
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'qtyout'
+            Footers = <>
+            Title.Caption = 'Jumlah | Diproses'
+            Width = 75
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'outstanding'
+            Footers = <>
+            Visible = False
           end
           item
             CellButtons = <>
@@ -238,20 +294,22 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 535
-    Width = 1076
+    Top = 474
+    Width = 965
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 526
-    ExplicitWidth = 1070
+    ExplicitLeft = -448
+    ExplicitTop = 410
+    ExplicitWidth = 1076
     object BBatal: TRzBitBtn
-      Left = 1000
+      Left = 889
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Close'
       TabOrder = 1
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -304,10 +362,10 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 994
+      ExplicitLeft = 1000
     end
     object BSave: TRzBitBtn
-      Left = 925
+      Left = 814
       Top = 1
       Height = 30
       Align = alRight
@@ -366,95 +424,126 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 919
+      ExplicitLeft = 808
+      ExplicitTop = 3
     end
   end
-  object MemDetailPiutang: TMemTableEh
+  object MemDetail: TMemTableEh
     Params = <>
     Left = 552
     Top = 330
-    object MemDetailPiutangnotrans: TStringField
-      FieldName = 'notrans'
+    object MemDetailitem_stock_code: TStringField
+      FieldName = 'item_stock_code'
       Size = 100
     end
-    object MemDetailPiutangkode_pelanggan: TStringField
-      FieldName = 'kode_pelanggan'
+    object MemDetailstock_code: TStringField
+      FieldName = 'stock_code'
       Size = 100
     end
-    object MemDetailPiutangnama_pelanggan: TStringField
-      FieldName = 'nama_pelanggan'
+    object MemDetailsupplier_name: TStringField
+      FieldName = 'supplier_name'
       Size = 200
     end
-    object MemDetailPiutangtgltagih: TDateField
-      FieldName = 'tgltagih'
+    object MemDetailwh_name: TStringField
+      FieldName = 'wh_name'
     end
-    object MemDetailPiutangjum_piutang: TCurrencyField
-      FieldName = 'jum_piutang'
+    object MemDetailitem_code: TStringField
+      FieldName = 'item_code'
     end
-    object MemDetailPiutangno_tagihan: TStringField
-      FieldName = 'no_tagihan'
+    object MemDetailitem_name: TStringField
+      FieldName = 'item_name'
       Size = 200
     end
-    object MemDetailPiutangno_Faktur: TStringField
-      FieldName = 'no_Faktur'
+    object MemDetailunit: TStringField
+      FieldName = 'unit'
       Size = 200
     end
-    object MemDetailPiutangtglfaktur: TDateField
-      FieldName = 'tglfaktur'
-    end
-    object MemDetailPiutangpilih: TBooleanField
+    object MemDetailpilih: TBooleanField
       FieldName = 'pilih'
+    end
+    object MemDetailqty: TCurrencyField
+      FieldName = 'qty'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemDetailqtyout: TCurrencyField
+      FieldName = 'qtyout'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemDetailoutstanding: TCurrencyField
+      FieldName = 'outstanding'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
-        object notrans: TMTStringDataFieldEh
-          FieldName = 'notrans'
+        object item_stock_code: TMTStringDataFieldEh
+          FieldName = 'item_stock_code'
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 100
         end
-        object kode_pelanggan: TMTStringDataFieldEh
-          FieldName = 'kode_pelanggan'
+        object stock_code: TMTStringDataFieldEh
+          FieldName = 'stock_code'
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 100
         end
-        object nama_pelanggan: TMTStringDataFieldEh
-          FieldName = 'nama_pelanggan'
+        object supplier_name: TMTStringDataFieldEh
+          FieldName = 'supplier_name'
           StringDataType = fdtStringEh
           DisplayWidth = 200
           Size = 200
         end
-        object tglfaktur: TMTDateTimeDataFieldEh
-          FieldName = 'tglfaktur'
-          DateTimeDataType = fdtDateEh
+        object wh_name: TMTStringDataFieldEh
+          FieldName = 'wh_name'
+          StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object tgltagih: TMTDateTimeDataFieldEh
-          FieldName = 'tgltagih'
-          DateTimeDataType = fdtDateEh
+        object item_code: TMTStringDataFieldEh
+          FieldName = 'item_code'
+          StringDataType = fdtStringEh
           DisplayWidth = 100
         end
-        object jum_piutang: TMTNumericDataFieldEh
-          FieldName = 'jum_piutang'
-          NumericDataType = fdtCurrencyEh
+        object qty: TMTNumericDataFieldEh
+          FieldName = 'qty'
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
-          DisplayFormat = '#,##0.00'
+          DisplayFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
-        object no_tagihan: TMTStringDataFieldEh
-          FieldName = 'no_tagihan'
+        object item_name: TMTStringDataFieldEh
+          FieldName = 'item_name'
           StringDataType = fdtStringEh
           DisplayWidth = 200
           Size = 200
         end
-        object no_Faktur: TMTStringDataFieldEh
-          FieldName = 'no_Faktur'
+        object unit: TMTStringDataFieldEh
+          FieldName = 'unit'
           StringDataType = fdtStringEh
           DisplayWidth = 200
           Size = 200
+        end
+        object qtyout: TMTNumericDataFieldEh
+          FieldName = 'qtyout'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object outstanding: TMTNumericDataFieldEh
+          FieldName = 'outstanding'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          currency = False
+          Precision = 15
         end
         object pilih: TMTBooleanDataFieldEh
           FieldName = 'pilih'
@@ -465,8 +554,8 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
       end
     end
   end
-  object dsDetailPiutang: TDataSource
-    DataSet = MemDetailPiutang
+  object dsDetail: TDataSource
+    DataSet = MemDetail
     Left = 448
     Top = 330
   end

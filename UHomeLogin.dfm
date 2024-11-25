@@ -4577,12 +4577,8 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       PasswordChar = '*'
-<<<<<<< HEAD
-      TabOrder = 0
       Text = '123456'
-=======
       TabOrder = 2
->>>>>>> d71694c15ebee9c59c8f19c3081ac8d06445e6d0
       TextHint = 'Password'
       OnKeyPress = EdPassKeyPress
     end

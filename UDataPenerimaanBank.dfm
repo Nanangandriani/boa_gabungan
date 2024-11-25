@@ -674,14 +674,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Caption = ':'
       end
       object lbSumberTagihann: TLabel
-        Left = 429
+        Left = 446
         Top = 30
         Width = 3
         Height = 15
         Caption = ':'
       end
       object lbJenisBayarr: TLabel
-        Left = 429
+        Left = 446
         Top = 59
         Width = 3
         Height = 15
@@ -697,9 +697,9 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object lbSumberTagihan: TLabel
         Left = 332
         Top = 30
-        Width = 85
+        Width = 124
         Height = 15
-        Caption = 'Sumber Tagihan'
+        Caption = 'Sumber Penerimaan'
       end
       object edNamaBank: TRzButtonEdit
         Left = 136
@@ -722,7 +722,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         TabOrder = 1
       end
       object edKodeSumberTagihan: TEdit
-        Left = 572
+        Left = 596
         Top = 27
         Width = 50
         Height = 23
@@ -732,7 +732,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Visible = False
       end
       object edKodeJenisBayar: TEdit
-        Left = 572
+        Left = 596
         Top = 56
         Width = 50
         Height = 23
@@ -742,7 +742,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Visible = False
       end
       object edNMJenisBayar: TRzButtonEdit
-        Left = 438
+        Left = 462
         Top = 56
         Width = 128
         Height = 23
@@ -753,7 +753,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         OnButtonClick = edNMJenisBayarButtonClick
       end
       object edNMSumberTagihan: TRzButtonEdit
-        Left = 438
+        Left = 462
         Top = 27
         Width = 128
         Height = 23

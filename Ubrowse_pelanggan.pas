@@ -55,7 +55,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
   UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber,
   UNew_DataPenjualan, UDataPenerimaanBank, UDataRencanaLunasPiutang,
-  UDataPenagihanPiutang;
+  UDataPenagihanPiutang, UNewKontrakTagihan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 begin
@@ -168,6 +168,13 @@ begin
     MemDetailAkun.Next;
     end;
     end;
+  end;
+  if vcall='kontrak_jasa' then
+  begin
+    FNewKontrakTagihan.edKodePelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FNewKontrakTagihan.edNamaPelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FNewKontrakTagihan.edNPWP.Text:=SelectRow('SELECT npwp from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+    FNewKontrakTagihan.MemAlamat.Text:=SelectRow('SELECT address from t_customer_address where code_details=''001'' and customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
   if vcall='retur_penjualan' then
   begin

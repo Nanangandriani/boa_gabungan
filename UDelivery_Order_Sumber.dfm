@@ -22,6 +22,7 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1280
     object Label38: TLabel
       Left = 124
       Top = 29

@@ -580,7 +580,11 @@ object FNew_Penjualan: TFNew_Penjualan
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridDetailColumns3EditButtons0Click
+              end>
             FieldName = 'JUMLAH'
             Footers = <>
             Title.Caption = 'Jumlah'

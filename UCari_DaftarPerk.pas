@@ -38,8 +38,7 @@ implementation
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
-  U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank;
-
+  U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan;
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
 function FCari_DaftarPerk: TFCari_DaftarPerk;
@@ -98,7 +97,26 @@ begin
       FNew_Penjualan.MemDetail['PPH_PERSEN']:='0';
       FNew_Penjualan.MemDetail['PPH_NILAI']:='0';
       FNew_Penjualan.MemDetail.post;
+      QDaftar_Perk.Close;
+    end;
 
+    if (vpanggil = 'kontrak_jasa_ppn')then
+    begin
+      FNewKontrakTagihan.MemDataBiaya.Edit;
+      FNewKontrakTagihan.MemDataBiaya['akun_ppn']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNewKontrakTagihan.MemDataBiaya['nama_ppn']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FNewKontrakTagihan.MemDataBiaya['persen_ppn']:=0;
+      FNewKontrakTagihan.MemDataBiaya.post;
+      QDaftar_Perk.Close;
+    end;
+
+    if (vpanggil = 'kontrak_jasa_pph')then
+    begin
+      FNewKontrakTagihan.MemDataBiaya.Edit;
+      FNewKontrakTagihan.MemDataBiaya['akun_pph']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNewKontrakTagihan.MemDataBiaya['nama_pph']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FNewKontrakTagihan.MemDataBiaya['persen_pph']:=0;
+      FNewKontrakTagihan.MemDataBiaya.post;
       QDaftar_Perk.Close;
     end;
 

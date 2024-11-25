@@ -208,10 +208,13 @@ begin
         rgPPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_ppn_jual'' '));
         rgPotongan.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' '));
         edPersenPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' ');
+        edPersenPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_pph_jual'' ');
         edAkunJenisTax.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
         edNamaJenisTax.Text:=SelectRow('select name from t_parameter a LEFT JOIN t_sales_transaction_source b ON a.value_parameter=b.code where key_parameter=''default_kode_tax'' ');
         edAkunPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_jual'' ');
         edNamaPPNJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_jual'' ');
+        edAkunPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_pph_jual'' ');
+        edNamaPPHJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_pph_jual'' ');
         edKodeModulJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
         edNamaModulJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
         edKodeTransJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;

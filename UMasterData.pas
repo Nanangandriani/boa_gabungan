@@ -39,13 +39,77 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UNew_MasterBiayaDO, UNewDeliveryOrder, USetDeliveryOrder, USetMasterPelanggan,
   UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank,
   UDataPenagihanPiutang, UMovingDPP, UNew_Supplier, UDataPengeluaranKasBank,
-  UDataPengajuanPengeluaranKasBank;
+  UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
+  URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
   vid_modul: string;
 begin
   //ShowMessage(vcall);
+  if vcall='m_supplier' then
+  begin
+    FListStockBarang.edKodeSupplier.Text:=MemMasterData['KD_MASTER'];
+    FListStockBarang.edNamaSupplier.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='m_gudang' then
+  begin
+    FListStockBarang.edKodeGudang.Text:=MemMasterData['KD_MASTER'];
+    FListStockBarang.edNamaGudang.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='bhpenjualan_kab' then
+  begin
+    FBHPenjualan.vkd_kab:=MemMasterData['KD_MASTER'];
+    FBHPenjualan.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='bhpenjualan_kares' then
+  begin
+    FBHPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
+    FBHPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FBHPenjualan.vkd_kab:='';
+    FBHPenjualan.edKabupaten.EditValue:='';
+  end;
+  if vcall='rekappenjualan_kab' then
+  begin
+    FRekapPenjualan.vkd_kab:=MemMasterData['KD_MASTER'];
+    FRekapPenjualan.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='bhreturpenjualan_kab' then
+  begin
+    FBHReturPenjualan.vkd_kab:=MemMasterData['KD_MASTER'];
+    FBHReturPenjualan.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='bhreturpenjualan_kares' then
+  begin
+    FBHReturPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
+    FBHReturPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FBHReturPenjualan.vkd_kab:='';
+    FBHReturPenjualan.edKabupaten.EditValue:='';
+  end;
+  if vcall='rekappenjualan_kab' then
+  begin
+    FRekapPenjualan.vkd_kab:=MemMasterData['KD_MASTER'];
+    FRekapPenjualan.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekappenjualan_kares' then
+  begin
+    FRekapPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
+    FRekapPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FRekapPenjualan.vkd_kab:='';
+    FRekapPenjualan.edKabupaten.EditValue:='';
+  end;
+  if vcall='rekap_ret_penjualan_kab' then
+  begin
+    FRekapReturPenjualan.vkd_kab:=MemMasterData['KD_MASTER'];
+    FRekapReturPenjualan.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekap_ret_penjualan_kares' then
+  begin
+    FRekapReturPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
+    FRekapReturPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FRekapReturPenjualan.vkd_kab:='';
+    FRekapReturPenjualan.edKabupaten.EditValue:='';
+  end;
   if vcall='m_kolektor_moving' then
   begin
     FMovingDPP.edKodeKolektor.Text:=MemMasterData['KD_MASTER'];
@@ -227,6 +291,11 @@ begin
     FDataMasterAkunTrans.edAkunPPNJual.Text:=MemMasterData['KD_MASTER'];
     FDataMasterAkunTrans.edNamaPPNJual.Text:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='set_ak_pph_jual' then
+  begin
+    FDataMasterAkunTrans.edAkunPPHJual.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaPPHJual.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='set_ak_trans_jual' then
   begin
     FDataMasterAkunTrans.edAkunPiutang.Text:=MemMasterData['KD_MASTER'];
@@ -326,6 +395,12 @@ begin
     FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['KD_MASTER'];
     FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='master_jenis_kontrakTagihan' then
+  begin
+    FNewKontrakTagihan.EdKodeJenisKontrak.Text:=MemMasterData['KD_MASTER'];
+    FNewKontrakTagihan.edNamaJenisKontrak.Text:=MemMasterData['NM_MASTER'];
+    FNewKontrakTagihan.RefreshGrid;
+  end;
   if vcall='do_jenis' then
   begin
     FNewDeliveryOrder.edKodeJenisMuatan.Text:=MemMasterData['KD_MASTER'];
@@ -361,6 +436,41 @@ begin
     FSetDeliveryOrder.RefreshGrid;
     FSetDeliveryOrder.Status:=1;
     FSetDeliveryOrder.show;
+  end;
+  if vcall='setmaster_jenis_kontrakTagihan' then
+  begin
+    with FSetJenisKontrakTagihan do
+    begin
+      Clear;
+
+      if MemMasterData.RecordCount<>0 then
+      begin
+        with Dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.add(' SELECT * from ('+
+                  ' SELECT "code", "name", "description", "form_target_vendor", '+
+                  ' "form_target_source" from "t_type_contract_service"  '+
+                  ' WHERE	deleted_at IS NULL ORDER BY code desc ) a '+
+                  ' WHERE "code"='+QuotedStr(MemMasterData['KD_MASTER'])+' '+
+                  ' Order By code, name desc');
+          open;
+        end;
+
+        edKode.Text:=Dm.Qtemp.FieldByName('code').Value;
+        edNama.Text:=Dm.Qtemp.FieldByName('name').Value;
+        edKet.Text:=Dm.Qtemp.FieldByName('description').Value;
+        FSetJenisKontrakTagihan.RefreshGrid;
+        FSetJenisKontrakTagihan.Status:=1;
+      end;
+
+      if MemMasterData.RecordCount=0 then
+      begin
+        FSetJenisKontrakTagihan.Status:=0;
+      end;
+    end;
+    FSetJenisKontrakTagihan.show;
   end;
   if vcall='do_lokasi_awal' then
   begin
@@ -470,6 +580,14 @@ begin
     //FTemplate_Temp.Width:=FTambah_Barang.Width+50;
     FTambah_Barang.Show;
     FTemplate_Temp.Show;
+  end;
+  if vcall='jasa_jns_kontrak' then
+  begin
+     FSetJenisKontrakTagihan.MemJenis.insert;
+     FSetJenisKontrakTagihan.MemJenis['kode']:=MemMasterData['KD_MASTER'];
+     FSetJenisKontrakTagihan.MemJenis['nama']:=MemMasterData['NM_MASTER'];
+     FSetJenisKontrakTagihan.MemJenis['keterangan']:='-';
+     FSetJenisKontrakTagihan.MemJenis.post;
   end;
   if vcall='satuan_order' then
   begin

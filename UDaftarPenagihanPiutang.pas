@@ -31,11 +31,11 @@ type
     MemDetailPiutangnotrans: TStringField;
     MemDetailPiutangkode_pelanggan: TStringField;
     MemDetailPiutangnama_pelanggan: TStringField;
-    MemDetailPiutangtglfaktur: TDateField;
     MemDetailPiutangtgltagih: TDateField;
     MemDetailPiutangjum_piutang: TCurrencyField;
     MemDetailPiutangno_tagihan: TStringField;
     MemDetailPiutangno_Faktur: TStringField;
+    MemDetailPiutangtglfaktur: TDateField;
     MemDetailPiutangpilih: TBooleanField;
     procedure btTampilkanClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
@@ -71,7 +71,7 @@ begin
       if MemDetailPiutang.RecordCount=0 then
       begin
         MessageDlg('Tidak Ada Data',mtInformation,[mbRetry],0);
-        Exit;
+        //edKodeVendorMuatan.SetFocus;
       end
       else if Status = 0 then
       begin

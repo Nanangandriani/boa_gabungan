@@ -1,7 +1,7 @@
-object FSetDeliveryOrder: TFSetDeliveryOrder
+object FSetJenisKontrakTagihan: TFSetJenisKontrakTagihan
   Left = 0
   Top = 0
-  Caption = 'Setting Delivery Order'
+  Caption = 'Setting Jenis Kontrak Tagihan'
   ClientHeight = 442
   ClientWidth = 628
   Color = clBtnFace
@@ -30,25 +30,11 @@ object FSetDeliveryOrder: TFSetDeliveryOrder
       Caption = 'Seting Jenis'
       ExplicitWidth = 618
       ExplicitHeight = 408
-      object Label12: TLabel
-        Left = 125
-        Top = 115
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
-      object Label13: TLabel
-        Left = 28
-        Top = 115
-        Width = 57
-        Height = 15
-        Caption = 'Link Target'
-      end
       object Panel5: TPanel
         Left = 0
         Top = 0
         Width = 624
-        Height = 165
+        Height = 121
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
@@ -96,33 +82,19 @@ object FSetDeliveryOrder: TFSetDeliveryOrder
           Height = 15
           Caption = ':'
         end
-        object Label8: TLabel
-          Left = 20
-          Top = 107
-          Width = 62
-          Height = 15
-          Caption = 'Link Vendor'
+        object edNama: TEdit
+          Left = 132
+          Top = 46
+          Width = 313
+          Height = 23
+          TabOrder = 0
         end
-        object Label9: TLabel
-          Left = 117
-          Top = 107
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label1: TLabel
-          Left = 117
-          Top = 135
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label2: TLabel
-          Left = 20
-          Top = 135
-          Width = 66
-          Height = 15
-          Caption = 'Link Sumber'
+        object edKet: TEdit
+          Left = 132
+          Top = 75
+          Width = 313
+          Height = 23
+          TabOrder = 1
         end
         object edKode: TEdit
           Left = 132
@@ -130,64 +102,12 @@ object FSetDeliveryOrder: TFSetDeliveryOrder
           Width = 185
           Height = 23
           CharCase = ecUpperCase
-          TabOrder = 0
-        end
-        object edNama: TEdit
-          Left = 132
-          Top = 46
-          Width = 313
-          Height = 23
-          TabOrder = 1
-        end
-        object edKet: TEdit
-          Left = 132
-          Top = 75
-          Width = 313
-          Height = 23
           TabOrder = 2
-        end
-        object edLinkVendor: TEdit
-          Left = 452
-          Top = 104
-          Width = 200
-          Height = 23
-          TabOrder = 3
-          Visible = False
-        end
-        object edLinkSumber: TEdit
-          Left = 452
-          Top = 132
-          Width = 200
-          Height = 23
-          TabOrder = 4
-          Visible = False
-        end
-        object edNamaLinkVendor: TRzButtonEdit
-          Left = 132
-          Top = 104
-          Width = 313
-          Height = 23
-          Text = ''
-          TabOrder = 5
-          AltBtnNumGlyphs = 1
-          ButtonNumGlyphs = 1
-          OnButtonClick = edNamaLinkVendorButtonClick
-        end
-        object edNamaLinkSumber: TRzButtonEdit
-          Left = 132
-          Top = 132
-          Width = 313
-          Height = 23
-          Text = ''
-          TabOrder = 6
-          AltBtnNumGlyphs = 1
-          ButtonNumGlyphs = 1
-          OnButtonClick = edNamaLinkSumberButtonClick
         end
       end
       object Panel2: TPanel
         Left = 0
-        Top = 165
+        Top = 121
         Width = 624
         Height = 32
         Align = alTop
@@ -382,11 +302,11 @@ object FSetDeliveryOrder: TFSetDeliveryOrder
       end
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
-        Top = 197
+        Top = 153
         Width = 624
-        Height = 220
+        Height = 264
         Align = alClient
-        DataSource = dsJenisDO
+        DataSource = dsJenis
         DynProps = <>
         SearchPanel.Enabled = True
         TabOrder = 2
@@ -394,7 +314,11 @@ object FSetDeliveryOrder: TFSetDeliveryOrder
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGrid_SumberOrderColumns0EditButtons0Click
+              end>
             FieldName = 'kode'
             Footers = <>
             Title.Caption = 'Kode'
@@ -423,22 +347,22 @@ object FSetDeliveryOrder: TFSetDeliveryOrder
       end
     end
   end
-  object dsJenisDO: TDataSource
-    DataSet = MemJenisDO
+  object dsJenis: TDataSource
+    DataSet = MemJenis
     Left = 72
     Top = 304
   end
-  object MemJenisDO: TMemTableEh
+  object MemJenis: TMemTableEh
     Params = <>
     Left = 72
     Top = 360
-    object MemJenisDOkode: TStringField
+    object MemJeniskode: TStringField
       FieldName = 'kode'
     end
-    object MemJenisDOnama: TStringField
+    object MemJenisnama: TStringField
       FieldName = 'nama'
     end
-    object MemJenisDOketerangan: TStringField
+    object MemJenisketerangan: TStringField
       FieldName = 'keterangan'
     end
     object MemTableData: TMemTableDataEh

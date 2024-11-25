@@ -1070,7 +1070,12 @@ end;
 
 procedure TFNewDeliveryOrder.FormShow(Sender: TObject);
 begin
-  //Clear;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
+  begin
+    btMasterSumber.Visible:=false;
+  end else begin
+    btMasterSumber.Visible:=true;
+  end;
 end;
 
 Initialization

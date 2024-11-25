@@ -66,6 +66,7 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
         FieldName = 'account_name_bank'
         Footers = <>
         Title.Caption = 'Bank'
+        Visible = False
         Width = 200
       end
       item
@@ -75,6 +76,7 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
         FieldName = 'account_number_bank'
         Footers = <>
         Title.Caption = 'Nomor Rekening'
+        Visible = False
         Width = 200
       end
       item

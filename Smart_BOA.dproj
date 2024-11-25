@@ -843,6 +843,41 @@
         </DCCReference>
         <DCCReference Include="URekapSisa_PO.pas">
             <Form>FRekapSisa_PO</Form>
+        </DCCReference>
+        <DCCReference Include="UBHPenjualan.pas">
+            <Form>FBHPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_JenisUsaha.pas">
+            <Form>FNew_Jenis_Usaha</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapPenjualan.pas">
+            <Form>FRekapPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListStockBarang.pas">
+            <Form>FListStockBarang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBHReturPenjualan.pas">
+            <Form>FBHReturPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapReturPenjualan.pas">
+            <Form>FRekapReturPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNewKontrakTagihan.pas">
+            <Form>FNewKontrakTagihan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USetJenisKontrakTagihan.pas">
+            <Form>FSetJenisKontrakTagihan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListKontrakTagihan.pas">
+            <Form>FListKontrakTagihan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

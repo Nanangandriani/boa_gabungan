@@ -90,6 +90,8 @@ type
     procedure BSaveClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridDetailExit(Sender: TObject);
+    procedure DBGridDetailColumns3EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_grand : real;
@@ -122,7 +124,7 @@ implementation
 uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
   Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan,
   UListPenjualan, UTemplate_Temp, UTambah_Barang, UListSalesOrder,
-  UCari_DaftarPerk, UHomeLogin, UMy_Function;
+  UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang;
 
 function GetFakturPajak(vtahun:string): string;
 begin
@@ -381,7 +383,7 @@ begin
   ShowMessage('Onprogres Hitung Klasifikasi...');
   MessageDlg('Buatkan Validasi Cek Piutang Dengan Berbagai Jenis(Dengan SP)..!!',mtInformation,[MBOK],0);
 
-  {if MemDetail.RecordCount=0 then
+  if MemDetail.RecordCount=0 then
   begin
     ShowMessage('Pastikan Anda Sudah Membuat Detail Penjualan..!!!');
     exit;
@@ -397,7 +399,7 @@ begin
       edNama_Pelanggan.Text:=FNew_Penjualan.edNama_Pelanggan.Text;
     end;
     FRincianPot_Penjualan.ShowModal;
-  end; }
+  end;
 end;
 
 procedure TFNew_Penjualan.btMasterSumberClick(Sender: TObject);
@@ -464,6 +466,15 @@ begin
       Execute;
     end;
   end;
+end;
+
+procedure TFNew_Penjualan.DBGridDetailColumns3EditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+begin
+  FListStockBarang.vcall:='penjualan';
+  FListStockBarang.kd_barang_request:=MemDetail['KD_ITEM'];
+  FListStockBarang.qty_request:=MemDetail['JUMLAH'];
+  FListStockBarang.ShowModal;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailEnter(Sender: TObject);

@@ -137,21 +137,36 @@ type
     StringField1: TStringField;
     StringField2: TStringField;
     StringField3: TStringField;
-    rgPPH: TRzRadioGroup;
-    rgPPN: TRzRadioGroup;
     rgPotongan: TRzRadioGroup;
+    RzPageControl4: TRzPageControl;
+    TabSetPPn: TRzTabSheet;
+    Label59: TLabel;
+    Label60: TLabel;
+    Panel9: TPanel;
+    Label58: TLabel;
     Label50: TLabel;
-    Label51: TLabel;
-    edAkunJenisTax: TRzButtonEdit;
-    edNamaJenisTax: TEdit;
-    Label52: TLabel;
     Label53: TLabel;
     edPersenPPNJual: TEdit;
     Label56: TLabel;
-    Label57: TLabel;
-    Label58: TLabel;
+    edAkunJenisTax: TRzButtonEdit;
     edAkunPPNJual: TRzButtonEdit;
     edNamaPPNJual: TEdit;
+    edNamaJenisTax: TEdit;
+    rgPPN: TRzRadioGroup;
+    Label52: TLabel;
+    Label51: TLabel;
+    Label57: TLabel;
+    TabSheet1: TRzTabSheet;
+    Panel10: TPanel;
+    rgPPH: TRzRadioGroup;
+    Label61: TLabel;
+    edPersenPPHJual: TEdit;
+    Label62: TLabel;
+    Label63: TLabel;
+    Label64: TLabel;
+    Label65: TLabel;
+    edAkunPPHJual: TRzButtonEdit;
+    edNamaPPHJual: TEdit;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -176,6 +191,8 @@ type
     procedure edAkunJenisTaxButtonClick(Sender: TObject);
     procedure edAkunPPNJualButtonClick(Sender: TObject);
     procedure rgPPNClick(Sender: TObject);
+    procedure edAkunPPHJualButtonClick(Sender: TObject);
+    procedure rgPPHClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -261,6 +278,19 @@ begin
     ExecSQL;
   end;
 
+  with dm.Qtemp do //Default Akun PPH
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(edAkunPPHJual.Text)+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('akun_pajak_pph_jual')+';';
+    ExecSQL;
+  end;
+
+
   with dm.Qtemp do //Default Persen PPN
   begin
     close;
@@ -270,6 +300,18 @@ begin
               ' "updated_at"=now(), '+
               ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
               ' WHERE "key_parameter"='+QuotedStr('persen_pajak_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Persen PPH
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(edPersenPPHJual.Text)+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('persen_pajak_pph_jual')+';';
     ExecSQL;
   end;
 
@@ -395,6 +437,30 @@ begin
     end;
 end;
 
+procedure TFDataMasterAkunTrans.rgPPHClick(Sender: TObject);
+begin
+  if rgPPH.ItemIndex=0 then
+  begin
+    rgPPH.ItemIndex:=0;
+    edPersenPPHJual.Clear;
+    edAkunPPHJual.Clear;
+    edNamaPPHJual.Clear;
+    edPersenPPHJual.Enabled:=false;
+    edAkunPPHJual.Enabled:=false;
+    edNamaPPHJual.Enabled:=false;
+  end;
+  if rgPPH.ItemIndex=1 then
+  begin
+    rgPPH.ItemIndex:=1;
+    edPersenPPHJual.Clear;
+    edAkunPPHJual.Clear;
+    edNamaPPHJual.Clear;
+    edPersenPPHJual.Enabled:=true;
+    edAkunPPHJual.Enabled:=true;
+    edNamaPPHJual.Enabled:=true;
+  end;
+end;
+
 procedure TFDataMasterAkunTrans.rgPPNClick(Sender: TObject);
 begin
   if rgPPN.ItemIndex=0 then
@@ -433,6 +499,27 @@ begin
   FMasterData.vcall:='setting_penjualan_tax';
   FMasterData.update_grid('code','name','description','t_sales_transaction_source','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.ShowModal;
+end;
+
+procedure TFDataMasterAkunTrans.edAkunPPHJualButtonClick(Sender: TObject);
+begin
+    if Length(edKodeModulJual.Text)=0 then
+    begin
+      ShowMessage('Silakan Pilih Modul..!!');
+      exit;
+    end;
+
+      FMasterData.Caption:='Master Data Perkiraan';
+      FMasterData.vcall:='set_ak_pph_jual';
+      FMasterData.update_grid('account_code','account_name','journal_name','(SELECT a.account_code,'+
+                              ' b.account_name,c.journal_name  FROM t_ak_account_det a  '+
+                              ' LEFT JOIN t_ak_account b on a.account_code=b.code  '+
+                              ' LEFT JOIN t_ak_header c on b.header_code=c.header_code  '+
+                              ' LEFT JOIN t_ak_module d on a.module_id=d.id  '+
+                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+' '+
+                              ' GROUP BY a.account_code ,b.account_name,c.journal_name  '+
+                              ' ORDER BY a.account_code ,b.account_name,c.journal_name asc)a ','where account_code <>'''' ');
+      FMasterData.ShowModal;
 end;
 
 procedure TFDataMasterAkunTrans.edAkunPPNJualButtonClick(Sender: TObject);
@@ -1106,10 +1193,13 @@ begin
   rgPPN.ItemIndex:=0;
   rgPotongan.ItemIndex:=0;
   edPersenPPNJual.Clear;
+  edPersenPPHJual.Clear;
   edAkunJenisTax.Clear;
   edNamaJenisTax.Clear;
   edAkunPPNJual.Clear;
   edNamaPPNJual.Clear;
+  edAkunPPHJual.Clear;
+  edNamaPPHJual.Clear;
   //Bank
   edNamaModul.Clear;
   edKodeModul.Clear;

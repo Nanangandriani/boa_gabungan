@@ -148,7 +148,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin;
+uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
+  UNewKontrakTagihan;
 
 procedure TFDataListPenjualan.ActBaruExecute(Sender: TObject);
 begin
