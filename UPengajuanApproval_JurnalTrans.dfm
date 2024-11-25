@@ -21,9 +21,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 900
     Height = 442
     Hint = ''
-    ActivePage = TabKas
+    ActivePage = TabPembelian
     Align = alClient
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 896
     ExplicitHeight = 441
@@ -287,7 +287,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
           end
-          object RzBitBtn6: TRzBitBtn
+          object BSelect_Pemb: TRzBitBtn
             Left = 616
             Top = 1
             Width = 98
@@ -295,7 +295,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             Align = alRight
             Caption = 'Select All'
             TabOrder = 1
-            OnClick = RzBitBtn6Click
+            OnClick = BSelect_PembClick
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000830E0000830E00000001000000000000000000003300
@@ -349,14 +349,15 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
           end
-          object RzBitBtn7: TRzBitBtn
-            Left = 808
+          object BApp_Pemb: TRzBitBtn
+            Left = 714
             Top = 1
             Width = 85
             Height = 34
             Align = alRight
             Caption = 'Approved'
             TabOrder = 2
+            OnClick = BApp_PembClick
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000330B0000330B00000001000000000000000000003300
@@ -409,15 +410,18 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 723
+            ExplicitTop = -3
           end
-          object RzBitBtn8: TRzBitBtn
-            Left = 714
+          object BPrint_Pemb: TRzBitBtn
+            Left = 799
             Top = 1
             Width = 94
             Height = 34
             Align = alRight
             Caption = 'Print'
             TabOrder = 3
+            OnClick = BPrint_PembClick
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000730E0000730E00000001000000000000000000003300
@@ -470,6 +474,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 770
+            ExplicitTop = 9
           end
         end
       end
@@ -759,7 +765,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
           end
-          object Bselect: TRzBitBtn
+          object Bselect_Penj: TRzBitBtn
             Left = 616
             Top = 1
             Width = 98
@@ -767,7 +773,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             Align = alRight
             Caption = 'Select All'
             TabOrder = 1
-            OnClick = BselectClick
+            OnClick = Bselect_PenjClick
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000830E0000830E00000001000000000000000000003300
@@ -821,14 +827,15 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
           end
-          object BApprove: TRzBitBtn
-            Left = 808
+          object BApp_Penj: TRzBitBtn
+            Left = 714
             Top = 1
             Width = 85
             Height = 34
             Align = alRight
             Caption = 'Approved'
             TabOrder = 2
+            OnClick = BApp_PenjClick
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000330B0000330B00000001000000000000000000003300
@@ -881,15 +888,17 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 808
           end
-          object RzBitBtn4: TRzBitBtn
-            Left = 714
+          object BPrint_Penj: TRzBitBtn
+            Left = 799
             Top = 1
             Width = 94
             Height = 34
             Align = alRight
             Caption = 'Print'
             TabOrder = 3
+            OnClick = BPrint_PenjClick
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000730E0000730E00000001000000000000000000003300
@@ -942,6 +951,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 808
+            ExplicitTop = -3
           end
         end
       end
@@ -1132,13 +1143,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             ExplicitLeft = 612
           end
           object RzBitBtn12: TRzBitBtn
-            Left = 808
+            Left = 714
             Top = 1
             Width = 85
             Height = 34
             Align = alRight
             Caption = 'Approved'
             TabOrder = 2
+            OnClick = RzBitBtn12Click
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000330B0000330B00000001000000000000000000003300
@@ -1191,16 +1203,18 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 804
+            ExplicitLeft = 686
+            ExplicitTop = -3
           end
           object RzBitBtn13: TRzBitBtn
-            Left = 714
+            Left = 799
             Top = 1
             Width = 94
             Height = 34
             Align = alRight
             Caption = 'Print'
             TabOrder = 3
+            OnClick = RzBitBtn13Click
             Glyph.Data = {
               36060000424D3606000000000000360400002800000020000000100000000100
               08000000000000020000730E0000730E00000001000000000000000000003300
