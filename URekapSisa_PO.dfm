@@ -1,32 +1,240 @@
-object FRekap_PO: TFRekap_PO
+object FRekapSisa_PO: TFRekapSisa_PO
   Left = 0
   Top = 0
-  Caption = 'FORM REKAP PO'
-  ClientHeight = 442
-  ClientWidth = 753
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Rekap Sisa PO'
+  ClientHeight = 421
+  ClientWidth = 699
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
-  Font.Name = 'Segoe UI'
+  Font.Height = -11
+  Font.Name = 'Tahoma'
   Font.Style = []
+  Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  TextHeight = 15
+  TextHeight = 13
+  object Label2: TLabel
+    Left = 53
+    Top = 197
+    Width = 38
+    Height = 13
+    Caption = 'Tanggal'
+  end
+  object Label3: TLabel
+    Left = 122
+    Top = 200
+    Width = 4
+    Height = 13
+    Caption = ':'
+    Visible = False
+  end
+  object Label4: TLabel
+    Left = 119
+    Top = 171
+    Width = 4
+    Height = 13
+    Caption = ':'
+    Visible = False
+  end
+  object Label7: TLabel
+    Left = 269
+    Top = 208
+    Width = 15
+    Height = 13
+    Caption = 's/d'
+    Visible = False
+  end
+  object Label8: TLabel
+    Left = 51
+    Top = 163
+    Width = 75
+    Height = 13
+    Caption = 'Jenis Pembelian'
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 380
+    Width = 699
+    Height = 41
+    Align = alBottom
+    TabOrder = 0
+    OnClick = Panel1Click
+    ExplicitTop = 260
+    ExplicitWidth = 580
+    object BBatal: TRzBitBtn
+      Left = 623
+      Top = 1
+      Height = 39
+      Align = alRight
+      Caption = 'Batal'
+      TabOrder = 0
+      OnClick = BBatalClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000630B0000630B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8B46C6C6CE8
+        E8E8E8E8B46C6C6CE8E8E8E2DFDFDFE8E8E8E8E8E2DFDFDFE8E8E8B49090906C
+        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8E8B4909090
+        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8E8E8B49090
+        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8E8E8B490
+        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8E8E8B4
+        9090906CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8B490
+        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8B49090
+        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8B4909090
+        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8B49090906C
+        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8B4B4B4B4E8
+        E8E8E8E8B4B4B4B4E8E8E8E2E2E2E2E8E8E8E8E8E2E2E2E2E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 504
+    end
+    object BPrint: TRzBitBtn
+      Left = 544
+      Top = 1
+      Width = 79
+      Height = 39
+      Align = alRight
+      Caption = 'Print'
+      TabOrder = 1
+      OnClick = BPrintClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000730E0000730E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
+        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
+        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
+        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
+        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
+        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
+        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
+        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
+        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
+        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
+        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
+        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
+        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
+        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 425
+    end
+  end
+  object DtMulai1: TRzDateTimeEdit
+    Left = 132
+    Top = 194
+    Width = 121
+    Height = 21
+    EditType = etDate
+    Format = 'dd/mm/yyyy'
+    TabOrder = 1
+  end
+  object DtSelesai1: TRzDateTimeEdit
+    Left = 289
+    Top = 205
+    Width = 121
+    Height = 21
+    EditType = etDate
+    Format = 'mm/dd/yyyy'
+    TabOrder = 2
+    Visible = False
+  end
+  object EdJenis: TRzComboBox
+    Left = 132
+    Top = 160
+    Width = 189
+    Height = 21
+    TabOrder = 3
+    Items.Strings = (
+      'PRODUKSI'
+      'NON PRODUKSI'
+      'AKTIVA')
+  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 753
+    Width = 699
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 0
+    TabOrder = 4
     TabStop = False
-    ExplicitTop = -6
+    ExplicitLeft = -169
+    ExplicitWidth = 753
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -40,20 +248,20 @@ object FRekap_PO: TFRekap_PO
   object DBGridKontrak: TDBGridEh
     Left = 0
     Top = 127
-    Width = 753
-    Height = 315
+    Width = 699
+    Height = 253
     Align = alClient
     DataGrouping.GroupLevels = <
       item
       end
       item
       end>
-    DataSource = DsRekapo
+    DataSource = DsRekapSisa_PO
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     SearchPanel.Enabled = True
-    TabOrder = 1
+    TabOrder = 5
     TitleParams.MultiTitle = True
     Columns = <
       item
@@ -78,10 +286,10 @@ object FRekap_PO: TFRekap_PO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'contract_no'
+        FieldName = 'delivery'
         Footers = <>
-        Title.Caption = 'No. Kontrak'
-        Width = 120
+        Title.Caption = 'Tgl Kirim'
+        Width = 135
       end
       item
         CellButtons = <>
@@ -115,10 +323,18 @@ object FRekap_PO: TFRekap_PO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'unit'
+        FieldName = 'tglterima'
         Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 85
+        Title.Caption = 'Tgl Datang'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'remaining_qty'
+        Footers = <>
+        Title.Caption = 'Sisa PO'
       end
       item
         CellButtons = <>
@@ -132,33 +348,732 @@ object FRekap_PO: TFRekap_PO
       end
       item
         CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'faktur_no'
+        Footers = <>
+        Title.Caption = 'Faktur'
+        Width = 85
+      end
+      item
+        CellButtons = <>
         DisplayFormat = '#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'ppn_rp'
+        FieldName = 'sbu_code'
         Footers = <>
-        Title.Caption = 'PPN'
+        Title.Caption = 'SBU'
         Width = 70
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'delivery'
+        FieldName = 'wh_name'
         Footers = <>
-        Title.Caption = 'Tanggal Kirim'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'remarks'
-        Footers = <>
-        Title.Caption = 'Keterangan'
+        Title.Caption = 'Gudang'
         Width = 70
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
+  end
+  object Rpt: TfrxReport
+    Version = '2022.2.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44124.612568669000000000
+    ReportOptions.LastChange = 45619.453842905100000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 449
+    Top = 127
+    Datasets = <
+      item
+        DataSet = DbRekapSisaPO
+        DataSetName = 'DbRekapSisaPO'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      VGuides.Strings = (
+        '767,85714401')
+      Orientation = poLandscape
+      PaperWidth = 330.000000000000000000
+      PaperHeight = 210.000000000000000000
+      PaperSize = 256
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 5.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      MirrorMode = []
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 75.590551180000000000
+        Top = 18.897650000000000000
+        Width = 1209.449600000000000000
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 181.428571340000000000
+          Top = 49.133858270000000000
+          Width = 118.397382230000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tgl. Kirim')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 59.285714290000000000
+          Top = 49.133858270000000000
+          Width = 122.142857050000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No PO')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 783.929087480000000000
+          Top = 49.133858270000000000
+          Width = 69.921259842519700000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Sisa PO')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 714.841374010000000000
+          Top = 49.133858270000000000
+          Width = 68.031496060000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kuantum')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 526.866141730000000000
+          Top = 49.133858270000000000
+          Width = 132.283464566929000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nama Barang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 658.637795280000000000
+          Top = 49.133858270000000000
+          Width = 56.692913385826800000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tgl. Datang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Top = 49.133858270000000000
+          Width = 59.384906420000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Width = 1209.448818900000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -27
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'REKAP SISA PO')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object MSBU: TfrxMemoView
+          AllowVectorExport = True
+          Left = 49.133890000000000000
+          Width = 110.658554040000000000
+          Height = 41.574815350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -48
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'MLB')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object MPeriode: TfrxMemoView
+          AllowVectorExport = True
+          Top = 26.456692910000000000
+          Width = 1209.448818900000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            ' Tanggal :04 Januari 2022')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 300.294991160000000000
+          Top = 49.133858270000000000
+          Width = 226.771653543307000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Supplier')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 941.905453230000000000
+          Top = 49.133890000000000000
+          Width = 113.385826770000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Faktur')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 1091.000000000000000000
+          Top = 27.102350000000000000
+          Width = 94.488250000000000000
+          Height = 20.787401570000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Lembar : [PAGE#]')
+        end
+        object Memo17: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1056.173147800000000000
+          Top = 49.133890000000000000
+          Width = 37.795275590000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Sbu')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 929.764380000000000000
+          Top = 25.897650000000000000
+          Width = 154.960705590000000000
+          Height = 20.787401570000000000
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '#,###;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."trans_category"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1093.661417320000000000
+          Top = 49.133890000000000000
+          Width = 115.275590550000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Gudang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 853.904454010000000000
+          Top = 49.133858270000000000
+          Width = 88.440944880000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Harga')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 21.165354330000000000
+        Top = 154.960730000000000000
+        Width = 1209.449600000000000000
+        DataSet = DbRekapSisaPO
+        DataSetName = 'DbRekapSisaPO'
+        RowCount = 0
+        Stretched = True
+        object frxDBDataset1tgl_invoice: TfrxMemoView
+          AllowVectorExport = True
+          Left = 714.841374010000000000
+          Width = 68.031496060000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'qty'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '#,##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."qty"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1no_faktur_pajak: TfrxMemoView
+          AllowVectorExport = True
+          Left = 59.285714290000000000
+          Width = 122.142857050000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'po_no'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."po_no"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1dpp: TfrxMemoView
+          AllowVectorExport = True
+          Left = 658.637795280000000000
+          Width = 56.692913390000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'sbu_code'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."sbu_code"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1ppn_ribuan: TfrxMemoView
+          AllowVectorExport = True
+          Left = 783.929087480000000000
+          Width = 69.921259840000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'remaining_qty'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '0.00#,##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."remaining_qty"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 526.866141730000000000
+          Width = 132.283464566929000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'item_name'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."item_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 181.428571340000000000
+          Width = 118.397382230000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = 'dd mmm yy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            
+              '[DbRekapSisaPO."delivery_date"] - [DbRekapSisaPO."delivery2_date' +
+              '"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          AllowVectorExport = True
+          Width = 59.285714290000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'po_date'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = 'dd mmm yy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."po_date"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 299.866419740000000000
+          Width = 226.771653543307000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'supplier_name'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '#,##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."supplier_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 942.346393230000000000
+          Top = 0.000031729999999994
+          Width = 113.385826770000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'faktur_no'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."faktur_no"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1055.732207800000000000
+          Top = 0.000031729999999994
+          Width = 37.795275590000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'sbu_code'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '#,###;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."sbu_code"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1093.661417320000000000
+          Top = 0.000031729999999994
+          Width = 115.275590550000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'wh_name'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '#,###;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."wh_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1piutang_dagang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 853.904454010000000000
+          Width = 88.440944880000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'price'
+          DataSet = DbRekapSisaPO
+          DataSetName = 'DbRekapSisaPO'
+          DisplayFormat.FormatStr = '0.00#,##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapSisaPO."price"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+    end
+  end
+  object QRekapSisaPO: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supp' +
+        'lier_name,d.faktur_no,b.item_name, to_char(d.trans_date, '#39'dd mon' +
+        ' yy'#39')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_cod' +
+        'e,a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,' +
+        #39' - '#39',a.delivery2_date)delivery from purchase.t_po a INNER JOIN ' +
+        'purchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c' +
+        ' on  a.supplier_code=c.supplier_code Left JOIN ('
+      
+        'SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from   pur' +
+        'chase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoic' +
+        'e_det b on a.trans_no=b.trans_no where  a.trans_date='#39'2024-10-01' +
+        #39
+      
+        ')as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_cod' +
+        'e where  b.remaining_qty<>0 and a.status='#39'1'#39' and a.as_status='#39'1'#39 +
+        ' and a. trans_category='#39#39' '
+      'union  '
+      
+        'select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supp' +
+        'lier_name,d.faktur_no,b.item_name,to_char(d.trans_date, '#39'dd mon ' +
+        'yy'#39')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_code' +
+        ',a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'#39 +
+        ' - '#39',a.delivery2_date)delivery from purchase.t_po a INNER JOIN p' +
+        'urchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c ' +
+        'on  a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_d' +
+        'ate,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code from pur' +
+        'chase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoic' +
+        'e_det b on a.trans_no=b.trans_no where  a.trans_date='#39'2024-10-01' +
+        #39')'
+      
+        'as d on d.po_no=a.po_no and  b.item_stock_code=d.item_stock_code' +
+        ' INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 an' +
+        'd*/ a.as_status='#39'1'#39' and   a.trans_category='#39#39' order by po_date,p' +
+        'o_date asc')
+    Left = 480
+    Top = 72
+  end
+  object DbRekapSisaPO: TfrxDBDataset
+    UserName = 'DbRekapSisaPO'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'po_date=po_date'
+      'po_no=po_no'
+      'delivery_date=delivery_date'
+      'delivery2_date=delivery2_date'
+      'supplier_name=supplier_name'
+      'faktur_no=faktur_no'
+      'item_name=item_name'
+      'tglterima=tglterima'
+      'qty=qty'
+      'remaining_qty=remaining_qty'
+      'price=price'
+      'item_stock_code=item_stock_code'
+      'sbu_code=sbu_code'
+      'trans_category=trans_category'
+      'wh_name=wh_name'
+      'delivery=delivery')
+    DataSet = QRekapSisaPO
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 424
+    Top = 184
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -174,7 +1089,7 @@ object FRekap_PO: TFRekap_PO
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 600
+    Left = 556
     Top = 32
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -560,7 +1475,7 @@ object FRekap_PO: TFRekap_PO
       Hint = 'Desain Report'
       Visible = ivNever
     end
-    object BPrint: TdxBarSubItem
+    object dxBarSubItem1: TdxBarSubItem
       Caption = 'Print  '
       Category = 0
       Enabled = False
@@ -1095,7 +2010,7 @@ object FRekap_PO: TFRekap_PO
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
+      OnClick = BPrintClick
     end
     object DxRefresh: TdxBarLargeButton
       Caption = 'Cari'
@@ -1128,16 +2043,16 @@ object FRekap_PO: TFRekap_PO
       OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
-      Caption = 'Tanggal Mulai    '
+      Caption = 'Tanggal Mulai   '
       Category = 0
-      Hint = 'Tanggal Mulai    '
+      Hint = 'Tanggal Mulai   '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object DtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Selesai  '
+      Caption = 'Tanggal Selesai '
       Category = 0
-      Hint = 'Tanggal Selesai  '
+      Hint = 'Tanggal Selesai '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
@@ -1150,106 +2065,9 @@ object FRekap_PO: TFRekap_PO
       InternalEditValue = nil
     end
   end
-  object QRekapPO: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from purchase."V_RptRekapPO"')
-    Left = 320
-    Top = 88
-  end
-  object DbRekapPO: TfrxDBDataset
-    UserName = 'DbRekapPO'
-    CloseDataSource = False
-    DataSet = QRekapPO
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 320
-    Top = 40
-  end
-  object Rpt: TfrxReport
-    Version = '2022.2.7'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45618.938778726850000000
-    ReportOptions.LastChange = 45618.938778726850000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      ''
-      'begin'
-      ''
-      'end.')
-    Left = 568
-    Top = 80
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
-      MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[Page#]')
-        end
-      end
-    end
-  end
-  object DsRekapo: TDataSource
-    DataSet = QRekapPO
-    Left = 368
-    Top = 224
+  object DsRekapSisa_PO: TDataSource
+    DataSet = QRekapSisaPO
+    Left = 528
+    Top = 208
   end
 end

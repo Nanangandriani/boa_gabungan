@@ -79,6 +79,7 @@ type
     procedure DtSpbChange(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure Ednm_suppButtonClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -89,9 +90,8 @@ type
     Procedure Load;
   end;
 
-var
- FNew_SPB: TFNew_SPB;
-  //RealFnew_spb: TFnew_spb;
+function FNew_SPB: TFNew_SPB;
+var RealFnew_spb: TFnew_spb;
   status:integer;
   kdsb,no_urut:string;
 
@@ -102,11 +102,11 @@ implementation
 uses USearch_Po, UMy_Function, USearch_Purchase_Order, UDataModule, UMainMenu,
   USearch_Supplier;
 
-{function Fnew_spb: TFnew_spb;
+function Fnew_spb: TFnew_spb;
 begin
   if RealFnew_spb <> nil then Fnew_spb:= RealFnew_spb
   else  Application.CreateForm(TFnew_spb, Result);
-end;}
+end;
 
 Procedure TFNew_SPB.Load;
 begin
@@ -418,12 +418,17 @@ end;
 
 procedure TFNew_SPB.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  //Action:=cafree;
+  Action:=cafree;
+end;
+
+procedure TFNew_SPB.FormCreate(Sender: TObject);
+begin
+  RealFnew_spb:=self;
 end;
 
 procedure TFNew_SPB.FormDestroy(Sender: TObject);
 begin
-   //RealFnew_spb:=nil;
+   RealFnew_spb:=nil;
 end;
 
 procedure TFNew_SPB.FormShow(Sender: TObject);

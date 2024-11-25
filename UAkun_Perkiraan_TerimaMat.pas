@@ -28,7 +28,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Pembelian, UMy_Function, URpt_BukuHarianPembelian,
-  u_rencana_lunas_hutang_input;
+  u_rencana_lunas_hutang_input, URpt_Buku_Besar;
 
 procedure TFAkun_Perkiraan_TerimaMat.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -67,8 +67,17 @@ begin
     begin
       with FRpt_BukuHarianPembelian do
       begin
-        edkd_akun.Text:=QAkun['code'];
-        ednm_akun.text:=QAkun['account_name'];
+        edakun.EditValue:=QAkun['code'];
+        ednm_akun.EditValue:=QAkun['account_name'];
+      end;
+    end;
+
+    if statustr='buku_besar' then
+    begin
+      with FRpt_Buku_Besar do
+      begin
+        edAkun.EditValue:=QAkun['code'];
+        ednm_akun.EditValue:=QAkun['account_name'];
       end;
     end;
   Close;

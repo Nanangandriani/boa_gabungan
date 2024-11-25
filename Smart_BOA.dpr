@@ -185,6 +185,7 @@ uses
   URpt_Jurnal_Khusus in 'URpt_Jurnal_Khusus.pas' {FRpt_Jurnal_Khusus},
   URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
   UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
+<<<<<<< Updated upstream
   U_daftar_hutang in 'U_daftar_hutang.pas' {FDaftar_Hutang},
   U_daftar_Nocek in 'U_daftar_Nocek.pas' {Fdaftar_nocek},
   udafajuankeluarkasbank in 'udafajuankeluarkasbank.pas' {Fdafajuankeluarkasbank},
@@ -193,6 +194,12 @@ uses
   u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
   UDataPengajuanPengeluaranKasBank in 'UDataPengajuanPengeluaranKasBank.pas' {FDataPengajuanPengeluaranKasBank},
   UDataPengeluaranKasBank in 'UDataPengeluaranKasBank.pas' {FDataPengeluaranKasBank};
+=======
+  URpt_Buku_Besar in 'URpt_Buku_Besar.pas' {FRpt_Buku_Besar},
+  URekap_Kontrakks in 'URekap_Kontrakks.pas' {FRekapKontrak},
+  URekap_PO in 'URekap_PO.pas' {FRekap_PO},
+  URekapSisa_PO in 'URekapSisa_PO.pas' {FRekapSisa_PO};
+>>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -291,6 +298,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFMaster_PercBarang, FMaster_PercBarang);
   Application.CreateForm(TFNew_PO, FNew_PO);
   Application.CreateForm(TFSPB, FSPB);
+<<<<<<< Updated upstream
   Application.CreateForm(TFDaftar_Hutang, FDaftar_Hutang);
   Application.CreateForm(TFdaftar_nocek, Fdaftar_nocek);
   Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
@@ -300,6 +308,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
   Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
+=======
+>>>>>>> Stashed changes
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);
@@ -323,11 +333,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFRencana_Lunas_Hutang, FRencana_Lunas_Hutang);
   Application.CreateForm(TFRencana_Pengajuan_Pelunasan_Hutang, FRencana_Pengajuan_Pelunasan_Hutang);
   Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
-//  Application.CreateForm(TFList_Rencana_Lunas_Hutang, FList_Rencana_Lunas_Hutang);
   Application.CreateForm(TFTerima_Material, FTerima_Material);
   Application.CreateForm(TFNew_TerimaMaterial, FNew_TerimaMaterial);
   Application.CreateForm(TFSearch_Matterima, FSearch_Matterima);
-  Application.CreateForm(TFNew_SPB, FNew_SPB);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   Application.Run;

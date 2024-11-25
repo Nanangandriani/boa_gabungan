@@ -13,6 +13,7 @@ object FNew_SPB: TFNew_SPB
   Font.Style = []
   Position = poMainFormCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   DesignSize = (
@@ -345,7 +346,7 @@ object FNew_SPB: TFNew_SPB
   object DBGridEh1: TDBGridEh
     Left = 669
     Top = -3
-    Width = 449
+    Width = 445
     Height = 451
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColumnDefValues.AlwaysShowEditButton = True
@@ -432,7 +433,7 @@ object FNew_SPB: TFNew_SPB
     Height = 32
     Align = alBottom
     TabOrder = 14
-    ExplicitTop = 442
+    ExplicitTop = 529
     ExplicitWidth = 651
     object BBatal: TRzBitBtn
       Left = 579

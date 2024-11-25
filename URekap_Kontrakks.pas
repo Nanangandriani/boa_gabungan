@@ -27,7 +27,7 @@ uses
   dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Black,
   dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray, dxSkinOffice2019White,
   dxSkinTheBezier, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
-  dxSkinVisualStudio2013Light, dxCore, dxBarExtItems;
+  dxSkinVisualStudio2013Light, dxCore, dxBarExtItems, cxCalendar, cxBarEditItem;
 
 type
   TFRekapKontrak = class(TForm)
@@ -52,21 +52,10 @@ type
     DBGridEh3: TDBGridEh;
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
-    dxBUpdate: TdxBarButton;
-    dxBDelete: TdxBarButton;
-    dxBarButton1: TdxBarButton;
-    dxBbaru: TdxBarLargeButton;
-    dxBarButton2: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarButton4: TdxBarButton;
-    BPrint: TdxBarSubItem;
-    BProduksi: TdxBarButton;
-    BNonProduksi: TdxBarButton;
-    BClosed: TdxBarButton;
     dxBarLargeButton1: TdxBarLargeButton;
-    dtmulai: TdxBarDateCombo;
-    dtselesai: TdxBarDateCombo;
     DxRefresh: TdxBarLargeButton;
+    dtmulai: TcxBarEditItem;
+    dtselesai: TcxBarEditItem;
     procedure dxBRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -105,7 +94,23 @@ begin
 end;
 
 procedure TFRekapKontrak.DxRefreshClick(Sender: TObject);
+var
+Datemulai,dateselesai: TDateTime;
 begin
+    if dtmulai.EditValue = null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+    Datemulai:=dtmulai.EditValue;
+    dateselesai:=dtselesai.EditValue;
   if status_akses<>'True' then
   begin
     DBGridKontrak.Columns[6].Visible:=false;
@@ -115,6 +120,7 @@ begin
   begin
     DBGridKontrak.Columns[6].Visible:=true;
   end;
+  DBGridKontrak.StartLoadingStatus();
   with QKerjasama do
   begin
     close;
@@ -123,7 +129,7 @@ begin
     ' purchase.t_coop_contract A inner join t_supplier B on A.supplier_code=B.supplier_code   '+
     ' INNER JOIN purchase.t_coop_contract_det AS "c" on a. contract_no=c.contract_no '+
     ' INNER JOIN warehouse.t_item_stock AS d	ON c.item_stock_code = d.item_stock_code '+
-    ' where contract_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.Date))+ ' and contract_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.Date))+''+
+    ' where contract_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd', datemulai))+ ' and contract_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',dateselesai))+''+
     ' order by a.id Asc';
     open;
   end;
@@ -133,6 +139,8 @@ begin
     QKerjasama_det.Close;
     QKerjasama_det.Open;
   //  ShowMessage(status_akses);
+  DBGridKontrak.FinishLoadingStatus();
+
 end;
 
 procedure TFRekapKontrak.dxBRefreshClick(Sender: TObject);
@@ -169,7 +177,6 @@ procedure TFRekapKontrak.FormDestroy(Sender: TObject);
 begin
   RealFRekapKontrak:=nil;
 end;
-
 
 initialization
 RegisterClass(TFRekapKontrak);

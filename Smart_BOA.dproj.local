@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+<<<<<<< Updated upstream
     <Transaction>2024/11/19 11:20:52.000.666,=D:\Project Gabungan\back_office_automation\U_daftar_hutang.pas</Transaction>
     <Transaction>2024/11/19 11:24:13.000.231,=D:\Project Gabungan\back_office_automation\U_daftar_Nocek.pas</Transaction>
     <Transaction>2024/11/19 11:29:39.000.949,=D:\Project Gabungan\back_office_automation\udafajuankeluarkasbank.pas</Transaction>
@@ -12,5 +13,23 @@
     <Transaction>2024/11/19 14:00:00.000.770,D:\Project Gabungan\back_office_automation\UDataPengeluaranKasBank.dfm=D:\Project Gabungan\back_office_automation\UDataPengajuanPengeluaranKasBank.dfm</Transaction>
     <Transaction>2024/11/19 14:02:13.000.634,=D:\Project Gabungan\back_office_automation\UDataPengeluaranKasBank.pas</Transaction>
     <Transaction>2024/11/23 09:29:36.085,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
+=======
+    <Transaction>1899/12/30 00.00.00.000.336,D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.pas=D:\back_office_automation\URpt_Buku_Besar.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\URpt_RekapKontrak.pas=</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.336,D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.dfm=D:\back_office_automation\URpt_Buku_Besar.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.222,D:\back_office_automation\URekap_PO.pas=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.130,D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.dfm=D:\back_office_automation\URekap_Kontrakks.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.464,=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.906,D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.pas=D:\back_office_automation\URpt_RekapKontrak.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.666,=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.130,D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.pas=D:\back_office_automation\URekap_Kontrakks.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.222,D:\back_office_automation\URekap_PO.dfm=D:\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.906,D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.dfm=D:\back_office_automation\URpt_RekapKontrak.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.979,=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.973,=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.pas</Transaction>
+    <Transaction>2024/11/22 23.37.33.268,=D:\GitBOA\MLB\BOA MLB\ULaporan_PO.pas</Transaction>
+    <Transaction>2024/11/22 23.38.11.559,D:\back_office_automation\URekapSisa_PO.dfm=D:\GitBOA\MLB\BOA MLB\ULaporan_PO.dfm</Transaction>
+    <Transaction>2024/11/22 23.38.11.559,D:\back_office_automation\URekapSisa_PO.pas=D:\GitBOA\MLB\BOA MLB\ULaporan_PO.pas</Transaction>
+>>>>>>> Stashed changes
   </Transactions>
 </BorlandProject>

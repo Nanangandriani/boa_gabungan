@@ -16,9 +16,6 @@ Coordinates=1070,586,90,58
 [DM.Qjenis_pajak]
 Coordinates=209,518,112,58
 
-[Ednm_akun]
-Coordinates=454,654,83,36
-
 [CKUm]
 Coordinates=1052,518,114,58
 
@@ -49,14 +46,8 @@ Coordinates=989,518,53,58
 [QRptBHP]
 Coordinates=909,518,70,58
 
-[edkd_akun]
-Coordinates=278,654,77,36
-
 [DbRptSP]
 Coordinates=263,907,68,36
-
-[DtSelesai]
-Coordinates=198,654,70,36
 
 [fmainmenu.qexec3]
 Coordinates=151,586,123,58
@@ -66,9 +57,6 @@ Coordinates=823,518,76,58
 
 [Rpt]
 Coordinates=135,907,40,36
-
-[DtMulai]
-Coordinates=130,654,58,36
 
 [DM.QTemp3]
 Coordinates=458,518,87,58
@@ -124,13 +112,22 @@ Coordinates=10,518,126,58
 [DM.QPerusahaan]
 Coordinates=331,518,117,58
 
-[RzBitBtn2]
-Coordinates=1170,586,72,36
-Visible=True
-
 [fmainmenu.QKon]
 Coordinates=185,10,114,256
 
 []
-Coordinates=365,654,79,36
+Coordinates=1170,586,72,36
+Visible=True
+
+[DtMulai1]
+Coordinates=130,654,58,36
+
+[DtSelesai1]
+Coordinates=198,654,70,36
+
+[Ednm_akun1]
+Coordinates=454,654,83,36
+
+[edkd_akun1]
+Coordinates=278,654,77,36
 

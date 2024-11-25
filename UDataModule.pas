@@ -49,6 +49,7 @@ type
     link1,link2:string;
  // MyClass: TClass;
     procedure linktest1;
+    procedure refreshPerusahaan;
   end;
 
 var
@@ -60,6 +61,12 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure tdm.refreshperusahaan;
+begin
+  QPerusahaan.Close;
+  QPerusahaan.Open;
+end;
 
 procedure Tdm.DataModuleCreate(Sender: TObject);
 begin

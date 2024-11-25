@@ -841,6 +841,10 @@
             <Form>FDataPengeluaranKasBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="URekapSisa_PO.pas">
+            <Form>FRekapSisa_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
