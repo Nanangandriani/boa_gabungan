@@ -178,7 +178,6 @@ uses
   UTerima_Material in 'UTerima_Material.pas' {FTerima_Material},
   UNew_TerimaMaterial in 'UNew_TerimaMaterial.pas' {FNew_TerimaMaterial},
   Usearch_MatTerima in 'Usearch_MatTerima.pas' {FSearch_Matterima},
-  Unew_spb in 'Unew_spb.pas' {FNew_SPB},
   USearch_Po in 'USearch_Po.pas' {Fsearch_po},
   USearch_Purchase_Order in 'USearch_Purchase_Order.pas' {FUSearch_PO},
   UPengajuan_Approval_Pembelian in 'UPengajuan_Approval_Pembelian.pas' {FListPengajuanApprovePembelian},
@@ -205,7 +204,8 @@ uses
   URekapReturPenjualan in 'URekapReturPenjualan.pas' {FRekapReturPenjualan},
   UNewKontrakTagihan in 'UNewKontrakTagihan.pas' {FNewKontrakTagihan},
   USetJenisKontrakTagihan in 'USetJenisKontrakTagihan.pas' {FSetJenisKontrakTagihan},
-  UListKontrakTagihan in 'UListKontrakTagihan.pas' {FListKontrakTagihan};
+  UListKontrakTagihan in 'UListKontrakTagihan.pas' {FListKontrakTagihan},
+  Unew_spb in 'Unew_spb.pas' {FNew_SPB};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -339,7 +339,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFTerima_Material, FTerima_Material);
   Application.CreateForm(TFNew_TerimaMaterial, FNew_TerimaMaterial);
   Application.CreateForm(TFSearch_Matterima, FSearch_Matterima);
-  Application.CreateForm(TFNew_SPB, FNew_SPB);
   Application.CreateForm(TFNew_Jenis_Usaha, FNew_Jenis_Usaha);
   Application.CreateForm(TFListStockBarang, FListStockBarang);
   Application.CreateForm(TFNewKontrakTagihan, FNewKontrakTagihan);

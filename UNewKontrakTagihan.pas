@@ -65,11 +65,9 @@ type
     MemDataBiayaakun_ppn: TStringField;
     MemDataBiayanama_ppn: TStringField;
     MemDataBiayapersen_ppn: TFloatField;
-    MemDataBiayappn: TFloatField;
     MemDataBiayaakun_pph: TStringField;
     MemDataBiayanama_pph: TStringField;
     MemDataBiayapersen_pph: TFloatField;
-    MemDataBiayapph: TFloatField;
     MemDataBiayaketerangan: TWideStringField;
     procedure edNamaJenisKontrakButtonClick(Sender: TObject);
     procedure btMasterSumberJenisClick(Sender: TObject);
@@ -139,6 +137,7 @@ begin
      FNewKontrakTagihan.MemDataBiaya['keterangan']:=Dm.Qtemp.fieldbyname('description').value;
      FNewKontrakTagihan.MemDataBiaya.post;
      Dm.Qtemp.next;
+     showmessage(Dm.Qtemp.fieldbyname('code').value);
     end;
     end;
 end;

@@ -781,10 +781,6 @@
             <Form>FSearch_Matterima</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Unew_spb.pas">
-            <Form>FNew_SPB</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="USearch_Po.pas">
             <Form>Fsearch_po</Form>
             <FormType>dfm</FormType>
@@ -841,6 +837,15 @@
             <Form>FDataPengeluaranKasBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="URpt_Buku_Besar.pas">
+            <Form>FRpt_Buku_Besar</Form>
+        </DCCReference>
+        <DCCReference Include="URekap_Kontrakks.pas">
+            <Form>FRekapKontrak</Form>
+        </DCCReference>
+        <DCCReference Include="URekap_PO.pas">
+            <Form>FRekap_PO</Form>
+        </DCCReference>
         <DCCReference Include="URekapSisa_PO.pas">
             <Form>FRekapSisa_PO</Form>
         </DCCReference>
@@ -878,6 +883,10 @@
         </DCCReference>
         <DCCReference Include="UListKontrakTagihan.pas">
             <Form>FListKontrakTagihan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unew_spb.pas">
+            <Form>FNew_SPB</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

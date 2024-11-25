@@ -624,9 +624,6 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     object MemDataBiayapersen_ppn: TFloatField
       FieldName = 'persen_ppn'
     end
-    object MemDataBiayappn: TFloatField
-      FieldName = 'ppn'
-    end
     object MemDataBiayaakun_pph: TStringField
       FieldName = 'akun_pph'
     end
@@ -635,9 +632,6 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object MemDataBiayapersen_pph: TFloatField
       FieldName = 'persen_pph'
-    end
-    object MemDataBiayapph: TFloatField
-      FieldName = 'pph'
     end
     object MemDataBiayaketerangan: TWideStringField
       FieldName = 'keterangan'
