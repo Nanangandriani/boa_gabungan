@@ -4,7 +4,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
   BorderStyle = bsSizeToolWin
   Caption = 'FORM REPORT JURNAL KHSUSUS'
   ClientHeight = 412
-  ClientWidth = 843
+  ClientWidth = 957
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,6 +23,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Width = 36
     Height = 13
     Caption = 'Periode'
+    Visible = False
   end
   object Label3: TLabel
     Left = 171
@@ -30,6 +31,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Width = 4
     Height = 13
     Caption = ':'
+    Visible = False
   end
   object Label7: TLabel
     Left = 310
@@ -37,6 +39,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Width = 15
     Height = 13
     Caption = 's/d'
+    Visible = False
   end
   object Label1: TLabel
     Left = 104
@@ -44,6 +47,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Width = 49
     Height = 13
     Caption = 'Pilih Modul'
+    Visible = False
   end
   object Label4: TLabel
     Left = 171
@@ -51,6 +55,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Width = 4
     Height = 13
     Caption = ':'
+    Visible = False
   end
   object DtMulai1: TRzDateTimeEdit
     Left = 183
@@ -60,6 +65,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     EditType = etDate
     Format = 'mm/dd/yyyy'
     TabOrder = 0
+    Visible = False
   end
   object DtSelesai1: TRzDateTimeEdit
     Left = 330
@@ -69,17 +75,20 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     EditType = etDate
     Format = 'mm/dd/yyyy'
     TabOrder = 1
+    Visible = False
   end
   object Panel1: TPanel
     Left = 0
     Top = 377
-    Width = 843
+    Width = 957
     Height = 35
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 345
+    Visible = False
+    ExplicitTop = 365
+    ExplicitWidth = 835
     object BBatal: TRzBitBtn
-      Left = 767
+      Left = 881
       Top = 1
       Height = 33
       Align = alRight
@@ -138,10 +147,10 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 329
+      ExplicitLeft = 759
     end
     object BPrint: TRzBitBtn
-      Left = 688
+      Left = 802
       Top = 1
       Width = 79
       Height = 33
@@ -201,7 +210,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 250
+      ExplicitLeft = 680
     end
   end
   object CbModul1: TRzComboBox
@@ -210,11 +219,12 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Width = 268
     Height = 21
     TabOrder = 3
+    Visible = False
   end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 843
+    Width = 957
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -222,8 +232,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     Contexts = <>
     TabOrder = 4
     TabStop = False
-    ExplicitLeft = -169
-    ExplicitWidth = 753
+    ExplicitWidth = 843
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -232,6 +241,95 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
           ToolbarName = 'dxBarManager1Bar1'
         end>
       Index = 0
+    end
+  end
+  object DBGridEh1: TDBGridEh
+    Left = 0
+    Top = 127
+    Width = 957
+    Height = 250
+    Align = alClient
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_0_trans_no'
+      end>
+    DataSource = DsJurnal_Khusus
+    DynProps = <>
+    FooterRowCount = 1
+    SumList.Active = True
+    TabOrder = 9
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_no'
+        Footers = <>
+        Title.Caption = 'No Trans'
+        Width = 126
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_date'
+        Footers = <>
+        Title.Caption = 'Tanggal'
+        Width = 75
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'module_name'
+        Footers = <>
+        Title.Caption = 'Module'
+        Width = 149
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_code'
+        Footers = <>
+        Title.Caption = 'Kode Perkiraan'
+        Width = 111
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_name'
+        Footers = <>
+        Title.Caption = 'Nama Perkiraan'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'db'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Debit'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kd'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
+        Footers = <>
+        Title.Caption = 'Kredit'
+        Width = 120
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object DBJurnal_Khusus: TfrxDBDataset
@@ -249,8 +347,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     DataSet = QRpt_Jurnal_Khusus
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 40
-    Top = 272
+    Left = 568
+    Top = 40
   end
   object Rpt: TfrxReport
     Version = '2022.2.7'
@@ -268,8 +366,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
       'begin'
       ''
       'end.')
-    Left = 177
-    Top = 266
+    Left = 497
+    Top = 74
     Datasets = <>
     Variables = <>
     Style = <>
@@ -347,8 +445,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         't_name,c.module_name,a.module_id  '
       ',status_dk  order by a.trans_no,status_dk ASC')
     DetailFields = 'no_trans'
-    Left = 47
-    Top = 220
+    Left = 631
+    Top = 76
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -364,8 +462,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 556
-    Top = 32
+    Left = 492
+    Top = 16
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -1315,6 +1413,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Mulai   '
@@ -1338,5 +1437,10 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
       PropertiesClassName = 'TcxComboBoxProperties'
       InternalEditValue = nil
     end
+  end
+  object DsJurnal_Khusus: TDataSource
+    DataSet = QRpt_Jurnal_Khusus
+    Left = 632
+    Top = 24
   end
 end

@@ -4577,7 +4577,6 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       PasswordChar = '*'
-      Text = '123456'
       TabOrder = 2
       TextHint = 'Password'
       OnKeyPress = EdPassKeyPress
@@ -4598,7 +4597,6 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      Text = 'Admin'
       TextHint = 'Username'
       OnKeyPress = EduserKeyPress
     end

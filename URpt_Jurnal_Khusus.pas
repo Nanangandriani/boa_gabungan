@@ -25,7 +25,8 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, cxDropDownEdit, dxBar, cxBarEditItem,
-  cxClasses, dxRibbon;
+  cxClasses, dxRibbon, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
+  DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
 
 type
   TFRpt_Jurnal_Khusus = class(TForm)
@@ -63,12 +64,15 @@ type
     DtMulai: TcxBarEditItem;
     DtSelesai: TcxBarEditItem;
     Cbmodul: TcxBarEditItem;
+    DBGridEh1: TDBGridEh;
+    DsJurnal_Khusus: TDataSource;
     procedure BPrintClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -172,6 +176,24 @@ begin
     Rpt.ShowReport();
 end;
 
+
+procedure TFRpt_Jurnal_Khusus.DxRefreshClick(Sender: TObject);
+begin
+   with QRpt_Jurnal_Khusus do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' where module_name='+QuotedStr(CbModul.EditValue)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
+      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+''+
+      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
+      ' order by a.trans_no,status_dk ASC';
+      Execute;
+   end;
+   QRpt_Jurnal_Khusus.Open;
+end;
 
 initialization
 RegisterClass(TFRpt_Jurnal_Khusus);
