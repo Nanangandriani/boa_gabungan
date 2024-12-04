@@ -60,6 +60,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+
+
 {$R *.dfm}
 
 procedure tdm.refreshperusahaan;

@@ -878,7 +878,6 @@
             <Form>FNew_SPB</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
         <DCCReference Include="UDaftarKontrak.pas">
             <Form>FDaftarKontrak</Form>
             <FormType>dfm</FormType>
@@ -889,8 +888,8 @@
         </DCCReference>
         <DCCReference Include="UBHPenerimaanKasBank.pas">
             <Form>FBHPenerimaanKasBank</Form>
-=======
-        <DCCReference Include="UHomeLogin.pas"/>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="URpt_Rekap_Pembelian.pas">
             <Form>FRptRekap_Pembelian</Form>
             <FormType>dfm</FormType>
@@ -909,7 +908,7 @@
         </DCCReference>
         <DCCReference Include="URpt_Neraca.pas">
             <Form>FRpt_Neraca</Form>
->>>>>>> Stashed changes
+// >>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
