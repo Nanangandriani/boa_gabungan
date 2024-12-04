@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, RzCmboBx;
 
 type
   TFDataPenerimaanBank = class(TForm)
@@ -91,6 +91,10 @@ type
     lbJenisBayarr: TLabel;
     lbJenisBayar: TLabel;
     lbSumberTagihan: TLabel;
+    cbJenisTransaksi: TRzComboBox;
+    Label23: TLabel;
+    Label24: TLabel;
+    cbTransaksi: TRzComboBox;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -108,6 +112,8 @@ type
     procedure edKursChange(Sender: TObject);
     procedure dtTransChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure cbJenisTransaksiChange(Sender: TObject);
+    procedure cbTransaksiChange(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -127,6 +133,7 @@ type
     procedure Clear;
     procedure RefreshGridDetailAkun;
     procedure RefreshGridDetailPiutang;
+    procedure RefreshForm;
     procedure VCekBalance;
     procedure HitungKurs;
     procedure CekPosisiDK;
@@ -141,8 +148,131 @@ implementation
 
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
-  UListPenerimaanBank, UHomeLogin;
+  UHomeLogin, UListPenerimaanBank;
 
+procedure TFDataPenerimaanBank.RefreshForm;
+begin
+    with FDataPenerimaanBank do
+    begin
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from t_master_trans_account  '+
+              ' where name_module='+QuotedStr(cbTransaksi.Text)+' '+
+              ' and status_bill='+IntToStr(cbJenisTransaksi.ItemIndex-1)+' ) a ');
+      open;
+    end;
+
+      MemDetailAkun.EmptyTable;
+      MemDetailPiutang.EmptyTable;
+      edNoTrans.Clear;
+      dtTrans.date:=now();
+      dtPeriode1.date:=now();
+      dtPeriode2.date:=now();
+      edKodeJenisTrans.Clear;
+      edNamaJenisTrans.Clear;
+      edNamaBank.Clear;
+      edNoRek.Clear;
+      edKode_Pelanggan.Clear;
+      edNama_Pelanggan.Clear;
+      edNoRek.Clear;
+      edNamaBank.Clear;
+      edKodeMataUang.Clear;
+      edNamaMataUang.Clear;
+      edUntukPengiriman.Clear;
+      edKurs.value:=0.00;
+      edJumlah.value:=0.00;
+      MemKeterangan.Clear;
+      MemDetailAkun.Active:=true;
+      MemDetailPiutang.Active:=true;
+      edKodeSumberTagihan.Clear;
+      edNMSumberTagihan.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
+
+      edKodeJenisTrans.Text:=Dm.Qtemp1.FieldByName('code_trans').AsString;
+      edNamaJenisTrans.Text:=Dm.Qtemp1.FieldByName('name_trans').AsString;
+      additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString));
+      additional_code2:='0';
+      additional_code3:='0';
+      additional_code4:='0';
+      additional_code5:='0';
+    end;
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ');
+  if vid_modul='3' then // Bank
+  begin
+    FDataPenerimaanBank.gbDataBank.Visible:=True;
+  end;
+  if vid_modul='4' then // Kas
+  begin
+    FDataPenerimaanBank.gbDataBank.Visible:=False;
+  end;
+
+
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      //ShowMessage('0');
+      //edKodeSumberTagihan.Visible:=true;
+      //edKodeJenisBayar.Visible:=true;
+      lbSumberTagihan.Visible:=true;
+      lbSumberTagihann.Visible:=true;
+      lbJenisBayar.Visible:=true;
+      lbJenisBayarr.Visible:=true;
+      edNMSumberTagihan.Visible:=true;
+      edNMJenisBayar.Visible:=true;
+    end;
+  end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      //ShowMessage('1');
+      //edKodeSumberTagihan.Visible:=false;
+      //edKodeJenisBayar.Visible:=false;
+      lbSumberTagihan.Visible:=false;
+      lbSumberTagihann.Visible:=false;
+      lbJenisBayar.Visible:=false;
+      lbJenisBayarr.Visible:=false;
+      edNMSumberTagihan.Visible:=false;
+      edNMJenisBayar.Visible:=false;
+    end;
+  end;
+
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataPiutang.Visible:=false;
+      TabDetailFaktur.TabVisible:=false;
+    end;
+  end;
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataPiutang.Visible:=true;
+      TabDetailFaktur.TabVisible:=true;
+    end;
+
+    if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
+      FDataPenerimaanBank.Panel5.Visible:=false
+    else
+      FDataPenerimaanBank.Panel5.Visible:=true;
+  end;
+
+
+  FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
+  RefreshGridDetailAkun;
+  FDataPenerimaanBank.Autonumber;
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
+
+end;
 
 procedure TFDataPenerimaanBank.HitungKurs;
 begin
@@ -666,6 +796,16 @@ begin
     end;
 end;
 
+procedure TFDataPenerimaanBank.cbJenisTransaksiChange(Sender: TObject);
+begin
+  RefreshForm;
+end;
+
+procedure TFDataPenerimaanBank.cbTransaksiChange(Sender: TObject);
+begin
+  cbJenisTransaksi.ItemIndex:=0;
+end;
+
 procedure TFDataPenerimaanBank.VCekBalance;
 begin
   //Cek Balance Debit Kredit
@@ -719,6 +859,23 @@ end;
 
 procedure TFDataPenerimaanBank.Clear;
 begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
+    open;
+    first;
+  end;
+
+  cbTransaksi.clear;
+  cbTransaksi.items.Add('');
+  while not dm.Qtemp.eof do
+  begin
+   cbTransaksi.Items.add(dm.Qtemp.fieldbyname('module_name').asstring);
+   dm.Qtemp.next;
+  end;
+
   MemDetailAkun.EmptyTable;
   MemDetailPiutang.EmptyTable;
   edNoTrans.Clear;
@@ -745,7 +902,8 @@ begin
   edNMSumberTagihan.Clear;
   edKodeJenisBayar.Clear;
   edNMJenisBayar.Clear;
-
+  cbTransaksi.ItemIndex:=0;
+  cbJenisTransaksi.ItemIndex:=0;
 end;
 
 procedure TFDataPenerimaanBank.DBGridAkunColEnter(Sender: TObject);

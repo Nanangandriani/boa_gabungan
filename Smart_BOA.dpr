@@ -75,7 +75,6 @@ uses
   USPB in 'USPB.pas' {FSPB},
   UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat},
   UNew_Additional in 'UNew_Additional.pas' {FNew_Additional},
-  UMy_Function in 'UMy_Function.pas',
   UNew_Kategori_Gudang in 'UNew_Kategori_Gudang.pas' {FNew_Kategori_Gudang},
   Udafcek_entry in 'Udafcek_entry.pas' {FDaf_EntryCek},
   Uimportnocek in 'Uimportnocek.pas' {FImportnocek},
@@ -155,7 +154,6 @@ uses
   UDaftarTagihan in 'UDaftarTagihan.pas' {FDaftarTagihan},
   UDataPenerimaanBank in 'UDataPenerimaanBank.pas' {FDataPenerimaanBank},
   UListPenerimaanKas in 'UListPenerimaanKas.pas' {FListPenerimaanKas},
-  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
   UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans},
   UDataRencanaLunasPiutang in 'UDataRencanaLunasPiutang.pas' {FDataRencanaLunasPiutang},
   UDaftarRencanaLunasPiutang in 'UDaftarRencanaLunasPiutang.pas' {FDaftarRencanaLunasPiutang},
@@ -213,8 +211,9 @@ uses
   URekap_TerimaDok in 'URekap_TerimaDok.pas' {FRpt_RekapTerimaDok},
   URpt_RekapMutasi in 'URpt_RekapMutasi.pas' {FRpt_RekapMutasi},
   URpt_NeracaLajur in 'URpt_NeracaLajur.pas' {FRpt_NeracaLajur},
-  URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca};
-
+  URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca},
+  UMy_Function in 'UMy_Function.pas',
+  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -322,6 +321,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
   Application.CreateForm(TFDaftarKontrak, FDaftarKontrak);
   Application.CreateForm(TFHomeLogin, FHomeLogin);
+  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

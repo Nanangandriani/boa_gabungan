@@ -122,7 +122,8 @@ begin
   FDataPenerimaanBank.Clear;
   //FDataPenerimaanBank.Autocode;
   FDataPenerimaanBank.Status:=0;
-  FDataPenerimaanBank.edNamaJenisTrans.Enabled:=true;
+  FDataPenerimaanBank.cbTransaksi.Enabled:=true;
+  FDataPenerimaanBank.cbJenisTransaksi.Enabled:=true;
   FDataPenerimaanBank.edNoTrans.Enabled:=true;
   FDataPenerimaanBank.ShowModal;
 end;
@@ -198,12 +199,42 @@ begin
   with FDataPenerimaanBank do
   begin
     //Master
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.clear;
+      sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
+      open;
+      first;
+    end;
+
+    cbTransaksi.clear;
+    cbTransaksi.items.Add('');
+    while not dm.Qtemp3.eof do
+    begin
+     cbTransaksi.Items.add(dm.Qtemp3.fieldbyname('module_name').asstring);
+     dm.Qtemp3.next;
+    end;
+
     edNoTrans.Text:=Dm.Qtemp.FieldByName('voucher_no').AsString;
     dtTrans.date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
     dtPeriode1.date:=Dm.Qtemp.FieldByName('period_date1').AsDateTime;
     dtPeriode2.date:=Dm.Qtemp.FieldByName('period_date2').AsDateTime;
     edKodeJenisTrans.Text:=Dm.Qtemp.FieldByName('code_type_trans').AsString;
     edNamaJenisTrans.Text:=Dm.Qtemp.FieldByName('name_type_trans').AsString;
+
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from t_master_trans_account  '+
+              ' where code_trans='+QuotedStr(Dm.Qtemp.FieldByName('code_type_trans').AsString)+') a ');
+      open;
+    end;
+    cbTransaksi.Text:=Dm.Qtemp1.FieldByName('name_module').AsString;
+    cbJenisTransaksi.ItemIndex:=Dm.Qtemp1.FieldByName('status_bill').AsInteger+1;
+
     edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
     edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
     edNoRek.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
@@ -357,7 +388,8 @@ begin
   end;
   end;
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
-  FDataPenerimaanBank.edNamaJenisTrans.Enabled:=false;
+  FDataPenerimaanBank.cbTransaksi.Enabled:=false;
+  FDataPenerimaanBank.cbJenisTransaksi.Enabled:=false;
   FDataPenerimaanBank.edNoTrans.Enabled:=false;
   FDataPenerimaanBank.Status := 1;
   FDataPenerimaanBank.Show;
