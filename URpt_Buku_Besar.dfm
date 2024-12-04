@@ -23,7 +23,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     Align = alTop
     TabOrder = 0
     Visible = False
-    ExplicitWidth = 742
+    ExplicitWidth = 920
     object BBatal: TRzBitBtn
       Left = 848
       Top = 1
@@ -85,7 +85,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 666
+      ExplicitLeft = 844
     end
     object BPrint: TRzBitBtn
       Left = 80
@@ -272,7 +272,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 587
+      ExplicitLeft = 765
     end
     object BCarri: TRzBitBtn
       Left = 682
@@ -335,7 +335,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
         E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 500
+      ExplicitLeft = 678
     end
   end
   object PnPerAkun: TPanel
@@ -348,7 +348,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     ParentBackground = False
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 742
+    ExplicitWidth = 920
     object Label3: TLabel
       Left = 103
       Top = 99
@@ -445,7 +445,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     Align = alTop
     TabOrder = 2
     Visible = False
-    ExplicitWidth = 742
+    ExplicitWidth = 920
     object Label8: TLabel
       Left = 103
       Top = 35
@@ -592,7 +592,6 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     Contexts = <>
     TabOrder = 4
     TabStop = False
-    ExplicitWidth = 746
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -929,14 +928,14 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     object dtMulai: TcxBarEditItem
       Caption = 'Tanggal Mulai '
       Category = 0
-      Hint = 'Tanggal Mulai '
+      Hint = 'Tanggal Awal '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object dtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Selesai'
+      Caption = 'Tanggal Akhir  '
       Category = 0
-      Hint = 'Tanggal Selesai'
+      Hint = 'Tanggal Akhir'
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end

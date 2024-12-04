@@ -447,16 +447,16 @@ object FRekapKontrak: TFRekapKontrak
       OnClick = DxRefreshClick
     end
     object dtmulai: TcxBarEditItem
-      Caption = 'Tanggal Dari      '
+      Caption = 'Tanggal Awal '
       Category = 0
-      Hint = 'Tanggal Dari      '
+      Hint = 'Tanggal Awal '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object dtselesai: TcxBarEditItem
-      Caption = 'Tanggal Sampai'
+      Caption = 'Tanggal Akhir'
       Category = 0
-      Hint = 'Tanggal Sampai'
+      Hint = 'Tanggal Akhir'
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end

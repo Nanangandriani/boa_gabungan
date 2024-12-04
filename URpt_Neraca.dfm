@@ -1,75 +1,34 @@
-object FRekapSisa_PO: TFRekapSisa_PO
+object FRpt_Neraca: TFRpt_Neraca
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
-  Caption = 'Rekap Sisa PO'
-  ClientHeight = 421
-  ClientWidth = 699
+  Caption = 'Laporan Neraca'
+  ClientHeight = 394
+  ClientWidth = 667
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Position = poMainFormCenter
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
-  object Label2: TLabel
-    Left = 53
-    Top = 197
-    Width = 38
-    Height = 13
-    Caption = 'Tanggal'
-  end
-  object Label3: TLabel
-    Left = 122
-    Top = 200
-    Width = 4
-    Height = 13
-    Caption = ':'
-    Visible = False
-  end
-  object Label4: TLabel
-    Left = 119
-    Top = 171
-    Width = 4
-    Height = 13
-    Caption = ':'
-    Visible = False
-  end
-  object Label7: TLabel
-    Left = 269
-    Top = 208
-    Width = 15
-    Height = 13
-    Caption = 's/d'
-    Visible = False
-  end
-  object Label8: TLabel
-    Left = 51
-    Top = 163
-    Width = 75
-    Height = 13
-    Caption = 'Jenis Pembelian'
-  end
-  object Panel1: TPanel
+  object Panel2: TPanel
     Left = 0
-    Top = 380
-    Width = 699
-    Height = 41
+    Top = 351
+    Width = 667
+    Height = 43
     Align = alBottom
     TabOrder = 0
-    OnClick = Panel1Click
-    ExplicitTop = 379
-    ExplicitWidth = 695
+    ExplicitTop = 350
+    ExplicitWidth = 663
     object BBatal: TRzBitBtn
-      Left = 623
+      Left = 591
       Top = 1
-      Height = 39
+      Height = 41
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
@@ -126,13 +85,12 @@ object FRekapSisa_PO: TFRekapSisa_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 619
+      ExplicitLeft = 587
     end
     object BPrint: TRzBitBtn
-      Left = 544
+      Left = 516
       Top = 1
-      Width = 79
-      Height = 39
+      Height = 41
       Align = alRight
       Caption = 'Print'
       TabOrder = 1
@@ -189,49 +147,135 @@ object FRekapSisa_PO: TFRekapSisa_PO
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 540
+      ExplicitLeft = 512
     end
   end
-  object DtMulai1: TRzDateTimeEdit
-    Left = 132
-    Top = 194
-    Width = 121
-    Height = 21
-    EditType = etDate
-    Format = 'dd/mm/yyyy'
+  object Panel1: TPanel
+    Left = 0
+    Top = 156
+    Width = 667
+    Height = 129
+    Align = alBottom
     TabOrder = 1
+    Visible = False
+    ExplicitTop = 155
+    ExplicitWidth = 663
+    object Label16: TLabel
+      Left = 35
+      Top = 58
+      Width = 26
+      Height = 13
+      Caption = 'Bulan'
+    end
+    object Label15: TLabel
+      Left = 35
+      Top = 94
+      Width = 30
+      Height = 13
+      Caption = 'Tahun'
+    end
+    object Label2: TLabel
+      Left = 35
+      Top = 21
+      Width = 36
+      Height = 13
+      Caption = 'Periode'
+    end
+    object Label1: TLabel
+      Left = 220
+      Top = 21
+      Width = 15
+      Height = 13
+      Caption = 's/d'
+    end
+    object cbbulan: TComboBox
+      Left = 108
+      Top = 55
+      Width = 106
+      Height = 21
+      TabOrder = 0
+      OnSelect = cbbulanSelect
+      Items.Strings = (
+        'Januari'
+        'Februari'
+        'Maret'
+        'April'
+        'Mei'
+        'Juni'
+        'Juli'
+        'Agustus'
+        'September'
+        'Oktober'
+        'November'
+        'Desember')
+    end
+    object edth: TSpinEdit
+      Left = 108
+      Top = 91
+      Width = 150
+      Height = 22
+      MaxValue = 3000
+      MinValue = 2000
+      TabOrder = 1
+      Value = 2022
+    end
+    object dtmulai1: TRzDateTimeEdit
+      Left = 108
+      Top = 18
+      Width = 106
+      Height = 21
+      EditType = etDate
+      Format = 'dd/mm/yyyy'
+      TabOrder = 2
+    end
+    object dtselesai1: TRzDateTimeEdit
+      Left = 241
+      Top = 18
+      Width = 106
+      Height = 21
+      EditType = etDate
+      Format = 'dd/mm/yyyy'
+      TabOrder = 3
+    end
   end
-  object DtSelesai1: TRzDateTimeEdit
-    Left = 289
-    Top = 205
-    Width = 121
-    Height = 21
-    EditType = etDate
-    Format = 'mm/dd/yyyy'
+  object Pnthn: TPanel
+    Left = 0
+    Top = 285
+    Width = 667
+    Height = 66
+    Align = alBottom
     TabOrder = 2
     Visible = False
-  end
-  object EdJenis: TRzComboBox
-    Left = 132
-    Top = 160
-    Width = 189
-    Height = 21
-    TabOrder = 3
-    Items.Strings = (
-      'PRODUKSI'
-      'NON PRODUKSI'
-      'AKTIVA')
+    ExplicitTop = 284
+    ExplicitWidth = 663
+    object Label4: TLabel
+      Left = 35
+      Top = 30
+      Width = 30
+      Height = 13
+      Caption = 'Tahun'
+    end
+    object edthn2: TSpinEdit
+      Left = 108
+      Top = 27
+      Width = 150
+      Height = 22
+      MaxValue = 3000
+      MinValue = 2000
+      TabOrder = 0
+      Value = 2022
+    end
   end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 699
+    Width = 667
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 4
+    TabOrder = 3
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
@@ -243,138 +287,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
       Index = 0
     end
   end
-  object DBGridKontrak: TDBGridEh
-    Left = 0
-    Top = 127
-    Width = 699
-    Height = 253
-    Align = alClient
-    DataGrouping.GroupLevels = <
-      item
-      end
-      item
-      end>
-    DataSource = DsRekapSisa_PO
-    DrawMemoText = True
-    DynProps = <>
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    SearchPanel.Enabled = True
-    TabOrder = 5
-    TitleParams.MultiTitle = True
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'po_date'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'po_no'
-        Footers = <>
-        Title.Caption = 'No PO'
-        Width = 129
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'delivery'
-        Footers = <>
-        Title.Caption = 'Tgl Kirim'
-        Width = 135
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_name'
-        Footers = <>
-        Title.Caption = 'Nama Supplier'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'item_name'
-        Footers = <>
-        Title.Caption = 'Nama Barang'
-        Width = 168
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'qty'
-        Footers = <>
-        Title.Caption = 'Kuantum'
-        Width = 75
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tglterima'
-        Footers = <>
-        Title.Caption = 'Tgl Datang'
-        Width = 120
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'remaining_qty'
-        Footers = <>
-        Title.Caption = 'Sisa PO'
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'price'
-        Footers = <>
-        Title.Caption = 'Harga'
-        Width = 109
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'faktur_no'
-        Footers = <>
-        Title.Caption = 'Faktur'
-        Width = 85
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sbu_code'
-        Footers = <>
-        Title.Caption = 'SBU'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_name'
-        Footers = <>
-        Title.Caption = 'Gudang'
-        Width = 70
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-    end
-  end
   object Rpt: TfrxReport
     Version = '2022.2.7'
     DotMatrixReport = False
@@ -383,16 +295,15 @@ object FRekapSisa_PO: TFRekapSisa_PO
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45624.607431122680000000
-    ReportOptions.LastChange = 45624.607431122680000000
+    ReportOptions.CreateDate = 45100.655733194440000000
+    ReportOptions.LastChange = 45100.655733194440000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'begin'
       ''
       'end.')
-    Left = 553
-    Top = 95
+    Left = 334
     Datasets = <>
     Variables = <>
     Style = <>
@@ -456,72 +367,359 @@ object FRekapSisa_PO: TFRekapSisa_PO
       end
     end
   end
-  object QRekapSisaPO: TUniQuery
+  object DbRpt_Neraca: TfrxDBDataset
+    UserName = 'DbRpt_Neraca'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'jenis=jenis'
+      'jenis_nr=jenis_nr'
+      'kode_header=kode_header'
+      'bulan=bulan'
+      'tahun=tahun'
+      'kode=kode'
+      'nama_perkiraan=nama_perkiraan'
+      'total=total')
+    DataSet = QRpt_Neraca
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 281
+    Top = 33
+  end
+  object QRpt_Neraca: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supp' +
-        'lier_name,d.faktur_no,b.item_name, to_char(d.trans_date, '#39'dd mon' +
-        ' yy'#39')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_cod' +
-        'e,a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,' +
-        #39' - '#39',a.delivery2_date)delivery from purchase.t_po a INNER JOIN ' +
-        'purchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c' +
-        ' on  a.supplier_code=c.supplier_code Left JOIN ('
+        '{select jenis,jenis_nr,kode_header,bulan,tahun,kode,nama_perkira' +
+        'an,sum(total) total from ('
       
-        'SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from   pur' +
-        'chase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoic' +
-        'e_det b on a.trans_no=b.trans_no where  a.trans_date='#39'2024-10-01' +
-        #39
+        'select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode' +
+        ',nama_perkiraan,case when (db-kr) > 0 then (db-kr) else 0 end to' +
+        'tal from  (select x.kode_header,x2.bulan,x2.tahun,x.kode kd_akun' +
+        ',x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.deb' +
+        'it)db from  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on ' +
+        ' x.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln bulan,a.thn tah' +
+        'un from t_neraca_lajur1_det b INNER JOIN t_neraca_lajur1 a on a.' +
+        'notrans=b.notrans WHERE  a.bln='#39'01'#39' and a.thn='#39'2022'#39' and  (a.per' +
+        'iode1 >='#39'2022-01-02'#39' and a.periode2 <='#39'2022-01-08'#39'))x2 on x2.kd_' +
+        'akun=x.kode WHERE  x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP ' +
+        'BY x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jen' +
+        'is,b.jenis_nr)xx   '
+      'UNION'
       
-        ')as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_cod' +
-        'e where  b.remaining_qty<>0 and a.status='#39'1'#39' and a.as_status='#39'1'#39 +
-        ' and a. trans_category='#39#39' '
+        'select jenis,jenis_nr,kode_header,bulan,tahun,kode,nama_perkiraa' +
+        'n,case when jenis_nr='#39'AKM. PENYUSUTAN'#39' then -(case when (kr-db) ' +
+        '> 0 then (kr-db) else 0 end) else (case when (kr-db) > 0 then (k' +
+        'r-db) else 0 end) end total '
+      
+        'from (select kode_header,bulan,tahun,kode,nama_perkiraan,jenis,j' +
+        'enis_nr,sum(kredit)kr,sum(debit)db from'
+      
+        '(select x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,' +
+        'b.jenis,b.jenis_nr,x2.kredit,x2.debit from  t_daftar_perkiraan x' +
+        ' INNER JOIN t_jenis_neraca b on  x.id_jenis_nr=b."id" LEFT JOIN(' +
+        'select b.*,a.bln bulan,a.thn tahun from t_neraca_lajur1_det b IN' +
+        'NER JOIN t_neraca_lajur1 a on a.notrans=b.notrans WHERE  a.bln='#39 +
+        '01'#39' and a.thn='#39'2022'#39' and  (a.periode1 >='#39'2022-01-02'#39' and a.perio' +
+        'de2 <='#39'2022-01-08'#39'))x2 on x2.kd_akun=x.kode WHERE  x.status_nera' +
+        'ca='#39'1'#39' and  posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39' '
+      'UNION'
+      
+        'select x1.kode_header,xx.bulan,xx.tahun,x1.kode kd_akun,x1.nama_' +
+        'perkiraan,x1.jenis,x1.jenis_nr,xx.kredit,xx.debit from (select x' +
+        '.kode,x.nama_perkiraan,x.kode_header,b.jenis,b.jenis_nr,x.posisi' +
+        '_dk,x.status_neraca from t_daftar_perkiraan x left JOIN t_jenis_' +
+        'neraca b on  x.id_jenis_nr=b."id" where x.status_neraca='#39'1'#39' and ' +
+        ' x.posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39') x1 INNER JOIN (select left(x.k' +
+        'ode_header,4) kd_header,x2.bulan,x2.tahun,LEFT(x.kode_header,4) ' +
+        'kd_akun,x.nama_perkiraan,x.jenis,x.jenis_nr,x2.kredit,x2.debit f' +
+        'rom  '
+      
+        '(select x.kode,x.nama_perkiraan,x.kode_header,b.jenis,b.jenis_nr' +
+        ',x.posisi_dk,x.status_neraca from t_daftar_perkiraan x left JOIN' +
+        ' t_jenis_neraca b on  x.id_jenis_nr=b."id" where x.status_neraca' +
+        '='#39'1'#39' and  x.posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39') x'
+      
+        ' LEFT JOIN(select b.*,a.bln bulan,a.thn tahun from t_neraca_laju' +
+        'r1_det b INNER JOIN t_neraca_lajur1 a on a.notrans=b.notrans WHE' +
+        'RE  a.bln='#39'01'#39' and a.thn='#39'2022'#39' and  (a.periode1 >='#39'2022-01-02'#39' ' +
+        'and a.periode2 <='#39'2022-01-08'#39'))x2 on x2.kd_akun=x.kode WHERE   j' +
+        'enis is NULL) xx on x1.kode=xx.kd_akun) xxx'
+      
+        'GROUP BY kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis' +
+        '_nr)x4 ORDER BY jenis,kode asc) xxx GROUP BY jenis,jenis_nr,kode' +
+        '_header,bulan,tahun,kode,nama_perkiraan;'
+      '}'
+      ''
+      
+        'select jenis,jenis_nr,kode_header,bulan,tahun,kode,nama_perkiraa' +
+        'n,sum(total) total from ('
+      
+        'select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode' +
+        ',nama_perkiraan,case when (db-kr) > 0 then (db-kr) else 0 end to' +
+        'tal from  (select x.kode_header,x2.bulan,x2.tahun,x.kode kd_akun' +
+        ',x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.deb' +
+        'it)db from  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on ' +
+        ' x.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln bulan,a.thn tah' +
+        'un from t_neraca_lajur1_det b INNER JOIN t_neraca_lajur1 a on a.' +
+        'notrans=b.notrans WHERE  a.bln='#39'01'#39' and a.thn='#39'2022'#39' and  (a.per' +
+        'iode1 >='#39'2022-01-02'#39' and a.periode2 <='#39'2022-01-08'#39'))x2 on x2.kd_' +
+        'akun=x.kode WHERE  x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP ' +
+        'BY x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jen' +
+        'is,b.jenis_nr)xx   '
+      'UNION'
+      
+        'select jenis,jenis_nr,kode_header,bulan,tahun,kode,nama_perkiraa' +
+        'n,case when jenis_nr='#39'AKM. PENYUSUTAN'#39' then -(case when (kr-db) ' +
+        '> 0 then (kr-db) else 0 end) else (case when (kr-db) > 0 then (k' +
+        'r-db) else 0 end) end total '
+      
+        'from (select kode_header,bulan,tahun,kode,nama_perkiraan,jenis,j' +
+        'enis_nr,sum(kredit)kr,sum(debit)db from'
+      
+        '(select x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,' +
+        'b.jenis,b.jenis_nr,x2.kredit,x2.debit from  t_daftar_perkiraan x' +
+        ' INNER JOIN t_jenis_neraca b on  x.id_jenis_nr=b."id" LEFT JOIN(' +
+        'select b.*,a.bln bulan,a.thn tahun from t_neraca_lajur1_det b IN' +
+        'NER JOIN t_neraca_lajur1 a on a.notrans=b.notrans WHERE  a.bln='#39 +
+        '01'#39' and a.thn='#39'2022'#39' and  (a.periode1 >='#39'2022-01-02'#39' and a.perio' +
+        'de2 <='#39'2022-01-08'#39'))x2 on x2.kd_akun=x.kode WHERE  x.status_nera' +
+        'ca='#39'1'#39' and  posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39' '
+      ') xxx'
+      
+        'GROUP BY kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis' +
+        '_nr)x4 ORDER BY jenis,kode asc) xxx GROUP BY jenis,jenis_nr,kode' +
+        '_header,bulan,tahun,kode,nama_perkiraan;')
+    Left = 337
+    Top = 47
+  end
+  object UniQuery1: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode' +
+        ',nama_perkiraan,case when (x3.debit-x3.kredit)+(db-kr) > 0 then ' +
+        '(x3.debit-x3.kredit)+(db-kr) else 0 end total from  '
+      
+        '(select x.kode_header,x2.bulan,x2.tahun,x.kode kd_akun,x.nama_pe' +
+        'rkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.debit)db from' +
+        '  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on x.id_jenis' +
+        '_nr=b."id"'
+      
+        'LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_ne' +
+        'raca a on a.no_in=b.no_in WHERE  bulan='#39'01'#39' and tahun='#39'2022'#39' and' +
+        ' (a.tgl_in >='#39'2022-01-03'#39' and a.tgl_in <='#39'2022-01-03'#39'))x2 on x2.' +
+        'kd_akun=x.kode WHERE x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROU' +
+        'P BY x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.j' +
+        'enis,b.jenis_nr)xx left JOIN tsa_akundet x3 on xx.kd_akun=x3.kd_' +
+        'akun  '
       'union  '
       
-        'select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supp' +
-        'lier_name,d.faktur_no,b.item_name,to_char(d.trans_date, '#39'dd mon ' +
-        'yy'#39')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_code' +
-        ',a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'#39 +
-        ' - '#39',a.delivery2_date)delivery from purchase.t_po a INNER JOIN p' +
-        'urchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c ' +
-        'on  a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_d' +
-        'ate,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code from pur' +
-        'chase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoic' +
-        'e_det b on a.trans_no=b.trans_no where  a.trans_date='#39'2024-10-01' +
-        #39')'
+        'select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun,nama' +
+        '_perkiraan,case when (x3.kredit-x3.debit)+(kr-db) > 0 then (x3.k' +
+        'redit-x3.debit)+(kr-db) else 0 end total from '
       
-        'as d on d.po_no=a.po_no and  b.item_stock_code=d.item_stock_code' +
-        ' INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 an' +
-        'd*/ a.as_status='#39'1'#39' and   a.trans_category='#39#39' order by po_date,p' +
-        'o_date asc')
-    Left = 480
-    Top = 72
+        ' (select x.kode_header,x2.bulan,x2.tahun,x.kode kd_akun,x.nama_p' +
+        'erkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.debit)db fro' +
+        'm  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on x.id_jeni' +
+        's_nr=b."id" LEFT JOIN(select * from t_item_neraca_det b INNER JO' +
+        'IN t_item_neraca a on a.no_in=b.no_in WHERE  bulan='#39'01'#39' and tahu' +
+        'n='#39'2022'#39' and (a.tgl_in >='#39'2022-01-03'#39' and a.tgl_in <='#39'2022-01-03' +
+        #39'))x2 on x2.kd_akun=x.kode WHERE x.status_neraca='#39'1'#39' and  posisi' +
+        '_dk='#39'K'#39' GROUP BY x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_p' +
+        'erkiraan,b.jenis,b.jenis_nr)xx left JOIN tsa_akundet x3 on xx.kd' +
+        '_akun=x3.kd_akun  '
+      'ORDER BY kode asc')
+    Left = 337
+    Top = 103
   end
-  object DbRekapSisaPO: TfrxDBDataset
-    UserName = 'DbRekapSisaPO'
+  object frxDBDataset1: TfrxDBDataset
+    UserName = 'DbRpt_Neraca'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'po_date=po_date'
-      'po_no=po_no'
-      'delivery_date=delivery_date'
-      'delivery2_date=delivery2_date'
-      'supplier_name=supplier_name'
-      'faktur_no=faktur_no'
-      'item_name=item_name'
-      'tglterima=tglterima'
-      'qty=qty'
-      'remaining_qty=remaining_qty'
-      'price=price'
-      'item_stock_code=item_stock_code'
-      'sbu_code=sbu_code'
-      'trans_category=trans_category'
-      'wh_name=wh_name'
-      'delivery=delivery')
-    DataSet = QRekapSisaPO
+      'jenis=jenis'
+      'jenis_nr=jenis_nr'
+      'kode_header=kode_header'
+      'bulan=bulan'
+      'tahun=tahun'
+      'kode=kode'
+      'nama_perkiraan=nama_perkiraan'
+      'total=total')
+    DataSet = UniQuery1
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 472
-    Top = 240
+    Left = 441
+    Top = 9
+  end
+  object QRpt_Neracathn: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select kode,jenis,jenis_nr,kode_header,tahun,nama_perkiraan,sum(' +
+        'spt)spt,sum(jan)jan,sum(feb)feb,sum(mar)mar,sum(apr)apr,sum(mei)' +
+        'mei,sum(jun)jun,sum(jul)jul, sum(ags)ags,sum(sep)sep,sum(okt)okt' +
+        ',sum(nov)nov,sum(des)des from (select kode,jenis,jenis_nr,kode_h' +
+        'eader,tahun,nama_perkiraan,case when bulan='#39'01'#39'  then total end ' +
+        'jan,case when bulan='#39'02'#39' then total end feb,case when bulan='#39'03'#39 +
+        ' then total end mar,case when bulan='#39'04'#39' then total end apr, cas' +
+        'e when bulan='#39'05'#39' then total end mei,case when bulan='#39'06'#39' then t' +
+        'otal end jun, case when bulan='#39'07'#39' then total end jul,case when ' +
+        'bulan='#39'08'#39' then total end ags,case when bulan='#39'09'#39' then total en' +
+        'd sep,case when bulan='#39'10'#39' then total end okt,case when bulan='#39'1' +
+        '1'#39' then total end nov, case when bulan='#39'12'#39' then total end des,c' +
+        'ase when bulan='#39'SPT'#39' then total end spt from (select jenis,jenis' +
+        '_nr,kode_header,bulan,tahun,kode,nama_perkiraan,sum(total) total' +
+        ' from (    select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.k' +
+        'd_akun kode,nama_perkiraan,case when (db-kr) isnull  then 0 else' +
+        ' (db-kr) end total from   (select x.kode_header,x2.bulan,x2.tahu' +
+        'n,x.kode kd_akun,x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kred' +
+        'it)kr,sum(x2.debit)db from t_daftar_perkiraan x  INNER JOIN t_je' +
+        'nis_neraca b on x.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln ' +
+        'bulan,a.thn tahun from t_neraca_lajur1_det b INNER JOIN  (select' +
+        ' thn,bln,max(notrans) notrans from t_neraca_lajur1 GROUP BY thn,' +
+        'bln ORDER BY bln,thn) a on a.notrans=b.notrans WHERE  a.thn='#39'202' +
+        '3'#39' union /*SPT Tahun Lalu*/  select b.*,'#39'SPT'#39' bulan,'#39'2023'#39' tahun' +
+        ' from t_neraca_lajur1_det b INNER JOIN (select thn,bln,notrans,p' +
+        'eriode1,periode2  from t_neraca_lajur1 WHERE thn<'#39'2023'#39' ORDER BY' +
+        ' periode2 desc limit 1)a on a.notrans=b.notrans)x2 on x2.kd_akun' +
+        '=x.kode WHERE  x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP BY x' +
+        '.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jenis,b' +
+        '.jenis_nr)xx UNION  select jenis,jenis_nr,kode_header,bulan,tahu' +
+        'n,kode,nama_perkiraan,case when jenis_nr='#39'AKM. PENYUSUTAN'#39' then ' +
+        '-(case when (kr-db) isnull then 0 else (kr-db) end) else (case w' +
+        'hen (kr-db) isnull then 0 else (kr-db) end) end total from (sele' +
+        'ct kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr,su' +
+        'm(kredit)kr,sum(debit)db from (select x.kode_header,x2.bulan,x2.' +
+        'tahun,x.kode,x.nama_perkiraan,b.jenis,b.jenis_nr,x2.kredit,x2.de' +
+        'bit from  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on  x' +
+        '.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln bulan,a.thn tahun' +
+        ' from t_neraca_lajur1_det b INNER JOIN (select thn,bln,max(notra' +
+        'ns) notrans from t_neraca_lajur1  GROUP BY thn,bln ORDER BY bln,' +
+        'thn) a on a.notrans=b.notrans WHERE a.thn='#39'2023'#39' union /*SPT Tah' +
+        'un Lalu*/  select b.*,'#39'SPT'#39' bulan,'#39'2023'#39' tahun from t_neraca_laj' +
+        'ur1_det b INNER JOIN (select thn,bln,notrans,periode1,periode2  ' +
+        'from t_neraca_lajur1 WHERE thn<'#39'2023'#39' ORDER BY periode2 desc lim' +
+        'it 1)a on a.notrans=b.notrans)x2 on x2.kd_akun=x.kode WHERE x.st' +
+        'atus_neraca='#39'1'#39' and posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39') xxx GROUP BY ' +
+        'kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr)x4 OR' +
+        'DER BY jenis,kode asc) xxx GROUP BY jenis,jenis_nr,kode_header,b' +
+        'ulan,tahun,kode,nama_perkiraan) y) yy GROUP BY kode,jenis,jenis_' +
+        'nr,kode_header,tahun,nama_perkiraan ORDER BY jenis,kode asc'
+      ''
+      '-- 0 row(s) affected.')
+    Left = 137
+    Top = 127
+  end
+  object dbRpt_neracathn: TfrxDBDataset
+    UserName = 'dbRpt_neracathn'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'kode=kode'
+      'jenis=jenis'
+      'jenis_nr=jenis_nr'
+      'kode_header=kode_header'
+      'tahun=tahun'
+      'nama_perkiraan=nama_perkiraan'
+      'spt=spt'
+      'jan=jan'
+      'feb=feb'
+      'mar=mar'
+      'apr=apr'
+      'mei=mei'
+      'jun=jun'
+      'jul=jul'
+      'ags=ags'
+      'sep=sep'
+      'okt=okt'
+      'nov=nov'
+      'des=des')
+    DataSet = QRpt_Neracathn
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 49
+    Top = 121
+  end
+  object QRpt_PosNeraca: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT X5.*,X6.st_posnr,CASE WHEN x6.kode=x6.kode_header then 0 ' +
+        'else 1 end notr,y.nm_pos FROM (/* Aktiva tetap dan lancar*/ sele' +
+        'ct jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode,nam' +
+        'a_perkiraan, '
+      
+        'case when db isnull then 0 else db end db ,case when kr isnull t' +
+        'hen 0 else kr end kr from (select x.kode_header,x2.bulan,x2.tahu' +
+        'n,x.kode kd_akun,'
+      
+        'x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.debi' +
+        't)db from   t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on ' +
+        'x.id_jenis_nr=b."id" '
+      
+        'LEFT JOIN(select b.*,a.bln bulan,a.thn tahun from t_neraca_lajur' +
+        '1_det b INNER JOIN (select thn,bln,max(notrans) notrans from t_n' +
+        'eraca_lajur1 '
+      
+        'GROUP BY thn,bln ORDER BY bln,thn) a on a.notrans=b.notrans WHER' +
+        'E a.bln='#39'04'#39' and a.thn='#39'2022'#39')x2 on x2.kd_akun=x.kode'
+      
+        ' WHERE x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP BY x.kode_he' +
+        'ader,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jenis,b.jenis_n' +
+        'r)xx  '
+      ''
+      
+        'UNION /* Aktiva Lancar dan Pasiva*/  select jenis,jenis_nr,kode_' +
+        'header,bulan,tahun,kode,nama_perkiraan, case when jenis_nr='#39'AKM.' +
+        ' PENYUSUTAN'#39' then '
+      
+        '-(case when db isnull then 0  else db end) else (case when db IS' +
+        'NULL  then 0 else db end) end db, case when jenis_nr='#39'AKM. PENYU' +
+        'SUTAN'#39' then -(case when kr  isnull then 0 else kr end) else (cas' +
+        'e when kr ISNULL then 0 else kr end) end kr from (select kode_he' +
+        'ader,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr,sum(kredit)k' +
+        'r,'
+      
+        'sum(debit)db from (select x.kode_header,x2.bulan,x2.tahun, x.kod' +
+        'e,x.nama_perkiraan,b.jenis,b.jenis_nr,x2.kredit,x2.debit from t_' +
+        'daftar_perkiraan x '
+      
+        'INNER JOIN t_jenis_neraca b on x.id_jenis_nr=b."id"  LEFT JOIN(s' +
+        'elect b.*,a.bln bulan,a.thn tahun from t_neraca_lajur1_det b '
+      
+        'INNER JOIN (select thn,bln,max(notrans) notrans from t_neraca_la' +
+        'jur1 GROUP BY thn,bln ORDER BY bln,thn)a on a.notrans=b.notrans'
+      
+        ' WHERE a.bln='#39'04'#39' and a.thn='#39'2022'#39')x2 on x2.kd_akun=x.kode WHERE' +
+        ' x.status_neraca='#39'1'#39' and  posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39' ) xxx '
+      
+        'GROUP BY kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis' +
+        '_nr)x4 ) X5 INNER JOIN t_daftar_perkiraan X6 ON X5.kode=X6.kode '
+      
+        'INNER JOIN t_category_pos_neraca y ON x6.st_posnr=y."id" ORDER B' +
+        'Y st_posnr,kode asc')
+    Left = 65529
+    Top = 7
+  end
+  object DbRpt_PosNeraca: TfrxDBDataset
+    UserName = 'DbRpt_PosNeraca'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'jenis=jenis'
+      'jenis_nr=jenis_nr'
+      'kode_header=kode_header'
+      'bulan=bulan'
+      'tahun=tahun'
+      'kode=kode'
+      'nama_perkiraan=nama_perkiraan'
+      'db=db'
+      'kr=kr'
+      'st_posnr=st_posnr'
+      'notr=notr'
+      'nm_pos=nm_pos')
+    DataSet = QRpt_PosNeraca
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 65529
+    Top = 57
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -537,8 +735,8 @@ object FRekapSisa_PO: TFRekapSisa_PO
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 556
-    Top = 32
+    Left = 492
+    Top = 16
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -547,8 +745,8 @@ object FRekapSisa_PO: TFRekapSisa_PO
       DockedTop = 0
       FloatLeft = 805
       FloatTop = 8
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 100
+      FloatClientHeight = 130
       ItemLinks = <
         item
           Visible = True
@@ -557,11 +755,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
         item
           Visible = True
           ItemName = 'DtSelesai'
-        end
-        item
-          BeginGroup = True
-          Visible = True
-          ItemName = 'CbKategori'
         end
         item
           BeginGroup = True
@@ -692,12 +885,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFBFBFFFFF0C0CFFFFABABFFFFFFFFFFFFFFFFFFFF}
     end
-    object dxBarButton1: TdxBarButton
-      Caption = 'Print Kontrak'
-      Category = 0
-      Hint = 'Print Kontrak'
-      Visible = ivAlways
-    end
     object dxBbaru: TdxBarLargeButton
       Caption = 'Baru  '
       Category = 0
@@ -764,165 +951,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFF}
-    end
-    object dxBarButton2: TdxBarButton
-      Caption = 'Approve    '
-      Category = 0
-      Enabled = False
-      Visible = ivNever
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
-        F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E9E8FFFEFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F4FFBEBB
-        B8FF95918BFF8F8B85FF928E88FF948F8AFF9B9995FF847D75FF463421FF412E
-        1AFF877A6EFFE7E5E2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1
-        ADFF8D8882FF96918CFF9A9590FF9B9792FF9D9A95FFA29F9BFF66584AFF4532
-        1EFF4E3C29FF4E3C2AFF483522FF38240FFF746657FFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEEE
-        EDFF918D87FF96918CFF9A9691FF9B9792FF9B9792FFA19E9AFF928D86FF4D3A
-        28FF4B3825FF4F3D2BFF4F3D2BFF503E2CFF503E2CFF4F3D2BFF483522FF3D29
-        15FFDBD7D4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFE9E8E7FF8C8782FF999590FF9B9792FF9B9792FF9C9893FFA3A19DFF7368
-        5CFF39230EFF483522FF483523FF43301DFF493724FF4F3D2BFF503E2CFF503E
-        2CFF503E2CFF4E3C2AFF36210CFFCFCAC5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFF9F8F8FF8D8983FF9A9691FF9B9792FF9B9792FFA09D99FF9B97
-        92FF6A5C4DFFB8B0A8FFFAFAFAFFAFA69EFFBBB4ADFFF6F5F4FFB7B0A9FF422F
-        1BFF473421FF4C3A27FF503E2CFF503E2CFF4F3D2BFF36220DFFEAE8E6FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF9D9994FF98948FFF9B9792FF97938EFF9A96
-        92FF6F6458FF3D2814FF402C18FF301B06FFAAA198FF2C1601FF68594AFF7D6F
-        62FF392511FF978C82FFA69D94FF675748FF422E1BFF4F3D2BFF503E2CFF4C3A
-        28FF4B3826FFFFFFFFFFFFFFFFFFFFFFFFFFD7D6D4FF918D87FF9B9792FF9792
-        8DFFC4C2C0FFBEB8B1FFB4ACA4FFBAB3ACFFBAB3ACFFBAB3ACFFB1A9A1FFB8B1
-        AAFFCCC7C2FFA79E95FFCBC6C0FF69594AFF4F3C2AFF9F968CFFC1BAB4FF3E2A
-        16FF4F3D2BFF503E2CFF422E1BFFAAA198FFFFFFFFFFFFFFFFFF9B9792FF9995
-        90FF9B9792FF97938EFFC5C0BBFF2C1600FF3A2612FF3A2612FF3A2612FF3A26
-        12FF3A2612FF3C2814FF3C2814FFCDC8C3FF36220DFF422E1BFFC1BBB5FF6B5C
-        4DFF726355FF9B9186FF483522FF503E2CFF4E3B29FF463321FFFFFFFFFFF4F3
-        F3FF8F8A85FF9B9792FF9B9792FF94908BFFE3E1DFFFB5ADA6FFBAB3ACFFBAB3
-        ACFFBAB3ACFFBAB3ACFFBDB7B0FF9C9187FF877A6EFF746657FF422E1BFFC4BE
-        B9FF5A4938FF9D9389FF625242FFC0BAB3FF44311EFF503E2CFF503E2CFF3D29
-        15FFE2DFDBFFD6D5D3FF948F8AFF9B9792FF9B9792FF97938EFFC5C0BBFF3823
-        0FFF45321FFF45321FFF45321FFF45321FFF45321FFF412E1AFF908479FF6A5B
-        4CFFB2AAA2FF6F6051FFA59C93FFAFA79FFF9B9086FFB7B0A8FF412E1AFF503E
-        2CFF503E2CFF422E1AFFBAB3ACFFC5C2BFFF96928CFF9B9792FF9B9792FF9793
-        8EFFC8C3BFFF432F1CFF503E2CFF503E2CFF503E2CFF503E2CFF503E2CFF4E3C
-        2AFF4A3825FFCCC7C2FF5B4A39FF8F8478FF3C2814FF4C3A28FFA89F97FFA79E
-        95FF604F3FFF4A3725FF4E3C2AFF4C3A28FFCDCCCAFFBCBAB7FF97928DFF9B97
-        92FF9B9792FF97938EFFC8C3BFFF402C19FF45321FFF483523FF503E2CFF503E
-        2CFF503E2CFF503E2CFF422E1BFF796B5DFFC9C4BEFF5D4C3CFF534130FF9C92
-        88FFB1A9A1FFA0968CFFB9B2ABFF584735FF432F1BFF89837BFFBFBDBAFFBEBB
-        B8FF96928DFF9B9792FF9B9792FF97938EFFC6C1BCFF53412FFFBCB5AEFF9287
-        7CFF3D2A16FF45321FFF45321FFF463320FF9B9187FF564433FF402C18FF9388
-        7DFFA1988EFF645444FF3F2C18FF6D5E4FFFA59C92FFC3BDB7FF554535FFA09D
-        99FFBDBBB8FFC9C6C4FF95918CFF9B9792FF9B9792FF97938EFFC6C1BCFF513F
-        2CFFAEA59DFFA9A097FFB0A8A0FFB0A8A0FFB9B1AAFF584635FF8A7E72FFB1A9
-        A1FFAFA79EFFA9A097FFAAA198FF9A9086FF645343FF9A9186FF594837FF5D4C
-        3AFF96928CFF97938EFFC8C6C3FFDDDCDAFF938F89FF9B9792FF9B9792FF9793
-        8EFFC4BEB9FF4C3A27FFB2AAA2FFA9A198FFA9A198FFA9A198FFB2AAA2FF513F
-        2DFF8A7E72FFADA59CFFA9A198FFA9A198FFACA39BFF988D82FF5B4939FF9A90
-        85FF402C18FF6D6054FFA19E9AFF938F89FFDDDBDAFFFFFFFFFF8D8883FF9A96
-        91FF9B9792FF95918CFFD8D5D2FF827568FF827568FF827568FF85786CFF8578
-        6CFF85786CFF8D8276FF897C70FF85786CFF85786CFF85786CFF85786CFF8578
-        6CFFA49A91FF93887DFF45311EFFA2A09CFF9B9792FF8D8883FFFEFEFEFFFFFF
-        FFFFAAA7A3FF97938EFF9B9792FF96928DFFCBC6C2FF7F7164FF86796DFF897D
-        71FF645545FF685849FF685849FF685849FF685849FF685849FF685849FF6858
-        49FF685849FF655545FF807266FF8D8174FF857D75FF9E9A96FF97938EFFAAA6
-        A2FFFFFFFFFFFFFFFFFFECEBEAFF8D8983FF9A9691FF95918CFFD7D4D1FF9286
-        7BFF988D82FF998E83FF8F8376FF908478FF908478FF908478FF908478FF9084
-        78FF908478FF908478FF908478FF8D8175FFA79C93FFB2AEA9FF9B9893FF9B97
-        92FF8D8983FFEBEBEAFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1ADFF95908BFF9A96
-        91FF9A9691FFACAAA6FFABA8A4FFABA8A5FFACA9A6FFACA9A6FFACA9A6FFACA9
-        A6FFACA9A6FFACA9A6FFACA9A6FFACA9A6FFACA9A6FFACAAA6FFA9A6A3FF9793
-        8EFF9A9691FF95908BFFB4B1ADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFF9A9691FF97938EFF9A9691FF999590FF999590FF999590FF999590FF9995
-        90FF999590FF999590FF999590FF999590FF999590FF999590FF999590FF9995
-        90FF999590FF9A9691FF97938EFF999590FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF98948FFF96918CFF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF96918CFF98938EFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAAA6A2FF908B
-        86FF999590FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF999590FF908B86FFA9A6A2FFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFDCDBD9FF98938EFF918C87FF96928DFF999590FF9A9691FF9B97
-        92FF9B9792FF9A9691FF999590FF96928DFF918C87FF97938EFFDCDAD9FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E2E0FFB9B7B3FF9C98
-        93FF8D8983FF8F8B85FF8F8B85FF8D8983FF9C9893FFB9B7B3FFE3E2E0FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-    end
-    object dxBarButton3: TdxBarButton
-      Caption = 'Reject  '
-      Category = 0
-      Enabled = False
-      Visible = ivNever
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        424DD60500000000000036000000280000001400000012000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
-        FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
-        FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9696
-        FFFF0000FFFF0000FFFF0000FFFF7676FFFFFFFFFFFF7070FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF7E7EFFFFF7F7FFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFF6F6FFFF7C7CFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF7171FFFF4343FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF6060FFFFE3E3FFFFFFFFFFFFFFFFFFFFE3E3FFFF5E5EFFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF4545FFFFFFFFFFFF4F4FFFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF3F3FFFFFDEDEFFFFDDDD
-        FFFF3E3EFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF5050
-        FFFFFFFFFFFFFFFFFFFFFBFBFFFF5757FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF3333FFFF3232FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF5757FFFFFCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFB
-        FFFF6161FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF6262FFFFFBFBFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7676FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF7878FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFBCBCFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFFBEBEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA3A3FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFFA8A8
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFF6868FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF6C6CFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFAFFFF5858FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF5A5AFFFFFAFAFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7FFFF5555
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF3636FFFF3636
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF5555FFFFF9F9
-        FFFFFFFFFFFFFCFCFFFF4A4AFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF4A4AFFFFE2E2FFFFE1E1FFFF4A4AFFFF0000FFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF4D4DFFFFFCFCFFFF3E3EFFFF0000FFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF6D6DFFFFE8E8FFFFFFFFFFFFFFFF
-        FFFFE8E8FFFF6C6CFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
-        FFFF3E3EFFFF7575FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF8A8A
-        FFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFFFF8A8AFFFF0000
-        FFFF0000FFFF0000FFFF0000FFFF0000FFFF7777FFFFFFFFFFFF7D7DFFFF0000
-        FFFF0000FFFF0000FFFFA2A2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFA1A1FFFF0000FFFF0000FFFF0000FFFF7E7E
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFA7A7FFFF0B0BFFFFC0C0FFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFBFBFFFFF0C0CFFFFABABFFFFFFFFFFFFFFFFFFFF}
-    end
-    object dxBarButton4: TdxBarButton
-      Caption = 'Desain Report'
-      Category = 0
-      Hint = 'Desain Report'
-      Visible = ivNever
     end
     object dxBarSubItem1: TdxBarSubItem
       Caption = 'Print  '
@@ -1113,293 +1141,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'BProduksi'
-        end
-        item
-          Visible = True
-          ItemName = 'BNonProduksi'
-        end>
-    end
-    object BProduksi: TdxBarButton
-      Caption = 'Barang Produksi'
-      Category = 0
-      Hint = 'Barang Produksi'
-      Visible = ivAlways
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
-        F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F4FFBEBB
-        B8FF95918BFF8F8B85FF928E88FF938F89FF97938EFF8E8983FF3C2814FF4532
-        1FFF8D8176FFEEECEBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1
-        ADFF8D8882FF96918CFF9A9590FF9B9792FF9B9792FF9F9B97FF95908AFF4835
-        22FF4E3C2AFF4E3C29FF473421FF37230EFF7B6E60FFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEEE
-        EDFF918D87FF96918CFF9A9691FF9B9792FF9B9792FF9B9792FF9F9C98FF928D
-        86FF473420FF4E3C2AFF503E2CFF503E2CFF503E2CFF4F3D2BFF473421FF3F2B
-        18FFE1DFDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFE9E8E7FF8C8782FF999590FF9B9792FF9B9792FF9B9792FF9B9792FFA09C
-        98FF908A83FF46331FFF4F3C2AFF503E2CFF503E2CFF503E2CFF503E2CFF503E
-        2CFF503E2CFF4D3B29FF36210DFFD8D4D0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFF9F8F8FF8D8983FF9A9691FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9D9995FF888079FF402C18FF493724FF4A3725FF4A3725FF4A3725FF4C3A
-        27FF503E2CFF503E2CFF503E2CFF503E2CFF4E3C2AFF38240FFFF3F2F1FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF9D9994FF98948FFF9B9792FF9B9792FF9B97
-        92FF9B9792FF9D9A96FF9E9994FF766758FF7D7063FF7E7164FF7E7164FF7E71
-        64FF807366FF645444FF4C3A27FF503E2CFF503E2CFF503E2CFF503E2CFF4B39
-        26FF544231FFFFFFFFFFFFFFFFFFFFFFFFFFD7D6D4FF918D87FF9B9792FF9B97
-        92FF9B9792FF9B9792FFA19E9AFF786F65FFDBD7D3FF958A7FFF9C9288FF9C92
-        88FF9C9288FF9C9288FF968B80FFE5E3E1FF412D1AFF503E2CFF503E2CFF503E
-        2CFF503E2CFF503E2CFF3F2C18FFB9B2AAFFFFFFFFFFFFFFFFFF9B9792FF9995
-        90FF9B9792FF9B9792FF9B9792FFA29F9BFF847B73FF37210CFFDDDAD7FF3925
-        10FF473422FF473422FF473422FF473422FF392510FFDCD9D6FF412E1AFF503E
-        2CFF503E2CFF503E2CFF503E2CFF503E2CFF4D3A28FF503E2CFFFFFFFFFFF4F3
-        F3FF8F8A85FF9B9792FF9B9792FF9B9792FF9A9692FF72675CFF37220CFF331E
-        0AFFDAD6D3FF412E1AFF503E2CFF503E2CFF503E2CFF503E2CFF412E1AFFD9D5
-        D2FF341F0AFF422E1BFF412E1AFF483522FF503E2CFF503E2CFF503E2CFF3B27
-        13FFEBE9E7FFD6D5D3FF948F8AFF9B9792FF9B9792FF96928DFFC2C0BDFFDBD6
-        D2FFD7D3CFFFCDC8C3FFFEFEFEFF321D08FF44311EFF44311EFF44311EFF4431
-        1EFF321D08FFFCFCFCFFCEC9C5FFD9D5D1FFE7E5E2FF92877CFF483522FF503E
-        2CFF503E2CFF44311DFFB7AFA8FFC5C2BFFF96928CFF9B9792FF9B9792FF938F
-        89FFF4F4F5FF37230FFF3B2712FF7B6E60FFFFFFFFFFB7B0A9FFBEB8B1FFBEB8
-        B1FFBEB8B1FFBEB8B1FFB7B0A9FFFFFFFFFF7C6E61FF3B2712FF3A2611FFDDD9
-        D5FF422F1BFF503E2CFF503E2CFF44311DFF998E84FFBCBAB7FF97928DFF9B97
-        92FF9B9792FF938F89FFF1F1F1FF45321FFF4E3B29FF544231FF4D3B28FF5645
-        33FF52412FFF554433FF554433FF513F2DFF594837FF544231FF554332FF4E3C
-        29FF483521FFD7D3CFFF422F1BFF503E2CFF4A3725FF574737FFC4C2C1FFBEBB
-        B8FF96928DFF9B9792FF9B9792FF938F89FFF1F1F1FF45321FFF4E3C2AFF4835
-        23FFBEB7B0FF897D71FFBAB3ACFF91867CFF908579FFCCC7C2FF695A4AFF6F61
-        52FF4A3825FF4F3D2BFF483521FFD7D3CFFF422F1BFF4A3724FF5E4E3FFFA09E
-        9AFFBEBCB9FFC9C6C4FF95918CFF9B9792FF9B9792FF938F89FFF1F1F1FF4532
-        1FFF4C3A27FF3E2A16FF756758FF564533FF6E5F50FF554433FF645344FF5341
-        2FFF685849FF645444FF3F2B17FF4C3A28FF483521FFD7D3CFFF3C2713FF6052
-        43FFA5A39FFF96928DFFC8C6C3FFDDDCDAFF938F89FF9B9792FF9B9792FF938F
-        89FFF3F3F3FF36220EFF4C3927FFFFFFFFFFFCFBFBFFCBC6C1FFCFCAC5FFD1CC
-        C8FFD0CBC7FFD1CCC8FFCAC5C0FFFDFDFDFFFFFFFFFF4C3A28FF3A2510FFD4CF
-        CAFF564636FFA5A3A0FF9B9792FF938F89FFDDDBDAFFFFFFFFFF8D8883FF9A96
-        91FF9B9792FF95918BFFD5D3D2FFBFB7B0FFBDB5AEFFE0DDD9FFEFECEAFF311B
-        06FF422F1CFF422F1CFF422F1CFF422F1CFF311B06FFF0EEEDFFE8E6E3FFBEB6
-        B0FFC0B9B1FFC6C3BFFF9B9894FF9B9792FF9A9691FF8D8883FFFEFEFEFFFFFF
-        FFFFAAA7A3FF97938EFF9B9792FF9A9691FF948F8AFFA4A19DFFA5A29EFF9996
-        91FFF4F5F4FF301A05FF412E1AFF412E1AFF412E1AFF412E1AFF321D08FFDFDB
-        D8FF45321EFFA09C98FFA5A29EFF95918CFF9B9792FF9B9792FF97938EFFAAA6
-        A2FFFFFFFFFFFFFFFFFFECEBEAFF8D8983FF9A9691FF9B9792FF9A9691FF9995
-        90FF999590FF918D88FFECECEBFFD0CAC5FFD3CEC9FFD3CEC9FFD3CEC9FFD3CE
-        C9FFD2CCC7FFDAD5D2FF8B857EFF9B9893FF999590FF9A9691FF9B9792FF9B97
-        92FF8D8983FFEBEBEAFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1ADFF95908BFF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF938E89FF96928DFF96928DFF9692
-        8DFF96928DFF96928DFF96928DFF95918CFF9C9893FF9B9792FF9B9792FF9B97
-        92FF9B9792FF95908BFFB4B1ADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFF9A9691FF97938EFF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF97938EFF999590FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF98948FFF96918CFF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF96918CFF98938EFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAAA6A2FF908B
-        86FF999590FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF999590FF908B86FFA9A6A2FFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFDCDBD9FF98938EFF918C87FF96928DFF999590FF9A9691FF9B97
-        92FF9B9792FF9A9691FF999590FF96928DFF918C87FF97938EFFDCDAD9FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E2E0FFB9B7B3FF9C98
-        93FF8D8983FF8F8B85FF8F8B85FF8D8983FF9C9893FFB9B7B3FFE3E2E0FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-    end
-    object BNonProduksi: TdxBarButton
-      Caption = 'Barang Non Produksi'
-      Category = 0
-      Hint = 'Barang Non Produksi'
-      Visible = ivAlways
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
-        F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F4FFBEBB
-        B8FF95918BFF8F8B85FF928E88FF938F89FF97938EFF8E8983FF3C2814FF4532
-        1FFF8D8176FFEEECEBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1
-        ADFF8D8882FF96918CFF9A9590FF9B9792FF9B9792FF9F9B97FF95908AFF4835
-        22FF4E3C2AFF4E3C29FF473421FF37230EFF7B6E60FFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEEE
-        EDFF918D87FF96918CFF9A9691FF9B9792FF9B9792FF9B9792FF9F9C98FF928D
-        86FF473420FF4E3C2AFF503E2CFF503E2CFF503E2CFF4F3D2BFF473421FF3F2B
-        18FFE1DFDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFE9E8E7FF8C8782FF999590FF9B9792FF9B9792FF9B9792FF9B9792FFA09C
-        98FF908A83FF46331FFF4F3C2AFF503E2CFF503E2CFF503E2CFF503E2CFF503E
-        2CFF503E2CFF4D3B29FF36210DFFD8D4D0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFF9F8F8FF8D8983FF9A9691FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9D9995FF888079FF402C18FF493724FF4A3725FF4A3725FF4A3725FF4C3A
-        27FF503E2CFF503E2CFF503E2CFF503E2CFF4E3C2AFF38240FFFF3F2F1FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF9D9994FF98948FFF9B9792FF9B9792FF9B97
-        92FF9B9792FF9D9A96FF9E9994FF766758FF7D7063FF7E7164FF7E7164FF7E71
-        64FF807366FF645444FF4C3A27FF503E2CFF503E2CFF503E2CFF503E2CFF4B39
-        26FF544231FFFFFFFFFFFFFFFFFFFFFFFFFFD7D6D4FF918D87FF9B9792FF9B97
-        92FF9B9792FF9B9792FFA19E9AFF786F65FFDBD7D3FF958A7FFF9C9288FF9C92
-        88FF9C9288FF9C9288FF968B80FFE5E3E1FF412D1AFF503E2CFF503E2CFF503E
-        2CFF503E2CFF503E2CFF3F2C18FFB9B2AAFFFFFFFFFFFFFFFFFF9B9792FF9995
-        90FF9B9792FF9B9792FF9B9792FFA29F9BFF847B73FF37210CFFDDDAD7FF3925
-        10FF473422FF473422FF473422FF473422FF392510FFDCD9D6FF412E1AFF503E
-        2CFF503E2CFF503E2CFF503E2CFF503E2CFF4D3A28FF503E2CFFFFFFFFFFF4F3
-        F3FF8F8A85FF9B9792FF9B9792FF9B9792FF9A9692FF72675CFF37220CFF331E
-        0AFFDAD6D3FF412E1AFF503E2CFF503E2CFF503E2CFF503E2CFF412E1AFFD9D5
-        D2FF341F0AFF422E1BFF412E1AFF483522FF503E2CFF503E2CFF503E2CFF3B27
-        13FFEBE9E7FFD6D5D3FF948F8AFF9B9792FF9B9792FF96928DFFC2C0BDFFDBD6
-        D2FFD7D3CFFFCDC8C3FFFEFEFEFF321D08FF44311EFF44311EFF44311EFF4431
-        1EFF321D08FFFCFCFCFFCEC9C5FFD9D5D1FFE7E5E2FF92877CFF483522FF503E
-        2CFF503E2CFF44311DFFB7AFA8FFC5C2BFFF96928CFF9B9792FF9B9792FF938F
-        89FFF4F4F5FF37230FFF3B2712FF7B6E60FFFFFFFFFFB7B0A9FFBEB8B1FFBEB8
-        B1FFBEB8B1FFBEB8B1FFB7B0A9FFFFFFFFFF7C6E61FF3B2712FF3A2611FFDDD9
-        D5FF422F1BFF503E2CFF503E2CFF44311DFF998E84FFBCBAB7FF97928DFF9B97
-        92FF9B9792FF938F89FFF1F1F1FF45321FFF4E3B29FF544231FF4D3B28FF5645
-        33FF52412FFF554433FF554433FF513F2DFF594837FF544231FF554332FF4E3C
-        29FF483521FFD7D3CFFF422F1BFF503E2CFF4A3725FF574737FFC4C2C1FFBEBB
-        B8FF96928DFF9B9792FF9B9792FF938F89FFF1F1F1FF45321FFF4E3C2AFF4835
-        23FFBEB7B0FF897D71FFBAB3ACFF91867CFF908579FFCCC7C2FF695A4AFF6F61
-        52FF4A3825FF4F3D2BFF483521FFD7D3CFFF422F1BFF4A3724FF5E4E3FFFA09E
-        9AFFBEBCB9FFC9C6C4FF95918CFF9B9792FF9B9792FF938F89FFF1F1F1FF4532
-        1FFF4C3A27FF3E2A16FF756758FF564533FF6E5F50FF554433FF645344FF5341
-        2FFF685849FF645444FF3F2B17FF4C3A28FF483521FFD7D3CFFF3C2713FF6052
-        43FFA5A39FFF96928DFFC8C6C3FFDDDCDAFF938F89FF9B9792FF9B9792FF938F
-        89FFF3F3F3FF36220EFF4C3927FFFFFFFFFFFCFBFBFFCBC6C1FFCFCAC5FFD1CC
-        C8FFD0CBC7FFD1CCC8FFCAC5C0FFFDFDFDFFFFFFFFFF4C3A28FF3A2510FFD4CF
-        CAFF564636FFA5A3A0FF9B9792FF938F89FFDDDBDAFFFFFFFFFF8D8883FF9A96
-        91FF9B9792FF95918BFFD5D3D2FFBFB7B0FFBDB5AEFFE0DDD9FFEFECEAFF311B
-        06FF422F1CFF422F1CFF422F1CFF422F1CFF311B06FFF0EEEDFFE8E6E3FFBEB6
-        B0FFC0B9B1FFC6C3BFFF9B9894FF9B9792FF9A9691FF8D8883FFFEFEFEFFFFFF
-        FFFFAAA7A3FF97938EFF9B9792FF9A9691FF948F8AFFA4A19DFFA5A29EFF9996
-        91FFF4F5F4FF301A05FF412E1AFF412E1AFF412E1AFF412E1AFF321D08FFDFDB
-        D8FF45321EFFA09C98FFA5A29EFF95918CFF9B9792FF9B9792FF97938EFFAAA6
-        A2FFFFFFFFFFFFFFFFFFECEBEAFF8D8983FF9A9691FF9B9792FF9A9691FF9995
-        90FF999590FF918D88FFECECEBFFD0CAC5FFD3CEC9FFD3CEC9FFD3CEC9FFD3CE
-        C9FFD2CCC7FFDAD5D2FF8B857EFF9B9893FF999590FF9A9691FF9B9792FF9B97
-        92FF8D8983FFEBEBEAFFFFFFFFFFFFFFFFFFFFFFFFFFB4B1ADFF95908BFF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF938E89FF96928DFF96928DFF9692
-        8DFF96928DFF96928DFF96928DFF95918CFF9C9893FF9B9792FF9B9792FF9B97
-        92FF9B9792FF95908BFFB4B1ADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFF9A9691FF97938EFF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF97938EFF999590FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF98948FFF96918CFF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF96918CFF98938EFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAAA6A2FF908B
-        86FF999590FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B9792FF9B97
-        92FF9B9792FF9B9792FF9B9792FF999590FF908B86FFA9A6A2FFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFDCDBD9FF98938EFF918C87FF96928DFF999590FF9A9691FF9B97
-        92FF9B9792FF9A9691FF999590FF96928DFF918C87FF97938EFFDCDAD9FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E2E0FFB9B7B3FF9C98
-        93FF8D8983FF8F8B85FF8F8B85FF8D8983FF9C9893FFB9B7B3FFE3E2E0FFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-    end
-    object BClosed: TdxBarButton
-      Caption = 'CLose Kontrak    '
-      Category = 0
-      Enabled = False
-      Visible = ivAlways
-      Glyph.SourceDPI = 96
-      Glyph.Data = {
-        424D260900000000000036000000280000001A00000016000000010020000000
-        000000000000C40E0000C40E00000000000000000000F7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFBFBFBFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFBFCFCFFFFFF
-        FFFFE4E3E3FF9F9B99FF75706DFF615A58FF615A58FF75706DFF9F9B99FFE4E3
-        E3FFFFFFFFFFFBFCFCFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFF
-        FFFFE2E2E1FF605A57FF372F2BFF423B37FF463F3CFF48413EFF48413EFF463F
-        3CFF423B37FF372F2BFF605A57FFE2E2E1FFFFFFFFFFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFFFFFFFFFA4A19FFF342C28FF47403DFF49423FFF49423FFF49423FFF4942
-        3FFF49423FFF49423FFF49423FFF49423FFF47403DFF342C28FFA4A19FFFFFFF
-        FFFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFFFFFFFFF979392FF38302DFF4C4542FF413A36FF57514EFF564F
-        4CFF564F4CFF58514EFF58514EFF564F4CFF564F4CFF57514EFF413A36FF4C45
-        42FF38302DFF979392FFFFFFFFFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFFFFFFFFFC8C6C6FF352D29FF4C4542FF413A37FFB1AE
-        ADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFB1AEADFF413A36FF4C4542FF352D29FFC8C6C6FFFFFFFFFFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFFFFFF423A37FF4B4340FF4D46
-        43FF3F3835FFBBB8B8FFFFFFFFFFFFFFFFFFFFFFFFFF4B4441FF49423FFFFFFF
-        FFFFFFFFFFFFFFFFFFFFBBB8B8FF3F3835FF4D4643FF4B4340FF423A37FFFFFF
-        FFFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFFFFFFB4B1B0FF3E36
-        33FF4D4643FF4D4643FF3F3835FFBAB7B6FFFFFFFFFFFFFFFFFFFFFFFFFF8A85
-        83FF847F7DFFFFFFFFFFFFFFFFFFFFFFFFFFBAB7B6FF3F3835FF4D4643FF4D46
-        43FF3E3633FFB4B1B0FFFFFFFFFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFF
-        FFFF6C6664FF47403DFF4D4643FF4D4643FF3F3835FFBAB7B6FFFFFFFFFFFFFF
-        FFFFFFFFFFFF4E4745FF4E4744FFFFFFFFFFFFFFFFFFFFFFFFFFBAB7B6FF3F38
-        35FF4D4643FF4D4643FF47403DFF6C6664FFFFFFFFFFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFFFFFFFFF3F3734FF4B4441FF4D4643FF4D4643FF3F3835FFBCB9
-        B8FFFFFFFFFFFFFFFFFFFFFFFFFF8A8684FF8A8684FFFFFFFFFFFFFFFFFFFFFF
-        FFFFBCB9B8FF3F3835FF4D4643FF4D4643FF4B4441FF3F3734FFFFFFFFFFF7F7
-        F7FFF7F7F7FFF7F7F7FFF8F8F8FFFFFFFFFF372F2CFF4D4643FF4D4643FF4D46
-        43FF423A37FFAFABAAFFEAEAE9FFEEEEEDFFEFEFEEFFFCFCFCFFFCFCFCFFEFEF
-        EEFFEEEDEDFFE9E8E8FFAFACAAFF423A37FF4D4643FF4D4643FF4D4643FF372F
-        2CFFFFFFFFFFF8F8F8FFF7F7F7FFF7F7F7FFF8F8F8FFFFFFFFFF372F2CFF4D46
-        43FF4D4643FF4D4643FF4B4441FF403935FFB6B4B3FF362E2BFF39312EFF3A32
-        2FFF3A322FFF39312EFF38302DFFC8C6C5FF3D3632FF4C4542FF4D4643FF4D46
-        43FF4D4643FF372F2CFFFFFFFFFFF8F8F8FFF7F7F7FFF7F7F7FFF7F7F7FFFFFF
-        FFFF403935FF4B4441FF4D4643FF4D4643FF4B4441FF48413EFFFFFFFFFF4840
-        3DFF4B4441FF4D4643FF4D4643FF4B4441FF48413EFFFFFFFFFF48413EFF4B44
-        41FF4D4643FF4D4643FF4B4441FF403935FFFFFFFFFFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFFFFFFFFF6F6967FF473F3CFF4D4643FF4D4643FF4B4441FF463F
-        3BFFFFFFFFFF453E3BFF4B4440FF4D4643FF4D4643FF4B4441FF413936FFFFFF
-        FFFF4B4441FF4B4440FF4D4643FF4D4643FF473F3CFF6F6966FFFFFFFFFFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFFFFFFB8B5B4FF3D3632FF4D4643FF4D46
-        43FF4C4542FF39322EFFFFFFFFFF6D6765FF3E3733FF4B4441FF4B4441FF3F37
-        34FF696361FFFFFFFFFF3B3330FF4C4542FF4D4643FF4D4643FF3D3632FFB8B5
-        B4FFFFFFFFFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFFFFFF453E
-        3AFF4A4340FF4D4643FF4D4643FF423B38FF9A9694FFFFFFFFFF837E7CFF3F37
-        34FF3F3834FF837E7CFFFFFFFFFF9C9897FF423B37FF4D4643FF4D4643FF4A43
-        40FF453E3AFFFFFFFFFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFFEFEFEFFD0CECDFF342C28FF4C4542FF4D4643FF4C4542FF3A332FFF8984
-        82FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF898583FF3A322FFF4C4542FF4D46
-        43FF4C4542FF342C28FFD0CECDFFFEFEFEFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFFFFFFA29E9DFF362E2BFF4C4542FF4D46
-        43FF4C4542FF443D3AFF38302DFF463E3BFF453E3BFF38302DFF443D3AFF4C45
-        42FF4D4643FF4C4542FF362E2BFFA29E9DFFFFFFFFFFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFFFFFFFFAFAC
-        ABFF342C29FF463F3CFF4C4542FF4D4643FF4D4643FF4B4441FF4B4441FF4D46
-        43FF4D4643FF4C4542FF463F3CFF342C29FFAFACABFFFFFFFFFFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFFFFFFFFFEAEAEAFF6A6562FF352D2AFF413936FF453E3BFF4740
-        3DFF47403DFF453E3BFF413936FF352D2AFF6B6562FFEAEAEAFFFFFFFFFFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFBFBFBFFFFFFFFFFEEEDEDFFA8A5
-        A4FF7F7A77FF6A6462FF6A6462FF7F7A77FFA8A5A4FFEEEDEDFFFFFFFFFFFBFB
-        FBFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFFAFAFAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFA
-        FAFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
-        F7FFF7F7F7FF}
+      ItemLinks = <>
     end
     object dxBarLargeButton1: TdxBarLargeButton
       Caption = 'Print'
@@ -1492,31 +1234,18 @@ object FRekapSisa_PO: TFRekapSisa_PO
       OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
-      Caption = 'Tanggal Awal  '
+      Caption = 'Tanggal Awal   '
       Category = 0
-      Hint = 'Tanggal Awal  '
+      Hint = 'Tanggal Awal   '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object DtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Akhir '
+      Caption = 'Tanggal Akhir  '
       Category = 0
-      Hint = 'Tanggal Akhir '
+      Hint = 'Tanggal Akhir  '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
-    object CbKategori: TcxBarEditItem
-      Caption = 'Jenis Pembelian'
-      Category = 0
-      Hint = 'Jenis Pembelian'
-      Visible = ivAlways
-      PropertiesClassName = 'TcxComboBoxProperties'
-      InternalEditValue = nil
-    end
-  end
-  object DsRekapSisa_PO: TDataSource
-    DataSet = QRekapSisaPO
-    Left = 536
-    Top = 216
   end
 end

@@ -50,15 +50,8 @@ type
     dxBarManager1Bar1: TdxBar;
     dxBUpdate: TdxBarButton;
     dxBDelete: TdxBarButton;
-    dxBarButton1: TdxBarButton;
     dxBbaru: TdxBarLargeButton;
-    dxBarButton2: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarButton4: TdxBarButton;
     dxBarSubItem1: TdxBarSubItem;
-    BProduksi: TdxBarButton;
-    BNonProduksi: TdxBarButton;
-    BClosed: TdxBarButton;
     dxBarLargeButton1: TdxBarLargeButton;
     DxRefresh: TdxBarLargeButton;
     DtMulai: TcxBarEditItem;
@@ -149,6 +142,18 @@ end;
 
 procedure TFRpt_Jurnal_Khusus.BPrintClick(Sender: TObject);
 begin
+    if DtMulai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
    with QRpt_Jurnal_Khusus do
    begin
       close;
@@ -179,6 +184,18 @@ end;
 
 procedure TFRpt_Jurnal_Khusus.DxRefreshClick(Sender: TObject);
 begin
+    if DtMulai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
    with QRpt_Jurnal_Khusus do
    begin
       close;

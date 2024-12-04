@@ -1,79 +1,72 @@
-object FRekapSisa_PO: TFRekapSisa_PO
+object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
-  Caption = 'Rekap Sisa PO'
-  ClientHeight = 421
-  ClientWidth = 699
+  Caption = 'Rekap Terima Dokumen'
+  ClientHeight = 414
+  ClientWidth = 704
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Position = poMainFormCenter
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   TextHeight = 13
-  object Label2: TLabel
-    Left = 53
-    Top = 197
+  object Label1: TLabel
+    Left = 115
+    Top = 227
     Width = 38
     Height = 13
     Caption = 'Tanggal'
-  end
-  object Label3: TLabel
-    Left = 122
-    Top = 200
-    Width = 4
-    Height = 13
-    Caption = ':'
     Visible = False
   end
-  object Label4: TLabel
-    Left = 119
-    Top = 171
-    Width = 4
-    Height = 13
-    Caption = ':'
+  object DtPO: TRzDateTimeEdit
+    Left = 195
+    Top = 224
+    Width = 121
+    Height = 21
+    EditType = etDate
+    TabOrder = 0
     Visible = False
   end
-  object Label7: TLabel
-    Left = 269
-    Top = 208
-    Width = 15
-    Height = 13
-    Caption = 's/d'
-    Visible = False
-  end
-  object Label8: TLabel
-    Left = 51
-    Top = 163
-    Width = 75
-    Height = 13
-    Caption = 'Jenis Pembelian'
-  end
-  object Panel1: TPanel
+  object RzPanel2: TRzPanel
     Left = 0
-    Top = 380
-    Width = 699
+    Top = 373
+    Width = 704
     Height = 41
     Align = alBottom
-    TabOrder = 0
-    OnClick = Panel1Click
-    ExplicitTop = 379
-    ExplicitWidth = 695
-    object BBatal: TRzBitBtn
-      Left = 623
-      Top = 1
-      Height = 39
+    Color = 15987699
+    TabOrder = 1
+    OnDblClick = RzPanel2DblClick
+    ExplicitTop = 372
+    ExplicitWidth = 700
+    object RzBitBtn1: TRzBitBtn
+      Left = 516
+      Top = 2
+      Width = 93
+      Height = 37
+      Align = alRight
+      Caption = 'Print'
+      Color = clSkyBlue
+      TabOrder = 0
+      OnClick = RzBitBtn1Click
+      Kind = bkYes
+      ExplicitLeft = 512
+    end
+    object RzBitBtn2: TRzBitBtn
+      Left = 609
+      Top = 2
+      Width = 93
+      Height = 37
+      ModalResult = 3
       Align = alRight
       Caption = 'Batal'
-      TabOrder = 0
-      OnClick = BBatalClick
+      Color = clSkyBlue
+      TabOrder = 1
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -126,112 +119,19 @@ object FRekapSisa_PO: TFRekapSisa_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 619
+      ExplicitLeft = 605
     end
-    object BPrint: TRzBitBtn
-      Left = 544
-      Top = 1
-      Width = 79
-      Height = 39
-      Align = alRight
-      Caption = 'Print'
-      TabOrder = 1
-      OnClick = BPrintClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
-        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
-        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
-        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
-        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
-        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
-        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
-        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
-        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
-        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
-        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
-        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
-        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
-        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 540
-    end
-  end
-  object DtMulai1: TRzDateTimeEdit
-    Left = 132
-    Top = 194
-    Width = 121
-    Height = 21
-    EditType = etDate
-    Format = 'dd/mm/yyyy'
-    TabOrder = 1
-  end
-  object DtSelesai1: TRzDateTimeEdit
-    Left = 289
-    Top = 205
-    Width = 121
-    Height = 21
-    EditType = etDate
-    Format = 'mm/dd/yyyy'
-    TabOrder = 2
-    Visible = False
-  end
-  object EdJenis: TRzComboBox
-    Left = 132
-    Top = 160
-    Width = 189
-    Height = 21
-    TabOrder = 3
-    Items.Strings = (
-      'PRODUKSI'
-      'NON PRODUKSI'
-      'AKTIVA')
   end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 699
+    Width = 704
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 4
+    TabOrder = 2
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
@@ -243,59 +143,25 @@ object FRekapSisa_PO: TFRekapSisa_PO
       Index = 0
     end
   end
-  object DBGridKontrak: TDBGridEh
+  object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 699
-    Height = 253
+    Width = 704
+    Height = 246
     Align = alClient
-    DataGrouping.GroupLevels = <
-      item
-      end
-      item
-      end>
-    DataSource = DsRekapSisa_PO
-    DrawMemoText = True
+    DataSource = DsRekapDok
     DynProps = <>
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
-    SearchPanel.Enabled = True
-    TabOrder = 5
-    TitleParams.MultiTitle = True
+    FooterRowCount = 1
+    SumList.Active = True
+    TabOrder = 3
     Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'po_date'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'po_no'
-        Footers = <>
-        Title.Caption = 'No PO'
-        Width = 129
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'delivery'
-        Footers = <>
-        Title.Caption = 'Tgl Kirim'
-        Width = 135
-      end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
         FieldName = 'supplier_name'
         Footers = <>
-        Title.Caption = 'Nama Supplier'
+        Title.Caption = 'Supplier'
         Width = 200
       end
       item
@@ -305,44 +171,36 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FieldName = 'item_name'
         Footers = <>
         Title.Caption = 'Nama Barang'
-        Width = 168
+        Width = 200
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'qty'
         Footers = <>
         Title.Caption = 'Kuantum'
-        Width = 75
+        Width = 80
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tglterima'
+        FieldName = 'trans_date'
         Footers = <>
-        Title.Caption = 'Tgl Datang'
-        Width = 120
+        Title.Caption = 'Tgl LPB'
+        Width = 65
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'remaining_qty'
+        FieldName = 'sj_no'
+        Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Sisa PO'
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'price'
-        Footers = <>
-        Title.Caption = 'Harga'
-        Width = 109
+        Title.Caption = 'Grand Total'
+        Width = 100
       end
       item
         CellButtons = <>
@@ -350,30 +208,36 @@ object FRekapSisa_PO: TFRekapSisa_PO
         EditButtons = <>
         FieldName = 'faktur_no'
         Footers = <>
-        Title.Caption = 'Faktur'
-        Width = 85
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sbu_code'
-        Footers = <>
-        Title.Caption = 'SBU'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'wh_name'
-        Footers = <>
-        Title.Caption = 'Gudang'
-        Width = 70
+        Title.Caption = 'No Faktur'
+        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
+  end
+  object QRekapDok: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from purchase."V_RekapTerimaDok"')
+    Left = 40
+    Top = 216
+  end
+  object DbRekapDok: TfrxDBDataset
+    UserName = 'DbRekapDok'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'supplier_name=supplier_name'
+      'item_name=item_name'
+      'qty=qty'
+      'trans_date=trans_date'
+      'sj_no=sj_no'
+      'faktur_no=faktur_no'
+      'faktur_date=faktur_date'
+      'faktur2_date=faktur2_date')
+    DataSet = QRekapDok
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 40
+    Top = 160
   end
   object Rpt: TfrxReport
     Version = '2022.2.7'
@@ -383,16 +247,16 @@ object FRekapSisa_PO: TFRekapSisa_PO
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45624.607431122680000000
-    ReportOptions.LastChange = 45624.607431122680000000
+    ReportOptions.CreateDate = 45623.880521435190000000
+    ReportOptions.LastChange = 45623.880521435190000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'begin'
       ''
       'end.')
-    Left = 553
-    Top = 95
+    Left = 96
+    Top = 135
     Datasets = <>
     Variables = <>
     Style = <>
@@ -456,73 +320,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
       end
     end
   end
-  object QRekapSisaPO: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supp' +
-        'lier_name,d.faktur_no,b.item_name, to_char(d.trans_date, '#39'dd mon' +
-        ' yy'#39')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_cod' +
-        'e,a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,' +
-        #39' - '#39',a.delivery2_date)delivery from purchase.t_po a INNER JOIN ' +
-        'purchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c' +
-        ' on  a.supplier_code=c.supplier_code Left JOIN ('
-      
-        'SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from   pur' +
-        'chase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoic' +
-        'e_det b on a.trans_no=b.trans_no where  a.trans_date='#39'2024-10-01' +
-        #39
-      
-        ')as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_cod' +
-        'e where  b.remaining_qty<>0 and a.status='#39'1'#39' and a.as_status='#39'1'#39 +
-        ' and a. trans_category='#39#39' '
-      'union  '
-      
-        'select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supp' +
-        'lier_name,d.faktur_no,b.item_name,to_char(d.trans_date, '#39'dd mon ' +
-        'yy'#39')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_code' +
-        ',a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'#39 +
-        ' - '#39',a.delivery2_date)delivery from purchase.t_po a INNER JOIN p' +
-        'urchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c ' +
-        'on  a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_d' +
-        'ate,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code from pur' +
-        'chase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoic' +
-        'e_det b on a.trans_no=b.trans_no where  a.trans_date='#39'2024-10-01' +
-        #39')'
-      
-        'as d on d.po_no=a.po_no and  b.item_stock_code=d.item_stock_code' +
-        ' INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 an' +
-        'd*/ a.as_status='#39'1'#39' and   a.trans_category='#39#39' order by po_date,p' +
-        'o_date asc')
-    Left = 480
-    Top = 72
-  end
-  object DbRekapSisaPO: TfrxDBDataset
-    UserName = 'DbRekapSisaPO'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'po_date=po_date'
-      'po_no=po_no'
-      'delivery_date=delivery_date'
-      'delivery2_date=delivery2_date'
-      'supplier_name=supplier_name'
-      'faktur_no=faktur_no'
-      'item_name=item_name'
-      'tglterima=tglterima'
-      'qty=qty'
-      'remaining_qty=remaining_qty'
-      'price=price'
-      'item_stock_code=item_stock_code'
-      'sbu_code=sbu_code'
-      'trans_category=trans_category'
-      'wh_name=wh_name'
-      'delivery=delivery')
-    DataSet = QRekapSisaPO
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 472
-    Top = 240
-  end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -537,8 +334,8 @@ object FRekapSisa_PO: TFRekapSisa_PO
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 556
-    Top = 32
+    Left = 492
+    Top = 16
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -555,22 +352,13 @@ object FRekapSisa_PO: TFRekapSisa_PO
           ItemName = 'DtMulai'
         end
         item
-          Visible = True
-          ItemName = 'DtSelesai'
-        end
-        item
-          BeginGroup = True
-          Visible = True
-          ItemName = 'CbKategori'
-        end
-        item
           BeginGroup = True
           Visible = True
           ItemName = 'DxRefresh'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'dxPrint'
         end>
       OneOnRow = True
       Row = 0
@@ -1401,7 +1189,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FAFFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
         F7FFF7F7F7FF}
     end
-    object dxBarLargeButton1: TdxBarLargeButton
+    object dxPrint: TdxBarLargeButton
       Caption = 'Print'
       Category = 0
       Hint = 'Print'
@@ -1459,7 +1247,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
-      OnClick = BPrintClick
+      OnClick = dxPrintClick
     end
     object DxRefresh: TdxBarLargeButton
       Caption = 'Cari'
@@ -1492,31 +1280,23 @@ object FRekapSisa_PO: TFRekapSisa_PO
       OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
-      Caption = 'Tanggal Awal  '
+      Caption = 'Tanggal    '
       Category = 0
-      Hint = 'Tanggal Awal  '
+      Hint = 'Tanggal    '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object DtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Akhir '
+      Caption = 'Tanggal Selesai '
       Category = 0
-      Hint = 'Tanggal Akhir '
+      Hint = 'Tanggal Selesai '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
-    object CbKategori: TcxBarEditItem
-      Caption = 'Jenis Pembelian'
-      Category = 0
-      Hint = 'Jenis Pembelian'
-      Visible = ivAlways
-      PropertiesClassName = 'TcxComboBoxProperties'
-      InternalEditValue = nil
-    end
   end
-  object DsRekapSisa_PO: TDataSource
-    DataSet = QRekapSisaPO
-    Left = 536
-    Top = 216
+  object DsRekapDok: TDataSource
+    DataSet = QRekapDok
+    Left = 104
+    Top = 193
   end
 end

@@ -2464,16 +2464,16 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
     end
     object dtMulai: TcxBarEditItem
-      Caption = 'Tanggal Mulai '
+      Caption = 'Tanggal Awal '
       Category = 0
-      Hint = 'Tanggal Mulai '
+      Hint = 'Tanggal Awal '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object dtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Selesai'
+      Caption = 'Tanggal Akhir'
       Category = 0
-      Hint = 'Tanggal Selesai'
+      Hint = 'Tanggal Akhir'
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end

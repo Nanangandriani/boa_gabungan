@@ -6,7 +6,6 @@ uses
   UDataModule in 'UDataModule.pas' {dm: TDataModule},
   UDashboard in 'UDashboard.pas' {FDashboard},
   UHomeSreen in 'UHomeSreen.pas' {FHomeSreen},
-  UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
   Vcl.Themes,
   Vcl.Styles,
   UListProduk in 'UListProduk.pas' {FListProduk},
@@ -206,9 +205,18 @@ uses
   USetJenisKontrakTagihan in 'USetJenisKontrakTagihan.pas' {FSetJenisKontrakTagihan},
   UListKontrakTagihan in 'UListKontrakTagihan.pas' {FListKontrakTagihan},
   Unew_spb in 'Unew_spb.pas' {FNew_SPB},
+<<<<<<< Updated upstream
   UDaftarKontrak in 'UDaftarKontrak.pas' {FDaftarKontrak},
   UKartuPiutang in 'UKartuPiutang.pas' {FKartuPiutang},
   UBHPenerimaanKasBank in 'UBHPenerimaanKasBank.pas' {FBHPenerimaanKasBank};
+=======
+  UHomeLogin in 'UHomeLogin.pas',
+  URpt_Rekap_Pembelian in 'URpt_Rekap_Pembelian.pas' {FRptRekap_Pembelian},
+  URekap_TerimaDok in 'URekap_TerimaDok.pas' {FRpt_RekapTerimaDok},
+  URpt_RekapMutasi in 'URpt_RekapMutasi.pas' {FRpt_RekapMutasi},
+  URpt_NeracaLajur in 'URpt_NeracaLajur.pas' {FRpt_NeracaLajur},
+  URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca};
+>>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
