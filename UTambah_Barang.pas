@@ -121,6 +121,8 @@ begin
            FNew_Penjualan.MemDetail['PPH_NILAI']:='0';
            FNew_Penjualan.MemDetail['POTONGAN_NILAI']:='0';
            FNew_Penjualan.MemDetail['POTONGAN_PERSEN']:='0';
+           FNew_Penjualan.MemDetail['MENEJ_FEE_PERSEN']:='0';
+           FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:='0';
            FNew_Penjualan.MemDetail['GRAND_TOTAL']:='0';
            FNew_Penjualan.MemDetail.post;
         end;
@@ -143,21 +145,21 @@ begin
        dm.Koneksi.StartTransaction;
       try
       vKodeSama:=false;
-      if edKodeSupplier.Text='' then
-      begin
-        MessageDlg('Supplier Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKodeSupplier.SetFocus;
-      end
-      else if edKodeBarang.Text='' then
+      if edKodeBarang.Text='' then
       begin
         MessageDlg('Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeBarang.SetFocus;
       end
-      else if edKodeGudang.Text='' then
+      {if edKodeSupplier.Text='' then
+      begin
+        MessageDlg('Supplier Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKodeSupplier.SetFocus;
+      end else
+      {else if edKodeGudang.Text='' then
       begin
         MessageDlg('Gudang Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeGudang.SetFocus;
-      end
+      end}
       else if edKodeSatuan.Text='' then
       begin
         MessageDlg('Satuan Wajib Diisi..!!',mtInformation,[mbRetry],0);

@@ -927,7 +927,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'WHERE'
       #9'A."voucher_no" = '#39'0002/BM18/XI/2024'#39' '
       #9'AND "position" = '#39'K'#39)
-    Active = True
     Left = 1012
     Top = 152
     object QBukti_Terimavoucher_no: TStringField
@@ -1032,7 +1031,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'begin'
       ''
       'end.')
-    Left = 1160
+    Left = 1184
     Top = 152
     Datasets = <
       item

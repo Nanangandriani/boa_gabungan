@@ -2,8 +2,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   Left = 0
   Top = 0
   Caption = 'Pengajuan Approve Penjualan'
-  ClientHeight = 584
-  ClientWidth = 1112
+  ClientHeight = 575
+  ClientWidth = 1106
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1112
+    Width = 1106
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1112
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,8 +35,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   object PageControl1: TRzPageControl
     Left = 0
     Top = 127
-    Width = 1112
-    Height = 457
+    Width = 1106
+    Height = 448
     Hint = ''
     ActivePage = TabForm
     Align = alClient
@@ -43,10 +44,14 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     TabIndex = 0
     TabOrder = 1
     ExplicitTop = 133
+    ExplicitWidth = 1112
+    ExplicitHeight = 457
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Klasifikasi Penjualan'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1102
       ExplicitHeight = 423
       object PanelParent: TPanel
@@ -348,6 +353,10 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     end
     object TabSheet1: TRzTabSheet
       Caption = 'TabSheet1'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object ActMenu: TActionManager

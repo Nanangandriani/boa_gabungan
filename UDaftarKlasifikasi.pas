@@ -175,16 +175,18 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if MemMaster.RecordCount=0 then
-      begin
-        MessageDlg('Tidak Ada Data..!!',mtInformation,[mbRetry],0);
-        edKode_Pelanggan.SetFocus;
-      end
-      else if FDaftarKlasifikasi.Status = 0 then
+      if FDaftarKlasifikasi.Status = 0 then
       begin
       if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         //ShowMessage(IntToStr(Status));
+      if MemMaster.RecordCount=0 then
+      begin
+        MessageDlg('Tidak Ada Data..!!',mtInformation,[mbRetry],0);
+        edKode_Pelanggan.SetFocus;
+        exit;
+      end;
+
         with dm.Qtemp do
         begin
           close;
@@ -210,6 +212,13 @@ begin
       begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
+      if MemGroup.RecordCount=0 then
+      begin
+        MessageDlg('Tidak Ada Data..!!',mtInformation,[mbRetry],0);
+        edKode_Pelanggan.SetFocus;
+        exit;
+      end;
+
         with dm.Qtemp do
         begin
           close;
@@ -726,7 +735,7 @@ end;
 
 procedure TFDaftarKlasifikasi.BBatalClick(Sender: TObject);
 begin 
-  Status:=1;
+  FDaftarKlasifikasi.Status:=1;
   SaveUpdateGroup;
 end;
 
@@ -793,7 +802,7 @@ procedure TFDaftarKlasifikasi.ednm_kategoriButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Kategori';
   FMasterData.vcall:='kategori_klasifikasi';
-  FMasterData.update_grid('code','category','0','t_item_category','WHERE	deleted_at IS NULL Order By code Asc');
+  FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By code Asc');
   FMasterData.ShowModal;
 end;
 
@@ -801,7 +810,7 @@ procedure TFDaftarKlasifikasi.ednm_kategori_pelButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Kategori';
   FMasterData.vcall:='kategori_klasifikasi_pel';
-  FMasterData.update_grid('code','category','0','t_item_category','WHERE	deleted_at IS NULL Order By code Asc');
+  FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By code Asc');
   FMasterData.ShowModal;
 end;
 

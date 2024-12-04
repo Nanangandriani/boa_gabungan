@@ -220,7 +220,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * FROM (SELECT a."id" AS id_master, "code_type_customer", '+
-            ' b.NAME AS "name_type_customer",  "code_item_category", c.category as '+
+            ' b.NAME AS "name_type_customer",  "code_item_category", c.group_name as '+
             ' "name_item_category",  "code_type_count",	d.name as "name_type_count", '+
             ' "code_customer_selling_type",  e.name as "name_customer_selling_type", '+
             ' "code_sell_type", f.name as "name_sell_type",  "status_payment", '+
@@ -232,7 +232,8 @@ begin
             '"status_promo"=0 then ''Tidak'' else ''Iya'' end "name_promo"  FROM	'+
             ' "t_sales_classification" a  '+
             ' LEFT JOIN t_customer_type b ON a.code_type_customer = b.code  '+
-            ' LEFT JOIN t_item_category c ON a.code_item_category = c.code  '+
+            //' LEFT JOIN t_item_category c ON a.code_item_category = c.code  '+
+            ' LEFT JOIN t_item_group c ON a.code_item_category = c.group_id ::VARCHAR   '+
             ' LEFT JOIN t_sell_type_count d ON a.code_type_count = d.code  '+
             ' LEFT JOIN t_customer_selling_type e ON a.code_customer_selling_type = e.code  '+
             ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+

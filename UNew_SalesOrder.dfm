@@ -17,13 +17,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Left = 0
     Top = 0
     Width = 1061
-    Height = 270
+    Height = 277
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1055
-    ExplicitHeight = 261
+    ExplicitHeight = 270
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -144,7 +143,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = ':'
     end
     object btMasterSumber: TSpeedButton
-      Left = 312
+      Left = 320
       Top = 207
       Width = 23
       Height = 22
@@ -235,7 +234,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       OnButtonClick = edNamaSumberButtonClick
     end
     object edKodeSumber: TEdit
-      Left = 336
+      Left = 344
       Top = 207
       Width = 100
       Height = 23
@@ -472,26 +471,25 @@ object FNew_SalesOrder: TFNew_SalesOrder
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 270
+    Top = 277
     Width = 1061
-    Height = 220
+    Height = 213
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 261
-    ExplicitWidth = 1055
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1051
+      ExplicitHeight = 195
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 1057
-        Height = 195
+        Height = 188
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -567,6 +565,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             Footers = <>
             ReadOnly = True
             Title.Caption = 'Nama Supplier'
+            Visible = False
             Width = 250
           end
           item
@@ -588,6 +587,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             Footers = <>
             ReadOnly = True
             Title.Caption = 'Nama Gudang'
+            Visible = False
             Width = 250
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -614,6 +614,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object MemDetailJUMLAH: TFloatField
       FieldName = 'JUMLAH'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
     end
     object MemDetailKD_SATUAN: TStringField
       FieldName = 'KD_SATUAN'
@@ -658,6 +660,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end

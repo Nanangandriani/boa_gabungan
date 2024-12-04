@@ -63,7 +63,8 @@ implementation
 
 uses USetMasterWilayah, UMasterData, UDataModule, UNew_Pelanggan, UMy_Function,
   Ubrowse_pelanggan, UDataProspekPelanggan, UListOrderTelemarketing,
-  UMasterSales, UListSalesOrder, UDataKolektor, UPengajuanApproval_JurnalTrans;
+  UMasterSales, UListSalesOrder, UDataKolektor, UPengajuanApproval_JurnalTrans,
+  UTemplate_Temp;
 
 procedure TFMasterWilayah.RefreshGrid;
 begin
@@ -188,6 +189,11 @@ begin
   begin
     FListSalesOrder.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
     FListSalesOrder.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+    FListSalesOrder.Parent:=FTemplate_Temp.PanelParent;
+    FListSalesOrder.Align:=Alclient;
+    FListSalesOrder.BorderStyle:=BsNone;
+    FListSalesOrder.Show;
+    FTemplate_Temp.Show;
   end;
   if vcall='m_sales' then
   begin

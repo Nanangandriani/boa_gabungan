@@ -205,7 +205,10 @@ uses
   UNewKontrakTagihan in 'UNewKontrakTagihan.pas' {FNewKontrakTagihan},
   USetJenisKontrakTagihan in 'USetJenisKontrakTagihan.pas' {FSetJenisKontrakTagihan},
   UListKontrakTagihan in 'UListKontrakTagihan.pas' {FListKontrakTagihan},
-  Unew_spb in 'Unew_spb.pas' {FNew_SPB};
+  Unew_spb in 'Unew_spb.pas' {FNew_SPB},
+  UDaftarKontrak in 'UDaftarKontrak.pas' {FDaftarKontrak},
+  UKartuPiutang in 'UKartuPiutang.pas' {FKartuPiutang},
+  UBHPenerimaanKasBank in 'UBHPenerimaanKasBank.pas' {FBHPenerimaanKasBank};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -272,7 +275,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataPenerimaanBank, FDataPenerimaanBank);
   Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
   Application.CreateForm(TFListPenerimaanKas, FListPenerimaanKas);
-  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
   Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
   Application.CreateForm(TFDataRencanaLunasPiutang, FDataRencanaLunasPiutang);
   Application.CreateForm(TFDaftarRencanaLunasPiutang, FDaftarRencanaLunasPiutang);
@@ -312,6 +314,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
   Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
   Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
+  Application.CreateForm(TFDaftarKontrak, FDaftarKontrak);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

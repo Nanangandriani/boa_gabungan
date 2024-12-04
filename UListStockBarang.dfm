@@ -11,6 +11,7 @@ object FListStockBarang: TFListStockBarang
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -21,6 +22,7 @@ object FListStockBarang: TFListStockBarang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 959
     object Label8: TLabel
       Left = 22
       Top = 50
@@ -161,15 +163,13 @@ object FListStockBarang: TFListStockBarang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitLeft = -448
-    ExplicitTop = 12
-    ExplicitWidth = 1076
-    ExplicitHeight = 430
+    ExplicitWidth = 959
+    ExplicitHeight = 384
     FixedDimension = 21
     object TabDataBarang: TRzTabSheet
       Caption = 'Data Barang'
-      ExplicitWidth = 1072
-      ExplicitHeight = 405
+      ExplicitWidth = 955
+      ExplicitHeight = 359
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -299,9 +299,8 @@ object FListStockBarang: TFListStockBarang
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = -448
-    ExplicitTop = 410
-    ExplicitWidth = 1076
+    ExplicitTop = 465
+    ExplicitWidth = 959
     object BBatal: TRzBitBtn
       Left = 889
       Top = 1
@@ -362,7 +361,7 @@ object FListStockBarang: TFListStockBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1000
+      ExplicitLeft = 883
     end
     object BSave: TRzBitBtn
       Left = 814
@@ -425,7 +424,6 @@ object FListStockBarang: TFListStockBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 808
-      ExplicitTop = 3
     end
   end
   object MemDetail: TMemTableEh

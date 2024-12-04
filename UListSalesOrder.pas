@@ -228,6 +228,8 @@ begin
       FNew_Penjualan.MemDetail['PPH_NILAI']:='0';
       FNew_Penjualan.MemDetail['POTONGAN_NILAI']:='0';
       FNew_Penjualan.MemDetail['POTONGAN_PERSEN']:='0';
+      FNew_Penjualan.MemDetail['MENEJ_FEE_PERSEN']:='0';
+      FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:='0';
       FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('selling_price').AsFloat;
       FNew_Penjualan.MemDetail.post;
       FNew_Penjualan.HitungGrid;
@@ -266,5 +268,7 @@ begin
     btGetDataProspekClick(Sender);
   end;
 end;
+initialization
+RegisterClass(TFListSalesOrder);
 
 end.

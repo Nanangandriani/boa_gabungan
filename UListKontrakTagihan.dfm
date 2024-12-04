@@ -22,7 +22,6 @@ object FListKontrakTagihan: TFListKontrakTagihan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 828
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -35,7 +34,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
       Index = 0
     end
   end
-  object DBGridOrder: TDBGridEh
+  object DBGrid: TDBGridEh
     Left = 0
     Top = 127
     Width = 966
@@ -50,55 +49,46 @@ object FListKontrakTagihan: TFListKontrakTagihan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_no'
+        FieldName = 'nocontract'
         Footers = <>
-        Title.Caption = 'No Transaksi'
+        Title.Caption = 'Nomor Kontrak'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_date'
+        FieldName = 'cust_name'
         Footers = <>
-        Title.Caption = 'Tanggal'
+        Title.Caption = 'Nama Pelanggan'
+        Width = 250
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'address'
+        Footers = <>
+        Title.Caption = 'Alamat'
+        Width = 300
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'type_contract_name'
+        Footers = <>
+        Title.Caption = 'Jenis Kontrak'
         Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_source'
+        FieldName = 'periode_end'
         Footers = <>
-        Title.Caption = 'Sumber'
-        Width = 150
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_cust'
-        Footers = <>
-        Title.Caption = 'Pelanggan'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'no_reference'
-        Footers = <>
-        Title.Caption = 'No Reference'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'payment_term'
-        Footers = <>
-        Title.Caption = 'Jatuh Tempo (Hari)'
-        Width = 150
+        Title.Caption = 'Tanggal Berakhir'
+        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -887,41 +877,30 @@ object FListKontrakTagihan: TFListKontrakTagihan
   object QKontrakTagihan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_selling"  '
+      'select * from "sale"."t_billing_contract" '
       'where deleted_at is null order by created_at Desc')
     Left = 660
     Top = 16
-    object QKontrakTagihancode_cust: TStringField
-      FieldName = 'code_cust'
-      Visible = False
-      Size = 100
-    end
-    object QKontrakTagihanname_cust: TStringField
-      FieldName = 'name_cust'
+    object QKontrakTagihannocontract: TStringField
+      FieldName = 'nocontract'
+      Required = True
       Size = 255
     end
-    object QKontrakTagihanpayment_term: TSmallintField
-      FieldName = 'payment_term'
-    end
-    object QKontrakTagihanno_purchase: TStringField
-      FieldName = 'no_reference'
+    object QKontrakTagihancust_name: TStringField
+      FieldName = 'cust_name'
       Size = 255
     end
-    object QKontrakTagihancode_source: TStringField
-      FieldName = 'code_source'
-      Visible = False
-      Size = 100
+    object QKontrakTagihanaddress: TMemoField
+      FieldName = 'address'
+      OnGetText = QKontrakTagihanaddressGetText
+      BlobType = ftMemo
     end
-    object QKontrakTagihanname_source: TStringField
-      FieldName = 'name_source'
+    object QKontrakTagihantype_contract_name: TStringField
+      FieldName = 'type_contract_name'
       Size = 255
     end
-    object QKontrakTagihandate_trans: TDateField
-      FieldName = 'trans_date'
-    end
-    object QKontrakTagihantrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 255
+    object QKontrakTagihanperiode_end: TDateField
+      FieldName = 'periode_end'
     end
   end
   object DsKontrakTagihan: TDataSource

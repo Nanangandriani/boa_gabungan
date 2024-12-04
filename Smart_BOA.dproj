@@ -95,6 +95,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -887,6 +889,18 @@
         </DCCReference>
         <DCCReference Include="Unew_spb.pas">
             <Form>FNew_SPB</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDaftarKontrak.pas">
+            <Form>FDaftarKontrak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UKartuPiutang.pas">
+            <Form>FKartuPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBHPenerimaanKasBank.pas">
+            <Form>FBHPenerimaanKasBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

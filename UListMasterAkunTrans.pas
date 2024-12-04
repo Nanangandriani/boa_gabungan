@@ -207,6 +207,7 @@ begin
         rgPPH.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual'' '));
         rgPPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_ppn_jual'' '));
         rgPotongan.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' '));
+        rgMenejFee.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_menej_fee_jual'' '));
         edPersenPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' ');
         edPersenPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_pph_jual'' ');
         edAkunJenisTax.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
