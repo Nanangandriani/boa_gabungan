@@ -206,11 +206,14 @@ begin
     end;
     if dm.Qtemp.RecordCount<>0 then
     begin
+    with FHomeLogin do
+    begin
       vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
       vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
       vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
       vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
       vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+    end;
     end;
     Nm:=Eduser.Text;
    end;

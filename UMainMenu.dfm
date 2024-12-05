@@ -35,8 +35,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 588
-    ExplicitWidth = 1023
+    ExplicitTop = 580
+    ExplicitWidth = 1021
     object RzDBStateStatus1: TRzDBStateStatus
       Left = 0
       Top = 0
@@ -143,7 +143,7 @@ object FMainMenu: TFMainMenu
     HeaderFont.Name = 'Segoe UI'
     HeaderFont.Style = []
     TabOrder = 2
-    ExplicitHeight = 462
+    ExplicitHeight = 454
   end
   object PageControl1: TRzPageControl
     Left = 181
@@ -157,14 +157,14 @@ object FMainMenu: TFMainMenu
     TabIndex = 0
     TabOrder = 3
     OnClose = PageControl1Close
-    ExplicitWidth = 842
-    ExplicitHeight = 462
+    ExplicitWidth = 840
+    ExplicitHeight = 454
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Dashboard'
-      ExplicitWidth = 838
-      ExplicitHeight = 437
+      ExplicitWidth = 836
+      ExplicitHeight = 429
       object PanelParent: TPanel
         Left = 0
         Top = 0
@@ -172,8 +172,8 @@ object FMainMenu: TFMainMenu
         Height = 438
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 838
-        ExplicitHeight = 437
+        ExplicitWidth = 836
+        ExplicitHeight = 429
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 1
@@ -182,8 +182,8 @@ object FMainMenu: TFMainMenu
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 836
-          ExplicitHeight = 435
+          ExplicitWidth = 834
+          ExplicitHeight = 427
         end
         object WebBrowser1: TWebBrowser
           Left = 1
@@ -192,10 +192,10 @@ object FMainMenu: TFMainMenu
           Height = 436
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 836
-          ExplicitHeight = 435
+          ExplicitWidth = 834
+          ExplicitHeight = 427
           ControlData = {
-            4C000000D1560000102D00000000000000000000000000000000000000000000
+            4C000000744500000D2400000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000

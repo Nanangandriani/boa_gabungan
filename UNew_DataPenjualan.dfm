@@ -327,8 +327,8 @@ object FNew_Penjualan: TFNew_Penjualan
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = 554
+    ExplicitTop = 553
+    ExplicitWidth = 1251
     object BBatal: TRzBitBtn
       Left = 1181
       Top = 1
@@ -514,8 +514,6 @@ object FNew_Penjualan: TFNew_Penjualan
         D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85E5E5E5E5E5E
         5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 113
-      ExplicitTop = 3
     end
     object bt_re_calculate: TRzBitBtn
       Left = 107
@@ -578,8 +576,6 @@ object FNew_Penjualan: TFNew_Penjualan
         D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85E5E5E5E5E5E
         5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 169
-      ExplicitTop = -7
     end
   end
   object RzPageControl1: TRzPageControl

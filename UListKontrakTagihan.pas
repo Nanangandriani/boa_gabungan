@@ -98,6 +98,8 @@ type
     QKontrakTagihanaddress: TMemoField;
     QKontrakTagihantype_contract_name: TStringField;
     QKontrakTagihanperiode_end: TDateField;
+    dxBarLargeButton6: TdxBarLargeButton;
+    QKontrakTagihancontract_value: TFloatField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -180,6 +182,7 @@ begin
     edNamaJenisKontrak.Text:=Dm.Qtemp.FieldByName('type_contract_name').AsString;
     dtPeriodeAwal.Date:=Dm.Qtemp.FieldByName('periode_first').AsDateTime;
     dtPeriodeAkhir.Date:=Dm.Qtemp.FieldByName('periode_end').AsDateTime;
+    edNilaiKontrak.Value:=Dm.Qtemp.FieldByName('contract_value').Value;
     edTermin.Value:=Dm.Qtemp.FieldByName('term_date').Value;
     edJatuhTempo.Value:=Dm.Qtemp.FieldByName('due_date').Value;
     edMenejFee.Value:=Dm.Qtemp.FieldByName('menj_fee').Value;

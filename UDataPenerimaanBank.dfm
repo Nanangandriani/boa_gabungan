@@ -185,6 +185,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Height = 23
       Text = ''
       TabOrder = 1
+      Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaJenisTransButtonClick
@@ -481,13 +482,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             DynProps = <>
             EditButtons = <
               item
-                Style = ebsPlusEh
-                OnClick = DBGridAkunColumns0EditButtons0Click
+                OnClick = DBGridAkunColumns5EditButtons0Click
               end>
-            FieldName = 'kd_akun'
+            FieldName = 'kd_header_akun'
             Footers = <>
             Title.Caption = 'Kode Akun'
-            Width = 100
           end
           item
             CellButtons = <>
@@ -528,10 +527,16 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_header_akun'
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridAkunColumns0EditButtons0Click
+              end>
+            FieldName = 'kd_akun'
             Footers = <>
+            Title.Caption = 'Kode Anak Akun '
             Visible = False
+            Width = 100
           end
           item
             CellButtons = <>

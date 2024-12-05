@@ -94,7 +94,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label7: TLabel
       Left = 501
-      Top = 79
+      Top = 102
       Width = 36
       Height = 15
       Caption = 'Termin'
@@ -115,7 +115,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label12: TLabel
       Left = 598
-      Top = 79
+      Top = 102
       Width = 3
       Height = 15
       Caption = ':'
@@ -143,28 +143,28 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label16: TLabel
       Left = 501
-      Top = 107
+      Top = 130
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label17: TLabel
       Left = 598
-      Top = 107
+      Top = 130
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label18: TLabel
       Left = 678
-      Top = 106
+      Top = 129
       Width = 22
       Height = 15
       Caption = 'Hari'
     end
     object Label19: TLabel
       Left = 678
-      Top = 78
+      Top = 101
       Width = 19
       Height = 15
       Caption = 'Kali'
@@ -179,24 +179,38 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label20: TLabel
       Left = 598
-      Top = 137
+      Top = 160
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label23: TLabel
       Left = 501
-      Top = 137
+      Top = 160
       Width = 84
       Height = 15
       Caption = 'Manajemen FEE'
     end
     object Label24: TLabel
       Left = 678
-      Top = 137
+      Top = 160
       Width = 10
       Height = 15
       Caption = '%'
+    end
+    object Label25: TLabel
+      Left = 501
+      Top = 76
+      Width = 68
+      Height = 15
+      Caption = 'Nilai Kontrak'
+    end
+    object Label26: TLabel
+      Left = 598
+      Top = 76
+      Width = 3
+      Height = 15
+      Caption = ':'
     end
     object edNamaPelanggan: TRzButtonEdit
       Left = 135
@@ -261,7 +275,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object edJatuhTempo: TSpinEdit
       Left = 612
-      Top = 104
+      Top = 127
       Width = 60
       Height = 24
       MaxValue = 0
@@ -271,7 +285,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object edTermin: TSpinEdit
       Left = 612
-      Top = 76
+      Top = 99
       Width = 60
       Height = 24
       MaxValue = 0
@@ -281,7 +295,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object rgIntegrasiBiaya: TRzRadioGroup
       Left = 719
-      Top = 76
+      Top = 99
       Width = 186
       Height = 46
       Caption = 'Integrasi Biaya'
@@ -296,7 +310,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object edMenejFee: TSpinEdit
       Left = 612
-      Top = 134
+      Top = 157
       Width = 60
       Height = 24
       MaxValue = 0
@@ -322,6 +336,14 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
       Date = 45627.000000000000000000
       Time = 0.913770208331698100
       TabOrder = 12
+    end
+    object edNilaiKontrak: TRzNumericEdit
+      Left = 612
+      Top = 73
+      Width = 186
+      Height = 23
+      TabOrder = 13
+      DisplayFormat = '0.00#,##'
     end
   end
   object RzPageControl1: TRzPageControl
@@ -600,8 +622,8 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 912
-    Top = 48
+    Left = 960
+    Top = 144
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end
@@ -702,7 +724,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   end
   object dsDataBiaya: TDataSource
     DataSet = MemDataBiaya
-    Left = 992
-    Top = 48
+    Left = 1040
+    Top = 144
   end
 end

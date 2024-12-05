@@ -724,7 +724,7 @@ begin
             ' "name_unit", "no_reference", "unit_price", "sub_total", "ppn_percent", '+
             ' "ppn_value", "pph_account", "pph_name", "pph_percent", "pph_value", '+
             ' "tot_piece_value", "tot_piece_percent", "grand_tot", "ppn_account", '+
-            ' "account_code", "menejmen_fee" '+
+            ' "account_code", "menejmen_fee", "menejmen_fee_value" '+
             ' FROM  "sale"."t_selling_det" '+
             ' WHERE deleted_at IS NULL ) a '+
             ' WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' '+

@@ -2,8 +2,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
   Left = 0
   Top = 0
   Caption = 'Penerimaan Bank'
-  ClientHeight = 628
-  ClientWidth = 1237
+  ClientHeight = 637
+  ClientWidth = 1243
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1237
+    Width = 1243
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,7 +22,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1243
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -38,8 +37,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1237
-    Height = 501
+    Width = 1243
+    Height = 510
     Align = alClient
     DataSource = DsPenerimaanBank
     DynProps = <>

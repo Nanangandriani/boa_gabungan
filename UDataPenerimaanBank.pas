@@ -114,6 +114,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure cbJenisTransaksiChange(Sender: TObject);
     procedure cbTransaksiChange(Sender: TObject);
+    procedure DBGridAkunColumns5EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -917,6 +919,27 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.DBGridAkunColumns0EditButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='terima_bank';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                ' left join t_ak_header c on b.header_code=c.header_code'+
+                ' GROUP BY b.code,b.account_name,c.header_name '+
+                ' ORDER BY b.code,b.account_name,c.header_name';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFDataPenerimaanBank.DBGridAkunColumns5EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
   with FCari_DaftarPerk do

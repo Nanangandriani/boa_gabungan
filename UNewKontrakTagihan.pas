@@ -69,6 +69,9 @@ type
     MemDataBiayaketerangan: TWideStringField;
     dtPeriodeAwal: TDateTimePicker;
     dtPeriodeAkhir: TDateTimePicker;
+    Label25: TLabel;
+    Label26: TLabel;
+    edNilaiKontrak: TRzNumericEdit;
     procedure edNamaJenisKontrakButtonClick(Sender: TObject);
     procedure btMasterSumberJenisClick(Sender: TObject);
     procedure edNamaPelangganButtonClick(Sender: TObject);
@@ -110,7 +113,7 @@ begin
     sql.add(' Insert into "sale"."t_billing_contract" ("created_at", "created_by", '+
             ' "nocontract", "cust_code", "cust_name", "cust_npwp", "address", '+
             ' "type_contract_code", "type_contract_name", "periode_first", "periode_end", '+
-            ' "term_date", "due_date", "menj_fee", "cost_integration") '+
+            ' "contract_value", "term_date", "due_date", "menj_fee", "cost_integration") '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -123,6 +126,7 @@ begin
             ' '+QuotedStr(edNamaJenisKontrak.Text)+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriodeAwal.Date))+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriodeAkhir.Date))+', '+
+            ' '+QuotedStr(FloatToStr(edNilaiKontrak.Value))+', '+
             ' '+QuotedStr(FloatToStr(edTermin.Value))+', '+
             ' '+QuotedStr(FloatToStr(edJatuhTempo.Value))+', '+
             ' '+QuotedStr(FloatToStr(edMenejFee.Value))+', '+
@@ -153,6 +157,7 @@ begin
               ' type_contract_name='+QuotedStr(edNamaJenisKontrak.Text)+','+
               ' periode_first='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriodeAwal.Date))+','+
               ' periode_end='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriodeAkhir.Date))+','+
+              ' contract_value='+QuotedStr(FloatToStr(edNilaiKontrak.value))+','+
               ' term_date='+QuotedStr(FloatToStr(edTermin.value))+','+
               ' due_date='+QuotedStr(FloatToStr(edJatuhTempo.value))+','+
               ' menj_fee='+QuotedStr(FloatToStr(edMenejFee.value))+','+
@@ -293,6 +298,7 @@ begin
   dtPeriodeAkhir.Date:=Now();
   EdKodeJenisKontrak.Clear;
   edNamaJenisKontrak.Clear;
+  edNilaiKontrak.Value:=0.0;
   edTermin.Value:=0;
   edJatuhTempo.Value:=0;
   edMenejFee.Value:=0;
