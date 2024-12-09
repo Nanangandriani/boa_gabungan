@@ -99,7 +99,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' select * from "sale"."t_sales_order"   '+
+       sql.add(' select * from "public"."t_sales_order"   '+
                ' where deleted_at is null ');
        sql.add( vBatas_Data );
        sql.add(' order by created_at Desc ');
@@ -127,7 +127,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_selling"   '+
+       sql.Text:=' select * from "public"."t_selling"   '+
                  ' where no_reference='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -147,7 +147,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_sales_order"  SET '+
+          sql.Text:=' UPDATE "public"."t_sales_order"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "notrans"='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString);
@@ -157,7 +157,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_sales_order_det"  SET '+
+          sql.Text:=' UPDATE "public"."t_sales_order_det"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "notrans"='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString);
@@ -185,7 +185,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' select * from "sale"."t_sales_order"   '+
+       sql.add(' select * from "public"."t_sales_order"   '+
                ' where deleted_at is null ');
        sql.add( vBatas_Data );
        sql.add(' order by created_at Desc ');
@@ -203,7 +203,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_sales_order" a '+
+       sql.Text:=' select * from "public"."t_sales_order" a '+
                  ' WHERE "notrans"='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;

@@ -22,7 +22,6 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 986
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -673,7 +672,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
   object QDeliveryOrder: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_delivery_order"  '
+      'select * from "public"."t_delivery_order"  '
       'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56

@@ -2,8 +2,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
   Left = 0
   Top = 0
   Caption = 'Retur Penjualan'
-  ClientHeight = 605
-  ClientWidth = 1061
+  ClientHeight = 596
+  ClientWidth = 1055
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,14 +15,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1061
-    Height = 144
+    Width = 1055
+    Height = 135
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1055
-    ExplicitHeight = 135
     object Label39: TLabel
       Left = 20
       Top = 80
@@ -170,8 +168,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 144
-    Width = 1061
+    Top = 135
+    Width = 1055
     Height = 429
     Hint = ''
     ActivePage = TabSDetailPel
@@ -179,12 +177,13 @@ object FDataReturPenjualan: TFDataReturPenjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 135
-    ExplicitWidth = 1055
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1051
+      ExplicitHeight = 0
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -359,13 +358,11 @@ object FDataReturPenjualan: TFDataReturPenjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 573
-    Width = 1061
+    Top = 564
+    Width = 1055
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 564
-    ExplicitWidth = 1055
     object BBatal: TRzBitBtn
       Left = 985
       Top = 1

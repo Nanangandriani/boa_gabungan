@@ -118,15 +118,6 @@ type
     QJurnal: TUniQuery;
     frxDBDJurnal: TfrxDBDataset;
     dxBarLargeButton5: TdxBarLargeButton;
-    QJurnaltrans_no: TStringField;
-    QJurnalaccount_code: TStringField;
-    QJurnalmodule_id: TSmallintField;
-    QJurnalmodule_name: TStringField;
-    QJurnalstatus_dk: TStringField;
-    QJurnalaccount_name: TStringField;
-    QJurnaldb: TFloatField;
-    QJurnalkd: TFloatField;
-    QJurnaltrans_date: TDateField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -168,7 +159,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_selling"   '+
+       sql.Text:=' select * from "public"."t_selling"   '+
                  ' where no_reference='+QuotedStr(QPenjualan.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -190,7 +181,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_selling"  SET '+
+          sql.Text:=' UPDATE "public"."t_selling"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
@@ -200,7 +191,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_selling_det"  SET '+
+          sql.Text:=' UPDATE "public"."t_selling_det"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
@@ -227,7 +218,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_selling"   '+
+       sql.Text:=' select * from "public"."t_selling"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -243,7 +234,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_selling" a '+
+       sql.Text:=' select * from "public"."t_selling" a '+
                  ' WHERE "trans_no"='+QuotedSTr(QPenjualan.FieldByName('trans_no').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -299,9 +290,9 @@ begin
              ' case when "piece_second" is null then 0 else "piece_second" end "piece_second", '+
              ' case when "piece_third" is null then 0 else "piece_third" end "piece_third", '+
              ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth" '+
-             ' from "sale"."t_selling" a '+
-             ' LEFT JOIN "sale"."t_selling_det" b ON a.trans_no=b.trans_no '+
-             ' LEFT JOIN "sale"."t_selling_piece" c ON a.trans_no=c.trans_no '+
+             ' from "public"."t_selling" a '+
+             ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
+             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
              ' where a.deleted_at is null and '+
              ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
@@ -324,7 +315,7 @@ begin
      close;
      sql.clear;
      sql.add(' select * '+
-             ' from "sale"."t_selling" a '+
+             ' from "public"."t_selling" a '+
              ' where a.deleted_at is null and '+
              ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
      open;
@@ -354,9 +345,9 @@ begin
      sql.clear;
      sql.add(' select a."trans_no", "no_traveldoc", "trans_date", a."code_cust", '+
              ' a."name_cust",  d."address", b."code_item", b."name_item",  b."amount", '+
-             ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket from "sale"."t_selling" a  '+
-             ' LEFT JOIN "sale"."t_selling_det" b ON a.trans_no=b.trans_no  '+
-             ' LEFT JOIN "sale"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
+             ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket from "public"."t_selling" a  '+
+             ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
+             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
              ' where "code_details"=''001'') d on a.code_cust=d.customer_code  '+
              ' where a.deleted_at is null and  '+

@@ -71,10 +71,10 @@ begin
       sql.add(' select *  from ('+
               ' SELECT trans_date, "code_cust", "name_cust", a."trans_no", '+
               ' b."no_reference", "code_item", "name_item", "amount", "code_unit" '+
-              ' from "sale"."t_selling" a LEFT JOIN "sale"."t_selling_det" b ON '+
+              ' from "public"."t_selling" a LEFT JOIN "public"."t_selling_det" b ON '+
               ' a.trans_no=b.trans_no where a.deleted_at  is null) jual '+
-              ' where trans_no not in (SELECT notrans_load from "sale"."t_delivery_order" a '+
-              ' LEFT JOIN "sale"."t_delivery_order_load" b ON a.notrans=b.notrans '+
+              ' where trans_no not in (SELECT notrans_load from "public"."t_delivery_order" a '+
+              ' LEFT JOIN "public"."t_delivery_order_load" b ON a.notrans=b.notrans '+
               ' where a.deleted_at  is null) ');
       sql.add(' AND trans_date between '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
@@ -86,9 +86,9 @@ begin
       sql.add(' ORDER BY jual.trans_no,jual.code_item desc');
 
       {sql.add(' select  a."no_trans", "no_reference", "code_cust", "name_cust", '+
-              ' total_detail as ket_barang  from "sale"."t_selling" a '+
+              ' total_detail as ket_barang  from "public"."t_selling" a '+
               ' LEFT JOIN (WITH total_per_code_unit AS (SELECT no_trans, code_unit, '+
-              ' SUM(amount) AS total_code_unit FROM "sale"."t_selling_det" '+
+              ' SUM(amount) AS total_code_unit FROM "public"."t_selling_det" '+
               ' GROUP BY no_trans,code_unit ), total_combined AS ( SELECT no_trans, '+
               ' STRING_AGG(total_code_unit || '+QuotedSTR(' ')+' || code_unit, '+QuotedSTR(', ')+') AS total_detail '+
               ' FROM total_per_code_unit GROUP BY no_trans ) SELECT no_trans, '+
@@ -116,8 +116,8 @@ begin
               ' left JOIN purchase.t_podetail b ON a.po_no=b.po_no '+
               ' LEFT join t_supplier c on a.supplier_code=c.supplier_code '+
               ' where a.deleted_at  is null) beli '+
-               ' where trans_no not in (SELECT notrans_load from "sale"."t_delivery_order" a '+
-               ' LEFT JOIN "sale"."t_delivery_order_load" b ON a.notrans=b.notrans '+
+               ' where trans_no not in (SELECT notrans_load from "public"."t_delivery_order" a '+
+               ' LEFT JOIN "public"."t_delivery_order_load" b ON a.notrans=b.notrans '+
                ' where a.deleted_at  is null)  ');
       sql.add(' AND po_date between '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
@@ -254,9 +254,9 @@ end;
 procedure TFDelivery_Order_Sumber.btTampilkanClick(Sender: TObject);
 begin
   Status:=0;
- {select *  from ( SELECT date_trans, a."notrans", "vendor_code_transport", "vendor_name_transport", "notrans_load", "code_vendor_load", "name_vendor_load", "no_ref_load", "item_code", "item_name", "source_load", "amount", "unit"  from "sale"."t_delivery_order" a
- LEFT JOIN (SELECT a.*, vendor_code as vendor_code_transport, vendor_name as vendor_name_transport from "sale"."t_delivery_order_load" a LEFT JOIN "sale"."t_delivery_order_services" b ON a.notrans=b.notrans
- )b ON  a.notrans=b.notrans where deleted_at  is null) deo  where notrans not in (SELECT notrans from "sale"."t_spm" a  where a.deleted_at  is null)
+ {select *  from ( SELECT date_trans, a."notrans", "vendor_code_transport", "vendor_name_transport", "notrans_load", "code_vendor_load", "name_vendor_load", "no_ref_load", "item_code", "item_name", "source_load", "amount", "unit"  from "public"."t_delivery_order" a
+ LEFT JOIN (SELECT a.*, vendor_code as vendor_code_transport, vendor_name as vendor_name_transport from "public"."t_delivery_order_load" a LEFT JOIN "public"."t_delivery_order_services" b ON a.notrans=b.notrans
+ )b ON  a.notrans=b.notrans where deleted_at  is null) deo  where notrans not in (SELECT notrans from "public"."t_spm" a  where a.deleted_at  is null)
  AND date_trans between  '2024-01-01' AND  '2024-08-01'
  AND vendor_code_transport='SP0010'
  ORDER BY deo.notrans,deo.vendor_code_transport desc}

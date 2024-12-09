@@ -22,7 +22,6 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1030
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -688,9 +687,9 @@ object FListRencanaLunasPiutang: TFListRencanaLunasPiutang
   object QRencanaLunasHutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "cash_banks"."t_plan_receivable"'
+      'select * from "public"."t_plan_receivable"'
       'where deleted_at is null order by created_at Desc')
-    Left = 428
+    Left = 412
     Top = 56
     object QRencanaLunasHutangnotrans: TStringField
       FieldName = 'notrans'

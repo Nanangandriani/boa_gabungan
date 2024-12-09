@@ -25,8 +25,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -129
-    ExplicitWidth = 1209
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -554,7 +552,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
   object QBHPenerimaanKasBank: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * from "cash_banks"."vbhpenerimaan_kas_bank"')
+      'SELECT * from "public"."vbhpenerimaan_kas_bank"')
     Left = 948
     Top = 344
     object QBHPenerimaanKasBankvoucher_no: TStringField

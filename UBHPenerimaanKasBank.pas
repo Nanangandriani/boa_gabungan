@@ -120,7 +120,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "cash_banks"."vbhpenerimaan_kas_bank" a  '+
+       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhpenerimaan_kas_bank" a  '+
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+

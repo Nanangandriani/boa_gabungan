@@ -237,7 +237,7 @@ object FDaftarKontrak: TFDaftarKontrak
   object QKontrakTagihan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_billing_contract" '
+      'select * from "public"."t_billing_contract" '
       'where deleted_at is null order by created_at Desc')
     Left = 660
     Top = 16
@@ -265,6 +265,9 @@ object FDaftarKontrak: TFDaftarKontrak
     object QKontrakTagihancust_code: TStringField
       FieldName = 'cust_code'
       Size = 100
+    end
+    object QKontrakTagihandue_date: TIntegerField
+      FieldName = 'due_date'
     end
   end
   object DsKontrakTagihan: TDataSource

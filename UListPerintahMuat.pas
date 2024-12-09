@@ -126,7 +126,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_spm"  SET '+
+          sql.Text:=' UPDATE "public"."t_spm"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString);
@@ -153,7 +153,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_spm"   '+
+       sql.Text:=' select * from "public"."t_spm"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -169,7 +169,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_spm" a '+
+       sql.Text:=' select * from "public"."t_spm" a '+
                  ' WHERE "notrans"='+QuotedSTr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -202,7 +202,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_spm_det" a '+
+       sql.Text:=' select * from "public"."t_spm_det" a '+
                  ' WHERE "notrans"='+QuotedSTr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
                  ' order by notrans Desc ';
        open;
@@ -252,8 +252,8 @@ begin
              ' a."name_cust" as cust_name_vendor, b."name_cust" as an_terima, "code_items", '+
              ' "name_item", "amount", "unit", '+
              ' concat("name_item",'' = '',CAST("amount" AS INTEGER),'' '',"unit") as banyaknya '+
-             ' from "sale"."t_spm_det" a '+
-             ' LEFT JOIN "sale"."t_selling" b ON a."notrans_sale"=b."trans_no" '+
+             ' from "public"."t_spm_det" a '+
+             ' LEFT JOIN "public"."t_selling" b ON a."notrans_sale"=b."trans_no" '+
              ' WHERE a."notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
              ' order by a."notrans" Desc');
      open;

@@ -25,7 +25,6 @@ object FKartuPiutang: TFKartuPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1209
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -43,7 +42,7 @@ object FKartuPiutang: TFKartuPiutang
     Top = 39
     Width = 180
     Height = 23
-    TabOrder = 5
+    TabOrder = 1
     Items.Strings = (
       ''
       'Januari'
@@ -71,7 +70,7 @@ object FKartuPiutang: TFKartuPiutang
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 200
     SearchPanel.Enabled = True
-    TabOrder = 6
+    TabOrder = 2
     Columns = <
       item
         CellButtons = <>
@@ -445,7 +444,7 @@ object FKartuPiutang: TFKartuPiutang
   object QKartuPiutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * FROM "sale"."get_piutang_saldoawal"('#39'2024-11-30'#39');')
+      'SELECT * FROM "public"."get_piutang_saldoawal"('#39'2024-11-30'#39');')
     Left = 1012
     Top = 376
     object QKartuPiutangcustomer_code: TMemoField
@@ -492,8 +491,8 @@ object FKartuPiutang: TFKartuPiutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * FROM "sale"."get_piutang_trx"('#39'2024-10-30'#39','#39'2024-11-30'#39 +
-        ');')
+        'SELECT * FROM "public"."get_piutang_trx"('#39'2024-10-30'#39','#39'2024-11-3' +
+        '0'#39');')
     Left = 1012
     Top = 488
     object QKartuPiutangTRXcustomer_code: TMemoField

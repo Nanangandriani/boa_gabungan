@@ -3,8 +3,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Daftar Hutang'
-  ClientHeight = 534
-  ClientWidth = 1030
+  ClientHeight = 525
+  ClientWidth = 1024
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,11 @@ object FDaftar_Hutang: TFDaftar_Hutang
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 1030
+    Width = 1024
     Height = 109
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 1024
     object Label3: TLabel
       Left = 475
       Top = 13
@@ -93,7 +92,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Left = 641
       Top = 11
       Width = 311
-      Height = 24
+      Height = 21
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -111,7 +110,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Left = 552
       Top = 11
       Width = 83
-      Height = 24
+      Height = 21
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -239,13 +238,11 @@ object FDaftar_Hutang: TFDaftar_Hutang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 493
-    Width = 1030
+    Top = 484
+    Width = 1024
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 484
-    ExplicitWidth = 1024
     object Label4: TLabel
       Left = 46
       Top = 13
@@ -517,13 +514,11 @@ object FDaftar_Hutang: TFDaftar_Hutang
   object RzPanel2: TRzPanel
     Left = 0
     Top = 109
-    Width = 1030
-    Height = 384
+    Width = 1024
+    Height = 375
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1024
-    ExplicitHeight = 375
     object DBGridDafHutang: TDBGridEh
       Left = 2
       Top = 2

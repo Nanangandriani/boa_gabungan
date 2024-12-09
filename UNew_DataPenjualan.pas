@@ -209,7 +209,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_selling_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_selling_det" '+
             ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+';';
   ExecSQL;
   end;
@@ -221,7 +221,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_selling_det" ("trans_no", "code_item", "name_item", "account_code", '+
+    sql.Text:=' INSERT INTO "public"."t_selling_det" ("trans_no", "code_item", "name_item", "account_code", '+
               ' "amount", "code_unit", "name_unit", "no_reference", "unit_price", "sub_total", '+
               ' "ppn_percent", "ppn_account", "ppn_value", "pph_account", "pph_name", "pph_percent", '+
               ' "pph_value", "tot_piece_value", "tot_piece_percent", "menejmen_fee", "menejmen_fee_value", "grand_tot") '+
@@ -309,8 +309,8 @@ procedure TFNew_Penjualan.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FDataListPenjualan.Name)+'');
    strday2:=dtTanggal.Date;
-   edNomorTrans.Text:=getNourut(strday2,'sale.t_selling',FNew_Penjualan.kd_kares);
-   edSuratJalanTrans.Text:=getNourut(strday2,'sale.t_selling',FNew_Penjualan.kd_kares);
+   edNomorTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
+   edSuratJalanTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
 end;
 
 procedure TFNew_Penjualan.BBatalClick(Sender: TObject);
@@ -423,6 +423,7 @@ begin
         FTemplate_Temp.Caption:='';
         FTemplate_Temp.TabForm.Caption:=AForm.Caption;
         vStatusTrans:='penjualan';
+        FDaftarKontrak.vtanggalBA:=FNew_Penjualan.dtTanggal.Date;
         FTemplate_Temp.ShowModal;
         //FTambah_Barang.ShowModal;
   end;
@@ -631,7 +632,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_selling" ("created_at", "created_by", "code_trans", '+
+    sql.add(' Insert into "public"."t_selling" ("created_at", "created_by", "code_trans", '+
             ' "no_inv_tax", "trans_no", "no_traveldoc", "trans_date", "code_cust", '+
             ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
@@ -677,7 +678,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_selling" SET '+
+      sql.add(' UPDATE "public"."t_selling" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
@@ -725,7 +726,7 @@ begin
             ' "ppn_value", "pph_account", "pph_name", "pph_percent", "pph_value", '+
             ' "tot_piece_value", "tot_piece_percent", "grand_tot", "ppn_account", '+
             ' "account_code", "menejmen_fee", "menejmen_fee_value" '+
-            ' FROM  "sale"."t_selling_det" '+
+            ' FROM  "public"."t_selling_det" '+
             ' WHERE deleted_at IS NULL ) a '+
             ' WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' '+
             ' Order By trans_no, code_item desc');

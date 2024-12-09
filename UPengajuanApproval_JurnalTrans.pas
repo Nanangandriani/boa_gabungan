@@ -166,7 +166,7 @@ begin
     close;
     sql.clear;
     sql.Text:='SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM sale.t_selling AS "a" left JOIN t_general_ledger AS b'+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM public.t_selling AS "a" left JOIN t_general_ledger AS b'+
     '	ON "a".trans_no = b.trans_no WHERE "a".deleted_at IS NULL  and  '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
@@ -460,7 +460,7 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,b.approved_status,b.module_id '+
-    ' FROM	cash_banks.t_cash_bank_acceptance AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
+    ' FROM	public.t_cash_bank_acceptance AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
     ' where "a".deleted_at IS NULL and a.module_id= '+quotedstr(module_id)+' and '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
     ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, a.description,b.approved_status,b.module_id'+

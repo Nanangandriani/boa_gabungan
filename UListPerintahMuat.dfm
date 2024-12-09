@@ -771,7 +771,7 @@ object FListPerintahMuat: TFListPerintahMuat
   object QListPerintahMuat: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_spm"  '
+      'select * from "public"."t_spm"  '
       'where deleted_at is null order by created_at Desc')
     Left = 532
     Top = 64
@@ -827,10 +827,10 @@ object FListPerintahMuat: TFListPerintahMuat
         #9'concat ( "name_item", '#39' = '#39', CAST ( "amount" AS INTEGER ), '#39' '#39',' +
         ' "unit" ) AS banyaknya '
       'FROM'
-      #9'"sale"."t_spm_det"'
+      #9'"public"."t_spm_det"'
       
-        #9'A LEFT JOIN "sale"."t_selling" b ON A."notrans_sale" = b."trans' +
-        '_no" '
+        #9'A LEFT JOIN "public"."t_selling" b ON A."notrans_sale" = b."tra' +
+        'ns_no" '
       'WHERE'
       #9'A."notrans" = '#39'SPM/0001/13/VIII/2024'#39' '
       'ORDER BY'

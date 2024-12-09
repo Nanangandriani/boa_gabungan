@@ -532,7 +532,7 @@ object FRekapPenjualan: TFRekapPenjualan
   object QRekapPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * from "sale"."vrekap_penjualan"')
+      'SELECT * from "public"."vrekap_penjualan"')
     Left = 1012
     Top = 376
     object QRekapPenjualantrans_no: TStringField

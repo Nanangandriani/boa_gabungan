@@ -2,8 +2,8 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   Left = 0
   Top = 0
   Caption = 'Sumber Perintah Muat'
-  ClientHeight = 469
-  ClientWidth = 1042
+  ClientHeight = 460
+  ClientWidth = 1036
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,13 +14,12 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   object Panel5: TPanel
     Left = 0
     Top = 0
-    Width = 1042
+    Width = 1036
     Height = 145
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1036
     object Label38: TLabel
       Left = 124
       Top = 29
@@ -228,8 +227,8 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   object DBGrid_SumberOrder: TDBGridEh
     Left = 0
     Top = 145
-    Width = 1042
-    Height = 324
+    Width = 1036
+    Height = 315
     Align = alClient
     DataSource = dsDetail
     DynProps = <>

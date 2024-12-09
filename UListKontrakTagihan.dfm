@@ -22,7 +22,6 @@ object FListKontrakTagihan: TFListKontrakTagihan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 966
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -966,7 +965,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
   object QKontrakTagihan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_billing_contract" '
+      'select * from "public"."t_billing_contract" '
       'where deleted_at is null order by created_at Desc')
     Left = 660
     Top = 16
@@ -1036,9 +1035,13 @@ object FListKontrakTagihan: TFListKontrakTagihan
       #9'"piece_third",'
       #9'"piece_fourth" '
       'FROM'
-      #9'"sale"."t_selling"'
-      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.trans_no = b.trans_no'
-      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.trans_no = C.trans_no'
+      #9'"public"."t_selling"'
+      
+        #9'A LEFT JOIN "public"."t_selling_det" b ON A.trans_no = b.trans_' +
+        'no'
+      
+        #9'LEFT JOIN "public"."t_selling_piece" C ON A.trans_no = C.trans_' +
+        'no'
       
         #9'LEFT JOIN ( SELECT "customer_code", "address" FROM "public"."t_' +
         'customer_address" WHERE "code_details" = '#39'001'#39' ) d ON A.code_cus' +

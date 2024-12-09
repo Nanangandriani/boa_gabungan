@@ -90,7 +90,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_delivery_order"   '+
+       sql.Text:=' select * from "public"."t_delivery_order"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -126,7 +126,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_delivery_order"  SET '+
+          sql.Text:=' UPDATE "public"."t_delivery_order"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "notrans"='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString);
@@ -153,7 +153,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_delivery_order"   '+
+       sql.Text:=' select * from "public"."t_delivery_order"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -169,7 +169,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_delivery_order" a '+
+       sql.Text:=' select * from "public"."t_delivery_order" a '+
                  ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -212,7 +212,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_delivery_order_cost" a '+
+       sql.Text:=' select * from "public"."t_delivery_order_cost" a '+
                  ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                  ' order by cost_code Desc ';
        open;
@@ -255,7 +255,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_delivery_order_load" a '+
+       sql.Text:=' select * from "public"."t_delivery_order_load" a '+
                  ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                  ' order by notrans_load Desc ';
        open;
@@ -294,7 +294,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_delivery_order_services" a '+
+       sql.Text:=' select * from "public"."t_delivery_order_services" a '+
                  ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                  ' order by vendor_code Desc ';
        open;

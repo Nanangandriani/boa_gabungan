@@ -76,7 +76,7 @@ begin
       sql.clear;
       sql.add(' select *  from ('+
               ' select trans_no, trans_date, code_cust, name_cust, code_source, '+
-              ' name_source, no_reference from "sale"."t_selling" '+
+              ' name_source, no_reference from "public"."t_selling" '+
               ' where deleted_at is null order by created_at Desc) aa ');
       sql.add(' Where trans_date between '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
@@ -174,7 +174,7 @@ begin
                         ' "amount", "code_unit",  "name_unit", "no_reference", "unit_price", '+
                         ' "sub_total", "ppn_percent",  "ppn_value", "pph_account", "pph_name", '+
                         ' "pph_percent", "pph_value",  "tot_piece_value", "tot_piece_percent", '+
-                        ' "grand_tot", "ppn_account", "account_code"  FROM  "sale"."t_selling_det"  WHERE deleted_at IS NULL ) a '+
+                        ' "grand_tot", "ppn_account", "account_code"  FROM  "public"."t_selling_det"  WHERE deleted_at IS NULL ) a '+
                         ' WHERE trans_no='+QuotedStr(MemDetail['no_trans'])+'  '+
                         ' Order By trans_no, code_item desc');
                 open;

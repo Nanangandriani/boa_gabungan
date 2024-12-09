@@ -156,7 +156,7 @@ begin
       sql.clear;
       sql.add(' SELECT *,customer_name from ('+
               ' SELECT * '+
-              ' FROM "cash_banks"."t_dpp")  a '+
+              ' FROM "public"."t_dpp")  a '+
               ' LEFT JOIN t_customer b ON a.code_cust=b.customer_code '+
               ' WHERE date_dpp ='+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih))+' ');
       if Length(edKode_Pelanggan.Text)<>0 then

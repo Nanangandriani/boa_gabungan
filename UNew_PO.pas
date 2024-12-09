@@ -1209,7 +1209,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='select * from sale.t_delivery_order oder by notrans';
+        sql.Text:='select * from public.t_delivery_order oder by notrans';
         Execute;
       end;
        Edno_kontrak.Items.Clear;

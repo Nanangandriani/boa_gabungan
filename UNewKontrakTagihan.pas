@@ -110,7 +110,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_billing_contract" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_billing_contract" ("created_at", "created_by", '+
             ' "nocontract", "cust_code", "cust_name", "cust_npwp", "address", '+
             ' "type_contract_code", "type_contract_name", "periode_first", "periode_end", '+
             ' "contract_value", "term_date", "due_date", "menj_fee", "cost_integration") '+
@@ -146,7 +146,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_billing_contract" SET '+
+      sql.add(' UPDATE "public"."t_billing_contract" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' cust_code='+QuotedStr(edKodePelanggan.Text)+','+
@@ -177,7 +177,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_billing_contract_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_billing_contract_det" '+
             ' WHERE "nocontract"='+QuotedStr(edNoKontrak.Text)+';';
   ExecSQL;
   end;
@@ -189,7 +189,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_billing_contract_det" ("nocontract", "cost_code", '+
+    sql.Text:=' INSERT INTO "public"."t_billing_contract_det" ("nocontract", "cost_code", '+
               ' "cost_name", "menj_fee", "account_code_ppn", "account_name_ppn", '+
               ' "ppn_percent", "account_code_pph", "account_name_pph", "pph_percent", '+
               ' "description") '+
@@ -383,7 +383,7 @@ begin
           close;
           sql.clear;
           sql.add(' SELECT * from ('+
-                  ' SELECT* FROM "sale"."t_billing_contract") a '+
+                  ' SELECT* FROM "public"."t_billing_contract") a '+
                   ' WHERE "nocontract"='+QuotedStr(edNoKontrak.Text)+' '+
                   ' Order By nocontract desc');
           open;

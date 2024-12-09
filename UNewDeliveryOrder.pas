@@ -237,7 +237,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_delivery_order" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_delivery_order" ("created_at", "created_by", '+
             ' "notrans", "date_trans", "type_do_code", "type_do_name", "starting_loc_code", '+
             ' "starting_loc_name", "province_code", "province_name", "regency_code", '+
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
@@ -281,7 +281,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_delivery_order" SET '+
+      sql.add(' UPDATE "public"."t_delivery_order" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggalMuatan.Date))+','+
@@ -318,7 +318,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "sale"."t_delivery_order_load"'+
+            ' SELECT * from "public"."t_delivery_order_load"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
     open;
@@ -330,7 +330,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_delivery_order_load" '+
+  sql.Text:=' DELETE FROM  "public"."t_delivery_order_load" '+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
   ExecSQL;
   end;
@@ -343,7 +343,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_delivery_order_load" ("notrans", "notrans_load", '+
+    sql.Text:=' INSERT INTO "public"."t_delivery_order_load" ("notrans", "notrans_load", '+
               ' "code_vendor_load", "name_vendor_load", "no_ref_load", "item_code", '+
               ' "item_name","amount", "unit", "source_load") '+
               ' Values( '+
@@ -370,7 +370,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "sale"."t_delivery_order_cost"'+
+            ' SELECT * from "public"."t_delivery_order_cost"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
     open;
@@ -382,7 +382,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_delivery_order_cost" '+
+  sql.Text:=' DELETE FROM  "public"."t_delivery_order_cost" '+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
   ExecSQL;
   end;
@@ -396,7 +396,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_delivery_order_cost" ("notrans", '+
+    sql.Text:=' INSERT INTO "public"."t_delivery_order_cost" ("notrans", '+
               ' "cost_code", "cost_name", '+
               ' "percent_pph", "code_pph", "name_pph", "percent_ppn", "code_ppn", "name_ppn", '+
               ' "sub_total", "ppn_value", "pph_value", '+
@@ -432,7 +432,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "sale"."t_delivery_order_services"'+
+            ' SELECT * from "public"."t_delivery_order_services"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
     open;
@@ -444,7 +444,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_delivery_order_services" '+
+  sql.Text:=' DELETE FROM  "public"."t_delivery_order_services" '+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
   ExecSQL;
   end;
@@ -454,7 +454,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_delivery_order_services" ("notrans", '+
+    sql.Text:=' INSERT INTO "public"."t_delivery_order_services" ("notrans", '+
               ' "vendor_code", "vendor_name", "pic", "vehicles", '+
               ' "type_vehicles_code", "type_vehicles_name", "capacity", '+
               ' "driver_name", "helper_name", "number_pib", "no_invoice",'+
@@ -484,9 +484,9 @@ procedure TFNewDeliveryOrder.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListDeliveryOrder.Name)+'');
    strday2:=dtTanggalMuatan.Date;
-   edKodeDOMuatan.Text:=getNourut(strday2,'sale.t_delivery_order','0');
-   edKodeDOBiaya.Text:=getNourut(strday2,'sale.t_delivery_order','0');
-   edKodeDODok.Text:=getNourut(strday2,'sale.t_delivery_order','0');
+   edKodeDOMuatan.Text:=getNourut(strday2,'public.t_delivery_order','0');
+   edKodeDOBiaya.Text:=getNourut(strday2,'public.t_delivery_order','0');
+   edKodeDODok.Text:=getNourut(strday2,'public.t_delivery_order','0');
 end;
 
 
@@ -735,7 +735,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_delivery_order" SET '+
+      sql.add(' UPDATE "public"."t_delivery_order" SET '+
               ' updated_at=NOW(), '+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
               ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
@@ -745,7 +745,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_delivery_order_services" SET '+
+      sql.add(' UPDATE "public"."t_delivery_order_services" SET '+
               ' date_invoice='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTerimaTagihan.Date))+','+
               ' no_invoice='+QuotedStr(edNomorTagihanVendor.Text)+','+
               ' total_cost='+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+

@@ -2,8 +2,8 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   Left = 0
   Top = 0
   Caption = 'Data Kontrak Tagihan'
-  ClientHeight = 560
-  ClientWidth = 1217
+  ClientHeight = 551
+  ClientWidth = 1211
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,12 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1217
+    Width = 1211
     Height = 209
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1211
     object Label8: TLabel
       Left = 22
       Top = 50
@@ -349,19 +348,19 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 209
-    Width = 1217
-    Height = 319
+    Width = 1211
+    Height = 310
     Hint = ''
     ActivePage = TabDataJasa
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1211
-    ExplicitHeight = 310
     FixedDimension = 21
     object TabDataJasa: TRzTabSheet
       Caption = 'Data Jasa'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1207
       ExplicitHeight = 285
       object DBGridSumberPenjualan: TDBGridEh
@@ -488,13 +487,11 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 528
-    Width = 1217
+    Top = 519
+    Width = 1211
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 519
-    ExplicitWidth = 1211
     object BBatal: TRzBitBtn
       Left = 1141
       Top = 1

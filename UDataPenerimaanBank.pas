@@ -334,7 +334,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "cash_banks"."t_cash_bank_acceptance" SET '+
+      sql.add(' UPDATE "public"."t_cash_bank_acceptance" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
@@ -386,7 +386,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "cash_banks"."t_cash_bank_acceptance_det"'+
+            ' SELECT * from "public"."t_cash_bank_acceptance_det"'+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc');
     open;
@@ -398,7 +398,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_acceptance_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_det" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
@@ -411,7 +411,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_det" ("voucher_no", '+
+    sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_det" ("voucher_no", '+
             ' "code_account", "name_account", "module_id", "trans_date", "position", '+
             ' "paid_amount", "amount_rate_results", "description", '+
             ' "code_account_header") '+
@@ -447,7 +447,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' SELECT * from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc');
     open;
@@ -459,7 +459,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_acceptance_receivable" '+
+  sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
@@ -472,7 +472,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
+    sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
             ' "no_invoice", "no_invoice_tax", "code_cust", "name_cust", "trans_date", "date_invoice_tax", '+
             ' "code_type_trans", "name_type_trans", "account_number_bank", "account_name_bank", '+
             ' "paid_amount", "description", "account_acc") '+
@@ -503,7 +503,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "cash_banks"."t_cash_bank_acceptance" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_cash_bank_acceptance" ("created_at", "created_by", '+
             ' "voucher_no", "trans_date", "period_date1", "period_date2", "code_type_trans", '+
             ' "name_type_trans", "account_number_bank", "account_name_bank", "code_currency", '+
             ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
@@ -560,7 +560,7 @@ procedure TFDataPenerimaanBank.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
    strday2:=dtTrans.Date;
-   edNoTrans.Text:=getNourut(strday2,'cash_banks.t_cash_bank_acceptance','0');
+   edNoTrans.Text:=getNourut(strday2,'public.t_cash_bank_acceptance','0');
 end;
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
@@ -574,7 +574,7 @@ begin
     sql.add(' SELECT "voucher_no", "no_invoice", "no_invoice_tax", "code_cust", '+
             ' "name_cust", "trans_date", "code_type_trans", "name_type_trans", '+
             ' "account_number_bank", "account_name_bank", "paid_amount", "description", "account_acc" '+
-            ' from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
             '  Order BY no_invoice_tax asc');
     open;
@@ -642,9 +642,9 @@ begin
                 ' "code_type_trans", "name_type_trans", "account_number_bank", '+
                 ' "account_name_bank", "code_currency", "name_currency", "kurs", '+
                 ' "paid_amount", "for_acceptance", "description", "code_cust", "name_cust" '+
-                ' from "cash_banks"."t_cash_bank_acceptance") a '+
+                ' from "public"."t_cash_bank_acceptance") a '+
                 ' LEFT JOIN (SELECT "voucher_no", "code_account", "name_account", '+
-                ' "position", "paid_amount", "description" from "cash_banks"."t_cash_bank_acceptance_det") b '+
+                ' "position", "paid_amount", "description" from "public"."t_cash_bank_acceptance_det") b '+
                 ' ON a."voucher_no"=b."voucher_no" '+
                 ' WHERE a."voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
                 ' AND a."voucher_no"='+QuotedStr(Dm.Qtemp1.fieldbyname('code_account').value)+''+
@@ -1028,7 +1028,7 @@ begin
   begin
   FMasterData.Caption:='Master Jenis Pembayaran';
   FMasterData.vcall:='jenis_terima';
-  FMasterData.update_grid('code','name','description','"cash_banks"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.update_grid('code','name','description','"public"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
   FMasterData.ShowModal;
   //Autocode;
   end;
@@ -1100,7 +1100,7 @@ begin
   begin
   FMasterData.Caption:='Master Sumber Tagihan';
   FMasterData.vcall:='sumber_terima';
-  FMasterData.update_grid('code','name','description','"cash_banks"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.update_grid('code','name','description','"public"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
   FMasterData.ShowModal;
   //Autocode;
   end;

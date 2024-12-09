@@ -33,6 +33,7 @@ type
     DsKontrakTagihan: TDataSource;
     DBGrid: TDBGridEh;
     QKontrakTagihancust_code: TStringField;
+    QKontrakTagihandue_date: TIntegerField;
     procedure edNamaPelangganButtonClick(Sender: TObject);
     procedure edNamaJenisKontrakButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
   private
     { Private declarations }
   public
+    vtanggalBA: TDate;
     { Public declarations }
     procedure Clear;
     procedure AddPenjulan;
@@ -65,9 +67,10 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' select * from "sale"."t_billing_contract"   '+
+       sql.add(' select * from "public"."t_billing_contract"   '+
                ' where deleted_at is null '+
-               ' AND periode_end >= now() ');
+               ' AND periode_first <= '+QuotedStr(formatdatetime('yyyy-mm-dd',FDaftarKontrak.vtanggalBA))+' '+
+               ' AND periode_end >= '+QuotedStr(formatdatetime('yyyy-mm-dd',FDaftarKontrak.vtanggalBA))+' ');
         if Length(edNamaPelanggan.Text)<>0 then
         begin
           sql.add(' AND "cust_code"='+QuotedStr(edKodePelanggan.Text)+'');
@@ -134,7 +137,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_billing_contract_det" a '+
+       sql.Text:=' select * from "public"."t_billing_contract_det" a '+
                  ' WHERE "nocontract"='+QuotedSTr(QKontrakTagihan.FieldByName('nocontract').AsString)+' '+
                  ' order by cost_code Desc ';
        open;
@@ -150,6 +153,7 @@ begin
     begin
     FNew_Penjualan.edKode_Pelanggan.Text:=QKontrakTagihan.FieldByName('cust_code').AsString;
     FNew_Penjualan.edNama_Pelanggan.Text:=QKontrakTagihan.FieldByName('cust_name').AsString;
+    FNew_Penjualan.spJatuhTempo.Text:=QKontrakTagihan.FieldByName('due_date').value;
     FNew_Penjualan.edNoReff.Text:=QKontrakTagihan.FieldByName('nocontract').AsString;
     FNew_Penjualan.MemDetail.active:=false;
     FNew_Penjualan.MemDetail.active:=true;

@@ -21,7 +21,7 @@ object FNew_PO: TFNew_PO
     Height = 243
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1206
+    ExplicitWidth = 1204
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -686,7 +686,7 @@ object FNew_PO: TFNew_PO
     Height = 139
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1206
+    ExplicitWidth = 1204
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -858,8 +858,8 @@ object FNew_PO: TFNew_PO
     Height = 33
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1206
-    ExplicitHeight = 32
+    ExplicitWidth = 1204
+    ExplicitHeight = 24
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
@@ -920,8 +920,8 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1130
-      ExplicitHeight = 30
+      ExplicitLeft = 1128
+      ExplicitHeight = 22
     end
     object BSimpan: TRzBitBtn
       Left = 1059
@@ -984,8 +984,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1055
-      ExplicitHeight = 30
+      ExplicitLeft = 1053
+      ExplicitHeight = 22
     end
     object BEdit: TRzBitBtn
       Left = 984
@@ -1048,8 +1048,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 980
-      ExplicitHeight = 30
+      ExplicitLeft = 978
+      ExplicitHeight = 22
     end
     object Button1: TButton
       Left = 856
@@ -1069,7 +1069,7 @@ object FNew_PO: TFNew_PO
     Height = 265
     Align = alTop
     TabOrder = 3
-    ExplicitWidth = 1206
+    ExplicitWidth = 1204
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1

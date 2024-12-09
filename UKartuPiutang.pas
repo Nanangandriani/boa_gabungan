@@ -173,7 +173,7 @@ begin
        close;
        sql.Clear;
        sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from ('+
-               ' select * from "sale"."get_piutang_saldoawal"('+QuotedStr(formatdatetime('yyyy-mm-dd',bln_akhir))+')) a  '+
+               ' select * from "public"."get_piutang_saldoawal"('+QuotedStr(formatdatetime('yyyy-mm-dd',bln_akhir))+')) a  '+
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+
@@ -220,7 +220,7 @@ begin
        close;
        sql.Clear;
        sql.add(' SELECT * FROM  '+
-               ' "sale"."get_piutang_trx"'+
+               ' "public"."get_piutang_trx"'+
                ' ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') a ');
        open;

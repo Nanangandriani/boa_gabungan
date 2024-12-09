@@ -187,8 +187,8 @@ begin
            'union all '+
            'select  a.notrans as no_terima,a.date_trans as tanggal,b.vendor_code as kodesup,a.notrans as no_inv,a.notrans as nofakturpajak,a.date_trans as tgl_faktur, '+
            ' ''''::character varying as nosj,''IDR''::character varying as valas,0 as valas_value,  0 as  due_date,false as stat_rencana,1 as status,0 as ppnrp,0 as pph_rp,0 as id,0 as status_approval '+
-           ' from sale.t_delivery_order a '+
-           'inner join sale.t_delivery_order_services b  on a.notrans=b.notrans '+
+           ' from public.t_delivery_order a '+
+           'inner join public.t_delivery_order_services b  on a.notrans=b.notrans '+
            'where a.date_trans between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
            ')a '+
            'left join '+
@@ -205,7 +205,7 @@ begin
            'left join '+
            '(select receive_no,sum(price_rp) as nilai_pot_rp,sum(price) as nilai_pot_dolar,sum(ppnrp)as ppnrp from purchase.t_purchase_discount GROUP BY receive_no)pot on a.trans_no=pot.receive_no '+
            'left join '+
-           '(select notrans as do_no,vendor_code,sum(total_cost)as harga from sale.t_delivery_order_services group by do_no,vendor_code order by do_no,vendor_code)do1 on a.trans_no=do1.do_no '+
+           '(select notrans as do_no,vendor_code,sum(total_cost)as harga from public.t_delivery_order_services group by do_no,vendor_code order by do_no,vendor_code)do1 on a.trans_no=do1.do_no '+
            ')xxx  '+
            'left join '+
            '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+

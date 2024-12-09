@@ -143,7 +143,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_billing_contract"   '+
+       sql.Text:=' select * from "public"."t_billing_contract"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -159,7 +159,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_billing_contract" a '+
+       sql.Text:=' select * from "public"."t_billing_contract" a '+
                  ' WHERE "nocontract"='+QuotedSTr(QKontrakTagihan.FieldByName('nocontract').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -196,7 +196,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_billing_contract_det" a '+
+       sql.Text:=' select * from "public"."t_billing_contract_det" a '+
                  ' WHERE "nocontract"='+QuotedSTr(QKontrakTagihan.FieldByName('nocontract').AsString)+' '+
                  ' order by cost_code Desc ';
        open;

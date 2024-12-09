@@ -2,8 +2,8 @@ object FListSalesOrder: TFListSalesOrder
   Left = 0
   Top = 0
   Caption = 'List Sales Order'
-  ClientHeight = 504
-  ClientWidth = 1035
+  ClientHeight = 495
+  ClientWidth = 1029
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,12 @@ object FListSalesOrder: TFListSalesOrder
   object pnlFilter: TPanel
     Left = 0
     Top = 0
-    Width = 1035
+    Width = 1029
     Height = 146
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1029
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -236,8 +235,8 @@ object FListSalesOrder: TFListSalesOrder
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 146
-    Width = 1035
-    Height = 358
+    Width = 1029
+    Height = 349
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>

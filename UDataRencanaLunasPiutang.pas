@@ -100,7 +100,7 @@ begin
     sql.add(' SELECT * from ('+
             ' SELECT "notrans", "no_invoice", "no_invoice_tax", "date_trans", '+
             ' "date_tempo", "paid_amount", "description"'+
-            ' FROM  "cash_banks"."t_plan_receivable_det") a '+
+            ' FROM  "public"."t_plan_receivable_det") a '+
             ' WHERE notrans='+QuotedStr(edNoTrans.Text)+' '+
             ' Order By notrans, no_invoice_tax desc');
     open;
@@ -143,7 +143,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "cash_banks"."t_plan_receivable" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_plan_receivable" ("created_at", "created_by", '+
             ' "notrans", "period_date1", "period_date2", "code_cust", "name_cust", '+
             ' "description", "tot_paid_amount", "date_trans", "order_no", "additional_code", '+
             ' "trans_day", "trans_month", "trans_year") '+
@@ -178,7 +178,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "cash_banks"."t_plan_receivable" SET '+
+      sql.add(' UPDATE "public"."t_plan_receivable" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
@@ -209,7 +209,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM "cash_banks"."t_plan_receivable_det"'+
+  sql.Text:=' DELETE FROM "public"."t_plan_receivable_det"'+
             ' WHERE "notrans"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
@@ -221,7 +221,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "cash_banks"."t_plan_receivable_det" ("notrans", "no_invoice", '+
+    sql.Text:=' INSERT INTO "public"."t_plan_receivable_det" ("notrans", "no_invoice", '+
               ' "no_invoice_tax", "date_trans", "date_tempo", "paid_amount", "description") '+
               ' Values( '+
               ' '+QuotedStr(edNoTrans.Text)+', '+
@@ -241,7 +241,7 @@ procedure TFDataRencanaLunasPiutang.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListRencanaLunasPiutang.Name)+'');
    strday2:=dtTrans.Date;
-   edNoTrans.Text:=getNourut(strday2,'"cash_banks"."t_plan_receivable"','0');
+   edNoTrans.Text:=getNourut(strday2,'"public"."t_plan_receivable"','0');
 end;
 
 procedure TFDataRencanaLunasPiutang.HitungGrid;

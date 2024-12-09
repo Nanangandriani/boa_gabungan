@@ -23,6 +23,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1127
     object LabelPelanggan: TLabel
       Left = 10
       Top = 73
@@ -455,13 +456,13 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 281
     ExplicitWidth = 1127
-    ExplicitHeight = 232
+    ExplicitHeight = 211
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitHeight = 216
+      ExplicitWidth = 1123
+      ExplicitHeight = 186
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -554,6 +555,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1123
       ExplicitHeight = 207
       object DBGridTagihan: TDBGridEh
@@ -635,7 +638,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
-    ExplicitTop = 185
     ExplicitWidth = 1127
     object gbDataPiutang: TGroupBox
       Left = 0

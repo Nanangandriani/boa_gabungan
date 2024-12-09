@@ -127,7 +127,7 @@ begin
                 sql.add(' SELECT * from ('+
                         ' SELECT "notrans", "no_invoice", "no_invoice_tax", '+
                         ' "date_trans", "date_tempo", "paid_amount", "description"'+
-                        ' FROM  "cash_banks"."t_plan_receivable_det") a '+
+                        ' FROM  "public"."t_plan_receivable_det") a '+
                         ' WHERE "notrans"='+QuotedStr(MemDetailPiutang['notrans'])+' '+
                         ' Order By "notrans", "no_invoice" desc');
                 open;
@@ -176,7 +176,7 @@ begin
       sql.clear;
       sql.add(' SELECT * from ('+
               ' SELECT * '+
-              ' FROM "cash_banks"."t_plan_receivable") a '+
+              ' FROM "public"."t_plan_receivable") a '+
               ' WHERE period_date1 = '+QuotedStr(formatdatetime('yyyy-mm-dd',periode1))+' '+
               ' AND period_date2 ='+QuotedStr(formatdatetime('yyyy-mm-dd',periode2))+' ');
       if Length(edKode_Pelanggan.Text)<>0 then

@@ -161,7 +161,7 @@ begin
         begin
         MemDetailAkun.Edit;
         MemDetailAkun['kd_akun']:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
-        MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_customer b ON a.code=b.account_code where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+        //MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_customer b ON a.code=b.account_code where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
         kd_ak_pelanggan:=MemDetailAkun['kd_akun'];
         MemDetailAkun.post;
       end;
