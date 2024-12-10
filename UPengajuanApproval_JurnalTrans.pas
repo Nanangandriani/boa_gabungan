@@ -127,10 +127,10 @@ begin
     sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn,status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status approval_status,trans_date from ('+
     ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
     ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
-    ' purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+    ' t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
     ' left join t_ak_account c on a.account_code=c.code'+
     ' left join t_ak_account d on a.account_um_code=d.code'+
-    ' left join purchase.t_purchase_invoice_det f on a.trans_no=f.trans_no '+
+    ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
     ' INNER JOIN t_general_ledger g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
     ' order by a.id desc) a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
     ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status,trans_date';

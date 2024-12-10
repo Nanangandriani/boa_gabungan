@@ -189,7 +189,7 @@ begin
       sql.Clear;
       sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
       ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,sbu_code,'+
-      ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from warehouse.t_item_request order by created_at Desc';
+      ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from t_item_request order by created_at Desc';
       open;
     end;
       MemPermt_Material.Close;
@@ -205,7 +205,7 @@ begin
       sql.Clear;
       sql.Text:='select case when (status_app=''f'') and (status=''f'') then ''CREATED'' WHEN (status_app=''t'') '+
         ' and (status=''t'') then ''APPROVE'' ELSE ''IN-PROSES'' END status,trans_date,trans_no,sbu_code,'+
-        ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from warehouse.t_item_request  '+
+        ' trans_year,trans_month,to_char(trans_date,''dd'') tgl from t_item_request  '+
         ' where sbu_code='+QuotedStr(loksbu)+' order by id Desc';
       open;
     end;

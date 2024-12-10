@@ -70,7 +70,7 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 68
-    Width = 678
+    Width = 674
     Height = 251
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True

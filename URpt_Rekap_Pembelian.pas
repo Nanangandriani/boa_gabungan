@@ -178,7 +178,7 @@ begin
       DtSelesai.SetFocus;
       Exit;
     end;
-  subquery:='select * from  purchase."V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
+  subquery:='select * from "V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
             ' and trans_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.EditValue));
   // kode Barang 0 dan ppn false
   if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then
@@ -355,7 +355,7 @@ begin
       DtSelesai.SetFocus;
       Exit;
     end;
-  subquery:='select * from purchase."V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
+  subquery:='select * from "V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
             ' and trans_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.EditValue));
   // kode Barang 0 dan ppn false
   if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then

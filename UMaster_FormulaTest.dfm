@@ -1541,8 +1541,8 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
         'select (case WHEN status=0 THEN '#39'PENGAJUAN'#39' WHEN status=1 THEN '#39 +
         'DISETUJUI'#39' else '#39'TIDAK DISETUJUI'#39' '
       
-        'END) AS status,a.*,b.wh_name,c.wh_name wh_nm from "warehouse".t_' +
-        'master_formula_test a INNER JOIN t_wh b on'
+        'END) AS status,a.*,b.wh_name,c.wh_name wh_nm from t_master_formu' +
+        'la_test a INNER JOIN t_wh b on'
       
         ' a.wh_code=b.wh_code INNER JOIN t_wh c on a.wh_code2=c.wh_code o' +
         'rder by formula_no Desc')
@@ -1558,15 +1558,13 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,C.item_name, D.supplier_name,e.wh_name from "warehous' +
-        'e".t_master_formula_test_det A '
-      
-        'left join warehouse.t_item_stock B on A.item_stock_code=B.item_s' +
-        'tock_code'
+        'select A.*,C.item_name, D.supplier_name,e.wh_name from t_master_' +
+        'formula_test_det A '
+      'left join t_item_stock B on A.item_stock_code=B.item_stock_code'
       'left join t_item C on B.item_code=C.item_code '
       'left join t_supplier D on B.supplier_code=D.supplier_code'
       'left join t_wh e on a.wh_code=e.wh_code'
-      'order by a.detail_id Asc')
+      'order by a.id Asc')
     MasterSource = DsMaster_Formula
     MasterFields = 'formula_no'
     DetailFields = 'formula_no'
@@ -1588,15 +1586,13 @@ object FMaster_FormulaTest: TFMaster_FormulaTest
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,C.item_name, D.supplier_name,e.wh_name from "warehous' +
-        'e".t_master_formula_test_det A '
-      
-        'left join warehouse.t_item_stock B on A.item_stock_code=B.item_s' +
-        'tock_code'
+        'select A.*,C.item_name, D.supplier_name,e.wh_name from t_master_' +
+        'formula_test_det A '
+      'left join t_item_stock B on A.item_stock_code=B.item_stock_code'
       'left join t_item C on B.item_code=C.item_code '
       'left join t_supplier D on B.supplier_code=D.supplier_code'
       'left join t_wh e on a.wh_code=e.wh_code'
-      'order by detail_id Asc')
+      'order by id Asc')
     MasterSource = DsMaster_Formula
     MasterFields = 'formula_no'
     DetailFields = 'formula_no'

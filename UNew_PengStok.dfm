@@ -186,8 +186,10 @@ object FNew_PengStok: TFNew_PengStok
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 399
+    ExplicitWidth = 605
     object BBatal: TRzBitBtn
-      Left = 537
+      Left = 533
       Top = 1
       Height = 30
       Align = alRight
@@ -246,10 +248,10 @@ object FNew_PengStok: TFNew_PengStok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 533
+      ExplicitLeft = 529
     end
     object BSimpan: TRzBitBtn
-      Left = 462
+      Left = 458
       Top = 1
       Height = 30
       Align = alRight
@@ -308,7 +310,7 @@ object FNew_PengStok: TFNew_PengStok
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 458
+      ExplicitLeft = 454
     end
   end
   object Edno: TRzEdit

@@ -426,8 +426,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 949
-      ExplicitTop = 6
+      ExplicitLeft = 944
     end
     object BSimpan: TRzBitBtn
       Left = 873

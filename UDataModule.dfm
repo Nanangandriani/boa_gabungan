@@ -6,9 +6,10 @@ object dm: Tdm
     AutoCommit = False
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_boa_hps'
+    Database = 'db_boa_distribution'
     Username = 'postgres'
     Server = '10.10.10.110'
+    Connected = True
     Left = 157
     Top = 13
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'

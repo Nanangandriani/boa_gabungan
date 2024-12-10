@@ -145,7 +145,7 @@ with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from purchase.t_item_receive_det where item_stock_code='+
+    sql.Text:='select * from t_item_receive_det where item_stock_code='+
               ''+QuotedStr(EdKd_material2.Text)+' and trans_year='+QuotedStr(Dtth.Text);
     open;
   end;
@@ -189,7 +189,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from warehouse.t_item_stock_det where item_stock_code='+QuotedStr(Edkd_material2.Text)+''+
+    sql.Text:='select * from t_item_stock_det where item_stock_code='+QuotedStr(Edkd_material2.Text)+''+
               ' and stock_code='+QuotedStr(Edkd_stok.Text);
     Execute;
   end;
@@ -199,7 +199,7 @@ begin
     begin
       close;
       sql.Clear;
-      SQL.Text:='update warehouse.t_item_stock_det set qty=:parqty,"outstanding"=:parout where item_stock_code=:parkd and stock_code=:parkdst';
+      SQL.Text:='update t_item_stock_det set qty=:parqty,"outstanding"=:parout where item_stock_code=:parkd and stock_code=:parkdst';
               ParamByName('parqty').Value:=DM.QTemp2['qty']+StrToFloat(Edqty2.Text);
               ParamByName('parout').Value:=DM.QTemp2['outstanding']+StrToFloat(Edqty2.Text);
               ParamByName('parkd').Value:=Edkd_material2.Text;
@@ -213,7 +213,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='	INSERT INTO warehouse.t_item_stock_det(item_stock_code,stock_code,qty,'+
+      sql.Text:='	INSERT INTO t_item_stock_det(item_stock_code,stock_code,qty,'+
                 ' unit,qtyout,"outstanding",wh_code)VALUES(:parkd,:parkdst,:parqty,'+
                 ' :parsatuan,:parqtyout,:parOut,:pargudang)';
                 ParamByName('parkd').Value:=Edkd_material2.Text;
@@ -241,14 +241,14 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from warehouse.t_item_mixing_result';
+    sql.Text:='select * from t_item_mixing_result';
     ExecSQL;
   end;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:=' Update warehouse.t_item_mixing_result set item_stock_code=:parkdmat,Qty=:parqty,'+
+    sql.Text:=' Update t_item_mixing_result set item_stock_code=:parkdmat,Qty=:parqty,'+
               ' unit=:parst,mixing_no=:parnp,trans_date=:partgl,status=:parstatus,'+
               ' sbu_code=:parsbu where result_no=:parnh';
               ParamByName('parkdmat').Value:=edkd_material.Text;
@@ -271,21 +271,21 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='update warehouse.t_item_mixing_result set status=''1'' where result_no='+QuotedStr(Edno2.Text);
+    sql.Text:='update t_item_mixing_result set status=''1'' where result_no='+QuotedStr(Edno2.Text);
     ExecSQL;
   end;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from warehouse.t_item_mixing_result_wh ';
+    sql.Text:='select * from t_item_mixing_result_wh ';
     ExecSQL;
   end;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='insert into warehouse.t_item_mixing_result_wh(item_stock_code,Qty,unit,mixing_no,trans_date'+
+    sql.Text:='insert into t_item_mixing_result_wh(item_stock_code,Qty,unit,mixing_no,trans_date'+
               ',result_no,status,sbu_code,wh_code,stock_code,order_no)values(:parkdmt,:parqty,:parsatuan,:parnopermt,:partgl'+
               ',:parnohsl,:parstatus,:parsbu,:pargd,:parkdstok,:parno)';
               ParamByName('parkdmt').AsString:=edkd_material2.Text;
@@ -310,14 +310,14 @@ procedure TFNew_Hasil_Perc_Barang.BSimpanClick(Sender: TObject);
 begin
   idmenu:='M04007';
   strday2:=DtTanggal.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_mixing_result','');
+  Edno.Text:=getNourut(strday2,'t_item_mixing_result','');
  if messageDlg ('Anda Yakin Simpan Hasil Percampuran ini. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from warehouse.t_item_mixing_result';
+      sql.Text:='select * from t_item_mixing_result';
       ExecSQL;
     end;
 
@@ -325,7 +325,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into warehouse.t_item_mixing_result(item_stock_code,Qty,unit,mixing_no,trans_date'+
+      sql.Text:='insert into t_item_mixing_result(item_stock_code,Qty,unit,mixing_no,trans_date'+
                 ',result_no,status,sbu_code,trans_year,trans_month,trans_day,order_no,created_by)values(:parkdmt,:parqty,:parsatuan,:parnopermt,:partgl'+
                 ',:parnohsl,:parstatus,:parsbu,:parthn,:parbln,:partglno,:parnourut,:cr)';
                 ParamByName('parkdmt').AsString:=edkd_material.Text;
@@ -347,7 +347,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='update warehouse.t_item_mixing set "trans_status"=''0'' where mixing_no='+QuotedStr(EdNo_permintaan.Text);
+      sql.Text:='update t_item_mixing set "trans_status"=''0'' where mixing_no='+QuotedStr(EdNo_permintaan.Text);
       ExecSQL;
     end;
       Messagedlg('Data Berhasil Disimpan',MtInformation,[Mbok],0);
@@ -369,7 +369,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select A.*,B.item_stock_code,c.group_name from t_item A inner join warehouse.t_item_stock B '+
+    sql.Text:='select A.*,B.item_stock_code,c.group_name from t_item A inner join t_item_stock B '+
               ' on A.item_code=B.item_code inner join t_item_group c on a.group_id=c.group_id where B.item_stock_code='+
               ''+QuotedStr(Edkd_material2.Text);
     ExecSQL;
@@ -402,7 +402,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' Select A.* from warehouse.t_item_mixing A inner join warehouse.t_item_stock B on '+
+    sql.Text:=' Select A.* from t_item_mixing A inner join t_item_stock B on '+
     ' A.item_stock_code=B.item_stock_code where mixing_no='+QuotedStr(EdNo_permintaan.Text);
     Execsql;
   end;
@@ -441,7 +441,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select "type",item_code,mixing_no,sbu_code from warehouse.t_item_mixing where trans_status=''1'''+
+      sql.Text:='select "type",item_code,mixing_no,sbu_code from t_item_mixing where trans_status=''1'''+
       ' and status=''Selesai'' and (sbu_code='+QuotedStr(loksbu)+' or sbu_code='''') Group by "type",item_code,mixing_no,sbu_code '+
       ' order by mixing_no ASC ';
       ExecSQL;

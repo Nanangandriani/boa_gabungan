@@ -106,7 +106,7 @@ procedure TFNew_Pot_Pembelian.Autonumber;
 begin
   idmenu:='M11006';
   strday2:=DtReturn.Date;
-  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_purchase_discount','');
+  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'t_purchase_discount','');
   Edurut.Text:=order_no;
 end;
 
@@ -198,7 +198,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_item_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
+      sql.Text:='select * from t_item_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
       Execute;
     end;
     Dm.Qtemp.First;
@@ -215,7 +215,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_item_receive where receive_no='+QuotedStr(edno_terima.Text);
+      sql.Text:='select * from t_item_receive where receive_no='+QuotedStr(edno_terima.Text);
       Execute;
     end;
       EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];
@@ -298,14 +298,14 @@ begin
             begin
               close;
               sql.Clear;
-              sql.Text:='select * from purchase.t_purchase_discount';
+              sql.Text:='select * from t_purchase_discount';
               ExecSQL;
             end;
             with dm.Qtemp do
             begin
               close;
               sql.Clear;
-              sql.Text:=' insert into purchase.t_purchase_discount(discount_no,discount_date,faktur_no,price,supplier_code,receive_no,trans_year,price_rp,valas,n_valas,trans_month,trans_day,order_no,ppn,ppnrp,total,pic)'+
+              sql.Text:=' insert into t_purchase_discount(discount_no,discount_date,faktur_no,price,supplier_code,receive_no,trans_year,price_rp,valas,n_valas,trans_month,trans_day,order_no,ppn,ppnrp,total,pic)'+
                         ' values(:parno,:partgl,:parnofaktur,:parharga,:parkd_supplier,:parno_terima,:parthn,:parharga_rp,:parvls,:parnvls,:parbln,:partglno,:parnourut,:parppn,:parppnrp,:partotal,:parpic)';
                         ParamByName('parno').Value:=Edno.Text;
                         ParamByName('partgl').Value:=FormatDateTime('yyy-mm-dd',DtReturn.Date);
@@ -335,7 +335,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Update purchase.t_purchase_discount set discount_date=:partgl,faktur_no=:parnofk,price=:parharga,'+
+            sql.Text:='Update t_purchase_discount set discount_date=:partgl,faktur_no=:parnofk,price=:parharga,'+
                       ' supplier_code=:parkd_sp,price_rp=:parharga_rp,valas=:parvls,n_valas=:parnvls,'+
                       ' ppn=:parppn,ppnrp=:parppnrp,total=:partotal,receive_no=:parno_terima,pic_update=:parpic where discount_no=:parno_pot';
                       ParamByName('partgl').AsString:=FormatDateTime('yyy-mm-dd',DtReturn.Date);

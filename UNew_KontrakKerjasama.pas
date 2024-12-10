@@ -136,8 +136,8 @@ begin
     idmenu:=dm.Qtemp['submenu_code'];
    //idmenu:='M11001';
    strday2:=Dtkontrak.Date;
-   //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
-   EdNo_kontrak.Text:=getNourut(strday2,'purchase.t_coop_contract','');
+   //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'t_coop_contract','');
+   EdNo_kontrak.Text:=getNourut(strday2,'t_coop_contract','');
    EdNo.Text:=Order_no;
 end;
 
@@ -206,14 +206,14 @@ begin
           begin
             close;
             sql.clear;
-            sql.Text:='Select * from purchase.t_coop_contract';
+            sql.Text:='Select * from t_coop_contract';
             ExecSQL;
           end;
           with dm.Qtemp2 do
           begin
             close;
             sql.clear;
-            sql.Text:='update purchase.t_coop_contract set supplier_code=:parkd_supplier,contract_date=:partgl_kontrak,'+
+            sql.Text:='update t_coop_contract set supplier_code=:parkd_supplier,contract_date=:partgl_kontrak,'+
                       ' finish_date=:partgl_selesai,due_date=:parjatuh_tempo,type=:parjenis, '+
                       ' order_no=:parno_urut,remarks=:parketerangan,currency=:parcurrency,'+
                       ' currency_value=:parnilaicurrency,delivery_month=:parbln_kirim, category=:parkategori '+
@@ -240,7 +240,7 @@ begin
           begin
             close;
             sql.clear;
-            sql.Text:='Delete from purchase.t_coop_contract_det where contract_no='+QuotedStr(EdNo_kontrak.Text);
+            sql.Text:='Delete from t_coop_contract_det where contract_no='+QuotedStr(EdNo_kontrak.Text);
             ExecSQL;
           end;
           MemMaterial.First;
@@ -250,14 +250,14 @@ begin
               begin
                 close;
                 sql.clear;
-                sql.Text:='Select * from purchase.t_coop_contract_det';
+                sql.Text:='Select * from t_coop_contract_det';
                 ExecSQL;
               end;
               with dm.Qtemp do
               begin
                 close;
                 sql.clear;
-                sql.Text:='insert into purchase.t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
+                sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                           ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,"specification",'+
                           ' subtotal_rp,grandtotal,price2,pemb_ppn,pph,pph_rp,pemb_dpp)values(:parno_kontrak,'+
                           ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
@@ -348,14 +348,14 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='Select * from purchase.t_coop_contract';
+          sql.Text:='Select * from t_coop_contract';
           ExecSQL;
         end;
         with dm.Qtemp2 do
         begin
             close;
             sql.clear;
-            sql.Text:='update purchase.t_coop_contract set supplier_code=:parkd_supplier,contract_date=:partgl_kontrak,'+
+            sql.Text:='update t_coop_contract set supplier_code=:parkd_supplier,contract_date=:partgl_kontrak,'+
                       ' finish_date=:partgl_selesai,due_date=:parjatuh_tempo,type=:parjenis, '+
                       ' order_no=:parno_urut,remarks=:parketerangan,currency=:parcurrency,'+
                       ' currency_value=:parnilaicurrency,delivery_month=:parbln_kirim, category=:parkategori '+
@@ -382,7 +382,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='Delete from purchase.t_coop_contract_det where contract_no='+QuotedStr(EdNo_kontrak.Text);
+          sql.Text:='Delete from t_coop_contract_det where contract_no='+QuotedStr(EdNo_kontrak.Text);
           ExecSQL;
         end;
         MemMaterial.First;
@@ -392,14 +392,14 @@ begin
             begin
               close;
               sql.clear;
-              sql.Text:='Select * from purchase.t_coop_contract_det';
+              sql.Text:='Select * from t_coop_contract_det';
               ExecSQL;
             end;
             with dm.Qtemp do
             begin
               close;
               sql.clear;
-              sql.Text:='insert into purchase.t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
+              sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                         ' total_price, totalpo, remaining_aqty, status,ppn,ppn_rp,"specification",'+
                         ' subtotal_rp,grandtotal,pemb_ppn)values(:parno_kontrak,:parkd_material_stok,:parqty,'+
                         ' :parharga,:parsatuan,:partotal_harga,:partotalpo,:parsisaqty,:parstatus,'+
@@ -512,14 +512,14 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='Select * from purchase.t_coop_contract';
+          sql.Text:='Select * from t_coop_contract';
           ExecSQL;
         end;
         with dm.Qtemp do
         begin
           close;
           sql.clear;
-          sql.Text:=' insert into purchase.t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
+          sql.Text:=' insert into t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
                     ' due_date, order_no, trans_year, remarks, status,currency,currency_value,'+
                     ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month,trans_day,input_date)'+
                     ' values(:parno_kontrak,:parkd_supplier,:partgl_kontrak,:partgl_selesai, '+
@@ -555,14 +555,14 @@ begin
           begin
             close;
             sql.clear;
-            sql.Text:='Select * from purchase.t_coop_contract_det';
+            sql.Text:='Select * from t_coop_contract_det';
             ExecSQL;
           end;
           with dm.Qtemp do
           begin
             close;
             sql.clear;
-            sql.Text:='insert into purchase.t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
+            sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                       ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,"specification",'+
                       ' subtotal_rp,grandtotal,price2,pemb_ppn,pph,pph_rp,pemb_dpp)values(:parno_kontrak,'+
                       ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
@@ -661,14 +661,14 @@ begin
             begin
               close;
               sql.clear;
-              sql.Text:='Select * from purchase.t_coop_contract';
+              sql.Text:='Select * from t_coop_contract';
               ExecSQL;
             end;
             with dm.Qtemp do
             begin
               close;
               sql.clear;
-              sql.Text:='insert into purchase.t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
+              sql.Text:='insert into t_coop_contract(contract_no,supplier_code,contract_date,finish_date,'+
                         ' due_date, order_no, trans_year, remarks, status,currency,currency_value,'+
                         ' type,"approval_status",category,delivery_month,delivery_year,pic,trans_month,trans_day)'+
                         ' values(:parno_kontrak,:parkd_supplier,:partgl_kontrak,:partgl_selesai, '+
@@ -704,14 +704,14 @@ begin
               begin
                 close;
                 sql.clear;
-                sql.Text:='Select * from purchase.t_coop_contract_det';
+                sql.Text:='Select * from t_coop_contract_det';
                 ExecSQL;
               end;
               with dm.Qtemp do
               begin
                 close;
                 sql.clear;
-                sql.Text:='insert into purchase.t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
+                sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                           ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,"specification",'+
                           ' subtotal_rp,grandtotal,price2,pemb_ppn)values(:parno_kontrak,'+
                           ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
@@ -857,7 +857,7 @@ begin
                   'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,c.buy, '+
                   'e.category,f."type",g.group_name '+
 
-                  'from warehouse.t_item_stock a  '+
+                  'from t_item_stock a  '+
                   'inner join t_supplier b on a.supplier_code=b.supplier_code '+
                   'inner join t_item c on a.item_code=c.item_code  '+
                   'inner join t_item_conversion d on a.item_code=d.item_code '+

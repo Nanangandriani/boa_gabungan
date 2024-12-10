@@ -114,7 +114,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from purchase."V_RekapTerimaDok" where faktur_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue));
+    sql.Text:='select * from "V_RekapTerimaDok" where faktur_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue));
     ExecSQL;
   end;
   if QRekapDok.RecordCount=0 then
@@ -142,7 +142,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from purchase."V_RekapTerimaDok" where faktur_date='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai.EditValue));
+    sql.Text:='select * from "V_RekapTerimaDok" where faktur_date='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai.EditValue));
     ExecSQL;
   end;
   if QRekapDok.RecordCount=0 then

@@ -422,9 +422,8 @@ object FTerima_Material: TFTerima_Material
         'app,a.*, b.supplier_name,'
       
         ' c.account_name, d.account_name as nm_perk,to_char(receive_date,' +
-        #39'dd'#39') tgl,to_char(receive_date,'#39'mm'#39') bln from purchase.t_item_re' +
-        'ceive a Left join t_supplier b on a.supplier_code=b.supplier_cod' +
-        'e'
+        #39'dd'#39') tgl,to_char(receive_date,'#39'mm'#39') bln from t_item_receive a L' +
+        'eft join t_supplier b on a.supplier_code=b.supplier_code'
       'left join t_ak_account c on a.account_code=c.code'
       'left join t_ak_account d on a.account_um_code=d.code'
       'order by a.id desc')
@@ -477,11 +476,10 @@ object FTerima_Material: TFTerima_Material
         'y_account_code,a.import_duty,a.order_no,a.subtotalrp,a.pemb_dpp,' +
         'c.wh_name'
       ''
-      'FROM'
-      #9'purchase.t_item_receive_det AS "a"'
+      'FROM    t_item_receive_det AS "a"'
       
-        #9'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b' +
-        '.item_stock_code'
+        #9'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stoc' +
+        'k_code'
       '        INNER JOIN t_wh'#9'c on a.wh_code=c.wh_code'
       'ORDER BY a.id desc')
     MasterSource = Dsterima_material

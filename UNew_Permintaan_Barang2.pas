@@ -198,7 +198,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='update warehouse.t_item_request2 set item_stock_code=:parkd_material_stok,qty=:parqty'+
+        sql.Text:='update t_item_request2 set item_stock_code=:parkd_material_stok,qty=:parqty'+
                   ' ,unit=:parsatuan,notes=:parket,stock_code=:parkd_stok,trans_date=:partgl_permt,'+
                   ' trans_type=:parjenis,trans_year=:partahun,price=:parharga,status=:parstatus,wh_code='+
                   ' :pargudang,pono=:parnopo,updated_at=now(),updated_by=:pic where request_no=:parno_permt';
@@ -236,7 +236,7 @@ begin
  // Autonumber;
   idmenu:='M04008';
   strday2:=DtPermt.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_request2','');
+  Edno.Text:=getNourut(strday2,'t_item_request2','');
   if messageDlg ('Anda Yakin Simpan Pembelian No.'+EdNo.text+' '+'?', mtInformation, [mbYes]+[mbNo],0) = mrYes
   then begin
     if not dm.koneksi.InTransaction then
@@ -247,7 +247,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='insert into warehouse.t_item_request2(request_no,item_stock_code,qty,unit,notes,stock_code,trans_date,trans_type,'+
+          sql.Text:='insert into t_item_request2(request_no,item_stock_code,qty,unit,notes,stock_code,trans_date,trans_type,'+
                     ' trans_year,price,status,wh_code,pono,qtykonversi,qtyreceive,outstanding,sbu_code,trans_month,trans_day,order_no,created_by)'+
                     'values(:parno_permt,:parkd_material_stok,:parqty,:parsatuan,:parket,:parkd_stok,:partgl_permt,'+
                     ' :parjenis,:partahun,:parharga,:parstatus,:pargudang,:parnopo,:parqtykonversi,:parqtyterima,'+
@@ -314,7 +314,7 @@ begin
   with Dm.Qtemp do
   begin
     close;
-    sql.Text:=' Select A.*,b.item_name from purchase.t_podetail a inner join warehouse.t_item_stock b on a.item_stock_code='+
+    sql.Text:=' Select A.*,b.item_name from t_podetail a inner join t_item_stock b on a.item_stock_code='+
               ' b.item_stock_code where b.item_code='+QuotedStr(kd_brng)+''+
               ' and status=''In-Proses''';
     ExecSQL;
@@ -345,7 +345,7 @@ begin
  with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select * from warehouse.t_item_stock where item_name='+QuotedStr(EdNm_Material.Text);
+    sql.Text:='select * from t_item_stock where item_name='+QuotedStr(EdNm_Material.Text);
     ExecSQL;
   end;
   EdKd_Material.Text:=Dm.Qtemp.FieldByName('item_stock_code').AsString;
@@ -363,7 +363,7 @@ begin
   with Dm.Qtemp do
   begin
     close;
-    sql.Text:=' select a.item_name,b.price,b.id from warehouse.t_item_stock a inner JOIN purchase.t_item_receive_det '+
+    sql.Text:=' select a.item_name,b.price,b.id from t_item_stock a inner JOIN t_item_receive_det '+
               ' b on a.item_stock_code=b.item_stock_code INNER JOIN t_item c on a.item_code=c.item_code '+ //AND a.no_material= c.no_material
               ' where c.item_code=''KMS'' GROUP BY a.item_name,b.price,b.id ORDER BY b.id DESC limit 1';
     ExecSQL;
@@ -376,7 +376,7 @@ begin
   with Dm.Qtemp2 do
   begin
     close;
-    sql.Text:=' Select item_stock_code,price from purchase.t_item_receive_det where item_stock_code=''C'''+
+    sql.Text:=' Select item_stock_code,price from t_item_receive_det where item_stock_code=''C'''+
               ' ORDER BY id DESC limit 1';
     ExecSQL;
   end;
@@ -393,7 +393,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select a.*,b.item_name from warehouse.t_mixing_master2 a INNER join warehouse.t_item_stock b on '+
+    sql.Text:=' select a.*,b.item_name from t_mixing_master2 a INNER join t_item_stock b on '+
               ' a.item_conversion=b.item_stock_code where a.item_code='+QuotedStr(kd_brng);
     ExecSQL;
   end;

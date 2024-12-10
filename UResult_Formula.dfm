@@ -54,13 +54,13 @@ object FResult_Formula: TFResult_Formula
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_11_tahun'
+        ColumnName = 'Column_11_trans_year'
       end
       item
-        ColumnName = 'Column_12_bln'
+        ColumnName = 'Column_12_trans_month'
       end
       item
-        ColumnName = 'Column_13_tgl_no'
+        ColumnName = 'Column_13_trans_day'
       end>
     DataSource = DsResult
     DynProps = <>
@@ -75,7 +75,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nospk'
+        FieldName = 'spk_no'
         Footers = <>
         Visible = False
       end
@@ -83,7 +83,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'noresult'
+        FieldName = 'result_no'
         Footers = <>
         Title.Caption = 'No. Result'
         Width = 102
@@ -92,7 +92,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_produk'
+        FieldName = 'product_name'
         Footers = <>
         Title.Caption = 'Nama Produk'
         Width = 128
@@ -101,7 +101,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'noformula'
+        FieldName = 'formula_no'
         Footers = <>
         Title.Caption = 'No. Formula'
         Width = 159
@@ -128,7 +128,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tanggal'
+        FieldName = 'trans_date'
         Footers = <>
         Title.Caption = 'Tanggal Test Bakar'
         Width = 150
@@ -137,7 +137,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kesimpulan'
+        FieldName = #13#10'conclusion'
         Footers = <>
         Title.Caption = 'Kesimpulan'
       end
@@ -145,7 +145,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'persetujuan'
+        FieldName = 'agreement'
         Footers = <>
         Title.Caption = 'Persetujuan'
         Width = 100
@@ -154,7 +154,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'ket'
+        FieldName = 'notes'
         Footers = <>
         Title.Caption = 'Keterangan'
         Width = 124
@@ -173,7 +173,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tahun'
+        FieldName = 'trans_year'
         Footers = <>
         Title.Caption = 'Tahun'
         Visible = False
@@ -182,7 +182,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'bln'
+        FieldName = 'trans_month'
         Footers = <>
         Title.Caption = 'Bulan'
         Visible = False
@@ -191,7 +191,7 @@ object FResult_Formula: TFResult_Formula
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_no'
+        FieldName = 'trans_day'
         Footers = <>
         Title.Caption = 'Tanggal'
         Visible = False
@@ -200,7 +200,7 @@ object FResult_Formula: TFResult_Formula
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 0
-        Width = 941
+        Width = 980
         Height = 118
         Align = alClient
         DataSource = DsResultDet
@@ -213,7 +213,7 @@ object FResult_Formula: TFResult_Formula
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'deskripsi'
+            FieldName = 'description'
             Footers = <>
             Title.Caption = 'Deskripsi'
             Width = 300
@@ -818,8 +818,9 @@ object FResult_Formula: TFResult_Formula
     SQL.Strings = (
       
         'select A.*,b.Shift,b.mc from t_result_formula a inner join t_spk' +
-        '_formula B on A.nospk=B.no_spk'
-      ' order by noresult desc')
+        '_formula B on A.spk_no=B.spk_no'
+      ' order by result_no desc')
+    Active = True
     Left = 448
     Top = 16
   end
@@ -829,6 +830,7 @@ object FResult_Formula: TFResult_Formula
     Top = 64
   end
   object MemResult: TMemTableEh
+    Active = True
     Params = <>
     DataDriver = DsdResult
     Left = 520
@@ -844,16 +846,16 @@ object FResult_Formula: TFResult_Formula
     SQL.Strings = (
       'select * from t_result_formula_det')
     MasterSource = DsResult
-    MasterFields = 'noresult'
-    DetailFields = 'noresult'
+    MasterFields = 'result_no'
+    DetailFields = 'result_no'
     Left = 616
     Top = 24
     ParamData = <
       item
         DataType = ftString
-        Name = 'noresult'
+        Name = 'result_no'
         ParamType = ptInput
-        Value = '001/I/21/HKJ'
+        Value = nil
       end>
   end
   object DsResultDet: TDataSource
@@ -866,16 +868,15 @@ object FResult_Formula: TFResult_Formula
     SQL.Strings = (
       'select * from t_result_formula_det order by id Desc')
     MasterSource = DsResult
-    MasterFields = 'noresult'
-    DetailFields = 'noresult'
+    MasterFields = 'result_no'
+    DetailFields = 'result_no'
     Left = 688
     Top = 24
     ParamData = <
       item
-        DataType = ftString
-        Name = 'noresult'
-        ParamType = ptInput
-        Value = '001/I/21/HKJ'
+        DataType = ftUnknown
+        Name = 'result_no'
+        Value = nil
       end>
   end
   object DsResultDet2: TDataSource

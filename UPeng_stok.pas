@@ -112,8 +112,8 @@ DBGridTransfer.FinishLoadingStatus();
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code code2 from warehouse.t_item_comb a INNER JOIN '+
-      ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.wh_code order by a.trans_no asc';
+      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code code2 from t_item_comb a INNER JOIN '+
+      ' t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.wh_code order by a.trans_no asc';
       ExecSQL;
     end;
     QPeng_stok.Open;
@@ -128,8 +128,8 @@ DBGridTransfer.FinishLoadingStatus();
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code code2 from warehouse.t_item_comb a INNER JOIN '+
-      ' warehouse.t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.wh_code '+
+      sql.Text:='SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code code2 from t_item_comb a INNER JOIN '+
+      ' t_item_stock b on a.item_code=b.item_stock_code inner join t_wh c on a.wh_code=c.wh_code '+
       '  where a.sbu_code='+QuotedStr(loksbu)+' order by a.trans_no asc';
       ExecSQL;
     end;

@@ -3,8 +3,8 @@ object FNew_PO: TFNew_PO
   Top = 49
   BorderIcons = [biSystemMenu]
   Caption = 'Form New Purchase Order'
-  ClientHeight = 680
-  ClientWidth = 1210
+  ClientHeight = 679
+  ClientWidth = 1206
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,14 @@ object FNew_PO: TFNew_PO
   object pninput: TPanel
     Left = 0
     Top = 0
-    Width = 1210
+    Width = 1206
     Height = 243
     Align = alTop
     TabOrder = 0
+<<<<<<< Updated upstream
     ExplicitWidth = 1204
+=======
+>>>>>>> Stashed changes
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -682,11 +685,14 @@ object FNew_PO: TFNew_PO
   object Panel2: TPanel
     Left = 0
     Top = 508
-    Width = 1210
+    Width = 1206
     Height = 139
     Align = alTop
     TabOrder = 1
+<<<<<<< Updated upstream
     ExplicitWidth = 1204
+=======
+>>>>>>> Stashed changes
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -854,12 +860,15 @@ object FNew_PO: TFNew_PO
   object Panel1: TPanel
     Left = 0
     Top = 647
-    Width = 1210
-    Height = 33
+    Width = 1206
+    Height = 32
     Align = alClient
     TabOrder = 2
+<<<<<<< Updated upstream
     ExplicitWidth = 1204
     ExplicitHeight = 24
+=======
+>>>>>>> Stashed changes
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
@@ -1065,11 +1074,14 @@ object FNew_PO: TFNew_PO
   object Panel3: TPanel
     Left = 0
     Top = 243
-    Width = 1210
+    Width = 1206
     Height = 265
     Align = alTop
     TabOrder = 3
+<<<<<<< Updated upstream
     ExplicitWidth = 1204
+=======
+>>>>>>> Stashed changes
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1

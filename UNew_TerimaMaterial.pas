@@ -131,8 +131,8 @@ begin
   idmenu:=dm.Qtemp['submenu_code'];
   //idmenu:='M11008';
   strday2:=Dtterima.Date;
-  //EdNo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_item_receive','');
-  EdNo.Text:=getNourut(strday2,'purchase.t_item_receive','');
+  //EdNo.Text:=getNourutBlnPrshthn_kode(strday2,'t_item_receive','');
+  EdNo.Text:=getNourut(strday2,'t_item_receive','');
   Edurut.Text:=order_no;
 end;
 
@@ -262,7 +262,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from warehouse.t_item_stock_det where ' +
+        sql.Text:='select * from t_item_stock_det where ' +
                   'item_stock_code='+QuotedStr(MemterimaDet['item_stock_code'])+''+
                   'and stock_code='+QuotedStr(MemterimaDet['kd_stok']);
         Execute;
@@ -273,7 +273,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='	Update warehouse.t_item_stock_det set qty=qty +:parqty,"outstanding"=(qty +:parqty)- qtyout,unit=:parsatuan'+
+          sql.Text:='	Update t_item_stock_det set qty=qty +:parqty,"outstanding"=(qty +:parqty)- qtyout,unit=:parsatuan'+
                     ' ,remaining_sp=(qty +:parsisasp)- qtyout,price=:parharga where item_stock_code=:parkd_material_stok and stock_code=:parkd_stok';
                     ParamByName('parqty').Value:=MemterimaDet['qty'];
                     ParamByName('parsatuan').Value:=MemterimaDet['satuan'];
@@ -291,7 +291,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='	INSERT INTO warehouse.t_item_stock_det(item_stock_code,stock_code,qty,'+
+          sql.Text:='	INSERT INTO t_item_stock_det(item_stock_code,stock_code,qty,'+
                     ' unit,qtyout,outstanding,wh_code,qtysp,remaining_sp,price,reciving_date)VALUES(:parkd_material_stok,:parkd_stok,'+
                     ' :parqty,:parsatuan,:parqtyout,:parOut,:pargudang,:parqtysp,:parsisasp,:parharga,:partgl)';
                     ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
@@ -381,14 +381,14 @@ begin
             begin
               close;
               sql.Clear;
-              sql.Text:='select * from purchase.t_item_receive ';
+              sql.Text:='select * fromt_item_receive ';
               ExecSQL;
             end;
             with dm.Qtemp do
             begin
               close;
               sql.Clear;
-              sql.Text:=' insert into purchase.t_item_receive(receive_no,receive_date,remark,spb_no,sj_no,faktur_no,'+
+              sql.Text:=' insert into t_item_receive(receive_no,receive_date,remark,spb_no,sj_no,faktur_no,'+
                         ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                         ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
                         ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no)values(:parno_terima,'+
@@ -437,7 +437,7 @@ begin
               begin
                 Close;
                 sql.Clear;
-                sql.Text:=' insert into purchase.t_item_receive_det(item_stock_code,stock_code,qty,unit,wh_code,'+
+                sql.Text:=' insert into t_item_receive_det(item_stock_code,stock_code,qty,unit,wh_code,'+
                           ' trans_year,po_no,receive_no,qty_po,unit_po,qty_difference,qty_per_conversion,qty_conversion,'+
                           ' unit_conversion,subtotal,ppn,ppn_rp,pph,pph_rp,grandtotal,price,account_code,'+
                           //' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no)values(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
@@ -494,7 +494,7 @@ begin
               begin
                 close;
                 sql.Clear;
-                sql.Text:='Update purchase.t_spb set status=''Selesai'' where spb_no='+QuotedStr(EdNoSPB.Text);
+                sql.Text:='Update t_spb set status=''Selesai'' where spb_no='+QuotedStr(EdNoSPB.Text);
                 ExecSQL;
               end;
             end;
@@ -575,9 +575,9 @@ begin
         SQL.Clear;
         SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
                   ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
-                  ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from warehouse.t_item_stock a '+
-                  ' inner join purchase.t_podetail b on a.item_stock_code=b.item_stock_code '+
-                  ' inner join purchase.t_po c on b.po_no=c.po_no '+
+                  ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a '+
+                  ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
+                  ' inner join t_po c on b.po_no=c.po_no '+
                   ' inner join t_item e on a.item_code=e.item_code '+
                   ' inner join t_wh f on c.warehouse=f.wh_name'+
                   ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and b.remaining_qty > 0'+
@@ -594,10 +594,10 @@ begin
     SQL.Clear;
     SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,d.qty, '+
               ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, d.spb_no,e.account_code'+
-              ' , c.due_date ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from warehouse.t_item_stock a '+
-              ' inner join purchase.t_podetail b on a.item_stock_code=b.item_stock_code '+
-              ' inner join purchase.t_po c on b.po_no=c.po_no '+
-              ' inner join purchase.t_spb_det d on b.po_no=d.po_no and d.item_stock_code=b.item_stock_code '+
+              ' , c.due_date ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a '+
+              ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
+              ' inner join t_po c on b.po_no=c.po_no '+
+              ' inner join t_spb_det d on b.po_no=d.po_no and d.item_stock_code=b.item_stock_code '+
               ' inner join t_item e on a.item_code=e.item_code '+
               ' inner join t_wh f on c.wh_code=f.wh_code'+
               ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+'and d.spb_no='+QuotedStr(EdNoSPB.Text)+''+
@@ -668,9 +668,9 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name,avg(c.um_value) umpo'+
-      ' FROM purchase.t_spb a inner join t_supplier b on a.supplier_code=b.supplier_code '+
-      ' Left join (select a.*,b.spb_no from purchase.t_po A INNER JOIN purchase.t_spb_det b on a.po_no=b.po_no ) c on a.spb_no=c.spb_no '+
-      ' Left join (SELECT AVG(a.pay)as um ,a.account_code,a.voucher_no,b.account_name FROM purchase.t_payment_detail_real a inner join'+
+      ' FROM t_spb a inner join t_supplier b on a.supplier_code=b.supplier_code '+
+      ' Left join (select a.*,b.spb_no from t_po A INNER JOIN t_spb_det b on a.po_no=b.po_no ) c on a.spb_no=c.spb_no '+
+      ' Left join (SELECT AVG(a.pay)as um ,a.account_code,a.voucher_no,b.account_name FROM t_payment_detail_real a inner join'+
       ' t_ak_account b on a.account_code=b.code GROUP BY a.account_code,a.voucher_no,b.account_name) as d on a.po_no=d.voucher_no '+
       ' where a.spb_no='+QuotedStr(EdNoSPB.Text)+''+
       ' GROUP BY  c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name';
@@ -728,9 +728,9 @@ begin
           with Dm.Qtemp do
           begin
            close;
-           sql.Text:=' select a.*,b.supplier_name from purchase.t_spb a left join t_supplier b on '+
-                     ' a.supplier_code=b.supplier_code WHERE a.spb_no in (select spb_no from purchase.t_spb'+
-                     ' EXCEPT select spb_no from purchase.t_item_receive) and "approval_status"=''1'' '+
+           sql.Text:=' select a.*,b.supplier_name from t_spb a left join t_supplier b on '+
+                     ' a.supplier_code=b.supplier_code WHERE a.spb_no in (select spb_no from t_spb'+
+                     ' EXCEPT select spb_no from t_item_receive) and "approval_status"=''1'' '+
                      ' and trans_category='+QuotedStr(Edjenis.Text)+''+
                      ' order by spb_no asc';
             ExecSQL;
@@ -760,9 +760,9 @@ begin
           with Dm.Qtemp do
           begin
             close;
-            sql.Text:=' select a.*,b.supplier_name from purchase.t_spb a left join t_supplier b on '+
-                     ' a.supplier_code=b.supplier_code WHERE a.spb_no in (select spb_no from purchase.t_spb'+
-                     ' EXCEPT select spb_no from purchase.t_item_receive) and a."approval_status"=''1'''+
+            sql.Text:=' select a.*,b.supplier_name from t_spb a left join t_supplier b on '+
+                     ' a.supplier_code=b.supplier_code WHERE a.spb_no in (select spb_no from t_spb'+
+                     ' EXCEPT select spb_no from t_item_receive) and a."approval_status"=''1'''+
                      ' and ( sbu_code='+QuotedStr(loksbu)+' or sbu_code='''' or sbu_code=''MLB'') '+
                      ' and trans_category='+QuotedStr(Edjenis.Text)+''+
                      ' order by sbu_code asc';

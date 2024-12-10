@@ -26,7 +26,6 @@ object FPeng_Stok: TFPeng_Stok
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 998
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -171,7 +170,7 @@ object FPeng_Stok: TFPeng_Stok
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 961
+        Width = 957
         Height = 118
         Align = alClient
         DataSource = DsDetail
@@ -355,6 +354,7 @@ object FPeng_Stok: TFPeng_Stok
     end
     object dxBarBaru: TdxBarLargeButton
       Action = ActBaru
+      Caption = 'New  '
       Category = 0
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -671,10 +671,8 @@ object FPeng_Stok: TFPeng_Stok
     SQL.Strings = (
       
         'SELECT a.*,b.item_name,b.item_code as kdmat,c.wh_name,c.wh_code ' +
-        'code2  from warehouse.t_item_comb a '
-      
-        'INNER JOIN warehouse.t_item_stock b on a.item_code=b.item_stock_' +
-        'code '
+        'code2  from t_item_comb a '
+      'INNER JOIN t_item_stock b on a.item_code=b.item_stock_code '
       'inner join t_wh c on a.wh_code=c.wh_code order by a.trans_no asc')
     Left = 288
     Top = 40
@@ -705,9 +703,9 @@ object FPeng_Stok: TFPeng_Stok
       #9'a.qty, '
       #9'a.unit, '
       #9'a.trans_no,b.item_code'
-      'FROM'#9'warehouse.t_item_comb_det AS "a"'
+      'FROM'#9't_item_comb_det AS "a"'
       #9'INNER JOIN'
-      #9'warehouse.t_item_stock AS b'
+      #9't_item_stock AS b'
       #9'ON a.item_stock_code= b.item_stock_code')
     MasterSource = DsPeng_stok
     MasterFields = 'trans_no'
@@ -800,7 +798,7 @@ object FPeng_Stok: TFPeng_Stok
     DataSet = QRptPeng_stok
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 733
+    Left = 693
     Top = 12
   end
   object ActMenu: TActionManager

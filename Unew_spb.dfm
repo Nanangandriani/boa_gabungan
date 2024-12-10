@@ -3,8 +3,8 @@ object FNew_SPB: TFNew_SPB
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form New Surat Perintah Bongkar'
-  ClientHeight = 562
-  ClientWidth = 655
+  ClientHeight = 561
+  ClientWidth = 651
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object FNew_SPB: TFNew_SPB
   OnDestroy = FormDestroy
   OnShow = FormShow
   DesignSize = (
-    655
-    562)
+    651
+    561)
   TextHeight = 15
   object Label17: TLabel
     Left = 25
@@ -256,8 +256,8 @@ object FNew_SPB: TFNew_SPB
   end
   object DBGridEh2: TDBGridEh
     Left = 0
-    Top = 264
-    Width = 655
+    Top = 263
+    Width = 651
     Height = 266
     Align = alBottom
     DataSource = DsDetail
@@ -346,8 +346,8 @@ object FNew_SPB: TFNew_SPB
   object DBGridEh1: TDBGridEh
     Left = 669
     Top = -3
-    Width = 445
-    Height = 451
+    Width = 437
+    Height = 450
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColumnDefValues.AlwaysShowEditButton = True
     Ctl3D = False
@@ -428,13 +428,11 @@ object FNew_SPB: TFNew_SPB
   end
   object Panel1: TPanel
     Left = 0
-    Top = 530
-    Width = 655
+    Top = 529
+    Width = 651
     Height = 32
     Align = alBottom
     TabOrder = 14
-    ExplicitTop = 529
-    ExplicitWidth = 651
     object BBatal: TRzBitBtn
       Left = 579
       Top = 1

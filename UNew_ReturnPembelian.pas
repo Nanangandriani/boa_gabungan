@@ -118,7 +118,7 @@ procedure TFNew_ReturnPemb.Autonumber;
 begin
   idmenu:='M11005';
   strday2:=DtReturn.Date;
-  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_purchase_return','');
+  Edno.Text:=getNourutBlnPrshthn_kode(strday2,'t_purchase_return','');
   Edurut.Text:=order_no;
 end;
 
@@ -170,14 +170,14 @@ begin
             begin
               close;
               sql.Clear;
-              sql.Text:='select * from purchase.t_purchase_return';
+              sql.Text:='select * from t_purchase_return';
               ExecSQL;
             end;
             with dm.Qtemp do
             begin
               close;
               sql.Clear;
-              sql.Text:=' insert into purchase.t_purchase_return(return_no,return_date,faktur_no,price,total_price,'+
+              sql.Text:=' insert into t_purchase_return(return_no,return_date,faktur_no,price,total_price,'+
                         ' ppn, supplier_code,receive_no,valas,valas_value,trans_year,trans_month,trans_day,order_no,ppn_rp,pic)values(:parno,:partgl,:parnofk,:parharga,:partotal,'+
                         ' :parppn,:parkdsp,:parnotr,:parvls,:parnvls,:parthn,:parbln,:partglno,:parnourut,:parppnrp,:parpic)';
                         ParamByName('parno').Value:=Edno.Text;
@@ -206,7 +206,7 @@ begin
                 begin
                   Close;
                   sql.Clear;
-                  sql.Text:='	insert into purchase.t_purchase_return_det(return_no,faktur_no,po_no,item_stock_code,'+
+                  sql.Text:='	insert into t_purchase_return_det(return_no,faktur_no,po_no,item_stock_code,'+
                             ' qty,unit,stock_code,price,total_price,receive_no)values(:parno,:parnofk,:parnopo, '+
                             ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr)';
                             ParamByName('parno').Value:=Edno.Text;
@@ -234,7 +234,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Update purchase.t_purchase_return set return_date=:partgl,faktur_no=:parnofk,price=:parharga,'+
+            sql.Text:='Update t_purchase_return set return_date=:partgl,faktur_no=:parnofk,price=:parharga,'+
                       ' total_price=:partotal,ppn=:parppn,supplier_code=:parkdsp,valas=:parvls,valas_value=:parnvls,'+
                       ' receive_no=:parnotr,ppn_rp=:parppnrp,pic_update=:parpic where return_no=:parno';
                       ParamByName('parno').Value:=Edno.Text;
@@ -255,7 +255,7 @@ begin
           begin
             Close;
             sql.Clear;
-            sql.Text:='	delete from purchase.t_purchase_return_det where return_no='+QuotedStr(Edno.Text);
+            sql.Text:='	delete from t_purchase_return_det where return_no='+QuotedStr(Edno.Text);
             ExecSQL;
           end;
           MemDetail.First;
@@ -265,7 +265,7 @@ begin
               begin
                 Close;
                 sql.Clear;
-                sql.Text:='	insert into purchase.t_purchase_return_det(return_no,faktur_no,po_no, item_stock_code,'+
+                sql.Text:='	insert into t_purchase_return_det(return_no,faktur_no,po_no, item_stock_code,'+
                           ' qty,unit,stock_code,price,total_price,receive_no)values(:parno,:parnofk,:parnopo, '+
                           ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr)';
                           ParamByName('parno').Value:=Edno.Text;
@@ -393,7 +393,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_item_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
+      sql.Text:='select * from t_item_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
       Execute;
     end;
     edno_terima.Items.Clear;
@@ -411,7 +411,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_item_receive where Receive_no='+QuotedStr(edno_terima.Text);
+      sql.Text:='select * from t_item_receive where Receive_no='+QuotedStr(edno_terima.Text);
       Execute;
     end;
       EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];

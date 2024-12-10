@@ -945,43 +945,6 @@ object FReturnPembelian: TFReturnPembelian
       Enabled = False
     end
   end
-  object DBPerusahaan: TfrxDBDataset
-    UserName = 'DBPerusahaan'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'company_code=company_code'
-      'company_name=company_name'
-      'address=address'
-      'telp=telp'
-      'email=email'
-      'npwp=npwp'
-      'city=city'
-      'address2=address2'
-      'id=id'
-      'created_at=created_at'
-      'created_by=created_by'
-      'updated_at=updated_at'
-      'updated_by=updated_by'
-      'deleted_at=deleted_at'
-      'deleted_by=deleted_by'
-      'type_of_business=type_of_business'
-      'latitude=latitude'
-      'longitude=longitude'
-      'tax_status=tax_status'
-      'currency=currency')
-    DataSet = QPerusahaan
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 792
-    Top = 80
-  end
-  object QPerusahaan: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from t_company where deleted_at is Null')
-    Left = 733
-    Top = 80
-  end
   object frxReport1: TfrxReport
     Version = '2022.2.7'
     DotMatrixReport = False
@@ -1000,10 +963,6 @@ object FReturnPembelian: TFReturnPembelian
     Left = 678
     Top = 108
     Datasets = <
-      item
-        DataSet = DBPerusahaan
-        DataSetName = 'DBPerusahaan'
-      end
       item
         DataSet = frxDBReturnPemb
         DataSetName = 'frxDBDo'
@@ -2022,9 +1981,9 @@ object FReturnPembelian: TFReturnPembelian
       #9'a.total_price, '
       #9'a.ppn, '
       #9'a.price '
-      'from purchase.t_purchase_return A '
+      'from t_purchase_return A '
       'inner join t_supplier D on A.supplier_code=D.supplier_code'
-      'inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no'
+      'inner join t_item_receive f on a.faktur_no=f.faktur_no'
       'Group by d.supplier_name, '
       #9'f.faktur_date, '
       #9'd.address, '
@@ -2058,10 +2017,8 @@ object FReturnPembelian: TFReturnPembelian
     SQL.Strings = (
       
         'select a.qty,a.price,a.total_price,b.item_name,a.return_no from ' +
-        'purchase.t_purchase_return_det a '
-      
-        'inner join warehouse.t_item_stock b on a.item_stock_code=b.item_' +
-        'stock_code')
+        't_purchase_return_det a '
+      'inner join t_item_stock b on a.item_stock_code=b.item_stock_code')
     MasterSource = DsRptReturnPemb
     MasterFields = 'return_no'
     DetailFields = 'return_no'
@@ -2083,8 +2040,8 @@ object FReturnPembelian: TFReturnPembelian
   object QDetail: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT a.*,b.item_name from purchase.t_purchase_return_det a'
-      'inner join warehouse.t_item_stock AS b '
+      'SELECT a.*,b.item_name from t_purchase_return_det a'
+      'inner join t_item_stock AS b '
       'ON a.item_stock_code = b.item_stock_code'
       'ORDER BY  id asc')
     MasterSource = DsReturnPembelian
@@ -2132,8 +2089,7 @@ object FReturnPembelian: TFReturnPembelian
       
         #9'a.faktur_no, a.price,a.total_price,a.ppn,(a.price/100)*a.ppn as' +
         ' ppnrp'
-      'FROM'
-      #9'purchase.t_purchase_return AS "a"'
+      'FROM    t_purchase_return AS "a"'
       #9'INNER JOIN'
       #9't_supplier AS d'
       #9'ON a.supplier_code = d.supplier_code'

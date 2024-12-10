@@ -241,8 +241,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' Select * from warehouse.t_master_formula_test where formula_no in (select formula_no from warehouse.t_master_formula_test'+
-                ' EXCEPT select formula_no from warehouse.t_spk_formula)';
+      sql.Text:=' Select * from t_master_formula_test where formula_no in (select formula_no from t_master_formula_test'+
+                ' EXCEPT select formula_no from t_spk_formula)';
       ExecSQL;
     end;
     Dm.Qtemp.First;
@@ -274,8 +274,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' Select * from warehouse.t_master_formula_test where formula_no in (select formula_no from warehouse.t_master_formula_test'+
-              ' EXCEPT select formula_no from warehouse.t_spk_formula) and sbu_code='+QuotedStr(loksbu);
+    sql.Text:=' Select * from t_master_formula_test where formula_no in (select formula_no from t_master_formula_test'+
+              ' EXCEPT select formula_no from t_spk_formula) and sbu_code='+QuotedStr(loksbu);
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -438,7 +438,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from warehouse.t_master_formula_test where formula_no='+QuotedStr(EdNo_Formula.Text);
+    sql.Text:='select * from t_master_formula_test where formula_no='+QuotedStr(EdNo_Formula.Text);
     ExecSQL;
   end;
   DtPMulai.Date:=Dm.Qtemp2['prod_start_date'];
@@ -448,11 +448,11 @@ begin
   begin
     sql.Clear;
     sql.Text:='select A.*,E.trial_date,E.formula_date,E.est_prod_date,E.product_code,C.item_name,'+
-              ' D.supplier_name,f.wh_name from warehouse.t_master_formula_test_det A '+
-              ' left join warehouse.t_item_stock B on A.item_stock_code=B.item_stock_code '+
+              ' D.supplier_name,f.wh_name from t_master_formula_test_det A '+
+              ' left join t_item_stock B on A.item_stock_code=B.item_stock_code '+
               ' left join t_item C on B.item_name=C.item_name '+
               ' left join t_supplier D on B.supplier_code=D.supplier_code '+
-              ' INNER JOIN warehouse.t_master_formula_test E ON A.formula_no=E.formula_no '+
+              ' INNER JOIN t_master_formula_test E ON A.formula_no=E.formula_no '+
               ' INNER join t_wh f on a.wh_code=f.wh_code'+
               ' where A.formula_no='+QuotedStr(EdNo_Formula.Text) +''+
               ' order by a.detail_id Desc ';
@@ -547,7 +547,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from warehouse.t_spk_formula';
+        sql.Text:='select * from t_spk_formula';
         ExecSQL;
       end;
       //sGauge1.visible:=true;
@@ -555,7 +555,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' update warehouse.t_spk_formula set '+
+        sql.Text:=' update t_spk_formula set '+
                   ' trial_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtTest.date))+','+
                   ' formula_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.date))+','+
                   ' prod_start_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtPMulai.date))+','+
@@ -574,14 +574,14 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from warehouse.t_spk_formula_det';
+        sql.Text:='select * from t_spk_formula_det';
         ExecSQL;
       end;
       with dm.Qtemp2 do
       begin
         close;
         sql.Clear;
-        sql.Text:='delete from warehouse.t_spk_formula_det where spk_no='+QuotedStr(Edno.Text);
+        sql.Text:='delete from t_spk_formula_det where spk_no='+QuotedStr(Edno.Text);
         ExecSQL;
       end;
       Memformuladet.First;
@@ -591,7 +591,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:=' insert into warehouse.t_spk_formula_det(spk_no,wh_code,item_stock_code,stock_code, '+
+          sql.Text:=' insert into t_spk_formula_det(spk_no,wh_code,item_stock_code,stock_code, '+
                     ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit, '+
                     ' wh_code2,total_give,total_receive,type) '+
                     ' values(:parno_spk,:pargudang,:parkd_material_stok,:parkd_stok, '+
@@ -644,7 +644,7 @@ begin
   end;
   idmenu:=dm.Qtemp['submenu_code'];
   strday2:=DtTest.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_spk_formula','');
+  Edno.Text:=getNourut(strday2,'t_spk_formula','');
   if messageDlg ('Anda Yakin Simpan SPK No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
   if not dm.koneksi.InTransaction then
@@ -655,14 +655,14 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='select * from warehouse.t_spk_formula';
+          sql.Text:='select * from t_spk_formula';
           ExecSQL;
         end;
         with dm.Qtemp do
         begin
           close;
           sql.Clear;
-          sql.Text:=' insert into warehouse.t_spk_formula(formula_no,trial_date,formula_date,est_prod_date,amount_weight,shift,spk_no,'+
+          sql.Text:=' insert into t_spk_formula(formula_no,trial_date,formula_date,est_prod_date,amount_weight,shift,spk_no,'+
                     ' mc,product_code,type,prod_start_date,prod_end_date,sbu_code,status,trans_year,trans_month,trans_day,order_no,wh_code,created_by) '+
                     ' values('+quotedstr(EdNo_Formula.Text)+','+QuotedStr(FormatDateTime('yyy-mm-dd',DtTest.date))+','+
                     ''+QuotedStr(Formatdatetime('yyy-mm-dd',DtMulai.date))+','+QuotedStr(Edperkiraan.Text)+','+
@@ -678,7 +678,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='select * from warehouse.t_spk_formula_det';
+          sql.Text:='select * from t_spk_formula_det';
           ExecSQL;
         end;
         Memformuladet.First;
@@ -688,7 +688,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:=' insert into warehouse.t_spk_formula_det(spk_no,wh_code,item_stock_code,stock_code, '+
+            sql.Text:=' insert into t_spk_formula_det(spk_no,wh_code,item_stock_code,stock_code, '+
                       ' index,unit,supplier_code,total_weight,pack_qty,total_pack,pack_unit,wh_code2,total_give,total_receive,type) '+
                       ' values(:parno_spk,:pargudang,:parkd_material_stok,:parkd_stok, '+
                       ' :parindex,:parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,'+
@@ -717,7 +717,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='update warehouse.t_master_formula_test set spk_status=''f'' where formula_no='+QuotedStr(EdNo_Formula.Text);
+          sql.Text:='update t_master_formula_test set spk_status=''f'' where formula_no='+QuotedStr(EdNo_Formula.Text);
           ExecSQL;
         end;
          dm.koneksi.Commit;

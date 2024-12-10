@@ -170,7 +170,7 @@ with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select max("left"(order_no,3)) as nourut from purchase.t_item_receive_det where item_stock_code='+QuotedStr(Edkd_material.Text)+''+
+    sql.Text:='select max("left"(order_no,3)) as nourut from t_item_receive_det where item_stock_code='+QuotedStr(Edkd_material.Text)+''+
               ' and trans_year='+QuotedStr(thn);
     open;
   end;
@@ -225,7 +225,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from warehouse.t_item_request2 where Status=''0'''; // and (kd_material_stok=''ETKA'' or kd_material_stok=''ETKB'' or kd_material_stok=''ETKC'' or kd_material_stok=''ETKD'')';
+      sql.Text:='select * from t_item_request2 where Status=''0'''; // and (kd_material_stok=''ETKA'' or kd_material_stok=''ETKB'' or kd_material_stok=''ETKC'' or kd_material_stok=''ETKD'')';
       Execute;
     end;
     Dm.Qtemp.First;
@@ -256,7 +256,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from warehouse.t_item_request2 where Status=''0'' and sbu_code='+Quotedstr(loksbu); // and (kd_material_stok=''ETKA'' or kd_material_stok=''ETKB'' or kd_material_stok=''ETKC'' or kd_material_stok=''ETKD'')';
+      sql.Text:='select * from t_item_request2 where Status=''0'' and sbu_code='+Quotedstr(loksbu); // and (kd_material_stok=''ETKA'' or kd_material_stok=''ETKB'' or kd_material_stok=''ETKC'' or kd_material_stok=''ETKD'')';
       Execute;
     end;
     Dm.Qtemp.First;
@@ -329,12 +329,12 @@ begin
         begin
           idmenu:='M04009';
           strday2:=DtTanggal.Date;
-          Edno.Text:=getNourut(strday2,'warehouse.t_item_receive3','');
+          Edno.Text:=getNourut(strday2,'t_item_receive3','');
          with dm.Qtemp do
           begin
             close;
             sql.Clear;
-            sql.Text:='insert into warehouse.t_item_receive3(item_stock_code,stock_code,qty,unit,wh_code, '+
+            sql.Text:='insert into t_item_receive3(item_stock_code,stock_code,qty,unit,wh_code, '+
                       ' trans_year,receive_no,trans_date,price,total_price,request_no,order_no,created_by,trans_month,trans_day)values('+
                       ' :parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,:partahun, '+
                       ' :parno_terima,:partgl_terima,:parharga,:partotal_harga,:parno_permt,:parnourut,:pic,:bln,:hari)';
@@ -359,7 +359,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Update warehouse.t_item_request2 set status=''1'' where request_no='+QuotedStr(EdNo_Permt.Text);
+            sql.Text:='Update t_item_request2 set status=''1'' where request_no='+QuotedStr(EdNo_Permt.Text);
             ExecSQL;
           end;
         end;
@@ -369,7 +369,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Update warehouse.t_item_receive3 set item_stock_code=:parkd_material_stok,  '+
+            sql.Text:='Update t_item_receive3 set item_stock_code=:parkd_material_stok,  '+
                       ' stock_code=:parkd_stok,qty=:parqty,unit=:parsatuan,wh_code=:pargudang, '+
                       ' trans_year=:partahun,trans_date=:partgl_terima,price=:parharga,total_price='+
                       ' :partotal_harga,request_no=:parno_permt,updated_at=now(),updated_by=:pic where receive_no=:parno_terima';

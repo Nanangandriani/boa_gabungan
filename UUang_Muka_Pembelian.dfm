@@ -691,7 +691,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       'select a.*,b.supplier_name '
-      'from purchase.t_advance_payment a'
+      'from t_advance_payment a'
       'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code'
       'group by a.supplier_code,b.supplier_name,a.no_trans'
       'order by a.no_trans DESC')

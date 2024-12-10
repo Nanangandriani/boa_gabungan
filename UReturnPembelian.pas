@@ -58,8 +58,6 @@ type
     DBGridEh1: TDBGridEh;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
-    DBPerusahaan: TfrxDBDataset;
-    QPerusahaan: TUniQuery;
     frxReport1: TfrxReport;
     frxDBReturnPemb: TfrxDBDataset;
     DsRptReturnPemb: TDataSource;
@@ -182,15 +180,14 @@ begin
    QRptDet.Close;
    QRptDet.Open;}
 
-   QPerusahaan.Close;
-   QPerusahaan.Open;
+  dm.refreshPerusahaan;
    with QRptReturnPemb do
    begin
       close;
       sql.Clear;
       sql.Text:=' select	d.supplier_name,f.faktur_date,d.address,d.npwp,((a.price/100)*a.ppn) AS ppn_rp,a.return_no,a.return_date,a.faktur_no,a.total_price,'+
-                ' a.ppn,a.price,a.valas,a.valas_value from purchase.t_purchase_return a inner join t_supplier d on a.supplier_code=d.supplier_code '+
-                ' inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no  where a.return_no='+QuotedStr(DBGridReturnPemb.Fields[3].asstring)+''+
+                ' a.ppn,a.price,a.valas,a.valas_value from t_purchase_return a inner join t_supplier d on a.supplier_code=d.supplier_code '+
+                ' inner join t_item_receive f on a.faktur_no=f.faktur_no  where a.return_no='+QuotedStr(DBGridReturnPemb.Fields[3].asstring)+''+
                 ' Group by d.supplier_name,f.faktur_date,d.address,d.npwp,a.return_no,a.return_date,a.faktur_no,a.total_price,a.ppn,a.price,a.valas,a.valas_value ';
       ExecSQL;
    end;

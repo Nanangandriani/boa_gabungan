@@ -156,8 +156,8 @@ begin
          sql.Clear;
          sql.Text:='SELECT a.statusby,c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit,b.wh_code,'+
          ' d.wh_name,c.item_name,a.supplier_code,a.sbu_code,a.approval_status from (select a.*,'+
-         ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from purchase.t_po a left join purchase.t_purchase_invoice b on a.po_no=b.ref_no)  a '+
-         ' INNER JOIN purchase.t_podetail b on a.po_no=b.po_no '+
+         ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from t_po a left join t_purchase_invoice b on a.po_no=b.ref_no)  a '+
+         ' INNER JOIN t_podetail b on a.po_no=b.po_no '+
          ' inner join warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code  '+
          ' INNER JOIN t_wh d on d.wh_code=a.wh_code where b.remaining_sp <>0 and a.approval_status=''1'''+
          ' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND trans_category='+QuotedStr(CbCategori.Text)+' ';
@@ -172,8 +172,8 @@ begin
          sql.Clear;
          sql.Text:='SELECT a.statusby,c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit,b.wh_code,'+
          ' d.wh_name,c.item_name,a.supplier_code,a.sbu_code,a.approval_status from (select a.*,'+
-         ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from purchase.t_po a left join purchase.t_purchase_invoice b on a.po_no=b.ref_no)  a '+
-         ' INNER JOIN purchase.t_podetail b on a.po_no=b.po_no '+
+         ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from t_po a left join t_purchase_invoice b on a.po_no=b.ref_no)  a '+
+         ' INNER JOIN t_podetail b on a.po_no=b.po_no '+
          ' inner join warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code  '+
          ' INNER JOIN t_wh d on d.wh_code=a.wh_code where b.remaining_sp <>0 and a.approval_status=''1'''+
          ' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND trans_category='+QuotedStr(CbCategori.Text)+' and a.sbu_code='+QuotedStr(loksbu);
@@ -221,7 +221,7 @@ procedure TFNew_SPB.autonumber;
 begin
   idmenu:='M11003';
   strday2:=Dtspb.Date;
-  EdNoSpb.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_spb','');
+  EdNoSpb.Text:=getNourutBlnPrshthn_kode(strday2,'t_spb','');
   Edurut.Text:=order_no;
 end;
 
@@ -240,14 +240,14 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='select * from purchase.t_spb';
+            sql.Text:='select * from t_spb';
             ExecSQL;
           end;
           with dm.Qtemp do
           begin
             close;
             sql.Clear;
-            sql.Text:='Update purchase.t_spb set spb_date=:partgl_spb, pic=:parpic,vehicle_no=:parnokend,'+
+            sql.Text:='Update t_spb set spb_date=:partgl_spb, pic=:parpic,vehicle_no=:parnokend,'+
                       ' supplier_code=:parkd_supplier,sbu_code=:parkd_sbu,driver=:pardriver,po_no=:parnopo,'+
                       ' handover_time=:parjamserah,return_time=:parjamkembali,return_date=:partglkembali, '+
                       ' remark=:parket,to_at=:Parkepada,order_no=:parnourut where spb_no=:parnospb';
@@ -272,7 +272,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Delete from purchase.t_spb_det where spb_no='+QuotedStr(EdnoSpb.Text);
+            sql.Text:='Delete from t_spb_det where spb_no='+QuotedStr(EdnoSpb.Text);
             ExecSQL;
           end;
           Memdetail.First;
@@ -282,7 +282,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Insert Into purchase.t_spb_det(spb_no,po_no,item_stock_code,qty,unit,wh_code)'+
+            sql.Text:='Insert Into t_spb_det(spb_no,po_no,item_stock_code,qty,unit,wh_code)'+
                       'Values(:parnospb,:parnopo,:parkd_material,:parqty,:parsatuan,:pargudang)';
                        ParamByName('parnospb').Value:=EdnoSpb.Text;
                        ParamByName('parnopo').Value:=Memdetail['nopo'];
@@ -328,14 +328,14 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from purchase.t_spb ';
+        sql.Text:='select * from t_spb ';
         ExecSQL;
       end;
       with dm.Qtemp do
       begin
         close;
         sql.Clear;
-        sql.Text:='insert into purchase.t_spb(supplier_code,spb_no,spb_date, pic,vehicle_no,driver,approval_status,'+
+        sql.Text:='insert into t_spb(supplier_code,spb_no,spb_date, pic,vehicle_no,driver,approval_status,'+
                   ' sbu_code,recept_time,handover_time,return_date,return_time,remark,to_at,trans_year,trans_month,trans_day,po_no,order_no,trans_category)values'+
                   ' (:parkd_supplier,:parnospb,:partgl_spb,:parpic,:parnokend,:pardriver,:parstatus_ap, '+
                   ' :parkd_sbu,:parjamterima,:parjamserah,:partglkembali,:parjamkembali,:parket,:parkepada,:parth,:parbln,:parhr,:parnopo,'+
@@ -370,7 +370,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:=' Insert Into purchase.t_spb_det(spb_no,po_no,item_stock_code,qty,unit,wh_code)'+
+            sql.Text:=' Insert Into t_spb_det(spb_no,po_no,item_stock_code,qty,unit,wh_code)'+
                       ' Values(:parnospb,:parnopo,:parkd_material,:parqty,:parsatuan,:pargudang)';
                        ParamByName('parnospb').Value:=EdnoSpb.Text;
                        ParamByName('parnopo').Value:=Memdetail['nopo'];

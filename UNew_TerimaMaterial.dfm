@@ -2,8 +2,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
   Left = 0
   Top = 0
   Caption = 'Form New Terima Barang'
-  ClientHeight = 522
-  ClientWidth = 1030
+  ClientHeight = 521
+  ClientWidth = 1026
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,11 +16,10 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1030
+    Width = 1026
     Height = 241
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1026
     object Label1: TLabel
       Left = 24
       Top = 42
@@ -507,13 +506,11 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
   end
   object Panel1: TPanel
     Left = 0
-    Top = 490
-    Width = 1030
+    Top = 489
+    Width = 1026
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 489
-    ExplicitWidth = 1026
     object BBatal: TRzBitBtn
       Left = 954
       Top = 1
@@ -713,13 +710,11 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
   object RzPanel1: TRzPanel
     Left = 0
     Top = 241
-    Width = 1030
-    Height = 249
+    Width = 1026
+    Height = 248
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1026
-    ExplicitHeight = 248
     object DBGridDetailpo: TDBGridEh
       Left = 2
       Top = 2

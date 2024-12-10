@@ -152,7 +152,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:=' select "max"(order_no) as no_urut from purchase.t_item_receive_det '+
+          sql.Text:=' select "max"(order_no) as no_urut from t_item_receive_det '+
                     ' where item_stock_code='+QuotedStr(kd_mat)+''+
                     ' and trans_year='+QuotedStr(DTth.Text);
           open;
@@ -569,7 +569,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:=' SELECT a.*,b.supplier_name from purchase.t_advance_payment a '+
+          sql.Text:=' SELECT a.*,b.supplier_name from t_advance_payment a '+
                     ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code   '+
                     ' WHERE a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND a.po_no='+QuotedStr(Cb_ref.Text)+' '+
                     ' AND a.um_status=false '+
@@ -588,11 +588,11 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:=' SELECT a.*,b.supplier_name,c.receive_no,d.spb_no,e.po_no from purchase.t_advance_payment a '+
+          sql.Text:=' SELECT a.*,b.supplier_name,c.receive_no,d.spb_no,e.po_no from t_advance_payment a '+
                     ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code   '+
-                    ' INNER JOIN purchase.t_item_receive c on b.supplier_code=c.supplier_code '+
-                    ' INNER JOIN purchase.t_spb d on c.spb_no=d.spb_no '+
-                    ' INNER JOIN purchase.t_po e on d.po_no=e.po_no '+
+                    ' INNER JOIN t_item_receive c on b.supplier_code=c.supplier_code '+
+                    ' INNER JOIN t_spb d on c.spb_no=d.spb_no '+
+                    ' INNER JOIN t_po e on d.po_no=e.po_no '+
                     ' WHERE a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND a.po_no='+QuotedStr(Cb_ref.Text)+' '+
                     ' AND a.um_status=false '+
                     ' GROUP BY a.supplier_code,b.supplier_name,a.no_trans,c.receive_no,d.spb_no,e.po_no '+

@@ -250,7 +250,7 @@ begin
     with Dm.Qtemp do
     begin
       close;
-      sql.Text:='SELECT * from purchase.t_ref_po where status=''true'' ';
+      sql.Text:='SELECT * from t_ref_po where status=''true'' ';
       Open;
     end;
     Dm.Qtemp.First;
@@ -331,9 +331,9 @@ begin
    begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' and po_no=''''';
+      sql.Text:='select * from t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' and po_no=''''';
                // ' and po_no isnull ';
-                //' and po_no not in (select po_no from purchase.t_po)';
+                //' and po_no not in (select po_no from t_po)';
       Open;
    end;
    NoTransUM.Items.Clear;
@@ -361,7 +361,7 @@ begin
    begin
      close;
      sql.Clear;
-     sql.Text:=' select * from purchase.t_advance_payment where no_trans='+Quotedstr(NoTransUM.Text);
+     sql.Text:=' select * from t_advance_payment where no_trans='+Quotedstr(NoTransUM.Text);
      open;
    end;
    EdUM.Text:=dm.Qtemp1.FieldByName('um_value').AsString;
@@ -464,8 +464,8 @@ procedure TFNew_PO.Autonumber;
 begin
   idmenu:='M11002';
   strday2:=Dtpo.Date;
-  //Nopo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_po','');
-  EdNopo.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_po',Cb_code.text);
+  //Nopo.Text:=getNourutBlnPrshthn_kode(strday2,'t_po','');
+  EdNopo.Text:=getNourutBlnPrshthn_kode(strday2,'t_po',Cb_code.text);
   Edurut.Text:=order_no;
 end;
 
@@ -486,7 +486,7 @@ begin
 
     Query := TUniQuery.Create(nil);
     try
-      Query.SQL.Text := 'SELECT MAX(No_Urut) FROM purchase.t_po ' +
+      Query.SQL.Text := 'SELECT MAX(No_Urut) FROM t_po ' +
                         'WHERE Bulan = :bulan AND Tahun = :tahun';
       Query.ParamByName('bulan').AsInteger := CurrentMonth;
       Query.ParamByName('tahun').AsInteger := CurrentYear;
@@ -501,7 +501,7 @@ begin
       // Tambahkan 1 ke nomor urut dan simpan dalam tabel
       MaxNomorUrut := MaxNomorUrut + 1;
 
-      Query.SQL.Text := 'INSERT INTO purchase.t_po (No_Urut, Bulan, Tahun) ' +
+      Query.SQL.Text := 'INSERT INTO t_po (No_Urut, Bulan, Tahun) ' +
                         'VALUES (:nourut, :bulan, :tahun)';
       Query.ParamByName('nourut').AsInteger := MaxNomorUrut;
       Query.ParamByName('bulan').AsInteger := CurrentMonth;
@@ -618,7 +618,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text);
+      sql.Text:='select * from t_coop_contract_det where contract_no='+QuotedStr(Edno_kontrak.Text);
       ExecSQL;
     end;
     Dm.QTemp2.First;
@@ -632,7 +632,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=' SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.total_price,'+
-                ' a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal  FROM purchase.t_coop_contract_det AS "a" '+
+                ' a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal  FROM t_coop_contract_det AS "a" '+
                 ' INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
                 ' where a.remaining_qty>0 and A.contract_no='+QuotedStr(Edno_kontrak.Text)+''+
                 ' GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit, '+
@@ -996,7 +996,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='select * from purchase.t_coop_contract where supplier_code='+QuotedStr(EdKd_supp.Text)+''+
+          sql.Text:='select * from t_coop_contract where supplier_code='+QuotedStr(EdKd_supp.Text)+''+
                     ' and status = ''1'' AND "approval_status"=''1'' order by contract_date Desc';
 
           ExecSQL;
@@ -1040,7 +1040,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_coop_contract where supplier_code='+QuotedStr(EdKd_supp.Text)+''+
+      sql.Text:='select * from t_coop_contract where supplier_code='+QuotedStr(EdKd_supp.Text)+''+
                 ' and status = ''1'' AND "approval_status"=''1'' order by contract_date Desc';
 
       ExecSQL;
@@ -1066,7 +1066,7 @@ begin
    begin
      close;
      sql.Clear;
-     sql.Text:='select * FROM purchase.t_po WHERE po_no='+QuotedStr(EdNopo.Text);
+     sql.Text:='select * FROM t_po WHERE po_no='+QuotedStr(EdNopo.Text);
      Open;
    end;
    NoTransUM.Text:=dm.Qtemp.FieldByName('um_no').AsString;
@@ -1091,7 +1091,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from purchase.t_coop_contract where contract_no='+QuotedStr(Edno_kontrak.Text);
+        sql.Text:='select * from t_coop_contract where contract_no='+QuotedStr(Edno_kontrak.Text);
         Execute;
       end;
       Edjatuh_tempo.Text:=dm.Qtemp['due_date'];
@@ -1150,7 +1150,7 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='select * from "purchase".t_ref_po where ref_name='+QuotedStr(EdStatus.Text)+' order by id';
+      sql.Text:='select * from t_ref_po where ref_name='+QuotedStr(EdStatus.Text)+' order by id';
       ExecSQL;
     end;
       ref_code:=dm.Qtemp['ref_code'];
@@ -1375,7 +1375,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
+        sql.Text:=' insert into t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
                   ' valas,valas_value,order_no, remarks,"type",transportation_type,division_code,status,'+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status,'+
                   ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,um_status,um_value,um_account_code,um_no) '+
@@ -1430,7 +1430,7 @@ begin
           begin
             Close;
             sql.Clear;
-            sql.Text:='insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:='insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,"subtotal",ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -1471,7 +1471,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date, supplier_code,pph23,ppn,po_type, '+
+        sql.Text:=' insert into t_po(po_no,contract_no,po_date, supplier_code,pph23,ppn,po_type, '+
                   ' valas,valas_value,order_no,remarks,"type",transportation_type,division_code,status, '+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status, '+
                   ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year, '+
@@ -1527,7 +1527,7 @@ begin
           begin
             Close;
             sql.Clear;
-            sql.Text:=' insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -1566,7 +1566,7 @@ begin
   begin
       close;
       sql.Clear;
-      sql.Text:=' select * from purchase.t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
+      sql.Text:=' select * from t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
                 ' and um_no='+Quotedstr(NoTransUM.Text);
       Open;
   end;
@@ -1577,7 +1577,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='update purchase.t_advance_payment set po_no=(select po_no from purchase.t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' and um_no='+Quotedstr(NoTransUM.Text)+' ) '+
+      sql.Text:='update t_advance_payment set po_no=(select po_no from t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' and um_no='+Quotedstr(NoTransUM.Text)+' ) '+
                 'where no_trans='+Quotedstr(NoTransUM.Text)+' ';
       execsql;
     end;
@@ -1601,7 +1601,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
+        sql.Text:=' insert into t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
                   ' valas,valas_value,order_no, remarks,type,transportation_type,division_code,status,'+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status,'+
                   ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,um_status,um_value,um_account_code,um_no) '+
@@ -1657,7 +1657,7 @@ begin
           begin
             Close;
             sql.Clear;
-            sql.Text:=' insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -1698,7 +1698,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' insert into purchase.t_po(po_no,contract_no,po_date, supplier_code,pph23,ppn,po_type, '+
+        sql.Text:=' insert into t_po(po_no,contract_no,po_date, supplier_code,pph23,ppn,po_type, '+
                   ' valas,valas_value,order_no,remarks,type,transportation_type,division_code,status, '+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,"approval_status", '+
                   ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year, '+
@@ -1755,7 +1755,7 @@ begin
           begin
             Close;
             sql.Clear;
-            sql.Text:=' insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -1794,7 +1794,7 @@ begin
   begin
       close;
       sql.Clear;
-      sql.Text:=' select * from purchase.t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
+      sql.Text:=' select * from t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
                 ' and um_no='+Quotedstr(NoTransUM.Text);
       Open;
   end;
@@ -1805,7 +1805,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='update purchase.t_advance_payment set po_no=(select po_no from purchase.t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' and um_no='+Quotedstr(NoTransUM.Text)+' ) '+
+      sql.Text:='update t_advance_payment set po_no=(select po_no from t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' and um_no='+Quotedstr(NoTransUM.Text)+' ) '+
                 'where no_trans='+Quotedstr(NoTransUM.Text)+' ';
       execsql;
     end;
@@ -1818,7 +1818,7 @@ begin
     with dm.Qtemp do
     begin
       sql.Clear;
-      sql.Text:='delete from purchase.t_podetail where po_no='+QuotedStr(EdNopo.text);
+      sql.Text:='delete from t_podetail where po_no='+QuotedStr(EdNopo.text);
       ExecSQL;
     end;
 
@@ -1831,7 +1831,7 @@ begin
          begin
             Close;
             sql.Clear;
-            sql.Text:=' insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -1875,7 +1875,7 @@ begin
         begin
           Close;
           sql.Clear;
-          sql.Text:=' insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+          sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                     ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                     ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                     ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -1916,14 +1916,14 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from purchase.t_po ';
+        sql.Text:='select * from t_po ';
         ExecSQL;
       end;
       with dm.Qtemp do
       begin
         close;
         sql.Clear;
-        sql.Text:=' update purchase.t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
+        sql.Text:=' update t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
                   ' ,pph23=:parpph23,ppn=:parppn,po_type=:parjenispo,valas=:parvalas,valas_value=:parnilai_valas'+
                   ' ,order_no=:parno_urut,remarks=:parket,type=:parjenis,division_code=:parkd_divisi'+
                   ' ,transportation_type=:parjenisangkutan,"Subtotal"=:parSubtotal,"Grandtotal"=:parGrandtotal'+
@@ -1974,14 +1974,14 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='select * from purchase.t_po ';
+          sql.Text:='select * from t_po ';
           ExecSQL;
         end;
         with dm.Qtemp do
         begin
           close;
           sql.Clear;
-          sql.Text:=' update purchase.t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
+          sql.Text:=' update t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
                     ' ,pph23=:parpph23,ppn=:parppn,po_type=:parjenispo,valas=:parvalas,valas_value=:parnilai_valas'+
                     ' ,order_no=:parno_urut,remarks=:parket,type=:parjenis,division_code=:parkd_divisi'+
                     ' ,transportation_type=:parjenisangkutan,"Subtotal"=:parSubtotal,"Grandtotal"=:parGrandtotal'+
@@ -2032,13 +2032,13 @@ begin
     with dm.Qtemp do
     begin
         sql.Clear;
-        sql.Text:='select * from purchase.t_podetail where po_no='+QuotedStr(EdNopo.text);
+        sql.Text:='select * from t_podetail where po_no='+QuotedStr(EdNopo.text);
         ExecSQL;
     end;
     with dm.Qtemp do
     begin
       sql.Clear;
-      sql.Text:='delete from purchase.t_podetail where po_no='+QuotedStr(EdNopo.text);
+      sql.Text:='delete from t_podetail where po_no='+QuotedStr(EdNopo.text);
       ExecSQL;
     end;
 
@@ -2051,7 +2051,7 @@ begin
          begin
             Close;
             sql.Clear;
-            sql.Text:='insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:='insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -2095,7 +2095,7 @@ begin
          begin
             Close;
             sql.Clear;
-            sql.Text:='insert into purchase.t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            sql.Text:='insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,pemb_dpp)values(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
@@ -2134,7 +2134,7 @@ begin
     begin
        close;
        sql.Clear;
-       sql.Text:='select * from purchase.t_po ';
+       sql.Text:='select * from t_po ';
        ExecSQL;
     end;
     if Statustr2=1 then
@@ -2143,7 +2143,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' update purchase.t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
+        sql.Text:=' update t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
                   ' ,pph23=:parpph23,ppn=:parppn,po_type=:parjenispo,valas=:parvalas,valas_value=:parnilai_valas'+
                   ' ,order_no=:parno_urut,remarks=:parket,type=:parjenis,division_code=:parkd_divisi'+
                   ' ,transportation_type=:parjenisangkutan,"Subtotal"=:parSubtotal,"Grandtotal"=:parGrandtotal'+
@@ -2193,7 +2193,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' update purchase.t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
+        sql.Text:=' update t_po set contract_no=:parno_kontrak,po_date=:partgl_po,supplier_code=:parkd_supplier'+
                   ' ,pph23=:parpph23,ppn=:parppn,po_type=:parjenispo,valas=:parvalas,valas_value=:parnilai_valas'+
                   ' ,order_no=:parno_urut,remarks=:parket,type=:parjenis,division_code=:parkd_divisi'+
                   ' ,transportation_type=:parjenisangkutan,"Subtotal"=:parSubtotal,"Grandtotal"=:parGrandtotal'+
@@ -2477,7 +2477,7 @@ begin
    begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_coop_contract where supplier_code='+QuotedStr(Edkd_supp.Text)+'  and approval_status=''1'' and status = ''1'' ';
+      sql.Text:='select * from t_coop_contract where supplier_code='+QuotedStr(Edkd_supp.Text)+'  and approval_status=''1'' and status = ''1'' ';
       Open;
    end;
    Edno_kontrak.Items.Clear;

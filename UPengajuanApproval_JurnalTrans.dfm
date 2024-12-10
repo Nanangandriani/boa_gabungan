@@ -2,8 +2,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   Left = 0
   Top = 0
   Caption = 'Form Approval Jurnal Transaksi'
-  ClientHeight = 442
-  ClientWidth = 900
+  ClientHeight = 441
+  ClientWidth = 896
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,19 +18,26 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 900
-    Height = 442
+    Width = 896
+    Height = 441
     Hint = ''
     ActivePage = TabPenjualan
     Align = alClient
     TabIndex = 1
     TabOrder = 0
+<<<<<<< Updated upstream
     ExplicitWidth = 894
     ExplicitHeight = 433
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
       ExplicitWidth = 902
+=======
+    FixedDimension = 21
+    object TabPembelian: TRzTabSheet
+      Caption = 'Pembelian'
+      ExplicitWidth = 900
+>>>>>>> Stashed changes
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 105
@@ -189,7 +196,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+<<<<<<< Updated upstream
         ExplicitWidth = 902
+=======
+        ExplicitWidth = 900
+>>>>>>> Stashed changes
         object Label1: TLabel
           Left = 40
           Top = 27
@@ -480,8 +491,12 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
+<<<<<<< Updated upstream
       ExplicitWidth = 890
       ExplicitHeight = 408
+=======
+      ExplicitWidth = 900
+>>>>>>> Stashed changes
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 106
@@ -629,7 +644,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+<<<<<<< Updated upstream
         ExplicitWidth = 890
+=======
+        ExplicitWidth = 900
+>>>>>>> Stashed changes
         object Label3: TLabel
           Left = 27
           Top = 30
@@ -962,7 +981,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabKas: TRzTabSheet
       Caption = 'Kas && Bank'
+<<<<<<< Updated upstream
       ExplicitWidth = 902
+=======
+      ExplicitWidth = 900
+>>>>>>> Stashed changes
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -972,7 +995,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+<<<<<<< Updated upstream
         ExplicitWidth = 902
+=======
+        ExplicitWidth = 900
+>>>>>>> Stashed changes
         object Label7: TLabel
           Left = 40
           Top = 56
@@ -1278,8 +1305,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       object DBGridEh5: TDBGridEh
         Left = 0
         Top = 153
-        Width = 896
-        Height = 264
+        Width = 892
+        Height = 263
         Align = alClient
         DataSource = DsKas
         DynProps = <>

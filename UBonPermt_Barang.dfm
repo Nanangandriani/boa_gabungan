@@ -821,14 +821,13 @@ object FBonPermt_Barang: TFBonPermt_Barang
         'select A.trans_date,a.sbu_code,c.item_name,b.*,a.created_by,a.ap' +
         'p1,a.app2,d.ttd,e.ttd ttd2--,kdsbu'
       
-        ' from warehouse.t_item_request a INNER JOIN warehouse.t_item_req' +
-        'uest_det b on a.trans_no=b.trans_no '
+        ' from t_item_request a INNER JOIN t_item_request_det b on a.tran' +
+        's_no=b.trans_no '
       'inner join t_item c on b.item_code=c.item_code'
       
         ' LEFT JOIN t_user d on a.app1=d.code LEFT JOIN t_user e on a.app' +
         '2=e.code  ')
     DetailFields = 'no_transfer'
-    Active = True
     Left = 504
     Top = 160
   end
@@ -865,8 +864,8 @@ object FBonPermt_Barang: TFBonPermt_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,B.item_name from warehouse.t_item_request_det a inner' +
-        ' join t_item B on'
+        'select A.*,B.item_name from t_item_request_det a inner join t_it' +
+        'em B on'
       ' A.item_code=B.item_code')
     MasterSource = DsPermt_material
     MasterFields = 'trans_no'
@@ -895,8 +894,7 @@ object FBonPermt_Barang: TFBonPermt_Barang
         '-PROSES'#39' END status,'
       
         'trans_date,trans_no,sbu_code,trans_year,trans_month,to_char(tran' +
-        's_date,'#39'dd'#39') tgl from warehouse.t_item_request order by created_' +
-        'at Desc')
+        's_date,'#39'dd'#39') tgl from t_item_request order by created_at Desc')
     Left = 384
   end
   object DsPermt_material: TDataSource

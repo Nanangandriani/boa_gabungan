@@ -241,8 +241,8 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
     Height = 32
     Align = alBottom
     TabOrder = 12
-    ExplicitTop = 209
-    ExplicitWidth = 480
+    ExplicitTop = 217
+    ExplicitWidth = 482
     object BBatal: TRzBitBtn
       Left = 410
       Top = 1
@@ -303,7 +303,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 404
+      ExplicitLeft = 406
     end
     object BSimpan: TRzBitBtn
       Left = 335
@@ -366,6 +366,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 329
+      ExplicitTop = -7
     end
     object RzBitBtn1: TRzBitBtn
       Left = 243

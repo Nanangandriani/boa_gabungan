@@ -1152,7 +1152,7 @@ object FRekap_PO: TFRekap_PO
   object QRekapPO: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from purchase."V_RptRekapPO"')
+      'select * from "V_RptRekapPO"')
     Left = 320
     Top = 88
   end

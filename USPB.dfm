@@ -245,10 +245,8 @@ object FSPB: TFSPB
     Width = 826
     Height = 41
     Align = alTop
-    TabOrder = 6
-    ExplicitLeft = 152
-    ExplicitTop = 400
-    ExplicitWidth = 185
+    TabOrder = 2
+    ExplicitWidth = 822
     object Label1: TLabel
       Left = 28
       Top = 11
@@ -1179,8 +1177,8 @@ object FSPB: TFSPB
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*, B.item_name from purchase.t_podetail A inner join wa' +
-        'rehouse.t_item_stock B on '
+        'select A.*, B.item_name from t_podetail A inner join t_item_stoc' +
+        'k B on '
       'A.item_stock_code=B.item_stock_code')
     DetailFields = 'nopo'
     Left = 664
@@ -1193,15 +1191,13 @@ object FSPB: TFSPB
         'select c.supplier_name,e.item_name,b.qty,f.qty_conv,f.unit,f.uni' +
         't_conv,a.spb_no,a.po_no,a.spb_date,a.pic,a.vehicle_no, '
       #9'a.driver,a.status,a.supplier_code,a.to_at,a.remark'
-      'from  purchase.t_spb a'
-      'inner join purchase.t_spb_det b on a.spb_no=b.spb_no'
+      'from  t_spb a'
+      'inner join t_spb_det b on a.spb_no=b.spb_no'
       'inner join t_supplier C on A.supplier_code=C.supplier_code '
       
-        'inner join purchase.t_podetail d on b.po_no=d.po_no and b.item_s' +
-        'tock_code=d.item_stock_code'
-      
-        'Inner join warehouse.t_item_stock e on d.item_stock_code=e.item_' +
-        'stock_code'
+        'inner join t_podetail d on b.po_no=d.po_no and b.item_stock_code' +
+        '=d.item_stock_code'
+      'Inner join t_item_stock e on d.item_stock_code=e.item_stock_code'
       'left join  t_item_conversion f on e.item_code=f.item_code'
       
         'Group by c.supplier_name,e.item_name,b.qty,f.qty_conv,f.unit,f.u' +
@@ -1281,10 +1277,8 @@ object FSPB: TFSPB
         'de'
       
         'SELECT a.spb_no,a.po_no,a.status,a.item_stock_code,a.qty,a.unit,' +
-        'a.wh_code,wh_name,b.item_name  from purchase.t_spb_det a '
-      
-        'inner join warehouse.t_item_stock b on b.item_stock_code=a.item_' +
-        'stock_code'
+        'a.wh_code,wh_name,b.item_name  from t_spb_det a '
+      'inner join t_item_stock b on b.item_stock_code=a.item_stock_code'
       'inner join t_wh c on a.wh_code=c.wh_code')
     MasterSource = DsSPB
     MasterFields = 'spb_no'
@@ -1311,8 +1305,8 @@ object FSPB: TFSPB
         ' Select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a' +
         '."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
       
-        'END) AS status_app,A.*, B.supplier_name from purchase.t_spb a in' +
-        'ner join t_supplier b on A.supplier_code=b.supplier_code '
+        'END) AS status_app,A.*, B.supplier_name from t_spb a inner join ' +
+        't_supplier b on A.supplier_code=b.supplier_code '
       'order by spb_no desc'
       '')
     Left = 368

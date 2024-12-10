@@ -194,7 +194,7 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:='delete From purchase.t_purchase_discount where discount_no='+QuotedStr(DBGridReturnPemb.Fields[0].AsString);
+        sql.Text:='delete From t_purchase_discount where discount_no='+QuotedStr(DBGridReturnPemb.Fields[0].AsString);
         Execute;
       end;
        ActRoExecute(sender);
@@ -211,10 +211,10 @@ begin
       close;
       sql.Clear;
       sql.Text:=' select	d.supplier_name,f.faktur_date,d.address,d.npwp,a.discount_no,a.faktur_no,a.price,g.item_name,f.pib_no,f.receive_date,h.price price_unit,sum(a.price) price '+
-                ' from purchase.t_purchase_discount a inner join t_supplier d on a.supplier_code=d.supplier_code  '+
-                ' inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no '+
-                ' inner join purchase.t_item_receive_det h on f.receive_no=h.receive_no '+
-                ' inner join warehouse.t_item_stock g on h.item_stock_code=g.item_stock_code '+
+                ' from t_purchase_discount a inner join t_supplier d on a.supplier_code=d.supplier_code  '+
+                ' inner join t_item_receive f on a.faktur_no=f.faktur_no '+
+                ' inner join t_item_receive_det h on f.receive_no=h.receive_no '+
+                ' inner join t_item_stock g on h.item_stock_code=g.item_stock_code '+
                 ' where a.discount_no='+QuotedStr(MemReturn['discount_no'])+' group by d.supplier_name,'+
                 ' f.faktur_date,d.address,d.npwp, a.discount_no,a.discount_date,a.faktur_no,a.price,g.item_name,f.pib_no,f.receive_date,h.price';
       ExecSQL;

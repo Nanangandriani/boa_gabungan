@@ -2,8 +2,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   Left = 0
   Top = 0
   Caption = 'Search Material'
-  ClientHeight = 418
-  ClientWidth = 584
+  ClientHeight = 417
+  ClientWidth = 580
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,11 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 386
-    Width = 584
+    Top = 385
+    Width = 580
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 385
-    ExplicitWidth = 580
     object BBatal: TRzBitBtn
       Left = 508
       Top = 1
@@ -238,8 +236,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   object DBGridEh2: TDBGridEh
     Left = 0
     Top = 0
-    Width = 584
-    Height = 386
+    Width = 580
+    Height = 385
     Align = alClient
     DataSource = DSMaterial2
     DynProps = <>
@@ -317,8 +315,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 584
-    Height = 386
+    Width = 580
+    Height = 385
     Align = alClient
     DataSource = DSMaterial
     DynProps = <>

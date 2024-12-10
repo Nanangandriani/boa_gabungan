@@ -1815,8 +1815,8 @@ object FPot_Pembelian: TFPot_Pembelian
     DataSet = QRptPot_Pemb
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 776
-    Top = 24
+    Left = 696
+    Top = 104
   end
   object DsRptPot_Pemb: TDataSource
     DataSet = QRptPot_Pemb
@@ -1830,15 +1830,11 @@ object FPot_Pembelian: TFPot_Pembelian
         'select'#9'd.supplier_name,f.faktur_date,d.address, d.npwp,a.discoun' +
         't_no, a.discount_date, a.faktur_no,a.price,g.item_name,f.pib_no,' +
         'f.receive_date,h.price price_unit'
-      'from purchase.t_purchase_discount a '
+      'from t_purchase_discount a '
       'inner join t_supplier d on a.supplier_code=d.supplier_code'
-      'inner join purchase.t_item_receive f on a.faktur_no=f.faktur_no'
-      
-        'inner join purchase.t_item_receive_det h on f.receive_no=h.recei' +
-        've_no'
-      
-        'inner join warehouse.t_item_stock g on h.item_stock_code=g.item_' +
-        'stock_code'
+      'inner join t_item_receive f on a.faktur_no=f.faktur_no'
+      'inner join t_item_receive_det h on f.receive_no=h.receive_no'
+      'inner join t_item_stock g on h.item_stock_code=g.item_stock_code'
       
         'Group by d.supplier_name,f.faktur_date,  d.address,d.npwp,a.disc' +
         'ount_no, a.discount_date,a.faktur_no, a.price, g.item_name,f.pib' +
@@ -1851,10 +1847,8 @@ object FPot_Pembelian: TFPot_Pembelian
     SQL.Strings = (
       
         'select a.qty,a.price,a.total_price,b.item_name,a.return_no from ' +
-        'purchase.t_purchase_discount_det a '
-      
-        'inner join warehouse.t_item_stock b on a.item_stock_code=b.item_' +
-        'stock_code')
+        't_purchase_discount_det a '
+      'inner join t_item_stock b on a.item_stock_code=b.item_stock_code')
     MasterSource = DsRptPot_Pemb
     MasterFields = 'no_return'
     Left = 526
@@ -1904,7 +1898,7 @@ object FPot_Pembelian: TFPot_Pembelian
         '_date,a.faktur_no,a.price,a.receive_no,a.n_valas,a.valas,a.price' +
         '_rp,a.trans_year,a.trans_month,a.trans_day,a."month",a.date_no,'
       'a."year",a.ppn,a.ppnrp,a.total'
-      'FROM purchase.t_purchase_discount AS "a" '
+      'FROM t_purchase_discount AS "a" '
       'INNER JOIN t_supplier AS d ON a.supplier_code = d.supplier_code'
       
         'Group by a.supplier_code,d.supplier_name,a.discount_no,a.discoun' +
@@ -1918,8 +1912,8 @@ object FPot_Pembelian: TFPot_Pembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.*,b.item_name from purchase.t_purchase_discount_det a i' +
-        'nner join warehouse.t_item_stock AS b '
+        'SELECT a.*,b.item_name from t_purchase_discount_det a inner join' +
+        ' t_item_stock AS b '
       'ON a.item_stock_code = b.item_stock_code'
       'ORDER BY  id asc')
     MasterSource = DsReturnPembelian

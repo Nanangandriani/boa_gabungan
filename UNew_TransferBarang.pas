@@ -359,14 +359,14 @@ Procedure TFNew_TransferBarang.Simpan;
 begin
   idmenu:='M04004';
   strday2:=DtTransfer.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_transfer','');
+  Edno.Text:=getNourut(strday2,'t_item_transfer','');
   if messageDlg ('Anda Yakin Simpan No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Insert into warehouse.t_item_transfer(wh_category_code,trans_date,trans_no,wh_code_from,wh_code_to,note,trans_year,sbu_code,created_by,trans_month,trans_day,order_no)'+
+      sql.Text:='Insert into t_item_transfer(wh_category_code,trans_date,trans_no,wh_code_from,wh_code_to,note,trans_year,sbu_code,created_by,trans_month,trans_day,order_no)'+
                 ' values(:parkt,:partgl_transfer,:parno_transfer,:parDari,:parKe,:parket,:partahun,:parkd_sbu,:parpic,:parbln,:partglno,:parnourut)';
                 ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
                 ParamByName('parno_transfer').Value:=Edno.Text;
@@ -389,7 +389,7 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:='Insert into warehouse.t_item_transfer_det(trans_no,item_stock_code,stock_code_old,'+
+        sql.Text:='Insert into t_item_transfer_det(trans_no,item_stock_code,stock_code_old,'+
                   'stock_code_new,qty,unit,order_no)values(:parno_transfer,:parkd_material_stok,:parkd_stok_lama,'+
                   ':parkd_stok_baru,:parqty,:parsatuan,:parnourut)';
                   ParamByName('parno_transfer').Value:=Edno.Text;
@@ -413,7 +413,7 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:=' Update warehouse.t_item_transfer set trans_date=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
+    sql.Text:=' Update t_item_transfer set trans_date=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
               ' wh_code_from=:pardari,wh_code_to=:parke,note=:parket,wh_category_code=:parkt,sbu_code=:parkd_sbu where trans_no=:parno_transfer ';
               ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
               ParamByName('parno_transfer').Value:=Edno.Text;
@@ -430,7 +430,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='Delete From warehouse.t_item_transfer_det where trans_no='+QuotedStr(Edno.Text);
+    sql.Text:='Delete From t_item_transfer_det where trans_no='+QuotedStr(Edno.Text);
     ExecSQL;
   end;
   Memdetail.First;
@@ -440,7 +440,7 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:='Insert into warehouse.t_item_transfer_det(trans_no,item_stock_code,stock_code_old,'+
+        sql.Text:='Insert into t_item_transfer_det(trans_no,item_stock_code,stock_code_old,'+
                   'stock_code_new,qty,unit,order_no)values(:parno_transfer,:parkd_material_stok,:parkd_stok_lama,'+
                   ':parkd_stok_baru,:parqty,:parsatuan,:parnourut)';
                   ParamByName('parno_transfer').Value:=Edno.Text;

@@ -105,7 +105,7 @@ object FNew_PercBarang: TFNew_PercBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 94
-    Width = 1029
+    Width = 1021
     Height = 245
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
@@ -237,8 +237,10 @@ object FNew_PercBarang: TFNew_PercBarang
     Height = 32
     Align = alBottom
     TabOrder = 3
+    ExplicitTop = 332
+    ExplicitWidth = 1077
     object BBatal: TRzBitBtn
-      Left = 1017
+      Left = 1009
       Top = 1
       Height = 30
       Align = alRight
@@ -297,10 +299,10 @@ object FNew_PercBarang: TFNew_PercBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1009
+      ExplicitLeft = 1001
     end
     object BSimpan: TRzBitBtn
-      Left = 942
+      Left = 934
       Top = 1
       Height = 30
       Align = alRight
@@ -359,7 +361,7 @@ object FNew_PercBarang: TFNew_PercBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 934
+      ExplicitLeft = 926
     end
   end
   object Edjenis: TRzComboBox

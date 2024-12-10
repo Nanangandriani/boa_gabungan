@@ -4,8 +4,8 @@ object FRekapSisa_PO: TFRekapSisa_PO
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Rekap Sisa PO'
-  ClientHeight = 421
-  ClientWidth = 699
+  ClientHeight = 420
+  ClientWidth = 695
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -58,14 +58,12 @@ object FRekapSisa_PO: TFRekapSisa_PO
   end
   object Panel1: TPanel
     Left = 0
-    Top = 380
-    Width = 699
+    Top = 379
+    Width = 695
     Height = 41
     Align = alBottom
     TabOrder = 0
     OnClick = Panel1Click
-    ExplicitTop = 379
-    ExplicitWidth = 695
     object BBatal: TRzBitBtn
       Left = 623
       Top = 1
@@ -225,7 +223,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 699
+    Width = 695
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -233,6 +231,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
     Contexts = <>
     TabOrder = 4
     TabStop = False
+    ExplicitWidth = 699
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -246,8 +245,8 @@ object FRekapSisa_PO: TFRekapSisa_PO
   object DBGridKontrak: TDBGridEh
     Left = 0
     Top = 127
-    Width = 699
-    Height = 253
+    Width = 695
+    Height = 252
     Align = alClient
     DataGrouping.GroupLevels = <
       item

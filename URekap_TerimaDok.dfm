@@ -3,8 +3,8 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Rekap Terima Dokumen'
-  ClientHeight = 414
-  ClientWidth = 704
+  ClientHeight = 413
+  ClientWidth = 700
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -35,15 +35,13 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 373
-    Width = 704
+    Top = 372
+    Width = 700
     Height = 41
     Align = alBottom
     Color = 15987699
     TabOrder = 1
     OnDblClick = RzPanel2DblClick
-    ExplicitTop = 372
-    ExplicitWidth = 700
     object RzBitBtn1: TRzBitBtn
       Left = 516
       Top = 2
@@ -125,7 +123,7 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 704
+    Width = 700
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -133,6 +131,7 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
     Contexts = <>
     TabOrder = 2
     TabStop = False
+    ExplicitWidth = 704
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -146,8 +145,8 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 704
-    Height = 246
+    Width = 700
+    Height = 245
     Align = alClient
     DataSource = DsRekapDok
     DynProps = <>

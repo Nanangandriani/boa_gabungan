@@ -155,16 +155,16 @@ begin
     //NmBulan;
     subquery:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name, to_char(d.trans_date, ''dd mon yy'')as tglterima,'+
             ' d.qty,b.remaining_qty,b.price,b.item_stock_code,a.sbu_code, a.trans_category,e.wh_name,'+
-            ' concat(a.delivery_date,'' - '',a.delivery2_date)delivery from purchase.t_po a INNER JOIN purchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c on  a.supplier_code=c.supplier_code Left JOIN ( '+
-            ' SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from purchase.t_purchase_invoice a INNER JOIN '+
-            ' purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+''+
+            ' concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no inner join t_supplier c on  a.supplier_code=c.supplier_code Left JOIN ( '+
+            ' SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from t_purchase_invoice a INNER JOIN '+
+            ' t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+''+
             ' )as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_code where b.remaining_qty<>0 and a.status=''1'' '+
             ' and a.as_status=''1'' and a. trans_category='+QuotedStr(CbKategori.EditValue);
     subquery2:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name,'+
             ' to_char(d.trans_date, ''dd mon yy'')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_code,'+
-            ' a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'' - '',a.delivery2_date)delivery from purchase.t_po a INNER JOIN purchase.t_podetail b on a.po_no=b.po_no'+
+            ' a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no'+
             ' inner join t_supplier c on a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code'+
-            ' from purchase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no where  '+
+            ' from t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no where  '+
             ' a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+') as d on d.po_no=a.po_no '+
             ' and b.item_stock_code=d.item_stock_code INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 and*/ '+
             ' a.as_status=''1'' and a.trans_category='+QuotedStr(CbKategori.EditValue); 
@@ -245,17 +245,17 @@ begin
     sql.Clear;
     sql.Text:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name, to_char(d.trans_date, ''dd mon yy'')as tglterima,'+
     ' d.qty,b.remaining_qty,b.price,b.item_stock_code,a.sbu_code, a.trans_category,e.wh_name,'+
-    ' concat(a.delivery_date,'' - '',a.delivery2_date)delivery from purchase.t_po a INNER JOIN purchase.t_podetail b on a.po_no=b.po_no inner join t_supplier c on  a.supplier_code=c.supplier_code Left JOIN ( '+
-    ' SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from purchase.t_purchase_invoice a INNER JOIN '+
-    ' purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+''+
+    ' concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no inner join t_supplier c on  a.supplier_code=c.supplier_code Left JOIN ( '+
+    ' SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from t_purchase_invoice a INNER JOIN '+
+    ' t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+''+
     ' )as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_code where b.remaining_qty<>0 and a.status=''1'' '+
     ' and a.as_status=''1'' and a. trans_category='+QuotedStr(CbKategori.EditValue)+''+
     ' union'+
     ' select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name,'+
     ' to_char(d.trans_date, ''dd mon yy'')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_code,'+
-    ' a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'' - '',a.delivery2_date)delivery from purchase.t_po a INNER JOIN purchase.t_podetail b on a.po_no=b.po_no'+
+    ' a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no'+
     ' inner join t_supplier c on a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code'+
-    ' from purchase.t_purchase_invoice a INNER JOIN purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no where  '+
+    ' from t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no where  '+
     ' a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+') as d on d.po_no=a.po_no '+
     ' and b.item_stock_code=d.item_stock_code INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 and*/ '+
     ' a.as_status=''1'' and   a.trans_category='+QuotedStr(CbKategori.EditValue)+' order by po_date,po_date asc';

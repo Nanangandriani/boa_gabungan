@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+<<<<<<< Updated upstream
     <Transaction>1899/12/30 00.00.00.000.047,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UListMasterAkunTrans.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.835,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.164,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
@@ -323,5 +324,47 @@
     <Transaction>1899/12/30 00.00.00.000.335,D:\DATA HPS\Development\back_office_automation\UListKolektor.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.335,D:\DATA HPS\Development\back_office_automation\UListKolektor.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.973,=D:\back_office_automation\UMovingDPP.pas</Transaction>
+=======
+    <Transaction>1899/12/30 00.00.00.000.386,=D:\APK BOA\APL HHA AKT\URpt_NeracaLajur.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.294,D:\APK BOA\APL HHA AKT\URpt_NeracaLajur.pas=D:\back_office_automation\URpt_NeracaLajur.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.888,D:\back_office_automation\URpt_Neraca.dfm=D:\APK BOA\APL HHA AKT\URpt_Neraca.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.579,D:\back_office_automation\URekap_TerimaDok.dfm=D:\GitBOA\MLB\BOA MLB\URekap_TerimaDok.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.078,=D:\back_office_automation\u_daf_keluar_kas_bank.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.444,=D:\back_office_automation\U_daftar_Nocek.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.818,=D:\back_office_automation\U_keluarkasbank_ajuan.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.157,=D:\back_office_automation\udafajuankeluarkasbank.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.961,=D:\GitBOA\MLB\BOA MLB\URpt_Rekap_Pembelian.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.609,D:\GitBOA\MLB\BOA MLB\URpt_Rekap_Pembelian.pas=D:\back_office_automation\URpt_Rekap_Pembelian.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.609,D:\GitBOA\MLB\BOA MLB\URpt_Rekap_Pembelian.dfm=D:\back_office_automation\URpt_Rekap_Pembelian.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.543,D:\back_office_automation\URpt_RekapMutasi.pas=D:\APK BOA\APL HHA AKT Month\URpt_RekapMutasi.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.222,D:\back_office_automation\Unit1.dfm=D:\back_office_automation\URekap_PO.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.222,D:\back_office_automation\Unit1.pas=D:\back_office_automation\URekap_PO.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.979,=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.336,D:\back_office_automation\URpt_Buku_Besar.dfm=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.905,=D:\GitBOA\MLB\BOA MLB\URekap_TerimaDok.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\URpt_RekapKontrak.pas=</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.906,D:\back_office_automation\URpt_RekapKontrak.pas=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.034,=D:\back_office_automation\U_daftar_hutang.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.692,=D:\APK BOA\APL HHA AKT\URpt_Neraca.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.973,=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.559,D:\GitBOA\MLB\BOA MLB\ULaporan_PO.pas=D:\back_office_automation\URekapSisa_PO.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.268,=D:\GitBOA\MLB\BOA MLB\ULaporan_PO.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.394,=D:\back_office_automation\UDataPengajuanPengeluaranKasBank.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.843,=D:\back_office_automation\U_Data_rencana_lunas_hutang_pengajuan.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.559,D:\GitBOA\MLB\BOA MLB\ULaporan_PO.dfm=D:\back_office_automation\URekapSisa_PO.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.543,D:\back_office_automation\URpt_RekapMutasi.dfm=D:\APK BOA\APL HHA AKT Month\URpt_RekapMutasi.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.666,=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.130,D:\back_office_automation\URekap_Kontrakks.pas=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.906,D:\back_office_automation\URpt_RekapKontrak.dfm=D:\GitBOA\MLB\BOA MLB\URpt_RekapKontrak.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.464,=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.257,=D:\APK BOA\APL HHA AKT Month\URpt_RekapMutasi.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.966,=D:\back_office_automation\URpt_Buku_Besar.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.336,D:\back_office_automation\URpt_Buku_Besar.pas=D:\APK BOA\APL HHA AKT\URpt_Buku_Besar_Perakun.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.888,D:\back_office_automation\URpt_Neraca.pas=D:\APK BOA\APL HHA AKT\URpt_Neraca.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.255,=D:\back_office_automation\UDataPengeluaranKasBank.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.294,D:\APK BOA\APL HHA AKT\URpt_NeracaLajur.dfm=D:\back_office_automation\URpt_NeracaLajur.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.578,D:\back_office_automation\URekap_TerimaDok.pas=D:\GitBOA\MLB\BOA MLB\URekap_TerimaDok.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.130,D:\back_office_automation\URekap_Kontrakks.dfm=D:\GitBOA\MLB\BOA MLB\URekap_Kontrakks.dfm</Transaction>
+>>>>>>> Stashed changes
   </Transactions>
 </BorlandProject>

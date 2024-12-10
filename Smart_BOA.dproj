@@ -796,7 +796,6 @@
         </DCCReference>
         <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
             <Form>FPengajuan_AppJurnal_Trans</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="U_daftar_hutang.pas">
             <Form>FDaftar_Hutang</Form>
@@ -832,6 +831,7 @@
         </DCCReference>
         <DCCReference Include="URpt_Buku_Besar.pas">
             <Form>FRpt_Buku_Besar</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekap_Kontrakks.pas">
             <Form>FRekapKontrak</Form>
@@ -844,39 +844,30 @@
         </DCCReference>
         <DCCReference Include="UBHPenjualan.pas">
             <Form>FBHPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_JenisUsaha.pas">
             <Form>FNew_Jenis_Usaha</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekapPenjualan.pas">
             <Form>FRekapPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListStockBarang.pas">
             <Form>FListStockBarang</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UBHReturPenjualan.pas">
             <Form>FBHReturPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekapReturPenjualan.pas">
             <Form>FRekapReturPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNewKontrakTagihan.pas">
             <Form>FNewKontrakTagihan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="USetJenisKontrakTagihan.pas">
             <Form>FSetJenisKontrakTagihan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListKontrakTagihan.pas">
             <Form>FListKontrakTagihan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Unew_spb.pas">
             <Form>FNew_SPB</Form>
@@ -884,7 +875,6 @@
         </DCCReference>
         <DCCReference Include="UDaftarKontrak.pas">
             <Form>FDaftarKontrak</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UKartuPiutang.pas">
             <Form>FKartuPiutang</Form>

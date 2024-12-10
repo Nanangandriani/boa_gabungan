@@ -663,8 +663,8 @@ object FTransfer_Barang: TFTransfer_Barang
         'select a.*,date_part('#39'YEAR'#39',trans_date) thn,date_part('#39'MONTH'#39',tr' +
         'ans_date) bln,date_part('#39'DAY'#39',trans_date) tgl,b.wh_name nm_from,'
       
-        'c.wh_name nm_to,d.category,d.category_code from warehouse.t_item' +
-        '_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '
+        'c.wh_name nm_to,d.category,d.category_code from t_item_transfer ' +
+        'a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '
       'INNER JOIN t_wh c on a.wh_code_to=c.wh_code '
       'INNER JOIN t_wh_category d on a.wh_category_code=d.category_code'
       'order by trans_no desc')
@@ -692,9 +692,9 @@ object FTransfer_Barang: TFTransfer_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.item_name,B.order_no,b.item_code from warehouse.t_i' +
-        'tem_transfer_det a inner join warehouse.t_item_stock b on A.item' +
-        '_stock_code=b.item_stock_code')
+        'select A.*,b.item_name,B.order_no,b.item_code from t_item_transf' +
+        'er_det a inner join t_item_stock b on A.item_stock_code=b.item_s' +
+        'tock_code')
     MasterSource = DsTransfer
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
@@ -799,11 +799,9 @@ object FTransfer_Barang: TFTransfer_Barang
     SQL.Strings = (
       
         'select A.*,b.item_name,B.order_no,c."from",c."to",c.trans_date,c' +
-        '.note from gudang.t_item_transfer_det a '
-      
-        'inner join gudang.t_item_stock b on A.item_stock_code=b.item_sto' +
-        'ck_code'
-      'inner join gudang.t_item_transfer c on a.trans_no=c.trans_no')
+        '.note from t_item_transfer_det a '
+      'inner join t_item_stock b on A.item_stock_code=b.item_stock_code'
+      'inner join t_item_transfer c on a.trans_no=c.trans_no')
     DetailFields = 'no_transfer'
     Left = 368
     Top = 32

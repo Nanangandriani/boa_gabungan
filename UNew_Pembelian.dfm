@@ -2,8 +2,8 @@ object FNew_Pembelian: TFNew_Pembelian
   Left = 0
   Top = 0
   Caption = 'Form New Faktur Pembelian'
-  ClientHeight = 638
-  ClientWidth = 1121
+  ClientHeight = 637
+  ClientWidth = 1117
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,13 +22,11 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object Panel1: TPanel
     Left = 0
-    Top = 606
-    Width = 1121
+    Top = 605
+    Width = 1117
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 605
-    ExplicitWidth = 1117
     object BBatal: TRzBitBtn
       Left = 1045
       Top = 1
@@ -294,11 +292,10 @@ object FNew_Pembelian: TFNew_Pembelian
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1121
+    Width = 1117
     Height = 217
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1117
     object Label1: TLabel
       Left = 27
       Top = 256
@@ -742,13 +739,11 @@ object FNew_Pembelian: TFNew_Pembelian
   object RzPanel1: TRzPanel
     Left = 0
     Top = 217
-    Width = 1121
-    Height = 389
+    Width = 1117
+    Height = 388
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1117
-    ExplicitHeight = 388
     object Label26: TLabel
       Left = 41
       Top = 185
@@ -860,6 +855,8 @@ object FNew_Pembelian: TFNew_Pembelian
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
+        ExplicitLeft = 0
+        ExplicitTop = 0
         ExplicitWidth = 1109
         ExplicitHeight = 220
         object DBGridDetailpo: TDBGridEh
@@ -1207,6 +1204,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1294,6 +1295,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Retur_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Retur Pembelian'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridReturPemb: TDBGridEh
           Left = 0
           Top = 0
@@ -1399,6 +1404,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Pot_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Pot. Pembelian'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0
@@ -1467,6 +1476,10 @@ object FNew_Pembelian: TFNew_Pembelian
         Color = 15987699
         TabVisible = False
         Caption = 'Barang'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridBarang: TDBGridEh
           Left = 0
           Top = 0

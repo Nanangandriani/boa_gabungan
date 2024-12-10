@@ -254,6 +254,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         ColumnName = 'Column_0_trans_no'
       end>
     DataSource = DsJurnal_Khusus
+    DrawMemoText = True
     DynProps = <>
     FooterRowCount = 1
     SumList.Active = True

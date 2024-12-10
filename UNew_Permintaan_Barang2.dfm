@@ -198,7 +198,7 @@ object FNew_Permintaan_Barang2: TFNew_Permintaan_Barang2
     Height = 32
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 372
+    ExplicitTop = 352
     ExplicitWidth = 486
     object BBatal: TRzBitBtn
       Left = 414

@@ -515,7 +515,7 @@ object FPO: TFPO
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 857
+    ExplicitWidth = 859
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -1441,10 +1441,10 @@ object FPO: TFPO
         'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.status,a.grandtotal'
       ',sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
       ''
-      'FROM purchase.t_podetail AS "a" '
+      'FROM t_podetail AS "a" '
       
-        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
+        '_code'
       'INNER JOIN t_item AS "c" ON b.item_code = c.item_code '
       'INNER JOIN t_item_category d on c.category_id=d.category_id'
       
@@ -1542,20 +1542,20 @@ object FPO: TFPO
         'delivery_date, e.supplier_name,e.address,d.valas,d.remarks'
       ',d.delivery2_date,d.po2_no,sumtotal ,c.category_id ,j.user_name'
       '--,c."type"'
-      'FROM purchase.t_podetail AS "a" '
+      'FROM t_podetail AS "a" '
       
-        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
+        '_code'
       
         'INNER JOIN t_item AS "c" ON b.item_code = c.item_code --and b.it' +
         'em_no=c.item_no'
-      'Inner join purchase.t_po d on a.po_no=d.po_no'
+      'Inner join t_po d on a.po_no=d.po_no'
       'INNER JOIN t_wh i on a.wh_code=i.wh_code '
       'INNER JOIN t_supplier e on d.supplier_code=e.supplier_code'
       'INNER JOIN t_item_category g on c.category_id=g.category_id'
       
-        'INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from purchas' +
-        'e.t_podetail GROUP BY po_no) f on d.po_no=f.po_no'
+        'INNER JOIN (select sum(Grandtotal)as sumtotal,po_no from t_podet' +
+        'ail GROUP BY po_no) f on d.po_no=f.po_no'
       'LEFT JOIN t_user j on d.approval=j.user_name'
       '-- where a.nopo='#39'PO/105/E2/MLB/VII/21'#39
       
@@ -1592,10 +1592,10 @@ object FPO: TFPO
         'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,'
       '        a.status,a.grandtotal'
       '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
-      'FROM purchase.t_podetail AS "a" '
+      'FROM t_podetail AS "a" '
       
-        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
+        '_code'
       'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
       'INNER JOIN t_wh d on a.wh_code=d.wh_code  '
       
@@ -1656,7 +1656,7 @@ object FPO: TFPO
         '.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sb' +
         'u_code,a.correction_status,a.um_status,a.um_value,'
       'a.um_account_code,a.as_status,um_no'
-      'from purchase.t_po A '
+      'from t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'INNER JOIN t_wh c on a.wh_code=c.wh_code'
       'order by A.id desc')

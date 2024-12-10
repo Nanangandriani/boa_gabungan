@@ -157,7 +157,7 @@ begin
       close;
       sql.clear;
       sql.Text:='select (case WHEN status=0 THEN ''PENGAJUAN'' WHEN status=1 THEN ''DISETUJUI'' else ''TIDAK DISETUJUI'''+
-      ' END) AS status,a.*,b.wh_name,c.wh_name wh_nm from "warehouse".t_master_formula_test a INNER JOIN t_wh b on '+
+      ' END) AS status,a.*,b.wh_name,c.wh_name wh_nm from t_master_formula_test a INNER JOIN t_wh b on '+
       ' a.wh_code=b.wh_code INNER JOIN t_wh c on a.wh_code2=c.wh_code order by formula_no Desc ';
       ExecSQL;
     end;
@@ -176,7 +176,7 @@ begin
       close;
       sql.clear;
       sql.Text:='select (case WHEN status=0 THEN ''PENGAJUAN'' WHEN status=1 THEN ''DISETUJUI'' else ''TIDAK DISETUJUI'''+
-      ' END) AS status,a.*,b.wh_name,c.wh_name wh_nm from "warehouse".t_master_formula_test a INNER JOIN t_wh b on '+
+      ' END) AS status,a.*,b.wh_name,c.wh_name wh_nm from t_master_formula_test a INNER JOIN t_wh b on '+
       ' a.wh_code=b.wh_code INNER JOIN t_wh c on a.wh_code2=c.wh_code where a.sbu_code='+QuotedStr(loksbu)+''+
       ' order by formula_no Desc ';
       ExecSQL;
@@ -295,14 +295,14 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='Update "warehouse".t_master_formula_test set Status=''Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
+    sql.Text:='Update t_master_formula_test set Status=''Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
     ExecSQL;
   end;
   with dm.qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='Update "warehouse".t_master_formula_test_det set Status=''Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
+    sql.Text:='Update t_master_formula_test_det set Status=''Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
     ExecSQL;
   end;
   ActROExecute(sender);
@@ -314,14 +314,14 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='Update "warehouse".t_master_formula_test set Status=''Tidak Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
+    sql.Text:='Update t_master_formula_test set Status=''Tidak Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
     ExecSQL;
   end;
   with dm.qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='Update "warehouse".t_master_formula_test_det set Status=''Tidak Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
+    sql.Text:='Update t_master_formula_test_det set Status=''Tidak Disetujui'' where formula_no='+QuotedStr(Dbgridspk_for.Fields[0].AsString);
     ExecSQL;
   end;
   ActROExecute(sender);

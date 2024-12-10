@@ -26,7 +26,6 @@ object FNew_Hasil_Perc_Barang: TFNew_Hasil_Perc_Barang
     Color = 15987699
     TabOrder = 0
     ExplicitWidth = 462
-    ExplicitHeight = 294
     object Label13: TLabel
       Left = 24
       Top = 24
@@ -191,7 +190,6 @@ object FNew_Hasil_Perc_Barang: TFNew_Hasil_Perc_Barang
       Height = 32
       Align = alBottom
       TabOrder = 5
-      ExplicitTop = 260
       ExplicitWidth = 458
       object BBatal2: TRzBitBtn
         Left = 390
