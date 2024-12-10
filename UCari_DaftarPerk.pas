@@ -206,7 +206,24 @@ begin
       FDataPengajuanPengeluaranKasBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
+    if (vpanggil ='pengajuankeluarkasbank_show_header')then
+    begin
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun.edit;
+      //FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=QDaftar_Perk.fieldbyname('header_code').AsString;
+      //FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('header_name').AsString;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['kredit']:=0;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['debit']:=0;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun.post;
+      QDaftar_Perk.Close;
+    end;
     close;
+    close;
+
 end;
 
 procedure TFCari_DaftarPerk.FormClose(Sender: TObject;

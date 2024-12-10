@@ -452,7 +452,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   object QdataRencana: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT a.*,b.supplier_name FROM cash_banks.t_paid_debt_det A'
+      'SELECT a.*,b.supplier_name FROM t_paid_debt_det A'
       'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code'
       ' ')
     Left = 640

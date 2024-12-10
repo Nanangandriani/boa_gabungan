@@ -205,7 +205,10 @@ uses
   UNewKontrakTagihan in 'UNewKontrakTagihan.pas' {FNewKontrakTagihan},
   USetJenisKontrakTagihan in 'USetJenisKontrakTagihan.pas' {FSetJenisKontrakTagihan},
   UListKontrakTagihan in 'UListKontrakTagihan.pas' {FListKontrakTagihan},
-  Unew_spb in 'Unew_spb.pas' {FNew_SPB};
+  Unew_spb in 'Unew_spb.pas' {FNew_SPB},
+  U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
+  UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya},
+  UApproval_Keluar_Kas_Bank in 'UApproval_Keluar_Kas_Bank.pas' {FApproval_Keluar_Kas_Bank};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -312,6 +315,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
   Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
   Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
+  Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
+  Application.CreateForm(TFPelaku_Biaya, FPelaku_Biaya);
+  Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

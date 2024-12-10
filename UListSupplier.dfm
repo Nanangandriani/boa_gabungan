@@ -726,7 +726,7 @@ object FListSupplier: TFListSupplier
   object QBarang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from warehouse.t_item_stock')
+      'select * from t_item_stock')
     MasterSource = DsSupplier
     MasterFields = 'supplier_code'
     DetailFields = 'supplier_code'

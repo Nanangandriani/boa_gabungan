@@ -4577,7 +4577,8 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       PasswordChar = '*'
-      TabOrder = 2
+      TabOrder = 0
+      Text = '123456'
       TextHint = 'Password'
       OnKeyPress = EdPassKeyPress
     end
@@ -4597,8 +4598,8 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      Text = 'Admin'
       TextHint = 'Username'
-      OnKeyPress = EduserKeyPress
     end
     object CbSBU: TcxComboBox
       Left = 66
@@ -4620,9 +4621,8 @@ object FHomeLogin: TFHomeLogin
       StyleDisabled.Color = clGradientActiveCaption
       StyleDisabled.TextColor = clGradientActiveCaption
       StyleDisabled.ButtonStyle = btsFlat
-      TabOrder = 0
+      TabOrder = 2
       OnClick = CbSBUClick
-      OnKeyPress = CbSBUKeyPress
       Width = 265
     end
   end

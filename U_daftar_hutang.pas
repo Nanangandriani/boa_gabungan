@@ -182,7 +182,7 @@ begin
            'FROM '+
 
            '(select trans_no,trans_date as tanggal,supplier_code as kodesup,trans_no as no_inv,faktur_no as nofakturpajak,faktur_date,sj_no,valas,valas_value,due_date,plan_stat,'+
-           '(case when sj_status=1 and fk_status=1 and invoice_status=1 then 1 else 0 end)status,0 as ppnrp,pph_rp,id as urutan,approval_status  from purchase.t_purchase_invoice where (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
+           '(case when sj_status=1 and fk_status=1 and invoice_status=1 then 1 else 0 end)status,0 as ppnrp,pph_rp,id as urutan,approval_status  from t_purchase_invoice where (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
 
            'union all '+
            'select  a.notrans as no_terima,a.date_trans as tanggal,b.vendor_code as kodesup,a.notrans as no_inv,a.notrans as nofakturpajak,a.date_trans as tgl_faktur, '+
@@ -193,34 +193,34 @@ begin
            ')a '+
            'left join '+
            '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as jumlah,(case when b.valas=''USD'' then sum(a.subtotalrp) else sum(a.grandtotal) end)as hutang,sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph '+
-           'from purchase.t_purchase_invoice_det a,purchase.t_purchase_invoice b  where a.trans_no=b.trans_no group by a.trans_no,b.supplier_code,b.valas '+
+           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no group by a.trans_no,b.supplier_code,b.valas '+
            'order by trans_no,supplier_code)b on a.trans_no=b.trans_no and a.kodesup=b.supplier_code '+
            'left join '+
            't_supplier c on a.kodesup=c.supplier_code '+
            'left join '+
-           '(select faktur_no from cash_banks.t_paid_debt_det)as lunas  on a.nofakturpajak=lunas.faktur_no '+
+           '(select faktur_no from t_paid_debt_det)as lunas  on a.nofakturpajak=lunas.faktur_no '+
            'left join '+
-           '(select a.receive_no,b.valas_value,b.valas,case when b.valas=''USD'' then sum(a.total_price)*b.valas_value else sum(b.price+b.ppn_rp) end as nil_retur from purchase.t_purchase_return_det a,purchase.t_purchase_return b '+
+           '(select a.receive_no,b.valas_value,b.valas,case when b.valas=''USD'' then sum(a.total_price)*b.valas_value else sum(b.price+b.ppn_rp) end as nil_retur from t_purchase_return_det a,t_purchase_return b '+
            'where a.return_no=b.return_no  group by a.receive_no,b.valas_value,b.valas order by a.receive_no)retur on a.trans_no=retur.receive_no '+
            'left join '+
-           '(select receive_no,sum(price_rp) as nilai_pot_rp,sum(price) as nilai_pot_dolar,sum(ppnrp)as ppnrp from purchase.t_purchase_discount GROUP BY receive_no)pot on a.trans_no=pot.receive_no '+
+           '(select receive_no,sum(price_rp) as nilai_pot_rp,sum(price) as nilai_pot_dolar,sum(ppnrp)as ppnrp from t_purchase_discount GROUP BY receive_no)pot on a.trans_no=pot.receive_no '+
            'left join '+
            '(select notrans as do_no,vendor_code,sum(total_cost)as harga from sale.t_delivery_order_services group by do_no,vendor_code order by do_no,vendor_code)do1 on a.trans_no=do1.do_no '+
            ')xxx  '+
            'left join '+
            '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+
-           '(select distinct a.trans_no,a.po_no,b.supplier_code from purchase.t_purchase_invoice_det a,purchase.t_purchase_invoice b where a.trans_no=b.trans_no '+
+           '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no '+
            ' and (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')a '+
            'left join '+
-           '(select supplier_code,po_no,sum(um_value)as nilai_um from purchase.t_po where um_status=true and po_date<=''2024-10-21''  '+
+           '(select supplier_code,po_no,sum(um_value)as nilai_um from t_po where um_status=true and po_date<=''2024-10-21''  '+
            'group  by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_beli on xxx.no_inv=um_beli.trans_no '+
 
            ')zzz ' +
            'ORDER BY tglfaktur,nofakturpajak,urutan ASC)y '+
            'left join '+
-           '(select faktur_no,plan_to from cash_banks.v_plan_paid_debt where paid_status=0  and periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')yy on y.nofakturpajak=yy.faktur_no '+
+           '(select faktur_no,plan_to from v_plan_paid_debt where paid_status=0  and periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')yy on y.nofakturpajak=yy.faktur_no '+
            'left join '+
-           '(select lpb_no,pay from cash_banks.t_buy_pay)z on y.no_inv=z.lpb_no ORDER BY y.urutan) zz ';
+           '(select lpb_no,pay from t_buy_pay)z on y.no_inv=z.lpb_no ORDER BY y.urutan) zz ';
 
     if qdaftarhutang.Active=false then
        qdaftarhutang.Active:=true;

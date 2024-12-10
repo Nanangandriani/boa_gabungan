@@ -42,8 +42,6 @@ type
     procedure EdPassKeyPress(Sender: TObject; var Key: Char);
     procedure CbSBUClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure CbSBUKeyPress(Sender: TObject; var Key: Char);
-    procedure EduserKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -88,27 +86,11 @@ begin
   END;
 end;
 
-procedure TFHomeLogin.CbSBUKeyPress(Sender: TObject; var Key: Char);
-begin
-  if key=#13 then
-  begin
-     Eduser.SetFocus;
-  end;
-end;
-
 procedure TFHomeLogin.EdPassKeyPress(Sender: TObject; var Key: Char);
 begin
   if key=#13 then
   begin
      ImgTransaksiClick(sender);
-  end;
-end;
-
-procedure TFHomeLogin.EduserKeyPress(Sender: TObject; var Key: Char);
-begin
-  if key=#13 then
-  begin
-     EdPass.SetFocus;
   end;
 end;
 
@@ -181,13 +163,12 @@ begin
              ' "password", "role_id", "is_active", "last_login", "last_logout", '+
              ' "signature", "position", "status", "created_at", "updated_at", '+
              ' "deleted_at", "job_level_id", "created_by", "updated_by", '+
-             ' "deleted_by", "dept_code", "position_code", "ttd","access_status" '+
+             ' "deleted_by", "dept_code", "position_code", "ttd" '+
              ' FROM "public"."t_user" '+
              ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
              ' and "password"='+QuotedStr(EdPass.Text)+'  ');
      open;
     end;
-    status_akses:=dm.Qtemp['access_status'];
     if dm.Qtemp.RecordCount=0 then
     begin
       ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');

@@ -343,7 +343,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Delete from warehouse.t_item_stock where supplier_code='+QuotedStr(Edno.Text);
+        sql.Text:='Delete from t_item_stock where supplier_code='+QuotedStr(Edno.Text);
         ExecSQL;
       end;
       MemMaterial.First;
@@ -353,7 +353,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='insert into warehouse.t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,item_name,created_by)'+
+          sql.Text:='insert into t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,item_name,created_by)'+
                     ' values(:item_stock,:item_code,:supplier_code,:qty,:unit,:order_no,:item_name,:cr_by)';
                     ParamByName('item_stock').AsString:=MemMaterial['kode'];
                     ParamByName('item_code').AsString:=MemMaterial['kd_material'];
@@ -439,7 +439,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='insert into warehouse.t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,item_name,created_by)'+
+          sql.Text:='insert into t_item_stock(item_stock_code,item_code,supplier_code,qty,unit,order_no,item_name,created_by)'+
                     ' values(:item_stock,:item_code,:supplier_code,:qty,:unit,:order_no,:item_name,:cr_by)';
                     ParamByName('item_stock').AsString:=MemMaterial['kode'];
                     ParamByName('item_code').AsString:=MemMaterial['kd_material'];

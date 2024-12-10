@@ -902,7 +902,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       #9#9'"description",'
       '                "module_id" '
       #9'FROM'
-      #9#9'"cash_banks"."t_cash_bank_acceptance" A '
+      #9#9'"t_cash_bank_acceptance" A '
       #9'WHERE'
       #9#9'"voucher_no" = '#39'0002/BM18/XI/2024'#39' '
       #9#9'AND deleted_at IS NULL '
@@ -919,7 +919,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       #9#9'"account_name",'
       #9#9'"amount_rate_results" '
       #9'FROM'
-      #9#9'"cash_banks"."t_cash_bank_acceptance_det" aa'
+      #9#9'"t_cash_bank_acceptance_det" aa'
       
         #9#9'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.cod' +
         'e '
@@ -927,7 +927,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'WHERE'
       #9'A."voucher_no" = '#39'0002/BM18/XI/2024'#39' '
       #9'AND "position" = '#39'K'#39)
-    Active = True
     Left = 1012
     Top = 152
     object QBukti_Terimavoucher_no: TStringField

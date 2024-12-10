@@ -91,7 +91,7 @@ procedure TFDataRencanaLunasHutangPengajuan.BCariClick(Sender: TObject);
 var query :string;
     URUTAN_KE : Integer;
 begin
-    query:='SELECT a.*,b.supplier_name FROM cash_banks.t_paid_debt_det A '+
+    query:='SELECT a.*,b.supplier_name FROM t_paid_debt_det A '+
            'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ';
 
     with dm.Qtemp do
@@ -223,12 +223,14 @@ begin
                     FDataPengajuanPengeluaranKasBank.MemDetailHutang['jum_hutang']:=MemDataRencana['amount'];
                     FDataPengajuanPengeluaranKasBank.MemDetailHutang.post;
                end;
-             MemDataRencana.Next;
+               MemDataRencana.Next;
              end;
              FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=MemDataRencana['supplier_code'];
              FDataPengajuanPengeluaranKasBank.ednama_supplier.Text:=MemDataRencana['supplier_name'];
              FDataPengajuanPengeluaranKasBank.CbRencana.Text:=MemDataRencana['plan_to'];
-
+             FDataPengajuanPengeluaranKasBank.EdJumlah.Text:=MemDataRencana['amount'];
+             FDataPengajuanPengeluaranKasBank.dtPeriode1.Date:=MemDataRencana['periode1'];
+             FDataPengajuanPengeluaranKasBank.dtPeriode2.Date:=MemDataRencana['periode2'];
            end;
       {end
       Except on E :Exception do

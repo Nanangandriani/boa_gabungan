@@ -144,7 +144,7 @@ end;
 procedure TFList_Rencana_Lunas_Hutang.BCariClick(Sender: TObject);
 var query:string;
 begin
-    query:='select * from cash_banks.v_plan_paid_debt ';
+    query:='select * from v_plan_paid_debt ';
     if CBstatus.ItemIndex=0 then
     begin
       if txtkdsupp.Text='' then
@@ -153,7 +153,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from cash_banks.v_plan_paid_debt '+
+          sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=0 and periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date)) ;
           open;
         end;
@@ -164,7 +164,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from cash_banks.v_plan_paid_debt '+
+          sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=0 and '+
                     'supplier_code='+QuotedStr(txtkdsupp.Text) ;
           open;
@@ -179,7 +179,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from cash_banks.v_plan_paid_debt '+
+          sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=1 and '+
                     'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date)) ;
           open;
@@ -191,7 +191,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from cash_banks.v_plan_paid_debt '+
+          sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=1 and '+
                     'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+
                     'supplier_code='+QuotedStr(txtkdsupp.Text) ;

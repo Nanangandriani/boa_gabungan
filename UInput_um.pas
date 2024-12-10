@@ -101,7 +101,7 @@ begin
     begin
         close;
         sql.clear;
-        sql.Text:='Update purchase.t_advance_payment set trans_date=:partrans_date,supplier_code=:parsupplier_code,um_status=:parum_status, '+
+        sql.Text:='Update t_advance_payment set trans_date=:partrans_date,supplier_code=:parsupplier_code,um_status=:parum_status, '+
                   'um_value=:parum_value,um_account_code=:parum_account_code,trans_day=:partrans_day,trans_month=:partrans_month,trans_year=:partrans_year, '+
                   //'pic=:parpic,
                   'input_date=:parinput_date, '+
@@ -136,8 +136,8 @@ begin
    begin
       close;
       sql.Clear;
-      sql.Text:='select * from purchase.t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
-      ' and po_no in (select po_no from purchase.t_po except select po_no from purchase.t_advance_payment )';
+      sql.Text:='select * from t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
+      ' and po_no in (select po_no from t_po except select po_no from t_advance_payment )';
          //       'and po_no not in (select po_no from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' )';
 
       //sql.Text:='select * from purchase.t_po where um_status=''true'' and supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
@@ -157,7 +157,7 @@ procedure TFNew_UM_Pembelian.Autonumber;
 begin
    idmenu:='M11007';
    strday2:=Dtp_Um.Date;
-   Ed_no_trans.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_advance_payment','');
+   Ed_no_trans.Text:=getNourutBlnPrshthn_kode(strday2,'t_advance_payment','');
    Edurut.Text:=order_no;
 end;
 
@@ -167,7 +167,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' insert into purchase.t_advance_payment(no_trans,trans_date,supplier_code,um_status,um_value,um_account_code,'+
+        sql.Text:=' insert into t_advance_payment(no_trans,trans_date,supplier_code,um_status,um_value,um_account_code,'+
                   ' trans_day,trans_month,trans_year,pic,input_date,order_no,po_no,currency,exchange_rate,created_at,created_by) '+
                   ' values(:parno_trans,:partrans_date,:parkd_supplier,:parum_status,:parum_value,'+
                   ' :parum_account_code,:partrans_day,:partrans_month,:partrans_year,:parpic,:parinput_date,'+
@@ -239,7 +239,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select sum(grandtotal) total from purchase.t_podetail where po_no='+QuotedStr(CbPo.Text);
+      sql.Text:='select sum(grandtotal) total from t_podetail where po_no='+QuotedStr(CbPo.Text);
       Execute;
     end;
 //    hg_po:=dm.Qtemp['total'];

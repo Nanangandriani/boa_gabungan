@@ -36,7 +36,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = -6
+    ExplicitWidth = 1102
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
@@ -54,7 +54,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     object Label39: TLabel
       Left = 587
       Top = -1
-      Width = 77
+      Width = 75
       Height = 15
       Caption = 'Jenis Transaksi'
       Visible = False
@@ -62,7 +62,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     object Label38: TLabel
       Left = 700
       Top = -1
-      Width = 5
+      Width = 3
       Height = 15
       Caption = ':'
       Visible = False
@@ -297,7 +297,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 93
       Height = 23
       TabOrder = 8
-      Visible = False
     end
     object edKurs: TRzNumericEdit
       Left = 398
@@ -337,7 +336,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 47
       Height = 23
       TabOrder = 13
-      Visible = False
       OnChange = code_transChange
     end
     object Ed_kepada: TEdit
@@ -354,7 +352,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 15
-      Visible = False
     end
     object Ed_Additional: TEdit
       Left = 339
@@ -362,7 +359,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 119
       Height = 23
       TabOrder = 16
-      Visible = False
     end
     object Edth: TEdit
       Left = 433
@@ -370,7 +366,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 58
       Height = 23
       TabOrder = 17
-      Visible = False
     end
     object Edbln: TEdit
       Left = 375
@@ -378,7 +373,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 52
       Height = 23
       TabOrder = 18
-      Visible = False
     end
     object Edhari: TEdit
       Left = 317
@@ -386,7 +380,13 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 53
       Height = 23
       TabOrder = 19
-      Visible = False
+    end
+    object Ed_id_modul: TEdit
+      Left = 408
+      Top = 50
+      Width = 50
+      Height = 23
+      TabOrder = 20
     end
   end
   object Panel2: TPanel
@@ -521,7 +521,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 951
-      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -565,8 +564,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
-      ExplicitLeft = 1
-      ExplicitTop = -6
       object Label21: TLabel
         Left = 20
         Top = 30
@@ -632,6 +629,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Height = 23
         Text = ''
         TabOrder = 0
+        OnChange = edKode_supplierChange
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = edKode_supplierButtonClick
@@ -673,7 +671,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 4
-        Visible = False
       end
       object edNMJenisBayar: TRzButtonEdit
         Left = 147
@@ -703,6 +700,13 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         TabOrder = 7
         OnSelect = Cb_debt_sourceSelect
       end
+      object ak_account: TEdit
+        Left = 294
+        Top = 27
+        Width = 76
+        Height = 23
+        TabOrder = 8
+      end
     end
     object gbDataBank: TGroupBox
       Left = 553
@@ -715,8 +719,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
-      ExplicitLeft = 559
-      ExplicitTop = -6
       object Label1: TLabel
         Left = 147
         Top = 57
@@ -773,16 +775,18 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 230
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 221
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1098
+      ExplicitHeight = 196
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -796,6 +800,19 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
+          item
+            CellButtons = <
+              item
+                OnClick = DBGridAkunColumns5CellButtons0Click
+              end>
+            DynProps = <>
+            EditButton.Style = ebsEllipsisEh
+            EditButtons = <>
+            FieldName = 'kd_header_akun'
+            Footers = <>
+            Title.Caption = 'Kode Akun'
+            Width = 100
+          end
           item
             CellButtons = <>
             DynProps = <>
@@ -849,14 +866,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'kd_header_akun'
-            Footers = <>
-            Visible = False
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
             FieldName = 'jumlah_hasil_kurs'
             Footers = <>
             Visible = False
@@ -867,6 +876,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1098
       ExplicitHeight = 196
       object DBGridTagihan: TDBGridEh
@@ -899,6 +910,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
+            FieldName = 'no_sj'
             Footers = <>
             Title.Caption = 'Nomor | Surat Jalan'
             Width = 150
@@ -965,7 +977,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     OnSelect = Cb_jenis_transSelect
   end
   object MemDetailAkun: TMemTableEh
-    Active = True
     Params = <>
     Left = 584
     Top = 488
@@ -1054,7 +1065,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
   end
   object MemDetailHutang: TMemTableEh
-    Active = True
     Params = <>
     Left = 784
     Top = 464
@@ -1133,12 +1143,12 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
   end
   object dsDetailHutang: TDataSource
     DataSet = MemDetailHutang
-    Left = 704
-    Top = 472
+    Left = 832
+    Top = 512
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
-    Left = 512
-    Top = 480
+    Left = 648
+    Top = 504
   end
 end

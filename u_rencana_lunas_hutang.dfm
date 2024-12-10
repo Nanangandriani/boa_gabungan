@@ -959,8 +959,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select * from cash_banks.v_plan_paid_debt where paid_status=0 an' +
-        'd approve_status=false  '
+        'select * from v_plan_paid_debt where paid_status=0 and approve_s' +
+        'tatus=false  '
       'and periode1='#39'2024-01-01'#39' and periode2='#39'2024-01-31'#39)
     Left = 640
     Top = 175

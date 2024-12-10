@@ -105,7 +105,27 @@ begin
     begin
       FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];
       FDataPengajuanPengeluaranKasBank.edNama_Supplier.Text:=QSupplier['supplier_name'];
+
+      //Ganti Akun Header  Menjadi Akun Hutang Pelanggan/Pemasok
+      with FDataPengajuanPengeluaranKasBank do
+      begin
+        MemDetailAkun.First;
+        while not MemDetailAkun.Eof do
+        begin
+          if MemDetailAkun['kd_header_akun']=('SELECT header_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)) then
+          begin
+            MemDetailAkun.Edit;
+            MemDetailAkun['kd_akun']:=('SELECT account_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
+            MemDetailAkun['nm_akun']:=('SELECT account_name from t_ak_account a LEFT JOIN t_supplier b ON a.code=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
+            //kd_ak_supplier:=MemDetailAkun['kd_akun'];
+            MemDetailAkun.post;
+          end;
+          MemDetailAkun.Next;
+        end;
+        //showmessage(MemDetailAkun['kd_akun']);
+      end;
     end;
+
     if vcall='keluar_kas_bank' then
     begin
       FDataPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];

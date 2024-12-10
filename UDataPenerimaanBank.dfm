@@ -416,10 +416,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1133
     Height = 241
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 1127
     ExplicitHeight = 232
@@ -697,7 +697,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object lbSumberTagihan: TLabel
         Left = 332
         Top = 30
-        Width = 124
+        Width = 107
         Height = 15
         Caption = 'Sumber Penerimaan'
       end

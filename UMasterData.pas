@@ -281,6 +281,27 @@ begin
     end;
     end;
   end;
+  if vcall='KL_kasbank_bank' then
+  begin
+    FDataPengeluaranKasBank.edNorek.Text:=MemMasterData['KD_MASTER'];
+    FDataPengeluaranKasBank.edNamaBank.Text:=MemMasterData['NM_MASTER'];
+    //Ganti Akun Header bank Menjadi Akun No Rekening
+    with FDataPengeluaranKasBank do
+    begin
+      MemDetailAkun.First;
+      while not MemDetailAkun.Eof do
+      begin
+        if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])) then
+        begin
+          MemDetailAkun.Edit;
+          MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+          MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+          MemDetailAkun.post;
+        end;
+        MemDetailAkun.Next;
+      end;
+    end;
+  end;
   if vcall='setting_penjualan_tax' then
   begin
     FDataMasterAkunTrans.edAkunJenisTax.Text:=MemMasterData['KD_MASTER'];

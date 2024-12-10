@@ -2,8 +2,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   Left = 0
   Top = 0
   Caption = 'Rencana Pelunasan Hutang'
-  ClientHeight = 520
-  ClientWidth = 868
+  ClientHeight = 511
+  ClientWidth = 862
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   object DBGrid_Rencana: TDBGridEh
     Left = 0
     Top = 225
-    Width = 868
-    Height = 259
+    Width = 862
+    Height = 250
     Align = alClient
     DataSource = DSRencana
     DynProps = <>
@@ -199,14 +199,12 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   end
   object lblrencanake: TPanel
     Left = 0
-    Top = 484
-    Width = 868
+    Top = 475
+    Width = 862
     Height = 36
     Align = alBottom
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 475
-    ExplicitWidth = 851
     object Btutup: TRzBitBtn
       Left = 767
       Top = 1
@@ -268,7 +266,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 750
+      ExplicitLeft = 761
     end
     object BHapus: TRzBitBtn
       Left = 567
@@ -331,7 +329,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 550
+      ExplicitLeft = 561
     end
     object BSimpan: TRzBitBtn
       Left = 667
@@ -394,19 +392,17 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 662
-      ExplicitTop = 6
+      ExplicitLeft = 661
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 868
+    Width = 862
     Height = 225
     Align = alTop
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 851
     object Label2: TLabel
       Left = 25
       Top = 14

@@ -6,7 +6,7 @@ object dm: Tdm
   object Koneksi: TUniConnection
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_boa_hps'
+    Database = 'db_boa_distribution'
     Username = 'postgres'
     Server = '10.10.10.110'
     Connected = True

@@ -147,7 +147,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add('select * from cash_banks.t_paid_debt_det where periode1=:tgl1 and periode2=:tgl2 and supplier_code=:kds and cek_no=:noc and plan_to=:rencanake');
+      sql.add('select * from t_paid_debt_det where periode1=:tgl1 and periode2=:tgl2 and supplier_code=:kds and cek_no=:noc and plan_to=:rencanake');
       ParamByName('tgl1').Value:=formatdatetime('yyyy-mm-dd',dpperiode1.DateTime);
       ParamByName('tgl2').Value:=formatdatetime('yyyy-mm-dd',dpperiode2.DateTime);
       ParamByName('kds').Asstring:=MemRencana['kd_sup'].Value;
@@ -161,7 +161,7 @@ begin
       begin
          close;
          sql.clear;
-         sql.add('delete from cash_banks.t_paid_debt_det where periode1=:tgl1 and periode2=:tgl2 and supplier_code=:kds and cek_no=:noc and plan_to=:rencanake');
+         sql.add('delete from t_paid_debt_det where periode1=:tgl1 and periode2=:tgl2 and supplier_code=:kds and cek_no=:noc and plan_to=:rencanake');
          ParamByName('tgl1').value:=formatdatetime('yyyy-mm-dd',dpperiode1.Date);
          ParamByName('tgl2').value:=formatdatetime('yyyy-mm-dd',dpperiode2.Date);
          ParamByName('kds').asstring:=MemRencana['kd_sup'].Value;
@@ -178,7 +178,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.add('insert into cash_banks.t_paid_debt_det(bank,supplier_code,inv_no,faktur_no,faktur_date, '+
+        sql.add('insert into t_paid_debt_det(bank,supplier_code,inv_no,faktur_no,faktur_date, '+
                 'cek_no,cek_date,paid_date,periode1,periode2,periodetempo1,periodetempo2,amount,'+
                 'debt_type,username,npph,pph_account,pph_name '+
                 ',paid_status,exchange_rate,dolar_amount,approve_status,sj_no,factory_code,plan_to '+
@@ -259,17 +259,17 @@ begin
    //Simpan;
    if application.MessageBox('Data rencana pelunasan hutang akan disimpan?','confirm',mb_yesno or mb_iconquestion)=id_yes then
    begin
-      if not dm.Koneksi.InTransaction then
-      dm.Koneksi.StartTransaction;
-      try
+      //if not dm.Koneksi.InTransaction then
+      //dm.Koneksi.StartTransaction;
+      //try
         with dm.Qtemp do
         begin
           close;
           sql.Clear;
-          sql.Text:='select * from cash_banks.t_paid_debt_det where '+
+          sql.Text:='select * from t_paid_debt_det where '+
                     'periode1='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode1.Date))+' and '+
                     'periode2='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode2.Date))+' and '+
-                    'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from cash_banks.t_paid_debt_det where username='+QuotedStr(Nm)+')';
+                    'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
           open;
         end;
         if (length(txtnocek.Text)=0)and(rbbank.Checked=true) then
@@ -306,12 +306,12 @@ begin
           FList_Rencana_Lunas_Hutang.ActROExecute(sender);
           close;
         end;
-        Except on E :Exception do
-          begin
-            MessageDlg('Data gagal disimpan, silahkan ulangi proses simpan..!!', MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-      end;
+        //Except on E :Exception do
+          //begin
+            //MessageDlg('Data gagal disimpan, silahkan ulangi proses simpan..!!', MtError,[mbok],0);
+            //Dm.koneksi.Rollback ;
+          //end;
+       //end;
    end;
 
 end;
