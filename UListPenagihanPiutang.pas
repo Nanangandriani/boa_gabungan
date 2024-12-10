@@ -103,7 +103,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "cash_banks"."t_dpp"  SET '+
+          sql.Text:=' UPDATE "public"."t_dpp"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "code_collector"='+QuotedStr(QListPenagihanPiutang.FieldByName('code_collector').AsString)+' AND '+
@@ -133,7 +133,7 @@ begin
        sql.Clear;
        sql.Text:=' SELECT "date_dpp", "date_print", "code_collector" , "name_collector", '+
                  ' b."wilayah", count(no_invoice) as tot_lmbr_invoice, SUM("paid_amount") jum_tagihan '+
-                 ' from "cash_banks"."t_dpp" a '+
+                 ' from "public"."t_dpp" a '+
                  ' LEFT JOIN (SELECT code AS kd_master, name AS nm_master,  '+
                  ' concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency)  AS wilayah  '+
                  ' from "public"."t_collector"  WHERE	deleted_at IS NULL) b ON a."code_collector"=b."kd_master" '+

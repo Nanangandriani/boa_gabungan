@@ -218,15 +218,15 @@ object FRekapKontrak: TFRekapKontrak
     SQL.Strings = (
       
         'select'#9'A.contract_no,b.supplier_name,d.item_name,c.qty,c.unit,c.' +
-        'price,c.remaining_qty,a.contract_date,c.item_stock_code from pur' +
-        'chase.t_coop_contract A inner join t_supplier B on A.supplier_co' +
-        'de=B.supplier_code '
+        'price,c.remaining_qty,a.contract_date,c.item_stock_code from t_c' +
+        'oop_contract A inner join t_supplier B on A.supplier_code=B.supp' +
+        'lier_code '
       
-        'INNER JOIN purchase.t_coop_contract_det AS "c" on a. contract_no' +
-        '=c.contract_no'
+        'INNER JOIN t_coop_contract_det AS "c" on a. contract_no=c.contra' +
+        'ct_no'
       
-        'INNER JOIN warehouse.t_item_stock AS d'#9'ON c.item_stock_code = d.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS d'#9'ON c.item_stock_code = d.item_stock' +
+        '_code'
       'order by a.id Desc')
     Left = 44
     Top = 192
@@ -248,8 +248,8 @@ object FRekapKontrak: TFRekapKontrak
     SQL.Strings = (
       
         'SELECT'#9'a.contract_no, a.po_no,b.item_stock_code,a.po_date,b.qty,' +
-        'b.unit from purchase.t_po a  INNER JOIN '
-      'purchase.t_podetail b on b.po_no=a.po_no order by a.po_date asc')
+        'b.unit from t_po a  INNER JOIN '
+      't_podetail b on b.po_no=a.po_no order by a.po_date asc')
     MasterSource = DsKerjasama
     MasterFields = 'contract_no;item_stock_code'
     DetailFields = 'contract_no;item_stock_code'
@@ -447,16 +447,16 @@ object FRekapKontrak: TFRekapKontrak
       OnClick = DxRefreshClick
     end
     object dtmulai: TcxBarEditItem
-      Caption = 'Tanggal Dari      '
+      Caption = 'Tanggal Awal '
       Category = 0
-      Hint = 'Tanggal Dari      '
+      Hint = 'Tanggal Awal '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object dtselesai: TcxBarEditItem
-      Caption = 'Tanggal Sampai'
+      Caption = 'Tanggal Akhir'
       Category = 0
-      Hint = 'Tanggal Sampai'
+      Hint = 'Tanggal Akhir'
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end

@@ -65,15 +65,6 @@ type
     WebBrowser1: TWebBrowser;
     dxBarLargeButton2: TdxBarLargeButton;
     QJurnal: TUniQuery;
-    QJurnaltrans_no: TStringField;
-    QJurnalaccount_code: TStringField;
-    QJurnalmodule_id: TSmallintField;
-    QJurnalmodule_name: TStringField;
-    QJurnalstatus_dk: TStringField;
-    QJurnalaccount_name: TStringField;
-    QJurnaldb: TFloatField;
-    QJurnalkd: TFloatField;
-    QJurnaltrans_date: TDateField;
     frxDBDJurnal: TfrxDBDataset;
     Report: TfrxReport;
     procedure Exit1Click(Sender: TObject);

@@ -86,7 +86,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_spm" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_spm" ("created_at", "created_by", '+
             ' "notrans", "loading_date", "delivery_date", "code_vendor", '+
             ' "name_vendor", "number_of_vehicles", "description", "order_no", '+
             //' "additional_code", '+
@@ -121,7 +121,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_spm" SET '+
+      sql.add(' UPDATE "public"."t_spm" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' loading_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtMuat.Date))+','+
@@ -151,7 +151,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "sale"."t_spm_det"'+
+            ' SELECT * from "public"."t_spm_det"'+
             ' WHERE "notrans"='+QuotedStr(edKodeMuat.Text)+' ) a '+
             ' Order By notrans desc');
     open;
@@ -163,7 +163,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_spm_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_spm_det" '+
             ' WHERE "notrans"='+QuotedStr(edKodeMuat.Text)+';';
   ExecSQL;
   end;
@@ -176,7 +176,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_spm_det" ( "notrans", "notrans_do", '+
+    sql.Text:=' INSERT INTO "public"."t_spm_det" ( "notrans", "notrans_do", '+
               ' "notrans_sale", "code_cust", "name_cust", "code_items", "name_item", '+
               ' "amount", "unit") '+
               ' Values( '+
@@ -306,7 +306,7 @@ procedure TFDataPerintahMuat.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPerintahMuat.Name)+'');
    strday2:=dtMuat.Date;
-   edKodeMuat.Text:=getNourut(strday2,'sale.t_spm','0');
+   edKodeMuat.Text:=getNourut(strday2,'public.t_spm','0');
 end;
 
 end.

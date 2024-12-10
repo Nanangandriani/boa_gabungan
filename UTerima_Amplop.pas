@@ -107,14 +107,14 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      sql.Text:='update t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
       Execute;
     end;
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='update warehouse.t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
+      sql.Text:='update t_item_receive3 set deleted_at=now,deleted_by='+quotedstr(nm)+'  where no_terima='+QuotedStr(DBGridPermt_Material.Fields[1].AsString);
       Execute;
     end;
     ActROExecute(sender);
@@ -132,8 +132,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select A.*,B.item_name,C.supplier_name,d.wh_name from warehouse.t_item_receive3 A  '+
-      ' inner join warehouse.t_item_stock B on A.item_stock_code=B.item_stock_code'+
+      sql.Text:='select A.*,B.item_name,C.supplier_name,d.wh_name from t_item_receive3 A  '+
+      ' inner join t_item_stock B on A.item_stock_code=B.item_stock_code'+
       ' Inner Join t_supplier C on B.supplier_code=C.supplier_code'+
       ' inner join t_wh d on a.wh_code=d.wh_code order by a.request_no desc';
     end;
@@ -144,8 +144,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select A.*,B.item_name,C.supplier_name,d.wh_name from warehouse.t_item_receive3 A  '+
-      ' inner join warehouse.t_item_stock B on A.item_stock_code=B.item_stock_code'+
+      sql.Text:='select A.*,B.item_name,C.supplier_name,d.wh_name from t_item_receive3 A  '+
+      ' inner join t_item_stock B on A.item_stock_code=B.item_stock_code'+
       ' Inner Join t_supplier C on B.supplier_code=C.supplier_code'+
       ' inner join t_wh d on a.wh_code=d.wh_code where d.sbu_code='+QuotedStr(loksbu)+''+
       ' order by a.request_no desc';

@@ -45,12 +45,13 @@ type
     procedure BSaveClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 
   private
     { Private declarations }
   public
     vcall,kd_barang_request : string;
-    qty_request : Real;
+    qty_request, qty_stock : Real;
     { Public declarations }
     procedure RefreshGrid;
     procedure Clear;
@@ -67,12 +68,30 @@ uses UDataModule, UMasterData;
 
 procedure TFListStockBarang.BBatalClick(Sender: TObject);
 begin
+  Clear;
   Close;
 end;
 
 procedure TFListStockBarang.BSaveClick(Sender: TObject);
 begin
-  //Validasi qty request harus sama dengan qty yang di tandai
+  //qty_request Validasi qty request harus sama dengan qty yang di tandai
+  qty_stock:=0;
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    if MemDetail['pilih']=true then
+    begin
+      qty_stock:=qty_stock+MemDetail['qtyout'];
+    end;
+    MemDetail.Next;
+  end;
+  if qty_stock<>qty_request then
+  begin
+    ShowMessage('Data Penjualan Tidak Balance Dengan Stock Persediaan!!!');
+    Exit;
+  end;
+
+
   //udpate stock
   Close;
 end;
@@ -82,7 +101,7 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if edKodeSupplier.Text='' then
+      {if edKodeSupplier.Text='' then
       begin
         MessageDlg('Data Supplier Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edNamaSupplier.SetFocus;
@@ -96,7 +115,9 @@ begin
       begin
         RefreshGrid;
         Dm.Koneksi.Commit;
-      end;
+      end;}
+        RefreshGrid;
+        Dm.Koneksi.Commit;
       Except on E :Exception do
         begin
           begin
@@ -129,9 +150,15 @@ begin
       sql.clear;
       sql.add(' SELECT * '+
               ' FROM "public"."vsaldo_akhir_gudang"  a '+
-              ' WHERE "item_code"='+QuotedStr(kd_barang_request)+' AND'+
-              ' "supplier_code"='+QuotedStr(edKodeSupplier.Text)+' '+
-              ' and "wh_code"='+QuotedStr(edKodeGudang.Text)+' ');
+              ' WHERE "item_code"='+QuotedStr(kd_barang_request)+'' );
+        if Length(edNamaSupplier.Text)<>0 then
+        begin
+          sql.add(' AND "supplier_code"='+QuotedStr(edKodeSupplier.Text)+' ' );
+        end;
+        if Length(edNamaGudang.Text)<>0 then
+        begin
+          sql.add(' AND "wh_code"='+QuotedStr(edKodeGudang.Text)+' ');
+        end;
       //sql.add(' ORDER BY "created_at" desc');
       open;
     end;
@@ -178,6 +205,11 @@ begin
   FMasterData.vcall:='m_supplier';
   FMasterData.update_grid('supplier_code','supplier_name','address','"public"."t_supplier"','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
+end;
+
+procedure TFListStockBarang.FormShow(Sender: TObject);
+begin
+  Clear;
 end;
 
 procedure TFListStockBarang.edNamaGudangButtonClick(Sender: TObject);

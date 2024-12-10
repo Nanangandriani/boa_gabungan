@@ -326,11 +326,9 @@ object FUSearch_PO: TFUSearch_PO
       
         'SELECT c.item_stock_code,a.po_no,a.po_date,b.remaining_sp,b.unit' +
         ',b.wh_code,d.wh_name,c.item_name,a.supplier_code,a.sbu_code,'
-      'a.approval_status from purchase.t_po a '
-      'INNER JOIN purchase.t_podetail b on a.po_no=b.po_no'
-      
-        'inner join warehouse.t_item_stock c on b.item_stock_code=c.item_' +
-        'stock_code'
+      'a.approval_status from t_po a '
+      'INNER JOIN t_podetail b on a.po_no=b.po_no'
+      'inner join t_item_stock c on b.item_stock_code=c.item_stock_code'
       'INNER JOIN t_wh d on d.wh_code=a.wh_code'
       'where b.remaining_sp <>0 and a.approval_status='#39'1'#39)
     Left = 304

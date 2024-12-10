@@ -109,7 +109,7 @@ begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name)+'');
    strday2:=dtTanggal_Pesan.Date;
    //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
-   edKodeOrder.Text:=getNourut(strday2,'sale.t_sales_order',kd_kares);
+   edKodeOrder.Text:=getNourut(strday2,'public.t_sales_order',kd_kares);
    //EdNo.Text:=Order_no;
 end;
 
@@ -124,7 +124,7 @@ begin
     sql.add(' SELECT * from ('+
             ' SELECT "notrans", "code_item", '+
             ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
-            ' "name_wh", "code_supp", "name_supp", "source" FROM  "sale"."t_sales_order_det" '+
+            ' "name_wh", "code_supp", "name_supp", "source" FROM  "public"."t_sales_order_det" '+
             ' WHERE deleted_at IS NULL ) a '+
             ' WHERE notrans='+QuotedStr(edKodeOrder.Text)+' '+
             ' Order By notrans, code_item desc');
@@ -169,7 +169,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_sales_order_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_sales_order_det" '+
             ' WHERE "notrans"='+QuotedStr(edKodeOrder.Text)+';';
   ExecSQL;
   end;
@@ -181,7 +181,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_sales_order_det" ("notrans", "code_item", '+
+    sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
               ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
               ' "name_wh", "code_supp", "name_supp", "source" ) '+
               ' Values( '+
@@ -383,7 +383,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_sales_order" ("created_at", "created_by", "notrans", '+
+    sql.add(' Insert into "public"."t_sales_order" ("created_at", "created_by", "notrans", '+
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year") '+
@@ -421,7 +421,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_sales_order" SET '+
+      sql.add(' UPDATE "public"."t_sales_order" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+

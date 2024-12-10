@@ -138,10 +138,10 @@ begin
       sql.Clear;
       sql.Text:='select * from t_po where supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
       ' and po_no in (select po_no from t_po except select po_no from t_advance_payment )';
-         //       'and po_no not in (select po_no from purchase.t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' )';
+         //       'and po_no not in (select po_no from t_advance_payment where supplier_code='+Quotedstr(EdKd_supp.Text)+' )';
 
-      //sql.Text:='select * from purchase.t_po where um_status=''true'' and supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
-                //' and po_no not in (select po_no from purchase.t_advance_payment)';
+      //sql.Text:='select * from t_po where um_status=''true'' and supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
+                //' and po_no not in (select po_no from t_advance_payment)';
       Open;
    end;
    Cbpo.Items.Clear;

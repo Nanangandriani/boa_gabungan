@@ -105,8 +105,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select A.*,b.item_name,c.wh_name,d.item_name type_name from warehouse.t_item_request2 A inner join warehouse.t_item_stock B on A.item_stock_code=B.item_stock_code'+
-      '  INNER JOIN t_wh c on a.wh_code=c.wh_code inner join warehouse.t_item_stock d on a.trans_type=d.item_stock_code order by A.request_no desc';
+      sql.Text:='select A.*,b.item_name,c.wh_name,d.item_name type_name from t_item_request2 A inner join t_item_stock B on A.item_stock_code=B.item_stock_code'+
+      '  INNER JOIN t_wh c on a.wh_code=c.wh_code inner join t_item_stock d on a.trans_type=d.item_stock_code order by A.request_no desc';
       ExecSQL;
     end;
   QPermt_Material.Open;
@@ -119,8 +119,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select A.*,b.item_name,c.wh_name,d.item_name type_name from warehouse.t_item_request2 A inner join warehouse.t_item_stock B on A.item_stock_code=B.item_stock_code '+
-      ' INNER JOIN t_wh c on a.wh_code=c.wh_code inner join warehouse.t_item_stock d on a.trans_type=d.item_stock_code where a.sbu_code='+QuotedStr(loksbu)+' order by A.request_no desc';
+      sql.Text:='select A.*,b.item_name,c.wh_name,d.item_name type_name from t_item_request2 A inner join t_item_stock B on A.item_stock_code=B.item_stock_code '+
+      ' INNER JOIN t_wh c on a.wh_code=c.wh_code inner join t_item_stock d on a.trans_type=d.item_stock_code where a.sbu_code='+QuotedStr(loksbu)+' order by A.request_no desc';
      ExecSQL;
     end;
     QPermt_Material.Open;

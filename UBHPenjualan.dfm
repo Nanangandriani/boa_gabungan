@@ -613,7 +613,7 @@ object FBHPenjualan: TFBHPenjualan
   object QBHPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * from "sale"."vbhpenjualan"')
+      'SELECT * from "public"."vbhpenjualan"')
     Left = 1012
     Top = 376
     object QBHPenjualantrans_no: TStringField

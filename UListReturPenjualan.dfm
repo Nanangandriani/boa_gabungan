@@ -821,7 +821,7 @@ object FListReturPenjualan: TFListReturPenjualan
   object QReturJual: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_sales_returns"  '
+      'select * from "public"."t_sales_returns"  '
       'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56
@@ -943,11 +943,12 @@ object FListReturPenjualan: TFListReturPenjualan
       #9#9'"account_code",'
       '                "no_trans_sale"'
       #9'FROM'
-      #9#9'"sale"."t_sales_returns_det" '
+      #9#9'"public"."t_sales_returns_det" '
       #9') A'
       
         'LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_c' +
-        'ust" from "sale"."t_sales_returns") b  ON a.trans_no=b.trans_no '
+        'ust" from "public"."t_sales_returns") b  ON a.trans_no=b.trans_n' +
+        'o '
       
         'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_cu' +
         'stomer_address" where "code_details"='#39'001'#39') d on b.code_cust=d.c' +
@@ -1475,38 +1476,6 @@ object FListReturPenjualan: TFListReturPenjualan
       'SELECT * FROM "public"."VTrans_Journal"')
     Left = 28
     Top = 256
-    object QJurnaltrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 100
-    end
-    object QJurnalaccount_code: TStringField
-      FieldName = 'account_code'
-      Size = 50
-    end
-    object QJurnalmodule_id: TSmallintField
-      FieldName = 'module_id'
-    end
-    object QJurnalmodule_name: TStringField
-      FieldName = 'module_name'
-      Size = 100
-    end
-    object QJurnalstatus_dk: TStringField
-      FieldName = 'status_dk'
-      Size = 1
-    end
-    object QJurnalaccount_name: TStringField
-      FieldName = 'account_name'
-      Size = 100
-    end
-    object QJurnaldb: TFloatField
-      FieldName = 'db'
-    end
-    object QJurnalkd: TFloatField
-      FieldName = 'kd'
-    end
-    object QJurnaltrans_date: TDateField
-      FieldName = 'trans_date'
-    end
   end
   object frxDBDJurnal: TfrxDBDataset
     UserName = 'frxDBDJurnal'

@@ -34,7 +34,7 @@ implementation
 
 uses UNew_Barang_stok, UNew_BonPermtBarang, UNew_KonvBarang, UDataModule,
   UNew_Supplier, UMaster_PercBarang, UNew_PercBarang, UMainMenu,
-  UNew_SPKFormula;
+  UNew_SPKFormula, URpt_Rekap_Pembelian, UMy_Function;
 
 var
   realfCari_barang: TFCari_Barang;
@@ -134,6 +134,14 @@ begin
       Memformuladet['nm_material']:=QBarang.FieldByName('item_name').AsString;
       Memformuladet['qty']:=0;
       Memformuladet['satuan']:=QBarang.FieldByName('unit').AsString;
+    end;
+  end;
+  if statustr='Rekap_Pemb' then
+  begin
+    with FRptRekap_Pembelian do
+    begin
+      EdKd_Barang.Text:=QBarang.FieldByName('item_code').AsString;
+      CbBarang.EditValue:=QBarang.FieldByName('item_name').AsString;
     end;
   end;
   close;

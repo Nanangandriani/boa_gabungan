@@ -836,7 +836,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object QPenerimaanBank: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "cash_banks"."t_cash_bank_acceptance"'
+      'select * from "public"."t_cash_bank_acceptance"'
       'where deleted_at is null order by created_at Desc')
     Left = 1060
     Top = 88
@@ -902,7 +902,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       #9#9'"description",'
       '                "module_id" '
       #9'FROM'
-      #9#9'"t_cash_bank_acceptance" A '
+      #9#9'"public"."t_cash_bank_acceptance" A '
       #9'WHERE'
       #9#9'"voucher_no" = '#39'0002/BM18/XI/2024'#39' '
       #9#9'AND deleted_at IS NULL '
@@ -919,7 +919,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       #9#9'"account_name",'
       #9#9'"amount_rate_results" '
       #9'FROM'
-      #9#9'"t_cash_bank_acceptance_det" aa'
+      #9#9'"public"."t_cash_bank_acceptance_det" aa'
       
         #9#9'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.cod' +
         'e '
@@ -1031,7 +1031,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'begin'
       ''
       'end.')
-    Left = 1160
+    Left = 1184
     Top = 152
     Datasets = <
       item
@@ -1753,37 +1753,5 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'SELECT * FROM "public"."VTrans_Journal"')
     Left = 1012
     Top = 208
-    object QJurnaltrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 100
-    end
-    object QJurnalaccount_code: TStringField
-      FieldName = 'account_code'
-      Size = 50
-    end
-    object QJurnalmodule_id: TSmallintField
-      FieldName = 'module_id'
-    end
-    object QJurnalmodule_name: TStringField
-      FieldName = 'module_name'
-      Size = 100
-    end
-    object QJurnalstatus_dk: TStringField
-      FieldName = 'status_dk'
-      Size = 1
-    end
-    object QJurnalaccount_name: TStringField
-      FieldName = 'account_name'
-      Size = 100
-    end
-    object QJurnaldb: TFloatField
-      FieldName = 'db'
-    end
-    object QJurnalkd: TFloatField
-      FieldName = 'kd'
-    end
-    object QJurnaltrans_date: TDateField
-      FieldName = 'trans_date'
-    end
   end
 end

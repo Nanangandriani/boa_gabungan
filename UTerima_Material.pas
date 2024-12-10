@@ -113,7 +113,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select A.*, b.supplier_name,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from purchase.t_item_receive a Left join t_supplier b '+
+    sql.Text:='select A.*, b.supplier_name,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from t_item_receive a Left join t_supplier b '+
               ' on a.supplier_code=b.supplier_code order by a.receive_no Desc ';
     ExecSQL;
   end;
@@ -124,7 +124,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select A.*, b.supplier_name,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from purchase.t_item_receive a Left join t_supplier b '+
+    sql.Text:='select A.*, b.supplier_name,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from t_item_receive a Left join t_supplier b '+
               ' on a.supplier_code=b.supplier_code  where a.sbu_code='+QuotedStr(kdsbu)+''+
               ' order by a.receive_no Desc ';
     ExecSQL;

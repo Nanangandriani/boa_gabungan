@@ -129,14 +129,14 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:='Delete From purchase.t_spb where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
+        sql.Text:='Delete From t_spb where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
         Execute;
       end;
       with dm.Qtemp do
       begin
         Close;
         sql.Clear;
-        sql.Text:='Delete From purchase.t_spb_det where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
+        sql.Text:='Delete From t_spb_det where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
         Execute;
       end;
       ActROExecute(sender);
@@ -186,7 +186,7 @@ begin
        sql.Clear;
        sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 '+
                  ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
-                 ' purchase.t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
+                 ' t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
                  ' where spb_date>='+quotedstr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+''+
                  ' order by spb_no desc';
        ExecSQL;
@@ -201,7 +201,7 @@ begin
        sql.Clear;
        sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 '+
                  ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
-                 ' purchase.t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
+                 ' t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
                  ' where (sbu_code='+QuotedStr(loksbu)+' or sbu_code=''MLB'' or sbu_code='''') '+
                  ' and (spb_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+')'+
                  ' order by spb_no desc';
@@ -268,7 +268,7 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:='Update purchase.t_spb set "approval_status"=''1'', spb_date=now(), approval='+QuotedStr(Nm)+' where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
+        sql.Text:='Update t_spb set "approval_status"=''1'', spb_date=now(), approval='+QuotedStr(Nm)+' where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
         Execute;
       end;
       ActROExecute(sender);
@@ -284,7 +284,7 @@ begin
        begin
         Close;
         sql.Clear;
-        sql.Text:='Update purchase.t_spb set "approval_status"=''2'', spb_date=now(), approval='+QuotedStr(Nm)+' where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
+        sql.Text:='Update t_spb set "approval_status"=''2'', spb_date=now(), approval='+QuotedStr(Nm)+' where spb_no='+QuotedStr(DBGridSPB.Fields[0].AsString);
         Execute;
        end;
       ActROExecute(sender);

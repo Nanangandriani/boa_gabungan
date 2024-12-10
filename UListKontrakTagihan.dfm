@@ -3,7 +3,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
   Top = 0
   Caption = 'List Kontrak Tagihan'
   ClientHeight = 582
-  ClientWidth = 966
+  ClientWidth = 1225
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 966
+    Width = 1225
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,7 +22,6 @@ object FListKontrakTagihan: TFListKontrakTagihan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 828
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -35,10 +34,10 @@ object FListKontrakTagihan: TFListKontrakTagihan
       Index = 0
     end
   end
-  object DBGridOrder: TDBGridEh
+  object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 966
+    Width = 1225
     Height = 455
     Align = alClient
     DataSource = DsKontrakTagihan
@@ -50,54 +49,55 @@ object FListKontrakTagihan: TFListKontrakTagihan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_no'
+        FieldName = 'nocontract'
         Footers = <>
-        Title.Caption = 'No Transaksi'
+        Title.Caption = 'Nomor Kontrak'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'trans_date'
+        FieldName = 'cust_name'
         Footers = <>
-        Title.Caption = 'Tanggal'
+        Title.Caption = 'Nama Pelanggan'
+        Width = 250
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'address'
+        Footers = <>
+        Title.Caption = 'Alamat'
+        Width = 300
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'type_contract_name'
+        Footers = <>
+        Title.Caption = 'Jenis Kontrak'
         Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_source'
+        FieldName = 'periode_end'
         Footers = <>
-        Title.Caption = 'Sumber'
-        Width = 150
+        Title.Caption = 'Tanggal Berakhir'
+        Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_cust'
+        FieldName = 'contract_value'
         Footers = <>
-        Title.Caption = 'Pelanggan'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'no_reference'
-        Footers = <>
-        Title.Caption = 'No Reference'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'payment_term'
-        Footers = <>
-        Title.Caption = 'Jatuh Tempo (Hari)'
+        Title.Caption = 'Nilai Kontrak'
         Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -201,6 +201,10 @@ object FListKontrakTagihan: TFListKontrakTagihan
         item
           Visible = True
           ItemName = 'dxBarLargeButton3'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton6'
         end>
       OneOnRow = False
       Row = 0
@@ -883,45 +887,113 @@ object FListKontrakTagihan: TFListKontrakTagihan
         FD77EC2BF95211609209DC78B818F9E4F10F4824A6D94EC853CD000000004945
         4E44AE426082}
     end
+    object dxBarLargeButton6: TdxBarLargeButton
+      Caption = 'Berita Acara'
+      Category = 0
+      Hint = 'Berita Acara'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D227574
+        662D38223F3E0D0A3C212D2D2047656E657261746F723A2041646F626520496C
+        6C7573747261746F722032312E312E302C20535647204578706F727420506C75
+        672D496E202E205356472056657273696F6E3A20362E3030204275696C642030
+        2920202D2D3E0D0A3C7376672076657273696F6E3D22312E31222069643D224C
+        617965725F312220786D6C6E733D22687474703A2F2F7777772E77332E6F7267
+        2F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A2F2F77
+        77772E77332E6F72672F313939392F786C696E6B2220783D223070782220793D
+        22307078220D0A092076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E0D0A3C7374
+        796C6520747970653D22746578742F637373223E0D0A092E426C61636B7B6669
+        6C6C3A233732373237323B7D0D0A092E59656C6C6F777B66696C6C3A23464642
+        3131353B7D0D0A092E7374307B6F7061636974793A302E37353B7D0D0A3C2F73
+        74796C653E0D0A3C673E0D0A093C673E0D0A09093C7061746820636C6173733D
+        22426C61636B2220643D224D32372C32483543342E342C322C342C322E342C34
+        2C3376323663302C302E362C302E342C312C312C3168323263302E362C302C31
+        2D302E342C312D3156334332382C322E342C32372E362C322C32372C327A204D
+        32362C3238483656346832305632387A220D0A0909092F3E0D0A093C2F673E0D
+        0A093C673E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D32372C32483543342E342C322C342C322E342C342C3376323663302C302E36
+        2C302E342C312C312C3168323263302E362C302C312D302E342C312D31563343
+        32382C322E342C32372E362C322C32372C327A204D32362C3238483656346832
+        305632387A220D0A0909092F3E0D0A093C2F673E0D0A3C2F673E0D0A3C706174
+        6820636C6173733D2259656C6C6F772220643D224D382C31307638683136762D
+        3848387A204D32322C3136483130762D346831325631367A222F3E0D0A3C6720
+        636C6173733D22737430223E0D0A093C7265637420783D2231302220793D2236
+        2220636C6173733D22426C61636B222077696474683D22313222206865696768
+        743D2232222F3E0D0A093C7265637420783D2231302220793D2232302220636C
+        6173733D22426C61636B222077696474683D22313222206865696768743D2232
+        222F3E0D0A093C7265637420783D2231302220793D2232342220636C6173733D
+        22426C61636B222077696474683D22313222206865696768743D2232222F3E0D
+        0A3C2F673E0D0A3C2F7376673E0D0A}
+      HotGlyph.SourceDPI = 96
+      HotGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D224C
+        617965725F312220786D6C6E733D22687474703A2F2F7777772E77332E6F7267
+        2F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A2F2F77
+        77772E77332E6F72672F313939392F786C696E6B2220783D223070782220793D
+        22307078222076696577426F783D2230203020333220333222207374796C653D
+        22656E61626C652D6261636B67726F756E643A6E657720302030203332203332
+        3B2220786D6C3A73706163653D227072657365727665223E262331333B262331
+        303B3C7374796C6520747970653D22746578742F6373732220786D6C3A737061
+        63653D227072657365727665223E2E426C61636B7B66696C6C3A233732373237
+        323B7D262331333B262331303B2623393B2E59656C6C6F777B66696C6C3A2346
+        46423131353B7D262331333B262331303B2623393B2E7374307B6F7061636974
+        793A302E37353B7D3C2F7374796C653E0D0A3C673E0D0A09093C673E0D0A0909
+        093C7061746820636C6173733D22426C61636B2220643D224D32372C32483543
+        342E342C322C342C322E342C342C3376323663302C302E362C302E342C312C31
+        2C3168323263302E362C302C312D302E342C312D3156334332382C322E342C32
+        372E362C322C32372C327A204D32362C3238483656346832305632387A222F3E
+        0D0A09093C2F673E0D0A09093C673E0D0A0909093C7061746820636C6173733D
+        22426C61636B2220643D224D32372C32483543342E342C322C342C322E342C34
+        2C3376323663302C302E362C302E342C312C312C3168323263302E362C302C31
+        2D302E342C312D3156334332382C322E342C32372E362C322C32372C327A204D
+        32362C3238483656346832305632387A222F3E0D0A09093C2F673E0D0A093C2F
+        673E0D0A3C7061746820636C6173733D2259656C6C6F772220643D224D382C31
+        307638683136762D3848387A204D32322C3136483130762D346831325631367A
+        222F3E0D0A3C6720636C6173733D22737430223E0D0A09093C7265637420783D
+        2231302220793D22362220636C6173733D22426C61636B222077696474683D22
+        313222206865696768743D2232222F3E0D0A09093C7265637420783D22313022
+        20793D2232302220636C6173733D22426C61636B222077696474683D22313222
+        206865696768743D2232222F3E0D0A09093C7265637420783D2231302220793D
+        2232342220636C6173733D22426C61636B222077696474683D22313222206865
+        696768743D2232222F3E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+    end
   end
   object QKontrakTagihan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_selling"  '
+      'select * from "public"."t_billing_contract" '
       'where deleted_at is null order by created_at Desc')
     Left = 660
     Top = 16
-    object QKontrakTagihancode_cust: TStringField
-      FieldName = 'code_cust'
-      Visible = False
-      Size = 100
-    end
-    object QKontrakTagihanname_cust: TStringField
-      FieldName = 'name_cust'
+    object QKontrakTagihannocontract: TStringField
+      FieldName = 'nocontract'
+      Required = True
       Size = 255
     end
-    object QKontrakTagihanpayment_term: TSmallintField
-      FieldName = 'payment_term'
-    end
-    object QKontrakTagihanno_purchase: TStringField
-      FieldName = 'no_reference'
+    object QKontrakTagihancust_name: TStringField
+      FieldName = 'cust_name'
       Size = 255
     end
-    object QKontrakTagihancode_source: TStringField
-      FieldName = 'code_source'
-      Visible = False
-      Size = 100
+    object QKontrakTagihanaddress: TMemoField
+      FieldName = 'address'
+      OnGetText = QKontrakTagihanaddressGetText
+      BlobType = ftMemo
     end
-    object QKontrakTagihanname_source: TStringField
-      FieldName = 'name_source'
+    object QKontrakTagihantype_contract_name: TStringField
+      FieldName = 'type_contract_name'
       Size = 255
     end
-    object QKontrakTagihandate_trans: TDateField
-      FieldName = 'trans_date'
+    object QKontrakTagihanperiode_end: TDateField
+      FieldName = 'periode_end'
     end
-    object QKontrakTagihantrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 255
+    object QKontrakTagihancontract_value: TFloatField
+      FieldName = 'contract_value'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
     end
   end
   object DsKontrakTagihan: TDataSource
@@ -963,9 +1035,13 @@ object FListKontrakTagihan: TFListKontrakTagihan
       #9'"piece_third",'
       #9'"piece_fourth" '
       'FROM'
-      #9'"sale"."t_selling"'
-      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.trans_no = b.trans_no'
-      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.trans_no = C.trans_no'
+      #9'"public"."t_selling"'
+      
+        #9'A LEFT JOIN "public"."t_selling_det" b ON A.trans_no = b.trans_' +
+        'no'
+      
+        #9'LEFT JOIN "public"."t_selling_piece" C ON A.trans_no = C.trans_' +
+        'no'
       
         #9'LEFT JOIN ( SELECT "customer_code", "address" FROM "public"."t_' +
         'customer_address" WHERE "code_details" = '#39'001'#39' ) d ON A.code_cus' +
@@ -1223,6 +1299,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
         Height = 18.897650000000000000
         Top = 226.771800000000000000
         Width = 740.409927000000000000
+        DataSet = FDataListPenjualan.frxDBDJurnal
         DataSetName = 'frxDBDJurnal'
         RowCount = 0
         object frxDBDJurnalaccount_code: TfrxMemoView
@@ -1232,6 +1309,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
           Width = 147.401670000000000000
           Height = 18.897650000000000000
           DataField = 'account_code'
+          DataSet = FDataListPenjualan.frxDBDJurnal
           DataSetName = 'frxDBDJurnal'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1250,6 +1328,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
           Width = 279.685220000000000000
           Height = 18.897650000000000000
           DataField = 'account_name'
+          DataSet = FDataListPenjualan.frxDBDJurnal
           DataSetName = 'frxDBDJurnal'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1268,6 +1347,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
           Width = 143.622140000000000000
           Height = 18.897650000000000000
           DataField = 'db'
+          DataSet = FDataListPenjualan.frxDBDJurnal
           DataSetName = 'frxDBDJurnal'
           DisplayFormat.FormatStr = '%0.0n'
           DisplayFormat.Kind = fkNumeric
@@ -1289,6 +1369,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
           Width = 143.622140000000000000
           Height = 18.897650000000000000
           DataField = 'kd'
+          DataSet = FDataListPenjualan.frxDBDJurnal
           DataSetName = 'frxDBDJurnal'
           DisplayFormat.FormatStr = '%0.0n'
           DisplayFormat.Kind = fkNumeric
@@ -1333,6 +1414,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
           Top = 0.000000000000000014
           Width = 389.291590000000000000
           Height = 18.897650000000000000
+          DataSet = FDataListPenjualan.frxDBDJurnal
           DataSetName = 'frxDBDJurnal'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1357,6 +1439,7 @@ object FListKontrakTagihan: TFListKontrakTagihan
           Width = 136.063080000000000000
           Height = 18.897650000000000000
           DataField = 'trans_date'
+          DataSet = FDataListPenjualan.frxDBDJurnal
           DataSetName = 'frxDBDJurnal'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
           DisplayFormat.Kind = fkDateTime

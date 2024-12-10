@@ -897,7 +897,7 @@ object FDataListPenjualan: TFDataListPenjualan
   object QPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_selling"  '
+      'select * from "public"."t_selling"  '
       'where deleted_at is null order by created_at Desc')
     Left = 660
     Top = 16
@@ -973,9 +973,13 @@ object FDataListPenjualan: TFDataListPenjualan
       #9'"piece_third",'
       #9'"piece_fourth" '
       'FROM'
-      #9'"sale"."t_selling"'
-      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.trans_no = b.trans_no'
-      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.trans_no = C.trans_no'
+      #9'"public"."t_selling"'
+      
+        #9'A LEFT JOIN "public"."t_selling_det" b ON A.trans_no = b.trans_' +
+        'no'
+      
+        #9'LEFT JOIN "public"."t_selling_piece" C ON A.trans_no = C.trans_' +
+        'no'
       
         #9'LEFT JOIN ( SELECT "customer_code", "address" FROM "public"."t_' +
         'customer_address" WHERE "code_details" = '#39'001'#39' ) d ON A.code_cus' +
@@ -1528,9 +1532,13 @@ object FDataListPenjualan: TFDataListPenjualan
       #9'A."no_reference", '
       '        b."code_unit" as ket'
       'FROM'
-      #9'"sale"."t_selling"'
-      #9'A LEFT JOIN "sale"."t_selling_det" b ON A.trans_no = b.trans_no'
-      #9'LEFT JOIN "sale"."t_selling_piece" C ON A.trans_no = C.trans_no'
+      #9'"public"."t_selling"'
+      
+        #9'A LEFT JOIN "public"."t_selling_det" b ON A.trans_no = b.trans_' +
+        'no'
+      
+        #9'LEFT JOIN "public"."t_selling_piece" C ON A.trans_no = C.trans_' +
+        'no'
       
         #9'LEFT JOIN ( SELECT "customer_code", "address" FROM "public"."t_' +
         'customer_address" WHERE "code_details" = '#39'001'#39' ) d ON A.code_cus' +
@@ -1629,38 +1637,6 @@ object FDataListPenjualan: TFDataListPenjualan
       'SELECT * FROM "public"."VTrans_Journal"')
     Left = 332
     Top = 136
-    object QJurnaltrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 100
-    end
-    object QJurnalaccount_code: TStringField
-      FieldName = 'account_code'
-      Size = 50
-    end
-    object QJurnalmodule_id: TSmallintField
-      FieldName = 'module_id'
-    end
-    object QJurnalmodule_name: TStringField
-      FieldName = 'module_name'
-      Size = 100
-    end
-    object QJurnalstatus_dk: TStringField
-      FieldName = 'status_dk'
-      Size = 1
-    end
-    object QJurnalaccount_name: TStringField
-      FieldName = 'account_name'
-      Size = 100
-    end
-    object QJurnaldb: TFloatField
-      FieldName = 'db'
-    end
-    object QJurnalkd: TFloatField
-      FieldName = 'kd'
-    end
-    object QJurnaltrans_date: TDateField
-      FieldName = 'trans_date'
-    end
   end
   object frxDBDJurnal: TfrxDBDataset
     UserName = 'frxDBDJurnal'

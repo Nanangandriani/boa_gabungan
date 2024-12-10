@@ -103,7 +103,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "cash_banks"."t_plan_receivable"  SET '+
+          sql.Text:=' UPDATE "public"."t_plan_receivable"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "notrans"='+QuotedStr(QRencanaLunasHutang.FieldByName('notrans').AsString);
@@ -130,7 +130,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "cash_banks"."t_plan_receivable"   '+
+       sql.Text:=' select * from "public"."t_plan_receivable"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -146,7 +146,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "cash_banks"."t_plan_receivable" a '+
+       sql.Text:=' select * from "public"."t_plan_receivable" a '+
                  ' WHERE "notrans"='+QuotedSTr(QRencanaLunasHutang.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;

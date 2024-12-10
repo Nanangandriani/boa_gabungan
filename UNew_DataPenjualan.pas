@@ -71,6 +71,9 @@ type
     MemDetailHARGA_SATUAN: TCurrencyField;
     MemDetailNM_SATUAN: TStringField;
     MemDetailAKUN_PERK_ITEM: TStringField;
+    MemDetailMENEJ_FEE_PERSEN: TFloatField;
+    MemDetailMENEJ_FEE_NILAI: TFloatField;
+    bt_re_calculate: TRzBitBtn;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -86,17 +89,18 @@ type
     procedure DBGridDetailColExit(Sender: TObject);
     procedure DBGridDetailCellClick(Column: TColumnEh);
     procedure DBGridDetailEnter(Sender: TObject);
-    procedure DBGridDetailMouseEnter(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridDetailExit(Sender: TObject);
     procedure DBGridDetailColumns3EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure bt_re_calculateClick(Sender: TObject);
   private
     { Private declarations }
-  tot_dpp, tot_ppn, tot_pph, tot_pot, tot_grand : real;
+  tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand : real;
   public
     { Public declarations }
+    stat_menej_fee_jual : Boolean;
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel: string;
     strtgl, strbulan, strtahun: string;
     Year, Month, Day: Word;
@@ -107,6 +111,7 @@ type
     procedure RefreshGrid;
     procedure Autonumber;
     procedure HitungGrid;
+    procedure UpdateDataMenejFee;
   end;
 
 var
@@ -124,7 +129,7 @@ implementation
 uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
   Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan,
   UListPenjualan, UTemplate_Temp, UTambah_Barang, UListSalesOrder,
-  UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang;
+  UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang, UDaftarKontrak;
 
 function GetFakturPajak(vtahun:string): string;
 begin
@@ -167,6 +172,36 @@ begin
   end;
 end;
 
+procedure TFNew_Penjualan.UpdateDataMenejFee;
+begin
+  //refresh grid
+  tot_menej_fee:=0;
+
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    HitungGrid;
+      tot_menej_fee:=tot_menej_fee+MemDetail['MENEJ_FEE_NILAI'];
+    MemDetail.Next;
+  end;
+  //ShowMessage(FloatToStr(tot_menej_fee));
+
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    with FNew_Penjualan do
+    begin
+      if (tot_menej_fee<>0) AND (MemDetail['KD_ITEM'] = 'MENFEE') then
+      begin
+        MemDetail.Edit;
+        MemDetail['JUMLAH']:=1;
+        MemDetail['HARGA_SATUAN']:=tot_menej_fee;
+        MemDetail.post;
+      end;
+  end;
+  MemDetail.Next;
+  end;
+end;
 
 procedure TFNew_Penjualan.InsertDetailJU;
 begin
@@ -174,7 +209,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_selling_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_selling_det" '+
             ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+';';
   ExecSQL;
   end;
@@ -186,10 +221,10 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_selling_det" ("trans_no", "code_item", "name_item", "account_code", '+
+    sql.Text:=' INSERT INTO "public"."t_selling_det" ("trans_no", "code_item", "name_item", "account_code", '+
               ' "amount", "code_unit", "name_unit", "no_reference", "unit_price", "sub_total", '+
               ' "ppn_percent", "ppn_account", "ppn_value", "pph_account", "pph_name", "pph_percent", '+
-              ' "pph_value", "tot_piece_value", "tot_piece_percent", "grand_tot") '+
+              ' "pph_value", "tot_piece_value", "tot_piece_percent", "menejmen_fee", "menejmen_fee_value", "grand_tot") '+
               ' Values( '+
               ' '+QuotedStr(edNomorTrans.Text)+', '+
               ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
@@ -211,6 +246,8 @@ begin
               ' '+QuotedStr(MemDetail['PPH_NILAI'])+', '+
               ' '+QuotedStr(MemDetail['POTONGAN_NILAI'])+', '+
               ' '+QuotedStr(MemDetail['POTONGAN_PERSEN'])+', '+
+              ' '+QuotedStr(MemDetail['MENEJ_FEE_PERSEN'])+', '+
+              ' '+QuotedStr(MemDetail['MENEJ_FEE_NILAI'])+', '+
               ' '+QuotedStr(MemDetail['GRAND_TOTAL'])+' );';
     ExecSQL;
     end;
@@ -249,7 +286,17 @@ begin
         begin
           MemDetail['PPH_NILAI']:=(MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI'])*(MemDetail['PPH_PERSEN']/100);
         end;
-        MemDetail['GRAND_TOTAL']:=MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI']-MemDetail['PPH_NILAI']-MemDetail['POTONGAN_NILAI'];
+        //Validasi Menejmen Fee
+        if (MemDetail['MENEJ_FEE_PERSEN']<>0)  OR (MemDetail['MENEJ_FEE_PERSEN']<>'0')  then
+        begin
+          MemDetail['MENEJ_FEE_NILAI']:=(MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI']-MemDetail['PPH_NILAI'])*(MemDetail['MENEJ_FEE_PERSEN']/100);
+        end;
+        if ((MemDetail['MENEJ_FEE_PERSEN']<>0)  OR (MemDetail['MENEJ_FEE_PERSEN']<>'0')) AND (MemDetail['KD_ITEM']<>'MENFEE') then
+        begin
+          //UpdateDataMenejFee;
+        end;
+
+        MemDetail['GRAND_TOTAL']:=MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI']-MemDetail['PPH_NILAI']-MemDetail['POTONGAN_NILAI']+MemDetail['MENEJ_FEE_NILAI'];
 
         MemDetail.Post;
       end;
@@ -262,8 +309,8 @@ procedure TFNew_Penjualan.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FDataListPenjualan.Name)+'');
    strday2:=dtTanggal.Date;
-   edNomorTrans.Text:=getNourut(strday2,'sale.t_selling',FNew_Penjualan.kd_kares);
-   edSuratJalanTrans.Text:=getNourut(strday2,'sale.t_selling',FNew_Penjualan.kd_kares);
+   edNomorTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
+   edSuratJalanTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
 end;
 
 procedure TFNew_Penjualan.BBatalClick(Sender: TObject);
@@ -284,6 +331,7 @@ begin
   tot_ppn:=0;
   tot_pph:=0;
   tot_pot:=0;
+  tot_menej_fee:=0;
   tot_grand:=0;
 
   MemDetail.First;
@@ -294,9 +342,11 @@ begin
       tot_ppn:=tot_ppn+MemDetail['PPN_NILAI'];
       tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
       tot_pot:=tot_pot+MemDetail['POTONGAN_NILAI'];
+      tot_menej_fee:=tot_menej_fee+MemDetail['MENEJ_FEE_NILAI'];
       tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
     MemDetail.Next;
   end;
+  UpdateDataMenejFee;
 
   MessageDlg('Buatkan Validasi Cek Piutang Dengan Berbagai Jenis(Dengan SP)..!!',mtInformation,[MBOK],0);
       if not dm.Koneksi.InTransaction then
@@ -373,6 +423,7 @@ begin
         FTemplate_Temp.Caption:='';
         FTemplate_Temp.TabForm.Caption:=AForm.Caption;
         vStatusTrans:='penjualan';
+        FDaftarKontrak.vtanggalBA:=FNew_Penjualan.dtTanggal.Date;
         FTemplate_Temp.ShowModal;
         //FTambah_Barang.ShowModal;
   end;
@@ -487,11 +538,6 @@ begin
   HitungGrid;
 end;
 
-procedure TFNew_Penjualan.DBGridDetailMouseEnter(Sender: TObject);
-begin
-  HitungGrid;
-end;
-
 procedure TFNew_Penjualan.dtTanggalChange(Sender: TObject);
 begin
   DecodeDate(dtTanggal.Date, Year, Month, Day);
@@ -508,6 +554,7 @@ begin
   FMasterData.vcall:='penjualan';
   FMasterData.update_grid('code','name','description','t_selling_source','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.ShowModal;
+  MemDetail.EmptyTable;
 end;
 
 procedure TFNew_Penjualan.edKode_TransButtonClick(Sender: TObject);
@@ -567,6 +614,16 @@ begin
     DBGridDetail.Columns[12].Visible:=true;
     DBGridDetail.Columns[13].Visible:=true;
   end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''stat_menej_fee_jual'' ')= '0' then
+  begin
+    stat_menej_fee_jual:=false;
+    DBGridDetail.Columns[16].Visible:=false;
+    DBGridDetail.Columns[17].Visible:=false;
+  end else begin
+    stat_menej_fee_jual:=true;
+    DBGridDetail.Columns[16].Visible:=true;
+    DBGridDetail.Columns[17].Visible:=true;
+  end;
 end;
 
 procedure TFNew_Penjualan.Save;
@@ -575,10 +632,10 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_selling" ("created_at", "created_by", "code_trans", '+
+    sql.add(' Insert into "public"."t_selling" ("created_at", "created_by", "code_trans", '+
             ' "no_inv_tax", "trans_no", "no_traveldoc", "trans_date", "code_cust", '+
             ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
-            ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "grand_tot", '+
+            ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
@@ -599,6 +656,7 @@ begin
             ' '+QuotedStr(FloatToStr(tot_ppn))+', '+
             ' '+QuotedStr(FloatToStr(tot_pph))+', '+
             ' '+QuotedStr(FloatToStr(tot_pot))+', '+
+            ' '+QuotedStr(FloatToStr(tot_menej_fee))+', '+
             ' '+QuotedStr(FloatToStr(tot_grand))+', '+
             ' '+QuotedStr(order_no)+', '+
             ' '+QuotedStr(kd_kares)+', '+
@@ -620,7 +678,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_selling" SET '+
+      sql.add(' UPDATE "public"."t_selling" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
@@ -638,6 +696,7 @@ begin
               ' ppn_value='+QuotedStr(FloatToStr(tot_ppn))+', '+
               ' pph_value='+QuotedStr(FloatToStr(tot_pph))+', '+
               ' tot_piece_value='+QuotedStr(FloatToStr(tot_pot))+', '+
+              ' tot_menj_fee='+QuotedStr(FloatToStr(tot_menej_fee))+', '+
               ' grand_tot='+QuotedStr(FloatToStr(tot_grand))+', '+
               ' order_no='+QuotedStr(order_no)+','+
               ' additional_code='+QuotedStr(kd_kares)+','+
@@ -665,8 +724,9 @@ begin
             ' SELECT "trans_no", "code_item", "name_item", "amount", "code_unit", '+
             ' "name_unit", "no_reference", "unit_price", "sub_total", "ppn_percent", '+
             ' "ppn_value", "pph_account", "pph_name", "pph_percent", "pph_value", '+
-            ' "tot_piece_value", "tot_piece_percent", "grand_tot", "ppn_account", "account_code" '+
-            ' FROM  "sale"."t_selling_det" '+
+            ' "tot_piece_value", "tot_piece_percent", "grand_tot", "ppn_account", '+
+            ' "account_code", "menejmen_fee", "menejmen_fee_value" '+
+            ' FROM  "public"."t_selling_det" '+
             ' WHERE deleted_at IS NULL ) a '+
             ' WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' '+
             ' Order By trans_no, code_item desc');
@@ -708,6 +768,8 @@ begin
      FNew_Penjualan.MemDetail['PPH_NILAI']:=Dm.Qtemp.fieldbyname('pph_value').value;
      FNew_Penjualan.MemDetail['POTONGAN_NILAI']:=Dm.Qtemp.fieldbyname('tot_piece_value').value;
      FNew_Penjualan.MemDetail['POTONGAN_PERSEN']:=Dm.Qtemp.fieldbyname('tot_piece_percent').value;
+     FNew_Penjualan.MemDetail['MENEJ_FEE_PERSEN']:=Dm.Qtemp.fieldbyname('menejmen_fee').value;
+     FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:=Dm.Qtemp.fieldbyname('menejmen_fee_value').value;
      FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
      FNew_Penjualan.MemDetail.post;
      Dm.Qtemp.next;
@@ -715,7 +777,14 @@ begin
     end;
 end;
 
+procedure TFNew_Penjualan.bt_re_calculateClick(Sender: TObject);
+begin
+  UpdateDataMenejFee;
+end;
+
+//Initialization
+//  RegisterClasses([TFTambah_Barang,TFListSalesOrder,TFDaftarKontrak]);
 Initialization
-  RegisterClasses([TFTambah_Barang,TFListSalesOrder]);
+  RegisterClasses([TFNew_Penjualan]);
 
 end.

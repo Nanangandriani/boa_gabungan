@@ -2,8 +2,8 @@ object FListKlasifikasi: TFListKlasifikasi
   Left = 0
   Top = 0
   Caption = 'Master Klasifikasi'
-  ClientHeight = 500
-  ClientWidth = 827
+  ClientHeight = 491
+  ClientWidth = 821
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListKlasifikasi: TFListKlasifikasi
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 827
+    Width = 821
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListKlasifikasi: TFListKlasifikasi
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 827
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,8 +35,8 @@ object FListKlasifikasi: TFListKlasifikasi
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 827
-    Height = 373
+    Width = 821
+    Height = 364
     Align = alClient
     DataSource = DsMasterKlasifikasi
     DynProps = <>

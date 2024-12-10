@@ -167,6 +167,7 @@ type
     Label65: TLabel;
     edAkunPPHJual: TRzButtonEdit;
     edNamaPPHJual: TEdit;
+    rgMenejFee: TRzRadioGroup;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -239,6 +240,18 @@ begin
               ' "updated_at"=now(), '+
               ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
               ' WHERE "key_parameter"='+QuotedStr('stat_klasifikasi_jual')+';';
+    ExecSQL;
+  end;
+
+  with dm.Qtemp do //Default Status Menejmen Fee
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' UPDATE "t_parameter" SET '+
+              ' "value_parameter"='+QuotedStr(IntToStr(rgMenejFee.ItemIndex))+', '+
+              ' "updated_at"=now(), '+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' WHERE "key_parameter"='+QuotedStr('stat_menej_fee_jual')+';';
     ExecSQL;
   end;
 
@@ -1192,6 +1205,7 @@ begin
   rgPPH.ItemIndex:=0;
   rgPPN.ItemIndex:=0;
   rgPotongan.ItemIndex:=0;
+  rgMenejFee.ItemIndex:=0;
   edPersenPPNJual.Clear;
   edPersenPPHJual.Clear;
   edAkunJenisTax.Clear;

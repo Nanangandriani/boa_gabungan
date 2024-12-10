@@ -40,7 +40,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UDataReturPenjualan, UDataMasterAkunTrans, UDataPenerimaanBank,
   UDataPenagihanPiutang, UMovingDPP, UNew_Supplier, UDataPengeluaranKasBank,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
-  URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank;
+  URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
+  UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -56,6 +57,30 @@ begin
   begin
     FListStockBarang.edKodeGudang.Text:=MemMasterData['KD_MASTER'];
     FListStockBarang.edNamaGudang.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='kartupiutang_kares' then
+  begin
+    FKartuPiutang.vkd_kares:=MemMasterData['KD_MASTER'];
+    FKartuPiutang.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FKartuPiutang.vkd_kab:='';
+    FKartuPiutang.edKabupaten.EditValue:='';
+  end;
+  if vcall='kartupiutang_kab' then
+  begin
+    FKartuPiutang.vkd_kab:=MemMasterData['KD_MASTER'];
+    FKartuPiutang.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='bhpenerimaankas_bank_kab' then
+  begin
+    FBHPenerimaanKasBank.vkd_kab:=MemMasterData['KD_MASTER'];
+    FBHPenerimaanKasBank.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='bhpenerimaankas_bank_kares' then
+  begin
+    FBHPenerimaanKasBank.vkd_kares:=MemMasterData['KD_MASTER'];
+    FBHPenerimaanKasBank.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FBHPenerimaanKasBank.vkd_kab:='';
+    FBHPenerimaanKasBank.edKabupaten.EditValue:='';
   end;
   if vcall='bhpenjualan_kab' then
   begin
@@ -422,6 +447,16 @@ begin
     FNewKontrakTagihan.edNamaJenisKontrak.Text:=MemMasterData['NM_MASTER'];
     FNewKontrakTagihan.RefreshGrid;
   end;
+  if vcall='daf_jenis_kontrakTagihan' then
+  begin
+    FDaftarKontrak.EdKodeJenisKontrak.Text:=MemMasterData['KD_MASTER'];
+    FDaftarKontrak.edNamaJenisKontrak.Text:=MemMasterData['NM_MASTER'];
+    FDaftarKontrak.Parent:=FTemplate_Temp.PanelParent;
+    FDaftarKontrak.Align:=Alclient;
+    FDaftarKontrak.BorderStyle:=BsNone;
+    FDaftarKontrak.Show;
+    FTemplate_Temp.Show;
+  end;
   if vcall='do_jenis' then
   begin
     FNewDeliveryOrder.edKodeJenisMuatan.Text:=MemMasterData['KD_MASTER'];
@@ -471,8 +506,7 @@ begin
           close;
           sql.clear;
           sql.add(' SELECT * from ('+
-                  ' SELECT "code", "name", "description", "form_target_vendor", '+
-                  ' "form_target_source" from "t_type_contract_service"  '+
+                  ' SELECT "code", "name", "description" from "t_type_contract_service"  '+
                   ' WHERE	deleted_at IS NULL ORDER BY code desc ) a '+
                   ' WHERE "code"='+QuotedStr(MemMasterData['KD_MASTER'])+' '+
                   ' Order By code, name desc');

@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, RzCmboBx;
 
 type
   TFDataPenerimaanBank = class(TForm)
@@ -91,6 +91,10 @@ type
     lbJenisBayarr: TLabel;
     lbJenisBayar: TLabel;
     lbSumberTagihan: TLabel;
+    cbJenisTransaksi: TRzComboBox;
+    Label23: TLabel;
+    Label24: TLabel;
+    cbTransaksi: TRzComboBox;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -108,6 +112,10 @@ type
     procedure edKursChange(Sender: TObject);
     procedure dtTransChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure cbJenisTransaksiChange(Sender: TObject);
+    procedure cbTransaksiChange(Sender: TObject);
+    procedure DBGridAkunColumns5EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -127,6 +135,7 @@ type
     procedure Clear;
     procedure RefreshGridDetailAkun;
     procedure RefreshGridDetailPiutang;
+    procedure RefreshForm;
     procedure VCekBalance;
     procedure HitungKurs;
     procedure CekPosisiDK;
@@ -141,8 +150,131 @@ implementation
 
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
-  UListPenerimaanBank, UHomeLogin;
+  UHomeLogin, UListPenerimaanBank;
 
+procedure TFDataPenerimaanBank.RefreshForm;
+begin
+    with FDataPenerimaanBank do
+    begin
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from t_master_trans_account  '+
+              ' where name_module='+QuotedStr(cbTransaksi.Text)+' '+
+              ' and status_bill='+IntToStr(cbJenisTransaksi.ItemIndex-1)+' ) a ');
+      open;
+    end;
+
+      MemDetailAkun.EmptyTable;
+      MemDetailPiutang.EmptyTable;
+      edNoTrans.Clear;
+      dtTrans.date:=now();
+      dtPeriode1.date:=now();
+      dtPeriode2.date:=now();
+      edKodeJenisTrans.Clear;
+      edNamaJenisTrans.Clear;
+      edNamaBank.Clear;
+      edNoRek.Clear;
+      edKode_Pelanggan.Clear;
+      edNama_Pelanggan.Clear;
+      edNoRek.Clear;
+      edNamaBank.Clear;
+      edKodeMataUang.Clear;
+      edNamaMataUang.Clear;
+      edUntukPengiriman.Clear;
+      edKurs.value:=0.00;
+      edJumlah.value:=0.00;
+      MemKeterangan.Clear;
+      MemDetailAkun.Active:=true;
+      MemDetailPiutang.Active:=true;
+      edKodeSumberTagihan.Clear;
+      edNMSumberTagihan.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
+
+      edKodeJenisTrans.Text:=Dm.Qtemp1.FieldByName('code_trans').AsString;
+      edNamaJenisTrans.Text:=Dm.Qtemp1.FieldByName('name_trans').AsString;
+      additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString));
+      additional_code2:='0';
+      additional_code3:='0';
+      additional_code4:='0';
+      additional_code5:='0';
+    end;
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ');
+  if vid_modul='3' then // Bank
+  begin
+    FDataPenerimaanBank.gbDataBank.Visible:=True;
+  end;
+  if vid_modul='4' then // Kas
+  begin
+    FDataPenerimaanBank.gbDataBank.Visible:=False;
+  end;
+
+
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      //ShowMessage('0');
+      //edKodeSumberTagihan.Visible:=true;
+      //edKodeJenisBayar.Visible:=true;
+      lbSumberTagihan.Visible:=true;
+      lbSumberTagihann.Visible:=true;
+      lbJenisBayar.Visible:=true;
+      lbJenisBayarr.Visible:=true;
+      edNMSumberTagihan.Visible:=true;
+      edNMJenisBayar.Visible:=true;
+    end;
+  end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      //ShowMessage('1');
+      //edKodeSumberTagihan.Visible:=false;
+      //edKodeJenisBayar.Visible:=false;
+      lbSumberTagihan.Visible:=false;
+      lbSumberTagihann.Visible:=false;
+      lbJenisBayar.Visible:=false;
+      lbJenisBayarr.Visible:=false;
+      edNMSumberTagihan.Visible:=false;
+      edNMJenisBayar.Visible:=false;
+    end;
+  end;
+
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '0' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataPiutang.Visible:=false;
+      TabDetailFaktur.TabVisible:=false;
+    end;
+  end;
+  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '1' then
+  begin
+    with FDataPenerimaanBank do
+    begin
+      Panel5.Visible:=true;
+      gbDataPiutang.Visible:=true;
+      TabDetailFaktur.TabVisible:=true;
+    end;
+
+    if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
+      FDataPenerimaanBank.Panel5.Visible:=false
+    else
+      FDataPenerimaanBank.Panel5.Visible:=true;
+  end;
+
+
+  FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
+  RefreshGridDetailAkun;
+  FDataPenerimaanBank.Autonumber;
+  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
+
+end;
 
 procedure TFDataPenerimaanBank.HitungKurs;
 begin
@@ -202,7 +334,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "cash_banks"."t_cash_bank_acceptance" SET '+
+      sql.add(' UPDATE "public"."t_cash_bank_acceptance" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
@@ -254,7 +386,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "cash_banks"."t_cash_bank_acceptance_det"'+
+            ' SELECT * from "public"."t_cash_bank_acceptance_det"'+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc');
     open;
@@ -266,7 +398,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_acceptance_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_det" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
@@ -279,7 +411,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_det" ("voucher_no", '+
+    sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_det" ("voucher_no", '+
             ' "code_account", "name_account", "module_id", "trans_date", "position", '+
             ' "paid_amount", "amount_rate_results", "description", '+
             ' "code_account_header") '+
@@ -315,7 +447,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
-            ' SELECT * from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' SELECT * from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc');
     open;
@@ -327,7 +459,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_acceptance_receivable" '+
+  sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
@@ -340,7 +472,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
+    sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
             ' "no_invoice", "no_invoice_tax", "code_cust", "name_cust", "trans_date", "date_invoice_tax", '+
             ' "code_type_trans", "name_type_trans", "account_number_bank", "account_name_bank", '+
             ' "paid_amount", "description", "account_acc") '+
@@ -371,7 +503,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "cash_banks"."t_cash_bank_acceptance" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_cash_bank_acceptance" ("created_at", "created_by", '+
             ' "voucher_no", "trans_date", "period_date1", "period_date2", "code_type_trans", '+
             ' "name_type_trans", "account_number_bank", "account_name_bank", "code_currency", '+
             ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
@@ -428,7 +560,7 @@ procedure TFDataPenerimaanBank.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
    strday2:=dtTrans.Date;
-   edNoTrans.Text:=getNourut(strday2,'cash_banks.t_cash_bank_acceptance','0');
+   edNoTrans.Text:=getNourut(strday2,'public.t_cash_bank_acceptance','0');
 end;
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
@@ -442,7 +574,7 @@ begin
     sql.add(' SELECT "voucher_no", "no_invoice", "no_invoice_tax", "code_cust", '+
             ' "name_cust", "trans_date", "code_type_trans", "name_type_trans", '+
             ' "account_number_bank", "account_name_bank", "paid_amount", "description", "account_acc" '+
-            ' from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
             '  Order BY no_invoice_tax asc');
     open;
@@ -510,9 +642,9 @@ begin
                 ' "code_type_trans", "name_type_trans", "account_number_bank", '+
                 ' "account_name_bank", "code_currency", "name_currency", "kurs", '+
                 ' "paid_amount", "for_acceptance", "description", "code_cust", "name_cust" '+
-                ' from "cash_banks"."t_cash_bank_acceptance") a '+
+                ' from "public"."t_cash_bank_acceptance") a '+
                 ' LEFT JOIN (SELECT "voucher_no", "code_account", "name_account", '+
-                ' "position", "paid_amount", "description" from "cash_banks"."t_cash_bank_acceptance_det") b '+
+                ' "position", "paid_amount", "description" from "public"."t_cash_bank_acceptance_det") b '+
                 ' ON a."voucher_no"=b."voucher_no" '+
                 ' WHERE a."voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
                 ' AND a."voucher_no"='+QuotedStr(Dm.Qtemp1.fieldbyname('code_account').value)+''+
@@ -666,6 +798,16 @@ begin
     end;
 end;
 
+procedure TFDataPenerimaanBank.cbJenisTransaksiChange(Sender: TObject);
+begin
+  RefreshForm;
+end;
+
+procedure TFDataPenerimaanBank.cbTransaksiChange(Sender: TObject);
+begin
+  cbJenisTransaksi.ItemIndex:=0;
+end;
+
 procedure TFDataPenerimaanBank.VCekBalance;
 begin
   //Cek Balance Debit Kredit
@@ -719,6 +861,23 @@ end;
 
 procedure TFDataPenerimaanBank.Clear;
 begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
+    open;
+    first;
+  end;
+
+  cbTransaksi.clear;
+  cbTransaksi.items.Add('');
+  while not dm.Qtemp.eof do
+  begin
+   cbTransaksi.Items.add(dm.Qtemp.fieldbyname('module_name').asstring);
+   dm.Qtemp.next;
+  end;
+
   MemDetailAkun.EmptyTable;
   MemDetailPiutang.EmptyTable;
   edNoTrans.Clear;
@@ -745,7 +904,8 @@ begin
   edNMSumberTagihan.Clear;
   edKodeJenisBayar.Clear;
   edNMJenisBayar.Clear;
-
+  cbTransaksi.ItemIndex:=0;
+  cbJenisTransaksi.ItemIndex:=0;
 end;
 
 procedure TFDataPenerimaanBank.DBGridAkunColEnter(Sender: TObject);
@@ -759,6 +919,27 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.DBGridAkunColumns0EditButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='terima_bank';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                ' left join t_ak_header c on b.header_code=c.header_code'+
+                ' GROUP BY b.code,b.account_name,c.header_name '+
+                ' ORDER BY b.code,b.account_name,c.header_name';
+      Execute;
+    end;
+  end;
+end;
+
+procedure TFDataPenerimaanBank.DBGridAkunColumns5EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
   with FCari_DaftarPerk do
@@ -847,7 +1028,7 @@ begin
   begin
   FMasterData.Caption:='Master Jenis Pembayaran';
   FMasterData.vcall:='jenis_terima';
-  FMasterData.update_grid('code','name','description','"cash_banks"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.update_grid('code','name','description','"public"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
   FMasterData.ShowModal;
   //Autocode;
   end;
@@ -919,7 +1100,7 @@ begin
   begin
   FMasterData.Caption:='Master Sumber Tagihan';
   FMasterData.vcall:='sumber_terima';
-  FMasterData.update_grid('code','name','description','"cash_banks"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+  FMasterData.update_grid('code','name','description','"public"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
   FMasterData.ShowModal;
   //Autocode;
   end;

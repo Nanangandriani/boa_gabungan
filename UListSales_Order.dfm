@@ -680,7 +680,7 @@ object FSalesOrder: TFSalesOrder
   object QSalesOrder: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "sale"."t_sales_order"  '
+      'select * from "public"."t_sales_order"  '
       'where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56

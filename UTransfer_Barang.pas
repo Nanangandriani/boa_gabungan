@@ -127,7 +127,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
-      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
       ' INNER JOIN t_wh c on a.wh_code_to=c.wh_code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code order by trans_no desc';
       ExecSQL;
     end;
@@ -144,7 +144,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
-      ' b.wh_name nm_from,c.wh_name nm_to,d.category from warehouse.t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category from t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
       ' INNER JOIN t_wh c on a.wh_code_to=c.wh_code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code '+
       ' where a.sbu_code='+QuotedStr(loksbu)+' order by a.trans_no desc';
       ExecSQL;

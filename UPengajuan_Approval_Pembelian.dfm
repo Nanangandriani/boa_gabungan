@@ -2,8 +2,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
   Left = 0
   Top = 0
   Caption = 'Approve Pembelian'
-  ClientHeight = 441
-  ClientWidth = 943
+  ClientHeight = 440
+  ClientWidth = 939
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 943
+    Width = 939
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,6 +26,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 943
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -38,18 +39,24 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
   object PG1: TRzPageControl
     Left = 0
     Top = 127
-    Width = 943
-    Height = 314
+    Width = 939
+    Height = 313
     Hint = ''
     ActivePage = TabPO
     Align = alClient
     TabIndex = 1
     TabOrder = 1
     ExplicitTop = 133
+    ExplicitWidth = 943
+    ExplicitHeight = 314
     FixedDimension = 21
     object Tabkontrak: TRzTabSheet
       OnShow = TabkontrakShow
       Caption = 'Kontrak Kerjasama'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -392,6 +399,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     object TabSheet2: TRzTabSheet
       TabVisible = False
       Caption = 'Uang Muka Pembelian'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 935
       ExplicitHeight = 288
       object RzPanel4: TRzPanel
@@ -461,6 +470,10 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     end
     object TabPO: TRzTabSheet
       Caption = 'PO'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RzPanel2: TRzPanel
         Left = 0
         Top = 0
@@ -860,6 +873,10 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     end
     object TabSPB: TRzTabSheet
       Caption = 'SPB'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RzPanel3: TRzPanel
         Left = 0
         Top = 0
@@ -1895,7 +1912,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       
         ' GROUP BY contract_no ORDER BY contract_no ASC) as t on 1=1 WHER' +
         'E a."approval_status"=0 and a."status"='#39'1'#39' order by a.id')
-    Active = True
     Left = 220
     Top = 24
   end
@@ -1928,7 +1944,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     MasterSource = DsKerjasama
     MasterFields = 'no_trans'
     DetailFields = 'contract_no'
-    Active = True
     Left = 264
     Top = 24
     ParamData = <
@@ -1972,7 +1987,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     MasterSource = DsPo
     MasterFields = 'po_no'
     DetailFields = 'po_no'
-    Active = True
     Left = 384
     Top = 24
     ParamData = <
@@ -2031,7 +2045,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       '-- INNER JOIN t_wh c on a.wh_code=c.wh_code'
       '-- WHERE a."approval_status"='#39'0'#39
       '-- order by A.id desc')
-    Active = True
     Left = 336
     Top = 24
   end
@@ -2055,7 +2068,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         'stock_code'
       'inner join t_wh c on a.wh_code=c.wh_code')
     MasterSource = DsSPB
-    Active = True
     Left = 484
     Top = 24
   end
@@ -2072,7 +2084,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       'where a."approval_status"=0 '
       'order by spb_no desc'
       '')
-    Active = True
     Left = 440
     Top = 24
   end

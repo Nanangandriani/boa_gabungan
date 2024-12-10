@@ -32,10 +32,6 @@ object FBarang_Stok: TFBarang_Stok
     object Tabnew: TRzTabSheet
       TabVisible = False
       Caption = 'Tabnew'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pninput: TPanel
         Left = 0
         Top = 0
@@ -2061,8 +2057,8 @@ object FBarang_Stok: TFBarang_Stok
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.*,b.supplier_name from warehouse.t_item_stock a INNER J' +
-        'OIN t_supplier b on a.supplier_code=b.supplier_code')
+        'select a.*,b.supplier_name from t_item_stock a INNER JOIN t_supp' +
+        'lier b on a.supplier_code=b.supplier_code')
     Left = 326
     Top = 87
   end
@@ -2076,7 +2072,7 @@ object FBarang_Stok: TFBarang_Stok
   object QStok_Barangdet: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from gudang.t_item_stock_det')
+      'select * from t_item_stock_det')
     MasterSource = DsStok_Barang
     MasterFields = 'item_stock_code'
     DetailFields = 'item_stock_code'

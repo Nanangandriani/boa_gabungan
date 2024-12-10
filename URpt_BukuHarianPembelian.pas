@@ -237,7 +237,7 @@ begin
     ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
     ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
     ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
-    ' from purchase.t_purchase_invoice a INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
     ' INNER JOIN (select a.*,c.group_name from warehouse.t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
     ' INNER JOIN t_ak_account d on a.account_code=d.code '+
@@ -261,7 +261,7 @@ begin
     ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
     ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
     ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
-    ' from purchase.t_purchase_invoice a INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
     ' INNER JOIN (select a.*,c.group_name from warehouse.t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
     ' INNER JOIN t_ak_account d on a.account_code=d.code '+
@@ -307,7 +307,7 @@ begin
     ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
     ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
     ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
-    ' from purchase.t_purchase_invoice a INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
     ' INNER JOIN (select a.*,c.group_name from warehouse.t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
     ' INNER JOIN t_ak_account d on a.account_code=d.code '+
@@ -331,7 +331,7 @@ begin
     ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
     ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
     ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
-    ' from purchase.t_purchase_invoice a INNER JOIN  purchase.t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
     ' INNER JOIN (select a.*,c.group_name from warehouse.t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
     ' INNER JOIN t_ak_account d on a.account_code=d.code '+

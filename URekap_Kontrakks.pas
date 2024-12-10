@@ -126,9 +126,9 @@ begin
     close;
     sql.Clear;
     sql.Text:='select	A.contract_no,a.contract_date,b.supplier_name,d.item_name,c.qty,c.unit,c.price,c.remaining_qty from '+
-    ' purchase.t_coop_contract A inner join t_supplier B on A.supplier_code=B.supplier_code   '+
-    ' INNER JOIN purchase.t_coop_contract_det AS "c" on a. contract_no=c.contract_no '+
-    ' INNER JOIN warehouse.t_item_stock AS d	ON c.item_stock_code = d.item_stock_code '+
+    ' t_coop_contract A inner join t_supplier B on A.supplier_code=B.supplier_code   '+
+    ' INNER JOIN t_coop_contract_det AS "c" on a. contract_no=c.contract_no '+
+    ' INNER JOIN t_item_stock AS d	ON c.item_stock_code = d.item_stock_code '+
     ' where contract_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd', datemulai))+ ' and contract_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',dateselesai))+''+
     ' order by a.id Asc';
     open;

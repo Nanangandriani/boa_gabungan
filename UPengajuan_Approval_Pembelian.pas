@@ -147,9 +147,9 @@ begin
       sql.Clear;
       sql.Text:='select ''KONTRAK'' as modul ,A.contract_no as no_trans,a.supplier_name as Ket,a.contract_date as tgl_mulai,a.finish_date,t.harga,date_part(''YEAR'',contract_date) thn, '+
                 ' '''' no_result,'''' kt,a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from '+
-                '(select a.*,b.supplier_code,b.supplier_name from purchase. t_coop_contract a '+
+                '(select a.*,b.supplier_code,b.supplier_name from t_coop_contract a '+
                 'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ORDER BY contract_no ASC) a '+
-                'INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no from purchase.t_coop_contract_det WHERE contract_no=a.contract_no '+
+                'INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no from t_coop_contract_det WHERE contract_no=a.contract_no '+
                 'GROUP BY contract_no ORDER BY contract_no ASC) as t on 1=1 WHERE a."approval_status"=0 and a."status"=''1'' order by a.id ';
       open;
     end;
@@ -168,8 +168,8 @@ begin
       close;
       sql.Clear;
       sql.Text:='select ''PO'' as modul,A.po_no,b.supplier_name as Ket,a.po_date,a.delivery_date,t.harga,'''' no_result,'''' ket '+
-                ' ,a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from purchase.t_po a INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
-                ' INNER JOIN LATERAL(SELECT sum(subtotal)as harga,po_no from purchase.t_podetail WHERE po_no=a.po_no GROUP BY po_no) as t on 1=1'+
+                ' ,a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from t_po a INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
+                ' INNER JOIN LATERAL(SELECT sum(subtotal)as harga,po_no from t_podetail WHERE po_no=a.po_no GROUP BY po_no) as t on 1=1'+
                 ' WHERE a."approval_status"=0 and a."status"=''1'' order by a.po_date,a.po_no asc';
       Open;
     end;
@@ -187,7 +187,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=''1'' then ''APPROVE'' else ''REJECT'' end) AS status_app, '+
-                'a.*, b.supplier_name from purchase.t_spb a '+
+                'a.*, b.supplier_name from t_spb a '+
                 'inner join t_supplier b on A.supplier_code=b.supplier_code '+
                 'where a."approval_status"=''0'' '+
                 'order by spb_no desc ';
@@ -239,7 +239,7 @@ begin
                     begin
                         Close;
                         sql.Clear;
-                        sql.Text:='Update purchase.t_coop_contract set "approval_status"=''1'', approval='+QuotedStr(Nm)+' WHERE contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+                        sql.Text:='Update t_coop_contract set "approval_status"=''1'', approval='+QuotedStr(Nm)+' WHERE contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
                         Execute;
                     end;
                  end;
@@ -269,7 +269,7 @@ begin
                     begin
                       Close;
                       sql.Clear;
-                      sql.Text:='Update purchase.t_po set "approval_status"=''1'',approval='+QuotedStr(Nm)+' WHERE po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+                      sql.Text:='Update t_po set "approval_status"=''1'',approval='+QuotedStr(Nm)+' WHERE po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
                       Execute;
                     end;
                  end;
@@ -314,9 +314,9 @@ begin
       sql.Clear;
       sql.Text:='select ''KONTRAK'' as modul ,A.contract_no as no_trans,a.supplier_name as Ket,a.contract_date as tgl_mulai,a.finish_date,t.harga,date_part(''YEAR'',contract_date) thn, '+
                 ' '''' no_result,'''' kt,a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from '+
-                '(select a.*,b.supplier_code,b.supplier_name from purchase. t_coop_contract a '+
+                '(select a.*,b.supplier_code,b.supplier_name from  t_coop_contract a '+
                 'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ORDER BY contract_no ASC) a '+
-                'INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no from purchase.t_coop_contract_det WHERE contract_no=a.contract_no '+
+                'INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no from t_coop_contract_det WHERE contract_no=a.contract_no '+
                 'GROUP BY contract_no ORDER BY contract_no ASC) as t on 1=1 WHERE a."approval_status"=0 and a."status"=''1'' order by a.id ';
       open;
     end;

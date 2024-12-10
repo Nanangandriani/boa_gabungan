@@ -55,7 +55,7 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew
   UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber,
   UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
   UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
-  UDataPengajuanPengeluaranKasBank;
+  UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -196,7 +196,11 @@ begin
       Edkd_supp.Text:=Qsupplier['supplier_code'];
       ednm_supp.text:=Qsupplier['supplier_name'];
     end;
-
+    if StatusTr='RekapPemb' then
+    begin
+      FRptRekap_Pembelian.Edkd_sp.Text:=QSupplier['supplier_code'];
+      FRptRekap_Pembelian.CbSupplier.EditValue:=QSupplier['supplier_name'];
+    end;
     close;
 end;
 

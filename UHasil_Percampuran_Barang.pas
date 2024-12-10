@@ -152,7 +152,7 @@ begin
       close;
       sql.Clear;
       SQL.Text:='select (case WHEN a.status=0 THEN ''In-Proses'' else ''Selesai'' END) AS statustr,A.*,'+
-      ' B.item_name from warehouse.t_item_mixing_result A inner join warehouse.t_item_stock B on '+
+      ' B.item_name from t_item_mixing_result A inner join t_item_stock B on '+
       ' A.item_stock_code=B.item_stock_code where a.sbu_code='+QuotedStr(loksbu)+' order by a.result_no desc  ';
       ExecSQL;
     end;
@@ -166,7 +166,7 @@ begin
       close;
       sql.Clear;
       SQL.Text:='select (case WHEN a.status=0 THEN ''In-Proses'' else ''Selesai'' END) AS statustr,A.*,'+
-      ' B.item_name from warehouse.t_item_mixing_result A inner join warehouse.t_item_stock B on '+
+      ' B.item_name from t_item_mixing_result A inner join t_item_stock B on '+
       ' A.item_stock_code=B.item_stock_code order by a.result_no desc  ';
       ExecSQL;
     end;

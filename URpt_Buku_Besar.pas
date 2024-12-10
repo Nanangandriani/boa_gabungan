@@ -450,7 +450,6 @@ begin
       Edakun.SetFocus;
       Exit;
     end;
-
     if DtMulai.EditValue= null then
     begin
       MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);

@@ -127,10 +127,10 @@ begin
     sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn,status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status approval_status,trans_date from ('+
     ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
     ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
-    ' purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+    ' t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
     ' left join t_ak_account c on a.account_code=c.code'+
     ' left join t_ak_account d on a.account_um_code=d.code'+
-    ' left join purchase.t_purchase_invoice_det f on a.trans_no=f.trans_no '+
+    ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
     ' INNER JOIN t_general_ledger g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
     ' order by a.id desc) a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
     ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status,trans_date';
@@ -166,7 +166,7 @@ begin
     close;
     sql.clear;
     sql.Text:='SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM sale.t_selling AS "a" left JOIN t_general_ledger AS b'+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM public.t_selling AS "a" left JOIN t_general_ledger AS b'+
     '	ON "a".trans_no = b.trans_no WHERE "a".deleted_at IS NULL  and  '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
@@ -460,7 +460,7 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,b.approved_status,b.module_id '+
-    ' FROM	cash_banks.t_cash_bank_acceptance AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
+    ' FROM	public.t_cash_bank_acceptance AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
     ' where "a".deleted_at IS NULL and a.module_id= '+quotedstr(module_id)+' and '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
     ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, a.description,b.approved_status,b.module_id'+

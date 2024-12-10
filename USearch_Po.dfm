@@ -62,9 +62,9 @@ object Fsearch_po: TFsearch_po
     SQL.Strings = (
       
         'select a.sbu_code,a.po_no,a.supplier_code,b.supplier_name,a.tran' +
-        's_category from purchase.t_po a '
+        's_category from t_po a '
       'inner join t_supplier b on a.supplier_code=b.supplier_code'
-      'inner join purchase.t_podetail c on a.po_no=c.po_no '
+      'inner join t_podetail c on a.po_no=c.po_no '
       
         'where c.remaining_sp<>0 and a."approval_status"='#39'1'#39' and a.status' +
         '='#39'1'#39

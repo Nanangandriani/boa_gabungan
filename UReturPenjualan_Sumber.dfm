@@ -2,8 +2,8 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
   Left = 0
   Top = 0
   Caption = 'Sumber Retur'
-  ClientHeight = 664
-  ClientWidth = 1122
+  ClientHeight = 655
+  ClientWidth = 1116
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,12 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
   object Panel5: TPanel
     Left = 0
     Top = 0
-    Width = 1122
+    Width = 1116
     Height = 145
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1116
     object Label38: TLabel
       Left = 124
       Top = 29
@@ -243,8 +242,8 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
   object DBGrid_SumberOrder: TDBGridEh
     Left = 0
     Top = 145
-    Width = 1122
-    Height = 519
+    Width = 1116
+    Height = 510
     Align = alClient
     DataSource = dsDetail
     DynProps = <>

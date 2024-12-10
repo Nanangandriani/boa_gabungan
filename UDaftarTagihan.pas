@@ -303,7 +303,7 @@ begin
       sql.clear;
       sql.add(' SELECT * from ('+
               ' SELECT * '+
-              ' FROM "cash_banks"."vget_piutang") a '+
+              ' FROM "public"."vget_piutang") a '+
               ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
               ' ORDER BY date_tempo desc');
       open;
@@ -318,7 +318,7 @@ begin
       sql.clear;
       sql.add(' SELECT * from ('+
               ' SELECT * '+
-              ' FROM "cash_banks"."vget_piutang") a '+
+              ' FROM "public"."vget_piutang") a '+
               ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
               ' ORDER BY date_tempo desc');
       open;
@@ -333,7 +333,7 @@ begin
       sql.clear;
       sql.add(' SELECT * from ('+
               ' SELECT * '+
-              ' FROM "cash_banks"."vget_piutang") a '+
+              ' FROM "public"."vget_piutang") a '+
               ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
               ' AND date_tempo BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',periode1))+' '+
               ' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',periode2))+' '+

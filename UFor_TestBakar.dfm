@@ -27,7 +27,6 @@ object FFor_Testbakar: TFFor_Testbakar
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -189,7 +188,7 @@ object FFor_Testbakar: TFFor_Testbakar
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1138
+        Width = 1188
         Height = 118
         Align = alClient
         DataSource = DsTestBakarDet
@@ -798,7 +797,7 @@ object FFor_Testbakar: TFFor_Testbakar
   object QTestBakarDet: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "warehouse".t_formula_burn_test_det')
+      'select * from t_formula_burn_test_det')
     MasterSource = DsTestBakar
     MasterFields = 'test_no'
     DetailFields = 'test_no'

@@ -88,7 +88,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:=' select "max"(order_no) as no_urut from purchase.t_item_receive_det '+
+          sql.Text:=' select "max"(order_no) as no_urut from t_item_receive_det '+
                     ' where item_stock_code='+QuotedStr(kd_mat)+''+
                     ' and trans_year='+QuotedStr(DTth.Text);
           open;

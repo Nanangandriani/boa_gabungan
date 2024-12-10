@@ -66,11 +66,11 @@ begin
     close;
     sql.clear;
     sql.add(' select notrans, order_date, code_cust, name_cust, code_region, '+
-            ' name_region  from "sale"."t_sales_order"  a  '+
+            ' name_region  from "public"."t_sales_order"  a  '+
             ' LEFT JOIN (select * from "public"."t_customer"  where  deleted_at '+
               ' is null order by created_at Desc) b ON a.code_cust=b.customer_code '+
             ' where  a.deleted_at is null and notrans not in (select no_reference '+
-            ' from "sale"."t_selling" where  deleted_at is null order by created_at Desc ) '+
+            ' from "public"."t_selling" where  deleted_at is null order by created_at Desc ) '+
             ' AND code_cust='+QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text)+' '+
             ' ORDER BY a.created_at,order_date desc ');
     open;
@@ -130,11 +130,11 @@ begin
     close;
     sql.clear;
     sql.add(' select notrans, order_date, code_cust, name_cust, code_region, '+
-            ' name_region  from "sale"."t_sales_order"  a  '+
+            ' name_region  from "public"."t_sales_order"  a  '+
             ' LEFT JOIN (select * from "public"."t_customer"  where  deleted_at '+
               ' is null order by created_at Desc) b ON a.code_cust=b.customer_code '+
             ' where  a.deleted_at is null and notrans not in (select no_reference '+
-            ' from "sale"."t_selling" where  deleted_at is null order by created_at Desc ) '+
+            ' from "public"."t_selling" where  deleted_at is null order by created_at Desc ) '+
             ' AND code_region='+QuotedStr(Edkodewilayah.Text)+' '+
             ' ORDER BY a.created_at,order_date desc ');
     open;
@@ -184,7 +184,7 @@ begin
     close;
     sql.clear;
     sql.add(' select notrans, code_item, name_item, amount, code_unit, name_unit, '+
-            ' sell as selling_price from "sale"."t_sales_order_det" a '+
+            ' sell as selling_price from "public"."t_sales_order_det" a '+
             ' LEFT JOIN (select * from "public"."t_item"  where  deleted_at is null '+
             ' order by created_at Desc) b ON a.code_item=b.item_code '+
             ' where a.notrans='+QuotedStr(MemMasterData['NO_REFF'])+' and '+
@@ -228,6 +228,8 @@ begin
       FNew_Penjualan.MemDetail['PPH_NILAI']:='0';
       FNew_Penjualan.MemDetail['POTONGAN_NILAI']:='0';
       FNew_Penjualan.MemDetail['POTONGAN_PERSEN']:='0';
+      FNew_Penjualan.MemDetail['MENEJ_FEE_PERSEN']:='0';
+      FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:='0';
       FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('selling_price').AsFloat;
       FNew_Penjualan.MemDetail.post;
       FNew_Penjualan.HitungGrid;
@@ -266,5 +268,7 @@ begin
     btGetDataProspekClick(Sender);
   end;
 end;
+initialization
+RegisterClass(TFListSalesOrder);
 
 end.

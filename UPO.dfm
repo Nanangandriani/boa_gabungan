@@ -515,7 +515,7 @@ object FPO: TFPO
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 857
+    ExplicitWidth = 859
     object Label1: TLabel
       Left = 20
       Top = 12

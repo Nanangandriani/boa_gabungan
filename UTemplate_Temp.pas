@@ -25,6 +25,9 @@ implementation
 
 {$R *.dfm}
 
+uses UDaftarKontrak;
+
+
 initialization
 RegisterClass(TFTemplate_Temp);
 

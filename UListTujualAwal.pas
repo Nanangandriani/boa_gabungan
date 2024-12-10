@@ -116,7 +116,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_selling"   '+
+       sql.Text:=' select * from "public"."t_selling"   '+
                  ' where no_reference='+QuotedStr(QPenjualan.FieldByName('notrans').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;

@@ -2,8 +2,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   Left = 0
   Top = 0
   Caption = 'New Retur Pembelian'
-  ClientHeight = 489
-  ClientWidth = 937
+  ClientHeight = 488
+  ClientWidth = 933
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,8 +13,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   Position = poMainFormCenter
   OnShow = FormShow
   DesignSize = (
-    937
-    489)
+    933
+    488)
   TextHeight = 15
   object Label8: TLabel
     Left = 92
@@ -189,8 +189,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object DBGridEh3: TDBGridEh
     Left = 9
     Top = 140
-    Width = 875
-    Height = 227
+    Width = 867
+    Height = 226
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
     DynProps = <>
@@ -282,8 +282,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   end
   object Panel1: TPanel
     Left = 0
-    Top = 453
-    Width = 937
+    Top = 452
+    Width = 933
     Height = 36
     Align = alBottom
     TabOrder = 5

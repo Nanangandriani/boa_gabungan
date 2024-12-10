@@ -102,7 +102,7 @@ with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select max(order_no)as urut from warehouse.t_item_request where trans_year='+QuotedStr(thn)+' and trans_month='+QuotedStr(bln)+' and date_no='+QuotedStr(tgl);
+    sql.Text:='select max(order_no)as urut from t_item_request where trans_year='+QuotedStr(thn)+' and trans_month='+QuotedStr(bln)+' and date_no='+QuotedStr(tgl);
     open;
   end;
    if dm.Qtemp.Fields[0].AsString = '' then
@@ -136,7 +136,7 @@ begin
       begin
         idmenu:='M04003';
         strday2:=DtPeriode.Date;
-        Edno.Text:=getNourut(strday2,'warehouse.t_item_request','');
+        Edno.Text:=getNourut(strday2,'t_item_request','');
         Edno_urut.Text:=order_no;
         simpan;
       end;
@@ -218,7 +218,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='insert into warehouse.t_item_request(trans_date,trans_no,status,status_app,order_no,sbu_code,trans_day,trans_year,trans_month,created_by)'+
+    sql.Text:='insert into t_item_request(trans_date,trans_no,status,status_app,order_no,sbu_code,trans_day,trans_year,trans_month,created_by)'+
               ' values(:tgl,:notrans,:status,:status_app,:urut,:kdsbu,:tgl_no,:thn,:bln,:pic)';
               ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
               ParamByName('notrans').Value:=Edno.Text;
@@ -239,7 +239,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into warehouse.t_item_request_det(item_code,qty,trans_no,unit,note)'+
+      sql.Text:='insert into t_item_request_det(item_code,qty,trans_no,unit,note)'+
                 ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
                 ParamByName('kd_material').Value:=MemMaterial['kd_material'];
                 ParamByName('qty').Value:=MemMaterial['qty'];
@@ -258,7 +258,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='update warehouse.t_item_request set trans_date=:tgl_permt,updated_by=:pic,updated_at=now() where trans_no=:notrans';
+    sql.Text:='update t_item_request set trans_date=:tgl_permt,updated_by=:pic,updated_at=now() where trans_no=:notrans';
               ParamByName('tgl_permt').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
               ParamByName('notrans').Value:=Edno.Text;
               ParamByName('pic').Value:=nm;
@@ -268,7 +268,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='delete from warehouse.t_item_request_det where trans_no='+QuotedStr(Edno.Text);
+    sql.Text:='delete from t_item_request_det where trans_no='+QuotedStr(Edno.Text);
     ExecSQL;
   end;
   MemMaterial.First;
@@ -278,7 +278,7 @@ begin
       begin
         close;
         sql.Clear;
-            sql.Text:='insert into warehouse.t_item_request_det(item_code,qty,trans_no,unit,note)'+
+            sql.Text:='insert into t_item_request_det(item_code,qty,trans_no,unit,note)'+
                       ' values(:kd_material,:qty,:notrans,:satuan,:ket)';
                       ParamByName('kd_material').Value:=MemMaterial['kd_material'];
                       ParamByName('qty').Value:=MemMaterial['qty'];

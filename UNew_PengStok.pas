@@ -195,7 +195,7 @@ begin
 //Autonumber;
   idmenu:='M04005';
   strday2:=DtTransfer.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_comb','');
+  Edno.Text:=getNourut(strday2,'t_item_comb','');
 if messageDlg ('Anda Yakin Simpan No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
 then begin
 //  Autonumber2;
@@ -207,7 +207,7 @@ then begin
   begin
     close;
     sql.clear;
-    sql.text:='Insert into warehouse.t_item_comb_det(item_stock_code,stock_code_old,qty,unit,trans_no)'+
+    sql.text:='Insert into t_item_comb_det(item_stock_code,stock_code_old,qty,unit,trans_no)'+
               'values(:parkd_mat,:parkd_stok,:parqty,:parsatuan,:parno)';
      parambyname('parno').asstring:=edno.text;
      parambyname('parkd_mat').asstring:=Memdetail['kd_material'];
@@ -222,7 +222,7 @@ then begin
   begin
     close;
     sql.clear;
-    sql.text:='Insert into warehouse.t_item_comb(trans_no,wh_code,item_code,trans_date,note,trans_year,sbu_code,qty,unit,stock_code,created_by,trans_month,trans_day,order_no,order_no2)'+
+    sql.text:='Insert into t_item_comb(trans_no,wh_code,item_code,trans_date,note,trans_year,sbu_code,qty,unit,stock_code,created_by,trans_month,trans_day,order_no,order_no2)'+
               'values(:parno,:parkd_gd,:parkd_mat,:partgl,:parket,:parth,:parkd_sbu,:parqty,:parsatuan,:parkd_stok,:parpic,:parbln,:partglno,:parnourut,:parnourut2)';
      parambyname('parno').asstring:=edno.text;
      parambyname('parkd_gd').asstring:=kdgd;
@@ -251,7 +251,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.text:='Update warehouse.t_item_comb set wh_code=:parkd_gd,item_code=:parkd_mat,trans_date=:partgl,'+
+    sql.text:='Update t_item_comb set wh_code=:parkd_gd,item_code=:parkd_mat,trans_date=:partgl,'+
     ' note=:parket,sbu_code=:parkd_sbu,qty=:parqty,unit=:parsatuan,stock_code=:parkd_stok,updated_by=:parpic,'+
     ' updated_at=now() where trans_no=:parno';
      parambyname('parno').asstring:=edno.text;
@@ -270,7 +270,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='delete from warehouse.t_item_comb_det where trans_no='+QuotedStr(edno.Text);
+    sql.Text:='delete from t_item_comb_det where trans_no='+QuotedStr(edno.Text);
     ExecSQL;
   end;
   Memdetail.First;
@@ -280,7 +280,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.text:='Insert into warehouse.t_item_comb_det(item_stock_code,stock_code_old,qty,unit,trans_no)'+
+      sql.text:='Insert into t_item_comb_det(item_stock_code,stock_code_old,qty,unit,trans_no)'+
                 'values(:parkd_mat,:parkd_stok,:parqty,:parsatuan,:parno)';
        parambyname('parno').asstring:=edno.text;
        parambyname('parkd_mat').asstring:=Memdetail['kd_material'];
@@ -371,7 +371,7 @@ begin
        begin
         close;
         sql.Clear;
-        sql.Text:='select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a inner join warehouse.t_item_stock b on '+
+        sql.Text:='select a.*,b.*,c.supplier_name from t_item_stock_det a inner join warehouse.t_item_stock b on '+
                   ' a.item_stock_code=b.item_stock_code inner join t_supplier c on b.supplier_code=c.supplier_code '+
                   ' INNER JOIN t_wh d on a.wh_code=d.wh_code where a."outstanding" > 0 and b.Item_code='+QuotedStr(edkdbr.Text);
         ExecSQL;
@@ -383,7 +383,7 @@ begin
       begin
        close;
        sql.Clear;
-       sql.Text:='select a.*,b.*,c.supplier_name from warehouse.t_item_stock_det a inner join warehouse.t_item_stock b on '+
+       sql.Text:='select a.*,b.*,c.supplier_name from t_item_stock_det a inner join warehouse.t_item_stock b on '+
                 ' a.item_stock_code=b.item_stock_code inner join t_supplier c on b.supplier_code=c.supplier_code '+
                 ' INNER JOIN t_wh d on a.wh_code=d.wh_code where a."outstanding" > 0 and d.sbu_code='+QuotedStr(loksbu)+' AND b.Item_code='+QuotedStr(edkdbr.Text);
        ExecSQL;

@@ -26,7 +26,6 @@ object FRekap_PO: TFRekap_PO
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitTop = -6
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -1128,16 +1127,16 @@ object FRekap_PO: TFRekap_PO
       OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
-      Caption = 'Tanggal Mulai    '
+      Caption = 'Tanggal Awal    '
       Category = 0
-      Hint = 'Tanggal Mulai    '
+      Hint = 'Tanggal Awal    '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object DtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Selesai  '
+      Caption = 'Tanggal Akhir   '
       Category = 0
-      Hint = 'Tanggal Selesai  '
+      Hint = 'Tanggal Akhir   '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
@@ -1153,7 +1152,7 @@ object FRekap_PO: TFRekap_PO
   object QRekapPO: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from purchase."V_RptRekapPO"')
+      'select * from "V_RptRekapPO"')
     Left = 320
     Top = 88
   end

@@ -22,7 +22,6 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1092
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -690,7 +689,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
       #9'COUNT ( no_invoice ) AS tot_lmbr_invoice,'
       #9'SUM ( "paid_amount" ) jum_tagihan '
       'FROM'
-      #9'"cash_banks"."t_dpp"'
+      #9'"public"."t_dpp"'
       #9'A LEFT JOIN ('
       #9'SELECT'
       #9#9'code AS kd_master,'

@@ -149,7 +149,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='  select A.*,b.Shift,b.mc from t_result_formula a inner join t_spk_formula B on A.nospk=B.no_spk order by noresult desc ';
+      sql.Text:=' select A.*,b.Shift,b.mc from t_result_formula a inner join t_spk_formula B on A.spk_no=B.spk_no order by result_no desc ';
       ExecSQL;
     end;
   end else
@@ -159,9 +159,9 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select A.*,b.Shift,b.mc from t_result_formula a inner join t_spk_formula B on A.nospk=B.no_spk '+
-                ' where a.kd_sbu='+QuotedStr(loksbu)+''+
-                '  order by a.noresult desc ';
+      sql.Text:=' select A.*,b.Shift,b.mc from t_result_formula a inner join t_spk_formula B on A.spk_no=B.spk_no '+
+                ' where a.sbu_code='+QuotedStr(loksbu)+''+
+                '  order by a.result_no desc ';
       ExecSQL;
     end;
   end;

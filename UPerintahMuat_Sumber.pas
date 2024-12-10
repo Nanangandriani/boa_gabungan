@@ -85,12 +85,12 @@ begin
       sql.add(' select *  from ( SELECT date_trans, a."notrans", "vendor_code_transport", '+
               ' "vendor_name_transport", "notrans_load", "code_vendor_load", "name_vendor_load", '+
               ' "no_ref_load", "item_code", "item_name", "source_load", "amount", "unit"  '+
-              ' from "sale"."t_delivery_order" a '+
+              ' from "public"."t_delivery_order" a '+
               ' LEFT JOIN (SELECT a.*, vendor_code as vendor_code_transport, vendor_name '+
-              ' as vendor_name_transport from "sale"."t_delivery_order_load" a '+
-              ' LEFT JOIN "sale"."t_delivery_order_services" b ON a.notrans=b.notrans '+
+              ' as vendor_name_transport from "public"."t_delivery_order_load" a '+
+              ' LEFT JOIN "public"."t_delivery_order_services" b ON a.notrans=b.notrans '+
               ' )b ON  a.notrans=b.notrans where deleted_at  is null) deo  '+
-              ' where notrans not in (SELECT notrans from "sale"."t_spm" a  where a.deleted_at  is null) ');
+              ' where notrans not in (SELECT notrans from "public"."t_spm" a  where a.deleted_at  is null) ');
       sql.add(' AND date_trans between '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal2.Date))+' ');

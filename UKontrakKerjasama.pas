@@ -31,13 +31,6 @@ type
   TFKontrakkerjasama = class(TForm)
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
-    dxBarButton2: TdxBarButton;
-    dxBarButton1: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarButton4: TdxBarButton;
-    dxBarButton5: TdxBarButton;
-    dxBarButton6: TdxBarButton;
-    dxBarButton7: TdxBarButton;
     dxBarBaru: TdxBarLargeButton;
     dxBarUpdate: TdxBarButton;
     dxbarRefresh: TdxBarButton;
@@ -359,14 +352,14 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='Delete From purchase.t_coop_contract where contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+      sql.Text:='Delete From t_coop_contract where contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
       Execute;
     end;
     with dm.Qtemp1 do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Delete From purchase.t_coop_contract_det where contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+      sql.Text:='Delete From t_coop_contract_det where contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
       Execute;
     end;
     ActROExecute(sender);
@@ -457,7 +450,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' select * from purchase.t_coop_contract where contract_no='+QuotedStr(Memkerjasama['contract_no']);
+        sql.Text:=' select * from t_coop_contract where contract_no='+QuotedStr(Memkerjasama['contract_no']);
         ExecSQL;
       end;
       EdCurr.Text:=DM.Qtemp['currency'];

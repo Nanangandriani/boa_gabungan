@@ -2,8 +2,8 @@ object FSearch_Matterima: TFSearch_Matterima
   Left = 0
   Top = 0
   Caption = 'Search Material'
-  ClientHeight = 316
-  ClientWidth = 584
+  ClientHeight = 315
+  ClientWidth = 580
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FSearch_Matterima: TFSearch_Matterima
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 584
-    Height = 284
+    Width = 580
+    Height = 283
     Align = alClient
     DataSource = DSMaterial
     DynProps = <>
@@ -104,8 +104,8 @@ object FSearch_Matterima: TFSearch_Matterima
   end
   object Panel1: TPanel
     Left = 0
-    Top = 284
-    Width = 584
+    Top = 283
+    Width = 580
     Height = 32
     Align = alBottom
     TabOrder = 2

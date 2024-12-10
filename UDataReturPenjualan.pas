@@ -109,7 +109,7 @@ begin
             ' SELECT "trans_no", "code_item", "name_item", "amount", "amount_sale", "code_unit", '+
             ' "name_unit", "unit_price", "unit_price_sale", "sub_total", "ppn_account", "ppn_percent", '+
             ' "ppn_value", "pph_account", "pph_value", "pph_name", "pph_percent", "grand_tot", "account_code" '+
-            ' FROM  "sale"."t_sales_returns_det") a '+
+            ' FROM  "public"."t_sales_returns_det") a '+
             ' WHERE trans_no='+QuotedStr(edNoTrans.Text)+' '+
             ' Order By trans_no, code_item desc');
     open;
@@ -164,7 +164,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "sale"."t_sales_returns" ("created_at", "created_by", '+
+    sql.add(' Insert into "public"."t_sales_returns" ("created_at", "created_by", '+
             ' "trans_no", "trans_date", "code_cust", "name_cust", "account_code", "code_type_return", '+
             ' "name_type_return", "description", "order_no", "additional_code", '+
             ' "trans_day", "trans_month", "trans_year", "sub_total", "ppn_value", '+
@@ -204,7 +204,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "sale"."t_sales_returns" SET '+
+      sql.add(' UPDATE "public"."t_sales_returns" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
@@ -239,7 +239,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM  "sale"."t_sales_returns_det" '+
+  sql.Text:=' DELETE FROM  "public"."t_sales_returns_det" '+
             ' WHERE "trans_no"='+QuotedStr(edNoTrans.Text)+';';
   ExecSQL;
   end;
@@ -251,7 +251,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.Text:=' INSERT INTO "sale"."t_sales_returns_det" ("trans_no", "no_trans_sale", "code_item", '+
+    sql.Text:=' INSERT INTO "public"."t_sales_returns_det" ("trans_no", "no_trans_sale", "code_item", '+
               ' "name_item", "account_code", "amount", "code_unit", "name_unit", "unit_price", '+
               ' "sub_total", "ppn_account", "ppn_percent", "ppn_value", "pph_account", '+
               ' "pph_value", "pph_name", "pph_percent", "amount_sale", "unit_price_sale", "grand_tot") '+
@@ -494,7 +494,7 @@ procedure TFDataReturPenjualan.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListReturPenjualan.Name)+'');
    strday2:=dtTanggal.Date;
-   edNoTrans.Text:=getNourut(strday2,'sale.t_sales_returns','0');
+   edNoTrans.Text:=getNourut(strday2,'public.t_sales_returns','0');
 end;
 
 end.

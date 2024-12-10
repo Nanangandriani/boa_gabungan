@@ -25,8 +25,6 @@ object FBHReturPenjualan: TFBHReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -2
-    ExplicitWidth = 1209
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -615,7 +613,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
   object QBHReturPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * from "sale"."vbhreturppenjualan"')
+      'SELECT * from "public"."vbhreturppenjualan"')
     Left = 1012
     Top = 376
     object QBHReturPenjualantrans_no: TStringField

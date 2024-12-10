@@ -109,15 +109,6 @@ type
     QCetakaddress: TMemoField;
     dxBarLargeButton2: TdxBarLargeButton;
     QJurnal: TUniQuery;
-    QJurnaltrans_no: TStringField;
-    QJurnalaccount_code: TStringField;
-    QJurnalmodule_id: TSmallintField;
-    QJurnalmodule_name: TStringField;
-    QJurnalstatus_dk: TStringField;
-    QJurnalaccount_name: TStringField;
-    QJurnaldb: TFloatField;
-    QJurnalkd: TFloatField;
-    QJurnaltrans_date: TDateField;
     frxDBDJurnal: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
@@ -165,7 +156,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "sale"."t_selling"  SET '+
+          sql.Text:=' UPDATE "public"."t_selling"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString);
@@ -192,7 +183,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_sales_returns"   '+
+       sql.Text:=' select * from "public"."t_sales_returns"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -208,7 +199,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "sale"."t_sales_returns" a '+
+       sql.Text:=' select * from "public"."t_sales_returns" a '+
                  ' WHERE "trans_no"='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -254,9 +245,9 @@ begin
              ' "code_unit",  "name_unit", "unit_price", "unit_price_sale", "sub_total", '+
              ' "ppn_account", "ppn_percent",  "ppn_value", "pph_account", "pph_value", '+
              ' "pph_name", "pph_percent", "grand_tot", "account_code", "no_trans_sale"  '+
-             ' FROM  "sale"."t_sales_returns_det") a  '+
+             ' FROM  "public"."t_sales_returns_det") a  '+
              ' LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_cust" '+
-             ' from "sale"."t_sales_returns") b  ON a.trans_no=b.trans_no '+
+             ' from "public"."t_sales_returns") b  ON a.trans_no=b.trans_no '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on b.code_cust=d.customer_code '+
              ' WHERE a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' '+
              ' Order By a.trans_no, code_item desc');
@@ -278,7 +269,7 @@ begin
      close;
      sql.clear;
      sql.add(' select * '+
-             ' from "sale"."t_sales_returns" a '+
+             ' from "public"."t_sales_returns" a '+
              ' where a.deleted_at is null and '+
              ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
      open;

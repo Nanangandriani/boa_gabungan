@@ -2,8 +2,8 @@ object FTambah_Barang: TFTambah_Barang
   Left = 0
   Top = 0
   Caption = 'Tambah Barang'
-  ClientHeight = 232
-  ClientWidth = 547
+  ClientHeight = 193
+  ClientWidth = 489
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object FTambah_Barang: TFTambah_Barang
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 547
-    Height = 200
+    Width = 489
+    Height = 161
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
@@ -54,57 +54,57 @@ object FTambah_Barang: TFTambah_Barang
       Caption = ':'
     end
     object Label1: TLabel
-      Left = 20
-      Top = 56
+      Left = 370
+      Top = 209
       Width = 43
       Height = 15
       Caption = 'Supplier'
     end
     object Label2: TLabel
-      Left = 117
-      Top = 56
+      Left = 467
+      Top = 209
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
-      Left = 118
-      Top = 83
+      Left = 468
+      Top = 236
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
-      Left = 21
-      Top = 83
+      Left = 371
+      Top = 236
       Width = 78
       Height = 15
       Caption = 'Lokasi Gudang'
     end
     object Label6: TLabel
       Left = 20
-      Top = 111
+      Top = 63
       Width = 36
       Height = 15
       Caption = 'Satuan'
     end
     object Label7: TLabel
       Left = 117
-      Top = 111
+      Top = 63
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label8: TLabel
       Left = 20
-      Top = 140
+      Top = 92
       Width = 38
       Height = 15
       Caption = 'Jumlah'
     end
     object Label9: TLabel
       Left = 117
-      Top = 140
+      Top = 92
       Width = 3
       Height = 15
       Caption = ':'
@@ -139,7 +139,7 @@ object FTambah_Barang: TFTambah_Barang
     end
     object edKodeSatuan: TEdit
       Left = 323
-      Top = 108
+      Top = 60
       Width = 200
       Height = 23
       TabOrder = 3
@@ -147,23 +147,22 @@ object FTambah_Barang: TFTambah_Barang
     end
     object edJumlah: TRzNumericEdit
       Left = 132
-      Top = 137
+      Top = 89
       Width = 109
       Height = 23
       TabOrder = 4
       DisplayFormat = ',0;(,0)'
     end
     object edKodeSupplier: TEdit
-      Left = 482
-      Top = 53
+      Left = 832
+      Top = 206
       Width = 200
       Height = 23
       TabOrder = 5
-      Visible = False
     end
     object edNamaSupplier: TRzButtonEdit
-      Left = 132
-      Top = 53
+      Left = 482
+      Top = 206
       Width = 344
       Height = 23
       Text = ''
@@ -174,7 +173,7 @@ object FTambah_Barang: TFTambah_Barang
     end
     object edSatuan: TRzButtonEdit
       Left = 132
-      Top = 108
+      Top = 60
       Width = 185
       Height = 23
       Text = ''
@@ -186,15 +185,15 @@ object FTambah_Barang: TFTambah_Barang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 200
-    Width = 547
+    Top = 161
+    Width = 489
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 191
     ExplicitWidth = 541
     object BBatal: TRzBitBtn
-      Left = 471
+      Left = 413
       Top = 1
       Height = 30
       Align = alRight
@@ -256,7 +255,7 @@ object FTambah_Barang: TFTambah_Barang
       ExplicitLeft = 465
     end
     object btAdd: TRzBitBtn
-      Left = 396
+      Left = 338
       Top = 1
       Height = 30
       Align = alRight
@@ -319,16 +318,15 @@ object FTambah_Barang: TFTambah_Barang
     end
   end
   object edKodeGudang: TEdit
-    Left = 482
-    Top = 79
+    Left = 832
+    Top = 233
     Width = 200
     Height = 23
     TabOrder = 2
-    Visible = False
   end
   object edNamaGudang: TRzButtonEdit
-    Left = 132
-    Top = 79
+    Left = 482
+    Top = 233
     Width = 344
     Height = 23
     Text = ''

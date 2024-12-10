@@ -85,15 +85,6 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     frxDBDJurnal: TfrxDBDataset;
     QJurnal: TUniQuery;
-    QJurnaltrans_no: TStringField;
-    QJurnalaccount_code: TStringField;
-    QJurnalmodule_id: TSmallintField;
-    QJurnalmodule_name: TStringField;
-    QJurnalstatus_dk: TStringField;
-    QJurnalaccount_name: TStringField;
-    QJurnaldb: TFloatField;
-    QJurnalkd: TFloatField;
-    QJurnaltrans_date: TDateField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -122,7 +113,8 @@ begin
   FDataPenerimaanBank.Clear;
   //FDataPenerimaanBank.Autocode;
   FDataPenerimaanBank.Status:=0;
-  FDataPenerimaanBank.edNamaJenisTrans.Enabled:=true;
+  FDataPenerimaanBank.cbTransaksi.Enabled:=true;
+  FDataPenerimaanBank.cbJenisTransaksi.Enabled:=true;
   FDataPenerimaanBank.edNoTrans.Enabled:=true;
   FDataPenerimaanBank.ShowModal;
 end;
@@ -140,7 +132,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "cash_banks"."t_cash_bank_acceptance" SET '+
+          sql.Text:=' UPDATE "public"."t_cash_bank_acceptance" SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString);
@@ -167,7 +159,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "cash_banks"."t_cash_bank_acceptance"   '+
+       sql.Text:=' select * from "public"."t_cash_bank_acceptance"   '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -183,7 +175,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "cash_banks"."t_cash_bank_acceptance"  a '+
+       sql.Text:=' select * from "public"."t_cash_bank_acceptance"  a '+
                  ' WHERE "voucher_no"='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -198,12 +190,42 @@ begin
   with FDataPenerimaanBank do
   begin
     //Master
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.clear;
+      sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
+      open;
+      first;
+    end;
+
+    cbTransaksi.clear;
+    cbTransaksi.items.Add('');
+    while not dm.Qtemp3.eof do
+    begin
+     cbTransaksi.Items.add(dm.Qtemp3.fieldbyname('module_name').asstring);
+     dm.Qtemp3.next;
+    end;
+
     edNoTrans.Text:=Dm.Qtemp.FieldByName('voucher_no').AsString;
     dtTrans.date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
     dtPeriode1.date:=Dm.Qtemp.FieldByName('period_date1').AsDateTime;
     dtPeriode2.date:=Dm.Qtemp.FieldByName('period_date2').AsDateTime;
     edKodeJenisTrans.Text:=Dm.Qtemp.FieldByName('code_type_trans').AsString;
     edNamaJenisTrans.Text:=Dm.Qtemp.FieldByName('name_type_trans').AsString;
+
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from t_master_trans_account  '+
+              ' where code_trans='+QuotedStr(Dm.Qtemp.FieldByName('code_type_trans').AsString)+') a ');
+      open;
+    end;
+    cbTransaksi.Text:=Dm.Qtemp1.FieldByName('name_module').AsString;
+    cbJenisTransaksi.ItemIndex:=Dm.Qtemp1.FieldByName('status_bill').AsInteger+1;
+
     edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
     edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
     edNoRek.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
@@ -297,7 +319,7 @@ begin
       close;
       sql.clear;
       sql.add(' SELECT * from ('+
-              ' SELECT * from "cash_banks"."t_cash_bank_acceptance_det"'+
+              ' SELECT * from "public"."t_cash_bank_acceptance_det"'+
               ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
               ' Order By position asc');
       open;
@@ -333,7 +355,7 @@ begin
       close;
       sql.clear;
       sql.add(' SELECT * from ('+
-              ' SELECT * from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+              ' SELECT * from "public"."t_cash_bank_acceptance_receivable" '+
               ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
               ' Order By voucher_no desc');
       open;
@@ -357,7 +379,8 @@ begin
   end;
   end;
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
-  FDataPenerimaanBank.edNamaJenisTrans.Enabled:=false;
+  FDataPenerimaanBank.cbTransaksi.Enabled:=false;
+  FDataPenerimaanBank.cbJenisTransaksi.Enabled:=false;
   FDataPenerimaanBank.edNoTrans.Enabled:=false;
   FDataPenerimaanBank.Status := 1;
   FDataPenerimaanBank.Show;
@@ -372,12 +395,12 @@ begin
      sql.add(' SELECT a.*, "code_account_header", "account_name", "paid_amount", "desc_akun" from ('+
              ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
              ' "account_name_bank", "for_acceptance", "description", "module_id" '+
-             ' from "cash_banks"."t_cash_bank_acceptance"  a  '+
+             ' from "public"."t_cash_bank_acceptance"  a  '+
              ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
              ' AND deleted_at is null) a '+
              ' LEFT JOIN (SELECT  "voucher_no", "code_account", "name_account", "position", '+
              ' "paid_amount", "description" as desc_akun, "code_account_header", "account_name" , '+
-             ' "amount_rate_results" from "cash_banks"."t_cash_bank_acceptance_det" aa '+
+             ' "amount_rate_results" from "public"."t_cash_bank_acceptance_det" aa '+
              ' LEFT JOIN t_ak_account bb ON aa."code_account_header"=bb.code) b ON a."voucher_no"=b."voucher_no" '+
              ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
              ' and "position"=''K'' '+
@@ -400,7 +423,7 @@ begin
      close;
      sql.clear;
      sql.add(' select * '+
-             ' from "cash_banks"."t_cash_bank_acceptance" a '+
+             ' from "public"."t_cash_bank_acceptance" a '+
              ' where a.deleted_at is null and '+
              ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
      open;

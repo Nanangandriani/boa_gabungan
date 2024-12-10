@@ -198,7 +198,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select a.*,b.wh_name from warehouse.t_spk_formula a INNER JOIN t_wh b on a.wh_code=b.wh_code Order by a.formula_no Desc ';
+      sql.Text:=' select a.*,b.wh_name from t_spk_formula a INNER JOIN t_wh b on a.wh_code=b.wh_code Order by a.formula_no Desc ';
       ExecSQL;
     end;
   end else
@@ -208,7 +208,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select a.*,b.wh_name from warehouse.t_spk_formula a INNER JOIN t_wh b on a.wh_code=b.wh_code where a.sbu_code='+QuotedStr(loksbu)+''+
+      sql.Text:=' select a.*,b.wh_name from t_spk_formula a INNER JOIN t_wh b on a.wh_code=b.wh_code where a.sbu_code='+QuotedStr(loksbu)+''+
                 ' Order by a.formula_no Desc ';
       ExecSQL;
     end;

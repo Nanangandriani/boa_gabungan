@@ -95,6 +95,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -115,10 +117,6 @@
         </DCCReference>
         <DCCReference Include="UHomeSreen.pas">
             <Form>FHomeSreen</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UHomeLogin.pas">
-            <Form>FHomeLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListProduk.pas">
@@ -389,7 +387,6 @@
             <Form>FNew_Additional</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UMy_Function.pas"/>
         <DCCReference Include="UNew_Kategori_Gudang.pas">
             <Form>FNew_Kategori_Gudang</Form>
             <FormType>dfm</FormType>
@@ -693,10 +690,6 @@
             <Form>FListPenerimaanKas</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListPenerimaanBank.pas">
-            <Form>FListPenerimaanBank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UListMasterAkunTrans.pas">
             <Form>FListMasterAkunTrans</Form>
             <FormType>dfm</FormType>
@@ -803,7 +796,6 @@
         </DCCReference>
         <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
             <Form>FPengajuan_AppJurnal_Trans</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="U_daftar_hutang.pas">
             <Form>FDaftar_Hutang</Form>
@@ -839,6 +831,7 @@
         </DCCReference>
         <DCCReference Include="URpt_Buku_Besar.pas">
             <Form>FRpt_Buku_Besar</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekap_Kontrakks.pas">
             <Form>FRekapKontrak</Form>
@@ -851,54 +844,66 @@
         </DCCReference>
         <DCCReference Include="UBHPenjualan.pas">
             <Form>FBHPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_JenisUsaha.pas">
             <Form>FNew_Jenis_Usaha</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekapPenjualan.pas">
             <Form>FRekapPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListStockBarang.pas">
             <Form>FListStockBarang</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UBHReturPenjualan.pas">
             <Form>FBHReturPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekapReturPenjualan.pas">
             <Form>FRekapReturPenjualan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNewKontrakTagihan.pas">
             <Form>FNewKontrakTagihan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="USetJenisKontrakTagihan.pas">
             <Form>FSetJenisKontrakTagihan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListKontrakTagihan.pas">
             <Form>FListKontrakTagihan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Unew_spb.pas">
             <Form>FNew_SPB</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="U_Pelaku_Biaya.pas">
-            <Form>FPelaku_Biaya</Form>
+        <DCCReference Include="UDaftarKontrak.pas">
+            <Form>FDaftarKontrak</Form>
+        </DCCReference>
+        <DCCReference Include="UKartuPiutang.pas">
+            <Form>FKartuPiutang</Form>
+        </DCCReference>
+        <DCCReference Include="UBHPenerimaanKasBank.pas">
+            <Form>FBHPenerimaanKasBank</Form>
+        </DCCReference>
+        <DCCReference Include="UHomeLogin.pas">
+            <Form>FHomeLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UList_Pelaku_Biaya.pas">
-            <Form>FListPelakuBiaya</Form>
-            <FormType>dfm</FormType>
+        <DCCReference Include="URpt_Rekap_Pembelian.pas">
+            <Form>FRptRekap_Pembelian</Form>
         </DCCReference>
-        <DCCReference Include="UApproval_Keluar_Kas_Bank.pas">
-            <Form>FApproval_Keluar_Kas_Bank</Form>
+        <DCCReference Include="URekap_TerimaDok.pas">
+            <Form>FRpt_RekapTerimaDok</Form>
+        </DCCReference>
+        <DCCReference Include="URpt_RekapMutasi.pas">
+            <Form>FRpt_RekapMutasi</Form>
+        </DCCReference>
+        <DCCReference Include="URpt_NeracaLajur.pas">
+            <Form>FRpt_NeracaLajur</Form>
+        </DCCReference>
+        <DCCReference Include="URpt_Neraca.pas">
+            <Form>FRpt_Neraca</Form>
+        </DCCReference>
+        <DCCReference Include="UMy_Function.pas"/>
+        <DCCReference Include="UListPenerimaanBank.pas">
+            <Form>FListPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

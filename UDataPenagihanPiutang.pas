@@ -92,7 +92,7 @@ begin
             ' "code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
             ' "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
             ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", "date_tempo_cheque", "kodeprsh" '+
-            ' FROM  "cash_banks"."t_dpp") a '+
+            ' FROM  "public"."t_dpp") a '+
             ' LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
             ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' '+
@@ -155,7 +155,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.add(  ' UPDATE "cash_banks"."t_dpp"  SET '+
+    sql.add(  ' UPDATE "public"."t_dpp"  SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' "date_print"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtCetak.Date))+','+
@@ -202,7 +202,7 @@ begin
   begin
   close;
   sql.clear;
-  sql.Text:=' DELETE FROM "cash_banks"."t_dpp"'+
+  sql.Text:=' DELETE FROM "public"."t_dpp"'+
             ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_trans"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+';';
   ExecSQL;
@@ -215,7 +215,7 @@ begin
     begin
     close;
     sql.clear;
-    sql.add(  ' INSERT INTO "cash_banks"."t_dpp" ("created_at", "created_by", '+
+    sql.add(  ' INSERT INTO "public"."t_dpp" ("created_at", "created_by", '+
               ' "date_dpp", "date_print", '+
               ' "code_collector", "name_collector", "code_cust", "no_invoice", '+
               ' "no_invoice_tax", "date_trans", "date_tempo", "paid_amount", "cash", '+

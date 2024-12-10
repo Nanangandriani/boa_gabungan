@@ -6,7 +6,6 @@ uses
   UDataModule in 'UDataModule.pas' {dm: TDataModule},
   UDashboard in 'UDashboard.pas' {FDashboard},
   UHomeSreen in 'UHomeSreen.pas' {FHomeSreen},
-  UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
   Vcl.Themes,
   Vcl.Styles,
   UListProduk in 'UListProduk.pas' {FListProduk},
@@ -76,7 +75,6 @@ uses
   USPB in 'USPB.pas' {FSPB},
   UNewSPMuat in 'UNewSPMuat.pas' {Finput_sp_muat},
   UNew_Additional in 'UNew_Additional.pas' {FNew_Additional},
-  UMy_Function in 'UMy_Function.pas',
   UNew_Kategori_Gudang in 'UNew_Kategori_Gudang.pas' {FNew_Kategori_Gudang},
   Udafcek_entry in 'Udafcek_entry.pas' {FDaf_EntryCek},
   Uimportnocek in 'Uimportnocek.pas' {FImportnocek},
@@ -156,7 +154,6 @@ uses
   UDaftarTagihan in 'UDaftarTagihan.pas' {FDaftarTagihan},
   UDataPenerimaanBank in 'UDataPenerimaanBank.pas' {FDataPenerimaanBank},
   UListPenerimaanKas in 'UListPenerimaanKas.pas' {FListPenerimaanKas},
-  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
   UListMasterAkunTrans in 'UListMasterAkunTrans.pas' {FListMasterAkunTrans},
   UDataRencanaLunasPiutang in 'UDataRencanaLunasPiutang.pas' {FDataRencanaLunasPiutang},
   UDaftarRencanaLunasPiutang in 'UDaftarRencanaLunasPiutang.pas' {FDaftarRencanaLunasPiutang},
@@ -206,9 +203,17 @@ uses
   USetJenisKontrakTagihan in 'USetJenisKontrakTagihan.pas' {FSetJenisKontrakTagihan},
   UListKontrakTagihan in 'UListKontrakTagihan.pas' {FListKontrakTagihan},
   Unew_spb in 'Unew_spb.pas' {FNew_SPB},
-  U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
-  UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya},
-  UApproval_Keluar_Kas_Bank in 'UApproval_Keluar_Kas_Bank.pas' {FApproval_Keluar_Kas_Bank};
+  UDaftarKontrak in 'UDaftarKontrak.pas' {FDaftarKontrak},
+  UKartuPiutang in 'UKartuPiutang.pas' {FKartuPiutang},
+  UBHPenerimaanKasBank in 'UBHPenerimaanKasBank.pas' {FBHPenerimaanKasBank},
+  UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
+  URpt_Rekap_Pembelian in 'URpt_Rekap_Pembelian.pas' {FRptRekap_Pembelian},
+  URekap_TerimaDok in 'URekap_TerimaDok.pas' {FRpt_RekapTerimaDok},
+  URpt_RekapMutasi in 'URpt_RekapMutasi.pas' {FRpt_RekapMutasi},
+  URpt_NeracaLajur in 'URpt_NeracaLajur.pas' {FRpt_NeracaLajur},
+  URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca},
+  UMy_Function in 'UMy_Function.pas',
+  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -275,7 +280,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataPenerimaanBank, FDataPenerimaanBank);
   Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
   Application.CreateForm(TFListPenerimaanKas, FListPenerimaanKas);
-  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
   Application.CreateForm(TFListMasterAkunTrans, FListMasterAkunTrans);
   Application.CreateForm(TFDataRencanaLunasPiutang, FDataRencanaLunasPiutang);
   Application.CreateForm(TFDaftarRencanaLunasPiutang, FDaftarRencanaLunasPiutang);
@@ -315,9 +319,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
   Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
   Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
-  Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
-  Application.CreateForm(TFPelaku_Biaya, FPelaku_Biaya);
-  Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
+  Application.CreateForm(TFDaftarKontrak, FDaftarKontrak);
+  Application.CreateForm(TFHomeLogin, FHomeLogin);
+  Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

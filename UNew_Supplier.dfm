@@ -23,8 +23,8 @@ object FNew_Supplier: TFNew_Supplier
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 482
-    ExplicitWidth = 861
+    ExplicitTop = 490
+    ExplicitWidth = 863
     object BBatal: TRzBitBtn
       Left = 791
       Top = 1
@@ -85,7 +85,7 @@ object FNew_Supplier: TFNew_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 785
+      ExplicitLeft = 787
     end
     object BSimpan: TRzBitBtn
       Left = 716
@@ -147,7 +147,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 710
+      ExplicitLeft = 712
     end
     object BEdit: TRzBitBtn
       Left = 641
@@ -210,7 +210,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 635
+      ExplicitLeft = 637
     end
   end
   object Panel1: TPanel
@@ -222,7 +222,7 @@ object FNew_Supplier: TFNew_Supplier
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 861
+    ExplicitWidth = 863
     object Label1: TLabel
       Left = 30
       Top = 19
@@ -375,15 +375,11 @@ object FNew_Supplier: TFNew_Supplier
     Align = alClient
     TabIndex = 1
     TabOrder = 2
-    ExplicitWidth = 861
-    ExplicitHeight = 281
+    ExplicitWidth = 863
+    ExplicitHeight = 289
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
       Caption = 'Barang'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -466,8 +462,8 @@ object FNew_Supplier: TFNew_Supplier
     end
     object TabSheet2: TRzTabSheet
       Caption = 'Lain-lain'
-      ExplicitWidth = 857
-      ExplicitHeight = 256
+      ExplicitWidth = 859
+      ExplicitHeight = 264
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -476,8 +472,8 @@ object FNew_Supplier: TFNew_Supplier
         Align = alClient
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 857
-        ExplicitHeight = 256
+        ExplicitWidth = 859
+        ExplicitHeight = 264
         object Label11: TLabel
           Left = 177
           Top = 20

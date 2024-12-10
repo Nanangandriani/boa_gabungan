@@ -140,7 +140,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select * from "warehouse".t_formula_burn_test Order by test_no Desc ';
+      sql.Text:=' select * from t_formula_burn_test Order by test_no Desc ';
       ExecSQL;
     end;
   end else
@@ -150,7 +150,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' select * from "warehouse".t_formula_burn_test  where sbu_code='+QuotedStr(loksbu)+''+
+      sql.Text:=' select * from t_formula_burn_test  where sbu_code='+QuotedStr(loksbu)+''+
                 ' Order by test_no Desc ';
       ExecSQL;
     end;
@@ -178,7 +178,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from "warehouse".t_formula_burn_test  where test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
+        sql.Text:='select * from t_formula_burn_test  where test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
         ExecSQL;
       end;
       with Dm.Qtemp do
@@ -238,7 +238,7 @@ begin
   Filtered:=True; }
   CLOSE;
   sql.Clear;
-  sql.Text:='select * from "warehouse".t_formula_burn_test A inner join "warehouse".t_formula_burn_test_det B on a.test_no=b.test_no where a.test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
+  sql.Text:='select * from t_formula_burn_test A inner join "warehouse".t_formula_burn_test_det B on a.test_no=b.test_no where a.test_no='+QuotedStr(DBGridTestBakar.Fields[0].AsString);
   ExecSQL;
 end;
   QRpt_QCBakar.Open;

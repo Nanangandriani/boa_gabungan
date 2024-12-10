@@ -104,7 +104,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select item_name "type" from warehouse.t_mixing_master a inner join t_item b on a.type_code=b.item_code GROUP BY item_name order by item_name asc';
+    sql.Text:='select item_name "type" from t_mixing_master a inner join t_item b on a.type_code=b.item_code GROUP BY item_name order by item_name asc';
     Execute;
   end;
   DM.Qtemp.First;
@@ -119,12 +119,12 @@ Procedure TFNew_PercBarang.Simpan;
 begin
   idmenu:='M04006';
   strday2:=DtPeriode.Date;
-  Edno.Text:=getNourut(strday2,'warehouse.t_item_mixing','');
+  Edno.Text:=getNourut(strday2,'t_item_mixing','');
   with dm.Qtemp do
    begin
     Close;
     sql.Clear;
-    sql.Text:='select * from warehouse.t_item_mixing';
+    sql.Text:='select * from t_item_mixing';
     Execsql;
    end;
    MemMaterial.First;
@@ -134,7 +134,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='insert into warehouse.t_item_mixing(item_stock_code,qty,unit,note,periode,wh_code,"type",mixing_no,'+
+        sql.Text:='insert into t_item_mixing(item_stock_code,qty,unit,note,periode,wh_code,"type",mixing_no,'+
         ' stock_code,status,order_no,item_code,weigh_amount,total_request,total_received,weigh,trans_status,'+
         ' sbu_code,trans_year,trans_month,trans_day)values(:parkd_material_stok,:parqty,:parsatuan, '+
         ' :parketerangan,:parperiode,:pargudang,:parjenis,:parno_permintaan,:parkd_stok,:parstatus, '+
@@ -173,7 +173,7 @@ begin
   begin
    Close;
    sql.Clear;
-   sql.Text:='delete from warehouse.t_item_mixing where mixing_no='+QuotedStr(Edno.Text);
+   sql.Text:='delete from t_item_mixing where mixing_no='+QuotedStr(Edno.Text);
    Execsql;
   end;
   MemMaterial.First;
@@ -183,7 +183,7 @@ begin
    begin
     close;
     sql.Clear;
-    sql.Text:='insert into warehouse.t_item_mixing(item_stock_code,qty,unit,note,periode,wh_code,"type",mixing_no,'+
+    sql.Text:='insert into t_item_mixing(item_stock_code,qty,unit,note,periode,wh_code,"type",mixing_no,'+
     ' stock_code,status,order_no,item_code,weigh_amount,total_request,total_received,weigh,trans_status,'+
     ' sbu_code,trans_year,trans_month,trans_day)values(:parkd_material_stok,:parqty,:parsatuan, '+
     ' :parketerangan,:parperiode,:pargudang,:parjenis,:parno_permintaan,:parkd_stok,:parstatus, '+
@@ -402,7 +402,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' Select a.*,b.item_name,c.supplier_name,d.wh_name from warehouse.t_item_stock_det a INNER JOIN warehouse.t_item_stock b on a.item_stock_code=b.item_stock_code'+
+      sql.Text:=' Select a.*,b.item_name,c.supplier_name,d.wh_name from t_item_stock_det a INNER JOIN warehouse.t_item_stock b on a.item_stock_code=b.item_stock_code'+
       ' INNER JOIN t_supplier c on b.supplier_code=c.supplier_code left join t_wh d on a.wh_code=d.wh_code'+
       ' where b.item_code='+QuotedStr(MemMaterial['kd_material'])+' and a."outstanding" > 0' ;
       ExecSQL;
@@ -416,7 +416,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' Select a.*,b.item_name,c.supplier_name,d.wh_name from warehouse.t_item_stock_det a INNER JOIN warehouse.t_item_stock b on a.item_stock_code=b.item_stock_code'+
+      sql.Text:=' Select a.*,b.item_name,c.supplier_name,d.wh_name from t_item_stock_det a INNER JOIN warehouse.t_item_stock b on a.item_stock_code=b.item_stock_code'+
       ' INNER JOIN t_supplier c on b.supplier_code=c.supplier_code left join t_wh d on a.wh_code=d.wh_code'+
       ' where b.item_code='+QuotedStr(MemMaterial['kd_material'])+' and a."outstanding" > 0'+
       ' and d.sbu_code='+QuotedStr(loksbu);
@@ -448,7 +448,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from warehouse.t_item_stock where item_name='+QuotedStr(Edjenis.Text);
+    sql.Text:='select * from t_item_stock where item_name='+QuotedStr(Edjenis.Text);
     ExecSQL;
   end;
   Kode:=Dm.Qtemp['item_stock_code'];
@@ -458,7 +458,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select A.*,B.item_name,b.unit,c.item_name tp from warehouse.t_mixing_master A inner join t_item B on A.item_code=B.item_code  inner join t_item c on A. type_code=c.item_code where c.item_name='+QuotedStr(Edjenis.Text);
+      sql.Text:='select A.*,B.item_name,b.unit,c.item_name tp from t_mixing_master A inner join t_item B on A.item_code=B.item_code  inner join t_item c on A. type_code=c.item_code where c.item_name='+QuotedStr(Edjenis.Text);
       ExecSQL;
     end;
     QMaster.Open;

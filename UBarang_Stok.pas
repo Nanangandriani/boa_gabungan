@@ -275,9 +275,9 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
-      ' a.unit,a.merk,aa.totalmt as qty from warehouse.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' a.unit,a.merk,aa.totalmt as qty from t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
       ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."category_id" '+
-      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on '+
       ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code)as aa on 1=1 where a.deleted_at isnull '+
       ' Order by item_stock_code Desc';
       open;
@@ -287,7 +287,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a1.*,b1.sbu_code FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0';
       open;
     end;
   end;
@@ -297,9 +297,9 @@ begin
     begin
       close;
       sql.Text:='SELECT b.supplier_name,c.item_name,d.category,a.item_code,a.supplier_code,a.item_stock_code,a.order_no,'+
-      ' a.unit,a.merk,aa.totalmt as qty from warehouse.t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
+      ' a.unit,a.merk,aa.totalmt as qty from t_item_stock A Left join t_supplier B on A.supplier_code=B.supplier_code '+
       ' inner join t_item C on A.item_code=C.item_code INNER JOIN t_item_category d on c.category_id=d."category_id" '+
-      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on '+
+      ' LEFT JOIN LATERAL (SELECT sum(a1.qty)as totalmt FROM t_item_stock_det a1 INNER JOIN t_wh b1 on '+
       ' a1.wh_code=b1.wh_code where a1.item_stock_code=a.item_stock_code and (b1.sbu_code='+QuotedStr(loksbu)+' OR b1.sbu_code=''''))as'+
       ' aa on 1=1 where a.deleted_at isnull Order by item_stock_code Desc';
       Open;
@@ -309,7 +309,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a1.*,b1.sbu_code FROM warehouse.t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.sbu_code='+QuotedStr(loksbu)+' OR b1.sbu_code=''''';
+      sql.Text:='SELECT a1.*,b1.sbu_code FROM t_item_stock_det a1 INNER JOIN t_wh b1 on a1.wh_code=b1.wh_code where a1."outstanding"<>0 and b1.sbu_code='+QuotedStr(loksbu)+' OR b1.sbu_code=''''';
       open;
     end;
   end;

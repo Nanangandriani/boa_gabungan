@@ -27,7 +27,6 @@ object FTerima_Amplop: TFTerima_Amplop
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1101
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -454,11 +453,9 @@ object FTerima_Amplop: TFTerima_Amplop
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,B.item_name,C.supplier_name,d.wh_name from warehouse.' +
-        't_item_receive3 A '
-      
-        'inner join warehouse.t_item_stock B on A.item_stock_code=B.item_' +
-        'stock_code'
+        'select A.*,B.item_name,C.supplier_name,d.wh_name from t_item_rec' +
+        'eive3 A '
+      'inner join t_item_stock B on A.item_stock_code=B.item_stock_code'
       'Inner Join t_supplier C on B.supplier_code=C.supplier_code'
       'inner join t_wh d on a.wh_code=d.wh_code'
       'order by a.request_no desc')

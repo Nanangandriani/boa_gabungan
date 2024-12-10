@@ -2,8 +2,8 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   Left = 0
   Top = 0
   Caption = 'Data Kontrak Tagihan'
-  ClientHeight = 560
-  ClientWidth = 1217
+  ClientHeight = 551
+  ClientWidth = 1211
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,12 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1217
+    Width = 1211
     Height = 209
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1211
     object Label8: TLabel
       Left = 22
       Top = 50
@@ -94,7 +93,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label7: TLabel
       Left = 501
-      Top = 79
+      Top = 102
       Width = 36
       Height = 15
       Caption = 'Termin'
@@ -115,7 +114,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label12: TLabel
       Left = 598
-      Top = 79
+      Top = 102
       Width = 3
       Height = 15
       Caption = ':'
@@ -143,28 +142,28 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label16: TLabel
       Left = 501
-      Top = 107
+      Top = 130
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label17: TLabel
       Left = 598
-      Top = 107
+      Top = 130
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label18: TLabel
       Left = 678
-      Top = 106
+      Top = 129
       Width = 22
       Height = 15
       Caption = 'Hari'
     end
     object Label19: TLabel
       Left = 678
-      Top = 78
+      Top = 101
       Width = 19
       Height = 15
       Caption = 'Kali'
@@ -179,24 +178,38 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
     end
     object Label20: TLabel
       Left = 598
-      Top = 137
+      Top = 160
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label23: TLabel
       Left = 501
-      Top = 137
+      Top = 160
       Width = 84
       Height = 15
       Caption = 'Manajemen FEE'
     end
     object Label24: TLabel
       Left = 678
-      Top = 137
+      Top = 160
       Width = 10
       Height = 15
       Caption = '%'
+    end
+    object Label25: TLabel
+      Left = 501
+      Top = 76
+      Width = 68
+      Height = 15
+      Caption = 'Nilai Kontrak'
+    end
+    object Label26: TLabel
+      Left = 598
+      Top = 76
+      Width = 3
+      Height = 15
+      Caption = ':'
     end
     object edNamaPelanggan: TRzButtonEdit
       Left = 135
@@ -259,49 +272,29 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
       TabOrder = 6
       Visible = False
     end
-    object dtPeriodeAwal: TRzDateTimePicker
-      Left = 612
-      Top = 47
-      Width = 135
-      Height = 23
-      Date = 45405.000000000000000000
-      Format = ''
-      Time = 0.597438842589326700
-      TabOrder = 7
-    end
-    object dtPeriodeAkhir: TRzDateTimePicker
-      Left = 770
-      Top = 47
-      Width = 135
-      Height = 23
-      Date = 45405.000000000000000000
-      Format = ''
-      Time = 0.597438842589326700
-      TabOrder = 8
-    end
     object edJatuhTempo: TSpinEdit
       Left = 612
-      Top = 104
+      Top = 127
       Width = 60
       Height = 24
       MaxValue = 0
       MinValue = 0
-      TabOrder = 9
+      TabOrder = 7
       Value = 0
     end
     object edTermin: TSpinEdit
       Left = 612
-      Top = 76
+      Top = 99
       Width = 60
       Height = 24
       MaxValue = 0
       MinValue = 0
-      TabOrder = 10
+      TabOrder = 8
       Value = 0
     end
     object rgIntegrasiBiaya: TRzRadioGroup
       Left = 719
-      Top = 76
+      Top = 99
       Width = 186
       Height = 46
       Caption = 'Integrasi Biaya'
@@ -312,36 +305,62 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
       Items.Strings = (
         'Tidak'
         'Ya')
-      TabOrder = 11
+      TabOrder = 9
     end
     object edMenejFee: TSpinEdit
       Left = 612
-      Top = 134
+      Top = 157
       Width = 60
       Height = 24
       MaxValue = 0
       MinValue = 0
-      TabOrder = 12
+      TabOrder = 10
       Value = 0
-      OnChange = edMenejFeeChange
+      OnExit = edMenejFeeExit
+    end
+    object dtPeriodeAwal: TDateTimePicker
+      Left = 612
+      Top = 47
+      Width = 135
+      Height = 23
+      Date = 45627.000000000000000000
+      Time = 0.913770208331698100
+      TabOrder = 11
+    end
+    object dtPeriodeAkhir: TDateTimePicker
+      Left = 770
+      Top = 47
+      Width = 135
+      Height = 23
+      Date = 45627.000000000000000000
+      Time = 0.913770208331698100
+      TabOrder = 12
+    end
+    object edNilaiKontrak: TRzNumericEdit
+      Left = 612
+      Top = 73
+      Width = 186
+      Height = 23
+      TabOrder = 13
+      DisplayFormat = '0.00#,##'
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 209
-    Width = 1217
-    Height = 319
+    Width = 1211
+    Height = 310
     Hint = ''
     ActivePage = TabDataJasa
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1211
-    ExplicitHeight = 310
     FixedDimension = 21
     object TabDataJasa: TRzTabSheet
       Caption = 'Data Jasa'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1207
       ExplicitHeight = 285
       object DBGridSumberPenjualan: TDBGridEh
@@ -360,11 +379,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
         TitleParams.MultiTitle = True
         Columns = <
           item
-            CellButtons = <
-              item
-                Style = ebsGlyphEh
-                Caption = '...'
-              end>
+            CellButtons = <>
             DynProps = <>
             EditButtons = <>
             FieldName = 'kd_biaya'
@@ -472,13 +487,11 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 528
-    Width = 1217
+    Top = 519
+    Width = 1211
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 519
-    ExplicitWidth = 1211
     object BBatal: TRzBitBtn
       Left = 1141
       Top = 1
@@ -486,6 +499,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
       Align = alRight
       Caption = 'Close'
       TabOrder = 1
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -545,11 +559,12 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Process'
+      Caption = 'Save'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000630B0000630B00000001000000000000000000003300
+        08000000000000020000830E0000830E00000001000000000000000000003300
         00006600000099000000CC000000FF0000000033000033330000663300009933
         0000CC330000FF33000000660000336600006666000099660000CC660000FF66
         000000990000339900006699000099990000CC990000FF99000000CC000033CC
@@ -581,31 +596,31 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
         4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
         6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
-        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
-        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
-        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
-        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
-        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
-        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
-        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
-        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
-        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+        0000000000000000000000000000000000000000000000000000E8E8E8090909
+        09090909090909090909E8E8E881818181818181818181818181E8E809101009
+        E31009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E80909101009
+        E31009E3E3E309101009E88181ACAC81E3AC81E3E3E381ACAC81091009101009
+        E31009E3E3E30910100981AC81ACAC81E3AC81E3E3E381ACAC81091009101009
+        E3E3E3E3E3E30910100981AC81ACAC81E3E3E3E3E3E381ACAC81091009101010
+        0909090909091010100981AC81ACACAC818181818181ACACAC81091009101010
+        1010101010101010100981AC81ACACACACACACACACACACACAC81091009101009
+        0909090909090910100981AC81ACAC8181818181818181ACAC810910091009D7
+        D7D7D7D7D7D7D709100981AC81AC81D7D7D7D7D7D7D7D781AC810910091009D7
+        090909090909D709100981AC81AC81D7818181818181D781AC810910091009D7
+        D7D7D7D7D7D7D709100981AC81AC81D7D7D7D7D7D7D7D781AC81091009E309D7
+        090909090909D709090981AC81E381D7818181818181D78181810910091009D7
+        D7D7D7D7D7D7D709100981AC81AC81D7D7D7D7D7D7D7D781AC8109E309090909
+        0909090909090909090981E38181818181818181818181818181091009D7D7D7
+        D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
+        0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1060
     end
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 912
-    Top = 48
+    Left = 960
+    Top = 144
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end
@@ -706,7 +721,7 @@ object FNewKontrakTagihan: TFNewKontrakTagihan
   end
   object dsDataBiaya: TDataSource
     DataSet = MemDataBiaya
-    Left = 992
-    Top = 48
+    Left = 1040
+    Top = 144
   end
 end

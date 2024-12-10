@@ -26,7 +26,6 @@ object FPerc_Barang: TFPerc_Barang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 931
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -857,10 +856,8 @@ object FPerc_Barang: TFPerc_Barang
       
         'select A.mixing_no,A.periode,A."type",A.status,A.item_code,A.wei' +
         'gh_amount,A.order_no,a.sbu_code,a.trans_year,a.trans_month,'
-      'a.trans_day,a.trans_status from warehouse.t_item_mixing A'
-      
-        'inner join warehouse.t_item_stock B on A.item_code=B.item_stock_' +
-        'code '
+      'a.trans_day,a.trans_status from t_item_mixing A'
+      'inner join t_item_stock B on A.item_code=B.item_stock_code '
       
         'group by A.mixing_no,A.periode,A."type",A.status,A.item_code,A.w' +
         'eigh_amount,A.order_no,a.sbu_code,a.trans_year,a.trans_month,a.t' +
@@ -877,8 +874,8 @@ object FPerc_Barang: TFPerc_Barang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,B.item_name,c.wh_name from warehouse.t_item_mixing a ' +
-        'inner join warehouse.t_item_stock B on'
+        'select A.*,B.item_name,c.wh_name from t_item_mixing a inner join' +
+        ' t_item_stock B on'
       
         ' A.item_stock_code=B.item_stock_code left join t_wh c on a.wh_co' +
         'de=c.wh_code')

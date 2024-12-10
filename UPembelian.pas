@@ -116,10 +116,10 @@ begin
       sql.Clear;
       sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''approved'' '+
                 ' END) AS status_app,a.*,b.supplier_name,c.account_name,d.account_name as nm_perk ,to_char(trans_date,''dd'') tgl '+
-                ' ,to_char(trans_date,''mm'') bln,e.ref_name from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                ' ,to_char(trans_date,''mm'') bln,e.ref_name from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
                 ' left join t_ak_account d on a.account_um_code=d.code '+
-                ' left join purchase.t_ref_item_receive e on a.ref_code=e.ref_code order by a.id desc';
+                ' left join t_ref_item_receive e on a.ref_code=e.ref_code order by a.id desc';
       ExecSQL;
     end;
     end else
@@ -131,10 +131,10 @@ begin
       sql.Clear;
       sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN''else ''APPROVE'' '+
                 ' END) AS status_app,a.*, b.supplier_name, c.account_name,d.account_name as nm_perk,to_char(trans_date,''dd'') tgl '+
-                ' ,to_char(trans_date,''mm'') bln,e.ref_name from purchase.t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                ' ,to_char(trans_date,''mm'') bln,e.ref_name from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
                 ' left join t_ak_account d on a.account_um_code=d.code '+
-                ' left join purchase.t_ref_item_receive e on a.ref_code=e.ref_code'+
+                ' left join t_ref_item_receive e on a.ref_code=e.ref_code'+
                 ' where a.sbu_code='+QuotedStr(kdsbu)+''+
                 ' order by a.ref_no Desc ';
       ExecSQL;
@@ -265,6 +265,7 @@ end;
 
 procedure TFPembelian.dxBarLargeButton2Click(Sender: TObject);
 begin
+  dm.refreshPerusahaan;
    with FMainMenu.QJurnal do
     begin
      close;
@@ -273,24 +274,21 @@ begin
              ' where "trans_no"='+QuotedStr(Memterima_material.FieldByName('trans_no').AsString)+'');
      open;
     end;
+   if FMainMenu.QJurnal.RecordCount=0 then
+   begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+   end;
 
-
- if FMainMenu.QJurnal.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
-
- if FMainMenu.QJurnal.RecordCount<>0 then
- begin
-   cLocation := ExtractFilePath(Application.ExeName);
-
-   //ShowMessage(cLocation);
-   FMainMenu.Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
-   SetMemo(FMainMenu.Report,'nama_pt',FHomeLogin.vNamaPRSH);
-   //Report.DesignReport();
-   FMainMenu.Report.ShowReport();
- end;
+   if FMainMenu.QJurnal.RecordCount<>0 then
+   begin
+     cLocation := ExtractFilePath(Application.ExeName);
+     //ShowMessage(cLocation);
+     FMainMenu.Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+     //SetMemo(FMainMenu.Report,'nama_pt',FHomeLogin.vNamaPRSH);
+     //Report.DesignReport();
+     FMainMenu.Report.ShowReport();
+   end;
 end;
 
 procedure TFPembelian.FormShow(Sender: TObject);

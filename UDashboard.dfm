@@ -2,22 +2,819 @@ object FDashboard: TFDashboard
   Left = 0
   Top = 0
   Caption = 'FDashboard'
-  ClientHeight = 442
-  ClientWidth = 628
+  ClientHeight = 703
+  ClientWidth = 1271
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
-  object BitBtn1: TBitBtn
-    Left = 8
-    Top = 48
-    Width = 225
-    Height = 89
-    Caption = 'BitBtn1'
+  object pnlUtama: TRzPanel
+    Left = 0
+    Top = 0
+    Width = 1271
+    Height = 703
+    Align = alClient
+    BorderOuter = fsNone
+    BorderShadow = clWhite
+    Color = 15987699
+    GridColor = cl3DLight
     TabOrder = 0
-    OnClick = BitBtn1Click
+    VisualStyle = vsGradient
+    ExplicitWidth = 1265
+    ExplicitHeight = 694
+    object pnlHeader2: TPanel
+      Left = 0
+      Top = 171
+      Width = 1271
+      Height = 246
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 0
+      object pnlHeader2Sub1: TPanel
+        Left = 10
+        Top = 0
+        Width = 300
+        Height = 246
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 0
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 284
+        object DBChart1: TDBChart
+          Left = 2
+          Top = 2
+          Width = 296
+          Height = 242
+          Title.Text.Strings = (
+            'TDBChart')
+          View3DOptions.Elevation = 315
+          View3DOptions.Orthogonal = False
+          View3DOptions.Perspective = 0
+          View3DOptions.Rotation = 360
+          Align = alClient
+          TabOrder = 0
+          ExplicitHeight = 280
+          DefaultCanvas = 'TGDIPlusCanvas'
+          ColorPaletteIndex = 13
+          object Series5: TPieSeries
+            HoverElement = []
+            Marks.Tail.Margin = 2
+            XValues.Order = loAscending
+            YValues.Name = 'Pie'
+            YValues.Order = loNone
+            Frame.InnerBrush.BackColor = clRed
+            Frame.InnerBrush.Gradient.EndColor = clGray
+            Frame.InnerBrush.Gradient.MidColor = clWhite
+            Frame.InnerBrush.Gradient.StartColor = 4210752
+            Frame.InnerBrush.Gradient.Visible = True
+            Frame.MiddleBrush.BackColor = clYellow
+            Frame.MiddleBrush.Gradient.EndColor = 8553090
+            Frame.MiddleBrush.Gradient.MidColor = clWhite
+            Frame.MiddleBrush.Gradient.StartColor = clGray
+            Frame.MiddleBrush.Gradient.Visible = True
+            Frame.OuterBrush.BackColor = clGreen
+            Frame.OuterBrush.Gradient.EndColor = 4210752
+            Frame.OuterBrush.Gradient.MidColor = clWhite
+            Frame.OuterBrush.Gradient.StartColor = clSilver
+            Frame.OuterBrush.Gradient.Visible = True
+            Frame.Width = 4
+            OtherSlice.Legend.Visible = False
+          end
+        end
+      end
+      object pnlHeader2Sub3: TPanel
+        Left = 630
+        Top = 0
+        Width = 300
+        Height = 246
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 1
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 284
+        object Chart3: TChart
+          Left = 2
+          Top = 2
+          Width = 296
+          Height = 242
+          BackWall.Pen.Visible = False
+          BottomWall.Brush.Gradient.EndColor = clSilver
+          BottomWall.Brush.Gradient.StartColor = clGray
+          BottomWall.Brush.Gradient.Visible = True
+          BottomWall.Pen.Color = clGray
+          BottomWall.Size = 4
+          Gradient.Direction = gdFromTopLeft
+          Gradient.EndColor = clWhite
+          Gradient.StartColor = clSilver
+          Gradient.Visible = True
+          LeftWall.Brush.Gradient.EndColor = clSilver
+          LeftWall.Brush.Gradient.StartColor = clGray
+          LeftWall.Brush.Gradient.Visible = True
+          LeftWall.Color = clWhite
+          LeftWall.Pen.Color = clGray
+          LeftWall.Size = 4
+          MarginBottom = 5
+          MarginLeft = 5
+          MarginRight = 5
+          MarginTop = 5
+          Title.Text.Strings = (
+            'TChart')
+          BottomAxis.Grid.Color = 14540253
+          BottomAxis.LabelsFormat.Font.Color = clGray
+          BottomAxis.LabelsFormat.Font.Height = -12
+          BottomAxis.LabelStyle = talValue
+          Frame.Visible = False
+          LeftAxis.Grid.Color = 14540253
+          LeftAxis.LabelsFormat.Font.Color = clGray
+          LeftAxis.LabelsFormat.Font.Height = -12
+          LeftAxis.LabelStyle = talValue
+          View3DOptions.Elevation = 315
+          View3DOptions.Orthogonal = False
+          View3DOptions.Perspective = 0
+          View3DOptions.Rotation = 360
+          Zoom.Animated = True
+          Align = alClient
+          BevelWidth = 2
+          Color = clWhite
+          TabOrder = 0
+          ExplicitHeight = 280
+          DefaultCanvas = 'TGDIPlusCanvas'
+          ColorPaletteIndex = 18
+          object PieSeries1: TPieSeries
+            HoverElement = []
+            Marks.Visible = False
+            Marks.Tail.Margin = 2
+            XValues.Order = loAscending
+            YValues.Name = 'Pie'
+            YValues.Order = loNone
+            Frame.InnerBrush.BackColor = clRed
+            Frame.InnerBrush.Gradient.EndColor = clGray
+            Frame.InnerBrush.Gradient.MidColor = clWhite
+            Frame.InnerBrush.Gradient.StartColor = 4210752
+            Frame.InnerBrush.Gradient.Visible = True
+            Frame.MiddleBrush.BackColor = clYellow
+            Frame.MiddleBrush.Gradient.EndColor = 8553090
+            Frame.MiddleBrush.Gradient.MidColor = clWhite
+            Frame.MiddleBrush.Gradient.StartColor = clGray
+            Frame.MiddleBrush.Gradient.Visible = True
+            Frame.OuterBrush.BackColor = clGreen
+            Frame.OuterBrush.Gradient.EndColor = 4210752
+            Frame.OuterBrush.Gradient.MidColor = clWhite
+            Frame.OuterBrush.Gradient.StartColor = clSilver
+            Frame.OuterBrush.Gradient.Visible = True
+            Frame.Width = 4
+            MultiPie = mpConcentric
+            OtherSlice.Legend.Visible = False
+          end
+          object PieSeries2: TPieSeries
+            HoverElement = []
+            Marks.Visible = False
+            Marks.Tail.Margin = 2
+            XValues.Order = loAscending
+            YValues.Name = 'Pie'
+            YValues.Order = loNone
+            Frame.InnerBrush.BackColor = clRed
+            Frame.InnerBrush.Gradient.EndColor = clGray
+            Frame.InnerBrush.Gradient.MidColor = clWhite
+            Frame.InnerBrush.Gradient.StartColor = 4210752
+            Frame.InnerBrush.Gradient.Visible = True
+            Frame.MiddleBrush.BackColor = clYellow
+            Frame.MiddleBrush.Gradient.EndColor = 8553090
+            Frame.MiddleBrush.Gradient.MidColor = clWhite
+            Frame.MiddleBrush.Gradient.StartColor = clGray
+            Frame.MiddleBrush.Gradient.Visible = True
+            Frame.OuterBrush.BackColor = clGreen
+            Frame.OuterBrush.Gradient.EndColor = 4210752
+            Frame.OuterBrush.Gradient.MidColor = clWhite
+            Frame.OuterBrush.Gradient.StartColor = clSilver
+            Frame.OuterBrush.Gradient.Visible = True
+            Frame.Width = 4
+            MultiPie = mpConcentric
+            OtherSlice.Legend.Visible = False
+          end
+          object PieSeries3: TPieSeries
+            HoverElement = []
+            Marks.Visible = False
+            Marks.Tail.Margin = 2
+            XValues.Order = loAscending
+            YValues.Name = 'Pie'
+            YValues.Order = loNone
+            Frame.InnerBrush.BackColor = clRed
+            Frame.InnerBrush.Gradient.EndColor = clGray
+            Frame.InnerBrush.Gradient.MidColor = clWhite
+            Frame.InnerBrush.Gradient.StartColor = 4210752
+            Frame.InnerBrush.Gradient.Visible = True
+            Frame.MiddleBrush.BackColor = clYellow
+            Frame.MiddleBrush.Gradient.EndColor = 8553090
+            Frame.MiddleBrush.Gradient.MidColor = clWhite
+            Frame.MiddleBrush.Gradient.StartColor = clGray
+            Frame.MiddleBrush.Gradient.Visible = True
+            Frame.OuterBrush.BackColor = clGreen
+            Frame.OuterBrush.Gradient.EndColor = 4210752
+            Frame.OuterBrush.Gradient.MidColor = clWhite
+            Frame.OuterBrush.Gradient.StartColor = clSilver
+            Frame.OuterBrush.Gradient.Visible = True
+            Frame.Width = 4
+            MultiPie = mpConcentric
+            OtherSlice.Legend.Visible = False
+          end
+        end
+      end
+      object CardPanel7: TCardPanel
+        Left = 0
+        Top = 0
+        Width = 10
+        Height = 246
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 2
+        ExplicitHeight = 284
+      end
+      object CardPanel1: TCardPanel
+        Left = 930
+        Top = 0
+        Width = 10
+        Height = 246
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 3
+        ExplicitHeight = 284
+      end
+      object CardPanel2: TCardPanel
+        Left = 310
+        Top = 0
+        Width = 10
+        Height = 246
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 4
+        ExplicitHeight = 284
+      end
+      object CardPanel4: TCardPanel
+        Left = 620
+        Top = 0
+        Width = 10
+        Height = 246
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 5
+        ExplicitHeight = 284
+      end
+      object pnlHeader2Sub2: TPanel
+        Left = 320
+        Top = 0
+        Width = 300
+        Height = 246
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 6
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 284
+        object Chart2: TChart
+          Left = 2
+          Top = 2
+          Width = 296
+          Height = 242
+          BackWall.Pen.Visible = False
+          BottomWall.Brush.Gradient.EndColor = clSilver
+          BottomWall.Brush.Gradient.StartColor = clGray
+          BottomWall.Brush.Gradient.Visible = True
+          BottomWall.Pen.Color = clGray
+          BottomWall.Size = 4
+          Gradient.Direction = gdFromTopLeft
+          Gradient.EndColor = clWhite
+          Gradient.StartColor = clSilver
+          Gradient.Visible = True
+          LeftWall.Brush.Gradient.EndColor = clSilver
+          LeftWall.Brush.Gradient.StartColor = clGray
+          LeftWall.Brush.Gradient.Visible = True
+          LeftWall.Color = clWhite
+          LeftWall.Pen.Color = clGray
+          LeftWall.Size = 4
+          MarginBottom = 5
+          MarginLeft = 5
+          MarginRight = 5
+          MarginTop = 5
+          Title.Text.Strings = (
+            'TChart')
+          BottomAxis.Grid.Color = 14540253
+          BottomAxis.LabelsFormat.Font.Color = clGray
+          BottomAxis.LabelsFormat.Font.Height = -12
+          BottomAxis.LabelStyle = talValue
+          Frame.Visible = False
+          LeftAxis.Grid.Color = 14540253
+          LeftAxis.LabelsFormat.Font.Color = clGray
+          LeftAxis.LabelsFormat.Font.Height = -12
+          LeftAxis.LabelStyle = talValue
+          View3D = False
+          View3DOptions.Elevation = 315
+          View3DOptions.Orthogonal = False
+          View3DOptions.Perspective = 0
+          View3DOptions.Rotation = 360
+          Zoom.Animated = True
+          Align = alClient
+          BevelWidth = 2
+          Color = clWhite
+          TabOrder = 0
+          ExplicitHeight = 280
+          DefaultCanvas = 'TGDIPlusCanvas'
+          PrintMargins = (
+            15
+            35
+            15
+            35)
+          ColorPaletteIndex = 18
+          object Series4: TBarSeries
+            HoverElement = []
+            XValues.Name = 'X'
+            XValues.Order = loAscending
+            YValues.Name = 'Bar'
+            YValues.Order = loNone
+          end
+        end
+      end
+    end
+    object CardPanel3: TCardPanel
+      Left = 0
+      Top = 161
+      Width = 1271
+      Height = 10
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'CardPanel1'
+      TabOrder = 1
+      ExplicitTop = 155
+      ExplicitWidth = 1265
+    end
+    object CardPanel8: TCardPanel
+      Left = 0
+      Top = 0
+      Width = 1271
+      Height = 10
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'CardPanel1'
+      TabOrder = 2
+      ExplicitWidth = 1265
+    end
+    object pnlHeader1: TPanel
+      Left = 0
+      Top = 10
+      Width = 1271
+      Height = 151
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 3
+      object pnlHeaderSub1: TPanel
+        Left = 10
+        Top = 0
+        Width = 150
+        Height = 151
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 0
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 145
+        object pnlHeaderSub11: TPanel
+          Left = -4
+          Top = 44
+          Width = 150
+          Height = 58
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object RzLabel13: TRzLabel
+            Left = 0
+            Top = 20
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object RzLabel14: TRzLabel
+            Left = 0
+            Top = 35
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object Label7: TLabel
+            Left = 0
+            Top = 0
+            Width = 150
+            Height = 20
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Label1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -17
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 55
+          end
+        end
+      end
+      object pnlHeaderSub2: TPanel
+        Left = 170
+        Top = 0
+        Width = 150
+        Height = 151
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 1
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 145
+        object pnlHeaderSub22: TPanel
+          Left = -4
+          Top = 44
+          Width = 150
+          Height = 58
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object RzLabel15: TRzLabel
+            Left = 0
+            Top = 20
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object RzLabel16: TRzLabel
+            Left = 0
+            Top = 35
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object Label8: TLabel
+            Left = 0
+            Top = 0
+            Width = 150
+            Height = 20
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Label1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -17
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 55
+          end
+        end
+      end
+      object CardPanel9: TCardPanel
+        Left = 320
+        Top = 0
+        Width = 10
+        Height = 151
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 2
+        ExplicitHeight = 145
+      end
+      object CardPanel10: TCardPanel
+        Left = 160
+        Top = 0
+        Width = 10
+        Height = 151
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 3
+        ExplicitHeight = 145
+      end
+      object pnlHeaderSub3: TPanel
+        Left = 330
+        Top = 0
+        Width = 150
+        Height = 151
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 4
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 145
+        object pnlHeaderSub33: TPanel
+          Left = -4
+          Top = 44
+          Width = 150
+          Height = 58
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object RzLabel17: TRzLabel
+            Left = 0
+            Top = 20
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object RzLabel18: TRzLabel
+            Left = 0
+            Top = 35
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object Label9: TLabel
+            Left = 0
+            Top = 0
+            Width = 150
+            Height = 20
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Label1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -17
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 55
+          end
+        end
+      end
+      object pnlHeaderSub6: TPanel
+        Left = 810
+        Top = 0
+        Width = 150
+        Height = 151
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 5
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 145
+        object pnlHeaderSub66: TPanel
+          Left = -4
+          Top = 44
+          Width = 150
+          Height = 58
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object RzLabel19: TRzLabel
+            Left = 0
+            Top = 20
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object RzLabel20: TRzLabel
+            Left = 0
+            Top = 35
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object Label10: TLabel
+            Left = 0
+            Top = 0
+            Width = 150
+            Height = 20
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Label1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -17
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 55
+          end
+        end
+      end
+      object CardPanel11: TCardPanel
+        Left = 640
+        Top = 0
+        Width = 10
+        Height = 151
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 6
+        ExplicitHeight = 145
+      end
+      object pnlHeaderSub5: TPanel
+        Left = 650
+        Top = 0
+        Width = 150
+        Height = 151
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 7
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 145
+        object pnlHeaderSub55: TPanel
+          Left = -4
+          Top = 44
+          Width = 150
+          Height = 58
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object RzLabel21: TRzLabel
+            Left = 0
+            Top = 20
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object RzLabel22: TRzLabel
+            Left = 0
+            Top = 35
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object Label11: TLabel
+            Left = 0
+            Top = 0
+            Width = 150
+            Height = 20
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Label1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -17
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 55
+          end
+        end
+      end
+      object CardPanel12: TCardPanel
+        Left = 480
+        Top = 0
+        Width = 10
+        Height = 151
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 8
+        ExplicitHeight = 145
+      end
+      object pnlHeaderSub4: TPanel
+        Left = 490
+        Top = 0
+        Width = 150
+        Height = 151
+        Align = alLeft
+        BevelInner = bvRaised
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 9
+        VerticalAlignment = taAlignBottom
+        ExplicitHeight = 145
+        object pnlHeaderSub44: TPanel
+          Left = -4
+          Top = 44
+          Width = 150
+          Height = 58
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object RzLabel23: TRzLabel
+            Left = 0
+            Top = 20
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object RzLabel24: TRzLabel
+            Left = 0
+            Top = 35
+            Width = 150
+            Height = 15
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'RzLabel1'
+            ExplicitWidth = 46
+          end
+          object Label12: TLabel
+            Left = 0
+            Top = 0
+            Width = 150
+            Height = 20
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Label1'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clLime
+            Font.Height = -17
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 55
+          end
+        end
+      end
+      object CardPanel13: TCardPanel
+        Left = 800
+        Top = 0
+        Width = 10
+        Height = 151
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 10
+        ExplicitHeight = 145
+      end
+      object CardPanel14: TCardPanel
+        Left = 0
+        Top = 0
+        Width = 10
+        Height = 151
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'CardPanel1'
+        TabOrder = 11
+        ExplicitHeight = 145
+      end
+    end
+    object WebBrowser1: TWebBrowser
+      Left = 0
+      Top = 417
+      Width = 1271
+      Height = 286
+      Align = alClient
+      TabOrder = 4
+      ExplicitTop = 449
+      ExplicitHeight = 240
+      ControlData = {
+        4C00000017690000A61700000000000000000000000000000000000000000000
+        000000004C000000000000000000000001000000E0D057007335CF11AE690800
+        2B2E126208000000000000004C0000000114020000000000C000000000000046
+        8000000000000000000000000000000000000000000000000000000000000000
+        00000000000000000100000000000000000000000000000000000000}
+    end
   end
 end

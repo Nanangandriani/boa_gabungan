@@ -265,6 +265,7 @@ object FPermintaan_Barang2: TFPermintaan_Barang2
     end
     object dxBarBaru: TdxBarLargeButton
       Action = ActBaru
+      Caption = 'New  '
       Category = 0
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -574,12 +575,12 @@ object FPermintaan_Barang2: TFPermintaan_Barang2
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.*,b.item_name,c.wh_name,d.item_name type_name from ware' +
-        'house.t_item_request2 A inner join warehouse.t_item_stock B '
+        'select A.*,b.item_name,c.wh_name,d.item_name type_name from t_it' +
+        'em_request2 A inner join t_item_stock B '
       
         'on A.item_stock_code=B.item_stock_code INNER JOIN t_wh c on a.wh' +
-        '_code=c.wh_code inner join warehouse.t_item_stock d on a.trans_t' +
-        'ype=d.item_stock_code'
+        '_code=c.wh_code inner join t_item_stock d on a.trans_type=d.item' +
+        '_stock_code'
       'order by A.request_no desc')
     Left = 448
     Top = 32
