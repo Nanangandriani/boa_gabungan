@@ -21,10 +21,8 @@ object FNew_PO: TFNew_PO
     Height = 243
     Align = alTop
     TabOrder = 0
-<<<<<<< Updated upstream
     ExplicitWidth = 1204
-=======
->>>>>>> Stashed changes
+
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -689,10 +687,7 @@ object FNew_PO: TFNew_PO
     Height = 139
     Align = alTop
     TabOrder = 1
-<<<<<<< Updated upstream
     ExplicitWidth = 1204
-=======
->>>>>>> Stashed changes
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -864,11 +859,8 @@ object FNew_PO: TFNew_PO
     Height = 32
     Align = alClient
     TabOrder = 2
-<<<<<<< Updated upstream
     ExplicitWidth = 1204
     ExplicitHeight = 24
-=======
->>>>>>> Stashed changes
     object BBatal: TRzBitBtn
       Left = 1134
       Top = 1
@@ -1078,10 +1070,7 @@ object FNew_PO: TFNew_PO
     Height = 265
     Align = alTop
     TabOrder = 3
-<<<<<<< Updated upstream
     ExplicitWidth = 1204
-=======
->>>>>>> Stashed changes
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1

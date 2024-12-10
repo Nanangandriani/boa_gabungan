@@ -180,7 +180,6 @@ uses
   UPengajuan_Approval_Pembelian in 'UPengajuan_Approval_Pembelian.pas' {FListPengajuanApprovePembelian},
   URpt_Jurnal_Khusus in 'URpt_Jurnal_Khusus.pas' {FRpt_Jurnal_Khusus},
   URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
-  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
   U_daftar_hutang in 'U_daftar_hutang.pas' {FDaftar_Hutang},
   U_daftar_Nocek in 'U_daftar_Nocek.pas' {Fdaftar_nocek},
   udafajuankeluarkasbank in 'udafajuankeluarkasbank.pas' {Fdafajuankeluarkasbank},
@@ -213,7 +212,8 @@ uses
   URpt_NeracaLajur in 'URpt_NeracaLajur.pas' {FRpt_NeracaLajur},
   URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca},
   UMy_Function in 'UMy_Function.pas',
-  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank};
+  UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
+  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas';
 
 // UMy_Function in 'UMy_Function.pas';
 

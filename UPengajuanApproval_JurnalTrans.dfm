@@ -25,19 +25,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Align = alClient
     TabIndex = 1
     TabOrder = 0
-<<<<<<< Updated upstream
-    ExplicitWidth = 894
-    ExplicitHeight = 433
-    FixedDimension = 21
-    object TabPembelian: TRzTabSheet
-      Caption = 'Pembelian'
-      ExplicitWidth = 902
-=======
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
       ExplicitWidth = 900
->>>>>>> Stashed changes
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 105
@@ -129,7 +120,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           object DBGridEh3: TDBGridEh
             Left = 0
             Top = 0
-            Width = 859
+            Width = 855
             Height = 118
             Align = alClient
             DataSource = Ds_DetailPembelian
@@ -196,11 +187,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-<<<<<<< Updated upstream
-        ExplicitWidth = 902
-=======
         ExplicitWidth = 900
->>>>>>> Stashed changes
         object Label1: TLabel
           Left = 40
           Top = 27
@@ -238,6 +225,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
+          ExplicitWidth = 890
           object BTampil_Pemb: TRzBitBtn
             Left = 522
             Top = 1
@@ -299,6 +287,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 518
           end
           object BSelect_Pemb: TRzBitBtn
             Left = 616
@@ -361,6 +350,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 612
           end
           object BApp_Pemb: TRzBitBtn
             Left = 714
@@ -423,6 +413,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 710
           end
           object BPrint_Pemb: TRzBitBtn
             Left = 799
@@ -485,18 +476,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 795
           end
         end
       end
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
-<<<<<<< Updated upstream
-      ExplicitWidth = 890
-      ExplicitHeight = 408
-=======
       ExplicitWidth = 900
->>>>>>> Stashed changes
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 106
@@ -644,11 +631,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-<<<<<<< Updated upstream
-        ExplicitWidth = 890
-=======
         ExplicitWidth = 900
->>>>>>> Stashed changes
         object Label3: TLabel
           Left = 27
           Top = 30
@@ -723,7 +706,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 4
-          ExplicitWidth = 888
+          ExplicitTop = 84
           object BTampil_Penj: TRzBitBtn
             Left = 522
             Top = 1
@@ -785,7 +768,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 516
           end
           object Bselect_Penj: TRzBitBtn
             Left = 616
@@ -848,7 +830,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 610
           end
           object BApp_Penj: TRzBitBtn
             Left = 714
@@ -911,7 +892,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 708
           end
           object BPrint_Penj: TRzBitBtn
             Left = 799
@@ -974,18 +954,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 793
           end
         end
       end
     end
     object TabKas: TRzTabSheet
       Caption = 'Kas && Bank'
-<<<<<<< Updated upstream
-      ExplicitWidth = 902
-=======
       ExplicitWidth = 900
->>>>>>> Stashed changes
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -995,11 +970,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-<<<<<<< Updated upstream
-        ExplicitWidth = 902
-=======
         ExplicitWidth = 900
->>>>>>> Stashed changes
         object Label7: TLabel
           Left = 40
           Top = 56

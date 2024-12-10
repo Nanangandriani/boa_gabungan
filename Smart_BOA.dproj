@@ -794,9 +794,6 @@
             <Form>FRpt_BukuHarianPembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
-            <Form>FPengajuan_AppJurnal_Trans</Form>
-        </DCCReference>
         <DCCReference Include="U_daftar_hutang.pas">
             <Form>FDaftar_Hutang</Form>
             <FormType>dfm</FormType>
@@ -906,6 +903,7 @@
             <Form>FListPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
