@@ -92,7 +92,11 @@ end;
 procedure TFDashboard.FormShow(Sender: TObject);
 var
   wpnlHeader : Integer;
+  url : string;
 begin
+ url := 'https://app.powerbi.com/groups/me/list?experience=power-bi';
+ WebBrowser1.Navigate(url);
+
   //Header 1
   pnlHeader1.Width:=pnlUtama.Width;
   wpnlHeader:=pnlHeader1.Width-60;

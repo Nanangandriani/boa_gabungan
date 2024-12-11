@@ -34,6 +34,7 @@ object FDashboard: TFDashboard
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 1265
       object pnlHeader2Sub1: TPanel
         Left = 10
         Top = 0
@@ -45,7 +46,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 0
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 284
         object DBChart1: TDBChart
           Left = 2
           Top = 2
@@ -59,7 +59,6 @@ object FDashboard: TFDashboard
           View3DOptions.Rotation = 360
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 280
           DefaultCanvas = 'TGDIPlusCanvas'
           ColorPaletteIndex = 13
           object Series5: TPieSeries
@@ -99,7 +98,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 1
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 284
         object Chart3: TChart
           Left = 2
           Top = 2
@@ -145,7 +143,6 @@ object FDashboard: TFDashboard
           BevelWidth = 2
           Color = clWhite
           TabOrder = 0
-          ExplicitHeight = 280
           DefaultCanvas = 'TGDIPlusCanvas'
           ColorPaletteIndex = 18
           object PieSeries1: TPieSeries
@@ -237,7 +234,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 2
-        ExplicitHeight = 284
       end
       object CardPanel1: TCardPanel
         Left = 930
@@ -248,7 +244,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 3
-        ExplicitHeight = 284
       end
       object CardPanel2: TCardPanel
         Left = 310
@@ -259,7 +254,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 4
-        ExplicitHeight = 284
       end
       object CardPanel4: TCardPanel
         Left = 620
@@ -270,7 +264,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 5
-        ExplicitHeight = 284
       end
       object pnlHeader2Sub2: TPanel
         Left = 320
@@ -283,7 +276,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 6
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 284
         object Chart2: TChart
           Left = 2
           Top = 2
@@ -330,7 +322,6 @@ object FDashboard: TFDashboard
           BevelWidth = 2
           Color = clWhite
           TabOrder = 0
-          ExplicitHeight = 280
           DefaultCanvas = 'TGDIPlusCanvas'
           PrintMargins = (
             15
@@ -357,7 +348,6 @@ object FDashboard: TFDashboard
       BevelOuter = bvNone
       Caption = 'CardPanel1'
       TabOrder = 1
-      ExplicitTop = 155
       ExplicitWidth = 1265
     end
     object CardPanel8: TCardPanel
@@ -379,6 +369,7 @@ object FDashboard: TFDashboard
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 3
+      ExplicitWidth = 1265
       object pnlHeaderSub1: TPanel
         Left = 10
         Top = 0
@@ -390,7 +381,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 0
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 145
         object pnlHeaderSub11: TPanel
           Left = -4
           Top = 44
@@ -449,7 +439,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 1
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 145
         object pnlHeaderSub22: TPanel
           Left = -4
           Top = 44
@@ -506,7 +495,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 2
-        ExplicitHeight = 145
       end
       object CardPanel10: TCardPanel
         Left = 160
@@ -517,7 +505,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 3
-        ExplicitHeight = 145
       end
       object pnlHeaderSub3: TPanel
         Left = 330
@@ -530,7 +517,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 4
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 145
         object pnlHeaderSub33: TPanel
           Left = -4
           Top = 44
@@ -589,7 +575,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 5
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 145
         object pnlHeaderSub66: TPanel
           Left = -4
           Top = 44
@@ -646,7 +631,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 6
-        ExplicitHeight = 145
       end
       object pnlHeaderSub5: TPanel
         Left = 650
@@ -659,7 +643,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 7
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 145
         object pnlHeaderSub55: TPanel
           Left = -4
           Top = 44
@@ -716,7 +699,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 8
-        ExplicitHeight = 145
       end
       object pnlHeaderSub4: TPanel
         Left = 490
@@ -729,7 +711,6 @@ object FDashboard: TFDashboard
         ParentBackground = False
         TabOrder = 9
         VerticalAlignment = taAlignBottom
-        ExplicitHeight = 145
         object pnlHeaderSub44: TPanel
           Left = -4
           Top = 44
@@ -786,7 +767,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 10
-        ExplicitHeight = 145
       end
       object CardPanel14: TCardPanel
         Left = 0
@@ -797,7 +777,6 @@ object FDashboard: TFDashboard
         BevelOuter = bvNone
         Caption = 'CardPanel1'
         TabOrder = 11
-        ExplicitHeight = 145
       end
     end
     object WebBrowser1: TWebBrowser
@@ -807,8 +786,8 @@ object FDashboard: TFDashboard
       Height = 286
       Align = alClient
       TabOrder = 4
-      ExplicitTop = 449
-      ExplicitHeight = 240
+      ExplicitWidth = 1265
+      ExplicitHeight = 277
       ControlData = {
         4C00000017690000A61700000000000000000000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
