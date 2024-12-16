@@ -187,7 +187,7 @@ begin
        sql.Text:=' Select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 '+
                  ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
                  ' t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
-                 ' where spb_date>='+quotedstr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+''+
+            //     ' where spb_date>='+quotedstr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+''+
                  ' order by spb_no desc';
        ExecSQL;
      end;
@@ -203,7 +203,7 @@ begin
                  ' THEN ''APPROVE'' else ''REJECT''END) AS status_app,A.*, B.supplier_name from '+
                  ' t_spb a inner join t_supplier b on A.supplier_code=b.supplier_code '+
                  ' where (sbu_code='+QuotedStr(loksbu)+' or sbu_code=''MLB'' or sbu_code='''') '+
-                 ' and (spb_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+')'+
+             //    ' and (spb_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.Date))+' and spb_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.Date))+')'+
                  ' order by spb_no desc';
        ExecSQL;
      end;

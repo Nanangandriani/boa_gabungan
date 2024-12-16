@@ -2,8 +2,8 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   Left = 0
   Top = 0
   Caption = 'Form New Bon Permintaan Barang'
-  ClientHeight = 357
-  ClientWidth = 710
+  ClientHeight = 356
+  ClientWidth = 706
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   OnDestroy = FormDestroy
   OnShow = FormShow
   DesignSize = (
-    710
-    357)
+    706
+    356)
   TextHeight = 13
   object Label1: TLabel
     Left = 22
@@ -70,8 +70,8 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   object DBGridEh1: TDBGridEh
     Left = 8
     Top = 68
-    Width = 674
-    Height = 251
+    Width = 666
+    Height = 250
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoFitColWidths = True
     DataSource = DsMaterial
@@ -139,13 +139,11 @@ object FNew_BonPermtBarang: TFNew_BonPermtBarang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 325
-    Width = 710
+    Top = 324
+    Width = 706
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 324
-    ExplicitWidth = 706
     object BBatal: TRzBitBtn
       Left = 634
       Top = 1

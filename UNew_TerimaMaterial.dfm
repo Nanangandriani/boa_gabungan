@@ -20,6 +20,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 241
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 1022
     object Label1: TLabel
       Left = 24
       Top = 42
@@ -511,8 +512,10 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 488
+    ExplicitWidth = 1022
     object BBatal: TRzBitBtn
-      Left = 954
+      Left = 950
       Top = 1
       Height = 30
       Align = alRight
@@ -571,10 +574,10 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 950
+      ExplicitLeft = 946
     end
     object BSimpan: TRzBitBtn
-      Left = 879
+      Left = 875
       Top = 1
       Height = 30
       Align = alRight
@@ -633,10 +636,10 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 875
+      ExplicitLeft = 871
     end
     object BEdit: TRzBitBtn
-      Left = 804
+      Left = 800
       Top = 1
       Height = 30
       Align = alRight
@@ -694,7 +697,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 800
+      ExplicitLeft = 796
     end
     object BitBtn1: TBitBtn
       Left = 597
@@ -715,11 +718,13 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Align = alClient
     Color = 15987699
     TabOrder = 2
+    ExplicitWidth = 1022
+    ExplicitHeight = 247
     object DBGridDetailpo: TDBGridEh
       Left = 2
       Top = 2
-      Width = 1026
-      Height = 245
+      Width = 1022
+      Height = 244
       Align = alClient
       DataSource = DsTerimadet
       DynProps = <>

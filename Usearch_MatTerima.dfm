@@ -110,10 +110,10 @@ object FSearch_Matterima: TFSearch_Matterima
     Align = alBottom
     TabOrder = 2
     OnClick = Panel1Click
-    ExplicitTop = 276
-    ExplicitWidth = 582
+    ExplicitTop = 282
+    ExplicitWidth = 576
     object BBatal: TRzBitBtn
-      Left = 512
+      Left = 504
       Top = 1
       Height = 30
       Align = alRight
@@ -172,10 +172,10 @@ object FSearch_Matterima: TFSearch_Matterima
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 506
+      ExplicitLeft = 500
     end
     object BEdit: TRzBitBtn
-      Left = 437
+      Left = 429
       Top = 1
       Height = 30
       Align = alRight
@@ -234,8 +234,7 @@ object FSearch_Matterima: TFSearch_Matterima
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 431
-      ExplicitTop = 6
+      ExplicitLeft = 425
     end
     object BSelectAll: TRzBitBtn
       Left = 114
@@ -323,12 +322,10 @@ object FSearch_Matterima: TFSearch_Matterima
         'price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,b.' +
         'pph,'
       'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code'
-      'from warehouse.t_item_stock a '
-      
-        'inner join purchase.t_podetail b on a.item_stock_code=b.item_sto' +
-        'ck_code'
-      'inner join purchase.t_po C on b.po_no=c.po_no'
-      'left join  purchase.t_spb_det d on c.po_no=d.po_no'
+      'from t_item_stock a '
+      'inner join t_podetail b on a.item_stock_code=b.item_stock_code'
+      'inner join t_po C on b.po_no=c.po_no'
+      'left join  t_spb_det d on c.po_no=d.po_no'
       'inner join t_item e on a.item_code=e.item_code'
       'inner join t_wh f on b.wh_code=f.wh_code '
       

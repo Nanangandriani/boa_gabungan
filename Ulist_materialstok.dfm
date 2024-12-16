@@ -289,7 +289,7 @@ object Flistmaterialstok: TFlistmaterialstok
       'd.qty_unit,d.unit,d.qty_conv,d.unit_conv,c.buy,'
       'e.category,f."type",g.group_name  '
       ''
-      'from warehouse.t_item_stock a  '
+      'from t_item_stock a  '
       'inner join t_supplier b on a.supplier_code=b.supplier_code  '
       'inner join t_item c on a.item_code=c.item_code  '
       'inner join t_item_conversion d on a.item_code=d.item_code'

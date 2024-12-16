@@ -24,10 +24,10 @@ object FNew_Barang: TFNew_Barang
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 325
-    ExplicitWidth = 555
+    ExplicitTop = 332
+    ExplicitWidth = 553
     object BBatal: TRzBitBtn
-      Left = 485
+      Left = 481
       Top = 1
       Height = 39
       Align = alRight
@@ -86,10 +86,10 @@ object FNew_Barang: TFNew_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 479
+      ExplicitLeft = 477
     end
     object BSimpan: TRzBitBtn
-      Left = 410
+      Left = 406
       Top = 1
       Height = 39
       Align = alRight
@@ -148,7 +148,7 @@ object FNew_Barang: TFNew_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 404
+      ExplicitLeft = 402
     end
     object RzBitBtn1: TRzBitBtn
       Left = 83
@@ -280,21 +280,17 @@ object FNew_Barang: TFNew_Barang
     Width = 557
     Height = 333
     Hint = ''
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 555
-    ExplicitHeight = 325
+    ExplicitWidth = 553
+    ExplicitHeight = 332
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Umum'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 551
-      ExplicitHeight = 302
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -533,8 +529,6 @@ object FNew_Barang: TFNew_Barang
         Width = 553
         Height = 19
         Panels = <>
-        ExplicitTop = 283
-        ExplicitWidth = 551
       end
       object ck_st_penjualan: TCheckBox
         Left = 412
@@ -642,10 +636,8 @@ object FNew_Barang: TFNew_Barang
     object TabSheet3: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Akun'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 549
+      ExplicitHeight = 309
       object Label19: TLabel
         Left = 27
         Top = 28

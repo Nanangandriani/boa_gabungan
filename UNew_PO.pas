@@ -299,7 +299,7 @@ begin
    begin
       close;
       sql.Clear;
-      sql.Text:='select distinct trans_no from warehouse.t_item_request ';
+      sql.Text:='select distinct trans_no from t_item_request ';
       open;
    end;
    //cb_bon.Items.Clear;
@@ -531,7 +531,7 @@ begin
       Open;}
       close;
       sql.Clear;
-      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from warehouse.t_item_request_det a '+
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from t_item_request_det a '+
                 'LEFT JOIN t_item b on a.item_code=b.item_code '+
                 'WHERE trans_no='+Quotedstr(Cb_bon.Text)+'  '+
                 'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name ';
@@ -547,7 +547,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from warehouse.t_item_request_det a '+
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from t_item_request_det a '+
                 'LEFT JOIN t_item b on a.item_code=b.item_code '+
                 'WHERE trans_no='+Quotedstr(Cb_bon.Text)+' '+
                 'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name';
@@ -578,7 +578,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from warehouse.t_item_request_det a '+
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note from t_item_request_det a '+
                 'LEFT JOIN t_item b on a.item_code=b.item_code '+
                 'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
                 'WHERE trans_no='+Quotedstr(Cb_bon.Text)+'  '+
@@ -594,7 +594,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note,c.supplier_code from warehouse.t_item_request_det a '+
+      sql.Text:='SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note,c.supplier_code from t_item_request_det a '+
                 'LEFT JOIN t_item b on a.item_code=b.item_code '+
                 'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '+
                 'WHERE trans_no='+Quotedstr(Cb_bon.Text)+' and c.supplier_code='+Quotedstr(EdKd_supp.Text)+' '+
@@ -633,7 +633,7 @@ begin
       sql.Clear;
       sql.Text:=' SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.total_price,'+
                 ' a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal  FROM t_coop_contract_det AS "a" '+
-                ' INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
+                ' INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
                 ' where a.remaining_qty>0 and A.contract_no='+QuotedStr(Edno_kontrak.Text)+''+
                 ' GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit, '+
                 ' a.total_price, a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,ppn_rp,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal '+
@@ -672,7 +672,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' select A.*,B.supplier_name ,e."type", C.item_name from warehouse.t_item_stock A  '+
+      sql.Text:=' select A.*,B.supplier_name ,e."type", C.item_name from t_item_stock A  '+
                 ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
                 ' inner join t_item C on A.item_code=C.item_code  '+
                 ' INNER JOIN t_item_category d on c.category_id=d.category_id '+
@@ -692,7 +692,7 @@ begin
                 '	a.qty,a.unit, a.merk,a.item_name,	f.qty_conv, '+
                 //' f.unit_conv,b.supplier_name , c.item_name,e.type '+
                 ' b.supplier_name , c.item_name,e.type '+
-                ' from warehouse.t_item_stock A  '+
+                ' from t_item_stock A  '+
                 ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
                 ' inner join t_item C on A.item_code=C.item_code  '+
                 ' INNER JOIN t_item_category d on c.category_id=d.category_id '+
@@ -711,7 +711,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' select A.*,B.supplier_name , C.item_name,e.type from warehouse.t_item_stock A  '+
+      sql.Text:=' select A.*,B.supplier_name , C.item_name,e.type from t_item_stock A  '+
                 ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
                 ' inner join t_item C on A.item_code=C.item_code  '+
                 ' INNER JOIN t_item_category d on c.category_id=d.category_id '+
@@ -1016,7 +1016,7 @@ begin
         begin
             close;
             sql.Clear;
-            sql.Text:='select distinct trans_no from warehouse.t_item_request ';
+            sql.Text:='select distinct trans_no from t_item_request ';
             open;
         end;
         Edno_kontrak.Items.Clear;

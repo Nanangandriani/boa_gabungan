@@ -228,21 +228,21 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:='Update t_result_formula set persetujuan=''DISETUJUI'', tanggal=now(), approval='+QuotedStr(Nm)+' where noresult='+QuotedStr(DBGridResult.Fields[1].AsString);
+    sql.Text:='Update t_result_formula set agreement=''DISETUJUI'', trans_date=now(), approved_by='+QuotedStr(Nm)+' where result_no='+QuotedStr(DBGridResult.Fields[1].AsString);
     Execute;
   end;
   with dm.Qtemp do
   begin
     Close;
     sql.Clear;
-    sql.Text:='Update t_master_formula_test set status=''DISETUJUI'', tgl_approv=now(), approval='+QuotedStr(Nm)+' where no_formula='+QuotedStr(DBGridResult.Fields[3].AsString);
+    sql.Text:='Update t_master_formula_test set status=''DISETUJUI'', approved=now(), approved_by='+QuotedStr(Nm)+' where formula_no='+QuotedStr(DBGridResult.Fields[3].AsString);
     Execute;
   end;
   with dm.Qtemp do
   begin
     Close;
     sql.Clear;
-    sql.Text:='Update t_master_formula_test_det set status=''DISETUJUI'' where no_formula='+QuotedStr(DBGridResult.Fields[3].AsString);
+    sql.Text:='Update t_master_formula_test_det set status=''DISETUJUI'' where formula_no='+QuotedStr(DBGridResult.Fields[3].AsString);
     Execute;
   end;
   ActROExecute(sender);
@@ -258,21 +258,21 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='Update t_result_formula set persetujuan=''TIDAK DISETUJUI'', tanggal=now(), approval='+QuotedStr(Nm)+' where noresult='+QuotedStr(DBGridResult.Fields[1].AsString);
+      sql.Text:='Update t_result_formula set agreement=''TIDAK DISETUJUI'', trans_date=now(), approved_by='+QuotedStr(Nm)+' where result_no='+QuotedStr(DBGridResult.Fields[1].AsString);
       Execute;
     end;
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Update t_master_formula_test set status=''TIDAK DISETUJUI'', tgl_approv=now(), approval='+QuotedStr(Nm)+' where noresult='+QuotedStr(DBGridResult.Fields[3].AsString);
+      sql.Text:='Update t_master_formula_test set status=''TIDAK DISETUJUI'', trans_date=now(), approved_by='+QuotedStr(Nm)+' where result_no='+QuotedStr(DBGridResult.Fields[3].AsString);
       Execute;
     end;
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Update t_master_formula_test_det set status=''TIDAK DISETUJUI'' where no_formula='+QuotedStr(DBGridResult.Fields[3].AsString);
+      sql.Text:='Update t_master_formula_test_det set status=''TIDAK DISETUJUI'' where formula_no='+QuotedStr(DBGridResult.Fields[3].AsString);
       Execute;
     end;
   ActROExecute(sender);
@@ -287,7 +287,7 @@ begin
   with QRptMaster_formula do
   begin
     Filtered:=False;
-    Filter:=' no_spk='+QuotedStr(DBGridResult.Fields[0].AsString);
+    Filter:=' spk_no='+QuotedStr(DBGridResult.Fields[0].AsString);
     FilterOptions:=[];
     Filtered:=True;
   end;
@@ -297,7 +297,7 @@ begin
   with QResultBakar_Formula do
   begin
     Filtered:=False;
-    Filter:=' nospk='+QuotedStr(DBGridResult.Fields[0].AsString);
+    Filter:=' spk_no='+QuotedStr(DBGridResult.Fields[0].AsString);
     FilterOptions:=[];
     Filtered:=True;
   end;
@@ -307,7 +307,7 @@ begin
   with QRptResult do
   begin
     Filtered:=False;
-    Filter:=' nospk='+QuotedStr(DBGridResult.Fields[0].AsString);
+    Filter:=' spk_no='+QuotedStr(DBGridResult.Fields[0].AsString);
     FilterOptions:=[];
     Filtered:=True;
   end;

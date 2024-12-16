@@ -165,7 +165,7 @@ begin
 //  Edit1.Text:=
 {  idmenu:='M4103';
   strday2:=DtPeriode.Date;
-  Edit1.Text:=getNourutBlnPrshthn_kode(strday2,'warehouse.t_item_request','');
+  Edit1.Text:=getNourutBlnPrshthn_kode(strday2,'t_item_request','');
   Edno_urut.Text:=order_no;   }
 end;
 

@@ -381,7 +381,7 @@ begin
             begin
               close;
               sql.Clear;
-              sql.Text:='select * fromt_item_receive ';
+              sql.Text:='select * from t_item_receive ';
               ExecSQL;
             end;
             with dm.Qtemp do

@@ -173,7 +173,7 @@ object Flistitempo: TFlistitempo
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 556
+    ExplicitTop = 370
     ExplicitWidth = 579
     object BBatal: TRzBitBtn
       Left = 507
@@ -625,10 +625,10 @@ object Flistitempo: TFlistitempo
         'a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp' +
         ',a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal' +
         ' '
-      'FROM purchase.t_coop_contract_det AS "a"'
+      'FROM t_coop_contract_det AS "a"'
       
-        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
+        '_code'
       
         'GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.' +
         'total_price,'
@@ -653,9 +653,7 @@ object Flistitempo: TFlistitempo
     Connection = dm.Koneksi
     SQL.Strings = (
       ''
-      
-        'select A.*,B.supplier_name , C.item_name from warehouse.t_item_s' +
-        'tock A'
+      'select A.*,B.supplier_name , C.item_name from t_item_stock A'
       'left join t_supplier B on A.supplier_code=B.supplier_code '
       'inner join t_item C on A.item_code=C.item_code'
       'INNER JOIN t_item_category d on c.category_id=d.category_id '
@@ -715,7 +713,7 @@ object Flistitempo: TFlistitempo
     SQL.Strings = (
       
         'SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note fr' +
-        'om warehouse.t_item_request_det a '
+        'om t_item_request_det a '
       'LEFT JOIN t_item b on a.item_code=b.item_code'
       'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name;'
       '')
@@ -751,9 +749,9 @@ object Flistitempo: TFlistitempo
     SQL.Strings = (
       
         'SELECT a.trans_no,a.item_code,b.item_name,a.qty,a.unit,a.note,c.' +
-        'supplier_code from warehouse.t_item_request_det a '
+        'supplier_code from t_item_request_det a '
       'LEFT JOIN t_item b on a.item_code=b.item_code'
-      'LEFT JOIN warehouse.t_item_stock c on b.item_code=c.item_code '
+      'LEFT JOIN t_item_stock c on b.item_code=c.item_code '
       
         'GROUP BY a.trans_no,a.item_code,a.qty,a.unit,a.note,b.item_name,' +
         'c.supplier_code;'

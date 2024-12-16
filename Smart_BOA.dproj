@@ -175,10 +175,6 @@
             <Form>FCari_Barang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UBonPermt_Barang.pas">
-            <Form>FBonPermt_Barang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UNew_BonPermtBarang.pas">
             <Form>FNew_BonPermtBarang</Form>
             <FormType>dfm</FormType>
@@ -903,7 +899,9 @@
             <Form>FListPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas"/>
+        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
+            <Form>FPengajuan_AppJurnal_Trans</Form>
+        </DCCReference>
         <DCCReference Include="UDataListPelakuBiaya.pas">
             <Form>FDataListPelakuBiaya</Form>
             <FormType>dfm</FormType>
@@ -912,28 +910,52 @@
             <Form>FDataPeLakuBiaya</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UDataListKelompokBiaya.pas">
+            <Form>FDataListKelompokBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="UDataKelompokBiaya.pas">
             <Form>FDataKelompokBiaya</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDataListKelompokBiaya.pas">
-            <Form>FDataListKelompokBiaya</Form>
+        <DCCReference Include="UDataKasKecil.pas">
+            <Form>FDataKasKecil</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataKasBon.pas">
             <Form>FDataKasBon</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UListKasBon.pas">
-            <Form>FListKasBon</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UListKasKecil.pas">
             <Form>FListKasKecil</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDataKasKecil.pas">
-            <Form>FDataKasKecil</Form>
+        <DCCReference Include="UListKasBon.pas">
+            <Form>FListKasBon</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMaster_FormulaProd.pas">
+            <Form>FMaster_FormulaProd</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USPK_Produksi.pas">
+            <Form>FSPK_Produksi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBonPermt_Barang.pas">
+            <Form>FBonPermt_Barang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBon_Produksi.pas">
+            <Form>FBon_Produksi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBon_KmsnProd.pas">
+            <Form>FBon_Kmsn_prod</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UStokMat_Prod.pas">
+            <Form>FStokMat_Prod</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

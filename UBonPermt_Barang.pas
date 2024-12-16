@@ -168,7 +168,7 @@ begin
   close;
   sql.Clear;
   sql.Text:='select A.trans_date,a.sbu_code,c.item_name,b.*,a.created_by,a.app1,a.app2,d.ttd,e.ttd ttd2 from '+
-  ' warehouse.t_item_request a INNER JOIN warehouse.t_item_request_det b on a.trans_no=b.trans_no '+
+  ' t_item_request a INNER JOIN t_item_request_det b on a.trans_no=b.trans_no '+
   ' inner join t_item c on b.item_code=c.item_code LEFT JOIN t_user d on a.app1=d.code LEFT JOIN t_user e on a.app2=e.code'+
   ' where a.trans_no='+QuotedStr(MemPermt_Material['trans_no']);
   Execute;

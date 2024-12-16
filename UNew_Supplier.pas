@@ -362,6 +362,7 @@ begin
                     ParamByName('unit').AsString:=MemMaterial['satuan'];
                     ParamByName('item_name').AsString:=MemMaterial['nm_material'];
                     ParamByName('cr_by').AsString:=nm;
+                    ParamByName('order_no').Value:=Copy(MemMaterial['kd_material'], 1, Length(MemMaterial['kd_material']) - 4);
           ExecSQL;
         end;
           MemMaterial.Next;
@@ -448,6 +449,7 @@ begin
                     ParamByName('unit').AsString:=MemMaterial['satuan'];
                     ParamByName('item_name').AsString:=MemMaterial['nm_material'];
                     ParamByName('cr_by').AsString:=nm;
+                    ParamByName('order_no').Value:=Copy(MemMaterial['kd_material'], 1, Length(MemMaterial['kd_material']) - 4);
           ExecSQL;
         end;
           MemMaterial.Next;

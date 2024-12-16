@@ -176,7 +176,7 @@ begin
         begin
             close;
             sql.Clear;
-            sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
+            sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
                       ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
             ExecSQL;
         end;
@@ -222,7 +222,7 @@ begin
       sql.Text:=' SELECT a.*,b.account_name FROM t_item_category a '+
                 ' INNER JOIN t_ak_account b on a.account_code=b.code '+
                 ' INNER JOIN t_item c on a.category_id=c.category_id '+
-                ' INNER JOIN warehouse.t_item_stock d on c.item_code=d.item_code '+
+                ' INNER JOIN t_item_stock d on c.item_code=d.item_code '+
                 ' where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
       ExecSQL
     end;
@@ -282,7 +282,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
+      sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
                 ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial['item_stock_code']);
       ExecSQL;
     end;
@@ -307,7 +307,7 @@ begin
       sql.Text:=' SELECT a.*,b.account_name FROM t_item_category a '+
                 ' INNER JOIN t_ak_account b on a.account_code=b.code '+
                 ' INNER JOIN t_item c on a.category_id=c.category_id '+
-                ' INNER JOIN warehouse.t_item_stock d on c.item_code=d.item_code '+
+                ' INNER JOIN t_item_stock d on c.item_code=d.item_code '+
                 ' where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
       ExecSQL
     end;

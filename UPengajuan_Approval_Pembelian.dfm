@@ -26,7 +26,6 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 943
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -42,25 +41,20 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     Width = 939
     Height = 313
     Hint = ''
-    ActivePage = TabPO
+    ActivePage = Tabkontrak
     Align = alClient
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 133
-    ExplicitWidth = 943
-    ExplicitHeight = 314
+    ExplicitWidth = 935
+    ExplicitHeight = 312
     FixedDimension = 21
     object Tabkontrak: TRzTabSheet
       OnShow = TabkontrakShow
       Caption = 'Kontrak Kerjasama'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
-        Width = 939
+        Width = 935
         Height = 33
         Align = alTop
         Color = 15987699
@@ -68,7 +62,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         object Cbkontrak: TRzCheckBox
           Left = 852
           Top = 2
-          Width = 85
+          Width = 81
           Height = 29
           Align = alRight
           AlignmentVertical = avCenter
@@ -76,15 +70,15 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           State = cbUnchecked
           TabOrder = 0
           OnClick = CbkontrakClick
-          ExplicitLeft = 856
-          ExplicitHeight = 19
+          ExplicitLeft = 848
+          ExplicitHeight = 17
         end
       end
       object DBGridKontrak: TDBGridEh
         Left = 0
         Top = 33
-        Width = 939
-        Height = 256
+        Width = 935
+        Height = 255
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -215,7 +209,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           object DBGridEh3: TDBGridEh
             Left = 0
             Top = 0
-            Width = 879
+            Width = 875
             Height = 148
             Align = alClient
             DataSource = DsKerjasama_det
@@ -399,23 +393,18 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     object TabSheet2: TRzTabSheet
       TabVisible = False
       Caption = 'Uang Muka Pembelian'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 935
-      ExplicitHeight = 288
       object RzPanel4: TRzPanel
         Left = 0
         Top = 0
-        Width = 939
+        Width = 935
         Height = 33
         Align = alTop
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 935
         object Cb_Um: TRzCheckBox
           Left = 852
           Top = 2
-          Width = 85
+          Width = 81
           Height = 29
           Align = alRight
           AlignmentVertical = avCenter
@@ -423,15 +412,15 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           State = cbUnchecked
           TabOrder = 0
           OnClick = CbkontrakClick
-          ExplicitLeft = 856
-          ExplicitHeight = 19
+          ExplicitLeft = 848
+          ExplicitHeight = 17
         end
       end
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 33
-        Width = 939
-        Height = 256
+        Width = 935
+        Height = 255
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -470,20 +459,19 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     end
     object TabPO: TRzTabSheet
       Caption = 'PO'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 931
+      ExplicitHeight = 287
       object RzPanel2: TRzPanel
         Left = 0
         Top = 0
-        Width = 939
+        Width = 935
         Height = 33
         Align = alTop
         Color = 15987699
         TabOrder = 0
+        ExplicitWidth = 931
         object Cb_po: TRzCheckBox
-          Left = 852
+          Left = 848
           Top = 2
           Width = 85
           Height = 29
@@ -493,15 +481,15 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           State = cbUnchecked
           TabOrder = 0
           OnClick = Cb_poClick
-          ExplicitLeft = 856
+          ExplicitLeft = 852
           ExplicitHeight = 19
         end
       end
       object DBGridPO: TDBGridEh
         Left = 0
         Top = 33
-        Width = 939
-        Height = 256
+        Width = 935
+        Height = 255
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -629,8 +617,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           object DBGridEh1: TDBGridEh
             Left = 0
             Top = 0
-            Width = 879
-            Height = 141
+            Width = 875
+            Height = 140
             Align = alClient
             DataSource = DsDetailPo
             DynProps = <>
@@ -873,14 +861,10 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     end
     object TabSPB: TRzTabSheet
       Caption = 'SPB'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RzPanel3: TRzPanel
         Left = 0
         Top = 0
-        Width = 939
+        Width = 935
         Height = 33
         Align = alTop
         Color = 15987699
@@ -888,7 +872,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         object Cb_spb: TRzCheckBox
           Left = 852
           Top = 2
-          Width = 85
+          Width = 81
           Height = 29
           Align = alRight
           AlignmentVertical = avCenter
@@ -896,15 +880,15 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           State = cbUnchecked
           TabOrder = 0
           OnClick = CbkontrakClick
-          ExplicitLeft = 856
-          ExplicitHeight = 19
+          ExplicitLeft = 848
+          ExplicitHeight = 17
         end
       end
       object DBGridSPB: TDBGridEh
         Left = 0
         Top = 33
-        Width = 939
-        Height = 256
+        Width = 935
+        Height = 255
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -1900,15 +1884,14 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         ' '#39#39' no_result,'#39#39' kt,a.trans_year Tahun,a.trans_month Bulan,a.tra' +
         'ns_day Tanggal from '
       
-        ' (select a.*,b.supplier_code,b.supplier_name from purchase. t_co' +
-        'op_contract a '
+        ' (select a.*,b.supplier_code,b.supplier_name from t_coop_contrac' +
+        't a '
       
         ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ORDE' +
         'R BY contract_no ASC) a '
       
         ' INNER JOIN LATERAL(SELECT sum(total_price)as harga,contract_no ' +
-        'from purchase.t_coop_contract_det WHERE contract_no=a.contract_n' +
-        'o '
+        'from t_coop_contract_det WHERE contract_no=a.contract_no '
       
         ' GROUP BY contract_no ORDER BY contract_no ASC) as t on 1=1 WHER' +
         'E a."approval_status"=0 and a."status"='#39'1'#39' order by a.id')
@@ -1929,10 +1912,10 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       
         'd.category,a.ppn,a.ppn_rp,a."specification",a.subtotal_rp,a.gran' +
         'dtotal,a.pemb_ppn,a.pph,a.pph_rp,a.detail_id'
-      'FROM purchase.t_coop_contract_det AS "a"'
+      'FROM t_coop_contract_det AS "a"'
       
-        'INNER JOIN warehouse.t_item_stock AS b'#9'ON a.item_stock_code = b.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS b'#9'ON a.item_stock_code = b.item_stock' +
+        '_code'
       'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
       'INNER JOIN t_item_category d ON c.category_id=d.category_id '
       
@@ -1971,10 +1954,10 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         'a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,'
       '        a.status,a.grandtotal'
       '        ,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum'
-      'FROM purchase.t_podetail AS "a" '
+      'FROM t_podetail AS "a" '
       
-        'INNER JOIN warehouse.t_item_stock AS b ON a.item_stock_code = b.' +
-        'item_stock_code'
+        'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
+        '_code'
       'INNER JOIN t_item AS "c" ON b.item_code = c.item_code'
       'INNER JOIN t_wh d on a.wh_code=d.wh_code  '
       
@@ -2011,11 +1994,11 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         'delivery_date,t.harga,'#39#39' no_result,'#39#39' ket '
       
         ',a.trans_year Tahun,a.trans_month Bulan,a.trans_day Tanggal from' +
-        ' purchase.t_po a INNER JOIN t_supplier b on a.supplier_code=b.su' +
-        'pplier_code '
+        ' t_po a INNER JOIN t_supplier b on a.supplier_code=b.supplier_co' +
+        'de '
       
-        'INNER JOIN LATERAL(SELECT sum(subtotal)as harga,po_no from purch' +
-        'ase.t_podetail WHERE po_no=a.po_no GROUP BY po_no) as t on 1=1'
+        'INNER JOIN LATERAL(SELECT sum(subtotal)as harga,po_no from t_pod' +
+        'etail WHERE po_no=a.po_no GROUP BY po_no) as t on 1=1'
       
         'WHERE a."approval_status"=0 and a."status"='#39'1'#39' order by a.po_dat' +
         'e,a.po_no asc'
@@ -2062,10 +2045,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         'de'
       
         'SELECT a.spb_no,a.po_no,a.status,a.item_stock_code,a.qty,a.unit,' +
-        'a.wh_code,wh_name,b.item_name  from purchase.t_spb_det a '
-      
-        'inner join warehouse.t_item_stock b on b.item_stock_code=a.item_' +
-        'stock_code'
+        'a.wh_code,wh_name,b.item_name from t_spb_det a '
+      'inner join t_item_stock b on b.item_stock_code=a.item_stock_code'
       'inner join t_wh c on a.wh_code=c.wh_code')
     MasterSource = DsSPB
     Left = 484
@@ -2079,8 +2060,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         ' Select (case WHEN a."approval_status"=0 THEN '#39'PENGAJUAN'#39' WHEN a' +
         '."approval_status"=1 THEN '#39'APPROVE'#39' else '#39'REJECT'#39' '
       
-        'END) AS status_app,A.*, B.supplier_name from purchase.t_spb a in' +
-        'ner join t_supplier b on A.supplier_code=b.supplier_code'
+        'END) AS status_app,A.*, B.supplier_name from t_spb a inner join ' +
+        't_supplier b on A.supplier_code=b.supplier_code'
       'where a."approval_status"=0 '
       'order by spb_no desc'
       '')

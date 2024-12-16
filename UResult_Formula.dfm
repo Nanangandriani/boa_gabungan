@@ -20,10 +20,10 @@ object FResult_Formula: TFResult_Formula
     Left = 0
     Top = 0
     Width = 1071
-    Height = 124
+    Height = 126
     BarManager = dxBarManager1
     Style = rs2010
-    ColorSchemeName = 'DevExpressStyle'
+    ColorSchemeName = 'Office2010Blue'
     Contexts = <>
     TabOrder = 0
     TabStop = False
@@ -47,9 +47,9 @@ object FResult_Formula: TFResult_Formula
   end
   object DBGridResult: TDBGridEh
     Left = 0
-    Top = 124
+    Top = 126
     Width = 1071
-    Height = 397
+    Height = 395
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -292,7 +292,7 @@ object FResult_Formula: TFResult_Formula
     object dxBarManager1Bar2: TdxBar
       Caption = 'Laporan'
       CaptionButtons = <>
-      DockedLeft = 124
+      DockedLeft = 129
       DockedTop = 0
       FloatLeft = 1109
       FloatTop = 8

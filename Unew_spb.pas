@@ -158,7 +158,7 @@ begin
          ' d.wh_name,c.item_name,a.supplier_code,a.sbu_code,a.approval_status from (select a.*,'+
          ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from t_po a left join t_purchase_invoice b on a.po_no=b.ref_no)  a '+
          ' INNER JOIN t_podetail b on a.po_no=b.po_no '+
-         ' inner join warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code  '+
+         ' inner join t_item_stock c on b.item_stock_code=c.item_stock_code  '+
          ' INNER JOIN t_wh d on d.wh_code=a.wh_code where b.remaining_sp <>0 and a.approval_status=''1'''+
          ' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND trans_category='+QuotedStr(CbCategori.Text)+' ';
          Open;
@@ -174,7 +174,7 @@ begin
          ' d.wh_name,c.item_name,a.supplier_code,a.sbu_code,a.approval_status from (select a.*,'+
          ' case when b.ref_no<>'''' then ''1'' else ''0'' end statusby from t_po a left join t_purchase_invoice b on a.po_no=b.ref_no)  a '+
          ' INNER JOIN t_podetail b on a.po_no=b.po_no '+
-         ' inner join warehouse.t_item_stock c on b.item_stock_code=c.item_stock_code  '+
+         ' inner join t_item_stock c on b.item_stock_code=c.item_stock_code  '+
          ' INNER JOIN t_wh d on d.wh_code=a.wh_code where b.remaining_sp <>0 and a.approval_status=''1'''+
          ' AND a.supplier_code='+QuotedStr(Edkd_supp.Text)+' AND trans_category='+QuotedStr(CbCategori.Text)+' and a.sbu_code='+QuotedStr(loksbu);
          Open;

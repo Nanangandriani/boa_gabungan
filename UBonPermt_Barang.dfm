@@ -2,8 +2,8 @@ object FBonPermt_Barang: TFBonPermt_Barang
   Left = 0
   Top = 0
   Caption = 'Form Bon Permintaan Barang'
-  ClientHeight = 465
-  ClientWidth = 714
+  ClientHeight = 463
+  ClientWidth = 706
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FBonPermt_Barang: TFBonPermt_Barang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 714
+    Width = 706
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,6 +26,7 @@ object FBonPermt_Barang: TFBonPermt_Barang
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 710
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -45,8 +46,8 @@ object FBonPermt_Barang: TFBonPermt_Barang
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 714
-    Height = 338
+    Width = 706
+    Height = 336
     Align = alClient
     AutoFitColWidths = True
     DataGrouping.Active = True

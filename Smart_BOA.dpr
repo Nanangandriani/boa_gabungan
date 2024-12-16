@@ -22,7 +22,6 @@ uses
   UBarang_Stok in 'UBarang_Stok.pas' {FBarang_Stok},
   UNew_Barang_Stok in 'UNew_Barang_Stok.pas' {FNew_Barang_stok},
   UCari_Barang in 'UCari_Barang.pas' {FCari_Barang},
-  UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
   UNew_BonPermtBarang in 'UNew_BonPermtBarang.pas' {FNew_BonPermtBarang},
   UItem_Type in 'UItem_Type.pas' {FItem_Type},
   UNew_ItemType in 'UNew_ItemType.pas' {FNew_ItemType},
@@ -213,15 +212,21 @@ uses
   URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca},
   UMy_Function in 'UMy_Function.pas',
   UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
-  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas',
+  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
   UDataListPelakuBiaya in 'UDataListPelakuBiaya.pas' {FDataListPelakuBiaya},
   UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya},
-  UDataKelompokBiaya in 'UDataKelompokBiaya.pas' {FDataKelompokBiaya},
   UDataListKelompokBiaya in 'UDataListKelompokBiaya.pas' {FDataListKelompokBiaya},
+  UDataKelompokBiaya in 'UDataKelompokBiaya.pas' {FDataKelompokBiaya},
+  UDataKasKecil in 'UDataKasKecil.pas' {FDataKasKecil},
   UDataKasBon in 'UDataKasBon.pas' {FDataKasBon},
-  UListKasBon in 'UListKasBon.pas' {FListKasBon},
   UListKasKecil in 'UListKasKecil.pas' {FListKasKecil},
-  UDataKasKecil in 'UDataKasKecil.pas' {FDataKasKecil};
+  UListKasBon in 'UListKasBon.pas' {FListKasBon},
+  UMaster_FormulaProd in 'UMaster_FormulaProd.pas' {FMaster_FormulaProd},
+  USPK_Produksi in 'USPK_Produksi.pas' {FSPK_Produksi},
+  UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
+  UBon_Produksi in 'UBon_Produksi.pas' {FBon_Produksi},
+  UBon_KmsnProd in 'UBon_KmsnProd.pas' {FBon_Kmsn_prod},
+  UStokMat_Prod in 'UStokMat_Prod.pas' {FStokMat_Prod};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -338,6 +343,14 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListKasBon, FListKasBon);
   Application.CreateForm(TFListKasKecil, FListKasKecil);
   Application.CreateForm(TFDataKasKecil, FDataKasKecil);
+  Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
+  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
+  Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
+  Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
+  Application.CreateForm(TFDataKasKecil, FDataKasKecil);
+  Application.CreateForm(TFDataKasBon, FDataKasBon);
+  Application.CreateForm(TFListKasKecil, FListKasKecil);
+  Application.CreateForm(TFListKasBon, FListKasBon);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

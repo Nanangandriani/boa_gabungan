@@ -1,0 +1,1823 @@
+object FBon_Produksi: TFBon_Produksi
+  Left = 0
+  Top = 0
+  Caption = 'Form Bon Produksi'
+  ClientHeight = 560
+  ClientWidth = 1287
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  TextHeight = 13
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 1287
+    Height = 127
+    BarManager = dxBarManager1
+    Style = rs2010
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 0
+    TabStop = False
+    object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
+      Caption = 'Home'
+      Groups = <
+        item
+          ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar3'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar4'
+        end>
+      Index = 0
+    end
+  end
+  object DBGridBonFormula: TDBGridEh
+    Left = 0
+    Top = 162
+    Width = 1287
+    Height = 398
+    Align = alClient
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_0_bulan'
+      end
+      item
+        ColumnName = 'Column_3_no_spk_prod'
+      end
+      item
+        ColumnName = 'Column_4_tgl_bon'
+      end>
+    DataSource = DsBonProduksi
+    DynProps = <>
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    RowDetailPanel.Active = True
+    RowDetailPanel.Height = 200
+    SearchPanel.Enabled = True
+    TabOrder = 1
+    OnCellClick = DBGridBonFormulaCellClick
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bulan'
+        Footers = <>
+        Title.Caption = 'Bulan'
+        Width = 63
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_bon'
+        Footers = <>
+        Title.Caption = 'No. Bon'
+        Width = 176
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_formula'
+        Footers = <>
+        Title.Caption = 'No. Formula'
+        Width = 197
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_spk_prod'
+        Footers = <>
+        Title.Caption = 'No. SPK Produksi'
+        Width = 205
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'tgl_bon'
+        Footers = <>
+        Title.Caption = 'Tanggal'
+        Width = 132
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'mc'
+        Footers = <>
+        Title.Caption = 'Mesin'
+        Width = 90
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'shift'
+        Footers = <>
+        Title.Caption = 'Group'
+        Visible = False
+        Width = 112
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jmlh_timbang'
+        Footers = <>
+        Title.Caption = 'Jumlah Timbang'
+        Width = 123
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jmlh_karton'
+        Footers = <>
+        Title.Caption = 'Jumlah Karton'
+        Visible = False
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'status'
+        Footers = <>
+        Title.Caption = 'Status'
+        Width = 142
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+      object RzPageControl1: TRzPageControl
+        Left = 0
+        Top = 0
+        Width = 1115
+        Height = 198
+        Hint = ''
+        ActivePage = TabBaku
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        FixedDimension = 19
+        object TabBaku: TRzTabSheet
+          Caption = 'Bahan Tepung'
+          object DBGridBaku: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 1111
+            Height = 175
+            Align = alClient
+            DataSource = DsBaku
+            DynProps = <>
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_material_stok'
+                Footers = <>
+                Title.Caption = 'Kode Barang'
+                Width = 60
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'nm_material'
+                Footers = <>
+                Title.Caption = 'Nama Barang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'nm_supplier'
+                Footers = <>
+                Title.Caption = 'Supplier'
+                Width = 200
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_stok'
+                Footers = <>
+                Title.Caption = 'Kode Stok'
+                Width = 150
+              end
+              item
+                Alignment = taRightJustify
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'index'
+                Footers = <>
+                Title.Caption = 'Permintaan|Index'
+                Width = 80
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ttlberat'
+                Footers = <>
+                Title.Caption = 'Permintaan|Total'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'satuan'
+                Footers = <>
+                Title.Caption = 'Index|Satuan'
+                Visible = False
+                Width = 49
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qtyperkemasan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Berat(@)'
+                Width = 79
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalkemasan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Total'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'gudang'
+                Footers = <>
+                Title.Caption = 'Gudang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'gudangtransit'
+                Footers = <>
+                Title.Caption = 'Gudang Transit'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalberi'
+                Footers = <>
+                Title.Caption = 'Total Diberikan'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalterima'
+                Footers = <>
+                Title.Caption = 'Total Terima'
+                Width = 100
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+        object TabKimia: TRzTabSheet
+          Caption = 'Bahan Kimia'
+          object DBGridKimia: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 1111
+            Height = 175
+            Align = alClient
+            DataSource = DsKimia
+            DynProps = <>
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_material_stok'
+                Footers = <>
+                Title.Caption = 'Kode Barang'
+                Width = 60
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'nm_material'
+                Footers = <>
+                Title.Caption = 'Nama Barang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'nm_supplier'
+                Footers = <>
+                Title.Caption = 'Supplier'
+                Width = 200
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_stok'
+                Footers = <>
+                Title.Caption = 'Kode Stok'
+                Width = 150
+              end
+              item
+                Alignment = taRightJustify
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'index'
+                Footers = <>
+                Title.Caption = 'Permintaan|Index'
+                Width = 66
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ttlberat'
+                Footers = <>
+                Title.Caption = 'Permintaan|Total'
+                Width = 96
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'satuan'
+                Footers = <>
+                Title.Caption = 'Index|Satuan'
+                Visible = False
+                Width = 61
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qtyperkemasan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Berat(@)'
+                Width = 92
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalkemasan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Total'
+                Width = 97
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'gudang'
+                Footers = <>
+                Title.Caption = 'Gudang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'gudangtransit'
+                Footers = <>
+                Title.Caption = 'Gudang Transit'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalberi'
+                Footers = <>
+                Title.Caption = 'Total Diberikan'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalterima'
+                Footers = <>
+                Title.Caption = 'Total Terima'
+                Width = 100
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+        object TabKemasan: TRzTabSheet
+          TabVisible = False
+          Caption = 'Bahan Kemasan'
+          ParentShowHint = False
+          ShowHint = False
+          object DBGridKemasan: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 1111
+            Height = 175
+            Align = alClient
+            DataSource = DsKemasan
+            DynProps = <>
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+            OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_material_stok'
+                Footers = <>
+                Title.Caption = 'Kode Barang'
+                Width = 60
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'nm_material'
+                Footers = <>
+                Title.Caption = 'Nama Barang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <
+                  item
+                  end>
+                FieldName = 'nm_supplier'
+                Footers = <>
+                Title.Caption = 'Supplier'
+                Width = 200
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_supplier'
+                Footers = <>
+                Visible = False
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd_stok'
+                Footers = <>
+                Title.Caption = 'Kode Stok'
+                Width = 150
+              end
+              item
+                Alignment = taRightJustify
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'index2'
+                Footers = <>
+                PickList.Strings = (
+                  '1/320'
+                  '1/430')
+                Title.Caption = 'Permintaan|Index'
+                Width = 55
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'ttlberat'
+                Footers = <>
+                Title.Caption = 'Permintaan|Total'
+                Width = 70
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'qtyperkemasan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Berat(@)'
+                Width = 70
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalkemasan'
+                Footers = <>
+                Title.Caption = 'Karung/Botol|Jumlah'
+                Width = 70
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'gudang'
+                Footers = <>
+                Title.Caption = 'Gudang'
+                Width = 60
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'gudangtransit'
+                Footers = <>
+                Title.Caption = 'Gudang Transit'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalberi'
+                Footers = <>
+                Title.Caption = 'Total Diberikan'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '0.00#,##'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'totalterima'
+                Footers = <>
+                Title.Caption = 'Total Diterima'
+                Width = 100
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 127
+    Width = 1287
+    Height = 35
+    Align = alTop
+    TabOrder = 2
+    ExplicitTop = 124
+    ExplicitWidth = 1283
+    object Label1: TLabel
+      Left = 19
+      Top = 9
+      Width = 38
+      Height = 13
+      Caption = 'Tanggal'
+    end
+    object DtTgl: TRzDateTimeEdit
+      Left = 75
+      Top = 6
+      Width = 121
+      Height = 21
+      EditType = etDate
+      TabOrder = 0
+    end
+    object Bcari: TRzBitBtn
+      Left = 202
+      Top = 5
+      Caption = 'Cari'
+      TabOrder = 1
+      OnClick = BcariClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000730E0000730E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8B4D8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E281E8E8E8E8E8E8E8E8E8E8E8E8E8
+        B46C6CD8E8E8E8E8E8E8E8E8E8E8E8E8E2818181E8E8E8E8E8E8E8E8E8E8E8E8
+        B46CD86CD8E8E8E8E8E8E8E8E8E8E8E8E281818181E8E8E8E8E8E8E8E8E8E8E8
+        B46C6CD86CD8E8E8E8E8E8E8E8E8E8E8E28181818181E8E8E8E8E8E8E8E8E8D7
+        5E6C6C6CB46CD8E8E8E8E8E8E8E8E8D781818181E28181E8E8E8E8E8E8E8E8D7
+        89896CB4B4B46CD8E8E8E8E8E8E8E8D7ACAC81E2E2E28181E8E8E8E8E8E8D789
+        89D7D7B4C7C7C76CE8E8E8E8E8E8D7ACACD7D7E2ACACAC81E8E8E8E8E8D78989
+        D7D7D7D76C6C6CE8E8E8E8E8E8D7ACACD7D7D7D7818181E8E8E8E8E8D78989D7
+        D7D75E5EE8E8E8E8E8E8E8E8D7ACACD7D7D78181E8E8E8E8E8E8E8D78989D7D7
+        D75EE8E8E8E8E8E8E8E8E8D7ACACD7D7D781E8E8E8E8E8E8E8E8D78989D7D7D7
+        5EB4E8E8E8E8E8E8E8E8D7ACACD7D7D781E2E8E8E8E8E8E8E8E85E89D7D7D75E
+        B4E8E8E8E8E8E8E8E8E881ACD7D7D781E2E8E8E8E8E8E8E8E8E8E85ED7D75EE8
+        E8E8E8E8E8E8E8E8E8E8E881D7D781E8E8E8E8E8E8E8E8E8E8E8E8E85E5EE8E8
+        E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+    end
+  end
+  object dxBarManager1: TdxBarManager
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Categories.Strings = (
+      'Default')
+    Categories.ItemsVisibles = (
+      2)
+    Categories.Visibles = (
+      True)
+    PopupMenuLinks = <>
+    UseSystemFont = True
+    Left = 744
+    Top = 65528
+    PixelsPerInch = 96
+    object dxBarManager1Bar1: TdxBar
+      Caption = 'Action'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 679
+      FloatTop = 8
+      FloatClientWidth = 58
+      FloatClientHeight = 90
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarBaru'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarUpdate'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarRefresh'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarHapus'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Proses'
+      CaptionButtons = <>
+      DockedLeft = 129
+      DockedTop = 0
+      FloatLeft = 1018
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'DxBeri'
+        end
+        item
+          Visible = True
+          ItemName = 'DxTerima'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar3: TdxBar
+      Caption = 'Laporan'
+      CaptionButtons = <>
+      DockedLeft = 295
+      DockedTop = 0
+      FloatLeft = 1355
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BBahan_Baku'
+        end
+        item
+          Visible = True
+          ItemName = 'BBahan_Kimia'
+        end
+        item
+          Visible = True
+          ItemName = 'BBahanKemasan'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar4: TdxBar
+      Caption = 'Filter Status'
+      CaptionButtons = <>
+      DockedLeft = 469
+      DockedTop = 0
+      FloatLeft = 1355
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          ViewLayout = ivlGlyphControlCaption
+          Visible = True
+          ItemName = 'CkStatus'
+        end
+        item
+          ViewLayout = ivlGlyphControlCaption
+          Visible = True
+          ItemName = 'CkStatus2'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarUpdate: TdxBarButton
+      Caption = 'Update    '
+      Category = 0
+      Hint = 'Update    '
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424D960600000000000036000000280000001800000011000000010020000000
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
+        74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
+        58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
+        67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
+        69FFF7E5BFFFF8EACCFFF8EACAFFF8EACAFFF8EACAFFF8EACAFFF8EACAFFF8EA
+        CAFFF8EACAFFF8EACAFFF8EACAFFF8EACAFFF8EACAFFF8EACBFFF8EACAFFF0CE
+        85FFE4A621FFE4A723FFFCF6EAFFFFFFFFFFFFFFFFFFE6AD33FFEECA7AFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFF8E8C7FFE4A724FFF3D89EFFFFFFFFFFFFFFFFFFE6AE36FFF1D391FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFE3A51FFFF4DAA3FFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFE3A51FFFF4DAA3FFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFFE6AE36FFEFCA7CFFF5DE
+        ADFFFAEFD9FFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFE3A51FFFF4DAA3FFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEC979FFE5AC2FFFE4A8
+        25FFE8B343FFF8EBCDFFF4DDABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFE3A51FFFF4DAA3FFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBF3E3FFE2A115FFF4DB
+        A7FFF8E9C8FFE5AB2EFFE5AA2AFFEDC36BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFE3A51FFFF4DAA3FFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9ECD1FFECC2
+        67FFE5AB2DFFE7B240FFE8B341FFE6AE36FFE7B03AFFFCF7EBFFFFFFFFFFFFFF
+        FFFFFFFEFFFFE19C09FFF2D699FFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3D9
+        A1FFE4A826FFE7B13DFFE8B341FFE8B341FFE7B13DFFE4A827FFF4DDACFFFFFF
+        FFFFFFFFFFFFFEFEFDFFFFFFFFFFFFFFFFFFFFFFFFFFE6AE36FFF1D28EFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFCF6E8FFE7AF38FFE6AF37FFE8B341FFE8B341FFE7B240FFE5AB2DFFECC2
+        67FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE6AE36FFF1D38FFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFECC267FFE5AB2DFFE7B240FFE8B341FFE8B341FFE6AF
+        37FFE6AF38FFFCF6E8FFFFFFFFFFFFFFFFFFFFFFFFFFE6AD34FFF1D290FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFF5DDABFFE4A827FFE7B13DFFE8B341FFE8B3
+        41FFE7B13DFFE4A825FFF2D699FFFFFFFFFFFFFFFFFFEBBE5CFFE6AE35FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCF7EBFFE7B03AFFE6AE36FFE8B3
+        41FFE7B03AFFE6AC31FFF8EACAFFF3D89DFFFFFFFFFFFDF9F0FFE5AB2DFFE3A5
+        1EFFEBBE5DFFEBBE5EFFEBBE5EFFEBBE5EFFEBBE5EFFEBBE5EFFEBBF5FFFEBBF
+        5FFFEBBF5FFFE9B950FFFFFDFCFFFFFFFFFFFFFFFFFFFFFFFFFFECC36BFFE4A7
+        23FFECC164FFFEFCF8FFEABA53FFE5AA2AFFE6AE36FFFFFFFFFFFFFFFFFFF9EB
+        CFFFF7E4BCFFF6E4BCFFF6E3BAFFF6E3B9FFF6E2B8FFF6E2B6FFF6E1B5FFF5E0
+        B3FFF5E0B2FFF4DCA8FFFFFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9EC
+        D0FFF6E1B5FFE4A724FFE5AC2FFFE7B03BFFFCF6E9FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFCF7ECFFEDC36AFFF1D08BFFFFFFFFFFFFFFFFFF}
+      OnClick = dxBarUpdateClick
+    end
+    object dxBarRefresh: TdxBarButton
+      Caption = 'Refresh   '
+      Category = 0
+      Hint = 'Refresh   '
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424D960600000000000036000000280000001800000011000000010020000000
+        000000000000C40E0000C40E00000000000000000000F3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F4FFF4F6
+        F9FFF5F7FDFFF4F6FCFFF3F4F6FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F4FFF6F9FFFFF0F6FFFFE5DE
+        CBFFE0D1A6FFE3D6AFFFEEEDECFFF7FCFFFFF4F5FAFFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF4F4F5FFF2F8FFFFD4BF7FFFC69100FFC68E
+        00FFC68E00FFC68E00FFC48C00FFCCA11EFFECE6D3FFF6FAFFFFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF4F4F4FFF0F5FFFFC9A128FFC79000FFC79000FFC690
+        00FFCFA523FFCC9E14FFC58D00FFC79200FFC38A00FFE4D4A2FFF6F9FFFFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF5F9FFFFCEB056FFC89100FFC58D00FFDFC780FFF7FD
+        FFFFF7FCFFFFF8FEFFFFF1F1F3FFCDA325FFC89300FFC28700FFECE5CFFFF4F5
+        F9FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF4F5F7FFE6E7EAFFC58D00FFC79100FFDFC882FFF7FEFFFFF3F3
+        F4FFF3F3F3FFF3F3F3FFF4F5F8FFF5FDFFFFC79705FFCC9D0FFFE0C985FFF5F7
+        FEFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF6F8FFFFD8C68FFFC79100FFC69000FFF7FEFFFFF3F3F4FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F4FFF6FBFFFFF7FCFFFFF5F7FEFFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF6F9FFFFD4BB73FFC79100FFCDA018FFF7FDFFFFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF4F5F7FFF5F7FCFFF6F9FFFFF6FAFFFFF5FAFFFFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF5F8FFFFDAC68DFFC79100FFC79100FFF8FEFFFFF3F3F3FFF3F3
+        F3FFF2F2F2FFEFF3FDFFE9E9E6FFE1D4B0FFD7C07BFFCEAC44FFC8990EFFF7FC
+        FFFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF4F5F7FFEAE9E8FFC58C00FFC69000FFE2CE93FFF7FCFFFFF3F3
+        F3FFF4F7FFFFD5B75EFFC28300FFC79000FFC89200FFC89300FFC89200FFF7FD
+        FFFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF7FBFFFFD0AF4DFFC79100FFC58E00FFE3D19EFFF7FF
+        FFFFF7FBFFFFFBFFFFFFDED4B9FFC79200FFCA9700FFC99700FFC89400FFF7FD
+        FFFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F4FFF4F9FFFFCB9E17FFC69000FFC68F00FFC897
+        01FFCFAC42FFCBA532FFC89300FFC99600FFC69000FFC79200FFC89400FFF7FD
+        FFFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F4F5FFF6FBFFFFD9BD69FFC48D00FFC58E
+        00FFC68E00FFC68E00FFC58D00FFCA9801FFEAE0C5FFD9BE6DFFC38800FFF7FD
+        FFFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F4FFF6FAFFFFF5F8FFFFE7D9
+        AFFFE0CA88FFE2CD91FFECE3CCFFF7FDFFFFF4F6FDFFF7FCFFFFE5D8B2FFF4F6
+        FAFFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F4FFF4F6
+        FCFFF5F8FFFFF5F7FFFFF4F5F9FFF3F3F3FFF3F3F3FFF3F3F3FFF4F6FAFFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
+        F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FF}
+      OnClick = dxBarRefreshClick
+    end
+    object dxBarHapus: TdxBarButton
+      Caption = 'Delete      '
+      Category = 0
+      Enabled = False
+      Hint = 'Delete      '
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424DD60500000000000036000000280000001400000012000000010020000000
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
+        FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
+        FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9696
+        FFFF0000FFFF0000FFFF0000FFFF7676FFFFFFFFFFFF7070FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF7E7EFFFFF7F7FFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFF6F6FFFF7C7CFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF7171FFFF4343FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF6060FFFFE3E3FFFFFFFFFFFFFFFFFFFFE3E3FFFF5E5EFFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF4545FFFFFFFFFFFF4F4FFFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF3F3FFFFFDEDEFFFFDDDD
+        FFFF3E3EFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF5050
+        FFFFFFFFFFFFFFFFFFFFFBFBFFFF5757FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF3333FFFF3232FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF5757FFFFFCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFB
+        FFFF6161FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF6262FFFFFBFBFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7676FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF7878FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFBCBCFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFFBEBEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA3A3FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFFA8A8
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF6868FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF6C6CFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFAFFFF5858FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF5A5AFFFFFAFAFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7FFFF5555
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF3636FFFF3636
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF5555FFFFF9F9
+        FFFFFFFFFFFFFCFCFFFF4A4AFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF4A4AFFFFE2E2FFFFE1E1FFFF4A4AFFFF0000FFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF4D4DFFFFFCFCFFFF3E3EFFFF0000FFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF6D6DFFFFE8E8FFFFFFFFFFFFFFFF
+        FFFFE8E8FFFF6C6CFFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000
+        FFFF3E3EFFFF7575FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF8A8A
+        FFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFFFF8A8AFFFF0000
+        FFFF0000FFFF0000FFFF0000FFFF0000FFFF7777FFFFFFFFFFFF7D7DFFFF0000
+        FFFF0000FFFF0000FFFFA2A2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFA1A1FFFF0000FFFF0000FFFF0000FFFF7E7E
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFA7A7FFFF0B0BFFFFC0C0FFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFBFBFFFFF0C0CFFFFABABFFFFFFFFFFFFFFFFFFFF}
+    end
+    object dxRibbonGalleryItem1: TdxRibbonGalleryItem
+      Caption = 'New Gallery'
+      Category = 0
+      Visible = ivAlways
+      GalleryFilter.Categories = <>
+      ItemLinks = <>
+    end
+    object dxSkinChooserGalleryItem1: TdxSkinChooserGalleryItem
+      Caption = 'New Skin Chooser'
+      Category = 0
+      Visible = ivAlways
+      ItemLinks = <>
+    end
+    object dxBarBaru: TdxBarLargeButton
+      Caption = 'Baru      '
+      Category = 0
+      Hint = 'Baru      '
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        424D660700000000000036000000280000001700000014000000010020000000
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
+        7CFFD09E6BFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A1
+        6FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD09E6BFFD6AA
+        7CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5A97BFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5A97BFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE
+        81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE
+        81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD7AD80FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFD5A777FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2E6D8FFC27A32FFD0985CFFD099
+        5DFFD5A169FFBF7527FFE1C19FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFF1E5D6FFEBCCABFFFFFFFFFFFFFFFFFFF0D4
+        B6FFDEBA94FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFD8AE81FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFF1E4D7FFE7C4A0FFFFFCF0FFDBAB7AFFDCB996FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5A9
+        7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFBFAF7FFE3BA90FFD4A16CFFE8D2BAFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA7CFFD09E
+        6BFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A16FFFD2A2
+        70FFCE9963FFC68746FFF4E9DEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF}
+      OnClick = dxBarBaruClick
+    end
+    object DxBeri: TdxBarButton
+      Caption = 'Memberikan Material     '
+      Category = 0
+      Hint = 'Memberikan Material     '
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424DC60A00000000000036000000280000001A0000001A000000010020000000
+        000000000000C40E0000C40E00000000000000000000F6F6F6FFF6F6F6FFF6F6
+        F6FFF6F6F6FFF6F6F6FFF6F6F6FFF7F7FAFFFCFCFFFFF1F1E9FFDDDDB2FFCECD
+        8BFFC5C472FFC5C471FFC5C471FFC5C472FFCECD8BFFDDDDB2FFF1F1E9FFFCFC
+        FFFFF7F7FAFFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6
+        F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFFBFBFFFFECECDEFFC7C677FFC7C7
+        75FFE4E4BEFFF8F8EDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8EEFFE5E4
+        BEFFC8C775FFC7C677FFECECDDFFFBFBFFFFF6F6F6FFF6F6F6FFF6F6F6FFF6F6
+        F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF7F7F8FFFBFBFFFFD4D398FFC5C4
+        6EFFF5F4E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F4E6FFC5C46FFFD4D398FFFBFBFFFFF7F7
+        F8FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF7F7F8FFF9F9FFFFC6C5
+        72FFDCDBA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDCDB
+        A8FFC6C572FFF9F9FFFFF7F7F8FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFFBFB
+        FFFFC6C572FFE5E5C1FFFFFFFFFFA18670FF997C65FF997C65FF997C65FF997C
+        65FF997C65FF997C65FF997C65FF997C65FF997C65FF997C65FF967860FFCEC0
+        B4FFFFFFFFFFFFFFFFFFE5E5C1FFC6C572FFFBFBFFFFF6F6F6FFF6F6F6FFF6F6
+        F6FFFBFBFFFFD4D398FFDCDBA8FFFFFFFFFFFFFFFFFF5C2E09FF764F2FFF7F5B
+        3EFF7A5436FF7A5436FF7A5436FF7A5436FF7A5436FF7A5436FF7A5436FF7C57
+        39FF6A401EFF8F7056FFFFFFFFFFFFFFFFFFFFFFFFFFDCDBA9FFD4D398FFFBFB
+        FFFFF6F6F6FFF7F7FAFFECECDDFFC5C46EFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D
+        07FFD4C8BFFFE7E0DBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF825F43FF92745AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFC5C46FFFECECDDFFF7F7FAFFFCFCFFFFC7C676FFF5F4E6FFFFFFFFFFFFFF
+        FFFFFFFFFFFF5B2D07FFCBBDB2FFE2DAD4FFA48B76FF9B7F68FF7A5435FFAB93
+        80FF9E836CFFCDBFB4FFAA927FFFFFFFFFFF856247FF8D6D52FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFF5F5E6FFC7C676FFFCFCFFFFF1F1E9FFC8C675FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D07FFC7B8ACFFFFFFFFFFCDBFB4FF501E
+        00FFF2EEEBFFFFFFFFFFFFFFFFFFC5B5A8FF6C4321FF9A7E67FFFBFAF9FFB29D
+        8BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC8C776FFF1F1E9FFDDDD
+        B2FFE4E4BEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D07FFC7B8ACFFFFFF
+        FFFFFFFFFFFFD6CAC1FFF4F1EEFFFFFFFFFFFFFFFFFFC7B8ABFFE6E0DAFFA187
+        71FF623612FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE5E4
+        BFFFDDDDB2FFCECD8AFFF8F8EEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D
+        07FFC7B8ACFFFFFFFFFFEDE8E5FFF0ECE8FFECE7E2FFF6F3F1FFFFFFFFFFE2DA
+        D4FF582903FF6F4725FF6C4220FFAC9581FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFF8F8EEFFCECD8AFFC5C472FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF5B2D07FFCBBDB1FFEDE8E4FF4C1A00FF5B2D07FF5A2C06FF4D1B
+        00FFFFFFFFFFFFFFFFFF876549FF704827FF744D2DFF623612FFFAF8F7FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC5C472FFC5C471FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D07FFC7B8ACFFFFFFFFFFE4DDD6FFE3DB
+        D5FFE2DAD3FFEFEBE7FFFFFFFFFFFFFFFFFFF8F6F5FF623611FF744D2DFF6F47
+        26FF8E6E54FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC5C471FFC5C4
+        71FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D07FFC8B9ACFFFFFF
+        FFFFD0C3B9FFD1C4B9FFD1C4BAFFD0C3B8FFCCBEB2FFC9BAAEFFF1EDEAFFA890
+        7CFF6D4422FF754D2DFF643814FFE0D7D0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFC5C471FFC5C472FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D
+        07FFCBBCB1FFF0EBE8FF4D1A00FF5B2C07FF5B2C07FF5B2C07FF5B2C07FF5728
+        01FF704827FFFFFFFFFF673C19FF744C2CFF724A2AFF764F2FFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFC5C472FFCECD8AFFF8F8EEFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF5B2D07FFC7B8ACFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC4B3A6FF693E1BFF754E2EFF693E
+        1CFFC2B1A3FFFFFFFFFFFFFFFFFFF8F8EEFFCECD8AFFDDDDB2FFE5E4BEFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D07FFC8B9ADFFFFFFFFFFAB9480FFAF98
+        86FFAF9986FFAF9986FFAF9986FFAC9482FFC7B7AAFFFFFFFFFFFFFFFFFF7852
+        33FF724A2AFF744C2CFF673C19FFFFFFFFFFFFFFFFFFE5E4BFFFDDDDB1FFF1F1
+        E9FFC8C776FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5B2D07FFCABCB0FFF6F4
+        F2FF5F310CFF663B18FF673C18FF673C18FF673C18FF633612FF846245FFFFFF
+        FFFF94755DFFEFEBE7FF643814FF734C2CFF5F320DFFCBBCB0FFFFFFFFFFC8C7
+        76FFF1F1E8FFFCFCFFFFC7C676FFF5F5E7FFFFFFFFFFFFFFFFFFFFFFFFFF5B2D
+        07FFCDC0B5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF7A5537FFD6CAC1FF93755CFF633612FFBBA999FFFFFF
+        FFFFF5F5E7FFC7C676FFFCFCFFFFF7F7FAFFECECDDFFC5C46FFFFFFFFFFFFFFF
+        FFFFFFFFFFFF5E300BFF907057FFA58C78FFA38974FFA38974FFA38974FFA389
+        74FFA38974FFA38974FFA38974FFA8907BFF734C2CFF8C6C51FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFC5C46FFFECECDCFFF7F7FAFFF6F6F6FFFBFBFFFFD4D3
+        97FFDCDBA9FFFFFFFFFFFFFFFFFF785233FF724A29FF714827FF714827FF7148
+        27FF714827FF714827FF714827FF714827FF714827FF714827FF6F4725FFB29D
+        8BFFFFFFFFFFFFFFFFFFFFFFFFFFDCDBAAFFD4D397FFFBFBFFFFF6F6F6FFF6F6
+        F6FFF6F6F6FFFBFBFFFFC6C571FFE6E5C1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE6E5C2FFC6C571FFFBFBFFFFF6F6
+        F6FFF6F6F6FFF6F6F6FFF6F6F6FFF7F7F8FFF9F9FFFFC6C571FFDCDBA9FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDCDCAAFFC6C571FFF9F9
+        FFFFF7F7F8FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF7F7F8FFFBFB
+        FFFFD4D397FFC5C46FFFF5F5E7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5E7FFC5C46FFFD4D3
+        97FFFBFBFFFFF7F7F8FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6
+        F6FFF6F6F6FFF6F6F6FFFBFBFFFFECECDDFFC7C676FFC8C776FFE5E4BFFFF8F8
+        EEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8EFFFE5E5BFFFC8C776FFC7C6
+        75FFECECDCFFFBFBFFFFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6
+        F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF7F7FAFFFCFCFFFFF1F1
+        E8FFDDDDB1FFCECD8AFFC5C472FFC5C471FFC5C471FFC5C472FFCECD8AFFDDDC
+        B1FFF1F1E8FFFCFCFFFFF7F7FAFFF6F6F6FFF6F6F6FFF6F6F6FFF6F6F6FFF6F6
+        F6FFF6F6F6FF}
+      OnClick = DxBeriClick
+    end
+    object DxTerima: TdxBarButton
+      Caption = 'Terima Material    '
+      Category = 0
+      Hint = 'Terima Material    '
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424DC60A00000000000036000000280000001A0000001A000000010020000000
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFEDEA
+        E8FFE5DED9FFE3DCD7FFE4DCD7FFE4DCD7FFE4DCD7FFE4DCD7FFE4DCD7FFE4DC
+        D7FFE4DCD7FFE4DCD7FFE4DCD7FFE4DDD8FFE8E6E4FFF7F7F7FFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFE7E4E2FF8BA3B2FF5297C2FF599BC4FF599AC4FF589AC4FF589AC4FF579A
+        C4FF579AC4FF5799C4FF5699C4FF5699C4FF5699C4FF4B93C0FF8EA0ABFFDBD8
+        D7FFFCFCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFF5F0ECFF679BBCFF80C8F6FF6FBCEEFF70BDEEFF70BD
+        EEFF70BDEEFF70BDEEFF71BDEEFF71BDEEFF71BDEEFF71BDEEFF6FBCEEFF87CB
+        F7FF6194B5FFEBE5E2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7DAECDFF73BCEAFF66B3
+        E5FF68B4E5FF68B4E5FF68B4E5FF68B4E5FF68B4E5FF68B4E5FF68B4E5FF68B4
+        E5FF65B3E5FF79BFEBFF7DADCCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7DAF
+        CEFF60ADDEFF52A4D9FF54A5DAFF54A5DAFF54A5DAFF54A5DAFF54A5DAFF54A5
+        DAFF54A5DAFF54A5DAFF51A4D9FF66B0E0FF80B0CEFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF7DAECDFF4E9FD4FF3F96CEFF4197CFFF4197CFFF4197CFFF4197
+        CFFF4197CFFF4197CFFF4197CFFF4197CFFF3F96CEFF55A3D6FF7FAFCDFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFF7FAFCDFF358DC8FF2382C1FF2584C2FF2684
+        C2FF2684C2FF2684C2FF2684C2FF2684C2FF2684C2FF2684C2FF2382C1FF3F93
+        CAFF81B0CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2D7CAEFF70A9CEFF6BA6CBFF6DA6
+        CBFF6DA6CBFF6DA6CBFF6DA6CBFF6DA6CBFF6CA6CBFF6CA6CBFF6CA6CBFF6CA6
+        CBFF6CA6CBFF6AA5CAFF6FA9CEFF1D73A9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCCDFEBFF5897BEFFC6DAE6FF9CCA
+        E8FF94CEF4FF92CDF1FF90CBF1FF8ECAF1FF8BC9F0FF89C8F0FF86C7EFFF84C5
+        EFFF82C4EFFF7FC3EEFF7DC2EEFF77C0EFFF97C8E7FFB8D1E0FF5092BAFFCDDF
+        EBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF94BC
+        D5FF569AC4FF347FAFFFB4DCF6FFA6D7F6FFA7D8F6FFA5D7F6FFA4D6F5FFA3D5
+        F5FFA2D4F4FFA1D3F3FF9FD2F2FF9DD0F1FF99CEF0FFB2DAF3FF1C72A7FF0057
+        9FFFA1C3D9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF7EAECCFFCAE5F6FFA9D5F0FF3482B3FF408AB9FF408B
+        BBFF4490C2FF4995C4FF4F9BCEFF54A0D1FF5AA6D7FF5AAADCFF60AFE1FF85BF
+        E4FF0070BFFF8EB7D1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF639DC2FFC2E0F3FF4D96
+        C4FF045E97FF0C669FFF0F6DB5FF03684EFF066D64FF0F7CCAFF0E7FC7FF0580
+        CEFF7BBEE7FF0074C8FF6EA3C5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFA7C7DBFF69A6CCFF2F83B8FF3487BDFF4A92C4FF006F00FF006A00FF5FA1
+        D5FF5098C9FF519AC7FF68A4C9FFC6D8E3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF4A974FFF0084
+        00FF007A00FF609F65FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCDDA
+        D5FF008100FF049208FF038B08FF006A00FFE4EAE9FFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF09821AFF00A600FF049C07FF049608FF008E00FF1B7E2DFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFF86B593FF00AE00FF04B105FF03A706FF03A107FF049D
+        06FF008100FF9EC2A9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81B58DFF7DAA8CFF00A000FF05B5
+        05FF04AE05FF008B00FF85B194FF8AB996FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6
+        FFFF00A100FF05C104FF05BA04FF008B00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFF4EFF8FF00AA00FF05CD03FF05C603FF009200FFFFFBFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFF5EFF9FF00B400FF05DC01FF05D501FF009C
+        00FFFFFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF4EFF8FF00A000FF00C8
+        00FF00C200FF008B00FFFFFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFD3DBDAFFD9DCE0FFD9DDE0FFD3DDD9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFF}
+      OnClick = DxTerimaClick
+    end
+    object BBahan_Baku: TdxBarButton
+      Caption = 'Print Bon Bahan Tepung'
+      Category = 0
+      Hint = 'Print Bon Bahan Tepung'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424D360900000000000036000000280000001800000018000000010020000000
+        000000000000C40E0000C40E00000000000000000000FDFDFDFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFC
+        FCFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFFFBFBFBFF000000FF1C1C1CFF1B1B1BFF1B1B1BFF1B1B
+        1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1A1A1AFF141414FFFFFF
+        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF8D8D8DFF979797FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FFD1D1
+        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF959595FFFFFFFFFF595959FF666666FF6666
+        66FF666666FF666666FF666666FF666666FF575757FFFFFFFFFF525252FFD3D3
+        D3FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
+        FFFFFFFFFFFFFFFFFFFF9C9C9CFF939393FFFFFFFFFFC9C9C9FFD0D0D0FFD0D0
+        D0FFD0D0D0FFD0D0D0FFD0D0D0FFD0D0D0FFC9C9C9FFFFFFFFFF515252FFE0E0
+        E0FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFFFFFFFF6E6E
+        6EFF737373FF7A7A7AFF3A3A3AFF9F9F9FFFFFFFFFFF323232FF434343FF4343
+        43FF434343FF434343FF434343FF434343FF303030FFFFFFFFFF5F5F5FFF5A5A
+        5AFF777777FF686868FF7E7E7EFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF000000FF000000FFB5B5B5FFFFFFFFFFFCFCFCFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFFFFFFFF757575FF0000
+        00FF000000FF525252FF000000FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF010101FF000000FF202020FF333333FF333333FF333333FF3333
+        33FF333333FF333333FF333333FF333333FF333333FF343434FF141414FF0000
+        00FF000000FF505050FF0B0B0BFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF606060FFA0A0A0FF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B
+        9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFFA2A2
+        A2FF4F4F4FFF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB9B9B9FF000000FF040404FF040404FF040404FF040404FF0404
+        04FF040404FF040404FF040404FF040404FF040404FF040404FF040404FF0000
+        00FFB8B9B9FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFAAAAAAFF000000FF262626FF3D3D3DFF393939FF393939FF3939
+        39FF393939FF393939FF393939FF393939FF393939FF3E3E3EFF181818FF0000
+        00FFA9A9A9FF000000FF040404FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFFD6D6
+        D6FF9A9A9AFFE3E3E3FF121212FFADADADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6C6C6CFF2929
+        29FFEAEAEAFF9A9A9AFFD4D4D4FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
+        FFFFFFFFFFFFFFFFFFFF9F9F9FFF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFFFFFFFF515151FFE4E4
+        E4FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFFFFFFFFFF5A5A5AFFD1D1
+        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFF363636FF3E3E3EFF000000FFEFEF
+        EFFFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF919191FF939393FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFFFFFFFFDDDDDDFF000000FF000000FF757575FFFFFF
+        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF919191FF8B8B8BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF646464FFFFFFFFFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFDFDFDFFFFFFFFFF141414FF0F0F0FFF101010FF101010FF1010
+        10FF101010FF101010FF131313FF000000FF636363FFFFFFFFFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFDFDFDFFFCFCFCFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFDFDFDFF}
+      OnClick = BBahan_BakuClick
+    end
+    object BBahan_Kimia: TdxBarButton
+      Caption = 'Print Bon Bahan Kimia'
+      Category = 0
+      Hint = 'Print Bon Bahan Kimia'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424D360900000000000036000000280000001800000018000000010020000000
+        000000000000C40E0000C40E00000000000000000000FDFDFDFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFC
+        FCFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFFFBFBFBFF000000FF1C1C1CFF1B1B1BFF1B1B1BFF1B1B
+        1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1A1A1AFF141414FFFFFF
+        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF8D8D8DFF979797FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FFD1D1
+        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF959595FFFFFFFFFF595959FF666666FF6666
+        66FF666666FF666666FF666666FF666666FF575757FFFFFFFFFF525252FFD3D3
+        D3FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
+        FFFFFFFFFFFFFFFFFFFF9C9C9CFF939393FFFFFFFFFFC9C9C9FFD0D0D0FFD0D0
+        D0FFD0D0D0FFD0D0D0FFD0D0D0FFD0D0D0FFC9C9C9FFFFFFFFFF515252FFE0E0
+        E0FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFFFFFFFF6E6E
+        6EFF737373FF7A7A7AFF3A3A3AFF9F9F9FFFFFFFFFFF323232FF434343FF4343
+        43FF434343FF434343FF434343FF434343FF303030FFFFFFFFFF5F5F5FFF5A5A
+        5AFF777777FF686868FF7E7E7EFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF000000FF000000FFB5B5B5FFFFFFFFFFFCFCFCFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFFFFFFFF757575FF0000
+        00FF000000FF525252FF000000FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF010101FF000000FF202020FF333333FF333333FF333333FF3333
+        33FF333333FF333333FF333333FF333333FF333333FF343434FF141414FF0000
+        00FF000000FF505050FF0B0B0BFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF606060FFA0A0A0FF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B
+        9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFFA2A2
+        A2FF4F4F4FFF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB9B9B9FF000000FF040404FF040404FF040404FF040404FF0404
+        04FF040404FF040404FF040404FF040404FF040404FF040404FF040404FF0000
+        00FFB8B9B9FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFAAAAAAFF000000FF262626FF3D3D3DFF393939FF393939FF3939
+        39FF393939FF393939FF393939FF393939FF393939FF3E3E3EFF181818FF0000
+        00FFA9A9A9FF000000FF040404FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFFD6D6
+        D6FF9A9A9AFFE3E3E3FF121212FFADADADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6C6C6CFF2929
+        29FFEAEAEAFF9A9A9AFFD4D4D4FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
+        FFFFFFFFFFFFFFFFFFFF9F9F9FFF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFFFFFFFF515151FFE4E4
+        E4FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFFFFFFFFFF5A5A5AFFD1D1
+        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFF363636FF3E3E3EFF000000FFEFEF
+        EFFFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF919191FF939393FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFFFFFFFFDDDDDDFF000000FF000000FF757575FFFFFF
+        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF919191FF8B8B8BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF646464FFFFFFFFFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFDFDFDFFFFFFFFFF141414FF0F0F0FFF101010FF101010FF1010
+        10FF101010FF101010FF131313FF000000FF636363FFFFFFFFFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFDFDFDFFFCFCFCFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFDFDFDFF}
+      OnClick = BBahan_KimiaClick
+    end
+    object BBahanKemasan: TdxBarButton
+      Caption = 'Print Bon Bahan Kemasan'
+      Category = 0
+      Hint = 'Print Bon Bahan Kemasan'
+      Visible = ivNever
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        424D360900000000000036000000280000001800000018000000010020000000
+        000000000000C40E0000C40E00000000000000000000FDFDFDFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFC
+        FCFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFFFBFBFBFF000000FF1C1C1CFF1B1B1BFF1B1B1BFF1B1B
+        1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1A1A1AFF141414FFFFFF
+        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF8D8D8DFF979797FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FFD1D1
+        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF959595FFFFFFFFFF595959FF666666FF6666
+        66FF666666FF666666FF666666FF666666FF575757FFFFFFFFFF525252FFD3D3
+        D3FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
+        FFFFFFFFFFFFFFFFFFFF9C9C9CFF939393FFFFFFFFFFC9C9C9FFD0D0D0FFD0D0
+        D0FFD0D0D0FFD0D0D0FFD0D0D0FFD0D0D0FFC9C9C9FFFFFFFFFF515252FFE0E0
+        E0FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFFFFFFFF6E6E
+        6EFF737373FF7A7A7AFF3A3A3AFF9F9F9FFFFFFFFFFF323232FF434343FF4343
+        43FF434343FF434343FF434343FF434343FF303030FFFFFFFFFF5F5F5FFF5A5A
+        5AFF777777FF686868FF7E7E7EFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF000000FF000000FFB5B5B5FFFFFFFFFFFCFCFCFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFFFFFFFF757575FF0000
+        00FF000000FF525252FF000000FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF010101FF000000FF202020FF333333FF333333FF333333FF3333
+        33FF333333FF333333FF333333FF333333FF333333FF343434FF141414FF0000
+        00FF000000FF505050FF0B0B0BFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FF606060FFA0A0A0FF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B
+        9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFFA2A2
+        A2FF4F4F4FFF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB9B9B9FF000000FF040404FF040404FF040404FF040404FF0404
+        04FF040404FF040404FF040404FF040404FF040404FF040404FF040404FF0000
+        00FFB8B9B9FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
+        00FF000000FFAAAAAAFF000000FF262626FF3D3D3DFF393939FF393939FF3939
+        39FF393939FF393939FF393939FF393939FF393939FF3E3E3EFF181818FF0000
+        00FFA9A9A9FF000000FF040404FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFFD6D6
+        D6FF9A9A9AFFE3E3E3FF121212FFADADADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6C6C6CFF2929
+        29FFEAEAEAFF9A9A9AFFD4D4D4FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
+        FFFFFFFFFFFFFFFFFFFF9F9F9FFF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFFFFFFFF515151FFE4E4
+        E4FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFFFFFFFFFF5A5A5AFFD1D1
+        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFF363636FF3E3E3EFF000000FFEFEF
+        EFFFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF919191FF939393FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFFFFFFFFDDDDDDFF000000FF000000FF757575FFFFFF
+        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFFFFFFFF919191FF8B8B8BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF646464FFFFFFFFFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
+        FCFFFCFCFCFFFDFDFDFFFFFFFFFF141414FF0F0F0FFF101010FF101010FF1010
+        10FF101010FF101010FF131313FF000000FF636363FFFFFFFFFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFBFBFBFFFBFB
+        FBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFDFDFDFFFCFCFCFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFC
+        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
+        FDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFDFDFDFF}
+      OnClick = BBahanKemasanClick
+    end
+    object CkStatus: TcxBarEditItem
+      Caption = 'Tampilkan yang Sudah Selesai'
+      Category = 0
+      Hint = 'Tampilkan yang Sudah Selesai'
+      Visible = ivAlways
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+      InternalEditValue = False
+    end
+    object CkStatus2: TcxBarEditItem
+      Caption = 'In - Proses'
+      Category = 0
+      Hint = 'In - Proses'
+      Visible = ivNever
+      OnChange = CkStatus2Change
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+      InternalEditValue = False
+    end
+  end
+  object QBonProduksi: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'Select A.* ,B.*, date_part('#39'MONTH'#39', tgl_bon)as bulan '
+      'from t_spk_prod_bon A  inner join t_spk_prod_tmbng b '
+      ' on A.no_timbang=B.no_timbang order by A.no_bon Desc')
+    Left = 672
+    Top = 65528
+  end
+  object DsBonProduksi: TDataSource
+    DataSet = MemBonProduksi
+    Left = 752
+    Top = 48
+  end
+  object MemBonProduksi: TMemTableEh
+    FetchAllOnOpen = True
+    Params = <>
+    DataDriver = DsdBonProduksi
+    Left = 672
+    Top = 40
+  end
+  object DsdBonProduksi: TDataSetDriverEh
+    ProviderDataSet = QBonProduksi
+    Left = 744
+    Top = 96
+  end
+  object Qkemasan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select b.nm_material,c.category,d.nm_supplier,a.no_formula,a.gud' +
+        'ang,a.kd_material_stok,a.kd_stok,'
+      
+        'a."index", a.satuan, a.kd_supplier, a.ttlberat, a.qtyperkemasan,' +
+        'a.totalkemasan,a.no_bon,a.index2,'
+      
+        'D.nm_supplier,a.iddetail,A.shift,A.satuankemasan,A.totalberi,A.t' +
+        'otalterima,A.gudangtransit'
+      'from t_spk_prod_bon_det A '
+      
+        'inner join t_material_stok B on A.kd_material_stok=B.kd_material' +
+        '_stok'
+      'inner join t_material C on B.kd_material=C.kd_material '
+      'Left join t_supplier D on B.kd_supplier=D.kd_supplier'
+      'where C.category='#39'BAHAN KEMASAN'#39
+      'GROUP BY'
+      
+        'b.nm_material,c.category, d.nm_supplier, a.no_formula, a.gudang,' +
+        ' a.kd_material_stok, a.kd_stok, '
+      
+        'a."index", a.satuan, a.kd_supplier, a.ttlberat, a.qtyperkemasan,' +
+        'a.totalkemasan, a.no_bon,a.index2,'
+      
+        'a.iddetail,A.shift,A.satuankemasan,A.totalberi,A.totalterima,A.g' +
+        'udangtransit'
+      'order by a.iddetail desc')
+    MasterSource = DsBonProduksi
+    MasterFields = 'no_bon;shift'
+    DetailFields = 'no_bon;shift'
+    Left = 604
+    Top = 152
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'no_bon'
+        ParamType = ptInput
+        Value = '35/III/21/PMA'
+      end
+      item
+        DataType = ftString
+        Name = 'shift'
+        ParamType = ptInput
+        Value = 'A'
+      end>
+  end
+  object QBaku: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select A.*,C.nm_material, C.Category,D.nm_supplier from t_spk_pr' +
+        'od_bon_det A '
+      
+        'inner join t_material_stok B on A.kd_material_stok=B.kd_material' +
+        '_stok'
+      'inner join t_material C on B.kd_material=C.kd_material '
+      'Left join t_supplier D on B.kd_supplier=D.kd_supplier'
+      'where C.category='#39'BAHAN BAKU'#39' order by a.kd_material_stok Desc')
+    MasterSource = DsBonProduksi
+    MasterFields = 'no_bon'
+    DetailFields = 'no_bon'
+    Left = 468
+    Top = 144
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'no_bon'
+        ParamType = ptInput
+        Value = '14/XII/20/HKJ'
+      end>
+  end
+  object Qkimia: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select A.*,C.nm_material, C.Category,D.nm_supplier from t_spk_pr' +
+        'od_bon_det A '
+      
+        'inner join t_material_stok B on A.kd_material_stok=B.kd_material' +
+        '_stok'
+      'inner join t_material C on B.kd_material=C.kd_material '
+      'Left join t_supplier D on B.kd_supplier=D.kd_supplier'
+      'where C.category='#39'KIMIA'#39
+      'order by a.kd_material_stok Asc')
+    MasterSource = DsBonProduksi
+    MasterFields = 'no_bon'
+    DetailFields = 'no_bon'
+    Left = 540
+    Top = 144
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'no_bon'
+        ParamType = ptInput
+        Value = '14/XII/20/HKJ'
+      end>
+  end
+  object DsBaku: TDataSource
+    DataSet = QBaku
+    Left = 471
+    Top = 198
+  end
+  object DsKimia: TDataSource
+    DataSet = Qkimia
+    Left = 543
+    Top = 198
+  end
+  object DsKemasan: TDataSource
+    DataSet = Qkemasan
+    Left = 599
+    Top = 214
+  end
+  object Rpt: TfrxReport
+    Version = '2022.2.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44734.599042824080000000
+    ReportOptions.LastChange = 44734.599042824080000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    Left = 366
+    Top = 282
+    Datasets = <>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 215.900000000000000000
+      PaperHeight = 279.400000000000000000
+      PaperSize = 1
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 18.897650000000000000
+        Width = 740.787880000000000000
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 83.149660000000000000
+        Width = 740.787880000000000000
+        RowCount = 0
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 147.401670000000000000
+        Width = 740.787880000000000000
+      end
+      object Memo1: TfrxMemoView
+        AllowVectorExport = True
+        Left = 665.197280000000000000
+        Top = 147.401670000000000000
+        Width = 75.590600000000000000
+        Height = 18.897650000000000000
+        Frame.Typ = []
+        HAlign = haRight
+        Memo.UTF8W = (
+          '[Page#]')
+      end
+    end
+  end
+  object DbRptSPK: TfrxDBDataset
+    UserName = 'DbRptSPK'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'no_bon=no_bon'
+      'kd_material_stok=kd_material_stok'
+      'totalkemasan=totalkemasan'
+      'qtyperkemasan=qtyperkemasan'
+      'ttlberat=ttlberat'
+      'jmlh_timbang=jmlh_timbang'
+      'Keterangan=Keterangan'
+      'tgl_bon=tgl_bon'
+      'nm_material=nm_material'
+      'nm_supplier=nm_supplier'
+      'category=category'
+      'mc=mc'
+      'jmlh=jmlh'
+      'satuan=satuan')
+    DataSet = QRptSPK
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 366
+    Top = 234
+  end
+  object QRptSPK: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select e.no_bon,a.kd_material_stok,a.totalkemasan,a.qtyperkemasa' +
+        'n,a.ttlberat,e.jmlh_timbang,e."Keterangan",e.tgl_bon,C.nm_materi' +
+        'al,'
+      
+        ' D.nm_supplier, C.Category,f.mc,c.btl*e.jmlh_timbang jmlh,a.satu' +
+        'an from t_spk_prod_bon_det A '
+      
+        'left join t_material_stok B on A.kd_material_stok=B.kd_material_' +
+        'stok'
+      'left join t_material C on B.kd_material=C.kd_material '
+      'left join t_supplier D on B.kd_supplier=D.kd_supplier'
+      'inner join t_spk_prod_bon E on A.no_bon=E.no_bon'
+      'inner join t_spk_prod_tmbng f on e.no_timbang=F.no_timbang'
+      'order by a.kd_material_stok Asc')
+    Left = 470
+    Top = 250
+  end
+end
