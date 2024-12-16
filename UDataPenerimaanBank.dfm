@@ -555,10 +555,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1123
-      ExplicitHeight = 207
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

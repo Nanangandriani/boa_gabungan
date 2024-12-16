@@ -213,7 +213,15 @@ uses
   URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca},
   UMy_Function in 'UMy_Function.pas',
   UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
-  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas';
+  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas',
+  UDataListPelakuBiaya in 'UDataListPelakuBiaya.pas' {FDataListPelakuBiaya},
+  UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya},
+  UDataKelompokBiaya in 'UDataKelompokBiaya.pas' {FDataKelompokBiaya},
+  UDataListKelompokBiaya in 'UDataListKelompokBiaya.pas' {FDataListKelompokBiaya},
+  UDataKasBon in 'UDataKasBon.pas' {FDataKasBon},
+  UListKasBon in 'UListKasBon.pas' {FListKasBon},
+  UListKasKecil in 'UListKasKecil.pas' {FListKasKecil},
+  UDataKasKecil in 'UDataKasKecil.pas' {FDataKasKecil};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -322,6 +330,14 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKontrak, FDaftarKontrak);
   Application.CreateForm(TFHomeLogin, FHomeLogin);
   Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
+  Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
+  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
+  Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
+  Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
+  Application.CreateForm(TFDataKasBon, FDataKasBon);
+  Application.CreateForm(TFListKasBon, FListKasBon);
+  Application.CreateForm(TFListKasKecil, FListKasKecil);
+  Application.CreateForm(TFDataKasKecil, FDataKasKecil);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

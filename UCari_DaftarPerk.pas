@@ -38,7 +38,8 @@ implementation
 uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
-  U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan;
+  U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan,
+  UDataKasBon, UDataKasKecil;
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
 function FCari_DaftarPerk: TFCari_DaftarPerk;
@@ -60,6 +61,36 @@ begin
       FDataPenerimaanBank.MemDetailAkun['keterangan']:='-';
       FDataPenerimaanBank.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       FDataPenerimaanBank.MemDetailAkun.post;
+      QDaftar_Perk.Close;
+    end;
+
+    if (vpanggil = 'kas_kecil')then
+    begin
+      FDataKasKecil.MemDetailAkun.edit;
+      FDataKasKecil.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FDataKasKecil.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FDataKasKecil.MemDetailAkun['kredit']:=0;
+      FDataKasKecil.MemDetailAkun['debit']:=0;
+      FDataKasKecil.MemDetailAkun['kd_group_biaya']:='0';
+      FDataKasKecil.MemDetailAkun['nm_group_biaya']:='-';
+      FDataKasKecil.MemDetailAkun['keterangan']:='-';
+      FDataKasKecil.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+      FDataKasKecil.MemDetailAkun.post;
+      QDaftar_Perk.Close;
+    end;
+
+    if (vpanggil = 'kas_bon')then
+    begin
+      FDataKasBon.MemDetailAkun.edit;
+      FDataKasBon.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FDataKasBon.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FDataKasBon.MemDetailAkun['kredit']:=0;
+      FDataKasBon.MemDetailAkun['debit']:=0;
+      FDataKasBon.MemDetailAkun['kd_group_biaya']:='0';
+      FDataKasBon.MemDetailAkun['nm_group_biaya']:='-';
+      FDataKasBon.MemDetailAkun['keterangan']:='-';
+      FDataKasBon.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+      FDataKasBon.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
 

@@ -26,8 +26,8 @@ object FHomeLogin: TFHomeLogin
     object ImgApproval: TImage
       Left = 0
       Top = 0
-      Width = 398
-      Height = 374
+      Width = 1135
+      Height = 1071
       Align = alClient
       AutoSize = True
       Center = True
@@ -4600,7 +4600,6 @@ object FHomeLogin: TFHomeLogin
       TabOrder = 1
       Text = 'Admin'
       TextHint = 'Username'
-      OnKeyPress = EduserKeyPress
     end
     object CbSBU: TcxComboBox
       Left = 66

@@ -358,7 +358,7 @@ begin
               ' bill_name='+QuotedStr(edNMJenisBayar.Text)+', '+
               ' module_id='+QuotedStr(vid_modul)+', '+
               ' order_no='+QuotedStr(order_no)+','+
-              ' additional_code='+QuotedStr('0')+','+
+              //' additional_code='+QuotedStr('0')+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+
@@ -773,7 +773,7 @@ begin
       begin
       FDataPenerimaanBank.Autonumber;
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      if MessageDlg ('Anda Yakin Disimpan Dengan No . '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
         Save;
         Dm.Koneksi.Commit;

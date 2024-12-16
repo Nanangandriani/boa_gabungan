@@ -1,9 +1,9 @@
-object FListKolektor: TFListKolektor
+object FDataListKelompokBiaya: TFDataListKelompokBiaya
   Left = 0
   Top = 0
-  Caption = 'List Kolektor'
-  ClientHeight = 679
-  ClientWidth = 1013
+  Caption = 'Data Kelompok Biaya'
+  ClientHeight = 777
+  ClientWidth = 1108
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListKolektor: TFListKolektor
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1013
+    Width = 1108
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListKolektor: TFListKolektor
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1002
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,10 +35,10 @@ object FListKolektor: TFListKolektor
   object DBGridData: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1013
-    Height = 552
+    Width = 1108
+    Height = 650
     Align = alClient
-    DataSource = DsKolektor
+    DataSource = DsKelompokBiaya
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -46,44 +47,19 @@ object FListKolektor: TFListKolektor
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code_kares'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_kares'
-        Footers = <>
-        Title.Caption = 'Karesidenan'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code_regency'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_regency'
-        Footers = <>
-        Title.Caption = 'Kabupaten'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
         FieldName = 'code'
         Footers = <>
-        Title.Caption = 'Kode Kolektor'
+        Title.Caption = 'Kode'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'initial_code'
+        Footers = <>
+        Title.Caption = 'Kode Inisial'
+        Width = 150
       end
       item
         CellButtons = <>
@@ -91,39 +67,23 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'name'
         Footers = <>
-        Title.Caption = 'Nama Kolektor'
-        Width = 200
+        Title.Caption = 'Nama Kelompok'
+        Width = 230
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nik_employee'
+        FieldName = 'description'
         Footers = <>
-        Title.Caption = 'NIK Karyawan'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'phone_number'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'address'
-        Footers = <>
-        Visible = False
+        Title.Caption = 'keterangan'
+        Width = 300
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object ActMenu: TActionManager
-    Left = 560
+    Left = 600
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
@@ -172,7 +132,7 @@ object FListKolektor: TFListKolektor
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 560
+    Left = 600
     Top = 72
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -690,53 +650,35 @@ object FListKolektor: TFListKolektor
         0000000049454E44AE426082}
     end
   end
-  object QKolektor: TUniQuery
+  object QKelompokBiaya: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_collector"'
+      'select * from "public"."t_cost_group"'
       'where deleted_at is null order by created_at Desc')
-    Left = 388
+    Left = 428
     Top = 56
-    object QKolektorcode_kares: TStringField
-      FieldName = 'code_kares'
-      Size = 100
-    end
-    object QKolektorname_kares: TStringField
-      FieldName = 'name_kares'
-      Size = 255
-    end
-    object QKolektorcode_regency: TStringField
-      FieldName = 'code_regency'
-      Size = 100
-    end
-    object QKolektorname_regency: TStringField
-      FieldName = 'name_regency'
-      Size = 255
-    end
-    object QKolektorcode: TStringField
+    object QKelompokBiayacode: TStringField
       FieldName = 'code'
       Required = True
       Size = 50
     end
-    object QKolektorname: TStringField
+    object QKelompokBiayainitial_code: TStringField
+      FieldName = 'initial_code'
+      Size = 255
+    end
+    object QKelompokBiayaname: TStringField
       FieldName = 'name'
       Size = 255
     end
-    object QKolektornik_employee: TStringField
-      FieldName = 'nik_employee'
-      Size = 100
-    end
-    object QKolektorphone_number: TStringField
-      FieldName = 'phone_number'
-    end
-    object QKolektoraddress: TMemoField
-      FieldName = 'address'
+    object QKelompokBiayadescription: TMemoField
+      FieldName = 'description'
+      OnGetText = QKelompokBiayadescriptionGetText
       BlobType = ftMemo
     end
   end
-  object DsKolektor: TDataSource
-    DataSet = QKolektor
-    Left = 473
-    Top = 32
+  object DsKelompokBiaya: TDataSource
+    DataSet = QKelompokBiaya
+    Left = 505
+    Top = 40
   end
 end

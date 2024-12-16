@@ -904,6 +904,38 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UPengajuanApproval_JurnalTrans.pas"/>
+        <DCCReference Include="UDataListPelakuBiaya.pas">
+            <Form>FDataListPelakuBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataPeLakuBiaya.pas">
+            <Form>FDataPeLakuBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataKelompokBiaya.pas">
+            <Form>FDataKelompokBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataListKelompokBiaya.pas">
+            <Form>FDataListKelompokBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataKasBon.pas">
+            <Form>FDataKasBon</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListKasBon.pas">
+            <Form>FListKasBon</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListKasKecil.pas">
+            <Form>FListKasKecil</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataKasKecil.pas">
+            <Form>FDataKasKecil</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -19,10 +19,10 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Width = 1258
     Height = 456
     Hint = ''
-    ActivePage = TabAkunPerkiraan
+    ActivePage = TabMasterPelanggan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 1252
     ExplicitHeight = 447

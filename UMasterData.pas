@@ -41,7 +41,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UDataPenagihanPiutang, UMovingDPP, UNew_Supplier, UDataPengeluaranKasBank,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
   URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
-  UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank;
+  UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank, UDataKasBon,
+  UDataKasKecil;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -246,11 +247,44 @@ begin
 
 
   end;
-
+  if vcall='kaskecil_group_biaya' then
+  begin
+    FDataKasKecil.MemDetailAkun.edit;
+    FDataKasKecil.MemDetailAkun['kd_group_biaya']:=MemMasterData['KD_MASTER'];
+    FDataKasKecil.MemDetailAkun['nm_group_biaya']:=MemMasterData['NM_MASTER'];
+    FDataKasKecil.MemDetailAkun.post;
+  end;
+  if vcall='kaskecil_pelaku_biaya' then
+  begin
+    FDataKasKecil.edKodeKepada.Text:=MemMasterData['KD_MASTER'];
+    FDataKasKecil.edNamaKepada.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='m_sumber_kas' then
+  begin
+    FDataKasKecil.edKodeSumberKas.Text:=MemMasterData['KD_MASTER'];
+    FDataKasKecil.edNamaSumberKas.Text:=MemMasterData['NM_MASTER'];
+    FDataKasKecil.stat_bon:=StrToInt(SelectRow('select stat_receipt from t_petty_cash_source where code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
+  end;
+  if vcall='data_kasbon' then
+  begin
+    FDataKasKecil.edNomorKasBon.Text:=MemMasterData['KD_MASTER'];
+  end;
+  if vcall='kasbon_group_biaya' then
+  begin
+    FDataKasBon.MemDetailAkun.edit;
+    FDataKasBon.MemDetailAkun['kd_group_biaya']:=MemMasterData['KD_MASTER'];
+    FDataKasBon.MemDetailAkun['nm_group_biaya']:=MemMasterData['NM_MASTER'];
+    FDataKasBon.MemDetailAkun.post;
+  end;
+  if vcall='kasbon_pelaku_biaya' then
+  begin
+    FDataKasBon.edKodeKepada.Text:=MemMasterData['KD_MASTER'];
+    FDataKasBon.edNamaKepada.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_mata_uang' then
   begin
     FDataPenerimaanBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
-    FDataPenerimaanBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];  
+    FDataPenerimaanBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
     FDataPenerimaanBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
   end;
   if vcall='m_bank' then
