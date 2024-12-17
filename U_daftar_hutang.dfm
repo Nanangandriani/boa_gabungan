@@ -3,8 +3,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Daftar Hutang'
-  ClientHeight = 525
-  ClientWidth = 1024
+  ClientHeight = 534
+  ClientWidth = 1030
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,12 @@ object FDaftar_Hutang: TFDaftar_Hutang
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 1024
+    Width = 1030
     Height = 109
     Align = alTop
     Color = 15987699
     TabOrder = 0
+    ExplicitWidth = 1024
     object Label3: TLabel
       Left = 475
       Top = 13
@@ -92,7 +93,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Left = 641
       Top = 11
       Width = 311
-      Height = 21
+      Height = 24
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -110,7 +111,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Left = 552
       Top = 11
       Width = 83
-      Height = 21
+      Height = 24
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -238,11 +239,13 @@ object FDaftar_Hutang: TFDaftar_Hutang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 484
-    Width = 1024
+    Top = 493
+    Width = 1030
     Height = 41
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 484
+    ExplicitWidth = 1024
     object Label4: TLabel
       Left = 46
       Top = 13
@@ -514,11 +517,13 @@ object FDaftar_Hutang: TFDaftar_Hutang
   object RzPanel2: TRzPanel
     Left = 0
     Top = 109
-    Width = 1024
-    Height = 375
+    Width = 1030
+    Height = 384
     Align = alClient
     Color = 15987699
     TabOrder = 2
+    ExplicitWidth = 1024
+    ExplicitHeight = 375
     object DBGridDafHutang: TDBGridEh
       Left = 2
       Top = 2
@@ -725,9 +730,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
         'trans_no as no_inv,faktur_no as nofakturpajak,faktur_date,sj_no,' +
         'valas,valas_value,due_date,plan_stat,(case when sj_status=1 and ' +
         'fk_status=1 and invoice_status=1 then 1 else 0 end)status,0 as p' +
-        'pnrp,id as urutan,approval_status  from purchase.t_purchase_invo' +
-        'ice where (faktur_date + due_date) between '#39'2024-06-20'#39' and '#39'202' +
-        '4-10-10'#39' '
+        'pnrp,id as urutan,approval_status  from t_purchase_invoice where' +
+        ' (faktur_date + due_date) between '#39'2024-06-20'#39' and '#39'2024-10-10'#39' '
       '   '
       'union all  '
       
@@ -736,10 +740,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
         '.date_trans as tgl_faktur,'#39#39'::character varying as nosj,'#39'Rp'#39'::ch' +
         'aracter varying as valas,0 as valas_value,  0 as  due_date,false' +
         ' as stat_rencana,1 as status,0 as ppnrp,0 as id,0 as status_appr' +
-        'oval  from sale.t_delivery_order a'
-      
-        'inner join sale.t_delivery_order_services b  on a.notrans=b.notr' +
-        'ans  '
+        'oval  from t_delivery_order a'
+      'inner join t_delivery_order_services b  on a.notrans=b.notrans  '
       'where a.date_trans between '#39'2024-06-20'#39' and '#39'2024-10-10'#39
       ')a'
       'left join '
@@ -747,52 +749,51 @@ object FDaftar_Hutang: TFDaftar_Hutang
         '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as j' +
         'umlah,(case when b.valas='#39'USD'#39' then sum(a.subtotalrp) else sum(a' +
         '.grandtotal) end)as hutang,a.subtotal,a.ppn_rp ,sum(a.pph_rp)as ' +
-        'npph from purchase.t_purchase_invoice_det a,purchase.t_purchase_' +
-        'invoice b  where a.trans_no=b.trans_no group by a.trans_no,b.sup' +
-        'plier_code,b.valas,a.subtotal,a.ppn_rp order by trans_no,supplie' +
-        'r_code)b on a.trans_no=b.trans_no and a.kodesup=b.supplier_code ' +
-        #9
+        'npph from t_purchase_invoice_det a,t_purchase_invoice b  where a' +
+        '.trans_no=b.trans_no group by a.trans_no,b.supplier_code,b.valas' +
+        ',a.subtotal,a.ppn_rp order by trans_no,supplier_code)b on a.tran' +
+        's_no=b.trans_no and a.kodesup=b.supplier_code '#9
       'left join '
       't_supplier c on a.kodesup=c.supplier_code  '
       'left join '
       
-        '(select faktur_no from cash_banks.t_paid_debt_det)as lunas  on a' +
-        '.nofakturpajak=lunas.faktur_no  '
+        '(select faktur_no from t_paid_debt_det)as lunas  on a.nofakturpa' +
+        'jak=lunas.faktur_no  '
       'left join '
       
         '(select a.receive_no,b.valas_value,b.valas,case when b.valas='#39'US' +
         'D'#39' then sum(a.total_price)*b.valas_value else sum(b.price+b.ppn_' +
-        'rp) end as nil_retur from purchase.t_purchase_return_det a,purch' +
-        'ase.t_purchase_return b where a.return_no=b.return_no  group by ' +
-        'a.receive_no,b.valas_value,b.valas order by a.receive_no)retur o' +
-        'n a.trans_no=retur.receive_no  '
+        'rp) end as nil_retur from t_purchase_return_det a,t_purchase_ret' +
+        'urn b where a.return_no=b.return_no  group by a.receive_no,b.val' +
+        'as_value,b.valas order by a.receive_no)retur on a.trans_no=retur' +
+        '.receive_no  '
       'left join '
       
         '(select receive_no,sum(price_rp) as nilai_pot_rp,sum(price) as n' +
-        'ilai_pot_dolar,sum(ppnrp)as ppnrp from purchase.t_purchase_disco' +
-        'unt GROUP BY receive_no)pot on a.trans_no=pot.receive_no'
+        'ilai_pot_dolar,sum(ppnrp)as ppnrp from t_purchase_discount GROUP' +
+        ' BY receive_no)pot on a.trans_no=pot.receive_no'
       'left join'
       
         '(select notrans as do_no,vendor_code,sum(total_cost)as harga fro' +
-        'm sale.t_delivery_order_services group by do_no,vendor_code orde' +
-        'r by do_no,vendor_code)do1 on a.trans_no=do1.do_no'
+        'm t_delivery_order_services group by do_no,vendor_code order by ' +
+        'do_no,vendor_code)do1 on a.trans_no=do1.do_no'
       ')xxx'
       'left join'
       
         '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um' +
         ' end)nilai_um from  '
       
-        '(select distinct a.trans_no,a.po_no,b.supplier_code from purchas' +
-        'e.t_purchase_invoice_det a,purchase.t_purchase_invoice b where a' +
-        '.trans_no=b.trans_no  and (faktur_date + due_date) between '#39'2024' +
-        '-06-20'#39' and '#39'2024-10-10'#39')a  '
+        '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purch' +
+        'ase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_' +
+        'no  and (faktur_date + due_date) between '#39'2024-06-20'#39' and '#39'2024-' +
+        '10-10'#39')a  '
       'left join  '
       
-        '(select supplier_code,po_no,sum(um_value)as nilai_um from purcha' +
-        'se.t_po where um_status=true and po_date<='#39'2024-10-21'#39'  group  b' +
-        'y po_no,supplier_code order by po_no,supplier_code)b on a.po_no=' +
-        'b.po_no and a.supplier_code=b.supplier_code)um_beli on xxx.no_in' +
-        'v=um_beli.trans_no'
+        '(select supplier_code,po_no,sum(um_value)as nilai_um from t_po w' +
+        'here um_status=true and po_date<='#39'2024-10-21'#39'  group  by po_no,s' +
+        'upplier_code order by po_no,supplier_code)b on a.po_no=b.po_no a' +
+        'nd a.supplier_code=b.supplier_code)um_beli on xxx.no_inv=um_beli' +
+        '.trans_no'
       ''
       ')zzz'
       ''
@@ -801,13 +802,13 @@ object FDaftar_Hutang: TFDaftar_Hutang
       ''
       'left join '
       
-        '(select faktur_no,plan_to from cash_banks.v_plan_paid_debt where' +
-        ' paid_status=0  and periode1 between '#39'2024-06-20'#39' and '#39'2024-10-1' +
-        '0'#39')yy on y.nofakturpajak=yy.faktur_no'
+        '(select faktur_no,plan_to from v_plan_paid_debt where paid_statu' +
+        's=0  and periode1 between '#39'2024-06-20'#39' and '#39'2024-10-10'#39')yy on y.' +
+        'nofakturpajak=yy.faktur_no'
       'left join'
       
-        '(select lpb_no,pay from cash_banks.t_buy_pay)z on y.no_inv=z.lpb' +
-        '_no ORDER BY y.urutan) zz')
+        '(select lpb_no,pay from t_buy_pay)z on y.no_inv=z.lpb_no ORDER B' +
+        'Y y.urutan) zz')
     Left = 744
     Top = 40
     object QdaftarHutangtanggal: TDateField

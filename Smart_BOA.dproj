@@ -899,6 +899,7 @@
             <Form>FListPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< Updated upstream
         <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
             <Form>FPengajuan_AppJurnal_Trans</Form>
         </DCCReference>
@@ -956,6 +957,23 @@
         </DCCReference>
         <DCCReference Include="UStokMat_Prod.pas">
             <Form>FStokMat_Prod</Form>
+=======
+        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas"/>
+        <DCCReference Include="U_List_Kasbon.pas">
+            <Form>FKasbon</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UList_Pelaku_Biaya.pas">
+            <Form>FListPelakuBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_Pelaku_Biaya.pas">
+            <Form>FPelaku_Biaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Kasbon.pas">
+            <Form>FNew_Kasbon</Form>
+>>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

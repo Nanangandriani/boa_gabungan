@@ -4623,7 +4623,6 @@ object FHomeLogin: TFHomeLogin
       StyleDisabled.ButtonStyle = btsFlat
       TabOrder = 0
       OnClick = CbSBUClick
-      OnKeyPress = CbSBUKeyPress
       Width = 265
     end
   end

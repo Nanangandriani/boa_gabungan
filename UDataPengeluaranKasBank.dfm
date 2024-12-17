@@ -875,6 +875,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1098
+      ExplicitHeight = 198
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -967,8 +969,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
-      ExplicitWidth = 1098
-      ExplicitHeight = 198
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

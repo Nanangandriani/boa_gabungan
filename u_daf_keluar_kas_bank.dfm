@@ -245,7 +245,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'Baru  '
+      Caption = 'New'
       OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction

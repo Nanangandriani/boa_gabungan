@@ -1,2 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2024/12/12 15:11:53.718,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>2024/12/12 15:26:36.753,=D:\Project Gabungan\back_office_automation\Unit2.pas</Transaction>
+    <Transaction>2024/12/12 15:31:13.103,D:\Project Gabungan\back_office_automation\U_List_Kasbon.dfm=D:\Project Gabungan\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>2024/12/12 15:31:13.103,D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>2024/12/12 15:31:29.351,D:\Project Gabungan\back_office_automation\UNew_Kasbon.dfm=D:\Project Gabungan\back_office_automation\Unit2.dfm</Transaction>
+    <Transaction>2024/12/12 15:31:29.351,D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas=D:\Project Gabungan\back_office_automation\Unit2.pas</Transaction>
+    <Transaction>2024/12/17 09:11:43.353,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
+    <Transaction>2024/12/17 09:36:35.912,=D:\Project Gabungan\back_office_automation\U_Pelaku_Biaya.pas</Transaction>
+  </Transactions>
+</BorlandProject>

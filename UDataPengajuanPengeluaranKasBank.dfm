@@ -803,6 +803,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
           item
             CellButtons = <
               item
+                Style = ebsPlusEh
                 OnClick = DBGridAkunColumns5CellButtons0Click
               end>
             DynProps = <>
@@ -876,10 +877,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1098
-      ExplicitHeight = 196
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

@@ -165,6 +165,7 @@ type
     procedure HitungKurs;
     procedure CekPosisiDK;
     procedure save;
+    procedure update;
     procedure Autonumber;
     procedure InsertDetailAkun;
     procedure InsertDetailHutang;
@@ -181,6 +182,93 @@ uses UDataModule, UCari_DaftarPerk, UMasterData, USearch_Supplier,
   udafajuankeluarkasbank, UMy_Function, u_daf_keluar_kas_bank, UHomeLogin;
 
 
+procedure TFDataPengeluaranKasBank.update;
+begin
+   with dm.Qtemp do
+   begin
+      close;
+      sql.Clear;
+      sql.Add('UPDATE "public"."t_cash_bank_expenditure" SET '+
+              //' "voucher_no"='+QuotedStr(edNoTrans.Text)+','+
+              ' "voucher_tmp"='+QuotedStr(Ed_voucher_ajuan.Text)+','+
+              ' "subvoucher"=NULL,'+
+              ' "remark"='+QuotedStr(MemKeterangan.Text)+','+
+              ' "entry_date"=Now(),'+
+              ' "trans_date"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
+              ' "periode1"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+
+              ' "periode2"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+
+              ' "amount"='+QuotedStr(FloatToStr(edJumlah.value))+','+
+              ' "account_code"=NULL,'+
+              ' "group_code"=NULL,'+
+              ' "group_name"=NULL,'+
+              ' "tp_code"=NULL,'+
+              ' "account_name"=NULL,'+
+              ' "dk"=NULL,'+
+              ' "perpetrator_id"=NULL,'+
+              ' "debit"=NULL,'+
+              ' "kredit"NULL,'+
+              ' "header_code="NULL,'+
+              ' "ref_no"='+QuotedStr(edKodeSumberPengeluaran.Text)+','+
+              ' "posting"=NULL,'+
+              ' "customer_code"=NULL,'+
+              ' "supplier_code"='+QuotedStr(edKode_supplier.Text)+','+
+              ' "cash_type"=NULL,'+
+              ' "job_no"=NULL,'+
+              ' "company_code"=NULL,'+
+              ' "trans_year"='+QuotedStr(Edth.Text)+','+
+              ' "trans_month"='+QuotedStr(Edbln.Text)+','+
+              ' "trans_day"='+QuotedStr(Edhari.Text)+','+
+              ' "order_no"='+QuotedStr(order_no)+','+
+              ' "giro_no"=NULL,'+
+              ' "bank_giro_name"=NULL,'+
+              ' "giro_due_date"=NULL,'+
+              ' "customer_name"=NULL,'+
+              ' "supplier_name"='+QuotedStr(edNama_Supplier.Text)+','+
+              ' "to_"='+QuotedStr(Ed_kepada.Text)+','+
+              ' "deposit"=NULL,'+
+              ' "deposit_date"=NULL,'+
+              ' "tgup"=NULL,'+
+              ' "voucher_code"=NULL,'+
+              ' "to_getout"='+QuotedStr(edUntukPengeluaran.Text)+','+
+              //' "stat"=0,'+
+              ' "time_lock"=NULL,'+
+              ' "update_time"=NULL,'+
+              ' "stat_lock"=NULL,'+
+              ' "currency"='+QuotedStr(edKodeMataUang.Text)+','+
+              ' "kurs"='+QuotedStr(FloatToStr(edKurs.value))+','+
+              //' "bon_no"=NULL,'+
+              //' "post_status"=0,'+
+              //' "created_at"=now(),'+
+              ' "created_by"='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' "updated_at"=Now(),'+
+              ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              //' "deleted_at"=NULL,'+
+              //' "deleted_by"=NULL,'+
+              ' "bank_norek"='+QuotedStr(edNoRek.Text)+','+
+              ' "bank_name"='+QuotedStr(edNamaBank.Text)+','+
+              //' "cek_no"=NULL,'+
+              ' "trans_type_code"='+QuotedStr(code_Trans.Text)+','+
+              ' "trans_type_name"='+QuotedStr(Cb_Jenis_Trans.Text)+','+
+              //' "bank_number_account"=NULL,'+
+              //' "bank_name_account"=NULL,'+
+              ' "additional_code"='+QuotedStr(Ed_Additional.Text)+' '+
+              ' WHERE voucher_no='+QuotedStr(edNoTrans.Text)+'');
+      ExecSQL;
+   end;
+   if MemDetailAkun.RecordCount<>0 then
+   begin
+      InsertDetailAkun;
+   end;
+
+   if MemDetailHutang.RecordCount<>0 then
+   begin
+      InsertDetailHutang;
+   end;
+   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+   Close;
+   Fdaf_pengeluaran_kas_bank.Refresh;
+end;
+
 procedure TFDataPengeluaranKasBank.InsertDetailHutang;
 begin
     with Dm.Qtemp1 do
@@ -188,7 +276,7 @@ begin
       close;
       sql.clear;
       sql.add(' SELECT * from ('+
-              ' SELECT * from "cash_banks"."t_cash_bank_expenditure_payable" '+
+              ' SELECT * from "t_cash_bank_expenditure_payable" '+
               ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
               ' Order By voucher_no desc');
       open;
@@ -200,7 +288,7 @@ begin
       begin
       close;
       sql.clear;
-      sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_expenditure_payable" '+
+      sql.Text:=' DELETE FROM  "t_cash_bank_expenditure_payable" '+
                 ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
       ExecSQL;
       end;
@@ -213,7 +301,7 @@ begin
       begin
           close;
           sql.clear;
-          sql.Add(' INSERT INTO "cash_banks"."t_cash_bank_expenditure_payable" ("voucher_no", '+
+          sql.Add(' INSERT INTO "t_cash_bank_expenditure_payable" ("voucher_no", '+
                   ' "invoice_no", "sj_no", "faktur_no", "faktur_date", "trans_date", "supplier_code", '+
                   ' "supplier_name", "trans_type_code", "trans_type_name", "bank_number_account", '+
                   ' "bank_name_account", "paid_amount", "description","account_acc") '+
@@ -246,7 +334,7 @@ begin
       close;
       sql.clear;
       sql.add(' SELECT * from ('+
-              ' SELECT * from "cash_banks"."t_cash_bank_expenditure_det"'+
+              ' SELECT * from "t_cash_bank_expenditure_det"'+
               ' WHERE "no_voucher"='+QuotedStr(edNoTrans.Text)+' ) a '+
               ' Order By no_voucher desc');
       open;
@@ -257,7 +345,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:=' DELETE FROM  "cash_banks"."t_cash_bank_expenditure_det" '+
+        sql.Text:=' DELETE FROM  "t_cash_bank_expenditure_det" '+
                   ' WHERE "no_voucher"='+QuotedStr(edNoTrans.Text)+';';
         ExecSQL;
       end;
@@ -270,7 +358,7 @@ begin
        begin
           Close;
           sql.Clear;
-          sql.Text:='INSERT into cash_banks.t_cash_bank_expenditure_det("no_voucher","code_account","name_account",'+
+          sql.Text:='INSERT into t_cash_bank_expenditure_det("no_voucher","code_account","name_account",'+
                     '"position","paid_amount","description","code_account_header","amount_rate_results",'+
                     '"module_id","trans_date","no_voucher_sub") '+
                     'VALUES(:parno_voucher,:parcode_account,:parname_account,:parposition,:parpaid_amount,'+
@@ -307,7 +395,7 @@ procedure TFDataPengeluaranKasBank.Autonumber;
 begin
      idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(Fdaf_pengeluaran_kas_bank.Name)+'');
      strday2:=dtTrans.Date;
-     edNoTrans.Text:=getNourut(strday2,'cash_banks.t_cash_bank_expenditure',(Ed_Additional.Text));
+     edNoTrans.Text:=getNourut(strday2,'t_cash_bank_expenditure',(Ed_Additional.Text));
      EdNo.Text:=Order_no;
 end;
 procedure TFDataPengeluaranKasBank.save;
@@ -316,7 +404,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "cash_banks"."t_cash_bank_expenditure" '+
+    sql.add(' Insert into "t_cash_bank_expenditure" '+
             '("voucher_no","voucher_tmp","subvoucher","remark","entry_date","trans_date", '+
             ' "periode1", "periode2","amount","account_code","group_code","group_name", '+
             ' "tp_code","account_name","dk","perpetrator_id","debit","kredit", '+
@@ -878,7 +966,7 @@ begin
   begin
     FMasterData.Caption:='Master Jenis Pembayaran';
     FMasterData.vcall:='jenis_pengeluaran';
-    FMasterData.update_grid('code','name','description','"cash_banks"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+    FMasterData.update_grid('code','name','description','"t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
     FMasterData.ShowModal;
     //Autocode;
   end;
@@ -903,7 +991,7 @@ begin
         close;
         sql.Clear;
         sql.Text:='SELECT code_account,name_account,position,paid_amount,description,code_account_header, '+
-                  'amount_rate_results,module_id FROM cash_banks.t_cash_bank_expenditure_submission_det '+
+                  'amount_rate_results,module_id FROM t_cash_bank_expenditure_submission_det '+
                   'WHERE no_voucher='+QuotedStr(FDataPengeluaranKasBank.Ed_voucher_ajuan.text)+'';
         Open;
       end;
@@ -984,9 +1072,9 @@ begin
                   '(SELECT "voucher_no" as no_voucher, trans_date as "date_trans", periode1 as "period_date1", '+
                   ' periode2 as "period_date2", trans_type_code as"code_type_trans",trans_type_name  as "name_type_trans",'+
                   ' bank_number_account as "account_number_bank", bank_name_account as "account_name_bank", currency, "kurs",'+
-                  ' "amount", "to_", "remark", customer_code as  "code_cust",customer_name as "name_cust"  from "cash_banks"."t_cash_bank_expenditure") a '+
+                  ' "amount", "to_", "remark", customer_code as  "code_cust",customer_name as "name_cust"  from "t_cash_bank_expenditure") a '+
                   'LEFT JOIN '+
-                  '(SELECT no_voucher, "code_account", "name_account", "position", "paid_amount", "description" from "cash_banks"."t_cash_bank_expenditure_det") b  ON a."no_voucher"=b."no_voucher" '+
+                  '(SELECT no_voucher, "code_account", "name_account", "position", "paid_amount", "description" from "t_cash_bank_expenditure_det") b  ON a."no_voucher"=b."no_voucher" '+
                   'WHERE a."no_voucher"='+QuotedStr(edNoTrans.Text)+' '+
                   'AND a."no_voucher"='+QuotedStr(Dm.Qtemp1.fieldbyname('code_account').value)+''+
                   'ORDER BY "position" desc ');
@@ -1053,7 +1141,7 @@ begin
     sql.add(' SELECT "no_voucher", "no_invoice", "no_invoice_tax", "code_cust", '+
             ' "name_cust", "date_trans", "code_type_trans", "name_type_trans", '+
             ' "account_number_bank", "account_name_bank", "paid_amount", "description", "account_acc" '+
-            ' from "cash_banks"."t_cash_bank_acceptance_receivable" '+
+            ' from "t_cash_bank_acceptance_receivable" '+
             ' WHERE "no_voucher"='+QuotedStr(edNoTrans.Text)+' '+
             ' Order BY no_invoice_tax asc');
     open;
