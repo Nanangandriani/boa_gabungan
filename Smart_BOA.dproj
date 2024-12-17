@@ -976,6 +976,10 @@
 >>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UList_Pelaku_Biaya.pas">
+            <Form>FListPelakuBiaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

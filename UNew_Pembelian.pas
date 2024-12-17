@@ -1262,7 +1262,7 @@ begin
               SQL.Clear;
               SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
                         ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
-                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from warehouse.t_item_stock a '+
+                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a '+
                         ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
                         ' inner join t_po c on b.po_no=c.po_no '+
                         ' inner join t_item e on a.item_code=e.item_code '+
@@ -1292,7 +1292,7 @@ begin
               SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,d.qty, '+
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
-                        ' from warehouse.t_item_stock a '+
+                        ' from t_item_stock a '+
                         ' inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code '+
                         ' inner join t_item_receive C on b.receive_no=c.receive_no '+
                         ' inner join t_spb_det d on d.spb_no=c.spb_no '+
@@ -1580,7 +1580,7 @@ begin
         begin
           close;
           sql.Clear;
-          sql.Text:='select * from warehouse.t_item_stock_det where ' +
+          sql.Text:='select * from t_item_stock_det where ' +
                     'item_stock_code='+QuotedStr(MemterimaDet['kd_material'])+''+
                     'and stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
           Execute;
@@ -1591,7 +1591,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='Update warehouse.t_item_stock_det set qty=:parqty,unit=:parunit'+
+            sql.Text:='Update t_item_stock_det set qty=:parqty,unit=:parunit'+
                       'where item_stock_code=:paritem_stock_code and stock_code=:parstock_code';
             ParamByName('parqty').Value:=DM.Qtemp2['qty']+MemterimaDet['qty'];
             ParamByName('parunit').Value:=MemterimaDet['satuan'];
@@ -1607,7 +1607,7 @@ begin
           begin
             close;
             sql.Clear;
-            sql.Text:='	INSERT INTO warehouse.t_item_stock_det(item_stock_code,stock_code,qty,'+
+            sql.Text:='	INSERT INTO t_item_stock_det(item_stock_code,stock_code,qty,'+
                       ' unit,qtyout,"outstanding",wh_code,reciving_date)VALUES(:paritem_stock_code,:parstock_code,:parqty,'+
                       ' :parunit,:parqtyout,:paroutst,:parwh,:parreciving_date)';
                       //ParamByName('paritem_stock_code').Value:=MemterimaDet['kd_material'];

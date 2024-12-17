@@ -27,8 +27,10 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 32
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 604
+    ExplicitWidth = 1113
     object BBatal: TRzBitBtn
-      Left = 1045
+      Left = 1041
       Top = 1
       Height = 30
       Align = alRight
@@ -87,10 +89,10 @@ object FNew_Pembelian: TFNew_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1041
+      ExplicitLeft = 1037
     end
     object BSimpan: TRzBitBtn
-      Left = 970
+      Left = 966
       Top = 1
       Height = 30
       Align = alRight
@@ -149,10 +151,10 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 966
+      ExplicitLeft = 962
     end
     object BEdit: TRzBitBtn
-      Left = 895
+      Left = 891
       Top = 1
       Height = 30
       Align = alRight
@@ -211,10 +213,10 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 891
+      ExplicitLeft = 887
     end
     object BPosting: TRzBitBtn
-      Left = 820
+      Left = 816
       Top = 1
       Height = 30
       Align = alRight
@@ -274,10 +276,10 @@ object FNew_Pembelian: TFNew_Pembelian
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 816
+      ExplicitLeft = 812
     end
     object Button1: TButton
-      Left = 745
+      Left = 741
       Top = 1
       Width = 75
       Height = 30
@@ -286,7 +288,7 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 4
       Visible = False
       OnClick = Button1Click
-      ExplicitLeft = 741
+      ExplicitLeft = 737
     end
   end
   object Panel2: TPanel
@@ -296,6 +298,7 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 217
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 1113
     object Label1: TLabel
       Left = 27
       Top = 256
@@ -744,6 +747,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Align = alClient
     Color = 15987699
     TabOrder = 2
+    ExplicitWidth = 1113
+    ExplicitHeight = 387
     object Label26: TLabel
       Left = 41
       Top = 185
@@ -842,28 +847,26 @@ object FNew_Pembelian: TFNew_Pembelian
     object PGFaktur: TRzPageControl
       Left = 2
       Top = 2
-      Width = 1117
-      Height = 246
+      Width = 1113
+      Height = 245
       Hint = ''
       ActivePage = TabBarang2
       Align = alClient
       TabIndex = 0
       TabOrder = 6
-      ExplicitWidth = 1113
-      ExplicitHeight = 245
+      ExplicitWidth = 1109
+      ExplicitHeight = 244
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 1109
-        ExplicitHeight = 220
+        ExplicitWidth = 1105
+        ExplicitHeight = 219
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1113
-          Height = 221
+          Width = 1109
+          Height = 220
           Align = alClient
           DataSource = DsTerimadet
           DynProps = <>
@@ -1204,15 +1207,11 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1113
-          Height = 221
+          Width = 1109
+          Height = 220
           Align = alClient
           DataGrouping.GroupLevels = <
             item
@@ -1295,15 +1294,11 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Retur_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Retur Pembelian'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridReturPemb: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1113
-          Height = 221
+          Width = 1109
+          Height = 220
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1404,15 +1399,11 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Pot_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Pot. Pembelian'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1113
-          Height = 221
+          Width = 1109
+          Height = 220
           Align = alClient
           DynProps = <>
           TabOrder = 0
@@ -1476,15 +1467,11 @@ object FNew_Pembelian: TFNew_Pembelian
         Color = 15987699
         TabVisible = False
         Caption = 'Barang'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridBarang: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1113
-          Height = 221
+          Width = 1109
+          Height = 220
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1815,14 +1802,14 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object RzPanel2: TRzPanel
       Left = 2
-      Top = 248
-      Width = 1117
+      Top = 247
+      Width = 1113
       Height = 139
       Align = alBottom
       Color = 15987699
       TabOrder = 7
-      ExplicitTop = 247
-      ExplicitWidth = 1113
+      ExplicitTop = 246
+      ExplicitWidth = 1109
       object Label28: TLabel
         Left = 26
         Top = 81
@@ -2313,7 +2300,7 @@ object FNew_Pembelian: TFNew_Pembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       'select a.*,b.supplier_name '
-      'from purchase.t_advance_payment a'
+      'from t_advance_payment a'
       
         'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code where' +
         ' a.supplier_code='#39#39
@@ -2387,14 +2374,12 @@ object FNew_Pembelian: TFNew_Pembelian
       
         'b.po_no, c.supplier_code, d.spb_no,e.account_code,b.subtotal,b.g' +
         'randtotal,b.pemb_dpp,b.ppn_rp,b.ppn_pembulatan,b.pph_rp'
-      'from warehouse.t_item_stock a '
+      'from t_item_stock a '
       
-        'inner join purchase.t_item_receive_det b on a.item_stock_code=b.' +
-        'item_stock_code'
-      
-        'inner join purchase.t_item_receive C on b.receive_no=c.receive_n' +
-        'o'
-      'inner join  purchase.t_spb_det d on d.spb_no=c.spb_no'
+        'inner join t_item_receive_det b on a.item_stock_code=b.item_stoc' +
+        'k_code'
+      'inner join t_item_receive C on b.receive_no=c.receive_no'
+      'inner join t_spb_det d on d.spb_no=c.spb_no'
       'inner join t_item e on a.item_code=e.item_code'
       'inner join t_wh f on b.wh_code=f.wh_code'
       
@@ -2427,7 +2412,7 @@ object FNew_Pembelian: TFNew_Pembelian
   object QPot_pemb: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from purchase.t_purchase_discount')
+      'select * from t_purchase_discount')
     Left = 651
     Top = 313
   end

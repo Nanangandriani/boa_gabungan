@@ -108,7 +108,7 @@ type
 
 var
   FNew_TerimaMaterial: TFNew_TerimaMaterial;
-   thn,bln,statustrans,nopo:string;
+   thn,bln,statustrans,nopo,gudang:string;
    grandtotal:real;
 
 implementation
@@ -667,15 +667,16 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name,avg(c.um_value) umpo'+
+      sql.Text:='SELECT c.wh_code,c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name,avg(c.um_value) umpo'+
       ' FROM t_spb a inner join t_supplier b on a.supplier_code=b.supplier_code '+
       ' Left join (select a.*,b.spb_no from t_po A INNER JOIN t_spb_det b on a.po_no=b.po_no ) c on a.spb_no=c.spb_no '+
       ' Left join (SELECT AVG(a.pay)as um ,a.account_code,a.voucher_no,b.account_name FROM t_payment_detail_real a inner join'+
       ' t_ak_account b on a.account_code=b.code GROUP BY a.account_code,a.voucher_no,b.account_name) as d on a.po_no=d.voucher_no '+
       ' where a.spb_no='+QuotedStr(EdNoSPB.Text)+''+
-      ' GROUP BY  c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name';
+      ' GROUP BY c.wh_code,c.sbu_code,a.spb_no,a.supplier_code,b.supplier_name, c.valas,c.valas_value,c."type",c.due_date,d.account_code,d.um ,d.account_name';
       ExecSQL;
     end;
+    gudang:=dm.Qtemp['wh_code'];
     Edkd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
     EdNm_supp.Text:=Dm.Qtemp.FieldByName('supplier_name').AsString;
     EdValas.Text:=Dm.Qtemp.FieldByName('valas').AsString;
@@ -697,7 +698,6 @@ begin
     else
        Edkd_akunum.Text:=Dm.Qtemp['account_code'];
        Edsbu.Text:=DM.Qtemp['sbu_code'];
-
 end;
 
 procedure TFNew_TerimaMaterial.FormShow(Sender: TObject);

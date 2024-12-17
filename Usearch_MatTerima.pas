@@ -105,7 +105,7 @@ begin
         EditComplete:=CODE;
         FNew_TerimaMaterial.MemterimaDet.Edit;
         //FNew_Pembelian.MemterimaDet['item_stock_code']:= MemterimaDet['no_material']+ '/'+Edkd_supp.Text+'/'+EditComplete+'/'+QMaterial['wh_code']+'/'+yn;
-        FNew_TerimaMaterial.MemterimaDet['kd_stok']:= MemterimaDet['kd_material']+ '/'+Edkd_supp.Text+'/'+EditComplete+'/'+QMaterial['wh_code']+'/'+(yn);
+        FNew_TerimaMaterial.MemterimaDet['kd_stok']:= QMaterial['kd_material']+ '/'+Edkd_supp.Text+'/'+EditComplete+'/'+QMaterial['wh_code']+'/'+(yn);
         FNew_TerimaMaterial.MemterimaDet['nourut']:= EditComplete;
         FNew_TerimaMaterial.MemterimaDet.Post;
         FNew_TerimaMaterial.MemterimaDet.Next;
@@ -187,7 +187,7 @@ begin
           //MemterimaDet['kd_stok']:=MemterimaDet['kd_material'];
           //MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code'];
           //MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code']+'/'+MemterimaDet['wh_code'];
-          MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code']+'/'+QMaterial['wh_code'];
+          MemterimaDet['kd_stok']:=QMaterial['item_stock_code']+'/'+QMaterial['wh_code'];
           MemterimaDet.Post;
         end
         else

@@ -227,6 +227,7 @@ uses
   UBonPermt_Barang in 'UBonPermt_Barang.pas' {FBonPermt_Barang},
   UBon_Produksi in 'UBon_Produksi.pas' {FBon_Produksi},
   UBon_KmsnProd in 'UBon_KmsnProd.pas' {FBon_Kmsn_prod},
+<<<<<<< Updated upstream
   UStokMat_Prod in 'UStokMat_Prod.pas' {FStokMat_Prod};
 =======
   UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas',
@@ -234,6 +235,10 @@ uses
   UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya},
   U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
   UNew_Kasbon in 'UNew_Kasbon.pas' {FNew_Kasbon};
+>>>>>>> Stashed changes
+=======
+  UStokMat_Prod in 'UStokMat_Prod.pas' {FStokMat_Prod},
+  UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya};
 >>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
@@ -360,12 +365,16 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataKasBon, FDataKasBon);
   Application.CreateForm(TFListKasKecil, FListKasKecil);
   Application.CreateForm(TFListKasBon, FListKasBon);
+<<<<<<< Updated upstream
 =======
   Application.CreateForm(TFKasbon, FKasbon);
   Application.CreateForm(TFNew_Kasbon, FNew_Kasbon);
   Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
   Application.CreateForm(TFPelaku_Biaya, FPelaku_Biaya);
   Application.CreateForm(TFNew_Kasbon, FNew_Kasbon);
+>>>>>>> Stashed changes
+=======
+  Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
 >>>>>>> Stashed changes
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);

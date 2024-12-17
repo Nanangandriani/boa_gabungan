@@ -23,8 +23,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     Height = 32
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 384
+    ExplicitWidth = 576
     object BBatal: TRzBitBtn
-      Left = 508
+      Left = 504
       Top = 1
       Height = 30
       Align = alRight
@@ -83,11 +85,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 514
-      ExplicitTop = 6
+      ExplicitLeft = 500
     end
     object BEdit: TRzBitBtn
-      Left = 433
+      Left = 429
       Top = 1
       Height = 30
       Align = alRight
@@ -146,8 +147,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 427
-      ExplicitTop = 6
+      ExplicitLeft = 425
     end
     object BSelectAll: TRzBitBtn
       Left = 114
@@ -406,12 +406,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       
         'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code,c.du' +
         'e_date'
-      'from warehouse.t_item_stock a '
-      
-        'inner join purchase.t_podetail b on a.item_stock_code=b.item_sto' +
-        'ck_code'
-      'inner join purchase.t_po C on b.po_no=c.po_no'
-      'left join  purchase.t_spb_det d on c.po_no=d.po_no'
+      'from t_item_stock a '
+      'inner join t_podetail b on a.item_stock_code=b.item_stock_code'
+      'inner join t_po C on b.po_no=c.po_no'
+      'left join  t_spb_det d on c.po_no=d.po_no'
       'inner join t_item e on a.item_code=e.item_code'
       'inner join t_wh f on b.wh_code=f.wh_code '
       
@@ -437,19 +435,17 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       
         'b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.va' +
         'las,c.valas_value'
-      'from warehouse.t_item_stock a  '
+      'from t_item_stock a  '
       
-        'inner join purchase.t_item_receive_det b on a.item_stock_code=b.' +
-        'item_stock_code  '
-      
-        'inner join purchase.t_item_receive C on b.receive_no=c.receive_n' +
-        'o  '
-      'inner join purchase.t_spb_det d on d.spb_no=c.spb_no'
+        'inner join t_item_receive_det b on a.item_stock_code=b.item_stoc' +
+        'k_code  '
+      'inner join t_item_receive C on b.receive_no=c.receive_no  '
+      'inner join t_spb_det d on d.spb_no=c.spb_no'
       'inner join t_item e on a.item_code=e.item_code  '
       'inner join t_wh f on b.wh_code=f.wh_code'
       
-        'inner join purchase.t_item_receive_det g on d.item_stock_code=g.' +
-        'item_stock_code   '
+        'inner join t_item_receive_det g on d.item_stock_code=g.item_stoc' +
+        'k_code   '
       
         'GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b' +
         '.price,d.qty, b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pp' +
