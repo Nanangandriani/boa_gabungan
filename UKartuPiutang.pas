@@ -28,7 +28,7 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, cxSpinEdit, cxDropDownEdit, DateUtils,
   cxDBLookupComboBox, cxCheckComboBox, cxEdit, Vcl.StdCtrls, RzCmboBx, cxLabel,
-  MemTableDataEh, MemTableEh;
+  MemTableDataEh, MemTableEh, frxClass, frxDBSet;
 
 type
   TFKartuPiutang = class(TForm)
@@ -94,6 +94,28 @@ type
     MemMasterDetailno_urut: TStringField;
     MemMasterDetailketerangan: TStringField;
     MemMasterkode_pelanggan: TStringField;
+    QCetak: TUniQuery;
+    frxDBDKartuPiutang: TfrxDBDataset;
+    dsCetak: TDataSource;
+    Report: TfrxReport;
+    QCetaknomor: TLargeintField;
+    QCetakcustomer_code: TMemoField;
+    QCetakcustomer_name_pkp: TMemoField;
+    QCetakcode_region: TMemoField;
+    QCetakname_region: TMemoField;
+    QCetaktrans_no: TMemoField;
+    QCetaktgltrans: TDateField;
+    QCetaksaldo_awal: TFloatField;
+    QCetakno_urut: TMemoField;
+    QCetakketerangan: TMemoField;
+    QCetakdebet: TFloatField;
+    QCetakkredit: TFloatField;
+    QCetaksaldo: TFloatField;
+    QCetakcode_province: TStringField;
+    QCetakcode_kab: TStringField;
+    QCetakname_kab: TStringField;
+    QCetakcode_karesidenan: TStringField;
+    QCetakketerangan2: TMemoField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -106,6 +128,7 @@ type
     procedure btSearchClick(Sender: TObject);
     procedure QKartuPiutangcustomer_name_pkpGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
+    procedure btPreviewClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -121,7 +144,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData;
+uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function;
 var
   realfpiutang : TFKartuPiutang;
 // implementasi function
@@ -148,6 +171,74 @@ function LastDayOfMonth(Year, Month: Word): word;
 
 end;
 
+
+procedure TFKartuPiutang.btPreviewClick(Sender: TObject);
+var
+  dd,mm,yy:word;
+  bln_akhir,tgl1,tgl2:tdate;
+begin
+  mm:=cbBulan.ItemIndex;
+  yy:=spTahun.EditValue;
+  tgl1:=encodedate(yy,mm,1);
+  tgl2:=encodedate(yy,mm,LastDayOfMonth(yy,mm));
+  //bln_akhir:=encodedate(yy,mm-1,LastDayOfMonth(yy,mm-1));
+  //tgl2:=encodedate(yy,12,LastDayOfMonth(yy,12));
+
+  if mm=1 then
+  bln_akhir:=EncodeDate(yy-1,12,LastDayOfMonth(yy,mm-1))
+  else
+  bln_akhir:=EncodeDate(yy,mm-1,LastDayOfMonth(yy,mm-1));
+
+   with QCetak do
+   begin
+       close;
+       sql.Clear;
+       sql.add(' SELECT * from ( '+
+               ' SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC) AS nomor,  '+
+               ' *, ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY no_urut, '+
+               ' tgltrans ASC) AS NUMERIC), 2) AS saldo '+
+               ' FROM (SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, '+
+               ' saldo_awal, no_urut, keterangan, keterangan2, debet, kredit FROM '+
+               ' "public"."get_piutang_trx" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
+               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') '+
+               ' ORDER BY customer_code, no_urut, tgltrans ASC) AS subquery '+
+               ' ORDER BY customer_code, nomor) trx '+
+               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b   '+
+               ' ON "left"(code_region, 4)=b.code_kab '+
+               ' where customer_code<> ''0'' ');
+         if edKaresidenan.EditValue<>'' then
+         begin
+          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+         end;
+         if edKabupaten.EditValue<>'' then
+         begin
+          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+         end;
+       sql.add(' ORDER BY customer_code asc');
+       open;
+   end;
+
+ if QCetak.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetak.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_kartupiutang'+ '.fr3');
+   SetMemo(Report,'nama_PT',FHomeLogin.vKodePRSH);
+   SetMemo(Report,'periode',cbBulan.Text+'-'+FloatToStr(spTahun.EditValue));
+   //Report.DesignReport();
+   //ShowMessage('A');
+   Report.ShowReport();
+ end;
+
+end;
 
 procedure TFKartuPiutang.btSearchClick(Sender: TObject);
 var

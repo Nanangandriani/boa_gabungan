@@ -894,14 +894,14 @@
         <DCCReference Include="URpt_Neraca.pas">
             <Form>FRpt_Neraca</Form>
         </DCCReference>
-        <DCCReference Include="UMy_Function.pas"/>
+        <DCCReference Include="UMy_Function.pas"/>		
         <DCCReference Include="UListPenerimaanBank.pas">
             <Form>FListPenerimaanBank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
         <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
             <Form>FPengajuan_AppJurnal_Trans</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataListPelakuBiaya.pas">
             <Form>FDataListPelakuBiaya</Form>
@@ -957,8 +957,7 @@
         </DCCReference>
         <DCCReference Include="UStokMat_Prod.pas">
             <Form>FStokMat_Prod</Form>
-=======
-        <DCCReference Include="UPengajuanApproval_JurnalTrans.pas"/>
+            <FormType>dfm</FormType>
         <DCCReference Include="U_List_Kasbon.pas">
             <Form>FKasbon</Form>
             <FormType>dfm</FormType>
@@ -973,7 +972,6 @@
         </DCCReference>
         <DCCReference Include="UNew_Kasbon.pas">
             <Form>FNew_Kasbon</Form>
->>>>>>> Stashed changes
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UList_Pelaku_Biaya.pas">

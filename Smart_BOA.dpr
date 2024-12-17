@@ -212,8 +212,6 @@ uses
   URpt_Neraca in 'URpt_Neraca.pas' {FRpt_Neraca},
   UMy_Function in 'UMy_Function.pas',
   UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
-<<<<<<< Updated upstream
-  UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
   UDataListPelakuBiaya in 'UDataListPelakuBiaya.pas' {FDataListPelakuBiaya},
   UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya},
   UDataListKelompokBiaya in 'UDataListKelompokBiaya.pas' {FDataListKelompokBiaya},
@@ -229,16 +227,18 @@ uses
   UBon_KmsnProd in 'UBon_KmsnProd.pas' {FBon_Kmsn_prod},
 <<<<<<< Updated upstream
   UStokMat_Prod in 'UStokMat_Prod.pas' {FStokMat_Prod};
-=======
   UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas',
   U_List_Kasbon in 'U_List_Kasbon.pas' {FKasbon},
   UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya},
   U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
   UNew_Kasbon in 'UNew_Kasbon.pas' {FNew_Kasbon};
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
   UStokMat_Prod in 'UStokMat_Prod.pas' {FStokMat_Prod},
   UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya};
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
@@ -348,7 +348,6 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKontrak, FDaftarKontrak);
   Application.CreateForm(TFHomeLogin, FHomeLogin);
   Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
-<<<<<<< Updated upstream
   Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
   Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
   Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
@@ -357,6 +356,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListKasBon, FListKasBon);
   Application.CreateForm(TFListKasKecil, FListKasKecil);
   Application.CreateForm(TFDataKasKecil, FDataKasKecil);
+<<<<<<< Updated upstream
   Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
   Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
   Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
@@ -367,14 +367,19 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListKasBon, FListKasBon);
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
   Application.CreateForm(TFKasbon, FKasbon);
   Application.CreateForm(TFNew_Kasbon, FNew_Kasbon);
   Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
   Application.CreateForm(TFPelaku_Biaya, FPelaku_Biaya);
+<<<<<<< Updated upstream
   Application.CreateForm(TFNew_Kasbon, FNew_Kasbon);
 >>>>>>> Stashed changes
 =======
   Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);

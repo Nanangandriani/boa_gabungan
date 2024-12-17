@@ -1818,7 +1818,6 @@ object FBHPenjualan: TFBHPenjualan
     MasterSource = dsCetak
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Active = True
     Left = 860
     Top = 128
     ParamData = <
@@ -1826,7 +1825,7 @@ object FBHPenjualan: TFBHPenjualan
         DataType = ftString
         Name = 'trans_no'
         ParamType = ptInput
-        Value = '001-2024/XII/09-DKI'
+        Value = '001-2024/X/29-DKI'
       end>
     object StringField1: TStringField
       FieldName = 'trans_no'
