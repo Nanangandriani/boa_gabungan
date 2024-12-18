@@ -137,27 +137,28 @@ procedure TFRekapSisa_PO.BPrintClick(Sender: TObject);
 var fmt:TFormatSettings;
   subquery,subquery2,tgl1,tgl2:string;
 begin
-    if DtMulai.EditValue= null then
+{    if DtMulai.EditValue= null then
     begin
       MessageDlg('Tanggal Mulai Tidak boleh Kosong ',MtWarning,[MbOk],0);
       DtMulai.SetFocus;
       Exit;
-    end;
-    if DtSelesai.EditValue= null then
+    end;  }
+ {   if DtSelesai.EditValue= null then
     begin
       MessageDlg('Tanggal Selesai Tidak boleh Kosong ',MtWarning,[MbOk],0);
       DtSelesai.SetFocus;
       Exit;
     end;
     DM.refreshperusahaan;     
-    tgl1:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
+   // tgl1:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
     tgl2:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
     //NmBulan;
     subquery:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name, to_char(d.trans_date, ''dd mon yy'')as tglterima,'+
             ' d.qty,b.remaining_qty,b.price,b.item_stock_code,a.sbu_code, a.trans_category,e.wh_name,'+
             ' concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no inner join t_supplier c on  a.supplier_code=c.supplier_code Left JOIN ( '+
             ' SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from t_purchase_invoice a INNER JOIN '+
-            ' t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+''+
+            ' t_purchase_invoice_det b on a.trans_no=b.trans_no where '+// a.trans_date>='+quotedstr(tgl1)+' and
+            ' a.trans_date='+quotedstr(tgl2)+''+
             ' )as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_code where b.remaining_qty<>0 and a.status=''1'' '+
             ' and a.as_status=''1'' and a. trans_category='+QuotedStr(CbKategori.EditValue);
     subquery2:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name,'+
@@ -165,7 +166,8 @@ begin
             ' a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no'+
             ' inner join t_supplier c on a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code'+
             ' from t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no where  '+
-            ' a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+') as d on d.po_no=a.po_no '+
+            //' a.trans_date>='+quotedstr(tgl1)+' and
+            ' a.trans_date='+quotedstr(tgl2)+') as d on d.po_no=a.po_no '+
             ' and b.item_stock_code=d.item_stock_code INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 and*/ '+
             ' a.as_status=''1'' and a.trans_category='+QuotedStr(CbKategori.EditValue); 
 
@@ -183,7 +185,7 @@ begin
           Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapSisaPO.Fr3');
         //  Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['kode_perusahaan'];
           ///Tfrxmemoview(Rpt.FindObject('MGudang')).Memo.Text:=CbGudang.Text;
-          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue);
+          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtSelesai.editvalue);
           //frxReport1.Script.Variables['varPathGambar']:='Report\PMA.PNG';
           //TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
           Rpt.ShowReport();
@@ -193,7 +195,7 @@ begin
           Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapSisaPO_Dr.Fr3');
          // Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['kode_perusahaan'];
           ///Tfrxmemoview(Rpt.FindObject('MGudang')).Memo.Text:=CbGudang.Text;
-          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue);
+          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtSelesai.editvalue);
           //frxReport1.Script.Variables['varPathGambar']:='Report\PMA.PNG';
           //TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
           Rpt.ShowReport();
@@ -210,57 +212,75 @@ begin
                       ' union'+subquery2+' and sbu_code='+QuotedStr(loksbu)+''+
                       ' order by po_date,po_no asc';
            ExecSQL;
-        end;
+        end;                        }
       Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapSisaPO.Fr3');
       //Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['kode_perusahaan'];
       ///Tfrxmemoview(Rpt.FindObject('MGudang')).Memo.Text:=CbGudang.Text;
       //Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=FormatDateTime('dd MMMM',DtMulai.editvalue)+'-'+FormatDateTime('dd MMMM yyy',DtSelesai.Date);
       //frxReport1.Script.Variables['varPathGambar']:='Report\PMA.PNG';
       //TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
-      Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue);
+      Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',Dtselesai.editvalue);
       Rpt.ShowReport();
-      end;
 end;
 
 procedure TFRekapSisa_PO.DxRefreshClick(Sender: TObject);
-var tgl1,tgl2:string;
+var tgl1,tgl2,subquery,subquery2:string;
 begin
-    if DtMulai.EditValue= null then
+ {   if DtMulai.EditValue= null then
     begin
       MessageDlg('Tanggal Mulai Tidak boleh Kosong ',MtWarning,[MbOk],0);
       DtMulai.SetFocus;
       Exit;
-    end;
+    end; }
     if DtSelesai.EditValue= null then
     begin
-      MessageDlg('Tanggal Selesai Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      MessageDlg('Tanggal  Tidak boleh Kosong ',MtWarning,[MbOk],0);
       DtSelesai.SetFocus;
       Exit;
     end;
-  tgl1:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
+ //tgl1:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
   tgl2:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
-  with QRekapSisaPO do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name, to_char(d.trans_date, ''dd mon yy'')as tglterima,'+
+  subquery:='select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name, to_char(d.trans_date, ''dd mon yy'')as tglterima,'+
     ' d.qty,b.remaining_qty,b.price,b.item_stock_code,a.sbu_code, a.trans_category,e.wh_name,'+
     ' concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no inner join t_supplier c on  a.supplier_code=c.supplier_code Left JOIN ( '+
-    ' SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no from t_purchase_invoice a INNER JOIN '+
-    ' t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+''+
-    ' )as d on d.po_no=a.po_no INNER JOIN t_wh e on b.wh_code=e.wh_code where b.remaining_qty<>0 and a.status=''1'' '+
-    ' and a.as_status=''1'' and a. trans_category='+QuotedStr(CbKategori.EditValue)+''+
-    ' union'+
-    ' select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name,'+
+    ' SELECT a.trans_date,b.qty,b.price,c.po_no,a.faktur_no from t_purchase_invoice a INNER JOIN  '+
+    ' t_purchase_invoice_det b on a.trans_no=b.trans_no INNER JOIN t_item_receive_det c ON A.ref_no=c.receive_no where  a.trans_date='+quotedstr(tgl2)+' and a.ref_code=''PB'''+
+    ' UNION '+
+    ' SELECT a.trans_date,b.qty,b.price,a.ref_no,a.faktur_no from t_purchase_invoice a INNER JOIN  '+
+    ' t_purchase_invoice_det b on a.trans_no=b.trans_no where  a.trans_date='+quotedstr(tgl2)+' and a.ref_code<>''PB'' '+
+    ' )as d on d.po_no=a.po_no INNER JOIN t_wh e on a.wh_code=e.wh_code where b.remaining_qty<>0 and a.status=''1'' '+
+    ' and a.as_status=''1'' and a. trans_category='+QuotedStr(CbKategori.EditValue);
+  subquery2:=' select a.po_date,a.po_no,a.delivery_date,a.delivery2_date,c.supplier_name,d.faktur_no,b.item_name,'+
     ' to_char(d.trans_date, ''dd mon yy'')as tglterima,d.qty,b.remaining_qty,b.price,b.item_stock_code,'+
     ' a.sbu_code, a.trans_category,e.wh_name,concat(a.delivery_date,'' - '',a.delivery2_date)delivery from t_po a INNER JOIN t_podetail b on a.po_no=b.po_no'+
     ' inner join t_supplier c on a.supplier_code=c.supplier_code inner JOIN (SELECT a.trans_date,b.qty,b.price,b.po_no,a.faktur_no,b.item_stock_code'+
     ' from t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no where  '+
-    ' a.trans_date>='+quotedstr(tgl1)+' and a.trans_date<='+quotedstr(tgl2)+') as d on d.po_no=a.po_no '+
+    //' a.trans_date>='+quotedstr(tgl1)+' and
+    ' a.trans_date='+quotedstr(tgl2)+') as d on d.po_no=a.po_no '+
     ' and b.item_stock_code=d.item_stock_code INNER JOIN t_wh e on b.wh_code=e.wh_code where /*b.sisaqty=0 and*/ '+
-    ' a.as_status=''1'' and   a.trans_category='+QuotedStr(CbKategori.EditValue)+' order by po_date,po_date asc';
-    Execute;
-  end;
+    ' a.as_status=''1'' and   a.trans_category='+QuotedStr(CbKategori.EditValue);
+    if loksbu<>'' then
+      begin
+        with QRekapSisaPO do
+        begin
+           close;
+           sql.Clear;
+           sql.Text:=subquery +' and a.sbu_code='+QuotedStr(loksbu)+''+
+                      ' union'+subquery2+' and a.sbu_code='+QuotedStr(loksbu)+''+
+                      ' order by po_date,po_no asc';
+           ExecSQL;
+        end;
+      end;
+      if loksbu='' then
+      begin
+        with QRekapSisaPO do
+        begin
+           close;
+           sql.Clear;
+           sql.Text:=subquery +' union'+subquery2+' order by po_date,po_no asc';
+           ExecSQL;
+        end;
+      end;
   QRekapSisaPO.Open;
 end;
 
@@ -300,7 +320,7 @@ Tag := Tag + 1; NamaBulan[Tag] := 'September';
 Tag := Tag + 1; NamaBulan[Tag] := 'Oktober';
 Tag := Tag + 1; NamaBulan[Tag] := 'November';
 Tag := Tag + 1; NamaBulan[Tag] := 'Desember';     }
-bln:=FormatDateTime('mm',DtMulai.editvalue);
+bln:=FormatDateTime('mm',DtSelesai.editvalue);
 if bln='1' then bulan:= 'January';
 if bln='2' then bulan:= 'February';
 if bln='3' then bulan:= 'Maret';
@@ -327,7 +347,7 @@ begin
               ' a.nopo=b.nopo inner join t_supplier c on a.kd_supplier=c.kd_supplier '+
               ' Left JOIN (SELECT a.tgl_terima,b.qty,b.harga,b.nopo,a.nofaktur from '+
               ' t_terima_material a INNER JOIN t_terima_material_det b on a.no_terima=b.no_terima where '+
-              ' a.tgl_terima='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.editvalue))+')as d'+
+              ' a.tgl_terima='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtselesai.editvalue))+')as d'+
               ' on d.nopo=a.nopo where b.sisaqty<>0  and a.status=''1'' and a.status_as=''1'' order by a.tgl_po asc';
    ExecSQL;
 end;

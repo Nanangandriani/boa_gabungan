@@ -81,6 +81,8 @@ type
     procedure CbAkunPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure EdAkunPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     { Private declarations }
   public
@@ -481,14 +483,39 @@ begin
       QRpt_Buku_Besar.Open;
 end;
 
+procedure TFRpt_Buku_Besar.EdAkunPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  with  FAkun_Perkiraan_TerimaMat do
+  begin
+    statustr:='buku_besar';
+    Show;
+    with QAkun do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from "V_Search_Account2"';
+      Execute;
+    end;
+    QAkun.Active:=True;
+  end;
+end;
+
 procedure TFRpt_Buku_Besar.Edkd_akun2ButtonClick(Sender: TObject);
 begin
-with  FAkun_Perkiraan_TerimaMat do
-begin
-  statustr:='buku_besar';
-  Show;
-  if QAkun.Active=false then QAkun.Active:=True;
-end;
+  with  FAkun_Perkiraan_TerimaMat do
+  begin
+    statustr:='buku_besar';
+    Show;
+    with QAkun do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from "V_Search_Account2"';
+      Execute;
+    end;
+    QAkun.Active:=True;
+  end;
 end;
 
 procedure TFRpt_Buku_Besar.FormClose(Sender: TObject;
