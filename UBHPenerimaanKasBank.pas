@@ -26,7 +26,7 @@ uses
   DynVarsEh, cxCalendar, cxButtonEdit, Data.DB, MemDS, DBAccess, Uni, dxBar,
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon;
+  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFBHPenerimaanKasBank = class(TForm)
@@ -71,6 +71,31 @@ type
     QBHPenerimaanKasBankak_lain_kre: TMemoField;
     QBHPenerimaanKasBankak_nm_lain_kre: TMemoField;
     QBHPenerimaanKasBankjum_lain_kre: TIntegerField;
+    QBHPenerimaanKasBankket_faktur: TMemoField;
+    dsCetak: TDataSource;
+    Report: TfrxReport;
+    frxDBDBHPenerimaan: TfrxDBDataset;
+    QCetak: TUniQuery;
+    QCetakvoucher_no: TStringField;
+    QCetaktrans_date: TDateField;
+    QCetakmodule_id: TIntegerField;
+    QCetakcode_cust: TStringField;
+    QCetakname_cust: TStringField;
+    QCetakcode_region: TStringField;
+    QCetakfor_acceptance: TStringField;
+    QCetakdescription: TMemoField;
+    QCetakjum_kas: TFloatField;
+    QCetakaccount_name_bank: TStringField;
+    QCetakaccount_number_bank: TStringField;
+    QCetakjum_bank: TFloatField;
+    QCetakjum_piutang: TFloatField;
+    QCetakak_lain_kre: TMemoField;
+    QCetakak_nm_lain_kre: TMemoField;
+    QCetakjum_lain_kre: TIntegerField;
+    QCetakcode_karesidenan: TStringField;
+    QCetakcode_kab: TStringField;
+    QCetakname_kab: TStringField;
+    QCetakket_faktur: TMemoField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -85,6 +110,9 @@ type
       var Text: string; DisplayText: Boolean);
     procedure QBHPenerimaanKasBankak_nm_lain_kreGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
+    procedure QBHPenerimaanKasBankket_fakturGetText(Sender: TField;
+      var Text: string; DisplayText: Boolean);
+    procedure btPreviewClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,7 +128,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData;
+uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, UHomeSreen;
 var
   realfbhp : TFBHPenerimaanKasBank;
 // implementasi function
@@ -112,6 +140,65 @@ begin
     Application.CreateForm(TFBHPenerimaanKasBank, Result);
 end;
 
+procedure TFBHPenerimaanKasBank.btPreviewClick(Sender: TObject);
+begin
+   with QCetak do
+   begin
+       close;
+       sql.Clear;
+       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
+               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+               ' ON "left"(code_region, 4)=b.code_kab '+
+               ' LEFT JOIN (SELECT voucher_no, '+
+               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, '+QuotedStr(', ')+') AS ket_faktur '+
+               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+         if edKaresidenan.EditValue<>'' then
+         begin
+          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+         end;
+         if edKabupaten.EditValue<>'' then
+         begin
+          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+         end;
+       sql.add(' ORDER BY trans_date, voucher_no');
+       open;
+   end;
+
+ if QCetak.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetak.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+   SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
+    if edKaresidenan.EditValue='' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah : Semua Wilayah');
+    end;
+    if edKaresidenan.EditValue<>'' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah :'+edKaresidenan.EditValue);
+    end;
+    if edKabupaten.EditValue<>'' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
+    end;
+   //Report.DesignReport();
+   //Report.ShowReport();
+ end;
+
+end;
+
 procedure TFBHPenerimaanKasBank.btSearchClick(Sender: TObject);
 begin
   DBGrid.StartLoadingStatus();
@@ -120,10 +207,13 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhpenerimaan_kas_bank" a  '+
+       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+
+               ' LEFT JOIN (SELECT voucher_no, '+
+               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, '+QuotedStr(', ')+') AS ket_faktur '+
+               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
                ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
@@ -183,19 +273,25 @@ end;
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankak_lain_kreGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankak_lain_kre.asstring,255);
+  Text:=copy(QBHPenerimaanKasBankak_lain_kre.asstring,1,255);
 end;
 
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankak_nm_lain_kreGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankak_nm_lain_kre.asstring,255);
+  Text:=copy(QBHPenerimaanKasBankak_nm_lain_kre.asstring,1,255);
 end;
 
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankdescriptionGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankdescription.asstring,255);
+  Text:=copy(QBHPenerimaanKasBankdescription.asstring,1,255);
+end;
+
+procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankket_fakturGetText(
+  Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+  Text:=copy(QBHPenerimaanKasBankket_faktur.asstring,1,255);
 end;
 
 initialization
