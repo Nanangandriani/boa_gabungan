@@ -25,6 +25,7 @@ object FKartuPiutang: TFKartuPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1251
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -759,8 +760,8 @@ object FKartuPiutang: TFKartuPiutang
         'LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as' +
         ' name_kab,  "code_karesidenan"  from t_region_regency WHERE dele' +
         'ted_at IS NULL)b   ON "left"(code_region, 4)=b.code_kab')
-    Left = 860
-    Top = 72
+    Left = 844
+    Top = 80
     object QCetaknomor: TLargeintField
       FieldName = 'nomor'
       ReadOnly = True

@@ -63,9 +63,12 @@ object FRekapSisa_PO: TFRekapSisa_PO
     Height = 41
     Align = alBottom
     TabOrder = 0
+    Visible = False
     OnClick = Panel1Click
+    ExplicitTop = 378
+    ExplicitWidth = 691
     object BBatal: TRzBitBtn
-      Left = 623
+      Left = 619
       Top = 1
       Height = 39
       Align = alRight
@@ -124,10 +127,10 @@ object FRekapSisa_PO: TFRekapSisa_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 619
+      ExplicitLeft = 615
     end
     object BPrint: TRzBitBtn
-      Left = 544
+      Left = 540
       Top = 1
       Width = 79
       Height = 39
@@ -187,7 +190,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 540
+      ExplicitLeft = 536
     end
   end
   object DtMulai1: TRzDateTimeEdit
@@ -231,7 +234,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
     Contexts = <>
     TabOrder = 4
     TabStop = False
-    ExplicitWidth = 699
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -558,7 +560,6 @@ object FRekapSisa_PO: TFRekapSisa_PO
           ItemName = 'DtSelesai'
         end
         item
-          BeginGroup = True
           Visible = True
           ItemName = 'CbKategori'
         end
@@ -1494,13 +1495,13 @@ object FRekapSisa_PO: TFRekapSisa_PO
       Caption = 'Tanggal Awal  '
       Category = 0
       Hint = 'Tanggal Awal  '
-      Visible = ivAlways
+      Visible = ivNever
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object DtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Akhir '
+      Caption = 'Tanggal Akhir    '
       Category = 0
-      Hint = 'Tanggal Akhir '
+      Hint = 'Tanggal Akhir    '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end

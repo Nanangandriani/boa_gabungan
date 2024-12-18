@@ -42,8 +42,10 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
     Color = 15987699
     TabOrder = 1
     OnDblClick = RzPanel2DblClick
+    ExplicitTop = 371
+    ExplicitWidth = 696
     object RzBitBtn1: TRzBitBtn
-      Left = 516
+      Left = 512
       Top = 2
       Width = 93
       Height = 37
@@ -53,10 +55,10 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
       TabOrder = 0
       OnClick = RzBitBtn1Click
       Kind = bkYes
-      ExplicitLeft = 512
+      ExplicitLeft = 508
     end
     object RzBitBtn2: TRzBitBtn
-      Left = 609
+      Left = 605
       Top = 2
       Width = 93
       Height = 37
@@ -117,7 +119,7 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 605
+      ExplicitLeft = 601
     end
   end
   object dxRibbon1: TdxRibbon
@@ -131,7 +133,6 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
     Contexts = <>
     TabOrder = 2
     TabStop = False
-    ExplicitWidth = 704
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -198,7 +199,7 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
         Footer.DisplayFormat = '#,##0.00'
         Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Grand Total'
+        Title.Caption = 'Surat Jalan'
         Width = 100
       end
       item
@@ -216,7 +217,7 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
   object QRekapDok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from purchase."V_RekapTerimaDok"')
+      'select * from "V_RekapTerimaDok"')
     Left = 40
     Top = 216
   end
@@ -246,17 +247,24 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45623.880521435190000000
-    ReportOptions.LastChange = 45623.880521435190000000
+    ReportOptions.CreateDate = 44124.612568669000000000
+    ReportOptions.LastChange = 45623.880508645800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      ''
       'begin'
       ''
       'end.')
     Left = 96
     Top = 135
-    Datasets = <>
+    Datasets = <
+      item
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
+      end
+      item
+        DataSet = DbRekapDok
+        DataSetName = 'DbRekapDok'
+      end>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -265,24 +273,181 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
     end
     object Page1: TfrxReportPage
       PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
+      PaperHeight = 330.000000000000000000
+      PaperSize = 256
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
       TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
+      BottomMargin = 5.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
+      object PageHeader1: TfrxPageHeader
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 75.590551180000000000
         Top = 18.897650000000000000
-        Width = 718.110700000000000000
+        Width = 755.906000000000000000
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 188.976377950000000000
+          Top = 49.133858270000000000
+          Width = 188.976377950000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nama Barang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Width = 755.905511810000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -27
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'REKAP TERIMA DOKUMEN')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object MSBU: TfrxMemoView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Width = 139.842536770000000000
+          Height = 45.354345350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -48
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[DBPerusahaan."company_code"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object MPeriode: TfrxMemoView
+          AllowVectorExport = True
+          Top = 26.456692910000000000
+          Width = 755.905511810000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal  :')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Top = 49.133858270000000000
+          Width = 188.976377950000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Supplier')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 525.354330708661000000
+          Top = 49.133858270000000000
+          Width = 117.165354330709000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Surat Jalan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 377.952755905512000000
+          Top = 49.133858270000000000
+          Width = 75.590551180000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kuantum')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 453.543307090000000000
+          Top = 49.133858270000000000
+          Width = 71.811023622047200000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tgl. Datang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 642.519685039370000000
+          Top = 49.133890000000000000
+          Width = 113.385826771654000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Faktur')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -291,30 +456,137 @@ object FRpt_RekapTerimaDok: TFRpt_RekapTerimaDok
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
+        Height = 21.165354330000000000
+        Top = 154.960730000000000000
+        Width = 755.906000000000000000
+        DataSet = DbRekapDok
+        DataSetName = 'DbRekapDok'
         RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
+        Stretched = True
+        object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
+          Left = 188.976377950000000000
+          Width = 188.976377950000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'item_name'
+          DataSet = DbRekapDok
+          DataSetName = 'DbRekapDok'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapDok."item_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Width = 188.976377950000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'supplier_name'
+          DataSet = DbRekapDok
+          DataSetName = 'DbRekapDok'
+          DisplayFormat.FormatStr = '#,##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapDok."supplier_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1tgl_invoice: TfrxMemoView
+          AllowVectorExport = True
+          Left = 377.952755910000000000
+          Width = 75.590551180000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'qty'
+          DataSet = DbRekapDok
+          DataSetName = 'DbRekapDok'
+          DisplayFormat.FormatStr = '#,##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[Page#]')
+            '[DbRekapDok."qty"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1dpp: TfrxMemoView
+          AllowVectorExport = True
+          Left = 453.543307090000000000
+          Width = 71.811023622047200000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'trans_date'
+          DataSet = DbRekapDok
+          DataSetName = 'DbRekapDok'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapDok."trans_date"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1piutang_dagang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 642.519458030000000000
+          Width = 113.385826770000000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'faktur_no'
+          DataSet = DbRekapDok
+          DataSetName = 'DbRekapDok'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapDok."faktur_no"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 525.354330708661000000
+          Width = 117.165354330709000000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
+          DataField = 'sj_no'
+          DataSet = DbRekapDok
+          DataSetName = 'DbRekapDok'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapDok."sj_no"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
       end
     end

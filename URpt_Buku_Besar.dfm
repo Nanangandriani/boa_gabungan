@@ -813,6 +813,8 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         end
         item
           BeginGroup = True
+          UserDefine = [udWidth]
+          UserWidth = 193
           Visible = True
           ItemName = 'EdAkun'
         end
@@ -940,9 +942,9 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object EdAkun: TcxBarEditItem
-      Caption = 'Akun Perkiraan '
+      Caption = 'Akun Perkiraan   '
       Category = 0
-      Hint = 'Akun Perkiraan '
+      Hint = 'Akun Perkiraan   '
       Visible = ivAlways
       Width = 200
       PropertiesClassName = 'TcxButtonEditProperties'
@@ -951,7 +953,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
           Default = True
           Kind = bkEllipsis
         end>
-      Properties.OnButtonClick = CbAkunPropertiesButtonClick
+      Properties.OnButtonClick = EdAkunPropertiesButtonClick
     end
     object Ednm_akun: TcxBarEditItem
       Caption = 'Nama Perkiraan'
