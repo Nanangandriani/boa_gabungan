@@ -56,6 +56,9 @@ type
     DxRefresh: TdxBarLargeButton;
     dtmulai: TcxBarEditItem;
     dtselesai: TcxBarEditItem;
+    Rpt: TfrxReport;
+    QRptRekapKontrak: TUniQuery;
+    DbRptRekapKontrak: TfrxDBDataset;
     procedure dxBRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -87,10 +90,51 @@ begin
 end;
 
 procedure TFRekapKontrak.dxBarLargeButton1Click(Sender: TObject);
+var
+Datemulai,dateselesai: TDateTime;
 begin
   DM.QPerusahaan.Close;
   DM.QPerusahaan.Open;
-  //FRpt_RekapKontrak.Show;
+    if dtmulai.EditValue = null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+    Datemulai:=dtmulai.EditValue;
+    dateselesai:=dtselesai.EditValue;
+  if status_akses<>'True' then
+  begin
+    DBGridKontrak.Columns[6].Visible:=false;
+  end;
+
+  if status_akses='True' then
+  begin
+    DBGridKontrak.Columns[6].Visible:=true;
+  end;
+  with QRptRekapKontrak do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select	A.contract_no,a.contract_date,b.supplier_name,d.item_name,c.qty,c.unit,c.price,c.remaining_qty from '+
+    ' t_coop_contract A inner join t_supplier B on A.supplier_code=B.supplier_code   '+
+    ' INNER JOIN t_coop_contract_det AS "c" on a. contract_no=c.contract_no '+
+    ' INNER JOIN t_item_stock AS d	ON c.item_stock_code = d.item_stock_code '+
+    ' where contract_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd', datemulai))+ ' and contract_date<='+quotedstr(FormatDateTime('yyyy-mm-dd',dateselesai))+''+
+    ' order by a.id Asc';
+    open;
+  end;
+     QKerjasama_det.Open;
+     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapKontrak.Fr3');
+  //   SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
+  //   SetMemo(Rpt,'msbu',' '+dm.QPerusahaan['company_code']);
+     Rpt.ShowReport();
 end;
 
 procedure TFRekapKontrak.DxRefreshClick(Sender: TObject);
