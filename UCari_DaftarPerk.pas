@@ -39,7 +39,7 @@ uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
   U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan,
-  UDataKasBon, UDataKasKecil;
+  UDataKasBon, UDataKasKecil, UDataPengeluaranKasBank;
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
 function FCari_DaftarPerk: TFCari_DaftarPerk;
@@ -249,7 +249,24 @@ begin
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+      //FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(FDataPengajuanPengeluaranKasBank.ak_account.Text)+'') ;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun.post;
+      QDaftar_Perk.Close;
+    end;
+    if (vpanggil ='keluar_kasbank_show_header')then
+    begin
+      FDataPengeluaranKasBank.MemDetailAkun.edit;
+      //FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+      FDataPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=QDaftar_Perk.fieldbyname('header_code').AsString;
+      //FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('header_name').AsString;
+      FDataPengeluaranKasBank.MemDetailAkun['kredit']:=0;
+      FDataPengeluaranKasBank.MemDetailAkun['debit']:=0;
+      FDataPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
+      FDataPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+      FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+      //FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(FDataPengajuanPengeluaranKasBank.ak_account.Text)+'') ;
+      FDataPengeluaranKasBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
     close;

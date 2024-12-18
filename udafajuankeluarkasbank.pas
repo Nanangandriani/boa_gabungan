@@ -207,73 +207,141 @@ end;
 
 procedure TFdafajuankeluarkasbank.ActUpdateExecute(Sender: TObject);
 begin
-  {with dm.Qtemp do
-  begin
-     close;
-     sql.clear;
-     sql.add('SELECT a."voucher_no",a."subvoucher",a."remark",a."entry_date",a."trans_date",a."periode1",a."periode2", '+
-             'a."amount",a."account_code",a."account_name",a."dk",a."debit",a."kredit",a."header_code",a."ref_no", '+
-             'a."posting",a."customer_code",a."supplier_code",a."cash_type",a."job_no",a."company_code",a."tp_code", '+
-             'a."trans_year",a."trans_month",a."trans_day",a."order_no",a."giro_no",a."bank_giro_name",a."giro_due_date", '+
-             'a."customer_name",a."supplier_name",a."to_",a."deposit",a."deposit_date",a."TgUP",a."voucher_code",a."to_getout", '+
-             'a."status",a."approve_status",a."approval_date",a."approval",a."app_stat",a."currency",a."kurs",a."plan_to", '+
-             'a."bon_no",a."bank_norek",a."bank_name",a."amount_origin",a."debit_amount_origin",a."credit_amount_origin", '+
-             'a."created_at",a."created_by",a."updated_at",a."updated_by",a."deleted_at",a."deleted_by",a."trans_type_code", '+
-             'a."trans_type_name",a."bank_number_account",a."bank_name_account",a."additional_code",a."id", '+
-             'b."code_module",b."name_module",b."name_trans",c."code",c."name",d."currency_name" FROM cash_banks.t_cash_bank_expenditure_submission a '+
-             'INNER JOIN t_master_trans_account b on a.trans_type_code=b.code_trans '+
-             'INNER JOIN t_source_payment c on a.additional_code=c.code '+
-             'LEFT JOIN t_currency d on a."currency"=d."currency_name" '+
-             'WHERE trans_date between '+QuotedStr(formatdatetime('yyyy=mm-dd',DateTimePicker1.DateTime))+' '+
-             'and '+ QuotedStr(formatdatetime('yyyy=mm-dd',DateTimePicker2.DateTime)) +' and( app_stat=true) '+
-             'GROUP BY a."voucher_no",a."subvoucher",a."remark",a."entry_date",a."trans_date",a."periode1", '+
-             'a."periode2",a."amount",a."account_code",a."account_name",a."dk",a."debit",a."kredit",a."header_code", '+
-             'a."ref_no",a."posting",a."customer_code",a.supplier_code,a."cash_type",a."job_no",a."company_code", '+
-             'a."tp_code",a."trans_year",a."trans_month",a."trans_day",a."order_no",a."giro_no",a."bank_giro_name", '+
-             'a."giro_due_date",a."customer_name",a."supplier_name",a."to_",a."deposit",a."deposit_date",a."TgUP", '+
-             'a."voucher_code",a."to_getout",a."status",a."approve_status",a."approval_date",a."approval",a."app_stat", '+
-             'a."currency",a."kurs",a."plan_to",a."bon_no",a."bank_norek",a."bank_name",a."amount_origin", '+
-             'a."debit_amount_origin",a."credit_amount_origin",a."created_at",a."created_by",a."updated_at", '+
-             'a."updated_by",a."deleted_at",a."deleted_by",a."trans_type_code",a."trans_type_name",a."bank_number_account", '+
-             'a."bank_name_account",a."additional_code",a."id" '+
-             ',b."code_module",b."name_module",b."name_trans",c."code",c."name",d."currency_name" ');
-     open;
-  end;
-  FDataPengeluaranKasBank.dtTrans.Date:=dm.Qtemp.fieldbyname('trans_date').asdatetime;
-  FDataPengeluaranKasBank.dtperiode1.Date:=dm.Qtemp.fieldbyname('periode1').asdatetime;
-  FDataPengeluaranKasBank.dtperiode2.Date:=dm.Qtemp.fieldbyname('periode2').asdatetime;
-  FDataPengeluaranKasBank.nobk_tmp:=dm.Qtemp.fieldbyname('voucher_no').AsString;
-  FDataPengeluaranKasBank.no_bon:=dm.Qtemp.fieldbyname('bon_no').AsString;
-  FDataPengeluaranKasBank.edUntukPengeluaran.Text:=dm.Qtemp.fieldbyname('to_getout').AsString;
-  FDataPengeluaranKasBank.Ed_kepada.Text:=dm.Qtemp.fieldbyname('to_').AsString;
-  FDataPengeluaranKasBank.MemKeterangan.Text:=dm.Qtemp.fieldbyname('remark').AsString;
-  FDataPengeluaranKasBank.Ed_Additional.Text:=dm.Qtemp.fieldbyname('additional_code').AsString;
-  FDataPengeluaranKasBank.edJumlah.value:=dm.Qtemp.fieldbyname('amount').Value;
-  FDataPengeluaranKasBank.edKode_supplier.Text:=dm.Qtemp.fieldbyname('supplier_code').AsString;
-  FDataPengeluaranKasBank.edNama_Supplier.Text:=dm.Qtemp.fieldbyname('supplier_name').AsString;
-  FDataPengeluaranKasBank.Ed_voucher_ajuan.Text:=dm.Qtemp.fieldbyname('voucher_no').AsString;
-  FDataPengeluaranKasBank.edKodeMataUang.Text:=dm.Qtemp.fieldbyname('currency').AsString;
-  FDataPengeluaranKasBank.Edkurs.Value:=dm.Qtemp.fieldbyname('kurs').Value;
-  FDataPengeluaranKasBank.CbRencana.Text:=dm.Qtemp.fieldbyname('plan_to').Value;
-  FDataPengeluaranKasBank.edKodeSumberPengeluaran.Text:=dm.Qtemp.fieldbyname('ref_no').Value;
-  FDataPengeluaranKasBank.ednamabank.Text:=dm.Qtemp.fieldbyname('bank_name').AsString;
-  FDataPengeluaranKasBank.edNoRek.Text:=dm.Qtemp.fieldbyname('bank_norek').AsString;
-  FDataPengeluaranKasBank.code_trans.Text:=dm.Qtemp.fieldbyname('trans_type_code').AsString;
-  FDataPengeluaranKasBank.Ed_id_modul.Text:=dm.Qtemp.fieldbyname('code_module').AsString;
-  Fdafajuankeluarkasbank.Close;}
-  {if dm.Qtemp.FieldByName('currency').AsString='USD' then
-  begin
-    FDataPengeluaranKasBank.edKodeMataUang.Text:=dm.Qtemp.fieldbyname('currency').AsString;
-    FDataPengeluaranKasBank.edNamaMataUang.Text:=dm.Qtemp.fieldbyname('currency_name').AsString;
-    FDataPengeluaranKasBank.Edkurs.Value:=dm.Qtemp.fieldbyname('kurs').Value;
-  end
-  else
-  begin
-    FDataPengeluaranKasBank.edKodeMataUang.Text:=dm.Qtemp.fieldbyname('currency').AsString;
-    FDataPengeluaranKasBank.edNamaMataUang.Text:=dm.Qtemp.fieldbyname('currency_name').AsString;;
-    FDataPengeluaranKasBank.Edkurs.Value:=dm.Qtemp.fieldbyname('kurs').Value;
-  end;}
+
+      with FDataPengajuanPengeluaranKasBank do
+      begin
+        MemDetailAkun.Close;
+        MemDetailAkun.Open;
+        MemDetailHutang.Close;
+        MemDetailHutang.Open;
+        show;
+        code_trans.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString;
+        Ed_id_modul.Text:=Qdaf_PengajuanKasBank.fieldbyname('code_module').AsString;
+        if Ed_id_modul.Text='5' then
+           cbsumberdata.Text:='BANK';
+        if Ed_id_modul.Text='6' then
+           cbsumberdata.Text:='KAS';
+
+        edNoTrans.Text:=Qdaf_PengajuanKasBank.fieldbyname('voucher_no').AsString;
+        dtTrans.Date:=Qdaf_PengajuanKasBank.fieldbyname('trans_date').asdatetime;
+        dtperiode1.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode1').asdatetime;
+        dtperiode2.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode2').asdatetime;
+        FDataPengeluaranKasBank.no_bon:=Qdaf_PengajuanKasBank.fieldbyname('bon_no').AsString;
+        no_bon:=Qdaf_PengajuanKasBank.fieldbyname('bon_no').AsString;
+        edUntukPengeluaran.Text:=Qdaf_PengajuanKasBank.fieldbyname('to_getout').AsString;
+        Ed_kepada.Text:=Qdaf_PengajuanKasBank.fieldbyname('to_').AsString;
+        MemKeterangan.Text:=Qdaf_PengajuanKasBank.fieldbyname('remark').AsString;
+        Ed_Additional.Text:=Qdaf_PengajuanKasBank.fieldbyname('additional_code').AsString;
+        FDataPengeluaranKasBank.edJumlah.value:=Qdaf_PengajuanKasBank.fieldbyname('amount').Value;
+        edKode_supplier.Text:=Qdaf_PengajuanKasBank.fieldbyname('supplier_code').AsString;
+        edNama_Supplier.Text:=Qdaf_PengajuanKasBank.fieldbyname('supplier_name').AsString;
+        edKodeMataUang.Text:=Qdaf_PengajuanKasBank.fieldbyname('currency').AsString;
+        Edkurs.Value:=Qdaf_PengajuanKasBank.fieldbyname('kurs').Value;
+        CbRencana.Text:=Qdaf_PengajuanKasBank.fieldbyname('plan_to').Value;
+        edKodeSumberPengeluaran.Text:=Qdaf_PengajuanKasBank.fieldbyname('ref_no').Asstring;
+        ednamabank.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_name').AsString;
+        edNoRek.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_norek').AsString;
+        FDataPengeluaranKasBank.code_trans.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString;
+        Ed_id_modul.Text:=Qdaf_PengajuanKasBank.fieldbyname('code_module').AsString;
+        Edhari.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_day').AsString;
+        Edbln.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_month').AsString;
+        Edth.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_year').AsString;
+
+
+        //detail akun
+        with QDetail_akun_ajuan do
+        begin
+          close;
+          sql.clear;
+          sql.add(' SELECT * from ('+
+                  ' SELECT * from "public"."t_cash_bank_expenditure_submission_det"'+
+                  ' WHERE "no_voucher"='+Quotedstr(DBGridPengajuanKeluarKasBank.Fields[0].Asstring)+' ) a '+
+                  ' Order By position asc');
+          open;
+        end;
+
+        with FDataPengajuanPengeluaranKasBank do
+        begin
+          MemDetailAkun.EmptyTable;
+          QDetail_akun_ajuan.First;
+          while not QDetail_akun_ajuan.Eof do
+          begin
+              MemDetailAkun.Insert;
+              MemDetailAkun['kd_akun']:=QDetail_akun_ajuan.fieldbyname('code_account').AsString;
+              MemDetailAkun['nm_akun']:=QDetail_akun_ajuan.FieldByName('name_account').AsString;
+              if QDetail_akun_ajuan.FieldByName('position').AsString='D' then
+              begin
+                MemDetailAkun['debit']:=QDetail_akun_ajuan.FieldByName('paid_amount').Value;
+                MemDetailAkun['kredit']:='0';
+              end;
+              if QDetail_akun_ajuan.FieldByName('position').AsString='K' then
+              begin
+                MemDetailAkun['kredit']:=QDetail_akun_ajuan.FieldByName('paid_amount').Value;
+                MemDetailAkun['debit']:='0';
+              end;
+              MemDetailAkun['keterangan']:=QDetail_akun_ajuan.FieldByName('description').AsString;
+              MemDetailAkun['kd_header_akun']:=QDetail_akun_ajuan.FieldByName('code_account_header').AsString;
+              //MemDetailAkun['modul_id']:=QDetail_akun_ajuan.FieldByName('module_id').AsString;
+              MemDetailAkun.post;
+              QDetail_Akun_Ajuan.Next;
+          end;
+        end;
+
+        //detail faktur
+        with QDetail_Hutang_Ajuan do
+        begin
+          close;
+          sql.clear;
+          sql.add(' SELECT * from ('+
+                  ' SELECT * from "public"."t_cash_bank_expenditure_submission_payable" '+
+                  //' WHERE "voucher_no"='+QuotedStr(QDetail_Hutang_Ajuan.FieldByName('voucher_no').AsString)+' ) a '+
+                  'WHERE voucher_no='+Quotedstr(DBGridPengajuanKeluarKasBank.Fields[0].Asstring)+' ) a '+
+                  ' Order By voucher_no desc');
+          open;
+        end;
+
+        with FDataPengajuanPengeluaranKasBank do
+        begin
+          QDetail_Hutang_Ajuan.First;
+          while not QDetail_Hutang_Ajuan.Eof do
+          begin
+              MemDetailHutang.Insert;
+              MemDetailHutang['no_tagihan']:=QDetail_Hutang_Ajuan.fieldbyname('invoice_no').AsString;
+              MemDetailHutang['no_faktur']:=QDetail_Hutang_Ajuan.fieldbyname('faktur_no').AsString;
+              MemDetailHutang['tgl_faktur']:=QDetail_Hutang_Ajuan.fieldbyname('faktur_date').AsString;
+              MemDetailHutang['no_sj']:=QDetail_Hutang_Ajuan.fieldbyname('sj_no').AsString;
+              MemDetailHutang['jum_hutang']:=QDetail_Hutang_Ajuan.fieldbyname('paid_amount').Value;
+              MemDetailHutang['keterangan']:=QDetail_Hutang_Ajuan.FieldByName('description').AsString;
+              MemDetailHutang.post;
+              QDetail_Hutang_Ajuan.Next;
+          end;
+        end;
+
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='SELECT * from t_master_trans_account where code_module='+Quotedstr(FDataPengajuanPengeluaranKasBank.Ed_id_modul.Text)+' '+
+                    ' and code_trans='+Quotedstr(FDataPengajuanPengeluaranKasBank.code_trans.Text)+' ';
+          open;
+          Cb_jenis_trans.text:=fieldbyname('name_trans').AsString;
+        end;
+
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='SELECT * from  t_currency where currency_code='+Quotedstr(FDataPengajuanPengeluaranKasBank.Edkodematauang.Text)+' ';
+          open;
+          edNamaMataUang.text:=fieldbyname('currency_name').AsString;
+        end;
+
+
+        Fdafajuankeluarkasbank.Close;
+      end;
 end;
+
+
 
 procedure TFdafajuankeluarkasbank.BCariClick(Sender: TObject);
 begin
@@ -422,31 +490,16 @@ begin
          //MemDetailHutang['keterangan']:=Qdaf_PengajuanKasBank.fieldbyname('remark').AsString;
       end;
 
-      {with FDataPengeluaranKasBank do
+      with QDetail_Akun_Ajuan do
       begin
-         MemDetailAkun.First;
-         while not MemDetailAkun.Eof do
-         begin
-           MemDetailAkun.insert;
-           MemDetailAkun['kd_akun']:=dm.Qtemp.FieldByName('code_account').AsString;
-           MemDetailAkun['nm_akun']:=dm.Qtemp.FieldByName('name_account').AsString;
-           if dm.Qtemp.FieldByName('position').AsString='D' then
-           begin
-              MemDetailAkun['debit']:=dm.Qtemp.FieldByName('paid_amount').Value;
-           end;
-           if dm.Qtemp.FieldByName('position').AsString='K' then
-           begin
-              MemDetailAkun['kredit']:=dm.Qtemp.FieldByName('paid_amount').Value;
-           end;
-           MemDetailAkun['keterangan']:=dm.Qtemp.FieldByName('description').AsString;
-           MemDetailAkun['kd_header_akun']:=dm.Qtemp.FieldByName('code_account_header').AsString;
-           MemDetailAkun.post;
-           MemDetailAkun.Next;
-         end;
-      end; }
-
+         close;
+         sql.Clear;
+         sql.Text:='SELECT * FROM t_cash_bank_expenditure_submission_det WHERE no_voucher='+Quotedstr(DBGridPengajuanKeluarKasBank.Fields[0].Asstring)+' ';
+         open;
+      end;
       with FDataPengeluaranKasBank do
       begin
+        MemDetailAkun.EmptyTable;
         QDetail_Akun_Ajuan.First;
         while not QDetail_Akun_Ajuan.Eof do
         begin
@@ -471,6 +524,13 @@ begin
         end;
       end;
 
+      with QDetail_Hutang_Ajuan do
+      begin
+         close;
+         sql.Clear;
+         sql.Text:='SELECT * FROM t_cash_bank_expenditure_submission_payable WHERE voucher_no='+Quotedstr(DBGridPengajuanKeluarKasBank.Fields[0].Asstring)+' ';
+         open;
+      end;
       with FDataPengeluaranKasBank do
       begin
         QDetail_Hutang_Ajuan.First;
@@ -495,10 +555,18 @@ procedure TFdafajuankeluarkasbank.FormShow(Sender: TObject);
 begin
    if Qdaf_PengajuanKasBank.Active=false then
       Qdaf_PengajuanKasBank.Active:=true;
+   if QDetail_akun_ajuan.Active=false then
+      QDetail_akun_ajuan.Active:=true;
+   if QDetail_Hutang_Ajuan.Active=false then
+      QDetail_Hutang_Ajuan.Active:=true;
    DateTimePicker1.Date:=Now;
    DateTimePicker2.Date:=Now;
    //BCariClick(sender);
    ActROExecute(sender);
+   QDetail_akun_ajuan.Close;
+   QDetail_akun_ajuan.Open;
+   QDetail_Hutang_Ajuan.Close;
+   QDetail_Hutang_Ajuan.Open;
 end;
 
 initialization

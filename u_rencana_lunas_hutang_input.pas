@@ -270,6 +270,7 @@ begin
                     'periode1='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode1.Date))+' and '+
                     'periode2='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode2.Date))+' and '+
                     'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
+                    //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+' and supplier_code='+QuotedStr(DBGrid_Rencana.Fields[0].AsString)+' )';
           open;
         end;
         if (length(txtnocek.Text)=0)and(rbbank.Checked=true) then
@@ -292,7 +293,7 @@ begin
           if MessageDlg('Rencana ke '+QuotedStr(CBrencanake.Text)+' sudah ada, lanjut simpan?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
           begin
             Simpan;
-            Dm.Koneksi.Commit;
+            //Dm.Koneksi.Commit;
             MessageDlg('Data berhasil disimpan..!!',mtInformation,[MBOK],0);
             FList_Rencana_Lunas_Hutang.ActROExecute(sender);
             close;
@@ -301,7 +302,7 @@ begin
         else
         begin
           Simpan;
-          Dm.Koneksi.Commit;
+          //Dm.Koneksi.Commit;
           MessageDlg('Data berhasil disimpan..!!',mtInformation,[MBOK],0);
           FList_Rencana_Lunas_Hutang.ActROExecute(sender);
           close;
@@ -370,6 +371,11 @@ begin
    dpperiodetmp2.date:=now;
    if MemRencana.Active=false then
       MemRencana.Active:=true;
+
+   if dm.QPerusahaan.Active=false then
+      dm.QPerusahaan.Active:=true;
+      dm.QPerusahaan.Close;
+      dm.QPerusahaan.Open;
 end;
 
 end.

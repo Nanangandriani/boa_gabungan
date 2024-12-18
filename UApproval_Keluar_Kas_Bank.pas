@@ -178,7 +178,7 @@ begin
                     begin
                         Close;
                         sql.Clear;
-                        sql.Text:='Update cash_banks.t_paid_debt_det set "approve_status"=''1'', approve_name='+QuotedStr(Nm)+' '+
+                        sql.Text:='Update t_paid_debt_det set "approve_status"=''1'', approve_name='+QuotedStr(Nm)+' '+
                                   'WHERE id='+QuotedStr(DBGrid_Rencana_Pelunasan.Fields[10].AsString);
                         Execute;
                     end;
@@ -252,7 +252,7 @@ begin
                     begin
                         Close;
                         sql.Clear;
-                        sql.Text:='Update cash_banks.t_paid_debt_det set "approve_status"=''1'' '+
+                        sql.Text:='Update t_paid_debt_det set "approve_status"=''1'' '+
                                   ', approve_name='+QuotedStr(Nm)+' '+
                                   'WHERE id='+QuotedStr(DBGrid_Rencana_Pelunasan.Fields[10].AsString);
                         Execute;
@@ -284,7 +284,7 @@ end;
 procedure TFApproval_Keluar_Kas_Bank.BCariClick(Sender: TObject);
 var query:string;
 begin
-  query:='SELECT * from cash_banks.v_plan_paid_debt ';
+  query:='SELECT * from v_plan_paid_debt ';
   if cblunas.Checked=false then
   begin
        with QRencana do

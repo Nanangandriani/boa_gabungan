@@ -215,6 +215,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 23
       Text = ''
       TabOrder = 1
+      Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaJenisTransButtonClick
@@ -225,6 +226,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 34
       Height = 23
       TabOrder = 2
+      Visible = False
     end
     object dtTrans: TRzDateTimePicker
       Left = 147
@@ -280,6 +282,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 93
       Height = 23
       TabOrder = 8
+      Visible = False
       OnChange = edKodeMataUangChange
     end
     object edKurs: TRzNumericEdit
@@ -318,6 +321,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 58
       Height = 23
       TabOrder = 13
+      Visible = False
     end
     object Edbln: TEdit
       Left = 375
@@ -325,6 +329,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 52
       Height = 23
       TabOrder = 14
+      Visible = False
     end
     object Edhari: TEdit
       Left = 317
@@ -332,6 +337,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 53
       Height = 23
       TabOrder = 15
+      Visible = False
     end
     object EdNo: TEdit
       Left = 497
@@ -340,6 +346,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 16
+      Visible = False
     end
     object Ed_id_modul: TEdit
       Left = 408
@@ -347,6 +354,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 50
       Height = 23
       TabOrder = 17
+      Visible = False
     end
     object code_trans: TEdit
       Left = 339
@@ -354,6 +362,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 47
       Height = 23
       TabOrder = 18
+      Visible = False
       OnChange = code_transChange
     end
     object Ed_Additional: TEdit
@@ -362,6 +371,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 119
       Height = 23
       TabOrder = 19
+      Visible = False
       OnChange = Ed_AdditionalChange
     end
     object cbsumberdata: TComboBox
@@ -605,6 +615,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
+      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -706,6 +717,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 3
+        Visible = False
         OnChange = edKodeSumberPengeluaranChange
       end
       object Cb_debt_source: TComboBox
@@ -721,6 +733,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Width = 76
         Height = 23
         TabOrder = 5
+        Visible = False
       end
     end
     object gbDataBank: TGroupBox
@@ -891,6 +904,19 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         TitleParams.MultiTitle = True
         Columns = <
           item
+            CellButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridAkunColumns0CellButtons0Click
+              end>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kd_header_akun'
+            Footers = <>
+            Title.Caption = 'Kode Akun'
+            Width = 100
+          end
+          item
             CellButtons = <>
             DynProps = <>
             EditButtons = <
@@ -901,6 +927,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             FieldName = 'kd_akun'
             Footers = <>
             Title.Caption = 'Kode Akun'
+            Visible = False
             Width = 100
           end
           item
@@ -938,14 +965,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             Footers = <>
             Title.Caption = 'Keterangan'
             Width = 300
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'kd_header_akun'
-            Footers = <>
-            Visible = False
           end
           item
             CellButtons = <>
@@ -1112,7 +1131,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Params = <>
     StoreDefs = True
     Left = 456
-    Top = 504
+    Top = 544
     object MemDetailAkunkd_akun: TStringField
       FieldName = 'kd_akun'
       Size = 100
@@ -1205,8 +1224,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   object MemDetailHutang: TMemTableEh
     Active = True
     Params = <>
-    Left = 608
-    Top = 488
+    Left = 648
+    Top = 512
     object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
       Size = 500
@@ -1282,18 +1301,18 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   end
   object dsDetailHutang: TDataSource
     DataSet = MemDetailHutang
-    Left = 672
-    Top = 480
+    Left = 712
+    Top = 520
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
     Left = 520
-    Top = 512
+    Top = 536
   end
   object MemKKasBank: TMemTableEh
     Params = <>
-    Left = 832
-    Top = 496
+    Left = 840
+    Top = 528
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object voucher_no: TMTStringDataFieldEh
@@ -1649,6 +1668,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   object DSKKasBank: TDataSource
     DataSet = MemKKasBank
     Left = 896
-    Top = 496
+    Top = 528
   end
 end

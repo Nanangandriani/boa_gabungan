@@ -297,6 +297,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 93
       Height = 23
       TabOrder = 8
+      Visible = False
     end
     object edKurs: TRzNumericEdit
       Left = 398
@@ -336,6 +337,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 47
       Height = 23
       TabOrder = 13
+      Visible = False
       OnChange = code_transChange
     end
     object Ed_kepada: TEdit
@@ -352,6 +354,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 15
+      Visible = False
     end
     object Ed_Additional: TEdit
       Left = 339
@@ -359,6 +362,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 119
       Height = 23
       TabOrder = 16
+      Visible = False
     end
     object Edth: TEdit
       Left = 433
@@ -366,6 +370,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 58
       Height = 23
       TabOrder = 17
+      Visible = False
     end
     object Edbln: TEdit
       Left = 375
@@ -373,6 +378,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 52
       Height = 23
       TabOrder = 18
+      Visible = False
     end
     object Edhari: TEdit
       Left = 317
@@ -380,6 +386,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 53
       Height = 23
       TabOrder = 19
+      Visible = False
     end
     object Ed_id_modul: TEdit
       Left = 408
@@ -387,6 +394,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 50
       Height = 23
       TabOrder = 20
+      Visible = False
     end
   end
   object Panel2: TPanel
@@ -671,6 +679,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 4
+        Visible = False
       end
       object edNMJenisBayar: TRzButtonEdit
         Left = 147
@@ -706,6 +715,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Width = 76
         Height = 23
         TabOrder = 8
+        Visible = False
       end
     end
     object gbDataBank: TGroupBox
@@ -825,6 +835,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             FieldName = 'kd_akun'
             Footers = <>
             Title.Caption = 'Kode Akun'
+            Visible = False
             Width = 100
           end
           item

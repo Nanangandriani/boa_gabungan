@@ -1,2 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/12/12 15:11:53.000.718,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>2024/12/12 15:26:36.000.753,=D:\Project Gabungan\back_office_automation\Unit2.pas</Transaction>
+    <Transaction>2024/12/12 15:31:13.000.103,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\U_List_Kasbon.dfm</Transaction>
+    <Transaction>2024/12/12 15:31:13.000.103,D:\Project Gabungan\back_office_automation\Unit1.pas=D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas</Transaction>
+    <Transaction>2024/12/12 15:31:29.000.351,D:\Project Gabungan\back_office_automation\Unit2.pas=D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas</Transaction>
+    <Transaction>2024/12/12 15:31:29.000.351,D:\Project Gabungan\back_office_automation\Unit2.dfm=D:\Project Gabungan\back_office_automation\UNew_Kasbon.dfm</Transaction>
+    <Transaction>2024/12/17 09:11:43.000.353,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
+    <Transaction>2024/12/17 09:36:35.000.912,=D:\Project Gabungan\back_office_automation\U_Pelaku_Biaya.pas</Transaction>
+    <Transaction>2024/12/17 10:53:59.931,=D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas</Transaction>
+    <Transaction>2024/12/17 10:55:00.862,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
+    <Transaction>2024/12/17 10:55:55.452,=D:\Project Gabungan\back_office_automation\U_Pelaku_Biaya.pas</Transaction>
+    <Transaction>2024/12/17 10:56:32.665,=D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas</Transaction>
+    <Transaction>2024/12/18 10:30:53.208,=D:\Project Gabungan\back_office_automation\UApproval_Keluar_Kas_Bank.pas</Transaction>
+  </Transactions>
+</BorlandProject>
