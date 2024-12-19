@@ -26,7 +26,7 @@ uses
   RzButton, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, RzPanel, dxRibbon, dxBar,
   cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Data.DB, MemDS,
-  DBAccess, Uni;
+  DBAccess, Uni, frxClass, frxDBSet;
 
 type
   TFdafajuankeluarkasbank = class(TForm)
@@ -139,6 +139,11 @@ type
     Qdaf_PengajuanKasBanksource_name: TStringField;
     QDetail_Hutang_Ajuan: TUniQuery;
     DSDetail_Hutang_Ajuan: TDataSource;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    QBukti_Ajuan_Keluar: TUniQuery;
+    frxDBDBukti_Ajuan_Keluar: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BCariClick(Sender: TObject);
@@ -237,6 +242,7 @@ begin
         edNama_Supplier.Text:=Qdaf_PengajuanKasBank.fieldbyname('supplier_name').AsString;
         edKodeMataUang.Text:=Qdaf_PengajuanKasBank.fieldbyname('currency').AsString;
         Edkurs.Value:=Qdaf_PengajuanKasBank.fieldbyname('kurs').Value;
+        edJumlah.Value:=Qdaf_PengajuanKasBank.FieldByName('amount').Value;
         CbRencana.Text:=Qdaf_PengajuanKasBank.fieldbyname('plan_to').Value;
         edKodeSumberPengeluaran.Text:=Qdaf_PengajuanKasBank.fieldbyname('ref_no').Asstring;
         ednamabank.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_name').AsString;

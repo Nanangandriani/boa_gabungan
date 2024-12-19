@@ -58,6 +58,7 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
         FieldName = 'header_code'
         Footers = <>
         Title.Caption = 'Kode Header'
+        Visible = False
         Width = 100
       end
       item

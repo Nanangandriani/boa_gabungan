@@ -417,7 +417,7 @@ begin
             ' "time_lock","update_time","stat_lock","currency","kurs","bon_no",'+
             ' "post_status","created_at","created_by","updated_at","updated_by","deleted_at", '+
             ' "deleted_by","bank_norek","bank_name","cek_no","trans_type_code","trans_type_name", '+
-            ' "bank_number_account","bank_name_account","additional_code") '+
+            ' "bank_number_account","bank_name_account","additional_code","module_id") '+
             ' VALUES ( '+
             ' '+QuotedStr(edNoTrans.Text)+','+QuotedStr(Ed_voucher_ajuan.Text)+',NULL,'+QuotedStr(MemKeterangan.Text)+',Now(),'+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+QuotedStr(FloatToStr(edJumlah.value))+',NULL, NULL,NULL, '+
@@ -429,7 +429,7 @@ begin
             ' NULL,NULL,NULL, '+QuotedStr(edKodeMataUang.Text)+','+QuotedStr(FloatToStr(edKurs.value))+',NULL,'+
             ' 0,NOW(),'+QuotedStr(FHomeLogin.Eduser.Text)+',NULL, NULL, NULL, '+
             ' NULL,'+QuotedStr(edNoRek.Text)+','+QuotedStr(edNamaBank.Text)+',NULL,'+QuotedStr(code_Trans.Text)+','+QuotedStr(Cb_Jenis_Trans.Text)+', '+
-            ' NULL,NULL,'+QuotedStr(Ed_Additional.Text)+' );');
+            ' NULL,NULL,'+QuotedStr(Ed_Additional.Text)+','+QuotedStr(Ed_id_modul.Text)+' );');
     ExecSQL;
   end;
 

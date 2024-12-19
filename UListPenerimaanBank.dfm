@@ -928,7 +928,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       #9'A."voucher_no" = '#39'0002/BM18/XI/2024'#39' '
       #9'AND "position" = '#39'K'#39)
     Left = 1012
-    Top = 152
+    Top = 160
     object QBukti_Terimavoucher_no: TStringField
       FieldName = 'voucher_no'
       ReadOnly = True
@@ -1013,7 +1013,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     BCDToCurrency = False
     DataSetOptions = []
     Left = 1088
-    Top = 152
+    Top = 160
   end
   object Report: TfrxReport
     Version = '2022.2.7'
@@ -1745,13 +1745,13 @@ object FListPenerimaanBank: TFListPenerimaanBank
     BCDToCurrency = False
     DataSetOptions = []
     Left = 1088
-    Top = 208
+    Top = 216
   end
   object QJurnal: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Left = 1012
-    Top = 208
+    Left = 1004
+    Top = 216
   end
 end
