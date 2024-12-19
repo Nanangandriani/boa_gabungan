@@ -205,8 +205,10 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     Align = alBottom
     ParentBackground = False
     TabOrder = 1
+    ExplicitTop = 466
+    ExplicitWidth = 856
     object Btutup: TRzBitBtn
-      Left = 767
+      Left = 761
       Top = 1
       Width = 100
       Height = 34
@@ -266,10 +268,10 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 761
+      ExplicitLeft = 755
     end
     object BHapus: TRzBitBtn
-      Left = 567
+      Left = 561
       Top = 1
       Width = 100
       Height = 34
@@ -329,10 +331,10 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 561
+      ExplicitLeft = 555
     end
     object BSimpan: TRzBitBtn
-      Left = 667
+      Left = 661
       Top = 1
       Width = 100
       Height = 34
@@ -392,7 +394,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 661
+      ExplicitLeft = 655
     end
   end
   object Panel2: TPanel
@@ -403,6 +405,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     Align = alTop
     ParentBackground = False
     TabOrder = 2
+    ExplicitWidth = 856
     object Label2: TLabel
       Left = 25
       Top = 14

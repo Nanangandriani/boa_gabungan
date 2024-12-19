@@ -55,6 +55,15 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'header_code'
+        Footers = <>
+        Title.Caption = 'Kode Header'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'code'
         Footers = <>
         Title.Caption = 'Kode'
@@ -96,8 +105,8 @@ object FCari_DaftarPerk: TFCari_DaftarPerk
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det' +
-        ' a'
+        'SELECT b.header_code,b.code,b.account_name,c.header_name FROM t_' +
+        'ak_account_det a'
       'left join t_ak_account b on a.account_code=b.code'
       'left join t_ak_header c on b.header_code=c.header_code')
     LockMode = lmOptimistic

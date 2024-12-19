@@ -227,7 +227,11 @@ uses
   UBon_Produksi in 'UBon_Produksi.pas' {FBon_Produksi},
   UBon_KmsnProd in 'UBon_KmsnProd.pas' {FBon_Kmsn_prod},
   UStokMat_Prod in 'UStokMat_Prod.pas' {FStokMat_Prod},
-  UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya};
+  U_List_Kasbon in 'U_List_Kasbon.pas' {FKasbon},
+  UList_Pelaku_Biaya in 'UList_Pelaku_Biaya.pas' {FListPelakuBiaya},
+  U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
+  UNew_Kasbon in 'UNew_Kasbon.pas' {FNew_Kasbon},
+  UApproval_Keluar_Kas_Bank in 'UApproval_Keluar_Kas_Bank.pas' {FApproval_Keluar_Kas_Bank};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -336,23 +340,26 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKontrak, FDaftarKontrak);
   Application.CreateForm(TFHomeLogin, FHomeLogin);
   Application.CreateForm(TFListPenerimaanBank, FListPenerimaanBank);
-  Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
-  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
-  Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
-  Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
-  Application.CreateForm(TFDataKasBon, FDataKasBon);
-  Application.CreateForm(TFListKasBon, FListKasBon);
-  Application.CreateForm(TFListKasKecil, FListKasKecil);
-  Application.CreateForm(TFDataKasKecil, FDataKasKecil);
-  Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
-  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
-  Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
-  Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
-  Application.CreateForm(TFDataKasKecil, FDataKasKecil);
-  Application.CreateForm(TFDataKasBon, FDataKasBon);
-  Application.CreateForm(TFListKasKecil, FListKasKecil);
-  Application.CreateForm(TFListKasBon, FListKasBon);
+  Application.CreateForm(TFKasbon, FKasbon);
   Application.CreateForm(TFListPelakuBiaya, FListPelakuBiaya);
+  Application.CreateForm(TFPelaku_Biaya, FPelaku_Biaya);
+  Application.CreateForm(TFNew_Kasbon, FNew_Kasbon);
+  Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
+  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
+  Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
+  Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
+  Application.CreateForm(TFDataKasBon, FDataKasBon);
+  Application.CreateForm(TFListKasBon, FListKasBon);
+  Application.CreateForm(TFListKasKecil, FListKasKecil);
+  Application.CreateForm(TFDataKasKecil, FDataKasKecil);
+  Application.CreateForm(TFDataListPelakuBiaya, FDataListPelakuBiaya);
+  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
+  Application.CreateForm(TFDataListKelompokBiaya, FDataListKelompokBiaya);
+  Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
+  Application.CreateForm(TFDataKasKecil, FDataKasKecil);
+  Application.CreateForm(TFDataKasBon, FDataKasBon);
+  Application.CreateForm(TFListKasKecil, FListKasKecil);
+  Application.CreateForm(TFListKasBon, FListKasBon);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

@@ -145,6 +145,8 @@ type
     procedure Ed_voucher_ajuanChange(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure edKode_supplierChange(Sender: TObject);
+    procedure DBGridAkunColumns0CellButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;
@@ -650,12 +652,12 @@ begin
             MessageDlg('Pastikan Jenis Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
             edKodeJenisTrans.SetFocus;
           end
-          {else
-          if edNoTrans.Text='' then
+          else
+          if cbsumberdata.Text='' then
           begin
-            MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-            edNoTrans.SetFocus;
-          end}
+            MessageDlg('Pastikan Sumber Data Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+            cbsumberdata.SetFocus;
+          end
           else
           if edKodeMataUang.Text='' then
           begin
@@ -787,6 +789,16 @@ begin
   MemKeterangan.Clear;
   MemDetailAkun.Active:=true;
   MemDetailHutang.Active:=true;
+  Cbsumberdata.Clear;
+  Cb_jenis_trans.Clear;
+  code_trans.Clear;
+  Ed_id_modul.Clear;
+  Ed_Additional.Clear;
+  Edth.Clear;
+  Edbln.Clear;
+  Edhari.Clear;
+  ak_account.Clear;
+  Ed_voucher_ajuan.Clear;
 end;
 
 procedure TFDataPengeluaranKasBank.code_transChange(Sender: TObject);
@@ -804,6 +816,27 @@ begin
      ed_id_modul.Text:=fieldbyname('code_module').AsString;
      cb_jenis_trans.Text:=fieldbyname('name_trans').AsString;
    end;
+end;
+
+procedure TFDataPengeluaranKasBank.DBGridAkunColumns0CellButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  with FCari_DaftarPerk do
+  begin
+    Show;
+    vpanggil:='keluar_kasbank_show_header';
+    with QDaftar_Perk do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:=' SELECT b.header_code,b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                ' left join t_ak_header c on b.header_code=c.header_code'+
+                ' GROUP BY b.code,b.account_name,c.header_name '+
+                ' ORDER BY b.code,b.account_name,c.header_name';
+      Execute;
+    end;
+  end;
 end;
 
 procedure TFDataPengeluaranKasBank.DBGridAkunColumns0EditButtons0Click(

@@ -21,27 +21,25 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
     Width = 947
     Height = 475
     Hint = ''
-    ActivePage = TabPengajuan_Keluar_KasBank
+    ActivePage = Tab_Rencana_Pelunasan
     Align = alClient
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 941
     ExplicitHeight = 466
     FixedDimension = 21
     object Tab_Rencana_Pelunasan: TRzTabSheet
       Caption = 'Rencana Pelunasan Hutang'
-      ExplicitWidth = 937
-      ExplicitHeight = 441
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
         Width = 943
-        Height = 145
+        Height = 129
         Align = alTop
         AlignmentVertical = avBottom
+        BorderOuter = fsNone
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 937
         object Label1: TLabel
           Left = 26
           Top = 14
@@ -51,21 +49,21 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object Label2: TLabel
           Left = 26
-          Top = 43
+          Top = 39
           Width = 61
           Height = 15
           Caption = 'Rencana Ke'
         end
         object Label3: TLabel
           Left = 25
-          Top = 72
+          Top = 64
           Width = 109
           Height = 15
           Caption = 'Periode Pembayaran'
         end
         object Label4: TLabel
           Left = 229
-          Top = 43
+          Top = 39
           Width = 68
           Height = 15
           Caption = 'Jenis Hutang'
@@ -73,16 +71,16 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object Label5: TLabel
           Left = 277
-          Top = 72
+          Top = 64
           Width = 17
           Height = 15
           Caption = 's/d'
         end
         object Combo_Approve: TRzCheckBox
-          Left = 856
-          Top = 2
+          Left = 858
+          Top = 0
           Width = 85
-          Height = 141
+          Height = 129
           Align = alRight
           AlignmentVertical = avBottom
           Caption = 'Pilih Semua'
@@ -90,11 +88,12 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
           TabOrder = 0
           OnClick = Combo_ApproveClick
           ExplicitLeft = 860
+          ExplicitTop = 2
           ExplicitHeight = 19
         end
         object cblunas: TCheckBox
           Left = 25
-          Top = 113
+          Top = 97
           Width = 200
           Height = 17
           Caption = 'Tampilkan yang Sudah Diapprove'
@@ -108,7 +107,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object BCari: TRzBitBtn
           Left = 433
-          Top = 70
+          Top = 62
           Width = 96
           Caption = 'Cari ...'
           TabOrder = 2
@@ -168,7 +167,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object Ed_KdAkun: TEdit
           Left = 459
-          Top = 41
+          Top = 37
           Width = 70
           Height = 23
           TabOrder = 3
@@ -176,7 +175,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object CBJenisHutang: TComboBox
           Left = 302
-          Top = 41
+          Top = 37
           Width = 151
           Height = 23
           TabOrder = 4
@@ -184,7 +183,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object CbRencanake: TComboBox
           Left = 146
-          Top = 41
+          Top = 37
           Width = 61
           Height = 23
           TabOrder = 5
@@ -245,7 +244,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object DTP1: TRzDateTimePicker
           Left = 146
-          Top = 70
+          Top = 62
           Width = 125
           Height = 23
           Date = 45604.000000000000000000
@@ -255,7 +254,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         end
         object DTP2: TRzDateTimePicker
           Left = 302
-          Top = 70
+          Top = 62
           Width = 125
           Height = 23
           Date = 45604.000000000000000000
@@ -266,9 +265,9 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
       end
       object DBGrid_Rencana_Pelunasan: TDBGridEh
         Left = 0
-        Top = 145
+        Top = 129
         Width = 943
-        Height = 305
+        Height = 321
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -390,6 +389,8 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
     end
     object TabPengajuan_Keluar_KasBank: TRzTabSheet
       Caption = 'Pengajuan Keluar Kas dan Bank'
+      ExplicitWidth = 937
+      ExplicitHeight = 441
       object RzPanel2: TRzPanel
         Left = 0
         Top = 0
@@ -398,6 +399,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         Align = alTop
         Color = 15987699
         TabOrder = 0
+        ExplicitWidth = 937
         object Cb_po: TRzCheckBox
           Left = 856
           Top = 2
@@ -470,17 +472,17 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         Color = 15987699
         TabOrder = 0
         object Cb_spb: TRzCheckBox
-          Left = 856
+          Left = 860
           Top = 2
-          Width = 85
+          Width = 81
           Height = 29
           Align = alRight
           AlignmentVertical = avCenter
           Caption = 'Pilih Semua'
           State = cbUnchecked
           TabOrder = 0
-          ExplicitLeft = 860
-          ExplicitHeight = 19
+          ExplicitLeft = 856
+          ExplicitHeight = 17
         end
       end
       object DBGridPengeluaran: TDBGridEh
@@ -1331,8 +1333,8 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
       ''
       ''
       
-        'select * from cash_banks.v_plan_paid_debt where paid_status=0 an' +
-        'd approve_status=false  '
+        'select * from v_plan_paid_debt where paid_status=0 and approve_s' +
+        'tatus=false  '
       'and periode1='#39'2024-01-01'#39' and periode2='#39'2024-01-31'#39
       ''
       

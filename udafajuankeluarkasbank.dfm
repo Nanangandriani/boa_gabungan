@@ -1707,7 +1707,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object QDetail_akun_ajuan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from cash_banks.t_cash_bank_expenditure_submission_det')
+      'select * from t_cash_bank_expenditure_submission_det')
     Left = 598
     Top = 267
   end
@@ -1719,9 +1719,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object QDetail_Hutang_Ajuan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        'select * from cash_banks.t_cash_bank_expenditure_submission_paya' +
-        'ble')
+      'select * from t_cash_bank_expenditure_submission_payable')
     Left = 758
     Top = 267
   end
