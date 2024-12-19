@@ -194,7 +194,7 @@ begin
       SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
     end;
    //Report.DesignReport();
-   //Report.ShowReport();
+   Report.ShowReport();
  end;
 
 end;

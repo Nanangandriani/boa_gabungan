@@ -329,6 +329,53 @@ begin
                 ' '+QuotedStr(MemKlasifikasi['disc4'])+');';
       ExecSQL;
       end;
+
+
+      with Dm.Qtemp3 do //cek data master harga
+      begin
+        close;
+        sql.clear;
+        sql.add(' SELECT * '+
+                ' FROM "t_sales_classification_price_master" '+
+                ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+                ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' AND '+
+                ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+' ');
+        open;
+      end;
+
+      if Dm.Qtemp3.RecordCount=0 then
+      begin
+        with dm.Qtemp2 do
+        begin
+        close;
+        sql.clear;
+        sql.Text:=' INSERT INTO "public"."t_sales_classification_price_master" '+
+                  ' ("code_type_customer", "code_item", "code_unit", "unit_price") '+
+                  ' Values( '+
+                  ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
+                  ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
+                  ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
+                  ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
+        ExecSQL;
+        end;
+      end;
+
+      if Dm.Qtemp3.RecordCount<>0 then
+      begin
+        with dm.Qtemp2 do
+        begin
+        close;
+        sql.clear;
+        sql.Text:=' Update "public"."t_sales_classification_price_master" set '+
+                  ' "unit_price"='+QuotedStr(MemKlasifikasi['harga_satuan'])+' '+
+                  ' where '+
+                  ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' and  '+
+                  ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' and '+
+                  ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+';';
+        ExecSQL;
+        end;
+      end;
+      //end cek master harga
       //ShowMessage(MemKlasifikasi['kd_barang']);
     MemKlasifikasi.Next;
     end;
@@ -416,6 +463,51 @@ begin
                 ' '+QuotedStr(MemKlasifikasi['disc4'])+');';
       ExecSQL;
       end;
+      with Dm.Qtemp3 do //cek data master harga
+      begin
+        close;
+        sql.clear;
+        sql.add(' SELECT * '+
+                ' FROM "t_sales_classification_price_master" '+
+                ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+                ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' AND '+
+                ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+' ');
+        open;
+      end;
+
+      if Dm.Qtemp3.RecordCount=0 then
+      begin
+        with dm.Qtemp2 do
+        begin
+        close;
+        sql.clear;
+        sql.Text:=' INSERT INTO "public"."t_sales_classification_price_master" '+
+                  ' ("code_type_customer", "code_item", "code_unit", "unit_price") '+
+                  ' Values( '+
+                  ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
+                  ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
+                  ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
+                  ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
+        ExecSQL;
+        end;
+      end;
+
+      if Dm.Qtemp3.RecordCount<>0 then
+      begin
+        with dm.Qtemp2 do
+        begin
+        close;
+        sql.clear;
+        sql.Text:=' Update "public"."t_sales_classification_price_master" set '+
+                  ' "unit_price"='+QuotedStr(MemKlasifikasi['harga_satuan'])+' '+
+                  ' where '+
+                  ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' and  '+
+                  ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' and '+
+                  ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+';';
+        ExecSQL;
+        end;
+      end;
+      //end cek master harga
     MemKlasifikasi.Next;
     end;
     end;

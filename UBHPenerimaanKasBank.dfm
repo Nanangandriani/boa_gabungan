@@ -1788,7 +1788,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         'vable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no  wher' +
         'e trans_date between '#39'2024-12-18'#39'  and '#39'2024-12-18'#39' '
       ' ORDER BY trans_date, voucher_no')
-    Active = True
     Left = 860
     Top = 72
     object QCetakvoucher_no: TStringField

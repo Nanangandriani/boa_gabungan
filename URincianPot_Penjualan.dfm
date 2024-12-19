@@ -2,8 +2,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Left = 0
   Top = 0
   Caption = 'Rincian Potongan'
-  ClientHeight = 418
-  ClientWidth = 880
+  ClientHeight = 442
+  ClientWidth = 1200
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 880
+    Width = 1200
     Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
@@ -79,8 +79,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 81
-    Width = 880
-    Height = 305
+    Width = 1200
+    Height = 329
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -104,6 +104,23 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         Footers = <>
         Title.Caption = 'Nama Barang'
         Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'satuan'
+        Footers = <>
+        Title.Caption = 'Satuan'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'harga_satuan'
+        Footers = <>
+        Title.Caption = 'Harga Satuan'
+        Width = 150
       end
       item
         CellButtons = <>
@@ -178,15 +195,15 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 386
-    Width = 880
+    Top = 410
+    Width = 1200
     Height = 32
     Align = alBottom
     TabOrder = 2
     ExplicitTop = 377
     ExplicitWidth = 874
     object BBatal: TRzBitBtn
-      Left = 804
+      Left = 1124
       Top = 1
       Height = 30
       Align = alRight
@@ -248,7 +265,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
       ExplicitLeft = 798
     end
     object BSave: TRzBitBtn
-      Left = 729
+      Left = 1049
       Top = 1
       Height = 30
       Align = alRight
@@ -350,6 +367,12 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     object MemMasterDatapot_persen_4: TFloatField
       FieldName = 'pot_persen_4'
     end
+    object MemMasterDataharga_satuan: TCurrencyField
+      FieldName = 'harga_satuan'
+    end
+    object MemMasterDatasatuan: TStringField
+      FieldName = 'satuan'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kd_brg: TMTStringDataFieldEh
@@ -363,6 +386,19 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 255
+        end
+        object harga_satuan: TMTNumericDataFieldEh
+          FieldName = 'harga_satuan'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object satuan: TMTStringDataFieldEh
+          FieldName = 'satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
         object pot_value_1: TMTNumericDataFieldEh
           FieldName = 'pot_value_1'
