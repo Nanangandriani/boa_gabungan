@@ -23,6 +23,7 @@ object FPembelian: TFPembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 822
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -577,6 +578,7 @@ object FPembelian: TFPembelian
     end
     object ActPrint: TAction
       Caption = 'Print  '
+      OnExecute = ActPrintExecute
     end
     object ActApp: TAction
       Caption = 'Approve  '
@@ -1269,7 +1271,7 @@ object FPembelian: TFPembelian
       OnClick = dxBarLargeButton2Click
     end
   end
-  object RptLPB: TfrxReport
+  object Rpt: TfrxReport
     Version = '2022.2.7'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
@@ -1277,8 +1279,8 @@ object FPembelian: TFPembelian
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45558.382883287000000000
-    ReportOptions.LastChange = 45594.665369421300000000
+    ReportOptions.CreateDate = 45645.693357326390000000
+    ReportOptions.LastChange = 45645.693357326390000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1287,11 +1289,7 @@ object FPembelian: TFPembelian
       'end.')
     Left = 694
     Top = 82
-    Datasets = <
-      item
-        DataSet = FMainMenu.frxDBDJurnal
-        DataSetName = 'frxDBDJurnal'
-      end>
+    Datasets = <>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -1299,9 +1297,9 @@ object FPembelian: TFPembelian
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 215.900000000000000000
-      PaperHeight = 279.400000000000000000
-      PaperSize = 1
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
@@ -1315,41 +1313,9 @@ object FPembelian: TFPembelian
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 75.590600000000000000
+        Height = 22.677180000000000000
         Top = 18.897650000000000000
-        Width = 740.409927000000000000
-        object nama_pt: TfrxMemoView
-          AllowVectorExport = True
-          Top = 34.015770000000000000
-          Width = 740.787880000000000000
-          Height = 30.236240000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -27
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'nama_pt')
-          ParentFont = False
-        end
-        object nm_judul: TfrxMemoView
-          AllowVectorExport = True
-          Top = 3.779530000000000000
-          Width = 740.787880000000000000
-          Height = 30.236240000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -27
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'DAFTAR JURNAL')
-          ParentFont = False
-        end
+        Width = 718.110700000000000000
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -1358,228 +1324,12 @@ object FPembelian: TFPembelian
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 18.897650000000000000
-        Top = 230.551330000000000000
-        Width = 740.409927000000000000
-        DataSet = FMainMenu.frxDBDJurnal
-        DataSetName = 'frxDBDJurnal'
+        Height = 22.677180000000000000
+        Top = 102.047310000000000000
+        Width = 718.110700000000000000
         RowCount = 0
-        object frxDBDJurnalaccount_code: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Width = 147.401670000000000000
-          Height = 18.897650000000000000
-          DataField = 'account_code'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."account_code"]')
-          ParentFont = False
-        end
-        object frxDBDJurnalaccount_name: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 154.960730000000000000
-          Width = 279.685220000000000000
-          Height = 18.897650000000000000
-          DataField = 'account_name'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."account_name"]')
-          ParentFont = False
-        end
-        object frxDBDJurnaldb: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 438.425480000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          DataField = 'db'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDJurnal."db"]')
-          ParentFont = False
-        end
-        object frxDBDJurnalkd: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          DataField = 'kd'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDJurnal."kd"]')
-          ParentFont = False
-        end
       end
-      object GroupHeader1: TfrxGroupHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 52.913420000000000000
-        Top = 154.960730000000000000
-        Width = 740.409927000000000000
-        Condition = 'frxDBDJurnal."trans_no"'
-        object frxDBDJurnalmodule_name: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 139.842610000000000000
-          Top = 5.000000000000000000
-          Width = 389.291590000000000000
-          Height = 18.897650000000000000
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."module_name"] - [frxDBDJurnal."trans_no"]')
-          ParentFont = False
-          Formats = <
-            item
-            end
-            item
-            end>
-        end
-        object frxDBDJurnaltrans_date: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 4.000000000000000000
-          Width = 136.063080000000000000
-          Height = 18.897650000000000000
-          DataField = 'trans_date'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          DisplayFormat.FormatStr = 'dd mmmm yyyy'
-          DisplayFormat.Kind = fkDateTime
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."trans_date"]')
-          ParentFont = False
-        end
-        object Memo3: TfrxMemoView
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 31.677180000000000000
-          Width = 147.401670000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Account No.')
-          ParentFont = False
-        end
-        object Memo4: TfrxMemoView
-          AllowVectorExport = True
-          Left = 154.960730000000000000
-          Top = 31.677180000000000000
-          Width = 279.685220000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Account Name')
-          ParentFont = False
-        end
-        object Memo5: TfrxMemoView
-          AllowVectorExport = True
-          Left = 438.425480000000000000
-          Top = 31.677180000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Debit')
-          ParentFont = False
-        end
-        object Memo6: TfrxMemoView
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Top = 31.677180000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Kredit')
-          ParentFont = False
-        end
-        object Line1: TfrxLineView
-          AllowVectorExport = True
-          Width = 740.409448820000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-      end
-      object GroupFooter1: TfrxGroupFooter
+      object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
@@ -1587,50 +1337,17 @@ object FPembelian: TFPembelian
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677180000000000000
-        Top = 272.126160000000000000
-        Width = 740.409927000000000000
-        object SysMemo1: TfrxSysMemoView
+        Top = 185.196970000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 438.425199290000000000
-          Width = 143.622140000000000000
+          Left = 642.520100000000000000
+          Width = 75.590600000000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftTop]
+          Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDJurnal."db">,MasterData1)]')
-          ParentFont = False
-        end
-        object SysMemo2: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftTop]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDJurnal."kd">,MasterData1)]')
-          ParentFont = False
-        end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Top = 22.677180000000000000
-          Width = 740.409448820000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
+            '[Page#]')
         end
       end
     end
@@ -1639,43 +1356,43 @@ object FPembelian: TFPembelian
     UserName = 'DbLPB'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'no_terima=no_terima'
-      'no_urut=no_urut'
-      'tgl_terima=tgl_terima'
-      'nopo=nopo'
-      'pic=pic'
-      'ket=ket'
-      'nospb=nospb'
-      'nosj=nosj'
-      'nofaktur=nofaktur'
-      'bea_masuk=bea_masuk'
-      'tgl_faktur=tgl_faktur'
-      'jatuh_tempo=jatuh_tempo'
-      'kd_supplier=kd_supplier'
-      'kd_akun=kd_akun'
-      'jenis_pembelian=jenis_pembelian'
-      'jmlh_hutang=jmlh_hutang'
-      'jmlh_bayar=jmlh_bayar'
-      'sisa_hutang=sisa_hutang'
+      'trans_no=trans_no'
+      'order_no=order_no'
+      'trans_date=trans_date'
+      'po_no=po_no'
+      'created_by=created_by'
+      'remark=remark'
+      'spb_no=spb_no'
+      'sj_no=sj_no'
+      'faktur_no=faktur_no'
+      'import_duty=import_duty'
+      'faktur_date=faktur_date'
+      'due_date=due_date'
+      'supplier_code=supplier_code'
+      'account_code=account_code'
+      'purchase_type=purchase_type'
+      'debt_amount=debt_amount'
+      'payment_amount=payment_amount'
+      'debt_remaining=debt_remaining'
       'status=status'
       'valas=valas'
-      'nilai_valas=nilai_valas'
-      'tgl_update=tgl_update'
-      'pic_update=pic_update'
-      'no_pib=no_pib'
-      'status_koreksi=status_koreksi'
-      'stat_rencana=stat_rencana'
-      'status_approval=status_approval'
+      'valas_value=valas_value'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'pib_no=pib_no'
+      'correction_status=correction_status'
+      'plan_stat=plan_stat'
+      'approval_status=approval_status'
       'approval=approval'
-      'kd_sbu=kd_sbu'
-      'bulan=bulan'
-      'thn=thn'
-      'nokendaraan=nokendaraan'
+      'sbu_code=sbu_code'
+      'trans_month=trans_month'
+      'trans_year=trans_year'
+      'vehicle_no=vehicle_no'
       'driver=driver'
-      'nm_supplier=nm_supplier'
-      'nm_material=nm_material'
-      'kd_material_stok=kd_material_stok'
-      'satuan=satuan'
+      'supplier_name=supplier_name'
+      'item_name=item_name'
+      'item_stock_code=item_stock_code'
+      'unit=unit'
       'qty=qty'
       'ppn_rp=ppn_rp'
       'pph_rp=pph_rp'
@@ -1683,8 +1400,10 @@ object FPembelian: TFPembelian
       'subtotalrp=subtotalrp'
       'grandtotal=grandtotal'
       'subtotal=subtotal'
-      'harga=harga'
-      'ttd=ttd')
+      'price=price'
+      'ttd=ttd'
+      'account_pph_code=account_pph_code'
+      'um_value=um_value')
     DataSet = QReportLPB
     BCDToCurrency = False
     DataSetOptions = []
@@ -1695,37 +1414,38 @@ object FPembelian: TFPembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.no_terima,a.no_urut,a.tgl_terima,a.nopo,a.pic,a.ket,a.n' +
-        'ospb,a.nosj,a.nofaktur, a.bea_masuk,'
+        'select a.trans_no,a.order_no,a.trans_date,a.po_no,a. created_by,' +
+        'a.remark,a.spb_no,a.sj_no,a.faktur_no, a.import_duty,'
       
-        '           '#9'a.tgl_faktur,a.jatuh_tempo,a.kd_supplier,a.kd_akun,a' +
-        '.jenis_pembelian,a.jmlh_hutang, '
+        '           '#9'a.faktur_date,a.due_date,a.supplier_code,a.account_c' +
+        'ode,a.purchase_type,a.debt_amount, '
       
-        #9'        a.jmlh_bayar,a.sisa_hutang,a.status,a.valas,a.nilai_val' +
-        'as,a.tgl_update,a.pic_update,          '
+        #9'        a.payment_amount,a.debt_remaining,a.status,a.valas,a.va' +
+        'las_value,a.updated_at,a.updated_by,          '
       
-        'a.no_pib,'#9'a.status_koreksi,a.stat_rencana,a.status_approval,a.ap' +
-        'proval,a.kd_sbu, a.bulan,          '
+        'a.pib_no,'#9'a.correction_status,a.plan_stat,a.approval_status,a.ap' +
+        'proval,a.sbu_code, a.trans_month,          '
       
-        ' a.thn,C.nokendaraan,C.driver,D.nm_supplier,F.nm_material,e.kd_m' +
-        'aterial_stok,e.satuan,e.qty,e.ppn_rp,e.pph_rp,e.ppn_pembulatan,e' +
-        '.subtotalrp,e.grandtotal,'
-      'e.subtotal,e.harga,g.ttd'
+        ' a.trans_year,C.vehicle_no,C.driver,D.supplier_name,F.item_name,' +
+        'e.item_stock_code,e.unit,e.qty,e.ppn_rp,e.pph_rp,e.ppn_pembulata' +
+        'n,e.subtotalrp,'
       
-        ' from        t_terima_material A Left join t_spb C on A.nospb=C.' +
-        'nospb inner join'
+        ' e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_v' +
+        'alue'
       
-        '             t_terima_material_det E on A.no_terima=E.no_terima ' +
-        'inner join t_supplier D '
+        ' from        t_purchase_invoice A Left join t_spb C on A.spb_no=' +
+        'C.spb_no inner join'
       
-        '             on A.kd_Supplier=D.kd_supplier inner join t_materia' +
-        'l_stok F on'
+        '             t_purchase_invoice_det E on A.trans_no=E.trans_no i' +
+        'nner join t_supplier D '
       
-        '             E.kd_material_stok=F.kd_material_stok left JOIN t_u' +
-        'ser g on a.pic=g.nama '
-      '-- where a.no_terima='#39'014/IV/21/PMA'#39
-      '-- where a.no_terima='#39'472/VI/21/MLB'#39
+        '             on A.supplier_code=D.supplier_code inner join t_ite' +
+        'm_stock F on'
+      
+        '             E.item_stock_code=F. item_stock_code left JOIN t_us' +
+        'er g on a.created_by=g.user_name '
       'order by e.id asc')
+    Active = True
     Left = 638
     Top = 82
   end

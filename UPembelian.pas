@@ -56,7 +56,7 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DBGridTerima1: TDBGridEh;
     DBGridEh3: TDBGridEh;
-    RptLPB: TfrxReport;
+    Rpt: TfrxReport;
     DbLPB: TfrxDBDataset;
     QReportLPB: TUniQuery;
     DsTerimaDet: TDataSource;
@@ -73,6 +73,7 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,6 +100,30 @@ begin
       BEdit.Visible:=false;
       Caption:='New Faktur Pembelian';
     end;
+end;
+
+procedure TFPembelian.ActPrintExecute(Sender: TObject);
+begin
+  WITH QReportLPB do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.order_no,a.trans_date,a.po_no,a. created_by,a.remark,a.spb_no,a.sj_no,a.faktur_no, a.import_duty,'+
+    ' a.faktur_date,a.due_date,a.supplier_code,a.account_code,a.purchase_type,a.debt_amount, '+
+    ' a.payment_amount,a.debt_remaining,a.status,a.valas,a.valas_value,a.updated_at,a.updated_by, '+
+    ' a.pib_no,	a.correction_status,a.plan_stat,a.approval_status,a.approval,a.sbu_code, a.trans_month, '+
+    ' a.trans_year,C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,'+
+    ' e.pph_rp,e.ppn_pembulatan,e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value '+
+    ' from t_purchase_invoice A Left join t_spb C on A.spb_no=C.spb_no '+
+    ' inner join t_purchase_invoice_det E on A.trans_no=E.trans_no '+
+    ' inner join t_supplier D on A.supplier_code=D.supplier_code '+
+    ' inner join t_item_stock F on E.item_stock_code=F. item_stock_code '+
+    ' left JOIN t_user g on a.created_by=g.user_name '+
+    ' where a.trans_no='+QuotedStr(Memterima_material['trans_no'])+' order by e.id asc';
+    Execute;
+  end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPN.fr3');
+    Rpt.ShowReport();
 end;
 
 procedure TFPembelian.ActRoExecute(Sender: TObject);

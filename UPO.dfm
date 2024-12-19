@@ -1357,8 +1357,8 @@ object FPO: TFPO
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45586.891155034730000000
-    ReportOptions.LastChange = 45586.891155034730000000
+    ReportOptions.CreateDate = 45645.589570543980000000
+    ReportOptions.LastChange = 45645.589570543980000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1506,7 +1506,11 @@ object FPO: TFPO
       'po2_no=po2_no'
       'sumtotal=sumtotal'
       'category_id=category_id'
-      'user_name=user_name')
+      'user_name=user_name'
+      'account_pph_code=account_pph_code'
+      'account_ppn_code=account_ppn_code'
+      'um_value=um_value'
+      'pemb_ppn=pemb_ppn')
     DataSet = QRptPO
     BCDToCurrency = False
     DataSetOptions = []
@@ -1540,7 +1544,9 @@ object FPO: TFPO
       
         ',sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.po_date,d.' +
         'delivery_date, e.supplier_name,e.address,d.valas,d.remarks'
-      ',d.delivery2_date,d.po2_no,sumtotal ,c.category_id ,j.user_name'
+      
+        ',d.delivery2_date,d.po2_no,sumtotal ,c.category_id ,j.user_name,' +
+        'a.account_pph_code,a.account_ppn_code,d.um_value,a.pemb_ppn'
       '--,c."type"'
       'FROM t_podetail AS "a" '
       
@@ -1569,9 +1575,10 @@ object FPO: TFPO
       
         ',d.po_no,d.delivery_date, e.supplier_name,e.address,d.valas,d.re' +
         'marks,d.delivery2_date,d.po2_no,sumtotal,c.category_id ,j.user_n' +
-        'ame'
-      ' --,c."type"'
+        'ame,a.account_pph_code,a.account_ppn_code'
+      ' ,d.um_value,a.pemb_ppn--,c."type"'
       'order by a.po_no desc')
+    Active = True
     Left = 504
     Top = 32
   end

@@ -93,6 +93,7 @@ object FMainMenu: TFMainMenu
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 1023
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Main Menu'
@@ -192,8 +193,6 @@ object FMainMenu: TFMainMenu
           Height = 436
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 672
-          ExplicitHeight = 349
           ControlData = {
             4C000000D1560000102D00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
