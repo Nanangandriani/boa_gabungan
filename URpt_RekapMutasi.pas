@@ -197,7 +197,10 @@ begin
       BEGIN
         Close;
         SQL.Clear;
-        SQL.Text:='select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai);
+        SQL.Text:='select account_code,account_name,notr,sum(db) db,sum(kd) kd,sum(dbpb) dbpb,sum(kdpb) kdpb,sum(dbpj)dbpj,sum(kdpj) kdpj,sum(dbbop) dbbop,sum(kdbop) kdbop,'+
+        ' sum(dbadm) dbadm,sum(kdadm) kdadm,sum(dbkk) dbkk,sum(kdkk) kdkk,sum(dbtk) dbtk,sum(kdtk) kdtk from '+
+        ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
+        ' GROUP BY account_code,account_name,notr';
         Execute;
       END;
         QRekap_Mutasi.Open;
@@ -226,7 +229,10 @@ tgl_selesai:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
   BEGIN
     Close;
     SQL.Clear;
-    SQL.Text:='select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai);
+    SQL.Text:='select account_code,account_name,notr,sum(db) db,sum(kd) kd,sum(dbpb) dbpb,sum(kdpb) kdpb,sum(dbpj)dbpj,sum(kdpj) kdpj,sum(dbbop) dbbop,sum(kdbop) kdbop,'+
+    ' sum(dbadm) dbadm,sum(kdadm) kdadm,sum(dbkk) dbkk,sum(kdkk) kdkk,sum(dbtk) dbtk,sum(kdtk) kdtk from '+
+    ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
+    ' GROUP BY account_code,account_name,notr';
     Execute;
   END;
   QRekap_Mutasi.Open;

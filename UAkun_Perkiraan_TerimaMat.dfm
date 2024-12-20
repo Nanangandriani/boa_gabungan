@@ -20,6 +20,7 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
     Height = 416
     Align = alTop
     DataSource = DsAkun
+    DrawMemoText = True
     DynProps = <>
     FooterRowCount = 1
     HorzScrollBar.ExtraPanel.NavigatorButtons = [nbLastEh, nbInsertEh, nbDeleteEh, nbPostEh, nbRefreshEh]

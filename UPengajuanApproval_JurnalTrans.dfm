@@ -21,19 +21,20 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 896
     Height = 441
     Hint = ''
-    ActivePage = TabPenjualan
+    ActivePage = TabKas
     Align = alClient
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
+    ExplicitWidth = 892
+    ExplicitHeight = 440
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
-      ExplicitWidth = 900
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 105
-        Width = 896
-        Height = 312
+        Width = 892
+        Height = 311
         Align = alClient
         DataSource = DsPembelian
         DynProps = <>
@@ -181,13 +182,12 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 896
+        Width = 892
         Height = 105
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 900
         object Label1: TLabel
           Left = 40
           Top = 27
@@ -221,13 +221,12 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         object Panel4: TPanel
           Left = 1
           Top = 68
-          Width = 894
+          Width = 890
           Height = 36
           Align = alBottom
           TabOrder = 2
-          ExplicitWidth = 890
           object BTampil_Pemb: TRzBitBtn
-            Left = 522
+            Left = 518
             Top = 1
             Width = 94
             Height = 34
@@ -287,10 +286,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 518
           end
           object BSelect_Pemb: TRzBitBtn
-            Left = 616
+            Left = 612
             Top = 1
             Width = 98
             Height = 34
@@ -350,10 +348,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 612
           end
           object BApp_Pemb: TRzBitBtn
-            Left = 714
+            Left = 710
             Top = 1
             Width = 85
             Height = 34
@@ -413,10 +410,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 710
           end
           object BPrint_Pemb: TRzBitBtn
-            Left = 799
+            Left = 795
             Top = 1
             Width = 94
             Height = 34
@@ -476,19 +472,19 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 795
           end
         end
       end
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
-      ExplicitWidth = 900
+      ExplicitWidth = 888
+      ExplicitHeight = 415
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 106
-        Width = 896
-        Height = 311
+        Width = 892
+        Height = 310
         Align = alClient
         DataSource = DsPenjualan
         DynProps = <>
@@ -625,13 +621,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 896
+        Width = 892
         Height = 106
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 900
+        ExplicitWidth = 888
         object Label3: TLabel
           Left = 27
           Top = 30
@@ -702,13 +698,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         object Panel3: TPanel
           Left = 1
           Top = 69
-          Width = 894
+          Width = 890
           Height = 36
           Align = alBottom
           TabOrder = 4
-          ExplicitTop = 84
+          ExplicitWidth = 886
           object BTampil_Penj: TRzBitBtn
-            Left = 522
+            Left = 518
             Top = 1
             Width = 94
             Height = 34
@@ -768,9 +764,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 514
           end
           object Bselect_Penj: TRzBitBtn
-            Left = 616
+            Left = 612
             Top = 1
             Width = 98
             Height = 34
@@ -830,9 +827,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 608
           end
           object BApp_Penj: TRzBitBtn
-            Left = 714
+            Left = 710
             Top = 1
             Width = 85
             Height = 34
@@ -892,9 +890,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 706
           end
           object BPrint_Penj: TRzBitBtn
-            Left = 799
+            Left = 795
             Top = 1
             Width = 94
             Height = 34
@@ -954,23 +953,22 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 791
           end
         end
       end
     end
     object TabKas: TRzTabSheet
       Caption = 'Kas && Bank'
-      ExplicitWidth = 900
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 896
+        Width = 892
         Height = 153
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 900
         object Label7: TLabel
           Left = 40
           Top = 56
@@ -1011,12 +1009,12 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         object Panel8: TPanel
           Left = 1
           Top = 116
-          Width = 894
+          Width = 890
           Height = 36
           Align = alBottom
           TabOrder = 2
           object Btampil_kas: TRzBitBtn
-            Left = 522
+            Left = 518
             Top = 1
             Width = 94
             Height = 34
@@ -1078,7 +1076,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             NumGlyphs = 2
           end
           object RzBitBtn11: TRzBitBtn
-            Left = 616
+            Left = 612
             Top = 1
             Width = 98
             Height = 34
@@ -1140,7 +1138,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             NumGlyphs = 2
           end
           object RzBitBtn12: TRzBitBtn
-            Left = 714
+            Left = 710
             Top = 1
             Width = 85
             Height = 34
@@ -1202,7 +1200,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             NumGlyphs = 2
           end
           object RzBitBtn13: TRzBitBtn
-            Left = 799
+            Left = 795
             Top = 1
             Width = 94
             Height = 34

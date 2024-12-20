@@ -592,6 +592,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     Contexts = <>
     TabOrder = 4
     TabStop = False
+    ExplicitWidth = 920
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

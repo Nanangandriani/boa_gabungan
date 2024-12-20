@@ -460,8 +460,9 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,b.approved_status,b.module_id '+
-    ' FROM	public.t_cash_bank_acceptance AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
-    ' where "a".deleted_at IS NULL and a.module_id= '+quotedstr(module_id)+' and '+
+    ' FROM	(select voucher_no,trans_date,created_at,paid_amount,description,deleted_at from t_cash_bank_acceptance   '+
+    ' UNION  select voucher_no,trans_date,created_at,amount,to_ ,deleted_at from t_cash_bank_expenditure)  AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
+    ' where "a".deleted_at IS NULL and b.module_id= '+quotedstr(module_id)+' and '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
     ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, a.description,b.approved_status,b.module_id'+
     ' ORDER BY "a".created_at DESC ';
