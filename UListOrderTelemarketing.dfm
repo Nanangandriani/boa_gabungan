@@ -2,8 +2,8 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
   Left = 0
   Top = 0
   Caption = 'List Order Telemarketing'
-  ClientHeight = 518
-  ClientWidth = 1041
+  ClientHeight = 509
+  ClientWidth = 1035
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,12 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
   object pnlFilter: TPanel
     Left = 0
     Top = 0
-    Width = 1041
+    Width = 1035
     Height = 146
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1035
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -236,8 +235,8 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
   object DBGrid: TDBGridEh
     Left = 0
     Top = 146
-    Width = 1041
-    Height = 372
+    Width = 1035
+    Height = 363
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>

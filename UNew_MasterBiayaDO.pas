@@ -109,7 +109,7 @@ begin
                 ' "code_province", "name_province", "code_regency", '+
                 ' "name_regency", "code_subdistrict", "name_subdistrict", "code_transport_type", '+
                 ' "name_transport_type", "transportation_costs", "cost_per_point", '+
-                ' "additional_km_costs" from "db_center"."t_cost_delivery_order" '+
+                ' "additional_km_costs" from "public"."t_cost_delivery_order" '+
                 ' WHERE deleted_at IS NULL '+
                 ' AND "code_starting_location"='+QuotedStr(edKodeLokasi.Text)+' '+
                 ' AND "code_province"='+QuotedStr(edKodeProvinsi.Text)+' '+
@@ -127,7 +127,7 @@ begin
         begin
         close;
         sql.clear;
-        sql.Text:=' INSERT INTO "db_center"."t_cost_delivery_order" ("created_at", '+
+        sql.Text:=' INSERT INTO "public"."t_cost_delivery_order" ("created_at", '+
                   ' "created_by", "code_starting_location", "name_starting_location", '+
                   ' "code_province", "name_province", "code_regency", '+
                   ' "name_regency", "code_subdistrict", "name_subdistrict", '+
@@ -159,7 +159,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.add(' Update "db_center"."t_cost_delivery_order" set '+
+          sql.add(' Update "public"."t_cost_delivery_order" set '+
                   ' name_transport_type='+QuotedStr(MemDetail['nama_jenis'])+','+
                   ' transportation_costs='+QuotedStr(MemDetail['angkutan'])+','+
                   ' cost_per_point='+QuotedStr(MemDetail['tambah_titik'])+','+
@@ -193,7 +193,7 @@ begin
                 ' SELECT "code_cust", "name_cust", '+
                 ' "code_category", "name_category",  '+
                 ' "cost_loading", "cost_unloading" from '+
-                ' "db_center"."t_cost_delivery_order_additional" '+
+                ' "public"."t_cost_delivery_order_additional" '+
                 ' WHERE deleted_at IS NULL '+
                 ' AND "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+' '+
                 ' AND "code_category"='+QuotedStr(MemDetailBongkar['kd_jenis'])+' '+
@@ -208,7 +208,7 @@ begin
         begin
         close;
         sql.clear;
-        sql.Text:=' INSERT INTO "db_center"."t_cost_delivery_order_additional" ("created_at", '+
+        sql.Text:=' INSERT INTO "public"."t_cost_delivery_order_additional" ("created_at", '+
                   ' "created_by", "code_cust", "name_cust", '+
                   ' "code_category", "name_category",  '+
                   ' "cost_loading", "cost_unloading") '+
@@ -231,7 +231,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.add(' Update "db_center"."t_cost_delivery_order_additional" set '+
+          sql.add(' Update "public"."t_cost_delivery_order_additional" set '+
                   ' name_category='+QuotedStr(MemDetailBongkar['nama_jenis'])+','+
                   ' cost_loading='+QuotedStr(MemDetailBongkar['muat'])+','+
                   ' cost_unloading='+QuotedStr(MemDetailBongkar['bongkar'])+','+
@@ -255,7 +255,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT "code", "name" from "db_center"."t_transportation_type" '+
+    sql.add(' SELECT "code", "name" from "public"."t_transportation_type" '+
             ' WHERE deleted_at IS NULL '+
             ' Order By "code" desc ');
     open;
@@ -281,7 +281,7 @@ begin
                 ' "code_province", "name_province", "code_regency", '+
                 ' "name_regency", "code_subdistrict", "name_subdistrict", "code_transport_type", '+
                 ' "name_transport_type", "transportation_costs", "cost_per_point", '+
-                ' "additional_km_costs" from "db_center"."t_cost_delivery_order" '+
+                ' "additional_km_costs" from "public"."t_cost_delivery_order" '+
                 ' WHERE deleted_at IS NULL '+
                 ' AND "code_starting_location"='+QuotedStr(edKodeLokasi.Text)+' '+
                 ' AND "code_province"='+QuotedStr(edKodeProvinsi.Text)+' '+
@@ -347,7 +347,7 @@ begin
                 ' SELECT "code_cust", "name_cust", '+
                 ' "code_category", "name_category",  '+
                 ' "cost_loading", "cost_unloading" from '+
-                ' "db_center"."t_cost_delivery_order_additional" '+
+                ' "public"."t_cost_delivery_order_additional" '+
                 ' WHERE deleted_at IS NULL '+
                 ' AND "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+' '+
                 ' AND "code_category"='+QuotedStr(Dm.Qtemp1.FieldByName('code').AsString)+' '+
@@ -572,7 +572,7 @@ procedure TFNew_MasterBiayaDO.edNamaLokasiButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Lokasi Awal';
   FMasterData.vcall:='m_biaya_do_lokasi';
-  FMasterData.update_grid('code','name','address','"db_center"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
+  FMasterData.update_grid('code','name','address','"public"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
   FMasterData.ShowModal;
 end;
 

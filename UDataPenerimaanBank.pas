@@ -116,6 +116,7 @@ type
     procedure cbTransaksiChange(Sender: TObject);
     procedure DBGridAkunColumns5EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure edJumlahExit(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -179,8 +180,10 @@ begin
       edNoRek.Clear;
       edKode_Pelanggan.Clear;
       edNama_Pelanggan.Clear;
-      edNoRek.Clear;
-      edNamaBank.Clear;
+      edKodeSumberTagihan.Clear;
+      edNMSumberTagihan.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
       edKodeMataUang.Clear;
       edNamaMataUang.Clear;
       edUntukPengiriman.Clear;
@@ -189,10 +192,6 @@ begin
       MemKeterangan.Clear;
       MemDetailAkun.Active:=true;
       MemDetailPiutang.Active:=true;
-      edKodeSumberTagihan.Clear;
-      edNMSumberTagihan.Clear;
-      edKodeJenisBayar.Clear;
-      edNMJenisBayar.Clear;
 
       edKodeJenisTrans.Text:=Dm.Qtemp1.FieldByName('code_trans').AsString;
       edNamaJenisTrans.Text:=Dm.Qtemp1.FieldByName('name_trans').AsString;
@@ -273,8 +272,10 @@ begin
   RefreshGridDetailAkun;
   FDataPenerimaanBank.Autonumber;
   vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
-
-end;
+  edKodeMataUang.Text:=SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('mata_uang')+' ');
+  edNamaMataUang.Text:=SelectRow('select currency_name from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' ');
+  edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' '));
+  end;
 
 procedure TFDataPenerimaanBank.HitungKurs;
 begin
@@ -358,7 +359,7 @@ begin
               ' bill_name='+QuotedStr(edNMJenisBayar.Text)+', '+
               ' module_id='+QuotedStr(vid_modul)+', '+
               ' order_no='+QuotedStr(order_no)+','+
-              //' additional_code='+QuotedStr('0')+','+
+              ' additional_code='+QuotedStr(additional_code1)+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+
@@ -508,7 +509,7 @@ begin
             ' "name_type_trans", "account_number_bank", "account_name_bank", "code_currency", '+
             ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
             ' "code_cust", "name_cust", "payment_code", "payment_name", "bill_code", "bill_name", "module_id", '+
-            //' "additional_code", '+
+            ' "additional_code", '+
             ' "order_no", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
@@ -534,8 +535,8 @@ begin
             ' '+QuotedStr(edKodeJenisBayar.Text)+', '+
             ' '+QuotedStr(edNMJenisBayar.Text)+', '+
             ' '+QuotedStr(vid_modul)+', '+
+            ' '+QuotedStr(additional_code1)+', '+
             ' '+QuotedStr(order_no)+', '+
-            //' '+QuotedStr('0')+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+'  );');
@@ -560,7 +561,7 @@ procedure TFDataPenerimaanBank.Autonumber;
 begin
    idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
    strday2:=dtTrans.Date;
-   edNoTrans.Text:=getNourut(strday2,'public.t_cash_bank_acceptance','0');
+   edNoTrans.Text:=getNourut(strday2,'public.t_cash_bank_acceptance',additional_code1);
 end;
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
@@ -1032,6 +1033,21 @@ begin
   FMasterData.ShowModal;
   //Autocode;
   end;
+end;
+
+procedure TFDataPenerimaanBank.edJumlahExit(Sender: TObject);
+begin
+  RefreshGridDetailAkun;
+
+  //Di CLear Agar di Arahkan User untuk pilih data ulang danmendapat akun terbaru
+  edNamaBank.Clear;
+  edNoRek.Clear;
+  edKode_Pelanggan.Clear;
+  edNama_Pelanggan.Clear;
+  edKodeSumberTagihan.Clear;
+  edNMSumberTagihan.Clear;
+  edKodeJenisBayar.Clear;
+  edNMJenisBayar.Clear;
 end;
 
 procedure TFDataPenerimaanBank.edKode_PelangganButtonClick(Sender: TObject);

@@ -42,7 +42,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
   URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
   UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank, UDataKasBon,
-  UDataKasKecil;
+  UDataKasKecil, UDaftarRekeningKoran;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -75,6 +75,13 @@ begin
   begin
     FBHPenerimaanKasBank.vkd_kab:=MemMasterData['KD_MASTER'];
     FBHPenerimaanKasBank.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekening_koran' then
+  begin
+    FDaftarRekeningKoran.edRekeningBank.EditValue:=MemMasterData['KD_MASTER'];
+    FDaftarRekeningKoran.edNamaBank.EditValue:=MemMasterData['NM_MASTER'];
+    FDaftarRekeningKoran.vRekeningBank:=MemMasterData['KD_MASTER'];
+    FDaftarRekeningKoran.vNamaBank:=MemMasterData['NM_MASTER'];
   end;
   if vcall='bhpenerimaankas_bank_kares' then
   begin

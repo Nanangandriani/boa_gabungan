@@ -2,8 +2,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   Left = 0
   Top = 0
   Caption = 'Delivery Order'
-  ClientHeight = 583
-  ClientWidth = 1395
+  ClientHeight = 574
+  ClientWidth = 1389
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 1395
-    Height = 583
+    Width = 1389
+    Height = 574
     Hint = ''
     ActivePage = TabDataMuatan
     Align = alClient
@@ -25,11 +25,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     TabIndex = 0
     TabOrder = 0
     OnClick = RzPageControl1Click
-    ExplicitWidth = 1389
-    ExplicitHeight = 574
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1385
       ExplicitHeight = 549
       object Label12: TLabel

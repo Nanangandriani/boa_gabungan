@@ -2,8 +2,8 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   Left = 0
   Top = 0
   Caption = 'Daftar Penagihan Piutang'
-  ClientHeight = 567
-  ClientWidth = 1076
+  ClientHeight = 558
+  ClientWidth = 1070
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,13 +14,12 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1076
+    Width = 1070
     Height = 105
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1070
     object Label8: TLabel
       Left = 21
       Top = 74
@@ -142,19 +141,19 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 105
-    Width = 1076
-    Height = 430
+    Width = 1070
+    Height = 421
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1070
-    ExplicitHeight = 421
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1066
       ExplicitHeight = 396
       object DBGridEh1: TDBGridEh
@@ -238,13 +237,11 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 535
-    Width = 1076
+    Top = 526
+    Width = 1070
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 526
-    ExplicitWidth = 1070
     object BBatal: TRzBitBtn
       Left = 1000
       Top = 1

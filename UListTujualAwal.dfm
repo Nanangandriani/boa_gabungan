@@ -2,8 +2,8 @@ object FListTujualAwal: TFListTujualAwal
   Left = 0
   Top = 0
   Caption = 'Lokasi Awal Muat'
-  ClientHeight = 537
-  ClientWidth = 962
+  ClientHeight = 528
+  ClientWidth = 956
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListTujualAwal: TFListTujualAwal
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 962
+    Width = 956
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,7 +22,7 @@ object FListTujualAwal: TFListTujualAwal
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 968
+    ExplicitWidth = 962
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -35,8 +35,8 @@ object FListTujualAwal: TFListTujualAwal
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 962
-    Height = 410
+    Width = 956
+    Height = 401
     Align = alClient
     DataSource = DsLokasiAwal
     DynProps = <>

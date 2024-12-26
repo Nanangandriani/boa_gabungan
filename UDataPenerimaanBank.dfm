@@ -271,6 +271,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Width = 186
       Height = 23
       TabOrder = 10
+      OnExit = edJumlahExit
       DisplayFormat = '0.00#,##'
     end
     object edUntukPengiriman: TMemo
@@ -451,10 +452,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1133
     Height = 220
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 1127
     ExplicitHeight = 211

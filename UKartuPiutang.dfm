@@ -25,7 +25,6 @@ object FKartuPiutang: TFKartuPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1251
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -886,6 +885,7 @@ object FKartuPiutang: TFKartuPiutang
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
     PreviewOptions.Zoom = 1.000000000000000000
+    PreviewOptions.ZoomMode = zmWholePage
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000

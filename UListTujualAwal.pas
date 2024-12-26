@@ -91,7 +91,7 @@ begin
        close;
        sql.Clear;
        sql.Text:=' SELECT "code", "name", "address", "code_regency", "name_regency" '+
-                 ' FROM "db_center"."t_starting_location" '+
+                 ' FROM "public"."t_starting_location" '+
                  ' WHERE deleted_at IS NULL '+
                  ' ORDER BY "code" asc ';
        open;
@@ -138,7 +138,7 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "db_center"."t_starting_location"  SET '+
+          sql.Text:=' UPDATE "public"."t_starting_location"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' WHERE "code"='+QuotedStr(QLokasiAwal.FieldByName('code').AsString);
@@ -166,7 +166,7 @@ begin
        close;
        sql.Clear;
        sql.Text:=' SELECT "code", "name", "address", "code_regency", "name_regency" '+
-                 ' FROM "db_center"."t_starting_location" '+
+                 ' FROM "public"."t_starting_location" '+
                  ' WHERE deleted_at IS NULL '+
                  ' ORDER BY "code" asc ';
        open;
@@ -186,7 +186,7 @@ begin
        sql.Text:=' select "code", "name", "address", '+
                  ' "code_regency", "name_regency", "latitude", "longitude", '+
                  ' "code_province", "name_province", "code_subdistrict", "name_subdistrict" '+
-                 ' from "db_center"."t_starting_location" a '+
+                 ' from "public"."t_starting_location" a '+
                  ' WHERE "code"='+QuotedSTr(QLokasiAwal.FieldByName('code').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;

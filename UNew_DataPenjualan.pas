@@ -101,11 +101,12 @@ type
   public
     { Public declarations }
     stat_menej_fee_jual : Boolean;
-    vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel: string;
+    vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
     strtgl, strbulan, strtahun: string;
     Year, Month, Day: Word;
     procedure Clear;
     procedure Save;
+    procedure SimpanTempDetail;
     procedure Update;
     procedure InsertDetailJU;
     procedure RefreshGrid;
@@ -199,6 +200,46 @@ begin
         MemDetail.post;
       end;
   end;
+  MemDetail.Next;
+  end;
+end;
+
+procedure TFNew_Penjualan.SimpanTempDetail;
+begin
+  //Insert ke t_selling_temp Untuk dapetin Detail Penjualan yang Akan di Proses
+  with dm.Qtemp do
+  begin
+  close;
+  sql.clear;
+  sql.Text:=' DELETE FROM  "public"."t_selling_temp" '+
+            ' WHERE "id_master"='+QuotedStr(get_uuid)+';';
+  ExecSQL;
+  end;
+
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+    close;
+    sql.clear;
+    sql.Text:=' INSERT INTO "public"."t_selling_temp" ("trans_no", "id_master", "cust_code", '+
+              ' "code_item", "name_item", "amount", "code_unit", "name_unit" '+
+              //' "unit_price", "sub_total", '+
+              //' "pot_value_1", "pot_value_2", "pot_value_3", "pot_value_4", '+
+              //' "ppn_value", "grand_tot"'+
+              ' ) '+
+              ' Values( '+
+              ' '+QuotedStr(edNomorTrans.Text)+', '+
+              ' '+QuotedStr(get_uuid)+', '+
+              ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
+              ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
+              ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
+              ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
+              ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
+              ' '+QuotedStr(MemDetail['NM_SATUAN'])+');';
+    ExecSQL;
+    end;
   MemDetail.Next;
   end;
 end;
@@ -431,9 +472,6 @@ end;
 
 procedure TFNew_Penjualan.btHitungPotonganClick(Sender: TObject);
 begin
-  ShowMessage('Onprogres Hitung Klasifikasi...');
-  MessageDlg('Buatkan Validasi Cek Piutang Dengan Berbagai Jenis(Dengan SP)..!!',mtInformation,[MBOK],0);
-
   if MemDetail.RecordCount=0 then
   begin
     ShowMessage('Pastikan Anda Sudah Membuat Detail Penjualan..!!!');
@@ -443,12 +481,27 @@ begin
   if MemDetail.RecordCount<>0 then
   begin
   //ShowMessage('A');
+  //insert Temp Angka potongmPenjualan
+  //
+    get_uuid:=SelectRow('SELECT gen_random_uuid()::TEXT AS clean_uuid;');
+    SimpanTempDetail;
     with FRincianPot_Penjualan do
     begin
+      get_uuid:=FNew_Penjualan.get_uuid;
+      kd_cust:='';
+      kd_item:='';
+      satuan:='';
+      stat_fp:=0;
+      stat_bayar:=0;
+      stat_promo:=0;
+      jumlah_item:=0;
+      kd_JenisOutlet:='';
+      kd_Kategori:='';
       edNomorTrans.Text:=FNew_Penjualan.edNomorTrans.Text;
       edKode_Pelanggan.Text:=FNew_Penjualan.edKode_Pelanggan.Text;
       edNama_Pelanggan.Text:=FNew_Penjualan.edNama_Pelanggan.Text;
     end;
+    FRincianPot_Penjualan.HitungKlasifikasi;
     FRincianPot_Penjualan.ShowModal;
   end;
 end;

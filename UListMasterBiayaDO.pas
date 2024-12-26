@@ -109,7 +109,7 @@ begin
                  ' "code_province", "name_province", "code_regency",  "name_regency", '+
                  ' "code_subdistrict", "name_subdistrict", "code_transport_type",  '+
                  ' "name_transport_type", "transportation_costs", "cost_per_point", '+
-                 ' "additional_km_costs" from "db_center"."t_cost_delivery_order"  '+
+                 ' "additional_km_costs" from "public"."t_cost_delivery_order"  '+
                  ' WHERE deleted_at IS NULL) a  Order By "name_starting_location" asc ';
        open;
    end;
@@ -130,7 +130,7 @@ begin
                  ' "code_province", "name_province", "code_regency",  "name_regency", '+
                  ' "code_subdistrict", "name_subdistrict", "code_transport_type",  '+
                  ' "name_transport_type", "transportation_costs", "cost_per_point", '+
-                 ' "additional_km_costs" from "db_center"."t_cost_delivery_order"  '+
+                 ' "additional_km_costs" from "public"."t_cost_delivery_order"  '+
                  ' WHERE deleted_at IS NULL)  a ';
        open;
    end;

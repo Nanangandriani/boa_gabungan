@@ -2,25 +2,26 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Left = 0
   Top = 0
   Caption = 'Rincian Potongan'
-  ClientHeight = 442
-  ClientWidth = 1200
+  ClientHeight = 443
+  ClientWidth = 1258
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1200
+    Width = 1258
     Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 874
+    ExplicitWidth = 1194
     object Label39: TLabel
       Left = 19
       Top = 43
@@ -79,14 +80,15 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 81
-    Width = 1200
-    Height = 329
+    Width = 1258
+    Height = 330
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
+    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
@@ -112,98 +114,143 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         FieldName = 'satuan'
         Footers = <>
         Title.Caption = 'Satuan'
+        Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jumlah'
+        Footers = <>
+        Title.Caption = 'Jumlah'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'harga_satuan'
         Footers = <>
         Title.Caption = 'Harga Satuan'
-        Width = 150
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nilai_ppn'
+        Footers = <>
+        Title.Caption = 'Nilai PPN'
+        Width = 125
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_value_1'
         Footers = <>
-        Title.Caption = 'Potongan 1'
-        Width = 150
+        Title.Caption = 'Potongan | Pertama'
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_value_2'
         Footers = <>
-        Title.Caption = 'Potongan 2'
-        Width = 150
+        Title.Caption = 'Potongan | Kedua'
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_value_3'
         Footers = <>
-        Title.Caption = 'Potongan 3'
-        Width = 150
+        Title.Caption = 'Potongan | Ketiga'
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_value_4'
         Footers = <>
-        Title.Caption = 'Potongan 4'
-        Width = 150
+        Title.Caption = 'Potongan | Keempat'
+        Visible = False
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_persen_1'
         Footers = <>
         Visible = False
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_persen_2'
         Footers = <>
         Visible = False
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_persen_3'
         Footers = <>
         Visible = False
+        Width = 125
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'pot_persen_4'
         Footers = <>
         Visible = False
+        Width = 125
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'total'
+        Footers = <>
+        Title.Caption = 'Total'
+        Width = 125
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 410
-    Width = 1200
+    Top = 411
+    Width = 1258
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 377
-    ExplicitWidth = 874
+    ExplicitTop = 401
+    ExplicitWidth = 1194
     object BBatal: TRzBitBtn
-      Left = 1124
+      Left = 1182
       Top = 1
       Height = 30
       Align = alRight
@@ -262,10 +309,10 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 798
+      ExplicitLeft = 1118
     end
     object BSave: TRzBitBtn
-      Left = 1049
+      Left = 1107
       Top = 1
       Height = 30
       Align = alRight
@@ -323,7 +370,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 723
+      ExplicitLeft = 1043
     end
   end
   object dsMasterData: TDataSource
@@ -332,6 +379,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     Top = 256
   end
   object MemMasterData: TMemTableEh
+    Active = True
     Params = <>
     Left = 488
     Top = 256
@@ -343,35 +391,68 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
       FieldName = 'nm_brg'
       Size = 255
     end
-    object MemMasterDatapot_value_1: TCurrencyField
-      FieldName = 'pot_value_1'
-    end
-    object MemMasterDatapot_value_2: TCurrencyField
-      FieldName = 'pot_value_2'
-    end
-    object MemMasterDatapot_value_3: TCurrencyField
-      FieldName = 'pot_value_3'
-    end
-    object MemMasterDatapot_value_4: TCurrencyField
-      FieldName = 'pot_value_4'
-    end
-    object MemMasterDatapot_persen_1: TFloatField
-      FieldName = 'pot_persen_1'
-    end
-    object MemMasterDatapot_persen_2: TFloatField
-      FieldName = 'pot_persen_2'
-    end
-    object MemMasterDatapot_persen_3: TFloatField
-      FieldName = 'pot_persen_3'
-    end
-    object MemMasterDatapot_persen_4: TFloatField
-      FieldName = 'pot_persen_4'
-    end
     object MemMasterDataharga_satuan: TCurrencyField
       FieldName = 'harga_satuan'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
     end
     object MemMasterDatasatuan: TStringField
       FieldName = 'satuan'
+    end
+    object MemMasterDatapot_value_1: TCurrencyField
+      FieldName = 'pot_value_1'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_value_2: TCurrencyField
+      FieldName = 'pot_value_2'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_value_3: TCurrencyField
+      FieldName = 'pot_value_3'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_value_4: TCurrencyField
+      FieldName = 'pot_value_4'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_persen_1: TFloatField
+      FieldName = 'pot_persen_1'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_persen_2: TFloatField
+      FieldName = 'pot_persen_2'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_persen_3: TFloatField
+      FieldName = 'pot_persen_3'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatapot_persen_4: TFloatField
+      FieldName = 'pot_persen_4'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatanilai_ppn: TFloatField
+      FieldName = 'nilai_ppn'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatajumlah: TFloatField
+      FieldName = 'jumlah'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
+    end
+    object MemMasterDatatotal: TFloatField
+      FieldName = 'total'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -392,6 +473,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -405,6 +488,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 100
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -413,6 +498,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -421,6 +508,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -429,6 +518,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -437,6 +528,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -445,6 +538,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -453,6 +548,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -461,6 +558,38 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object nilai_ppn: TMTNumericDataFieldEh
+          FieldName = 'nilai_ppn'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object jumlah: TMTNumericDataFieldEh
+          FieldName = 'jumlah'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object total: TMTNumericDataFieldEh
+          FieldName = 'total'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end
@@ -468,5 +597,10 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object query2: TUniQuery
+    Connection = dm.Koneksi
+    Left = 720
+    Top = 8
   end
 end

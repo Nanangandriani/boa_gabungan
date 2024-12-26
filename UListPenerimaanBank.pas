@@ -85,6 +85,22 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     frxDBDJurnal: TfrxDBDataset;
     QJurnal: TUniQuery;
+    QBukti_Terima_det: TUniQuery;
+    frxDBDQBukti_Terima_det: TfrxDBDataset;
+    QBukti_Terima_detvoucher_no: TStringField;
+    QBukti_Terima_dettrans_date: TDateField;
+    QBukti_Terima_detcode_cust: TStringField;
+    QBukti_Terima_detname_cust: TStringField;
+    QBukti_Terima_detaccount_number_bank: TStringField;
+    QBukti_Terima_detaccount_name_bank: TStringField;
+    QBukti_Terima_detcode_account_header: TStringField;
+    QBukti_Terima_detname_account: TStringField;
+    QBukti_Terima_detpaid_amount: TFloatField;
+    QBukti_Terima_detfor_acceptance: TStringField;
+    QBukti_Terima_detdescription: TMemoField;
+    dsBukti_Terima: TDataSource;
+    dsBukti_Terima_det: TDataSource;
+    QBukti_Terima_detket: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -245,6 +261,11 @@ begin
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+    additional_code1:=Dm.Qtemp.FieldByName('additional_code').AsString;
+    additional_code2:='0';
+    additional_code3:='0';
+    additional_code4:='0';
+    additional_code5:='0';
 
     //Refresh Form
     if FDataPenerimaanBank.vid_modul='3' then // Bank
@@ -429,6 +450,19 @@ begin
      open;
     end;
     //
+    //Bikin Detail vbuktipenerimaan
+   with QBukti_Terima_det do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT aa.*,ket from "public"."vbuktipenerimaan" aa '+
+             ' LEFT JOIN (SELECT voucher_no , STRING_AGG("description", E'+QuotedStr(', \n')+') as ket '+
+             ' from "public"."vbuktipenerimaan" where "voucher_no"= '+
+             ' '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
+             ' ON aa."voucher_no"=bb."voucher_no" '+
+             ' where aa."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+     open;
+    end;
 
    cLocation := ExtractFilePath(Application.ExeName);
 

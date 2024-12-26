@@ -2,8 +2,8 @@ object FListMasterBiayaDO: TFListMasterBiayaDO
   Left = 0
   Top = 0
   Caption = 'Master Biaya Delivery Order'
-  ClientHeight = 525
-  ClientWidth = 766
+  ClientHeight = 516
+  ClientWidth = 760
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListMasterBiayaDO: TFListMasterBiayaDO
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 766
+    Width = 760
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListMasterBiayaDO: TFListMasterBiayaDO
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 766
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -34,8 +35,8 @@ object FListMasterBiayaDO: TFListMasterBiayaDO
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 766
-    Height = 398
+    Width = 760
+    Height = 389
     Align = alClient
     DataSource = DsBiayaDO
     DynProps = <>

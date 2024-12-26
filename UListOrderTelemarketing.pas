@@ -77,7 +77,7 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:=' Delete from "sale"."t_telemarketing_orders_tmp" where "created_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' ';
+    sql.Text:=' Delete from "public"."t_telemarketing_orders_tmp" where "created_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' ';
     ExecSQL ;
   end;
 
@@ -148,7 +148,7 @@ begin
     begin
     Close;
     sql.Clear;
-    sql.Text:=' insert into "sale"."t_telemarketing_orders_tmp"("created_at", "created_by", "ticket_number", '+
+    sql.Text:=' insert into "public"."t_telemarketing_orders_tmp"("created_at", "created_by", "ticket_number", '+
               ' "order_date", "outlet_name", "status_name") values ('+
               ' NOW(), '+
               ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -174,7 +174,7 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT "ticket_number", "order_date", "outlet_name", "status_name" '+
-            ' FROM "sale"."t_telemarketing_orders_tmp" '+
+            ' FROM "public"."t_telemarketing_orders_tmp" '+
             ' where "created_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'');
       if Length(Edkodewilayah.Text)<>0 then
       begin

@@ -2,8 +2,8 @@ object FNew_MasterBiayaDO: TFNew_MasterBiayaDO
   Left = 0
   Top = 0
   Caption = 'Data Biaya DO'
-  ClientHeight = 577
-  ClientWidth = 952
+  ClientHeight = 568
+  ClientWidth = 946
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,19 +16,19 @@ object FNew_MasterBiayaDO: TFNew_MasterBiayaDO
   object RzPageControl2: TRzPageControl
     Left = 0
     Top = 0
-    Width = 952
-    Height = 577
+    Width = 946
+    Height = 568
     Hint = ''
     ActivePage = TabSetSumberOrder
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 0
-    ExplicitWidth = 946
-    ExplicitHeight = 568
     FixedDimension = 21
     object TabSetSumberOrder: TRzTabSheet
       Caption = 'Master Biaya'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 942
       ExplicitHeight = 543
       object Panel1: TPanel
@@ -390,7 +390,10 @@ object FNew_MasterBiayaDO: TFNew_MasterBiayaDO
         FixedDimension = 21
         object TabSDetail: TRzTabSheet
           Caption = 'Detail'
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 938
+          ExplicitHeight = 0
           object DBGridDetail: TDBGridEh
             Left = 0
             Top = 0
@@ -457,6 +460,10 @@ object FNew_MasterBiayaDO: TFNew_MasterBiayaDO
     end
     object TabSheet1: TRzTabSheet
       Caption = 'Biaya Bongkar'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RzPageControl3: TRzPageControl
         Left = 0
         Top = 126
@@ -471,6 +478,10 @@ object FNew_MasterBiayaDO: TFNew_MasterBiayaDO
         FixedDimension = 21
         object RzTabSheet1: TRzTabSheet
           Caption = 'Detail'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object DBGridBongkar: TDBGridEh
             Left = 0
             Top = 0

@@ -17,7 +17,7 @@ object FNew_Penjualan: TFNew_Penjualan
     Left = 0
     Top = 0
     Width = 1257
-    Height = 271
+    Height = 277
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
@@ -580,26 +580,25 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 271
+    Top = 277
     Width = 1257
-    Height = 291
+    Height = 285
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 262
-    ExplicitWidth = 1251
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1247
+      ExplicitHeight = 266
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 1253
-        Height = 266
+        Height = 260
         Align = alClient
         DataSource = DSDetail
         DynProps = <>

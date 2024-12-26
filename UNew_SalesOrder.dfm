@@ -17,13 +17,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Left = 0
     Top = 0
     Width = 1055
-    Height = 268
+    Height = 277
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1061
-    ExplicitHeight = 270
+    ExplicitHeight = 268
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -333,8 +332,10 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 472
+    ExplicitWidth = 1049
     object BBatal: TRzBitBtn
-      Left = 985
+      Left = 979
       Top = 1
       Height = 30
       Align = alRight
@@ -393,10 +394,10 @@ object FNew_SalesOrder: TFNew_SalesOrder
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 979
+      ExplicitLeft = 973
     end
     object BSave: TRzBitBtn
-      Left = 910
+      Left = 904
       Top = 1
       Height = 30
       Align = alRight
@@ -455,7 +456,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 904
+      ExplicitLeft = 898
     end
     object Edautocode: TEdit
       Left = 712
@@ -470,29 +471,25 @@ object FNew_SalesOrder: TFNew_SalesOrder
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 268
+    Top = 277
     Width = 1055
-    Height = 213
+    Height = 204
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 277
-    ExplicitWidth = 1061
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1051
-      ExplicitHeight = 195
+      ExplicitWidth = 1045
+      ExplicitHeight = 188
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1057
-        Height = 188
+        Width = 1051
+        Height = 179
         Align = alClient
         DataSource = DSDetail
         DynProps = <>

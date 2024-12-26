@@ -2,8 +2,8 @@ object FNew_TujuanAwal: TFNew_TujuanAwal
   Left = 0
   Top = 0
   Caption = 'Tujuan Awal'
-  ClientHeight = 345
-  ClientWidth = 519
+  ClientHeight = 336
+  ClientWidth = 513
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,14 @@ object FNew_TujuanAwal: TFNew_TujuanAwal
   object Panel4: TPanel
     Left = 0
     Top = 0
-    Width = 519
-    Height = 313
+    Width = 513
+    Height = 304
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 628
+    ExplicitHeight = 313
     object Label14: TLabel
       Left = 20
       Top = 19
@@ -232,8 +233,8 @@ object FNew_TujuanAwal: TFNew_TujuanAwal
   end
   object Panel3: TPanel
     Left = 0
-    Top = 313
-    Width = 519
+    Top = 304
+    Width = 513
     Height = 32
     Align = alBottom
     TabOrder = 1

@@ -222,21 +222,25 @@ begin
       begin
         MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKode_Pelanggan.SetFocus;
+        exit;
       end
       else if edKode_Sales.Text='' then
       begin
         MessageDlg('Data Sales Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKode_Sales.SetFocus;
+        exit;
       end
       else if spJatuhTempo.Value=0 then
       begin
         MessageDlg('Jumlah Tempo Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
         spJatuhTempo.SetFocus;
+        exit;
       end
       else if (edNoReff.Text='') or (edNoReff.Text='0' )then
       begin
         //MessageDlg('Nama Kabupaten Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edNoReff.Text:='-';
+        exit;
       end
       else if Status = 0 then
       begin

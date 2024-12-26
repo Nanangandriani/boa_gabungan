@@ -110,7 +110,7 @@ begin
                   FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=MemDetailPiutang['no_tagihan'];
                   FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=MemDetailPiutang['jum_piutang'];
                   FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=MemDetailPiutang['jum_piutang'];
-                  FDataPenerimaanBank.MemDetailPiutang['keterangan']:='-';
+                  FDataPenerimaanBank.MemDetailPiutang['keterangan']:='PELUNASAN PIUTANG ';
                   FDataPenerimaanBank.MemDetailPiutang.post;
              end;
            MemDetailPiutang.Next;

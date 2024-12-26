@@ -993,7 +993,7 @@ procedure TFNewDeliveryOrder.edNamaJenisKendMuatanButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Kendaraan';
   FMasterData.vcall:='do_jenis_kend';
-  FMasterData.update_grid('code','name','capacity','"db_center"."t_transportation_type"','WHERE	deleted_at IS NULL ORDER BY code desc');
+  FMasterData.update_grid('code','name','capacity','"public"."t_transportation_type"','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.ShowModal;
 end;
 
@@ -1020,7 +1020,7 @@ procedure TFNewDeliveryOrder.edNamaLokasiButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Lokasi Awal';
   FMasterData.vcall:='do_lokasi_awal';
-  FMasterData.update_grid('code','name','address','"db_center"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
+  FMasterData.update_grid('code','name','address','"public"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
   FMasterData.ShowModal;
 end;
 

@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, RzEdit,
   RzBtnEdt, Vcl.ExtCtrls, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, RzButton;
+  DBAxisGridsEh, DBGridEh, RzButton, MemDS, DBAccess, Uni;
 
 type
   TFRincianPot_Penjualan = class(TForm)
@@ -22,8 +22,14 @@ type
     DBGridCustomer: TDBGridEh;
     dsMasterData: TDataSource;
     MemMasterData: TMemTableEh;
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSave: TRzBitBtn;
+    query2: TUniQuery;
     MemMasterDatakd_brg: TStringField;
     MemMasterDatanm_brg: TStringField;
+    MemMasterDataharga_satuan: TCurrencyField;
+    MemMasterDatasatuan: TStringField;
     MemMasterDatapot_value_1: TCurrencyField;
     MemMasterDatapot_value_2: TCurrencyField;
     MemMasterDatapot_value_3: TCurrencyField;
@@ -32,16 +38,23 @@ type
     MemMasterDatapot_persen_2: TFloatField;
     MemMasterDatapot_persen_3: TFloatField;
     MemMasterDatapot_persen_4: TFloatField;
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BSave: TRzBitBtn;
-    MemMasterDataharga_satuan: TCurrencyField;
-    MemMasterDatasatuan: TStringField;
+    MemMasterDatanilai_ppn: TFloatField;
+    MemMasterDatajumlah: TFloatField;
+    MemMasterDatatotal: TFloatField;
     procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
+    id_jenis,stat_outlet,group_item,batas_disc,id_kategori,
+    jenis_disc,batastTotalValue,batasTotalQty,batasValuePerItem,batasQtyPerItem:integer;
+    tot_bruto,dpp_sbn,ndisc_sbn,dpp_temp,diskon,hdisc:real;
+    disc_stat,special_proses,next_proses:boolean;
+    kd_cust,kd_item,satuan,kd_JenisOutlet, kd_Kategori, get_uuid, type_jual,jenis_jual :string;
+    stat_fp,qty,stat_bayar,stat_promo,jumlah_item:integer;
+    stat_klasifikasi,hjual,disc1,disc2,disc3,disc4,disc,
+    bruto,ndisc,ndiscBruto1,ndiscBruto2,ndiscBruto3,ndiscBruto4,dpp,ppn,nppn,netto,total:real;
     { Public declarations }
+    procedure HitungKlasifikasi;
     procedure AmbilDataKlasifikasi;
   end;
 
@@ -52,29 +65,176 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule;
+uses UDataModule, UMy_Function;
+
+procedure TFRincianPot_Penjualan.HitungKlasifikasi;
+begin
+  //Query baca tempdetail jual
+    with query2 do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:=' SELECT a."trans_no", a."id_master", a."code_item" as kd_brg, a."name_item", '+
+                ' "group_name", d."group_id",a."amount", a."code_unit", a."name_unit", a."unit_price", a."sub_total", '+
+                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item  '+
+                ' FROM "public"."t_selling_temp" a '+
+                ' LEFT JOIN (SELECT customer_code, code_type, code_selling_type from t_customer where deleted_at is null) b '+
+                ' on a.cust_code=b.customer_code  '+
+                ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                ' and c.item_code=e.code_item '+
+                ' where "trans_no"='+QuotedStr(edNomorTrans.Text)+' and '+
+                ' "id_master"='+QuotedStr(get_uuid)+' '+
+                ' -- Baca Detail Penjualan ';
+      Open;
+    end;
+   if query2.RecordCount=0 then  //looping detail order
+   begin
+    ShowMessage('Tidak Ditemukan Data, Silakan Proses Hitung Potongan...');
+    MemMasterData.EmptyTable;
+    Exit;
+   end;
+
+   if query2.RecordCount<>0 then  //looping detail order
+   begin
+    kd_cust:=edKode_Pelanggan.Text;
+    kd_JenisOutlet:=query2.fieldbyname('jns_cust').Value;
+    type_jual:=query2.fieldbyname('type_cust').Value;
+    stat_fp:=1;
+    stat_bayar:=1;
+    stat_promo:=0;
+    jumlah_item:=0;
+    MemMasterData.active:=false;
+    MemMasterData.active:=true;
+    MemMasterData.EmptyTable;
+   query2.first;
+   while not query2.Eof do
+   begin
+    if query2.fieldbyname('amount').Value<>0 then
+    begin
+      kd_item:=query2.fieldbyname('kd_brg').Value;
+      satuan:=query2.fieldbyname('code_unit').Value;
+      kd_Kategori:=query2.fieldbyname('group_id').Value;
+      jumlah_item:=query2.fieldbyname('amount').Value;
+
+     with dm.Qtemp do
+     begin
+        close;
+        sql.clear;
+        sql.add(' select d.group_id from t_selling_temp a '+
+                ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+                ' on a.cust_code=b.customer_code '+
+                ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                ' and c.item_code=e.code_item '+
+                ' ');
+        sql.add(' where d.group_id='+QuotedStr(query2.fieldbyname('group_id').value)+' '+
+                ' GROUP BY d.group_id '+
+                ' -- Baca group kategori ');
+        open;
+        first;
+     end;
+        if dm.Qtemp.RecordCount=1 then
+            jenis_jual:='T001'
+             else
+            jenis_jual:='T002';
+
+       {if (type_jual<>'T003') then
+       begin
+        if dm.Qtemp.RecordCount=1 then
+            jenis_jual:='T001'
+             else
+            jenis_jual:='T002';
+       end
+       else
+         jenis_jual:='';}
+
+      //jenis_jual:=query2.fieldbyname('code_sell_type').Value;
+
+     with dm.Qtemp do
+     begin
+        close;
+        sql.clear;
+        sql.add(' select group_name, e."unit_price" as hjual,  '+
+                ' sum(e."unit_price"*a.amount) as total_value, sum(a.amount) as total_qty '+
+                ' from t_selling_temp a '+
+                ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+                ' on a.cust_code=b.customer_code '+
+                ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                ' and c.item_code=e.code_item '+
+                ' ');
+        sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' '+
+                ' GROUP BY group_name, e."unit_price", a.amount '+
+                ' -- Baca qty dalam group kategori ');
+        open;
+        first;
+     end;
+
+   with dm.Qtemp1 do
+   begin
+      close;
+      sql.clear;
+      sql.add(' select a.code_item, sum(e."unit_price"*a.amount) as value_per_item '+
+              ' from t_selling_temp a '+
+              ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+              ' on a.cust_code=b.customer_code '+
+              ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+              ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+              ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+              ' and c.item_code=e.code_item '+
+              ' GROUP BY a.code_item, e."unit_price", a.amount '+
+              ' -- Baca qty dalam group barang');
+      open;
+      first;
+   end;
+
+    AmbilDataKlasifikasi; //Cek Data Klasifikasi Umum/Grouping
+    //Masukin kegrid
+    //showmessage('Klasifikasi');
+    if dm.Qtemp.RecordCount=0 then
+    begin
+      if dm.Qtemp3.RecordCount=0 then
+      begin
+        Messagedlg('Data Klasifikasi Untuk '+QuotedSTR(query2.fieldbyname('name_item').asstring)+' Tidak Ditemukan, Silakan Hubungi IT...',MtInformation,[Mbok],0);
+        exit;
+      end;
+    end;
+    //insert ke memtable
+    with FRincianPot_Penjualan do
+    begin
+      MemMasterData.insert;
+      MemMasterData['kd_brg']:=kd_item;
+      MemMasterData['nm_brg']:=query2.fieldbyname('name_item').asstring;
+      MemMasterData['jumlah']:=qty;
+      MemMasterData['harga_satuan']:=dpp;
+      MemMasterData['nilai_ppn']:=nppn;
+      MemMasterData['satuan']:=satuan;
+      MemMasterData['pot_value_1']:=disc1;
+      MemMasterData['pot_value_2']:=disc2;
+      MemMasterData['pot_value_3']:=disc3;
+      MemMasterData['pot_value_4']:=disc4;
+      MemMasterData['pot_persen_1']:=0;
+      MemMasterData['pot_persen_2']:=0;
+      MemMasterData['pot_persen_3']:=0;
+      MemMasterData['pot_persen_4']:=0;
+      MemMasterData['jumlah']:=qty;
+      MemMasterData['total']:=dpp+nppn;
+      MemMasterData.post;
+    end;
+
+   end;
+   query2.Next;
+   end;
+ end;
+end;
 
 procedure TFRincianPot_Penjualan.AmbilDataKlasifikasi;
-var
-    id_jenis,stat_outlet,group_item,batas_disc,id_kategori,
-    jenis_disc,batastTotalValue,batasTotalQty,batasValuePerItem,batasQtyPerItem:integer;
-    tot_bruto,dpp_sbn,ndisc_sbn,dpp_temp,diskon,hdisc:real;
-    disc_stat,special_proses,next_proses:boolean;
-    kd_cust,kd_item,satuan,kd_JenisOutlet, kd_Kategori:string;
-    stat_fp,qty,type_jual,jenis_jual,stat_bayar,stat_promo,jumlah_item:integer;
-    stat_klasifikasi,hjual,disc1,disc2,disc3,disc4,disc,
-    bruto,ndisc,ndiscBruto1,ndiscBruto2,ndiscBruto3,ndiscBruto4,dpp,ppn,nppn,netto,total:real;
 begin
-  kd_cust:='';
-  kd_item:='';
-  satuan:='';
-  stat_fp:=0;
-  stat_bayar:=0;
-  stat_promo:=0;
-  jumlah_item:=0;
-  kd_JenisOutlet:='';
-  kd_Kategori:='';
-  with Dm.Qtemp do //cek Data di grouping
+  with Dm.Qtemp3 do //cek Data di grouping
   begin
     close;
     sql.clear;
@@ -83,13 +243,13 @@ begin
             ' left JOIN t_sales_classification_det c on a.id_master_det=c.id::VARCHAR '+
             ' where code_cust='+QuotedSTR(kd_cust)+' and '+
             ' a.code_item='+QuotedSTR(kd_item)+' and '+
-            ' code_customer_selling_type= '+IntToStr(type_jual)+' and '+
-            ' code_sell_type= '+IntToStr(jenis_jual)+' and '+
+            ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
+            ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
             ' c.code_unit='+QuotedSTR(satuan)+' ');
     open;
   end;
 
-  if Dm.Qtemp.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping
+  if Dm.Qtemp3.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping
   begin
   //with FMainMenu.qexec do
   with Dm.Qtemp3 do
@@ -105,8 +265,8 @@ begin
             ' LEFT JOIN t_sales_classification_group c on b.id::VARCHAR=c.id_master_det '+
             ' LEFT JOIN t_item d on b.code_item=d.item_code  '+
             ' where code_cust='+QuotedSTR(kd_cust)+' and '+
-            ' code_customer_selling_type= '+IntToStr(type_jual)+' and '+
-            ' code_sell_type= '+IntToStr(jenis_jual)+' and '+
+            ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
+            ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
             ' b.code_item='+QuotedSTR(kd_item)+' and a.status_grouping=1 and '+
             ' b.code_unit='+QuotedSTR(satuan)+'  ');
     open;
@@ -125,27 +285,29 @@ begin
 
   end
   else
-  if Dm.Qtemp.RecordCount=0 then //Klasifikasi Umum Cek Type Perhitungan
+  if Dm.Qtemp3.RecordCount=0 then //Klasifikasi Umum Cek Type Perhitungan
   begin
   with Dm.Qtemp2 do
   begin
     close;
-    sql.clear;//belum
-    sql.add(' SELECT perhitungan, e.hjual as hargamaster  FROM `tdata_klasifikasi` a '+
-            ' LEFT JOIN t_jenis_outlet b on b.id=a.idjenis '+
-            ' LEFT JOIN t_kategori c on c.id=a.idkategori '+
-            ' LEFT JOIN tdata_detklasifikasi d on d.idklasifikasi=a.id '+
-            ' LEFT JOIN tdata_masterharga e on e.idjenis=a.idjenis and d.kdbrg=e.kdbrg  Where '+
-            ' a.idjenis = '+QuotedSTR(kd_JenisOutlet)+' and '+
-            ' a.idkategori = '+QuotedSTR(kd_Kategori)+' and '+
-            ' stat_bayar = '+IntToStr(stat_bayar)+' and '+
-            ' stat_ppn = '+IntToStr(stat_fp)+' and '+
-            ' stat_promo ='+IntToStr(stat_promo)+' and '+
-            ' stat_grouping= 0 and '+
-            ' type_jual= '+IntToStr(type_jual)+' and '+
-            ' jenis_jual= '+IntToStr(jenis_jual)+' and '+
-            ' d.kdbrg='+QuotedSTR(kd_item)+' and '+
-            ' d.satuan='+QuotedSTR(satuan)+' LIMIT 1');
+    sql.clear;
+    sql.add(' SELECT code_type_count as perhitungan, e."unit_price" as hargamaster '+
+            ' FROM t_sales_classification a '+
+            ' LEFT JOIN t_customer_type b on b.code=a.code_type_customer '+
+            ' LEFT JOIN t_item_group c on c.code=a.code_item_category '+
+            ' LEFT JOIN t_sales_classification_det d on d.id_master::VARCHAR=a.id::VARCHAR '+
+            ' LEFT JOIN t_sales_classification_price_master e on '+
+            ' e.code_type_customer=a.code_type_customer and d.code_item=e.code_item  '+
+            ' where a.code_type_customer = '+QuotedSTR(kd_JenisOutlet)+' and '+
+            ' a.code_item_category = '+QuotedSTR(kd_Kategori)+' and '+
+            ' status_payment = '+IntToStr(stat_bayar)+' and '+
+            ' status_tax = '+IntToStr(stat_fp)+' and '+
+            ' status_promo ='+IntToStr(stat_promo)+' and '+
+            ' status_grouping= 0 and '+
+            ' code_customer_selling_type='+QuotedSTR(type_jual)+'  and '+
+            ' code_sell_type='+QuotedSTR(jenis_jual)+' and '+
+            ' d.code_item='+QuotedSTR(kd_item)+' and '+
+            ' d.code_unit='+QuotedSTR(satuan)+' LIMIT 1');
     open;
   end;
 
@@ -159,48 +321,52 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT d.hjual as HARGAJUAL, disc, perhitungan, e.hjual as hargamaster, disc, disc1, disc2, disc3, disc4,stat_potongan,stat_klasifikasi FROM `tdata_klasifikasi` a '+
-            ' LEFT JOIN t_jenis_outlet b on b.id=a.idjenis '+
-            ' LEFT JOIN t_kategori c on c.id=a.idkategori '+
-            ' LEFT JOIN tdata_detklasifikasi d on d.idklasifikasi=a.id  '+
-            ' LEFT JOIN tdata_masterharga e on e.idjenis=a.idjenis and d.kdbrg=e.kdbrg  Where '+
-            ' a.idjenis = '+QuotedSTR(kd_JenisOutlet)+' and '+
-            ' a.idkategori = '+QuotedSTR(kd_Kategori)+' and '+
-            ' stat_bayar = '+IntToStr(stat_bayar)+' and '+
-            ' stat_ppn = '+IntToStr(stat_fp)+' and '+
-            ' stat_promo ='+IntToStr(stat_promo)+' and '+
-            ' stat_grouping= 0 and '+
-            ' type_jual= '+IntToStr(type_jual)+' and '+
-            ' jenis_jual= '+IntToStr(jenis_jual)+' and '+
-            ' d.kdbrg='+QuotedSTR(kd_item)+' and '+
-            ' d.satuan='+QuotedSTR(satuan)+'');
+    sql.add(' SELECT d.unit_price as HARGAJUAL, disc, code_type_count as perhitungan, '+
+            ' e.unit_price as hargamaster, disc, disc1, disc2, disc3, disc4,status_disc as '+
+            ' stat_potongan,1 as stat_klasifikasi '+
+            ' FROM t_sales_classification a '+
+            ' LEFT JOIN t_customer_type b on b.code=a.code_type_customer '+
+            ' LEFT JOIN t_item_group c on c.code=a.code_item_category '+
+            ' LEFT JOIN t_sales_classification_det d on d.id_master::VARCHAR=a.id::VARCHAR  '+
+            ' LEFT JOIN t_sales_classification_price_master e on '+
+            ' e.code_type_customer=a.code_type_customer and d.code_item=e.code_item '+
+            ' where a.code_type_customer = '+QuotedSTR(kd_JenisOutlet)+' and '+
+            ' a.code_item_category = '+QuotedSTR(kd_Kategori)+' and '+
+            ' status_payment = '+IntToStr(stat_bayar)+' and '+
+            ' status_tax = '+IntToStr(stat_fp)+' and '+
+            ' status_promo ='+IntToStr(stat_promo)+' and '+
+            ' status_grouping= 0 and '+
+            ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
+            ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
+            ' d.code_item='+QuotedSTR(kd_item)+' and '+
+            ' d.code_unit='+QuotedSTR(satuan)+' ');
 
-    if Dm.Qtemp2.FieldByName('perhitungan').value= 0 then  //TOTAL VALUE
+    if Dm.Qtemp2.FieldByName('perhitungan').value= 'T001' then  //TOTAL VALUE
     begin
     batastTotalValue:=Dm.Qtemp.fieldbyname('total_value').value;
-    sql.add(' and d.batas1 <= '+QuotedSTR(IntToStr(batastTotalValue))+' and '+
-            ' d.batas2 >= '+QuotedSTR(IntToStr(batastTotalValue))+'  LIMIT 1 ');
+    sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batastTotalValue))+' and '+
+            ' d.limit2 >= '+QuotedSTR(IntToStr(batastTotalValue))+'  LIMIT 1 ');
     end;
 
-    if Dm.Qtemp2.FieldByName('perhitungan').value= 1 then  //TOTAL QTY
+    if Dm.Qtemp2.FieldByName('perhitungan').value= 'T002' then  //TOTAL QTY
     begin
     batasTotalQty:=Dm.Qtemp.fieldbyname('total_qty').value;
-    sql.add(' and d.batas1 <= '+QuotedSTR(IntToStr(batasTotalQty))+' and '+
-            ' d.batas2 >= '+QuotedSTR(IntToStr(batasTotalQty))+'  LIMIT 1 ');
+    sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batasTotalQty))+' and '+
+            ' d.limit2 >= '+QuotedSTR(IntToStr(batasTotalQty))+'  LIMIT 1 ');
     end;
 
-    if Dm.Qtemp2.FieldByName('perhitungan').value= 2 then  //VALUE PER ITEM
+    if Dm.Qtemp2.FieldByName('perhitungan').value= 'T003' then  //VALUE PER ITEM
     begin
     batasValuePerItem:=Dm.Qtemp1.fieldbyname('value_per_item').value;
-    sql.add(' and d.batas1 <= '+QuotedSTR(IntToStr(batasValuePerItem))+' and '+
-            ' d.batas2 >= '+QuotedSTR(IntToStr(batasValuePerItem))+'  LIMIT 1 ');
+    sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batasValuePerItem))+' and '+
+            ' d.limit2 >= '+QuotedSTR(IntToStr(batasValuePerItem))+'  LIMIT 1 ');
     end;
 
-    if Dm.Qtemp2.FieldByName('perhitungan').value= 3 then  //QTY PER ITEM
+    if Dm.Qtemp2.FieldByName('perhitungan').value= 'T004' then  //QTY PER ITEM
     begin
     batasQtyPerItem:=jumlah_item;
-    sql.add(' and d.batas1 <= '+QuotedSTR(IntToStr(batasQtyPerItem))+' and '+
-            ' d.batas2 >= '+QuotedSTR(IntToStr(batasQtyPerItem))+'  LIMIT 1 ');
+    sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batasQtyPerItem))+' and '+
+            ' d.limit2 >= '+QuotedSTR(IntToStr(batasQtyPerItem))+'  LIMIT 1 ');
     end;
     open;
   end;
@@ -314,7 +480,7 @@ begin
         end;
 
       dpp:=round(((hjual-(ndisc/qty))/1.11)*qty);
-      //ppn:=FMainMenu.vPPN;
+      ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
       nppn:=ROUND(dpp*(ppn/100));
       //nppn:=StrToFloat(parsing_koma(FloatToStr(nppn)));
       //nppn:=ROUND(nppn);
@@ -337,7 +503,7 @@ begin
   netto:=dpp+nppn;
   total:=dpp+nppn;
 
-
+  //ShowMessage(FloatToStr(dpp+ppn));
 end;
 
 procedure TFRincianPot_Penjualan.BBatalClick(Sender: TObject);

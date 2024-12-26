@@ -74,7 +74,7 @@ begin
   begin
     Close;
     SQL.Clear;
-    Sql.Text := 'select * from "db_center"."t_starting_location"  ';
+    Sql.Text := 'select * from "public"."t_starting_location"  ';
     open;
   end;
 
@@ -85,7 +85,7 @@ begin
       begin
         Close;
         Sql.Clear;
-        Sql.Text := 'select count(code) as hasil from "db_center"."t_starting_location" ';
+        Sql.Text := 'select count(code) as hasil from "public"."t_starting_location" ';
         Open;
       end;
       Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
@@ -145,7 +145,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "db_center"."t_starting_location"( "code", "name", "address", '+
+    sql.add(' Insert into "public"."t_starting_location"( "code", "name", "address", '+
             ' "code_regency", "name_regency", "latitude", "longitude", '+
             ' "code_province", "name_province", "code_subdistrict", "name_subdistrict", '+
             ' "created_at", "created_by" ) '+
@@ -178,7 +178,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' Update "db_center"."t_starting_location" set '+
+      sql.add(' Update "public"."t_starting_location" set '+
               ' name='+QuotedStr(Ednama.Text)+', '+
               ' address='+QuotedStr(MemAlamat.Text)+','+
               ' code_regency='+QuotedStr(edKodeKabupaten.Text)+','+
