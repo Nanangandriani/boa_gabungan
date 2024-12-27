@@ -4,7 +4,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   Caption = 'Data Pengeluaran Kas'
   ClientHeight = 689
   ClientWidth = 1108
-  Color = clBtnFace
+  Color = clGradientInactiveCaption
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -20,6 +20,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Height = 265
     Align = alTop
     BevelOuter = bvNone
+    Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 1102
@@ -355,6 +356,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 23
       TabOrder = 17
       Visible = False
+      OnChange = Ed_id_modulChange
     end
     object code_trans: TEdit
       Left = 339
@@ -615,7 +617,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
-      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -637,7 +638,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 160
       Align = alLeft
       Caption = ' Data Hutang'
-      Color = clBtnFace
+      Color = clGradientInactiveCaption
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
@@ -707,6 +708,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Top = 109
         Width = 54
         Height = 23
+        Enabled = False
         TabOrder = 2
       end
       object edKodeSumberPengeluaran: TEdit
@@ -725,6 +727,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Top = 82
         Width = 141
         Height = 23
+        Enabled = False
         TabOrder = 4
       end
       object ak_account: TEdit
@@ -743,7 +746,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 160
       Align = alLeft
       Caption = '  Data Bank'
-      Color = clBtnFace
+      Color = clGradientInactiveCaption
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
@@ -887,6 +890,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     ExplicitHeight = 223
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Detail Akun'
       ExplicitWidth = 1098
       ExplicitHeight = 198
@@ -987,6 +991,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
     end
     object TabDetailFaktur: TRzTabSheet
+      Color = clGradientInactiveCaption
       Caption = 'Detail Hutang'
       object DBGridTagihan: TDBGridEh
         Left = 0
@@ -1066,6 +1071,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
     end
     object TabSheet1: TRzTabSheet
+      Color = clGradientInactiveCaption
       TabVisible = False
       Caption = 'TabSheet1'
       object DBGridEh1: TDBGridEh

@@ -22,8 +22,8 @@ object FNew_Penomoran: TFNew_Penomoran
     Align = alClient
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 515
-    ExplicitHeight = 296
+    ExplicitWidth = 513
+    ExplicitHeight = 288
     object Label1: TLabel
       Left = 25
       Top = 25
@@ -798,8 +798,8 @@ object FNew_Penomoran: TFNew_Penomoran
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 296
-    ExplicitWidth = 515
+    ExplicitTop = 288
+    ExplicitWidth = 513
     object RzBitBtn4: TRzBitBtn
       Left = 367
       Top = 2
@@ -860,7 +860,7 @@ object FNew_Penomoran: TFNew_Penomoran
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 363
+      ExplicitLeft = 361
     end
     object BCancel: TRzBitBtn
       Left = 442
@@ -922,7 +922,7 @@ object FNew_Penomoran: TFNew_Penomoran
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 438
+      ExplicitLeft = 436
     end
   end
   object qnumb_det_tmp: TUniQuery

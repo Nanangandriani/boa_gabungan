@@ -1,606 +1,33 @@
-object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
+object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   Left = 0
   Top = 0
-  Caption = 'Form Daftar Pengajuan Keluar Kas dan Bank'
-  ClientHeight = 549
-  ClientWidth = 969
+  Caption = 'FLap_Buku_Harian_Kas'
+  ClientHeight = 442
+  ClientWidth = 707
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
-  OnShow = FormShow
   TextHeight = 15
-  object DBGridPengajuanKeluarKasBank: TDBGridEh
+  object DBGridSupplier: TDBGridEh
     Left = 0
-    Top = 173
-    Width = 969
-    Height = 376
+    Top = 127
+    Width = 707
+    Height = 315
     Align = alClient
-    DataSource = DS_Pengajuan
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
-    TitleParams.MultiTitle = True
-    OnDblClick = DBGridPengajuanKeluarKasBankDblClick
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'voucher_no'
-        Footers = <>
-        Title.Caption = 'No. Voucher'
-        Width = 150
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_date'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'remark'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 300
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'amount'
-        Footers = <>
-        Title.Caption = 'Jumlah'
-        Width = 120
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'to_'
-        Footers = <>
-        Title.Caption = 'Kepada'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'plan_to'
-        Footers = <>
-        Title.Caption = 'Rencana Ke'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'subvoucher'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'entry_date'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'periode1'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'periode2'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'amount'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'dk'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'debit'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kredit'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'header_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ref_no'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'posting'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'customer_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'cash_type'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'job_no'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'company_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tp_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_year'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_month'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_day'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'order_no'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'giro_no'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bank_giro_name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'giro_due_date'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'customer_name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'deposit'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'deposit_date'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tgup'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'voucher_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'to_getout'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'status'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'approve_status'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'approval_date'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'approval'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'app_stat'
-        Footers = <>
-        Title.Caption = 'Status Approve'
-        Width = 50
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'currency'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kurs'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bon_no'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bank_norek'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bank_name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'amount_origin'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'debit_amount_origin'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'credit_amount_origin'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'created_at'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'created_by'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'updated_at'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'updated_by'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'deleted_at'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'deleted_by'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_type_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_type_name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bank_number_account'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'bank_name_account'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'additional_code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'id'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code_module'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_module'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_trans'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'currency_name'
-        Footers = <>
-        Visible = False
-      end>
+    Visible = False
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 932
+        Width = 30
         Height = 118
         Align = alClient
         DynProps = <>
@@ -614,7 +41,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 969
+    Width = 707
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -622,166 +49,29 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitLeft = -64
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
-        end
-        item
-          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
   end
-  object RzPanel1: TRzPanel
-    Left = 0
-    Top = 127
-    Width = 969
-    Height = 46
-    Align = alTop
-    Color = 15987699
-    TabOrder = 2
-    ExplicitWidth = 963
-    object Label1: TLabel
-      Left = 15
-      Top = 13
-      Width = 110
-      Height = 17
-      Caption = 'Tanggal Pengajuan'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label2: TLabel
-      Left = 286
-      Top = 15
-      Width = 19
-      Height = 18
-      Caption = 's/d'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Trebuchet MS'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label5: TLabel
-      Left = 144
-      Top = 14
-      Width = 5
-      Height = 16
-      Caption = ':'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object DateTimePicker2: TDateTimePicker
-      Left = 312
-      Top = 12
-      Width = 121
-      Height = 21
-      Date = 38346.000000000000000000
-      Format = 'dd/MM/yyyy'
-      Time = 0.189661342599720200
-      ImeName = 'US'
-      TabOrder = 0
-    end
-    object BCari: TRzBitBtn
-      Left = 439
-      Top = 9
-      Width = 112
-      Height = 30
-      Caption = 'Tampilkan'
-      TabOrder = 1
-      OnClick = BCariClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000330B0000330B00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8ACDEE3E8E8
-        E8E8E8E8E8E8E8E8E8E8E8ACDEE3E8E8E8E8E8E8E8E8E8E8E8E8AC807A81E3E8
-        E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8E8CEA37A81E3
-        E8E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A81
-        E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A
-        81E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA3
-        7AACAD82828288E3E8E8E8E8E8E3ACE281ACE3818181E2E3E8E8E8E8E8E8D0CE
-        E28288E6B3E6E682EBE8E8E8E8E8E3ACE281E2ACACACAC81E3E8E8E8E8E8E8E3
-        8289B3B3B3D7D7D782E3E8E8E8E8E8E381E3ACACACE3E3E381E3E8E8E8E8E8AD
-        88B3E6B3B3D7D7D7E688E8E8E8E8E8E3E2ACACACACE3E3E3ACE2E8E8E8E8E888
-        89E6E6B3B3B3D7D7E682E8E8E8E8E8E2E3ACACACACACE3E3AC81E8E8E8E8E882
-        E6E6E6E6B3B3B3B3B382E8E8E8E8E881ACACACACACACACACAC81E8E8E8E8E888
-        E6B3E6E6E6B3B3B3E682E8E8E8E8E8E2ACACACACACACACACAC81E8E8E8E8E8AD
-        88D7D7E6E6E6E6B38888E8E8E8E8E8E3E2E3E3ACACACACACE2E2E8E8E8E8E8E3
-        82EBD7B3E6E6E68982E3E8E8E8E8E8E381E3E3ACACACACE381E3E8E8E8E8E8E8
-        AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
-        E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
-      NumGlyphs = 2
-    end
-    object DateTimePicker1: TDateTimePicker
-      Left = 159
-      Top = 12
-      Width = 123
-      Height = 21
-      Date = 38346.000000000000000000
-      Format = 'dd/MM/yyyy'
-      Time = 0.189661342599720200
-      ImeName = 'US'
-      TabOrder = 2
-    end
-  end
   object ActMenu: TActionManager
-    Left = 561
-    Top = 32
+    Left = 592
+    Top = 72
     StyleName = 'Platform Default'
     object ActBaru: TAction
-      Caption = 'New'
-      OnExecute = ActBaruExecute
+      Caption = 'Baru  '
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
     object ActRO: TAction
       Caption = 'Refresh  '
-      OnExecute = ActROExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
@@ -816,7 +106,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 642
+    Left = 648
     Top = 40
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -826,50 +116,26 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 56
-      FloatClientHeight = 123
+      FloatClientWidth = 51
+      FloatClientHeight = 151
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarBaru'
+          ItemName = 'datetimepicker1'
         end
         item
           Visible = True
-          ItemName = 'dxBarUpdate'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbarRefresh'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarDelete'
-        end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = True
-      WholeRow = False
-    end
-    object dxBarManager1Bar2: TdxBar
-      Caption = 'Laporan'
-      CaptionButtons = <>
-      DockedLeft = 125
-      DockedTop = 0
-      FloatLeft = 993
-      FloatTop = 2
-      FloatClientWidth = 0
-      FloatClientHeight = 0
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'DateTimePicker2'
         end
         item
           Visible = True
           ItemName = 'dxBarLargeButton2'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton3'
         end>
-      OneOnRow = False
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -1108,8 +374,10 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         BFC080A205F60000000049454E44AE426082}
     end
     object dxBarBaru: TdxBarLargeButton
-      Action = ActBaru
+      Caption = 'New'
       Category = 0
+      Hint = 'New'
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1244,8 +512,10 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update'
       Category = 0
+      Hint = 'Update'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1282,8 +552,10 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         82}
     end
     object dxbarRefresh: TdxBarButton
-      Action = ActRO
+      Caption = 'Refresh'
       Category = 0
+      Hint = 'Refresh'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1316,8 +588,10 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarDelete: TdxBarButton
-      Action = ActDel
+      Caption = 'Delete'
       Category = 0
+      Hint = 'Delete'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1356,10 +630,18 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'Cetak Bukti Pengeluaran'
+    object datetimepicker1: TcxBarEditItem
+      Caption = 'Pilih Tanggal'
       Category = 0
-      Hint = 'Cetak Bukti Pengeluaran'
+      Hint = 'Pilih Tanggal'
+      Visible = ivAlways
+      OnChange = datetimepicker1Change
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Print'
+      Category = 0
+      Hint = 'Print'
       Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -1415,11 +697,21 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
     end
-    object dxBarLargeButton2: TdxBarLargeButton
-      Caption = 'Cetak Jurnal'
+    object dxBarButton8: TdxBarButton
+      Caption = 'New Button'
       Category = 0
-      Hint = 'Cetak Jurnal'
-      Visible = ivNever
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Category = 0
+      Visible = ivAlways
+    end
+    object dxBarLargeButton3: TdxBarLargeButton
+      Caption = 'Print'
+      Category = 0
+      Hint = 'Print'
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1473,414 +765,1097 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton3Click
+    end
+    object DateTimePicker2: TcxBarEditItem
+      Caption = 'Pilih Tanggal'
+      Category = 0
+      Hint = 'Pilih Tanggal'
+      Visible = ivNever
     end
   end
-  object Qdaf_PengajuanKasBank: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      '-- SELECT * FROM cash_banks.t_cash_bank_expenditure_submission'
-      ''
-      
-        '-- SELECT a."voucher_no",a."subvoucher",a."remark",a."entry_date' +
-        '",a."trans_date",a."periode1",a."periode2",a."amount",a."account' +
-        '_code",a."account_name",a."dk",a."debit",a."kredit",a."header_co' +
-        'de",a."ref_no",a."posting",a."customer_code",a.supplier_code,a."' +
-        'cash_type",a."job_no",a."company_code",a."tp_code",a."trans_year' +
-        '",a."trans_month",a."trans_day",a."order_no",a."giro_no",a."bank' +
-        '_giro_name",a."giro_due_date",a."customer_name",a."supplier_name' +
-        '",a."to_",a."deposit",a."deposit_date",a."TgUP",a."voucher_code"' +
-        ',a."to_getout",a."status",a."approve_status",a."approval_date",a' +
-        '."approval",a."app_stat",a."currency",a."kurs",a."plan_to",a."bo' +
-        'n_no",a."bank_norek",a."bank_name",a."amount_origin",a."debit_am' +
-        'ount_origin",a."credit_amount_origin",a."created_at",a."created_' +
-        'by",a."updated_at",a."updated_by",a."deleted_at",a."deleted_by",' +
-        'a."trans_type_code",a."trans_type_name",a."bank_number_account",' +
-        'a."bank_name_account",a."additional_code",a."id"'
-      
-        '--  ,b."code_module",b."name_module",b."name_trans",c."code",c."' +
-        'name",d."currency_name" FROM cash_banks.t_cash_bank_expenditure_' +
-        'submission a '
-      
-        '-- INNER JOIN t_master_trans_account b on a.trans_type_code=b.co' +
-        'de_trans '
-      '-- INNER JOIN t_source_payment c on a.additional_code=c.code '
-      '-- LEFT JOIN t_currency d on a."currency"=d."currency_name"'
-      
-        '-- GROUP BY a."voucher_no",a."subvoucher",a."remark",a."entry_da' +
-        'te",a."trans_date",a."periode1",a."periode2",a."amount",a."accou' +
-        'nt_code",a."account_name",a."dk",a."debit",a."kredit",a."header_' +
-        'code",a."ref_no",a."posting",a."customer_code",a.supplier_code,a' +
-        '."cash_type",a."job_no",a."company_code",a."tp_code",a."trans_ye' +
-        'ar",a."trans_month",a."trans_day",a."order_no",a."giro_no",a."ba' +
-        'nk_giro_name",a."giro_due_date",a."customer_name",a."supplier_na' +
-        'me",a."to_",a."deposit",a."deposit_date",a."tgup",a."voucher_cod' +
-        'e",a."to_getout",a."status",a."approve_status",a."approval_date"' +
-        ',a."approval",a."app_stat",a."currency",a."kurs",a."plan_to",a."' +
-        'bon_no",a."bank_norek",a."bank_name",a."amount_origin",a."debit_' +
-        'amount_origin",a."credit_amount_origin",a."created_at",a."create' +
-        'd_by",a."updated_at",a."updated_by",a."deleted_at",a."deleted_by' +
-        '",a."trans_type_code",a."trans_type_name",a."bank_number_account' +
-        '",a."bank_name_account",a."additional_code",a."id"'
-      
-        '--  ,b."code_module",b."name_module",b."name_trans",c."code",c."' +
-        'name",d."currency_name" '
-      ''
-      ''
-      
-        'SELECT a."voucher_no",a."subvoucher",a."remark",a."entry_date",a' +
-        '."trans_date",a."periode1",a."periode2",a."amount", a."account_c' +
-        'ode",a."account_name",a."dk",a."debit",a."kredit",a."header_code' +
-        '",a."ref_no",a."posting",a."customer_code", a.supplier_code,a."c' +
-        'ash_type",a."job_no",a."company_code",a."tp_code",a."trans_year"' +
-        ',a."trans_month",a."trans_day", a."order_no",a."giro_no",a."bank' +
-        '_giro_name",a."giro_due_date",a."customer_name",a."supplier_name' +
-        '",a."to_",a."deposit", a."deposit_date",a."tgup",a."voucher_code' +
-        '",a."to_getout",a."status",a."approve_status",a."approval_date",' +
-        'a."approval", a."app_stat",a."currency",a."kurs",a."plan_to",a."' +
-        'bon_no",a."bank_norek",a."bank_name",a."amount_origin",a."debit_' +
-        'amount_origin",a."credit_amount_origin",a."created_at",a."create' +
-        'd_by",a."updated_at",a."updated_by",a."deleted_at",a."deleted_by' +
-        '",a."trans_type_code", a."trans_type_name",a."bank_number_accoun' +
-        't",a."bank_name_account",a."additional_code",a."id" ,b."code_mod' +
-        'ule",b."name_module",b."name_trans",c."code",c."name",d."currenc' +
-        'y_name",e."source_name" '
-      'FROM t_cash_bank_expenditure_submission a '
-      
-        'LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code' +
-        '_trans '
-      'LEFT JOIN t_source_payment c on a."additional_code"=c.code '
-      'LEFT JOIN t_currency d on a."currency"=d."currency_code" '
-      'LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code"'
-      
-        'GROUP BY a."voucher_no",a."subvoucher",a."remark",a."entry_date"' +
-        ',a."trans_date",a."periode1",a."periode2",a."amount",a."account_' +
-        'code", a."account_name",a."dk",a."debit",a."kredit",a."header_co' +
-        'de",a."ref_no",a."posting",a."customer_code",a.supplier_code,a."' +
-        'cash_type",a."job_no", a."company_code",a."tp_code",a."trans_yea' +
-        'r",a."trans_month",a."trans_day",a."order_no",a."giro_no",a."ban' +
-        'k_giro_name",a."giro_due_date",a."customer_name", a."supplier_na' +
-        'me",a."to_",a."deposit",a."deposit_date",a."tgup",a."voucher_cod' +
-        'e",a."to_getout",a."status",a."approve_status",a."approval_date"' +
-        ',a."approval", a."app_stat",a."currency",a."kurs",a."plan_to",a.' +
-        '"bon_no",a."bank_norek",a."bank_name",a."amount_origin",a."debit' +
-        '_amount_origin",a."credit_amount_origin", a."created_at",a."crea' +
-        'ted_by",a."updated_at",a."updated_by",a."deleted_at",a."deleted_' +
-        'by",a."trans_type_code",a."trans_type_name",a."bank_number_accou' +
-        'nt", a."bank_name_account",a."additional_code",a."id" ,b."code_m' +
-        'odule",b."name_module",b."name_trans",c."code",c."name",d."curre' +
-        'ncy_code",d."currency_name",e."source_name" '
-      'ORDER BY entry_date,voucher_no,trans_date,order_no ASC'
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      '')
-    Left = 800
-    Top = 64
-    object Qdaf_PengajuanKasBankvoucher_no: TStringField
-      FieldName = 'voucher_no'
-      Required = True
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBanksubvoucher: TFloatField
-      FieldName = 'subvoucher'
-    end
-    object Qdaf_PengajuanKasBankremark: TStringField
-      FieldName = 'remark'
-      Size = 600
-    end
-    object Qdaf_PengajuanKasBankentry_date: TDateField
-      FieldName = 'entry_date'
-    end
-    object Qdaf_PengajuanKasBanktrans_date: TDateField
-      FieldName = 'trans_date'
-    end
-    object Qdaf_PengajuanKasBankperiode1: TDateField
-      FieldName = 'periode1'
-    end
-    object Qdaf_PengajuanKasBankperiode2: TDateField
-      FieldName = 'periode2'
-    end
-    object Qdaf_PengajuanKasBankamount: TFloatField
-      FieldName = 'amount'
-    end
-    object Qdaf_PengajuanKasBankaccount_code: TStringField
-      FieldName = 'account_code'
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBankaccount_name: TStringField
-      FieldName = 'account_name'
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankdk: TStringField
-      FieldName = 'dk'
-      Size = 1
-    end
-    object Qdaf_PengajuanKasBankdebit: TFloatField
-      FieldName = 'debit'
-    end
-    object Qdaf_PengajuanKasBankkredit: TFloatField
-      FieldName = 'kredit'
-    end
-    object Qdaf_PengajuanKasBankheader_code: TStringField
-      FieldName = 'header_code'
-      Size = 5
-    end
-    object Qdaf_PengajuanKasBankref_no: TStringField
-      FieldName = 'ref_no'
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBankposting: TStringField
-      FieldName = 'posting'
-      Size = 10
-    end
-    object Qdaf_PengajuanKasBankcustomer_code: TStringField
-      FieldName = 'customer_code'
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBanksupplier_code: TStringField
-      FieldName = 'supplier_code'
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBankcash_type: TStringField
-      FieldName = 'cash_type'
-      Size = 1
-    end
-    object Qdaf_PengajuanKasBankjob_no: TStringField
-      FieldName = 'job_no'
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBankcompany_code: TStringField
-      FieldName = 'company_code'
-      Size = 3
-    end
-    object Qdaf_PengajuanKasBanktp_code: TStringField
-      FieldName = 'tp_code'
-      Size = 3
-    end
-    object Qdaf_PengajuanKasBanktrans_year: TSmallintField
-      FieldName = 'trans_year'
-    end
-    object Qdaf_PengajuanKasBanktrans_month: TSmallintField
-      FieldName = 'trans_month'
-    end
-    object Qdaf_PengajuanKasBanktrans_day: TSmallintField
-      FieldName = 'trans_day'
-    end
-    object Qdaf_PengajuanKasBankorder_no: TIntegerField
-      FieldName = 'order_no'
-    end
-    object Qdaf_PengajuanKasBankgiro_no: TStringField
-      FieldName = 'giro_no'
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBankbank_giro_name: TStringField
-      FieldName = 'bank_giro_name'
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBankgiro_due_date: TDateField
-      FieldName = 'giro_due_date'
-    end
-    object Qdaf_PengajuanKasBankcustomer_name: TStringField
-      FieldName = 'customer_name'
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBanksupplier_name: TStringField
-      FieldName = 'supplier_name'
-      Size = 150
-    end
-    object Qdaf_PengajuanKasBankto_: TStringField
-      FieldName = 'to_'
-      Size = 150
-    end
-    object Qdaf_PengajuanKasBankdeposit: TStringField
-      FieldName = 'deposit'
-    end
-    object Qdaf_PengajuanKasBankdeposit_date: TDateField
-      FieldName = 'deposit_date'
-    end
-    object Qdaf_PengajuanKasBankvoucher_code: TStringField
-      FieldName = 'voucher_code'
-      Size = 2
-    end
-    object Qdaf_PengajuanKasBankto_getout: TStringField
-      FieldName = 'to_getout'
-      Size = 100
-    end
-    object Qdaf_PengajuanKasBankstatus: TSmallintField
-      FieldName = 'status'
-    end
-    object Qdaf_PengajuanKasBankapprove_status: TSmallintField
-      FieldName = 'approve_status'
-    end
-    object Qdaf_PengajuanKasBankapproval_date: TDateField
-      FieldName = 'approval_date'
-    end
-    object Qdaf_PengajuanKasBankapproval: TStringField
-      FieldName = 'approval'
-      Size = 100
-    end
-    object Qdaf_PengajuanKasBankapp_stat: TBooleanField
-      FieldName = 'app_stat'
-    end
-    object Qdaf_PengajuanKasBankcurrency: TStringField
-      FieldName = 'currency'
-      Size = 10
-    end
-    object Qdaf_PengajuanKasBankkurs: TFloatField
-      FieldName = 'kurs'
-    end
-    object Qdaf_PengajuanKasBankplan_to: TSmallintField
-      FieldName = 'plan_to'
-    end
-    object Qdaf_PengajuanKasBankbon_no: TStringField
-      FieldName = 'bon_no'
-      Size = 100
-    end
-    object Qdaf_PengajuanKasBankbank_norek: TStringField
-      FieldName = 'bank_norek'
-      Size = 30
-    end
-    object Qdaf_PengajuanKasBankbank_name: TStringField
-      FieldName = 'bank_name'
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankamount_origin: TFloatField
-      FieldName = 'amount_origin'
-    end
-    object Qdaf_PengajuanKasBankdebit_amount_origin: TFloatField
-      FieldName = 'debit_amount_origin'
-    end
-    object Qdaf_PengajuanKasBankcredit_amount_origin: TFloatField
-      FieldName = 'credit_amount_origin'
-    end
-    object Qdaf_PengajuanKasBankcreated_at: TDateTimeField
-      FieldName = 'created_at'
-    end
-    object Qdaf_PengajuanKasBankcreated_by: TStringField
-      FieldName = 'created_by'
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBankupdated_at: TDateTimeField
-      FieldName = 'updated_at'
-    end
-    object Qdaf_PengajuanKasBankupdated_by: TStringField
-      FieldName = 'updated_by'
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBankdeleted_at: TDateTimeField
-      FieldName = 'deleted_at'
-    end
-    object Qdaf_PengajuanKasBankdeleted_by: TStringField
-      FieldName = 'deleted_by'
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBanktrans_type_code: TStringField
-      FieldName = 'trans_type_code'
-      Size = 100
-    end
-    object Qdaf_PengajuanKasBanktrans_type_name: TStringField
-      FieldName = 'trans_type_name'
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankbank_number_account: TStringField
-      FieldName = 'bank_number_account'
-      Size = 100
-    end
-    object Qdaf_PengajuanKasBankbank_name_account: TStringField
-      FieldName = 'bank_name_account'
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankadditional_code: TStringField
-      FieldName = 'additional_code'
-      Size = 200
-    end
-    object Qdaf_PengajuanKasBankid: TLargeintField
-      FieldName = 'id'
-    end
-    object Qdaf_PengajuanKasBankcode_module: TStringField
-      FieldName = 'code_module'
-      ReadOnly = True
-      Required = True
-      Size = 100
-    end
-    object Qdaf_PengajuanKasBankname_module: TStringField
-      FieldName = 'name_module'
-      ReadOnly = True
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankname_trans: TStringField
-      FieldName = 'name_trans'
-      ReadOnly = True
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankcode: TStringField
-      FieldName = 'code'
-      ReadOnly = True
-      Size = 10
-    end
-    object Qdaf_PengajuanKasBankname: TStringField
-      FieldName = 'name'
-      ReadOnly = True
-      Size = 255
-    end
-    object Qdaf_PengajuanKasBankcurrency_name: TStringField
-      FieldName = 'currency_name'
-      ReadOnly = True
-      Required = True
-      Size = 50
-    end
-    object Qdaf_PengajuanKasBanktgup: TDateField
-      FieldName = 'tgup'
-    end
-    object Qdaf_PengajuanKasBanksource_name: TStringField
-      FieldName = 'source_name'
-      ReadOnly = True
-      Size = 255
-    end
-  end
-  object DS_Pengajuan: TDataSource
-    DataSet = Qdaf_PengajuanKasBank
-    Left = 800
-    Top = 136
-  end
-  object QDetail_akun_ajuan: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from t_cash_bank_expenditure_submission_det')
-    Left = 598
-    Top = 275
-  end
-  object DSDetail_Akun_Ajun: TDataSource
-    DataSet = QDetail_akun_ajuan
-    Left = 598
-    Top = 323
-  end
-  object QDetail_Hutang_Ajuan: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from t_cash_bank_expenditure_submission_payable')
-    Left = 758
-    Top = 267
-  end
-  object DSDetail_Hutang_Ajuan: TDataSource
-    DataSet = QDetail_Hutang_Ajuan
-    Left = 760
-    Top = 320
-  end
-  object QBukti_Ajuan_Keluar: TUniQuery
-    Left = 624
-    Top = 392
-  end
-  object frxDBDBukti_Ajuan_Keluar: TfrxDBDataset
-    UserName = 'frxDBDataset1'
+  object frxDBDataset4: TfrxDBDataset
+    UserName = 'frxDBDataset4'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'company_code=company_code'
+      'company_name=company_name'
+      'address=address'
+      'telp=telp'
+      'email=email'
+      'npwp=npwp'
+      'city=city'
+      'address2=address2'
+      'id=id'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'type_of_business=type_of_business'
+      'latitude=latitude'
+      'longitude=longitude'
+      'tax_status=tax_status'
+      'currency=currency'
+      'fp_name=fp_name'
+      'kk_year=kk_year'
+      'kkas_year=kkas_year'
+      #13#10'inventory_date='#13#10'inventory_date'
+      #13#10'month_sa_acc='#13#10'month_sa_acc'
+      'item_date=item_date'
+      'debt_date=debt_date'
+      'expenditure_date=expenditure_date'
+      'serial_no=serial_no'
+      'reporter=reporter'
+      'position=position')
+    DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 696
-    Top = 392
+    Left = 520
+    Top = 32
+  end
+  object QPerusahaan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_company')
+    Active = True
+    Left = 472
+    Top = 32
+  end
+  object frxReport2: TfrxReport
+    Version = '2022.2.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44945.462862835700000000
+    ReportOptions.LastChange = 45651.476405185180000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 368
+    Top = 32
+    Datasets = <
+      item
+        DataSet = frxDBDataset4
+        DataSetName = 'frxDBDataset4'
+      end
+      item
+        DataSet = frxDBDataset3
+        DataSetName = 'frxDBDataset3'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 330.000000000000000000
+      PaperSize = 10000
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      DataSet = frxDBDataset4
+      DataSetName = 'frxDBDataset4'
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      MirrorMode = []
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 234.330860000000000000
+        Width = 755.906000000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
+        DataSet = frxDBDataset3
+        DataSetName = 'frxDBDataset3'
+        RowCount = 0
+        Stretched = True
+        object Memo40: TfrxMemoView
+          AllowVectorExport = True
+          Width = 60.094488190000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataField = 'tgltrans'
+          DataSet = frxDBDataset3
+          DataSetName = 'frxDBDataset3'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset3."tgltrans"]')
+          ParentFont = False
+        end
+        object Memo41: TfrxMemoView
+          AllowVectorExport = True
+          Left = 59.716535430000000000
+          Width = 109.606299212598000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataField = 'no_voucher'
+          DataSet = frxDBDataset3
+          DataSetName = 'frxDBDataset3'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset3."no_voucher"]')
+          ParentFont = False
+        end
+        object Memo42: TfrxMemoView
+          AllowVectorExport = True
+          Left = 169.700787400000000000
+          Width = 221.992123540000000000
+          Height = 22.677165350000000000
+          OnBeforePrint = 'Memo42OnBeforePrint'
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset3
+          DataSetName = 'frxDBDataset3'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset3."ket2"]'
+            '[frxDBDataset3."nm"]'
+            '[frxDBDataset3."nosj"]')
+          ParentFont = False
+          Formats = <
+            item
+            end
+            item
+            end
+            item
+            end>
+        end
+        object Memo43: TfrxMemoView
+          AllowVectorExport = True
+          Left = 392.401574800000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset3
+          DataSetName = 'frxDBDataset3'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset3."db"]')
+          ParentFont = False
+        end
+        object Memo44: TfrxMemoView
+          AllowVectorExport = True
+          Left = 492.937007870000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset3
+          DataSetName = 'frxDBDataset3'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset3."kredit"]')
+          ParentFont = False
+        end
+        object Memo45: TfrxMemoView
+          AllowVectorExport = True
+          Left = 593.094488190000000000
+          Width = 96.377952760000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset3
+          DataSetName = 'frxDBDataset3'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset3."saldo"]')
+          ParentFont = False
+        end
+        object Memo46: TfrxMemoView
+          AllowVectorExport = True
+          Left = 690.141732280000000000
+          Width = 66.141732280000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 110.724472910000000000
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        OnBeforePrint = 'PageHe'
+        object Memo50: TfrxMemoView
+          AllowVectorExport = True
+          Top = 3.000000000000000000
+          Width = 755.906000000000000000
+          Height = 30.236240000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -27
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'BUKU HARIAN KAS')
+          ParentFont = False
+        end
+        object Memperiode: TfrxMemoView
+          AllowVectorExport = True
+          Top = 34.236240000000000000
+          Width = 755.906000000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Periode :')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo52: TfrxMemoView
+          AllowVectorExport = True
+          Top = 19.000000000000000000
+          Width = 226.771653540000000000
+          Height = 27.118120000000000000
+          DataField = 'company_name'
+          DataSet = frxDBDataset4
+          DataSetName = 'frxDBDataset4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset4."company_name"]')
+          ParentFont = False
+        end
+        object Memo53: TfrxMemoView
+          AllowVectorExport = True
+          Top = 39.677180000000000000
+          Width = 268.771653540000000000
+          Height = 41.574830000000000000
+          StretchMode = smMaxHeight
+          DataField = 'address'
+          DataSet = frxDBDataset4
+          DataSetName = 'frxDBDataset4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset4."address"]')
+          ParentFont = False
+        end
+        object Memo54: TfrxMemoView
+          AllowVectorExport = True
+          Top = 84.267780000000000000
+          Width = 60.094488190000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo55: TfrxMemoView
+          AllowVectorExport = True
+          Left = 59.692950000000000000
+          Top = 84.267780000000000000
+          Width = 109.606299210000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Bukti')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo57: TfrxMemoView
+          AllowVectorExport = True
+          Left = 392.314960630000000000
+          Top = 84.283464570000000000
+          Width = 100.157480310000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Debet')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo58: TfrxMemoView
+          AllowVectorExport = True
+          Left = 492.850393700787000000
+          Top = 84.283464570000000000
+          Width = 100.157480310000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kredit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo59: TfrxMemoView
+          AllowVectorExport = True
+          Left = 593.007874020000000000
+          Top = 84.283464570000000000
+          Width = 96.377952760000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo60: TfrxMemoView
+          AllowVectorExport = True
+          Left = 690.079160000000000000
+          Top = 84.283464570000000000
+          Width = 66.141732280000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Paraf')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo8: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 672.094930000000000000
+          Top = 6.779530000000000000
+          Width = 94.795300000000000000
+          Height = 47.779530000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Hal. [PAGE#] dari [TOTALPAGES#]')
+          ParentFont = False
+        end
+        object Memo56: TfrxMemoView
+          AllowVectorExport = True
+          Left = 169.700787400000000000
+          Top = 84.283464570000000000
+          Width = 222.992125980000000000
+          Height = 26.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Keterangan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object Header1: TfrxHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677165350000000000
+        Top = 188.976500000000000000
+        Visible = False
+        Width = 755.906000000000000000
+        OnBeforePrint = 'Header1OnBeforePrint'
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Width = 60.094488188976400000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 392.314960630000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 492.850393700000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 593.007874020000000000
+          Width = 96.377952760000000000
+          Height = 22.677165350000000000
+          OnBeforePrint = 'PageHeader1OnBeforePrint'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+              FormatStr = '%2.n'
+              Kind = fkNumeric
+            end
+            item
+            end>
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 690.141732280000000000
+          Width = 66.141732280000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 169.700787400000000000
+          Width = 222.992125980000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo Awal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 59.716535430000000000
+          Width = 109.606299210000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          ParentFont = False
+        end
+      end
+      object ColumnFooter1: TfrxColumnFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 26.456695350000000000
+        Top = 317.480520000000000000
+        Width = 755.906000000000000000
+        object Shape1: TfrxShapeView
+          AllowVectorExport = True
+          Width = 755.906000000000000000
+          Height = 26.456695350000000000
+          Frame.Typ = []
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.700787400000000000
+          Top = 3.779527560000000000
+          Width = 52.913385830000000000
+          Height = 22.677165354330700000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'JUMLAH')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo15: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 392.314960630000000000
+          Top = 3.779527560000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset3."DB">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo16: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 492.850393700000000000
+          Top = 3.779527560000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset3."KREDIT">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line5: TfrxLineView
+          AllowVectorExport = True
+          Left = 392.314960629921000000
+          Top = 3.779527560000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Left = 492.850393700787000000
+          Top = 3.779527560000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line10: TfrxLineView
+          AllowVectorExport = True
+          Left = 593.007874015748000000
+          Top = 3.779527560000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Top = 3.779527560000000000
+          Width = 755.905511810000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+      object ReportSummary1: TfrxReportSummary
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 366.614410000000000000
+        Width = 755.906000000000000000
+        object Shape2: TfrxShapeView
+          AllowVectorExport = True
+          Width = 755.906000000000000000
+          Height = 22.677165350000000000
+          Frame.Typ = []
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.700990000000000000
+          Width = 52.913385830000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'TOTAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 392.314960630000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset3."DB">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 492.850393700000000000
+          Width = 100.157480310000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset3."KREDIT">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Left = 392.314960629921000000
+          Height = 22.677145830000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 492.850393700787000000
+          Height = 22.677145830000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 593.007874015748000000
+          Height = 22.677145830000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+    end
+  end
+  object frxDBDataset3: TfrxDBDataset
+    UserName = 'frxDBDataset3'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'nomor=nomor'
+      'no_voucher=no_voucher'
+      'code_account=code_account'
+      'position=position'
+      'tgltrans=tgltrans'
+      'to_=to_'
+      'nm=nm'
+      'nosj=nosj'
+      'remark=remark'
+      'ket2=ket2'
+      'sa=sa'
+      'db=db'
+      'kredit=kredit'
+      'saldo=saldo')
+    DataSet = QKet
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 384
+    Top = 88
+  end
+  object QKet: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select *, round(cast(sum(sa+db-kredit) over (ORDER BY nomor asc ' +
+        ') as numeric),2) saldo from '
+      ' '
+      ' ( /*transaksi*/ '
+      
+        ' select "row_number"() over (order by no_voucher)+1 nomor ,no_vo' +
+        'ucher,code_account,"position",tgltrans,to_,nm,nosj,remark,ket2,0' +
+        ' sa,db,kredit  from '
+      ' '
+      
+        '(select no_voucher,code_account,"position",trans_date as tgltran' +
+        's,"to_", '
+      '(case when y.acc_balance is null then x."to_"  '
+      
+        'when y.acc_balance='#39'2110'#39' then  nm  when y.acc_balance='#39'2130'#39' th' +
+        'en '#39#39'   '
+      'when y.acc_balance='#39'2120'#39' then  nm'#9'end) as nm,nosj,remark, '
+      '(case when acc_balance is null then  concat(x.remark,'#39' '#39')  '
+      'when acc_balance='#39'2110'#39' then  x."to_"  '
+      'when acc_balance='#39'2130'#39' then  x."to_"  '
+      
+        'when acc_balance='#39'2120'#39' then  x."to_" end) as ket2,0 db ,jumlah ' +
+        'kredit from '
+      
+        '(select d.no_voucher,d.code_account,d."position",d.trans_date,k.' +
+        'remark,k.to_,'
+      
+        '(case when k."currency"='#39'USD'#39' then k.amount*k.kurs else k.amount' +
+        ' end) jumlah from t_cash_bank_expenditure_det d'
+      
+        'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_n' +
+        'o'#9
+      ' '
+      'left join (select e.no_voucher,e.code_account,'
+      
+        '(case when f.currency='#39'USD'#39' then f.amount*f.kurs else f.amount e' +
+        'nd) pph23 from t_cash_bank_expenditure_det e  '
+      
+        'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_n' +
+        'o'
+      
+        'where e.trans_date between '#39'2024-12-19'#39'and '#39'2024-12-19'#39' and e.co' +
+        'de_account='#39'2142'#39' and f.company_code='#39'SJM'#39' ) e on d.no_voucher=e' +
+        '.no_voucher  '
+      
+        'where d.trans_date between '#39'2024-12-19'#39'and '#39'2024-12-19'#39' and d.co' +
+        'de_account='#39'1111'#39' and k.company_code='#39'SJM'#39')x  '
+      ' '
+      'left join '
+      ' '
+      
+        '(SELECT distinct voucher_no,string_agg (concat(item_name,'#39' '#39',to_' +
+        'char(qty,'#39'FM999G999G990'#39'),'#39' '#39',unit),'#39', '#39')nm,acc_balance  FROM '
+      
+        ' (SELECT  a.voucher_no,max(a.id)id,a.item_name,sum(a.qty) qty,a.' +
+        'unit,acc_balance  FROM '
+      
+        ' (SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e' +
+        '.unit,b.code as acc_balance  FROM t_cash_bank_expenditure_payabl' +
+        'e a '
+      ' INNER JOIN t_ak_account b  on a.account_acc= b.code '
+      ' '
+      'LEFT JOIN t_item_receive d ON a.invoice_no= d.receive_no'
+      ' '
+      'INNER JOIN t_item_receive_det e ON d.receive_no=e.receive_no '
+      ' '
+      
+        'INNER JOIN t_item_stock f ON e.item_stock_code=f.item_stock_code' +
+        ' '
+      
+        'where a.trans_date BETWEEN '#39'2024-12-19'#39' and '#39'2024-12-19'#39'  GROUP ' +
+        'BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  '
+      
+        'GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a  GROU' +
+        'P BY voucher_no,acc_balance ) y ON x.no_voucher=y.voucher_no  '
+      ' '
+      'left join '
+      
+        ' (SELECT voucher_no, string_agg (concat('#39'SJ.'#39',a.sj_no), '#39', '#39' ) n' +
+        'osj  FROM '
+      ' '
+      '(SELECT * FROM '
+      
+        ' (SELECT "row_number"() over (PARTITION by voucher_no order by i' +
+        'nvoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.receive_date'
+      ' FROM t_cash_bank_expenditure_payable a  '
+      ' '
+      'LEFT JOIN '
+      
+        ' t_item_receive b ON a.invoice_no= b.receive_no WHERE a.trans_da' +
+        'te BETWEEN '#39'2024-12-19'#39' and  '#39'2024-12-19'#39'  '
+      
+        'GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.receive_dat' +
+        'e  ORDER BY b.receive_date,a.invoice_no)A '
+      'ORDER BY voucher_no,sj_no,receive_date) a '
+      
+        'GROUP BY voucher_no,sj_no,receive_date ) z  ON y.voucher_no=z.vo' +
+        'ucher_no  '
+      ''
+      ' UNION ALL  '
+      
+        ' select a.no_voucher,a.code_account as kodesp,a."position",a.tra' +
+        'ns_date as tgltrans,'#39#39' kepada,'#39#39' nm,'#39#39' nosj,description as ket,d' +
+        'escription as ket2,paid_amount debit,0 kredit from t_cash_bank_e' +
+        'xpenditure_det a'
+      
+        'INNER JOIN t_cash_bank_expenditure b on a.no_voucher=b.voucher_n' +
+        'o'
+      
+        'where a.trans_date between '#39'2024-12-19'#39' and  '#39'2024-12-19'#39' and co' +
+        'de_account='#39'1111'#39' and company_code='#39'SJM'#39'   '
+      ' '
+      'UNION ALL  '
+      ' '
+      
+        'select voucher_no as voucher,code_account as kodesp,'#39'D'#39'::charact' +
+        'er varying as dk,trans_date as tgltrans,'#39#39' kepada,'#39#39' nm,'#39#39' sj,de' +
+        'scription::character varying as ket, '
+      
+        'description::character varying as ket2,paid_amount debit,0 kredi' +
+        't from t_cash_bank_acceptance_det where trans_date between '#39'2024' +
+        '-12-19'#39' and  '#39'2024-12-19'#39'  '
+      ' '
+      'UNION ALL  '
+      ' '
+      
+        'SELECT  voucher,kredit_account as kodesp,'#39'K'#39'::character varying ' +
+        'as dk,tgltrans,'#39#39'kepada,'#39#39' nm, '#39#39' sj,information::character vary' +
+        'ing as ket,information::character varying as ket2,debit,kredit f' +
+        'rom  '
+      ' (select a.adjustment_proof_no as voucher,'
+      
+        'b.kredit_account,'#39'K'#39'::character varying as dk,a."date" as tgltra' +
+        'ns,a.information,a.information as ket2,b.debit,b.kredit from '
+      
+        't_adjustment_journal a  INNER JOIN t_adjustment_journal_det b ON' +
+        ' a.adjustment_proof_no=b.adjustment_proof_no '
+      
+        'WHERE a."date" between '#39'2024-12-19'#39' and '#39'2024-12-19'#39' and b.kredi' +
+        't_account='#39'1111'#39' order by tgltrans,voucher Asc)n ) x  '
+      #9
+      ' '
+      ''
+      'UNION  '
+      ' /*Saldo awal*/  '
+      
+        ' select 1 nomor,'#39#39' voucher,'#39#39' kodesp,'#39#39' dk,null tgltrans,'#39#39' kepa' +
+        'da,'#39#39' nm,'#39#39' nosj,'#39' Saldo Awal '#39'  ket,'#39' Saldo Awal '#39'  ket2 ,  '
+      
+        'round(cast((balance+jum_debit+jum_debit2+jum_debit3+jum_debit4-j' +
+        'um_kredit-jum_kredit2) as numeric),2) saldosa,0 db,0 kredit from' +
+        '  '
+      ' '
+      
+        '(select x.jum_debit,x.jum_debit2,x.jum_kredit,x.jum_kredit2,x.ba' +
+        'lance,case when c.jum_debit isnull then 0 else c.jum_debit end j' +
+        'um_debit3,x.jum_debit4 from  '
+      '(select b.*,m.jum_kredit2,balance,n.jum_debit4 from '
+      ' '
+      
+        '(select code as kodesp,balance from t_ak_account where code='#39'111' +
+        '1'#39')a  '
+      ' '
+      'INNER JOIN '
+      
+        ' (select x.kodesp,(case when a.jum_debit is null then 0 else a.j' +
+        'um_debit end)jum_debit ,(case when c.jumlah is null then 0 else ' +
+        'c.jumlah end)jum_debit2,(case when b.jum_kredit is null then 0 e' +
+        'lse b.jum_kredit end)jum_kredit  from  '
+      '(select code as kodesp from t_ak_account where code='#39'1111'#39')x  '
+      
+        ' left join(select code_account,(case when currency='#39'USD'#39' then su' +
+        'm(amount*kurs) else sum(amount) end)jum_debit from t_cash_bank_e' +
+        'xpenditure_det a'
+      
+        'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_n' +
+        'o '
+      
+        'where (a.trans_date between '#39'2021-10-01'#39' and  '#39'2024-12-18'#39')  and' +
+        ' code_account='#39'1111'#39' and dk='#39'D'#39' and company_code='#39'SJM'#39' group by ' +
+        'code_account,currency order by code_account)a on a.code_account=' +
+        'x.kodesp  '
+      ' '
+      
+        'left join (select code_account,sum(jum_kredit)as jum_kredit from' +
+        '(select code_account,(case when currency='#39'USD'#39' then sum(amount*k' +
+        'urs)  else sum(amount) end)jum_kredit from t_cash_bank_expenditu' +
+        're_det A'
+      
+        'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_n' +
+        'o'
+      
+        'where (a.trans_date between '#39'2021-10-01'#39' and  '#39'2024-12-18'#39' ) and' +
+        ' code_account='#39'1111'#39'  and dk='#39'K'#39' and company_code='#39'SJM'#39'  group b' +
+        'y code_account,currency order by code_account)x  group by code_a' +
+        'ccount)b on b.code_account=x.kodesp   '
+      ' '
+      'left join(select akun_kredit,sum(paid_amount)as jumlah from '
+      
+        ' (SELECT * from "v_cash_receipts_cutoff" Where trans_date <= '#39'20' +
+        '24-12-18'#39')x group by akun_kredit)c on c.akun_kredit=x.kodesp) b ' +
+        'on a.kodesp=b.kodesp  '
+      
+        ' left join (SELECT '#39'1111'#39'::character varying as kodesp,(case whe' +
+        'n sum(kredit) ISNULL then 0 else sum(kredit) end) as jum_kredit2'
+      ' '
+      ''
+      'from t_adjustment_journal a  '
+      ' '
+      
+        'INNER JOIN t_adjustment_journal_det b on a.adjustment_proof_no=b' +
+        '.adjustment_proof_no '
+      
+        'WHERE a.date between '#39'2023-12-30'#39' and '#39'2024-12-18'#39' and b.kredit_' +
+        'account='#39'1111'#39')m on m.kodesp=b.kodesp   '
+      ' '
+      'LEFT JOIN  '
+      
+        ' (SELECT '#39'1111'#39'::character varying as kodesp,(case when sum(debi' +
+        't) ISNULL then 0 else sum(debit) end) as jum_debit4 from t_adjus' +
+        'tment_journal a  '
+      
+        'INNER JOIN t_adjustment_journal_det b on a.adjustment_proof_no=b' +
+        '.adjustment_proof_no  '
+      
+        'WHERE (a."date" between '#39'2023-12-30'#39' and '#39'2024-12-18'#39' ) and b.kr' +
+        'edit_account='#39'1111'#39')n on m.kodesp=n.kodesp )x   '
+      ' '
+      
+        'LEFT JOIN  (select a.code_account,sum(a.paid_amount)as jum_debit' +
+        ' from t_cash_bank_expenditure_det a,t_cash_bank_expenditure b '
+      
+        'where a.no_voucher=b.voucher_no and a.code_account='#39'1111'#39' and a.' +
+        '"position"='#39'D'#39' and b.company_code='#39'SJM'#39'  and (a."trans_date" bet' +
+        'ween '#39'2021-10-01'#39' and  '#39'2024-12-18'#39' ) '
+      
+        'group by a.code_account order by a.code_account) c  on c.code_ac' +
+        'count=x.kodesp) xx) xxx ORDER BY nomor ASC')
+    MasterFields = 'voucher'
+    DetailFields = 'voucher'
+    Active = True
+    Left = 344
+    Top = 80
   end
 end

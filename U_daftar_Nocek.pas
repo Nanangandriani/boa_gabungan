@@ -41,6 +41,7 @@ type
     procedure BCariClick(Sender: TObject);
     procedure btnokClick(Sender: TObject);
     procedure cbbankChange(Sender: TObject);
+    procedure DBGridEh1DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,7 +80,7 @@ procedure TFdaftar_nocek.btnokClick(Sender: TObject);
 begin
   if vcall='rencanalunashutang' then
   begin
-      FRencana_Lunas_Hutang.txtnocek.text:= qdafnocek.fieldbyname('nocek').asstring;
+      FRencana_Lunas_Hutang.txtnocek.text:= qdafnocek.fieldbyname('cek_no').asstring;
       Fdaftar_nocek.close;
   end;
 end;
@@ -102,6 +103,11 @@ begin
       cbrek.Items.Add(dm.Qtemp.fieldbyname('rekening_no').asstring);
       dm.Qtemp.Next;
    end;
+end;
+
+procedure TFdaftar_nocek.DBGridEh1DblClick(Sender: TObject);
+begin
+   btnokclick(sender);
 end;
 
 procedure TFdaftar_nocek.FormShow(Sender: TObject);

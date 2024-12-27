@@ -147,6 +147,7 @@ type
     procedure edKode_supplierChange(Sender: TObject);
     procedure DBGridAkunColumns0CellButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure Ed_id_modulChange(Sender: TObject);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;
@@ -171,6 +172,7 @@ type
     procedure Autonumber;
     procedure InsertDetailAkun;
     procedure InsertDetailHutang;
+    procedure refresh_form;
   end;
 
 var
@@ -183,6 +185,98 @@ implementation
 uses UDataModule, UCari_DaftarPerk, UMasterData, USearch_Supplier,
   udafajuankeluarkasbank, UMy_Function, u_daf_keluar_kas_bank, UHomeLogin;
 
+
+procedure TFDataPengeluaranKasBank.refresh_form;
+begin
+    with FDataPengeluaranKasBank do
+    begin
+      with Dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.add(' SELECT * from ('+
+                ' SELECT * from t_master_trans_account  '+
+                ' where name_trans='+QuotedStr(cb_jenis_trans.Text)+' '+
+                ' and status_bill='+IntToStr(cb_jenis_trans.ItemIndex-1)+' ) a ');
+        open;
+      end;
+
+      MemDetailAkun.EmptyTable;
+      MemDetailHutang.EmptyTable;
+      edNoTrans.Clear;
+      dtTrans.date:=now();
+      dtPeriode1.date:=now();
+      dtPeriode2.date:=now();
+      edKodeJenisTrans.Clear;
+      edNamaJenisTrans.Clear;
+      edNamaBank.Clear;
+      edNoRek.Clear;
+      edKode_supplier.Clear;
+      edNama_supplier.Clear;
+      edNoRek.Clear;
+      edNamaBank.Clear;
+      edKodeMataUang.Clear;
+      edNamaMataUang.Clear;
+      edUntukPengeluaran.Clear;
+      edKurs.value:=0.00;
+      edJumlah.value:=0.00;
+      MemKeterangan.Clear;
+      MemDetailAkun.Active:=true;
+      MemDetailHutang.Active:=true;
+      edKodeSumberPengeluaran.Clear;
+      cb_debt_source.Clear;
+      edKodeJenisBayar.Clear;
+      edNMJenisBayar.Clear;
+
+      edKodeJenisTrans.Text:=Dm.Qtemp1.FieldByName('code_trans').AsString;
+      edNamaJenisTrans.Text:=Dm.Qtemp1.FieldByName('name_trans').AsString;
+      additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString));
+      additional_code2:='0';
+      additional_code3:='0';
+      additional_code4:='0';
+      additional_code5:='0';
+    end;
+    vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ');
+    if vid_modul='5' then // Bank
+    begin
+      FDataPengeluaranKasBank.gbDataBank.Visible:=True;
+    end;
+    if vid_modul='6' then // Kas
+    begin
+      FDataPengeluaranKasBank.gbDataBank.Visible:=False;
+    end;
+
+    if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(code_trans.Text)+' ')='0' then
+    begin
+      with FDataPengeluaranKasBank do
+      begin
+        Panel5.Visible:=true;
+        gbDataHutang.Visible:=false;
+        TabDetailFaktur.TabVisible:=false;
+      end;
+    end;
+    if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(code_trans.Text)+' ')= '1' then
+    begin
+      with FDataPengeluaranKasBank do
+      begin
+        Panel5.Visible:=true;
+        gbDataHutang.Visible:=true;
+        TabDetailFaktur.TabVisible:=true;
+      end;
+
+      if (FDataPengeluaranKasBank.gbDataHutang.Visible=false) and (FDataPengeluaranKasBank.gbDataBank.Visible=false) then
+        FDataPengeluaranKasBank.Panel5.Visible:=false
+      else
+        FDataPengeluaranKasBank.Panel5.Visible:=true;
+    end;
+
+
+    FDataPengeluaranKasBank.RzPageControl1.ActivePage:=FDataPengeluaranKasBank.TabDetailAkun;
+    RefreshGridDetailAkun;
+    //FDataPengajuanPengeluaranKasBank.Autonumber;
+    vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(code_trans.Text)+' ');
+
+end;
 
 procedure TFDataPengeluaranKasBank.update;
 begin
@@ -322,7 +416,7 @@ begin
                   ' '+QuotedStr(edNamaBank.Text)+', '+
                   ' '+QuotedStr(FloatToStr(MemDetailHutang['jum_hutang']))+', '+
                   ' '+QuotedStr(MemDetailHutang['keterangan'])+', '+
-                  ' '+QuotedStr(kd_ak_supplier)+') ');
+                  ' '+QuotedStr(ak_account.Text)+') ');
           ExecSQL;
       end;
       MemDetailHutang.Next;
@@ -690,8 +784,9 @@ begin
               begin
                 Save;
                 Dm.Koneksi.Commit;
+                MessageDlg('Data berhasil disimpan..!!',mtInformation,[MBOK],0);
               end;
-              MessageDlg('Data berhasil disimpan..!!',mtInformation,[MBOK],0);
+              //MessageDlg('Data berhasil disimpan..!!',mtInformation,[MBOK],0);
           end
           else
           if Status = 1 then
@@ -700,8 +795,9 @@ begin
               begin
                 Update;
                 Dm.Koneksi.Commit;
+                MessageDlg('Data berhasil diupdate..!!',mtInformation,[MBOK],0);
               end;
-               MessageDlg('Data berhasil diupdate..!!',mtInformation,[MBOK],0);
+              //MessageDlg('Data berhasil diupdate..!!',mtInformation,[MBOK],0);
           end;
 
        Except on E :Exception do
@@ -721,18 +817,36 @@ begin
    if cbsumberdata.Text='KAS' then
    begin
     load_trans_type;
-    Ed_Additional.Text:='KK';
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select additional_code from t_additional_source_cash_bank where additional_name=''pengeluaran_kas'' and status=true ';
+      open;
+      Ed_Additional.Text:=fieldbyname('additional_code').AsString;
+    end;
+    //Ed_Additional.Text:='KK';
+    gbDataBank.Visible:=false;
    end;
    if cbsumberdata.Text='BANK' then
    begin
     load_trans_type2;
-    Ed_Additional.Text:='BK';
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select additional_code from t_additional_source_cash_bank where additional_name=''pengeluaran_bank'' and status=true ';
+      open;
+      Ed_Additional.Text:=fieldbyname('additional_code').AsString;
+    end;
+    //Ed_Additional.Text:='BK';
+    gbDataBank.Visible:=true;
    end;
-   if cbsumberdata.Text='KAS KECIL' then
-   begin
+   //if cbsumberdata.Text='KAS KECIL' then
+   //begin
     //load_trans_type2;
-    Ed_Additional.Text:='KC';
-   end;
+    //Ed_Additional.Text:='KC';
+   //end;
 end;
 
 procedure TFDataPengeluaranKasBank.Cb_jenis_transSelect(Sender: TObject);
@@ -749,6 +863,7 @@ begin
         code_trans.Text:=dm.Qtemp.FieldByName('code_trans').AsString;
         edKodeJenisTrans.Text:=code_trans.Text;
         ed_id_modul.Text:='6';
+        refresh_form;
      end;
      if cbsumberdata.Text='BANK' then
      begin
@@ -762,6 +877,7 @@ begin
         code_trans.Text:=dm.Qtemp.FieldByName('code_trans').AsString;
         edKodeJenisTrans.Text:=code_trans.Text;
         ed_id_modul.Text:='5';
+        refresh_form;
      end;
 end;
 
@@ -799,6 +915,8 @@ begin
   Edhari.Clear;
   ak_account.Clear;
   Ed_voucher_ajuan.Clear;
+  edKodeSumberPengeluaran.Clear;
+  Cb_debt_source.Clear;
 end;
 
 procedure TFDataPengeluaranKasBank.code_transChange(Sender: TObject);
@@ -1017,6 +1135,27 @@ begin
    end;
 end;
 
+procedure TFDataPengeluaranKasBank.Ed_id_modulChange(Sender: TObject);
+begin
+      with Dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * from t_master_trans_account where code_module='+Quotedstr(Ed_id_modul.Text)+' ';
+        Open;
+      end;
+      if Ed_id_modul.Text='5' then
+      begin
+        cbsumberdata.Text:='BANK';
+      end
+      else
+      if Ed_id_modul.Text='6' then
+      begin
+        cbsumberdata.Text:='KAS';
+      end;
+
+end;
+
 procedure TFDataPengeluaranKasBank.Ed_voucher_ajuanChange(Sender: TObject);
 begin
       with dm.Qtemp do
@@ -1206,6 +1345,8 @@ end;
 
 procedure TFDataPengeluaranKasBank.RzBitBtn1Click(Sender: TObject);
 begin
+   MemDetailAkun.EmptyTable;
+   MemDetailHutang.EmptyTable;
    Fdafajuankeluarkasbank.vcall:='keluar_kas';
    Fdafajuankeluarkasbank.Show;
 

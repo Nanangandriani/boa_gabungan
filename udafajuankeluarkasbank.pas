@@ -555,6 +555,7 @@ begin
       end;
       Fdafajuankeluarkasbank.Close;
   end;
+  FDataPengeluaranKasBank.cbsumberdataSelect(sender);
 end;
 
 procedure TFdafajuankeluarkasbank.FormShow(Sender: TObject);

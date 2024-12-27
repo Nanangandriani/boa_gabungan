@@ -812,9 +812,9 @@ begin
   end;
   if vcall='klkas_mata_uang' then
   begin
-    FDataPengajuanPengeluaranKasBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
-    FDataPengajuanPengeluaranKasBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
-    FDataPengajuanPengeluaranKasBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
+    FDataPengeluaranKasBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
+    FDataPengeluaranKasBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
+    FDataPengeluaranKasBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
   end;
   if vcall='klkas_mata_uang_pengajuan' then
   begin
@@ -852,7 +852,8 @@ begin
   end;
   if vid_modul='6' then // Kas
   begin
-    FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
+    //FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
+    FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=False;
   end;
 
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then

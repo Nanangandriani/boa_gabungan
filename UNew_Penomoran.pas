@@ -1547,6 +1547,62 @@ begin
          Ed_comp.Text:=FieldByName('note').AsString;
       end;
    end;
+   if CBKomponen_No.ItemIndex=8 then
+   begin
+      Ed_comp.Text:='';
+
+      with Qcomp do
+      begin
+        close;
+        sql.Clear;
+        sql.Add('select * from t_numb_component where description='+Quotedstr(CBKomponen_No.Text));
+        Open;
+        IdComp.Text:=fieldbyname('id').AsString;
+         Ed_comp.Text:=FieldByName('note').AsString;
+      end;
+   end;
+   if CBKomponen_No.ItemIndex=9 then
+   begin
+      Ed_comp.Text:='';
+
+      with Qcomp do
+      begin
+        close;
+        sql.Clear;
+        sql.Add('select * from t_numb_component where description='+Quotedstr(CBKomponen_No.Text));
+        Open;
+        IdComp.Text:=fieldbyname('id').AsString;
+        Ed_comp.Text:=FieldByName('note').AsString;
+      end;
+   end;
+   if CBKomponen_No.ItemIndex=10 then
+   begin
+      Ed_comp.Text:='';
+
+      with Qcomp do
+      begin
+        close;
+        sql.Clear;
+        sql.Add('select * from t_numb_component where description='+Quotedstr(CBKomponen_No.Text));
+        Open;
+        IdComp.Text:=fieldbyname('id').AsString;
+        Ed_comp.Text:=FieldByName('note').AsString;
+      end;
+   end;
+   if CBKomponen_No.ItemIndex=11 then
+   begin
+      Ed_comp.Text:='';
+
+      with Qcomp do
+      begin
+        close;
+        sql.Clear;
+        sql.Add('select * from t_numb_component where description='+Quotedstr(CBKomponen_No.Text));
+        Open;
+        IdComp.Text:=fieldbyname('id').AsString;
+        Ed_comp.Text:=FieldByName('note').AsString;
+      end;
+   end;
    if CBKomponen_No.ItemIndex=6 then
    begin
     Ed_comp.ReadOnly:=false;

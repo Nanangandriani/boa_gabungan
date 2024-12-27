@@ -91,6 +91,12 @@ type
     QRencanadebt_type: TIntegerField;
     QRencanaaccount_code: TStringField;
     QRencanaaccount_name: TStringField;
+    QRencanainv_no: TStringField;
+    QRencanasj_no: TStringField;
+    QRencanafaktur_date: TDateField;
+    QRencanatrans_date: TDateField;
+    QRencanatrans_no: TStringField;
+    QRencanabank_name: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure BCariClick(Sender: TObject);

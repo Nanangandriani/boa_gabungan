@@ -80,7 +80,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'bank'
+        FieldName = 'bank_name'
         Footers = <>
         Title.Caption = 'Bank'
         Width = 100
@@ -959,8 +959,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select * from v_plan_paid_debt where paid_status=0 and approve_s' +
-        'tatus=false  '
+        'select * from v_plan_paid_debt a where paid_status=0 and approve' +
+        '_status=false  '
       'and periode1='#39'2024-01-01'#39' and periode2='#39'2024-01-31'#39)
     Left = 640
     Top = 175
@@ -1022,6 +1022,28 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     end
     object QRencanaaccount_name: TStringField
       FieldName = 'account_name'
+      Size = 100
+    end
+    object QRencanainv_no: TStringField
+      FieldName = 'inv_no'
+      Size = 35
+    end
+    object QRencanasj_no: TStringField
+      FieldName = 'sj_no'
+      Size = 35
+    end
+    object QRencanafaktur_date: TDateField
+      FieldName = 'faktur_date'
+    end
+    object QRencanatrans_date: TDateField
+      FieldName = 'trans_date'
+    end
+    object QRencanatrans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 50
+    end
+    object QRencanabank_name: TStringField
+      FieldName = 'bank_name'
       Size = 100
     end
   end

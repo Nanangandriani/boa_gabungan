@@ -34,9 +34,10 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Height = 233
     Align = alTop
     BevelOuter = bvNone
+    Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1102
+    ExplicitTop = 8
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
@@ -558,6 +559,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Height = 160
     Align = alTop
     BevelOuter = bvNone
+    Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
     ExplicitWidth = 1102
@@ -568,7 +570,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 160
       Align = alLeft
       Caption = ' Data Hutang'
-      Color = clBtnFace
+      Color = clGradientInactiveCaption
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
@@ -680,6 +682,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         ReadOnly = True
         TabOrder = 4
         Visible = False
+        OnChange = edKodeSumberPengeluaranChange
       end
       object edNMJenisBayar: TRzButtonEdit
         Left = 147
@@ -725,7 +728,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 160
       Align = alLeft
       Caption = ' Data Bank'
-      Color = clBtnFace
+      Color = clGradientInactiveCaption
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
@@ -785,10 +788,10 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 230
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 221
@@ -888,10 +891,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

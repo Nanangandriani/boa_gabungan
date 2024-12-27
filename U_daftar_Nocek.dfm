@@ -129,7 +129,7 @@ object Fdaftar_nocek: TFdaftar_nocek
     Left = 111
     Top = 113
     Width = 297
-    Height = 21
+    Height = 23
     ImeName = 'US'
     TabOrder = 4
     Visible = False
@@ -145,6 +145,7 @@ object Fdaftar_nocek: TFdaftar_nocek
     SearchPanel.Enabled = True
     TabOrder = 5
     TitleParams.MultiTitle = True
+    OnDblClick = DBGridEh1DblClick
     Columns = <
       item
         CellButtons = <>
@@ -183,7 +184,8 @@ object Fdaftar_nocek: TFdaftar_nocek
     Height = 47
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 360
+    ExplicitTop = 136
+    ExplicitWidth = 458
     object BCari: TRzBitBtn
       Left = 1
       Top = 1
@@ -245,7 +247,6 @@ object Fdaftar_nocek: TFdaftar_nocek
         AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
         E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
       NumGlyphs = 2
-      ExplicitHeight = 39
     end
   end
   object Table1: TUniTable
