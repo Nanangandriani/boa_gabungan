@@ -79,8 +79,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Align = alBottom
     TabOrder = 2
     Visible = False
-    ExplicitTop = 311
-    ExplicitWidth = 677
+    ExplicitTop = 352
+    ExplicitWidth = 771
     object BBatal: TRzBitBtn
       Left = 699
       Top = 1
@@ -141,7 +141,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 601
+      ExplicitLeft = 695
     end
     object BPrint: TRzBitBtn
       Left = 620
@@ -204,7 +204,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 522
+      ExplicitLeft = 616
     end
   end
   object ProgressBar1: TProgressBar
@@ -226,7 +226,6 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Contexts = <>
     TabOrder = 4
     TabStop = False
-    ExplicitWidth = 681
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -248,7 +247,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     DynProps = <>
     FooterRowCount = 1
     SumList.Active = True
-    TabOrder = 9
+    TabOrder = 5
     TitleParams.MultiTitle = True
     Columns = <
       item
@@ -446,7 +445,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Width = 151
     Height = 21
     Color = clInactiveBorder
-    TabOrder = 10
+    TabOrder = 6
     Items.Strings = (
       ''
       'Januari  '
@@ -475,256 +474,147 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select kelompok_akun,kd_akun, case when notr = 0 then concat('#39#39',' +
-        'nama_perkiraan) else nama_perkiraan end nama_perkiraan,sum(debit' +
-        ') debit,sum(kredit)kredit,sum(db) db,sum(kd) kd,sum(dbpy) dbpy,s' +
-        'um(kdpy) kdpy,sum(dbnr) dbnr,sum(kdnr) kdnr,sum(dbnr2) dbnr2,sum' +
-        '(kdnr2) kdnr2,sum(dbnr3) dbnr3,sum(kdnr3) kdnr3,sum(dblr) dblr,s' +
-        'um(kdlr) kdlr,notr from /*Tambahan baru di atas*/(select xxx.*,c' +
-        'ase when yy.header_code is null then 0 else 1 end notr,yy.header' +
-        '_code from ( '
+        #9'SELECT w.kelompok_akun ,w.kd_akun,w.notr,CASE'#9'WHEN w.notr = 0 T' +
+        'HEn concat ( '#39#39', w.nama_perkiraan ) ELSE w.nama_perkiraan END na' +
+        'ma_perkiraan,SUM ( w.debit ) debit,SUM ( w.kredit ) kredit,SUM (' +
+        ' w.db ) db,SUM ( w.kd ) kd,SUM ( w.dbpy ) dbpy,SUM ( w.kdpy ) kd' +
+        'py,SUM ( w.dbnr ) dbnr,SUM ( w.kdnr ) kdnr,SUM ( w.dbnr2 ) dbnr2' +
+        ',SUM ( w.kdnr2 ) kdnr2,SUM ( w.dbnr3 ) dbnr3,SUM ( w.kdnr3 ) kdn' +
+        'r3,SUM ( w.dblr ) dblr,SUM ( w.kdlr ) kdlr'
+      'FROM'
+      '/*Tambahan baru di atas*/'
       
-        'select * ,case when (kelompok_akun=1 and dbnr2>0) then dbnr2 els' +
-        'e 0 end dbnr3,case when (kelompok_akun=1 and kdnr2>0 ) then kdnr' +
-        '2 else 0 end kdnr3,case when (kelompok_akun=2 and dbnr2 >0) then' +
-        ' dbnr2 else 0 end dblr, case when (kelompok_akun=2  and kdnr2>0)' +
-        ' then kdnr2 else 0 end kdlr from ('
+        #9'(SELECT xxx.*,CASE'#9'WHEN yy.header_code IS NULL THEN'#9'0 ELSE 1 EN' +
+        'D notr,yy.header_code FROM (SELECT'#9'* ,CASE'#9'WHEN ( xx4.kelompok_a' +
+        'kun = 1 AND xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dbnr3,CASE' +
+        #9'WHEN ( xx4.kelompok_akun = 1 AND xx4.kdnr2 > 0 ) THEN'#9'xx4.kdnr2' +
+        ' ELSE 0  END kdnr3,CASE'#9'WHEN ( xx4.kelompok_akun = 2 AND xx4.dbn' +
+        'r2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dblr,CASE'#9'WHEN ( xx4.kelompok' +
+        '_akun = 2 AND xx4.kdnr2 > 0 ) THEN xx4.kdnr2 ELSE 0  END kdlr FR' +
+        'OM (SELECT'#9'*,CASE'#9'WHEN ( xx3.dbnr -  xx3.kdnr ) + (  xx3.dbpy - ' +
+        ' xx3.kdpy ) > 0 THEN'#9'(  xx3.dbnr -  xx3.kdnr ) + (  xx3.dbpy -  ' +
+        'xx3.kdpy ) ELSE 0 END dbnr2,CASE'#9'WHEN (  xx3.kdnr -  xx3.dbnr ) ' +
+        '+ (  xx3.kdpy -  xx3.dbpy ) > 0 THEN'#9'(  xx3.kdnr -  xx3.dbnr ) +' +
+        ' (  xx3.kdpy -  xx3.dbpy ) ELSE 0 END kdnr2 FROM (SELECT'#9'*,CASE'#9 +
+        'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0 THEN'#9'xx2.debit' +
+        ' - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr,CASE'#9'WHEN xx2.kr' +
+        'edit - xx2.debit + xx2.kd - xx2.db > 0 THEN'#9'xx2.kredit - xx2.deb' +
+        'it + xx2.kd - xx2.db ELSE 0 END kdnr FROM'#9'(SELECT'#9'xx.kelompok_ak' +
+        'un,xx.kd_akun,xx.nama_perkiraan,CASE WHEN xx.debit > 0 THEN'#9'xx.d' +
+        'ebit ELSE 0 END debit,CASE WHEN xx.kredit > 0 THEN'#9'xx.kredit ELS' +
+        'E 0 '#9'END kredit,CASE'#9'WHEN xx.db > 0 THEN'#9'0 ELSE xx.db END db,CAS' +
+        'E'#9'WHEN xx.kd > 0 THEN'#9'0 ELSE xx.kd '#9'END kd,CASE WHEN xx.dbpy > 0' +
+        ' THEN 0 ELSE xx.dbpy '#9'END dbpy,CASE WHEN xx.kdpy > 0 THEN'#9'0 ELSE' +
+        ' xx.kdpy END kdpy FROM '
+      #9'/* HEADER */'
       
-        'select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(d' +
-        'bpy-kdpy) else 0 end dbnr2,case when (kdnr-dbnr)+(kdpy-dbpy)>0 t' +
-        'hen (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from(select *,case ' +
-        'when  debit-kredit+db-kd>0 then debit-kredit+db-kd else 0 end db' +
-        'nr,case when kredit-debit+kd-db > 0 then kredit-debit+kd-db else' +
-        ' 0 end kdnr from (select kelompok_akun,kd_akun,nama_perkiraan,ca' +
-        'se when debit ISNULL then 0 else debit end debit,case when kredi' +
-        't  ISNULL then 0 else kredit end kredit,case when db isnull then' +
-        ' 0 else db end db,case when kd ISNULL then 0 else kd end kd,case' +
-        ' when dbpy isnull then 0 else dbpy end dbpy,case when kdpy ISNUL' +
-        'L then 0 else kdpy end kdpy FROM /* HEADER */  (SELECT aa.group_' +
-        'id kelompok_akun,aa.kd_akun,aa.account_name nama_perkiraan,case ' +
-        'when aa.debit>0 then aa.debit else NULL end debit,case when aa.k' +
-        'redit is NULL then 0 else aa.kredit end kredit,case when b.db is' +
-        ' NULL then 0 else b.db end db,case when b.kd is null then 0 else' +
-        ' b.kd end kd,case when c.db is null then 0 else  c.db end dbpy,c' +
-        'ase when c.kd is null then 0 else c.kd end kdpy from (SELECT c.c' +
-        'ode kd_akun,c.header_code,c.group_id,c.account_name,d.debit,d.kr' +
-        'edit from ( SELECT DISTINCT code,header_code, account_name, bala' +
-        'nce_status,group_id from t_ak_account A WHERE balance_status='#39'1'#39 +
-        ' and code=header_code and header_code='#39'5400'#39' ) c inner JOIN (sel' +
-        'ect  trans_year,a.periode1,a.periode2,trans_month,a.trans_no,b.d' +
-        'ebit,b.kredit,account_code from (select trans_year,periode1,peri' +
-        'ode2,trans_month,trans_no from t_neraca_lajur WHERE periode2<'#39'20' +
-        '24-11-01'#39' order by periode2 desc limit 1) a INNER JOIN t_neraca_' +
-        'lajur_det b on a.trans_no=b.trans_no)d  on c.code=d.account_code' +
-        ' GROUP BY c.code,c.header_code,c.group_id,c.account_name,d.debit' +
-        ',d.kredit ORDER BY  c.code ASC)AA  '
+        '(SELECT'#9'aa.group_id kelompok_akun,aa.kd_akun,aa.account_name nam' +
+        'a_perkiraan,CASE WHEN aa.debit > 0 THEN aa.debit ELSE NULL END d' +
+        'ebit,CASE WHEN aa.kredit IS NULL THEN 0 ELSE aa.kredit END kredi' +
+        't,CASE'#9'WHEN b.db IS NULL THEN 0 ELSE b.db END db,CASE'#9'WHEN b.kd ' +
+        'IS NULL THEN 0 ELSE b.kd '#9'END kd,CASE WHEN C.db IS NULL THEN'#9'0 E' +
+        'LSE C.db '#9'END dbpy,CASE'#9'WHEN C.kd IS NULL THEN'#9'0 ELSE C.kd '#9'END ' +
+        'kdpy FROM'
       
-        'LEFT JOIN LATERAL(select case when status_dk='#39'D'#39' then sum(amount' +
-        ') else 0 end db,case when status_dk='#39'K'#39' then sum(amount) else 0 ' +
-        'end kd, b.code from t_general_ledger_real a inner join t_ak_acco' +
-        'unt b on a.account_code=b.code where b.code=aa.kd_akun and'
+        #9'(SELECT C.code kd_akun,C.header_code,C.group_id,C.account_name,' +
+        'SUM (c.db ) debit,'#9'SUM (C.kd ) kredit FROM'
       
-        '  a.module_id<>7 and (trans_date >='#39'2024-11-01'#39' and trans_date<=' +
-        #39'2024-11-30'#39') GROUP BY b.code,a.status_dk)b on 1=1 '
+        #9'(SELECT DISTINCT A.code,A.header_code,A.account_name,A.balance_' +
+        'status,A.group_id,b.db,b.kd FROM'#9't_ak_account'#9'A INNER JOIN"VSear' +
+        'ch_Item_Neraca" b ON A.code = b.account_code WHERE /*balance_sta' +
+        'tus='#39'1'#39' and*/ code = header_code AND header_code <> '#39'5400'#39' ) C  ' +
+        'GROUP BY C.code,C.header_code,C.group_id,C.account_name ORDER BY' +
+        #9'C.code ASC) AA'
       
-        ' LEFT JOIN LATERAL(select case when status_dk='#39'D'#39' then sum(amoun' +
-        't) else 0 end db,case when status_dk='#39'K'#39' then sum(amount) else 0' +
-        ' end kd, b.code from t_general_ledger_real a inner join t_ak_acc' +
-        'ount b on a.account_code=b.code where b.code=aa.kd_akun and b.co' +
-        'de<>'#39'1112.01'#39' and  a.module_id=7 and(trans_date >='#39'2024-11-01'#39' a' +
-        'nd trans_date<='#39'2024-11-30'#39') GROUP BY b.code,a.status_dk)c on 1=' +
-        '1 order by kd_akun ASC'
-      ' )xx)xx2)xx3  '
+        'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM(amo' +
+        'unt) ELSE 0 END db,CASE WHEN status_dk = '#39'K'#39' THEN'#9'SUM(amount)ELS' +
+        'E 0 END kd,b.code FROM'#9't_general_ledger_real'#9'A INNER JOIN t_ak_a' +
+        'ccount b ON A.account_code = b.code WHERE'#9'b.code = aa.kd_akun AN' +
+        'D A.module_id <> 7 AND ( to_char( trans_date, '#39'yyyy'#39' ) = '#39'2024'#39')' +
+        ' AND ( to_char( trans_date, '#39'mm'#39' ) = '#39'12'#39')  GROUP BY b.code,A.st' +
+        'atus_dk) b ON 1 = 1'
       
-        ' union select kelompok_akun,kd_akun,nama_perkiraan,debit,kredit,' +
-        'db,kd,dbpy,kdpy,dbnr,kdnr,case when (dbnr-kdnr)+(dbpy-kdpy)>0 th' +
-        'en (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,case when (kdnr-dbnr' +
-        ')+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0  end kdnr2 f' +
-        'rom ('
+        #9'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM ( ' +
+        'amount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN'#9'SUM (amoun' +
+        't) ELSE 0 '#9'END kd,'#9'b.code FROM'#9't_general_ledger_real'#9'A INNER JOI' +
+        'N t_ak_account b ON A.account_code = b.code WHERE'#9'b.code = aa.kd' +
+        '_akun AND b.code <> '#39'1112.01'#39' '#9'AND A.module_id = 7 '#9'AND ( to_cha' +
+        'r( trans_date, '#39'yyyy'#39' ) = '#39'2024'#39') AND ( to_char( trans_date, '#39'mm' +
+        #39' ) = '#39'12'#39')   GROUP BY'#9'b.code,A.status_dk '
+      #9') C ON 1 = 1 ORDER BY'#9'kd_akun ASC ) xx ) xx2) xx3'
+      'UNION'
       
-        ' /*bop detail*/select kelompok_akun,kd_akun,nama_perkiraan,debit' +
-        ',kredit,db,kd,dbpy,kdpy,dbnr,kdnr, 0 dbnr2,0 kdnr2 from (select ' +
-        '*,case when debit-kredit+db-kd>0 then debit-kredit+db-kd else 0 ' +
-        'end dbnr,case when kredit-debit+kd-db > 0 then kredit-debit+kd-d' +
-        'b else 0 end kdnr from (select kelompok_akun,kd_akun,nama_perkir' +
-        'aan,case when debit ISNULL  then 0 else debit end debit,case whe' +
-        'n kredit ISNULL then 0 else kredit end kredit,case when db isnul' +
-        'l then 0 else db end db, case when kd ISNULL then 0 else kd end ' +
-        'kd,case when dbpy isnull then 0 else dbpy end dbpy,case when kdp' +
-        'y ISNULL then 0 else kdpy end kdpy from('
+        'SELECT'#9'xx31.kelompok_akun,xx31.kd_akun,xx31.nama_perkiraan,xx31.' +
+        'debit,xx31.kredit,xx31.db,xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,' +
+        'xx31.kdnr,CASE'#9'WHEN ( xx31.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx' +
+        '31.kdpy ) > 0 THEN'#9'( xx31.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx3' +
+        '1.kdpy ) ELSE 0 END dbnr2,CASE'#9'WHEN ( xx31.dbnr - xx31.dbnr ) + ' +
+        '( xx31.kdpy - xx31.dbpy ) > 0 THEN'#9'( xx31.kdnr - xx31.dbnr ) + (' +
+        ' xx31.kdpy - xx31.dbpy ) ELSE 0 END kdnr2 FROM'#9'(/*bop detail*/ S' +
+        'ELECT'#9'xx3.kelompok_akun,xx3.kd_akun,xx3.nama_perkiraan,xx3.debit' +
+        ',xx3.kredit,xx3.db,xx3.kd,xx3.dbpy,xx3.kdpy,xx3.dbnr,xx3.kdnr,0 ' +
+        'dbnr2,0 kdnr2 FROM'
       
-        ' SELECT aa.group_id kelompok_akun,aa.kd_akun,aa.account_name nam' +
-        'a_perkiraan,case when aa.debit>0 then aa.debit else NULL end deb' +
-        'it,case when aa.kredit is NULL then 0 else aa.kredit end kredit,' +
-        'case when b.db is NULL then 0 else b.db end db,case when b.kd is' +
-        ' null then 0 else b.kd end kd,case when c.db is null then 0 else' +
-        '  c.db end dbpy,case when c.kd is null then 0 else c.kd end kdpy' +
-        ' from (SELECT c.code kd_akun,c.header_code,c.group_id,c.account_' +
-        'name,d.debit,d.kredit from ( SELECT DISTINCT code,header_code, a' +
-        'ccount_name, balance_status,group_id from t_ak_account A WHERE b' +
-        'alance_status='#39'1'#39' and code=header_code and header_code<>'#39'5400'#39' )' +
-        ' c inner JOIN (select  trans_year,a.periode1,a.periode2,trans_mo' +
-        'nth,a.trans_no,b.debit,b.kredit,account_code from (select trans_' +
-        'year,periode1,periode2,trans_month,trans_no from t_neraca_lajur ' +
-        'WHERE periode2<'#39'2024-11-01'#39' order by periode2 desc limit 1) a IN' +
-        'NER JOIN t_neraca_lajur_det b on a.trans_no=b.trans_no)d  on c.c' +
-        'ode=d.account_code GROUP BY c.code,c.header_code,c.group_id,c.ac' +
-        'count_name,d.debit,d.kredit ORDER BY  c.code ASC)AA  '
+        '(SELECT'#9'*,CASE'#9'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0' +
+        ' THEN'#9'xx2.debit - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr,C' +
+        'ASE'#9'WHEN xx2.kredit -xx2.debit + xx2.kd - xx2.db > 0 THEN xx2.kr' +
+        'edit - xx2.debit + xx2.kd - xx2.db ELSE 0 END kdnr FROM'#9'(SELECT'#9 +
+        'xx.kelompok_akun,xx.kd_akun,xx.nama_perkiraan,CASE'#9'WHEN xx.debit' +
+        ' > 0 THEN xx.debit ELSE 0 END debit,CASE'#9'WHEN xx.kredit >0 THEN'#9 +
+        'xx.debit ELSE 0 END kredit,CASE'#9'WHEN xx.db >0 THEN xx.db ELSE 0 ' +
+        'END db,CASE'#9'WHEN xx.kd >0 THEN xx.kd  ELSE 0 END kd,CASE'#9'WHEN xx' +
+        '.dbpy>0  THEN xx.dbpy ELSE 0'#9'END dbpy,CASE'#9'WHEN xx.kdpy >0 THEN'#9 +
+        'xx.kdpy ELSE 0'#9'END kdpy FROM('#9'SELECT'#9#9'aa.group_id kelompok_akun,' +
+        'aa.kd_akun,aa.account_name nama_perkiraan,CASE'#9'WHEN aa.debit > 0' +
+        ' THEN'#9'aa.debit ELSE NULL END debit,CASE'#9'WHEN aa.kredit IS NULL T' +
+        'HEN'#9'0 ELSE aa.kredit END kredit,CASE'#9'WHEN b.db IS NULL THEN 0 EL' +
+        'SE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 ELSE b.kd END kd,CA' +
+        'SE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy,CASE WHEN C.kd IS' +
+        ' NULL THEN 0 ELSE C.kd END kdpy FROM'#9'(SELECT C.code kd_akun,C.he' +
+        'ader_code,C.group_id,C.account_name,d.debit,d.kredit FROM'
       
-        'LEFT JOIN LATERAL(select case when status_dk='#39'D'#39' then sum(amount' +
-        ') else 0 end db,case when status_dk='#39'K'#39' then sum(amount) else 0 ' +
-        'end kd, b.code from t_general_ledger_real a inner join t_ak_acco' +
-        'unt b on a.account_code=b.code where b.code=aa.kd_akun and'
+        '( SELECT DISTINCT code, header_code, account_name, balance_statu' +
+        's, group_id FROM t_ak_account A WHERE balance_status = '#39'1'#39' AND c' +
+        'ode =header_code AND header_code <> '#39'5400'#39' ) C INNER JOIN (SELEC' +
+        'T'#9'trans_year,A.periode1,A.periode2,trans_month,A.trans_no,b.debi' +
+        't,b.kredit,'#9#9'account_code FROM'#9'(SELECT trans_year, periode1, per' +
+        'iode2, trans_month, trans_no FROM t_neraca_lajur WHERE ( to_char' +
+        '( periode2, '#39'yyyy'#39' ) <= '#39'2024'#39') AND ( to_char( periode2, '#39'mm'#39' ) ' +
+        '< '#39'12'#39')   ORDER BY periode2 DESC LIMIT 1)'#9'A INNER JOIN t_neraca_' +
+        'lajur_det b ON A.trans_no = b.trans_no) d ON C.code = d.account_' +
+        'code GROUP BY'#9'C.code,C.header_code,C.group_id,C.account_name,d.d' +
+        'ebit,d.kredit ORDER BY C.code ASC) AA'
       
-        '  a.module_id<>7 and (trans_date >='#39'2024-11-01'#39' and trans_date<=' +
-        #39'2024-11-30'#39') GROUP BY b.code,a.status_dk)b on 1=1 '
+        'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM ( a' +
+        'mount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN SUM ( amoun' +
+        't ) ELSE 0 END kd,b.code FROM t_general_ledger_real'#9'A INNER JOIN' +
+        ' t_ak_account b ON A.account_code = b.code WHERE b.code = aa.kd_' +
+        'akun AND A.module_id <> 7 AND ( to_char( trans_date, '#39'yyyy'#39' ) = ' +
+        #39'2024'#39') AND ( to_char( trans_date, '#39'mm'#39' ) = '#39'12'#39')   GROUP BY b.c' +
+        'ode,A.status_dk) b ON 1 = 1'
       
-        ' LEFT JOIN LATERAL(select case when status_dk='#39'D'#39' then sum(amoun' +
-        't) else 0 end db,case when status_dk='#39'K'#39' then sum(amount) else 0' +
-        ' end kd, b.code from t_general_ledger_real a inner join t_ak_acc' +
-        'ount b on a.account_code=b.code where b.code=aa.kd_akun and b.co' +
-        'de<>'#39'1112.01'#39' and  a.module_id=7 and(trans_date >='#39'2024-11-01'#39' a' +
-        'nd trans_date<='#39'2024-11-30'#39') GROUP BY b.code,a.status_dk)c on 1=' +
-        '1 order by kd_akun ASC)xx)xx2)xx3'
+        #9'LEFT JOIN LATERAL (SELECT'#9'CASE'#9'WHEN'#9'status_dk = '#39'D'#39' THEN'#9'SUM ( ' +
+        'amount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN SUM ( amou' +
+        'nt ) ELSE 0 END kd,b.code FROM'#9't_general_ledger_real'#9'A INNER JOI' +
+        'N t_ak_account b ON A.account_code = b.code WHERE'#9'b.code = aa.kd' +
+        '_akun AND b.code <> '#39'1112.01'#39' AND A.module_id = 7 '#9'AND ( to_char' +
+        '( trans_date, '#39'yyyy'#39' ) = '#39'2024'#39') AND ( to_char( trans_date, '#39'mm'#39 +
+        ' ) = '#39'12'#39')   GROUP BY'#9'b.code,'#9'A.status_dk '#9') C ON 1 = 1 ORDER BY'
       
-        ' )xx31)xx4 order by kd_akun)XXX /*Tambahan baru di atas*/ left J' +
-        'OIN t_ak_header yy on xxx.kd_akun=yy.header_code) w GROUP BY not' +
-        'r,kelompok_akun,kd_akun,nama_perkiraan'
-      ' ')
+        #9'kd_akun ASC) xx ) xx2) xx3) xx31) xx4 ORDER BY'#9'kd_akun ) XXX /*' +
+        'Tambahan baru di atas*/LEFT JOIN t_ak_header yy ON xxx.kd_akun =' +
+        ' yy.header_code '
+      
+        #9') w GROUP BY'#9'w.kelompok_akun,w.kd_akun,w.notr,w.nama_perkiraan ' +
+        ';')
     Left = 436
     Top = 80
   end
   object MemNeraca_lajur: TMemTableEh
-    Active = True
     Params = <>
+    DataDriver = DataSetDriverEh1
     Left = 355
     Top = 12
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object kd_akun: TMTStringDataFieldEh
-          FieldName = 'kd_akun'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object nm_akun: TMTStringDataFieldEh
-          FieldName = 'nm_akun'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
-        end
-        object debit: TMTNumericDataFieldEh
-          FieldName = 'debit'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object kredit: TMTNumericDataFieldEh
-          FieldName = 'kredit'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object debit_pemb: TMTNumericDataFieldEh
-          FieldName = 'debit_pemb'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object kredit_pemb: TMTNumericDataFieldEh
-          FieldName = 'kredit_pemb'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object debit_kk: TMTNumericDataFieldEh
-          FieldName = 'debit_kk'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object debit_bop: TMTNumericDataFieldEh
-          FieldName = 'debit_bop'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object kredit_kk: TMTNumericDataFieldEh
-          FieldName = 'kredit_kk'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object kredit_bop: TMTStringDataFieldEh
-          FieldName = 'kredit_bop'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object debit_adm: TMTNumericDataFieldEh
-          FieldName = 'debit_adm'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object kredit_adm: TMTNumericDataFieldEh
-          FieldName = 'kredit_adm'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object debit_pj: TMTNumericDataFieldEh
-          FieldName = 'debit_pj'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object kredit_pj: TMTNumericDataFieldEh
-          FieldName = 'kredit_pj'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object debit_tm: TMTNumericDataFieldEh
-          FieldName = 'debit_tm'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object kredit_tm: TMTNumericDataFieldEh
-          FieldName = 'kredit_tm'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-      end
-      object RecordsList: TRecordsListEh
-      end
-    end
   end
   object Rpt: TfrxReport
     Version = '2022.2.7'
@@ -855,6 +745,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         item
           Visible = True
           ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = True
       Row = 0
@@ -1238,7 +1132,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Caption = 'Print'
       Category = 0
       Hint = 'Print'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1338,10 +1232,75 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Visible = ivAlways
       PropertiesClassName = 'TcxSpinEditProperties'
     end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Print'
+      Category = 0
+      Hint = 'Print'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton2Click
+    end
   end
   object DsNeraca_lajur: TDataSource
-    DataSet = QNeraca_lajur
+    DataSet = MemNeraca_lajur
     Left = 496
     Top = 64
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QNeraca_lajur
+    Left = 600
+    Top = 48
   end
 end

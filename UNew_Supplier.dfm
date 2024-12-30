@@ -4,7 +4,7 @@ object FNew_Supplier: TFNew_Supplier
   Caption = 'New Supplier'
   ClientHeight = 523
   ClientWidth = 867
-  Color = clBtnFace
+  Color = clGradientActiveCaption
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -147,7 +147,8 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 712
+      ExplicitLeft = 722
+      ExplicitTop = 3
     end
     object BEdit: TRzBitBtn
       Left = 641
@@ -210,7 +211,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 637
+      ExplicitTop = 3
     end
   end
   object Panel1: TPanel
@@ -379,7 +380,10 @@ object FNew_Supplier: TFNew_Supplier
     ExplicitHeight = 289
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
+      Color = clGradientActiveCaption
       Caption = 'Barang'
+      ExplicitWidth = 859
+      ExplicitHeight = 264
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -461,9 +465,8 @@ object FNew_Supplier: TFNew_Supplier
       end
     end
     object TabSheet2: TRzTabSheet
+      Color = clGradientActiveCaption
       Caption = 'Lain-lain'
-      ExplicitWidth = 859
-      ExplicitHeight = 264
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -472,8 +475,6 @@ object FNew_Supplier: TFNew_Supplier
         Align = alClient
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 859
-        ExplicitHeight = 264
         object Label11: TLabel
           Left = 177
           Top = 20
