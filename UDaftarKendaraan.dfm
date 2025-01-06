@@ -82,46 +82,20 @@ object FDaftarKendaraan: TFDaftarKendaraan
       'Memo1')
     TabOrder = 1
     Visible = False
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    ExplicitWidth = 694
-=======
     ExplicitLeft = 16
     ExplicitTop = 19
     ExplicitWidth = 369
->>>>>>> Stashed changes
-=======
-    ExplicitLeft = 16
-    ExplicitTop = 19
-    ExplicitWidth = 369
->>>>>>> Stashed changes
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData
     Left = 384
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    Top = 232
-=======
     Top = 256
->>>>>>> Stashed changes
-=======
-    Top = 256
->>>>>>> Stashed changes
   end
   object MemMasterData: TMemTableEh
     Active = True
     Params = <>
     Left = 488
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    Top = 232
-=======
     Top = 256
->>>>>>> Stashed changes
-=======
-    Top = 256
->>>>>>> Stashed changes
     object MemMasterDatacode: TStringField
       FieldName = 'code'
     end
@@ -209,14 +183,6 @@ object FDaftarKendaraan: TFDaftarKendaraan
   object NetHTTPClient1: TNetHTTPClient
     UserAgent = 'Embarcadero URI Client/1.0'
     Left = 272
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    Top = 240
-=======
     Top = 264
->>>>>>> Stashed changes
-=======
-    Top = 264
->>>>>>> Stashed changes
   end
 end
