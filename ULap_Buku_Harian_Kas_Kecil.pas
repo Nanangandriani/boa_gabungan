@@ -27,11 +27,13 @@ uses
   RzEdit, RzCmboBx, dxRibbon, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   frxClass, frxDBSet, dxBar, cxBarEditItem, cxClasses, Data.DB, RzPanel,
   Vcl.ComCtrls, RzRadChk, Vcl.Buttons, dxBevel, dxGDIPlusClasses, RzBmpBtn,
-  MemDS, DBAccess, Uni, cxButtonEdit, cxCheckBox, dxColorEdit;
+  MemDS, DBAccess, Uni, cxButtonEdit, cxCheckBox, dxColorEdit, System.Actions,
+  Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, MemTableDataEh,
+  MemTableEh, DataDriverEh;
 
 type
   TFLap_Buku_Harian_Kas_Kecil = class(TForm)
-    DBGridKontrak: TDBGridEh;
+    DBGridKasKecil: TDBGridEh;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BPrint: TRzBitBtn;
@@ -98,9 +100,23 @@ type
     dxBarEdit4: TdxBarEdit;
     cxBarEditItem1: TcxBarEditItem;
     DTPick11: TcxBarEditItem;
+    ActMenu: TActionManager;
+    ActBaru: TAction;
+    ActUpdate: TAction;
+    ActRO: TAction;
+    ActDel: TAction;
+    ActPrint: TAction;
+    ActApp: TAction;
+    ActReject: TAction;
+    ActClose: TAction;
+    DataSetDriverEh1: TDataSetDriverEh;
+    DSBHKasKecil: TDataSource;
+    MemBHKasKecil: TMemTableEh;
+    QBHKasKecil: TUniQuery;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -125,7 +141,7 @@ var
   dd,mm,yy:word;
   ketemu:boolean;
 begin
-     with dm.qtemp do
+    with dm.qtemp do
     begin
       close;
       sql.Clear;
@@ -192,6 +208,51 @@ begin
     Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
     frxreport1.showreport;
 
+end;
+
+procedure TFLap_Buku_Harian_Kas_Kecil.DxRefreshClick(Sender: TObject);
+begin
+   if DTPick11.EditValue = null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DTPick11.SetFocus;
+      Exit;
+    end;
+
+    DBGridKasKecil.StartLoadingStatus();
+    with QBHKasKecil do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT  "row_number"() over (ORDER BY urutan)+1 nomor,trans_date,voucher_no,description,actors_name,order_no,actors_code,code '+
+                ',jumdebit,jumkredit,penjualan,adm,bop,urutan,0 sa,jumdebit debit,jumkredit kredit '+
+                'FROM '+
+                '(select distinct a.trans_date,a.voucher_no,a.description,a.actors_name,a.order_no,a.actors_code,a.code,'+
+                '(case when debit.jumlah is null then 0 else debit.jumlah end)jumdebit,(case when kredit.jumlah is null then 0 else kredit.jumlah end)jumkredit,'+
+                '(case when d.jumlah is null then 0 else d.jumlah end)penjualan,(case when b.jumlah is null then 0 else b.jumlah end)adm,(case when c.jumlah is null then 0 else c.jumlah end)bop,(case when debit.jumlah>0 then 1 else 10 end)urutan from '+
+                '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
+                'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
+                'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
+                'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account=''1112''  order by trans_date,voucher_no)a '+
+                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account=''1112'' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
+                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account=''1112'' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
+                'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
+                'where (a."position"=''D'') and '+
+                '(a.code_account=b.code)and (b.type_id=2)group by voucher_no order by voucher_no)b on a.voucher_no=b.voucher_no '+
+                'left join '+
+                '(select voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
+                'where (a."position"=''D'') and '+
+                '(a.code_account=b.code)and (b.type_id=3) group by voucher_no order by voucher_no)c on a.voucher_no=c.voucher_no '+
+                'left join '+
+                '(select voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
+                'where (a.code_account=b.code)and (b.type_id=4) group by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_no order by trans_date,urutan,order_no,voucher_no)xxx ';
+      open;
+    end;
+      MemBHKasKecil.Close;
+      MemBHKasKecil.Open;
+      QBHKasKecil.Close;
+      QBHKasKecil.Open;
+      DBGridKasKecil.FinishLoadingStatus();
 end;
 
 procedure TFLap_Buku_Harian_Kas_Kecil.FormShow(Sender: TObject);

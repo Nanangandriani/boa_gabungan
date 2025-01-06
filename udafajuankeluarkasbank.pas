@@ -144,12 +144,15 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     QBukti_Ajuan_Keluar: TUniQuery;
     frxDBDBukti_Ajuan_Keluar: TfrxDBDataset;
+    Report: TfrxReport;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BCariClick(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure DBGridPengajuanKeluarKasBankDblClick(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -165,12 +168,44 @@ implementation
 {$R *.dfm}
 
 uses U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UDataModule,
-  UDataPengeluaranKasBank;
+  UDataPengeluaranKasBank, UHomeLogin, UMy_Function,UDataKasKecil;
 
 procedure TFdafajuankeluarkasbank.ActBaruExecute(Sender: TObject);
 begin
    FDataPengajuanPengeluaranKasBank.show;
    //FKeluarKasBank_Ajuan.show;
+end;
+
+procedure TFdafajuankeluarkasbank.ActDelExecute(Sender: TObject);
+begin
+  MessageDlg('Cek Apakah sudah dilakukan tahap pelunasan apa belum...',mtInformation,[MBOK],0);
+
+  if MessageDlg('Apakah anda yakin ingin membatalkan pelunasan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "public"."t_cash_bank_expenditure_submission" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "voucher_no"='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString);
+          ExecSQL;
+        end;
+        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+  end;
 end;
 
 procedure TFdafajuankeluarkasbank.ActROExecute(Sender: TObject);
@@ -308,6 +343,7 @@ begin
 
         with FDataPengajuanPengeluaranKasBank do
         begin
+          MemDetailHutang.EmptyTable;
           QDetail_Hutang_Ajuan.First;
           while not QDetail_Hutang_Ajuan.Eof do
           begin
@@ -539,6 +575,7 @@ begin
       end;
       with FDataPengeluaranKasBank do
       begin
+        MemDetailHutang.EmptyTable;
         QDetail_Hutang_Ajuan.First;
         while not QDetail_Hutang_Ajuan.Eof do
         begin
@@ -555,7 +592,148 @@ begin
       end;
       Fdafajuankeluarkasbank.Close;
   end;
+  if (vcall='keluar_kas_kecil')and(Qdaf_PengajuanKasBank.RecordCount<>0) then
+  begin
+     with FDataKasKecil do
+     begin
+        dtperiode1.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode1').asdatetime;
+        dtperiode2.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode2').asdatetime;
+        edKode_supplier.Text:=Qdaf_PengajuanKasBank.fieldbyname('supplier_code').AsString;
+        edNamaKepada.Text:=Qdaf_PengajuanKasBank.fieldbyname('supplier_name').AsString;
+        memketerangan.Text:=Qdaf_PengajuanKasBank.fieldbyname('to_getout').AsString;
+        edKodeMataUang.Text:=Qdaf_PengajuanKasBank.fieldbyname('currency').AsString;
+        Edkurs.Value:=Qdaf_PengajuanKasBank.fieldbyname('kurs').Value;
+        Ed_Jumlah_hutang.value:=Qdaf_PengajuanKasBank.fieldbyname('amount').Value;
+     end;
+     with QDetail_Akun_Ajuan do
+     begin
+         close;
+         sql.Clear;
+         sql.Text:='SELECT * FROM t_cash_bank_expenditure_submission_det WHERE no_voucher='+Quotedstr(DBGridPengajuanKeluarKasBank.Fields[0].Asstring)+' ';
+         open;
+     end;
+     with FDataKasKecil do
+     begin
+        MemDetailAkun.EmptyTable;
+        QDetail_Akun_Ajuan.First;
+        while not QDetail_Akun_Ajuan.Eof do
+        begin
+            MemDetailAkun.Insert;
+            MemDetailAkun['kd_akun']:=QDetail_Akun_Ajuan.fieldbyname('code_account').AsString;
+            MemDetailAkun['nm_akun']:=QDetail_Akun_Ajuan.FieldByName('name_account').AsString;
+            if QDetail_Akun_Ajuan.FieldByName('position').AsString='D' then
+            begin
+              MemDetailAkun['debit']:=QDetail_Akun_Ajuan.FieldByName('paid_amount').Value;
+              MemDetailAkun['kredit']:='0';
+            end;
+            if QDetail_Akun_Ajuan.FieldByName('position').AsString='K' then
+            begin
+              MemDetailAkun['kredit']:=QDetail_Akun_Ajuan.FieldByName('paid_amount').Value;
+              MemDetailAkun['debit']:='0';
+            end;
+            MemDetailAkun['keterangan']:=QDetail_Akun_Ajuan.FieldByName('description').AsString;
+            MemDetailAkun['kd_header_akun']:=QDetail_Akun_Ajuan.FieldByName('code_account_header').AsString;
+            //MemDetailAkun['modul_id']:=QDetail_Akun_Ajuan.FieldByName('module_id').AsString;
+            MemDetailAkun.post;
+            QDetail_Akun_Ajuan.Next;
+        end;
+     end;
+
+     with QDetail_Hutang_Ajuan do
+     begin
+         close;
+         sql.Clear;
+         sql.Text:='SELECT * FROM t_cash_bank_expenditure_submission_payable WHERE voucher_no='+Quotedstr(DBGridPengajuanKeluarKasBank.Fields[0].Asstring)+' ';
+         open;
+     end;
+     with FDataKasKecil do
+     begin
+        QDetail_Hutang_Ajuan.First;
+        while not QDetail_Hutang_Ajuan.Eof do
+        begin
+            MemDetailHutang.Insert;
+            MemDetailHutang['no_tagihan']:=QDetail_Hutang_Ajuan.fieldbyname('invoice_no').AsString;
+            MemDetailHutang['no_faktur']:=QDetail_Hutang_Ajuan.fieldbyname('faktur_no').AsString;
+            MemDetailHutang['tgl_faktur']:=QDetail_Hutang_Ajuan.fieldbyname('faktur_date').AsString;
+            MemDetailHutang['no_sj']:=QDetail_Hutang_Ajuan.fieldbyname('sj_no').AsString;
+            MemDetailHutang['jum_hutang']:=QDetail_Hutang_Ajuan.fieldbyname('paid_amount').Value;
+            MemDetailHutang['keterangan']:=QDetail_Hutang_Ajuan.FieldByName('description').AsString;
+            MemDetailHutang.post;
+            QDetail_Hutang_Ajuan.Next;
+        end;
+     end;
+     Fdafajuankeluarkasbank.Close;
+  end;
   FDataPengeluaranKasBank.cbsumberdataSelect(sender);
+end;
+
+procedure TFdafajuankeluarkasbank.dxBarLargeButton1Click(Sender: TObject);
+begin
+  with QBukti_Ajuan_Keluar do
+  begin
+     close;
+     sql.clear;
+     sql.Add('SELECT A.*,"code_account_header","name_account","paid_amount","ket","module_id" FROM '+
+             '(SELECT voucher_no,subvoucher,remark,entry_date,trans_date,periode1,periode2,amount, '+
+             'account_code,account_name,dk,debit,kredit,	header_code,ref_no,posting,customer_code, '+
+             'supplier_code,cash_type,job_no,company_code,tp_code,trans_year,trans_month,trans_day, '+
+             'order_no,giro_no,bank_giro_name,giro_due_date,customer_name,supplier_name,to_,deposit, '+
+             'deposit_date,tgup,voucher_code,to_getout,	status,approve_status,approval_date,approval, '+
+             'app_stat,currency,kurs,plan_to,bon_no,bank_norek,bank_name,amount_origin,	debit_amount_origin, '+
+             'credit_amount_origin,created_at,created_by,updated_at,updated_by,deleted_at,deleted_by, '+
+             'trans_type_code,	trans_type_name,bank_number_account,bank_name_account,additional_code,"id" '+
+             'FROM "public"."t_cash_bank_expenditure_submission" A WHERE "voucher_no"='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
+             'AND deleted_at IS NULL) A '+
+             'LEFT JOIN '+
+             '(SELECT no_voucher,code_account,name_account,position,paid_amount,description as ket,code_account_header, '+
+             'amount_rate_results,module_id,trans_date FROM "public"."t_cash_bank_expenditure_submission_det" aa '+
+             'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.code) b ON A."voucher_no" = b."no_voucher" '+
+             'WHERE A."voucher_no"='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
+             'AND "position" = ''D'' ');
+     open;
+  end;
+
+  if QBukti_Ajuan_Keluar.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+  if QBukti_Ajuan_Keluar.RecordCount<>0 then
+  begin
+     // Dapetin Grand Total
+     with dm.Qtemp do
+     begin
+       close;
+       sql.clear;
+       sql.add(' select * '+
+               ' from "public"."t_cash_bank_expenditure_submission" a '+
+               ' where a.deleted_at is null and '+
+               ' a.voucher_no='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' ');
+       open;
+     end;
+      //
+
+     cLocation := ExtractFilePath(Application.ExeName);
+
+     //ShowMessage(cLocation);
+     Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran'+'.fr3');
+     SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+     SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+     SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+     if QBukti_Ajuan_Keluar.FieldByName('module_id').AsString='6' then//kas
+     begin
+      SetMemo(Report,'vkas','X');
+      SetMemo(Report,'vbank','');
+     end;
+     if QBukti_Ajuan_Keluar.FieldByName('module_id').AsString='5' then//bank
+     begin
+      SetMemo(Report,'vkas','');
+      SetMemo(Report,'vbank','X');
+     end;
+
+     //Report.DesignReport();
+     Report.ShowReport();
+   end;
 end;
 
 procedure TFdafajuankeluarkasbank.FormShow(Sender: TObject);

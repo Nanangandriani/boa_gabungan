@@ -42,7 +42,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
   URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
   UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank, UDataKasBon,
-  UDataKasKecil, UDaftarRekeningKoran;
+  UDataKasKecil, UDaftarRekeningKoran,UDataPeLakuBiaya,ULap_Kartu_Hutang;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -810,6 +810,11 @@ begin
     FNew_supplier.edKodePerkiraan_um.Text:=MemMasterData['KD_MASTER'];
     FNew_supplier.KodeHeaderPerkiraan_um:=MemMasterData['KD_MASTER'];
   end;
+  if vcall='pelaku_biaya' then
+  begin
+    FDataPeLakuBiaya.kd_Karesidenan.text:=MemMasterData['KD_MASTER'];
+    FDataPeLakuBiaya.edKaresidenan.text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='klkas_mata_uang' then
   begin
     FDataPengeluaranKasBank.edKodeMataUang.Text:=MemMasterData['KD_MASTER'];
@@ -822,6 +827,12 @@ begin
     FDataPengajuanPengeluaranKasBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
     FDataPengajuanPengeluaranKasBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
   end;
+  {if vcall='Lap_Kartu_Hutang' then
+  begin
+    FLap_Kartu_Hutang.vkd_supp:=MemMasterData['KD_MASTER'];
+    FLap_Kartu_Hutang.Ed_supplier.EditValue:=MemMasterData['NM_MASTER'];
+    ShowMessage(FLap_Kartu_Hutang.vkd_supp);
+  end;}
   if vcall='KL_kasbank_jns_transaksi_ajuan' then //Pengajuan pengeluaran kas
   begin
     with FDataPengajuanPengeluaranKasBank do

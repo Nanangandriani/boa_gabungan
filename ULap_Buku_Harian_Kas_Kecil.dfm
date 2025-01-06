@@ -3,7 +3,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   Top = 0
   Caption = 'Laporan Buku Harian Kas Kecil'
   ClientHeight = 393
-  ClientWidth = 827
+  ClientWidth = 971
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,40 +12,137 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   Font.Style = []
   OnShow = FormShow
   TextHeight = 15
-  object DBGridKontrak: TDBGridEh
+  object DBGridKasKecil: TDBGridEh
     Left = 0
-    Top = 256
-    Width = 827
-    Height = 96
-    Align = alBottom
-    Color = clGradientInactiveCaption
+    Top = 127
+    Width = 971
+    Height = 123
+    Align = alClient
+    Color = clBtnFace
     DataGrouping.GroupLevels = <
       item
       end
       item
       end>
+    DataSource = DSBHKasKecil
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     SearchPanel.Enabled = True
     TabOrder = 0
     TitleParams.MultiTitle = True
-    Visible = False
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'actors_name'
+        Footers = <>
+        Title.Caption = 'Pelaku'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'voucher_no'
+        Footers = <>
+        Title.Caption = 'No. Bukti'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'description'
+        Footers = <>
+        Title.Caption = 'Keterangan'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jumdebit'
+        Footers = <>
+        Title.Caption = 'Mutasi|Debet'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jumkredit'
+        Footers = <>
+        Title.Caption = 'Mutasi|kredit'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'sa'
+        Footers = <>
+        Title.Caption = 'Saldo'
+        Visible = False
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'penjualan'
+        Footers = <>
+        Title.Caption = 'Pengeluaran Biaya|Penjualan'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bop'
+        Footers = <>
+        Title.Caption = 'Pengeluaran Biaya|Over Head Pabrik'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'adm'
+        Footers = <>
+        Title.Caption = 'Pengeluaran Biaya|Admin & Umum'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Width = 0
+      end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel1: TPanel
     Left = 0
     Top = 352
-    Width = 827
+    Width = 971
     Height = 41
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 538
-    ExplicitWidth = 655
+    ExplicitTop = 343
+    ExplicitWidth = 821
     object BBatal: TRzBitBtn
-      Left = 751
+      Left = 895
       Top = 1
       Height = 39
       Align = alRight
@@ -103,10 +200,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 619
+      ExplicitLeft = 745
     end
     object BPrint: TRzBitBtn
-      Left = 672
+      Left = 816
       Top = 1
       Width = 79
       Height = 39
@@ -165,21 +262,21 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 721
-      ExplicitTop = 6
+      ExplicitLeft = 666
     end
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 154
-    Width = 827
+    Top = 250
+    Width = 971
     Height = 102
     Align = alBottom
     BorderSides = [sdLeft, sdTop, sdRight]
-    Color = clGradientInactiveCaption
+    Color = 15987699
     TabOrder = 2
     Visible = False
-    ExplicitTop = 148
+    ExplicitTop = 145
+    ExplicitWidth = 821
     object Label2: TLabel
       Left = 22
       Top = 98
@@ -374,8 +471,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     object Cbsemua: TRzCheckBox
       Left = 136
       Top = 120
-      Width = 103
-      Height = 19
+      Width = 99
+      Height = 15
       Caption = 'Semua Lokasi'
       Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
@@ -477,7 +574,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 827
+    Width = 971
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -485,7 +582,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Contexts = <>
     TabOrder = 3
     TabStop = False
-    ExplicitWidth = 651
+    ExplicitWidth = 827
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -523,16 +620,15 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 656
-    Top = 208
+    Left = 752
+    Top = 80
   end
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
-    Left = 648
-    Top = 160
+    Left = 704
+    Top = 80
     object QPerusahaancompany_code: TStringField
       FieldName = 'company_code'
       Required = True
@@ -646,8 +742,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       'begin'
       ''
       'end.')
-    Left = 584
-    Top = 160
+    Left = 616
+    Top = 88
     Datasets = <
       item
         DataSet = frxDBDatasetPers
@@ -1926,8 +2022,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     DataSet = QKasKecil
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 528
-    Top = 216
+    Left = 608
+    Top = 32
   end
   object QKasKecil: TUniQuery
     Connection = dm.Koneksi
@@ -2048,8 +2144,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       ''
       '')
     Active = True
-    Left = 528
-    Top = 160
+    Left = 560
+    Top = 32
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -2065,8 +2161,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 588
-    Top = 32
+    Left = 756
+    Top = 24
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -2831,8 +2927,34 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       OnClick = dxBarLargeButton1Click
     end
     object DxRefresh: TdxBarLargeButton
+      Caption = 'Cari'
       Category = 0
+      Hint = 'Cari'
       Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Awal   '
@@ -2999,5 +3121,95 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
+  end
+  object ActMenu: TActionManager
+    Left = 671
+    Top = 37
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
+    end
+    object ActUpdate: TAction
+      Caption = 'Update  '
+    end
+    object ActRO: TAction
+      Caption = 'Refresh  '
+    end
+    object ActDel: TAction
+      Caption = 'Delete'
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose PO    '
+      Enabled = False
+    end
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QBHKasKecil
+    Left = 520
+    Top = 208
+  end
+  object DSBHKasKecil: TDataSource
+    AutoEdit = False
+    DataSet = MemBHKasKecil
+    Left = 448
+    Top = 200
+  end
+  object MemBHKasKecil: TMemTableEh
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 520
+    Top = 168
+  end
+  object QBHKasKecil: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT  "row_number"() over (ORDER BY urutan)+1 nomor,trans_date' +
+        ',voucher_no,description,actors_name,order_no,actors_code,code ,j' +
+        'umdebit,jumkredit,penjualan,adm,bop,urutan,0 sa,jumdebit debit,j' +
+        'umkredit kredit FROM (select distinct a.trans_date,a.voucher_no,' +
+        'a.description,a.actors_name,a.order_no,a.actors_code,a.code,(cas' +
+        'e when debit.jumlah is null then 0 else debit.jumlah end)jumdebi' +
+        't,(case when kredit.jumlah is null then 0 else kredit.jumlah end' +
+        ')jumkredit,(case when d.jumlah is null then 0 else d.jumlah end)' +
+        'penjualan,(case when b.jumlah is null then 0 else b.jumlah end)a' +
+        'dm,(case when c.jumlah is null then 0 else c.jumlah end)bop,(cas' +
+        'e when debit.jumlah>0 then 1 else 10 end)urutan from (select dis' +
+        'tinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.or' +
+        'der_no,c.actors_code,b.code from t_petty_cash_det a INNER JOIN t' +
+        '_petty_cash c ON a.voucher_no=a.voucher_no LEFT JOIN t_cost_acto' +
+        'rs b on c.actors_code=b.code where trans_date = '#39'2025-01-04'#39' and' +
+        ' code_account='#39'1112'#39'  order by trans_date,voucher_no)a left join' +
+        ' (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_' +
+        'det where (code_account='#39'1112'#39' )and("position"='#39'D'#39') group by vou' +
+        'cher_no order by voucher_no)debit on a.voucher_no=debit.voucher_' +
+        'no left join (select voucher_no,sum(paid_amount)as jumlah from t' +
+        '_petty_cash_det where ("position"='#39'K'#39')and(code_account='#39'1112'#39' ) ' +
+        'group by voucher_no order by voucher_no)kredit on a.voucher_no=k' +
+        'redit.voucher_no left join (select a.voucher_no,sum(a.paid_amoun' +
+        't)as jumlah from t_petty_cash_det a,t_ak_account b where (a."pos' +
+        'ition"='#39'D'#39') and (a.code_account=b.code)and (b.type_id=2)group by' +
+        ' voucher_no order by voucher_no)b on a.voucher_no=b.voucher_no l' +
+        'eft join (select voucher_no,sum(a.paid_amount)as jumlah from t_p' +
+        'etty_cash_det a,t_ak_account b where (a."position"='#39'D'#39') and (a.c' +
+        'ode_account=b.code)and (b.type_id=3) group by voucher_no order b' +
+        'y voucher_no)c on a.voucher_no=c.voucher_no left join (select vo' +
+        'ucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_a' +
+        'k_account b where (a.code_account=b.code)and (b.type_id=4) group' +
+        ' by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_n' +
+        'o order by trans_date,urutan,order_no,voucher_no)xxx ')
+    Left = 472
+    Top = 144
   end
 end

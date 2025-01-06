@@ -28,8 +28,16 @@ type
     Label11: TLabel;
     Label12: TLabel;
     memAlamat: TMemo;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    EdKaresidenan: TRzButtonEdit;
+    kd_karesidenan: TEdit;
     procedure btBatalClick(Sender: TObject);
     procedure btSimpanClick(Sender: TObject);
+    procedure EdKaresidenanButtonClick(Sender: TObject);
+    procedure kd_karesidenanChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,7 +54,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UHomeLogin, UDataListPelakuBiaya;
+uses UDataModule, UHomeLogin, UDataListPelakuBiaya,UMasterData;
 procedure TFDataPeLakuBiaya.Autocode;
 var
   kode : String;
@@ -124,7 +132,7 @@ begin
           close;
           sql.clear;
           sql.Text:=' INSERT INTO "public"."t_cost_actors" ("created_at", "code", '+
-                    ' "name", "nik_employee", "phone_number", "address", "created_by" ) '+
+                    ' "name", "nik_employee", "phone_number", "address", "created_by","karesidenan_code" ) '+
                     ' Values( '+
                     ' NOW(), '+
                     ' '+QuotedStr(Edkode.Text)+', '+
@@ -132,7 +140,8 @@ begin
                     ' '+QuotedStr(edNikKaryawan.Text)+', '+
                     ' '+QuotedStr(EdNoTelp.Text)+', '+
                     ' '+QuotedStr(MemAlamat.Text)+', '+
-                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                    ' '+QuotedStr(kd_karesidenan.Text)+');';
           ExecSQL;
         end;
         MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -153,7 +162,8 @@ begin
                     ' "phone_number"='+QuotedStr(EdNoTelp.Text)+', '+
                     ' "address"='+QuotedStr(MemAlamat.Text)+', '+
                     ' "updated_at"=now(), '+
-                    ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                    ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                    ' "karesidenan_code"='+QuotedStr(kd_karesidenan.Text)+' '+
                     ' WHERE "code"='+QuotedStr(Edkode.Text)+';';
           ExecSQL;
         end;
@@ -182,5 +192,25 @@ begin
   MemAlamat.Clear;
 end;
 
+
+procedure TFDataPeLakuBiaya.EdKaresidenanButtonClick(Sender: TObject);
+begin
+    FMasterData.Caption:='Master Data Karesidenan';
+    FMasterData.vcall:='pelaku_biaya';
+    FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+    FMasterData.ShowModal;
+end;
+
+procedure TFDataPeLakuBiaya.kd_karesidenanChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select * from t_region_karesidenan where code='+QuotedStr(kd_karesidenan.Text)+' ';
+     Open;
+     EdKaresidenan.Text:=fieldbyname('name').AsString;
+   end;
+end;
 
 end.

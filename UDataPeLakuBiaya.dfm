@@ -2,7 +2,7 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   Left = 0
   Top = 0
   Caption = 'Data PeLaku Biaya'
-  ClientHeight = 296
+  ClientHeight = 317
   ClientWidth = 564
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,18 +12,31 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   Font.Style = []
   Position = poDesktopCenter
   TextHeight = 15
+  object Label6: TLabel
+    Left = 33
+    Top = 141
+    Width = 38
+    Height = 15
+    Caption = 'Alamat'
+  end
+  object Label7: TLabel
+    Left = 114
+    Top = 141
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 564
-    Height = 264
+    Height = 285
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -376
-    ExplicitWidth = 1004
-    ExplicitHeight = 113
+    ExplicitWidth = 558
+    ExplicitHeight = 255
     object Label1: TLabel
       Left = 25
       Top = 75
@@ -82,14 +95,28 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
     end
     object Label11: TLabel
       Left = 25
-      Top = 133
+      Top = 135
       Width = 38
       Height = 15
       Caption = 'Alamat'
     end
     object Label12: TLabel
       Left = 106
-      Top = 133
+      Top = 135
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label13: TLabel
+      Left = 25
+      Top = 227
+      Width = 42
+      Height = 15
+      Caption = 'Wilayah'
+    end
+    object Label14: TLabel
+      Left = 106
+      Top = 227
       Width = 3
       Height = 15
       Caption = ':'
@@ -133,17 +160,36 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       Height = 89
       TabOrder = 4
     end
+    object EdKaresidenan: TRzButtonEdit
+      Left = 115
+      Top = 225
+      Width = 240
+      Height = 23
+      Text = ''
+      TabOrder = 5
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = EdKaresidenanButtonClick
+    end
+    object kd_karesidenan: TEdit
+      Left = 361
+      Top = 225
+      Width = 56
+      Height = 23
+      TabOrder = 6
+      Visible = False
+      OnChange = kd_karesidenanChange
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 264
+    Top = 285
     Width = 564
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = -376
-    ExplicitTop = 113
-    ExplicitWidth = 1004
+    ExplicitTop = 255
+    ExplicitWidth = 558
     object btSimpan: TRzBitBtn
       Left = 413
       Top = 1
@@ -204,7 +250,7 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 778
+      ExplicitLeft = 407
     end
     object btBatal: TRzBitBtn
       Left = 488
@@ -266,7 +312,7 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 928
+      ExplicitLeft = 482
     end
   end
 end

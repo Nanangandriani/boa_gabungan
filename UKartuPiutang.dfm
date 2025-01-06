@@ -550,7 +550,7 @@ object FKartuPiutang: TFKartuPiutang
   end
   object dsKartuPiutangTRX: TDataSource
     DataSet = QKartuPiutangTRX
-    Left = 1105
+    Left = 1081
     Top = 488
   end
   object MemMaster: TMemTableEh

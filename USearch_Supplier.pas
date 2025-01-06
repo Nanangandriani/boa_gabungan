@@ -55,7 +55,7 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew
   UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber,
   UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
   UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
-  UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian;
+  UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian,ULap_Kartu_Hutang;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -151,6 +151,11 @@ begin
     begin
       FDataRencanaLunasHutangPengajuan.cbsupp.text:=QSupplier['supplier_code'];
       FDataRencanaLunasHutangPengajuan.txtnmsupp.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='Lap_Kartu_Hutang' then
+    begin
+      FLap_Kartu_Hutang.ed_code_supp.EditValue:=QSupplier['supplier_code'];
+      FLap_Kartu_Hutang.Ed_supplier.EditValue:=QSupplier['supplier_name'];
     end;
     if vcall='delivery_order_reimburst' then
     begin

@@ -22,7 +22,6 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1002
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -78,6 +77,23 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
         Footers = <>
         Title.Caption = 'Alamat'
         Width = 400
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'karesidenan_code'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_1'
+        Footers = <>
+        Title.Caption = 'Wilayah'
+        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -653,8 +669,13 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
   object QPelakuBiaya: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_cost_actors"'
-      'where deleted_at is null order by created_at Desc')
+      'select a.*,b.name from "public"."t_cost_actors" a'
+      'LEFT JOIN t_region_karesidenan b on a.karesidenan_code=b.code'
+      'where a.deleted_at is null order by created_at Desc'
+      ''
+      ''
+      '-- select * from "public"."t_cost_actors"'
+      '-- where deleted_at is null order by created_at Desc')
     Left = 428
     Top = 56
     object QPelakuBiayacode: TStringField
@@ -677,6 +698,15 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
       FieldName = 'address'
       OnGetText = QPelakuBiayaaddressGetText
       BlobType = ftMemo
+    end
+    object QPelakuBiayakaresidenan_code: TStringField
+      FieldName = 'karesidenan_code'
+      Size = 10
+    end
+    object QPelakuBiayaname_1: TStringField
+      FieldName = 'name_1'
+      ReadOnly = True
+      Size = 255
     end
   end
   object DsPelakuBiaya: TDataSource

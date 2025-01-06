@@ -221,6 +221,8 @@ begin
                     FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_faktur']:=MemDataRencana['faktur_no'];
                     FDataPengajuanPengeluaranKasBank.MemDetailHutang['tgl_faktur']:=MemDataRencana['faktur_date'];
                     FDataPengajuanPengeluaranKasBank.MemDetailHutang['jum_hutang']:=MemDataRencana['amount'];
+                    //FDataPengajuanPengeluaranKasBank.MemDetailHutang['keterangan']:='EX.'+formatdatetime('dd/mm/yyyy',MemDataRencana['faktur_date'].Date)+' No.Faktur : '+MemDataRencana['faktur_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['keterangan']:='No.Faktur : '+MemDataRencana['faktur_no'];
                     FDataPengajuanPengeluaranKasBank.MemDetailHutang.post;
                end;
                MemDataRencana.Next;
@@ -231,6 +233,7 @@ begin
              FDataPengajuanPengeluaranKasBank.EdJumlah.Text:=MemDataRencana['amount'];
              FDataPengajuanPengeluaranKasBank.dtPeriode1.Date:=MemDataRencana['periode1'];
              FDataPengajuanPengeluaranKasBank.dtPeriode2.Date:=MemDataRencana['periode2'];
+             FDataPengajuanPengeluaranKasBank.Ed_kepada.Text:=MemDataRencana['supplier_name'];
            end;
       {end
       Except on E :Exception do

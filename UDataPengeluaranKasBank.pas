@@ -148,6 +148,7 @@ type
     procedure DBGridAkunColumns0CellButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure Ed_id_modulChange(Sender: TObject);
+    procedure dtTransChange(Sender: TObject);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;
@@ -410,8 +411,8 @@ begin
                   ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
                   ' '+QuotedStr(edKode_supplier.Text)+', '+
                   ' '+QuotedStr(edNama_supplier.Text)+', '+
-                  ' '+QuotedStr(edKodeJenisTrans.Text)+', '+
-                  ' '+QuotedStr(edNamaJenisTrans.Text)+', '+
+                  ' '+QuotedStr(code_Trans.Text)+', '+
+                  ' '+QuotedStr(cb_Jenis_Trans.Text)+', '+
                   ' '+QuotedStr(edNoRek.Text)+', '+
                   ' '+QuotedStr(edNamaBank.Text)+', '+
                   ' '+QuotedStr(FloatToStr(MemDetailHutang['jum_hutang']))+', '+
@@ -954,6 +955,7 @@ begin
                 ' ORDER BY b.code,b.account_name,c.header_name';
       Execute;
     end;
+    DBGridDaftar_Perk.Columns[0].Visible:=true
   end;
 end;
 
@@ -1023,6 +1025,39 @@ begin
 
 end;
 
+procedure TFDataPengeluaranKasBank.dtTransChange(Sender: TObject);
+var
+    SelectedDate: TRzDateTimeEdit;
+    year, month, day: word;
+begin
+   with dm.Qtemp2 do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',Dttrans.Date))+' :: DATE, ''dd'') hari ';
+     Open;
+   end;
+   Edhari.Text:=dm.Qtemp2.FieldByName('hari').AsString;
+
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',Dttrans.Date))+' :: DATE, ''yyyy'') tahun ';
+     Open;
+   end;
+   Edth.Text:=dm.Qtemp.FieldByName('tahun').AsString;
+
+   with dm.Qtemp1 do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',Dttrans.Date))+' :: DATE, ''mm'') bulan ';
+     Open;
+   end;
+   Edbln.Text:=dm.Qtemp1.FieldByName('bulan').AsString;
+end;
+
 procedure TFDataPengeluaranKasBank.edKodeMataUangChange(Sender: TObject);
 begin
    with dm.Qtemp do
@@ -1074,12 +1109,14 @@ end;
 
 procedure TFDataPengeluaranKasBank.edNamaBankButtonClick(Sender: TObject);
 begin
-  if Length(edKodeJenisTrans.Text)=0 then
+  //if Length(edKodeJenisTrans.Text)=0 then
+  if Length(code_trans.Text)=0 then
   begin
     ShowMessage('Silakan Pilih Modul');
   end;
 
-  if Length(edKodeJenisTrans.Text)<>0 then
+  //if Length(edKodeJenisTrans.Text)<>0 then
+  if Length(code_trans.Text)<>0 then
   begin
   FMasterData.Caption:='Master Data Bank';
   FMasterData.vcall:='KL_kasbank_jns_transaksi';
@@ -1206,6 +1243,7 @@ begin
       MemDetailAkun.Active:=true;
    if MemDetailHutang.Active=false then
       MemDetailHutang.Active:=true;
+
 end;
 
 procedure TFDataPengeluaranKasBank.RefreshGridDetailAkun;

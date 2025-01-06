@@ -177,12 +177,22 @@ begin
         edNomorKasBon.Text:=Dm.Qtemp.FieldByName('voucher_no_receipt').AsString;
         edJumlah.Value:=Dm.Qtemp.FieldByName('amount_receipt').Value;
         gbDataBON.Visible:=True;
+        BtnAmbil_Data.Visible:=false;
+        GbHutang.Visible:=false;
       end;
       if stat_bon=0 then
       begin
         edNomorKasBon.Clear;
         edJumlah.Value:=0.00;
         gbDataBON.Visible:=False;
+        BtnAmbil_Data.Visible:=false;
+        GbHutang.Visible:=false;
+      end;
+      if stat_bon=2 then
+      begin
+        BtnAmbil_Data.Visible:=true;
+        gbDataBON.Visible:=false;
+        GbHutang.Visible:=true;
       end;
 
     order_no:=Dm.Qtemp.FieldByName('order_no').AsString;

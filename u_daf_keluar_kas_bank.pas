@@ -137,11 +137,20 @@ type
     Report: TfrxReport;
     frxDBDJurnal: TfrxDBDataset;
     QJurnal: TUniQuery;
+    DSDetail_Hutang: TDataSource;
+    DSDetail_Akun: TDataSource;
+    QDetail_Hutang: TUniQuery;
+    QDetail_akun: TUniQuery;
+    QDaf_Pengeluaran_Kas_Bankmodule_id: TIntegerField;
+    QBukti_Keluar_det: TUniQuery;
+    frxDBDBukti_Keluar_det: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -163,6 +172,38 @@ begin
    FDataPengeluaranKasBank.Show;
 end;
 
+procedure TFdaf_pengeluaran_kas_bank.ActDelExecute(Sender: TObject);
+begin
+  //MessageDlg('Cek Apakah sudah dilakukan tahap pelunasan apa belum...',mtInformation,[MBOK],0);
+
+  if MessageDlg('Apakah anda yakin ingin membatalkan pelunasan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "public"."t_cash_bank_expenditure" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString);
+          ExecSQL;
+        end;
+        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+  end;
+end;
+
 procedure TFdaf_pengeluaran_kas_bank.ActROExecute(Sender: TObject);
 begin
   DBGridKasBank.StartLoadingStatus();
@@ -178,6 +219,140 @@ begin
   finally
   DBGridKasBank.FinishLoadingStatus();
   end;
+end;
+
+procedure TFdaf_pengeluaran_kas_bank.ActUpdateExecute(Sender: TObject);
+begin
+      with FDataPengeluaranKasBank do
+      begin
+        MemDetailAkun.Close;
+        MemDetailAkun.Open;
+        MemDetailHutang.Close;
+        MemDetailHutang.Open;
+        show;
+        code_trans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_type_code').AsString;
+        Ed_id_modul.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('module_id').AsString;
+        if Ed_id_modul.Text='5' then
+           cbsumberdata.Text:='BANK';
+        if Ed_id_modul.Text='6' then
+           cbsumberdata.Text:='KAS';
+
+        edNoTrans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_no').AsString;
+        dtTrans.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_date').asdatetime;
+        dtperiode1.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('periode1').asdatetime;
+        dtperiode2.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('periode2').asdatetime;
+        FDataPengeluaranKasBank.no_bon:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bon_no').AsString;
+        no_bon:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bon_no').AsString;
+        edUntukPengeluaran.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('to_getout').AsString;
+        Ed_kepada.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('to_').AsString;
+        MemKeterangan.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('remark').AsString;
+        Ed_Additional.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('additional_code').AsString;
+        FDataPengeluaranKasBank.edJumlah.value:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('amount').Value;
+        edKode_supplier.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('supplier_code').AsString;
+        edNama_Supplier.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('supplier_name').AsString;
+        edKodeMataUang.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('currency').AsString;
+        Edkurs.Value:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('kurs').Value;
+        edJumlah.Value:=QDaf_Pengeluaran_Kas_Bank.FieldByName('amount').Value;
+        edKodeSumberPengeluaran.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('ref_no').Asstring;
+        ednamabank.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bank_name').AsString;
+        edNoRek.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bank_norek').AsString;
+        FDataPengeluaranKasBank.code_trans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_type_code').AsString;
+        Ed_id_modul.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('module_id').AsString;
+        Edhari.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_day').AsString;
+        Edbln.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_month').AsString;
+        Edth.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_year').AsString;
+        Ed_voucher_ajuan.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_tmp').AsString;
+
+        //detail akun
+        with QDetail_akun do
+        begin
+          close;
+          sql.clear;
+          sql.add(' SELECT * from ('+
+                  ' SELECT * from "public"."t_cash_bank_expenditure_det"'+
+                  ' WHERE "no_voucher"='+Quotedstr(DBGridKasBank.Fields[0].Asstring)+' ) a '+
+                  ' Order By position asc');
+          open;
+        end;
+
+        with FDataPengeluaranKasBank do
+        begin
+          MemDetailAkun.EmptyTable;
+          QDetail_akun.First;
+          while not QDetail_akun.Eof do
+          begin
+              MemDetailAkun.Insert;
+              MemDetailAkun['kd_akun']:=QDetail_akun.fieldbyname('code_account').AsString;
+              MemDetailAkun['nm_akun']:=QDetail_akun.FieldByName('name_account').AsString;
+              if QDetail_akun.FieldByName('position').AsString='D' then
+              begin
+                MemDetailAkun['debit']:=QDetail_akun.FieldByName('paid_amount').Value;
+                MemDetailAkun['kredit']:='0';
+              end;
+              if QDetail_akun.FieldByName('position').AsString='K' then
+              begin
+                MemDetailAkun['kredit']:=QDetail_akun.FieldByName('paid_amount').Value;
+                MemDetailAkun['debit']:='0';
+              end;
+              MemDetailAkun['keterangan']:=QDetail_akun.FieldByName('description').AsString;
+              MemDetailAkun['kd_header_akun']:=QDetail_akun.FieldByName('code_account_header').AsString;
+              //MemDetailAkun['modul_id']:=QDetail_akun.FieldByName('module_id').AsString;
+              MemDetailAkun.post;
+              QDetail_akun.Next;
+          end;
+        end;
+
+        //detail faktur
+        with QDetail_Hutang do
+        begin
+          close;
+          sql.clear;
+          sql.add(' SELECT * from ('+
+                  ' SELECT * from "public"."t_cash_bank_expenditure_payable" '+
+                  //' WHERE "voucher_no"='+QuotedStr(QDetail_Hutang_Ajuan.FieldByName('voucher_no').AsString)+' ) a '+
+                  'WHERE voucher_no='+Quotedstr(DBGridKasBank.Fields[0].Asstring)+' ) a '+
+                  ' Order By voucher_no desc');
+          open;
+        end;
+
+        with FDataPengeluaranKasBank do
+        begin
+          MemDetailHutang.EmptyTable;
+          QDetail_Hutang.First;
+          while not QDetail_Hutang.Eof do
+          begin
+              MemDetailHutang.Insert;
+              MemDetailHutang['no_tagihan']:=QDetail_Hutang.fieldbyname('invoice_no').AsString;
+              MemDetailHutang['no_faktur']:=QDetail_Hutang.fieldbyname('faktur_no').AsString;
+              MemDetailHutang['tgl_faktur']:=QDetail_Hutang.fieldbyname('faktur_date').AsString;
+              MemDetailHutang['no_sj']:=QDetail_Hutang.fieldbyname('sj_no').AsString;
+              MemDetailHutang['jum_hutang']:=QDetail_Hutang.fieldbyname('paid_amount').Value;
+              MemDetailHutang['keterangan']:=QDetail_Hutang.FieldByName('description').AsString;
+              MemDetailHutang.post;
+              QDetail_Hutang.Next;
+          end;
+        end;
+
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='SELECT * from t_master_trans_account where code_module='+Quotedstr(FDataPengeluaranKasBank.Ed_id_modul.Text)+' '+
+                    ' and code_trans='+Quotedstr(FDataPengeluaranKasBank.code_trans.Text)+' ';
+          open;
+          Cb_jenis_trans.text:=fieldbyname('name_trans').AsString;
+        end;
+
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='SELECT * from  t_currency where currency_code='+Quotedstr(FDataPengeluaranKasBank.Edkodematauang.Text)+' ';
+          open;
+          edNamaMataUang.text:=fieldbyname('currency_name').AsString;
+        end;
+        Fdaf_pengeluaran_kas_bank.Close;
+      end;
 end;
 
 procedure TFdaf_pengeluaran_kas_bank.dxBarLargeButton1Click(Sender: TObject);
@@ -223,7 +398,21 @@ begin
                ' a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
        open;
      end;
-      //
+     //
+     //keterangan
+     with QBukti_Keluar_det do
+     begin
+       close;
+       sql.clear;
+       sql.add(' SELECT aa.*,ket from "public"."v_buktipengeluaran" aa '+
+               ' LEFT JOIN (SELECT voucher_no , STRING_AGG("keterangan", E'+QuotedStr(', \n')+') as ket '+
+               ' from "public"."v_buktipengeluaran" where "voucher_no"= '+
+               ' '+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
+               ' ON aa."voucher_no"=bb."voucher_no" '+
+               ' where aa."voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
+       open;
+     end;
+
 
      cLocation := ExtractFilePath(Application.ExeName);
 
@@ -285,6 +474,15 @@ begin
   DateTimePicker2.Date:=Now;
   if QDaf_Pengeluaran_Kas_Bank.Active=false then
      QDaf_Pengeluaran_Kas_Bank.Active:=true;
+  if QDetail_akun.Active=false then
+     QDetail_akun.Active:=true;
+  if QDetail_akun.Active=false then
+     QDetail_akun.Active:=true;
+   ActROExecute(sender);
+   QDetail_akun.Close;
+   QDetail_akun.Open;
+   QDetail_akun.Close;
+   QDetail_akun.Open;
 end;
 
 initialization

@@ -99,7 +99,6 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 893
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -121,7 +120,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 887
+    ExplicitWidth = 954
     object Label1: TLabel
       Left = 21
       Top = 13
@@ -254,6 +253,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRO: TAction
       Caption = 'Refresh  '
@@ -261,6 +261,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -321,8 +322,8 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -345,7 +346,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Visible = True
           ItemName = 'dxBarLargeButton2'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -720,10 +721,8 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update'
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -794,10 +793,8 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarDelete: TdxBarButton
-      Caption = 'Delete'
+      Action = ActDel
       Category = 0
-      Hint = 'Delete'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -960,7 +957,31 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
   object QDaf_Pengeluaran_Kas_Bank: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * FROM t_cash_bank_expenditure')
+      '-- SELECT * FROM t_cash_bank_expenditure '
+      ''
+      'SELECT a.* FROM t_cash_bank_expenditure a'
+      
+        'LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code' +
+        '_trans '
+      'LEFT JOIN t_source_payment c on a."additional_code"=c.code '
+      'LEFT JOIN t_currency d on a."currency"=d."currency_code" '
+      'LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code"'
+      
+        'GROUP BY a.voucher_no,a.voucher_tmp,a.subvoucher,a.remark,a.entr' +
+        'y_date,a.trans_date,a.periode1,a.periode2,a.amount,a.account_cod' +
+        'e,a.group_code,a.group_name,a.tp_code,a.account_name,a.dk,a.perp' +
+        'etrator_id,a.debit,a.kredit,a.header_code,a.ref_no,a.posting,a.c' +
+        'ustomer_code,a.supplier_code,a.cash_type,a.job_no,a.company_code' +
+        ',a.trans_year,a.trans_month,a.trans_day,a.order_no,a.giro_no,a.b' +
+        'ank_giro_name,a.giro_due_date,a.customer_name,a.supplier_name,a.' +
+        'to_,a.deposit,a.deposit_date,a.tgup,a.voucher_code,a.to_getout,a' +
+        '.stat,a.time_lock,a.update_time,a.stat_lock,a.currency,a.kurs,a.' +
+        'bon_no,a.post_status,a.created_at,a.created_by,a.updated_at,a.up' +
+        'dated_by,a.deleted_at,a.deleted_by,a.bank_norek,a.bank_name,a.ce' +
+        'k_no,a.trans_type_code,a.trans_type_name,a.bank_number_account,a' +
+        '.bank_name_account,a.additional_code,a."id",a.module_id '
+      'ORDER BY entry_date,voucher_no,trans_date,order_no ASC'
+      '')
     Left = 384
     Top = 32
     object QDaf_Pengeluaran_Kas_Bankid: TLargeintField
@@ -1194,6 +1215,9 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       FieldName = 'additional_code'
       Size = 50
     end
+    object QDaf_Pengeluaran_Kas_Bankmodule_id: TIntegerField
+      FieldName = 'module_id'
+    end
   end
   object DSKeluarKasBank: TDataSource
     DataSet = QDaf_Pengeluaran_Kas_Bank
@@ -1350,7 +1374,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45645.577387500000000000
+    ReportOptions.LastChange = 45657.520059606480000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1367,6 +1391,10 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       item
         DataSet = frxDBDBukti_Keluar
         DataSetName = 'frxDBDBuktiKeluar'
+      end
+      item
+        DataSet = frxDBDBukti_Keluar_det
+        DataSetName = 'frxDBDBukti_Keluar_Det'
       end>
     Variables = <
       item
@@ -1840,7 +1868,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[(<frxDBDBuktiKeluar."ket">)]')
+            '[frxDBDBukti_Keluar_Det."ket"]')
           ParentFont = False
         end
         object frxDBDQBukti_Terimapaid_amount: TfrxMemoView
@@ -1892,9 +1920,9 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 529.134200000000000000
+          Left = 394.134200000000000000
           Top = 40.913420000000000000
-          Width = 222.992270000000000000
+          Width = 159.874015750000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1911,7 +1939,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           AllowVectorExport = True
           Left = 11.338590000000000000
           Top = 40.913420000000000000
-          Width = 222.992270000000000000
+          Width = 159.992270000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1928,7 +1956,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           AllowVectorExport = True
           Left = 11.338590000000000000
           Top = 108.590600000000000000
-          Width = 222.992270000000000000
+          Width = 159.992270000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1938,14 +1966,14 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '(___________________________)')
+            '(____________________)')
           ParentFont = False
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 529.134200000000000000
+          Left = 394.134200000000000000
           Top = 108.590600000000000000
-          Width = 222.992270000000000000
+          Width = 159.874015750000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1955,7 +1983,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '(___________________________)')
+            '(____________________)')
           ParentFont = False
         end
         object Line8: TfrxLineView
@@ -1967,9 +1995,9 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 264.567100000000000000
+          Left = 199.567100000000000000
           Top = 40.913420000000000000
-          Width = 222.992270000000000000
+          Width = 159.874015750000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1984,9 +2012,9 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 264.567100000000000000
+          Left = 199.567100000000000000
           Top = 108.590600000000000000
-          Width = 222.992270000000000000
+          Width = 159.874015750000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1996,7 +2024,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '(___________________________)')
+            '(___________________)')
           ParentFont = False
         end
         object Memo24: TfrxMemoView
@@ -2049,6 +2077,40 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
             '[SUM(<frxDBDBuktiKeluar."paid_amount">,MasterData1)]')
           ParentFont = False
         end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 587.000000000000000000
+          Top = 40.842300000000000000
+          Width = 159.874015750000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Dikeluarkan oleh :')
+          ParentFont = False
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 587.000000000000000000
+          Top = 108.519480000000000000
+          Width = 159.874015750000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '(____________________)')
+          ParentFont = False
+        end
       end
     end
   end
@@ -2077,5 +2139,69 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       'SELECT * FROM "public"."VTrans_Journal"')
     Left = 748
     Top = 88
+  end
+  object DSDetail_Hutang: TDataSource
+    DataSet = QDetail_Hutang
+    Left = 776
+    Top = 232
+  end
+  object DSDetail_Akun: TDataSource
+    DataSet = QDetail_akun
+    Left = 670
+    Top = 235
+  end
+  object QDetail_Hutang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_cash_bank_expenditure_payable')
+    Left = 774
+    Top = 171
+  end
+  object QDetail_akun: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_cash_bank_expenditure_det')
+    Left = 678
+    Top = 171
+  end
+  object QBukti_Keluar_det: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT aa.*,ket from "public"."v_buktipengeluaran" aa  '
+      
+        'LEFT JOIN (SELECT voucher_no,STRING_AGG("keterangan", E'#39', \n'#39') a' +
+        's ket  from "public"."v_buktipengeluaran" '
+      
+        'where "voucher_no"='#39'KK/0001/04/12/2024'#39' GROUP BY voucher_no) bb ' +
+        ' ON aa."voucher_no"=bb."voucher_no"  '
+      
+        'where (aa."voucher_no"='#39'KK/0001/04/12/2024'#39') AND aa.voucher_no =' +
+        #39'KK/0001/04/12/2024'#39)
+    Active = True
+    Left = 608
+    Top = 96
+  end
+  object frxDBDBukti_Keluar_det: TfrxDBDataset
+    UserName = 'frxDBDBukti_Keluar_Det'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'voucher_no=voucher_no'
+      'trans_date=trans_date'
+      'supplier_code=supplier_code'
+      'supplier_name=supplier_name'
+      'bank_norek=bank_norek'
+      'bank_name=bank_name'
+      'code_account_header=code_account_header'
+      'name_account=name_account'
+      'ketsj=ketsj'
+      'paid_amount=paid_amount'
+      'to_getout=to_getout'
+      'keterangan=keterangan'
+      'ket=ket')
+    DataSet = QBukti_Keluar_det
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 656
+    Top = 96
   end
 end

@@ -22,8 +22,6 @@ object FListKasKecil: TFListKasKecil
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -210
-    ExplicitWidth = 1243
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

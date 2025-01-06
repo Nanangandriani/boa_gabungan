@@ -22,6 +22,7 @@ object FDataKasKecil: TFDataKasKecil
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1231
     object LabelPelanggan: TLabel
       Left = 18
       Top = 104
@@ -52,14 +53,14 @@ object FDataKasKecil: TFDataKasKecil
     end
     object Label4: TLabel
       Left = 128
-      Top = 130
+      Top = 131
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
       Left = 18
-      Top = 130
+      Top = 131
       Width = 60
       Height = 15
       Caption = 'Keterangan'
@@ -116,7 +117,7 @@ object FDataKasKecil: TFDataKasKecil
       Left = 140
       Top = 129
       Width = 344
-      Height = 76
+      Height = 82
       TabOrder = 2
     end
     object edNoTrans: TEdit
@@ -214,6 +215,219 @@ object FDataKasKecil: TFDataKasKecil
         DisplayFormat = '0.00#,##'
       end
     end
+    object BtnAmbil_Data: TRzBitBtn
+      Left = 522
+      Top = 10
+      Width = 186
+      Caption = 'AMBIL DATA PENGAJUAN'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 8
+      Visible = False
+      OnClick = BtnAmbil_DataClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000A30E0000A30E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E881E8E8E8E8E8E8E8E8E8E8E8E8E8E80909
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8E8090909
+        09090909090909E8E8E8E8E8E881818181818181818181E8E8E8E8E8E8E80909
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E881E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8A37878787878
+        78E8E85E5E5E5E5E5E5E81818181818181E8E881818181818181A3D5D5D5D5D5
+        78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5D5D5D5
+        78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5D5D5D5
+        78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5D5D5D5
+        78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5A3A3A3
+        A3E8E85ED7D75E5E5E5E81ACAC81818181E8E881E8E881818181A3D5D5A3D678
+        E8E8E85ED7D75EE35EE881ACAC81AC81E8E8E881E8E881E381E8A3D5D5A378E8
+        E8E8E85ED7D75E5EE8E881ACAC8181E8E8E8E881E8E88181E8E8A3A3A3A3E8E8
+        E8E8E85E5E5E5EE8E8E881818181E8E8E8E8E881818181E8E8E8}
+      NumGlyphs = 2
+    end
+    object GbHutang: TGroupBox
+      Left = 504
+      Top = 100
+      Width = 497
+      Height = 111
+      TabOrder = 9
+      Visible = False
+      object Label10: TLabel
+        Left = 294
+        Top = 24
+        Width = 17
+        Height = 15
+        Caption = 's/d'
+      end
+      object Label11: TLabel
+        Left = 133
+        Top = 24
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label14: TLabel
+        Left = 20
+        Top = 24
+        Width = 40
+        Height = 15
+        Caption = 'Periode'
+      end
+      object Label16: TLabel
+        Left = 353
+        Top = 54
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label15: TLabel
+        Left = 317
+        Top = 54
+        Width = 23
+        Height = 15
+        Caption = 'Kurs'
+      end
+      object Label17: TLabel
+        Left = 133
+        Top = 54
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label18: TLabel
+        Left = 20
+        Top = 54
+        Width = 58
+        Height = 15
+        Caption = 'Mata Uang'
+      end
+      object Label21: TLabel
+        Left = 133
+        Top = 82
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label22: TLabel
+        Left = 20
+        Top = 82
+        Width = 38
+        Height = 15
+        Caption = 'Jumlah'
+      end
+      object dtPeriode2: TRzDateTimePicker
+        Left = 317
+        Top = 21
+        Width = 141
+        Height = 23
+        Date = 45405.000000000000000000
+        Format = ''
+        Time = 0.597438842589326700
+        TabOrder = 0
+      end
+      object dtPeriode1: TRzDateTimePicker
+        Left = 147
+        Top = 21
+        Width = 141
+        Height = 23
+        Date = 45405.000000000000000000
+        Format = ''
+        Time = 0.597438842589326700
+        TabOrder = 1
+      end
+      object edKurs: TRzNumericEdit
+        Left = 376
+        Top = 50
+        Width = 82
+        Height = 23
+        TabOrder = 2
+        DisplayFormat = '0.00#,##'
+      end
+      object edNamaMataUang: TRzButtonEdit
+        Left = 147
+        Top = 50
+        Width = 142
+        Height = 23
+        Text = ''
+        TabOrder = 3
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+      end
+      object edKodeMataUang: TEdit
+        Left = 376
+        Top = 79
+        Width = 83
+        Height = 23
+        TabOrder = 4
+        Visible = False
+        OnChange = edKodeMataUangChange
+      end
+      object Ed_Jumlah_Hutang: TRzNumericEdit
+        Left = 147
+        Top = 79
+        Width = 142
+        Height = 23
+        TabOrder = 5
+        DisplayFormat = '0.00#,##'
+      end
+    end
+    object ak_account: TEdit
+      Left = 408
+      Top = 41
+      Width = 76
+      Height = 23
+      TabOrder = 10
+      Visible = False
+    end
+    object edKode_supplier: TRzButtonEdit
+      Left = 328
+      Top = 41
+      Width = 74
+      Height = 23
+      Text = ''
+      TabOrder = 11
+      Visible = False
+      OnChange = edKode_supplierChange
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
@@ -221,19 +435,16 @@ object FDataKasKecil: TFDataKasKecil
     Width = 1237
     Height = 242
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 185
-    ExplicitWidth = 1117
-    ExplicitHeight = 240
+    ExplicitTop = 215
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1113
-      ExplicitHeight = 262
+      ExplicitWidth = 1227
+      ExplicitHeight = 208
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -333,6 +544,90 @@ object FDataKasKecil: TFDataKasKecil
         end
       end
     end
+    object TabDetailFaktur: TRzTabSheet
+      TabVisible = False
+      Caption = 'Detail Hutang'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object DBGridTagihan: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1233
+        Height = 217
+        Align = alClient
+        DataSource = dsDetailHutang
+        DynProps = <>
+        HorzScrollBar.ExtraPanel.Visible = True
+        SearchPanel.Enabled = True
+        TabOrder = 0
+        TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+              end>
+            FieldName = 'no_tagihan'
+            Footers = <>
+            Title.Caption = 'Nomor | Voucher'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_sj'
+            Footers = <>
+            Title.Caption = 'Nomor | Surat Jalan'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_faktur'
+            Footers = <>
+            Title.Caption = 'Nomor | Faktur'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+              end>
+            FieldName = 'tgl_faktur'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'jum_hutang'
+            Footers = <>
+            Title.Caption = 'Jumlah Hutang'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'keterangan'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Visible = False
+            Width = 250
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -341,9 +636,8 @@ object FDataKasKecil: TFDataKasKecil
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = -16
-    ExplicitTop = 522
-    ExplicitWidth = 1133
+    ExplicitTop = 450
+    ExplicitWidth = 1231
     object BBatal: TRzBitBtn
       Left = 1161
       Top = 1
@@ -404,7 +698,7 @@ object FDataKasKecil: TFDataKasKecil
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1041
+      ExplicitLeft = 1155
     end
     object BSave: TRzBitBtn
       Left = 1086
@@ -466,7 +760,7 @@ object FDataKasKecil: TFDataKasKecil
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 966
+      ExplicitLeft = 1080
     end
     object Edautocode: TEdit
       Left = 712
@@ -481,8 +775,8 @@ object FDataKasKecil: TFDataKasKecil
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
-    Left = 576
-    Top = 424
+    Left = 568
+    Top = 360
     object MemDetailAkunkd_akun: TStringField
       FieldName = 'kd_akun'
       Size = 100
@@ -576,7 +870,90 @@ object FDataKasKecil: TFDataKasKecil
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
-    Left = 504
-    Top = 424
+    Left = 648
+    Top = 360
+  end
+  object dsDetailHutang: TDataSource
+    DataSet = MemDetailHutang
+    Left = 864
+    Top = 319
+  end
+  object MemDetailHutang: TMemTableEh
+    Active = True
+    Params = <>
+    Left = 800
+    Top = 319
+    object MemDetailHutangno_tagihan: TStringField
+      FieldName = 'no_tagihan'
+      Size = 500
+    end
+    object MemDetailHutangtgl_faktur: TDateField
+      FieldName = 'tgl_faktur'
+    end
+    object MemDetailHutangketerangan: TStringField
+      FieldName = 'keterangan'
+    end
+    object MemDetailHutangno_faktur: TStringField
+      FieldName = 'no_faktur'
+    end
+    object MemDetailHutangno_sj: TStringField
+      FieldName = 'no_sj'
+    end
+    object MemDetailHutangjum_hutang: TCurrencyField
+      FieldName = 'jum_hutang'
+    end
+    object MemDetailHutangjum_hutang_real: TCurrencyField
+      FieldName = 'jum_hutang_real'
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object tgl_faktur: TMTDateTimeDataFieldEh
+          FieldName = 'tgl_faktur'
+          DateTimeDataType = fdtDateEh
+          DisplayWidth = 100
+        end
+        object no_faktur: TMTStringDataFieldEh
+          FieldName = 'no_faktur'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object no_sj: TMTStringDataFieldEh
+          FieldName = 'no_sj'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object no_tagihan: TMTStringDataFieldEh
+          FieldName = 'no_tagihan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 500
+        end
+        object jum_hutang: TMTNumericDataFieldEh
+          FieldName = 'jum_hutang'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.00'
+          currency = False
+          Precision = 15
+        end
+        object jum_hutang_real: TMTNumericDataFieldEh
+          FieldName = 'jum_hutang_real'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          EditFormat = '#,##0.00'
+          currency = False
+          Precision = 15
+        end
+        object keterangan: TMTStringDataFieldEh
+          FieldName = 'keterangan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
   end
 end

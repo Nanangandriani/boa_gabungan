@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, MemTableDataEh, Data.DB,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, RzButton,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, MemTableEh, Vcl.Mask,
-  RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.ComCtrls, RzDTP, Vcl.ExtCtrls;
+  RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.ComCtrls, RzDTP, Vcl.ExtCtrls, RzCmboBx,
+  RzRadChk, RzPanel, RzRadGrp;
 
 type
   TFDataKasKecil = class(TForm)
@@ -53,6 +54,36 @@ type
     Label19: TLabel;
     edJumlah: TRzNumericEdit;
     Label20: TLabel;
+    BtnAmbil_Data: TRzBitBtn;
+    GbHutang: TGroupBox;
+    dtPeriode2: TRzDateTimePicker;
+    Label10: TLabel;
+    dtPeriode1: TRzDateTimePicker;
+    Label11: TLabel;
+    Label14: TLabel;
+    edKurs: TRzNumericEdit;
+    Label16: TLabel;
+    Label15: TLabel;
+    edNamaMataUang: TRzButtonEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    edKodeMataUang: TEdit;
+    Ed_Jumlah_Hutang: TRzNumericEdit;
+    Label21: TLabel;
+    Label22: TLabel;
+    ak_account: TEdit;
+    edKode_supplier: TRzButtonEdit;
+    TabDetailFaktur: TRzTabSheet;
+    DBGridTagihan: TDBGridEh;
+    dsDetailHutang: TDataSource;
+    MemDetailHutang: TMemTableEh;
+    MemDetailHutangno_tagihan: TStringField;
+    MemDetailHutangtgl_faktur: TDateField;
+    MemDetailHutangketerangan: TStringField;
+    MemDetailHutangno_faktur: TStringField;
+    MemDetailHutangno_sj: TStringField;
+    MemDetailHutangjum_hutang: TCurrencyField;
+    MemDetailHutangjum_hutang_real: TCurrencyField;
     procedure DBGridAkunColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure DBGridAkunColumns4EditButtons0Click(Sender: TObject;
@@ -63,6 +94,9 @@ type
     procedure dtTransChange(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
+    procedure BtnAmbil_DataClick(Sender: TObject);
+    procedure edKodeMataUangChange(Sender: TObject);
+    procedure edKode_supplierChange(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -78,6 +112,7 @@ type
     procedure Save;
     procedure Update;
     procedure InsertDetailAkun;
+    procedure InsertDetailHutang;
     procedure RefreshForm;
     procedure RefreshFormBON;
     procedure Clear;
@@ -91,58 +126,174 @@ implementation
 {$R *.dfm}
 
 uses UMasterData, UCari_DaftarPerk, UDataModule, UMy_Function, UListKasKecil,
-  UHomeLogin;
+  UHomeLogin,udafajuankeluarkasbank;
+
+
+procedure TFDataKasKecil.InsertDetailHutang;
+begin
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from "t_petty_cash_expenditure_payable" '+
+              ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
+              ' Order By voucher_no desc');
+      open;
+    end;
+
+    if Dm.Qtemp1.RecordCount>0 then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' DELETE FROM  "t_petty_cash_expenditure_payable" '+
+                  ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+        ExecSQL;
+      end;
+    end;
+
+    MemDetailHutang.First;
+    while not MemDetailHutang.Eof do
+    begin
+      with dm.Qtemp do
+      begin
+          close;
+          sql.clear;
+          sql.Add(' INSERT INTO "t_petty_cash_expenditure_payable" ("voucher_no", '+
+                  ' "invoice_no", "sj_no", "faktur_no", "faktur_date", "trans_date", "supplier_code", '+
+                  ' "supplier_name", "trans_type_code", "trans_type_name", "bank_number_account", '+
+                  ' "bank_name_account", "paid_amount", "description","account_acc") '+
+                  ' Values( '+
+                  ' '+QuotedStr(edNoTrans.Text)+', '+
+                  ' '+QuotedStr(MemDetailHutang['no_tagihan'])+', '+
+                  ' '+QuotedStr(MemDetailHutang['no_sj'])+', '+
+                  ' '+QuotedStr(MemDetailHutang['no_faktur'])+', '+
+                  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetailHutang['tgl_faktur']))+', '+
+                  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
+                  ' '+QuotedStr(edKode_supplier.Text)+', '+
+                  ' '+QuotedStr(edNamakepada.Text)+', '+
+                  ' '+QuotedStr(edKodesumberkas.Text)+', '+
+                  ' '+QuotedStr(edNamasumberkas.Text)+', '+
+                  ' NULL, '+
+                  ' NULL, '+
+                  ' '+QuotedStr(FloatToStr(MemDetailHutang['jum_hutang']))+', '+
+                  ' '+QuotedStr(MemDetailHutang['keterangan'])+', '+
+                  ' '+QuotedStr(ak_account.Text)+') ');
+          ExecSQL;
+      end;
+      MemDetailHutang.Next;
+    end;
+end;
+
 
 procedure TFDataKasKecil.Save;
 begin
-  with dm.Qtemp do
+  if (stat_bon=0) or (stat_bon=1)  then
   begin
-    close;
-    sql.clear;
-    sql.add(' Insert into "public"."t_petty_cash" ("created_at", "created_by", '+
-            ' "voucher_no", "trans_date", "actors_code", "actors_name", "amount", "description", '+
-            ' "source_code", "source_name", '+
-            ' "voucher_no_receipt", "amount_receipt", "stat_receipt",'+
-            //' "additional_code", '+
-            ' "order_no", "trans_day", "trans_month", "trans_year") '+
-            ' VALUES ( '+
-            ' NOW(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-            ' '+QuotedStr(edNoTrans.Text)+', '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
-            ' '+QuotedStr(edKodeKepada.Text)+', '+
-            ' '+QuotedStr(edNamaKepada.Text)+', '+
-            ' '+QuotedStr(stringreplace(FloatToStr(vtotal_kredit), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-            ' '+QuotedStr(MemKeterangan.Text)+', '+
-            ' '+QuotedStr(edKodeSumberKas.Text)+', '+
-            ' '+QuotedStr(edNamaSumberKas.Text)+', '+
-            ' '+QuotedStr(edNomorKasBon.Text)+', '+
-            ' '+QuotedStr(stringreplace(FloatToStr(edJumlah.Value), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-            ' '+IntToStr(stat_bon)+', '+
-            ' '+QuotedStr(order_no)+', '+
-            //' '+QuotedStr('0')+', '+
-            ' '+QuotedStr(strtgl)+', '+
-            ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+'  );');
-    ExecSQL;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' Insert into "public"."t_petty_cash" ("created_at", "created_by", '+
+              ' "voucher_no", "trans_date", "actors_code", "actors_name", "amount", "description", '+
+              ' "source_code", "source_name", '+
+              ' "voucher_no_receipt", "amount_receipt", "stat_receipt",'+
+              //' "additional_code", '+
+              ' "order_no", "trans_day", "trans_month", "trans_year") '+
+              ' VALUES ( '+
+              ' NOW(), '+
+              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' '+QuotedStr(edNoTrans.Text)+', '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
+              ' '+QuotedStr(edKodeKepada.Text)+', '+
+              ' '+QuotedStr(edNamaKepada.Text)+', '+
+              ' '+QuotedStr(stringreplace(FloatToStr(vtotal_kredit), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+              ' '+QuotedStr(MemKeterangan.Text)+', '+
+              ' '+QuotedStr(edKodeSumberKas.Text)+', '+
+              ' '+QuotedStr(edNamaSumberKas.Text)+', '+
+              ' '+QuotedStr(edNomorKasBon.Text)+', '+
+              ' '+QuotedStr(stringreplace(FloatToStr(edJumlah.Value), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+              ' '+IntToStr(stat_bon)+', '+
+              ' '+QuotedStr(order_no)+', '+
+              //' '+QuotedStr('0')+', '+
+              ' '+QuotedStr(strtgl)+', '+
+              ' '+QuotedStr(strbulan)+', '+
+              ' '+QuotedStr(strtahun)+'  );');
+      ExecSQL;
+    end;
+
+    with dm.Qtemp do  //history
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "public"."t_petty_cash_receipt_history" SET '+
+              ' voucher_no_realization='+QuotedStr(edNoTrans.Text)+', '+
+              ' trans_date_realization='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
+              ' amount_realization='+QuotedStr(stringreplace(FloatToStr(edJumlah.Value), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
+              ' Where voucher_no_receipt='+QuotedStr(edNomorKasBon.Text)+'');
+      ExecSQL;
+    end;
+    InsertDetailAkun;
+    MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+    Clear;
+    Close;
+    FListKasKecil .Refresh;
+  end;
+  if stat_bon=2 then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' Insert into "public"."t_petty_cash" ("created_at", "created_by", '+
+              ' "voucher_no", "trans_date", "actors_code", "actors_name", "amount", "description", '+
+              ' "source_code", "source_name", '+
+              ' "voucher_no_receipt", "amount_receipt", "stat_receipt",'+
+              //' "additional_code", '+
+              ' "order_no", "trans_day", "trans_month", "trans_year") '+
+              ' VALUES ( '+
+              ' NOW(), '+
+              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' '+QuotedStr(edNoTrans.Text)+', '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
+              ' '+QuotedStr(edKodeKepada.Text)+', '+
+              ' '+QuotedStr(edNamaKepada.Text)+', '+
+              ' '+QuotedStr(stringreplace(FloatToStr(vtotal_kredit), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+              ' '+QuotedStr(MemKeterangan.Text)+', '+
+              ' '+QuotedStr(edKodeSumberKas.Text)+', '+
+              ' '+QuotedStr(edNamaSumberKas.Text)+', '+
+              ' '+QuotedStr(edNomorKasBon.Text)+', '+
+              ' '+QuotedStr(stringreplace(FloatToStr(edJumlah.Value), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+              ' '+IntToStr(stat_bon)+', '+
+              ' '+QuotedStr(order_no)+', '+
+              //' '+QuotedStr('0')+', '+
+              ' '+QuotedStr(strtgl)+', '+
+              ' '+QuotedStr(strbulan)+', '+
+              ' '+QuotedStr(strtahun)+'  );');
+      ExecSQL;
+    end;
+
+    with dm.Qtemp do  //history
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "public"."t_petty_cash_receipt_history" SET '+
+              ' voucher_no_realization='+QuotedStr(edNoTrans.Text)+', '+
+              ' trans_date_realization='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
+              ' amount_realization='+QuotedStr(stringreplace(FloatToStr(edJumlah.Value), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
+              ' Where voucher_no_receipt='+QuotedStr(edNomorKasBon.Text)+'');
+      ExecSQL;
+    end;
+    InsertDetailAkun;
+    InsertDetailHutang;
+    MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+    Clear;
+    Close;
+    FListKasKecil .Refresh;
   end;
 
-  with dm.Qtemp do  //history
-  begin
-    close;
-    sql.clear;
-    sql.add(' UPDATE "public"."t_petty_cash_receipt_history" SET '+
-            ' voucher_no_realization='+QuotedStr(edNoTrans.Text)+', '+
-            ' trans_date_realization='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
-            ' amount_realization='+QuotedStr(stringreplace(FloatToStr(edJumlah.Value), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
-            ' Where voucher_no_receipt='+QuotedStr(edNomorKasBon.Text)+'');
-    ExecSQL;
-  end;
-  InsertDetailAkun;
-  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
-  Clear;
-  Close;
-  FListKasKecil .Refresh;
 end;
 
 procedure TFDataKasKecil.Update;
@@ -349,6 +500,14 @@ begin
     end;
 end;
 
+procedure TFDataKasKecil.BtnAmbil_DataClick(Sender: TObject);
+begin
+   MemDetailAkun.EmptyTable;
+   //MemDetailHutang.EmptyTable;
+   Fdafajuankeluarkasbank.vcall:='keluar_kas_kecil';
+   Fdafajuankeluarkasbank.Show;
+end;
+
 procedure TFDataKasKecil.Clear;
 begin
   MemDetailAkun.EmptyTable;
@@ -364,6 +523,16 @@ begin
   edJumlah.Value:=0.00;
   edKodeSumberKas.Clear;
   edNamaSumberKas.Clear;
+
+  dtPeriode1.Date:=now();
+  dtPeriode2.Date:=now();
+  edKodeMataUang.Clear;
+  edNamaMataUang.Clear;
+  edKurs.Clear;
+  Ed_Jumlah_Hutang.Clear;
+  edKode_supplier.Clear;
+  ak_account.Clear;
+
 end;
 
 procedure TFDataKasKecil.RefreshFormBON;
@@ -440,12 +609,28 @@ begin
   if stat_bon=1 then
   begin
    gbDataBON.Visible:=true;
+   BtnAmbil_Data.Visible:=false;
+   GbHutang.Visible:=false;
+   edNamaKepada.ButtonVisible:=true;
+   TabDetailFaktur.TabVisible:=false;
   end;
   if stat_bon=0 then
   begin
     gbDataBON.Visible:=false;
     edNomorKasBon.Clear;
     edJumlah.Value:=0.00;
+    BtnAmbil_Data.Visible:=false;
+    GbHutang.Visible:=false;
+    edNamaKepada.ButtonVisible:=true;
+    TabDetailFaktur.TabVisible:=false;
+  end;
+  if stat_bon=2 then
+  begin
+    BtnAmbil_Data.Visible:=true;
+    gbDataBON.Visible:=false;
+    GbHutang.Visible:=true;
+    edNamaKepada.ButtonVisible:=false;
+    TabDetailFaktur.TabVisible:=true;
   end;
 end;
 
@@ -482,6 +667,31 @@ end;
 procedure TFDataKasKecil.dtTransChange(Sender: TObject);
 begin
   FDataKasKecil.Autonumber;
+end;
+
+procedure TFDataKasKecil.edKodeMataUangChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select * from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' ';
+     open;
+     edNamaMataUang.Text:=fieldbyname('currency_name').AsString;
+   end;
+end;
+
+procedure TFDataKasKecil.edKode_supplierChange(Sender: TObject);
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT code,account_name,supplier_code from t_ak_account a '+
+              'LEFT JOIN t_supplier b ON a.code=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text);
+    open;
+    ak_account.Text:=fieldbyname('code').AsString;
+  end;
 end;
 
 procedure TFDataKasKecil.edNamaKepadaButtonClick(Sender: TObject);

@@ -115,7 +115,7 @@ begin
    dpperiodetmp2.date:=now;
    cbbank.ItemIndex:=0;
    txtnocek.Clear;
-   dptglcek.Date:=date;
+   dptglcek.Date:=Now;
    rbbank.checked:=true;
    cbbank.enabled:=true;
    cbbank.ItemIndex:=0;

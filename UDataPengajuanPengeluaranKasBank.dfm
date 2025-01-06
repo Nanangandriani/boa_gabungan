@@ -37,7 +37,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = 8
+    ExplicitWidth = 1102
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
@@ -798,8 +798,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1098
-      ExplicitHeight = 196
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -891,6 +889,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
+      ExplicitWidth = 1098
+      ExplicitHeight = 196
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -962,6 +962,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             FieldName = 'keterangan'
             Footers = <>
             Title.Caption = 'Keterangan'
+            Visible = False
             Width = 250
           end>
         object RowDetailData: TRowDetailPanelControlEh

@@ -238,6 +238,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 3
+      OnChange = dtTransChange
     end
     object MemKeterangan: TMemo
       Left = 709
@@ -464,6 +465,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 121
       Height = 23
       TabOrder = 23
+      Visible = False
       OnChange = Ed_voucher_ajuanChange
     end
   end
@@ -599,6 +601,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 951
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -617,6 +620,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
+      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -881,10 +885,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Width = 1108
     Height = 232
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 223
@@ -1064,6 +1068,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             FieldName = 'keterangan'
             Footers = <>
             Title.Caption = 'Keterangan'
+            Visible = False
             Width = 250
           end>
         object RowDetailData: TRowDetailPanelControlEh

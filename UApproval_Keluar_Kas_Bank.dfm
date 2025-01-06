@@ -87,8 +87,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
           State = cbUnchecked
           TabOrder = 0
           OnClick = Combo_ApproveClick
-          ExplicitLeft = 860
-          ExplicitTop = 2
+          ExplicitLeft = 862
           ExplicitHeight = 19
         end
         object cblunas: TCheckBox
@@ -388,6 +387,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
       end
     end
     object TabPengajuan_Keluar_KasBank: TRzTabSheet
+      OnShow = TabPengajuan_Keluar_KasBankShow
       Caption = 'Pengajuan Keluar Kas dan Bank'
       ExplicitWidth = 937
       ExplicitHeight = 441
@@ -395,30 +395,158 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         Left = 0
         Top = 0
         Width = 943
-        Height = 33
+        Height = 113
         Align = alTop
+        BorderOuter = fsFlat
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 937
-        object Cb_po: TRzCheckBox
-          Left = 856
-          Top = 2
+        ExplicitTop = -6
+        object Label6: TLabel
+          Left = 278
+          Top = 16
+          Width = 17
+          Height = 15
+          Caption = 's/d'
+        end
+        object Label7: TLabel
+          Left = 26
+          Top = 16
+          Width = 109
+          Height = 15
+          Caption = 'Periode Pembayaran'
+        end
+        object Label8: TLabel
+          Left = 26
+          Top = 48
+          Width = 68
+          Height = 15
+          Caption = 'Sumber Data'
+        end
+        object Cb_Ajuan: TRzCheckBox
+          Left = 857
+          Top = 1
           Width = 85
-          Height = 29
+          Height = 111
           Align = alRight
-          AlignmentVertical = avCenter
+          AlignmentVertical = avBottom
           Caption = 'Pilih Semua'
           State = cbUnchecked
           TabOrder = 0
-          ExplicitLeft = 860
-          ExplicitHeight = 19
+          OnClick = Cb_AjuanClick
+          ExplicitLeft = 1
+          ExplicitTop = 27
+          ExplicitHeight = 941
+        end
+        object Cari2: TRzBitBtn
+          Left = 434
+          Top = 14
+          Width = 96
+          Caption = 'Cari ...'
+          TabOrder = 1
+          OnClick = Cari2Click
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000330B0000330B00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8ACDEE3E8E8
+            E8E8E8E8E8E8E8E8E8E8E8ACDEE3E8E8E8E8E8E8E8E8E8E8E8E8AC807A81E3E8
+            E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8E8CEA37A81E3
+            E8E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A81
+            E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A
+            81E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA3
+            7AACAD82828288E3E8E8E8E8E8E3ACE281ACE3818181E2E3E8E8E8E8E8E8D0CE
+            E28288E6B3E6E682EBE8E8E8E8E8E3ACE281E2ACACACAC81E3E8E8E8E8E8E8E3
+            8289B3B3B3D7D7D782E3E8E8E8E8E8E381E3ACACACE3E3E381E3E8E8E8E8E8AD
+            88B3E6B3B3D7D7D7E688E8E8E8E8E8E3E2ACACACACE3E3E3ACE2E8E8E8E8E888
+            89E6E6B3B3B3D7D7E682E8E8E8E8E8E2E3ACACACACACE3E3AC81E8E8E8E8E882
+            E6E6E6E6B3B3B3B3B382E8E8E8E8E881ACACACACACACACACAC81E8E8E8E8E888
+            E6B3E6E6E6B3B3B3E682E8E8E8E8E8E2ACACACACACACACACAC81E8E8E8E8E8AD
+            88D7D7E6E6E6E6B38888E8E8E8E8E8E3E2E3E3ACACACACACE2E2E8E8E8E8E8E3
+            82EBD7B3E6E6E68982E3E8E8E8E8E8E381E3E3ACACACACE381E3E8E8E8E8E8E8
+            AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
+            E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
+          NumGlyphs = 2
+        end
+        object DT2: TRzDateTimePicker
+          Left = 301
+          Top = 14
+          Width = 125
+          Height = 23
+          Date = 45656.000000000000000000
+          Format = ''
+          Time = 0.409629756941285500
+          TabOrder = 2
+        end
+        object DT1: TRzDateTimePicker
+          Left = 147
+          Top = 14
+          Width = 125
+          Height = 23
+          Date = 45656.000000000000000000
+          Format = ''
+          Time = 0.409629756941285500
+          TabOrder = 3
+        end
+        object rbkas: TRadioButton
+          Left = 147
+          Top = 48
+          Width = 54
+          Height = 17
+          Caption = 'Kas'
+          TabOrder = 4
+        end
+        object rbbank: TRadioButton
+          Left = 219
+          Top = 48
+          Width = 70
+          Height = 17
+          Caption = 'Bank'
+          TabOrder = 5
+        end
+        object cbapprove: TCheckBox
+          Left = 26
+          Top = 77
+          Width = 215
+          Height = 17
+          Caption = 'Tampilkan Yang Sudah Diapprove'
+          TabOrder = 6
         end
       end
       object DBGridPengajuan: TDBGridEh
         Left = 0
-        Top = 33
+        Top = 113
         Width = 943
-        Height = 417
+        Height = 337
         Align = alClient
         DataGrouping.Active = True
         DataGrouping.GroupLevels = <
@@ -426,6 +554,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
           end
           item
           end>
+        DataSource = DSPengajuanKasBank
         DrawMemoText = True
         DynProps = <>
         FooterRowCount = 1
@@ -441,11 +570,66 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
         STFilter.Visible = True
         TabOrder = 1
         TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'voucher_no'
+            Footers = <>
+            Title.Caption = 'Voucher'
+            Width = 120
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_date'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'supplier_name'
+            Footers = <>
+            Title.Caption = 'Supplier / Kepada'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'remark'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 300
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'amount'
+            Footers = <>
+            Title.Caption = 'Jumlah'
+            Width = 120
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'id'
+            Footers = <>
+            Width = 0
+          end>
         object RowDetailData: TRowDetailPanelControlEh
           object DBGridEh1: TDBGridEh
             Left = 0
             Top = 0
-            Width = 30
+            Width = 825
             Height = 158
             Align = alClient
             DynProps = <>
@@ -455,6 +639,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
             SumList.Active = True
             TabOrder = 0
             TitleParams.MultiTitle = True
+            Visible = False
             object RowDetailData: TRowDetailPanelControlEh
             end
           end
@@ -462,6 +647,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
       end
     end
     object TabPengeluaran_KasBank: TRzTabSheet
+      TabVisible = False
       Caption = 'Pengeluaran Kas dan Bank'
       object RzPanel3: TRzPanel
         Left = 0
@@ -1344,7 +1530,7 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
       ''
       ''
       '')
-    Left = 440
+    Left = 312
     Top = 32
     object QRencanajumlah: TFloatField
       FieldName = 'jumlah'
@@ -1427,7 +1613,23 @@ object FApproval_Keluar_Kas_Bank: TFApproval_Keluar_Kas_Bank
   end
   object DSRencana: TDataSource
     DataSet = QRencana
-    Left = 496
-    Top = 64
+    Left = 312
+    Top = 80
+  end
+  object QPengajuanKasBank: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.*,b.position,b.code_account,b.paid_amount from t_cash_b' +
+        'ank_expenditure_submission a'
+      'inner join t_cash_bank_expenditure_submission_det b'
+      'on a.voucher_no=b.no_voucher')
+    Left = 400
+    Top = 32
+  end
+  object DSPengajuanKasBank: TDataSource
+    DataSet = QPengajuanKasBank
+    Left = 400
+    Top = 88
   end
 end

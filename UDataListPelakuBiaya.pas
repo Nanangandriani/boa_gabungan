@@ -61,6 +61,8 @@ type
     QPelakuBiayaname: TStringField;
     QPelakuBiayaphone_number: TStringField;
     QPelakuBiayaaddress: TMemoField;
+    QPelakuBiayakaresidenan_code: TStringField;
+    QPelakuBiayaname_1: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -133,6 +135,7 @@ begin
     edNikKaryawan.Text:=Dm.Qtemp.FieldByName('nik_employee').AsString;
     EdNoTelp.Text:=Dm.Qtemp.FieldByName('phone_number').AsString;
     MemAlamat.Text:=Dm.Qtemp.FieldByName('address').AsString;
+    kd_Karesidenan.Text:=Dm.Qtemp.FieldByName('karesidenan_code').AsString;
   end;
   end;
   FDataPeLakuBiaya.Edkode.Enabled:=false;
