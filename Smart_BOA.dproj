@@ -980,9 +980,7 @@
             <Form>FListOrderTelemarketing</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< Updated upstream
         <DCCReference Include="ULap_Buku_Harian_Kas_Kecil.pas"/>
-=======
         <DCCReference Include="UDaftarKendaraan.pas">
             <Form>FDaftarKendaraan</Form>
             <FormType>dfm</FormType>
@@ -991,7 +989,6 @@
             <Form>FDataBankGaransi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
->>>>>>> Stashed changes
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

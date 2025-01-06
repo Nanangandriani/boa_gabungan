@@ -235,14 +235,11 @@ uses
   URpt_BHKeluarKasdanBank in 'URpt_BHKeluarKasdanBank.pas' {FRpt_BHKeluarKasdanBank},
   ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas},
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
-<<<<<<< Updated upstream
   UListOrderTelemarketing in 'UListOrderTelemarketing.pas' {FListOrderTelemarketing},
-  ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas';
-=======
+  ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas',
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
   UDaftarKendaraan in 'UDaftarKendaraan.pas' {FDaftarKendaraan},
   UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi};
->>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -378,15 +375,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
-<<<<<<< Updated upstream
   Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
-  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
-  Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
-=======
   Application.CreateForm(TFDaftarKendaraan, FDaftarKendaraan);
   Application.CreateForm(TFDataBankGaransi, FDataBankGaransi);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
->>>>>>> Stashed changes
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);
