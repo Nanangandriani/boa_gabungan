@@ -974,22 +974,20 @@
         <DCCReference Include="UApproval_Keluar_Kas_Bank.pas">
             <Form>FApproval_Keluar_Kas_Bank</Form>
         </DCCReference>
-        <DCCReference Include="URpt_BHKeluarKasdanBank.pas">
-            <Form>FRpt_BHKeluarKasdanBank</Form>
-        </DCCReference>
-        <DCCReference Include="ULap_Buku_Harian_Kas.pas">
-            <Form>FLap_Buku_Harian_Kas</Form>
+        <DCCReference Include="UListOrderTelemarketing.pas">
+            <Form>FListOrderTelemarketing</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UMasterWilayahAdministratif.pas">
             <Form>FMasterWilayahAdministratif</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDaftarKendaraan.pas">
-            <Form>FDaftarKendaraan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UDaftarRekeningKoran.pas">
             <Form>FDaftarRekeningKoran</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDaftarKendaraan.pas">
+            <Form>FDaftarKendaraan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataBankGaransi.pas">
