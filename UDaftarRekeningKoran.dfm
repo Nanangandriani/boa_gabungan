@@ -26,6 +26,10 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     TabOrder = 0
     TabStop = False
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    ExplicitWidth = 1229
+>>>>>>> Stashed changes
 =======
     ExplicitWidth = 1229
 >>>>>>> Stashed changes

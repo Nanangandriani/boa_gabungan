@@ -993,11 +993,17 @@
             <FormType>dfm</FormType>
         </DCCReference>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
         <DCCReference Include="UDaftarKendaraan.pas">
             <Form>FDaftarKendaraan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         <DCCReference Include="UDataBankGaransi.pas">
             <Form>FDataBankGaransi</Form>

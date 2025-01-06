@@ -83,7 +83,13 @@ object FDaftarKendaraan: TFDaftarKendaraan
     TabOrder = 1
     Visible = False
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     ExplicitWidth = 694
+=======
+    ExplicitLeft = 16
+    ExplicitTop = 19
+    ExplicitWidth = 369
+>>>>>>> Stashed changes
 =======
     ExplicitLeft = 16
     ExplicitTop = 19
@@ -94,7 +100,11 @@ object FDaftarKendaraan: TFDaftarKendaraan
     DataSet = MemMasterData
     Left = 384
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     Top = 232
+=======
+    Top = 256
+>>>>>>> Stashed changes
 =======
     Top = 256
 >>>>>>> Stashed changes
@@ -104,7 +114,11 @@ object FDaftarKendaraan: TFDaftarKendaraan
     Params = <>
     Left = 488
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     Top = 232
+=======
+    Top = 256
+>>>>>>> Stashed changes
 =======
     Top = 256
 >>>>>>> Stashed changes
@@ -196,7 +210,11 @@ object FDaftarKendaraan: TFDaftarKendaraan
     UserAgent = 'Embarcadero URI Client/1.0'
     Left = 272
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     Top = 240
+=======
+    Top = 264
+>>>>>>> Stashed changes
 =======
     Top = 264
 >>>>>>> Stashed changes

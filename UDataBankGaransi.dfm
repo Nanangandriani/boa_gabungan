@@ -21,8 +21,14 @@ object FDataBankGaransi: TFDataBankGaransi
     Align = alBottom
     TabOrder = 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     ExplicitTop = 462
     ExplicitWidth = 1004
+=======
+    ExplicitLeft = -244
+    ExplicitTop = 397
+    ExplicitWidth = 1254
+>>>>>>> Stashed changes
 =======
     ExplicitLeft = -244
     ExplicitTop = 397
@@ -88,7 +94,11 @@ object FDataBankGaransi: TFDataBankGaransi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       ExplicitLeft = 928
+=======
+      ExplicitLeft = 1178
+>>>>>>> Stashed changes
 =======
       ExplicitLeft = 1178
 >>>>>>> Stashed changes
@@ -153,7 +163,11 @@ object FDataBankGaransi: TFDataBankGaransi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       ExplicitLeft = 853
+=======
+      ExplicitLeft = 1103
+>>>>>>> Stashed changes
 =======
       ExplicitLeft = 1103
 >>>>>>> Stashed changes
@@ -169,7 +183,10 @@ object FDataBankGaransi: TFDataBankGaransi
     ParentBackground = False
     TabOrder = 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     ExplicitWidth = 1004
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     object LabelPelanggan: TLabel
@@ -253,6 +270,7 @@ object FDataBankGaransi: TFDataBankGaransi
     TabIndex = 0
     TabOrder = 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     ExplicitWidth = 1004
     ExplicitHeight = 349
     FixedDimension = 21
@@ -261,6 +279,8 @@ object FDataBankGaransi: TFDataBankGaransi
       ExplicitWidth = 1000
       ExplicitHeight = 324
 =======
+=======
+>>>>>>> Stashed changes
     ExplicitLeft = -244
     ExplicitTop = 137
     ExplicitWidth = 1254
@@ -270,6 +290,9 @@ object FDataBankGaransi: TFDataBankGaransi
       Caption = 'Data Bank Garansi'
       ExplicitWidth = 1250
       ExplicitHeight = 232
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       object DBGrid: TDBGridEh
         Left = 0
@@ -369,6 +392,7 @@ object FDataBankGaransi: TFDataBankGaransi
   object DSMaster: TDataSource
     DataSet = MemMaster
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     Left = 102
     Top = 368
   end
@@ -377,6 +401,8 @@ object FDataBankGaransi: TFDataBankGaransi
     Left = 182
     Top = 376
 =======
+=======
+>>>>>>> Stashed changes
     Left = 94
     Top = 400
   end
@@ -384,6 +410,9 @@ object FDataBankGaransi: TFDataBankGaransi
     Params = <>
     Left = 174
     Top = 408
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     object MemMasterkode_bank: TStringField
       FieldName = 'kode_bank'
