@@ -42,7 +42,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
   URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
   UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank, UDataKasBon,
-  UDataKasKecil, UDaftarRekeningKoran,UDataPeLakuBiaya, UDataBankGaransi;
+  UDataKasKecil, UDaftarRekeningKoran, UDataBankGaransi;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
