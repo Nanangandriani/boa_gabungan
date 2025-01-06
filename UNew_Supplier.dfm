@@ -147,8 +147,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 722
-      ExplicitTop = 3
+      ExplicitLeft = 712
     end
     object BEdit: TRzBitBtn
       Left = 641
@@ -211,7 +210,7 @@ object FNew_Supplier: TFNew_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = 3
+      ExplicitLeft = 637
     end
   end
   object Panel1: TPanel
@@ -372,9 +371,9 @@ object FNew_Supplier: TFNew_Supplier
     Width = 867
     Height = 290
     Hint = ''
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 863
     ExplicitHeight = 289

@@ -2,8 +2,8 @@ object FNewBank: TFNewBank
   Left = 0
   Top = 0
   Caption = 'Form New Bank'
-  ClientHeight = 146
-  ClientWidth = 345
+  ClientHeight = 212
+  ClientWidth = 440
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,14 +14,14 @@ object FNewBank: TFNewBank
   TextHeight = 15
   object Label4: TLabel
     Left = 92
-    Top = 89
+    Top = 152
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label3: TLabel
     Left = 8
-    Top = 89
+    Top = 152
     Width = 58
     Height = 15
     Caption = 'Mata Uang'
@@ -68,6 +68,36 @@ object FNewBank: TFNewBank
     Height = 15
     Caption = 'Bank'
   end
+  object Label5: TLabel
+    Left = 7
+    Top = 91
+    Width = 58
+    Height = 15
+    Caption = 'Atas Nama'
+  end
+  object Label6: TLabel
+    Left = 91
+    Top = 91
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label7: TLabel
+    Left = 93
+    Top = 120
+    Width = 3
+    Height = 15
+    Caption = ':'
+    Visible = False
+  end
+  object Label8: TLabel
+    Left = 7
+    Top = 120
+    Width = 80
+    Height = 15
+    Caption = 'Akun Perkiraan'
+    Visible = False
+  end
   object edkode_bank: TEdit
     Left = 103
     Top = 4
@@ -79,7 +109,7 @@ object FNewBank: TFNewBank
   end
   object CBmata_uang: TRzComboBox
     Left = 103
-    Top = 86
+    Top = 149
     Width = 234
     Height = 23
     TabOrder = 1
@@ -98,15 +128,15 @@ object FNewBank: TFNewBank
   end
   object Panel2: TPanel
     Left = 0
-    Top = 114
-    Width = 345
+    Top = 180
+    Width = 440
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 105
-    ExplicitWidth = 339
+    ExplicitTop = 194
+    ExplicitWidth = 411
     object BBatal: TRzBitBtn
-      Left = 269
+      Left = 364
       Top = 1
       Height = 30
       Align = alRight
@@ -165,10 +195,10 @@ object FNewBank: TFNewBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 263
+      ExplicitLeft = 335
     end
     object BSave: TRzBitBtn
-      Left = 184
+      Left = 279
       Top = 1
       Width = 85
       Height = 30
@@ -228,7 +258,7 @@ object FNewBank: TFNewBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 178
+      ExplicitLeft = 250
     end
   end
   object edno_rek: TEdit
@@ -248,5 +278,35 @@ object FNewBank: TFNewBank
     CharCase = ecUpperCase
     TabOrder = 5
     OnKeyPress = edbankKeyPress
+  end
+  object Edit1: TEdit
+    Left = 103
+    Top = 88
+    Width = 234
+    Height = 23
+    NumbersOnly = True
+    TabOrder = 6
+    OnKeyPress = edno_rekKeyPress
+  end
+  object Ednm_akun1: TRzButtonEdit
+    Left = 198
+    Top = 117
+    Width = 219
+    Height = 23
+    Text = ''
+    TabOrder = 7
+    Visible = False
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = Ednm_akun1ButtonClick
+  end
+  object edkd_akun1: TRzEdit
+    Left = 103
+    Top = 117
+    Width = 89
+    Height = 23
+    Text = ''
+    TabOrder = 8
+    Visible = False
   end
 end

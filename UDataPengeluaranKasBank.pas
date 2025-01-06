@@ -148,10 +148,7 @@ type
     procedure DBGridAkunColumns0CellButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure Ed_id_modulChange(Sender: TObject);
-<<<<<<< Updated upstream
     procedure dtTransChange(Sender: TObject);
-=======
->>>>>>> Stashed changes
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;

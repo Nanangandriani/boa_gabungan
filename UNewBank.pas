@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls,
-  RzCmboBx;
+  RzCmboBx, Vcl.Mask, RzEdit, RzBtnEdt;
 
 type
   TFNewBank = class(TForm)
@@ -25,12 +25,20 @@ type
     Label17: TLabel;
     Label15: TLabel;
     Label14: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Edit1: TEdit;
+    Ednm_akun1: TRzButtonEdit;
+    edkd_akun1: TRzEdit;
+    Label7: TLabel;
+    Label8: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure CBmata_uangKeyPress(Sender: TObject; var Key: Char);
     procedure edbankKeyPress(Sender: TObject; var Key: Char);
     procedure edkode_bankKeyPress(Sender: TObject; var Key: Char);
     procedure edno_rekKeyPress(Sender: TObject; var Key: Char);
+    procedure Ednm_akun1ButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,7 +56,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UListBank_perusahaan, UMainMenu;
+uses UDataModule, UListBank_perusahaan, UMainMenu, UMasterData;
 
 
 procedure TFNewBank.BSaveClick(Sender: TObject);
@@ -115,6 +123,15 @@ begin
     begin
       edbank.SetFocus;
     end;
+end;
+
+procedure TFNewBank.Ednm_akun1ButtonClick(Sender: TObject);
+begin
+   FMasterData.DBGridCustomer.SearchPanel.SearchingText:='';
+   FMasterData.Caption:='Master Data Perkiraan';
+   FMasterData.vcall:='perkiraan_bank';
+   FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
+   FMasterData.Showmodal;
 end;
 
 procedure TFNewBank.edno_rekKeyPress(Sender: TObject; var Key: Char);

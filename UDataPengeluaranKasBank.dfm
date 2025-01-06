@@ -620,6 +620,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
+      Visible = False
       OnClick = BitBtn1Click
     end
   end

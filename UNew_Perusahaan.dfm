@@ -154,6 +154,8 @@ object FNewPerusahaan: TFNewPerusahaan
     Height = 37
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 311
+    ExplicitWidth = 520
     object BBatal: TRzBitBtn
       Left = 448
       Top = 1
@@ -214,8 +216,7 @@ object FNewPerusahaan: TFNewPerusahaan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 442
-      ExplicitHeight = 39
+      ExplicitLeft = 444
     end
     object BSimpan: TRzBitBtn
       Left = 298
@@ -277,8 +278,7 @@ object FNewPerusahaan: TFNewPerusahaan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 292
-      ExplicitHeight = 39
+      ExplicitLeft = 294
     end
     object BEdit: TRzBitBtn
       Left = 373
@@ -340,8 +340,7 @@ object FNewPerusahaan: TFNewPerusahaan
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 367
-      ExplicitHeight = 39
+      ExplicitLeft = 369
     end
   end
   object Ed_kode: TEdit

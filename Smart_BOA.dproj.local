@@ -1,51 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  <Transactions>
-    <Transaction>2024/12/27 14:54:21.784,=D:\Project Gabungan\back_office_automation\UListOrderTelemarketing.pas</Transaction>
-    <Transaction>2024/12/27 14:55:49.589,=D:\Project Gabungan\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
-    <Transaction>2024/12/27 14:57:26.890,=D:\Project Gabungan\back_office_automation\UDaftarRekeningKoran.pas</Transaction>
-    <Transaction>2024/12/27 14:59:05.000,=D:\Project Gabungan\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
-    <Transaction>2024/12/27 14:59:41.862,=D:\Project Gabungan\back_office_automation\ULap_Buku_Harian_Kas.pas</Transaction>
-    <Transaction>2025/01/03 08:40:33.071,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>2025/01/03 10:07:40.734,D:\Project Gabungan\back_office_automation\ULap_Kartu_Hutang.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>2025/01/03 10:07:40.734,D:\Project Gabungan\back_office_automation\ULap_Kartu_Hutang.dfm=D:\Project Gabungan\back_office_automation\Unit1.dfm</Transaction>
-    <Transaction>2025/01/06 08:26:25.874,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>2025/01/06 09:18:45.357,D:\Project Gabungan\back_office_automation\ULap_Ikhtisar_Baiaya_KasKecil_BOP.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>2025/01/06 09:18:45.357,D:\Project Gabungan\back_office_automation\ULap_Ikhtisar_Baiaya_KasKecil_BOP.dfm=D:\Project Gabungan\back_office_automation\Unit1.dfm</Transaction>
-    <Transaction>2025/01/06 09:23:26.590,D:\Project Gabungan\back_office_automation\ULap_Ikhtisar_Biaya_KasKecil_BOP.dfm=D:\Project Gabungan\back_office_automation\ULap_Ikhtisar_Baiaya_KasKecil_BOP.dfm</Transaction>
-    <Transaction>2025/01/06 09:23:26.590,D:\Project Gabungan\back_office_automation\ULap_Ikhtisar_Biaya_KasKecil_BOP.pas=D:\Project Gabungan\back_office_automation\ULap_Ikhtisar_Baiaya_KasKecil_BOP.pas</Transaction>
-=======
-=======
->>>>>>> f74b2a6327851be1d142d096b790e1bf2a305b07
 	<Transactions>
-    <Transaction>1899/12/30 00.00.00.000.103,D:\Project Gabungan\back_office_automation\U_List_Kasbon.dfm=D:\Project Gabungan\back_office_automation\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.578,D:\back_office_automation\URpt_bhkasdanbank.pas=D:\back_office_automation\URpt_bhkeluarkasdanbank.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\Unit1.dfm=D:\back_office_automation\URpt_bhkasdanbank.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.353,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.862,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.665,=D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.351,D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas=D:\Project Gabungan\back_office_automation\Unit2.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.780,D:\back_office_automation\Unit1.dfm=D:\back_office_automation\URpt_BHKeluarKasdanBank.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.780,D:\back_office_automation\Unit1.pas=D:\back_office_automation\URpt_BHKeluarKasdanBank.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.351,D:\Project Gabungan\back_office_automation\Unit2.dfm=D:\Project Gabungan\back_office_automation\UNew_Kasbon.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\URpt_bhkasdanbank.pas=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.103,D:\Project Gabungan\back_office_automation\Unit1.dfm=D:\Project Gabungan\back_office_automation\U_List_Kasbon.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.931,=D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.977,=D:\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.912,=D:\Project Gabungan\back_office_automation\U_Pelaku_Biaya.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.452,=D:\Project Gabungan\back_office_automation\U_Pelaku_Biaya.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.240,=D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.420,=D:\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.547,=D:\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\Unit1.pas=D:\back_office_automation\URpt_bhkasdanbank.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.977,=D:\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.718,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.578,D:\back_office_automation\URpt_bhkasdanbank.dfm=D:\back_office_automation\URpt_bhkeluarkasdanbank.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.578,D:\back_office_automation\URpt_bhkeluarkasdanbank.dfm=D:\back_office_automation\URpt_bhkasdanbank.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.351,D:\Project Gabungan\back_office_automation\Unit2.pas=D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.953,=D:\back_office_automation\ULap_Buku_Harian_Kas.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.043,D:\back_office_automation\URpt_bhkeluarkasdanbank.pas=</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.780,D:\back_office_automation\URpt_BHKeluarKasdanBank.pas=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.578,D:\back_office_automation\URpt_bhkeluarkasdanbank.pas=D:\back_office_automation\URpt_bhkasdanbank.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.753,=D:\Project Gabungan\back_office_automation\Unit2.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.057,=D:\back_office_automation\URpt_BHKeluarKasdanBank.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.718,=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.103,D:\Project Gabungan\back_office_automation\Unit1.pas=D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.780,D:\back_office_automation\URpt_BHKeluarKasdanBank.dfm=D:\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.367,=D:\back_office_automation\UListOrderTelemarketing.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.517,D:\back_office_automation\URpt_bhkasdanbank.dfm=D:\back_office_automation\Unit1.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.208,=D:\Project Gabungan\back_office_automation\UApproval_Keluar_Kas_Bank.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.103,D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas=D:\Project Gabungan\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.931,=D:\Project Gabungan\back_office_automation\U_List_Kasbon.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.351,D:\Project Gabungan\back_office_automation\UNew_Kasbon.dfm=D:\Project Gabungan\back_office_automation\Unit2.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.862,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
-    <Transaction>2024/12/27 22.24.26.057,=D:\back_office_automation\URpt_BHKeluarKasdanBank.pas</Transaction>
-    <Transaction>2024/12/27 22.24.53.240,=D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
-    <Transaction>2024/12/27 22.24.53.953,=D:\back_office_automation\ULap_Buku_Harian_Kas.pas</Transaction>
-    <Transaction>2024/12/27 22.25.21.420,=D:\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
-    <Transaction>2024/12/27 22.26.06.367,=D:\back_office_automation\UListOrderTelemarketing.pas</Transaction>
+    <Transaction>2025/01/06 13.36.42.855,D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas=</Transaction>
+    <Transaction>2025/01/06 13.37.08.682,=D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
+    <Transaction>2025/01/06 13.37.21.118,D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas=</Transaction>
+    <Transaction>2025/01/06 13.48.41.672,=D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
   </Transactions>
 </BorlandProject>

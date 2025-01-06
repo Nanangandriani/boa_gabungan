@@ -11,87 +11,23 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-<<<<<<< Updated upstream
-  object DBGridBukuHarianKas: TDBGridEh
-=======
   object DBGridSupplier: TDBGridEh
->>>>>>> Stashed changes
     Left = 0
     Top = 127
     Width = 707
     Height = 315
     Align = alClient
-<<<<<<< Updated upstream
-    DataSource = DSBHKas
-    DrawMemoText = True
-=======
->>>>>>> Stashed changes
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
-<<<<<<< Updated upstream
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tgltrans'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'no_voucher'
-        Footers = <>
-        Title.Caption = 'Voucher'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ket2'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'db'
-        Footers = <>
-        Title.Caption = 'Debet'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kredit'
-        Footers = <>
-        Title.Caption = 'Kredit'
-        Width = 100
-      end>
-=======
     Visible = False
->>>>>>> Stashed changes
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-<<<<<<< Updated upstream
-        Width = 584
-=======
         Width = 30
->>>>>>> Stashed changes
         Height = 118
         Align = alClient
         DynProps = <>
@@ -113,10 +49,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
-<<<<<<< Updated upstream
-=======
-    ExplicitLeft = -64
->>>>>>> Stashed changes
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -196,11 +128,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         end
         item
           Visible = True
-<<<<<<< Updated upstream
-          ItemName = 'dxRefresh'
-=======
           ItemName = 'dxBarLargeButton2'
->>>>>>> Stashed changes
         end
         item
           Visible = True
@@ -702,15 +630,9 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         0000000049454E44AE426082}
     end
     object datetimepicker1: TcxBarEditItem
-<<<<<<< Updated upstream
-      Caption = 'Tanggal Awal'
-      Category = 0
-      Hint = 'Tanggal Awal'
-=======
       Caption = 'Pilih Tanggal'
       Category = 0
       Hint = 'Pilih Tanggal'
->>>>>>> Stashed changes
       Visible = ivAlways
       OnChange = datetimepicker1Change
       PropertiesClassName = 'TcxDateEditProperties'
@@ -780,41 +702,9 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       Hint = 'New Button'
       Visible = ivAlways
     end
-<<<<<<< Updated upstream
-    object dxRefresh: TdxBarLargeButton
-      Caption = 'Cari'
-      Category = 0
-      Hint = 'Cari'
-      Visible = ivAlways
-      LargeGlyph.SourceDPI = 96
-      LargeGlyph.Data = {
-        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
-        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
-        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
-        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
-        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
-        20793D22307078222076696577426F783D223020302033322033322220737479
-        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
-        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
-        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
-        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
-        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
-        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
-        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
-        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
-        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
-        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
-        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
-        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
-        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
-        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
-        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
-      OnClick = dxRefreshClick
-=======
     object dxBarLargeButton2: TdxBarLargeButton
       Category = 0
       Visible = ivAlways
->>>>>>> Stashed changes
     end
     object dxBarLargeButton3: TdxBarLargeButton
       Caption = 'Print'
@@ -877,15 +767,9 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       OnClick = dxBarLargeButton3Click
     end
     object DateTimePicker2: TcxBarEditItem
-<<<<<<< Updated upstream
-      Caption = 'Tanggal Akhir'
-      Category = 0
-      Hint = 'Tanggal Akhir'
-=======
       Caption = 'Pilih Tanggal'
       Category = 0
       Hint = 'Pilih Tanggal'
->>>>>>> Stashed changes
       Visible = ivNever
     end
   end
@@ -1973,96 +1857,4 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Left = 344
     Top = 80
   end
-<<<<<<< Updated upstream
-  object QBHKas: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select "row_number"() over (order by no_voucher)+1 nomor ,no_vou' +
-        'cher,code_account,"position",tgltrans,to_,nm,nosj,remark,ket2,0 ' +
-        'sa,db,kredit  from '
-      
-        '(select no_voucher,code_account,"position",trans_date as tgltran' +
-        's,"to_", (case when y.acc_balance is null then x."to_"  when y.a' +
-        'cc_balance='#39'2110'#39' then  nm  when y.acc_balance='#39'2130'#39' then '#39#39' wh' +
-        'en y.acc_balance='#39'2120'#39' then nm end) as nm,nosj,remark, (case wh' +
-        'en acc_balance is null then  concat(x.remark,'#39' '#39')  when acc_bala' +
-        'nce='#39'2110'#39' then x."to_"  when acc_balance='#39'2130'#39' then x."to_"  w' +
-        'hen acc_balance='#39'2120'#39' then x."to_" end) as ket2,0 db ,jumlah kr' +
-        'edit from (select d.no_voucher,d.code_account,d."position",d.tra' +
-        'ns_date,k.remark,k.to_, (case when k."currency"='#39'USD'#39' then k.amo' +
-        'unt*k.kurs else k.amount end) jumlah from t_cash_bank_expenditur' +
-        'e_det d INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.v' +
-        'oucher_no left join (select e.no_voucher,e.code_account,(case wh' +
-        'en f.currency='#39'USD'#39' then f.amount*f.kurs else f.amount end) pph2' +
-        '3 from t_cash_bank_expenditure_det e INNER JOIN t_cash_bank_expe' +
-        'nditure f ON e.no_voucher=f.voucher_no where e.trans_date betwee' +
-        'n '#39'2024-11-04'#39' and '#39'2024-11-04'#39' and e.code_account='#39'2142'#39' and f.' +
-        'company_code='#39'HLJ'#39' ) e on d.no_voucher=e.no_voucher where d.tran' +
-        's_date between '#39'2024-11-04'#39' and '#39'2024-11-04'#39' and d.code_account=' +
-        #39'1111'#39' and k.company_code='#39'HLJ'#39' )x left join (SELECT distinct vo' +
-        'ucher_no,string_agg (concat(item_name,'#39' '#39',to_char(qty,'#39'FM999G999' +
-        'G990'#39'),'#39' '#39',unit),'#39', '#39')nm,acc_balance  FROM (SELECT  a.voucher_no' +
-        ',max(a.id)id,a.item_name,sum(a.qty) qty,a.unit,acc_balance  FROM' +
-        ' (SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e' +
-        '.unit,b.code as acc_balance  FROM t_cash_bank_expenditure_payabl' +
-        'e a INNER JOIN t_ak_account b  on a.account_acc= b.code LEFT JOI' +
-        'N t_item_receive d ON a.invoice_no= d.receive_no INNER JOIN t_it' +
-        'em_receive_det e ON d.receive_no=e.receive_no INNER JOIN t_item_' +
-        'stock f ON e.item_stock_code=f.item_stock_code where a.trans_dat' +
-        'e BETWEEN '#39'2024-11-04'#39' and '#39'2024-11-04'#39'  GROUP BY a.voucher_no,e' +
-        '.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_' +
-        'name,a.unit,a.acc_balance ) a GROUP BY voucher_no,acc_balance ) ' +
-        'y ON x.no_voucher=y.voucher_no left join (SELECT voucher_no, str' +
-        'ing_agg (concat('#39'SJ.'#39',a.sj_no), '#39', '#39' ) nosj  FROM (SELECT * FROM' +
-        ' (SELECT "row_number"() over (PARTITION by voucher_no order by i' +
-        'nvoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.receive_date F' +
-        'ROM t_cash_bank_expenditure_payable a LEFT JOIN t_item_receive b' +
-        ' ON a.invoice_no= b.receive_no WHERE a.trans_date BETWEEN '#39'2024-' +
-        '11-04'#39' and '#39'2024-11-04'#39' GROUP BY a.voucher_no,a.invoice_no,a.sj_' +
-        'no,b.sj_no,b.receive_date ORDER BY b.receive_date,a.invoice_no)A' +
-        ' ORDER BY voucher_no,sj_no,receive_date) a GROUP BY voucher_no,s' +
-        'j_no,receive_date ) z  ON y.voucher_no=z.voucher_no UNION ALL se' +
-        'lect a.no_voucher,a.code_account as kodesp,a."position",a.trans_' +
-        'date as tgltrans,'#39#39' kepada,'#39#39' nm,'#39#39' nosj,description as ket,desc' +
-        'ription as ket2,paid_amount debit,0 kredit from t_cash_bank_expe' +
-        'nditure_det a INNER JOIN t_cash_bank_expenditure b on a.no_vouch' +
-        'er=b.voucher_no where a.trans_date BETWEEN '#39'2024-11-04'#39' and '#39'202' +
-        '4-11-04'#39' and code_account='#39'1111'#39' and company_code='#39'HLJ'#39' UNION AL' +
-        'L select voucher_no as voucher,code_account as kodesp,'#39'D'#39'::chara' +
-        'cter varying as dk,trans_date as tgltrans,'#39#39' kepada,'#39#39' nm,'#39#39' sj,' +
-        'description::character varying as ket, description::character va' +
-        'rying as ket2,paid_amount debit,0 kredit from t_cash_bank_accept' +
-        'ance_det where trans_date between '#39'2024-11-04'#39' and  '#39'2024-11-04'#39 +
-        ' UNION ALL SELECT  voucher,kredit_account as kodesp,'#39'K'#39'::charact' +
-        'er varying as dk,tgltrans,'#39#39'kepada,'#39#39' nm, '#39#39' sj,information::cha' +
-        'racter varying as ket,information::character varying as ket2,deb' +
-        'it,kredit from (select a.adjustment_proof_no as voucher,b.kredit' +
-        '_account,'#39'K'#39'::character varying as dk,a."date" as tgltrans,a.inf' +
-        'ormation,a.information as ket2,b.debit,b.kredit from t_adjustmen' +
-        't_journal a INNER JOIN t_adjustment_journal_det b ON a.adjustmen' +
-        't_proof_no=b.adjustment_proof_no WHERE a."date" between '#39'2024-11' +
-        '-04'#39' and '#39'2024-11-04'#39' and b.kredit_account='#39'1111'#39' order by tgltr' +
-        'ans,voucher Asc)n ) x ')
-    Left = 136
-    Top = 208
-  end
-  object MemBHKas: TMemTableEh
-    Params = <>
-    DataDriver = DataSetDriverEh1
-    Left = 208
-    Top = 208
-  end
-  object DSBHKas: TDataSource
-    DataSet = MemBHKas
-    Left = 136
-    Top = 272
-  end
-  object DataSetDriverEh1: TDataSetDriverEh
-    ProviderDataSet = QBHKas
-    Left = 208
-    Top = 272
-  end
-=======
->>>>>>> Stashed changes
 end

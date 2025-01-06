@@ -245,7 +245,7 @@ begin
         close;
         sql.clear;
         sql.Text:=' Update t_company set company_name='+QuotedStr(Ed_nama.Text)+ ' ,type_of_business='+QuotedStr(cb_jenis_usaha.Text)+', address='+QuotedStr(Ed_Alamat.Text)+' ,telp='+QuotedStr(Ed_telp.Text)+''+
-                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=NOW,updated_by=:updated_by '+
                   ' Where company_code='+QuotedStr(Ed_kode.Text);
 
         if Cb_Status_Pajak.Text='PKP' then
@@ -258,7 +258,7 @@ begin
            parambyname('partax_status').AsString:='0';
         end;
 
-        parambyname('updated_at').AsDateTime:=Now;
+       // parambyname('updated_at').AsDateTime:=Now;
         parambyname('updated_by').AsString:='Admin';
 
         ExecSQL;
