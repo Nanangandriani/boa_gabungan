@@ -214,7 +214,6 @@ uses
   UListPenerimaanBank in 'UListPenerimaanBank.pas' {FListPenerimaanBank},
   UPengajuanApproval_JurnalTrans in 'UPengajuanApproval_JurnalTrans.pas' {FPengajuan_AppJurnal_Trans},
   UDataListPelakuBiaya in 'UDataListPelakuBiaya.pas' {FDataListPelakuBiaya},
-  UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya},
   UDataListKelompokBiaya in 'UDataListKelompokBiaya.pas' {FDataListKelompokBiaya},
   UDataKelompokBiaya in 'UDataKelompokBiaya.pas' {FDataKelompokBiaya},
   UDataKasKecil in 'UDataKasKecil.pas' {FDataKasKecil},
@@ -236,7 +235,8 @@ uses
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
   UDaftarKendaraan in 'UDaftarKendaraan.pas' {FDaftarKendaraan},
-  UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi};
+  UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi},
+  UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -369,6 +369,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
   Application.CreateForm(TFDaftarKendaraan, FDaftarKendaraan);
   Application.CreateForm(TFDataBankGaransi, FDataBankGaransi);
+  Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

@@ -906,10 +906,6 @@
             <Form>FDataListPelakuBiaya</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDataPeLakuBiaya.pas">
-            <Form>FDataPeLakuBiaya</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UDataListKelompokBiaya.pas">
             <Form>FDataListKelompokBiaya</Form>
             <FormType>dfm</FormType>
@@ -976,7 +972,6 @@
         </DCCReference>
         <DCCReference Include="UListOrderTelemarketing.pas">
             <Form>FListOrderTelemarketing</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UMasterWilayahAdministratif.pas">
             <Form>FMasterWilayahAdministratif</Form>
@@ -984,14 +979,15 @@
         </DCCReference>
         <DCCReference Include="UDaftarRekeningKoran.pas">
             <Form>FDaftarRekeningKoran</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDaftarKendaraan.pas">
             <Form>FDaftarKendaraan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataBankGaransi.pas">
             <Form>FDataBankGaransi</Form>
+        </DCCReference>
+        <DCCReference Include="UDataPeLakuBiaya.pas">
+            <Form>FDataPeLakuBiaya</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
