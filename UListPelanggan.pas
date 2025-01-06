@@ -62,6 +62,8 @@ type
     QPelangganaddress: TMemoField;
     QPelangganpayment_term: TSmallintField;
     DBGridCustomer: TDBGridEh;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -69,6 +71,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure QPelangganaddressGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,7 +87,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pelanggan, UDataModule, UMy_Function, UDataProspekPelanggan;
+uses UNew_Pelanggan, UDataModule, UMy_Function, UDataProspekPelanggan,
+  UDataBankGaransi;
 
 procedure TFListPelanggan.Refresh;
 begin
@@ -226,6 +230,36 @@ begin
     Qpelanggan.Open;
   finally
   DBGridcustomer.FinishLoadingStatus();
+  end;
+end;
+
+procedure TFListPelanggan.dxBarLargeButton1Click(Sender: TObject);
+begin
+   with Dm.Qtemp do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from t_customer a '+
+                 ' WHERE customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
+                 ' AND deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  if Dm.Qtemp.RecordCount=0 then
+  begin
+    ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
+    exit;
+  end;
+
+  if Dm.Qtemp.RecordCount<>0 then
+  begin
+  with FDataBankGaransi do
+  begin
+    Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
+    Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
+    Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
+  end;
+  //FDataBankGaransi.RefreshGrid;
+  FDataBankGaransi.show;
   end;
 end;
 

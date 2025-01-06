@@ -200,10 +200,17 @@ begin
  begin
    cLocation := ExtractFilePath(Application.ExeName);
 
+
+
+
+
    //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank'+ '.fr3');
-   SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
-   SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
+   Report.LoadFromFile(cLocation +'report/rpt_cek_bulan'+ '.fr3');
+   SetMemo(Report,'njudul','DAFTAR CEK BULAN : '+formatdatetime('mmmm',dtAwal.EditValue)+' '+formatdatetime('yyyy',dtAwal.EditValue)+'');
+   SetMemo(Report,'no_rek',vRekeningBank);
+   SetMemo(Report,'nama_bank',vNamaBank);
+   SetMemo(Report,'nprsh',FHomeLogin.vNamaPRSH);
+   SetMemo(Report,'tanggal',''+formatdatetime('dd-mm-yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd-mm-yyyy',dtAkhir.EditValue));
    //Report.DesignReport();
    Report.ShowReport();
  end;

@@ -229,7 +229,7 @@ implementation
 
 uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
-  UListDeliveryOrder, UHomeLogin;
+  UListDeliveryOrder, UHomeLogin, UDaftarKendaraan;
 
 procedure TFNewDeliveryOrder.Save;
 begin
@@ -1034,7 +1034,9 @@ end;
 
 procedure TFNewDeliveryOrder.edNoKendMuatanButtonClick(Sender: TObject);
 begin
-  ShowMessage('Master Kendaraan Ready Dimana ??');
+  FDaftarKendaraan.vcall:='delivery_order';
+  FDaftarKendaraan.show;
+  FDaftarKendaraan.GetDataViaAPI;
 end;
 
 procedure TFNewDeliveryOrder.edNomorReffUtamaMuatanButtonClick(Sender: TObject);

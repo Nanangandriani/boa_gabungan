@@ -42,13 +42,27 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
   URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
   UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank, UDataKasBon,
-  UDataKasKecil, UDaftarRekeningKoran,UDataPeLakuBiaya,ULap_Kartu_Hutang;
+  UDataKasKecil, UDaftarRekeningKoran,UDataPeLakuBiaya, UDataBankGaransi;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
   vid_modul: string;
 begin
   //ShowMessage(vcall);
+  if vcall='m_bank_garansi' then
+  begin
+    FDataBankGaransi.MemMaster.edit;
+    FDataBankGaransi.MemMaster['kode_bank']:=MemMasterData['KD_MASTER'];
+    FDataBankGaransi.MemMaster['nama_bank']:=MemMasterData['NM_MASTER'];
+    FDataBankGaransi.MemMaster.post;
+  end;
+  if vcall='kategori_bank_garansi' then
+  begin
+    FDataBankGaransi.MemMaster.edit;
+    FDataBankGaransi.MemMaster['kode_kategori']:=MemMasterData['KD_MASTER'];
+    FDataBankGaransi.MemMaster['nama_kategori']:=MemMasterData['NM_MASTER'];
+    FDataBankGaransi.MemMaster.post;
+  end;
   if vcall='m_supplier' then
   begin
     FListStockBarang.edKodeSupplier.Text:=MemMasterData['KD_MASTER'];
@@ -827,12 +841,6 @@ begin
     FDataPengajuanPengeluaranKasBank.edNamaMataUang.Text:=MemMasterData['NM_MASTER'];
     FDataPengajuanPengeluaranKasBank.edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
   end;
-  {if vcall='Lap_Kartu_Hutang' then
-  begin
-    FLap_Kartu_Hutang.vkd_supp:=MemMasterData['KD_MASTER'];
-    FLap_Kartu_Hutang.Ed_supplier.EditValue:=MemMasterData['NM_MASTER'];
-    ShowMessage(FLap_Kartu_Hutang.vkd_supp);
-  end;}
   if vcall='KL_kasbank_jns_transaksi_ajuan' then //Pengajuan pengeluaran kas
   begin
     with FDataPengajuanPengeluaranKasBank do

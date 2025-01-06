@@ -141,6 +141,7 @@ end;
 procedure TFListStockBarang.RefreshGrid;
 var
 URUTAN_KE : Integer;
+qty_sisa : Real;
 begin
   if vcall='penjualan' then
   begin
@@ -181,6 +182,11 @@ begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
+     {if Dm.Qtemp.FieldByName('qty').AsFloat <= qty_request then
+     begin
+      qty_sisa:=
+     end;}
+
      FListStockBarang.MemDetail.insert;
      FListStockBarang.MemDetail['item_stock_code']:=Dm.Qtemp.FieldByName('item_stock_code').AsString;
      FListStockBarang.MemDetail['stock_code']:=Dm.Qtemp.FieldByName('stock_code').AsString;
@@ -190,7 +196,7 @@ begin
      FListStockBarang.MemDetail['item_name']:=Dm.Qtemp.FieldByName('item_name').AsString;
      FListStockBarang.MemDetail['unit']:=Dm.Qtemp.FieldByName('unit').AsString;
      FListStockBarang.MemDetail['qty']:=Dm.Qtemp.FieldByName('qty').AsFloat;
-     FListStockBarang.MemDetail['qtyout']:=0;
+     FListStockBarang.MemDetail['qtyout']:=qty_request;
      FListStockBarang.MemDetail['outstanding']:=Dm.Qtemp.FieldByName('outstanding').AsFloat;
      FListStockBarang.MemDetail['pilih']:=0;
      FListStockBarang.MemDetail.post;
