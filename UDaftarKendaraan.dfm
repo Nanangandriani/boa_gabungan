@@ -82,20 +82,18 @@ object FDaftarKendaraan: TFDaftarKendaraan
       'Memo1')
     TabOrder = 1
     Visible = False
-    ExplicitLeft = 16
-    ExplicitTop = 19
-    ExplicitWidth = 369
+    ExplicitWidth = 694
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData
     Left = 384
-    Top = 256
+    Top = 232
   end
   object MemMasterData: TMemTableEh
     Active = True
     Params = <>
     Left = 488
-    Top = 256
+    Top = 232
     object MemMasterDatacode: TStringField
       FieldName = 'code'
     end
@@ -183,6 +181,6 @@ object FDaftarKendaraan: TFDaftarKendaraan
   object NetHTTPClient1: TNetHTTPClient
     UserAgent = 'Embarcadero URI Client/1.0'
     Left = 272
-    Top = 264
+    Top = 240
   end
 end

@@ -25,7 +25,6 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -1659,7 +1658,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     BCDToCurrency = False
     DataSetOptions = []
     Left = 944
-    Top = 72
+    Top = 64
   end
   object QCetak: TUniQuery
     Connection = dm.Koneksi
@@ -1731,7 +1730,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         '"public"."get_bank_saldoakhir"('#39'1390021156231'#39','#39'2024-01-24'#39'))x)x' +
         'x ORDER BY nomor ASC')
     Left = 860
-    Top = 72
+    Top = 64
     object QCetaknomor: TLargeintField
       FieldName = 'nomor'
       ReadOnly = True
