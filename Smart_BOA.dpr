@@ -236,8 +236,11 @@ uses
   ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas},
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   UListOrderTelemarketing in 'UListOrderTelemarketing.pas' {FListOrderTelemarketing},
   ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas',
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
@@ -379,7 +382,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   Application.CreateForm(TFDaftarKendaraan, FDaftarKendaraan);

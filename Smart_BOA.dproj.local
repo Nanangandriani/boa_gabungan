@@ -2,6 +2,7 @@
 <BorlandProject>
 	<Transactions>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <Transaction>1899/12/30 00.00.00.000.353,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.862,=D:\Project Gabungan\back_office_automation\UList_Pelaku_Biaya.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.665,=D:\Project Gabungan\back_office_automation\UNew_Kasbon.pas</Transaction>
@@ -33,6 +34,8 @@
     <Transaction>2025/01/06 13.37.08.682,=D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
     <Transaction>2025/01/06 13.37.21.118,D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas=</Transaction>
     <Transaction>2025/01/06 13.48.41.672,=D:\back_office_automation\ULap_Buku_Harian_Kas_Kecil.pas</Transaction>
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas</Transaction>
