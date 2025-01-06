@@ -1021,6 +1021,14 @@
             <Form>FDataBankGaransi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UDaftarKendaraan.pas">
+            <Form>FDaftarKendaraan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataBankGaransi.pas">
+            <Form>FDataBankGaransi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
