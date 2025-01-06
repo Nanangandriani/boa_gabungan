@@ -232,6 +232,7 @@ uses
   U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
   UNew_Kasbon in 'UNew_Kasbon.pas' {FNew_Kasbon},
   UApproval_Keluar_Kas_Bank in 'UApproval_Keluar_Kas_Bank.pas' {FApproval_Keluar_Kas_Bank},
+<<<<<<< Updated upstream
   UListOrderTelemarketing in 'UListOrderTelemarketing.pas' {FListOrderTelemarketing},
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
   ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas' {FLap_Buku_Harian_Kas_Kecil},
@@ -239,6 +240,10 @@ uses
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
   ULap_Kartu_Hutang in 'ULap_Kartu_Hutang.pas' {FLap_Kartu_Hutang},
   ULap_Ikhtisar_Biaya_KasKecil_BOP in 'ULap_Ikhtisar_Biaya_KasKecil_BOP.pas' {FLap_Ikhtisar_Baiaya_KasKecil_BOP};
+=======
+  ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas' {FLap_Buku_Harian_Kas_Kecil},
+  ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas};
+>>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -367,6 +372,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataKasBon, FDataKasBon);
   Application.CreateForm(TFListKasKecil, FListKasKecil);
   Application.CreateForm(TFListKasBon, FListKasBon);
+<<<<<<< Updated upstream
   Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
@@ -374,6 +380,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
   Application.CreateForm(TFLap_Ikhtisar_Baiaya_KasKecil_BOP, FLap_Ikhtisar_Baiaya_KasKecil_BOP);
   //Application.CreateForm(TFLap_Kartu_Hutang, FLap_Kartu_Hutang);
+=======
+  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+>>>>>>> Stashed changes
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

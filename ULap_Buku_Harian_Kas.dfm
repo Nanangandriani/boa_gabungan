@@ -11,19 +11,27 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
+<<<<<<< Updated upstream
   object DBGridBukuHarianKas: TDBGridEh
+=======
+  object DBGridSupplier: TDBGridEh
+>>>>>>> Stashed changes
     Left = 0
     Top = 127
     Width = 707
     Height = 315
     Align = alClient
+<<<<<<< Updated upstream
     DataSource = DSBHKas
     DrawMemoText = True
+=======
+>>>>>>> Stashed changes
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
+<<<<<<< Updated upstream
     Columns = <
       item
         CellButtons = <>
@@ -72,11 +80,18 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         Title.Caption = 'Kredit'
         Width = 100
       end>
+=======
+    Visible = False
+>>>>>>> Stashed changes
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
+<<<<<<< Updated upstream
         Width = 584
+=======
+        Width = 30
+>>>>>>> Stashed changes
         Height = 118
         Align = alClient
         DynProps = <>
@@ -98,6 +113,10 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
+<<<<<<< Updated upstream
+=======
+    ExplicitLeft = -64
+>>>>>>> Stashed changes
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -177,7 +196,11 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         end
         item
           Visible = True
+<<<<<<< Updated upstream
           ItemName = 'dxRefresh'
+=======
+          ItemName = 'dxBarLargeButton2'
+>>>>>>> Stashed changes
         end
         item
           Visible = True
@@ -679,9 +702,15 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         0000000049454E44AE426082}
     end
     object datetimepicker1: TcxBarEditItem
+<<<<<<< Updated upstream
       Caption = 'Tanggal Awal'
       Category = 0
       Hint = 'Tanggal Awal'
+=======
+      Caption = 'Pilih Tanggal'
+      Category = 0
+      Hint = 'Pilih Tanggal'
+>>>>>>> Stashed changes
       Visible = ivAlways
       OnChange = datetimepicker1Change
       PropertiesClassName = 'TcxDateEditProperties'
@@ -751,6 +780,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       Hint = 'New Button'
       Visible = ivAlways
     end
+<<<<<<< Updated upstream
     object dxRefresh: TdxBarLargeButton
       Caption = 'Cari'
       Category = 0
@@ -780,6 +810,11 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
       OnClick = dxRefreshClick
+=======
+    object dxBarLargeButton2: TdxBarLargeButton
+      Category = 0
+      Visible = ivAlways
+>>>>>>> Stashed changes
     end
     object dxBarLargeButton3: TdxBarLargeButton
       Caption = 'Print'
@@ -842,9 +877,15 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       OnClick = dxBarLargeButton3Click
     end
     object DateTimePicker2: TcxBarEditItem
+<<<<<<< Updated upstream
       Caption = 'Tanggal Akhir'
       Category = 0
       Hint = 'Tanggal Akhir'
+=======
+      Caption = 'Pilih Tanggal'
+      Category = 0
+      Hint = 'Pilih Tanggal'
+>>>>>>> Stashed changes
       Visible = ivNever
     end
   end
@@ -1932,6 +1973,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Left = 344
     Top = 80
   end
+<<<<<<< Updated upstream
   object QBHKas: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
@@ -2021,4 +2063,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Left = 208
     Top = 272
   end
+=======
+>>>>>>> Stashed changes
 end
