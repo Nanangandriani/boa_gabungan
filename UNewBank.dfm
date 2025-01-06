@@ -133,8 +133,8 @@ object FNewBank: TFNewBank
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 194
-    ExplicitWidth = 411
+    ExplicitTop = 179
+    ExplicitWidth = 436
     object BBatal: TRzBitBtn
       Left = 364
       Top = 1
@@ -195,7 +195,7 @@ object FNewBank: TFNewBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 335
+      ExplicitLeft = 360
     end
     object BSave: TRzBitBtn
       Left = 279
@@ -258,7 +258,7 @@ object FNewBank: TFNewBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 250
+      ExplicitLeft = 275
     end
   end
   object edno_rek: TEdit
@@ -291,7 +291,7 @@ object FNewBank: TFNewBank
   object Ednm_akun1: TRzButtonEdit
     Left = 198
     Top = 117
-    Width = 219
+    Width = 234
     Height = 23
     Text = ''
     TabOrder = 7
