@@ -992,6 +992,13 @@
             <Form>FDaftarRekeningKoran</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+<<<<<<< Updated upstream
+=======
+        <DCCReference Include="UDaftarKendaraan.pas">
+            <Form>FDaftarKendaraan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+>>>>>>> Stashed changes
         <DCCReference Include="UDataBankGaransi.pas">
             <Form>FDataBankGaransi</Form>
             <FormType>dfm</FormType>

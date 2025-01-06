@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+<<<<<<< Updated upstream
     <Transaction>1899/12/30 00.00.00.000.597,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.984,=D:\DATA HPS\Development\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
@@ -14,5 +15,17 @@
     <Transaction>2025/01/06 15.46.49.590,=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas</Transaction>
     <Transaction>2025/01/06 15.46.53.659,=D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.pas</Transaction>
     <Transaction>2025/01/06 15.46.54.439,=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.pas</Transaction>
+=======
+    <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.869,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.984,=D:\DATA HPS\Development\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.453,D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.pas=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.453,D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\Unit1.dfm=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\Unit1.dfm=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.628,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.597,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+>>>>>>> Stashed changes
   </Transactions>
 </BorlandProject>

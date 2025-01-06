@@ -25,6 +25,10 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
+<<<<<<< Updated upstream
+=======
+    ExplicitWidth = 1229
+>>>>>>> Stashed changes
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

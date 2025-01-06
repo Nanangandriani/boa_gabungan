@@ -20,8 +20,14 @@ object FDataBankGaransi: TFDataBankGaransi
     Height = 34
     Align = alBottom
     TabOrder = 0
+<<<<<<< Updated upstream
     ExplicitTop = 462
     ExplicitWidth = 1004
+=======
+    ExplicitLeft = -244
+    ExplicitTop = 397
+    ExplicitWidth = 1254
+>>>>>>> Stashed changes
     object BBatal: TRzBitBtn
       Left = 934
       Top = 1
@@ -81,7 +87,11 @@ object FDataBankGaransi: TFDataBankGaransi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<< Updated upstream
       ExplicitLeft = 928
+=======
+      ExplicitLeft = 1178
+>>>>>>> Stashed changes
     end
     object BSave: TRzBitBtn
       Left = 859
@@ -142,7 +152,11 @@ object FDataBankGaransi: TFDataBankGaransi
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+<<<<<<< Updated upstream
       ExplicitLeft = 853
+=======
+      ExplicitLeft = 1103
+>>>>>>> Stashed changes
     end
   end
   object Panel6: TPanel
@@ -154,7 +168,10 @@ object FDataBankGaransi: TFDataBankGaransi
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
+<<<<<<< Updated upstream
     ExplicitWidth = 1004
+=======
+>>>>>>> Stashed changes
     object LabelPelanggan: TLabel
       Left = 24
       Top = 19
@@ -235,6 +252,7 @@ object FDataBankGaransi: TFDataBankGaransi
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
+<<<<<<< Updated upstream
     ExplicitWidth = 1004
     ExplicitHeight = 349
     FixedDimension = 21
@@ -242,6 +260,17 @@ object FDataBankGaransi: TFDataBankGaransi
       Caption = 'Data Bank Garansi'
       ExplicitWidth = 1000
       ExplicitHeight = 324
+=======
+    ExplicitLeft = -244
+    ExplicitTop = 137
+    ExplicitWidth = 1254
+    ExplicitHeight = 257
+    FixedDimension = 21
+    object TabSDetail: TRzTabSheet
+      Caption = 'Data Bank Garansi'
+      ExplicitWidth = 1250
+      ExplicitHeight = 232
+>>>>>>> Stashed changes
       object DBGrid: TDBGridEh
         Left = 0
         Top = 0
@@ -339,6 +368,7 @@ object FDataBankGaransi: TFDataBankGaransi
   end
   object DSMaster: TDataSource
     DataSet = MemMaster
+<<<<<<< Updated upstream
     Left = 102
     Top = 368
   end
@@ -346,6 +376,15 @@ object FDataBankGaransi: TFDataBankGaransi
     Params = <>
     Left = 182
     Top = 376
+=======
+    Left = 94
+    Top = 400
+  end
+  object MemMaster: TMemTableEh
+    Params = <>
+    Left = 174
+    Top = 408
+>>>>>>> Stashed changes
     object MemMasterkode_bank: TStringField
       FieldName = 'kode_bank'
     end

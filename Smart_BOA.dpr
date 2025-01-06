@@ -235,6 +235,7 @@ uses
   URpt_BHKeluarKasdanBank in 'URpt_BHKeluarKasdanBank.pas' {FRpt_BHKeluarKasdanBank},
   ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas},
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
+<<<<<<< Updated upstream
   UDaftarKendaraan in 'UDaftarKendaraan.pas' {FDaftarKendaraan},
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
   UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi};
@@ -476,6 +477,8 @@ uses
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
   UListOrderTelemarketing in 'UListOrderTelemarketing.pas' {FListOrderTelemarketing},
   ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas',
+=======
+>>>>>>> Stashed changes
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
   UDaftarKendaraan in 'UDaftarKendaraan.pas' {FDaftarKendaraan},
   UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi};
@@ -619,7 +622,10 @@ while FHomeSreen.Timer1.Enabled do
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
