@@ -26,7 +26,7 @@ uses
   DynVarsEh, cxCalendar, cxButtonEdit, Data.DB, MemDS, DBAccess, Uni, dxBar,
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, frxDesgn;
 
 type
   TFBHPenerimaanKasBank = class(TForm)
@@ -96,6 +96,25 @@ type
     QCetakcode_kab: TStringField;
     QCetakname_kab: TStringField;
     QCetakket_faktur: TMemoField;
+    dxBarLargeButton1: TdxBarLargeButton;
+    QDaftarPenerimaan: TUniQuery;
+    frxDBDDaftarPenerimaan: TfrxDBDataset;
+    dsDaftarPenerimaan: TDataSource;
+    QDaftarPenerimaanvoucher_no: TStringField;
+    QDaftarPenerimaantrans_date: TDateField;
+    QDaftarPenerimaancode_cust: TStringField;
+    QDaftarPenerimaanname_cust: TStringField;
+    QDaftarPenerimaancode_region: TStringField;
+    QDaftarPenerimaanfor_acceptance: TStringField;
+    QDaftarPenerimaandescription: TMemoField;
+    QDaftarPenerimaancheque: TMemoField;
+    QDaftarPenerimaancode_account: TStringField;
+    QDaftarPenerimaanname_account: TStringField;
+    QDaftarPenerimaantotal: TFloatField;
+    QDaftarPenerimaancode_karesidenan: TStringField;
+    QDaftarPenerimaancode_kab: TStringField;
+    QDaftarPenerimaanname_kab: TStringField;
+    QDaftarPenerimaanket_faktur: TMemoField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -113,6 +132,7 @@ type
     procedure QBHPenerimaanKasBankket_fakturGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
     procedure btPreviewClick(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -193,8 +213,14 @@ begin
     begin
       SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
     end;
-   //Report.DesignReport();
-   Report.ShowReport();
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+  begin
+   Report.DesignReport();
+  end else
+  begin
+    Report.ShowReport();
+  end;
+
  end;
 
 end;
@@ -230,6 +256,71 @@ begin
   finally
   DBGrid.FinishLoadingStatus();
   end;
+end;
+
+procedure TFBHPenerimaanKasBank.dxBarLargeButton1Click(Sender: TObject);
+begin
+   with QDaftarPenerimaan do
+   begin
+       close;
+       sql.Clear;
+       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "public"."vdaftar_penerimaan_kasbank_accurate" a  '+
+               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+               ' ON "left"(code_region, 4)=b.code_kab '+
+               ' LEFT JOIN (SELECT voucher_no, '+
+               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
+               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+         if edKaresidenan.EditValue<>'' then
+         begin
+          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+         end;
+         if edKabupaten.EditValue<>'' then
+         begin
+          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+         end;
+       sql.add(' ORDER BY trans_date, voucher_no');
+       open;
+   end;
+
+ if QDaftarPenerimaan.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QDaftarPenerimaan.RecordCount<>0 then
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_daf_penerimaan_kasbank'+ '.fr3');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   SetMemo(Report,'periode','Dari '+formatdatetime('dd mmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmm yyyy',dtAkhir.EditValue));
+    if edKaresidenan.EditValue='' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah : Semua Wilayah');
+    end;
+    if edKaresidenan.EditValue<>'' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah :'+edKaresidenan.EditValue);
+    end;
+    if edKabupaten.EditValue<>'' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
+    end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+  begin
+   Report.DesignReport();
+  end else
+  begin
+    Report.ShowReport();
+  end;
+
+ end;
+
 end;
 
 procedure TFBHPenerimaanKasBank.edKabupatenPropertiesButtonClick(

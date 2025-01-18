@@ -11,18 +11,19 @@ object FDataPerintahMuat: TFDataPerintahMuat
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 1227
-    Height = 257
+    Height = 232
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1233
-    ExplicitHeight = 266
+    ExplicitWidth = 1221
+    ExplicitHeight = 223
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -110,9 +111,9 @@ object FDataPerintahMuat: TFDataPerintahMuat
     object Label37: TLabel
       Left = 20
       Top = 127
-      Width = 78
+      Width = 56
       Height = 15
-      Caption = 'No. Kendaraan'
+      Caption = 'Kendaraan'
     end
     object edKodeMuat: TEdit
       Left = 132
@@ -183,13 +184,14 @@ object FDataPerintahMuat: TFDataPerintahMuat
       OnButtonClick = edNoKendMuatanButtonClick
     end
     object btAddDetail: TRzBitBtn
-      Left = 20
-      Top = 232
+      Left = 566
+      Top = 187
       Width = 116
       Height = 30
       Align = alCustom
       Caption = 'Ambil Muatan'
       TabOrder = 7
+      Visible = False
       OnClick = btAddDetailClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -252,15 +254,16 @@ object FDataPerintahMuat: TFDataPerintahMuat
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 486
-    ExplicitWidth = 1233
+    ExplicitTop = 468
+    ExplicitWidth = 1221
     object BBatal: TRzBitBtn
-      Left = 1163
+      Left = 1151
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Close'
       TabOrder = 1
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -314,9 +317,10 @@ object FDataPerintahMuat: TFDataPerintahMuat
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1157
+      ExplicitTop = 3
     end
     object BSave: TRzBitBtn
-      Left = 1088
+      Left = 1076
       Top = 1
       Height = 30
       Align = alRight
@@ -375,7 +379,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1082
+      ExplicitLeft = 1070
     end
     object Edautocode: TEdit
       Left = 712
@@ -390,28 +394,26 @@ object FDataPerintahMuat: TFDataPerintahMuat
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 257
+    Top = 232
     Width = 1227
-    Height = 220
+    Height = 245
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 266
-    ExplicitWidth = 1233
+    ExplicitTop = 223
+    ExplicitWidth = 1221
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Muatan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 1217
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1235
-        Height = 195
+        Width = 1223
+        Height = 220
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -423,7 +425,11 @@ object FDataPerintahMuat: TFDataPerintahMuat
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+                OnClick = DBGridDetailColumns0EditButtons0Click
+              end>
             FieldName = 'nodo'
             Footers = <>
             Title.Caption = 'Nomor DO'
@@ -575,7 +581,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
         end
         object jumlah: TMTNumericDataFieldEh
           FieldName = 'jumlah'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False

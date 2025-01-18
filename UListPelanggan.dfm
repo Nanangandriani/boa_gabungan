@@ -24,7 +24,6 @@ object FListPelanggan: TFListPelanggan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 816
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -155,8 +154,8 @@ object FListPelanggan: TFListPelanggan
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -175,7 +174,7 @@ object FListPelanggan: TFListPelanggan
           Visible = True
           ItemName = 'dxBarLargeButton1'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

@@ -36,8 +36,8 @@ type
     ckTandai: TCheckBox;
     MemDetailkd_barang: TStringField;
     MemDetailnm_barang: TStringField;
-    MemDetailjumlah: TFloatField;
     MemDetailsatuan: TStringField;
+    MemDetailjumlah: TCurrencyField;
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -112,8 +112,8 @@ begin
               ' supplier_name as "name_cust", a."po_no" as "trans_no", '+
               ' "contract_no" as "no_reference", item_stock_code as "code_item", '+
               ' item_name as "name_item", qty as "amount",unit as "code_unit" '+
-              ' from "purchase"."t_po" a '+
-              ' left JOIN purchase.t_podetail b ON a.po_no=b.po_no '+
+              ' from "public"."t_po" a '+
+              ' left JOIN public.t_podetail b ON a.po_no=b.po_no '+
               ' LEFT join t_supplier c on a.supplier_code=c.supplier_code '+
               ' where a.deleted_at  is null) beli '+
                ' where trans_no not in (SELECT notrans_load from "public"."t_delivery_order" a '+
@@ -189,12 +189,13 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if edKodeVendorMuatan.Text='' then
+      {if edKodeVendorMuatan.Text='' then
       begin
         MessageDlg('Data Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeVendorMuatan.SetFocus;
       end
-      else if Status = 0 then
+      else}
+      if Status = 0 then
       begin
          //cek ada yang di tandai tidak
          MemDetail.First;
@@ -263,12 +264,12 @@ begin
   if not dm.Koneksi.InTransaction then
   dm.Koneksi.StartTransaction;
   try
-  if edKodeVendorMuatan.Text='' then
+  {if edKodeVendorMuatan.Text='' then
   begin
     //MessageDlg('Data Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    edKodeVendorMuatan.SetFocus;
+    //edNamaVendorMuatan.SetFocus;
   end
-  else if Status = 0 then
+  else if Status = 0 then }
   begin
     FDelivery_Order_Sumber.RefreshGrid;
   end

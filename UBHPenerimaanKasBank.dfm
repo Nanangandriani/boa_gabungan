@@ -294,6 +294,10 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         item
           Visible = True
           ItemName = 'btPreview'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = False
       Row = 0
@@ -542,6 +546,66 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end>
       Properties.OnButtonClick = edKabupatenPropertiesButtonClick
     end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Daftar Penerimaan (Versi Accurate)'
+      Category = 0
+      Hint = 'Daftar Penerimaan (Versi Accurate)'
+      Visible = ivAlways
+      OnClick = dxBarLargeButton1Click
+      HotGlyph.SourceDPI = 96
+      HotGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+    end
   end
   object QBHPenerimaanKasBank: TUniQuery
     Connection = dm.Koneksi
@@ -650,7 +714,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     Top = 72
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
@@ -658,8 +722,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     PreviewOptions.ZoomMode = zmWholePage
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45644.650452060190000000
+    ReportOptions.CreateDate = 45673.924529294000000000
+    ReportOptions.LastChange = 45674.410541099540000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -670,33 +734,24 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     Top = 32
     Datasets = <
       item
-        DataSet = frxDBDBHPenerimaan
-        DataSetName = 'frxDBDBHPenerimaan'
+        DataSet = frxDBDDaftarPenerimaan
+        DataSetName = 'frxDBDDaftarPenerimaan'
       end>
-    Variables = <
-      item
-        Name = ' New Category1'
-        Value = Null
-      end
-      item
-        Name = 'vTerbilang_qty'
-        Value = Null
-      end>
+    Variables = <>
     Style = <>
     object Data: TfrxDataPage
       Height = 1000.000000000000000000
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
-      PaperWidth = 297.000000000000000000
-      PaperHeight = 210.000000000000000000
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
       PaperSize = 9
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000
       BottomMargin = 5.000000000000000000
-      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      Frame.Typ = []
       MirrorMode = []
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
@@ -705,20 +760,20 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 173.181102360000000000
+        Height = 120.944960000000000000
         Top = 18.897650000000000000
-        Width = 1084.725110000000000000
+        Width = 755.906000000000000000
         object nama_pt: TfrxMemoView
           AllowVectorExport = True
-          Left = 7.559060000000000000
-          Top = 30.236240000000000000
-          Width = 98.267780000000000000
+          Left = 3.779530000000000000
+          Top = 0.102350000000000000
+          Width = 748.346940000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Height = -16
+          Font.Name = 'Trebuchet MS'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
@@ -727,54 +782,47 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object periode: TfrxMemoView
           AllowVectorExport = True
-          Left = 120.944960000000000000
-          Top = 43.015770000000000000
-          Width = 952.441560000000000000
-          Height = 30.236240000000000000
+          Left = 3.779530000000000000
+          Top = 52.338590000000000000
+          Width = 748.346940000000000000
+          Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
             'periode')
           ParentFont = False
         end
-        object Line1: TfrxLineView
-          AllowVectorExport = True
-          Top = 94.488188980000000000
-          Width = 1084.725110000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 120.944960000000000000
-          Top = 11.795300000000000000
-          Width = 952.441560000000000000
+          Left = 3.779530000000000000
+          Top = 22.015770000000000000
+          Width = 748.346940000000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clRed
           Font.Height = -24
           Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
+          Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'BUKU HARIAN PENERIMAAN KAS & BANK')
+            'Ringkasan Daftar Penerimaan')
           ParentFont = False
         end
         object wilayah: TfrxMemoView
           AllowVectorExport = True
-          Left = 631.181510000000000000
-          Top = 73.047310000000000000
+          Left = 310.529444110000000000
+          Top = 75.590600000000000000
           Width = 442.205010000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -16
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -783,423 +831,73 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
             'Wilayah :')
           ParentFont = False
         end
-        object Line4: TfrxLineView
+        object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Top = 173.181102360000000000
-          Width = 1084.725110000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line6: TfrxLineView
-          AllowVectorExport = True
-          Left = -0.220470000000000000
-          Height = 147.401547950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Memo8: TfrxMemoView
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 122.740260000000000000
-          Width = 30.236240000000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'No.')
-          ParentFont = False
-        end
-        object Line11: TfrxLineView
-          AllowVectorExport = True
-          Left = 120.944960000000000000
-          Height = 94.488127950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Memo19: TfrxMemoView
-          AllowVectorExport = True
-          Left = 101.047310000000000000
-          Top = 117.078745040000000000
-          Width = 105.826783860000000000
-          Height = 30.236225350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'No. Bukti Penerimaan')
-          ParentFont = False
-        end
-        object Memo20: TfrxMemoView
-          AllowVectorExport = True
-          Left = 711.077878910000000000
+          Left = 60.472480000000000000
           Top = 98.267780000000000000
-          Width = 366.088171090000000000
-          Height = 18.897635350000000000
+          Width = 91.535339230000000000
+          Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
+          Font.Color = 16744448
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Perkiraan Yang Di Kredit')
-          ParentFont = False
-        end
-        object Memo21: TfrxMemoView
-          AllowVectorExport = True
-          Left = 712.171438570000000000
-          Top = 131.504020000000000000
-          Width = 98.267727870000000000
-          Height = 37.795285350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Piutang')
-          ParentFont = False
-        end
-        object Memo22: TfrxMemoView
-          AllowVectorExport = True
-          Left = 993.165408870000000000
-          Top = 144.622140000000000000
-          Width = 84.000641130000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Jumlah')
-          ParentFont = False
-        end
-        object Memo23: TfrxMemoView
-          AllowVectorExport = True
-          Left = 903.200394240000000000
-          Top = 144.622140000000000000
-          Width = 83.568303590000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Nama Akun')
-          ParentFont = False
-        end
-        object Memo24: TfrxMemoView
-          AllowVectorExport = True
-          Left = 816.554864620000000000
-          Top = 144.622140000000000000
-          Width = 80.719910010000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Kode Akun')
-          ParentFont = False
-        end
-        object Memo25: TfrxMemoView
-          AllowVectorExport = True
-          Left = 37.795300000000000000
-          Top = 121.944960000000000000
-          Width = 60.733203520000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Tanggal')
           ParentFont = False
         end
-        object Memo18: TfrxMemoView
-          AllowVectorExport = True
-          Left = 813.948782140000000000
-          Top = 120.944960000000000000
-          Width = 262.988383270000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Lain-Lain')
-          ParentFont = False
-        end
-        object Memo28: TfrxMemoView
-          AllowVectorExport = True
-          Left = 340.157700000000000000
-          Top = 98.267780000000000000
-          Width = 366.088171090000000000
-          Height = 18.897635350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Perkiraan Yang Di Debet')
-          ParentFont = False
-        end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 341.251259670000000000
-          Top = 124.504020000000000000
-          Width = 98.267727870000000000
-          Height = 37.795285350000000000
+          Left = 263.481654900000000000
+          Top = 98.267780000000000000
+          Width = 237.993722030000000000
+          Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
+          Font.Color = 16744448
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Kas')
+            'Nama Akun Kas / Bank')
           ParentFont = False
         end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 622.245229960000000000
-          Top = 144.622140000000000000
-          Width = 84.000641130000000000
-          Height = 22.677165350000000000
+          Left = 507.732983500000000000
+          Top = 98.267780000000000000
+          Width = 164.764530630000000000
+          Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
+          Font.Color = 16744448
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Jumlah')
+            'Nilai')
           ParentFont = False
         end
-        object Memo32: TfrxMemoView
+        object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 532.280215330000000000
-          Top = 144.622140000000000000
-          Width = 83.568303590000000000
-          Height = 22.677165350000000000
+          Left = 158.968126610000000000
+          Top = 98.267780000000000000
+          Width = 98.255921720000000000
+          Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
+          Font.Color = 16744448
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'No. Rekening')
+            'No Cek')
           ParentFont = False
-        end
-        object Memo33: TfrxMemoView
-          AllowVectorExport = True
-          Left = 445.634685710000000000
-          Top = 144.622140000000000000
-          Width = 80.719910010000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Nama Bank')
-          ParentFont = False
-        end
-        object Memo34: TfrxMemoView
-          AllowVectorExport = True
-          Left = 443.028603240000000000
-          Top = 120.944960000000000000
-          Width = 262.988383270000000000
-          Height = 22.677165350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Bank')
-          ParentFont = False
-        end
-        object Memo35: TfrxMemoView
-          AllowVectorExport = True
-          Left = 211.653680000000000000
-          Top = 123.165430000000000000
-          Width = 128.503963860000000000
-          Height = 15.118105350000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Keterangan')
-          ParentFont = False
-        end
-        object Line5: TfrxLineView
-          AllowVectorExport = True
-          Left = 37.795300000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line7: TfrxLineView
-          AllowVectorExport = True
-          Left = 101.047310000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line9: TfrxLineView
-          AllowVectorExport = True
-          Left = 211.653680000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line10: TfrxLineView
-          AllowVectorExport = True
-          Left = 340.157700000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line12: TfrxLineView
-          AllowVectorExport = True
-          Left = 710.551640000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line13: TfrxLineView
-          AllowVectorExport = True
-          Left = 442.205010000000000000
-          Top = 119.165430000000000000
-          Width = 642.520100000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line14: TfrxLineView
-          AllowVectorExport = True
-          Left = 442.205010000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line15: TfrxLineView
-          AllowVectorExport = True
-          Left = 442.205010000000000000
-          Top = 139.842610000000000000
-          Width = 268.346630000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line16: TfrxLineView
-          AllowVectorExport = True
-          Left = 811.819420000000000000
-          Top = 140.622140000000000000
-          Width = 272.126160000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line17: TfrxLineView
-          AllowVectorExport = True
-          Left = 812.598950000000000000
-          Top = 119.165430000000000000
-          Height = 52.913297950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line18: TfrxLineView
-          AllowVectorExport = True
-          Left = 529.134200000000000000
-          Top = 139.842610000000000000
-          Height = 34.015647950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line19: TfrxLineView
-          AllowVectorExport = True
-          Left = 618.842920000000000000
-          Top = 139.842610000000000000
-          Height = 34.015647950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line20: TfrxLineView
-          AllowVectorExport = True
-          Left = 899.528140000000000000
-          Top = 139.842610000000000000
-          Height = 34.015647950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line21: TfrxLineView
-          AllowVectorExport = True
-          Left = 990.236860000000000000
-          Top = 139.842610000000000000
-          Height = 34.015647950000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
         end
       end
       object MasterData1: TfrxMasterData
@@ -1210,345 +908,89 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 253.228510000000000000
-        Width = 1084.725110000000000000
-        DataSet = frxDBDBHPenerimaan
-        DataSetName = 'frxDBDBHPenerimaan'
+        Top = 200.315090000000000000
+        Width = 755.906000000000000000
+        DataSet = frxDBDDaftarPenerimaan
+        DataSetName = 'frxDBDDaftarPenerimaan'
         RowCount = 0
         Stretched = True
-        object Shape2: TfrxShapeView
-          Align = baClient
-          AllowVectorExport = True
-          Width = 1084.725110000000000000
-          Height = 18.897637800000000000
-          Frame.Typ = []
-        end
-        object SysMemo1: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 1.779530000000000000
-          Width = 34.015770000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[LINE#]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaantrans_date: TfrxMemoView
+        object frxDBDBHPenj_dettrans_date: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 41.574830000000000000
-          Width = 56.692950000000000000
+          Left = 159.118110240000000000
+          Width = 98.267716540000000000
           Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
+          DataSet = FBHPenjualan.frxDBDBHPenj_det
+          DataSetName = 'frxDBDBHPenj_det'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."trans_date"]')
+            '[frxDBDDaftarPenerimaan."cheque"]')
           ParentFont = False
         end
-        object frxDBDBHPenerimaanvoucher_no: TfrxMemoView
+        object frxDBDBHPenj_detname_cust: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 102.047310000000000000
-          Width = 105.826840000000000000
+          Left = 263.433070870000000000
+          Width = 238.110236220000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
-          DataField = 'voucher_no'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
+          DataSet = FBHPenjualan.frxDBDBHPenj_det
+          DataSetName = 'frxDBDBHPenj_det'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."voucher_no"]')
+            '[frxDBDDaftarPenerimaan."name_account"]')
           ParentFont = False
         end
-        object frxDBDBHPenerimaanjum_kas: TfrxMemoView
+        object frxDBDBHPenj_detjum_ak_deb: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 340.157700000000000000
-          Width = 102.047310000000000000
+          Left = 507.590551180000000000
+          Width = 164.787401570000000000
           Height = 18.897650000000000000
-          DataField = 'jum_kas'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DataSet = FBHPenjualan.frxDBDBHPenj_det
+          DataSetName = 'frxDBDBHPenj_det'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_kas"]')
+            '[frxDBDDaftarPenerimaan."total"]')
           ParentFont = False
         end
-        object frxDBDBHPenerimaanaccount_name_bank: TfrxMemoView
+        object Memo5: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 446.984540000000000000
-          Width = 75.590600000000000000
+          Left = 60.472440940000000000
+          Width = 91.464566930000000000
           Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'account_name_bank'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
+          DataSet = FBHPenjualan.frxDBDBHPenj_det
+          DataSetName = 'frxDBDBHPenj_det'
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
+          DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."account_name_bank"]')
+            '[frxDBDDaftarPenerimaan."trans_date"]')
           ParentFont = False
-        end
-        object frxDBDBHPenerimaanaccount_number_bank: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 531.913730000000000000
-          Width = 86.929190000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'account_number_bank'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."account_number_bank"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_bank: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 621.622450000000000000
-          Width = 86.929190000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_bank"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_piutang: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 718.110700000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_piutang"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanak_lain_kre: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 820.158010000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'ak_lain_kre'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."ak_lain_kre"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanak_nm_lain_kre: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 907.087200000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'ak_nm_lain_kre'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."ak_nm_lain_kre"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_lain_kre: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 997.795920000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_lain_kre"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanket_faktur: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 215.433210000000000000
-          Width = 120.944960000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'ket_faktur'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."ket_faktur"]')
-          ParentFont = False
-        end
-        object Line23: TfrxLineView
-          AllowVectorExport = True
-          Left = 340.157700000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line22: TfrxLineView
-          AllowVectorExport = True
-          Left = 211.653680000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line24: TfrxLineView
-          AllowVectorExport = True
-          Left = 100.913385830000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line25: TfrxLineView
-          AllowVectorExport = True
-          Left = 37.795300000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line26: TfrxLineView
-          AllowVectorExport = True
-          Left = 442.205010000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line27: TfrxLineView
-          AllowVectorExport = True
-          Left = 529.134200000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line28: TfrxLineView
-          AllowVectorExport = True
-          Left = 618.708661420000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line29: TfrxLineView
-          AllowVectorExport = True
-          Left = 710.551181100000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line30: TfrxLineView
-          AllowVectorExport = True
-          Left = 812.598950000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line31: TfrxLineView
-          AllowVectorExport = True
-          Left = 899.528140000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line32: TfrxLineView
-          AllowVectorExport = True
-          Left = 990.236860000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -1558,188 +1000,61 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Top = 385.512060000000000000
-        Width = 1084.725110000000000000
-        object Line8: TfrxLineView
+        Height = 52.913420000000000000
+        Top = 279.685220000000000000
+        Width = 755.906000000000000000
+        object Memo1: TfrxMemoView
+          Align = baBottom
           AllowVectorExport = True
-          Width = 1084.725110000000000000
-          Color = clBlack
+          Left = 438.047527000000000000
+          Top = 34.015770000000000000
+          Width = 313.700990000000000000
+          Height = 18.897650000000000000
           Frame.Typ = []
-          Diagonal = True
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Halaman [Page#] dari [TotalPages#]')
         end
-      end
-      object ColumnFooter1: TfrxColumnFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 30.236220470000000000
-        Top = 332.598640000000000000
-        Width = 1084.725110000000000000
-        object Shape1: TfrxShapeView
-          Align = baClient
+        object Memo9: TfrxMemoView
+          Align = baBottom
           AllowVectorExport = True
-          Width = 1084.725110000000000000
-          Height = 30.236220470000000000
-          Frame.Typ = [ftRight]
-        end
-        object kota_tanggal: TfrxMemoView
-          AllowVectorExport = True
-          Left = 4.779530000000000000
-          Top = 8.779530000000000000
-          Width = 325.039580000000000000
+          Left = 3.779530000000000000
+          Top = 34.015770000000000000
+          Width = 389.291590000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
           Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Style = []
           Frame.Typ = []
-          HAlign = haRight
           Memo.UTF8W = (
-            'Jumlah')
+            'Tercetak Pada Tanggal [Date] [Time]')
           ParentFont = False
         end
-        object Line33: TfrxLineView
+        object Line1: TfrxLineView
           AllowVectorExport = True
-          Left = 340.157700000000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line34: TfrxLineView
-          AllowVectorExport = True
-          Left = 442.205010000000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line35: TfrxLineView
-          AllowVectorExport = True
-          Left = 529.134200000000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line36: TfrxLineView
-          AllowVectorExport = True
-          Left = 618.708661420000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line37: TfrxLineView
-          AllowVectorExport = True
-          Left = 710.551181100000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line38: TfrxLineView
-          AllowVectorExport = True
-          Left = 812.598950000000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line39: TfrxLineView
-          AllowVectorExport = True
-          Left = 899.528140000000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line40: TfrxLineView
-          AllowVectorExport = True
-          Left = 990.236860000000000000
-          Height = 30.236220472440900000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object SysMemo2: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 343.937230000000000000
+          Left = 3.779530000000000000
           Top = 7.559060000000000000
-          Width = 94.488250000000000000
+          Width = 748.346940000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 6.897650000000000000
+          Width = 748.346940000000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Style = []
           Frame.Typ = []
-          HAlign = haRight
+          HAlign = haCenter
           Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenerimaan."jum_kas">,MasterData1)]')
-          ParentFont = False
-        end
-        object SysMemo3: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 619.842920000000000000
-          Top = 7.559060000000000000
-          Width = 90.708720000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenerimaan."jum_bank">,MasterData1)]')
-          ParentFont = False
-        end
-        object SysMemo4: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 718.110700000000000000
-          Top = 7.559060000000000000
-          Width = 90.708720000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenerimaan."jum_piutang">,MasterData1)]')
-          ParentFont = False
-        end
-        object SysMemo5: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 990.236860000000000000
-          Top = 7.559060000000000000
-          Width = 90.708720000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenerimaan."jum_lain_kre">,MasterData1)]')
+            'Smart Backoffice Automation System Report')
           ParentFont = False
         end
       end
@@ -1869,5 +1184,115 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
       ReadOnly = True
       BlobType = ftMemo
     end
+  end
+  object QDaftarPenerimaan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "p' +
+        'ublic"."vdaftar_penerimaan_kasbank_accurate" a   LEFT JOIN (SELE' +
+        'CT "code_province", "code" as code_kab, "name" as name_kab,  "co' +
+        'de_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)' +
+        'b   ON "left"(code_region, 4)=b.code_kab  LEFT JOIN (SELECT vouc' +
+        'her_no,  STRING_AGG( '#39' No. Faktur '#39' || no_invoice_tax || '#39' Tgl. ' +
+        #39' || date_invoice_tax, '#39', '#39') AS ket_faktur  from t_cash_bank_acc' +
+        'eptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.vou' +
+        'cher_no  where trans_date between '#39'2024-12-18'#39'  and '#39'2024-12-18'#39 +
+        ' '
+      ' ORDER BY trans_date, voucher_no')
+    Left = 860
+    Top = 120
+    object QDaftarPenerimaanvoucher_no: TStringField
+      FieldName = 'voucher_no'
+      Size = 100
+    end
+    object QDaftarPenerimaantrans_date: TDateField
+      FieldName = 'trans_date'
+    end
+    object QDaftarPenerimaancode_cust: TStringField
+      FieldName = 'code_cust'
+      Size = 100
+    end
+    object QDaftarPenerimaanname_cust: TStringField
+      FieldName = 'name_cust'
+      Size = 255
+    end
+    object QDaftarPenerimaancode_region: TStringField
+      FieldName = 'code_region'
+      Size = 50
+    end
+    object QDaftarPenerimaanfor_acceptance: TStringField
+      FieldName = 'for_acceptance'
+      Size = 255
+    end
+    object QDaftarPenerimaandescription: TMemoField
+      FieldName = 'description'
+      BlobType = ftMemo
+    end
+    object QDaftarPenerimaancheque: TMemoField
+      FieldName = 'cheque'
+      BlobType = ftMemo
+    end
+    object QDaftarPenerimaancode_account: TStringField
+      FieldName = 'code_account'
+      Size = 100
+    end
+    object QDaftarPenerimaanname_account: TStringField
+      FieldName = 'name_account'
+      Size = 255
+    end
+    object QDaftarPenerimaantotal: TFloatField
+      FieldName = 'total'
+    end
+    object QDaftarPenerimaancode_karesidenan: TStringField
+      FieldName = 'code_karesidenan'
+      ReadOnly = True
+      Size = 255
+    end
+    object QDaftarPenerimaancode_kab: TStringField
+      FieldName = 'code_kab'
+      ReadOnly = True
+      Size = 255
+    end
+    object QDaftarPenerimaanname_kab: TStringField
+      FieldName = 'name_kab'
+      ReadOnly = True
+      Size = 255
+    end
+    object QDaftarPenerimaanket_faktur: TMemoField
+      FieldName = 'ket_faktur'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+  end
+  object frxDBDDaftarPenerimaan: TfrxDBDataset
+    UserName = 'frxDBDDaftarPenerimaan'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'voucher_no=voucher_no'
+      'trans_date=trans_date'
+      'code_cust=code_cust'
+      'name_cust=name_cust'
+      'code_region=code_region'
+      'for_acceptance=for_acceptance'
+      'description=description'
+      'cheque=cheque'
+      'code_account=code_account'
+      'name_account=name_account'
+      'total=total'
+      'code_karesidenan=code_karesidenan'
+      'code_kab=code_kab'
+      'name_kab=name_kab'
+      'ket_faktur=ket_faktur')
+    DataSet = QDaftarPenerimaan
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 944
+    Top = 120
+  end
+  object dsDaftarPenerimaan: TDataSource
+    DataSet = QDaftarPenerimaan
+    Left = 1041
+    Top = 120
   end
 end

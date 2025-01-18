@@ -39,12 +39,6 @@ type
     Label3: TLabel;
     LabelPelanggan: TLabel;
     Label5: TLabel;
-    Label15: TLabel;
-    Label16: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
-    Label19: TLabel;
-    Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
     Label25: TLabel;
@@ -64,9 +58,6 @@ type
     Edtempo: TEdit;
     Edkode: TEdit;
     Ednama: TEdit;
-    Ednamapkp: TEdit;
-    Ednpwp: TEdit;
-    Ednik: TEdit;
     cbpkp: TCheckBox;
     Ednomorva: TEdit;
     edJenisPelanggan: TRzButtonEdit;
@@ -80,12 +71,6 @@ type
     RzPageControl1: TRzPageControl;
     TabSDetailPel: TRzTabSheet;
     DBGridCustomer: TDBGridEh;
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BSave: TRzBitBtn;
-    BDataProspek: TRzBitBtn;
-    Edautocode: TEdit;
-    btKlasifikasiHargaHargaJual: TRzBitBtn;
     Label33: TLabel;
     Label34: TLabel;
     Edkodeinitial: TEdit;
@@ -113,7 +98,41 @@ type
     Label7: TLabel;
     Label23: TLabel;
     Label31: TLabel;
+    TabPajak: TRzTabSheet;
+    Panel2: TPanel;
+    BBatal: TRzBitBtn;
+    BSave: TRzBitBtn;
+    BDataProspek: TRzBitBtn;
+    Edautocode: TEdit;
+    btKlasifikasiHargaHargaJual: TRzBitBtn;
     RzBitBtn2: TRzBitBtn;
+    Panel7: TPanel;
+    Label37: TLabel;
+    Label38: TLabel;
+    Label39: TLabel;
+    Label40: TLabel;
+    edKd_Jenis_Pajak: TRzButtonEdit;
+    edKd_Negara: TRzButtonEdit;
+    edNm_Negara: TEdit;
+    edNm_Jenis_Pajak: TEdit;
+    Panel8: TPanel;
+    RzBitBtn3: TRzBitBtn;
+    RzBitBtn4: TRzBitBtn;
+    Label19: TLabel;
+    Label18: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label20: TLabel;
+    Ednik: TEdit;
+    Ednpwp: TEdit;
+    Ednamapkp: TEdit;
+    Label41: TLabel;
+    Label42: TLabel;
+    EdNitKu: TEdit;
+    Label43: TLabel;
+    Label44: TLabel;
+    EdPaspor: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -148,6 +167,10 @@ type
     procedure btBackStepClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure RzBitBtn2Click(Sender: TObject);
+    procedure RzBitBtn3Click(Sender: TObject);
+    procedure RzBitBtn4Click(Sender: TObject);
+    procedure edKd_Jenis_PajakButtonClick(Sender: TObject);
+    procedure edKd_NegaraButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -302,7 +325,17 @@ end;
 
 procedure TFNew_Pelanggan.RzBitBtn2Click(Sender: TObject);
 begin
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabAkunPerkiraan;
+end;
+
+procedure TFNew_Pelanggan.RzBitBtn3Click(Sender: TObject);
+begin
   FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabDetailPelanggan;
+end;
+
+procedure TFNew_Pelanggan.RzBitBtn4Click(Sender: TObject);
+begin
+  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabPajak;
 end;
 
 procedure TFNew_Pelanggan.Autocode;
@@ -516,6 +549,12 @@ begin
   edNamaKantorPusat.Text:='';
   edKode_JenisUsaha.Text:='';
   edJenisUsaha.Text:='';
+  edKd_Jenis_Pajak.Text:='';
+  edNm_Jenis_Pajak.Text:='';
+  edKd_Negara.Text:='';
+  edNm_Negara.Text:='';
+  EdNitKu.Text:='0';
+  EdPaspor.Text:='0';
   MemDetailPel.EmptyTable;
 
   with Dm.Qtemp do
@@ -569,6 +608,22 @@ begin
   FMasterData.Caption:='Master Data Jenis Usaha';
   FMasterData.vcall:='jns_usaha_pelanggan';
   FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edKd_Jenis_PajakButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Jenis Pelanggan';
+  FMasterData.vcall:='jenis_pel_pajak';
+  FMasterData.update_grid('code','name','name','t_customer_type_tax','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edKd_NegaraButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Negara';
+  FMasterData.vcall:='negara_pel_pajak';
+  FMasterData.update_grid('code','name','name','t_customer_country_tax','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 
@@ -694,6 +749,12 @@ begin
               ' idprospek='+QuotedStr(inttoSTR(vid_prospek))+', '+
               ' customer_name='+QuotedStr(Ednama.Text)+','+
               ' customer_name_pkp='+QuotedStr(Ednamapkp.Text)+','+
+              ' cust_type_code_tax='+QuotedStr(edKd_Jenis_Pajak.Text)+','+
+              ' cust_type_name_tax='+QuotedStr(edNm_Jenis_Pajak.Text)+','+
+              ' country_code_tax='+QuotedStr(edKd_Negara.Text)+','+
+              ' country_name_tax='+QuotedStr(edNm_Negara.Text)+','+
+              ' no_nitku='+QuotedStr(EdNitKu.Text)+','+
+              ' no_passport='+QuotedStr(EdPaspor.Text)+','+
               ' no_npwp='+QuotedStr(Ednpwp.Text)+','+
               ' no_nik='+QuotedStr(Ednik.Text)+','+
               ' number_va='+QuotedStr(Ednomorva.Text)+','+
@@ -743,8 +804,9 @@ begin
     close;
     sql.clear;
     sql.add(' Insert into t_customer(idprospek,customer_code,customer_name,'+
-            ' customer_name_pkp, no_npwp, no_nik, number_va, '+
-            ' code_region, name_region, postal_code, code_type, name_type, '+
+            ' customer_name_pkp, no_npwp, no_nik, cust_type_code_tax, cust_type_name_tax, '+
+            ' country_code_tax, country_name_tax, no_nitku, no_passport, number_va, '+
+            ' code_region, name_region, postal_code, code_type, no_passport, name_type, '+
             ' account_code, header_code, account_code2, header_code2, initial_code, '+
             ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
@@ -757,6 +819,12 @@ begin
             ' '+QuotedStr(Ednamapkp.Text)+', '+
             ' '+QuotedStr(Ednpwp.Text)+', '+
             ' '+QuotedStr(Ednik.Text)+', '+
+            ' '+QuotedStr(edKd_Jenis_Pajak.Text)+', '+
+            ' '+QuotedStr(edNm_Jenis_Pajak.Text)+', '+
+            ' '+QuotedStr(edKd_Negara.Text)+', '+
+            ' '+QuotedStr(edNm_Negara.Text)+', '+
+            ' '+QuotedStr(EdNitKu.Text)+', '+
+            ' '+QuotedStr(EdPaspor.Text)+', '+
             ' '+QuotedStr(Ednomorva.Text)+', '+
             ' '+QuotedStr(Edkodewilayah.Text)+', '+
             ' '+QuotedStr(Ednamawilayah.Text)+', '+

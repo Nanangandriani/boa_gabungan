@@ -91,6 +91,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure reset_stock;
   end;
 
 var
@@ -103,12 +104,55 @@ implementation
 
 uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin;
 
+procedure TFListPerintahMuat.reset_stock;
+begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT *  '+
+              ' FROM "public"."t_spm_stock_details"  a '+
+              ' WHERE "trans_spm_no"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' ' );
+      open;
+    end;
+
+    if  Dm.Qtemp.RecordCount<>0 then
+    begin
+    Dm.Qtemp.first;
+    while not Dm.Qtemp.Eof do
+    begin
+      //update qty_booking t_item_stock_det  kembalikan stock booking
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
+                  ' "qtyout"=qtyout-'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
+                  ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
+        ExecSQL;
+      end;
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' delete from "public"."t_spm_stock_details" '+
+                  ' WHERE "trans_id"='+QuotedStr(Dm.Qtemp.FieldByName('trans_id').Value)+' ; ';
+        ExecSQL;
+      end;
+
+     Dm.Qtemp.next;
+    end;
+    end;
+end;
+
 procedure TFListPerintahMuat.ActBaruExecute(Sender: TObject);
 begin
   FDataPerintahMuat.Clear;
   FDataPerintahMuat.Autonumber;
   FDataPerintahMuat.MemDetail.EmptyTable;
+  FDataPerintahMuat.trans_id_link:=SelectRow('SELECT uuid_generate_v4()::VARCHAR AS uuid_as_varchar;');
   FDataPerintahMuat.Status:=0;
+  FDataPerintahMuat.stat_proses:=true;
   FDataPerintahMuat.edKodeMuat.Enabled:=true;
   FDataPerintahMuat.ShowModal;
 end;
@@ -132,6 +176,8 @@ begin
                     ' WHERE "notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString);
           ExecSQL;
         end;
+        //Kembalikan Stock
+        reset_stock;
         MessageDlg('Proses Hapus Berhasil..!!',mtInformation,[MBOK],0);
         Dm.Koneksi.Commit;
       Except on E :Exception do
@@ -235,6 +281,7 @@ begin
   //end Detail
 
   FDataPerintahMuat.edKodeMuat.Enabled:=false;
+  FDataPerintahMuat.stat_proses:=true;
   FDataPerintahMuat.Status := 1;
   FDataPerintahMuat.Show;
   //ShowMessage(IntToStr(FDataPerintahMuat.Status));

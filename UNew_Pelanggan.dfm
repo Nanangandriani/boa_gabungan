@@ -3,7 +3,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
   Top = 0
   Caption = 'New Pelanggan'
   ClientHeight = 456
-  ClientWidth = 1258
+  ClientWidth = 1276
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,28 +16,32 @@ object FNew_Pelanggan: TFNew_Pelanggan
   object RzPageControl2: TRzPageControl
     Left = 0
     Top = 0
-    Width = 1258
+    Width = 1276
     Height = 456
     Hint = ''
-    ActivePage = TabDetailPelanggan
+    ActivePage = TabPajak
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 3
     TabOrder = 0
     ExplicitWidth = 1252
     ExplicitHeight = 447
     FixedDimension = 21
     object TabMasterPelanggan: TRzTabSheet
       Caption = 'Master Pelanggan'
+      ExplicitWidth = 1248
+      ExplicitHeight = 422
       object Panel3: TPanel
         Left = 0
         Top = 399
-        Width = 1254
+        Width = 1272
         Height = 32
         Align = alBottom
         TabOrder = 0
+        ExplicitTop = 390
+        ExplicitWidth = 1248
         object btNextStep: TRzBitBtn
-          Left = 1178
+          Left = 1196
           Top = 1
           Height = 30
           Align = alRight
@@ -96,41 +100,44 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1172
         end
       end
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1254
+        Width = 1272
         Height = 399
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1248
+        ExplicitHeight = 390
         object Label14: TLabel
           Left = 247
-          Top = 370
+          Top = 283
           Width = 22
           Height = 15
           Caption = 'Hari'
         end
         object Label13: TLabel
           Left = 48
-          Top = 194
+          Top = 107
           Width = 29
           Height = 15
           Caption = 'Email'
         end
         object Label12: TLabel
           Left = 157
-          Top = 194
+          Top = 107
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label10: TLabel
           Left = 49
-          Top = 370
+          Top = 283
           Width = 54
           Height = 15
           Caption = 'Jth Tempo'
@@ -163,93 +170,51 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Height = 15
           Caption = 'Nama Pelanggan'
         end
-        object Label15: TLabel
-          Left = 48
-          Top = 107
-          Width = 56
-          Height = 15
-          Caption = 'Nama PKP'
-        end
-        object Label16: TLabel
-          Left = 157
-          Top = 107
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label17: TLabel
-          Left = 157
-          Top = 136
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
-        object Label18: TLabel
-          Left = 48
-          Top = 136
-          Width = 34
-          Height = 15
-          Caption = 'NPWP'
-        end
-        object Label19: TLabel
-          Left = 48
-          Top = 165
-          Width = 19
-          Height = 15
-          Caption = 'NIK'
-        end
-        object Label20: TLabel
-          Left = 157
-          Top = 165
-          Width = 3
-          Height = 15
-          Caption = ':'
-        end
         object Label21: TLabel
           Left = 48
-          Top = 223
+          Top = 136
           Width = 36
           Height = 15
           Caption = 'No. VA'
         end
         object Label22: TLabel
           Left = 157
-          Top = 223
+          Top = 136
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label25: TLabel
           Left = 157
-          Top = 312
+          Top = 225
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label26: TLabel
           Left = 48
-          Top = 312
+          Top = 225
           Width = 103
           Height = 15
           Caption = 'Kategori Pelanggan'
         end
         object Label27: TLabel
           Left = 48
-          Top = 341
+          Top = 254
           Width = 52
           Height = 15
           Caption = 'Golongan'
         end
         object Label28: TLabel
           Left = 157
-          Top = 341
+          Top = 254
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btMasterTypePenjualan: TSpeedButton
           Left = 413
-          Top = 309
+          Top = 222
           Width = 23
           Height = 22
           Caption = '+'
@@ -257,21 +222,21 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label1: TLabel
           Left = 48
-          Top = 283
+          Top = 196
           Width = 84
           Height = 15
           Caption = 'Jenis Pelanggan'
         end
         object Label2: TLabel
           Left = 157
-          Top = 283
+          Top = 196
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btJenisPelanggan: TSpeedButton
           Left = 413
-          Top = 280
+          Top = 193
           Width = 23
           Height = 22
           Caption = '+'
@@ -279,7 +244,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object btMasterGolongan: TSpeedButton
           Left = 413
-          Top = 338
+          Top = 251
           Width = 23
           Height = 22
           Caption = '+'
@@ -287,14 +252,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label8: TLabel
           Left = 157
-          Top = 370
+          Top = 283
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btJenisUsaha: TSpeedButton
           Left = 413
-          Top = 249
+          Top = 162
           Width = 23
           Height = 22
           Caption = '+'
@@ -302,14 +267,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label9: TLabel
           Left = 157
-          Top = 252
+          Top = 165
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label11: TLabel
           Left = 48
-          Top = 252
+          Top = 165
           Width = 60
           Height = 15
           Caption = 'Jenis Usaha'
@@ -330,7 +295,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Edemail: TEdit
           Left = 172
-          Top = 191
+          Top = 104
           Width = 313
           Height = 23
           TabOrder = 0
@@ -338,7 +303,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Edtempo: TEdit
           Left = 172
-          Top = 367
+          Top = 280
           Width = 69
           Height = 23
           NumbersOnly = True
@@ -363,83 +328,89 @@ object FNew_Pelanggan: TFNew_Pelanggan
           TabOrder = 3
           OnKeyPress = EdnamaKeyPress
         end
-        object Ednamapkp: TEdit
-          Left = 172
-          Top = 104
-          Width = 313
-          Height = 23
-          CharCase = ecUpperCase
-          TabOrder = 4
-          OnKeyPress = EdnamapkpKeyPress
-        end
-        object Ednpwp: TEdit
-          Left = 172
-          Top = 133
-          Width = 313
-          Height = 23
-          TabOrder = 5
-          OnKeyPress = EdnpwpKeyPress
-        end
-        object Ednik: TEdit
-          Left = 172
-          Top = 162
-          Width = 313
-          Height = 23
-          TabOrder = 6
-          OnKeyPress = EdnikKeyPress
-        end
         object cbpkp: TCheckBox
           Left = 363
           Top = 48
           Width = 142
           Height = 17
           Caption = 'PKP'
-          TabOrder = 7
+          TabOrder = 4
           OnClick = cbpkpClick
         end
         object Ednomorva: TEdit
           Left = 172
-          Top = 220
+          Top = 133
           Width = 313
           Height = 23
-          TabOrder = 8
+          TabOrder = 5
         end
         object edJenisPelanggan: TRzButtonEdit
           Left = 172
-          Top = 280
+          Top = 193
           Width = 240
           Height = 23
           Text = ''
-          TabOrder = 9
+          TabOrder = 6
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edJenisPelangganButtonClick
         end
         object edTypePenjualan: TRzButtonEdit
           Left = 172
-          Top = 309
+          Top = 222
           Width = 240
           Height = 23
           Text = ''
-          TabOrder = 10
+          TabOrder = 7
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edTypePenjualanButtonClick
         end
         object edGolonganPelanggan: TRzButtonEdit
           Left = 172
-          Top = 338
+          Top = 251
           Width = 240
           Height = 23
           Text = ''
-          TabOrder = 11
+          TabOrder = 8
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edGolonganPelangganButtonClick
         end
         object edKode_jnispel: TEdit
           Left = 443
-          Top = 279
+          Top = 192
+          Width = 100
+          Height = 23
+          CharCase = ecUpperCase
+          ReadOnly = True
+          TabOrder = 9
+          Visible = False
+          OnKeyPress = EdkodeKeyPress
+        end
+        object edKode_typejual: TEdit
+          Left = 443
+          Top = 222
+          Width = 100
+          Height = 23
+          ReadOnly = True
+          TabOrder = 10
+          Visible = False
+          OnKeyPress = EdnamaKeyPress
+        end
+        object edKode_gol: TEdit
+          Left = 443
+          Top = 251
+          Width = 100
+          Height = 23
+          ReadOnly = True
+          TabOrder = 11
+          Visible = False
+          OnKeyPress = EdnamapkpKeyPress
+        end
+        object edKode_JenisUsaha: TEdit
+          Left = 443
+          Top = 161
           Width = 100
           Height = 23
           CharCase = ecUpperCase
@@ -448,44 +419,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Visible = False
           OnKeyPress = EdkodeKeyPress
         end
-        object edKode_typejual: TEdit
-          Left = 443
-          Top = 309
-          Width = 100
-          Height = 23
-          ReadOnly = True
-          TabOrder = 13
-          Visible = False
-          OnKeyPress = EdnamaKeyPress
-        end
-        object edKode_gol: TEdit
-          Left = 443
-          Top = 338
-          Width = 100
-          Height = 23
-          ReadOnly = True
-          TabOrder = 14
-          Visible = False
-          OnKeyPress = EdnamapkpKeyPress
-        end
-        object edKode_JenisUsaha: TEdit
-          Left = 443
-          Top = 248
-          Width = 100
-          Height = 23
-          CharCase = ecUpperCase
-          ReadOnly = True
-          TabOrder = 15
-          Visible = False
-          OnKeyPress = EdkodeKeyPress
-        end
         object edJenisUsaha: TRzButtonEdit
           Left = 172
-          Top = 249
+          Top = 162
           Width = 240
           Height = 23
           Text = ''
-          TabOrder = 16
+          TabOrder = 13
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edJenisUsahaButtonClick
@@ -496,20 +436,22 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Width = 185
           Height = 23
           CharCase = ecUpperCase
-          TabOrder = 17
+          TabOrder = 14
           OnKeyPress = EdkodeKeyPress
         end
       end
     end
     object TabDetailPelanggan: TRzTabSheet
       Caption = 'Detail Pelanggan'
+      ExplicitWidth = 1254
       object Panel4: TPanel
         Left = 0
         Top = 394
-        Width = 1254
+        Width = 1272
         Height = 37
         Align = alBottom
         TabOrder = 0
+        ExplicitWidth = 1254
         object btBackStep: TRzBitBtn
           Left = 1
           Top = 1
@@ -572,7 +514,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
           NumGlyphs = 2
         end
         object RzBitBtn1: TRzBitBtn
-          Left = 1178
+          Left = 1196
           Top = 1
           Height = 35
           Align = alRight
@@ -631,12 +573,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1178
         end
       end
       object RzPageControl1: TRzPageControl
         Left = 0
         Top = 137
-        Width = 1254
+        Width = 1272
         Height = 257
         Hint = ''
         ActivePage = TabSDetailPel
@@ -644,13 +587,15 @@ object FNew_Pelanggan: TFNew_Pelanggan
         UseColoredTabs = True
         TabIndex = 0
         TabOrder = 1
+        ExplicitWidth = 1254
         FixedDimension = 21
         object TabSDetailPel: TRzTabSheet
           Caption = 'Detail Alamat Pelanggan'
+          ExplicitWidth = 1250
           object DBGridCustomer: TDBGridEh
             Left = 0
             Top = 0
-            Width = 1250
+            Width = 1268
             Height = 232
             Align = alClient
             DataSource = DSDetailPel
@@ -665,6 +610,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
                 FieldName = 'ALAMAT_UNTUK'
                 Footers = <>
                 Title.Caption = 'Alamat Untuk'
+                Width = 150
               end
               item
                 CellButtons = <>
@@ -743,12 +689,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1254
+        Width = 1272
         Height = 137
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 2
+        ExplicitWidth = 1254
         object Label32: TLabel
           Left = 149
           Top = 20
@@ -860,19 +807,233 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object TabAkunPerkiraan: TRzTabSheet
       Caption = 'Akun Perkiraan'
-      ExplicitWidth = 1248
-      ExplicitHeight = 422
+      ExplicitWidth = 1254
+      object Panel5: TPanel
+        Left = 0
+        Top = 0
+        Width = 1254
+        Height = 337
+        Align = alCustom
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 0
+        object Label36: TLabel
+          Left = 170
+          Top = 57
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label30: TLabel
+          Left = 170
+          Top = 28
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label35: TLabel
+          Left = 36
+          Top = 56
+          Width = 124
+          Height = 15
+          Caption = 'Akun Piutang Lain-Lain'
+        end
+        object Label29: TLabel
+          Left = 36
+          Top = 28
+          Width = 72
+          Height = 15
+          Caption = 'Akun Piutang'
+        end
+        object edAkunPiutang: TRzButtonEdit
+          Left = 185
+          Top = 24
+          Width = 185
+          Height = 23
+          Text = ''
+          TabOrder = 0
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edAkunPiutangButtonClick
+        end
+        object edAkunPiutangLainLain: TRzButtonEdit
+          Left = 185
+          Top = 53
+          Width = 185
+          Height = 23
+          Text = ''
+          TabOrder = 1
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edAkunPiutangLainLainButtonClick
+        end
+        object edNamaPiutangLain: TEdit
+          Left = 376
+          Top = 53
+          Width = 349
+          Height = 23
+          ReadOnly = True
+          TabOrder = 2
+          OnKeyPress = EdemailKeyPress
+        end
+        object edNamaPiutang: TEdit
+          Left = 376
+          Top = 24
+          Width = 349
+          Height = 23
+          ReadOnly = True
+          TabOrder = 3
+          OnKeyPress = EdemailKeyPress
+        end
+      end
+      object Panel8: TPanel
+        Left = 0
+        Top = 394
+        Width = 1272
+        Height = 37
+        Align = alBottom
+        TabOrder = 1
+        ExplicitWidth = 1254
+        object RzBitBtn3: TRzBitBtn
+          Left = 1
+          Top = 1
+          Height = 35
+          Align = alLeft
+          Caption = 'Back'
+          TabOrder = 0
+          OnClick = RzBitBtn3Click
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000620B0000620B00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809
+            090909E8E8E809090909E8E8E8E8E881818181E8E8E881818181E8E8E8E80910
+            101009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8091010
+            1009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E809101010
+            09E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E80910101009
+            E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E80910101009E8
+            E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E80910101009E8
+            E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E80910101009
+            E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E809101010
+            09E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E8091010
+            1009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E80910
+            101009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E809
+            090909E8E8E809090909E8E8E8E8E881818181E8E8E881818181E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+        end
+        object RzBitBtn4: TRzBitBtn
+          Left = 1196
+          Top = 1
+          Height = 35
+          Align = alRight
+          Caption = 'Next'
+          TabOrder = 1
+          OnClick = RzBitBtn4Click
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000520B0000520B00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909E8E8
+            E809090909E8E8E8E8E881818181E8E8E881818181E8E8E8E8E80910101009E8
+            E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E80910101009
+            E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E809101010
+            09E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E8091010
+            1009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E8E80910
+            101009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E80910
+            101009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8091010
+            1009E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E809101010
+            09E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E80910101009
+            E8E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E80910101009E8
+            E80910101009E8E8E8E881ACACAC81E8E881ACACAC81E8E8E8E809090909E8E8
+            E809090909E8E8E8E8E881818181E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+        end
+      end
+    end
+    object TabPajak: TRzTabSheet
+      Caption = 'Pajak'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 397
-        Width = 1254
+        Width = 1272
         Height = 34
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 388
-        ExplicitWidth = 1248
+        ExplicitWidth = 1254
         object BBatal: TRzBitBtn
-          Left = 1178
+          Left = 1196
           Top = 1
           Height = 32
           Align = alRight
@@ -931,10 +1092,9 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1172
         end
         object BSave: TRzBitBtn
-          Left = 1103
+          Left = 1121
           Top = 1
           Height = 32
           Align = alRight
@@ -993,7 +1153,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1097
         end
         object BDataProspek: TRzBitBtn
           Left = 244
@@ -1193,69 +1352,141 @@ object FNew_Pelanggan: TFNew_Pelanggan
           NumGlyphs = 2
         end
       end
-      object Panel5: TPanel
+      object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 1254
+        Width = 1272
         Height = 397
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 1248
-        ExplicitHeight = 388
-        object Label36: TLabel
-          Left = 170
+        ExplicitLeft = 8
+        ExplicitTop = 8
+        ExplicitWidth = 1254
+        ExplicitHeight = 337
+        object Label37: TLabel
+          Left = 130
           Top = 57
           Width = 3
           Height = 15
           Caption = ':'
         end
-        object Label30: TLabel
-          Left = 170
+        object Label38: TLabel
+          Left = 130
           Top = 28
           Width = 3
           Height = 15
           Caption = ':'
         end
-        object Label35: TLabel
+        object Label39: TLabel
           Left = 36
           Top = 56
-          Width = 124
+          Width = 38
           Height = 15
-          Caption = 'Akun Piutang Lain-Lain'
+          Caption = 'Negara'
         end
-        object Label29: TLabel
+        object Label40: TLabel
           Left = 36
           Top = 28
-          Width = 72
+          Width = 84
           Height = 15
-          Caption = 'Akun Piutang'
+          Caption = 'Jenis Pelanggan'
         end
-        object edAkunPiutang: TRzButtonEdit
-          Left = 185
+        object Label19: TLabel
+          Left = 36
+          Top = 143
+          Width = 19
+          Height = 15
+          Caption = 'NIK'
+        end
+        object Label18: TLabel
+          Left = 36
+          Top = 114
+          Width = 34
+          Height = 15
+          Caption = 'NPWP'
+        end
+        object Label15: TLabel
+          Left = 36
+          Top = 85
+          Width = 56
+          Height = 15
+          Caption = 'Nama PKP'
+        end
+        object Label16: TLabel
+          Left = 130
+          Top = 85
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label17: TLabel
+          Left = 130
+          Top = 114
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label20: TLabel
+          Left = 130
+          Top = 143
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label41: TLabel
+          Left = 36
+          Top = 172
+          Width = 33
+          Height = 15
+          Caption = 'NITKU'
+        end
+        object Label42: TLabel
+          Left = 130
+          Top = 172
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label43: TLabel
+          Left = 36
+          Top = 201
+          Width = 43
+          Height = 15
+          Caption = 'PASPOR'
+        end
+        object Label44: TLabel
+          Left = 130
+          Top = 201
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object edKd_Jenis_Pajak: TRzButtonEdit
+          Left = 145
           Top = 24
-          Width = 185
+          Width = 99
           Height = 23
           Text = ''
           TabOrder = 0
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
-          OnButtonClick = edAkunPiutangButtonClick
+          OnButtonClick = edKd_Jenis_PajakButtonClick
         end
-        object edAkunPiutangLainLain: TRzButtonEdit
-          Left = 185
+        object edKd_Negara: TRzButtonEdit
+          Left = 145
           Top = 53
-          Width = 185
+          Width = 99
           Height = 23
           Text = ''
           TabOrder = 1
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
-          OnButtonClick = edAkunPiutangLainLainButtonClick
+          OnButtonClick = edKd_NegaraButtonClick
         end
-        object edNamaPiutangLain: TEdit
-          Left = 376
+        object edNm_Negara: TEdit
+          Left = 250
           Top = 53
           Width = 349
           Height = 23
@@ -1263,14 +1494,55 @@ object FNew_Pelanggan: TFNew_Pelanggan
           TabOrder = 2
           OnKeyPress = EdemailKeyPress
         end
-        object edNamaPiutang: TEdit
-          Left = 376
+        object edNm_Jenis_Pajak: TEdit
+          Left = 250
           Top = 24
           Width = 349
           Height = 23
           ReadOnly = True
           TabOrder = 3
           OnKeyPress = EdemailKeyPress
+        end
+        object Ednik: TEdit
+          Left = 145
+          Top = 140
+          Width = 313
+          Height = 23
+          TabOrder = 4
+          OnKeyPress = EdnikKeyPress
+        end
+        object Ednpwp: TEdit
+          Left = 145
+          Top = 111
+          Width = 313
+          Height = 23
+          TabOrder = 5
+          OnKeyPress = EdnpwpKeyPress
+        end
+        object Ednamapkp: TEdit
+          Left = 145
+          Top = 82
+          Width = 313
+          Height = 23
+          CharCase = ecUpperCase
+          TabOrder = 6
+          OnKeyPress = EdnamapkpKeyPress
+        end
+        object EdNitKu: TEdit
+          Left = 145
+          Top = 169
+          Width = 313
+          Height = 23
+          TabOrder = 7
+          OnKeyPress = EdnikKeyPress
+        end
+        object EdPaspor: TEdit
+          Left = 145
+          Top = 198
+          Width = 313
+          Height = 23
+          TabOrder = 8
+          OnKeyPress = EdnikKeyPress
         end
       end
     end
@@ -1281,7 +1553,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Top = 424
   end
   object MemDetailPel: TMemTableEh
-    Active = True
     Params = <>
     Left = 992
     Top = 424
@@ -1306,12 +1577,15 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object MemDetailPelLONGITUDE: TStringField
       FieldName = 'LONGITUDE'
+      Size = 500
     end
     object MemDetailPelLATITUDE: TStringField
       FieldName = 'LATITUDE'
+      Size = 500
     end
     object MemDetailPelALAMAT_UNTUK: TStringField
       FieldName = 'ALAMAT_UNTUK'
+      Size = 500
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -1329,12 +1603,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
         object LONGITUDE: TMTStringDataFieldEh
           FieldName = 'LONGITUDE'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 500
+          Size = 500
         end
         object LATITUDE: TMTStringDataFieldEh
           FieldName = 'LATITUDE'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 500
+          Size = 500
         end
         object CONTACT_PERSON1: TMTStringDataFieldEh
           FieldName = 'CONTACT_PERSON1'
@@ -1362,7 +1638,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
         object ALAMAT_UNTUK: TMTStringDataFieldEh
           FieldName = 'ALAMAT_UNTUK'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 500
+          Size = 500
         end
       end
       object RecordsList: TRecordsListEh

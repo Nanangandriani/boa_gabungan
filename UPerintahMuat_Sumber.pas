@@ -33,9 +33,9 @@ type
     MemDetailno_reff: TStringField;
     MemDetailkd_barang: TStringField;
     MemDetailnm_barang: TStringField;
-    MemDetailjumlah: TFloatField;
     MemDetailsatuan: TStringField;
     MemDetailpilih: TBooleanField;
+    MemDetailjumlah: TCurrencyField;
     procedure btTampilkanClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure btProsesClick(Sender: TObject);
@@ -45,6 +45,7 @@ type
     { Public declarations }
     procedure RefreshGrid;
     procedure Clear;
+    procedure process_stock;
   end;
 
 var
@@ -54,7 +55,172 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPerintahMuat, UDataModule, UListPerintahMuat, USearch_Supplier;
+uses UDataPerintahMuat, UDataModule, UListPerintahMuat, USearch_Supplier,
+  UHomeLogin;
+
+procedure TFPerintahMuat_Sumber.btProsesClick(Sender: TObject);
+var
+  rec: Integer;
+begin
+  Status:=0;
+  rec:=0;
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if edKodeVendorMuatan.Text='' then
+      begin
+        MessageDlg('Data Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edKodeVendorMuatan.SetFocus;
+      end
+      else if Status = 0 then
+      begin
+         //cek ada yang di tandai tidak
+         MemDetail.First;
+         while not MemDetail.Eof do
+         begin
+           if MemDetail['pilih']=true then
+           begin
+            rec:=rec+1;
+              with Dm.Qtemp do // Cek apa Penjualan Sudah Tag Stock Atau Belum
+              begin
+                close;
+                sql.clear;
+                sql.add(' select a.*, item_stock_code  from "public"."t_selling_stock_details" a '+
+                        ' LEFT JOIN "public"."t_item_stock_det" b ON a.stock_code=b.stock_code  '+
+                        ' where "trans_no"='+QuotedStr(MemDetail['no_reff'])+' and '+
+                        ' "item_code"='+QuotedStr(MemDetail['kd_barang'])+'  ');
+                  open;
+              end;
+
+              if Dm.Qtemp.RecordCount=0 then
+              begin
+                FDataPerintahMuat.stat_proses:=false;
+                exit;
+              end;
+           end;
+         MemDetail.Next;
+         end;
+
+         if rec=0 then
+         begin
+           ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
+           exit;
+         end;
+
+         if (Dm.Qtemp.RecordCount=0) or (FDataPerintahMuat.stat_proses=false) then
+         // Cek apa Penjualan Sudah Tag Stock Atau Belum
+         begin
+           ShowMessage('Data Penjualan '+MemDetail['no_reff']+'-'+MemDetail['kd_barang']+' ' +#13#10+
+                       'Belum Melakukan Pendataan Stock... !!!');
+           FDataPerintahMuat.stat_proses:=false;
+           exit;
+         end;
+
+         //data di tandai kirm ke do
+         if rec>0 then
+         begin
+           FDataPerintahMuat.MemDetail.active:=false;
+           FDataPerintahMuat.MemDetail.active:=true;
+           FDataPerintahMuat.MemDetail.EmptyTable;
+
+           MemDetail.First;
+           while not MemDetail.Eof do
+           begin
+             if MemDetail['pilih']=true then
+             begin
+                  FDataPerintahMuat.MemDetail.insert;
+                  FDataPerintahMuat.MemDetail['nodo']:=MemDetail['notrans'];
+                  FDataPerintahMuat.MemDetail['kode_vendor']:=MemDetail['kode_vendor'];
+                  FDataPerintahMuat.MemDetail['name_vendor']:=MemDetail['name_vendor'];
+                  FDataPerintahMuat.MemDetail['notrans']:=MemDetail['no_reff'];
+                  FDataPerintahMuat.MemDetail['kd_barang']:=MemDetail['kd_barang'];
+                  FDataPerintahMuat.MemDetail['nm_barang']:=MemDetail['nm_barang'];
+                  FDataPerintahMuat.MemDetail['jumlah']:=MemDetail['jumlah'];
+                  FDataPerintahMuat.MemDetail['satuan']:=MemDetail['satuan'];
+                  FDataPerintahMuat.MemDetail.post;
+                  process_stock;
+             end;
+           MemDetail.Next;
+           end;
+           FDataPerintahMuat.edKode_Vendor_Kend.Text:=edKodeVendorMuatan.Text;
+           FDataPerintahMuat.edNama_Vendor_Kend.Text:=edNamaVendorMuatan.Text;
+           Dm.Koneksi.Commit;
+         end;
+      end
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      Close;
+end;
+
+procedure TFPerintahMuat_Sumber.process_stock;
+begin
+  with Dm.Qtemp do // Cek apa Penjualan Sudah Tag Stock Atau Belum
+  begin
+    close;
+    sql.clear;
+    sql.add(' select a.*, item_stock_code  from "public"."t_selling_stock_details" a '+
+            ' LEFT JOIN "public"."t_item_stock_det" b ON a.stock_code=b.stock_code  '+
+            ' where "trans_no"='+QuotedStr(MemDetail['no_reff'])+' and '+
+            ' "item_code"='+QuotedStr(MemDetail['kd_barang'])+'  ');
+      open;
+    end;
+
+  if Dm.Qtemp.RecordCount=0 then
+  begin
+    ShowMessage('Data Penjualan Anda Belum Melakukan Pendataan Stock... !!!');
+    FDataPerintahMuat.stat_proses:=false;
+    exit;
+  end;
+  //update qty_booking t_item_stock_det
+
+  if Dm.Qtemp.RecordCount<>0 then
+  begin
+    Dm.Qtemp.first;
+    while not Dm.Qtemp.Eof do
+    begin
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
+                  ' "qtyout"=qtyout+'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
+                  ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
+        ExecSQL;
+      end;
+
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' INSERT INTO "public"."t_spm_stock_details" '+
+                  ' ("created_at", "created_by", "trans_sell_no", "trans_id", "item_code", '+
+                  ' "stock_code", "qty", "unit", "wh_code", "supp_code", '+
+                  ' "trans_spm_no", "item_stock_code") '+
+                  ' Values( '+
+                  ' NOW(), '+
+                  ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('trans_no').AsString)+', '+
+                  ' '+QuotedStr(FDataPerintahMuat.trans_id_link)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('item_code').AsString)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('stock_code').AsString)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('qty').value)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('unit').AsString)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('wh_code').AsString)+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('supp_code').AsString)+', '+
+                  ' '+QuotedStr('0')+', '+
+                  ' '+QuotedStr(Dm.Qtemp.FieldByName('item_stock_code').AsString)+');';
+        ExecSQL;
+      end;
+     Dm.Qtemp.next;
+    end;
+  end;
+end;
 
 procedure TFPerintahMuat_Sumber.Clear;
 begin
@@ -135,78 +301,6 @@ begin
     end;
 end;
 
-procedure TFPerintahMuat_Sumber.btProsesClick(Sender: TObject);
-var
-  rec: Integer;
-begin
-  Status:=0;
-  rec:=0;
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if edKodeVendorMuatan.Text='' then
-      begin
-        MessageDlg('Data Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKodeVendorMuatan.SetFocus;
-      end
-      else if Status = 0 then
-      begin
-         //cek ada yang di tandai tidak
-         MemDetail.First;
-         while not MemDetail.Eof do
-         begin
-           if MemDetail['pilih']=true then
-           begin
-            rec:=rec+1;
-           end;
-         MemDetail.Next;
-         end;
-
-         if rec=0 then
-         begin
-           ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
-           exit;
-         end;
-
-         //data di tandai kirm ke do
-         if rec>0 then
-         begin
-           FDataPerintahMuat.MemDetail.active:=false;
-           FDataPerintahMuat.MemDetail.active:=true;
-           FDataPerintahMuat.MemDetail.EmptyTable;
-
-           MemDetail.First;
-           while not MemDetail.Eof do
-           begin
-             if MemDetail['pilih']=true then
-             begin
-                  FDataPerintahMuat.MemDetail.insert;
-                  FDataPerintahMuat.MemDetail['nodo']:=MemDetail['notrans'];
-                  FDataPerintahMuat.MemDetail['kode_vendor']:=MemDetail['kode_vendor'];
-                  FDataPerintahMuat.MemDetail['name_vendor']:=MemDetail['name_vendor'];
-                  FDataPerintahMuat.MemDetail['notrans']:=MemDetail['no_reff'];
-                  FDataPerintahMuat.MemDetail['kd_barang']:=MemDetail['kd_barang'];
-                  FDataPerintahMuat.MemDetail['nm_barang']:=MemDetail['nm_barang'];
-                  FDataPerintahMuat.MemDetail['jumlah']:=MemDetail['jumlah'];
-                  FDataPerintahMuat.MemDetail['satuan']:=MemDetail['satuan'];
-                  FDataPerintahMuat.MemDetail.post;
-             end;
-           MemDetail.Next;
-           end;
-           FDataPerintahMuat.edKode_Vendor_Kend.Text:=edKodeVendorMuatan.Text;
-           FDataPerintahMuat.edNama_Vendor_Kend.Text:=edNamaVendorMuatan.Text;
-         end;
-      end
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
-      Close;
-end;
 
 procedure TFPerintahMuat_Sumber.btTampilkanClick(Sender: TObject);
 begin
@@ -232,5 +326,6 @@ begin
         end;
       end;
 end;
+
 
 end.

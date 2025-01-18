@@ -44,7 +44,8 @@ implementation
 
 {$R *.dfm}
 
-uses ulkJSON, UDataModule, UHomeLogin, UMy_Function, UNewDeliveryOrder;
+uses ulkJSON, UDataModule, UHomeLogin, UMy_Function, UNewDeliveryOrder,
+  UDataPerintahMuat;
 
 procedure TFDaftarKendaraan.DBGridDblClick(Sender: TObject);
 begin
@@ -54,6 +55,10 @@ begin
     FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type'];
     FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type_name'];
     FNewDeliveryOrder.spKapasitas.value:=MemMasterData['capacity'];
+  end;
+  if vcall='perintah_muat' then
+  begin
+    FDataPerintahMuat.edNoKendMuatan.Text:=MemMasterData['code'];
   end;
   FDaftarKendaraan.Close;
   FDaftarKendaraan.MemMasterData.EmptyTable;

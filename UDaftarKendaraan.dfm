@@ -82,9 +82,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
       'Memo1')
     TabOrder = 1
     Visible = False
-    ExplicitLeft = 16
-    ExplicitTop = 19
-    ExplicitWidth = 369
+    ExplicitWidth = 694
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData

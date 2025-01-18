@@ -22,6 +22,7 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1274
     object Label38: TLabel
       Left = 124
       Top = 29
@@ -367,14 +368,16 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
       FieldName = 'nm_barang'
       Size = 255
     end
-    object MemDetailjumlah: TFloatField
-      FieldName = 'jumlah'
-    end
     object MemDetailsatuan: TStringField
       FieldName = 'satuan'
     end
     object MemDetailpilih: TBooleanField
       FieldName = 'pilih'
+    end
+    object MemDetailjumlah: TCurrencyField
+      FieldName = 'jumlah'
+      DisplayFormat = '#,##0.##'
+      EditFormat = '#,##0.##'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -416,7 +419,7 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
         end
         object jumlah: TMTNumericDataFieldEh
           FieldName = 'jumlah'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False

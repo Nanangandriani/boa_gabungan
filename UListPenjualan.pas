@@ -130,6 +130,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure reset_stock;
   end;
 
 var
@@ -142,12 +143,54 @@ implementation
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
   UNewKontrakTagihan;
 
+procedure TFDataListPenjualan.reset_stock;
+begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT *  '+
+              ' FROM "public"."t_selling_stock_details"  a '+
+              ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ' );
+      open;
+    end;
+
+    if  Dm.Qtemp.RecordCount<>0 then
+    begin
+    Dm.Qtemp.first;
+    while not Dm.Qtemp.Eof do
+    begin
+      //update qty_booking t_item_stock_det  kembalikan stock booking
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
+                  ' "qty_booking"=qty_booking-'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
+                  ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
+        ExecSQL;
+      end;
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' delete from "public"."t_selling_stock_details" '+
+                  ' WHERE "trans_id"='+QuotedStr(Dm.Qtemp.FieldByName('trans_id').Value)+' ; ';
+        ExecSQL;
+      end;
+
+     Dm.Qtemp.next;
+    end;
+    end;
+end;
+
 procedure TFDataListPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FNew_Penjualan.Clear;
   //FNew_Penjualan.Autonumber;
   FNew_Penjualan.MemDetail.EmptyTable;
-  Status:=0;
+  FNew_Penjualan.trans_id_link:=SelectRow('SELECT uuid_generate_v4()::VARCHAR AS uuid_as_varchar;');
+  FNew_Penjualan.Status:=0;
   FNew_Penjualan.edKode_Trans.Enabled:=true;
   FNew_Penjualan.edSuratJalanTrans.Enabled:=true;
   FNew_Penjualan.ShowModal;
@@ -197,6 +240,8 @@ begin
                     ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
           ExecSQL;
         end;
+        //Kembalikan Stock
+        reset_stock;
         MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
         Dm.Koneksi.Commit;
       Except on E :Exception do
@@ -249,6 +294,7 @@ begin
   with FNew_Penjualan do
   begin
     edKode_Trans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+    edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_trans').AsString)+' ');
     edNomorFaktur.Text:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
     edNomorTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
     edSuratJalanTrans.Text:=Dm.Qtemp.FieldByName('no_traveldoc').AsString;
@@ -271,7 +317,7 @@ begin
   FNew_Penjualan.edNomorTrans.Enabled:=false;
   FNew_Penjualan.edSuratJalanTrans.Enabled:=false;
   FNew_Penjualan.Show;
-  Status := 1;
+  FNew_Penjualan.Status := 1;
 end;
 
 procedure TFDataListPenjualan.dxBarLargeButton3Click(Sender: TObject);

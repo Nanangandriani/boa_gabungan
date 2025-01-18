@@ -19,10 +19,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1389
     Height = 574
     Hint = ''
-    ActivePage = TabDataMuatan
+    ActivePage = TabDataBiaya
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1383
@@ -671,6 +671,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'jumlah'

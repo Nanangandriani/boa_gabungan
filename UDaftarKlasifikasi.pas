@@ -809,7 +809,7 @@ procedure TFDaftarKlasifikasi.DBGridDetailColumns1CellButtons0Click(
 begin
   FMasterData.Caption:='Master Data Barang';
   FMasterData.vcall:='m_klasifikasi';
-  FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE category_id='+QuotedStr(edkd_kategori.Text)+' and	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 

@@ -11,7 +11,6 @@ object FDataBankGaransi: TFDataBankGaransi
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnShow = FormShow
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
@@ -20,9 +19,8 @@ object FDataBankGaransi: TFDataBankGaransi
     Height = 34
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -244
-    ExplicitTop = 397
-    ExplicitWidth = 1254
+    ExplicitTop = 462
+    ExplicitWidth = 1004
     object BBatal: TRzBitBtn
       Left = 934
       Top = 1
@@ -82,7 +80,7 @@ object FDataBankGaransi: TFDataBankGaransi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1178
+      ExplicitLeft = 928
     end
     object BSave: TRzBitBtn
       Left = 859
@@ -91,6 +89,7 @@ object FDataBankGaransi: TFDataBankGaransi
       Align = alRight
       Caption = 'Save'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -143,7 +142,7 @@ object FDataBankGaransi: TFDataBankGaransi
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1103
+      ExplicitLeft = 853
     end
   end
   object Panel6: TPanel
@@ -155,6 +154,7 @@ object FDataBankGaransi: TFDataBankGaransi
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 1004
     object LabelPelanggan: TLabel
       Left = 24
       Top = 19
@@ -235,15 +235,13 @@ object FDataBankGaransi: TFDataBankGaransi
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitLeft = -244
-    ExplicitTop = 137
-    ExplicitWidth = 1254
-    ExplicitHeight = 257
+    ExplicitWidth = 1004
+    ExplicitHeight = 349
     FixedDimension = 21
     object TabSDetail: TRzTabSheet
       Caption = 'Data Bank Garansi'
-      ExplicitWidth = 1250
-      ExplicitHeight = 232
+      ExplicitWidth = 1000
+      ExplicitHeight = 324
       object DBGrid: TDBGridEh
         Left = 0
         Top = 0

@@ -46,7 +46,6 @@ type
     Label1: TLabel;
     Label2: TLabel;
     edSuratJalanTrans: TEdit;
-    edNomorFaktur: TRzButtonEdit;
     Label15: TLabel;
     edNoReff: TEdit;
     Label16: TLabel;
@@ -74,11 +73,14 @@ type
     MemDetailMENEJ_FEE_PERSEN: TFloatField;
     MemDetailMENEJ_FEE_NILAI: TFloatField;
     bt_re_calculate: TRzBitBtn;
+    Label6: TLabel;
+    Label7: TLabel;
+    edNomorFaktur: TEdit;
+    edNama_Trans: TEdit;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
     procedure btHitungPotonganClick(Sender: TObject);
-    procedure edNomorFakturButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btMasterSumberClick(Sender: TObject);
     procedure dtTanggalChange(Sender: TObject);
@@ -95,15 +97,17 @@ type
     procedure DBGridDetailColumns3EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure bt_re_calculateClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
-  tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand : real;
+  tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah : real;
   public
     { Public declarations }
-    stat_menej_fee_jual : Boolean;
+    stat_menej_fee_jual, stat_proses : Boolean;
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
-    strtgl, strbulan, strtahun: string;
+    strtgl, strbulan, strtahun, trans_id_link: string;
     Year, Month, Day: Word;
+    status: integer;
     procedure Clear;
     procedure Save;
     procedure SimpanTempDetail;
@@ -113,11 +117,13 @@ type
     procedure Autonumber;
     procedure HitungGrid;
     procedure UpdateDataMenejFee;
+    procedure reset_stock;
+    procedure check_stock;
+    procedure proses_stock;
   end;
 
 var
   FNew_Penjualan: TFNew_Penjualan;
-  status: integer;
   AClass: TPersistentClass;
   AFormClass: TFormClass;
   AForm: TForm;
@@ -171,6 +177,92 @@ begin
             ' WHERE "no_invoice_tax"='+QuotedStr(FNew_Penjualan.vHasilGetFakturPajak)+';';
   ExecSQL;
   end;
+end;
+
+procedure TFNew_Penjualan.check_stock;
+begin
+  if FNew_Penjualan.Status = 0  then //kondisi baru
+  begin
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' select  case when sum(qty) is null then 0 else sum(qty) end '+
+                ' total_stock from "public"."t_selling_stock_details" '+
+                ' WHERE "trans_id"='+QuotedStr(FNew_Penjualan.trans_id_link)+'; ';
+      ExecSQL;
+    end;
+  end;
+
+  if FNew_Penjualan.Status = 1  then //kondisi update
+  begin
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' select  case when sum(qty) is null then 0 else sum(qty) end '+
+                ' total_stock from "public"."t_selling_stock_details" '+
+                ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+' ; ';
+      ExecSQL;
+    end;
+  end;
+end;
+
+procedure TFNew_Penjualan.proses_stock;
+begin
+  if FNew_Penjualan.Status = 0  then //kondisi baru
+  begin
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' update "public"."t_selling_stock_details" set '+
+                ' "trans_no"='+QuotedStr(edNomorTrans.Text)+' '+
+                ' WHERE "trans_id"='+QuotedStr(FNew_Penjualan.trans_id_link)+' ; ';
+      ExecSQL;
+    end;
+  end;
+end;
+
+procedure TFNew_Penjualan.reset_stock;
+begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT *  '+
+              ' FROM "public"."t_selling_stock_details"  a '+
+              ' WHERE "trans_no"=''0'' '+
+              ' and "trans_id"='+QuotedStr(FNew_Penjualan.trans_id_link)+' ' );
+      open;
+    end;
+
+    if  Dm.Qtemp.RecordCount<>0 then
+    begin
+    Dm.Qtemp.first;
+      while not Dm.Qtemp.Eof do
+      begin
+        //update qty_booking t_item_stock_det  kembalikan stock booking
+        with dm.Qtemp1 do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
+                    ' "qty_booking"=qty_booking-'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
+                    ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
+          ExecSQL;
+        end;
+        with dm.Qtemp1 do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' delete from "public"."t_selling_stock_details" '+
+                    ' WHERE "trans_id"='+QuotedStr(Dm.Qtemp.FieldByName('trans_id').Value)+' ; ';
+          ExecSQL;
+        end;
+      Dm.Qtemp.next;
+      end;
+    end;
 end;
 
 procedure TFNew_Penjualan.UpdateDataMenejFee;
@@ -367,7 +459,9 @@ begin
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
+  stat_proses:=true;
   //refresh grid
+  tot_jumlah:=0;
   tot_dpp:=0;
   tot_ppn:=0;
   tot_pph:=0;
@@ -379,6 +473,7 @@ begin
   while not MemDetail.Eof do
   begin
     HitungGrid;
+      tot_jumlah:=tot_jumlah+MemDetail['JUMLAH'];
       tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
       tot_ppn:=tot_ppn+MemDetail['PPN_NILAI'];
       tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
@@ -387,22 +482,35 @@ begin
       tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
     MemDetail.Next;
   end;
-  UpdateDataMenejFee;
+  UpdateDataMenejFee; //refresh kalkulasi jika ada menajmenfee
+                            
+  //cek balancestock
+  check_stock; 
+    if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
+    begin
+      ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
+      //ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
+      stat_proses:=false;
+      Exit;
+    end;
+  //  
 
-  MessageDlg('Buatkan Validasi Cek Piutang Dengan Berbagai Jenis(Dengan SP)..!!',mtInformation,[MBOK],0);
+  //MessageDlg('Buatkan Validasi Cek Piutang Dengan Berbagai Jenis(Dengan SP)..!!',mtInformation,[MBOK],0);
+    if stat_proses=true then
+    begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
       if edKode_Pelanggan.Text='' then
       begin
         MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKode_Pelanggan.SetFocus;
+        edNomorTrans.SetFocus;
       end
-      else if edNomorFaktur.Text='' then
+      {else if edNomorFaktur.Text='' then
       begin
         MessageDlg('Data Faktur Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edNomorFaktur.SetFocus;
-      end
+        edNomorTrans.SetFocus;
+      end }
       else if spJatuhTempo.Value=0 then
       begin
         MessageDlg('Jumlah Tempo Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
@@ -413,18 +521,18 @@ begin
         //MessageDlg('Nama Kabupaten Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edNoReff.Text:='-';
       end
-      else if Status = 0 then
+      else if FNew_Penjualan.Status = 0 then
       begin
       FNew_Penjualan.Autonumber;
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edNomorTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
-        UpdateFakturPajak(IntToStr(Year));
+        //UpdateFakturPajak(IntToStr(Year));
         Save;
         Dm.Koneksi.Commit;
       end;
       end
-      else if Status = 1 then
+      else if FNew_Penjualan.Status = 1 then
       begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
@@ -440,6 +548,7 @@ begin
           end;
         end;
       end;
+    end;
 end;
 
 procedure TFNew_Penjualan.btAddDetailClick(Sender: TObject);
@@ -521,9 +630,11 @@ end;
 procedure TFNew_Penjualan.Clear;
 begin
   edKode_Trans.Clear;
+  edNama_Trans.Clear;
   edNomorFaktur.Clear;
   edNomorTrans.Clear;
   edSuratJalanTrans.Clear;
+  edNomorFaktur.Clear;
   dtTanggal.Date:=Now();
   edKode_Pelanggan.Clear;
   edNama_Pelanggan.Clear;
@@ -578,6 +689,18 @@ begin
   FListStockBarang.vcall:='penjualan';
   FListStockBarang.kd_barang_request:=MemDetail['KD_ITEM'];
   FListStockBarang.qty_request:=MemDetail['JUMLAH'];
+  if FNew_Penjualan.Status = 0  then //kondisi baru
+  begin                           
+    FListStockBarang.Clear;
+    FListStockBarang.RefreshGrid_Update;  
+    FListStockBarang.btReset.Visible:=false;
+  end;
+  if FNew_Penjualan.Status = 1  then //kondisi update
+  begin                        
+    FListStockBarang.Clear;
+    FListStockBarang.RefreshGrid_Update;
+    FListStockBarang.btReset.Visible:=true;
+  end;
   FListStockBarang.ShowModal;
 end;
 
@@ -619,7 +742,7 @@ begin
   FMasterData.vcall:='kode_trans_penjualan';
   FMasterData.update_grid('code','name','description','t_sales_transaction_source','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.ShowModal;
-  GetFakturPajak(IntToStr(Year));
+  //GetFakturPajak(IntToStr(Year));
 end;
 
 procedure TFNew_Penjualan.edNama_PelangganButtonClick(Sender: TObject);
@@ -629,11 +752,10 @@ begin
   Fbrowse_data_pelanggan.ShowModal;
 end;
 
-procedure TFNew_Penjualan.edNomorFakturButtonClick(Sender: TObject);
+procedure TFNew_Penjualan.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Fbrowse_faktur_pajak.Caption:='Master Data Faktur Pajak';
-  Fbrowse_faktur_pajak.vcall:='penjualan';
-  Fbrowse_faktur_pajak.ShowModal;
+  //Hapus stock booking jika batal simpan
+  reset_stock;
 end;
 
 procedure TFNew_Penjualan.FormShow(Sender: TObject);
@@ -641,10 +763,11 @@ var
   Year, Month, Day: Word;
 begin
   edKode_Trans.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
+  edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
   DecodeDate(dtTanggal.Date, Year, Month, Day);
   dtTanggal.Date:=now();
   RefreshGrid;
-  GetFakturPajak(IntToStr(Year));
+  //GetFakturPajak(IntToStr(Year));
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
     btMasterSumber.Visible:=false;
@@ -719,6 +842,7 @@ begin
     ExecSQL;
   end;
   InsertDetailJU;
+  proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -760,6 +884,7 @@ begin
       ExecSQL;
     end;
     InsertDetailJU;
+    proses_stock;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Close;
     FNew_Penjualan.Refresh;

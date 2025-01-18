@@ -99,7 +99,7 @@ begin
        sql.Text:=' select a.customer_code, customer_name, email, address, contact_person1 as telp, '+
                  ' payment_term from t_customer a '+
                  ' LEFT JOIN (select customer_code, address, contact_person1 '+
-                   ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
+                   ' from t_customer_address where code_details=''001'') b ON a.customer_code=b.customer_code '+
                  ' where deleted_at is null order by created_at Desc ';
        open;
    end;
@@ -169,6 +169,12 @@ begin
     Ednamapkp.Text:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
     Ednpwp.Text:=Dm.Qtemp.FieldByName('no_npwp').AsString;
     Ednik.Text:=Dm.Qtemp.FieldByName('no_nik').AsString;
+    edKd_Jenis_Pajak.Text:=Dm.Qtemp.FieldByName('cust_type_code_tax').AsString;
+    edNm_Jenis_Pajak.Text:=Dm.Qtemp.FieldByName('cust_type_name_tax').AsString;
+    edKd_Negara.Text:=Dm.Qtemp.FieldByName('country_code_tax').AsString;
+    edNm_Negara.Text:=Dm.Qtemp.FieldByName('country_name_tax').AsString;
+    EdNitKu.Text:=Dm.Qtemp.FieldByName('no_nitku').AsString;
+    EdPaspor.Text:=Dm.Qtemp.FieldByName('no_passport').AsString;
     Ednomorva.Text:=Dm.Qtemp.FieldByName('number_va').AsString;
     Edkodewilayah.Text:=Dm.Qtemp.FieldByName('code_region').AsString;
     Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
@@ -258,7 +264,7 @@ begin
     Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
     Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
   end;
-  //FDataBankGaransi.RefreshGrid;
+  FDataBankGaransi.RefreshGrid;
   FDataBankGaransi.show;
   end;
 end;

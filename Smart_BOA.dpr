@@ -236,7 +236,8 @@ uses
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
   UDaftarKendaraan in 'UDaftarKendaraan.pas' {FDaftarKendaraan},
   UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi},
-  UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya};
+  UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya},
+  UDashboard2 in 'UDashboard2.pas' {FDashboard2};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -370,6 +371,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKendaraan, FDaftarKendaraan);
   Application.CreateForm(TFDataBankGaransi, FDataBankGaransi);
   Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
+  Application.CreateForm(TFDashboard2, FDashboard2);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

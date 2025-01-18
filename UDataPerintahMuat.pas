@@ -56,11 +56,17 @@ type
     procedure btAddDetailClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure dtMuatChange(Sender: TObject);
+    procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    strtgl, strbulan, strtahun: string;
+    tot_jumlah : real;
+    stat_proses : Boolean;
+    strtgl, strbulan, strtahun, trans_id_link: string;
     Year, Month, Day: Word;
     Status: Integer;
     procedure Clear;
@@ -68,6 +74,9 @@ type
     procedure Save;
     procedure Update;
     procedure InsertDetail;
+    procedure reset_stock;
+    procedure check_stock;
+    procedure proses_stock;
   end;
 
 var
@@ -78,7 +87,93 @@ implementation
 {$R *.dfm}
 
 uses USearch_Supplier, UPerintahMuat_Sumber, UDataModule, UHomeLogin,
-  UMy_Function, UListPerintahMuat;
+  UMy_Function, UListPerintahMuat, UDaftarKendaraan;
+
+procedure TFDataPerintahMuat.proses_stock;
+begin
+  if FDataPerintahMuat.Status = 0  then //kondisi baru
+  begin
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' update "public"."t_spm_stock_details" set '+
+                ' "trans_spm_no"='+QuotedStr(edKodeMuat.Text)+' '+
+                ' WHERE "trans_id"='+QuotedStr(FDataPerintahMuat.trans_id_link)+' ; ';
+      ExecSQL;
+    end;
+  end;
+end;
+
+procedure TFDataPerintahMuat.reset_stock;
+begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT *  '+
+              ' FROM "public"."t_spm_stock_details"  a '+
+              ' WHERE "trans_spm_no"=''0'' '+
+              ' and "trans_id"='+QuotedStr(FDataPerintahMuat.trans_id_link)+' ' );
+      open;
+    end;
+
+    if  Dm.Qtemp.RecordCount<>0 then
+    begin
+    Dm.Qtemp.first;
+      while not Dm.Qtemp.Eof do
+      begin
+        //update qtyout t_item_stock_det  kembalikan stock qtyout
+        with dm.Qtemp1 do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
+                    ' "qtyout"=qtyout-'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
+                    ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
+          ExecSQL;
+        end;
+        with dm.Qtemp1 do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' delete from "public"."t_spm_stock_details" '+
+                    ' WHERE "trans_id"='+QuotedStr(Dm.Qtemp.FieldByName('trans_id').Value)+' ; ';
+          ExecSQL;
+        end;
+      Dm.Qtemp.next;
+      end;
+    end;
+end;
+
+procedure TFDataPerintahMuat.check_stock;
+begin
+  if FDataPerintahMuat.Status = 0  then //kondisi baru
+  begin
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' select  case when sum(qty) is null then 0 else sum(qty) end '+
+                ' total_stock from "public"."t_spm_stock_details" '+
+                ' WHERE "trans_id"='+QuotedStr(FDataPerintahMuat.trans_id_link)+'; ';
+      ExecSQL;
+    end;
+  end;
+
+  if FDataPerintahMuat.Status = 1  then //kondisi update
+  begin
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' select  case when sum(qty) is null then 0 else sum(qty) end '+
+                ' total_stock from "public"."t_spm_stock_details" '+
+                ' WHERE "trans_spm_no"='+QuotedStr(edKodeMuat.Text)+' ; ';
+      ExecSQL;
+    end;
+  end;
+end;
 
 procedure TFDataPerintahMuat.Save;
 begin
@@ -109,6 +204,7 @@ begin
     ExecSQL;
   end;
   InsertDetail;
+  proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -139,6 +235,7 @@ begin
       ExecSQL;
     end;
     InsertDetail;
+    proses_stock;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Close;
     FListPerintahMuat.Refresh;
@@ -196,6 +293,11 @@ begin
 end;
 
 
+procedure TFDataPerintahMuat.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure TFDataPerintahMuat.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
@@ -205,7 +307,27 @@ begin
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
   //refresh grid
+  tot_jumlah:=0;
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+      tot_jumlah:=tot_jumlah+MemDetail['jumlah'];
+    MemDetail.Next;
+  end;
+
+  //cek balancestock
+  check_stock;
+    if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
+    begin
+      ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
+      ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
+      stat_proses:=false;
+      Exit;
+    end;
+  //
       //ShowMessage(IntToStr(FDataPerintahMuat.Status));
+    if stat_proses=true then
+    begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
@@ -260,6 +382,7 @@ begin
           end;
         end;
       end;
+    end;
 end;
 
 procedure TFDataPerintahMuat.btAddDetailClick(Sender: TObject);
@@ -277,7 +400,16 @@ begin
   edNama_Vendor_Kend.Clear;
   edNoKendMuatan.Clear;
   MemKeterangan.Clear;
+  MemDetail.active:=false;
+  MemDetail.active:=true;
   MemDetail.EmptyTable;
+end;
+
+procedure TFDataPerintahMuat.DBGridDetailColumns0EditButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+  FPerintahMuat_Sumber.Clear;
+  FPerintahMuat_Sumber.ShowModal;
 end;
 
 procedure TFDataPerintahMuat.dtMuatChange(Sender: TObject);
@@ -299,7 +431,17 @@ end;
 
 procedure TFDataPerintahMuat.edNoKendMuatanButtonClick(Sender: TObject);
 begin
-  ShowMessage('Master Kendaraan Ready Dimana ??');
+  //ShowMessage('Master Kendaraan Ready Dimana ??');
+  FDaftarKendaraan.vcall:='perintah_muat';
+  FDaftarKendaraan.show;
+  FDaftarKendaraan.GetDataViaAPI;
+end;
+
+procedure TFDataPerintahMuat.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  //Hapus stock booking jika batal simpan
+  reset_stock;
 end;
 
 procedure TFDataPerintahMuat.Autonumber;

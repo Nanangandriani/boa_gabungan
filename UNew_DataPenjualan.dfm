@@ -11,19 +11,19 @@ object FNew_Penjualan: TFNew_Penjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 1257
-    Height = 277
+    Height = 312
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1251
-    ExplicitHeight = 262
+    ExplicitHeight = 277
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -40,120 +40,134 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label39: TLabel
       Left = 19
-      Top = 125
+      Top = 46
       Width = 91
       Height = 15
       Caption = 'Nama Pelanggan'
     end
     object Label38: TLabel
       Left = 116
-      Top = 125
+      Top = 46
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
       Left = 117
-      Top = 152
+      Top = 181
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
       Left = 20
-      Top = 152
+      Top = 181
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label14: TLabel
       Left = 197
-      Top = 151
+      Top = 180
       Width = 22
       Height = 15
       Caption = 'Hari'
     end
     object Label8: TLabel
       Left = 19
-      Top = 180
+      Top = 209
       Width = 41
       Height = 15
       Caption = 'Sumber'
     end
     object Label9: TLabel
       Left = 117
-      Top = 180
+      Top = 209
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 20
-      Top = 98
+      Top = 72
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
     object Label11: TLabel
       Left = 117
-      Top = 98
+      Top = 72
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label13: TLabel
       Left = 118
-      Top = 45
+      Top = 99
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 20
-      Top = 45
+      Top = 99
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label1: TLabel
       Left = 21
-      Top = 72
+      Top = 126
       Width = 78
       Height = 15
       Caption = 'No. Surat Jalan'
     end
     object Label2: TLabel
       Left = 118
-      Top = 72
+      Top = 126
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label15: TLabel
       Left = 117
-      Top = 207
+      Top = 236
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label16: TLabel
       Left = 19
-      Top = 207
+      Top = 236
       Width = 43
       Height = 15
       Caption = 'No. Reff'
     end
     object btMasterSumber: TSpeedButton
       Left = 320
-      Top = 178
+      Top = 207
       Width = 23
       Height = 22
       Caption = '+'
       OnClick = btMasterSumberClick
     end
+    object Label6: TLabel
+      Left = 118
+      Top = 154
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label7: TLabel
+      Left = 21
+      Top = 154
+      Width = 55
+      Height = 15
+      Caption = 'No. Faktur'
+    end
     object edNama_Pelanggan: TRzButtonEdit
-      Left = 131
-      Top = 122
+      Left = 132
+      Top = 43
       Width = 344
       Height = 23
       Text = ''
@@ -164,15 +178,15 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edKode_Pelanggan: TEdit
       Left = 481
-      Top = 122
+      Top = 43
       Width = 200
       Height = 23
       TabOrder = 1
       Visible = False
     end
     object spJatuhTempo: TSpinEdit
-      Left = 131
-      Top = 149
+      Left = 132
+      Top = 178
       Width = 60
       Height = 24
       MaxValue = 0
@@ -181,8 +195,8 @@ object FNew_Penjualan: TFNew_Penjualan
       Value = 0
     end
     object edNamaSumber: TRzButtonEdit
-      Left = 131
-      Top = 177
+      Left = 132
+      Top = 206
       Width = 185
       Height = 23
       Text = ''
@@ -193,15 +207,15 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edKodeSumber: TEdit
       Left = 362
-      Top = 175
+      Top = 204
       Width = 100
       Height = 23
       TabOrder = 4
       Visible = False
     end
     object dtTanggal: TRzDateTimePicker
-      Left = 131
-      Top = 95
+      Left = 132
+      Top = 69
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -212,7 +226,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object btAddDetail: TRzBitBtn
       Left = 20
-      Top = 238
+      Top = 267
       Width = 116
       Height = 30
       Align = alCustom
@@ -274,14 +288,14 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNomorTrans: TEdit
       Left = 132
-      Top = 42
+      Top = 96
       Width = 250
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 7
     end
     object edKode_Trans: TRzButtonEdit
-      Left = 133
+      Left = 132
       Top = 16
       Width = 59
       Height = 23
@@ -292,32 +306,37 @@ object FNew_Penjualan: TFNew_Penjualan
       OnButtonClick = edKode_TransButtonClick
     end
     object edSuratJalanTrans: TEdit
-      Left = 133
-      Top = 69
+      Left = 132
+      Top = 123
       Width = 250
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 9
     end
-    object edNomorFaktur: TRzButtonEdit
-      Left = 198
-      Top = 16
+    object edNoReff: TEdit
+      Left = 132
+      Top = 233
       Width = 250
       Height = 23
-      Text = ''
+      CharCase = ecUpperCase
       TabOrder = 10
-      Visible = False
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      OnButtonClick = edNomorFakturButtonClick
     end
-    object edNoReff: TEdit
-      Left = 131
-      Top = 204
+    object edNomorFaktur: TEdit
+      Left = 132
+      Top = 151
       Width = 250
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 11
+    end
+    object edNama_Trans: TEdit
+      Left = 197
+      Top = 16
+      Width = 279
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 12
     end
   end
   object Panel2: TPanel
@@ -580,9 +599,9 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 277
+    Top = 312
     Width = 1257
-    Height = 285
+    Height = 250
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
@@ -593,12 +612,12 @@ object FNew_Penjualan: TFNew_Penjualan
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1247
-      ExplicitHeight = 266
+      ExplicitHeight = 260
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 1253
-        Height = 260
+        Height = 225
         Align = alClient
         DataSource = DSDetail
         DynProps = <>

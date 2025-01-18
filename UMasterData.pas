@@ -789,6 +789,16 @@ begin
     FNew_Pelanggan.KodeHeaderPiutangLain:=MemMasterData['KD_MASTER'];
     FNew_Pelanggan.edNamaPiutangLain.Text:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='jenis_pel_pajak' then
+  begin
+    FNew_Pelanggan.edKd_Jenis_Pajak.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edNm_Jenis_Pajak.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='negara_pel_pajak' then
+  begin
+    FNew_Pelanggan.edKd_Negara.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edNm_Negara.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='kantor_pusat' then
   begin
     FNew_Pelanggan.edKodeKantorPusat.Text:=MemMasterData['KD_MASTER'];
