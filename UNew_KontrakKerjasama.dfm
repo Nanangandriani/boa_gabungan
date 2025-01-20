@@ -587,7 +587,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Columns = <
       item
         CellButtons = <>
-        Color = clInfoBk
         DynProps = <>
         EditButtons = <
           item
@@ -678,7 +677,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
       end
       item
         CellButtons = <>
-        Color = clInfoBk
         DynProps = <>
         EditButtons = <>
         FieldName = 'Nm_material'
@@ -741,7 +739,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
       end
       item
         CellButtons = <>
-        Color = clInfoBk
         DynProps = <>
         EditButtons = <>
         FieldName = 'satuan'
@@ -762,7 +759,6 @@ object FNewKontrak_ks: TFNewKontrak_ks
       end
       item
         CellButtons = <>
-        Color = clInfoBk
         DisplayFormat = '#,##0.0000'
         DynProps = <>
         EditButtons = <>

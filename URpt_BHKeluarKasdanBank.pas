@@ -29,7 +29,7 @@ uses
 
 type
   TFRpt_BHKeluarKasdanBank = class(TForm)
-    frxReport1: TfrxReport;
+    rpt: TfrxReport;
     QKasBank: TUniQuery;
     QKasBankvoucher: TStringField;
     QKasBankket: TMemoField;
@@ -67,6 +67,8 @@ type
     DtMulai: TcxBarEditItem;
     DtSelesai: TcxBarEditItem;
     DBGridEh1: TDBGridEh;
+    Dskasbank: TDataSource;
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,6 +81,19 @@ var
 implementation
 
 {$R *.dfm}
+
+uses UMy_Function;
+
+procedure TFRpt_BHKeluarKasdanBank.dxBarLargeButton1Click(Sender: TObject);
+begin
+if DtMulai.EditValue<> null then
+begin
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BHKeluar_KasdanBank.Fr3');
+    SetMemo(Rpt,'MemoPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
+    rpt.ShowReport();
+end else
+  ShowMessage('Tanggal tidak boleh kosong');
+end;
 
 initialization
 RegisterClass(TFRpt_BHKeluarKasdanBank);

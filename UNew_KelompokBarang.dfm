@@ -21,9 +21,10 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitWidth = 572
+    ExplicitTop = 181
+    ExplicitWidth = 630
     object BTutup: TRzBitBtn
-      Left = 562
+      Left = 558
       Top = 1
       Height = 39
       Align = alRight
@@ -82,10 +83,10 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 496
+      ExplicitLeft = 554
     end
     object BSimpan: TRzBitBtn
-      Left = 412
+      Left = 408
       Top = 1
       Height = 39
       Align = alRight
@@ -144,7 +145,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 346
+      ExplicitLeft = 404
     end
     object BCari: TRzBitBtn
       Left = 1
@@ -209,7 +210,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 337
+      Left = 333
       Top = 1
       Height = 39
       Align = alRight
@@ -268,10 +269,10 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 271
+      ExplicitLeft = 329
     end
     object BRefresh: TRzBitBtn
-      Left = 487
+      Left = 483
       Top = 1
       Height = 39
       Align = alRight
@@ -330,7 +331,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 421
+      ExplicitLeft = 479
     end
   end
   object DBGridEh7: TDBGridEh
@@ -414,7 +415,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 572
+    ExplicitWidth = 630
+    ExplicitHeight = 181
     object Label6: TLabel
       Left = 106
       Top = 17

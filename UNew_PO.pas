@@ -143,6 +143,7 @@ type
     MemItempopemb_ppn_us: TFloatField;
     MemItempopemb_dpp: TCurrencyField;
     MemItempokd_gudang: TStringField;
+    Edheader: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -201,6 +202,7 @@ type
      procedure load_currency;
      procedure load_ref_po;
      procedure load_category;
+     procedure load;
   end;
 
 //function FNew_PO: TFNew_PO;
@@ -227,6 +229,51 @@ begin
   else
     Application.CreateForm(TFNew_PO, Result);
 end;}
+
+procedure TFNew_Po.load;
+begin
+    FNew_PO.EdNm_supp.Clear;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Text:='select * from t_supplier order by supplier_name Asc';
+      ExecSQL;
+    end;
+    Dm.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+      // FNew_PO.EdNm_supp.Items.Add(Dm.Qtemp.FieldByName('nm_supplier').AsString);
+       Dm.Qtemp.Next;
+    end;
+
+    FNew_PO.cb_gudang.Clear;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Text:='select * from t_wh order by wh_name Asc';
+      ExecSQL;
+    end;
+    Dm.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+      FNew_PO.cb_gudang.Items.Add(Dm.Qtemp.FieldByName('wh_name').AsString);
+      Dm.Qtemp.Next;
+    end;
+
+    FNew_PO.edsbu.Clear;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Text:='select sbu_code from t_sbu order by sbu_code Asc';
+      ExecSQL;
+    end;
+    Dm.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+      FNew_PO.edsbu.Items.Add(Dm.Qtemp.FieldByName('sbu_code').AsString);
+      Dm.Qtemp.Next;
+    end;
+end;
 
 Procedure TFNew_Po.load_category;
 begin
@@ -361,12 +408,14 @@ begin
    begin
      close;
      sql.Clear;
-     sql.Text:=' select * from t_advance_payment where no_trans='+Quotedstr(NoTransUM.Text);
+     sql.Text:='select a.*,d.header_name,d.header_code from t_advance_payment a left join t_ak_account c on a.um_account_code=c.code'+
+     ' left JOIN t_ak_header d on c.header_code=d.header_code group by a.no_trans,d.header_name,d.header_code where no_trans='+Quotedstr(NoTransUM.Text);
      open;
    end;
-   EdUM.Text:=dm.Qtemp1.FieldByName('um_value').AsString;
+   EdUM.Value:=dm.Qtemp1.FieldByName('um_value').Value;
    Edkd_akun.Text:=dm.Qtemp1.FieldByName('um_account_code').AsString;
-
+   Ednm_akun.Text:=dm.Qtemp1.FieldByName('header_name').AsString;
+   Edheader.Text:=dm.Qtemp1.FieldByName('header_code').AsString;
 end;
 
 Procedure TFNew_PO.Hitungdet;
@@ -738,10 +787,10 @@ begin
       Status_um:='1';
       NoTransUM.visible:=true;
       NoTransUM.ReadOnly:=false;
-      Ednm_akun.visible:=true;
+    //  Ednm_akun.visible:=true;
       EdUM.visible:=true;
-      Edkd_akun.visible:=true;
-      Label38.Visible:=true;
+    //  Edkd_akun.visible:=true;
+    //  Label38.Visible:=true;
     end
      else
     if CkUangmk.Checked=False then
@@ -959,12 +1008,15 @@ end;
 
 procedure TFNew_PO.Edkd_akunChange(Sender: TObject);
 begin
-  load_akun;
+ // load_akun;
 end;
 
 procedure TFNew_PO.EdKd_suppChange(Sender: TObject);
 begin
-  load_um;
+  if ref_code<>'DO' then
+  begin
+    load_um;
+  end;
 end;
 
 procedure TFNew_PO.EdNm_suppButtonClick(Sender: TObject);
@@ -986,12 +1038,12 @@ begin
       ExecSQL;
     end;
     EdKd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
-    Edno_kontrak.Clear;
+
 
     //if EdStatus.Text='KONTRAK KERJASAMA' then
     if ref_code='KK' then //ds 08-10-2024
-    
     begin
+        Edno_kontrak.Clear;
         with dm.QTemp2 do
         begin
           close;
@@ -1010,7 +1062,7 @@ begin
         end;
     end;
     //if EdStatus.Text='BON PERMINTAAN BARANG' then
-    if ref_code='BPB' then //ds 08-10-2024//
+ {   if ref_code='BPB' then //ds 08-10-2024//
     begin
         with dm.Qtemp do
         begin
@@ -1026,7 +1078,7 @@ begin
            Edno_kontrak.Items.Add(dm.Qtemp['trans_no']);
            dm.Qtemp.Next;
         end;
-    end;
+    end;      }
 
     {with Dm.Qtemp do
     begin
@@ -1102,24 +1154,46 @@ begin
       CbKategori.Text:=DM.Qtemp['category'];
       EdCurrChange(sender);
     end;
-    if EdStatus.Text<>'KONTRAK KERJASAMA' then
+    if ref_code='BPB' then
     begin
-      {with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT a."type",c.item_name,b.category FROM t_item_type a '+
-                  'INNER JOIN t_item_category b on a.type_id=b.type_id '+
-                  'INNER JOIN t_item c ON b.category_id=c.category_id ';
-        Execute;
-      end;}
       Edjatuh_tempo.Text:='0';
       EdCurr.Text:='IDR';
       Ednilai_curr.Text:='1';
       Edjenispo.Text:='LOKAL';
       //kategori_tr:='NON PRODUKSI';
+      CbKategori.Text:='BIAYA';
       kategori_tr:=CbKategori.Text;
-      CbKategori.Text:=DM.Qtemp['category'];
+      EdCurrChange(sender);
+    end;
+    if ref_code='DO' then
+    begin
+      WITH DM.Qtemp2 DO
+      BEGIN
+        Close;
+        sql.Clear;
+        sql.Text:='select * from t_delivery_order_services where notrans='+QuotedStr(Edno_kontrak.Text);
+        Execute;
+      END;
+      Ednm_supp.Text:=dm.Qtemp2['vendor_name'];
+      EdKd_supp.Text:=dm.Qtemp2['vendor_code'];
+      Edjatuh_tempo.Text:='0';
+      EdCurr.Text:='IDR';
+      Ednilai_curr.Text:='1';
+      Edjenispo.Text:='LOKAL';
+      //kategori_tr:='NON PRODUKSI';
+      CbKategori.Text:='BIAYA';
+      kategori_tr:=CbKategori.Text;
+      EdCurrChange(sender);
+    end;
+    if ref_code='SO' then
+    begin
+      Edjatuh_tempo.Text:='0';
+      EdCurr.Text:='IDR';
+      Ednilai_curr.Text:='1';
+      Edjenispo.Text:='LOKAL';
+      //kategori_tr:='NON PRODUKSI';
+      CbKategori.Text:='BIAYA';
+      kategori_tr:=CbKategori.Text;
       EdCurrChange(sender);
     end;
 end;
@@ -1158,6 +1232,7 @@ begin
     //if EdStatus.Text='NON REFERENSI' then
     if ref_code='NR' then         //DS 
     begin
+      EdNm_supp.Enabled:=true;
       Edno_kontrak.ReadOnly:=True;
       FNew_PO.Edno_kontrak.Text:='0';
       Edjenispo.ReadOnly:=False;
@@ -1177,6 +1252,7 @@ begin
     //if EdStatus.Text='KONTRAK KERJASAMA' then
     if ref_code='KK' then  //DS        
     begin
+      EdNm_supp.Enabled:=true;
       Edno_kontrak.Text:='';
       Edno_kontrak.ReadOnly:=False;
       Edjenispo.ReadOnly:=True;
@@ -1190,6 +1266,7 @@ begin
     //if EdStatus.Text='BON PERMINTAAN BARANG' then
     if ref_code='BPB' then    
     begin
+      EdNm_supp.Enabled:=true;
       Edno_kontrak.ReadOnly:=false;
       //Edno_kontrak.Text:='';
       Edjenispo.ReadOnly:=false;
@@ -1200,19 +1277,51 @@ begin
       Edjenispo.Text:='LOKAL';
       Cb_bon.Enabled:=true;
       Edno_kontrak.Items.Clear;
+      CbKategori.Enabled:=true;
       load_no_bon;
       load_category;
     end;
     if ref_code='DO' then
     begin
+      EdNm_supp.Enabled:=false;
+      CbKategori.Enabled:=true;
+      Edno_kontrak.readonly:=false;
+      Edno_kontrak.Items.Clear;
       with dm.Qtemp do
       begin
         close;
         sql.clear;
-        sql.Text:='select * from public.t_delivery_order oder by notrans';
+        sql.Text:='select notrans from t_delivery_order_services order by notrans';
         Execute;
       end;
-       Edno_kontrak.Items.Clear;
+       dm.Qtemp.First;
+       while not dm.Qtemp.Eof do
+       begin
+         //cb_bon.Items.Add(dm.Qtemp['trans_no']);
+         Edno_kontrak.Items.Add(dm.Qtemp['notrans']);
+         dm.Qtemp.Next;
+       end;
+      load_category;
+    end;
+    if ref_code='SO' then
+    begin
+      EdNm_supp.Enabled:=TRUE;
+      CbKategori.Enabled:=true;
+      Edno_kontrak.readonly:=false;
+      Edno_kontrak.Items.Clear;
+      Edjatuh_tempo.Text:='0';
+      EdCurr.Text:='IDR';
+      Ednilai_curr.Text:='1';
+      Edjenispo.Text:='LOKAL';
+      Cb_bon.Enabled:=true;
+      CbKategori.Enabled:=true;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='select notrans from t_sales_order order by notrans';
+        Execute;
+      end;
        dm.Qtemp.First;
        while not dm.Qtemp.Eof do
        begin
@@ -1332,7 +1441,8 @@ begin
    DtTh.Date:=now;
    DtHari.Date:=now;
    DtPO.Date:=Now;
-   FPO.Load;
+   Load;
+   load_ref_po;
    if MemItempo.Active=False then  MemItempo.Active:=True;
    Self.Clear;
    Cb_bon.Enabled:=false;
@@ -2409,33 +2519,33 @@ begin
     end;
     MemItempo.Next;
     end;
-
-    if not dm.koneksi.InTransaction then
-    dm.koneksi.StartTransaction;
-    try
+    if messageDlg ('Anda Yakin Disimpan Kontrak No.'+EdNo_kontrak.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
-       Autonumber;
-       if EdStatus.Text='KONTRAK KERJASAMA' then
-       begin
-         Simpan;
-       end
-       else
-         Simpan2;
-         dm.koneksi.Commit;
-         Messagedlg(' Data Berhasil di Simpan ',MtInformation,[Mbok],0);
-         //BBatalClick(sender);
-       end
-       Except
-       on E :Exception do
-       begin
-         MessageDlg(E.Message,mtError,[MBok],0);
-         dm.koneksi.Rollback;
-       end;
-    end;
+      if not dm.koneksi.InTransaction then
+      dm.koneksi.StartTransaction;
+      try
+      begin
+         Autonumber;
+         if EdStatus.Text='KONTRAK KERJASAMA' then
+         begin
+           Simpan;
+         end
+         else
+           Simpan2;
+           dm.koneksi.Commit;
+           Messagedlg(' Data Berhasil di Simpan ',MtInformation,[Mbok],0);
+           //BBatalClick(sender);
+         end
+         Except
+         on E :Exception do
+         begin
+           MessageDlg(E.Message,mtError,[MBok],0);
+           dm.koneksi.Rollback;
+         end;
+      end;
     //Fpo.ActBaru.OnExecute(sender);
-    Close;
-
-
+      Close;
+    end;
     //Autonumber;
     //simpan;
 end;

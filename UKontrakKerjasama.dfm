@@ -26,7 +26,6 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 826
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -203,7 +202,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 789
+        Width = 785
         Height = 148
         Align = alClient
         DataSource = DsKerjasama_det

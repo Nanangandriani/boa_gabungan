@@ -130,6 +130,8 @@ begin
      CbPo.text:=QUM.fieldbyname('po_no').AsString;
      Cb_Curr.Text:=QUM.fieldbyname('currency').Value;
      Ed_kurs.Text:=QUM.fieldbyname('exchange_rate').Value;
+     Edheader.Text:=QUM.fieldbyname('header_code').Asstring;
+     Ednm_akun.Text:=QUM.fieldbyname('header_name').Asstring;
      if QUM['po_no']<>'' then
      begin
       CbPoSelect(sender);

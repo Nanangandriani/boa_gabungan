@@ -20,13 +20,13 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 241
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1022
+    ExplicitTop = -4
     object Label1: TLabel
       Left = 24
       Top = 42
-      Width = 35
+      Width = 42
       Height = 15
-      Caption = 'No. SP'
+      Caption = 'No. Ref.'
     end
     object Label3: TLabel
       Left = 24
@@ -93,6 +93,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label13: TLabel
       Left = 483
@@ -200,6 +201,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Width = 21
       Height = 15
       Caption = 'SBU'
+      Visible = False
     end
     object Label25: TLabel
       Left = 170
@@ -222,6 +224,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Width = 226
       Height = 23
       CharCase = ecUpperCase
+      Enabled = False
       TabOrder = 0
       Text = '0'
       OnSelect = EdNoSPBSelect
@@ -258,7 +261,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdSJ: TEdit
       Left = 138
-      Top = 151
+      Top = 152
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -389,11 +392,12 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         'LOKAL')
     end
     object Edsbu: TComboBox
-      Left = 138
-      Top = 151
+      Left = 144
+      Top = 152
       Width = 73
       Height = 23
       TabOrder = 16
+      Visible = False
     end
     object EdPIB: TEdit
       Left = 728

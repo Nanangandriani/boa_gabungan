@@ -1,9 +1,10 @@
-object FRpt_Neraca: TFRpt_Neraca
+object FRpt_Lr: TFRpt_Lr
   Left = 0
   Top = 0
-  Caption = 'Laporan Neraca'
-  ClientHeight = 394
-  ClientWidth = 667
+  BorderIcons = [biSystemMenu]
+  Caption = 'Laporan Laba Rugi'
+  ClientHeight = 493
+  ClientWidth = 672
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,19 +17,84 @@ object FRpt_Neraca: TFRpt_Neraca
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
+  object Label16: TLabel
+    Left = 94
+    Top = 294
+    Width = 26
+    Height = 13
+    Caption = 'Bulan'
+    Visible = False
+  end
+  object Label15: TLabel
+    Left = 94
+    Top = 330
+    Width = 30
+    Height = 13
+    Caption = 'Tahun'
+    Visible = False
+  end
+  object Label2: TLabel
+    Left = 94
+    Top = 255
+    Width = 36
+    Height = 13
+    Caption = 'Periode'
+    Visible = False
+  end
+  object Label1: TLabel
+    Left = 279
+    Top = 255
+    Width = 15
+    Height = 13
+    Caption = 's/d'
+    Visible = False
+  end
+  object cbbulan: TComboBox
+    Left = 167
+    Top = 291
+    Width = 150
+    Height = 21
+    TabOrder = 0
+    Visible = False
+    OnSelect = cbbulanSelect
+    Items.Strings = (
+      'Januari'
+      'Februari'
+      'Maret'
+      'April'
+      'Mei'
+      'Juni'
+      'Juli'
+      'Agustus'
+      'September'
+      'Oktober'
+      'November'
+      'Desember')
+  end
+  object edth: TSpinEdit
+    Left = 167
+    Top = 327
+    Width = 150
+    Height = 22
+    MaxValue = 3000
+    MinValue = 2000
+    TabOrder = 1
+    Value = 2022
+    Visible = False
+  end
   object Panel2: TPanel
     Left = 0
-    Top = 351
-    Width = 667
-    Height = 43
+    Top = 461
+    Width = 672
+    Height = 32
     Align = alBottom
-    TabOrder = 0
-    ExplicitTop = 350
-    ExplicitWidth = 663
+    TabOrder = 2
+    ExplicitTop = 144
+    ExplicitWidth = 377
     object BBatal: TRzBitBtn
-      Left = 591
+      Left = 596
       Top = 1
-      Height = 41
+      Height = 30
       Align = alRight
       Caption = 'Batal'
       TabOrder = 0
@@ -85,12 +151,12 @@ object FRpt_Neraca: TFRpt_Neraca
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 587
+      ExplicitLeft = 301
     end
     object BPrint: TRzBitBtn
-      Left = 516
+      Left = 521
       Top = 1
-      Height = 41
+      Height = 30
       Align = alRight
       Caption = 'Print'
       TabOrder = 1
@@ -147,136 +213,103 @@ object FRpt_Neraca: TFRpt_Neraca
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 512
+      ExplicitLeft = 226
     end
-  end
-  object Panel1: TPanel
-    Left = 0
-    Top = 156
-    Width = 667
-    Height = 129
-    Align = alBottom
-    TabOrder = 1
-    Visible = False
-    ExplicitTop = 155
-    ExplicitWidth = 663
-    object Label16: TLabel
-      Left = 35
-      Top = 58
-      Width = 26
-      Height = 13
-      Caption = 'Bulan'
-    end
-    object Label15: TLabel
-      Left = 35
-      Top = 94
-      Width = 30
-      Height = 13
-      Caption = 'Tahun'
-    end
-    object Label2: TLabel
-      Left = 35
-      Top = 21
-      Width = 36
-      Height = 13
-      Caption = 'Periode'
-    end
-    object Label1: TLabel
-      Left = 220
-      Top = 21
-      Width = 15
-      Height = 13
-      Caption = 's/d'
-    end
-    object cbbulan: TComboBox
-      Left = 108
-      Top = 55
-      Width = 106
-      Height = 21
-      TabOrder = 0
-      OnSelect = cbbulanSelect
-      Items.Strings = (
-        'Januari'
-        'Februari'
-        'Maret'
-        'April'
-        'Mei'
-        'Juni'
-        'Juli'
-        'Agustus'
-        'September'
-        'Oktober'
-        'November'
-        'Desember')
-    end
-    object edth: TSpinEdit
-      Left = 108
-      Top = 91
-      Width = 150
-      Height = 22
-      MaxValue = 3000
-      MinValue = 2000
-      TabOrder = 1
-      Value = 2022
-    end
-    object dtmulai1: TRzDateTimeEdit
-      Left = 108
-      Top = 18
-      Width = 106
-      Height = 21
-      EditType = etDate
-      Format = 'dd/mm/yyyy'
+    object Bprint2: TRzBitBtn
+      Left = 446
+      Top = 1
+      Height = 30
+      Align = alRight
+      Caption = 'Print'
       TabOrder = 2
-    end
-    object dtselesai1: TRzDateTimeEdit
-      Left = 241
-      Top = 18
-      Width = 106
-      Height = 21
-      EditType = etDate
-      Format = 'dd/mm/yyyy'
-      TabOrder = 3
+      OnClick = Bprint2Click
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000730E0000730E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
+        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
+        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
+        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
+        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
+        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
+        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
+        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
+        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
+        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
+        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
+        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
+        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
+        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 151
     end
   end
-  object Pnthn: TPanel
-    Left = 0
-    Top = 285
-    Width = 667
-    Height = 66
-    Align = alBottom
-    TabOrder = 2
+  object dtmulai1: TRzDateTimeEdit
+    Left = 167
+    Top = 252
+    Width = 106
+    Height = 21
+    EditType = etDate
+    Format = 'dd/mm/yyyy'
+    TabOrder = 3
     Visible = False
-    ExplicitTop = 284
-    ExplicitWidth = 663
-    object Label4: TLabel
-      Left = 35
-      Top = 30
-      Width = 30
-      Height = 13
-      Caption = 'Tahun'
-    end
-    object edthn2: TSpinEdit
-      Left = 108
-      Top = 27
-      Width = 150
-      Height = 22
-      MaxValue = 3000
-      MinValue = 2000
-      TabOrder = 0
-      Value = 2022
-    end
+  end
+  object dtselesai1: TRzDateTimeEdit
+    Left = 300
+    Top = 252
+    Width = 106
+    Height = 21
+    EditType = etDate
+    Format = 'dd/mm/yyyy'
+    TabOrder = 4
+    Visible = False
   end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 667
+    Width = 672
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 3
+    TabOrder = 5
     TabStop = False
+    ExplicitWidth = 667
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -290,18 +323,16 @@ object FRpt_Neraca: TFRpt_Neraca
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 667
-    Height = 29
+    Width = 672
+    Height = 334
     Align = alClient
-    DataSource = DSNeraca
     DynProps = <>
-    TabOrder = 8
+    TabOrder = 10
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'account_name'
         Footers = <>
         Title.Caption = 'Nama Perkiraan'
         Width = 235
@@ -310,34 +341,20 @@ object FRpt_Neraca: TFRpt_Neraca
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'total'
         Footers = <>
         Title.Caption = 'Bulan'
-        Width = 256
+        Width = 174
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Caption = '%'
+        Width = 78
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
-  end
-  object CbBulan2: TComboBox
-    Left = 247
-    Top = 39
-    Width = 113
-    Height = 21
-    TabOrder = 9
-    OnSelect = cbbulanSelect
-    Items.Strings = (
-      'Januari'
-      'Februari'
-      'Maret'
-      'April'
-      'Mei'
-      'Juni'
-      'Juli'
-      'Agustus'
-      'September'
-      'Oktober'
-      'November'
-      'Desember')
   end
   object Rpt: TfrxReport
     Version = '2022.2.7'
@@ -348,18 +365,58 @@ object FRpt_Neraca: TFRpt_Neraca
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44873.702720590300000000
-    ReportOptions.LastChange = 45673.347209583330000000
+    ReportOptions.LastChange = 45100.661568506900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      'procedure GroupHeader1OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  if <DbLr."lr">='#39#39' then GroupFooter1.visible:=false else GroupF' +
+        'ooter1.visible:=true;'
+      
+        '//  if <DbLr."lr">='#39#39' then Groupheader1.visible:=false else Grou' +
+        'pheader1.visible:=true;'
+      'end;'
+      ''
+      'procedure GroupHeader2OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  if <DbLr."lr2">='#39#39' then GroupFooter2.visible:=false else Group' +
+        'Footer2.visible:=true;'
+      
+        '//  if <DbLr."lr2">='#39#39' then Groupheader2.visible:=false else Gro' +
+        'upheader2.visible:=true;'
+      'end;'
+      ''
+      'procedure MasterData3OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '// if <DbLr."kode">='#39#39' then memo30.font.style:=fsbold else memo3' +
+        '0.font.style:=fsnormal;'
+      
+        '// if <DbLr."kode"> ='#39#39' then memo30.font.style:=[fsbold]; //else' +
+        ' memo30.font.style:=[];'
+      'end;'
+      ''
+      'procedure MasterData3OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  if <DbLr."kode">='#39#39' then memo30.width:=500 else memo30.width:=' +
+        '400 ;'
+      
+        '  if <DbLr."kode"><>'#39#39' then memo30.left:=120 else memo30.left:=1' +
+        '10 ;'
+      'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 334
+    Left = 390
+    Top = 240
     Datasets = <
       item
-        DataSet = DbRpt_Neraca
-        DataSetName = 'DbRpt_Neraca'
+        DataSet = DbLr
+        DataSetName = 'DbLr'
       end>
     Variables = <>
     Style = <>
@@ -384,13 +441,13 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 81.944957560000000000
+        Height = 102.944940470000000000
         Top = 18.897650000000000000
         Width = 740.409927000000000000
         object Mpt: TfrxMemoView
           AllowVectorExport = True
-          Top = 18.897667090000000000
-          Width = 196.535084020000000000
+          Top = 18.897650000000000000
+          Width = 234.330384020000000000
           Height = 26.456692910000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -406,9 +463,9 @@ object FRpt_Neraca: TFRpt_Neraca
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = -3.779530000000000000
+          Top = -0.000017090000000001
           Width = 737.007874020000000000
-          Height = 30.236220470000000000
+          Height = 30.236220472440900000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -24
@@ -417,15 +474,15 @@ object FRpt_Neraca: TFRpt_Neraca
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'NERACA')
+            'LABA RUGI')
           ParentFont = False
           VAlign = vaCenter
         end
         object Mbln: TfrxMemoView
           AllowVectorExport = True
-          Top = 30.236225360000000000
+          Top = 27.456678270000000000
           Width = 737.007874020000000000
-          Height = 20.787401574803100000
+          Height = 22.677165350000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -440,7 +497,7 @@ object FRpt_Neraca: TFRpt_Neraca
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Top = 51.708737090000000000
+          Top = 72.566929133858300000
           Width = 98.267780000000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -458,7 +515,7 @@ object FRpt_Neraca: TFRpt_Neraca
         object Memo6: TfrxMemoView
           AllowVectorExport = True
           Left = 98.267780000000000000
-          Top = 51.708737090000000000
+          Top = 72.566929130000000000
           Width = 419.527830000000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -476,8 +533,24 @@ object FRpt_Neraca: TFRpt_Neraca
         object Memo7: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795610000000000000
-          Top = 51.708737090000000000
-          Width = 219.212740000000000000
+          Top = 72.566929133858300000
+          Width = 170.078740160000000000
+          Height = 30.236220470000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 687.874794410000000000
+          Top = 72.566929130000000000
+          Width = 51.023622050000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -487,22 +560,7 @@ object FRpt_Neraca: TFRpt_Neraca
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'TOTAL')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo10: TfrxMemoView
-          AllowVectorExport = True
-          Top = 0.000017090000000001
-          Width = 737.008350000000000000
-          Height = 52.913420000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop]
-          HAlign = haBlock
+            '%')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -514,15 +572,17 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 18.897637800000000000
-        Top = 162.519790000000000000
+        Height = 22.677165360000000000
+        Top = 181.417440000000000000
         Width = 740.409927000000000000
-        Condition = 'DbRpt_Neraca."type"'
+        OnAfterPrint = 'GroupHeader1OnAfterPrint'
+        Condition = 'DbLr."lr"'
         object Memo22: TfrxMemoView
           AllowVectorExport = True
+          Top = 3.779527559055120000
           Width = 98.267716540000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clNavy
@@ -536,27 +596,49 @@ object FRpt_Neraca: TFRpt_Neraca
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 98.267780000000000000
+          Top = 3.779527559055120000
           Width = 419.527559060000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
+          Font.Color = clRed
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[DbRpt_Neraca."type"]')
+            '[DbLr."lr"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795275590000000000
-          Width = 219.212598430000000000
+          Top = 3.779527559055120000
+          Width = 170.078740160000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 687.874460000000000000
+          Top = 3.779527559055120000
+          Width = 51.023622047244100000
+          Height = 18.897637800000000000
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
           DisplayFormat.Kind = fkNumeric
@@ -579,13 +661,13 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 332.598640000000000000
+        Top = 351.496290000000000000
         Width = 740.409927000000000000
         object Memo25: TfrxMemoView
           AllowVectorExport = True
           Width = 98.267780000000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clNavy
@@ -601,37 +683,58 @@ object FRpt_Neraca: TFRpt_Neraca
           Left = 98.267780000000000000
           Width = 419.527830000000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
+          Font.Color = clRed
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            'TOTAL [DbRpt_Neraca."type"]')
+            'TOTAL [DbLr."lr"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795610000000000000
-          Width = 219.212740000000000000
+          Width = 170.078740160000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
+          Font.Color = clRed
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<DbRpt_Neraca."total">,MasterData3)]')
+            '[SUM(<DbLr."qty">,MasterData3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 687.874794410000000000
+          Width = 51.023622050000000000
+          Height = 18.897637800000000000
+          DataSet = FRpt_Neraca.DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbLr."qty2">,MasterData3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -644,55 +747,37 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Right = 0
         Frame.Typ = []
         Height = 17.007874020000000000
-        Top = 245.669450000000000000
+        Top = 268.346630000000000000
         Width = 740.409927000000000000
-        DataSet = DbRpt_Neraca
-        DataSetName = 'DbRpt_Neraca'
+        OnBeforePrint = 'MasterData3OnBeforePrint'
+        DataSet = DbLr
+        DataSetName = 'DbLr'
         RowCount = 0
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Width = 98.267716540000000000
-          Height = 17.007874015748000000
-          DataField = 'kd_akun'
-          DataSet = DbRpt_Neraca
-          DataSetName = 'DbRpt_Neraca'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[DbRpt_Neraca."kd_akun"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo30: TfrxMemoView
-          AllowVectorExport = True
-          Left = 98.267780000000000000
-          Width = 419.527559060000000000
           Height = 17.007874020000000000
-          DataSet = DbRpt_Neraca
-          DataSetName = 'DbRpt_Neraca'
+          DataField = 'kode'
+          DataSet = DbLr
+          DataSetName = 'DbLr'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
-            '       [DbRpt_Neraca."account_name"]')
+            '[DbLr."kode"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795275590000000000
-          Width = 219.212598430000000000
-          Height = 17.007874015748000000
-          DataField = 'total'
-          DataSet = DbRpt_Neraca
-          DataSetName = 'DbRpt_Neraca'
+          Width = 170.078740160000000000
+          Height = 17.007874020000000000
+          DataSet = DbLr
+          DataSetName = 'DbLr'
           DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -700,10 +785,86 @@ object FRpt_Neraca: TFRpt_Neraca
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clBlack
+          Highlight.Font.Height = -12
+          Highlight.Font.Name = 'Arial'
+          Highlight.Font.Style = [fsBold]
+          Highlight.Condition = '<DbLr."kode"> = '#39#39
+          Highlight.FillType = ftBrush
+          Highlight.Frame.Typ = []
           Memo.UTF8W = (
-            '[DbRpt_Neraca."total"]')
+            '[DbLr."qty"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 136.063080000000000000
+          Width = 381.732259060000000000
+          Height = 17.007874020000000000
+          DataSet = DbLr
+          DataSetName = 'DbLr'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clBlack
+          Highlight.Font.Height = -12
+          Highlight.Font.Name = 'Arial'
+          Highlight.Font.Style = [fsBold]
+          Highlight.Condition = '<DbLr."kode"> = '#39#39
+          Highlight.FillType = ftBrush
+          Highlight.Frame.Typ = []
+          Memo.UTF8W = (
+            '[DbLr."nama_perkiraan"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Width = 94.488250000000000000
+          Height = 17.007874020000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          ParentFont = False
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 687.874460000000000000
+          Width = 51.023622050000000000
+          Height = 17.007874020000000000
+          DataSet = DbLr
+          DataSetName = 'DbLr'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clBlack
+          Highlight.Font.Height = -12
+          Highlight.Font.Name = 'Arial'
+          Highlight.Font.Style = [fsBold]
+          Highlight.Condition = '<DbLr."kode"> = '#39#39
+          Highlight.FillType = ftBrush
+          Highlight.Frame.Typ = []
+          Memo.UTF8W = (
+            '[DbLr."qty2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -716,14 +877,15 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 204.094620000000000000
+        Top = 226.771800000000000000
         Width = 740.409927000000000000
-        Condition = 'DbRpt_Neraca."type_balance"'
+        OnAfterPrint = 'GroupHeader2OnAfterPrint'
+        Condition = 'DbLr."lr2"'
         object Memo8: TfrxMemoView
           AllowVectorExport = True
           Width = 98.267716540000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -739,7 +901,7 @@ object FRpt_Neraca: TFRpt_Neraca
           Left = 98.267780000000000000
           Width = 419.527559060000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -748,16 +910,35 @@ object FRpt_Neraca: TFRpt_Neraca
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '   [DbRpt_Neraca."type_balance"]')
+            '   [DbLr."lr2"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795275590000000000
-          Width = 219.212598430000000000
+          Width = 170.078740160000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Left = 687.874460000000000000
+          Width = 51.023622047244100000
+          Height = 18.897637800000000000
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
           DisplayFormat.Kind = fkNumeric
@@ -779,15 +960,14 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677165360000000000
-        Top = 287.244280000000000000
+        Height = 18.897637800000000000
+        Top = 309.921460000000000000
         Width = 740.409927000000000000
         object Memo38: TfrxMemoView
           AllowVectorExport = True
-          Top = 3.779527559055120000
           Width = 98.267716540000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -801,10 +981,9 @@ object FRpt_Neraca: TFRpt_Neraca
         object Memo39: TfrxMemoView
           AllowVectorExport = True
           Left = 98.267780000000000000
-          Top = 3.779527560000000000
           Width = 419.527559060000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -813,17 +992,16 @@ object FRpt_Neraca: TFRpt_Neraca
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '   TOTAL[DbRpt_Neraca."type_balance"]')
+            '   TOTAL  [DbLr."lr2"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo40: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795275590000000000
-          Top = 3.779527560000000000
-          Width = 219.212598430000000000
+          Width = 170.078740160000000000
           Height = 18.897637800000000000
-          DataSet = DbRpt_Neraca
+          DataSet = FRpt_Neraca.DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'
           DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
           DisplayFormat.Kind = fkNumeric
@@ -835,306 +1013,500 @@ object FRpt_Neraca: TFRpt_Neraca
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<DbRpt_Neraca."total">,MasterData3)]')
+            '[SUM(<DbLr."qty">,MasterData3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo34: TfrxMemoView
+          AllowVectorExport = True
+          Left = 687.874460000000000000
+          Width = 51.023622050000000000
+          Height = 18.897637800000000000
+          DataSet = FRpt_Neraca.DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbLr."qty2">,MasterData3)]')
           ParentFont = False
           VAlign = vaCenter
         end
       end
     end
   end
-  object DbRpt_Neraca: TfrxDBDataset
-    UserName = 'DbRpt_Neraca'
+  object DbLr2: TfrxDBDataset
+    UserName = 'DbLr2'
     CloseDataSource = False
-    FieldAliases.Strings = (
-      'type=type'
-      'type_balance=type_balance'
-      'header_code=header_code'
-      'bulan=bulan'
-      'tahun=tahun'
-      'kd_akun=kd_akun'
-      'account_name=account_name'
-      'total=total')
-    DataSet = QRpt_Neraca
+    DataSet = QLr2
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 393
-    Top = 121
+    Left = 337
+    Top = 273
   end
-  object QRpt_Neraca: TUniQuery
+  object QLr2: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select "type",type_balance,header_code,bulan,tahun,kd_akun,accou' +
-        'nt_name,sum(total) total from ('
-      
-        'select "type",type_balance,header_code,bulan,xx.tahun,xx.kd_akun' +
-        ',account_name,case when (db-kr) > 0 then (db-kr) else 0 end tota' +
-        'l from  (select x.header_code,x2.bulan,x2.tahun,x.code kd_akun,x' +
-        '.account_name,b."type",b.type_balance,sum(x2.kredit)kr,sum(x2.de' +
-        'bit)db from  t_ak_account x INNER JOIN t_ak_type_balance b on  x' +
-        '.balance_st_id=b."id" LEFT JOIN(select b.*,a.trans_month bulan,a' +
-        '.trans_year tahun from t_work_sheet_det b INNER JOIN t_work_shee' +
-        't a on a.trans_no=b.trans_no WHERE  a.trans_month='#39'01'#39' and a.tra' +
-        'ns_year='#39'2022'#39' and  (a.periode1 >='#39'2022-01-02'#39' and a.periode2 <=' +
-        #39'2022-01-08'#39'))x2 on x2.account_code=x.code WHERE  x.balance_stat' +
-        'us='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP BY x.header_code,x2.bulan,x2.tah' +
-        'un,x.code,x.account_name,b."type",b.type_balance)xx   '
+        'SELECT 0 Nourut,a.periode1,a.periode2,sum(b.bahan_bk)bk, cast('#39'B' +
+        'IAYA BAHAN BAKU'#39' AS VARCHAR) nm_bahan FROM'#9't_hpp AS "a" INNER JO' +
+        'IN t_hpp_det AS b ON a.notrans=b.notrans WHERE periode1='#39'2022-01' +
+        '-03'#39' and periode2='#39'2022-01-09'#39' GROUP BY a.periode1,a.periode2'
       'UNION'
       
-        'select "type","type_balance",header_code,bulan,tahun,kd_akun,acc' +
-        'ount_name,case when type_balance='#39'AKM. PENYUSUTAN'#39' then -(case w' +
-        'hen (kr-db) > 0 then (kr-db) else 0 end) else (case when (kr-db)' +
-        ' > 0 then (kr-db) else 0 end) end total '
+        'SELECT'#9'1 ,a.periode1,a.periode2,sum(b.bahan_km)km, cast('#39'BIAYA B' +
+        'AHAN KIMIA'#39' AS VARCHAR) nm_bahan FROM'#9't_hpp AS "a" INNER JOIN t_' +
+        'hpp_det AS b ON a.notrans=b.notrans WHERE periode1='#39'2022-01-03'#39' ' +
+        'and periode2='#39'2022-01-09'#39' GROUP BY a.periode1,a.periode2'
+      'UNION'
       
-        'from (select header_code,bulan,tahun,kd_akun,account_name,"type"' +
-        ',type_balance,sum(kredit)kr,sum(debit)db from'
+        'SELECT'#9'2,a.periode1,a.periode2,sum(b.bahan_pnl)pnl, cast('#39'BIAYA ' +
+        'BAHAN PENOLONG'#39' AS VARCHAR) nm_bahan FROM'#9't_hpp AS "a" INNER JOI' +
+        'N t_hpp_det AS b ON a.notrans=b.notrans WHERE periode1='#39'2022-01-' +
+        '03'#39' and periode2='#39'2022-01-09'#39' GROUP BY a.periode1,a.periode2'
+      'UNION'
       
-        '(select x.header_code,x2.bulan,x2.tahun,x.code kd_akun,x.account' +
-        '_name,b."type",b.type_balance,x2.kredit,x2.debit from  t_ak_acco' +
-        'unt x INNER JOIN t_ak_type_balance b on  x.balance_st_id=b."id" ' +
-        ' LEFT JOIN(select b.*,a.trans_month bulan,a.trans_year tahun fro' +
-        'm t_work_sheet_det b INNER JOIN t_work_sheet a on a.trans_no=b.t' +
-        'rans_no WHERE  a.trans_month='#39'01'#39' and a.trans_year='#39'2022'#39' and  (' +
-        'a.periode1 >='#39'2022-01-02'#39' and a.periode2 <='#39'2022-01-08'#39'))x2 on x' +
-        '2.account_code=x.code WHERE  x.balance_status='#39'1'#39' and  posisi_dk' +
-        '='#39'K'#39' AND X.balance_status='#39'1'#39' '
-      ') xxx'
+        'SELECT'#9'3,a.periode1,a.periode2,sum(b.bahan_kms)kms, cast('#39'BIAYA ' +
+        'BAHAN KEMASAN'#39' AS VARCHAR) nm_bahan FROM'#9't_hpp AS "a" INNER JOIN' +
+        ' t_hpp_det AS b ON a.notrans=b.notrans WHERE periode1='#39'2022-01-0' +
+        '3'#39' and periode2='#39'2022-01-09'#39' GROUP BY a.periode1,a.periode2  UNI' +
+        'ON'
       
-        'GROUP BY header_code,bulan,tahun,kd_akun,account_name,"type",typ' +
-        'e_balance)x4 ORDER BY "type",kd_akun asc) xxx GROUP BY "type",ty' +
-        'pe_balance,header_code,bulan,tahun,kd_akun,account_name'
-      'ORDER BY "type",kd_akun asc;')
-    Left = 497
-    Top = 111
+        'SELECT'#9'4,a.periode1,a.periode2,a.tkl, cast('#39'BIAYA TENAGA KERJA L' +
+        'ANGSUNG'#39' AS VARCHAR) nm_bahan FROM'#9't_hpp AS "a" WHERE periode1='#39 +
+        '2022-01-03'#39' and periode2='#39'2022-01-09'#39
+      'UNION'
+      
+        'SELECT'#9'5,a.periode1,a.periode2,a.bop, cast('#39'BIAYA OVERHEAD PABRI' +
+        'K'#39' AS VARCHAR) nm_bahan FROM'#9't_hpp AS "a" WHERE periode1='#39'2022-0' +
+        '1-03'#39' and periode2='#39'2022-01-09'#39'  ORDER BY nourut ASC;')
+    Left = 393
+    Top = 287
   end
-  object UniQuery1: TUniQuery
+  object QLr: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode' +
-        ',nama_perkiraan,case when (x3.debit-x3.kredit)+(db-kr) > 0 then ' +
-        '(x3.debit-x3.kredit)+(db-kr) else 0 end total from  '
+        'SELECT kode,kode_header,nama_perkiraan,id_lr,lr,lr2,qty from (SE' +
+        'LECT KODE,kode_header,nama_perkiraan,id_LR,posisi_dk,lr,lr2 FROM' +
+        ' (select * from t_daftar_perkiraan WHERE st_lr>'#39'0'#39') A RIGHT JOIN' +
+        ' t_jenis_lr b on a.st_lr=b.id_lr  where (id_lr<>4 and id_lr<>6 a' +
+        'nd id_lr<>'#39'8'#39')'
+      ') a left JOIN'
       
-        '(select x.kode_header,x2.bulan,x2.tahun,x.kode kd_akun,x.nama_pe' +
-        'rkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.debit)db from' +
-        '  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on x.id_jenis' +
-        '_nr=b."id"'
+        '(select a.periode1,a.periode2,(debit2+kredit2) qty,kd_akun from ' +
+        't_neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=' +
+        'b.notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-' +
+        '08'#39' and b.kd_akun<>'#39'1146'#39' and (debit2+kredit2) >0'
+      'UNION'
       
-        'LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_ne' +
-        'raca a on a.no_in=b.no_in WHERE  bulan='#39'01'#39' and tahun='#39'2022'#39' and' +
-        ' (a.tgl_in >='#39'2022-01-03'#39' and a.tgl_in <='#39'2022-01-03'#39'))x2 on x2.' +
-        'kd_akun=x.kode WHERE x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROU' +
-        'P BY x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.j' +
-        'enis,b.jenis_nr)xx left JOIN tsa_akundet x3 on xx.kd_akun=x3.kd_' +
-        'akun  '
-      'union  '
+        'select a.periode1,a.periode2,-(debit+kredit) qty,kd_akun from t_' +
+        'neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.' +
+        'notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-08' +
+        #39' and b.kd_akun='#39'1146'#39
+      'UNION /*tkl*/'
       
-        'select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun,nama' +
-        '_perkiraan,case when (x3.kredit-x3.debit)+(kr-db) > 0 then (x3.k' +
-        'redit-x3.debit)+(kr-db) else 0 end total from '
+        'select null periode1, null periode2,kredit qty,kode_header from ' +
+        't_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.n' +
+        'o_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c on ' +
+        'b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39'2022-' +
+        '01-08'#39' and b.akun_kredit='#39'5300'#39
+      'union /*bop*/'
       
-        ' (select x.kode_header,x2.bulan,x2.tahun,x.kode kd_akun,x.nama_p' +
-        'erkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.debit)db fro' +
-        'm  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on x.id_jeni' +
-        's_nr=b."id" LEFT JOIN(select * from t_item_neraca_det b INNER JO' +
-        'IN t_item_neraca a on a.no_in=b.no_in WHERE  bulan='#39'01'#39' and tahu' +
-        'n='#39'2022'#39' and (a.tgl_in >='#39'2022-01-03'#39' and a.tgl_in <='#39'2022-01-03' +
-        #39'))x2 on x2.kd_akun=x.kode WHERE x.status_neraca='#39'1'#39' and  posisi' +
-        '_dk='#39'K'#39' GROUP BY x.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_p' +
-        'erkiraan,b.jenis,b.jenis_nr)xx left JOIN tsa_akundet x3 on xx.kd' +
-        '_akun=x3.kd_akun  '
-      'ORDER BY kode asc')
-    Left = 489
-    Top = 55
-  end
-  object frxDBDataset1: TfrxDBDataset
-    UserName = 'DbRpt_Neraca'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'jenis=jenis'
-      'jenis_nr=jenis_nr'
-      'kode_header=kode_header'
-      'bulan=bulan'
-      'tahun=tahun'
-      'kode=kode'
-      'nama_perkiraan=nama_perkiraan'
-      'total=total')
-    DataSet = UniQuery1
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 441
-    Top = 9
-  end
-  object QRpt_Neracathn: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
+        'select null periode1, null periode2,sum(kredit) qty,kode_header ' +
+        'from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b o' +
+        'n a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan ' +
+        'c on b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39 +
+        '2022-01-08'#39' and c.kode_header='#39'5400'#39' and kode<>'#39'5400.18'#39' GROUP B' +
+        'Y kode_header'
+      'UNION'
       
-        'select kode,jenis,jenis_nr,kode_header,tahun,nama_perkiraan,sum(' +
-        'spt)spt,sum(jan)jan,sum(feb)feb,sum(mar)mar,sum(apr)apr,sum(mei)' +
-        'mei,sum(jun)jun,sum(jul)jul, sum(ags)ags,sum(sep)sep,sum(okt)okt' +
-        ',sum(nov)nov,sum(des)des from (select kode,jenis,jenis_nr,kode_h' +
-        'eader,tahun,nama_perkiraan,case when bulan='#39'01'#39'  then total end ' +
-        'jan,case when bulan='#39'02'#39' then total end feb,case when bulan='#39'03'#39 +
-        ' then total end mar,case when bulan='#39'04'#39' then total end apr, cas' +
-        'e when bulan='#39'05'#39' then total end mei,case when bulan='#39'06'#39' then t' +
-        'otal end jun, case when bulan='#39'07'#39' then total end jul,case when ' +
-        'bulan='#39'08'#39' then total end ags,case when bulan='#39'09'#39' then total en' +
-        'd sep,case when bulan='#39'10'#39' then total end okt,case when bulan='#39'1' +
-        '1'#39' then total end nov, case when bulan='#39'12'#39' then total end des,c' +
-        'ase when bulan='#39'SPT'#39' then total end spt from (select jenis,jenis' +
-        '_nr,kode_header,bulan,tahun,kode,nama_perkiraan,sum(total) total' +
-        ' from (    select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.k' +
-        'd_akun kode,nama_perkiraan,case when (db-kr) isnull  then 0 else' +
-        ' (db-kr) end total from   (select x.kode_header,x2.bulan,x2.tahu' +
-        'n,x.kode kd_akun,x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kred' +
-        'it)kr,sum(x2.debit)db from t_daftar_perkiraan x  INNER JOIN t_je' +
-        'nis_neraca b on x.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln ' +
-        'bulan,a.thn tahun from t_neraca_lajur1_det b INNER JOIN  (select' +
-        ' thn,bln,max(notrans) notrans from t_neraca_lajur1 GROUP BY thn,' +
-        'bln ORDER BY bln,thn) a on a.notrans=b.notrans WHERE  a.thn='#39'202' +
-        '3'#39' union /*SPT Tahun Lalu*/  select b.*,'#39'SPT'#39' bulan,'#39'2023'#39' tahun' +
-        ' from t_neraca_lajur1_det b INNER JOIN (select thn,bln,notrans,p' +
-        'eriode1,periode2  from t_neraca_lajur1 WHERE thn<'#39'2023'#39' ORDER BY' +
-        ' periode2 desc limit 1)a on a.notrans=b.notrans)x2 on x2.kd_akun' +
-        '=x.kode WHERE  x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP BY x' +
-        '.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jenis,b' +
-        '.jenis_nr)xx UNION  select jenis,jenis_nr,kode_header,bulan,tahu' +
-        'n,kode,nama_perkiraan,case when jenis_nr='#39'AKM. PENYUSUTAN'#39' then ' +
-        '-(case when (kr-db) isnull then 0 else (kr-db) end) else (case w' +
-        'hen (kr-db) isnull then 0 else (kr-db) end) end total from (sele' +
-        'ct kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr,su' +
-        'm(kredit)kr,sum(debit)db from (select x.kode_header,x2.bulan,x2.' +
-        'tahun,x.kode,x.nama_perkiraan,b.jenis,b.jenis_nr,x2.kredit,x2.de' +
-        'bit from  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on  x' +
-        '.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln bulan,a.thn tahun' +
-        ' from t_neraca_lajur1_det b INNER JOIN (select thn,bln,max(notra' +
-        'ns) notrans from t_neraca_lajur1  GROUP BY thn,bln ORDER BY bln,' +
-        'thn) a on a.notrans=b.notrans WHERE a.thn='#39'2023'#39' union /*SPT Tah' +
-        'un Lalu*/  select b.*,'#39'SPT'#39' bulan,'#39'2023'#39' tahun from t_neraca_laj' +
-        'ur1_det b INNER JOIN (select thn,bln,notrans,periode1,periode2  ' +
-        'from t_neraca_lajur1 WHERE thn<'#39'2023'#39' ORDER BY periode2 desc lim' +
-        'it 1)a on a.notrans=b.notrans)x2 on x2.kd_akun=x.kode WHERE x.st' +
-        'atus_neraca='#39'1'#39' and posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39') xxx GROUP BY ' +
-        'kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr)x4 OR' +
-        'DER BY jenis,kode asc) xxx GROUP BY jenis,jenis_nr,kode_header,b' +
-        'ulan,tahun,kode,nama_perkiraan) y) yy GROUP BY kode,jenis,jenis_' +
-        'nr,kode_header,tahun,nama_perkiraan ORDER BY jenis,kode asc'
+        'SELECT periode1,periode2,qty,kd_akun FROM (select a.periode1,a.p' +
+        'eriode2,CASE WHEN (debit+kredit) ISNULL THEN 0 ELSE (debit+kredi' +
+        't) END  qty,kd_akun from t_neraca_lajur1 a INNER JOIN t_neraca_l' +
+        'ajur1_det b on a.notrans=b.notrans WHERE a.periode2<'#39'2022-01-08'#39 +
+        ' and b.kd_akun='#39'1146'#39' ORDER BY periode1 DESC LIMIT 1) A '
+      'UNION /*Bahan produksi*/'
+      'select null,null,qtypk,kdakun FROM ('
+      
+        'select kdakun,category,sum(hargapk) qtypk from (select a.kdakun,' +
+        'a.kd_produk,category, a.kd_material,qtypk*harga hargapk from (SE' +
+        'LECT a.kd_produk,c.category,sum(b.qtyperubahan) qtypk,b.kd_mater' +
+        'ial,d.kode_header kdakun FROM  t_pakai_bahan a INNER JOIN t_paka' +
+        'i_bahan_det b on a.notrans=b.notrans INNER join t_material c on ' +
+        'b.kd_material=c.kd_material INNER JOIN t_daftar_perkiraan d on c' +
+        '.kd_akun=d.kode WHERE periode1='#39'2022-01-02'#39' and periode2='#39'2022-0' +
+        '1-08'#39' GROUP BY a.kd_produk,c.category,b.kd_material,d.kode_heade' +
+        'r)a  INNER JOIN (SELECT case when round(hargapk/NULLIF(qtypk,0),' +
+        '0) > 0 then round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a' +
+        '.notrans,kd_material FROM t_sa_persediaan a INNER JOIN t_sa_pers' +
+        'ediaan_det b on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' ' +
+        'and periode2='#39'2022-01-08'#39' and category<>'#39'BAHAN KEMASAN'#39')b on  a.' +
+        'kd_material=b.kd_material )x GROUP BY kdakun,category'
+      'UNION'
+      
+        'select kode_header,category,sum(hargapk) qtypk from (select kode' +
+        '_header,a.kd_produk,category, a.kd_material,qtypk*harga hargapk ' +
+        'from (SELECT c.kode_header,a.kd_produk,c.category,sum(b.qtyperub' +
+        'ahan) qtypk,b.kd_material FROM  t_pakai_bahan a INNER JOIN t_pak' +
+        'ai_bahan_det b on a.notrans=b.notrans INNER join (select a.*,b.k' +
+        'ode_header from t_material a inner join t_daftar_perkiraan b on ' +
+        'a.kd_akun=b.kode where st_kms=1) c on b.kd_material=c.kd_materia' +
+        'l WHERE periode12='#39'2022-01-02'#39' and periode22='#39'2022-01-08'#39' GROUP ' +
+        'BY c.kode_header,a.kd_produk,c.category,b.kd_material)a  INNER J' +
+        'OIN (SELECT case when round(hargapk/NULLIF(qtypk,0),0) > 0 then ' +
+        'round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a.notrans,kd_' +
+        'material FROM t_sa_persediaan a INNER JOIN t_sa_persediaan_det b' +
+        ' on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' and periode2' +
+        '='#39'2022-01-08'#39' and category='#39'BAHAN KEMASAN'#39')b on  a.kd_material=b' +
+        '.kd_material )x GROUP BY kode_header,category)x'
+      'ORDER BY kd_akun ASC'
+      ')b on a.kode=b.kd_akun'
+      ' --ORDER BY id_lr,kode ASC '
+      ' /*lr betul*/'
+      'union /*LABA (RUGI) KOTOR*/'
+      
+        'select CAST('#39#39' AS VARCHAR ),null,'#39'LABA (RUGI) KOTOR'#39' perk,'#39'4'#39' id' +
+        'lr,'#39#39' lr,'#39#39' lr2, sum(qtypenj-(qtyhpp+qtybj)) Qtykotor from '
+      
+        '( SELECT id_lr,case when id_lr=1 then sum(qty) else 0 end qtypen' +
+        'j,case when id_lr=2 then sum(qty) else 0 end qtyhpp,case when id' +
+        '_lr=3 then sum(qty) else 0 end qtybj from (SELECT KODE,kode_head' +
+        'er,nama_perkiraan,id_LR,posisi_dk,lr,lr2 FROM (select * from t_d' +
+        'aftar_perkiraan WHERE st_lr>'#39'0'#39') A RIGHT JOIN t_jenis_lr b on a.' +
+        'st_lr=b.id_lr  where id_lr=1 or id_lr=2 or id_lr=3'
+      ') a left JOIN'
+      
+        '(select a.periode1,a.periode2,(debit2+kredit2) qty,kd_akun from ' +
+        't_neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=' +
+        'b.notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-' +
+        '08'#39' and b.kd_akun<>'#39'1146'#39' and (debit2+kredit2) >0'
+      'UNION'
+      
+        'select a.periode1,a.periode2,-(debit+kredit) qty,kd_akun from t_' +
+        'neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.' +
+        'notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-08' +
+        #39' and b.kd_akun='#39'1146'#39
+      'UNION /*tkl*/'
+      
+        'select null periode1, null periode2,kredit qty,kode_header from ' +
+        't_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.n' +
+        'o_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c on ' +
+        'b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39'2022-' +
+        '01-08'#39' and b.akun_kredit='#39'5300'#39
+      'union /*bop*/'
+      
+        'select null periode1, null periode2,sum(kredit) qty,kode_header ' +
+        'from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b o' +
+        'n a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan ' +
+        'c on b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39 +
+        '2022-01-08'#39' and c.kode_header='#39'5400'#39' and kode<>'#39'5400.18'#39' GROUP B' +
+        'Y kode_header'
+      'UNION'
+      
+        'SELECT periode1,periode2,qty,kd_akun FROM (select a.periode1,a.p' +
+        'eriode2,CASE WHEN (debit+kredit) ISNULL THEN 0 ELSE (debit+kredi' +
+        't) END  qty,kd_akun from t_neraca_lajur1 a INNER JOIN t_neraca_l' +
+        'ajur1_det b on a.notrans=b.notrans WHERE a.periode2<'#39'2022-01-08'#39 +
+        ' and b.kd_akun='#39'1146'#39' ORDER BY periode1 DESC LIMIT 1) A '
+      'UNION /*Bahan produksi*/'
+      'select null,null,qtypk,kdakun FROM ('
+      
+        'select kdakun,category,sum(hargapk) qtypk from (select a.kdakun,' +
+        'a.kd_produk,category, a.kd_material,qtypk*harga hargapk from (SE' +
+        'LECT a.kd_produk,c.category,sum(b.qtyperubahan) qtypk,b.kd_mater' +
+        'ial,d.kode_header kdakun FROM  t_pakai_bahan a INNER JOIN t_paka' +
+        'i_bahan_det b on a.notrans=b.notrans INNER join t_material c on ' +
+        'b.kd_material=c.kd_material INNER JOIN t_daftar_perkiraan d on c' +
+        '.kd_akun=d.kode WHERE periode1='#39'2022-01-02'#39' and periode2='#39'2022-0' +
+        '1-08'#39' GROUP BY a.kd_produk,c.category,b.kd_material,d.kode_heade' +
+        'r)a  INNER JOIN (SELECT case when round(hargapk/NULLIF(qtypk,0),' +
+        '0) > 0 then round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a' +
+        '.notrans,kd_material FROM t_sa_persediaan a INNER JOIN t_sa_pers' +
+        'ediaan_det b on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' ' +
+        'and periode2='#39'2022-01-08'#39' and category<>'#39'BAHAN KEMASAN'#39')b on  a.' +
+        'kd_material=b.kd_material )x GROUP BY kdakun,category'
+      'UNION'
+      
+        'select kode_header,category,sum(hargapk) qtypk from (select kode' +
+        '_header,a.kd_produk,category, a.kd_material,qtypk*harga hargapk ' +
+        'from (SELECT c.kode_header,a.kd_produk,c.category,sum(b.qtyperub' +
+        'ahan) qtypk,b.kd_material FROM  t_pakai_bahan a INNER JOIN t_pak' +
+        'ai_bahan_det b on a.notrans=b.notrans INNER join (select a.*,b.k' +
+        'ode_header from t_material a inner join t_daftar_perkiraan b on ' +
+        'a.kd_akun=b.kode where st_kms=1) c on b.kd_material=c.kd_materia' +
+        'l WHERE periode12='#39'2022-01-02'#39' and periode22='#39'2022-01-08'#39' GROUP ' +
+        'BY c.kode_header,a.kd_produk,c.category,b.kd_material)a  INNER J' +
+        'OIN (SELECT case when round(hargapk/NULLIF(qtypk,0),0) > 0 then ' +
+        'round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a.notrans,kd_' +
+        'material FROM t_sa_persediaan a INNER JOIN t_sa_persediaan_det b' +
+        ' on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' and periode2' +
+        '='#39'2022-01-08'#39' and category='#39'BAHAN KEMASAN'#39')b on  a.kd_material=b' +
+        '.kd_material )x GROUP BY kode_header,category)x)b on a.kode=b.kd' +
+        '_akun GROUP BY id_lr) xx '
       ''
-      '-- 0 row(s) affected.')
-    Left = 137
-    Top = 127
+      'union /*LABA (RUGI) USAHA*/'
+      
+        'select CAST('#39#39' AS VARCHAR ),null,'#39'LABA (RUGI) USAHA'#39' perk,'#39'6'#39' id' +
+        'lr,'#39#39' lr,'#39#39' lr2, sum((qtypenj-(qtyhpp+qtybj))-qtybo) Qtyusaha fr' +
+        'om '
+      
+        '( SELECT id_lr,case when id_lr=1 then sum(qty) else 0 end qtypen' +
+        'j,case when id_lr=2 then sum(qty) else 0 end qtyhpp,case when id' +
+        '_lr=3 THEN SUM(QTY) else 0 end qtybj,case when id_lr=5 then sum(' +
+        'qty) else 0 end qtyBO from (SELECT KODE,kode_header,nama_perkira' +
+        'an,id_LR,posisi_dk,lr,lr2 FROM (select * from t_daftar_perkiraan' +
+        ' WHERE st_lr>'#39'0'#39') A RIGHT JOIN t_jenis_lr b on a.st_lr=b.id_lr  ' +
+        '-- where id_lr=1 or id_lr=2 or id_lr=3'
+      ') a left JOIN'
+      
+        '(select a.periode1,a.periode2,(debit2+kredit2) qty,kd_akun from ' +
+        't_neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=' +
+        'b.notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-' +
+        '08'#39' and b.kd_akun<>'#39'1146'#39' and (debit2+kredit2) >0'
+      'UNION'
+      
+        'select a.periode1,a.periode2,-(debit+kredit) qty,kd_akun from t_' +
+        'neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.' +
+        'notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-08' +
+        #39' and b.kd_akun='#39'1146'#39
+      'UNION /*tkl*/'
+      
+        'select null periode1, null periode2,kredit qty,kode_header from ' +
+        't_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.n' +
+        'o_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c on ' +
+        'b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39'2022-' +
+        '01-08'#39' and b.akun_kredit='#39'5300'#39
+      'union /*bop*/'
+      
+        'select null periode1, null periode2,sum(kredit) qty,kode_header ' +
+        'from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b o' +
+        'n a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan ' +
+        'c on b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39 +
+        '2022-01-08'#39' and c.kode_header='#39'5400'#39' and kode<>'#39'5400.18'#39' GROUP B' +
+        'Y kode_header'
+      'UNION'
+      
+        'SELECT periode1,periode2,qty,kd_akun FROM (select a.periode1,a.p' +
+        'eriode2,CASE WHEN (debit+kredit) ISNULL THEN 0 ELSE (debit+kredi' +
+        't) END  qty,kd_akun from t_neraca_lajur1 a INNER JOIN t_neraca_l' +
+        'ajur1_det b on a.notrans=b.notrans WHERE a.periode2<'#39'2022-01-08'#39 +
+        ' and b.kd_akun='#39'1146'#39' ORDER BY periode1 DESC LIMIT 1) A '
+      'UNION /*Bahan produksi*/'
+      'select null,null,qtypk,kdakun FROM ('
+      
+        'select kdakun,category,sum(hargapk) qtypk from (select a.kdakun,' +
+        'a.kd_produk,category, a.kd_material,qtypk*harga hargapk from (SE' +
+        'LECT a.kd_produk,c.category,sum(b.qtyperubahan) qtypk,b.kd_mater' +
+        'ial,d.kode_header kdakun FROM  t_pakai_bahan a INNER JOIN t_paka' +
+        'i_bahan_det b on a.notrans=b.notrans INNER join t_material c on ' +
+        'b.kd_material=c.kd_material INNER JOIN t_daftar_perkiraan d on c' +
+        '.kd_akun=d.kode WHERE periode1='#39'2022-01-02'#39' and periode2='#39'2022-0' +
+        '1-08'#39' GROUP BY a.kd_produk,c.category,b.kd_material,d.kode_heade' +
+        'r)a  INNER JOIN (SELECT case when round(hargapk/NULLIF(qtypk,0),' +
+        '0) > 0 then round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a' +
+        '.notrans,kd_material FROM t_sa_persediaan a INNER JOIN t_sa_pers' +
+        'ediaan_det b on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' ' +
+        'and periode2='#39'2022-01-08'#39' and category<>'#39'BAHAN KEMASAN'#39')b on  a.' +
+        'kd_material=b.kd_material )x GROUP BY kdakun,category'
+      'UNION'
+      
+        'select kode_header,category,sum(hargapk) qtypk from (select kode' +
+        '_header,a.kd_produk,category, a.kd_material,qtypk*harga hargapk ' +
+        'from (SELECT c.kode_header,a.kd_produk,c.category,sum(b.qtyperub' +
+        'ahan) qtypk,b.kd_material FROM  t_pakai_bahan a INNER JOIN t_pak' +
+        'ai_bahan_det b on a.notrans=b.notrans INNER join (select a.*,b.k' +
+        'ode_header from t_material a inner join t_daftar_perkiraan b on ' +
+        'a.kd_akun=b.kode where st_kms=1) c on b.kd_material=c.kd_materia' +
+        'l WHERE periode12='#39'2022-01-02'#39' and periode22='#39'2022-01-08'#39' GROUP ' +
+        'BY c.kode_header,a.kd_produk,c.category,b.kd_material)a  INNER J' +
+        'OIN (SELECT case when round(hargapk/NULLIF(qtypk,0),0) > 0 then ' +
+        'round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a.notrans,kd_' +
+        'material FROM t_sa_persediaan a INNER JOIN t_sa_persediaan_det b' +
+        ' on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' and periode2' +
+        '='#39'2022-01-08'#39' and category='#39'BAHAN KEMASAN'#39')b on  a.kd_material=b' +
+        '.kd_material )x GROUP BY kode_header,category)x)b on a.kode=b.kd' +
+        '_akun GROUP BY id_lr) xx'
+      'union '
+      
+        'SELECT kode,kode_header,nama_perkiraan,id_lr,lr,lr2,qty from (SE' +
+        'LECT KODE,kode_header,nama_perkiraan,id_LR,posisi_dk,lr,lr2 FROM' +
+        ' (select * from t_daftar_perkiraan WHERE st_lr>'#39'0'#39') A RIGHT JOIN' +
+        ' t_jenis_lr b on a.st_lr=b.id_lr  where (id_lr<>4 and id_lr<>6 a' +
+        'nd id_lr<>'#39'8'#39')'
+      ') a left JOIN'
+      
+        '(select a.periode1,a.periode2,(debit2+kredit2) qty,kd_akun from ' +
+        't_neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=' +
+        'b.notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-' +
+        '08'#39' and b.kd_akun<>'#39'1146'#39' and (debit2+kredit2) >0'
+      'UNION'
+      
+        'select a.periode1,a.periode2,-(debit+kredit) qty,kd_akun from t_' +
+        'neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.' +
+        'notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-08' +
+        #39' and b.kd_akun='#39'1146'#39
+      'UNION /*tkl*/'
+      
+        'select null periode1, null periode2,kredit qty,kode_header from ' +
+        't_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.n' +
+        'o_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c on ' +
+        'b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39'2022-' +
+        '01-08'#39' and b.akun_kredit='#39'5300'#39
+      'union /*bop*/'
+      
+        'select null periode1, null periode2,sum(kredit) qty,kode_header ' +
+        'from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b o' +
+        'n a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan ' +
+        'c on b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39 +
+        '2022-01-08'#39' and c.kode_header='#39'5400'#39' and kode<>'#39'5400.18'#39' GROUP B' +
+        'Y kode_header'
+      'UNION'
+      
+        'SELECT periode1,periode2,qty,kd_akun FROM (select a.periode1,a.p' +
+        'eriode2,CASE WHEN (debit+kredit) ISNULL THEN 0 ELSE (debit+kredi' +
+        't) END  qty,kd_akun from t_neraca_lajur1 a INNER JOIN t_neraca_l' +
+        'ajur1_det b on a.notrans=b.notrans WHERE a.periode2<'#39'2022-01-08'#39 +
+        ' and b.kd_akun='#39'1146'#39' ORDER BY periode1 DESC LIMIT 1) A '
+      'UNION /*Bahan produksi*/'
+      'select null,null,qtypk,kdakun FROM ('
+      
+        'select kdakun,category,sum(hargapk) qtypk from (select a.kdakun,' +
+        'a.kd_produk,category, a.kd_material,qtypk*harga hargapk from (SE' +
+        'LECT a.kd_produk,c.category,sum(b.qtyperubahan) qtypk,b.kd_mater' +
+        'ial,d.kode_header kdakun FROM  t_pakai_bahan a INNER JOIN t_paka' +
+        'i_bahan_det b on a.notrans=b.notrans INNER join t_material c on ' +
+        'b.kd_material=c.kd_material INNER JOIN t_daftar_perkiraan d on c' +
+        '.kd_akun=d.kode WHERE periode1='#39'2022-01-02'#39' and periode2='#39'2022-0' +
+        '1-08'#39' GROUP BY a.kd_produk,c.category,b.kd_material,d.kode_heade' +
+        'r)a  INNER JOIN (SELECT case when round(hargapk/NULLIF(qtypk,0),' +
+        '0) > 0 then round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a' +
+        '.notrans,kd_material FROM t_sa_persediaan a INNER JOIN t_sa_pers' +
+        'ediaan_det b on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' ' +
+        'and periode2='#39'2022-01-08'#39' and category<>'#39'BAHAN KEMASAN'#39')b on  a.' +
+        'kd_material=b.kd_material )x GROUP BY kdakun,category'
+      'UNION'
+      
+        'select kode_header,category,sum(hargapk) qtypk from (select kode' +
+        '_header,a.kd_produk,category, a.kd_material,qtypk*harga hargapk ' +
+        'from (SELECT c.kode_header,a.kd_produk,c.category,sum(b.qtyperub' +
+        'ahan) qtypk,b.kd_material FROM  t_pakai_bahan a INNER JOIN t_pak' +
+        'ai_bahan_det b on a.notrans=b.notrans INNER join (select a.*,b.k' +
+        'ode_header from t_material a inner join t_daftar_perkiraan b on ' +
+        'a.kd_akun=b.kode where st_kms=1) c on b.kd_material=c.kd_materia' +
+        'l WHERE periode12='#39'2022-01-02'#39' and periode22='#39'2022-01-08'#39' GROUP ' +
+        'BY c.kode_header,a.kd_produk,c.category,b.kd_material)a  INNER J' +
+        'OIN (SELECT case when round(hargapk/NULLIF(qtypk,0),0) > 0 then ' +
+        'round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a.notrans,kd_' +
+        'material FROM t_sa_persediaan a INNER JOIN t_sa_persediaan_det b' +
+        ' on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' and periode2' +
+        '='#39'2022-01-08'#39' and category='#39'BAHAN KEMASAN'#39')b on  a.kd_material=b' +
+        '.kd_material )x GROUP BY kode_header,category)x'
+      'ORDER BY kd_akun ASC'
+      ')b on a.kode=b.kd_akun'
+      ' --ORDER BY id_lr,kode ASC '
+      ' /*lr betul*/'
+      'union /*LABA (RUGI) PERUSAHAAN*/'
+      
+        'select CAST('#39#39' AS VARCHAR ),null,'#39'LABA (RUGI) PERUSAHAAN'#39' perk,'#39 +
+        '8'#39' idlr,'#39#39' lr,'#39#39' lr2, sum(((qtypenj-(qtyhpp+qtybj))-qtybo)-qtydu' +
+        ') Qtyusaha from '
+      
+        '( SELECT id_lr,case when id_lr=1 then sum(qty) else 0 end qtypen' +
+        'j,case when id_lr=2 then sum(qty) else 0 end qtyhpp,case when id' +
+        '_lr=3 THEN SUM(QTY) else 0 end qtybj,case when id_lr=5 then sum(' +
+        'qty) else 0 end qtyBO,case when id_lr=7 then sum(qty) else 0 end' +
+        ' qtydu from (SELECT KODE,kode_header,nama_perkiraan,id_LR,posisi' +
+        '_dk,lr,lr2 FROM (select * from t_daftar_perkiraan WHERE st_lr>'#39'0' +
+        #39') A RIGHT JOIN t_jenis_lr b on a.st_lr=b.id_lr  -- where id_lr=' +
+        '1 or id_lr=2 or id_lr=3'
+      ') a left JOIN'
+      
+        '(select a.periode1,a.periode2,(debit2+kredit2) qty,kd_akun from ' +
+        't_neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=' +
+        'b.notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-' +
+        '08'#39' and b.kd_akun<>'#39'1146'#39' and (debit2+kredit2) >0'
+      'UNION'
+      
+        'select a.periode1,a.periode2,-(debit+kredit) qty,kd_akun from t_' +
+        'neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.' +
+        'notrans WHERE a.periode1='#39'2022-01-02'#39' and a.periode2='#39'2022-01-08' +
+        #39' and b.kd_akun='#39'1146'#39
+      'UNION /*tkl*/'
+      
+        'select null periode1, null periode2,kredit qty,kode_header from ' +
+        't_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.n' +
+        'o_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c on ' +
+        'b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39'2022-' +
+        '01-08'#39' and b.akun_kredit='#39'5300'#39
+      'union /*bop*/'
+      
+        'select null periode1, null periode2,sum(kredit) qty,kode_header ' +
+        'from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b o' +
+        'n a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan ' +
+        'c on b.akun_kredit=c.kode WHERE a.tgl>='#39'2022-01-02'#39' and a.tgl<='#39 +
+        '2022-01-08'#39' and c.kode_header='#39'5400'#39' and kode<>'#39'5400.18'#39' GROUP B' +
+        'Y kode_header'
+      'UNION'
+      
+        'SELECT periode1,periode2,qty,kd_akun FROM (select a.periode1,a.p' +
+        'eriode2,CASE WHEN (debit+kredit) ISNULL THEN 0 ELSE (debit+kredi' +
+        't) END  qty,kd_akun from t_neraca_lajur1 a INNER JOIN t_neraca_l' +
+        'ajur1_det b on a.notrans=b.notrans WHERE a.periode2<'#39'2022-01-08'#39 +
+        ' and b.kd_akun='#39'1146'#39' ORDER BY periode1 DESC LIMIT 1) A '
+      'UNION /*Bahan produksi*/'
+      'select null,null,qtypk,kdakun FROM ('
+      
+        'select kdakun,category,sum(hargapk) qtypk from (select a.kdakun,' +
+        'a.kd_produk,category, a.kd_material,qtypk*harga hargapk from (SE' +
+        'LECT a.kd_produk,c.category,sum(b.qtyperubahan) qtypk,b.kd_mater' +
+        'ial,d.kode_header kdakun FROM  t_pakai_bahan a INNER JOIN t_paka' +
+        'i_bahan_det b on a.notrans=b.notrans INNER join t_material c on ' +
+        'b.kd_material=c.kd_material INNER JOIN t_daftar_perkiraan d on c' +
+        '.kd_akun=d.kode WHERE periode1='#39'2022-01-02'#39' and periode2='#39'2022-0' +
+        '1-08'#39' GROUP BY a.kd_produk,c.category,b.kd_material,d.kode_heade' +
+        'r)a  INNER JOIN (SELECT case when round(hargapk/NULLIF(qtypk,0),' +
+        '0) > 0 then round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a' +
+        '.notrans,kd_material FROM t_sa_persediaan a INNER JOIN t_sa_pers' +
+        'ediaan_det b on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' ' +
+        'and periode2='#39'2022-01-08'#39' and category<>'#39'BAHAN KEMASAN'#39')b on  a.' +
+        'kd_material=b.kd_material )x GROUP BY kdakun,category'
+      'UNION'
+      
+        'select kode_header,category,sum(hargapk) qtypk from (select kode' +
+        '_header,a.kd_produk,category, a.kd_material,qtypk*harga hargapk ' +
+        'from (SELECT c.kode_header,a.kd_produk,c.category,sum(b.qtyperub' +
+        'ahan) qtypk,b.kd_material FROM  t_pakai_bahan a INNER JOIN t_pak' +
+        'ai_bahan_det b on a.notrans=b.notrans INNER join (select a.*,b.k' +
+        'ode_header from t_material a inner join t_daftar_perkiraan b on ' +
+        'a.kd_akun=b.kode where st_kms=1) c on b.kd_material=c.kd_materia' +
+        'l WHERE periode12='#39'2022-01-02'#39' and periode22='#39'2022-01-08'#39' GROUP ' +
+        'BY c.kode_header,a.kd_produk,c.category,b.kd_material)a  INNER J' +
+        'OIN (SELECT case when round(hargapk/NULLIF(qtypk,0),0) > 0 then ' +
+        'round(hargapk/NULLIF(qtypk,0),0) else 0 end harga, a.notrans,kd_' +
+        'material FROM t_sa_persediaan a INNER JOIN t_sa_persediaan_det b' +
+        ' on a.notrans=b.notrans  WHERE periode='#39'2022-01-02'#39' and periode2' +
+        '='#39'2022-01-08'#39' and category='#39'BAHAN KEMASAN'#39')b on  a.kd_material=b' +
+        '.kd_material )x GROUP BY kode_header,category)x)b on a.kode=b.kd' +
+        '_akun GROUP BY id_lr) xx'
+      ' ORDER BY id_lr,kode ASC')
+    Left = 393
+    Top = 335
   end
-  object dbRpt_neracathn: TfrxDBDataset
-    UserName = 'dbRpt_neracathn'
+  object DbLr: TfrxDBDataset
+    UserName = 'DbLr'
     CloseDataSource = False
-    FieldAliases.Strings = (
-      'kode=kode'
-      'jenis=jenis'
-      'jenis_nr=jenis_nr'
-      'kode_header=kode_header'
-      'tahun=tahun'
-      'nama_perkiraan=nama_perkiraan'
-      'spt=spt'
-      'jan=jan'
-      'feb=feb'
-      'mar=mar'
-      'apr=apr'
-      'mei=mei'
-      'jun=jun'
-      'jul=jul'
-      'ags=ags'
-      'sep=sep'
-      'okt=okt'
-      'nov=nov'
-      'des=des')
-    DataSet = QRpt_Neracathn
+    DataSet = QLr
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 49
-    Top = 121
-  end
-  object QRpt_PosNeraca: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'SELECT X5.*,X6.st_posnr,CASE WHEN x6.kode=x6.kode_header then 0 ' +
-        'else 1 end notr,y.nm_pos FROM (/* Aktiva tetap dan lancar*/ sele' +
-        'ct jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode,nam' +
-        'a_perkiraan, '
-      
-        'case when db isnull then 0 else db end db ,case when kr isnull t' +
-        'hen 0 else kr end kr from (select x.kode_header,x2.bulan,x2.tahu' +
-        'n,x.kode kd_akun,'
-      
-        'x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kredit)kr,sum(x2.debi' +
-        't)db from   t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on ' +
-        'x.id_jenis_nr=b."id" '
-      
-        'LEFT JOIN(select b.*,a.bln bulan,a.thn tahun from t_neraca_lajur' +
-        '1_det b INNER JOIN (select thn,bln,max(notrans) notrans from t_n' +
-        'eraca_lajur1 '
-      
-        'GROUP BY thn,bln ORDER BY bln,thn) a on a.notrans=b.notrans WHER' +
-        'E a.bln='#39'04'#39' and a.thn='#39'2022'#39')x2 on x2.kd_akun=x.kode'
-      
-        ' WHERE x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP BY x.kode_he' +
-        'ader,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jenis,b.jenis_n' +
-        'r)xx  '
-      ''
-      
-        'UNION /* Aktiva Lancar dan Pasiva*/  select jenis,jenis_nr,kode_' +
-        'header,bulan,tahun,kode,nama_perkiraan, case when jenis_nr='#39'AKM.' +
-        ' PENYUSUTAN'#39' then '
-      
-        '-(case when db isnull then 0  else db end) else (case when db IS' +
-        'NULL  then 0 else db end) end db, case when jenis_nr='#39'AKM. PENYU' +
-        'SUTAN'#39' then -(case when kr  isnull then 0 else kr end) else (cas' +
-        'e when kr ISNULL then 0 else kr end) end kr from (select kode_he' +
-        'ader,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr,sum(kredit)k' +
-        'r,'
-      
-        'sum(debit)db from (select x.kode_header,x2.bulan,x2.tahun, x.kod' +
-        'e,x.nama_perkiraan,b.jenis,b.jenis_nr,x2.kredit,x2.debit from t_' +
-        'daftar_perkiraan x '
-      
-        'INNER JOIN t_jenis_neraca b on x.id_jenis_nr=b."id"  LEFT JOIN(s' +
-        'elect b.*,a.bln bulan,a.thn tahun from t_neraca_lajur1_det b '
-      
-        'INNER JOIN (select thn,bln,max(notrans) notrans from t_neraca_la' +
-        'jur1 GROUP BY thn,bln ORDER BY bln,thn)a on a.notrans=b.notrans'
-      
-        ' WHERE a.bln='#39'04'#39' and a.thn='#39'2022'#39')x2 on x2.kd_akun=x.kode WHERE' +
-        ' x.status_neraca='#39'1'#39' and  posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39' ) xxx '
-      
-        'GROUP BY kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis' +
-        '_nr)x4 ) X5 INNER JOIN t_daftar_perkiraan X6 ON X5.kode=X6.kode '
-      
-        'INNER JOIN t_category_pos_neraca y ON x6.st_posnr=y."id" ORDER B' +
-        'Y st_posnr,kode asc')
-    Left = 65529
-    Top = 7
-  end
-  object DbRpt_PosNeraca: TfrxDBDataset
-    UserName = 'DbRpt_PosNeraca'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'jenis=jenis'
-      'jenis_nr=jenis_nr'
-      'kode_header=kode_header'
-      'bulan=bulan'
-      'tahun=tahun'
-      'kode=kode'
-      'nama_perkiraan=nama_perkiraan'
-      'db=db'
-      'kr=kr'
-      'st_posnr=st_posnr'
-      'notr=notr'
-      'nm_pos=nm_pos')
-    DataSet = QRpt_PosNeraca
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 65529
-    Top = 57
+    Left = 337
+    Top = 321
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -1170,19 +1542,6 @@ object FRpt_Neraca: TFRpt_Neraca
         item
           Visible = True
           ItemName = 'DtSelesai'
-        end
-        item
-          BeginGroup = True
-          UserDefine = [udWidth]
-          UserWidth = 77
-          Visible = True
-          ItemName = 'cxBarEditItem1'
-        end
-        item
-          UserDefine = [udWidth]
-          UserWidth = 113
-          Visible = True
-          ItemName = 'SpTahun'
         end
         item
           BeginGroup = True
@@ -1659,7 +2018,6 @@ object FRpt_Neraca: TFRpt_Neraca
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
-      OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Awal   '
@@ -1675,26 +2033,5 @@ object FRpt_Neraca: TFRpt_Neraca
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
-    object cxBarEditItem1: TcxBarEditItem
-      Caption = 'Bulan'
-      Category = 0
-      Hint = 'Bulan'
-      Visible = ivAlways
-      PropertiesClassName = 'TcxLabelProperties'
-    end
-    object SpTahun: TcxBarEditItem
-      Caption = 'Tahun  '
-      Category = 0
-      Hint = 'Tahun  '
-      Visible = ivAlways
-      PropertiesClassName = 'TcxSpinEditProperties'
-      Properties.MaxValue = 9999.000000000000000000
-      Properties.MinValue = 2000.000000000000000000
-    end
-  end
-  object DSNeraca: TDataSource
-    DataSet = QRpt_Neraca
-    Left = 408
-    Top = 56
   end
 end

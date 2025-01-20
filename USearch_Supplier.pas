@@ -16,21 +16,6 @@ type
     BSimpan: TRzBitBtn;
     QSupplier: TUniQuery;
     DsSupplier: TDataSource;
-    QSuppliersupplier_code: TStringField;
-    QSuppliersupplier_name: TStringField;
-    QSupplieraddress: TStringField;
-    QSuppliertelp: TStringField;
-    QSuppliersupplier1_name: TStringField;
-    QSuppliernpwp: TStringField;
-    QSuppliercontact_person: TStringField;
-    QSupplierpph: TStringField;
-    QSupplierid: TGuidField;
-    QSuppliercreated_at: TDateTimeField;
-    QSuppliercreated_by: TStringField;
-    QSupplierupdated_at: TDateTimeField;
-    QSupplierupdated_by: TStringField;
-    QSupplierdeleted_at: TDateTimeField;
-    QSupplierdeleted_by: TStringField;
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -189,13 +174,17 @@ begin
       Edkd_supp.Text:=QSupplier['supplier_code'];
       ednm_supp.Text:=QSupplier['supplier_name'];
     end;
-
-    with FNew_UM_Pembelian do
+    if vcall='Uang_Muka' then
     begin
-      Edkd_supp.Text:=QSupplier['supplier_code'];
-      ednm_supp.Text:=QSupplier['supplier_name'];
+      with FNew_UM_Pembelian do
+      begin
+        Edkd_supp.Text:=QSupplier['supplier_code'];
+        ednm_supp.Text:=QSupplier['supplier_name'];
+        Edheader.Text:=QSupplier['header_code_um'];
+        Ednm_akun.Text:=QSupplier['header_name'];
+        Edkd_akun.text:=QSupplier['account_code_um'];
+      end;
     end;
-
     with FNew_returnPemb do
     begin
       Edkd_supp.Text:=Qsupplier['supplier_code'];

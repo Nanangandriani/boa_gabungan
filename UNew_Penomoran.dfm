@@ -22,8 +22,8 @@ object FNew_Penomoran: TFNew_Penomoran
     Align = alClient
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 513
-    ExplicitHeight = 288
+    ExplicitWidth = 515
+    ExplicitHeight = 296
     object Label1: TLabel
       Left = 25
       Top = 25
@@ -67,7 +67,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Caption = 'Contoh Hasil Penomoran'
     end
     object LabelHasil: TLabel
-      Left = 170
+      Left = 172
       Top = 259
       Width = 246
       Height = 15
@@ -437,6 +437,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Height = 23
       Text = ''
       TabOrder = 20
+      Visible = False
     end
     object KdType: TRzEdit
       Left = 387
@@ -457,12 +458,13 @@ object FNew_Penomoran: TFNew_Penomoran
       Visible = False
     end
     object Kd: TRzEdit
-      Left = 387
-      Top = 22
+      Left = 385
+      Top = 25
       Width = 121
       Height = 23
       Text = ''
       TabOrder = 23
+      Visible = False
     end
     object DBGridEh1: TDBGridEh
       Left = 736
@@ -681,7 +683,7 @@ object FNew_Penomoran: TFNew_Penomoran
       TabOrder = 40
     end
     object CheckAdd: TCheckBox
-      Left = 69
+      Left = 67
       Top = 123
       Width = 97
       Height = 17
@@ -798,8 +800,8 @@ object FNew_Penomoran: TFNew_Penomoran
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 288
-    ExplicitWidth = 513
+    ExplicitTop = 296
+    ExplicitWidth = 515
     object RzBitBtn4: TRzBitBtn
       Left = 367
       Top = 2
@@ -860,7 +862,7 @@ object FNew_Penomoran: TFNew_Penomoran
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 361
+      ExplicitLeft = 363
     end
     object BCancel: TRzBitBtn
       Left = 442
@@ -922,7 +924,7 @@ object FNew_Penomoran: TFNew_Penomoran
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 436
+      ExplicitLeft = 438
     end
   end
   object qnumb_det_tmp: TUniQuery

@@ -105,7 +105,7 @@ begin
         EditComplete:=CODE;
         FNew_TerimaMaterial.MemterimaDet.Edit;
         //FNew_Pembelian.MemterimaDet['item_stock_code']:= MemterimaDet['no_material']+ '/'+Edkd_supp.Text+'/'+EditComplete+'/'+QMaterial['wh_code']+'/'+yn;
-        FNew_TerimaMaterial.MemterimaDet['kd_stok']:= QMaterial['kd_material']+ '/'+Edkd_supp.Text+'/'+EditComplete+'/'+QMaterial['wh_code']+'/'+(yn);
+        FNew_TerimaMaterial.MemterimaDet['kd_stok']:= QMaterial['item_code']+ '/'+Edkd_supp.Text+'/'+EditComplete+'/'+QMaterial['wh_code']+'/'+(yn);
         FNew_TerimaMaterial.MemterimaDet['nourut']:= EditComplete;
         FNew_TerimaMaterial.MemterimaDet.Post;
         FNew_TerimaMaterial.MemterimaDet.Next;
@@ -219,11 +219,9 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' SELECT a.*,b.account_name FROM t_item_category a '+
-                ' INNER JOIN t_ak_account b on a.account_code=b.code '+
-                ' INNER JOIN t_item c on a.category_id=c.category_id '+
-                ' INNER JOIN t_item_stock d on c.item_code=d.item_code '+
-                ' where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
+      sql.Text:=' SELECT a.group_name,a.kdtr, c.account_code,b.account_name FROM t_item_group a  '+
+      ' INNER JOIN t_ak_account b on a.account_code=b.code INNER JOIN t_item c on a.group_id=c.group_id'+
+      ' INNER JOIN t_item_stock d on c.item_code=d.item_code where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
       ExecSQL
     end;
     if DM.Qtemp.RecordCount=0 then

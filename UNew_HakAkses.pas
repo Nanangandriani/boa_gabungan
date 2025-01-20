@@ -32,6 +32,7 @@ type
     Edkd: TEdit;
     EdNm: TRzComboBox;
     EdNo: TEdit;
+    Bhapus: TRzBitBtn;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BTambahClick(Sender: TObject);
@@ -44,6 +45,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBGridEh2Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure BhapusClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -166,6 +168,17 @@ procedure TFNew_Hak_Akses.BBatalClick(Sender: TObject);
 begin
  FHak_Akses.ActROExecute(sender);
  Close;
+end;
+
+procedure TFNew_Hak_Akses.BhapusClick(Sender: TObject);
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='delete from t_akses where created_at='+QuotedStr(QDetail['created_at'])+' and id='+QuotedStr(QDetail['id']);
+    Execute;
+  end;
 end;
 
 procedure TFNew_Hak_Akses.BSimpanClick(Sender: TObject);

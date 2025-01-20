@@ -1289,20 +1289,15 @@ begin
            begin
               Close;
               SQL.Clear;
-              SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,d.qty, '+
+              SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty, '+
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
-                        ' from t_item_stock a '+
-                        ' inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code '+
-                        ' inner join t_item_receive C on b.receive_no=c.receive_no '+
-                        ' inner join t_spb_det d on d.spb_no=c.spb_no '+
-                        ' inner join t_po h on d.po_no=h.po_no '+
-                        ' inner join t_item e on a.item_code=e.item_code '+
-                        ' inner join t_wh f on b.wh_code=f.wh_code '+
-                        ' inner join t_item_receive_det g on d.item_stock_code=g.item_stock_code '+
-                        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' '+
+                        ' from t_item_stock a inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code inner join t_item_receive C on b.receive_no=c.receive_no '+
+                        ' left join t_spb_det d on d.spb_no=c.spb_no and b.item_stock_code=d.item_stock_code '+
+                        ' left join t_po h on b.po_no=h.po_no inner join t_item e on a.item_code=e.item_code '+
+                        ' inner join t_wh f on b.wh_code=f.wh_code where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' '+
                         ' and b.receive_no='+QuotedStr(Cb_Ref.Text)+' '+
-                        ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,d.qty,  '+
+                        ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty,  '+
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type" ';
                         ExecSQL;
            end;
@@ -1313,8 +1308,6 @@ begin
            show;
          end;
       end;
-
-
       {with QMaterial do
          begin
             Close;
@@ -1334,8 +1327,6 @@ begin
                       ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp';
             ExecSQL;
          end;}
-
-
     {with FSearch_TerimaBarang do
     begin
 

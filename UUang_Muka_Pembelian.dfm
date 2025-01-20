@@ -690,10 +690,14 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
   object QUM: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select a.*,b.supplier_name '
+      'select a.*,b.supplier_name,d.header_name,d.header_code'
       'from t_advance_payment a'
       'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code'
-      'group by a.supplier_code,b.supplier_name,a.no_trans'
+      'left join t_ak_account c on a.um_account_code=c.code'
+      'left JOIN t_ak_header d on c.header_code=d.header_code'
+      
+        'group by a.supplier_code,b.supplier_name,a.no_trans,d.header_nam' +
+        'e,d.header_code'
       'order by a.no_trans DESC')
     Left = 360
     Top = 32

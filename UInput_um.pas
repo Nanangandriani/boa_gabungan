@@ -44,6 +44,7 @@ type
     Label12: TLabel;
     Label13: TLabel;
     ednilai_po: TRzNumericEdit;
+    Edheader: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure EdUMKeyPress(Sender: TObject; var Key: Char);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -75,7 +76,7 @@ type
 
 function FNew_UM_Pembelian: TFNew_UM_Pembelian;
 var  StatusTr:integer;
-  status_um,user,orderno:string;
+  status_um,user,orderno,kd_akun:string;
  // hg_po:real;
 implementation
 
@@ -170,7 +171,7 @@ begin
         sql.Text:=' insert into t_advance_payment(no_trans,trans_date,supplier_code,um_status,um_value,um_account_code,'+
                   ' trans_day,trans_month,trans_year,pic,input_date,order_no,po_no,currency,exchange_rate,created_at,created_by) '+
                   ' values(:parno_trans,:partrans_date,:parkd_supplier,:parum_status,:parum_value,'+
-                  ' :parum_account_code,:partrans_day,:partrans_month,:partrans_year,:parpic,:parinput_date,'+
+                  ' :parum_account_code,:partrans_day,:partrans_month,:partrans_year,:parpic,now(),'+
                   ' :parorder_no,:parpo_no,:parcurrency,:exchange_rate,now(),:created_by)';
                   ParamByName('parno_trans').Value:=Ed_No_trans.Text;
                   ParamByName('partrans_date').Value:=FormatDateTime('yyy-mm-dd',DTP_UM.Date);
@@ -178,11 +179,11 @@ begin
                   ParamByName('parum_status').Value:='0';
                   ParamByName('parum_value').Value:=EdUM.Value;
                   ParamByName('parum_account_code').Value:=Edkd_akun.Text;
-                  ParamByName('partrans_day').Value:=Edhari.Text;;
+                  ParamByName('partrans_day').Value:=Edhari.Text;
                   ParamByName('partrans_month').Value:=Edbln.Text;
                   ParamByName('partrans_year').Value:=Edth.Text;
                   ParamByName('parpic').Value:=Nm;
-                  ParamByName('parinput_date').AsDateTime:=Now;
+                //  ParamByName('parinput_date').AsDateTime:=Now;
                   ParamByName('parorder_no').Value:=Edurut.text;
                   ParamByName('parpo_no').Value:=CbPo.text;
                   ParamByName('parcurrency').Value:=Cb_Curr.text;
@@ -351,7 +352,7 @@ end;
 
 procedure TFNew_UM_Pembelian.Edkd_akunChange(Sender: TObject);
 begin
-   with dm.Qtemp do
+ {  with dm.Qtemp do                 // off ds14-01-2025
    begin
      close;
      sql.Clear;
@@ -362,8 +363,7 @@ begin
                 'ORDER BY b.code ASC';
      open;
    end;
-   Ednm_akun.Text:=dm.Qtemp.FieldByName('account_name').AsString;
-
+   Ednm_akun.Text:=dm.Qtemp.FieldByName('account_name').AsString;  }
 end;
 
 procedure TFNew_UM_Pembelian.EdKd_suppChange(Sender: TObject);
@@ -403,6 +403,7 @@ begin
     with FSearch_Supplier do
     begin
       Show;
+      vcall:='Uang_Muka';
       QSupplier.Close;
       QSupplier.Open;
     end;

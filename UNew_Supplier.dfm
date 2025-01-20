@@ -381,8 +381,6 @@ object FNew_Supplier: TFNew_Supplier
     object TabSheet1: TRzTabSheet
       Color = clGradientActiveCaption
       Caption = 'Barang'
-      ExplicitWidth = 859
-      ExplicitHeight = 264
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -466,6 +464,8 @@ object FNew_Supplier: TFNew_Supplier
     object TabSheet2: TRzTabSheet
       Color = clGradientActiveCaption
       Caption = 'Lain-lain'
+      ExplicitWidth = 859
+      ExplicitHeight = 264
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -474,6 +474,8 @@ object FNew_Supplier: TFNew_Supplier
         Align = alClient
         Color = 15987699
         TabOrder = 0
+        ExplicitWidth = 859
+        ExplicitHeight = 264
         object Label11: TLabel
           Left = 177
           Top = 20

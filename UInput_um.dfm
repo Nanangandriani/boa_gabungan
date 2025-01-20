@@ -197,9 +197,9 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       OnButtonClick = Ednm_akunButtonClick
     end
     object Edkd_akun: TRzEdit
-      Left = 143
-      Top = 197
-      Width = 71
+      Left = 287
+      Top = 166
+      Width = 130
       Height = 23
       Text = ''
       Color = clInfoBk
@@ -268,6 +268,13 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       TabOrder = 14
       OnKeyPress = EdUMKeyPress
       DisplayFormat = '#,##0.00'
+    end
+    object Edheader: TEdit
+      Left = 143
+      Top = 197
+      Width = 73
+      Height = 23
+      TabOrder = 15
     end
   end
   object RzPanel2: TRzPanel

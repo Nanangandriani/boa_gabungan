@@ -754,6 +754,7 @@ end;
 
 procedure TFNewKontrak_ks.CbJenisSelect(Sender: TObject);
 begin
+    CbJenis.Text:='lokal';
     if CbJenis.Text='LOKAL' then
     begin
       EdCurr.Text:='IDR';
@@ -1038,6 +1039,9 @@ end;
 
 procedure TFNewKontrak_ks.FormShow(Sender: TObject);
 begin
+  CbJenis.Text:='LOKAL';
+  EdCurr.Text:='IDR';
+  EdCurrChange(SENDER);
   EdnilaiCurr.Visible:=False;
   MemMaterial.Open;
   EdTh_kirim.Text:=FormatDateTime('yyyy',now);

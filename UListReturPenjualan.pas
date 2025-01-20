@@ -293,7 +293,7 @@ end;
 
 procedure TFListReturPenjualan.dxBarLargeButton2Click(Sender: TObject);
 begin
-   with QJurnal do
+   with fmainmenu.QJurnal do
     begin
      close;
      sql.clear;
@@ -303,13 +303,13 @@ begin
     end;
 
 
- if QJurnal.RecordCount=0 then
+ if fmainmenu.QJurnal.RecordCount=0 then
  begin
   showmessage('Tidak ada data yang bisa dicetak !');
   exit;
  end;
 
- if QJurnal.RecordCount<>0 then
+ if fmainmenu.QJurnal.RecordCount<>0 then
  begin
    cLocation := ExtractFilePath(Application.ExeName);
 

@@ -97,6 +97,7 @@ type
   public
     { Public declarations }
     Procedure Load;
+    Procedure Load2; // cr ds 20-01-2025 loadpo
     Procedure LoadPO;
     //Procedure Loaditem;
     procedure Clear;
@@ -573,17 +574,12 @@ begin
       begin
         Close;
         SQL.Clear;
-        SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
-                  ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
-                  ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a '+
-                  ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
-                  ' inner join t_po c on b.po_no=c.po_no '+
-                  ' inner join t_item e on a.item_code=e.item_code '+
-                  ' inner join t_wh f on c.warehouse=f.wh_name'+
-                  ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and b.remaining_qty > 0'+
-                  ' GROUP BY a.item_stock_code,a.item_code, a.item_name, a.order_no,b.price,b.remaining_qty,'+
-                  ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code,e.account_code, c.due_date '+
-                  ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp';
+        SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty,b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,'+
+        ' b.po_no,c.supplier_code,e.account_code,c.due_date,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a inner join t_podetail b '+
+        ' on a.item_stock_code=b.item_stock_code inner join t_po c on b.po_no=c.po_no inner join t_item e on a.item_code=e.item_code inner join t_wh f on c.wh_code=f.wh_code '+
+        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and b.remaining_qty > 0'+
+        ' GROUP BY a.item_stock_code,a.item_code,b.item_name,a.order_no,b.price,b.remaining_qty,b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no,c.supplier_code,e.account_code,'+
+        ' c.due_date,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp';
         ExecSQL;
       end;
    end
@@ -601,6 +597,7 @@ begin
               ' inner join t_item e on a.item_code=e.item_code '+
               ' inner join t_wh f on c.wh_code=f.wh_code'+
               ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+'and d.spb_no='+QuotedStr(EdNoSPB.Text)+''+
+              ' and and b.po_no in  (select po_no from t_po EXCEPT select po_no from t_item_receive_det) '+
               ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,d.qty,'+
               ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, d.spb_no,e.account_code, c.due_date '+
               ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp';
@@ -648,6 +645,7 @@ end;
 procedure TFNew_TerimaMaterial.EdjenisSelect(Sender: TObject);
 begin
    load;
+   EdNoSPB.Text:='0';
 end;
 
 procedure TFNew_TerimaMaterial.EdNm_suppButtonClick(Sender: TObject);
@@ -863,6 +861,62 @@ begin
         end;
         Edsbu.Text:=loksbu;
     end;}
+end;
+
+procedure TFNew_TerimaMaterial.Load2;
+begin
+      EdNoSPB.Clear;
+      if loksbu='' then
+      begin
+          with Dm.Qtemp do
+          begin
+           close;
+           sql.Text:='select a.*,b.supplier_name from t_po a left join t_supplier b on '+
+           ' a.supplier_code=b.supplier_code WHERE a.po_no in (select po_no from t_po   '+
+           ' EXCEPT select spb_no from t_item_receive) and "approval_status"=''1'' '+
+           ' and trans_category='+QuotedStr(Edjenis.Text)+' order by po_no asc';
+            ExecSQL;
+          end;
+          Dm.Qtemp.First;
+          while not dm.Qtemp.Eof do
+          begin
+            EdNoSPB.Items.Add(Dm.Qtemp.FieldByName('po_no').AsString);
+            Dm.Qtemp.Next;
+          end;
+          edsbu.Clear;
+          with Dm.Qtemp do
+          begin
+            close;
+            sql.Text:='select sbu_code from t_sbu order by sbu_code Asc';
+            ExecSQL;
+          end;
+          Dm.Qtemp.First;
+          while not dm.Qtemp.Eof do
+          begin
+            edsbu.Items.Add(Dm.Qtemp.FieldByName('sbu_code').AsString);
+            Dm.Qtemp.Next;
+          end;
+      end;
+      if loksbu<>'' then
+      begin
+          with Dm.Qtemp do
+          begin
+            close;
+             sql.Text:='select a.*,b.supplier_name from t_po a left join t_supplier b on '+
+             ' a.supplier_code=b.supplier_code WHERE a.po_no in (select po_no from t_po   '+
+             ' EXCEPT select spb_no from t_item_receive) and "approval_status"=''1'' '+
+             ' and ( sbu_code='+QuotedStr(loksbu)+' or sbu_code='''' or sbu_code=''MLB'') '+
+             ' and trans_category='+QuotedStr(Edjenis.Text)+' order by po_no asc';
+            ExecSQL;
+          end;
+          Dm.Qtemp.First;
+          while not dm.Qtemp.Eof do
+          begin
+            EdNoSPB.Items.Add(Dm.Qtemp.FieldByName('po_no').AsString);
+            Dm.Qtemp.Next;
+          end;
+          Edsbu.Text:=loksbu;
+      end;
 end;
 
 procedure TFNew_TerimaMaterial.LoadPO;

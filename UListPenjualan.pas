@@ -141,7 +141,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
-  UNewKontrakTagihan;
+  UNewKontrakTagihan, UMainMenu;
 
 procedure TFDataListPenjualan.reset_stock;
 begin
@@ -378,9 +378,15 @@ begin
    SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
    SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
    //Report.DesignReport();
-   Report.ShowReport();
+   //Report.ShowReport();
+   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+    begin
+     Report.DesignReport();
+    end else
+    begin
+      Report.ShowReport();
  end;
-
+ end;
 end;
 
 procedure TFDataListPenjualan.dxBarLargeButton4Click(Sender: TObject);
@@ -426,7 +432,7 @@ end;
 
 procedure TFDataListPenjualan.dxBarLargeButton5Click(Sender: TObject);
 begin
-   with QJurnal do
+   with fmainmenu.QJurnal do
     begin
      close;
      sql.clear;
@@ -436,13 +442,13 @@ begin
     end;
 
 
- if QJurnal.RecordCount=0 then
+ if fmainmenu.QJurnal.RecordCount=0 then
  begin
   showmessage('Tidak ada data yang bisa dicetak !');
   exit;
  end;
 
- if QJurnal.RecordCount<>0 then
+ if fmainmenu.QJurnal.RecordCount<>0 then
  begin
    cLocation := ExtractFilePath(Application.ExeName);
 

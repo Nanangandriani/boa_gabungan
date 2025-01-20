@@ -20,6 +20,8 @@ object FNew_PO: TFNew_PO
     Width = 1206
     Height = 243
     Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 1202
     object Label1: TLabel
@@ -196,6 +198,7 @@ object FNew_PO: TFNew_PO
       Width = 21
       Height = 15
       Caption = 'SBU'
+      Visible = False
     end
     object Label37: TLabel
       Left = 175
@@ -203,6 +206,7 @@ object FNew_PO: TFNew_PO
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label38: TLabel
       Left = 660
@@ -210,6 +214,7 @@ object FNew_PO: TFNew_PO
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
+      Visible = False
     end
     object Label39: TLabel
       Left = 714
@@ -346,7 +351,6 @@ object FNew_PO: TFNew_PO
       Items.Strings = (
         'SUPPLIER'
         'DELIVERY ORDER')
-      ItemIndex = 0
     end
     object Edjenispo: TRzComboBox
       Left = 190
@@ -466,7 +470,7 @@ object FNew_PO: TFNew_PO
     object cb_gudang: TComboBox
       Left = 190
       Top = 154
-      Width = 164
+      Width = 187
       Height = 23
       TabOrder = 16
       OnSelect = cb_gudangSelect
@@ -539,6 +543,7 @@ object FNew_PO: TFNew_PO
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 24
+      Visible = False
       OnSelect = EdsbuSelect
     end
     object Dthari: TRzDateTimeEdit
@@ -577,19 +582,21 @@ object FNew_PO: TFNew_PO
       Text = ''
       FocusColor = clInfoBk
       TabOrder = 28
+      Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
     object Edkd_akun: TRzEdit
-      Left = 728
-      Top = 182
-      Width = 71
+      Left = 729
+      Top = 215
+      Width = 164
       Height = 23
       Text = ''
       Enabled = False
       FocusColor = clInfoBk
       ReadOnly = True
       TabOrder = 29
+      Visible = False
       OnChange = Edkd_akunChange
     end
     object EdUM: TRzNumericEdit
@@ -677,6 +684,14 @@ object FNew_PO: TFNew_PO
       Height = 23
       Enabled = False
       TabOrder = 39
+    end
+    object Edheader: TEdit
+      Left = 729
+      Top = 182
+      Width = 74
+      Height = 23
+      TabOrder = 40
+      Visible = False
     end
   end
   object Panel2: TPanel
@@ -984,8 +999,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1051
-      ExplicitHeight = 29
+      ExplicitLeft = 1049
+      ExplicitTop = -3
     end
     object BEdit: TRzBitBtn
       Left = 980

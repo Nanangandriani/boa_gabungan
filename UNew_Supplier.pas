@@ -135,7 +135,8 @@ begin
     begin
       kode := kode;
     end;
-    edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+kode;
+//    edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+kode;  of sementara ds 13/01/2025
+    edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+edno.Text;
 end;
 
 procedure TFNew_Supplier.Autocode_perkiraan_um;
@@ -182,7 +183,8 @@ begin
     begin
       kode := kode;
     end;
-    edKodePerkiraan_um.Text := KodeHeaderPerkiraan_um+'.'+kode;
+//    edKodePerkiraan_um.Text := KodeHeaderPerkiraan_um+'.'+kode;of sementara ds 13/01/2025
+    edKodePerkiraan_um.Text := KodeHeaderPerkiraan_um+'.'+edno.Text;
 end;
 
 procedure TFNew_Supplier.Clear;
@@ -324,7 +326,6 @@ begin
         Autocode_perkiraan;
         Autocode_perkiraan_um;
       end;
-
       with dm.Qtemp do
       begin
         close;

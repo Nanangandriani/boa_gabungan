@@ -1207,6 +1207,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1294,6 +1298,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Retur_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Retur Pembelian'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridReturPemb: TDBGridEh
           Left = 0
           Top = 0
@@ -1399,6 +1407,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Pot_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Pot. Pembelian'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0
@@ -1467,6 +1479,10 @@ object FNew_Pembelian: TFNew_Pembelian
         Color = 15987699
         TabVisible = False
         Caption = 'Barang'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridBarang: TDBGridEh
           Left = 0
           Top = 0

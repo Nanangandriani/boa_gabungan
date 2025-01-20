@@ -38,6 +38,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     Width = 864
     Height = 315
     Align = alClient
+    DataSource = Dskasbank
+    DrawMemoText = True
     DynProps = <>
     TabOrder = 1
     TitleParams.MultiTitle = True
@@ -46,30 +48,36 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'voucher'
         Footers = <>
         Title.Caption = 'Bukti'
-        Width = 100
+        Width = 138
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'ket'
         Footers = <>
         Title.Caption = 'Keterangan'
-        Width = 100
+        Width = 187
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
+        FieldName = 'jum_kas'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Kas'
-        Width = 100
+        Width = 93
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
+        FieldName = 'jum_bank'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Bank'
         Width = 100
@@ -78,6 +86,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'kodesp_k'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Lain-lain|No. Perkiraan'
         Width = 100
@@ -86,22 +95,27 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'namasp_k'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Lain-lain|Nama Perkiraan'
         Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
+        FieldName = 'jum_akun_k'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Lain-lain|Jumlah'
         Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
+        FieldName = 'jum_debit_hutang'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|Hutang Dagang'
         Width = 100
@@ -110,6 +124,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'nopk'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|No. Perkiraan'
         Width = 100
@@ -118,14 +133,17 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'nmpk'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|Nama Perkiraan'
         Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
+        FieldName = 'jum'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|Jumlah'
         Width = 100
@@ -133,7 +151,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
-  object frxReport1: TfrxReport
+  object rpt: TfrxReport
     Version = '2022.2.7'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
@@ -142,12 +160,12 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44224.360934872700000000
-    ReportOptions.LastChange = 45063.480543576390000000
+    ReportOptions.LastChange = 45667.454080914400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '                 '
+      ''
       'end;'
       ''
       'procedure Page1OnAfterPrint(Sender: TfrxComponent);'
@@ -162,23 +180,22 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       ''
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '     '
+      ''
       'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 144
-    Top = 200
+    Left = 344
+    Top = 69
     Datasets = <
+      item
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
+      end
       item
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
-      end
-      item
-        DataSetName = 'frxDBDataset2'
-      end
-      item
       end>
     Variables = <>
     Style = <>
@@ -527,7 +544,6 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Top = 6.102350000000000000
           Width = 215.488250000000000000
           Height = 18.897650000000000000
-          DataField = 'nama_perusahaan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -536,7 +552,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDatasetPers."nama_perusahaan"]')
+            '[DBPerusahaan."company_name"]')
           ParentFont = False
         end
         object Memoalamat: TfrxMemoView
@@ -546,7 +562,6 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Width = 214.771653540000000000
           Height = 34.574830000000000000
           StretchMode = smMaxHeight
-          DataField = 'alamat'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -555,7 +570,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDatasetPers."alamat"]')
+            '[DBPerusahaan."address"]')
           ParentFont = False
         end
         object SysMemo8: TfrxSysMemoView
@@ -1418,675 +1433,143 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
   object QKasBank: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT'
-      'CASE'
-      #9#9
-      #9'WHEN'
-      #9#9'nomor = 1 THEN'
-      #9#9#9'voucher ELSE'#39#39' '
-      #9#9'END voucher2,'
-      'CASE'
-      #9
-      #9'WHEN nomor = 1 THEN'
-      #9'ket ELSE'#39#39' '
-      #9'END ket2,'
-      'CASE'
-      #9
-      #9'WHEN nomor = 1 THEN'
-      #9'jum_kas ELSE 0 '
-      #9'END jum_kas2,* '
-      'FROM'
-      #9'('
-      #9'SELECT'
-      #9#9'x2.*,'
       
-        #9#9'"row_number" ( ) OVER ( PARTITION BY voucher ORDER BY nourut A' +
-        'SC ) AS nomor '
-      #9'FROM'
-      #9#9'('
-      #9#9'SELECT'
-      #9#9#9'xx.voucher,'
-      #9#9#9'xx.ket,'
-      #9#9#9'bb.nm,'
-      #9#9#9'ab.nosj,'
-      #9#9#9'xx.jum_kas,'
-      #9#9#9'xx.jum_bank,'
-      #9#9#9'xx.jum_akun_k,'
-      #9#9#9'xx.kodesp_k,'
-      #9#9#9'xx.namasp_k,'
-      #9#9#9'xx.kode3,'
-      #9#9#9'xx.jum_debit_hutang,'
-      #9#9#9'xx.nopk,'
-      #9#9#9'xx.nmpk,'
-      #9#9#9'xx.jum,'
-      #9#9#9'xx.ROW_NUMBER nourut,'
-      #9#9#9'xx.kode3,'
-      #9#9#9'xx.kodesp_k,'
-      #9#9#9'xx.nopk '
-      #9#9'FROM'
-      #9#9#9'('
-      #9#9#9'SELECT DISTINCT'
-      #9#9#9#9'voucher.voucher,'
-      #9#9#9#9'voucher.ket,'
-      #9#9#9#9'kas.jum_kas,'
-      #9#9#9#9'bank.jum_bank,'
-      #9#9#9#9'akun_k.jum_akun_k,'
-      #9#9#9#9'akun_k.kodesp_k,'
-      #9#9#9#9'akun_k.namasp_k,'
-      #9#9#9#9'd_hutang.kode3,'
-      #9#9#9#9'd_hutang.jum_debit_hutang,'
-      #9#9#9#9'k_lain.nopk,'
-      #9#9#9#9'k_lain.nmpk,'
-      #9#9#9#9'k_lain.jum,'
+        'SELECT CASE'#9'WHEN'#9'nomor = 1 THEN'#9'voucher ELSE'#39#39' '#9'END voucher2,CAS' +
+        'E WHEN nomor = 1 THEN'#9'ket ELSE'#39#39' '#9'END ket2,'
       
-        #9#9#9#9'ROW_NUMBER ( ) OVER ( ORDER BY voucher.voucher, d_hutang.kod' +
-        'e3, akun_k.kodesp_k, k_lain.nopk ) '
-      #9#9#9'FROM'
-      #9#9#9#9'('
-      #9#9#9#9'SELECT'
-      #9#9#9#9#9'kas.voucher,'
-      #9#9#9#9#9'('
-      #9#9#9#9#9'CASE'
-      #9#9#9#9#9#9#9
-      #9#9#9#9#9#9#9'WHEN kas.kodesp = '#39'2110'#39' THEN'
-      #9#9#9#9#9#9#9'concat ( kas.kepada, '#39' '#39' ) '
-      #9#9#9#9#9#9#9'WHEN kas.kodesp = '#39'2120'#39' THEN'
-      #9#9#9#9#9#9#9'concat ( kas.kepada, '#39' '#39' ) '
-      #9#9#9#9#9#9#9'WHEN kas.kodesp = '#39'2130'#39' THEN'
+        'CASE'#9'WHEN nomor = 1 THEN'#9'jum_kas ELSE 0 '#9'END jum_kas2,* FROM'#9'(/*' +
+        'X3*/'#9'SELECT'#9'x2.*,"row_number" ( ) OVER ( PARTITION BY voucher OR' +
+        'DER BY nourut ASC ) AS nomor '#9'FROM'
       
-        #9#9#9#9#9#9#9'concat ( kas.kepada, '#39' '#39' ) ELSE concat ( kas.ket, '#39' '#39', '#39'(' +
-        #39', kas.kepada, '#39')'#39' ) '
-      #9#9#9#9#9#9'END '
-      #9#9#9#9#9#9') AS ket,'
-      #9#9#9#9#9#9'kas.kodesp AS nopk,'
-      #9#9#9#9#9#9'pk.nama_perkiraan AS nmpk,'
-      #9#9#9#9#9#9'kas.kodesp AS kd3 '
-      #9#9#9#9#9'FROM'
-      #9#9#9#9#9#9'tkas kas'
-      #9#9#9#9#9#9'LEFT JOIN t_daftar_perkiraan pk ON kas.KODESP = pk.kode '
-      #9#9#9#9#9'WHERE'
-      #9#9#9#9#9#9'( kas.tgltrans = '#39'2023-05-02'#39' ) '
-      #9#9#9#9#9#9'AND ( kas.dk = '#39'D'#39' ) '
-      #9#9#9#9#9#9'AND ( SUBSTRING ( kas.voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      #9#9#9#9#9#9'AND ( SUBSTRING ( kas.voucher, 1, 2 ) <> '#39'KM'#39' ) '
-      #9#9#9#9#9#9'AND ( kodeprsh = '#39'MLB'#39' ) UNION ALL'
-      #9#9#9#9#9'SELECT DISTINCT'
-      #9#9#9#9#9#9'bank.voucher,'
-      #9#9#9#9#9#9'concat ( bd.keter, '#39' '#39', '#39'('#39', bd.kepada, '#39')'#39' ) AS ket,'
-      #9#9#9#9#9#9'bank.norek AS nopk,'
-      #9#9#9#9#9#9'pk.nama_perkiraan AS nmpk,'
-      #9#9#9#9#9#9'kode3 AS kd3 '
-      #9#9#9#9#9'FROM'
-      #9#9#9#9#9#9'tbank02ju bank'
-      #9#9#9#9#9#9'LEFT JOIN tbank02 bd ON bank.voucher = bd.voucher'
-      #9#9#9#9#9#9'LEFT JOIN t_daftar_perkiraan pk ON bank.NOREK = pk.kode '
-      #9#9#9#9#9'WHERE'
-      #9#9#9#9#9#9'bank.tanggal = '#39'2023-05-02'#39' '
-      #9#9#9#9#9#9'AND bank.dk = '#39'D'#39' '
-      #9#9#9#9#9#9'AND SUBSTRING ( bank.voucher, 1, 2 ) = '#39'BK'#39' '
-      #9#9#9#9#9#9'AND bd.kodeprsh = '#39'MLB'#39' '
-      #9#9#9#9#9') voucher'
-      #9#9#9#9#9'LEFT JOIN ('
-      #9#9#9#9#9'SELECT DISTINCT'
-      #9#9#9#9#9#9'voucher,'
-      #9#9#9#9#9#9'kodesp,'
+        #9'(/*X2*/SELECT'#9#9'xx.voucher,'#9'xx.ket,'#9#9'bb.nm,'#9#9'ab.nosj,'#9#9'xx.jum_ka' +
+        's,'#9#9'xx.jum_bank,'#9#9'xx.jum_akun_k,'#9#9'xx.kodesp_k,'#9#9'xx.namasp_k,'#9#9'xx' +
+        '.kode3,'#9#9'xx.jum_debit_hutang,'#9#9'xx.nopk,'#9#9'xx.nmpk,'#9#9'xx.jum,'#9#9'xx.R' +
+        'OW_NUMBER nourut,'#9#9'xx.kode3,'#9#9'xx.kodesp_k,'#9#9'xx.nopk '#9'FROM'#9#9'('#9'/*x' +
+        'x*/'#9
       
-        #9#9#9#9#9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( jumlah * kurs ) ELS' +
-        'E SUM ( jumlah ) END ) jum_kas '
-      'FROM'
-      #9'tkas '
-      'WHERE'
-      #9'dk = '#39'K'#39' '
-      #9'AND kodesp = '#39'1111'#39' '
-      #9'AND ( SUBSTRING ( voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      'GROUP BY'
-      #9'voucher,'
-      #9'kodesp,'
-      #9'matauang '
-      #9') kas ON kas.voucher = voucher.voucher'
-      #9'LEFT JOIN ('
-      #9'SELECT A'
-      #9#9'.voucher,'
+        #9'SELECT DISTINCT'#9'voucher.voucher,voucher.ket,kas.jum_kas,kas.jum' +
+        '_bank,akun_k.jum_akun_k,akun_k.kodesp_k,akun_k. namasp_k,d_hutan' +
+        'g.nopk kode3,'#9#9#9'd_hutang.jum_debit_hutang,k_lain.nopk,k_lain.nmp' +
+        'k,k_lain.jum,'#9#9#9'ROW_NUMBER ( ) OVER ( ORDER BY voucher.voucher, ' +
+        'd_hutang.nopk, akun_k.kodesp_k, k_lain.nopk ) '#9
+      #9'FROM'#9#9#9
       
-        #9'( CASE WHEN b.matauang = '#39'USD'#39' THEN A.jumlah * b.rate ELSE A.ju' +
-        'mlah END ) jum_bank,'
-      #9'kode3 '
-      'FROM'
-      #9'tbank02ju A,'
-      #9'tbank02 b '
-      'WHERE'
-      #9'( A.voucher = b.voucher ) '
-      #9'AND ( A.dk = '#39'K'#39' ) '
-      #9'AND A.norek = kode3 '
-      #9') bank ON bank.voucher = voucher.voucher'
-      #9'LEFT JOIN ('
-      #9'SELECT A'
-      #9#9'.voucher,'
-      #9#9'A.kode3 AS kodesp_k,'
-      #9#9'SUM ( A.jumlah ) AS jum_akun_k,'
-      #9#9'b.nama_perkiraan AS namasp_k '
-      #9'FROM'
-      #9#9'tbank02ju A,'
-      #9#9't_daftar_perkiraan b '
-      #9'WHERE'
-      #9#9'( A.kode3 = b.kode ) '
-      #9#9'AND ( dk = '#39'K'#39' ) '
-      #9#9'AND norek <> kode3 '
-      #9'GROUP BY'
-      #9#9'A.voucher,'
-      #9#9'A.kode3,'
-      #9#9'b.nama_perkiraan UNION'
-      #9'SELECT DISTINCT A'
-      #9#9'.voucher,'
-      #9#9'A.kodesp AS kodesp_k,'
+        #9'('#9'/*voucher*/SELECT'#9'kas.voucher_no voucher,(CASE'#9'WHEN kas.code_' +
+        'account =(select f_debt_master(1)) THEN'#9'concat ( kas.to_, '#39' '#39' ) ' +
+        #9'WHEN kas.code_account =(select f_debt_master(2))  THEN'#9'concat (' +
+        ' kas.to_, '#39' '#39' ) '#9'WHEN kas.code_account =(select f_debt_master(3)' +
+        ') THEN'#9'concat ( kas.to_, '#39' '#39' ) ELSE concat ( kas.remark, '#39' '#39', '#39'(' +
+        #39', kas.to_, '#39')'#39' ) END ) AS ket,kas.code_account AS nopk,pk.accou' +
+        'nt_name AS nmpk,kas.code_account AS kd3,"position" FROM ( select' +
+        ' a.*,b.code_account,b."position" from t_cash_bank_expenditure a ' +
+        'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_vo' +
+        'ucher)  kas LEFT JOIN t_ak_account pk ON kas.code_account = pk.c' +
+        'ode WHERE( kas.trans_date = '#39'2024-12-18'#39' ) AND ( kas."position" ' +
+        '= '#39'D'#39' ) AND ( SUBSTRING ( kas.voucher_no, 1, 2 ) <> '#39'KC'#39' ) AND (' +
+        ' SUBSTRING ( kas.voucher_no, 1, 2 ) <> '#39'KM'#39' ) --AND ( company_co' +
+        'de = ( select company_code from t_company)) '
+      ' /*voucher*/) voucher'#9#9#9#9
       
-        #9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( A.jumlah * A.kurs ) ELS' +
-        'E SUM ( A.jumlah ) END ) jum_akun_k,'
-      #9'b.nama_perkiraan AS namasp_k '
-      'FROM'
-      #9'tkas A,'
-      #9't_daftar_perkiraan b '
-      'WHERE'
-      #9'A.kodesp = b.kode '
-      #9'AND A.dk = '#39'K'#39' '
-      #9'AND A.kodesp <> '#39'1111'#39' '
-      #9'AND ( SUBSTRING ( A.voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      'GROUP BY'
-      #9'voucher,'
-      #9'kodesp_k,'
-      #9'nama_perkiraan,'
-      #9'matauang '
-      #9') akun_k ON akun_k.voucher = voucher.voucher'
-      #9'LEFT JOIN ('
-      #9'SELECT A'
-      #9#9'.voucher,'
+        ' LEFT JOIN ( /*kas*/select a.voucher_no voucher,b.code_account,c' +
+        'ase when a.module_id=6 then ( CASE WHEN a.currency = '#39'USD'#39' THEN ' +
+        'SUM ( amount * kurs ) ELSE SUM ( amount ) END )  else 0 end jum_' +
+        'kas,case when a.module_id=5 then ( CASE WHEN a.currency = '#39'USD'#39' ' +
+        'THEN SUM ( amount * kurs ) ELSE SUM ( amount ) END )  else 0 end' +
+        ' jum_bank from t_cash_bank_expenditure a INNER JOIN t_cash_bank_' +
+        'expenditure_det b on a.voucher_no=b.no_voucher WHERE "position" ' +
+        '= '#39'K'#39' --AND code_account = '#39'1111'#39' '
       
-        #9'( CASE WHEN A.matauang = '#39'USD'#39' THEN A.jumlah * b.rate ELSE A.ju' +
-        'mlah END ) jum_debit_hutang,'
-      #9'kode3 '
-      'FROM'
-      #9'tbank02ju A,'
-      #9'tbank02 b '
-      'WHERE'
-      #9'( A.voucher = b.voucher ) '
-      #9'AND ( dk = '#39'D'#39' ) '
-      #9'AND ( kode3 = '#39'2110'#39' ) UNION ALL'
-      'SELECT'
-      #9'voucher,'
-      #9'jumlah AS jum_debit_hutang,'
-      #9'kodesp AS kode3 '
-      'FROM'
-      #9'tkas '
-      'WHERE'
-      #9'dk = '#39'D'#39' '
-      #9'AND kodesp = '#39'2110'#39' '
-      #9') D_hutang ON D_hutang.voucher = voucher.voucher '
-      #9'AND D_hutang.kode3 = voucher.kd3'
-      #9'LEFT JOIN ('
-      #9'SELECT'
-      #9#9'voucher,'
+        ' AND ( SUBSTRING ( voucher_no, 1, 2 ) <> '#39'KC'#39' ) GROUP BY a.vouch' +
+        'er_no,b.code_account,a.currency,a.module_id/*kas*/) kas  '
+      ' ON kas.voucher = voucher.voucher'
+      ' /*kas bank*/ '
+      'LEFT JOIN (/*akun_k*/'#9
       
-        #9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( jumlah * kurs ) ELSE SU' +
-        'M ( jumlah ) END ) jum_debit_lain2,'
-      #9'kodesp,'
-      #9'namasp '
-      'FROM'
-      #9'tkas '
-      'WHERE'
-      #9'( dk = '#39'D'#39' ) '
-      #9'AND ( SUBSTRING ( voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      #9'AND kodesp <> '#39'2110'#39' '
-      'GROUP BY'
-      #9'voucher,'
-      #9'kodesp,'
-      #9'namasp,'
-      #9'matauang '
-      #9') D_lain2 ON D_lain2.voucher = voucher.voucher '
-      #9'AND D_lain2.kodesp = voucher.kd3'
-      #9'LEFT JOIN ('
-      #9'SELECT DISTINCT A'
-      #9#9'.voucher,'
-      #9#9'A.nopk,'
-      #9#9'A.nmpk,'
-      #9#9'A.jum,'
-      #9#9'A.urt '
-      #9'FROM'
-      #9#9'('
-      #9#9'SELECT DISTINCT'
-      #9#9#9'kas.voucher,'
-      #9#9#9'kas.kodesp AS nopk,'
-      #9#9#9'pk.nama_perkiraan AS nmpk,'
-      
-        #9#9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( kas.jumlah * kas.kurs ' +
-        ') ELSE SUM ( kas.jumlah ) END ) jum,'
-      #9#39'1'#39' AS urt '
-      'FROM'
-      #9'tkas kas'
-      #9'LEFT JOIN t_daftar_perkiraan pk ON kas.KODESP = pk.kode '
-      'WHERE'
-      #9'( kas.tgltrans = '#39'2023-05-02'#39' ) '
-      #9'AND ( kas.dk = '#39'D'#39' ) '
-      #9'AND ( SUBSTRING ( kas.voucher, 1, 12 ) <> '#39'KC'#39' ) '
-      #9'AND kas.kodesp <> '#39'2110'#39' '
-      'GROUP BY'
-      #9'kas.voucher,'
-      #9'kas.kodesp,'
-      #9'pk.nama_perkiraan,'
-      #9'matauang UNION ALL'
-      'SELECT'
-      #9'bank.voucher,'
-      #9'bank.kode3 AS nopk,'
-      #9'pk.nama_perkiraan AS nmpk,'
-      
-        #9'( CASE WHEN x1.matauang = '#39'USD'#39' THEN bank.jumlah * x1.rate ELSE' +
-        ' bank.jumlah END ) jum,'
-      #9#39'2'#39' AS urt '
-      'FROM'
-      #9'tbank02ju bank'
-      #9'LEFT JOIN t_daftar_perkiraan pk ON bank.kode3 = pk.kode'
-      #9'LEFT JOIN tbank02 x1 ON bank.voucher = x1.voucher '
-      'WHERE'
-      #9'( bank.tanggal = '#39'2023-05-02'#39' ) '
-      #9'AND ( bank.dk = '#39'D'#39' ) '
-      #9'AND ( bank.kode3 <> '#39'2110'#39' ) '
-      #9'AND ('
-      
-        #9#9'( SUBSTRING ( bank.kode3, 1, 4 ) <> '#39'1113'#39' AND SUBSTRING ( ban' +
-        'k.voucher, 1, 2 ) = '#39'BM'#39' ) '
-      #9#9'OR ( SUBSTRING ( bank.voucher, 1, 2 ) = '#39'BK'#39' ) '
-      #9') '
-      #9') A '
-      
-        #9') k_lain ON ( k_lain.voucher = voucher.voucher AND k_lain.nopk ' +
-        '= voucher.kd3 AND urt = '#39'2'#39' ) '
-      
-        #9'OR ( k_lain.voucher = voucher.voucher AND k_lain.nopk = voucher' +
-        '.kd3 AND urt = '#39'1'#39' ) '
-      'ORDER BY'
-      #9'voucher.voucher,'
-      #9'd_hutang.kode3,'
-      #9'akun_k.kodesp_k,'
-      #9'k_lain.nopk '
-      #9') xx'
-      #9'LEFT JOIN LATERAL ('
-      #9'SELECT A'
-      #9#9'.no_voucher,'
-      #9#9'A.tgl_trans,'
-      #9#9'string_agg ( concat ( '#39'SJ.'#39', b.nosj ), '#39','#39' ) nosj,'
-      #9#9'C.nm_supplier '
-      #9'FROM'
-      #9#9'tbeli_bayar A,'
-      #9#9't_terima_material b,'
-      #9#9't_supplier C '
-      #9'WHERE'
-      #9#9'A.no_voucher = xx.voucher '
-      #9#9'AND A.no_lpb = b.no_terima '
-      #9#9'AND b.kd_supplier = C.kd_supplier '
-      #9'GROUP BY'
-      #9#9'A.no_voucher,'
-      #9#9'A.tgl_trans,'
-      #9#9'C.nm_supplier '
-      #9') ab ON 1 = 1'
-      #9'LEFT JOIN LATERAL ('
-      #9'SELECT'
-      
-        #9#9'string_agg ( concat ( nm_material, '#39' '#39', to_char( tot_qty, '#39'99,' +
-        '999,999FM'#39' ), '#39' '#39', satuan ), '#39','#39' ) nm '
-      #9'FROM'
-      #9#9'('
-      #9#9'SELECT C'
-      #9#9#9'.kd_material,'
-      #9#9#9'C.nm_material,'
-      #9#9#9'b.satuan,'
-      #9#9#9'SUM ( b.qty ) AS tot_qty '
-      #9#9'FROM'
-      
-        #9#9#9'( SELECT DISTINCT no_lpb FROM tbeli_bayar WHERE no_voucher = ' +
-        'xx.voucher )'
-      
-        #9#9#9'A LEFT JOIN ( SELECT A.* FROM t_terima_material_det A INNER J' +
-        'OIN t_terima_material b ON A.no_terima = b.no_terima WHERE b.kd_' +
-        'akun = '#39'2110'#39' ) b ON A.no_lpb = b.no_terima'
-      
-        #9#9#9'LEFT JOIN t_material_stok C ON b.kd_material_stok = C.kd_mate' +
-        'rial_stok '
-      #9#9'GROUP BY'
-      #9#9#9'C.kd_material,'
-      #9#9#9'C.nm_material,'
-      #9#9#9'b.satuan '
-      #9#9'ORDER BY'
-      #9#9#9'C.nm_material,'
-      #9#9#9'b.satuan '
-      #9#9') A '
-      #9') bb ON 1 = 1 '
-      #9') x2 '
-      #9') x3'
+        'SELECT DISTINCT A'#9'.no_voucher voucher,'#9'A.code_account AS kodesp_' +
+        'k,( CASE WHEN currency = '#39'USD'#39' THEN SUM ( A.paid_amount * A.kurs' +
+        ' ) ELSE SUM ( A.paid_amount) END ) jum_akun_k,b.account_name AS ' +
+        'namasp_k FROM (select a.currency,a.kurs,b.* from t_cash_bank_exp' +
+        'enditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher' +
+        '_no=b.no_voucher) A,t_ak_account b WHERE A.code_account = b.code' +
+        ' AND A."position" = '#39'K'#39' AND (a.code_account not in  (select acco' +
+        'unt_no from t_bank) ) AND A.code_account <> ( select f_debt_mast' +
+        'er(4))AND ( SUBSTRING ( A.no_voucher, 1, 2 ) <> '#39'KC'#39' ) GROUP BY ' +
+        'a.no_voucher,a.code_account,b.account_name,a.currency /*akun_k*/' +
+        ' ) akun_k ON akun_k.voucher = voucher.voucher '
       ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      '/* SELECT'
-      #9'xx.voucher,'
-      #9'-- concat ( xx.ket, '#39' '#39', bb.nm, '#39' '#39', ab.nosj ) ket,'
-      #9'xx.ket,'
-      #9'bb.nm,'
-      #9'ab.nosj,'
-      #9'xx.jum_kas,'
-      #9'xx.jum_bank,'
-      #9'xx.jum_akun_k,'
-      #9'xx.kodesp_k,'
-      #9'xx.namasp_k,'
-      #9'xx.kode3,'
-      #9'xx.jum_debit_hutang,'
-      #9'xx.nopk,'
-      #9'xx.nmpk,'
-      #9'xx.jum,'
-      #9'xx.ROW_NUMBER,'
-      #9'xx.kode3,'
-      #9'xx.kodesp_k,'
-      #9'xx.nopk '
-      'FROM'
-      #9'('
-      #9'SELECT DISTINCT'
-      #9#9'voucher.voucher,'
-      #9#9'voucher.ket,'
-      #9#9'kas.jum_kas,'
-      #9#9'bank.jum_bank,'
-      #9#9'akun_k.jum_akun_k,'
-      #9#9'akun_k.kodesp_k,'
-      #9#9'akun_k.namasp_k,'
-      #9#9'd_hutang.kode3,'
-      #9#9'd_hutang.jum_debit_hutang,'
-      #9#9'k_lain.nopk,'
-      #9#9'k_lain.nmpk,'
-      #9#9'k_lain.jum,'
       
-        #9#9'ROW_NUMBER ( ) OVER ( ORDER BY voucher.voucher, d_hutang.kode3' +
-        ', akun_k.kodesp_k, k_lain.nopk ) '
-      #9'FROM'
-      #9#9'('
-      #9#9'SELECT'
-      #9#9#9'kas.voucher,'
-      #9#9#9'-- concat ( kas.ket, '#39' '#39', kas.kepada, '#39#39' ) AS ket,'
-      #9#9#9'(CASE WHEN kas.kodesp='#39'2110'#39' THEN concat (kas.kepada,'#39' '#39') '
-      #9#9#9'      WHEN kas.kodesp='#39'2120'#39' THEN concat (kas.kepada,'#39' '#39')'
-      #9#9#9#9#9#9'WHEN kas.kodesp='#39'2130'#39' THEN concat (kas.kepada,'#39' '#39')'
-      #9#9#9#9#9#9'ELSE concat (kas.ket, '#39' '#39') END ) AS ket,'
-      #9#9#9'-- concat ( kas.ket, '#39' '#39', '#39'('#39', kas.kepada, '#39')'#39' ) AS ket,'
-      #9#9#9'kas.kodesp AS nopk,'
-      #9#9#9'pk.nama_perkiraan AS nmpk,'
-      #9#9#9'kas.kodesp AS kd3 '
-      #9#9'FROM'
-      #9#9#9'tkas kas'
-      #9#9#9'LEFT JOIN t_daftar_perkiraan pk ON kas.KODESP = pk.kode '
-      #9#9'WHERE'
-      #9#9#9'( kas.tgltrans = '#39'2022-08-16'#39' ) '
-      #9#9#9'AND ( kas.dk = '#39'D'#39' ) '
-      #9#9#9'AND ( SUBSTRING ( kas.voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      #9#9#9'AND ( SUBSTRING ( kas.voucher, 1, 2 ) <> '#39'KM'#39' ) '
-      #9#9#9'AND ( kodeprsh = '#39'MLB'#39' ) UNION ALL'
-      #9#9'SELECT DISTINCT'
-      #9#9#9'bank.voucher,'
-      #9#9#9'concat ( bd.keter, '#39' '#39', '#39'('#39', bd.kepada, '#39')'#39' ) AS ket,'
-      #9#9#9'bank.norek AS nopk,'
-      #9#9#9'pk.nama_perkiraan AS nmpk,'
-      #9#9#9'kode3 AS kd3 '
-      #9#9'FROM'
-      #9#9#9'tbank02ju bank'
-      #9#9#9'LEFT JOIN tbank02 bd ON bank.voucher = bd.voucher'
-      #9#9#9'LEFT JOIN t_daftar_perkiraan pk ON bank.NOREK = pk.kode '
-      #9#9'WHERE'
-      #9#9#9'bank.tanggal = '#39'2022-08-16'#39' '
-      #9#9#9'AND bank.dk = '#39'D'#39' '
-      #9#9#9'AND SUBSTRING ( bank.voucher, 1, 2 ) = '#39'BK'#39' '
-      #9#9#9'AND bd.kodeprsh = '#39'MLB'#39' '
-      #9#9') voucher'
-      #9#9'LEFT JOIN ('
-      #9#9'SELECT DISTINCT'
-      #9#9#9'voucher,'
-      #9#9#9'kodesp,'
+        'LEFT JOIN (/*D_hutang*/SELECT A'#9'.voucher_no voucher,( CASE WHEN ' +
+        'A.currency = '#39'USD'#39' THEN A.amount* a.kurs ELSE A.amount END ) jum' +
+        '_debit_hutang,b.code_account nopk FROM t_cash_bank_expenditure A' +
+        ' INNER JOIN t_cash_bank_expenditure_det b on A.voucher_no= b.no_' +
+        'voucher '
       
-        #9#9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( jumlah * kurs ) ELSE S' +
-        'UM ( jumlah ) END ) jum_kas '
-      'FROM'
-      #9'tkas '
-      'WHERE'
-      #9'dk = '#39'K'#39' '
-      #9'AND kodesp = '#39'1111'#39' '
-      #9'AND ( SUBSTRING ( voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      'GROUP BY'
-      #9'voucher,'
-      #9'kodesp,'
-      #9'matauang '
-      #9') kas ON kas.voucher = voucher.voucher'
-      #9'LEFT JOIN ('
-      #9'SELECT A'
-      #9#9'.voucher,'
+        'WHERE ( b.position= '#39'D'#39' ) AND ( code_account = (select f_debt_ma' +
+        'ster(1)))  /*D_hutang*/) D_hutang ON D_hutang.voucher = voucher.' +
+        'voucher AND D_hutang.nopk = voucher.nopk'
       
-        #9'( CASE WHEN b.matauang = '#39'USD'#39' THEN A.jumlah * b.rate ELSE A.ju' +
-        'mlah END ) jum_bank,'
-      #9'kode3 '
-      'FROM'
-      #9'tbank02ju A,'
-      #9'tbank02 b '
-      'WHERE'
-      #9'( A.voucher = b.voucher ) '
-      #9'AND ( A.dk = '#39'K'#39' ) '
-      #9'AND A.norek = kode3 '
-      #9') bank ON bank.voucher = voucher.voucher'
-      #9'LEFT JOIN ('
-      #9'SELECT A'
-      #9#9'.voucher,'
-      #9#9'A.kode3 AS kodesp_k,'
-      #9#9'SUM ( A.jumlah ) AS jum_akun_k,'
-      #9#9'b.nama_perkiraan AS namasp_k '
-      #9'FROM'
-      #9#9'tbank02ju A,'
-      #9#9't_daftar_perkiraan b '
-      #9'WHERE'
-      #9#9'( A.kode3 = b.kode ) '
-      #9#9'AND ( dk = '#39'K'#39' ) '
-      #9#9'AND norek <> kode3 '
-      #9'GROUP BY'
-      #9#9'A.voucher,'
-      #9#9'A.kode3,'
-      #9#9'b.nama_perkiraan UNION'
-      #9'SELECT DISTINCT A'
-      #9#9'.voucher,'
-      #9#9'A.kodesp AS kodesp_k,'
+        'LEFT JOIN (/*d_lain2*/SELECT'#9'a.voucher_no voucher,( CASE WHEN a.' +
+        'currency = '#39'USD'#39' THEN SUM (a.amount * a.kurs ) ELSE SUM ( amount' +
+        ' ) END )jum_debit_lain2,b.code_account nopk,name_account nmpk FR' +
+        'OM t_cash_bank_expenditure A INNER JOIN t_cash_bank_expenditure_' +
+        'det b on A.voucher_no= b.no_voucher  WHERE( "position" = '#39'D'#39' ) A' +
+        'ND ( SUBSTRING ( a.voucher_no, 1, 2 ) <> '#39'KC'#39' ) AND b.code_accou' +
+        'nt <> (select f_debt_master(1)) GROUP BY a.voucher_no,b.code_acc' +
+        'ount,b.name_account,a.currency /*d_lain2*/) D_lain2 ON D_lain2.v' +
+        'oucher = voucher.voucher AND D_lain2.nopk = voucher.nopk'
       
-        #9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( A.jumlah * A.kurs ) ELS' +
-        'E SUM ( A.jumlah ) END ) jum_akun_k,'
-      #9'b.nama_perkiraan AS namasp_k '
-      'FROM'
-      #9'tkas A,'
-      #9't_daftar_perkiraan b '
-      'WHERE'
-      #9'A.kodesp = b.kode '
-      #9'AND A.dk = '#39'K'#39' '
-      #9'AND A.kodesp <> '#39'1111'#39' '
-      #9'AND ( SUBSTRING ( A.voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      'GROUP BY'
-      #9'voucher,'
-      #9'kodesp_k,'
-      #9'nama_perkiraan,'
-      #9'matauang '
-      #9') akun_k ON akun_k.voucher = voucher.voucher'
-      #9'LEFT JOIN ('
-      #9'SELECT A'
-      #9#9'.voucher,'
+        'LEFT JOIN (SELECT DISTINCT A'#9'.voucher_no voucher,a.nopk,a.nmpk,'#9 +
+        'A.jum,'#9'A.urt FROM'#9'(/*A*/SELECT DISTINCT'#9#9'a.voucher_no,b.code_acc' +
+        'ount AS nopk,b.name_account AS nmpk,'#9'( CASE WHEN a.currency = '#39'U' +
+        'SD'#39' THEN SUM ( a.amount * a.kurs ) ELSE SUM ( a.amount ) END ) j' +
+        'um,'#39'1'#39' AS urt  FROM t_cash_bank_expenditure a INNER join t_cash_' +
+        'bank_expenditure_det b  on a.voucher_no=b.no_voucher WHERE--( a.' +
+        'trans_date = '#39'2024-12-18'#39' ) AND'
       
-        #9'( CASE WHEN A.matauang = '#39'USD'#39' THEN A.jumlah * b.rate ELSE A.ju' +
-        'mlah END ) jum_debit_hutang,'
-      #9'kode3 '
-      'FROM'
-      #9'tbank02ju A,'
-      #9'tbank02 b '
-      'WHERE'
-      #9'( A.voucher = b.voucher ) '
-      #9'AND ( dk = '#39'D'#39' ) '
-      #9'AND ( kode3 = '#39'2110'#39' ) UNION ALL'
-      'SELECT'
-      #9'voucher,'
-      #9'jumlah AS jum_debit_hutang,'
-      #9'kodesp AS kode3 '
-      'FROM'
-      #9'tkas '
-      'WHERE'
-      #9'dk = '#39'D'#39' '
-      #9'AND kodesp = '#39'2110'#39' '
-      #9') D_hutang ON D_hutang.voucher = voucher.voucher '
-      #9'AND D_hutang.kode3 = voucher.kd3'
-      #9'LEFT JOIN ('
-      #9'SELECT'
-      #9#9'voucher,'
+        ' (b."position" = '#39'D'#39' ) AND ( SUBSTRING ( a.voucher_no, 1, 12 ) <' +
+        '> '#39'KC'#39' ) AND b.code_account <> (select f_debt_master(1)) AND ('#9'(' +
+        ' SUBSTRING (b.code_account, 1, 4 ) <> '#39'1113'#39' AND SUBSTRING ( a.v' +
+        'oucher_no, 1, 2 ) = '#39'BM'#39' ) '#9'OR ( SUBSTRING (a.voucher_no, 1, 2 )' +
+        ' = '#39'BK'#39' ) ) GROUP BY a.voucher_no,b.code_account,b.name_account,' +
+        'a.currency  /*A*/ ) A ) k_lain ON ( k_lain.voucher= voucher.vouc' +
+        'her AND k_lain.nopk = voucher.nopk AND urt = '#39'2'#39') OR ( k_lain.vo' +
+        'ucher= voucher.voucher AND k_lain.nopk = voucher.nopk  AND urt =' +
+        ' '#39'1'#39') '
       
-        #9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( jumlah * kurs ) ELSE SU' +
-        'M ( jumlah ) END ) jum_debit_lain2,'
-      #9'kodesp,'
-      #9'namasp '
-      'FROM'
-      #9'tkas '
-      'WHERE'
-      #9'( dk = '#39'D'#39' ) '
-      #9'AND ( SUBSTRING ( voucher, 1, 2 ) <> '#39'KC'#39' ) '
-      #9'AND kodesp <> '#39'2110'#39' '
-      'GROUP BY'
-      #9'voucher,'
-      #9'kodesp,'
-      #9'namasp,'
-      #9'matauang '
-      #9') D_lain2 ON D_lain2.voucher = voucher.voucher '
-      #9'AND D_lain2.kodesp = voucher.kd3'
-      #9'LEFT JOIN ('
-      #9'SELECT DISTINCT A'
-      #9#9'.voucher,'
-      #9#9'A.nopk,'
-      #9#9'A.nmpk,'
-      #9#9'A.jum,'
-      #9#9'A.urt '
-      #9'FROM'
-      #9#9'('
-      #9#9'SELECT DISTINCT'
-      #9#9#9'kas.voucher,'
-      #9#9#9'kas.kodesp AS nopk,'
-      #9#9#9'pk.nama_perkiraan AS nmpk,'
+        'ORDER BY voucher.voucher, d_hutang.nopk, akun_k.kodesp_k, k_lain' +
+        '.nopk '
+      '/*xx*/ ) xx'
       
-        #9#9'( CASE WHEN matauang = '#39'USD'#39' THEN SUM ( kas.jumlah * kas.kurs ' +
-        ') ELSE SUM ( kas.jumlah ) END ) jum,'
-      #9#39'1'#39' AS urt '
-      'FROM'
-      #9'tkas kas'
-      #9'LEFT JOIN t_daftar_perkiraan pk ON kas.KODESP = pk.kode '
-      'WHERE'
-      #9'( kas.tgltrans = '#39'2022-08-16'#39' ) '
-      #9'AND ( kas.dk = '#39'D'#39' ) '
-      #9'AND ( SUBSTRING ( kas.voucher, 1, 12 ) <> '#39'KC'#39' ) '
-      #9'AND kas.kodesp <> '#39'2110'#39' '
-      'GROUP BY'
-      #9'kas.voucher,'
-      #9'kas.kodesp,'
-      #9'pk.nama_perkiraan,'
-      #9'matauang UNION ALL'
-      'SELECT'
-      #9'bank.voucher,'
-      #9'bank.kode3 AS nopk,'
-      #9'pk.nama_perkiraan AS nmpk,'
+        ' LEFT JOIN (SELECT A.voucher_no voucher,A.trans_date tgl_trans,'#9 +
+        'string_agg ( concat ( '#39'SJ.'#39', b.sj_no ), '#39','#39' ) nosj,'#9'C.supplier_n' +
+        'ame nm_supplier FROM'#9' t_cash_bank_expenditure_payable A inner jo' +
+        'in'#9't_purchase_invoice b on A.invoice_no = b.trans_no  inner join' +
+        ' t_supplier C on b.supplier_code = C.supplier_code --WHERE--'#9'A.n' +
+        'o_voucher = xx.voucher '#9'AND'
       
-        #9'( CASE WHEN x1.matauang = '#39'USD'#39' THEN bank.jumlah * x1.rate ELSE' +
-        ' bank.jumlah END ) jum,'
-      #9#39'2'#39' AS urt '
-      'FROM'
-      #9'tbank02ju bank'
-      #9'LEFT JOIN t_daftar_perkiraan pk ON bank.kode3 = pk.kode'
-      #9'LEFT JOIN tbank02 x1 ON bank.voucher = x1.voucher '
-      'WHERE'
-      #9'( bank.tanggal = '#39'2022-08-16'#39' ) '
-      #9'AND ( bank.dk = '#39'D'#39' ) '
-      #9'AND ( bank.kode3 <> '#39'2110'#39' ) '
-      #9'AND ('
+        #9#9'GROUP BY'#9'A.voucher_no,'#9'A.trans_date,'#9'C.supplier_name ) ab ON  ' +
+        'ab.voucher = xx.voucher '#9#9
       
-        #9#9'( SUBSTRING ( bank.kode3, 1, 4 ) <> '#39'1113'#39' AND SUBSTRING ( ban' +
-        'k.voucher, 1, 2 ) = '#39'BM'#39' ) '
-      #9#9'OR ( SUBSTRING ( bank.voucher, 1, 2 ) = '#39'BK'#39' ) '
-      #9') '
-      #9') A '
+        #9'LEFT JOIN LATERAL (SELECT'#9'string_agg ( concat ( item_name, '#39' '#39',' +
+        ' to_char( tot_qty, '#39'99,999,999FM'#39' ), '#39' '#39', unit ), '#39','#39' ) nm FROM'#9 +
+        '(SELECT C.item_code,'#9'C.item_name,b.unit,SUM ( b.qty ) AS tot_qty' +
+        ' '#9'FROM'#9#9'( SELECT DISTINCT invoice_no no_lpb FROM t_cash_bank_exp' +
+        'enditure_payable WHERE voucher_no = xx.voucher )'#9#9'A'
       
-        #9') k_lain ON ( k_lain.voucher = voucher.voucher AND k_lain.nopk ' +
-        '= voucher.kd3 AND urt = '#39'2'#39' ) '
+        #9' LEFT JOIN ( SELECT A.* FROM t_purchase_invoice_det A INNER JOI' +
+        'N t_purchase_invoice b ON A.trans_no = b.trans_no WHERE b.accoun' +
+        't_code= '#39'2110'#39' ) b ON A.no_lpb = b.trans_no'#9
       
-        #9'OR ( k_lain.voucher = voucher.voucher AND k_lain.nopk = voucher' +
-        '.kd3 AND urt = '#39'1'#39' ) '
-      'ORDER BY'
-      #9'voucher.voucher,'
-      #9'd_hutang.kode3,'
-      #9'akun_k.kodesp_k,'
-      #9'k_lain.nopk '
-      #9') xx'
-      #9'LEFT JOIN LATERAL ('
-      #9'SELECT A'
-      #9#9'.no_voucher,'
-      #9#9'A.tgl_trans,'
-      #9'  string_agg (b.nosj, '#39','#39' ) nosj,'
-      #9#9'C.nm_supplier '
-      #9'FROM'
-      #9#9'tbeli_bayar A,'
-      #9#9't_terima_material b,'
-      #9#9't_supplier C '
-      #9'WHERE'
-      #9#9'A.no_voucher = xx.voucher '
-      #9#9'AND A.no_lpb = b.no_terima '
-      #9#9'AND b.kd_supplier = C.kd_supplier '
-      #9'GROUP BY'
-      #9#9'A.no_voucher,'
-      #9#9'A.tgl_trans,'
-      #9#9'C.nm_supplier '
-      #9') ab ON 1 = 1'
-      #9'LEFT JOIN LATERAL ('
-      #9'SELECT'
-      
-        #9#9'string_agg ( concat ( nm_material, '#39' '#39', to_char( tot_qty, '#39'99,' +
-        '999,999FM'#39' ), '#39' '#39', satuan ), '#39','#39' ) nm '
-      #9'FROM'
-      #9#9'('
-      #9#9'SELECT C'
-      #9#9#9'.kd_material,'
-      #9#9#9'C.nm_material,'
-      #9#9#9'b.satuan,'
-      #9#9#9'SUM ( b.qty ) AS tot_qty '
-      #9#9'FROM'
-      
-        #9#9#9'( SELECT DISTINCT no_lpb FROM tbeli_bayar WHERE no_voucher = ' +
-        'xx.voucher )'
-      
-        #9#9#9'A LEFT JOIN ( SELECT A.* FROM t_terima_material_det A INNER J' +
-        'OIN t_terima_material b ON A.no_terima = b.no_terima WHERE b.kd_' +
-        'akun = '#39'2110'#39' ) b ON A.no_lpb = b.no_terima'
-      
-        #9#9#9'LEFT JOIN t_material_stok C ON b.kd_material_stok = C.kd_mate' +
-        'rial_stok '
-      #9#9'GROUP BY'
-      #9#9#9'C.kd_material,'
-      #9#9#9'C.nm_material,'
-      #9#9#9'b.satuan '
-      #9#9'ORDER BY'
-      #9#9#9'C.nm_material,'
-      #9#9#9'b.satuan '
-      #9#9') A '
-      #9') bb ON 1 = 1;'
-      ''
-      ' */')
-    Left = 224
-    Top = 160
+        #9' LEFT JOIN t_item_stock C ON b.item_stock_code = C.item_stock_c' +
+        'ode  GROUP BY'#9'C.item_code,C.item_name,b.unit ORDER BY'#9'C.item_nam' +
+        'e,b.unit) A ) bb ON 1 = 1 )x2)x3')
+    Active = True
+    Left = 344
+    Top = 16
     object QKasBankvoucher: TStringField
       FieldName = 'voucher'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBankket: TMemoField
       FieldName = 'ket'
@@ -2118,7 +1601,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     object QKasBankkodesp_k: TStringField
       FieldName = 'kodesp_k'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBanknamasp_k: TStringField
       FieldName = 'namasp_k'
@@ -2128,7 +1611,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     object QKasBankkode3: TStringField
       FieldName = 'kode3'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBankjum_debit_hutang: TFloatField
       FieldName = 'jum_debit_hutang'
@@ -2137,12 +1620,12 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     object QKasBanknopk: TStringField
       FieldName = 'nopk'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBanknmpk: TStringField
       FieldName = 'nmpk'
       ReadOnly = True
-      Size = 100
+      Size = 255
     end
     object QKasBankjum: TFloatField
       FieldName = 'jum'
@@ -2151,17 +1634,17 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     object QKasBankkode3_1: TStringField
       FieldName = 'kode3_1'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBankkodesp_k_1: TStringField
       FieldName = 'kodesp_k_1'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBanknopk_1: TStringField
       FieldName = 'nopk_1'
       ReadOnly = True
-      Size = 30
+      Size = 100
     end
     object QKasBankvoucher2: TMemoField
       FieldName = 'voucher2'
@@ -2204,7 +1687,6 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       'nopk=nopk'
       'nmpk=nmpk'
       'jum=jum'
-      'row_number=row_number'
       'kode3_1=kode3_1'
       'kodesp_k_1=kodesp_k_1'
       'nopk_1=nopk_1'
@@ -2216,8 +1698,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     DataSet = QKasBank
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 256
-    Top = 176
+    Left = 400
+    Top = 40
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -2699,6 +2181,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton1Click
     end
     object DxRefresh: TdxBarLargeButton
       Caption = 'Cari'
@@ -2743,5 +2226,10 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       Visible = ivNever
       PropertiesClassName = 'TcxDateEditProperties'
     end
+  end
+  object Dskasbank: TDataSource
+    DataSet = QKasBank
+    Left = 472
+    Top = 72
   end
 end

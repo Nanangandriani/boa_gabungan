@@ -59,8 +59,8 @@ object FSearch_Supplier: TFSearch_Supplier
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 274
-    ExplicitWidth = 374
+    ExplicitTop = 282
+    ExplicitWidth = 376
     object BBatal: TRzBitBtn
       Left = 304
       Top = 1
@@ -120,7 +120,7 @@ object FSearch_Supplier: TFSearch_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 298
+      ExplicitLeft = 300
     end
     object BSimpan: TRzBitBtn
       Left = 229
@@ -181,74 +181,18 @@ object FSearch_Supplier: TFSearch_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 223
+      ExplicitLeft = 225
     end
   end
   object QSupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * from t_supplier where deleted_at is null order by suppl' +
-        'ier_code asc')
+        'SELECT a.*,b.header_name from t_supplier  a left JOIN t_ak_heade' +
+        'r b on a.header_code_um=b.header_code where a.deleted_at is null' +
+        ' order by supplier_code asc')
     Left = 232
     Top = 72
-    object QSuppliersupplier_code: TStringField
-      FieldName = 'supplier_code'
-      Required = True
-      Size = 6
-    end
-    object QSuppliersupplier_name: TStringField
-      FieldName = 'supplier_name'
-      Size = 100
-    end
-    object QSupplieraddress: TStringField
-      FieldName = 'address'
-      Size = 200
-    end
-    object QSuppliertelp: TStringField
-      FieldName = 'telp'
-      FixedChar = True
-    end
-    object QSuppliersupplier1_name: TStringField
-      FieldName = 'supplier1_name'
-      Size = 255
-    end
-    object QSuppliernpwp: TStringField
-      FieldName = 'npwp'
-      Size = 50
-    end
-    object QSuppliercontact_person: TStringField
-      FieldName = 'contact_person'
-      Size = 255
-    end
-    object QSupplierpph: TStringField
-      FieldName = 'pph'
-    end
-    object QSupplierid: TGuidField
-      FieldName = 'id'
-      Size = 38
-    end
-    object QSuppliercreated_at: TDateTimeField
-      FieldName = 'created_at'
-    end
-    object QSuppliercreated_by: TStringField
-      FieldName = 'created_by'
-      Size = 50
-    end
-    object QSupplierupdated_at: TDateTimeField
-      FieldName = 'updated_at'
-    end
-    object QSupplierupdated_by: TStringField
-      FieldName = 'updated_by'
-      Size = 50
-    end
-    object QSupplierdeleted_at: TDateTimeField
-      FieldName = 'deleted_at'
-    end
-    object QSupplierdeleted_by: TStringField
-      FieldName = 'deleted_by'
-      Size = 50
-    end
   end
   object DsSupplier: TDataSource
     DataSet = QSupplier

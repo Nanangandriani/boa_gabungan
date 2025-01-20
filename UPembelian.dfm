@@ -3,7 +3,7 @@ object FPembelian: TFPembelian
   Top = 0
   Caption = 'Form Faktur Pembelian'
   ClientHeight = 433
-  ClientWidth = 826
+  ClientWidth = 857
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object FPembelian: TFPembelian
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 826
+    Width = 857
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -23,7 +23,7 @@ object FPembelian: TFPembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 822
+    ExplicitWidth = 826
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -40,7 +40,7 @@ object FPembelian: TFPembelian
   object DBGridTerima1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 826
+    Width = 857
     Height = 306
     Align = alClient
     DataGrouping.Active = True
@@ -303,7 +303,7 @@ object FPembelian: TFPembelian
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 789
+        Width = 820
         Height = 182
         Align = alClient
         DataSource = DsTerimaDet
@@ -551,6 +551,73 @@ object FPembelian: TFPembelian
             EditButtons = <>
             FieldName = 'trans_no'
             Footers = <>
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+      object DBGridOrder: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 820
+        Height = 182
+        Align = alClient
+        DynProps = <>
+        SearchPanel.Enabled = True
+        TabOrder = 1
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_no'
+            Footers = <>
+            Title.Caption = 'No Transaksi'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_date'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_source'
+            Footers = <>
+            Title.Caption = 'Sumber'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_cust'
+            Footers = <>
+            Title.Caption = 'Pelanggan'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_reference'
+            Footers = <>
+            Title.Caption = 'No Reference'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'payment_term'
+            Footers = <>
+            Title.Caption = 'Jatuh Tempo (Hari)'
+            Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -1272,15 +1339,15 @@ object FPembelian: TFPembelian
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45645.693357326390000000
-    ReportOptions.LastChange = 45645.693357326390000000
+    ReportOptions.CreateDate = 45677.565517222230000000
+    ReportOptions.LastChange = 45677.565517222230000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''

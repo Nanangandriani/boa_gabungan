@@ -25,7 +25,8 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, dxBar, cxBarEditItem, cxClasses,
-  dxRibbon;
+  dxRibbon, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh,
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, cxLabel, cxMaskEdit, cxSpinEdit,DateUtils;
 
 type
   TFRpt_Neraca = class(TForm)
@@ -65,6 +66,11 @@ type
     DxRefresh: TdxBarLargeButton;
     DtMulai: TcxBarEditItem;
     DtSelesai: TcxBarEditItem;
+    DBGridEh1: TDBGridEh;
+    DSNeraca: TDataSource;
+    cxBarEditItem1: TcxBarEditItem;
+    SpTahun: TcxBarEditItem;
+    CbBulan2: TComboBox;
     procedure BBatalClick(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
@@ -120,14 +126,14 @@ begin
     DtSelesai.SetFocus;
     Exit;
   end;
-  tgl:=FormatDateTime('yyy-mm-dd',dtmulai.editvalue);
-  tgl2:=FormatDateTime('yyy-mm-dd',dtselesai.editvalue);
+//  tgl:=FormatDateTime('yyy-mm-dd',dtmulai.editvalue);
+ // tgl2:=FormatDateTime('yyy-mm-dd',dtselesai.editvalue);
   // neraca per periode
-  if statustr='0' then
-  begin
+//  if statustr='0' then
+//  begin
     WITH QRpt_Neraca do
     begin
-      close;
+    {  close;
       sql.Clear;
       sql.Text:=' select jenis,jenis_nr,kode_header,bulan,tahun,kode,nama_perkiraan,sum(total) total from ( /* Aktiva tetap dan lancar*/ '+
       ' select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.kd_akun kode,nama_perkiraan,case when (db-kr) isnull  then 0 else (db-kr) end total from'+
@@ -169,13 +175,13 @@ begin
       }open;
     end;
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Neraca.fr3');
-    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan.Text+' '+edth.Text);
-    Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
-    Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
+    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
+  //  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
+   Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
     Rpt.ShowReport();
-  end;
+  //end;
   // Neraca 1 tahun
-  if statustr='1' then
+{  if statustr='1' then
   begin
     WITH QRpt_neracathn do
     begin
@@ -274,7 +280,7 @@ begin
       Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
       Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:=UpperCase(''+cbbulan.Text);
       Rpt.ShowReport();
-  end;
+  end;         }
 end;
 
 procedure TFRpt_Neraca.cbbulanSelect(Sender: TObject);
@@ -309,6 +315,7 @@ begin
       DtSelesai.SetFocus;
       Exit;
     end;
+    QRpt_Neraca.Open;
 end;
 
 procedure TFRpt_Neraca.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -330,6 +337,7 @@ procedure TFRpt_Neraca.FormShow(Sender: TObject);
 begin
   edth.Text:=FormatDateTime('yyyy',now());
   edthn2.Text:=FormatDateTime('yyyy',now());
+  spTahun.EditValue := YearOf(Now);
 end;
 
 initialization

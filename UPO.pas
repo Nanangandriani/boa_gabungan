@@ -90,7 +90,7 @@ type
   public
     { Public declarations }
     procedure clear;
-    procedure load;
+ //   procedure load;
     Procedure PrintPO;
     Procedure PrintPodmlt;
   end;
@@ -645,7 +645,7 @@ begin
           FNew_PO.DtDelivery2.Date:=Mempo['delivery2_date'];
           FNew_PO.Edsbu.Text:=Mempo['sbu_code'];
           FNew_PO.NoTransUM.Text:=Mempo.FieldByName('um_no').AsString;
-          FNew_PO.EdUM.Text:=Mempo.FieldByName('um_value').AsString;
+          FNew_PO.EdUM.Value:=Mempo.FieldByName('um_value').Value;
           FNew_PO.Edkd_akun.Text:=Mempo.FieldByName('um_account_code').AsString;
           CkUangmk.Checked:=Mempo.FieldByName('um_status').AsBoolean;
           ckAs.Checked:=Mempo.FieldByName('as_status').AsBoolean;
@@ -763,6 +763,7 @@ begin
             MemItempo.Next;
         end;
       end;
+       FNew_PO.CkUangmkClick(sender);
       finally
     end;
 end;
@@ -797,51 +798,6 @@ begin
    DTP2.Date:=Now;
 end;
 
-procedure TFPO.load;
-begin
-    FNew_PO.EdNm_supp.Clear;
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.Text:='select * from t_supplier order by supplier_name Asc';
-      ExecSQL;
-    end;
-    Dm.Qtemp.First;
-    while not dm.Qtemp.Eof do
-    begin
-      // FNew_PO.EdNm_supp.Items.Add(Dm.Qtemp.FieldByName('nm_supplier').AsString);
-       Dm.Qtemp.Next;
-    end;
-
-    FNew_PO.cb_gudang.Clear;
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.Text:='select * from t_wh order by wh_name Asc';
-      ExecSQL;
-    end;
-    Dm.Qtemp.First;
-    while not dm.Qtemp.Eof do
-    begin
-      FNew_PO.cb_gudang.Items.Add(Dm.Qtemp.FieldByName('wh_name').AsString);
-      Dm.Qtemp.Next;
-    end;
-
-    FNew_PO.edsbu.Clear;
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.Text:='select sbu_code from t_sbu order by sbu_code Asc';
-      ExecSQL;
-    end;
-    Dm.Qtemp.First;
-    while not dm.Qtemp.Eof do
-    begin
-      FNew_PO.edsbu.Items.Add(Dm.Qtemp.FieldByName('sbu_code').AsString);
-      Dm.Qtemp.Next;
-    end;
-end;
-
 procedure TFPO.ActBaruExecute(Sender: TObject);
 begin
     with FNew_PO do
@@ -857,11 +813,10 @@ begin
       Caption:='New Purchase Order';
       StatusTr:=0;
       load_currency;
-      load_ref_po;
-
+      EdJenisAngkut.Text:='SUPPLIER';
+    //  load_ref_po;
     end;
 end;
-
 
 // Contoh RegisterClass
 Initialization

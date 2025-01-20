@@ -774,7 +774,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from t_numb_component where id <> 8 order by id ASC';
+        sql.Text:='select * from t_numb_component where note NOT like ''%AD%'' order by id ASC';
         Open;
       end;
       CBKomponen_No.Items.Clear;

@@ -309,8 +309,8 @@ begin
     Try
     with FNewKontrak_ks do
     begin
-      Show;
       Self.Clear;
+      Show;
       //EdnilaiCurr.Value:=1;
       Bln:=FNewKontrak_ks.DtBln.Text;
       th:=FNewKontrak_ks.DtTahun.Text;
