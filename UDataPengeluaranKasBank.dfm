@@ -742,8 +742,11 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Height = 23
         Enabled = False
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         TabOrder = 3
 =======
+=======
+>>>>>>> Stashed changes
         TabOrder = 4
 >>>>>>> Stashed changes
       end

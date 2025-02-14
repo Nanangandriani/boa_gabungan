@@ -149,7 +149,10 @@ type
       var Handled: Boolean);
     procedure Ed_id_modulChange(Sender: TObject);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     procedure dtTransChange(Sender: TObject);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   private

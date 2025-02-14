@@ -38,6 +38,10 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     ParentBackground = False
     TabOrder = 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    ExplicitTop = 8
+>>>>>>> Stashed changes
 =======
     ExplicitTop = 8
 >>>>>>> Stashed changes
@@ -981,8 +985,11 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       ExplicitWidth = 1098
       ExplicitHeight = 196
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       object DBGridTagihan: TDBGridEh

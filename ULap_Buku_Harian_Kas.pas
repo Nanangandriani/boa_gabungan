@@ -26,8 +26,12 @@ uses
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   cxCalendar, cxBarEditItem, frxClass, Data.DB, MemDS, DBAccess, Uni, frxDBSet,
   MemTableDataEh, MemTableEh, DataDriverEh;
+=======
+  cxCalendar, cxBarEditItem, frxClass, Data.DB, MemDS, DBAccess, Uni, frxDBSet;
+>>>>>>> Stashed changes
 =======
   cxCalendar, cxBarEditItem, frxClass, Data.DB, MemDS, DBAccess, Uni, frxDBSet;
 >>>>>>> Stashed changes
@@ -44,7 +48,11 @@ type
     ActReject: TAction;
     ActClose: TAction;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     DBGridBukuHarianKas: TDBGridEh;
+=======
+    DBGridSupplier: TDBGridEh;
+>>>>>>> Stashed changes
 =======
     DBGridSupplier: TDBGridEh;
 >>>>>>> Stashed changes
@@ -68,7 +76,11 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     dxBarButton8: TdxBarButton;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     dxRefresh: TdxBarLargeButton;
+=======
+    dxBarLargeButton2: TdxBarLargeButton;
+>>>>>>> Stashed changes
 =======
     dxBarLargeButton2: TdxBarLargeButton;
 >>>>>>> Stashed changes
@@ -79,6 +91,7 @@ type
     frxDBDataset3: TfrxDBDataset;
     QKet: TUniQuery;
     DateTimePicker2: TcxBarEditItem;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     QBHKas: TUniQuery;
     MemBHKas: TMemTableEh;
@@ -91,12 +104,20 @@ type
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure datetimepicker1Change(Sender: TObject);
 >>>>>>> Stashed changes
+=======
+    procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure datetimepicker1Change(Sender: TObject);
+>>>>>>> Stashed changes
   private
     { Private declarations }
   public
     { Public declarations }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     //vKODEPRSH :string;
+=======
+    vKODEPRSH :string;
+>>>>>>> Stashed changes
 =======
     vKODEPRSH :string;
 >>>>>>> Stashed changes
@@ -110,7 +131,11 @@ implementation
 {$R *.dfm}
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 uses UMy_Function, UHomeLogin, UDataModule;
+=======
+uses UMy_Function;
+>>>>>>> Stashed changes
 =======
 uses UMy_Function;
 >>>>>>> Stashed changes
@@ -143,9 +168,15 @@ begin
                  'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
                  'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                  'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  ') e on d.no_voucher=e.no_voucher '+
                  'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1111'' and k.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+=======
+                 'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' and f.company_code='+QuotedStr(vKODEPRSH)+' '+
+                 ') e on d.no_voucher=e.no_voucher '+
+                 'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1111'' and k.company_code='+QuotedStr(vKODEPRSH)+' '+
+>>>>>>> Stashed changes
 =======
                  'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' and f.company_code='+QuotedStr(vKODEPRSH)+' '+
                  ') e on d.no_voucher=e.no_voucher '+
@@ -174,7 +205,11 @@ begin
                  'select a.no_voucher,a.code_account as kodesp,a."position",a.trans_date as tgltrans,'''' kepada,'''' nm,'''' nosj,description as ket,description as ket2,paid_amount debit,0 kredit from t_cash_bank_expenditure_det a '+
                  'INNER JOIN t_cash_bank_expenditure b on a.no_voucher=b.voucher_no '+
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                  'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1111'' and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+=======
+                 'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1111'' and company_code='+QuotedStr(vKODEPRSH)+' '+
+>>>>>>> Stashed changes
 =======
                  'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1111'' and company_code='+QuotedStr(vKODEPRSH)+' '+
 >>>>>>> Stashed changes
@@ -200,17 +235,23 @@ begin
                  'left join(select code_account,(case when currency=''USD'' then sum(amount*kurs) else sum(amount) end)jum_debit from t_cash_bank_expenditure_det a '+
                  'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_no '+
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                  'where (a.trans_date between ''2024-01-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' )  and code_account=''1111'' and dk=''D'' and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  ' group by code_account,currency order by code_account)a on a.code_account=x.kodesp '+
                  'left join (select code_account,sum(jum_kredit)as jum_kredit from(select code_account,(case when currency=''USD'' then sum(amount*kurs) else sum(amount) end)jum_kredit from t_cash_bank_expenditure_det A '+
                  'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_no '+
                  'where (a.trans_date between ''2024-10-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' ) and code_account=''1111''  and dk=''K'' and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
 =======
+=======
+>>>>>>> Stashed changes
                  'where (a.trans_date between ''2024-01-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' )  and code_account=''1111'' and dk=''D'' and company_code='+QuotedStr(vKODEPRSH)+' '+
                  ' group by code_account,currency order by code_account)a on a.code_account=x.kodesp '+
                  'left join (select code_account,sum(jum_kredit)as jum_kredit from(select code_account,(case when currency=''USD'' then sum(amount*kurs) else sum(amount) end)jum_kredit from t_cash_bank_expenditure_det A '+
                  'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_no '+
                  'where (a.trans_date between ''2024-10-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' ) and code_account=''1111''  and dk=''K'' and company_code='+QuotedStr(vKODEPRSH)+' '+
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                  'group by code_account,currency order by code_account)x  group by code_account)b on b.code_account=x.kodesp '+
                  'left join(select akun_kredit,sum(paid_amount)as jumlah from '+
@@ -225,7 +266,11 @@ begin
                  'WHERE (a."date" between ''2024-01-01'' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue-1))+' ) and b.kredit_account=''1111'')n on m.kodesp=n.kodesp )x '+
                  'LEFT JOIN  (select a.code_account,sum(a.paid_amount)as jum_debit from t_cash_bank_expenditure_det a,t_cash_bank_expenditure b '+
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                  'where a.no_voucher=b.voucher_no and a.code_account=''1111'' and a."position"=''D'' and b.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+=======
+                 'where a.no_voucher=b.voucher_no and a.code_account=''1111'' and a."position"=''D'' and b.company_code='+QuotedStr(vKODEPRSH)+' '+
+>>>>>>> Stashed changes
 =======
                  'where a.no_voucher=b.voucher_no and a.code_account=''1111'' and a."position"=''D'' and b.company_code='+QuotedStr(vKODEPRSH)+' '+
 >>>>>>> Stashed changes
@@ -239,6 +284,7 @@ begin
     frxreport2.showreport;
 end;
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 procedure TFLap_Buku_Harian_Kas.dxRefreshClick(Sender: TObject);
 begin
@@ -317,6 +363,8 @@ begin
     DBGridBukuHarianKas.FinishLoadingStatus();
 end;
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 Initialization
