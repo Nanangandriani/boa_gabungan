@@ -231,6 +231,7 @@ uses
   U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
   UNew_Kasbon in 'UNew_Kasbon.pas' {FNew_Kasbon},
   UApproval_Keluar_Kas_Bank in 'UApproval_Keluar_Kas_Bank.pas' {FApproval_Keluar_Kas_Bank},
+<<<<<<< Updated upstream
   URpt_BHKeluarKasdanBank in 'URpt_BHKeluarKasdanBank.pas' {FRpt_BHKeluarKasdanBank},
   ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas},
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
@@ -255,6 +256,10 @@ uses
   Udata_uang_kas_besar in 'Udata_uang_kas_besar.pas' {Fdata_uang_cash_besar},
   UMutasi_Bank in 'UMutasi_Bank.pas' {FMutasiBank},
   udafajuankeluarkasbank in 'udafajuankeluarkasbank.pas' {Fdafajuankeluarkasbank};
+=======
+  ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas' {FLap_Buku_Harian_Kas_Kecil},
+  ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas};
+>>>>>>> Stashed changes
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -383,6 +388,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataKasBon, FDataKasBon);
   Application.CreateForm(TFListKasKecil, FListKasKecil);
   Application.CreateForm(TFListKasBon, FListKasBon);
+<<<<<<< Updated upstream
   Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
   Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, FLap_Ikhtisar_Biaya_KasKecil_BOP);
   Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, FLap_Ikhtisar_Biaya_KasKecil_ADM);
@@ -410,6 +416,11 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
   Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
   Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
+=======
+  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+  //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
+>>>>>>> Stashed changes
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);

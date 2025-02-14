@@ -641,7 +641,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
-      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -714,6 +713,17 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Height = 23
         TabOrder = 1
       end
+<<<<<<< Updated upstream
+=======
+      object CbRencana: TComboBox
+        Left = 147
+        Top = 109
+        Width = 54
+        Height = 23
+        Enabled = False
+        TabOrder = 2
+      end
+>>>>>>> Stashed changes
       object edKodeSumberPengeluaran: TEdit
         Left = 294
         Top = 82
@@ -731,7 +741,11 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Width = 141
         Height = 23
         Enabled = False
+<<<<<<< Updated upstream
         TabOrder = 3
+=======
+        TabOrder = 4
+>>>>>>> Stashed changes
       end
       object ak_account: TEdit
         Left = 294

@@ -1065,6 +1065,14 @@
             <Form>Fdafajuankeluarkasbank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="ULap_Buku_Harian_Kas_Kecil.pas">
+            <Form>FLap_Buku_Harian_Kas_Kecil</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ULap_Buku_Harian_Kas.pas">
+            <Form>FLap_Buku_Harian_Kas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -592,6 +592,7 @@ begin
       end;
       Fdafajuankeluarkasbank.Close;
   end;
+<<<<<<< Updated upstream
   if (vcall='keluar_kas_kecil')and(Qdaf_PengajuanKasBank.RecordCount<>0) then
   begin
      with FDataKasKecil do
@@ -734,6 +735,8 @@ begin
      //Report.DesignReport();
      Report.ShowReport();
    end;
+=======
+>>>>>>> Stashed changes
   FDataPengeluaranKasBank.cbsumberdataSelect(sender);
 end;
 
