@@ -2,7 +2,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   Left = 0
   Top = 0
   Caption = 'Rencana Pelunasan Hutang'
-  ClientHeight = 511
+  ClientHeight = 591
   ClientWidth = 862
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,9 +15,9 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   TextHeight = 15
   object DBGrid_Rencana: TDBGridEh
     Left = 0
-    Top = 225
+    Top = 265
     Width = 862
-    Height = 250
+    Height = 290
     Align = alClient
     DataSource = DSRencana
     DynProps = <>
@@ -199,7 +199,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   end
   object lblrencanake: TPanel
     Left = 0
-    Top = 475
+    Top = 555
     Width = 862
     Height = 36
     Align = alBottom
@@ -401,11 +401,10 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     Left = 0
     Top = 0
     Width = 862
-    Height = 225
+    Height = 265
     Align = alTop
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 856
     object Label2: TLabel
       Left = 25
       Top = 14
@@ -484,8 +483,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       ParentFont = False
     end
     object Label6: TLabel
-      Left = 450
-      Top = 127
+      Left = 25
+      Top = 182
       Width = 45
       Height = 17
       Caption = 'Tgl. Cek'
@@ -495,7 +494,6 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      Visible = False
     end
     object btncek: TSpeedButton
       Left = 399
@@ -546,7 +544,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object Label9: TLabel
       Left = 450
-      Top = 158
+      Top = 182
       Width = 74
       Height = 17
       Caption = 'Jenis Hutang'
@@ -560,7 +558,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object Label11: TLabel
       Left = 515
-      Top = 195
+      Top = 229
       Width = 126
       Height = 17
       Caption = 'F4 : Daftar Acc. Kredit'
@@ -665,21 +663,20 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       TabOrder = 4
     end
     object dptglcek: TDateTimePicker
-      Left = 531
-      Top = 123
-      Width = 169
-      Height = 26
+      Left = 212
+      Top = 179
+      Width = 184
+      Height = 25
       Date = 42042.000000000000000000
       Time = 0.416255162039306000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
-      Font.Name = 'Trebuchet MS'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       ImeName = 'US'
       ParentFont = False
       TabOrder = 5
-      Visible = False
     end
     object dpperiodetmp1: TDateTimePicker
       Left = 212
@@ -745,7 +742,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object Bdaftar: TRzBitBtn
       Left = 211
-      Top = 181
+      Top = 215
       Width = 185
       Height = 34
       Caption = 'Daftar Hutang'
@@ -806,7 +803,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object cbjenishutang: TComboBox
       Left = 531
-      Top = 155
+      Top = 179
       Width = 169
       Height = 26
       Style = csDropDownList

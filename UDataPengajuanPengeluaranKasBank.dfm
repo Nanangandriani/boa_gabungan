@@ -31,13 +31,12 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Left = 0
     Top = 0
     Width = 1108
-    Height = 233
+    Height = 249
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1102
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
@@ -215,6 +214,20 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 15
       Caption = 'Dibayar Kepada'
     end
+    object Label30: TLabel
+      Left = 135
+      Top = 211
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label29: TLabel
+      Left = 20
+      Top = 211
+      Width = 61
+      Height = 15
+      Caption = 'Rencana Ke'
+    end
     object edNoTrans: TEdit
       Left = 147
       Top = 77
@@ -314,6 +327,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 186
       Height = 23
       TabOrder = 10
+      OnExit = edJumlahExit
       OnKeyPress = edJumlahKeyPress
       DisplayFormat = '0.00#,##'
     end
@@ -396,6 +410,13 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 23
       TabOrder = 20
       Visible = False
+    end
+    object CbRencana: TComboBox
+      Left = 147
+      Top = 209
+      Width = 54
+      Height = 23
+      TabOrder = 21
     end
   end
   object Panel2: TPanel
@@ -554,26 +575,27 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
   end
   object Panel5: TPanel
     Left = 0
-    Top = 233
+    Top = 249
     Width = 1108
-    Height = 160
+    Height = 170
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 1102
+    ExplicitTop = 233
     object gbDataHutang: TGroupBox
       Left = 0
       Top = 0
       Width = 553
-      Height = 160
+      Height = 170
       Align = alLeft
       Caption = ' Data Hutang'
       Color = clGradientInactiveCaption
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
+      ExplicitHeight = 160
       object Label21: TLabel
         Left = 20
         Top = 30
@@ -617,20 +639,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Width = 68
         Height = 15
         Caption = 'Sumber Data'
-      end
-      object Label29: TLabel
-        Left = 20
-        Top = 111
-        Width = 61
-        Height = 15
-        Caption = 'Rencana Ke'
-      end
-      object Label30: TLabel
-        Left = 135
-        Top = 111
-        Width = 3
-        Height = 15
-        Caption = ':'
       end
       object edKode_supplier: TRzButtonEdit
         Left = 147
@@ -704,61 +712,106 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         TabOrder = 6
         OnSelect = Cb_debt_sourceSelect
       end
-      object CbRencana: TComboBox
-        Left = 147
-        Top = 109
-        Width = 54
-        Height = 23
-        TabOrder = 7
-        OnSelect = Cb_debt_sourceSelect
-      end
       object ak_account: TEdit
         Left = 294
         Top = 27
         Width = 76
         Height = 23
-        TabOrder = 8
-        Visible = False
+        TabOrder = 7
       end
     end
     object gbDataBank: TGroupBox
       Left = 553
       Top = 0
       Width = 553
-      Height = 160
+      Height = 170
       Align = alLeft
       Caption = ' Data Bank'
       Color = clGradientInactiveCaption
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
+      Visible = False
+      ExplicitLeft = 552
+      ExplicitTop = -6
+      ExplicitHeight = 160
       object Label1: TLabel
         Left = 147
-        Top = 57
+        Top = 56
         Width = 3
         Height = 15
         Caption = ':'
       end
       object Label2: TLabel
-        Left = 31
-        Top = 57
+        Left = 34
+        Top = 54
         Width = 90
         Height = 15
         Caption = 'Nomor Rekening'
       end
       object Label6: TLabel
-        Left = 31
-        Top = 30
+        Left = 34
+        Top = 27
         Width = 61
         Height = 15
         Caption = 'Nama Bank'
       end
       object Label7: TLabel
         Left = 147
-        Top = 33
+        Top = 30
         Width = 3
         Height = 15
         Caption = ':'
+      end
+      object Label35: TLabel
+        Left = 34
+        Top = 84
+        Width = 42
+        Height = 15
+        Caption = 'No. Cek'
+      end
+      object Label31: TLabel
+        Left = 147
+        Top = 84
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label32: TLabel
+        Left = 34
+        Top = 112
+        Width = 64
+        Height = 15
+        Caption = 'Tanggal Cek'
+      end
+      object Label33: TLabel
+        Left = 147
+        Top = 110
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label34: TLabel
+        Left = 147
+        Top = 139
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label36: TLabel
+        Left = 34
+        Top = 139
+        Width = 108
+        Height = 15
+        Caption = 'Tgl.Jatuh Tempo Cek'
+      end
+      object btncek: TSpeedButton
+        Left = 325
+        Top = 82
+        Width = 23
+        Height = 22
+        Caption = '...'
+        OnClick = btncekClick
       end
       object edNamaBank: TRzButtonEdit
         Left = 155
@@ -779,30 +832,65 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 1
+        OnChange = edNoRekChange
+      end
+      object Ed_nocek: TRzEdit
+        Left = 155
+        Top = 82
+        Width = 169
+        Height = 23
+        Text = ''
+        TabOrder = 2
+      end
+      object tgl_cek: TDateTimePicker
+        Left = 156
+        Top = 109
+        Width = 109
+        Height = 23
+        Date = 45678.000000000000000000
+        Time = 0.547003877312818100
+        TabOrder = 3
+      end
+      object tgl_tempo_cek: TDateTimePicker
+        Left = 156
+        Top = 137
+        Width = 109
+        Height = 23
+        Date = 45678.000000000000000000
+        Time = 0.547003877312818100
+        TabOrder = 4
+      end
+      object Ed_kd_bank: TEdit
+        Left = 330
+        Top = 27
+        Width = 31
+        Height = 23
+        TabOrder = 5
       end
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 393
+    Top = 419
     Width = 1108
-    Height = 230
+    Height = 204
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
-    ExplicitWidth = 1102
-    ExplicitHeight = 221
+    ExplicitTop = 393
+    ExplicitHeight = 230
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitHeight = 205
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
         Width = 1104
-        Height = 205
+        Height = 179
         Align = alClient
         DataSource = DSDetailAkun
         DynProps = <>
@@ -836,7 +924,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             FieldName = 'kd_akun'
             Footers = <>
             Title.Caption = 'Kode Akun'
-            Visible = False
             Width = 100
           end
           item
@@ -895,7 +982,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Left = 0
         Top = 0
         Width = 1104
-        Height = 205
+        Height = 179
         Align = alClient
         DataSource = dsDetailHutang
         DynProps = <>
@@ -972,12 +1059,13 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
   end
   object Panel3: TPanel
     Left = 0
-    Top = 393
+    Top = 419
     Width = 1108
     Height = 0
     Align = alTop
     TabOrder = 4
     Visible = False
+    ExplicitTop = 393
     ExplicitWidth = 1102
   end
   object Cb_jenis_trans: TComboBox

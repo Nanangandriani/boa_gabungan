@@ -140,7 +140,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     TabOrder = 1
     Visible = False
     ExplicitTop = 343
-    ExplicitWidth = 821
+    ExplicitWidth = 965
     object BBatal: TRzBitBtn
       Left = 895
       Top = 1
@@ -200,7 +200,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 745
+      ExplicitLeft = 889
     end
     object BPrint: TRzBitBtn
       Left = 816
@@ -262,7 +262,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 666
+      ExplicitLeft = 810
     end
   end
   object RzPanel1: TRzPanel
@@ -275,8 +275,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Color = 15987699
     TabOrder = 2
     Visible = False
-    ExplicitTop = 145
-    ExplicitWidth = 821
+    ExplicitTop = 241
+    ExplicitWidth = 965
     object Label2: TLabel
       Left = 22
       Top = 98
@@ -582,7 +582,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Contexts = <>
     TabOrder = 3
     TabStop = False
-    ExplicitWidth = 827
+    ExplicitWidth = 965
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -708,7 +708,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     end
   end
   object frxReport1: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

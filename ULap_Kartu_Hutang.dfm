@@ -26,8 +26,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = 8
-    ExplicitTop = -8
+    ExplicitWidth = 1086
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -117,7 +116,6 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 936
     Top = 32
   end
@@ -1497,7 +1495,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Top = 144
   end
   object frxReport1: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

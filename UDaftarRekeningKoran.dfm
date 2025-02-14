@@ -25,8 +25,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -24
-    ExplicitWidth = 1136
+    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -1861,8 +1860,8 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         ' as "kredit_bank", 0 as "setoran" FROM (select saldo_akhir from ' +
         '"public"."get_bank_saldoakhir"('#39'1390021156231'#39','#39'2024-01-24'#39'))x)x' +
         'x ORDER BY nomor ASC')
-    Left = 860
-    Top = 72
+    Left = 804
+    Top = 48
     object QCetaknomor: TLargeintField
       FieldName = 'nomor'
       ReadOnly = True

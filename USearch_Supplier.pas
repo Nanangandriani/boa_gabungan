@@ -112,12 +112,12 @@ begin
         MemDetailAkun.First;
         while not MemDetailAkun.Eof do
         begin
-          if MemDetailAkun['kd_header_akun']=('SELECT header_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)) then
+          if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)) then
           begin
             MemDetailAkun.Edit;
-            MemDetailAkun['kd_akun']:=('SELECT account_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
+            MemDetailAkun['kd_akun']:=SelectRow('SELECT account_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
             MemDetailAkun['nm_akun']:=('SELECT account_name from t_ak_account a LEFT JOIN t_supplier b ON a.code=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
-            //kd_ak_supplier:=MemDetailAkun['kd_akun'];
+            kd_ak_supplier:=MemDetailAkun['kd_akun'];
             MemDetailAkun.post;
           end;
           MemDetailAkun.Next;

@@ -369,6 +369,7 @@ begin
    dpperiode2.Date:=now;
    dpperiodetmp1.date:=now;
    dpperiodetmp2.date:=now;
+   dptglcek.Date:=now;
    if MemRencana.Active=false then
       MemRencana.Active:=true;
 

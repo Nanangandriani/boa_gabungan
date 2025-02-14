@@ -120,6 +120,7 @@ object FListSupplier: TFListSupplier
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

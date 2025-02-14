@@ -2,8 +2,8 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   Left = 0
   Top = 0
   Caption = 'Form Daftar Pengajuan Keluar Kas dan Bank'
-  ClientHeight = 548
-  ClientWidth = 1052
+  ClientHeight = 539
+  ClientWidth = 1046
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object DBGridPengajuanKeluarKasBank: TDBGridEh
     Left = 0
     Top = 173
-    Width = 1052
-    Height = 375
+    Width = 1046
+    Height = 366
     Align = alClient
     DataSource = DS_Pengajuan
     DynProps = <>
@@ -614,7 +614,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1052
+    Width = 1046
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -622,7 +622,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 1056
+    ExplicitWidth = 1052
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -639,12 +639,11 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 1052
+    Width = 1046
     Height = 46
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 963
     object Label1: TLabel
       Left = 15
       Top = 13
@@ -1856,7 +1855,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     SQL.Strings = (
       'select * from t_cash_bank_expenditure_submission_det')
     Left = 638
-    Top = 179
+    Top = 171
   end
   object DSDetail_Akun_Ajun: TDataSource
     DataSet = QDetail_akun_ajuan
@@ -2005,7 +2004,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Top = 72
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

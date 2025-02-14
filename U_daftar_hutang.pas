@@ -355,8 +355,14 @@ end;
 
 procedure TFDaftar_Hutang.FormShow(Sender: TObject);
 begin
+   if qdaftarhutang.Active=false then
+      qdaftarhutang.Active:=true;
+   Memdaftarhutang.Close;
+   Memdaftarhutang.Open;
+   Memdaftarhutang.EmptyTable;
    DtMulai.Date:=now;
    DtSelesai.Date:=now;
+   FDaftar_Hutang.Caption:='Daftar Hutang';
 end;
 
 end.

@@ -336,6 +336,22 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               FieldName = 'pilih'
               Footers = <>
               Title.Caption = 'Pilih'
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'cek_no'
+              Footers = <>
+              Width = 0
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'cek_date'
+              Footers = <>
+              Width = 0
             end>
           object RowDetailData: TRowDetailPanelControlEh
           end
