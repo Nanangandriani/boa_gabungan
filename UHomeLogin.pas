@@ -25,7 +25,7 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, cxDBEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, ABSMain,
-  Vcl.DBCtrls, Data.DB;
+  Vcl.DBCtrls, Data.DB, frxClass;
 
 type
   TFHomeLogin = class(TForm)

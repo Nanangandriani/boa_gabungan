@@ -103,12 +103,9 @@ type
     Label27: TLabel;
     Label23: TLabel;
     Cb_jenis_trans: TComboBox;
-    CbRencana: TComboBox;
-    Label30: TLabel;
     edKodeSumberPengeluaran: TEdit;
     Cb_debt_source: TComboBox;
     Label25: TLabel;
-    Label29: TLabel;
     Label26: TLabel;
     MemDetailHutangno_sj: TStringField;
     MemDetailHutangjum_hutang: TCurrencyField;
@@ -123,6 +120,9 @@ type
     ak_account: TEdit;
     MemDetailAkunjumlah_hasil_kurs: TCurrencyField;
     MemDetailAkunmodul_id: TStringField;
+    CbRencana: TComboBox;
+    Label30: TLabel;
+    Label29: TLabel;
     procedure edNamaJenisTransButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
@@ -148,7 +148,13 @@ type
     procedure DBGridAkunColumns0CellButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure Ed_id_modulChange(Sender: TObject);
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     procedure dtTransChange(Sender: TObject);
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;
@@ -1243,7 +1249,12 @@ begin
       MemDetailAkun.Active:=true;
    if MemDetailHutang.Active=false then
       MemDetailHutang.Active:=true;
-
+   MemKKasBank.Close;
+   MemKKasBank.Open;
+   MemDetailAkun.Close;
+   MemDetailAkun.Open;
+   MemDetailHutang.Close;
+   MemDetailHutang.Open;
 end;
 
 procedure TFDataPengeluaranKasBank.RefreshGridDetailAkun;

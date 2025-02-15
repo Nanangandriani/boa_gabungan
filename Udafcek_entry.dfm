@@ -26,6 +26,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 852
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

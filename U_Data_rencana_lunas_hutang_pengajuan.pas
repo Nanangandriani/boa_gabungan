@@ -234,6 +234,8 @@ begin
              FDataPengajuanPengeluaranKasBank.dtPeriode1.Date:=MemDataRencana['periode1'];
              FDataPengajuanPengeluaranKasBank.dtPeriode2.Date:=MemDataRencana['periode2'];
              FDataPengajuanPengeluaranKasBank.Ed_kepada.Text:=MemDataRencana['supplier_name'];
+             FDataPengajuanPengeluaranKasBank.Ed_nocek.Text:=MemDataRencana['cek_no'];
+             FDataPengajuanPengeluaranKasBank.tgl_cek.Date:=MemDataRencana['cek_date'];
            end;
       {end
       Except on E :Exception do

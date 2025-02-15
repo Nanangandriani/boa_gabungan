@@ -994,6 +994,26 @@
             <Form>FDashboard2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="URpt_Arus_Kas.pas">
+            <Form>FRpt_arus_kas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListJurnal_memorial.pas">
+            <Form>Flist_jurnal_memorial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNewJurnal_memorial.pas">
+            <Form>FNewJurnal_memo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCari_ket_memorial.pas">
+            <Form>FKet_Memorial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCari_SumberMemorial.pas">
+            <Form>FCari_SumberMemorial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -201,6 +201,20 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 15
       Caption = 'Sumber Pengeluaran'
     end
+    object Label30: TLabel
+      Left = 133
+      Top = 240
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label29: TLabel
+      Left = 20
+      Top = 240
+      Width = 61
+      Height = 15
+      Caption = 'Rencana Ke'
+    end
     object edNoTrans: TEdit
       Left = 147
       Top = 106
@@ -468,6 +482,14 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Visible = False
       OnChange = Ed_voucher_ajuanChange
     end
+    object CbRencana: TComboBox
+      Left = 147
+      Top = 238
+      Width = 54
+      Height = 23
+      Enabled = False
+      TabOrder = 24
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -601,7 +623,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 951
-      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -620,7 +641,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 25
       Caption = 'BitBtn1'
       TabOrder = 3
-      Visible = False
       OnClick = BitBtn1Click
     end
   end
@@ -660,26 +680,12 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Height = 15
         Caption = ':'
       end
-      object Label30: TLabel
-        Left = 133
-        Top = 111
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
       object Label25: TLabel
         Left = 133
         Top = 84
         Width = 3
         Height = 15
         Caption = ':'
-      end
-      object Label29: TLabel
-        Left = 20
-        Top = 111
-        Width = 61
-        Height = 15
-        Caption = 'Rencana Ke'
       end
       object Label26: TLabel
         Left = 20
@@ -707,6 +713,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Height = 23
         TabOrder = 1
       end
+<<<<<<< Updated upstream
+=======
       object CbRencana: TComboBox
         Left = 147
         Top = 109
@@ -715,6 +723,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Enabled = False
         TabOrder = 2
       end
+>>>>>>> Stashed changes
       object edKodeSumberPengeluaran: TEdit
         Left = 294
         Top = 82
@@ -722,7 +731,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Height = 23
         CharCase = ecUpperCase
         ReadOnly = True
-        TabOrder = 3
+        TabOrder = 2
         Visible = False
         OnChange = edKodeSumberPengeluaranChange
       end
@@ -732,14 +741,21 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Width = 141
         Height = 23
         Enabled = False
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+        TabOrder = 3
+=======
+=======
+>>>>>>> Stashed changes
         TabOrder = 4
+>>>>>>> Stashed changes
       end
       object ak_account: TEdit
         Left = 294
         Top = 30
         Width = 76
         Height = 23
-        TabOrder = 5
+        TabOrder = 4
         Visible = False
       end
     end
@@ -896,8 +912,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object TabDetailAkun: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Detail Akun'
-      ExplicitWidth = 1098
-      ExplicitHeight = 198
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -997,6 +1015,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object TabDetailFaktur: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Detail Hutang'
+      ExplicitWidth = 1098
+      ExplicitHeight = 198
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -1079,6 +1099,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Color = clGradientInactiveCaption
       TabVisible = False
       Caption = 'TabSheet1'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0

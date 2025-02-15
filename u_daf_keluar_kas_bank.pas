@@ -223,8 +223,34 @@ end;
 
 procedure TFdaf_pengeluaran_kas_bank.ActUpdateExecute(Sender: TObject);
 begin
+      {with QDaf_Pengeluaran_Kas_Bank do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT a.* FROM t_cash_bank_expenditure a '+
+                  'LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
+                  'LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
+                  'LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
+                  'LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
+                  'GROUP BY a.voucher_no,a.voucher_tmp,a.subvoucher,a.remark,a.entry_date,a.trans_date, '+
+                  'a.periode1,a.periode2,a.amount,a.account_code,a.group_code,a.group_name,a.tp_code, '+
+                  'a.account_name,a.dk,a.perpetrator_id,a.debit,a.kredit,a.header_code,a.ref_no,a.posting, '+
+                  'a.customer_code,a.supplier_code,a.cash_type,a.job_no,a.company_code,a.trans_year, '+
+                  'a.trans_month,a.trans_day,a.order_no,a.giro_no,a.bank_giro_name,a.giro_due_date, '+
+                  'a.customer_name,a.supplier_name,a.to_,a.deposit,a.deposit_date,a.tgup, '+
+                  'a.voucher_code,a.to_getout,a.stat,a.time_lock,a.update_time,a.stat_lock, '+
+                  'a.currency,a.kurs,a.bon_no,a.post_status,a.created_at,a.created_by, '+
+                  'a.updated_at,a.updated_by,a.deleted_at,a.deleted_by,a.bank_norek,a.bank_name, '+
+                  'a.cek_no,a.trans_type_code,a.trans_type_name,a.bank_number_account,a.bank_name_account, '+
+                  'a.additional_code,a."id",a.module_id '+
+                  'where voucher_no='+Quotedstr(DBGridKasBank.Fields[0].Asstring)+' '+
+                  'ORDER BY entry_date,voucher_no,trans_date,order_no ASC';
+        open;
+      end;}
       with FDataPengeluaranKasBank do
       begin
+        MemDetailAkun.EmptyTable;
+        MemDetailHutang.EmptyTable;
         MemDetailAkun.Close;
         MemDetailAkun.Open;
         MemDetailHutang.Close;
@@ -353,6 +379,7 @@ begin
         end;
         Fdaf_pengeluaran_kas_bank.Close;
       end;
+
 end;
 
 procedure TFdaf_pengeluaran_kas_bank.dxBarLargeButton1Click(Sender: TObject);
@@ -476,13 +503,15 @@ begin
      QDaf_Pengeluaran_Kas_Bank.Active:=true;
   if QDetail_akun.Active=false then
      QDetail_akun.Active:=true;
-  if QDetail_akun.Active=false then
-     QDetail_akun.Active:=true;
+  if QDetail_Hutang.Active=false then
+     QDetail_Hutang.Active:=true;
    ActROExecute(sender);
+   QDaf_Pengeluaran_Kas_Bank.Close;
+   QDaf_Pengeluaran_Kas_Bank.Open;
    QDetail_akun.Close;
    QDetail_akun.Open;
-   QDetail_akun.Close;
-   QDetail_akun.Open;
+   QDetail_Hutang.Close;
+   QDetail_Hutang.Open;
 end;
 
 initialization

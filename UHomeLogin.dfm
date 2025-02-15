@@ -26,8 +26,8 @@ object FHomeLogin: TFHomeLogin
     object ImgApproval: TImage
       Left = 0
       Top = 0
-      Width = 1135
-      Height = 1071
+      Width = 398
+      Height = 374
       Align = alClient
       AutoSize = True
       Center = True

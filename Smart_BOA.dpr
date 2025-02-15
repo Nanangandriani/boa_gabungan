@@ -237,7 +237,12 @@ uses
   UDaftarKendaraan in 'UDaftarKendaraan.pas' {FDaftarKendaraan},
   UDataBankGaransi in 'UDataBankGaransi.pas' {FDataBankGaransi},
   UDataPeLakuBiaya in 'UDataPeLakuBiaya.pas' {FDataPeLakuBiaya},
-  UDashboard2 in 'UDashboard2.pas' {FDashboard2};
+  UDashboard2 in 'UDashboard2.pas' {FDashboard2},
+  URpt_Arus_Kas in 'URpt_Arus_Kas.pas' {FRpt_arus_kas},
+  UListJurnal_memorial in 'UListJurnal_memorial.pas' {Flist_jurnal_memorial},
+  UNewJurnal_memorial in 'UNewJurnal_memorial.pas' {FNewJurnal_memo},
+  UCari_ket_memorial in 'UCari_ket_memorial.pas' {FKet_Memorial},
+  UCari_SumberMemorial in 'UCari_SumberMemorial.pas' {FCari_SumberMemorial};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -372,6 +377,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataBankGaransi, FDataBankGaransi);
   Application.CreateForm(TFDataPeLakuBiaya, FDataPeLakuBiaya);
   Application.CreateForm(TFDashboard2, FDashboard2);
+  Application.CreateForm(TFRpt_arus_kas, FRpt_arus_kas);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);

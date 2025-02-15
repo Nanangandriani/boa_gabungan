@@ -1361,12 +1361,11 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       #9'A."voucher_no" = '#39'KK/0001/04/12/2024'#39' '
       #9'AND "position" = '#39'D'#39
       #9)
-    Active = True
     Left = 792
     Top = 32
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

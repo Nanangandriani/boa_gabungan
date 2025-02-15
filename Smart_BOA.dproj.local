@@ -1,21 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.pas=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.439,=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.659,=D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.667,D:\DATA HPS\Development\back_office_automation\UDashboard2.pas=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.590,=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.628,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.597,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.453,D:\DATA HPS\Development\back_office_automation\Unit1.dfm=D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.667,D:\DATA HPS\Development\back_office_automation\UDashboard2.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.984,=D:\DATA HPS\Development\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.433,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.453,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.628,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.667,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDashboard2.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.667,D:\DATA HPS\Development\back_office_automation\Unit1.dfm=D:\DATA HPS\Development\back_office_automation\UDashboard2.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.869,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.433,=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\Unit1.pas=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.312,D:\back_office_automation\Unit1.dfm=D:\back_office_automation\URpt_Arus_Kas.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.312,D:\back_office_automation\Unit1.pas=D:\back_office_automation\URpt_Arus_Kas.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.226,=D:\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.060,D:\APK BOA Akunting\APL HHA AKT Month\UListJurnal_memorial.pas=</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.984,=D:\DATA HPS\Development\back_office_automation\UMasterWilayahAdministratif.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.640,D:\APK BOA Akunting\APL HHA AKT Month\UCari_SumberMemorial.dfm=D:\back_office_automation\UCari_SumberMemorial.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.668,=D:\APK BOA Akunting\APL HHA AKT Month\UListJurnal_memorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.200,D:\DATA HPS\Development\back_office_automation\Unit1.dfm=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.453,D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.pas=D:\DATA HPS\Development\back_office_automation\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.659,=D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.109,=D:\back_office_automation\UListJurnal_memorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.295,D:\APK BOA Akunting\APL HHA AKT Month\UCari_ket_memorial.pas=D:\back_office_automation\UCari_ket_memorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.295,D:\APK BOA Akunting\APL HHA AKT Month\UCari_ket_memorial.dfm=D:\back_office_automation\UCari_ket_memorial.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.453,D:\DATA HPS\Development\back_office_automation\UDaftarRekeningKoran.dfm=D:\DATA HPS\Development\back_office_automation\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.780,=D:\APK BOA Akunting\APL HHA AKT Month\UCari_ket_memorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.439,=D:\DATA HPS\Development\back_office_automation\UDataBankGaransi.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.590,=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.151,D:\APK BOA Akunting\APL HHA AKT Month\UNewJurnal_memorial.dfm=D:\back_office_automation\UNewJurnal_memorial.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.483,D:\DATA HPS\Development\back_office_automation\Unit1.dfm=D:\DATA HPS\Development\back_office_automation\UDaftarKendaraan.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.640,D:\APK BOA Akunting\APL HHA AKT Month\UCari_SumberMemorial.pas=D:\back_office_automation\UCari_SumberMemorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.235,=D:\APK BOA Akunting\APL HHA AKT Month\UNewJurnal_memorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.151,D:\APK BOA Akunting\APL HHA AKT Month\UNewJurnal_memorial.pas=D:\back_office_automation\UNewJurnal_memorial.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.531,=D:\APK BOA Akunting\APL HHA AKT Month\UCari_SumberMemorial.pas</Transaction>
   </Transactions>
 </BorlandProject>
