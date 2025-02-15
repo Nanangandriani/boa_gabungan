@@ -3,15 +3,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   Top = 0
   Caption = 'Laporan Buku Harian Kas Kecil'
   ClientHeight = 393
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   ClientWidth = 971
-=======
-  ClientWidth = 827
->>>>>>> Stashed changes
-=======
-  ClientWidth = 827
->>>>>>> Stashed changes
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +12,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   Font.Style = []
   OnShow = FormShow
   TextHeight = 15
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   object DBGridKasKecil: TDBGridEh
     Left = 0
     Top = 127
@@ -29,40 +19,18 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Height = 123
     Align = alClient
     Color = clBtnFace
-=======
-=======
->>>>>>> Stashed changes
-  object DBGridKontrak: TDBGridEh
-    Left = 0
-    Top = 256
-    Width = 827
-    Height = 96
-    Align = alBottom
-    Color = clGradientInactiveCaption
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     DataGrouping.GroupLevels = <
       item
       end
       item
       end>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     DataSource = DSBHKasKecil
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     SearchPanel.Enabled = True
     TabOrder = 0
     TitleParams.MultiTitle = True
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Columns = <
       item
         CellButtons = <>
@@ -160,48 +128,21 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         Footers = <>
         Width = 0
       end>
-=======
-    Visible = False
->>>>>>> Stashed changes
-=======
-    Visible = False
->>>>>>> Stashed changes
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel1: TPanel
     Left = 0
     Top = 352
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Width = 971
-=======
-    Width = 827
->>>>>>> Stashed changes
-=======
-    Width = 827
->>>>>>> Stashed changes
     Height = 41
     Align = alBottom
     TabOrder = 1
     Visible = False
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     ExplicitTop = 343
     ExplicitWidth = 965
     object BBatal: TRzBitBtn
       Left = 895
-=======
-=======
->>>>>>> Stashed changes
-    ExplicitTop = 538
-    ExplicitWidth = 655
-    object BBatal: TRzBitBtn
-      Left = 751
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
       Top = 1
       Height = 39
       Align = alRight
@@ -259,23 +200,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       ExplicitLeft = 889
     end
     object BPrint: TRzBitBtn
       Left = 816
-=======
-=======
->>>>>>> Stashed changes
-      ExplicitLeft = 619
-    end
-    object BPrint: TRzBitBtn
-      Left = 672
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
       Top = 1
       Width = 79
       Height = 39
@@ -334,23 +262,11 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       ExplicitLeft = 810
-=======
-      ExplicitLeft = 721
-      ExplicitTop = 6
->>>>>>> Stashed changes
-=======
-      ExplicitLeft = 721
-      ExplicitTop = 6
->>>>>>> Stashed changes
     end
   end
   object RzPanel1: TRzPanel
     Left = 0
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Top = 250
     Width = 971
     Height = 102
@@ -361,22 +277,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Visible = False
     ExplicitTop = 241
     ExplicitWidth = 965
-=======
-=======
->>>>>>> Stashed changes
-    Top = 154
-    Width = 827
-    Height = 102
-    Align = alBottom
-    BorderSides = [sdLeft, sdTop, sdRight]
-    Color = clGradientInactiveCaption
-    TabOrder = 2
-    Visible = False
-    ExplicitTop = 148
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     object Label2: TLabel
       Left = 22
       Top = 98
@@ -571,18 +471,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     object Cbsemua: TRzCheckBox
       Left = 136
       Top = 120
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       Width = 99
       Height = 15
-=======
-      Width = 103
-      Height = 19
->>>>>>> Stashed changes
-=======
-      Width = 103
-      Height = 19
->>>>>>> Stashed changes
       Caption = 'Semua Lokasi'
       Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
@@ -684,15 +574,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Width = 971
-=======
-    Width = 827
->>>>>>> Stashed changes
-=======
-    Width = 827
->>>>>>> Stashed changes
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -700,15 +582,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Contexts = <>
     TabOrder = 3
     TabStop = False
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     ExplicitWidth = 965
-=======
-    ExplicitWidth = 651
->>>>>>> Stashed changes
-=======
-    ExplicitWidth = 651
->>>>>>> Stashed changes
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -746,37 +620,15 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Left = 752
     Top = 80
-=======
-    Left = 656
-    Top = 208
->>>>>>> Stashed changes
-=======
-    Left = 656
-    Top = 208
->>>>>>> Stashed changes
   end
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Left = 704
     Top = 80
-=======
-    Active = True
-    Left = 648
-    Top = 160
->>>>>>> Stashed changes
-=======
-    Active = True
-    Left = 648
-    Top = 160
->>>>>>> Stashed changes
     object QPerusahaancompany_code: TStringField
       FieldName = 'company_code'
       Required = True
@@ -856,15 +708,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     end
   end
   object frxReport1: TfrxReport
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Version = '2022.1.3'
-=======
-    Version = '2022.2.7'
->>>>>>> Stashed changes
-=======
-    Version = '2022.2.7'
->>>>>>> Stashed changes
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
@@ -898,18 +742,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       'begin'
       ''
       'end.')
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Left = 616
     Top = 88
-=======
-    Left = 584
-    Top = 160
->>>>>>> Stashed changes
-=======
-    Left = 584
-    Top = 160
->>>>>>> Stashed changes
     Datasets = <
       item
         DataSet = frxDBDatasetPers
@@ -2188,18 +2022,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     DataSet = QKasKecil
     BCDToCurrency = False
     DataSetOptions = []
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Left = 608
     Top = 32
-=======
-    Left = 528
-    Top = 216
->>>>>>> Stashed changes
-=======
-    Left = 528
-    Top = 216
->>>>>>> Stashed changes
   end
   object QKasKecil: TUniQuery
     Connection = dm.Koneksi
@@ -2320,18 +2144,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       ''
       '')
     Active = True
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Left = 560
     Top = 32
-=======
-    Left = 528
-    Top = 160
->>>>>>> Stashed changes
-=======
-    Left = 528
-    Top = 160
->>>>>>> Stashed changes
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -2347,18 +2161,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     Left = 756
     Top = 24
-=======
-    Left = 588
-    Top = 32
->>>>>>> Stashed changes
-=======
-    Left = 588
-    Top = 32
->>>>>>> Stashed changes
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -3123,8 +2927,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       OnClick = dxBarLargeButton1Click
     end
     object DxRefresh: TdxBarLargeButton
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       Caption = 'Cari'
       Category = 0
       Hint = 'Cari'
@@ -3153,14 +2955,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
       OnClick = DxRefreshClick
-=======
-      Category = 0
-      Visible = ivAlways
->>>>>>> Stashed changes
-=======
-      Category = 0
-      Visible = ivAlways
->>>>>>> Stashed changes
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Awal   '
@@ -3328,8 +3122,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       PropertiesClassName = 'TcxDateEditProperties'
     end
   end
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   object ActMenu: TActionManager
     Left = 671
     Top = 37
@@ -3420,8 +3212,4 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Left = 472
     Top = 144
   end
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 end

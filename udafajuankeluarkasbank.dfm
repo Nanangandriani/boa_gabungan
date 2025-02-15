@@ -2,8 +2,8 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   Left = 0
   Top = 0
   Caption = 'Form Daftar Pengajuan Keluar Kas dan Bank'
-  ClientHeight = 539
-  ClientWidth = 1046
+  ClientHeight = 530
+  ClientWidth = 1040
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object DBGridPengajuanKeluarKasBank: TDBGridEh
     Left = 0
     Top = 173
-    Width = 1046
-    Height = 366
+    Width = 1040
+    Height = 357
     Align = alClient
     DataSource = DS_Pengajuan
     DynProps = <>
@@ -614,7 +614,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1046
+    Width = 1040
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -622,7 +622,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 1052
+    ExplicitWidth = 1046
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -639,11 +639,12 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 1046
+    Width = 1040
     Height = 46
     Align = alTop
     Color = 15987699
     TabOrder = 2
+    ExplicitWidth = 1046
     object Label1: TLabel
       Left = 15
       Top = 13

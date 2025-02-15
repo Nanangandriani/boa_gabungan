@@ -22,8 +22,6 @@ object Fdaftar_deposito_ajuan: TFdaftar_deposito_ajuan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -78
-    ExplicitWidth = 918
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -48,11 +46,66 @@ object Fdaftar_deposito_ajuan: TFdaftar_deposito_ajuan
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 1
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama Bank'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'No. Rekening'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tgl. Deposito'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tgl. Jatuh Tempo'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nilai Deposito'
+        Width = 110
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Keterangan'
+        Width = 200
+      end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 30
+        Width = 765
         Height = 118
         Align = alClient
         DynProps = <>
@@ -72,7 +125,7 @@ object Fdaftar_deposito_ajuan: TFdaftar_deposito_ajuan
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
-    ExplicitWidth = 840
+    ExplicitWidth = 878
     object Label1: TLabel
       Left = 21
       Top = 66
@@ -312,8 +365,8 @@ object Fdaftar_deposito_ajuan: TFdaftar_deposito_ajuan
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -331,7 +384,7 @@ object Fdaftar_deposito_ajuan: TFdaftar_deposito_ajuan
           Visible = True
           ItemName = 'dxBarLargeButton1'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

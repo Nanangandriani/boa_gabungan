@@ -25,7 +25,6 @@ object Fdaftar_deposito: TFdaftar_deposito
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitTop = 1
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -58,6 +57,7 @@ object Fdaftar_deposito: TFdaftar_deposito
         EditButtons = <>
         FieldName = 'bank_name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Bank'
         Width = 150
       end
@@ -67,6 +67,7 @@ object Fdaftar_deposito: TFdaftar_deposito
         EditButtons = <>
         FieldName = 'bank_norek'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'No. Rekening'
         Width = 120
       end
@@ -76,6 +77,7 @@ object Fdaftar_deposito: TFdaftar_deposito
         EditButtons = <>
         FieldName = 'deposito_date'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Tgl. Deposito'
         Width = 100
       end
@@ -85,6 +87,7 @@ object Fdaftar_deposito: TFdaftar_deposito
         EditButtons = <>
         FieldName = 'due_date'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Tgl. Jatuh Tempo'
         Width = 100
       end
@@ -94,6 +97,7 @@ object Fdaftar_deposito: TFdaftar_deposito
         EditButtons = <>
         FieldName = 'deposito_value'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nilai Deposito'
         Width = 110
       end
@@ -103,6 +107,7 @@ object Fdaftar_deposito: TFdaftar_deposito
         EditButtons = <>
         FieldName = 'description'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Keterangan'
         Width = 200
       end>
@@ -351,7 +356,6 @@ object Fdaftar_deposito: TFdaftar_deposito
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedDockingStyle = dsTop
       DockedLeft = 0
       DockedTop = 0
       FloatLeft = 930
@@ -383,7 +387,6 @@ object Fdaftar_deposito: TFdaftar_deposito
     end
     object dxBarManager1Bar2: TdxBar
       CaptionButtons = <>
-      DockedDockingStyle = dsTop
       DockedLeft = 125
       DockedTop = 0
       FloatLeft = 943

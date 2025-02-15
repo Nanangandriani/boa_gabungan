@@ -3,8 +3,8 @@ object Fdaftar_nocek: TFdaftar_nocek
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Daftar No.Cek & BG'
-  ClientHeight = 527
-  ClientWidth = 464
+  ClientHeight = 518
+  ClientWidth = 458
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -136,8 +136,8 @@ object Fdaftar_nocek: TFdaftar_nocek
   end
   object DBGridEh1: TDBGridEh
     Left = 0
-    Top = 192
-    Width = 464
+    Top = 183
+    Width = 458
     Height = 335
     Align = alBottom
     DataSource = DSdafcek
@@ -179,13 +179,11 @@ object Fdaftar_nocek: TFdaftar_nocek
   end
   object Panel1: TPanel
     Left = 0
-    Top = 145
-    Width = 464
+    Top = 136
+    Width = 458
     Height = 47
     Align = alBottom
     TabOrder = 6
-    ExplicitTop = 136
-    ExplicitWidth = 458
     object BCari: TRzBitBtn
       Left = 1
       Top = 1

@@ -81,18 +81,12 @@ begin
   if vcall='rencanalunashutang' then
   begin
       FRencana_Lunas_Hutang.txtnocek.text:= qdafnocek.fieldbyname('cek_no').asstring;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       Fdaftar_nocek.close;
   end
   else
   if vcall='ajuan_cash_bank' then
   begin
       FDataPengajuanPengeluaranKasBank.Ed_nocek.text:= qdafnocek.fieldbyname('cek_no').asstring;
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
       Fdaftar_nocek.close;
   end;
 

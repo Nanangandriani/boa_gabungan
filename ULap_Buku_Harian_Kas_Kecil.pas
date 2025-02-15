@@ -27,8 +27,6 @@ uses
   RzEdit, RzCmboBx, dxRibbon, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   frxClass, frxDBSet, dxBar, cxBarEditItem, cxClasses, Data.DB, RzPanel,
   Vcl.ComCtrls, RzRadChk, Vcl.Buttons, dxBevel, dxGDIPlusClasses, RzBmpBtn,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   MemDS, DBAccess, Uni, cxButtonEdit, cxCheckBox, dxColorEdit, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, MemTableDataEh,
   MemTableEh, DataDriverEh;
@@ -36,18 +34,6 @@ uses
 type
   TFLap_Buku_Harian_Kas_Kecil = class(TForm)
     DBGridKasKecil: TDBGridEh;
-=======
-=======
->>>>>>> Stashed changes
-  MemDS, DBAccess, Uni, cxButtonEdit, cxCheckBox, dxColorEdit;
-
-type
-  TFLap_Buku_Harian_Kas_Kecil = class(TForm)
-    DBGridKontrak: TDBGridEh;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BPrint: TRzBitBtn;
@@ -114,8 +100,6 @@ type
     dxBarEdit4: TdxBarEdit;
     cxBarEditItem1: TcxBarEditItem;
     DTPick11: TcxBarEditItem;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -133,16 +117,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
-=======
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure dxBarLargeButton1Click(Sender: TObject);
->>>>>>> Stashed changes
-=======
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure dxBarLargeButton1Click(Sender: TObject);
->>>>>>> Stashed changes
   private
     { Private declarations }
   public
@@ -167,15 +141,7 @@ var
   dd,mm,yy:word;
   ketemu:boolean;
 begin
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     with dm.qtemp do
-=======
-     with dm.qtemp do
->>>>>>> Stashed changes
-=======
-     with dm.qtemp do
->>>>>>> Stashed changes
     begin
       close;
       sql.Clear;
@@ -244,8 +210,6 @@ begin
 
 end;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 procedure TFLap_Buku_Harian_Kas_Kecil.DxRefreshClick(Sender: TObject);
 begin
    if DTPick11.EditValue = null then
@@ -291,10 +255,6 @@ begin
       DBGridKasKecil.FinishLoadingStatus();
 end;
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 procedure TFLap_Buku_Harian_Kas_Kecil.FormShow(Sender: TObject);
 begin
    DTPick1.Date:=Now;
