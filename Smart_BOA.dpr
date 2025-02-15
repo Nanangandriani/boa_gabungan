@@ -185,8 +185,6 @@ uses
   U_keluarkasbank_ajuan in 'U_keluarkasbank_ajuan.pas' {FKeluarKasBank_Ajuan},
   U_Data_rencana_lunas_hutang_pengajuan in 'U_Data_rencana_lunas_hutang_pengajuan.pas' {FDataRencanaLunasHutangPengajuan},
   u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
-  UDataPengajuanPengeluaranKasBank in 'UDataPengajuanPengeluaranKasBank.pas' {FDataPengajuanPengeluaranKasBank},
-  UDataPengeluaranKasBank in 'UDataPengeluaranKasBank.pas' {FDataPengeluaranKasBank},
   URpt_Buku_Besar in 'URpt_Buku_Besar.pas' {FRpt_Buku_Besar},
   URekap_Kontrakks in 'URekap_Kontrakks.pas' {FRekapKontrak},
   URekap_PO in 'URekap_PO.pas' {FRekap_PO},
@@ -231,6 +229,8 @@ uses
   U_Pelaku_Biaya in 'U_Pelaku_Biaya.pas' {FPelaku_Biaya},
   UNew_Kasbon in 'UNew_Kasbon.pas' {FNew_Kasbon},
   UApproval_Keluar_Kas_Bank in 'UApproval_Keluar_Kas_Bank.pas' {FApproval_Keluar_Kas_Bank},
+  URpt_BHKeluarKasdanBank in 'URpt_BHKeluarKasdanBank.pas' {FRpt_BHKeluarKasdanBank},
+  UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
   UListOrderTelemarketing in 'UListOrderTelemarketing.pas' {FListOrderTelemarketing},
   UMasterWilayahAdministratif in 'UMasterWilayahAdministratif.pas' {FMasterWilayahAdministratif},
   UDaftarRekeningKoran in 'UDaftarRekeningKoran.pas' {FDaftarRekeningKoran},
@@ -243,6 +243,25 @@ uses
   UNewJurnal_memorial in 'UNewJurnal_memorial.pas' {FNewJurnal_memo},
   UCari_ket_memorial in 'UCari_ket_memorial.pas' {FKet_Memorial},
   UCari_SumberMemorial in 'UCari_SumberMemorial.pas' {FCari_SumberMemorial};
+  Usaldo_bank_rencana_pelunasan_hutang in 'Usaldo_bank_rencana_pelunasan_hutang.pas' {Fsaldo_bank_rencana_pelunasan_hutang},
+  Udaftar_deposito in 'Udaftar_deposito.pas' {Fdaftar_deposito},
+  Upengajuan_deposito in 'Upengajuan_deposito.pas' {Fpengajuan_deposito},
+  Utrx_deposito in 'Utrx_deposito.pas' {Ftrx_deposito},
+  Udaftar_deposito_ajuan in 'Udaftar_deposito_ajuan.pas' {Fdaftar_deposito_ajuan},
+  Utrx_deposito_ajuan in 'Utrx_deposito_ajuan.pas' {Ftrx_deposito_ajuan},
+  Utrx_deposito2 in 'Utrx_deposito2.pas' {Ftrx_deposito2},
+  Ufoto_deposito in 'Ufoto_deposito.pas' {Form1},
+  ULap_Kartu_Hutang in 'ULap_Kartu_Hutang.pas' {FLap_Kartu_Hutang},
+  Ustock_opname_kas_besar in 'Ustock_opname_kas_besar.pas' {Fstock_opname_kas_besar},
+  Ustock_opname_kas_kecil in 'Ustock_opname_kas_kecil.pas' {Fstock_opname_kas_kecil},
+  Udata_uang_kas_kecil in 'Udata_uang_kas_kecil.pas' {Fdata_uang_cash_kecil},
+  Udata_uang_kas_besar in 'Udata_uang_kas_besar.pas' {Fdata_uang_cash_besar},
+  UMutasi_Bank in 'UMutasi_Bank.pas' {FMutasiBank},
+  udafajuankeluarkasbank in 'udafajuankeluarkasbank.pas' {Fdafajuankeluarkasbank},
+  ULap_Buku_Harian_Kas in 'ULap_Buku_Harian_Kas.pas' {FLap_Buku_Harian_Kas},
+  UDataPengajuanPengeluaranKasBank in 'UDataPengajuanPengeluaranKasBank.pas' {FDataPengajuanPengeluaranKasBank},
+  UDataPengeluaranKasBank in 'UDataPengeluaranKasBank.pas' {FDataPengeluaranKasBank},
+  ULap_Deposito in 'ULap_Deposito.pas' {Form2};
 
 // UMy_Function in 'UMy_Function.pas';
 
@@ -379,6 +398,36 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDashboard2, FDashboard2);
   Application.CreateForm(TFRpt_arus_kas, FRpt_arus_kas);
   //  Application.CreateForm(TFSearch_Supplier, FSearch_Supplier);
+  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, FLap_Ikhtisar_Biaya_KasKecil_BOP);
+  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, FLap_Ikhtisar_Biaya_KasKecil_ADM);
+  Application.CreateForm(TFRekap_Ikhtisar_Kas_Kecil, FRekap_Ikhtisar_Kas_Kecil);
+  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
+  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+  Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
+  Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
+  Application.CreateForm(TForm2, Form2);
+  //Application.CreateForm(TFMutasiBank, FMutasiBank);
+  //Application.CreateForm(TFstock_opname_kas_besar, Fstock_opname_kas_besar);
+  //Application.CreateForm(TFstock_opname_kas_kecil, Fstock_opname_kas_kecil);
+  //Application.CreateForm(TFdata_uang_cash_kecil, Fdata_uang_cash_kecil);
+  //Application.CreateForm(TFuang_cash_besar, Fuang_cash_besar);
+  //Application.CreateForm(TFdaftar_deposito_ajuan, Fdaftar_deposito_ajuan);
+  //Application.CreateForm(TFtrx_deposito_ajuan, Ftrx_deposito_ajuan);
+  //Application.CreateForm(TFtrx_deposito2, Ftrx_deposito2);
+  //Application.CreateForm(TFtrx_deposito, Ftrx_deposito);
+  //Application.CreateForm(TFdaftar_deposito, Fdaftar_deposito);
+  Application.CreateForm(TFpengajuan_deposito, Fpengajuan_deposito);
+  // Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
+  Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
+  Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
+  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
+  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+  Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
   Application.CreateForm(TFPembelian, FPembelian);
   Application.CreateForm(TFNew_Pembelian, FNew_Pembelian);
   Application.CreateForm(TFPot_Pembelian, FPot_Pembelian);

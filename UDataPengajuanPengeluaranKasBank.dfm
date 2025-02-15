@@ -37,14 +37,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-    ExplicitTop = 8
->>>>>>> Stashed changes
-=======
-    ExplicitTop = 8
->>>>>>> Stashed changes
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
@@ -883,10 +875,10 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 204
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
     ExplicitTop = 393
     ExplicitHeight = 230
@@ -984,14 +976,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       ExplicitWidth = 1098
       ExplicitHeight = 196
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
