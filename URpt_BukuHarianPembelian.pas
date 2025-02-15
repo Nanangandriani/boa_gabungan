@@ -67,6 +67,7 @@ type
     Ednm_akun: TcxBarEditItem;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BBatalClick(Sender: TObject);
@@ -80,6 +81,7 @@ type
     procedure EdAkunPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -144,14 +146,16 @@ end;
 
 procedure TFRpt_BukuHarianPembelian.FormShow(Sender: TObject);
 begin
-edkd_akun1.Clear;
-Ednm_akun1.Clear;
-DtMulai1.Clear;
-MemBHP.Close;
-MemBHP.Open;
-{if QRptBHP.Active=false then QRptBHP.Active:=true;
-if MemBHP.Active=false then MemBHP.Active:=true;
-}end;
+  edkd_akun1.Clear;
+  Ednm_akun1.Clear;
+  DtMulai1.Clear;
+  MemBHP.Close;
+  MemBHP.Open;
+  {if QRptBHP.Active=false then QRptBHP.Active:=true;
+  if MemBHP.Active=false then MemBHP.Active:=true;}
+  dtMulai.EditValue:=date;
+  DtSelesai.EditValue:=date;
+end;
 
 procedure TFRpt_BukuHarianPembelian.Panel1Click(Sender: TObject);
 begin
@@ -344,6 +348,76 @@ begin
   end;
 end;
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian.Fr3');
+  // Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptBukuHarianPembelianProduksi.Fr3');
+    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
+  //  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));
+  //  SetMemo(Rpt,'nmsbu',' '+Kd_SBU);
+    rpt.ShowReport();
+end;
+
+procedure TFRpt_BukuHarianPembelian.dxBarLargeButton2Click(Sender: TObject);
+begin
+    if dtmulai.EditValue = null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+if EdAkun.EditValue<> null then
+begin
+  with QRptBHP do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
+    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
+    ' b.ppn_rp,b.grandtotal,concat(a.account_code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
+    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
+    ' ,b.qty,b.unit from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN t_ak_account d on a.account_code=d.code '+
+    ' INNER JOIN t_ak_account E on b.account_code=e.code '+
+    ' LEFT JOIN t_ak_account F on b.ppn_account=f.code  '+
+    ' LEFT JOIN t_ak_account g on a.account_um_code=g.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where d.header_code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
+    Execute;
+  end;
+end;
+if EdAkun.EditValue=null then
+begin
+  with QRptBHP do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
+    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
+    ' b.ppn_rp,b.grandtotal,concat(a.account_code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' concat(b.account_code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
+    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
+    ' ,b.qty,b.unit from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN t_ak_account d on a.account_code=d.code '+
+    ' INNER JOIN t_ak_account E on b.account_code=e.code '+
+    ' LEFT JOIN t_ak_account F on b.ppn_account=f.code  '+
+    ' LEFT JOIN t_ak_account g on a.account_um_code=g.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
+    Execute;
+  end;
+end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Rincian_Penerimaan_Barang.Fr3');
   // Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptBukuHarianPembelianProduksi.Fr3');
     SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
   //  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));

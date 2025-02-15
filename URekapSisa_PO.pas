@@ -303,36 +303,38 @@ procedure TFRekapSisa_PO.FormShow(Sender: TObject);
 begin
 //NmBulan;
  Load;
+ DtMulai.EditValue:=date;
+ DtSelesai.EditValue:=date;
 end;
 
 procedure TFRekapSisa_PO.NmBulan;
-begin  {
-Tag := 0;
-Tag := Tag + 1; NamaBulan[Tag] := 'January';
-Tag := Tag + 1; NamaBulan[Tag] := 'February';
-Tag := Tag + 1; NamaBulan[Tag] := 'Maret';
-Tag := Tag + 1; NamaBulan[Tag] := 'April';
-Tag := Tag + 1; NamaBulan[Tag] := 'Mey';
-Tag := Tag + 1; NamaBulan[Tag] := 'Juni';
-Tag := Tag + 1; NamaBulan[Tag] := 'July';
-Tag := Tag + 1; NamaBulan[Tag] := 'Agustus';
-Tag := Tag + 1; NamaBulan[Tag] := 'September';
-Tag := Tag + 1; NamaBulan[Tag] := 'Oktober';
-Tag := Tag + 1; NamaBulan[Tag] := 'November';
-Tag := Tag + 1; NamaBulan[Tag] := 'Desember';     }
-bln:=FormatDateTime('mm',DtSelesai.editvalue);
-if bln='1' then bulan:= 'January';
-if bln='2' then bulan:= 'February';
-if bln='3' then bulan:= 'Maret';
-if bln='4' then bulan:= 'April';
-if bln='5' then bulan:= 'Mey';
-if bln='6' then bulan:= 'Juni';
-if bln='7' then bulan:= 'July';
-if bln='8' then bulan:= 'Agustus';
-if bln='9' then bulan:= 'September';
-if bln='10' then bulan:= 'Oktober';
-if bln='11' then bulan:= 'November';
-if bln='12' then bulan:= 'Desember';
+begin
+  {Tag := 0;
+  Tag := Tag + 1; NamaBulan[Tag] := 'January';
+  Tag := Tag + 1; NamaBulan[Tag] := 'February';
+  Tag := Tag + 1; NamaBulan[Tag] := 'Maret';
+  Tag := Tag + 1; NamaBulan[Tag] := 'April';
+  Tag := Tag + 1; NamaBulan[Tag] := 'Mey';
+  Tag := Tag + 1; NamaBulan[Tag] := 'Juni';
+  Tag := Tag + 1; NamaBulan[Tag] := 'July';
+  Tag := Tag + 1; NamaBulan[Tag] := 'Agustus';
+  Tag := Tag + 1; NamaBulan[Tag] := 'September';
+  Tag := Tag + 1; NamaBulan[Tag] := 'Oktober';
+  Tag := Tag + 1; NamaBulan[Tag] := 'November';
+  Tag := Tag + 1; NamaBulan[Tag] := 'Desember';     }
+  bln:=FormatDateTime('mm',DtSelesai.editvalue);
+  if bln='1' then bulan:= 'January';
+  if bln='2' then bulan:= 'February';
+  if bln='3' then bulan:= 'Maret';
+  if bln='4' then bulan:= 'April';
+  if bln='5' then bulan:= 'Mey';
+  if bln='6' then bulan:= 'Juni';
+  if bln='7' then bulan:= 'July';
+  if bln='8' then bulan:= 'Agustus';
+  if bln='9' then bulan:= 'September';
+  if bln='10' then bulan:= 'Oktober';
+  if bln='11' then bulan:= 'November';
+  if bln='12' then bulan:= 'Desember';
 end;
 
 procedure TFRekapSisa_PO.Panel1Click(Sender: TObject);

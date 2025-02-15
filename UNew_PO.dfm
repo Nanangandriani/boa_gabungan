@@ -999,8 +999,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1049
-      ExplicitTop = -3
+      ExplicitLeft = 1051
+      ExplicitHeight = 29
     end
     object BEdit: TRzBitBtn
       Left = 980

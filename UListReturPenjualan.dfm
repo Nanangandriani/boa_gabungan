@@ -2,8 +2,8 @@ object FListReturPenjualan: TFListReturPenjualan
   Left = 0
   Top = 0
   Caption = 'Retur Penjualan'
-  ClientHeight = 487
-  ClientWidth = 1192
+  ClientHeight = 486
+  ClientWidth = 1188
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListReturPenjualan: TFListReturPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1192
+    Width = 1188
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -22,6 +22,7 @@ object FListReturPenjualan: TFListReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1192
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -37,8 +38,8 @@ object FListReturPenjualan: TFListReturPenjualan
   object DBGridList: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1192
-    Height = 360
+    Width = 1188
+    Height = 359
     Align = alClient
     DataSource = DsReturJual
     DynProps = <>

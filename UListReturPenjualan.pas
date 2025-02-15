@@ -132,7 +132,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function;
+uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function, UMainMenu;
 
 procedure TFListReturPenjualan.ActBaruExecute(Sender: TObject);
 begin

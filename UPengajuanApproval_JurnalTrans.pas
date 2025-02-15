@@ -131,7 +131,7 @@ begin
     ' left join t_ak_account c on a.account_code=c.code'+
     ' left join t_ak_account d on a.account_um_code=d.code'+
     ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
-    ' INNER JOIN t_general_ledger g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
+    ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY approved_status,trans_no) g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
     ' order by a.id desc) a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
     ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status,trans_date';
     Execute;

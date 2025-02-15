@@ -377,15 +377,15 @@ object FRekapSisa_PO: TFRekapSisa_PO
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45624.607431122680000000
-    ReportOptions.LastChange = 45624.607431122680000000
+    ReportOptions.CreateDate = 45622.568261701400000000
+    ReportOptions.LastChange = 45678.472100775460000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -394,7 +394,15 @@ object FRekapSisa_PO: TFRekapSisa_PO
       'end.')
     Left = 553
     Top = 95
-    Datasets = <>
+    Datasets = <
+      item
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
+      end
+      item
+        DataSet = FRekap_PO.DbRekapPO
+        DataSetName = 'DbRekapPO'
+      end>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -418,9 +426,150 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 108.464681650000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = -1.000000000000000000
+          Width = 718.110236220000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[DBPerusahaan."company_name"]')
+          ParentFont = False
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Top = 22.102350000000000000
+          Width = 718.110236220000000000
+          Height = 27.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -21
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Arus Kas per Akun')
+          ParentFont = False
+        end
+        object Mperiode: TfrxMemoView
+          AllowVectorExport = True
+          Left = -1.000000000000000000
+          Top = 51.102350000000000000
+          Width = 718.110236220000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 12.000000000000000000
+          Top = 85.567031650000000000
+          Width = 112.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          Memo.UTF8W = (
+            'Kode')
+          ParentFont = False
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 128.000000000000000000
+          Top = 85.567031650000000000
+          Width = 211.488250000000000000
+          Height = 18.897650000000000000
+          DataField = 'qty'
+          DataSet = FRekap_PO.DbRekapPO
+          DataSetName = 'DbRekapPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Memo.UTF8W = (
+            '[DbRekapPO."qty"]')
+          ParentFont = False
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 350.000000000000000000
+          Top = 85.567031650000000000
+          Width = 84.976377950000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Kuantitas')
+          ParentFont = False
+        end
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 440.000000000000000000
+          Top = 85.567031650000000000
+          Width = 126.622047240000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Harga@')
+          ParentFont = False
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 572.000000000000000000
+          Top = 85.567031650000000000
+          Width = 142.503937010000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Total Harga')
+          ParentFont = False
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -429,10 +578,116 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
+        Height = 18.897650000000000000
+        Top = 340.157700000000000000
         Width = 718.110700000000000000
+        DataSet = FRekap_PO.DbRekapPO
+        DataSetName = 'DbRekapPO'
         RowCount = 0
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 12.000000000000000000
+          Width = 112.488250000000000000
+          Height = 18.897650000000000000
+          DataField = 'item_code'
+          DataSet = FRekap_PO.DbRekapPO
+          DataSetName = 'DbRekapPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          Memo.UTF8W = (
+            '[DbRekapPO."item_code"]')
+          ParentFont = False
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 128.000000000000000000
+          Width = 211.488250000000000000
+          Height = 18.897650000000000000
+          DataField = 'item_name'
+          DataSet = FRekap_PO.DbRekapPO
+          DataSetName = 'DbRekapPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DbRekapPO."item_name"]')
+          ParentFont = False
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 350.000000000000000000
+          Width = 84.976377950000000000
+          Height = 18.897650000000000000
+          DataField = 'qty'
+          DataSet = FRekap_PO.DbRekapPO
+          DataSetName = 'DbRekapPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapPO."qty"]')
+          ParentFont = False
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 440.000000000000000000
+          Width = 126.622047240000000000
+          Height = 18.897650000000000000
+          DataField = 'price'
+          DataSet = FRekap_PO.DbRekapPO
+          DataSetName = 'DbRekapPO'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapPO."price"]')
+          ParentFont = False
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 572.000000000000000000
+          Width = 142.503937010000000000
+          Height = 18.897650000000000000
+          DataSet = FRptRekap_Pembelian.frxDBRekap_pemb
+          DataSetName = 'frxDBRekap_pemb'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapPO."subtotal"]')
+          ParentFont = False
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
@@ -442,7 +697,7 @@ object FRekapSisa_PO: TFRekapSisa_PO
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677180000000000000
-        Top = 185.196970000000000000
+        Top = 464.882190000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           AllowVectorExport = True
@@ -453,6 +708,84 @@ object FRekapSisa_PO: TFRekapSisa_PO
           HAlign = haRight
           Memo.UTF8W = (
             '[Page#]')
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 129.724421650000000000
+        Top = 188.976500000000000000
+        Width = 718.110700000000000000
+        Condition = 'DbRekapPO."po_no"'
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.000000000000000000
+          Top = 0.023499999999999990
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          ParentFont = False
+        end
+      end
+      object GroupFooter1: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 381.732530000000000000
+        Width = 718.110700000000000000
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 351.000000000000000000
+          Width = 83.622047240000000000
+          Height = 18.897650000000000000
+          DataSet = FRekap_PO.DbRekapPO
+          DataSetName = 'DbRekapPO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftTop]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapPO."qty"]')
+          ParentFont = False
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 573.000000000000000000
+          Width = 142.503937010000000000
+          Height = 18.897650000000000000
+          DataSet = FRptRekap_Pembelian.frxDBRekap_pemb
+          DataSetName = 'frxDBRekap_pemb'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftTop]
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRekapPO."subtotal"]')
+          ParentFont = False
         end
       end
     end

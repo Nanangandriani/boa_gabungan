@@ -14,6 +14,7 @@ object FRekapKontrak: TFRekapKontrak
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 13
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -334,10 +335,14 @@ object FRekapKontrak: TFRekapKontrak
       FloatClientHeight = 0
       ItemLinks = <
         item
+          UserDefine = [udWidth]
+          UserWidth = 118
           Visible = True
           ItemName = 'dtmulai'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 119
           Visible = True
           ItemName = 'dtselesai'
         end
@@ -462,7 +467,7 @@ object FRekapKontrak: TFRekapKontrak
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]

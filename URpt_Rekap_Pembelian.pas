@@ -77,6 +77,7 @@ type
     DBGridEh1: TDBGridEh;
     DsRekap_Pembelian: TDataSource;
     BtnClear: TdxBarLargeButton;
+    BPrintAcc: TdxBarLargeButton;
     procedure Ednm_spButtonClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -94,6 +95,7 @@ type
     procedure DxRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure BtnClearClick(Sender: TObject);
+    procedure BPrintAccClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -339,6 +341,43 @@ begin
   end;
 end;
 
+procedure TFRptRekap_Pembelian.BPrintAccClick(Sender: TObject);
+begin
+ if DtMulai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+  subquery:='select * from "V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
+            ' and trans_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.EditValue));
+  // kode Barang 0 dan ppn false
+//  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then
+//  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=subquery;
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Rincian_Faktur_Pemb.Fr3');
+    SetMemo(Rpt,'MPeriode','Dari '+FormatDateTime('dd MMM yyyy',DtMulai.EditValue)+' s/d '+FormatDateTime('dd MMM yyyy',DtSelesai.EditValue));
+ //   SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    Rpt.ShowReport();
+end;
+
 procedure TFRptRekap_Pembelian.DxRefreshClick(Sender: TObject);
 begin
   dm.qperusahaan.close;
@@ -521,6 +560,8 @@ procedure TFRptRekap_Pembelian.FormShow(Sender: TObject);
 begin
   DTdari.Date:=now;
   DTsampai.Date:=now;
+  DtMulai.EditValue:=date;
+  DtSelesai.EditValue:=date;
   Edkd_sp.Clear;
   Ednm_sp.Clear;
 end;

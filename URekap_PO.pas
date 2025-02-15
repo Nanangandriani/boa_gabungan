@@ -54,12 +54,14 @@ type
     Rpt: TfrxReport;
     DsRekapo: TDataSource;
     CbKategori: TcxBarEditItem;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure DxRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -132,6 +134,57 @@ begin
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekapPO.Fr3');
     SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
     SetMemo(Rpt,'msbu',' '+dm.QPerusahaan['company_code']);
+    Rpt.ShowReport();
+  end;
+end;
+
+procedure TFRekap_PO.dxBarLargeButton2Click(Sender: TObject);
+begin
+  dm.refreshperusahaan;
+  if dtmulai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+  if CbKategori.EditValue=''  then
+  begin
+    with QRekapPO do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue));
+      ExecSQL;
+    end;
+  end;
+  if CbKategori.EditValue<>''  then
+  begin
+    with QRekapPO do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from "V_RekapPO" where po_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+' and kategori_tr='+QuotedStr(CbKategori.EditValue);
+      ExecSQL;
+    end;
+  end;
+  if status_akses='True' then
+  begin
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Rincian_Pesanan_Pemb.Fr3');
+    SetMemo(Rpt,'MPeriode',' Dari   '+FormatDateTime('dd MMM yyyy',Dtmulai.EditValue)+' s/d '+FormatDateTime('dd MMM yyyy',DtSelesai.EditValue));
+   // SetMemo(Rpt,'msbu',' '+dm.QPerusahaan['company_code']);
+    Rpt.ShowReport();
+  end;
+  if status_akses<>'True' then
+  begin
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Rincian_Pesanan_Pemb.Fr3');
+    SetMemo(Rpt,'MPeriode',' Dari '+FormatDateTime('dd MMM yyyy',DtMulai.EditValue)+' s/d '+FormatDateTime('dd MMM yyyy',DtSelesai.EditValue));
+   // SetMemo(Rpt,'msbu',' '+dm.QPerusahaan['company_code']);
     Rpt.ShowReport();
   end;
 end;
@@ -212,6 +265,8 @@ begin
     comboProps.items.add(dm.Qtemp['type']);
     dm.Qtemp.Next;
   end;
+  DtMulai.EditValue:=date;
+  DtSelesai.EditValue:=date;
 end;
 
 initialization

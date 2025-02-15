@@ -80,7 +80,7 @@ begin
               close;
               sql.Clear;
               sql.Text:='SELECT a.account_code,b.account_name FROM t_supplier a '+
-                        'INNER JOIN t_ak_account B ON A.account_code=b.code '+
+                        'INNER JOIN t_ak_account_sub B ON A.account_code=b.account_code2 '+
                         'where a.supplier_code='+QuotedStr(Edkd_supp.Text);
               Execute;
             end;

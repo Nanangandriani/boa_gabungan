@@ -107,7 +107,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
+uses UDatamodule, UNewJurnal_memorial;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
   RealFMemorial: TFlist_jurnal_memorial;
@@ -123,23 +123,23 @@ end;
 procedure TFlist_jurnal_memorial.Refresh;
 begin
   DBGridEh1.StartLoadingStatus();
-  try
-    Qlist_jurnal.Close;
-    Qlist_jurnal.Open;
-    MemTableEh1.Close;
-    MemTableEh1.Open;
-    Qjurnal_detail.Close;
-    Qjurnal_detail.Open;
-  finally
+    try
+      Qlist_jurnal.Close;
+      Qlist_jurnal.Open;
+      MemTableEh1.Close;
+      MemTableEh1.Open;
+      Qjurnal_detail.Close;
+      Qjurnal_detail.Open;
+    finally
   DBGridEh1.FinishLoadingStatus();
   end;
 end;
 
 procedure TFlist_jurnal_memorial.ActBaruExecute(Sender: TObject);
 begin
-{  FNewJurnal_memo.Clear;
+  FNewJurnal_memo.Clear;
   Status:=0;
-  FNewJurnal_memo.ShowModal;     }
+  FNewJurnal_memo.ShowModal;
 end;
 
 procedure TFlist_jurnal_memorial.ActDelExecute(Sender: TObject);
@@ -354,12 +354,17 @@ end;
 
 procedure TFlist_jurnal_memorial.FormShow(Sender: TObject);
 begin
-  Qlist_jurnal.Close;
+{  Qlist_jurnal.Close;
   Qlist_jurnal.Open;
   MemTableEh1.Close;
   MemTableEh1.Open;
   Qjurnal_detail.Close;
-  Qjurnal_detail.Open;
+  Qjurnal_detail.Open;          }
 end;
+
+
+initialization
+registerclass(TFlist_jurnal_memorial);
+
 
 end.

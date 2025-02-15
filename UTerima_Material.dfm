@@ -48,9 +48,6 @@ object FTerima_Material: TFTerima_Material
       end
       item
         ColumnName = 'Column_13_trans_day'
-      end
-      item
-        ColumnName = 'Column_0_purchase_type'
       end>
     DataSource = Dsterima_material
     DrawMemoText = True
@@ -594,7 +591,7 @@ object FTerima_Material: TFTerima_Material
     Top = 34
   end
   object RptLPB: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]

@@ -65,6 +65,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -220,6 +221,12 @@ end;
 procedure TFRekapKontrak.FormDestroy(Sender: TObject);
 begin
   RealFRekapKontrak:=nil;
+end;
+
+procedure TFRekapKontrak.FormShow(Sender: TObject);
+begin
+  dtmulai.EditValue:=date;
+  dtselesai.EditValue:=date;
 end;
 
 initialization

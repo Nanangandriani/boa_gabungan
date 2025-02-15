@@ -23,6 +23,8 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Width = 1024
     Height = 361
     Align = alTop
+    Color = clGradientActiveCaption
+    ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 1020
     object Label1: TLabel

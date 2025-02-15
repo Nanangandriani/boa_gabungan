@@ -612,9 +612,9 @@ begin
       ExecSQL;}
     end;
     Flistitempo.QMaterial3.Open;
-    Flistitempo.DBGridMaterial3.Show;
+  //  Flistitempo.DBGridMaterial3.Show;
     Flistitempo.DBGridMaterial.Hide;
-    Flistitempo.DBGridMaterial2.Hide;
+//    Flistitempo.DBGridMaterial2.Hide;
     Flistitempo.Bedit2.Visible:=false;
     Flistitempo.BEdit.Visible:=False;
     Flistitempo.BEdit3.Visible:=true;
@@ -651,10 +651,10 @@ begin
       ExecSQL;
     end;
     Flistitempo.QMaterial4.Open;
-    Flistitempo.DBGridMaterial4.Show;
+ //   Flistitempo.DBGridMaterial4.Show;
     Flistitempo.DBGridMaterial.Hide;
-    Flistitempo.DBGridMaterial2.Hide;
-    Flistitempo.DBGridMaterial3.Hide;
+//    Flistitempo.DBGridMaterial2.Hide;
+ //   Flistitempo.DBGridMaterial3.Hide;
     Flistitempo.Bedit2.Visible:=false;
     Flistitempo.BEdit.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
@@ -691,15 +691,15 @@ begin
     end;
     Flistitempo.QMaterial_stok.Open;
     Flistitempo.DBGridMaterial.Show;
-    Flistitempo.DBGridMaterial2.Hide;
+ //   Flistitempo.DBGridMaterial2.Hide;
     Flistitempo.Bedit.Visible:=true;
     Flistitempo.BEdit2.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
     Flistitempo.BEdit4.Visible:=False;
     Flistitempo.DBGridMaterial.Visible:=true;
-    flistitempo.DBGridMaterial2.Visible:=false;
-    Flistitempo.DBGridMaterial3.Visible:=false;
-    flistitempo.DBGridMaterial4.Visible:=false;
+ //   flistitempo.DBGridMaterial2.Visible:=false;
+  //  Flistitempo.DBGridMaterial3.Visible:=false;
+ //   flistitempo.DBGridMaterial4.Visible:=false;
 end;
 
 procedure TFNew_PO.Loaditem2;
@@ -770,10 +770,10 @@ begin
       ExecSQL;
     end;
     Flistitempo.QMaterial_stok2.Open;
-    Flistitempo.DBGridMaterial2.Show;
+ //   Flistitempo.DBGridMaterial2.Show;
     Flistitempo.DBGridMaterial.Hide;    
-    Flistitempo.DBGridMaterial3.HIDE;
-    Flistitempo.DBGridMaterial4.Hide;
+//    Flistitempo.DBGridMaterial3.HIDE;
+//    Flistitempo.DBGridMaterial4.Hide;
     Flistitempo.Bedit2.Visible:=true;
     Flistitempo.BEdit.Visible:=False;
     Flistitempo.BEdit3.Visible:=False;
@@ -869,18 +869,18 @@ begin
     begin
       Self.Loaditem;
       Flistitempo.DBGridMaterial.Visible:=true;
-      Flistitempo.DBGridMaterial2.Visible:=false;
+  {    Flistitempo.DBGridMaterial2.Visible:=false;
       Flistitempo.DBGridMaterial3.Visible:=false;
-      Flistitempo.DBGridMaterial4.Visible:=false;
+      Flistitempo.DBGridMaterial4.Visible:=false; }
     end
     else
     if EdStatus.Text='NON REFERENSI' then
     begin
       Self.Loaditem2;
       Flistitempo.DBGridMaterial.Visible:=false;
-      Flistitempo.DBGridMaterial2.Visible:=true;
+    {  Flistitempo.DBGridMaterial2.Visible:=true;
       Flistitempo.DBGridMaterial3.Visible:=false;
-      Flistitempo.DBGridMaterial4.Visible:=false;
+      Flistitempo.DBGridMaterial4.Visible:=false;   }
     end
     else
     if EdStatus.Text='BON PERMINTAAN BARANG'  then
@@ -888,9 +888,9 @@ begin
     begin
        Self.Loaditem3;
        Flistitempo.DBGridMaterial.Visible:=false;
-       Flistitempo.DBGridMaterial2.Visible:=false;
+     {  Flistitempo.DBGridMaterial2.Visible:=false;
        Flistitempo.DBGridMaterial3.Visible:=true;
-       Flistitempo.DBGridMaterial4.Visible:=false;
+       Flistitempo.DBGridMaterial4.Visible:=false;      }
     end;
     {else
     if (EdStatus.Text='BON PERMINTAAN BARANG') and (Length(Edkd_supp.Text)<>0) then

@@ -11,7 +11,6 @@ uses
 type
   TFlistitempo = class(TForm)
     DBGridMaterial: TDBGridEh;
-    DBGridMaterial2: TDBGridEh;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BEdit: TRzBitBtn;
@@ -32,7 +31,6 @@ type
     Qmaterial_stok2item_name_1: TStringField;
     DsMaterial3: TDataSource;
     QMaterial3: TUniQuery;
-    DBGridMaterial3: TDBGridEh;
     QMaterial3trans_no: TStringField;
     QMaterial3item_code: TStringField;
     QMaterial3item_name: TStringField;
@@ -41,7 +39,6 @@ type
     QMaterial3note: TStringField;
     BEdit3: TRzBitBtn;
     BEdit4: TRzBitBtn;
-    DBGridMaterial4: TDBGridEh;
     QMaterial4: TUniQuery;
     StringField1: TStringField;
     StringField2: TStringField;
@@ -99,7 +96,7 @@ end;
 procedure TFlistitempo.Bedit2Click(Sender: TObject);
 var i:integer;
 begin
-    if DBGridMaterial2.SelectedRows.Count > 0 then
+{    if DBGridMaterial2.SelectedRows.Count > 0 then
     begin
       with DBGridMaterial2.DataSource.DataSet do
       begin
@@ -128,7 +125,7 @@ begin
         end;
       end;
     end;
-   close;
+   close;     }
 end;
 
 procedure TFlistitempo.BEdit3Click(Sender: TObject);
@@ -213,7 +210,7 @@ begin
    //end;
 
 
-      if DBGridMaterial3.SelectedRows.Count > 0 then
+ {     if DBGridMaterial3.SelectedRows.Count > 0 then
       begin
         with DBGridMaterial3.DataSource.DataSet do
         begin
@@ -242,13 +239,13 @@ begin
           end;
         end;
       end;
-      close;
+      close; }
 end;
 
 procedure TFlistitempo.BEdit4Click(Sender: TObject);
 var i:integer;
 begin
-      if DBGridMaterial4.SelectedRows.Count > 0 then
+{      if DBGridMaterial4.SelectedRows.Count > 0 then
       begin
         with DBGridMaterial4.DataSource.DataSet do
         begin
@@ -276,7 +273,7 @@ begin
           end;
         end;
       end;
-      close;
+      close;  }
 end;
 
 procedure TFlistitempo.BEditClick(Sender: TObject);
@@ -395,9 +392,9 @@ begin
    Flistmaterialstok.Qjenis_pajak.Close;
    Flistmaterialstok.Qjenis_pajak.Open;
    DBGridMaterial.Align:=alClient;
-   DBGridMaterial2.Align:=alClient;
-   DBGridMaterial3.Align:=alClient;
-   DBGridMaterial4.Align:=alClient;
+//   DBGridMaterial2.Align:=alClient;
+//   DBGridMaterial3.Align:=alClient;
+ //  DBGridMaterial4.Align:=alClient;
 end;
 
 end.

@@ -6,7 +6,7 @@ object dm: Tdm
     AutoCommit = False
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_boa_distribution'
+    Database = 'db_boa_real'
     Username = 'postgres'
     Server = '10.10.10.110'
     Connected = True
@@ -93,6 +93,7 @@ object dm: Tdm
     Connection = Koneksi
     SQL.Strings = (
       'select * from t_company')
+    Active = True
     Left = 80
     Top = 176
   end

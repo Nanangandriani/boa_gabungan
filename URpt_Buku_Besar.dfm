@@ -14,6 +14,7 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
@@ -592,7 +593,6 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     Contexts = <>
     TabOrder = 4
     TabStop = False
-    ExplicitWidth = 920
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -604,17 +604,48 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45618.370208807870000000
-    ReportOptions.LastChange = 45618.370208807870000000
+    ReportOptions.CreateDate = 45622.568261701400000000
+    ReportOptions.LastChange = 45693.660698240740000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
+      'var sa,db,kd,saldo:real;'
+      'test:string;'
+      'procedure GroupHeader1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '{  sa:=0;'
+      '  db:=0;'
+      '  sa:=sa + <DBBuku_Besar."sa">;'
+      '  db:=db + <DBBuku_Besar."db">;'
+      '  kd:=0;'
+      '  kd:=kd + <DBBuku_Besar."kd">;'
+      '  saldo:=0;'
+      '  saldo:=saldo + <DBBuku_Besar."saldo">;'
+      ' // memo35.Text:=floattostr(sa);'
+      '//  memo36.Text:=floattostr(db);'
+      '  memo37.Text:=floattostr(kd);'
+      '  memo38.Text:=floattostr(saldo);'
+      '     // Kosongkan teks sebelumnya'
+      '{  for db := 0 to  <DBBuku_Besar."db"> do'
+      '  begin'
+      '    db := db + db;'
+      '  end;    }'
+      ''
+      '  //db:=floattostr(test);'
+      '//  Memo35.Text := FormatFloat('#39'#,##0.00'#39', db);'
+      'end;'
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ' //   sa:=sa + <DBBuku_Besar."sa">;'
+      'end;'
       ''
       'begin'
       ''
@@ -622,7 +653,19 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
     OnGetValue = RptGetValue
     Left = 439
     Top = 124
-    Datasets = <>
+    Datasets = <
+      item
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
+      end
+      item
+        DataSet = DBBuku_Besar
+        DataSetName = 'DBBuku_Besar'
+      end
+      item
+        DataSet = DbTotal_Buku_besar
+        DataSetName = 'DbTotal_Buku_Besar'
+      end>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -630,9 +673,9 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
+      PaperWidth = 215.900000000000000000
+      PaperHeight = 279.400000000000000000
+      PaperSize = 1
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
@@ -646,9 +689,170 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 134.000000000000000000
         Top = 18.897650000000000000
-        Width = 718.110700000000000000
+        Width = 740.409927000000000000
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Width = 733.228346460000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[DBPerusahaan."company_name"]')
+          ParentFont = False
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Top = 22.102350000000000000
+          Width = 733.228346460000000000
+          Height = 27.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -21
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Ringkasan Buku Besar')
+          ParentFont = False
+        end
+        object Mperiode: TfrxMemoView
+          AllowVectorExport = True
+          Top = 51.102350000000000000
+          Width = 733.228346460000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559055120000000000
+          Top = 94.488188980000000000
+          Width = 102.047244094488000000
+          Height = 34.015748030000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          Memo.UTF8W = (
+            'Kode')
+          ParentFont = False
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385826770000000000
+          Top = 94.488188980000000000
+          Width = 198.535433070000000000
+          Height = 34.015748030000000000
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Memo.UTF8W = (
+            'Nama Perkiraan')
+          ParentFont = False
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 315.480314960000000000
+          Top = 94.488188980000000000
+          Width = 102.047244090000000000
+          Height = 34.015748030000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Saldo Awal'
+            '(Dinormalkan)')
+          ParentFont = False
+        end
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 423.307086614173000000
+          Top = 94.488188980000000000
+          Width = 102.047244090000000000
+          Height = 34.015748030000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Perubahan Debit')
+          ParentFont = False
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 529.133858267717000000
+          Top = 94.488188980000000000
+          Width = 102.047244090000000000
+          Height = 34.015748030000000000
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Perubahan Kredit')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 633.826771653543000000
+          Top = 94.488188980000000000
+          Width = 105.826771653543000000
+          Height = 34.015748030000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Saldo Akhir'
+            '(Dinormalkan)')
+          ParentFont = False
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -657,10 +861,156 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
+        Height = 19.472467800000000000
+        Top = 257.008040000000000000
+        Width = 740.409927000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
+        DataSet = DBBuku_Besar
+        DataSetName = 'DBBuku_Besar'
         RowCount = 0
+        Stretched = True
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 9.889763780000000000
+          Top = 0.574830000000000000
+          Width = 97.826771650000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'account_code'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          Memo.UTF8W = (
+            '[DBBuku_Besar."account_code"]')
+          ParentFont = False
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385826770000000000
+          Top = 0.574830000000000000
+          Width = 196.535433070866000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'account_name'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DBBuku_Besar."account_name"]')
+          ParentFont = False
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 317.480314960630000000
+          Top = 0.574830000000000000
+          Width = 102.047244090000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'sa'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."sa"]')
+          ParentFont = False
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 423.307086614173000000
+          Top = 0.574830000000000000
+          Width = 102.047244090000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'db'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."db"]')
+          ParentFont = False
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 529.133858267717000000
+          Top = 0.574830000000000000
+          Width = 102.047244090000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'kd'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."kd"]')
+          ParentFont = False
+        end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Left = 633.826771653543000000
+          Top = 0.574830000000000000
+          Width = 105.826771653543000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'saldo'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."saldo"]')
+          ParentFont = False
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
@@ -669,18 +1019,207 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
+        Height = 52.913420000000000000
+        Top = 336.378170000000000000
+        Width = 740.409927000000000000
         object Memo1: TfrxMemoView
+          Align = baBottom
           AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
+          Left = 438.047527000000000000
+          Top = 34.015770000000000000
+          Width = 313.700990000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[Page#]')
+            'Halaman [Page#] dari [TotalPages#]')
+        end
+        object Memo31: TfrxMemoView
+          Align = baBottom
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 34.015770000000000000
+          Width = 389.291590000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Tercetak Pada Tanggal [Date] [Time]')
+          ParentFont = False
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 7.559060000000000000
+          Width = 748.346940000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 6.897650000000000000
+          Width = 748.346940000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Smart Backoffice Automation System Report')
+          ParentFont = False
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897650000000000000
+        Top = 215.433210000000000000
+        Width = 740.409927000000000000
+        OnBeforePrint = 'GroupHeader1OnBeforePrint'
+        Condition = 'DBBuku_Besar."header_code"'
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 4.559055120000000000
+          Width = 102.047244090000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'header_code'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          Memo.UTF8W = (
+            '[DBBuku_Besar."header_code"]')
+          ParentFont = False
+        end
+        object Memo37: TfrxMemoView
+          AllowVectorExport = True
+          Left = 529.133858267717000000
+          Width = 102.047244090000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."kdhd"]')
+          ParentFont = False
+        end
+        object Memo38: TfrxMemoView
+          AllowVectorExport = True
+          Left = 633.826771653543000000
+          Width = 105.826771653543000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."saldohd"]')
+          ParentFont = False
+        end
+        object Memo36: TfrxMemoView
+          AllowVectorExport = True
+          Left = 423.307086614173000000
+          Width = 102.047244090000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Color = clBlue
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."dbhd"]')
+          ParentFont = False
+        end
+        object Memo34: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385826770000000000
+          Width = 198.976377950000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'header_name'
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DBBuku_Besar."header_name"]')
+          ParentFont = False
+        end
+        object Memo35: TfrxMemoView
+          AllowVectorExport = True
+          Left = 317.480314960630000000
+          Width = 102.047244090000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = DBBuku_Besar
+          DataSetName = 'DBBuku_Besar'
+          DisplayFormat.FormatStr = '#,##0.00;'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Color = clBlue
+          Frame.Typ = []
+          Fill.BackColor = clWhite
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DBBuku_Besar."sahd"]')
+          ParentFont = False
         end
       end
     end
@@ -729,48 +1268,47 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         'INNER JOIN t_daftar_perkiraan y on x.kode=y.kode ORDER BY bln,no' +
         'mor,kd_modul asc;'
       ''
-      
-        'SELECT '#39#39' bln,xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.m' +
-        'odul,xx.account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.create' +
-        'd_at, CASE WHEN yy.posisi_dk::text = '#39'D'#39'::text THEN sum(xx.sa::n' +
-        'umeric + xx.db - xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_n' +
-        'o, xx.modul) ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDE' +
-        'R BY xx.trans_date, xx.trans_no, xx.modul)  END AS saldo FROM (/' +
-        '*saldo awal*/SELECT'#9'module_id, ket, date '#39'2024-10-01'#39' trans_date' +
-        ',trans_no,modul,account_code,account_name,sa,db,kd,date '#39'2024-10' +
-        '-01'#39'created_at FROM'#9'"VBuku_BesarSA" where trans_year<='#39'2024'#39' and' +
-        ' trans_month <'#39'10'#39' UNION  /*Transaksi*/  SELECT'#9'module_id,ket,tr' +
-        'ans_date,trans_no,modul,account_code,account_name,sa,db,kd,creat' +
-        'ed_at FROM'#9'"VBuku_Besar" where trans_date>='#39'2024-10-01'#39'and trans' +
-        '_date<='#39'2024-11-21'#39')xx  JOIN t_ak_account yy ON xx.account_code:' +
-        ':text = yy.code::text  where account_code='#39'2130.034'#39
       ''
+      'select a.header_name,b.*  from t_ak_header a inner join ('
+      
+        'SELECT yy.header_code,xx.module_id,xx.ket,xx.trans_date,xx.trans' +
+        '_no,xx.modul,xx.account_code,xx.account_name,xx.sa,xx.db,xx.kd,'
+      
+        'xx.created_at,'#39#39' bln, CASE WHEN yy.posisi_dk::text = '#39'D'#39'::text T' +
+        'HEN sum(xx.sa::numeric + xx.db - xx.kd) OVER '
+      
+        '(PARTITION BY xx.account_code ORDER BY xx.trans_date,xx.created_' +
+        'at) ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER '
+      
+        '(PARTITION BY  xx.account_code ORDER BY  xx.trans_date,xx.create' +
+        'd_at)  END AS saldo FROM (/*saldo awal*/SELECT'#9'module_id, ket, '
+      
+        'date '#39'2025-01-01'#39' trans_date,trans_no,modul,account_code,account' +
+        '_name,sa,db,kd,date '#39'2025-01-01'#39'created_at FROM'#9'"VBuku_BesarSA"'
+      
+        ' where trans_year<='#39'2025'#39' and trans_month <'#39'01'#39' UNION  /*Transak' +
+        'si*/  SELECT'#9'module_id,ket,trans_date,trans_no,modul,account_cod' +
+        'e,'
+      
+        'account_name,sa,db,kd,created_at FROM'#9'"VBuku_Besar" where trans_' +
+        'date>='#39'2025-01-01'#39'and trans_date<='#39'2025-01-22'#39')xx  JOIN'
+      
+        ' t_ak_account yy ON xx.account_code::text = yy.code::text) b on ' +
+        ' a.header_code=b.header_code order by b.header_code,b.created_at' +
+        ' asc'
       '-- 0 row(s) affected.')
+    Active = True
     Left = 496
     Top = 145
   end
   object DBBuku_Besar: TfrxDBDataset
     UserName = 'DBBuku_Besar'
     CloseDataSource = False
-    FieldAliases.Strings = (
-      'bln=bln'
-      'module_id=module_id'
-      'ket=ket'
-      'trans_date=trans_date'
-      'trans_no=trans_no'
-      'modul=modul'
-      'account_code=account_code'
-      'account_name=account_name'
-      'sa=sa'
-      'db=db'
-      'kd=kd'
-      'created_at=created_at'
-      'saldo=saldo')
     DataSet = QRpt_Buku_Besar
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 536
-    Top = 176
+    Left = 496
+    Top = 200
   end
   object DsBuku_Besar: TDataSource
     DataSet = QRpt_Buku_Besar
@@ -831,6 +1369,14 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
         item
           Visible = True
           ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'BPrint_Rincian'
+        end
+        item
+          Visible = True
+          ItemName = 'BRingkasan'
         end>
       OneOnRow = True
       Row = 0
@@ -957,12 +1503,148 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
       Properties.OnButtonClick = EdAkunPropertiesButtonClick
     end
     object Ednm_akun: TcxBarEditItem
-      Caption = 'Nama Perkiraan'
+      Caption = 'Nama Perkiraan  '
       Category = 0
-      Hint = 'Nama Perkiraan'
+      Hint = 'Nama Perkiraan  '
       Visible = ivAlways
-      Width = 200
+      Width = 193
       PropertiesClassName = 'TcxTextEditProperties'
     end
+    object BPrint_Rincian: TdxBarLargeButton
+      Caption = 'Rincian Buku Besar'
+      Category = 0
+      Hint = 'Rincian Buku Besar'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = BPrint_RincianClick
+    end
+    object BRingkasan: TdxBarLargeButton
+      Caption = 'Ringkisan Buku Besar'
+      Category = 0
+      Hint = 'Ringkisan Buku Besar'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = BRingkasanClick
+    end
+  end
+  object QTotal_Buku_Besar: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'DbTotal_Buku_besar')
+    Left = 608
+    Top = 143
+  end
+  object DbTotal_Buku_besar: TfrxDBDataset
+    UserName = 'DbTotal_Buku_Besar'
+    CloseDataSource = False
+    DataSet = QTotal_Buku_Besar
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 608
+    Top = 200
   end
 end
