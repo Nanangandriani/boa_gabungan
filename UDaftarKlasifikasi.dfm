@@ -1,6 +1,7 @@
 object FDaftarKlasifikasi: TFDaftarKlasifikasi
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Daftar Klasifikasi'
   ClientHeight = 558
   ClientWidth = 1081
@@ -21,8 +22,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
     ActivePage = TabMasterKlasifikasi
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1075
-    ExplicitHeight = 549
+    ExplicitWidth = 1077
+    ExplicitHeight = 557
     object TabMasterKlasifikasi: TTabSheet
       Caption = 'Master Klasifikasi'
       object Panel3: TPanel
@@ -32,7 +33,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 209
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 1067
         object Label9: TLabel
           Left = 117
           Top = 77
@@ -43,9 +43,9 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         object Label10: TLabel
           Left = 9
           Top = 77
-          Width = 84
+          Width = 94
           Height = 15
-          Caption = 'Kategori Barang'
+          Caption = 'Kelompok Barang'
         end
         object Label11: TLabel
           Left = 9
@@ -92,16 +92,16 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         object Label15: TLabel
           Left = 9
           Top = 136
-          Width = 103
+          Width = 79
           Height = 15
-          Caption = 'Kategori Pelanggan'
+          Caption = 'Type Penjualan'
         end
         object Label16: TLabel
           Left = 11
           Top = 165
-          Width = 54
+          Width = 80
           Height = 15
-          Caption = 'Jenis Nota'
+          Caption = 'Jenis Penjualan'
         end
         object Label1: TLabel
           Left = 117
@@ -124,6 +124,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 0
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_jenis_pelButtonClick
@@ -143,6 +144,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 2
+          OnChange = ednm_kategoriChange
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_kategoriButtonClick
@@ -154,6 +157,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           TabOrder = 3
           Visible = False
+          OnChange = edkd_kategoriChange
         end
         object ednm_type_jual: TRzButtonEdit
           Left = 126
@@ -162,6 +166,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 4
+          OnChange = ednm_type_jualChange
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_type_jualButtonClick
@@ -172,7 +178,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Width = 98
           Height = 23
           TabOrder = 5
-          Visible = False
+          OnChange = edkd_type_jualChange
         end
         object ednm_jenis_jual: TRzButtonEdit
           Left = 126
@@ -181,6 +187,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 6
+          OnChange = ednm_jenis_jualChange
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_jenis_jualButtonClick
@@ -192,6 +200,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           TabOrder = 7
           Visible = False
+          OnChange = edkd_jenis_jualChange
         end
         object ednm_type_hitung: TRzButtonEdit
           Left = 126
@@ -200,6 +209,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 8
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_type_hitungButtonClick
@@ -307,6 +317,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 16
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_jenis_usahaButtonClick
@@ -320,8 +331,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alClient
         Caption = 'Daftar Klasifikasi'
         TabOrder = 1
-        ExplicitWidth = 1067
-        ExplicitHeight = 278
         object DBGridDetail: TDBGridEh
           Left = 2
           Top = 17
@@ -457,7 +466,19 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 32
         Align = alTop
         TabOrder = 2
-        ExplicitWidth = 1067
+        object RzLabel1: TRzLabel
+          Left = 19
+          Top = 8
+          Width = 196
+          Height = 15
+          Caption = '*Harga Satuan sudah termasuk PPN'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
         object bt_m_batal: TRzBitBtn
           Left = 997
           Top = 1
@@ -518,7 +539,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 991
         end
         object bt_m_simpan: TRzBitBtn
           Left = 922
@@ -580,7 +600,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 916
         end
         object bt_m_tampilkan: TRzBitBtn
           Left = 817
@@ -643,7 +662,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 811
         end
       end
     end
@@ -657,6 +675,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 105
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1069
         object Label6: TLabel
           Left = 117
           Top = 49
@@ -702,9 +721,9 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         object Label27: TLabel
           Left = 492
           Top = 77
-          Width = 84
+          Width = 94
           Height = 15
-          Caption = 'Kategori Barang'
+          Caption = 'Kelompok Barang'
         end
         object Label28: TLabel
           Left = 589
@@ -732,6 +751,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Top = 46
           Width = 344
           Height = 23
+          ReadOnly = True
           TabOrder = 0
         end
         object edkd_type_jual_pel: TEdit
@@ -749,6 +769,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 2
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_jenis_jual_pelButtonClick
@@ -760,6 +781,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 3
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_type_jual_pelButtonClick
@@ -779,6 +801,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 5
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = ednm_kategori_pelButtonClick
@@ -798,6 +821,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 7
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edKode_PelangganButtonClick
@@ -810,6 +834,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 32
         Align = alTop
         TabOrder = 1
+        ExplicitWidth = 1069
         object BBatal: TRzBitBtn
           Left = 816
           Top = 1
@@ -871,6 +896,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 812
         end
         object BSave: TRzBitBtn
           Left = 1
@@ -995,6 +1021,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitWidth = 555
         end
       end
       object GroupBox1: TGroupBox
@@ -1005,6 +1032,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alTop
         Caption = 'Daftar Klasifikasi'
         TabOrder = 2
+        ExplicitWidth = 1069
         object DBGridKlasifikasi: TDBGridEh
           Left = 2
           Top = 17
@@ -1152,6 +1180,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alTop
         Caption = 'Daftar Master Klasifikasi'
         TabOrder = 3
+        ExplicitWidth = 1069
         object DBGridMaster: TDBGridEh
           Left = 2
           Top = 17
@@ -1770,5 +1799,9 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object IdCompressorZLib1: TIdCompressorZLib
+    Left = 604
+    Top = 194
   end
 end

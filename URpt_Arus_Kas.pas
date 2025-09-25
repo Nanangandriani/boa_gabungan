@@ -49,13 +49,16 @@ type
     procedure FormShow(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
+function
   FRpt_arus_kas: TFRpt_arus_kas;
 
 implementation
@@ -63,6 +66,17 @@ implementation
 {$R *.dfm}
 
 uses UMy_Function;
+
+var
+  RealRpt_AK: TFRpt_arus_kas;
+
+function FRpt_arus_kas: TFRpt_arus_kas;
+begin
+  if RealRpt_AK <> nil then
+    FRpt_arus_kas:= RealRpt_AK
+  else
+    Application.CreateForm(TFRpt_arus_kas, Result);
+end;
 
 procedure TFRpt_arus_kas.dxBarLargeButton1Click(Sender: TObject);
 begin
@@ -87,6 +101,21 @@ begin
     sql.Text:='select *,db-kd total from "VTrans_JournalReal" where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
     open;
   end;
+end;
+
+procedure TFRpt_arus_kas.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action:=cafree;
+end;
+
+procedure TFRpt_arus_kas.FormCreate(Sender: TObject);
+begin
+  RealRpt_AK:=self;
+end;
+
+procedure TFRpt_arus_kas.FormDestroy(Sender: TObject);
+begin
+  RealRpt_AK:=nil;
 end;
 
 procedure TFRpt_arus_kas.FormShow(Sender: TObject);

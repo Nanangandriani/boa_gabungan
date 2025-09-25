@@ -113,7 +113,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',wh_code='+QuotedStr(Edkd.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+' where code='+QuotedStr(Edkode.Text)+' and order_no='+QuotedStr(Edno.Text);
+      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',code='+QuotedStr(Edkode.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+' where wh_code='+QuotedStr(Edkd.Text)+' and order_no='+QuotedStr(Edno.Text);
       ExecSQL;
     end;
     BBatalClick(sender);

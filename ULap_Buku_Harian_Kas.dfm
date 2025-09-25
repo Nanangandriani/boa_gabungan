@@ -98,7 +98,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 701
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -894,7 +893,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 472
     Top = 32
   end
@@ -1929,7 +1927,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         'count=x.kodesp) xx) xxx ORDER BY nomor ASC')
     MasterFields = 'voucher'
     DetailFields = 'voucher'
-    Active = True
     Left = 368
     Top = 88
   end

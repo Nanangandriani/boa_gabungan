@@ -26,7 +26,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, dxBar, cxBarEditItem, cxClasses,
   dxRibbon, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh,
-  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, DataDriverEh,
+  MemTableEh;
 
 type
   TFRpt_Lr = class(TForm)
@@ -60,6 +61,11 @@ type
     DtMulai: TcxBarEditItem;
     DtSelesai: TcxBarEditItem;
     DBGridEh1: TDBGridEh;
+    Q_lr: TUniQuery;
+    Db_lr: TfrxDBDataset;
+    Ds_lr: TDataSource;
+    Mem_lr: TMemTableEh;
+    DataSetDriverEh1: TDataSetDriverEh;
     procedure BBatalClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -68,6 +74,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure Bprint2Click(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,7 +89,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMainmenu;
+uses UMainmenu, UDataModule;
 var
 RealFRpt_Lr: TFRpt_Lr;
 function FRpt_Lr: TFRpt_Lr;
@@ -100,11 +107,13 @@ end;
 
 procedure TFRpt_Lr.BPrintClick(Sender: TObject);
 var subquery,subquery2,tgl,tgl2,tgl3:string;
-begin
-tgl:=FormatDateTime('yyyy-mm-dd',dtmulai1.Date);
-tgl2:=FormatDateTime('yyy-mm-dd',dtselesai1.Date);
-tgl3:=edth.Text+'-'+bln;
-subquery:='(SELECT KODE,kode_header,nama_perkiraan,id_LR,posisi_dk,lr,lr2 FROM (select * from t_daftar_perkiraan WHERE  '+
+begin                                        {
+tgl:=FormatDateTime('yyyy-mm-dd',dtmulai.EditValue);
+tgl2:=FormatDateTime('yyyy-mm-dd',dtselesai.EditValue);   }
+//tgl3:=edth.Text+'-'+bln;
+
+//  ShowMessage('test');
+{subquery:='(SELECT KODE,kode_header,nama_perkiraan,id_LR,posisi_dk,lr,lr2 FROM (select * from t_daftar_perkiraan WHERE  '+
 ' st_lr>''0'') A RIGHT JOIN t_jenis_lr b on a.st_lr=b.id_lr ) a left JOIN '+
 ' (select a.periode1,a.periode2,(debit2+kredit2) qty,kd_akun from t_neraca_lajur1 a INNER JOIN t_neraca_lajur1_det b on '+
 ' a.notrans=b.notrans WHERE a.periode1='+QuotedStr(tgl)+' and a.periode2='+QuotedStr(tgl2)+' and '+
@@ -145,7 +154,7 @@ subquery:='(SELECT KODE,kode_header,nama_perkiraan,id_LR,posisi_dk,lr,lr2 FROM (
 ' else 0 end harga, a.notrans,kd_material FROM t_sa_persediaan a INNER JOIN t_sa_persediaan_det b on a.notrans=b.notrans '+
 ' WHERE periode='+QuotedStr(tgl)+' and periode2='+QuotedStr(tgl2)+' and category=''BAHAN KEMASAN'')b on a.kd_material=b.kd_material)x'+
 ' GROUP BY kode_header,category)x  ORDER BY kd_akun ASC)b' }
-' UNION /*Bahan produksi*/ select null,null,qtypk,kdakun FROM (select akun_kredit kdakun,(debit+kredit) qtypk from '+
+{' UNION /*Bahan produksi*/ select null,null,qtypk,kdakun FROM (select akun_kredit kdakun,(debit+kredit) qtypk from '+
 ' t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.no_bukti_memo=b.no_bukti_memo WHERE  '+
 ' keterangan like ''%Biaya - Biaya Yang Dipakai Untuk Produksi bulan%'' and tgl>='+QuotedStr(tgl)+' and'+
 ' tgl<='+QuotedStr(tgl2)+') x) b on a.kode=b.kd_akun';
@@ -176,15 +185,23 @@ begin
   ' case when id_lr=3 THEN SUM(QTY) else 0 end qtybj,case when id_lr=5 then sum(qty) else 0 end qtyBO,case when id_lr=7 then '+
   ' sum(qty) else 0 end qtydu from (SELECT kode,kode_header,nama_perkiraan,id_lr,lr,lr2,CASE WHEN kode=''6200.01'' then -qty else qty end qty '+
   ' from '+subquery+' ) c GROUP BY id_lr) xx ORDER BY id_lr,kode ASC, qty desc)x';
-  open;
-end;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_lr.fr3');
-  Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan.Text+' '+edth.Text);
-  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:=UpperCase(' '+FormatDateTime('dd',dtmulai1.Date)+' - '+FormatDateTime('dd/MMM/yyy',dtselesai1.Date));
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
-  Tfrxmemoview(Rpt.FindObject('Memo11')).Memo.Text:=UpperCase(' % ');
-  Rpt.ShowReport();
-  rpt.sho
+  open;                                                                           }
+  with Q_lr do
+  begin
+     Close;
+     sql.Clear;
+     sql.Text:='select b.id,b.lr,b.lr2,c.header_name,a.* from t_ak_type_lr b Left JOIN t_ak_account a '+
+     ' on a.lr_st_id=b.id left JOIN t_ak_header c on a.header_code=c.header_code order by b.id asc';
+     Execute;
+  end;
+//  ShowMessage('test');
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_lr.fr3');
+    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan.Text+' '+edth.Text);
+    Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:=UpperCase(' '+FormatDateTime('dd',dtmulai1.Date)+' - '+FormatDateTime('dd/MMM/yyy',dtselesai1.Date));
+    Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
+    Tfrxmemoview(Rpt.FindObject('Memo11')).Memo.Text:=UpperCase(' % ');
+    Rpt.ShowReport();
+   // rpt.sho
 end;
 
 procedure TFRpt_Lr.cbbulanSelect(Sender: TObject);
@@ -205,6 +222,16 @@ case cbbulan.Itemindex of
 end;
 end;
 
+procedure TFRpt_Lr.DxRefreshClick(Sender: TObject);
+begin
+  DBGridEh1.StartLoadingStatus();
+    Q_lr.Close;
+    Q_lr.Open;
+    Mem_lr.Close;
+    Mem_lr.Open;
+  DBGridEh1.FinishLoadingStatus();
+end;
+
 procedure TFRpt_Lr.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:=caFree;
@@ -223,6 +250,8 @@ end;
 procedure TFRpt_Lr.FormShow(Sender: TObject);
 begin
   edth.Text:=FormatDateTime('yyyy',now());
+  DtMulai.EditValue:=FormatDateTime('yyy-mm-dd',now());
+  DtSelesai.EditValue:=FormatDateTime('yyy-mm-dd',now());
 end;
 
 procedure TFRpt_Lr.Bprint2Click(Sender: TObject);

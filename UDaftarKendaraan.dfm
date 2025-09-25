@@ -1,6 +1,7 @@
 object FDaftarKendaraan: TFDaftarKendaraan
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Daftar Kendaraan'
   ClientHeight = 519
   ClientWidth = 700
@@ -82,7 +83,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
       'Memo1')
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 694
+    ExplicitWidth = 696
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData

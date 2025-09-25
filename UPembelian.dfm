@@ -2,20 +2,23 @@ object FPembelian: TFPembelian
   Left = 0
   Top = 0
   Caption = 'Form Faktur Pembelian'
-  ClientHeight = 433
-  ClientWidth = 857
+  ClientHeight = 549
+  ClientWidth = 1006
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 857
+    Width = 1006
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -23,6 +26,7 @@ object FPembelian: TFPembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 857
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -39,10 +43,9 @@ object FPembelian: TFPembelian
   object DBGridTerima1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 857
-    Height = 306
+    Width = 1006
+    Height = 422
     Align = alClient
-    DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
         ColumnName = 'Column_18_trans_year'
@@ -199,6 +202,7 @@ object FPembelian: TFPembelian
         FieldName = 'sj_status'
         Footers = <>
         Title.Caption = 'Ceklis Dokumen|Konf.'
+        Visible = False
         Width = 60
       end
       item
@@ -209,6 +213,7 @@ object FPembelian: TFPembelian
         FieldName = 'fk_status'
         Footers = <>
         Title.Caption = 'Ceklis Dokumen|Pref. Dok.'
+        Visible = False
         Width = 60
       end
       item
@@ -219,6 +224,7 @@ object FPembelian: TFPembelian
         FieldName = 'invoice_status'
         Footers = <>
         Title.Caption = 'Ceklis Dokumen|Invoice'
+        Visible = False
         Width = 60
       end
       item
@@ -302,8 +308,8 @@ object FPembelian: TFPembelian
       object DBGridEh3: TDBGridEh
         Left = 0
         Top = 0
-        Width = 820
-        Height = 182
+        Width = 969
+        Height = 198
         Align = alClient
         DataSource = DsTerimaDet
         DynProps = <>
@@ -396,7 +402,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'price'
-            Footer.Alignment = taRightJustify
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
             Footer.Font.Height = -11
@@ -414,7 +419,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'subtotal'
-            Footer.Alignment = taRightJustify
             Footer.DisplayFormat = '0.0000#,##'
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
@@ -432,7 +436,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'pemb_dpp'
-            Footer.Alignment = taRightJustify
             Footer.DisplayFormat = '#.##0.00'
             Footer.ValueType = fvtSum
             Footers = <>
@@ -453,7 +456,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn_rp'
-            Footer.Alignment = taRightJustify
             Footer.DisplayFormat = '#,##'
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
@@ -471,7 +473,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn_pembulatan'
-            Footer.Alignment = taRightJustify
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
             Footer.Font.Height = -11
@@ -488,7 +489,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'pph_rp'
-            Footer.Alignment = taRightJustify
             Footer.DisplayFormat = '#,##'
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
@@ -506,7 +506,6 @@ object FPembelian: TFPembelian
             DynProps = <>
             EditButtons = <>
             FieldName = 'grandtotal'
-            Footer.Alignment = taRightJustify
             Footer.DisplayFormat = '0.0000#,##'
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
@@ -557,8 +556,8 @@ object FPembelian: TFPembelian
       object DBGridOrder: TDBGridEh
         Left = 0
         Top = 0
-        Width = 820
-        Height = 182
+        Width = 969
+        Height = 198
         Align = alClient
         DynProps = <>
         SearchPanel.Enabled = True
@@ -1345,8 +1344,8 @@ object FPembelian: TFPembelian
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45558.382883287000000000
-    ReportOptions.LastChange = 45693.986440578700000000
+    ReportOptions.CreateDate = 45715.357455648150000000
+    ReportOptions.LastChange = 45715.357455648150000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1355,15 +1354,7 @@ object FPembelian: TFPembelian
       'end.')
     Left = 694
     Top = 82
-    Datasets = <
-      item
-        DataSet = dm.DBPerusahaan
-        DataSetName = 'DBPerusahaan'
-      end
-      item
-        DataSet = FMainMenu.frxDBDJurnal
-        DataSetName = 'frxDBDJurnal'
-      end>
+    Datasets = <>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -1371,9 +1362,9 @@ object FPembelian: TFPembelian
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 215.900000000000000000
-      PaperHeight = 279.400000000000000000
-      PaperSize = 1
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
@@ -1387,41 +1378,9 @@ object FPembelian: TFPembelian
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 75.590600000000000000
+        Height = 22.677180000000000000
         Top = 18.897650000000000000
-        Width = 740.409927000000000000
-        object nama_pt: TfrxMemoView
-          AllowVectorExport = True
-          Top = 34.015770000000000000
-          Width = 740.787880000000000000
-          Height = 30.236240000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -27
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DBPerusahaan."company_name"]')
-          ParentFont = False
-        end
-        object nm_judul: TfrxMemoView
-          AllowVectorExport = True
-          Top = 3.779530000000000000
-          Width = 740.787880000000000000
-          Height = 30.236240000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -27
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'DAFTAR JURNAL')
-          ParentFont = False
-        end
+        Width = 718.110700000000000000
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -1430,228 +1389,12 @@ object FPembelian: TFPembelian
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 18.897650000000000000
-        Top = 230.551330000000000000
-        Width = 740.409927000000000000
-        DataSet = FMainMenu.frxDBDJurnal
-        DataSetName = 'frxDBDJurnal'
+        Height = 22.677180000000000000
+        Top = 102.047310000000000000
+        Width = 718.110700000000000000
         RowCount = 0
-        object frxDBDJurnalaccount_code: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Width = 147.401670000000000000
-          Height = 18.897650000000000000
-          DataField = 'account_code'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."account_code"]')
-          ParentFont = False
-        end
-        object frxDBDJurnalaccount_name: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 154.960730000000000000
-          Width = 279.685220000000000000
-          Height = 18.897650000000000000
-          DataField = 'account_name'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."account_name"]')
-          ParentFont = False
-        end
-        object frxDBDJurnaldb: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 438.425480000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          DataField = 'db'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDJurnal."db"]')
-          ParentFont = False
-        end
-        object frxDBDJurnalkd: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          DataField = 'kd'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDJurnal."kd"]')
-          ParentFont = False
-        end
       end
-      object GroupHeader1: TfrxGroupHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 52.913420000000000000
-        Top = 154.960730000000000000
-        Width = 740.409927000000000000
-        Condition = 'frxDBDJurnal."trans_no"'
-        object frxDBDJurnalmodule_name: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 139.842610000000000000
-          Top = 5.000000000000000000
-          Width = 389.291590000000000000
-          Height = 18.897650000000000000
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."module_name"] - [frxDBDJurnal."trans_no"]')
-          ParentFont = False
-          Formats = <
-            item
-            end
-            item
-            end>
-        end
-        object frxDBDJurnaltrans_date: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 4.000000000000000000
-          Width = 136.063080000000000000
-          Height = 18.897650000000000000
-          DataField = 'trans_date'
-          DataSet = FMainMenu.frxDBDJurnal
-          DataSetName = 'frxDBDJurnal'
-          DisplayFormat.FormatStr = 'dd mmmm yyyy'
-          DisplayFormat.Kind = fkDateTime
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDJurnal."trans_date"]')
-          ParentFont = False
-        end
-        object Memo3: TfrxMemoView
-          AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 31.677180000000000000
-          Width = 147.401670000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Account No.')
-          ParentFont = False
-        end
-        object Memo4: TfrxMemoView
-          AllowVectorExport = True
-          Left = 154.960730000000000000
-          Top = 31.677180000000000000
-          Width = 279.685220000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Account Name')
-          ParentFont = False
-        end
-        object Memo5: TfrxMemoView
-          AllowVectorExport = True
-          Left = 438.425480000000000000
-          Top = 31.677180000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Debit')
-          ParentFont = False
-        end
-        object Memo6: TfrxMemoView
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Top = 31.677180000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold, fsUnderline]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Kredit')
-          ParentFont = False
-        end
-        object Line1: TfrxLineView
-          AllowVectorExport = True
-          Width = 740.409448820000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-      end
-      object GroupFooter1: TfrxGroupFooter
+      object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
@@ -1659,50 +1402,17 @@ object FPembelian: TFPembelian
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677180000000000000
-        Top = 272.126160000000000000
-        Width = 740.409927000000000000
-        object SysMemo1: TfrxSysMemoView
+        Top = 185.196970000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 438.425199290000000000
-          Width = 143.622140000000000000
+          Left = 642.520100000000000000
+          Width = 75.590600000000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftTop]
+          Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDJurnal."db">,MasterData1)]')
-          ParentFont = False
-        end
-        object SysMemo2: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Width = 143.622140000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftTop]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDJurnal."kd">,MasterData1)]')
-          ParentFont = False
-        end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Top = 22.677180000000000000
-          Width = 740.409448820000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
+            '[Page#]')
         end
       end
     end
@@ -1836,6 +1546,7 @@ object FPembelian: TFPembelian
     MasterSource = Dsterima_material
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
+    Active = True
     Left = 536
     Top = 16
     ParamData = <
@@ -1843,7 +1554,7 @@ object FPembelian: TFPembelian
         DataType = ftString
         Name = 'trans_no'
         ParamType = ptInput
-        Value = 'RCV/0003/29/X/24'
+        Value = 'FPB/001/08/VIII/2025/HLJ'
       end>
   end
   object DataSetDriverEh1: TDataSetDriverEh
@@ -1857,6 +1568,7 @@ object FPembelian: TFPembelian
     Top = 24
   end
   object Memterima_material: TMemTableEh
+    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1
@@ -1879,6 +1591,7 @@ object FPembelian: TFPembelian
       'left join t_ak_account d on a.account_um_code=d.code'
       'left join t_ref_item_receive e on a.ref_code=e.ref_code'
       'order by a.id desc')
+    Active = True
     Left = 320
     Top = 40
   end

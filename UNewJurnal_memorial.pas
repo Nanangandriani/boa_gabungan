@@ -72,17 +72,19 @@ type
     procedure Save;
     procedure Update;
     procedure Autocode;
+    procedure Autonumber;
   end;
 
 Function  FNewJurnal_memo: TFNewJurnal_memo;
-var  Status,jenismemo:Integer;
+var  Status,jenismemo,Urut,bulan1 :Integer;
 
 implementation
 
 {$R *.dfm}
 
 uses //browse_akun_kredit,Ubrowse_daftar_penerimaan_pembayaran_piutang,
-UDataModule, UListJurnal_memorial,UCari_ket_memorial, UCari_SumberMemorial, UMainmenu;
+UDataModule, UListJurnal_memorial,UCari_ket_memorial, UCari_SumberMemorial, UMainmenu,
+  browse_akun_kredit, UMy_Function;
 var
   RealFNew_JurnalMemo: TFNewJurnal_memo;
 
@@ -97,7 +99,7 @@ end;
 procedure TFNewJurnal_memo.Autocode;
 var
 kode,bulan,tahun,year,kode_perusahaan,cek_bulan_tahun,bulan_a,tahun2 : String;
-Urut,bulan1 : Integer;
+//Urut,bulan1 : Integer;
 begin
   bulan_a := FormatDateTime('mm', DTtgl.Date);
   bulan1 := StrToInt(bulan_a);
@@ -109,10 +111,10 @@ begin
   begin
     Close;
     SQL.Clear;
-    Sql.Text := 'select kode_perusahaan from t_data_perusahaan';
+    Sql.Text := 'select company_code from t_company';
     open;
   end;
-  kode_perusahaan:=dm.QTemp3.FieldByName('kode_perusahaan').AsString;
+  kode_perusahaan:=dm.QTemp3.FieldByName('company_code').AsString;
   cek_bulan_tahun:= bulan+tahun;
 
   With DM.Qtemp2 do
@@ -156,11 +158,29 @@ begin
   edno_bukti_memorial.Text := 'JM'+kode+bulan+tahun;
 end;
 
+procedure TFNewJurnal_memo.Autonumber;
+begin
+  with dm.Qtemp do
+  begin
+      close;
+      sql.clear;
+      sql.Text:='Select * from t_menu_sub where link=''FList_jurnal_memorial'' ';
+      ExecSQL;
+  end;
+  idmenu:=dm.Qtemp['submenu_code'];
+ // idmenu:='M11004';
+  //strday2:=Dtterima.Date;
+  strday2:=DTtgl.Date;
+  edno_bukti_memorial.Text:=getNourut(strday2,'t_memorial_journal','');
+  urut:=StrToInt(order_no);
+end;
+
 procedure TFNewJurnal_memo.Save;
 var
 total_debit,total_kredit : Currency;
 begin
-  Autocode;
+//  Autocode;
+  Autonumber;
   MemTableEh1.First;
   total_debit:=0;
   total_kredit:=0;
@@ -181,14 +201,15 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_jurnal_memorial(no_bukti_memo,tgl,keterangan,no_bk,no_faktur,status_pembulatan,status_post,bln,thn,id_ket,pic) '+
-      'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,:parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic)';
+      sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,faktur_no,rounding_status,post_status,trans_month,trans_year,notes_id,created_by,order_no,trans_day) '+
+      'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,:parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic,:order_no,:hr)';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
-      parambyname('partgl').Value:=DTtgl.Text;
+      parambyname('partgl').Value:= FormatDateTime('yyyy-mm-dd',DTtgl.date);
       parambyname('parketerangan').Value:=Memket.Text;
       parambyname('parno_bk').Value:=edno_bk_pembulatan.Text;
       parambyname('parno_faktur').Value:=edno_faktur_pembulatan.Text;
-      parambyname('bln').Value:=cbbulan.Text;
+      parambyname('hr').Value:=FormatDateTime('dd',DTtgl.Date);
+      parambyname('bln').Value:=cbbulan.ItemIndex;
       parambyname('thn').Value:=edth.Text;
       parambyname('id_ket').asstring:=Edkd_ket.Text;
       ParamByName('pic').AsString:=nm;
@@ -201,6 +222,7 @@ begin
         parambyname('parstatus_pembulatan').Value:=1;
       end;
       parambyname('parstatus_post').Value:=0;
+      ParamByName('order_no').Value:=Urut;
       execsql;
     end;
 
@@ -211,7 +233,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Insert Into t_jurnal_memorial_detail(no_bukti_memo,akun_kredit,debit,kredit) '+
+        sql.Text:='Insert Into t_memorial_journal_detail(memo_no,account_code,debit,kredit) '+
                   'Values (:parno_bukti_memo,:parakun_kredit,:pardebit,:parkredit)';
         parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
         parambyname('parakun_kredit').Value:=MemTableEh1['kode_akun'];
@@ -283,8 +305,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Add('Delete From t_jurnal_memorial_detail');
-      sql.Add('where no_bukti_memo=:parno_bukti_memo');
+      sql.Add('Delete From t_memorial_journal_detail');
+      sql.Add('where memo_no=:parno_bukti_memo');
       ParamByName('parno_bukti_memo').Value := edno_bukti_memorial.Text;
       execsql;
     end;
@@ -293,8 +315,8 @@ begin
     begin
       close;
       Sql.Clear;
-      Sql.Text:='update t_jurnal_memorial set tgl=:partgl,id_ket=:idket,bln=:bln,thn=:thn,pic=:pic,'+
-                'keterangan=:parketerangan,no_bk=:parno_bk,no_faktur=:parno_faktur where no_bukti_memo=:parno_bukti_memo';
+      Sql.Text:='update t_memorial_journal set trans_date=:partgl,notes_id=:idket,trans_month=:bln,trans_year=:thn,updated_by=:pic,'+
+                'updated_at=now(),notes=:parketerangan,bk_no=:parno_bk,faktur_no=:parno_faktur where memo_no=:parno_bukti_memo';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
       parambyname('partgl').Value:=DTtgl.Text;
       parambyname('parketerangan').Value:=Memket.Text;
@@ -314,7 +336,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Insert Into t_jurnal_memorial_detail(no_bukti_memo,akun_kredit,debit,kredit) '+
+        sql.Text:='Insert Into t_memorial_journal_detail(memo_no,account_code,debit,kredit) '+
                   'Values (:parno_bukti_memo,:parakun_kredit,:pardebit,:parkredit)';
         parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
         parambyname('parakun_kredit').Value:=MemTableEh1['kode_akun'];
@@ -392,29 +414,27 @@ end;
 
 procedure TFNewJurnal_memo.RzBitBtn2Click(Sender: TObject);
 begin
-{  Status_browse_akun_kredit:=4;
+  Status_browse_akun_kredit:=4;
   with Fbrowse_akun_kredit.UniQuery1 do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:=' SELECT a.kode_perkiraan,b.nama_perkiraan,c.nama_header,case when db ISNULL then 0 else db end db,'+
-              ' case when kr ISNULL then 0 else kr end kr FROM t_daftar_perkiraan_detail a '+
-              ' left join t_daftar_perkiraan b '+
-              ' on a.kode_perkiraan=b.kode '+
-              ' left join t_header_perkiraan c on b.kode_header=c.kode_header '+
-              ' left join (select cast(''2144'' as VARCHAR) kd_akun,masuk_jmlh db,0 kr from '+
-              ' t_rekonsiliasi_ppn union select cast(''1211'' as VARCHAR) kd_akun,0 db, masuk_jmlh  '+
-              ' kr from t_rekonsiliasi_ppn WHERE filter='+QuotedStr(FormatDateTime('yyy-mm',DTtgl.date))+''+
-              ' union /*Pemakaian Bahan Produksi*/'+
-              ' select akun,0 db,hargapk db from(select periode,periode2,a.category,akun,sum(hargapk) hargapk '+
-              ' from t_sa_persediaan a INNER JOIN t_sa_persediaan_det b on a.notrans=b.notrans inner join (select '+
-              ' a.kd_material,b.kode_header akun from t_material a INNER JOIN t_daftar_perkiraan b on a.kd_akun=b.kode) c '+
-              ' on b.kd_material=c.kd_material WHERE periode2='+QuotedStr(FormatDateTime('yyy-mm-dd',DTtgl.date))+' '+
-              ' GROUP BY periode,periode2,a.category,akun)x)d'+
-              ' on d.kd_akun=b.kode where a.id_modul=''7''';
+    Sql.Text:=' SELECT a.account_code,b.account_name,c.header_name,case when db ISNULL then 0 else db end db, '+
+    ' case when kr ISNULL then 0 else kr end kr FROM t_ak_account_det a left join t_ak_account b on a.account_code=b.code '+
+    ' left join t_ak_header c on b.header_code=c.header_code '+
+    ' left join (select cast(''2144'' as VARCHAR) kd_akun,ppn_in_amount db,0 kr from '+
+    ' t_rekonsiliasi_ppn union select cast(''1211'' as VARCHAR) kd_akun,0 db, ppn_in_amount '+
+    ' kr from t_rekonsiliasi_ppn WHERE filter='+QuotedStr(FormatDateTime('yyy-mm',DTtgl.date))+''+
+    ' union /*Pemakaian Bahan Produksi*/  '+
+    ' select akun,0 db,hargapk db from(select periode,periode2,a.category,akun,sum(price_pk) hargapk '+
+    ' from t_sa_persediaan a INNER JOIN t_sa_persediaan_det b on a.trans_no=b.trans_no inner join '+
+    ' (select a.item_code,b.account_code akun from t_item a INNER JOIN t_ak_account_sub b on a.account_code=b.account_code2) c '+
+    ' on b.item_code=c.item_code WHERE periode2='+QuotedStr(FormatDateTime('yyy-mm-dd',DTtgl.date))+''+
+    ' GROUP BY periode,periode2,a.category,akun)x)d on d.kd_akun=b.code where a.module_id=''7''';
     Open;
   end;
-  Fbrowse_akun_kredit.ShowModal;    update ds 11-02-2025}
+  Fbrowse_akun_kredit.ShowModal;
+  //update ds 11-02-2025}
 end;
 
 procedure TFNewJurnal_memo.RzBitBtn3Click(Sender: TObject);

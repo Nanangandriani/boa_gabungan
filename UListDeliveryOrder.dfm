@@ -1,20 +1,22 @@
 object FListDeliveryOrder: TFListDeliveryOrder
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Delivery Order'
   ClientHeight = 547
-  ClientWidth = 980
+  ClientWidth = 1118
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 980
+    Width = 1118
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -27,6 +29,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
@@ -34,11 +39,12 @@ object FListDeliveryOrder: TFListDeliveryOrder
   object DBGridList: TDBGridEh
     Left = 0
     Top = 127
-    Width = 980
+    Width = 1118
     Height = 420
     Align = alClient
     DataSource = DsDeliveryOrder
     DynProps = <>
+    EmptyDataInfo.Active = True
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -51,7 +57,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'notrans'
         Footers = <>
         Title.Caption = 'No Transaksi'
-        Width = 100
+        Width = 136
       end
       item
         CellButtons = <>
@@ -60,7 +66,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'date_trans'
         Footers = <>
         Title.Caption = 'Tanggal'
-        Width = 100
+        Width = 66
       end
       item
         CellButtons = <>
@@ -69,7 +75,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'type_do_name'
         Footers = <>
         Title.Caption = 'Jenis DO'
-        Width = 150
+        Width = 143
       end
       item
         CellButtons = <>
@@ -78,7 +84,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'starting_loc_name'
         Footers = <>
         Title.Caption = 'Lokasi Awal'
-        Width = 200
+        Width = 177
       end
       item
         CellButtons = <>
@@ -87,7 +93,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'province_name'
         Footers = <>
         Title.Caption = 'Tujuan | Provinsi'
-        Width = 200
+        Width = 167
       end
       item
         CellButtons = <>
@@ -96,14 +102,23 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'regency_name'
         Footers = <>
         Title.Caption = 'Tujuan | Kabupaten'
-        Width = 200
+        Width = 186
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'status_name'
+        Footers = <>
+        Title.Caption = 'Status'
+        Width = 140
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object ActMenu: TActionManager
-    Left = 672
-    Top = 32
+    Left = 936
+    Top = 24
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -151,8 +166,8 @@ object FListDeliveryOrder: TFListDeliveryOrder
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 744
-    Top = 72
+    Left = 936
+    Top = 80
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -180,7 +195,43 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Filter'
+      CaptionButtons = <>
+      DockedLeft = 125
+      DockedTop = 0
+      FloatLeft = 1004
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 169
+          Visible = True
+          ItemName = 'cbBulan'
+        end
+        item
+          Visible = True
+          ItemName = 'edTahun'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 182
+          Visible = True
+          ItemName = 'cbStatus'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -668,14 +719,79 @@ object FListDeliveryOrder: TFListDeliveryOrder
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+    object cbBulan: TdxBarCombo
+      Caption = 'Bulan '
+      Category = 0
+      Hint = 'Bulan '
+      Visible = ivAlways
+      Items.Strings = (
+        'Januari'
+        'Februari'
+        'Maret'
+        'April'
+        'Mei'
+        'Juni'
+        'Juli'
+        'Agustus'
+        'September'
+        'Oktober'
+        'November'
+        'Desember')
+      ItemIndex = -1
+    end
+    object edTahun: TdxBarSpinEdit
+      Caption = 'Tahun'
+      Category = 0
+      Hint = 'Tahun'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Search'
+      Category = 0
+      Hint = 'Search'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton1Click
+    end
+    object cbStatus: TdxBarCombo
+      Caption = 'Status'
+      Category = 0
+      Hint = 'Status'
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QDeliveryOrder: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_delivery_order"  '
-      'where deleted_at is null order by created_at Desc')
-    Left = 428
-    Top = 56
+      
+        'SELECT a.*,b.status_name from t_delivery_order a LEFT JOIN t_del' +
+        'ivery_order_status b on b.kode=a.status ORDER BY a.created_at De' +
+        'sc')
+    Left = 884
+    Top = 16
     object QDeliveryOrdernotrans: TStringField
       FieldName = 'notrans'
       Size = 100
@@ -699,10 +815,15 @@ object FListDeliveryOrder: TFListDeliveryOrder
       FieldName = 'regency_name'
       Size = 255
     end
+    object QDeliveryOrderstatus_name: TStringField
+      FieldName = 'status_name'
+      ReadOnly = True
+      Size = 255
+    end
   end
   object DsDeliveryOrder: TDataSource
     DataSet = QDeliveryOrder
-    Left = 553
-    Top = 40
+    Left = 857
+    Top = 80
   end
 end

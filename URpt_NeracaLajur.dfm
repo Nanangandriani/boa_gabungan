@@ -474,139 +474,124 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        #9'SELECT w.kelompok_akun ,w.kd_akun,w.notr,CASE'#9'WHEN w.notr = 0 T' +
-        'HEn concat ( '#39#39', w.nama_perkiraan ) ELSE w.nama_perkiraan END na' +
-        'ma_perkiraan,SUM ( w.debit ) debit,SUM ( w.kredit ) kredit,SUM (' +
-        ' w.db ) db,SUM ( w.kd ) kd,SUM ( w.dbpy ) dbpy,SUM ( w.kdpy ) kd' +
-        'py,SUM ( w.dbnr ) dbnr,SUM ( w.kdnr ) kdnr,SUM ( w.dbnr2 ) dbnr2' +
-        ',SUM ( w.kdnr2 ) kdnr2,SUM ( w.dbnr3 ) dbnr3,SUM ( w.kdnr3 ) kdn' +
-        'r3,SUM ( w.dblr ) dblr,SUM ( w.kdlr ) kdlr'
-      'FROM'
-      '/*Tambahan baru di atas*/'
-      
-        #9'(SELECT xxx.*,CASE'#9'WHEN yy.header_code IS NULL THEN'#9'0 ELSE 1 EN' +
-        'D notr,yy.header_code FROM (SELECT'#9'* ,CASE'#9'WHEN ( xx4.kelompok_a' +
-        'kun = 1 AND xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dbnr3,CASE' +
-        #9'WHEN ( xx4.kelompok_akun = 1 AND xx4.kdnr2 > 0 ) THEN'#9'xx4.kdnr2' +
-        ' ELSE 0  END kdnr3,CASE'#9'WHEN ( xx4.kelompok_akun = 2 AND xx4.dbn' +
-        'r2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dblr,CASE'#9'WHEN ( xx4.kelompok' +
-        '_akun = 2 AND xx4.kdnr2 > 0 ) THEN xx4.kdnr2 ELSE 0  END kdlr FR' +
-        'OM (SELECT'#9'*,CASE'#9'WHEN ( xx3.dbnr -  xx3.kdnr ) + (  xx3.dbpy - ' +
-        ' xx3.kdpy ) > 0 THEN'#9'(  xx3.dbnr -  xx3.kdnr ) + (  xx3.dbpy -  ' +
-        'xx3.kdpy ) ELSE 0 END dbnr2,CASE'#9'WHEN (  xx3.kdnr -  xx3.dbnr ) ' +
-        '+ (  xx3.kdpy -  xx3.dbpy ) > 0 THEN'#9'(  xx3.kdnr -  xx3.dbnr ) +' +
-        ' (  xx3.kdpy -  xx3.dbpy ) ELSE 0 END kdnr2 FROM (SELECT'#9'*,CASE'#9 +
-        'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0 THEN'#9'xx2.debit' +
-        ' - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr,CASE'#9'WHEN xx2.kr' +
-        'edit - xx2.debit + xx2.kd - xx2.db > 0 THEN'#9'xx2.kredit - xx2.deb' +
-        'it + xx2.kd - xx2.db ELSE 0 END kdnr FROM'#9'(SELECT'#9'xx.kelompok_ak' +
-        'un,xx.kd_akun,xx.nama_perkiraan,CASE WHEN xx.debit > 0 THEN'#9'xx.d' +
-        'ebit ELSE 0 END debit,CASE WHEN xx.kredit > 0 THEN'#9'xx.kredit ELS' +
-        'E 0 '#9'END kredit,CASE'#9'WHEN xx.db > 0 THEN'#9'0 ELSE xx.db END db,CAS' +
-        'E'#9'WHEN xx.kd > 0 THEN'#9'0 ELSE xx.kd '#9'END kd,CASE WHEN xx.dbpy > 0' +
-        ' THEN 0 ELSE xx.dbpy '#9'END dbpy,CASE WHEN xx.kdpy > 0 THEN'#9'0 ELSE' +
-        ' xx.kdpy END kdpy FROM '
-      #9'/* HEADER */'
-      
-        '(SELECT'#9'aa.group_id kelompok_akun,aa.kd_akun,aa.account_name nam' +
-        'a_perkiraan,CASE WHEN aa.debit > 0 THEN aa.debit ELSE NULL END d' +
-        'ebit,CASE WHEN aa.kredit IS NULL THEN 0 ELSE aa.kredit END kredi' +
-        't,CASE'#9'WHEN b.db IS NULL THEN 0 ELSE b.db END db,CASE'#9'WHEN b.kd ' +
-        'IS NULL THEN 0 ELSE b.kd '#9'END kd,CASE WHEN C.db IS NULL THEN'#9'0 E' +
-        'LSE C.db '#9'END dbpy,CASE'#9'WHEN C.kd IS NULL THEN'#9'0 ELSE C.kd '#9'END ' +
-        'kdpy FROM'
-      
-        #9'(SELECT C.code kd_akun,C.header_code,C.group_id,C.account_name,' +
-        'SUM (c.db ) debit,'#9'SUM (C.kd ) kredit FROM'
-      
-        #9'(SELECT DISTINCT A.code,A.header_code,A.account_name,A.balance_' +
-        'status,A.group_id,b.db,b.kd FROM'#9't_ak_account'#9'A INNER JOIN"VSear' +
-        'ch_Item_Neraca" b ON A.code = b.account_code WHERE /*balance_sta' +
-        'tus='#39'1'#39' and*/ code = header_code AND header_code <> '#39'5400'#39' ) C  ' +
-        'GROUP BY C.code,C.header_code,C.group_id,C.account_name ORDER BY' +
-        #9'C.code ASC) AA'
-      
-        'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM(amo' +
-        'unt) ELSE 0 END db,CASE WHEN status_dk = '#39'K'#39' THEN'#9'SUM(amount)ELS' +
-        'E 0 END kd,b.code FROM'#9't_general_ledger_real'#9'A INNER JOIN t_ak_a' +
-        'ccount b ON A.account_code = b.code WHERE'#9'b.code = aa.kd_akun AN' +
-        'D A.module_id <> 7 AND ( to_char( trans_date, '#39'yyyy'#39' ) = '#39'2024'#39')' +
-        ' AND ( to_char( trans_date, '#39'mm'#39' ) = '#39'12'#39')  GROUP BY b.code,A.st' +
-        'atus_dk) b ON 1 = 1'
-      
+        'SELECT w.kelompok_akun ,w.kd_akun,w.notr,CASE'#9'WHEN w.notr = 0 TH' +
+        'En concat ('#39#39',w.nama_perkiraan ) ELSE w. nama_perkiraan END nama' +
+        '_perkiraan,SUM ( w.debit ) debit,SUM ( w.kredit ) kredit,SUM ( w' +
+        '.db ) db,SUM ( w.kd ) kd,SUM ( w.dbpy ) dbpy, SUM ( w.kdpy ) kdp' +
+        'y,SUM ( w.dbnr ) dbnr,SUM ( w.kdnr ) kdnr,SUM ( w.dbnr2 ) dbnr2,' +
+        'SUM ( w.kdnr2 ) kdnr2,SUM ( w.dbnr3 ) dbnr3,SUM ( w.kdnr3 ) kdnr' +
+        '3,SUM ( w.dblr ) dblr,SUM ( w.kdlr ) kdlr  FROM /*Tambahan baru ' +
+        'di atas*/   (SELECT xxx.*,CASE'#9'WHEN yy.header_code IS NULL THEN'#9 +
+        '0 ELSE 1 END notr,yy.header_code FROM (SELECT'#9'* ,CASE'#9'WHEN ( xx4' +
+        '.kelompok_akun = 1 AND  xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 EN' +
+        'D dbnr3,CASE'#9'WHEN ( xx4.kelompok_akun = 1 AND xx4.kdnr2 > 0 ) TH' +
+        'EN'#9'xx4.kdnr2 ELSE 0  END kdnr3, CASE WHEN (xx4.kelompok_akun = 2' +
+        ' AND xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dblr,CASE'#9'WHEN ( ' +
+        'xx4.kelompok_akun = 2 AND xx4.kdnr2 > 0 ) THEN xx4. kdnr2 ELSE 0' +
+        '  END kdlr FROM (SELECT'#9'*,CASE'#9'WHEN ( xx3.dbnr-xx3.kdnr ) + (  x' +
+        'x3.dbpy-xx3.kdpy ) > 0 THEN'#9'(xx3.dbnr- xx3.kdnr) + (xx3.dbpy-xx3' +
+        '.kdpy ) ELSE 0 END dbnr2, CASE'#9'WHEN (xx3.kdnr -xx3.dbnr ) + (xx3' +
+        '.kdpy-xx3.dbpy ) > 0 THEN'#9'(  xx3.kdnr -  xx3.dbnr ) + (  xx3.kdp' +
+        'y -  xx3.dbpy ) ELSE 0 END kdnr2 FROM  (SELECT'#9'*,CASE'#9'WHEN xx2.d' +
+        'ebit - xx2.kredit + xx2.db - xx2.kd > 0 THEN'#9'xx2.debit - xx2.kre' +
+        'dit + xx2.db - xx2.kd ELSE 0 END dbnr, CASE'#9'WHEN xx2.kredit - xx' +
+        '2.debit + xx2.kd - xx2.db > 0 THEN'#9'xx2.kredit - xx2.debit + xx2.' +
+        'kd - xx2.db ELSE 0 END kdnr FROM'#9' (SELECT'#9'xx.kelompok_akun,xx.kd' +
+        '_akun,xx.nama_perkiraan,CASE WHEN xx.debit > 0 THEN'#9'xx.debit ELS' +
+        'E 0 END debit,CASE WHEN xx.kredit > 0 THEN'#9'xx. kredit ELSE 0 END' +
+        ' kredit,CASE'#9'WHEN xx.db > 0 THEN'#9'0 ELSE xx.db END db,CASE'#9'WHEN x' +
+        'x.kd > 0 THEN'#9'0 ELSE xx.kd '#9'END kd,CASE WHEN xx.dbpy > 0 THEN 0 ' +
+        'ELSE xx.dbpy '#9'END dbpy,CASE WHEN xx.kdpy > 0 THEN'#9'0 ELSE xx.kdpy' +
+        ' END kdpy FROM '#9'/* HEADER */  (SELECT'#9'aa.balance_status kelompok' +
+        '_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE WHEN aa.deb' +
+        'it > 0 THEN aa.debit ELSE NULL END debit,CASE WHEN aa.kredit IS ' +
+        'NULL THEN 0 ELSE aa.kredit END kredit, CASE'#9'WHEN b.db IS NULL TH' +
+        'EN 0 ELSE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 ELSE b.kd '#9'E' +
+        'ND kd,CASE WHEN C.db IS NULL THEN'#9'0 ELSE C.db '#9'END dbpy,CASE'#9'WHE' +
+        'N C.kd IS NULL THEN'#9'0 ELSE C.kd '#9'END kdpy FROM'#9'(SELECT C.code kd' +
+        '_akun,C.header_code,C.balance_status,C.account_name,SUM (c.db ) ' +
+        'debit,'#9'SUM (C.kd ) kredit FROM  '#9'(SELECT DISTINCT A.code,A.heade' +
+        'r_code,A.account_name,A.balance_status,b.db,b.kd FROM'#9't_ak_accou' +
+        'nt'#9'A INNER JOIN "VSearch_Item_Neraca" b ON A.code = b.account_co' +
+        'de WHERE  /*balance_status='#39'1'#39' and*/ code = header_code AND head' +
+        'er_code <> '#39'5400'#39' ) C  GROUP BY C.code,C.header_code,C.balance_s' +
+        'tatus,C.account_name ORDER BY'#9'C.code ASC) AA LEFT JOIN LATERAL (' +
+        'SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM(amount) ELSE 0 END db,' +
+        'CASE WHEN status_dk = '#39'K'#39' THEN'#9'SUM(amount)ELSE 0 END kd,b.code F' +
+        'ROM'#9't_general_ledger_real'#9'A  INNER JOIN t_ak_account b ON A.acco' +
+        'unt_code = b.code WHERE'#9'b.code = aa.kd_akun AND A.module_id <> 7' +
+        ' AND (to_char( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( to_char( tra' +
+        'ns_date, '#39'mm'#39' ) = '#39'3'#39') GROUP BY b.code,A.status_dk) b ON 1 = 1  ' +
         #9'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM ( ' +
         'amount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN'#9'SUM (amoun' +
         't) ELSE 0 '#9'END kd,'#9'b.code FROM'#9't_general_ledger_real'#9'A INNER JOI' +
         'N t_ak_account b ON A.account_code = b.code WHERE'#9'b.code = aa.kd' +
-        '_akun AND b.code <> '#39'1112.01'#39' '#9'AND A.module_id = 7 '#9'AND ( to_cha' +
-        'r( trans_date, '#39'yyyy'#39' ) = '#39'2024'#39') AND ( to_char( trans_date, '#39'mm' +
-        #39' ) = '#39'12'#39')   GROUP BY'#9'b.code,A.status_dk '
-      #9') C ON 1 = 1 ORDER BY'#9'kd_akun ASC ) xx ) xx2) xx3'
-      'UNION'
-      
-        'SELECT'#9'xx31.kelompok_akun,xx31.kd_akun,xx31.nama_perkiraan,xx31.' +
-        'debit,xx31.kredit,xx31.db,xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,' +
-        'xx31.kdnr,CASE'#9'WHEN ( xx31.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx' +
-        '31.kdpy ) > 0 THEN'#9'( xx31.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx3' +
-        '1.kdpy ) ELSE 0 END dbnr2,CASE'#9'WHEN ( xx31.dbnr - xx31.dbnr ) + ' +
-        '( xx31.kdpy - xx31.dbpy ) > 0 THEN'#9'( xx31.kdnr - xx31.dbnr ) + (' +
-        ' xx31.kdpy - xx31.dbpy ) ELSE 0 END kdnr2 FROM'#9'(/*bop detail*/ S' +
-        'ELECT'#9'xx3.kelompok_akun,xx3.kd_akun,xx3.nama_perkiraan,xx3.debit' +
-        ',xx3.kredit,xx3.db,xx3.kd,xx3.dbpy,xx3.kdpy,xx3.dbnr,xx3.kdnr,0 ' +
-        'dbnr2,0 kdnr2 FROM'
-      
-        '(SELECT'#9'*,CASE'#9'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0' +
-        ' THEN'#9'xx2.debit - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr,C' +
-        'ASE'#9'WHEN xx2.kredit -xx2.debit + xx2.kd - xx2.db > 0 THEN xx2.kr' +
-        'edit - xx2.debit + xx2.kd - xx2.db ELSE 0 END kdnr FROM'#9'(SELECT'#9 +
+        '_akun AND b.code <> '#39'1112.01'#39' '#9'AND A.module_id = 7 '#9'AND  ( to_ch' +
+        'ar( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( to_char( trans_date, '#39'm' +
+        'm'#39' ) = '#39'3'#39')   GROUP BY'#9'b.code,A.status_dk '#9') C ON 1 = 1 ORDER BY' +
+        #9'kd_akun ASC ) xx ) xx2) xx3   UNION  SELECT'#9'xx31.kelompok_akun,' +
+        'xx31.kd_akun,xx31.nama_perkiraan,xx31.debit,xx31.kredit,xx31.db,' +
+        'xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,xx31.kdnr, CASE'#9'WHEN ( xx3' +
+        '1.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx31.kdpy ) > 0 THEN'#9'( xx31' +
+        '.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx31.kdpy ) ELSE 0 END dbnr2' +
+        ', CASE'#9'WHEN ( xx31.dbnr - xx31.dbnr ) + ( xx31.kdpy - xx31.dbpy ' +
+        ') > 0 THEN'#9'( xx31.kdnr - xx31.dbnr ) + ( xx31.kdpy - xx31.dbpy )' +
+        ' ELSE 0 END kdnr2 FROM'#9' (/*bop detail*/ SELECT'#9'xx3.kelompok_akun' +
+        ',xx3.kd_akun,xx3.nama_perkiraan,xx3.debit,xx3.kredit,xx3.db,xx3.' +
+        'kd,xx3.dbpy,xx3.kdpy,xx3.dbnr,xx3.kdnr,0 dbnr2,0 kdnr2 FROM   (S' +
+        'ELECT'#9'*,CASE'#9'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0 T' +
+        'HEN'#9'xx2.debit - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr, CA' +
+        'SE'#9'WHEN xx2.kredit -xx2.debit + xx2.kd - xx2.db > 0 THEN xx2.kre' +
+        'dit - xx2.debit + xx2.kd - xx2.db ELSE 0 END kdnr FROM '#9'(SELECT'#9 +
         'xx.kelompok_akun,xx.kd_akun,xx.nama_perkiraan,CASE'#9'WHEN xx.debit' +
         ' > 0 THEN xx.debit ELSE 0 END debit,CASE'#9'WHEN xx.kredit >0 THEN'#9 +
-        'xx.debit ELSE 0 END kredit,CASE'#9'WHEN xx.db >0 THEN xx.db ELSE 0 ' +
-        'END db,CASE'#9'WHEN xx.kd >0 THEN xx.kd  ELSE 0 END kd,CASE'#9'WHEN xx' +
-        '.dbpy>0  THEN xx.dbpy ELSE 0'#9'END dbpy,CASE'#9'WHEN xx.kdpy >0 THEN'#9 +
-        'xx.kdpy ELSE 0'#9'END kdpy FROM('#9'SELECT'#9#9'aa.group_id kelompok_akun,' +
-        'aa.kd_akun,aa.account_name nama_perkiraan,CASE'#9'WHEN aa.debit > 0' +
-        ' THEN'#9'aa.debit ELSE NULL END debit,CASE'#9'WHEN aa.kredit IS NULL T' +
-        'HEN'#9'0 ELSE aa.kredit END kredit,CASE'#9'WHEN b.db IS NULL THEN 0 EL' +
-        'SE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 ELSE b.kd END kd,CA' +
-        'SE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy,CASE WHEN C.kd IS' +
-        ' NULL THEN 0 ELSE C.kd END kdpy FROM'#9'(SELECT C.code kd_akun,C.he' +
-        'ader_code,C.group_id,C.account_name,d.debit,d.kredit FROM'
+        'xx.debit ELSE 0 END kredit, CASE'#9'WHEN xx.db >0 THEN xx.db ELSE 0' +
+        ' END db,CASE'#9'WHEN xx.kd >0 THEN xx.kd  ELSE 0 END kd,CASE'#9'WHEN x' +
+        'x.dbpy>0  THEN xx.dbpy ELSE 0'#9'END dbpy,CASE'#9'WHEN xx.kdpy >0 THEN' +
+        #9'xx.kdpy ELSE 0'#9'END kdpy FROM (SELECT'#9'aa.balance_status kelompok' +
+        '_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE'#9'WHEN aa.deb' +
+        'it > 0 THEN'#9'aa.debit ELSE NULL END debit,CASE'#9'WHEN aa.kredit IS ' +
+        'NULL THEN'#9'0 ELSE aa.kredit END kredit, CASE'#9'WHEN b.db IS NULL TH' +
+        'EN 0 ELSE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 ELSE b.kd EN' +
+        'D kd,CASE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy,CASE WHEN ' +
+        'C.kd IS NULL THEN 0 ELSE C.kd END kdpy FROM '#9'(SELECT C.code kd_a' +
+        'kun,C.header_code,C.balance_status,C.account_name,d.debit,d.kred' +
+        'it FROM  (SELECT DISTINCT code, header_code, account_name, balan' +
+        'ce_status FROM t_ak_account A WHERE balance_status = '#39'1'#39' ) C  IN' +
+        'NER JOIN (SELECT'#9'trans_year,A.periode1,A.periode2,trans_month'
       
-        '( SELECT DISTINCT code, header_code, account_name, balance_statu' +
-        's, group_id FROM t_ak_account A WHERE balance_status = '#39'1'#39' AND c' +
-        'ode =header_code AND header_code <> '#39'5400'#39' ) C INNER JOIN (SELEC' +
-        'T'#9'trans_year,A.periode1,A.periode2,trans_month,A.trans_no,b.debi' +
-        't,b.kredit,'#9#9'account_code FROM'#9'(SELECT trans_year, periode1, per' +
-        'iode2, trans_month, trans_no FROM t_neraca_lajur WHERE ( to_char' +
-        '( periode2, '#39'yyyy'#39' ) <= '#39'2024'#39') AND ( to_char( periode2, '#39'mm'#39' ) ' +
-        '< '#39'12'#39')   ORDER BY periode2 DESC LIMIT 1)'#9'A INNER JOIN t_neraca_' +
-        'lajur_det b ON A.trans_no = b.trans_no) d ON C.code = d.account_' +
-        'code GROUP BY'#9'C.code,C.header_code,C.group_id,C.account_name,d.d' +
-        'ebit,d.kredit ORDER BY C.code ASC) AA'
+        ',A.trans_no,b.debit,b.kredit,'#9#9'account_code FROM'#9'(SELECT trans_y' +
+        'ear, periode1, periode2, trans_month, trans_no FROM t_neraca_laj' +
+        'ur WHERE  (to_char( periode2, '#39'yyyy'#39' ) <= '#39'2025'#39') AND ( to_char(' +
+        ' periode2, '#39'mm'#39' ) < '#39'2'#39')   ORDER BY periode2 DESC LIMIT 1)'#9'A INN' +
+        'ER JOIN t_neraca_lajur_det b ON A.trans_no = b.trans_no) d ON C.' +
+        'code = d.account_code GROUP BY'#9'C.code,C.header_code,C.balance_st' +
+        'atus,C.account_name,d.debit,d.kredit ORDER BY C.code ASC) AA   '
+      ' LEFT JOIN LATERAL ('
       
-        'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM ( a' +
-        'mount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN SUM ( amoun' +
-        't ) ELSE 0 END kd,b.code FROM t_general_ledger_real'#9'A INNER JOIN' +
-        ' t_ak_account b ON A.account_code = b.code WHERE b.code = aa.kd_' +
-        'akun AND A.module_id <> 7 AND ( to_char( trans_date, '#39'yyyy'#39' ) = ' +
-        #39'2024'#39') AND ( to_char( trans_date, '#39'mm'#39' ) = '#39'12'#39')   GROUP BY b.c' +
-        'ode,A.status_dk) b ON 1 = 1'
+        'SELECT CASE WHEN b.status_dk = '#39'D'#39' THEN SUM ( amount ) ELSE 0 EN' +
+        'D db,CASE'#9'WHEN b.status_dk = '#39'K'#39' THEN SUM ( amount ) ELSE 0 END ' +
+        'kd,b.account_code2 code FROM t_general_ledger_real'#9'A INNER JOIN ' +
+        '"v_ak_account_nr"  b ON A.account_code = b.account_code2  WHERE ' +
+        'b.header_code= aa.kd_akun AND '
       
-        #9'LEFT JOIN LATERAL (SELECT'#9'CASE'#9'WHEN'#9'status_dk = '#39'D'#39' THEN'#9'SUM ( ' +
-        'amount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN SUM ( amou' +
-        'nt ) ELSE 0 END kd,b.code FROM'#9't_general_ledger_real'#9'A INNER JOI' +
-        'N t_ak_account b ON A.account_code = b.code WHERE'#9'b.code = aa.kd' +
-        '_akun AND b.code <> '#39'1112.01'#39' AND A.module_id = 7 '#9'AND ( to_char' +
-        '( trans_date, '#39'yyyy'#39' ) = '#39'2024'#39') AND ( to_char( trans_date, '#39'mm'#39 +
-        ' ) = '#39'12'#39')   GROUP BY'#9'b.code,'#9'A.status_dk '#9') C ON 1 = 1 ORDER BY'
+        ' A.module_id <> 7 AND (to_char( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') A' +
+        'ND ( to_char( trans_date, '#39'mm'#39' ) = '#39'02'#39')   GROUP BY b.account_co' +
+        'de2 ,b.status_dk) b ON 1 = 1  '#9
       
-        #9'kd_akun ASC) xx ) xx2) xx3) xx31) xx4 ORDER BY'#9'kd_akun ) XXX /*' +
-        'Tambahan baru di atas*/LEFT JOIN t_ak_header yy ON xxx.kd_akun =' +
-        ' yy.header_code '
+        ' LEFT JOIN LATERAL (SELECT CASE WHEN b.status_dk = '#39'D'#39' THEN SUM ' +
+        '( amount ) ELSE 0 END db,CASE'#9'WHEN b.status_dk = '#39'K'#39' THEN SUM ( ' +
+        'amount ) ELSE 0 END kd,b.account_code2 code FROM t_general_ledge' +
+        'r_real'#9'A INNER JOIN "v_ak_account_nr"  b ON A.account_code = b.a' +
+        'ccount_code2 WHERE'#9'b.header_code = aa.kd_akun AND'
       
-        #9') w GROUP BY'#9'w.kelompok_akun,w.kd_akun,w.notr,w.nama_perkiraan ' +
-        ';')
+        #9'b.account_code2 <> '#39'1112.01'#39' AND A.module_id = 7 '#9'AND (to_char(' +
+        ' trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( to_char( trans_date, '#39'mm'#39' ' +
+        ') = '#39'2'#39')   GROUP BY'#9'b.account_code2,'#9'b.status_dk '#9') C ON 1 = 1 O' +
+        'RDER BY '#9'kd_akun ASC) xx ) xx2) xx3) xx31) xx4 ORDER BY'#9'kd_akun ' +
+        ') XXX /*Tambahan baru di atas*/LEFT JOIN t_ak_header yy ON xxx.k' +
+        'd_akun = yy.header_code) w GROUP BY'#9'w.kelompok_akun,w.kd_akun,w.' +
+        'notr,w.nama_perkiraan')
     Left = 436
     Top = 80
   end
@@ -617,7 +602,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Top = 12
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -674,6 +659,22 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Top = 102.047310000000000000
         Width = 718.110700000000000000
         RowCount = 0
+        Stretched = True
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 50.000000000000000000
+          Top = 0.952690000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          ParentFont = False
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush

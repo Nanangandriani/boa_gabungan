@@ -1,9 +1,10 @@
 object FNewDeliveryOrder: TFNewDeliveryOrder
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Delivery Order'
   ClientHeight = 574
-  ClientWidth = 1389
+  ClientWidth = 1350
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,22 +17,22 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 1389
+    Width = 1350
     Height = 574
     Hint = ''
-    ActivePage = TabDataBiaya
+    ActivePage = TabDokumenPendukung
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     OnClick = RzPageControl1Click
-    ExplicitWidth = 1383
-    ExplicitHeight = 565
+    ExplicitWidth = 1346
+    ExplicitHeight = 573
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
-      ExplicitWidth = 1379
-      ExplicitHeight = 540
+      ExplicitWidth = 1342
+      ExplicitHeight = 548
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -49,13 +50,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1385
+        Width = 1346
         Height = 345
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1379
+        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -133,6 +134,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 23
           Text = ''
           TabOrder = 2
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edNamaJenisMuatanButtonClick
@@ -421,7 +423,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Height = 23
             CharCase = ecUpperCase
             TabOrder = 5
-            Visible = False
           end
           object spKapasitas: TSpinEdit
             Left = 133
@@ -535,14 +536,14 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel2: TPanel
         Left = 0
         Top = 517
-        Width = 1385
+        Width = 1346
         Height = 32
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 508
-        ExplicitWidth = 1379
+        ExplicitTop = 516
+        ExplicitWidth = 1342
         object btNextStep: TRzBitBtn
-          Left = 1309
+          Left = 1270
           Top = 1
           Height = 30
           Align = alRight
@@ -601,13 +602,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1303
+          ExplicitLeft = 1266
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
         Top = 345
-        Width = 1385
+        Width = 1346
         Height = 172
         Align = alClient
         DataSource = dsDataMuatan
@@ -698,7 +699,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1385
+        Width = 1346
         Height = 241
         Align = alTop
         Color = clGradientInactiveCaption
@@ -850,6 +851,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 23
           Text = ''
           TabOrder = 3
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edNamaLokasiButtonClick
@@ -861,6 +863,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 23
           Text = ''
           TabOrder = 5
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edNamaProvinsiButtonClick
@@ -872,6 +875,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 23
           Text = ''
           TabOrder = 7
+          AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edNamaKabupatenButtonClick
@@ -919,16 +923,107 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           ScrollBars = ssVertical
           TabOrder = 10
         end
+        object BtnCekBiaya: TRzBitBtn
+          Left = 276
+          Top = 200
+          Width = 116
+          Height = 30
+          Align = alCustom
+          Caption = 'Cek Biaya Perubahan'
+          TabOrder = 11
+          OnClick = BtnCekBiayaClick
+          Glyph.Data = {
+            76060000424D7606000000000000360000002800000014000000140000000100
+            2000000000004006000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000000000000000000014140A1B888D3FB8AFB653EEB2B954F2B2B9
+            54F2B2B954F2B2B954F2B2B954F2B2B954F2B2B954F2B2B954F2B2B954F2B2B9
+            54F2B2B954F2B2B954F2B2B954F2AFB653EE8C9042BC181A0B21000000009A9C
+            40CCBFC152FFC0C151FFC0C151FFC0C151FFC0C151FFC0C151FFC0C151FFBFC1
+            51FFBFC151FFC0C151FFC0C151FFC0C151FFC0C151FFC0C151FFC0C151FFC0C1
+            51FFBFC152FF9EA144D300000000C2C04AFFC3C04AFFC2C04AFFC2C04AFFC2C0
+            4BFFC2C04AFFC3C049FFC2C04BFFBFBD50F9BDBA56F1BFBD50F8C1C04AFFC2C0
+            4AFFC2BF4BFFC2BF4BFFC2BF4BFFC2C04AFFC2C04AFFC3BF4BFF00000000BDB6
+            41F4C5BE44FFC5BE44FFC5BD43FFC4BF45FFC2C149FFDCD792FFF6F5E2FFFCFB
+            F4FFFCFBF4FFFCFBF5FFF7F5E4FFDED893FFC2BA46FFC3BD46FFC7C24BFFC5BD
+            44FFC5BE44FFBDB641F400000000BDB13BF2C7BB3EFFC8BC3EFFC5BC40FFC8B7
+            3CFFF5EBCEFFFFFFFFFFE9E4B0FFD7CD71FFD0C65DFFD6CD70FFE8E1ACFFFAF8
+            EDFFEBE9B1FFF1EDC8FFE6DDA3FFC6BC3FFFC7BB3EFFBDB13BF200000000C0B1
+            34F2CABA37FFCAB938FFC9BF3AFFF5EFCAFFFFFFFFFFCFBE47FFC8BB3AFFCABA
+            38FFCABA38FFCABA38FFCAB937FFF7F5E4FFFFFFFFFFFFFFFFFFE0D492FFCABA
+            38FFCABA37FFC0B134F200000000C3AF2FF2CDB832FFCBB734FFDFCB66FFFFFF
+            FFFFCEC550FFCCB832FFCDB831FFCDB832FFCDB832FFCCB832FFCEB838FFE3D8
+            82FFF1E7BDFFF6F0D6FFCEBE3DFFCDB832FFCDB832FFC3AF2FF200000000C4AD
+            29F2CFB62BFFCFB62BFFF5F0D4FFF9F5E3FFCFB72CFFCFB62BFFCFB62BFFCFB6
+            2BFFCFB62BFFCFB62BFFCFB72BFFCEB52DFFCEB52DFFDDC861FFDDCA64FFCFB6
+            2BFFCFB62BFFC4AD29F200000000C7AB23F2D2B425FFD2B425FFF9F5E1FFEEE3
+            AAFFD1B425FFD2B425FFD2B425FFD2B425FFD2B425FFD2B425FFD2B425FFD2B4
+            25FFD1B426FFEFE5B5FFFEFDF9FFD2B425FFD2B425FFC7AB23F200000000C9A9
+            1EF2D4B220FFD4B220FFDCC146FFE2C759FFD4B220FFD4B320FFD4B220FFD4B2
+            20FFD4B220FFD4B220FFD4B220FFD4B320FFD4B222FFF9F3DCFFF7F0D2FFD3B3
+            21FFD4B220FFC9A91EF200000000CBA81AF2D6B11BFFD6B11AFFDCBD40FFFCF9
+            EDFFF8EFD0FFEBD88DFFD7B31FFFD6B11BFFD6B11BFFD6B11BFFD7B11BFFD5AE
+            1DFFD8B932FFFFFFFFFFE6C75FFFD5B11CFFD6B11BFFCBA81AF200000000CEA7
+            15F2D9B016FFD8B016FFEEDA93FFFFFFFFFFFFFFFFFFF7EECEFFD7AF17FFD8AF
+            16FFD9B016FFD9AF16FFD7AE17FFDDB82DFFFFFFFFFFF8EFC3FFD7AF18FFD9AF
+            16FFD9B016FFCEA715F200000000D0A510F2DBAE11FFDAAD12FFF0D98AFFF1DF
+            9DFFEFDC96FFFBF5E2FFF2E0A3FFE6C657FFE1BE40FFE5C654FFF1DFA2FFFFFF
+            FFFFF9EEC5FFDDAB12FFD9AD11FFDBAE11FFDBAE11FFD0A510F200000000D3A5
+            0BF4DDAC0BFFDEAC0BFFDDAC0CFFDDAD0CFFDDAB0BFFEBCC63FFFAF0D3FFFDF9
+            EDFFFDFAF0FFFDF9EDFFFAF1D6FFEBCD6AFFDAA90DFFDCAC0CFFDEAD0BFFDDAC
+            0BFFDDAC0BFFD3A50BF400000000DEA708FFE0AD08FFDFAB08FFDFAB08FFDFAB
+            08FFDFAB08FFDEAB08FFDEAB08FFE0AE11FFE2B422FFE0AF13FFDFAB08FFDFAB
+            08FFDFAB08FFDFAB08FFDFAB08FFDFAB08FFDFAC08FFDEAB08FF00000000B088
+            03C7DEA705FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB
+            05FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB05FFE0AB
+            05FFDFA805FFB78D03CF0000000016130017C6992CDDE3AF13FFE3AD0EFFE3AD
+            0EFFE3AD0EFFE3AD0EFFE3AD0EFFE3AD0EFFE3AD0EFFE3AD0EFFE3AD0EFFE3AD
+            0EFFE3AD0EFFE3AD0EFFE3AD0EFFDDA70BF8A17A01B61912001C000000000000
+            0000565656569E9E9E9E94949494919191919191919191919191919191919191
+            9191919191919191919191919191919191919191919194949494A3A3A3A35A5A
+            5A5A000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000}
+        end
+        object Memo1: TMemo
+          Left = 1312
+          Top = 12
+          Width = 185
+          Height = 89
+          Lines.Strings = (
+            'Memo1')
+          TabOrder = 12
+          Visible = False
+        end
+        object MemoAPI: TMemo
+          Left = 581
+          Top = 0
+          Width = 257
+          Height = 89
+          Lines.Strings = (
+            'MemoAPI')
+          TabOrder = 13
+          Visible = False
+        end
+        object edlokasiregencyid: TEdit
+          Left = 459
+          Top = 84
+          Width = 100
+          Height = 23
+          TabOrder = 14
+          Visible = False
+        end
       end
       object Panel1: TPanel
         Left = 0
         Top = 512
-        Width = 1385
+        Width = 1346
         Height = 37
         Align = alBottom
         TabOrder = 1
         object btBatalSumberJual: TRzBitBtn
-          Left = 1309
+          Left = 1270
           Top = 1
           Height = 35
           Align = alRight
@@ -989,7 +1084,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           NumGlyphs = 2
         end
         object btSimpanSumberJual: TRzBitBtn
-          Left = 1234
+          Left = 1195
           Top = 1
           Height = 35
           Align = alRight
@@ -1114,7 +1209,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object DBGridSumberPenjualan: TDBGridEh
         Left = 0
         Top = 241
-        Width = 1385
+        Width = 1346
         Height = 271
         Align = alClient
         DataSource = dsDataBiaya
@@ -1125,9 +1220,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         SumList.Active = True
         TabOrder = 2
         TitleParams.MultiTitle = True
-        OnCellClick = DBGridSumberPenjualanCellClick
         OnColEnter = DBGridSumberPenjualanColEnter
-        OnColExit = DBGridSumberPenjualanColExit
         OnEnter = DBGridSumberPenjualanEnter
         OnExit = DBGridSumberPenjualanExit
         OnKeyDown = DBGridSumberPenjualanKeyDown
@@ -1326,12 +1419,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel3: TPanel
         Left = 0
         Top = 517
-        Width = 1385
+        Width = 1346
         Height = 32
         Align = alBottom
         TabOrder = 0
         object btBatalParameter: TRzBitBtn
-          Left = 1309
+          Left = 1270
           Top = 1
           Height = 30
           Align = alRight
@@ -1392,7 +1485,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           NumGlyphs = 2
         end
         object btSaveParameter: TRzBitBtn
-          Left = 1234
+          Left = 1195
           Top = 1
           Height = 30
           Align = alRight
@@ -1456,7 +1549,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1385
+        Width = 1346
         Height = 517
         Align = alClient
         Color = clGradientInactiveCaption
@@ -1609,8 +1702,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 808
-    Top = 88
+    Left = 384
+    Top = 264
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end
@@ -1766,13 +1859,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object dsDataMuatan: TDataSource
     DataSet = MemDataMuatan
-    Left = 720
+    Left = 728
     Top = 32
   end
   object MemDataMuatan: TMemTableEh
     Params = <>
-    Left = 720
-    Top = 88
+    Left = 640
     object MemDataMuatannotrans: TStringField
       FieldName = 'notrans'
       Size = 100
@@ -1865,5 +1957,21 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object IdHTTP1: TIdHTTP
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams]
+    Left = 544
+    Top = 65528
   end
 end

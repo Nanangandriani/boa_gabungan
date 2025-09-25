@@ -20,17 +20,18 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 241
     Align = alTop
     TabOrder = 0
-    ExplicitTop = -4
+    ExplicitWidth = 1020
     object Label1: TLabel
       Left = 24
-      Top = 42
+      Top = 124
       Width = 42
       Height = 15
       Caption = 'No. Ref.'
+      Visible = False
     end
     object Label3: TLabel
       Left = 24
-      Top = 125
+      Top = 99
       Width = 57
       Height = 15
       Caption = 'No. Terima'
@@ -45,28 +46,30 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label6: TLabel
       Left = 24
-      Top = 97
+      Top = 71
       Width = 79
       Height = 15
       Caption = 'Tanggal Terima'
     end
     object Label8: TLabel
       Left = 120
-      Top = 42
+      Top = 124
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label10: TLabel
       Left = 120
-      Top = 125
+      Top = 99
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label11: TLabel
       Left = 120
-      Top = 97
+      Top = 71
       Width = 3
       Height = 15
       Caption = ':'
@@ -145,14 +148,14 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label17: TLabel
       Left = 24
-      Top = 70
+      Top = 44
       Width = 43
       Height = 15
       Caption = 'Supplier'
     end
     object Label18: TLabel
       Left = 120
-      Top = 70
+      Top = 44
       Width = 3
       Height = 15
       Caption = ':'
@@ -209,6 +212,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label26: TLabel
       Left = 483
@@ -220,18 +224,19 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNoSPB: TRzComboBox
       Left = 138
-      Top = 40
+      Top = 122
       Width = 226
       Height = 23
       CharCase = ecUpperCase
       Enabled = False
       TabOrder = 0
       Text = '0'
+      Visible = False
       OnSelect = EdNoSPBSelect
     end
     object EdNo: TEdit
       Left = 138
-      Top = 123
+      Top = 97
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -241,7 +246,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Dtterima: TRzDateTimeEdit
       Left = 138
-      Top = 95
+      Top = 69
       Width = 121
       Height = 23
       EditType = etDate
@@ -261,7 +266,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdSJ: TEdit
       Left = 138
-      Top = 152
+      Top = 148
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -299,7 +304,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Edkd_supp: TRzEdit
       Left = 138
-      Top = 68
+      Top = 42
       Width = 53
       Height = 23
       Text = ''
@@ -310,7 +315,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNm_supp: TRzButtonEdit
       Left = 197
-      Top = 68
+      Top = 42
       Width = 218
       Height = 23
       Text = ''
@@ -379,7 +384,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Edjenispo: TRzComboBox
       Left = 265
-      Top = 95
+      Top = 69
       Width = 99
       Height = 23
       CharCase = ecUpperCase
@@ -392,8 +397,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         'LOKAL')
     end
     object Edsbu: TComboBox
-      Left = 144
-      Top = 152
+      Left = 138
+      Top = 148
       Width = 73
       Height = 23
       TabOrder = 16
@@ -485,24 +490,24 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Visible = False
     end
     object Edbln: TEdit
-      Left = 203
-      Top = 212
+      Left = 563
+      Top = 214
       Width = 58
       Height = 23
       TabOrder = 26
       Visible = False
     end
     object Edth: TEdit
-      Left = 267
-      Top = 212
+      Left = 627
+      Top = 214
       Width = 58
       Height = 23
       TabOrder = 27
       Visible = False
     end
     object Edhari: TEdit
-      Left = 138
-      Top = 212
+      Left = 498
+      Top = 214
       Width = 58
       Height = 23
       TabOrder = 28
@@ -516,8 +521,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 488
-    ExplicitWidth = 1022
+    ExplicitTop = 480
+    ExplicitWidth = 1020
     object BBatal: TRzBitBtn
       Left = 950
       Top = 1
@@ -578,7 +583,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 946
+      ExplicitLeft = 944
     end
     object BSimpan: TRzBitBtn
       Left = 875
@@ -640,7 +645,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 871
+      ExplicitLeft = 869
     end
     object BEdit: TRzBitBtn
       Left = 800
@@ -649,6 +654,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Align = alRight
       Caption = 'Save'
       TabOrder = 2
+      OnClick = BEditClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -701,7 +707,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 796
+      ExplicitLeft = 794
     end
     object BitBtn1: TBitBtn
       Left = 597
@@ -722,8 +728,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1022
-    ExplicitHeight = 247
+    ExplicitWidth = 1020
+    ExplicitHeight = 239
     object DBGridDetailpo: TDBGridEh
       Left = 2
       Top = 2
@@ -993,6 +999,34 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           FieldName = 'wh_code'
           Footers = <>
           Visible = False
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_pengajuan_asset'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'no_pengajuan_asset'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_detail_asset'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'spesifikasi_asset'
+          Footers = <>
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
@@ -1195,6 +1229,29 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           FieldName = 'wh_code'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object id_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'id_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object no_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'no_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object id_detail_asset: TMTStringDataFieldEh
+          FieldName = 'id_detail_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+        end
+        object spesifikasi_asset: TMTStringDataFieldEh
+          FieldName = 'spesifikasi_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
         end
       end
       object RecordsList: TRecordsListEh

@@ -67,6 +67,7 @@ type
     procedure DBGridEh3Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure edppnChange(Sender: TObject);
+    procedure edno_terimaSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,7 +93,7 @@ implementation
 {$R *.dfm}
 
 uses USupp_Pembelian, UDataModule, UReturnPembelian,UMy_Function,
-  USearch_ItemRetur, UMainMenu, USearch_Supplier;
+  USearch_ItemRetur, UMainMenu, USearch_Supplier, USearch_MaterialRetur;
 
 {var
   realfnew_rt : TFNew_returnPemb;
@@ -110,8 +111,8 @@ begin
   subtotal:=DBGridEh3.Columns[6].footer.sumvalue;
   ppn_rp:=(subtotal/100)* StrToFloat(edppn.Text);
   grandtotal:=subtotal+ppn_rp;
-  Edppnrp.Text:=FloatToStr(ppn_rp);
-  Edgrandtotal.Text:=FloatToStr(grandtotal);
+  Edppnrp.Value:=ppn_rp;
+  Edgrandtotal.Value:=grandtotal;
 end;
 
 procedure TFNew_ReturnPemb.Autonumber;
@@ -323,7 +324,7 @@ begin
       with Qmaterial do
       begin
         Filtered:=false;
-        Filter:='supplier_code='+QuotedStr(Edkd_supp.Text)+' and receive_no='+QuotedStr(Edno_terima.Text)+' ';
+        Filter:='supplier_code='+QuotedStr(Edkd_supp.Text);//+'// and trans_no='+QuotedStr(Edno_terima.Text)+' ';
         FilterOptions:=[];
         Filtered:=True;
       end;
@@ -393,14 +394,14 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_item_receive where supplier_code='+QuotedStr(Edkd_supp.Text);
+      sql.Text:='select * from t_purchase_invoice where supplier_code='+QuotedStr(Edkd_supp.Text);
       Execute;
     end;
     edno_terima.Items.Clear;
     Dm.Qtemp.First;
     while not Dm.Qtemp.Eof do
     begin
-      edno_terima.items.Add(Dm.Qtemp['receive_no']);
+      edno_terima.items.Add(Dm.Qtemp['trans_no']);
       Dm.Qtemp.Next;
     end;
     end;
@@ -411,12 +412,25 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_item_receive where Receive_no='+QuotedStr(edno_terima.Text);
+      sql.Text:='select * from t_purchase_invoice where trans_no='+QuotedStr(edno_terima.Text);
       Execute;
     end;
       EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];
       DtFaktur.text:=Dm.Qtemp['faktur_date'];
 end;
+procedure TFNew_ReturnPemb.edno_terimaSelect(Sender: TObject);
+begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_purchase_invoice where trans_no='+QuotedStr(edno_terima.Text);
+      Execute;
+    end;
+      EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];
+      DtFaktur.text:=Dm.Qtemp['faktur_date'];
+end;
+
 procedure TFNew_ReturnPemb.edppnChange(Sender: TObject);
 begin
    if Edppn.Text='' then Edppn.Text:='0';

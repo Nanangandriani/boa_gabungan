@@ -110,8 +110,8 @@ object FSearch_Matterima: TFSearch_Matterima
     Align = alBottom
     TabOrder = 2
     OnClick = Panel1Click
-    ExplicitTop = 282
-    ExplicitWidth = 576
+    ExplicitTop = 274
+    ExplicitWidth = 574
     object BBatal: TRzBitBtn
       Left = 504
       Top = 1
@@ -172,7 +172,7 @@ object FSearch_Matterima: TFSearch_Matterima
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 500
+      ExplicitLeft = 498
     end
     object BEdit: TRzBitBtn
       Left = 429
@@ -234,7 +234,7 @@ object FSearch_Matterima: TFSearch_Matterima
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 425
+      ExplicitLeft = 423
     end
     object BSelectAll: TRzBitBtn
       Left = 114

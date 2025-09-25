@@ -34,6 +34,7 @@ type
     { Public declarations }
     procedure GetDataViaAPI;
     procedure GetDataViaAPI2;
+    procedure GetDataVehicleDO;
   end;
 
 var
@@ -47,13 +48,42 @@ implementation
 uses ulkJSON, UDataModule, UHomeLogin, UMy_Function, UNewDeliveryOrder,
   UDataPerintahMuat;
 
+procedure TFDaftarKendaraan.GetDataVehicleDO;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select DISTINCT vehicles,type_vehicles_code,type_vehicles_name,capacity '+
+              'from t_delivery_order_services where notrans NOT IN '+
+              '(select a.notrans_do from t_spm_det a left join t_spm b on '+
+              'b.notrans=a.notrans where b.deleted_at is null)';
+    open;
+  end;
+  MemMasterData.active:=false;
+  MemMasterData.active:=true;
+  MemMasterData.EmptyTable;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+    MemMasterData.insert;
+    MemMasterData['code']:=dm.Qtemp.FieldValues['vehicles'];
+    MemMasterData['plate_number']:='';
+    MemMasterData['type']:=dm.Qtemp.FieldValues['type_vehicles_code'];;
+    MemMasterData['type_name']:=dm.Qtemp.FieldValues['type_vehicles_name'];;
+    MemMasterData['capacity']:=dm.Qtemp.FieldValues['capacity'];;
+    MemMasterData.post;
+    dm.Qtemp.Next;
+  end;
+end;
+
 procedure TFDaftarKendaraan.DBGridDblClick(Sender: TObject);
 begin
   if vcall='delivery_order' then
   begin
     FNewDeliveryOrder.edNoKendMuatan.Text:=MemMasterData['code'];
-    FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type'];
-    FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type_name'];
+    FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type_name'];
+    FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type'];
     FNewDeliveryOrder.spKapasitas.value:=MemMasterData['capacity'];
   end;
   if vcall='perintah_muat' then
@@ -110,8 +140,8 @@ begin
   try
   //BaseUrl:=edBaseURL.Text;
   BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurl_m_kend''');
-  key:='';
-  vtoken:='';
+  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
+  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapichakra''');
   vBody:='';
   Vpath:='/api/get-vehicle';
   url:= BaseUrl+Vpath;
@@ -173,7 +203,7 @@ begin
   begin
     inc(xxx);
     row1 := format('data/%d/', [iii]);
-    //ShowMessage(json.StringTree[row1 + 'outlet_code']);
+//    ShowMessage(json.StringTree[row1 + 'code']);
      MemMasterData.insert;
      MemMasterData['code']:=json.StringTree[row1 + 'code'];
      MemMasterData['plate_number']:=json.StringTree[row1 + 'plate_number'];

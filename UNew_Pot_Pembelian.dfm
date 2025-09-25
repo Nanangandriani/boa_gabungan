@@ -12,6 +12,9 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object Label6: TLabel
@@ -365,8 +368,7 @@ object FNew_Pot_Pembelian: TFNew_Pot_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 329
-      ExplicitTop = -7
+      ExplicitLeft = 331
     end
     object RzBitBtn1: TRzBitBtn
       Left = 243

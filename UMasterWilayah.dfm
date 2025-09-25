@@ -87,8 +87,8 @@ object FMasterWilayah: TFMasterWilayah
     ActivePage = TabSDetailData
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 96
-    ExplicitWidth = 1016
+    ExplicitTop = 104
+    ExplicitWidth = 1018
     object TabSDetailData: TTabSheet
       Caption = 'Data Detail'
       object DBGridCustomer: TDBGridEh

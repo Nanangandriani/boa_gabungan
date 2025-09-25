@@ -188,14 +188,14 @@ object FlistBarang: TFlistBarang
         'b, e.account_name nm_rtpemb, acc_potpemb, f.account_name nm_potp' +
         'emb,acc_rtpenj, g.account_name nm_rtpenj, item_code FROM t_item_' +
         'account AS "a" '
-      'INNER JOIN t_ak_account b on a.acc_persd=b.code'
-      'INNER JOIN t_ak_account c on a.acc_pemb=c.code'
-      'INNER JOIN t_ak_account d on a.acc_penj=d.code'
-      'INNER JOIN t_ak_account e on a.acc_rtpemb=e.code'
-      'INNER JOIN t_ak_account f on a.acc_potpemb=f.code'
+      'INNER JOIN t_ak_account_sub b on a.acc_persd=b.account_code2'
+      'INNER JOIN t_ak_account_sub c on a.acc_pemb=c.account_code2'
+      'INNER JOIN t_ak_account_sub d on a.acc_penj=d.account_code2'
+      'INNER JOIN t_ak_account_sub e on a.acc_rtpemb=e.account_code2'
+      'INNER JOIN t_ak_account_sub f on a.acc_potpemb=f.account_code2'
       
-        'INNER JOIN t_ak_account g on a.acc_rtpenj=g.code) f on b.item_co' +
-        'de=f.item_code'
+        'INNER JOIN t_ak_account_sub g on a.acc_rtpenj=g.account_code2) f' +
+        ' on b.item_code=f.item_code'
       'where b.deleted_at isnull'
       'order by b.item_code asc')
     Left = 44
@@ -392,7 +392,7 @@ object FlistBarang: TFlistBarang
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -679,7 +679,7 @@ object FlistBarang: TFlistBarang
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]

@@ -38,8 +38,8 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 503
-    ExplicitWidth = 594
+    ExplicitTop = 495
+    ExplicitWidth = 592
     object BBatal: TRzBitBtn
       Left = 522
       Top = 1
@@ -100,7 +100,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 518
+      ExplicitLeft = 516
     end
     object BSave: TRzBitBtn
       Left = 437
@@ -163,7 +163,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 433
+      ExplicitLeft = 431
     end
   end
   object RzPanel1: TRzPanel
@@ -172,9 +172,9 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Width = 598
     Height = 233
     Align = alTop
-    Color = clGradientInactiveCaption
+    Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 594
+    ExplicitTop = -4
     object Label16: TLabel
       Left = 13
       Top = 42
@@ -256,28 +256,29 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     end
     object Label4: TLabel
       Left = 286
-      Top = 132
+      Top = 192
       Width = 86
       Height = 13
       Caption = 'Group Pos Neraca'
+      Visible = False
     end
     object Label6: TLabel
       Left = 286
-      Top = 163
+      Top = 132
       Width = 44
       Height = 13
       Caption = 'Group BY'
     end
     object Label8: TLabel
       Left = 286
-      Top = 193
+      Top = 162
       Width = 48
       Height = 13
       Caption = 'Group L/R'
     end
     object SpeedButton3: TSpeedButton
       Left = 561
-      Top = 157
+      Top = 126
       Width = 23
       Height = 22
       Caption = '+'
@@ -285,7 +286,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     end
     object Btnlr: TSpeedButton
       Left = 561
-      Top = 187
+      Top = 156
       Width = 23
       Height = 22
       Caption = '+'
@@ -401,10 +402,11 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     end
     object Cb_PosNR: TRzComboBox
       Left = 375
-      Top = 129
+      Top = 189
       Width = 180
       Height = 21
       TabOrder = 11
+      Visible = False
       OnChange = CBkelompok_akunChange
       OnKeyPress = cbmodulKeyPress
       OnSelect = Cb_PosNRSelect
@@ -424,7 +426,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     end
     object Cb_lr: TRzComboBox
       Left = 375
-      Top = 190
+      Top = 159
       Width = 180
       Height = 21
       TabOrder = 13
@@ -435,7 +437,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     end
     object Cb_by: TRzComboBox
       Left = 375
-      Top = 160
+      Top = 129
       Width = 180
       Height = 21
       TabOrder = 14
@@ -456,11 +458,12 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     end
     object BtnPosNr: TRzBitBtn
       Left = 561
-      Top = 127
+      Top = 187
       Width = 23
       Height = 23
       Caption = '+'
       TabOrder = 16
+      Visible = False
       OnClick = BtnPosNrClick
     end
   end
@@ -472,7 +475,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 594
+    ExplicitWidth = 592
     object RzBitBtn4: TRzBitBtn
       Left = 2
       Top = 2

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS, DBAccess, Uni, RzButton,
-  Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+  Vcl.ExtCtrls, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Vcl.StdCtrls;
 
 type
   TFlistitempo = class(TForm)
@@ -76,10 +76,11 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_PO, UDataModule,Ulist_materialstok;
+uses UNew_PO, UDataModule,Ulist_materialstok, UMainMenu;
 
 var
   RealFlistitempo: TFlistitempo;
+  kode_br,kd_sp:string;
 function Flistitempo: TFlistitempo;
 begin
   if RealFlistitempo <> nil then
@@ -287,29 +288,100 @@ begin
         begin
           GotoBookmark((DBGridMaterial.SelectedRows.Items[i]));
           FNew_PO.Show;
-          with FNew_PO.Memitempo do
+          if ref_code='KK' then
           begin
-            FNew_PO.MemItempo.Insert;
-            FNew_PO.MemItempo['kd_material_stok']:=QMaterial_stok['item_stock_code'];
-            FNew_PO.MemItempo['kd_material']:=QMaterial_stok['item_code'];
-            FNew_PO.MemItempo['nm_material']:=QMaterial_stok['item_name'];
-            FNew_PO.MemItempo['satuan']:=QMaterial_stok['unit'];
-            FNew_PO.MemItempo['harga']:=QMaterial_stok['price'];
-            FNew_PO.MemItempo['harga_rp']:=QMaterial_stok['price'];
-            FNew_po.MemItempo['qtykontrak']:=QMaterial_stok['remaining_qty'];
-            FNew_po.MemItempo['ppn']:=QMaterial_stok['ppn'];
-            FNew_po.MemItempo['ppn_rp']:=QMaterial_stok['ppn_rp'];
-            FNew_po.MemItempo['pemb_ppn']:=QMaterial_stok['pemb_ppn'];
-            FNew_po.MemItempo['pemb_ppn_us']:=QMaterial_stok['pemb_ppn'];
-            FNew_po.MemItempo['pemb_dpp']:=QMaterial_stok['pemb_dpp'];
-            FNew_po.MemItempo['ppn_us']:=0;
-            FNew_PO.MemItempo['qty']:=QMaterial_stok['remaining_qty'];
-            FNew_po.MemItempo['pph']:=QMaterial_stok['pph'];
-            FNew_po.MemItempo['pph_rp']:=QMaterial_stok['pph_rp'];
-            //FNew_po.MemItempo['subtotal_rp']:=QMaterial_stok['subtotal_rp'];
-            //FNew_po.MemItempo['grandtotalrp']:=QMaterial_stok['grandtotal'];
-            FNew_PO.MemItempo['gudang']:=FNew_PO.cb_gudang.Text;
-            FNew_PO.MemItempo.Post;
+            with FNew_PO.Memitempo do
+            begin
+              FNew_PO.MemItempo.Insert;
+              FNew_PO.MemItempo['kd_material_stok']:=QMaterial_stok['item_stock_code'];
+              FNew_PO.MemItempo['kd_material']:=QMaterial_stok['item_code'];
+              FNew_PO.MemItempo['nm_material']:=QMaterial_stok['item_name'];
+              FNew_PO.MemItempo['satuan']:=QMaterial_stok['unit'];
+              FNew_PO.MemItempo['harga']:=QMaterial_stok['price'];
+              FNew_PO.MemItempo['harga_rp']:=QMaterial_stok['price'];
+              FNew_po.MemItempo['qtykontrak']:=QMaterial_stok['remaining_qty'];
+              FNew_po.MemItempo['ppn']:=QMaterial_stok['ppn'];
+              FNew_po.MemItempo['ppn_rp']:=QMaterial_stok['ppn_rp'];
+              FNew_po.MemItempo['pemb_ppn']:=QMaterial_stok['pemb_ppn'];
+              FNew_po.MemItempo['pemb_ppn_us']:=QMaterial_stok['pemb_ppn'];
+              FNew_po.MemItempo['pemb_dpp']:=QMaterial_stok['pemb_dpp'];
+              FNew_po.MemItempo['ppn_us']:=0;
+              FNew_PO.MemItempo['qty']:=QMaterial_stok['remaining_qty'];
+              FNew_po.MemItempo['pph']:=QMaterial_stok['pph'];
+              FNew_po.MemItempo['pph_rp']:=QMaterial_stok['pph_rp'];
+              //FNew_po.MemItempo['subtotal_rp']:=QMaterial_stok['subtotal_rp'];
+              //FNew_po.MemItempo['grandtotalrp']:=QMaterial_stok['grandtotal'];
+              FNew_PO.MemItempo['gudang']:=FNew_PO.cb_gudang.Text;
+              FNew_PO.MemItempo.Post;
+            end;
+          end;
+          WITH DM.Qtemp DO
+          BEGIN
+            Close;
+            SQL.Clear;
+            sql.Text:='select percentage ppn from t_tax_type where type=''PPN''';
+            Open;
+          END;
+          if ref_code<>'KK' then
+          begin
+            kode_br:=QMaterial_stok['item_code']+FNew_PO.EdKd_supp.Text;
+            with FNew_PO.Memitempo do
+            begin
+              FNew_PO.MemItempo.Insert;
+              FNew_PO.MemItempo['kd_material_stok']:=kode_br;
+              FNew_PO.MemItempo['kd_material']:=QMaterial_stok['item_code'];
+              FNew_PO.MemItempo['nm_material']:=QMaterial_stok['item_name'];
+              FNew_PO.MemItempo['satuan']:=QMaterial_stok['unit'];
+              FNew_PO.MemItempo['harga']:=QMaterial_stok['price'];
+              FNew_PO.MemItempo['harga_rp']:=QMaterial_stok['price'];
+              FNew_po.MemItempo['qtykontrak']:=QMaterial_stok['remaining_qty'];
+              FNew_po.MemItempo['ppn']:=dm.Qtemp['ppn'];
+              FNew_po.MemItempo['ppn_rp']:=0;
+              FNew_po.MemItempo['pemb_ppn']:=0;
+              FNew_po.MemItempo['pemb_ppn_us']:=0;
+              FNew_po.MemItempo['pemb_dpp']:=0;
+              FNew_po.MemItempo['ppn_us']:=0;
+              FNew_PO.MemItempo['qty']:=QMaterial_stok['remaining_qty'];
+              FNew_po.MemItempo['pph']:=0;
+              FNew_po.MemItempo['pph_rp']:=0;
+              //FNew_po.MemItempo['subtotal_rp']:=QMaterial_stok['subtotal_rp'];
+              //FNew_po.MemItempo['grandtotalrp']:=QMaterial_stok['grandtotal'];
+              FNew_PO.MemItempo['gudang']:=FNew_PO.cb_gudang.Text;
+              FNew_PO.MemItempo.Post;
+            end;
+            with dm.Qtemp do
+            begin
+              close;
+              sql.Clear;
+              sql.Text:='select * from t_item_stock where item_stock_code='+QuotedStr(kode_br);
+              Execute;
+            end;
+            if dm.Qtemp.RecordCount=0 then
+            begin
+              with dm.Qtemp2 do
+              begin
+                close;
+                sql.Clear;
+                sql.Text:='select max(order_no) urut from t_item_stock where supplier_code='+QuotedStr(FNew_PO.EdKd_supp.Text);
+                Execute;
+              end;
+              if dm.Qtemp2.RecordCount=0 then
+              begin
+                kd_sp:='0';
+              end;
+              if dm.Qtemp2.RecordCount<>0 then
+              begin
+                kd_sp:= inttostr(dm.Qtemp2['urut']+1);
+              end;
+              with dm.Qtemp1 do
+              begin
+                Close;
+                sql.clear;
+                SQL.Text:='insert into t_item_stock(item_stock_code,item_code,item_name,unit,order_no,qty,supplier_code,created_by)'+
+                'values('+QuotedStr(kode_br)+','+quotedstr(QMaterial_stok['item_code'])+','+QuotedStr(QMaterial_stok['item_name'])+','+QuotedStr(QMaterial_stok['unit'])+','+QuotedStr(kd_sp)+',''0'','+QuotedStr(FNew_PO.edkd_supp.Text)+','+QuotedStr(Nm)+')';
+                execute;
+              end;
+            end;
           end;
         end;
     end;
@@ -369,6 +441,39 @@ begin
     //FNew_PO.MemItempo['gudang']:=FNew_PO.cb_gudang.Text;
     FNew_PO.MemItempo.Post;
   end;
+   with dm.Qtemp do
+            begin
+              close;
+              sql.Clear;
+              sql.Text:='select * from t_item_stock where item_stock_code='+QuotedStr(kode_br);
+              Execute;
+            end;
+            if dm.Qtemp.RecordCount=0 then
+            begin
+              with dm.Qtemp2 do
+              begin
+                close;
+                sql.Clear;
+                sql.Text:='select max(order_no) urut from t_item_stock where supplier_code='+QuotedStr(FNew_PO.EdKd_supp.Text);
+                Execute;
+              end;
+              if dm.Qtemp2.RecordCount=0 then
+              begin
+                kd_sp:='0';
+              end;
+              if dm.Qtemp2.RecordCount<>0 then
+              begin
+                kd_sp:= inttostr(dm.Qtemp2['urut']+1);
+              end;
+              with dm.Qtemp1 do
+              begin
+                Close;
+                sql.clear;
+                SQL.Text:='insert into t_item_stock(item_stock_code,item_code,item_name,unit,order_no,qty,supplier_code,created_by)'+
+                'values('+QuotedStr(kode_br)+','+quotedstr(QMaterial_stok['item_code'])+','+QuotedStr(QMaterial_stok['item_name'])+','+QuotedStr(QMaterial_stok['unit'])+','+QuotedStr(kd_sp)+',''0'','+QuotedStr(FNew_PO.edkd_supp.Text)+','+QuotedStr(Nm)+')';
+                execute;
+              end;
+            end;
   close;
 end;
 

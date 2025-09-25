@@ -8,7 +8,8 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, MemTableEh, Vcl.StdCtrls, RzButton,
   Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Samples.Spin,
-  Vcl.ComCtrls, RzDTP;
+  Vcl.ComCtrls, RzDTP, IdBaseComponent, IdComponent, IdTCPConnection,
+  IdTCPClient, IdHTTP;
 
 type
   TFNew_SalesOrder = class(TForm)
@@ -62,6 +63,14 @@ type
     dtTanggal_Pesan: TRzDateTimePicker;
     btMasterSumber: TSpeedButton;
     btMasterSales: TSpeedButton;
+    MemDetailCATEGORY_ID: TIntegerField;
+    MemCategori: TMemTableEh;
+    MemCategoricategory_id: TSmallintField;
+    MemCategoriqty: TSmallintField;
+    MemDetailCATEGORY_NAME: TStringField;
+    Memo1: TMemo;
+    Edit1: TEdit;
+    SpeedButton1: TSpeedButton;
     procedure BBatalClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edNama_PelangganButtonClick(Sender: TObject);
@@ -72,12 +81,18 @@ type
     procedure btMasterSumberClick(Sender: TObject);
     procedure dtTanggal_PesanChange(Sender: TObject);
     procedure btMasterSalesClick(Sender: TObject);
+    procedure edNamaSumberChange(Sender: TObject);
+    procedure dtTanggal_KirimCloseUp(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
+
   public
     { Public declarations }
     vFormSumber, vFormSumber1, kd_kares: string;
-    strtgl, strbulan, strtahun: string;
+    strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
+    Strversi, Stripuser,Strketerangan,Stralasan: string;
     Year, Month, Day: Word;
     procedure Clear;
     procedure Save;
@@ -85,11 +100,15 @@ type
     procedure InsertDetailSO;
     Procedure Autonumber;
     procedure RefreshGrid;
+    procedure UpdateStatusTele;
+    procedure CekTargetSales;
+    procedure CekBankGaransi;
   end;
 
 var
   FNew_SalesOrder: TFNew_SalesOrder;
-  status: integer;
+  status,iserror,islanjut,IntKdKares: integer;
+  StrStatusUpdateTele: String;
   AClass: TPersistentClass;
   AFormClass: TFormClass;
   AForm: TForm;
@@ -101,16 +120,283 @@ implementation
 
 uses UTambah_Barang, UMasterData, Ubrowse_pelanggan, UMasterSales, UMy_Function,
   UDataModule, UTemplate_Temp, UListOrderTelemarketing, UListKontrakJasa,
-  UHomeLogin, UListSales_Order, USetMasterPenjulan, USetMasterPelanggan;
+  UHomeLogin, UListSales_Order, USetMasterPenjulan, USetMasterPelanggan,
+  UMainMenu;
 //uses UDataModule, UMy_Function;
+
+procedure TFNew_SalesOrder.UpdateStatusTele;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  vBody,vBody2  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt,cnt2: Integer;
+  iii,iiii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date: TDate;
+  max,min: Integer;
+        //component
+  gNet:TIdHTTP;
+  //respon component
+  httpresult: TIdHTTP ;
+  resp: TMemoryStream;
+begin
+  try
+
+  //BaseUrl:=edBaseURL.Text;
+  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
+  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
+  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
+  vBody:='?ticket_number='+edNoReff.Text+
+         '&status=3';
+  Vpath:='/update-order';
+  url:= BaseUrl+Vpath+vBody;
+  try
+  gNet :=  TIdHTTP.Create(nil);
+  gNet.Request.Accept := 'application/json';
+  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+  res:=  gNet.get(url);
+  jumdata:=1;
+  memo1.text := res;
+  except
+  on E: EIdHTTPProtocolException do
+
+  if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+  begin
+    jumdata:=0;
+    gNet.free;
+    resp.Free;
+  end;
+ on E: Exception do
+ ShowMessage('A non-Indy related exception has been raised!');
+ end;
+  finally
+    gNet.free;
+    resp.Free;
+  end;
+
+  //MOVE JSON
+  json.JSONText := memo1.text;
+  StrStatusUpdateTele:=json.StringTree['status'];
+end;
 
 procedure TFNew_SalesOrder.Autonumber;
 begin
-   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name)+'');
-   strday2:=dtTanggal_Pesan.Date;
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name)+'');
+  strday2:=dtTanggal_Pesan.Date;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.id,b.additional_status from t_numb_type a inner join t_numb b on a.id=b.reset_type where numb_type='+QuotedStr(idmenu);
+    open;
+  end;
+  if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
+//  ShowMessage(kd_kares);
    //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
-   edKodeOrder.Text:=getNourut(strday2,'public.t_sales_order',kd_kares);
+  edKodeOrder.Text:=getNourut(strday2,'public.t_sales_order',kd_kares);
    //EdNo.Text:=Order_no;
+end;
+
+procedure TFNew_SalesOrder.CekTargetSales;
+var Strmonth,StrYear,StrKdItem,StrQuery: String;
+    TotBarangSO,TotTargetBarang,TotCategorySO,QtyCategorySO: Real	;
+    IntCategoryID: Integer;
+begin
+  Strmonth:=FormatDateTime('mm', dtTanggal_Pesan.Date);
+  StrYear:=FormatDateTime('yyyy', dtTanggal_Pesan.Date);
+  TotCategorySO:=0;
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    //Cek kategori barang ada target atau tidak
+    with dm.Qtemp do
+    begin
+      Close;
+      Sql.Clear;
+      Sql.Text:= 'SELECT a.group_id,b.istarget '+
+                 'FROM t_item a '+
+                 'LEFT JOIN t_item_group b on b.group_id=a.group_id '+
+                 'WHERE a.item_code='+QuotedStr(MemDetail['KD_ITEM'])+';';
+      Open;
+    end;
+
+    //Jika mempunyai target lanjut pengecekan jumlah percategory diSO
+    if dm.Qtemp.FieldValues['istarget']=true then
+    begin
+
+      IntCategoryID:=MemDetail['CATEGORY_id'];
+      StrKdItem:=MemDetail['KD_ITEM'];
+
+      QtyCategorySO:=0;
+
+      QtyCategorySO:=(MemDetail['JUMLAH']);
+
+      //Hitung jumlah Qty Kategori barang di memDetail
+      MemDetail.First;
+      while not MemDetail.Eof do
+      begin
+
+        if (IntCategoryID=MemDetail['CATEGORY_id']) and (StrKdItem=MemDetail['KD_ITEM']) then
+        begin
+          TotCategorySO:=MemDetail['JUMLAH'];
+        end else if (IntCategoryID=MemDetail['CATEGORY_id']) and (StrKdItem<>MemDetail['KD_ITEM']) then
+        begin
+          TotCategorySO:=TotCategorySO+MemDetail['JUMLAH'];
+        end;
+
+
+        MemDetail.Next
+      end;
+
+
+      //Total Jumlah Qty pada sales order berdasarkan kategori
+      with dm.Qtemp do
+      begin
+        Close;
+        Sql.Clear;
+        Sql.Text:='SELECT * from "get_sales_order_total_unit"('+StrYear+', '+Strmonth+', '+QuotedStr(edKode_Pelanggan.Text)+', '+IntToStr(IntCategoryID)+');';
+
+        Open;
+      end;
+
+
+      if dm.Qtemp.RecordCount=0 then
+      begin
+        TotBarangSO:=0+TotCategorySO;
+      end else
+      begin
+        TotBarangSO:=dm.Qtemp.FieldValues['tot_unit']+TotCategorySO;
+      end;
+      //Cek qty target Kategori barang
+      with dm.Qtemp do
+      begin
+        Close;
+        Sql.Clear;
+        sql.Text:='SELECT * FROM "get_customer_sales_target"('+QuotedStr(edKode_Pelanggan.Text)+', '+
+                  ''+StrYear+', '+Strmonth+', '+IntToStr(IntCategoryID)+')';
+        Open;
+      end;
+
+      if dm.Qtemp.RecordCount=0 then
+      begin
+//        MessageDlg('Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan ..!!',mtInformation,[mbRetry],0);
+        iserror:=1;
+
+        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+        begin
+          islanjut:=1;
+          StrKetLog:=StrKetLog+', Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan';
+        end else begin
+          islanjut:=0;
+        end;
+
+        exit;
+      end else
+      begin
+        TotTargetBarang:=dm.Qtemp.FieldValues['total_qty'];
+      end;
+
+      //Pengecekan jika total barang lebih besar dari target maka error
+      if TotBarangSO>TotTargetBarang then
+      begin
+//        MessageDlg('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target '+IntToStr(TotTargetBarang)+' ..!!',mtInformation,[mbRetry],0);
+        if MessageDlg ('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+        begin
+          islanjut:=1;
+          StrKetLog:=StrKetLog+', Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target penjualan '+FloatToStr(TotTargetBarang);
+        end else begin
+          islanjut:=0;
+        end;
+        iserror:=1;
+
+        exit;
+      end;
+    end;
+    MemDetail.Next;
+  end;
+end;
+
+procedure TFNew_SalesOrder.CekBankGaransi;
+var SisaPiutang,TotSaldoBankGaransi,TotNilaiSO,TotSisaPiutangNilaiSO,SisaSaldo:Currency;
+begin
+  SisaPiutang:=0;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select total_receivables from "public"."get_piutang_saldoawal"('+QuotedStr(FormatDateTime('yyyy-mm-dd',NOW()))+') '+
+    'where customer_code='+QuotedStr(edKode_Pelanggan.Text);
+    open;
+  end;
+  if dm.Qtemp.RecordCount=0 then SisaPiutang:=0
+  else SisaPiutang:=dm.Qtemp.FieldValues['total_receivables'];
+
+  TotSaldoBankGaransi:=0;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT customer_code,SUM(amount) tot_saldo from t_customer_bank_guarantee '+
+              'WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' AND '+
+              'first_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal_Pesan.Date))+' AND '+
+              'end_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal_Pesan.Date))+' '+
+              'GROUP BY customer_code;';
+    open;
+  end;
+  if dm.Qtemp.RecordCount=0 then
+  TotSaldoBankGaransi:=0
+  else TotSaldoBankGaransi:=dm.Qtemp.FieldValues['tot_saldo'];
+
+  TotNilaiSO:=0;
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * from sp_bruto_selling('+QuotedStr(edKode_Pelanggan.Text)+','+QuotedStr(MemDetail['KD_ITEM'])+');';
+      open;
+    end;
+    if dm.Qtemp.RecordCount>0 then
+    begin
+      TotNilaiSO:=dm.Qtemp.FieldValues['price_bruto'];
+    end else begin
+      iserror:=1;
+      islanjut:=0;
+      MessageDlg('Barang '+MemDetail['NM_ITEM']+' belum memiliki harga klasifikasi..!!',mtInformation,[mbRetry],0);
+      exit;
+    end;
+    MemDetail.Next;
+  end;
+  TotSisaPiutangNilaiSO:=SisaPiutang+TotNilaiSO;
+  SisaSaldo:=TotSaldoBankGaransi-TotSisaPiutangNilaiSO;
+
+  if SisaSaldo<0 then
+  begin
+    if MessageDlg ('Order melebihi batas quota, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+      if SisaPiutang>0 then
+      begin
+        islanjut:=0;
+        MessageDlg('Order tidak bisa dilanjut, masih ada sisa piutang ..!!',mtInformation,[mbRetry],0);
+      end else begin
+
+        islanjut:=1;
+  //      MessageDlg('Order dari pelanggan tidak bisa diproses karena sudah melebihi batas quota nota ..!!',mtInformation,[mbRetry],0);
+        iserror:=1;
+        StrKetLog:=StrKetLog+', Sales Order pelanggan '+edKode_Pelanggan.Text+' melebihi batas quota nota ';
+        exit;
+      end;
+    end else begin
+      islanjut:=0;
+    end;
+  end;
 end;
 
 procedure TFNew_SalesOrder.RefreshGrid;
@@ -163,7 +449,14 @@ begin
     end;
 end;
 
+procedure TFNew_SalesOrder.RzBitBtn1Click(Sender: TObject);
+begin
+  edNama_Pelanggan.Text:='';
+  edKode_Pelanggan.Text:='';
+end;
+
 procedure TFNew_SalesOrder.InsertDetailSO;
+var strSatuanName:String;
 begin
   with dm.Qtemp do
   begin
@@ -177,26 +470,45 @@ begin
   MemDetail.First;
   while not MemDetail.Eof do
   begin
-    with dm.Qtemp do
-    begin
-    close;
-    sql.clear;
-    sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
-              ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
-              ' "name_wh", "code_supp", "name_supp", "source" ) '+
-              ' Values( '+
-              ' '+QuotedStr(edKodeOrder.Text)+', '+
-              ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
-              ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
-              ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
-              ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
-              ' '+QuotedStr(MemDetail['NM_ SATUAN'])+', '+
-              ' '+QuotedStr(MemDetail['KD_GUDANG'])+', '+
-              ' '+QuotedStr(MemDetail['NM_GUDANG'])+', '+
-              ' '+QuotedStr(MemDetail['KD_SUPPLIER'])+', '+
-              ' '+QuotedStr(MemDetail['NM_SUPPLIER'])+', '+
-              ' '+QuotedStr(edKodeSumber.Text)+' );';
-    ExecSQL;
+//    Memo1.Text:=MemDetail['JUMLAH'];
+//    +' '+MemDetail['NM_ SATUAN']+' '+MemDetail['KD_GUDANG'];
+      with dm.Qtemp do
+      begin
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
+                ' "name_item","amount", "code_unit", "name_unit", "source" ) '+
+                ' Values( '+
+                ' '+QuotedStr(edKodeOrder.Text)+', '+
+                ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
+                ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
+                ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
+                ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
+                ' '+QuotedStr(MemDetail['NM_ SATUAN'])+', '+
+//                ' '+QuotedStr(MemDetail['KD_GUDANG'])+', '+
+//                ' '+QuotedStr(MemDetail['NM_GUDANG'])+', '+
+//                ' '+QuotedStr(MemDetail['KD_SUPPLIER'])+', '+
+//                ' '+QuotedStr(MemDetail['NM_SUPPLIER'])+', '+
+                ' '+QuotedStr(edKodeSumber.Text)+' );';
+
+      ExecSQL;
+//      sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
+//                ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
+//                ' "name_wh", "code_supp", "name_supp", "source" ) '+
+//                ' Values( '+
+//                ' '+QuotedStr(edKodeOrder.Text)+', '+
+//                ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
+//                ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
+//                ' '+MemDetail['JUMLAH']+', '+
+//                ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
+//                ' '+QuotedStr(MemDetail['NM_ SATUAN'])+', '+
+//                ' '+QuotedStr(MemDetail['KD_GUDANG'])+', '+
+//                ' '+QuotedStr(MemDetail['NM_GUDANG'])+', '+
+//                ' '+QuotedStr(MemDetail['KD_SUPPLIER'])+', '+
+//                ' '+QuotedStr(MemDetail['NM_SUPPLIER'])+', '+
+//                ' '+QuotedStr(edKodeSumber.Text)+' );';
+//
+//      ExecSQL;
     end;
   MemDetail.Next;
   end;
@@ -211,63 +523,74 @@ end;
 
 procedure TFNew_SalesOrder.BSaveClick(Sender: TObject);
 begin
+  iserror:=0;
+  islanjut:=1;
   DecodeDate(dtTanggal_Pesan.Date, Year, Month, Day);
-   strtgl:=IntToStr(Day);
-   strbulan:=inttostr(Month);
-   strtahun:=inttostr(Year);
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if edKode_Pelanggan.Text='' then
-      begin
-        MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKode_Pelanggan.SetFocus;
-        exit;
-      end
-      else if edKode_Sales.Text='' then
-      begin
-        MessageDlg('Data Sales Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKode_Sales.SetFocus;
-        exit;
-      end
-      else if spJatuhTempo.Value=0 then
-      begin
-        MessageDlg('Jumlah Tempo Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
-        spJatuhTempo.SetFocus;
-        exit;
-      end
-      else if (edNoReff.Text='') or (edNoReff.Text='0' )then
-      begin
-        //MessageDlg('Nama Kabupaten Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edNoReff.Text:='-';
-        exit;
-      end
-      else if Status = 0 then
-      begin
-      FNew_SalesOrder.Autonumber;
-      //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+  strtgl:=IntToStr(Day);
+  strbulan:=inttostr(Month);
+  strtahun:=inttostr(Year);
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+    if edKode_Pelanggan.Text='' then
+    begin
+      MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edKode_Pelanggan.SetFocus;
+      exit;
+    end
+    else if edKode_Sales.Text='' then
+    begin
+      MessageDlg('Data Sales Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edKode_Sales.SetFocus;
+      exit;
+    end
+    else if spJatuhTempo.Value=0 then
+    begin
+      MessageDlg('Jumlah Tempo Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
+      spJatuhTempo.SetFocus;
+      exit;
+    end
+    else if (edNoReff.Text='') or (edNoReff.Text='0' )then
+    begin
+      //MessageDlg('Nama Kabupaten Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edNoReff.Text:='-';
+      exit;
+    end
+    else if Status = 0 then
+    begin
+      Autonumber;
+  //    if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeOrder.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
-        Save;
-        Dm.Koneksi.Commit;
-      end;
-      end
-      else if Status = 1 then
-      begin
-      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        Update;
-        Dm.Koneksi.Commit;
-      end;
-      end;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
+        CekTargetSales;
+        if islanjut=1 then begin
+          CekBankGaransi;
+          if islanjut=1 then begin
+            Save;
+            Dm.Koneksi.Commit;
+          end else begin
+            exit;
           end;
         end;
       end;
+    end
+    else if Status = 1 then
+    begin
+    if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
+      CekTargetSales;
+      Update;
+      Dm.Koneksi.Commit;
+    end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
 end;
 
 procedure TFNew_SalesOrder.btAddDetailClick(Sender: TObject);
@@ -277,24 +600,27 @@ begin
     ShowMessage('Silakan Setting Form Target Sumber..');
     exit;
   end;
-  if (vFormSumber<>'0') AND (vFormSumber<>'') then
-  begin
-        AClass := FindClass('T'+vFormSumber);
-        AFormClass := TFormClass(AClass);
-        AForm := AFormClass.Create(Application.MainForm);
-        AForm.Parent:=FTemplate_Temp.PanelParent;
-        AForm.Align:=Alclient;
-        AForm.BorderStyle:=BsNone;
-        FTemplate_Temp.Height:=AForm.Height;
-        FTemplate_Temp.Width:=AForm.Width;
-
-        AForm.Show;
-        FTemplate_Temp.Caption:='';
-        FTemplate_Temp.TabForm.Caption:=AForm.Caption;
-        vStatusTrans:='salesorder';
-        FTemplate_Temp.ShowModal;
-        //FTambah_Barang.ShowModal;
-  end;
+//  if (vFormSumber<>'0') AND (vFormSumber<>'') then
+//  begin
+//        AClass := FindClass('T'+vFormSumber);
+//        AFormClass := TFormClass(AClass);
+//        AForm := AFormClass.Create(Application.MainForm);
+//        AForm.Parent:=FTemplate_Temp.PanelParent;
+//        AForm.Align:=Alclient;
+//        AForm.BorderStyle:=BsNone;
+//        FTemplate_Temp.Height:=AForm.Height;
+//        FTemplate_Temp.Width:=AForm.Width;
+//
+//        AForm.Show;
+//        FTemplate_Temp.Caption:='';
+//        FTemplate_Temp.TabForm.Caption:=AForm.Caption;
+//        vStatusTrans:='salesorder';
+//        FTemplate_Temp.ShowModal;
+//  end;
+  vStatusTrans:='salesorder';
+  if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
+  FListOrderTelemarketing.ShowModal
+  else FTambah_Barang.ShowModal;
 end;
 
 procedure TFNew_SalesOrder.btMasterSalesClick(Sender: TObject);
@@ -331,15 +657,25 @@ begin
   vFormSumber:='0';
   kd_kares:='0';
   MemDetail.EmptyTable;
+  edNoReff.ReadOnly:=True;
+end;
+
+procedure TFNew_SalesOrder.dtTanggal_KirimCloseUp(Sender: TObject);
+begin
+  if dtTanggal_Kirim.Date<dtTanggal_Pesan.Date then
+  begin
+    MessageDlg('Tanggal kirim tidak boleh lebih kecil dari tanggal pesan..!!',mtInformation,[mbRetry],0);
+    dtTanggal_Kirim.Date:=dtTanggal_Pesan.Date;
+  end;
 end;
 
 procedure TFNew_SalesOrder.dtTanggal_PesanChange(Sender: TObject);
 begin
   DecodeDate(dtTanggal_Pesan.Date, Year, Month, Day);
-   strtgl:=IntToStr(Day);
-   strbulan:=inttostr(Month);
-   strtahun:=inttostr(Year);
-   FNew_SalesOrder.Autonumber;
+  strtgl:=IntToStr(Day);
+  strbulan:=inttostr(Month);
+  strtahun:=inttostr(Year);
+//   FNew_SalesOrder.Autonumber;
 end;
 
 procedure TFNew_SalesOrder.edNamaSumberButtonClick(Sender: TObject);
@@ -351,11 +687,35 @@ begin
   FMasterData.ShowModal;
 end;
 
+procedure TFNew_SalesOrder.edNamaSumberChange(Sender: TObject);
+begin
+  if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
+  begin
+    edNoReff.ReadOnly:=true;
+    edNoReff.Text:='';
+    edNama_Pelanggan.ReadOnly:=True;
+  end else
+  begin
+    edNoReff.ReadOnly:=false;
+    edNoReff.Text:='-';
+    edKode_Pelanggan.ReadOnly:=False;
+    edNama_Pelanggan.ReadOnly:=False;
+//    edKode_Pelanggan.Text:='';
+//    edNama_Pelanggan.Text:='';
+    dtTanggal_Pesan.Enabled:=True;
+  end;
+end;
+
 procedure TFNew_SalesOrder.edNama_PelangganButtonClick(Sender: TObject);
 begin
-  Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
-  Fbrowse_data_pelanggan.vcall:='sumber_order';
-  Fbrowse_data_pelanggan.ShowModal;
+  if edNamaSumber.Text='' then
+  begin
+    MessageDlg('Sumber Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else begin
+    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+    Fbrowse_data_pelanggan.vcall:='sumber_order';
+    Fbrowse_data_pelanggan.ShowModal;
+  end;
 end;
 
 procedure TFNew_SalesOrder.edNama_SalesButtonClick(Sender: TObject);
@@ -370,6 +730,7 @@ end;
 procedure TFNew_SalesOrder.FormShow(Sender: TObject);
 begin
   //Clear;
+//  Autonumber;
   RefreshGrid;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
@@ -379,10 +740,63 @@ begin
     btMasterSales.Visible:=true;
     btMasterSumber.Visible:=true;
   end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name);
+    open;
+  end;
+  Strsubmenu_code:=QuotedStr(dm.Qtemp.FieldValues['submenu_code']);
+  Strsubmenu:=QuotedStr('Sales Order');
 end;
 
 procedure TFNew_SalesOrder.Save;
+var
+  Stradditional_code,StrStatus,StrNote,
+  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak : String;
 begin
+
+  if (kd_kares='') OR (kd_kares='0') then
+    Stradditional_code:='NULL'
+  else Stradditional_code:=QuotedStr(kd_kares);
+
+//  ShowMessage(kd_kares);
+
+  StrUsername:=QuotedStr(FHomeLogin.Eduser.Text);
+  Strversi:=QuotedStr('1.0');
+  Stripuser:=QuotedStr(GetLocalIP);
+
+  if Copy(StrKetLog, 1, 1)=',' then
+  Strketerangan:=QuotedStr(Copy(StrKetLog,2))
+  else Strketerangan:=QuotedStr(StrKetLog);
+  Stralasan:=QuotedStr('');
+  StrInsert:='TRUE';
+  Strupdate:='FALSE';
+  Strdelete:='FALSE';
+  Strapproval:='FALSE';
+  Strcetak:='FALSE';
+
+  if (iserror=1) AND (islanjut=1) then
+  begin
+    StrStatus:='0';
+    StrNote:=Strketerangan;
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Text:='CALL "InsertSPLogActivity" ('+StrUsername+', '+Strsubmenu+','+
+//                ''+Strsubmenu_code+', '+Strversi+','+Stripuser+','+StrInsert+','+
+//                ''+Strupdate+','+Strdelete+','+Strapproval+','+
+//                ''+Strketerangan+','+Stralasan+','+Strcetak+','+QuotedStr(edKodeOrder.Text)+');';
+//      ExecSQL;
+//    end;
+  end else
+  begin
+    StrStatus:='1';
+    StrNote:='NULL';
+  end;
+
   with dm.Qtemp do
   begin
     close;
@@ -390,7 +804,7 @@ begin
     sql.add(' Insert into "public"."t_sales_order" ("created_at", "created_by", "notrans", '+
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
-            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year") '+
+            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",status,note) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -406,50 +820,62 @@ begin
             ' '+QuotedStr(edKodeSumber.Text)+', '+
             ' '+QuotedStr(edNamaSumber.Text)+', '+
             ' '+QuotedStr(order_no)+', '+
-            ' '+QuotedStr(kd_kares)+', '+
+            ' '+Stradditional_code+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+'  );');
+            ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+'  );');
     ExecSQL;
   end;
   InsertDetailSO;
-  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
+  begin
+    UpdateStatusTele;
+  end;
+  MessageDlg('Simpan Berhasil dengan no transaksi '+QuotedStr(edKodeOrder.Text)+' ..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
-  FSalesOrder.Refresh;
+  FMainMenu.TampilTabForm2;
+//  FSalesOrder.Refresh;
+end;
+
+procedure TFNew_SalesOrder.SpeedButton1Click(Sender: TObject);
+begin
+  edNama_Pelanggan.Text:='';
+  edKode_Pelanggan.Text:='';
 end;
 
 procedure TFNew_SalesOrder.Update;
 begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' UPDATE "public"."t_sales_order" SET '+
-              ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-              ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
-              ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
-              ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
-              ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
-              ' code_sales='+QuotedStr(edKode_Sales.Text)+','+
-              ' name_sales='+QuotedStr(edNama_Sales.Text)+','+
-              ' payment_term='+QuotedStr(spJatuhTempo.Text)+','+
-              ' no_reference='+QuotedStr(edNoReff.Text)+','+
-              ' code_source='+QuotedStr(edKodeSumber.Text)+','+
-              ' name_source='+QuotedStr(edNamaSumber.Text)+','+
-              ' order_no='+QuotedStr(order_no)+','+
-              ' additional_code='+QuotedStr(kd_kares)+','+
-              ' trans_day='+QuotedStr(strtgl)+','+
-              ' trans_month='+QuotedStr(strbulan)+','+
-              ' trans_year='+QuotedStr(strtahun)+' '+
-              ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
-      ExecSQL;
-    end;
-    InsertDetailSO;
-    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
-    Close;
-    FSalesOrder.Refresh;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "public"."t_sales_order" SET '+
+            ' updated_at=NOW(),'+
+            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+            ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
+            ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
+            ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
+            ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
+            ' code_sales='+QuotedStr(edKode_Sales.Text)+','+
+            ' name_sales='+QuotedStr(edNama_Sales.Text)+','+
+            ' payment_term='+QuotedStr(spJatuhTempo.Text)+','+
+            ' no_reference='+QuotedStr(edNoReff.Text)+','+
+            ' code_source='+QuotedStr(edKodeSumber.Text)+','+
+            ' name_source='+QuotedStr(edNamaSumber.Text)+','+
+            ' order_no='+QuotedStr(order_no)+','+
+            ' additional_code='+QuotedStr(kd_kares)+','+
+            ' trans_day='+QuotedStr(strtgl)+','+
+            ' trans_month='+QuotedStr(strbulan)+','+
+            ' trans_year='+QuotedStr(strtahun)+' '+
+            ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
+    ExecSQL;
+  end;
+  InsertDetailSO;
+  MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+  Close;
+  FMainMenu.TampilTabForm2;
+//    FSalesOrder.Refresh;
 end;
 
 Initialization

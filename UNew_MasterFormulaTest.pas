@@ -80,7 +80,7 @@ type
 
 Function FNew_MasterFormula: TFNew_MasterFormula;
 var  status:integer;
-  thn,bln,tglno,nourut,kd_gdng,kd_gdng2:string;
+  thn,bln,tglno,nourut,kd_gdng,kd_gdng2,kd_barang:string;
 
 implementation
 
@@ -135,7 +135,7 @@ with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select max(left(no_formula,3))as urut from "warehouse".t_master_formula_test where thn='+QuotedStr(thn)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tglno);
+    sql.Text:='select max(left(no_formula,3))as urut from t_master_formula_test where thn='+QuotedStr(thn)+' and bln='+QuotedStr(bln)+' and tgl_no='+QuotedStr(tglno);
     open;
   end;
    if dm.Qtemp.FieldByName('urut').AsString = '' then
@@ -194,7 +194,7 @@ begin
   Dm.Qtemp.First;
   while NOT Dm.Qtemp.Eof do
   BEGIN
-    EdProduk.Items.Add(DM.Qtemp['item_code2']);
+    EdProduk.Items.Add(DM.Qtemp['item_name']);
     Dm.Qtemp.Next;
   END;
 end;
@@ -250,7 +250,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' insert into "warehouse".t_master_formula_test(formula_no,trial_date,formula_date,est_prod_date,'+
+    sql.Text:=' insert into t_master_formula_test(formula_no,trial_date,formula_date,est_prod_date,'+
               ' prod_start_date,prod_end_date,weigh_amount,shift,status,product_code,wh_code,wh_code2,sbu_code,'+
               ' trans_year,order_no,trans_month,trans_date)values(:parno_formula,:partgl_trial,:partgl_formula,:partgl_perkiraan_prod,'+
               ' :partgl_mulai_prod,:partgl_selesai_prod,:parjmlh_timbang,:parshift,:parstatus,'+
@@ -281,7 +281,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into "warehouse".t_Master_formula_test_det(formula_no,wh_code,item_stock_code,stock_code, '+
+      sql.Text:='insert into t_Master_formula_test_det(formula_no,wh_code,item_stock_code,stock_code, '+
                 ' index,"unit",supplier_code,total_weight,pack_qty,total_pack,pack_unit) '+
                 ' values(:parno_formula,:pargudang,:parkd_material_stok,:parkd_stok,:parindex,'+
                 ' :parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,:partotalkemasan, '+
@@ -305,10 +305,16 @@ end;
 
 procedure TFNew_MasterFormula.SpeedButton1Click(Sender: TObject);
 begin
-  FItem_MasterFormula.Show;
-  FItem_MasterFormula.DBGridEh2.Visible:=true;
-  fitem_masterformula.Panel2.Visible:=false;
-  FItem_MasterFormula.BrefreshClick(sender);
+  WITH FItem_MasterFormula DO
+  BEGIN
+    Show;
+    DBGridEh2.Visible:=true;
+    Panel2.Visible:=false;
+    BrefreshClick(sender);
+    BNew.Enabled:=TruE;
+    BUpdate.Enabled:=True;
+    Brefresh.Enabled:=True;
+  END;
 end;
 
 Procedure TFNew_MasterFormula.Update;
@@ -317,7 +323,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' update "warehouse".t_master_formula_test set trial_date=:partgl_trial,formula_date=:partgl_formula,'+
+    sql.Text:=' update t_master_formula_test set trial_date=:partgl_trial,formula_date=:partgl_formula,'+
               ' est_prod_date=:partgl_perkiraan_prod,weigh_amount=:parjmlh_timbang,prod_start_date=:partgl_mulai_prod,'+
               ' prod_end_date=:partgl_selesai_prod,product_code=:parkd_produk,trans_year=:parthn,'+
               ' wh_code=:pargudang,wh_code2=:pargudang2,shift=:parshift where formula_no=:parno_formula';
@@ -340,7 +346,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='Delete from "warehouse".t_master_formula_test_det where formula_no='+QuotedStr(Edno.Text);
+    sql.Text:='Delete from t_master_formula_test_det where formula_no='+QuotedStr(Edno.Text);
     ExecSQL;
   end;
   Memformuladet.First;
@@ -350,7 +356,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into "warehouse".t_Master_formula_test_det(formula_no,wh_code,item_stock_code,stock_code, '+
+      sql.Text:='insert into t_Master_formula_test_det(formula_no,wh_code,item_stock_code,stock_code, '+
                 ' index,"unit",supplier_code,total_weight,pack_qty,total_pack,pack_unit) '+
                 ' values(:parno_formula,:pargudang,:parkd_material_stok,:parkd_stok,:parindex,'+
                 ' :parsatuan,:parkd_supplier,:parttlberat,:parqtyperkemasan,:partotalkemasan, '+
@@ -429,7 +435,7 @@ begin
         //Autonumber;
         idmenu:='M09001';
         strday2:=DtTest.Date;
-        Edno.Text:=getNourut(strday2,'warehouse.t_master_formula_test','');
+        Edno.Text:=getNourut(strday2,'t_master_formula_test','');
         if messageDlg ('Anda Yakin Simpan?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
         then begin
           Simpan;
@@ -487,8 +493,8 @@ begin
     close;
     sql.Clear;
     sql.Text:='select B.item_stock_code,b.item_name,A.supplier_code,A.supplier_name,C.stock_code, C."outstanding" as qty, '+
-    ' B.unit,e.wh_name,D.unit_conv,D.qty_conv,c.wh_code from t_supplier A Right join warehouse.t_item_stock B on'+
-    ' A.supplier_code=B.supplier_code Left join warehouse.t_item_stock_det C on B.item_stock_code=C.item_stock_code '+
+    ' B.unit,e.wh_name,D.unit_conv,D.qty_conv,c.wh_code from t_supplier A Right join t_item_stock B on'+
+    ' A.supplier_code=B.supplier_code Left join t_item_stock_det C on B.item_stock_code=C.item_stock_code '+
     ' inner join t_item_conversion D on D.item_code=B.item_code inner join t_wh e on c.wh_code=e.wh_code '+
     ' where B.item_code='+QuotedStr(Memformuladet['item_code'])+''+
     ' and (e.wh_name='+QuotedStr(CbGdKimia.Text)+' or e.wh_name='+QuotedStr(CbGdBaku.Text)+')'+''+
@@ -502,6 +508,14 @@ end;
 
 procedure TFNew_MasterFormula.EdProdukSelect(Sender: TObject);
 begin
+  with dm.qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_item where item_name='+QuotedStr(EdProduk.Text);
+    Execute
+  end;
+  kd_barang:=dm.Qtemp['item_code2'];
   Memformuladet.EmptyTable;
   Memformuladet.Close;
   Memformuladet.Open;
@@ -510,9 +524,9 @@ begin
     close;
     sql.Clear;
     sql.Text:='Select * from (SELECT a.item_code,qty,conversion_qty,a.id,product_code,b.item_name nm_produk,c.item_name,c.unit  '+
-    ' FROM "warehouse".t_master_test a INNER JOIN t_item b on  a.product_code=b.item_code2 INNER JOIN t_item c '+
+    ' FROM t_master_test a INNER JOIN t_item b on  a.product_code=b.item_code2 INNER JOIN t_item c '+
     ' on a.item_code=c.item_code INNER JOIN t_item_conversion d on c.item_code=d.item_code where '+
-    ' a.product_code='+QuotedStr(EdProduk.Text)+')a GROUP BY a.item_code,qty,conversion_qty,a.id,product_code,nm_produk,item_name,unit'+
+    ' a.product_code='+QuotedStr(kd_barang)+')a GROUP BY a.item_code,qty,conversion_qty,a.id,product_code,nm_produk,item_name,unit'+
     ' order by a.id desc';
     Execute;
   end;

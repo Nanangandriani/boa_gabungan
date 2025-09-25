@@ -77,6 +77,7 @@ type
     procedure reset_stock;
     procedure check_stock;
     procedure proses_stock;
+    procedure CheckJasaTransportDefault;
   end;
 
 var
@@ -88,6 +89,26 @@ implementation
 
 uses USearch_Supplier, UPerintahMuat_Sumber, UDataModule, UHomeLogin,
   UMy_Function, UListPerintahMuat, UDaftarKendaraan;
+
+procedure TFDataPerintahMuat.CheckJasaTransportDefault;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select supplier_code,supplier_name from t_supplier '+
+              'where supplier_code=(select value_parameter from t_parameter '+
+              'where key_parameter=''default_penyedia_jasa'') and deleted_at is null';
+    open;
+  end;
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    edKode_Vendor_Kend.Text:=dm.Qtemp.FieldValues['supplier_code'];
+    edNama_Vendor_Kend.Text:=dm.Qtemp.FieldValues['supplier_name'];
+  end;
+  dm.Qtemp.Close;
+
+end;
 
 procedure TFDataPerintahMuat.proses_stock;
 begin
@@ -317,72 +338,71 @@ begin
 
   //cek balancestock
   check_stock;
-    if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
+  if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
+  begin
+    ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
+    ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
+    stat_proses:=false;
+    Exit;
+  end;
+  //ShowMessage(IntToStr(FDataPerintahMuat.Status));
+  if stat_proses=true then
+  begin
+    if not dm.Koneksi.InTransaction then
+     dm.Koneksi.StartTransaction;
+    try
+    if edKodeMuat.Text='' then
     begin
-      ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
-      ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
-      stat_proses:=false;
-      Exit;
-    end;
-  //
-      //ShowMessage(IntToStr(FDataPerintahMuat.Status));
-    if stat_proses=true then
+      MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+      edKodeMuat.SetFocus;
+    end
+    else if edKode_Vendor_Kend.Text='' then
     begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if edKodeMuat.Text='' then
-      begin
-        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-        edKodeMuat.SetFocus;
-      end
-      else if edKode_Vendor_Kend.Text='' then
-      begin
-        MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
-        edKode_Vendor_Kend.SetFocus;
-      end
-      else if edKode_Vendor_Kend.Text='' then
-      begin
-        MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
-        edKode_Vendor_Kend.SetFocus;
-      end
-      else if edNoKendMuatan.Text='' then
-      begin
-        MessageDlg('Nomor Kendaraan Tidak Lengkap..!!',mtInformation,[mbRetry],0);
-        edNoKendMuatan.SetFocus;
-      end
-      else if MemDetail.RecordCount=0 then
-      begin
-        MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
-        edKodeMuat.SetFocus;
-      end
-      else if FDataPerintahMuat.Status = 0 then
-      begin
+      MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+      edKode_Vendor_Kend.SetFocus;
+    end
+    else if edKode_Vendor_Kend.Text='' then
+    begin
+      MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+      edKode_Vendor_Kend.SetFocus;
+    end
+    else if edNoKendMuatan.Text='' then
+    begin
+      MessageDlg('Nomor Kendaraan Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+      edNoKendMuatan.SetFocus;
+    end
+    else if MemDetail.RecordCount=0 then
+    begin
+      MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+      edKodeMuat.SetFocus;
+    end
+    else if FDataPerintahMuat.Status = 0 then
+    begin
       FDataPerintahMuat.Autonumber;
-      //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeMuat.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
         Save;
         Dm.Koneksi.Commit;
       end;
-      end
-      else if FDataPerintahMuat.Status = 1 then
+    end
+    else if FDataPerintahMuat.Status = 1 then
+    begin
+    if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
+      Update;
+      Dm.Koneksi.Commit;
+    end;
+    end;
+    Except on E :Exception do
       begin
-      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        Update;
-        Dm.Koneksi.Commit;
-      end;
-      end;
-      Except on E :Exception do
         begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
+          MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+          Dm.koneksi.Rollback ;
         end;
       end;
     end;
+  end;
 end;
 
 procedure TFDataPerintahMuat.btAddDetailClick(Sender: TObject);
@@ -408,8 +428,20 @@ end;
 procedure TFDataPerintahMuat.DBGridDetailColumns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-  FPerintahMuat_Sumber.Clear;
-  FPerintahMuat_Sumber.ShowModal;
+  if edNama_Vendor_Kend.Text='' then
+  begin
+    MessageDlg('Jasa Transport Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    FPerintahMuat_Sumber.Clear;
+    FPerintahMuat_Sumber.edKodeVendorMuatan.Text:=FDataPerintahMuat.edKode_Vendor_Kend.Text;
+    FPerintahMuat_Sumber.edNamaVendorMuatan.Text:=FDataPerintahMuat.edNama_Vendor_Kend.Text;
+    FPerintahMuat_Sumber.edNoKendMuatan.Text:=FDataPerintahMuat.edNoKendMuatan.Text;
+    FPerintahMuat_Sumber.edKodeVendorMuatan.ReadOnly:=True;
+    FPerintahMuat_Sumber.edNamaVendorMuatan.ReadOnly:=True;
+    FPerintahMuat_Sumber.edNoKendMuatan.ReadOnly:=True;
+    FPerintahMuat_Sumber.ShowModal;
+  end;
 end;
 
 procedure TFDataPerintahMuat.dtMuatChange(Sender: TObject);
@@ -433,8 +465,10 @@ procedure TFDataPerintahMuat.edNoKendMuatanButtonClick(Sender: TObject);
 begin
   //ShowMessage('Master Kendaraan Ready Dimana ??');
   FDaftarKendaraan.vcall:='perintah_muat';
+  FDaftarKendaraan.GetDataVehicleDO;
   FDaftarKendaraan.show;
-  FDaftarKendaraan.GetDataViaAPI;
+
+//  FDaftarKendaraan.GetDataViaAPI;
 end;
 
 procedure TFDataPerintahMuat.FormClose(Sender: TObject;

@@ -200,11 +200,11 @@ begin
     FMasterSales.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
     FMasterSales.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
   end;
-  if vcall='m_telemarketing' then
-  begin
-    FListOrderTelemarketing.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
-    FListOrderTelemarketing.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
-  end;
+//  if vcall='m_telemarketing' then
+//  begin
+//    FListOrderTelemarketing.Edkodewilaya.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
+//    FListOrderTelemarketing.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+//  end;
   if vcall='m_prospek' then
   begin
     FDataProspekPelanggan.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];

@@ -63,6 +63,7 @@ type
     QListPenagihanPiutangwilayah: TMemoField;
     QListPenagihanPiutangtot_lmbr_invoice: TLargeintField;
     QListPenagihanPiutangjum_tagihan: TFloatField;
+    QListPenagihanPiutangcode_regency: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -131,14 +132,14 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' SELECT "date_dpp", "date_print", "code_collector" , "name_collector", '+
+       sql.Text:=' SELECT b.code_regency,"date_dpp", "date_print", "code_collector" , "name_collector", '+
                  ' b."wilayah", count(no_invoice) as tot_lmbr_invoice, SUM("paid_amount") jum_tagihan '+
                  ' from "public"."t_dpp" a '+
                  ' LEFT JOIN (SELECT code AS kd_master, name AS nm_master,  '+
-                 ' concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency)  AS wilayah  '+
+                 ' concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency)  AS wilayah,code_regency  '+
                  ' from "public"."t_collector"  WHERE	deleted_at IS NULL) b ON a."code_collector"=b."kd_master" '+
                  ' where deleted_at is null '+
-                 ' GROUP BY "date_dpp", "date_print", "code_collector", "name_collector", b."wilayah" '+
+                 ' GROUP BY "date_dpp", "date_print", "code_collector", "name_collector", b."wilayah",b.code_regency '+
                  ' ORDER BY "date_dpp", "date_print", "code_collector", "name_collector", b."wilayah" Desc ';
        open;
    end;
@@ -153,6 +154,7 @@ begin
   FDataPenagihanPiutang.dtCetak.Date:=QListPenagihanPiutang.FieldByName('date_print').AsDateTime;
   FDataPenagihanPiutang.edKodeKolektor.Text:=QListPenagihanPiutang.FieldByName('code_collector').AsString;
   FDataPenagihanPiutang.edNamaKolektor.Text:=QListPenagihanPiutang.FieldByName('name_collector').AsString;
+  FDataPenagihanPiutang.edKdWilayah.Text:=QListPenagihanPiutang.FieldByName('code_regency').AsString;
   FDataPenagihanPiutang.RefreshGrid;
   FDataPenagihanPiutang.Show;
   FDataPenagihanPiutang.Status := 1;

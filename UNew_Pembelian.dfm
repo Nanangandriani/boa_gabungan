@@ -11,6 +11,9 @@ object FNew_Pembelian: TFNew_Pembelian
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object Label20: TLabel
@@ -27,8 +30,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 604
-    ExplicitWidth = 1113
+    ExplicitTop = 596
+    ExplicitWidth = 1111
     object BBatal: TRzBitBtn
       Left = 1041
       Top = 1
@@ -89,7 +92,7 @@ object FNew_Pembelian: TFNew_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1037
+      ExplicitLeft = 1035
     end
     object BSimpan: TRzBitBtn
       Left = 966
@@ -151,7 +154,7 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 962
+      ExplicitLeft = 960
     end
     object BEdit: TRzBitBtn
       Left = 891
@@ -213,7 +216,7 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 887
+      ExplicitLeft = 885
     end
     object BPosting: TRzBitBtn
       Left = 816
@@ -276,7 +279,7 @@ object FNew_Pembelian: TFNew_Pembelian
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 812
+      ExplicitLeft = 810
     end
     object Button1: TButton
       Left = 741
@@ -288,7 +291,7 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 4
       Visible = False
       OnClick = Button1Click
-      ExplicitLeft = 737
+      ExplicitLeft = 735
     end
   end
   object Panel2: TPanel
@@ -298,7 +301,7 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 217
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1113
+    ExplicitWidth = 1111
     object Label1: TLabel
       Left = 27
       Top = 256
@@ -555,12 +558,13 @@ object FNew_Pembelian: TFNew_Pembelian
       Text = '0'
     end
     object GBDok: TGroupBox
-      Left = 900
-      Top = 11
+      Left = 891
+      Top = 7
       Width = 139
       Height = 100
       Caption = 'Check List Dokumen'
       TabOrder = 13
+      Visible = False
       object Cksj: TCheckBox
         Left = 13
         Top = 19
@@ -568,6 +572,8 @@ object FNew_Pembelian: TFNew_Pembelian
         Height = 18
         Caption = 'Konf'
         TabOrder = 0
+        Visible = False
+        WordWrap = True
         OnClick = CksjClick
       end
       object CkFk: TCheckBox
@@ -577,6 +583,8 @@ object FNew_Pembelian: TFNew_Pembelian
         Height = 18
         Caption = 'Prev. Dok'
         TabOrder = 1
+        Visible = False
+        WordWrap = True
         OnClick = CkFkClick
       end
       object CkInv: TCheckBox
@@ -586,6 +594,8 @@ object FNew_Pembelian: TFNew_Pembelian
         Height = 18
         Caption = 'Invoice'
         TabOrder = 2
+        Visible = False
+        WordWrap = True
         OnClick = CkInvClick
       end
     end
@@ -705,6 +715,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Top = 71
       Width = 206
       Height = 23
+      Color = clInfoBk
+      ReadOnly = True
       TabOrder = 26
       OnSelect = Cb_RefSelect
       Items.Strings = (
@@ -717,6 +729,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 89
       Height = 23
       TabOrder = 27
+      Visible = False
     end
     object Edkd_akun: TRzEdit
       Left = 713
@@ -747,8 +760,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1113
-    ExplicitHeight = 387
+    ExplicitWidth = 1111
+    ExplicitHeight = 379
     object Label26: TLabel
       Left = 41
       Top = 185
@@ -854,14 +867,14 @@ object FNew_Pembelian: TFNew_Pembelian
       Align = alClient
       TabIndex = 0
       TabOrder = 6
-      ExplicitWidth = 1109
-      ExplicitHeight = 244
+      ExplicitWidth = 1107
+      ExplicitHeight = 236
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
-        ExplicitWidth = 1105
-        ExplicitHeight = 219
+        ExplicitWidth = 1103
+        ExplicitHeight = 211
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -1199,6 +1212,34 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'wh_code'
               Footers = <>
               Width = 0
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'id_pengajuan_asset'
+              Footers = <>
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'id_detail_asset'
+              Footers = <>
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'no_pengajuan_asset'
+              Footers = <>
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'Spesifikasi_asset'
+              Footers = <>
             end>
           object RowDetailData: TRowDetailPanelControlEh
           end
@@ -1207,10 +1248,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1297,11 +1334,8 @@ object FNew_Pembelian: TFNew_Pembelian
       end
       object Tab_Retur_Pemb: TRzTabSheet
         Color = 15987699
+        TabVisible = False
         Caption = 'Retur Pembelian'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridReturPemb: TDBGridEh
           Left = 0
           Top = 0
@@ -1407,10 +1441,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Pot_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Pot. Pembelian'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0
@@ -1479,10 +1509,6 @@ object FNew_Pembelian: TFNew_Pembelian
         Color = 15987699
         TabVisible = False
         Caption = 'Barang'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridBarang: TDBGridEh
           Left = 0
           Top = 0
@@ -1824,8 +1850,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Align = alBottom
       Color = 15987699
       TabOrder = 7
-      ExplicitTop = 246
-      ExplicitWidth = 1109
+      ExplicitTop = 238
+      ExplicitWidth = 1107
       object Label28: TLabel
         Left = 26
         Top = 81
@@ -1839,6 +1865,7 @@ object FNew_Pembelian: TFNew_Pembelian
         Width = 87
         Height = 15
         Caption = 'Retur Pembelian'
+        Visible = False
       end
       object Label22: TLabel
         Left = 26
@@ -1893,6 +1920,7 @@ object FNew_Pembelian: TFNew_Pembelian
         Width = 157
         Height = 23
         TabOrder = 3
+        Visible = False
         OnChange = EdJum_ReturPembChange
         DisplayFormat = '#,##0.00'
       end
@@ -2044,6 +2072,22 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object MemterimaDetref_no: TStringField
       FieldName = 'ref_no'
+    end
+    object MemterimaDetid_pengajuan_asset: TStringField
+      FieldName = 'id_pengajuan_asset'
+      Size = 50
+    end
+    object MemterimaDetno_pengajuan_asset: TStringField
+      FieldName = 'no_pengajuan_asset'
+      Size = 50
+    end
+    object MemterimaDetid_detail_asset: TStringField
+      FieldName = 'id_detail_asset'
+      Size = 50
+    end
+    object MemterimaDetSpesifikasi_asset: TStringField
+      FieldName = 'Spesifikasi_asset'
+      Size = 50
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -2301,6 +2345,30 @@ object FNew_Pembelian: TFNew_Pembelian
           FieldName = 'ref_no'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object id_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'id_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object no_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'no_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object id_detail_asset: TMTStringDataFieldEh
+          FieldName = 'id_detail_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object Spesifikasi_asset: TMTStringDataFieldEh
+          FieldName = 'Spesifikasi_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
         end
       end
       object RecordsList: TRecordsListEh

@@ -34,7 +34,8 @@ implementation
 
 uses UNew_Barang_stok, UNew_BonPermtBarang, UNew_KonvBarang, UDataModule,
   UNew_Supplier, UMaster_PercBarang, UNew_PercBarang, UMainMenu,
-  UNew_SPKFormula, URpt_Rekap_Pembelian, UMy_Function;
+  UNew_SPKFormula, URpt_Rekap_Pembelian, UMy_Function, URpt_Kartu_Gudang,
+  UItem_MasterFormula;
 
 var
   realfCari_barang: TFCari_Barang;
@@ -142,6 +143,29 @@ begin
     begin
       EdKd_Barang.Text:=QBarang.FieldByName('item_code').AsString;
       CbBarang.EditValue:=QBarang.FieldByName('item_name').AsString;
+    end;
+  end;
+  if status_tr='9' then
+  begin
+    with FRpt_Kartu_Gudang do
+    begin
+     { edkd.text:=QBarang.FieldByName('item_code').AsString;
+      ednm.text:=QBarang.FieldByName('item_name').AsString;
+         }
+      cxkd_barang.EditValue:=QBarang.FieldByName('item_code').AsString;
+      cxnm_barang.EditValue:=QBarang.FieldByName('item_name').AsString;
+    end;
+  end;
+    if status_tr='10' then
+  begin
+    with FItem_MasterFormula do
+    begin
+      MemMaterial.Insert;
+      MemMaterial['kd_barang']:=QBarang['item_code'];
+      MemMaterial['nm_barang']:=QBarang['item_name'];
+      MemMaterial['qty']:=0;
+      MemMaterial['qty_conv']:=0;
+      MemMaterial.Post;
     end;
   end;
   close;

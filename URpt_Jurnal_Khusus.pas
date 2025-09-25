@@ -133,6 +133,8 @@ begin
     Comboprops.Items.Add(Dm.Qtemp['module_name']);
     Dm.Qtemp.Next;
   end;
+  DtMulai.EditValue:=Now();
+  DtSelesai.EditValue:=Now();
 end;
 
 procedure TFRpt_Jurnal_Khusus.BBatalClick(Sender: TObject);
@@ -158,13 +160,6 @@ begin
    begin
       close;
       sql.Clear;
-   {   sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
-      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
-      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
-      ' where module_name='+QuotedStr(CbModul.EditValue)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
-      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+''+
-      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
-      ' order by a.trans_no,status_dk ASC';}
       sql.Text:='select * from "VTrans_JournalReal"  where module_name='+QuotedStr(CbModul.EditValue)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
       ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+''+
       ' order by trans_no,status_dk ASC';
@@ -203,19 +198,15 @@ begin
    begin
       close;
       sql.Clear;
-   {   sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
-      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
-      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
-      ' where module_name='+QuotedStr(CbModul.EditValue)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
-      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+''+
-      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
-      ' order by a.trans_no,status_dk ASC';   }
       sql.Text:='select * from "VTrans_JournalReal"  where module_name='+QuotedStr(CbModul.EditValue)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
       ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+''+
       ' order by trans_no,status_dk ASC';
-      Execute;
+      Open;
    end;
-   QRpt_Jurnal_Khusus.Open;
+   if QRpt_Jurnal_Khusus.RecordCount=0 then
+   begin
+     ShowMessage('Maaf Data Kosong');
+   end;
 end;
 
 initialization

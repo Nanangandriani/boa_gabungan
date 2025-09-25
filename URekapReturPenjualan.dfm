@@ -29,6 +29,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
       Active = True
       Groups = <
         item
+          Caption = 'Filter'
           ToolbarName = 'dxBarManager1Bar1'
         end
         item
@@ -120,6 +121,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'amount'
@@ -146,6 +148,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'nilaidpp'
@@ -155,6 +158,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'nilaippn'
@@ -164,6 +168,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'grandtotal'
@@ -413,9 +418,9 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP                   '
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP                   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -599,7 +604,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     Top = 72
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
@@ -608,7 +613,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45642.945645891200000000
+    ReportOptions.LastChange = 45889.588433333330000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -753,7 +758,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Line7: TfrxLineView
           AllowVectorExport = True
-          Left = 384.260050000000000000
+          Left = 392.260050000000000000
           Top = 97.133858270000000000
           Height = 525.354330710000000000
           Color = clBlack
@@ -781,7 +786,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           AllowVectorExport = True
           Left = 102.015770000000000000
           Top = 115.070807560000000000
-          Width = 124.985213520000000000
+          Width = 132.318546850000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -796,7 +801,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 229.943345890000000000
+          Left = 237.943345890000000000
           Top = 115.070807560000000000
           Width = 149.982256230000000000
           Height = 18.897650000000000000
@@ -813,7 +818,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 385.348138220000000000
+          Left = 393.348138220000000000
           Top = 115.070807560000000000
           Width = 149.982256230000000000
           Height = 18.897650000000000000
@@ -830,7 +835,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Line9: TfrxLineView
           AllowVectorExport = True
-          Left = 229.299320000000000000
+          Left = 237.299320000000000000
           Top = 97.133858270000000000
           Height = 525.354330710000000000
           Color = clBlack
@@ -856,7 +861,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 538.628300210000000000
+          Left = 546.628300210000000000
           Top = 115.165430000000000000
           Width = 59.367976420000000000
           Height = 18.897650000000000000
@@ -873,9 +878,9 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 600.947631550000000000
+          Left = 607.614298220000000000
           Top = 115.165430000000000000
-          Width = 78.115758450000000000
+          Width = 71.449091780000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -992,7 +997,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Line12: TfrxLineView
           AllowVectorExport = True
-          Left = 536.441250000000000000
+          Left = 546.441250000000000000
           Top = 97.133858270000000000
           Height = 525.354330710000000000
           Color = clBlack
@@ -1001,7 +1006,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object Line13: TfrxLineView
           AllowVectorExport = True
-          Left = 599.693260000000000000
+          Left = 607.693260000000000000
           Top = 97.133858270000000000
           Height = 525.354330710000000000
           Color = clBlack
@@ -1171,8 +1176,8 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         Width = 1084.725110000000000000
         object Shape1: TfrxShapeView
           AllowVectorExport = True
-          Left = 384.512060000000000000
-          Width = 700.346456690000000000
+          Left = 391.845393330000000000
+          Width = 693.013123360000000000
           Height = 30.236240000000000000
           Frame.Typ = [ftRight]
         end
@@ -1380,7 +1385,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 100.795300000000000000
-          Width = 128.504020000000000000
+          Width = 134.504020000000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDBHPenjualan
@@ -1398,7 +1403,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         object frxDBDBHPenjualanname_cust: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 229.299320000000000000
+          Left = 237.299320000000000000
           Width = 154.960730000000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -1474,29 +1479,10 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         DataSetName = 'frxDBDBHPenj_det'
         RowCount = 0
         Stretched = True
-        object Memo28: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 384.260050000000000000
-          Width = 151.181200000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataSet = frxDBDBHPenjualan
-          DataSetName = 'frxDBDBHPenjualan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenj_det."name_item"]')
-          ParentFont = False
-        end
         object Memo29: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 537.220780000000000000
+          Left = 544.220780000000000000
           Width = 60.472480000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDBHPenjualan
@@ -1517,7 +1503,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         object Memo30: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 603.472790000000000000
+          Left = 608.472790000000000000
           Width = 75.590600000000000000
           Height = 18.897650000000000000
           DataSet = frxDBDBHPenjualan
@@ -1619,6 +1605,25 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDBHPenj_det."jum_ak_kre_lain"]')
+          ParentFont = False
+        end
+        object Memo28: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 392.260050000000000000
+          Width = 151.181200000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDBHPenjualan
+          DataSetName = 'frxDBDBHPenjualan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBHPenj_det."name_item"]')
           ParentFont = False
         end
       end

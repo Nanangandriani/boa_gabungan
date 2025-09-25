@@ -95,6 +95,7 @@ type
     Label23: TLabel;
     Label24: TLabel;
     cbTransaksi: TRzComboBox;
+    MemDetailPiutangid_dpp: TStringField;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -117,6 +118,8 @@ type
     procedure DBGridAkunColumns5EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure edJumlahExit(Sender: TObject);
+    procedure dtPeriode2Change(Sender: TObject);
+    procedure dtPeriode1Change(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -140,6 +143,7 @@ type
     procedure VCekBalance;
     procedure HitungKurs;
     procedure CekPosisiDK;
+    procedure UpdateDPP;
   end;
 
 var
@@ -152,6 +156,60 @@ implementation
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
   UHomeLogin, UListPenerimaanBank;
+
+procedure TFDataPenerimaanBank.UpdateDPP;
+var curCash,curReceipt,curChequeAmount1: Currency;
+    strDateTrans,strNamaBank :String;
+begin
+  curCash:=0;
+  curReceipt:=0;
+  curChequeAmount1:=0;
+  strDateTrans:='NULL';
+  strNamaBank:='NULL';
+
+  MemDetailPiutang.first;
+  while not MemDetailPiutang.Eof do
+  begin
+    ShowMessage(MemDetailPiutang['id_dpp']) ;
+    if edKodeJenisBayar.Text='1' then
+    begin
+      curCash:= MemDetailPiutang['jum_piutang'];
+    end else if edKodeJenisBayar.Text='2' then
+    begin
+      curReceipt:= MemDetailPiutang['jum_piutang'];
+      strDateTrans:=QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date));
+      strNamaBank:=QuotedStr(edNamaBank.Text);
+    end else if edKodeJenisBayar.Text='3' then
+    begin
+      curChequeAmount1:= MemDetailPiutang['jum_piutang'];
+      strNamaBank:=QuotedStr(edNamaBank.Text);
+    end;
+
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT  COALESCE(cash,0) cash,COALESCE(receipt,0) receipt, '+
+                'COALESCE(cheque_amount1,0) cheque_amount1 '+
+                'FROM t_dpp WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
+      open;
+    end;
+    curCash:=curCash+dm.Qtemp3.FieldValues['cash'];
+    curReceipt:=curReceipt+dm.Qtemp3.FieldValues['receipt'];
+    curChequeAmount1:=curChequeAmount1+dm.Qtemp3.FieldValues['cheque_amount1'];
+
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='UPDATE t_dpp SET cash='+FloatToStr(curCash)+',receipt='+FloatToStr(curReceipt)+',bank_receipt='+strNamaBank+','+
+                'date_receipt='+strDateTrans+',cheque_amount1='+FloatToStr(curChequeAmount1)+','+
+                'name_bank_cheque='+strNamaBank+' WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
+      ExecSQL;
+    end;
+    MemDetailPiutang.Next;
+  end;
+end;
 
 procedure TFDataPenerimaanBank.RefreshForm;
 begin
@@ -374,6 +432,8 @@ begin
     if MemDetailPiutang.RecordCount<>0 then
     begin
       InsertDetailPiutang;
+      if edKodeSumberTagihan.Text='2' then
+      UpdateDPP;
     end;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Close;
@@ -494,7 +554,7 @@ begin
             ' '+QuotedStr(kd_ak_pelanggan)+') ');
     ExecSQL;
     end;
-  MemDetailPiutang.Next;
+    MemDetailPiutang.Next;
   end;
 end;
 
@@ -550,6 +610,8 @@ begin
   if MemDetailPiutang.RecordCount<>0 then
   begin
     InsertDetailPiutang;
+    if edKodeSumberTagihan.Text='2' then
+    UpdateDPP;
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
@@ -966,8 +1028,8 @@ procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
 begin
   if (edKode_Pelanggan.Text='0') OR (Length(edKode_Pelanggan.Text)=0) then
   begin
-   ShowMessage('Silkan Pilih Pelanggan...!!!');
-   Exit;
+    ShowMessage('Silkan Pilih Pelanggan...!!!');
+    Exit;
   end;
 
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
@@ -986,14 +1048,15 @@ begin
     end;
     if edKodeSumberTagihan.Text='2' then
     begin
-    FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
-    FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
-    FDaftarPenagihanPiutang.tglTagih:=dtPeriode1.Date;
-    FDaftarPenagihanPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
-    FDaftarPenagihanPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
-    FDaftarPenagihanPiutang.dtTagih.Date:=dtPeriode1.Date;
-    FDaftarPenagihanPiutang.RefreshGrid;
-    FDaftarPenagihanPiutang.show;
+      FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
+      FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
+      FDaftarPenagihanPiutang.tglTagih1:=dtPeriode1.Date;
+      FDaftarPenagihanPiutang.tglTagih2:=dtPeriode2.Date;
+      FDaftarPenagihanPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
+      FDaftarPenagihanPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
+      FDaftarPenagihanPiutang.dtTagih.Date:=dtPeriode1.Date;
+      FDaftarPenagihanPiutang.RefreshGrid;
+      FDaftarPenagihanPiutang.show;
     end;
   end;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '1' then
@@ -1011,6 +1074,18 @@ begin
   end;
 end;
 
+procedure TFDataPenerimaanBank.dtPeriode1Change(Sender: TObject);
+begin
+  if dtPeriode1.Date>dtPeriode2.Date then
+  dtPeriode2.Date:=dtPeriode1.Date;
+end;
+
+procedure TFDataPenerimaanBank.dtPeriode2Change(Sender: TObject);
+begin
+  if dtPeriode2.Date<dtPeriode1.Date then
+  dtPeriode1.Date:=dtPeriode2.Date;
+end;
+
 procedure TFDataPenerimaanBank.dtTransChange(Sender: TObject);
 begin
   FDataPenerimaanBank.Autonumber;
@@ -1023,15 +1098,18 @@ begin
   if Length(edKodeJenisTrans.Text)=0 then
   begin
     ShowMessage('Silakan Pilih Modul');
-  end;
-
-  if Length(edKodeJenisTrans.Text)<>0 then
+  end else if edJumlah.Text='0,00' then
   begin
-  FMasterData.Caption:='Master Jenis Pembayaran';
-  FMasterData.vcall:='jenis_terima';
-  FMasterData.update_grid('code','name','description','"public"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
-  FMasterData.ShowModal;
-  //Autocode;
+    MessageDlg('Jumlah diterima wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if Length(edKodeJenisTrans.Text)<>0 then
+    begin
+    FMasterData.Caption:='Master Jenis Pembayaran';
+    FMasterData.vcall:='jenis_terima';
+    FMasterData.update_grid('code','name','description','"public"."t_payment_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+    FMasterData.ShowModal;
+    //Autocode;
+    end;
   end;
 end;
 
@@ -1052,9 +1130,14 @@ end;
 
 procedure TFDataPenerimaanBank.edKode_PelangganButtonClick(Sender: TObject);
 begin
-  Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
-  Fbrowse_data_pelanggan.vcall:='terima_bank';
-  Fbrowse_data_pelanggan.ShowModal;
+  if edJumlah.Text='0,00' then
+  begin
+    MessageDlg('Jumlah diterima wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+    Fbrowse_data_pelanggan.vcall:='terima_bank';
+    Fbrowse_data_pelanggan.ShowModal;
+  end;
 end;
 
 procedure TFDataPenerimaanBank.edKursChange(Sender: TObject);
@@ -1072,15 +1155,19 @@ begin
   if Length(edKodeJenisTrans.Text)=0 then
   begin
     ShowMessage('Silakan Pilih Modul');
-  end;
-
-  if Length(edKodeJenisTrans.Text)<>0 then
+  end else if edJumlah.Text='0,00' then
   begin
-  FMasterData.Caption:='Master Data Bank';
-  FMasterData.vcall:='terima_bank';
-  FMasterData.update_grid('rekening_no','bank_name','currency','t_Bank','WHERE	deleted_at IS NULL ORDER BY id desc');
-  FMasterData.ShowModal;
-  //Autocode;
+    MessageDlg('Jumlah diterima wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+
+    if Length(edKodeJenisTrans.Text)<>0 then
+    begin
+    FMasterData.Caption:='Master Data Bank';
+    FMasterData.vcall:='terima_bank';
+    FMasterData.update_grid('rekening_no','bank_name','currency','t_Bank','WHERE	deleted_at IS NULL ORDER BY id desc');
+    FMasterData.ShowModal;
+    //Autocode;
+    end;
   end;
 end;
 
@@ -1110,15 +1197,19 @@ begin
   if Length(edKodeJenisTrans.Text)=0 then
   begin
     ShowMessage('Silakan Pilih Modul');
-  end;
-
-  if Length(edKodeJenisTrans.Text)<>0 then
+  end else if edJumlah.Text='0,00' then
   begin
-  FMasterData.Caption:='Master Sumber Tagihan';
-  FMasterData.vcall:='sumber_terima';
-  FMasterData.update_grid('code','name','description','"public"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
-  FMasterData.ShowModal;
-  //Autocode;
+    MessageDlg('Jumlah diterima wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+
+    if Length(edKodeJenisTrans.Text)<>0 then
+    begin
+    FMasterData.Caption:='Master Sumber Tagihan';
+    FMasterData.vcall:='sumber_terima';
+    FMasterData.update_grid('code','name','description','"public"."t_bill_source"','WHERE	deleted_at IS NULL ORDER BY id desc');
+    FMasterData.ShowModal;
+    //Autocode;
+    end;
   end;
 end;
 

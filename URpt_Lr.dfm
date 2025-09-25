@@ -89,8 +89,8 @@ object FRpt_Lr: TFRpt_Lr
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 144
-    ExplicitWidth = 377
+    ExplicitTop = 460
+    ExplicitWidth = 668
     object BBatal: TRzBitBtn
       Left = 596
       Top = 1
@@ -151,7 +151,7 @@ object FRpt_Lr: TFRpt_Lr
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 301
+      ExplicitLeft = 592
     end
     object BPrint: TRzBitBtn
       Left = 521
@@ -213,7 +213,7 @@ object FRpt_Lr: TFRpt_Lr
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 226
+      ExplicitLeft = 517
     end
     object Bprint2: TRzBitBtn
       Left = 446
@@ -275,7 +275,7 @@ object FRpt_Lr: TFRpt_Lr
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 151
+      ExplicitLeft = 442
     end
   end
   object dtmulai1: TRzDateTimeEdit
@@ -309,7 +309,6 @@ object FRpt_Lr: TFRpt_Lr
     Contexts = <>
     TabOrder = 5
     TabStop = False
-    ExplicitWidth = 667
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -326,38 +325,72 @@ object FRpt_Lr: TFRpt_Lr
     Width = 672
     Height = 334
     Align = alClient
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_2_lr2'
+      end>
+    DataSource = Ds_lr
     DynProps = <>
-    TabOrder = 10
+    TabOrder = 6
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'id'
         Footers = <>
-        Title.Caption = 'Nama Perkiraan'
-        Width = 235
+        Title.Caption = 'No.'
+        Visible = False
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'lr'
         Footers = <>
         Title.Caption = 'Bulan'
+        Visible = False
         Width = 174
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'lr2'
         Footers = <>
-        Title.Caption = '%'
-        Width = 78
+        Title.Caption = 'Kelompok'
+        Visible = False
+        Width = 235
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_name'
+        Footers = <>
+        Title.Caption = 'Nama Perkiraan'
+        Width = 191
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Caption = 'Nilai'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Width = 86
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -365,58 +398,43 @@ object FRpt_Lr: TFRpt_Lr
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44873.702720590300000000
-    ReportOptions.LastChange = 45100.661568506900000000
+    ReportOptions.LastChange = 45670.380398217600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure GroupHeader1OnAfterPrint(Sender: TfrxComponent);'
       'begin'
       
-        '  if <DbLr."lr">='#39#39' then GroupFooter1.visible:=false else GroupF' +
-        'ooter1.visible:=true;'
-      
-        '//  if <DbLr."lr">='#39#39' then Groupheader1.visible:=false else Grou' +
-        'pheader1.visible:=true;'
+        '  if <Db_Lr."lr">='#39#39' then GroupFooter1.visible:=false else Group' +
+        'Footer1.visible:=true;   '
       'end;'
       ''
       'procedure GroupHeader2OnAfterPrint(Sender: TfrxComponent);'
       'begin'
       
-        '  if <DbLr."lr2">='#39#39' then GroupFooter2.visible:=false else Group' +
-        'Footer2.visible:=true;'
-      
-        '//  if <DbLr."lr2">='#39#39' then Groupheader2.visible:=false else Gro' +
-        'upheader2.visible:=true;'
+        '  if <Db_Lr."lr2">='#39#39' then GroupFooter2.visible:=false else Grou' +
+        'pFooter2.visible:=true;  '
       'end;'
+      '                                                               '
       ''
-      'procedure MasterData3OnAfterPrint(Sender: TfrxComponent);'
+      '{procedure MasterData3OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '// if <DbLr."kode">='#39#39' then memo30.font.style:=fsbold else memo3' +
-        '0.font.style:=fsnormal;'
+        '  if <Db_Lr."code">='#39#39' then memo30.width:=500 else memo30.width:' +
+        '=400 ;'
       
-        '// if <DbLr."kode"> ='#39#39' then memo30.font.style:=[fsbold]; //else' +
-        ' memo30.font.style:=[];'
-      'end;'
-      ''
-      'procedure MasterData3OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      
-        '  if <DbLr."kode">='#39#39' then memo30.width:=500 else memo30.width:=' +
-        '400 ;'
-      
-        '  if <DbLr."kode"><>'#39#39' then memo30.left:=120 else memo30.left:=1' +
-        '10 ;'
-      'end;'
+        '  if <Db_Lr."code"><>'#39#39' then memo30.left:=120 else memo30.left:=' +
+        '110 ;'
+      'end;   }  '
       ''
       'begin'
       ''
       'end.')
-    Left = 390
-    Top = 240
+    Left = 374
+    Top = 96
     Datasets = <
       item
-        DataSet = DbLr
-        DataSetName = 'DbLr'
+        DataSet = Db_lr
+        DataSetName = 'Db_Lr'
       end>
     Variables = <>
     Style = <>
@@ -576,7 +594,7 @@ object FRpt_Lr: TFRpt_Lr
         Top = 181.417440000000000000
         Width = 740.409927000000000000
         OnAfterPrint = 'GroupHeader1OnAfterPrint'
-        Condition = 'DbLr."lr"'
+        Condition = 'Db_Lr."lr"'
         object Memo22: TfrxMemoView
           AllowVectorExport = True
           Top = 3.779527559055120000
@@ -596,7 +614,7 @@ object FRpt_Lr: TFRpt_Lr
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 98.267780000000000000
-          Top = 3.779527559055120000
+          Top = 3.779527560000000000
           Width = 419.527559060000000000
           Height = 18.897637800000000000
           DataSet = FRpt_Neraca.DbRpt_Neraca
@@ -608,7 +626,7 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[DbLr."lr"]')
+            '[Db_Lr."lr"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -692,7 +710,7 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            'TOTAL [DbLr."lr"]')
+            'TOTAL [Db_Lr."lr"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -712,8 +730,6 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<DbLr."qty">,MasterData3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -733,8 +749,6 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<DbLr."qty2">,MasterData3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -750,16 +764,15 @@ object FRpt_Lr: TFRpt_Lr
         Top = 268.346630000000000000
         Width = 740.409927000000000000
         OnBeforePrint = 'MasterData3OnBeforePrint'
-        DataSet = DbLr
-        DataSetName = 'DbLr'
+        DataSet = Db_lr
+        DataSetName = 'Db_Lr'
         RowCount = 0
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Width = 98.267716540000000000
           Height = 17.007874020000000000
-          DataField = 'kode'
-          DataSet = DbLr
-          DataSetName = 'DbLr'
+          DataSet = Db_lr
+          DataSetName = 'Db_Lr'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -767,7 +780,7 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
-            '[DbLr."kode"]')
+            '[Db_Lr."code"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -792,11 +805,9 @@ object FRpt_Lr: TFRpt_Lr
           Highlight.Font.Height = -12
           Highlight.Font.Name = 'Arial'
           Highlight.Font.Style = [fsBold]
-          Highlight.Condition = '<DbLr."kode"> = '#39#39
+          Highlight.Condition = '<Db_Lr."code"> = '#39#39
           Highlight.FillType = ftBrush
           Highlight.Frame.Typ = []
-          Memo.UTF8W = (
-            '[DbLr."qty"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -805,8 +816,8 @@ object FRpt_Lr: TFRpt_Lr
           Left = 136.063080000000000000
           Width = 381.732259060000000000
           Height = 17.007874020000000000
-          DataSet = DbLr
-          DataSetName = 'DbLr'
+          DataSet = Db_lr
+          DataSetName = 'Db_Lr'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -818,11 +829,11 @@ object FRpt_Lr: TFRpt_Lr
           Highlight.Font.Height = -12
           Highlight.Font.Name = 'Arial'
           Highlight.Font.Style = [fsBold]
-          Highlight.Condition = '<DbLr."kode"> = '#39#39
+          Highlight.Condition = '<Db_Lr."Code"> = '#39#39
           Highlight.FillType = ftBrush
           Highlight.Frame.Typ = []
           Memo.UTF8W = (
-            '[DbLr."nama_perkiraan"]')
+            '[Db_Lr."account_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -860,11 +871,9 @@ object FRpt_Lr: TFRpt_Lr
           Highlight.Font.Height = -12
           Highlight.Font.Name = 'Arial'
           Highlight.Font.Style = [fsBold]
-          Highlight.Condition = '<DbLr."kode"> = '#39#39
+          Highlight.Condition = '<Db_Lr."Code"> = '#39#39
           Highlight.FillType = ftBrush
           Highlight.Frame.Typ = []
-          Memo.UTF8W = (
-            '[DbLr."qty2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -880,7 +889,7 @@ object FRpt_Lr: TFRpt_Lr
         Top = 226.771800000000000000
         Width = 740.409927000000000000
         OnAfterPrint = 'GroupHeader2OnAfterPrint'
-        Condition = 'DbLr."lr2"'
+        Condition = 'Db_Lr."lr2"'
         object Memo8: TfrxMemoView
           AllowVectorExport = True
           Width = 98.267716540000000000
@@ -910,7 +919,7 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '   [DbLr."lr2"]')
+            '   [Db_Lr."lr2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -992,7 +1001,7 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '   TOTAL  [DbLr."lr2"]')
+            '   TOTAL  [Db_Lr."lr2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1012,8 +1021,6 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<DbLr."qty">,MasterData3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1033,8 +1040,6 @@ object FRpt_Lr: TFRpt_Lr
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<DbLr."qty2">,MasterData3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2018,6 +2023,7 @@ object FRpt_Lr: TFRpt_Lr
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Awal   '
@@ -2033,5 +2039,72 @@ object FRpt_Lr: TFRpt_Lr
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
+  end
+  object Q_lr: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select b.id,b.lr,b.lr2,c.header_name,a.* from t_ak_type_lr b Lef' +
+        't JOIN t_ak_account a on a.lr_st_id=b.id '
+      
+        'left JOIN t_ak_header c on a.header_code=c.header_code order by ' +
+        'b.id asc')
+    Left = 376
+    Top = 40
+  end
+  object Db_lr: TfrxDBDataset
+    UserName = 'Db_Lr'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'id=id'
+      'lr=lr'
+      'lr2=lr2'
+      'header_name=header_name'
+      'code=code'
+      'header_code=header_code'
+      'account_name=account_name'
+      'posting_id=posting_id'
+      'posisi_dk=posisi_dk'
+      'balance=balance'
+      'balance_status=balance_status'
+      'balance_type=balance_type'
+      'cost_st_id=cost_st_id'
+      'balance_st_id=balance_st_id'
+      'lr_st_id=lr_st_id'
+      'balance_post_st_id=balance_post_st_id'
+      'st_arus_kas=st_arus_kas'
+      'group_id=group_id'
+      'type_id=type_id'
+      'category_code=category_code'
+      'id_1=id_1'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'balance2=balance2'
+      'status=status')
+    DataSet = Q_lr
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 329
+    Top = 25
+  end
+  object Ds_lr: TDataSource
+    DataSet = Mem_lr
+    Left = 328
+    Top = 80
+  end
+  object Mem_lr: TMemTableEh
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 424
+    Top = 40
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = Q_lr
+    Left = 488
+    Top = 80
   end
 end

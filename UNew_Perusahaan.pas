@@ -52,6 +52,9 @@ type
     procedure RzBitBtn1Click(Sender: TObject);
     procedure cb_jenis_usahaClick(Sender: TObject);
     procedure Cb_Status_PajakSelect(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     procedure clear;
@@ -62,7 +65,7 @@ type
     { Public declarations }
   end;
 
-var
+function
   FNewPerusahaan: TFNewPerusahaan;
 
 implementation
@@ -70,6 +73,17 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UMainMenu, UNew_JenisUsaha;
+
+var
+  RealNewPT: TFNewPerusahaan;
+
+function FNewPerusahaan: TFNewPerusahaan;
+begin
+  if RealNewPT <> nil then
+    FNewPerusahaan:= RealNewPT
+  else
+    Application.CreateForm(TFNewPerusahaan, Result);
+end;
 
 procedure TFNewPerusahaan.Load_currency;
 begin
@@ -245,7 +259,7 @@ begin
         close;
         sql.clear;
         sql.Text:=' Update t_company set company_name='+QuotedStr(Ed_nama.Text)+ ' ,type_of_business='+QuotedStr(cb_jenis_usaha.Text)+', address='+QuotedStr(Ed_Alamat.Text)+' ,telp='+QuotedStr(Ed_telp.Text)+''+
-                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=NOW,updated_by=:updated_by '+
+                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=NOW(),updated_by=:updated_by '+
                   ' Where company_code='+QuotedStr(Ed_kode.Text);
 
         if Cb_Status_Pajak.Text='PKP' then
@@ -396,6 +410,21 @@ begin
     end;
     FMainMenu.TampilTabForm2;
     BBatalClick(sender);
+end;
+
+procedure TFNewPerusahaan.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNewPerusahaan.FormCreate(Sender: TObject);
+begin
+  RealNewPT:=self;
+end;
+
+procedure TFNewPerusahaan.FormDestroy(Sender: TObject);
+begin
+  RealNewPT:=nil;
 end;
 
 procedure TFNewPerusahaan.FormShow(Sender: TObject);

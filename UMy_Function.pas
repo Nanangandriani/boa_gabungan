@@ -4,6 +4,7 @@ interface
 
 Uses SysUtils, frxClass,uni;
   function convbulan(nobulan:Integer):string;
+  function convbulanInd(nobulan:Integer):string;
   function GenerateNumber(startingNumber, digits: Integer): string;
   function getNourutBlnPrshthn_kode(tgl:TDateTime;Tablename,kode:string):string;
   function GetNourut(tgl:TDateTime;Tablename,kode:string):string;
@@ -14,6 +15,8 @@ Uses SysUtils, frxClass,uni;
   function MyExecuteSQL(cSQL: String): Boolean;
   function UraikanAngka(S:String):String;
   function terbilang(sValue: string):string;
+  function LastDayOfMonth(Year, Month: Word): word; // 25-08-2025 cr ds
+  function GetLocalIP:string;//NANANG
   procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
 
   var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation,statustr,status_akses:string;
@@ -23,10 +26,71 @@ Uses SysUtils, frxClass,uni;
 
 implementation
 
-uses UDataModule, UHomeLogin;
+uses UDataModule, UHomeLogin, WinSock;
 function RIGHT(S: string; j:Integer): string;
 begin
   RIGHT := Copy(s,(length(s)-(j-1)),j);
+end;
+
+//Nanang
+function GetLocalIP: string;
+type
+  TaPInAddr = array [0..10] of PInAddr;
+  PaPInAddr = ^TaPInAddr;
+var
+  phe: PHostEnt;
+  pptr: PaPInAddr;
+  Buffer: array [0..63] of Ansichar;
+  i: Integer;
+  GInitData: TWSADATA;
+begin
+  WSAStartup($101, GInitData);
+  Result := '';
+  GetHostName(Buffer, SizeOf(Buffer));
+  phe := GetHostByName(Buffer);
+  if phe = nil then
+    Exit;
+  pptr := PaPInAddr(phe^.h_addr_list);
+  i := 0;
+  while pptr^[i] <> nil do
+  begin
+    Result := StrPas(inet_ntoa(pptr^[i]^));
+    Inc(i);
+  end;
+  WSACleanup;
+end;
+
+function convbulanInd(nobulan:Integer):string;
+begin
+  case nobulan of
+    1:Result:='Januari';
+    2:Result:='Februari';
+    3:Result:='Maret';
+    4:Result:='April';
+    5:Result:='Mei';
+    6:Result:='Juni';
+    7:Result:='Juli';
+    8:Result:='Agustus';
+    9:Result:='September';
+    10:Result:='Oktober';
+    11:Result:='November';
+    12:Result:='Desemeber';
+  end;
+end;
+
+function LastDayOfMonth(Year, Month: Word): word;
+  var Last_day:tdatetime;
+      yy,mm,dd:word;
+  begin
+    if Month = 12 then
+    begin
+    Inc(Year);
+    Month := 1;
+    end;
+    Last_day:=EncodeDate(Year, Month + 1, 1) - 1;
+    decodedate(last_day,yy,mm,dd);
+    Result :=dd;
+
 end;
 
 function rubah(masukan:string):String ;
@@ -440,35 +504,35 @@ begin
    end;
    if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']='0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code isnull';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code isnull AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']='0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where  additional_code isnull and  cast(trans_day as integer) ='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where  additional_code isnull and  cast(trans_day as integer) ='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+'  AND deleted_at is NULL';
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']='0')then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where  additional_code isnull and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where  additional_code isnull and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
    if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']='0')then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where additional_code isnull and cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where additional_code isnull and cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
       if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode);//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
    if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
    if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
    if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0')then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_year as integer)='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
     Vthn:=FormatDateTime('yyyy',strday2);
     Vbln:=FormatDateTime('mm',strday2);
@@ -493,7 +557,6 @@ begin
             sql.add(query2);
             open;
        end;
-
        // hasil Penggabungan format penomeran sesuai setting berdasarkan akses modulnya masing2
        with dm.Qtemp do
        begin

@@ -27,7 +27,7 @@ uses
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, Winapi.WebView2, Winapi.ActiveX,
   Vcl.OleCtrls, SHDocVw, Vcl.Edge, Vcl.ExtCtrls, RzTabs, MemTableDataEh,
-  MemTableEh;
+  MemTableEh, DataDriverEh;
 
 type
   TFListPengajuanApprovePenjualan = class(TForm)
@@ -120,6 +120,39 @@ type
     QAppKlasifikasiname_promo: TMemoField;
     QAppKlasifikasiid_master_klas: TMemoField;
     QAppKlasifikasipilih: TBooleanField;
+    DBGridOrder: TDBGridEh;
+    DBGridEh2: TDBGridEh;
+    QSalesOrder: TUniQuery;
+    DsSalesOrder: TDataSource;
+    DsSalesOrderDetail: TDataSource;
+    QSalesOrderDetail: TUniQuery;
+    QSalesOrderid: TGuidField;
+    QSalesOrdercreated_at: TDateTimeField;
+    QSalesOrdercreated_by: TStringField;
+    QSalesOrderupdated_at: TDateTimeField;
+    QSalesOrderupdated_by: TStringField;
+    QSalesOrderdeleted_at: TDateTimeField;
+    QSalesOrderdeleted_by: TStringField;
+    QSalesOrdernotrans: TStringField;
+    QSalesOrderorder_date: TDateField;
+    QSalesOrdersent_date: TDateField;
+    QSalesOrdercode_cust: TStringField;
+    QSalesOrdername_cust: TStringField;
+    QSalesOrdercode_sales: TStringField;
+    QSalesOrdername_sales: TStringField;
+    QSalesOrderpayment_term: TSmallintField;
+    QSalesOrdercode_source: TStringField;
+    QSalesOrdername_source: TStringField;
+    QSalesOrderorder_no: TIntegerField;
+    QSalesOrderadditional_code: TStringField;
+    QSalesOrdertrans_day: TStringField;
+    QSalesOrdertrans_month: TStringField;
+    QSalesOrdertrans_year: TStringField;
+    QSalesOrderno_reference: TStringField;
+    QSalesOrderstatus: TSmallintField;
+    QSalesOrdernote: TMemoField;
+    QSalesOrdernote_pengajuan: TMemoField;
+    QSalesOrderpilih: TBooleanField;
     procedure ActROExecute(Sender: TObject);
     procedure ActAppExecute(Sender: TObject);
     procedure ActRejectExecute(Sender: TObject);
@@ -139,12 +172,15 @@ type
       var Text: string; DisplayText: Boolean);
     procedure QAppKlasifikasiname_type_countGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure RefreshKlasifikasi;
     procedure ApproveKlasifikasi;
+    procedure ApproveSalesOrder;
+    procedure RejectSalesOrder;
     procedure RejectKlasifikasi;
   end;
 
@@ -166,23 +202,85 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "t_sales_classification_det" SET '+
+      sql.add(' UPDATE "t_sales_classification" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-              ' stat_approve=1 '+
-              ' Where stat_approve=0 and '+
-              ' id_master='+QuotedStr(QAppKlasifikasiid_master_klas.Value)+'');
+              ' status_approval=1 '+
+              ' Where status_approval=0 and '+
+              ' id='+QuotedStr(QAppKlasifikasiid_master_klas.Value)+'');
       ExecSQL;
     end;
     Dm.Koneksi.Commit;
-  Except on E :Exception do
-  begin
+    Except on E :Exception do
     begin
-      MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-      Dm.koneksi.Rollback ;
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
     end;
   end;
+end;
+
+procedure TFListPengajuanApprovePenjualan.ApproveSalesOrder;
+begin
+  if not dm.Koneksi.InTransaction then
+  dm.Koneksi.StartTransaction;
+  try
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "t_sales_order" SET '+
+              ' status_approval_at=NOW(),'+
+              ' status_approval_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' status=1 '+
+              ' Where notrans='+QuotedStr(QSalesOrdernotrans.Value)+'');
+      ExecSQL;
+    end;
+    Dm.Koneksi.Commit;
+    Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
   end;
+end;
+
+procedure TFListPengajuanApprovePenjualan.RejectSalesOrder;
+var notrans: String;
+begin
+  if not dm.Koneksi.InTransaction then
+  dm.Koneksi.StartTransaction;
+  try
+    notrans:=QSalesOrdernotrans.Value+'-REV';
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "t_sales_order" SET '+
+              ' notrans='+QuotedStr(notrans)+','+
+              ' updated_at=NOW(),'+
+              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' status=99,deleted_at=NOW(),deleted_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+              ' Where id='+QuotedStr(QSalesOrderid.Value)+'');
+      ExecSQL;
+    end;
+    Dm.Koneksi.Commit;
+    Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
+end;
+
+procedure TFListPengajuanApprovePenjualan.FormShow(Sender: TObject);
+begin
+  ActROExecute(sender);
 end;
 
 procedure TFListPengajuanApprovePenjualan.RejectKlasifikasi;
@@ -194,22 +292,22 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' UPDATE "t_sales_classification_det" SET '+
+      sql.add(' UPDATE "t_sales_classification" SET '+
               ' updated_at=NOW(),'+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-              ' stat_approve=0 '+
-              ' Where stat_approve=0 and '+
-              ' id_master='+QuotedStr(QAppKlasifikasiid_master_klas.Value)+'');
+              ' status_approval=99 '+
+              ' Where status_approval=0 and '+
+              ' id='+QuotedStr(QAppKlasifikasiid_master_klas.Value)+'');
       ExecSQL;
     end;
     Dm.Koneksi.Commit;
-  Except on E :Exception do
-  begin
+    Except on E :Exception do
     begin
-      MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-      Dm.koneksi.Rollback ;
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
     end;
-  end;
   end;
 end;
 
@@ -249,39 +347,39 @@ begin
     open;
   end;
 
+  FListPengajuanApprovePenjualan.MemAppKlasifikasi.active:=false;
+  FListPengajuanApprovePenjualan.MemAppKlasifikasi.active:=true;
+  FListPengajuanApprovePenjualan.MemAppKlasifikasi.EmptyTable;
+
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
     FListPengajuanApprovePenjualan.MemAppKlasifikasi.active:=false;
     FListPengajuanApprovePenjualan.MemAppKlasifikasi.active:=true;
     FListPengajuanApprovePenjualan.MemAppKlasifikasi.EmptyTable;
+  end;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      FListPengajuanApprovePenjualan.MemAppKlasifikasi.active:=false;
-      FListPengajuanApprovePenjualan.MemAppKlasifikasi.active:=true;
-      FListPengajuanApprovePenjualan.MemAppKlasifikasi.EmptyTable;
-    end;
-
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi.insert;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['id_master']:=Dm.Qtemp.fieldbyname('id_master').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_type_customer']:=Dm.Qtemp.fieldbyname('code_type_customer').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_item_category']:=Dm.Qtemp.fieldbyname('name_type_customer').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_type_count']:=Dm.Qtemp.fieldbyname('name_type_count').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_customer_selling_type']:=Dm.Qtemp.fieldbyname('name_customer_selling_type').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_sell_type']:=Dm.Qtemp.fieldbyname('name_sell_type').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_payment']:=Dm.Qtemp.fieldbyname('name_payment').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_grouping']:=Dm.Qtemp.fieldbyname('name_grouping').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_tax']:=Dm.Qtemp.fieldbyname('name_tax').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_disc']:=Dm.Qtemp.fieldbyname('name_disc').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_promo']:=Dm.Qtemp.fieldbyname('name_promo').value;
-     FListPengajuanApprovePenjualan.MemAppKlasifikasi.post;
-     ShowMessage('A');
-     Dm.Qtemp.next;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi.insert;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['id_master']:=Dm.Qtemp.fieldbyname('id_master').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_type_customer']:=Dm.Qtemp.fieldbyname('code_type_customer').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_item_category']:=Dm.Qtemp.fieldbyname('name_type_customer').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_type_count']:=Dm.Qtemp.fieldbyname('name_type_count').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_customer_selling_type']:=Dm.Qtemp.fieldbyname('name_customer_selling_type').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_sell_type']:=Dm.Qtemp.fieldbyname('name_sell_type').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_payment']:=Dm.Qtemp.fieldbyname('name_payment').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_grouping']:=Dm.Qtemp.fieldbyname('name_grouping').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_tax']:=Dm.Qtemp.fieldbyname('name_tax').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_disc']:=Dm.Qtemp.fieldbyname('name_disc').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi['name_promo']:=Dm.Qtemp.fieldbyname('name_promo').value;
+      FListPengajuanApprovePenjualan.MemAppKlasifikasi.post;
+      ShowMessage('A');
+      Dm.Qtemp.next;
     end;
-    end;
+  end;
 end;
 
 procedure TFListPengajuanApprovePenjualan.ActAppExecute(Sender: TObject);
@@ -318,8 +416,8 @@ begin
         if QAppKlasifikasipilih.value=true then
         begin
           ApproveKlasifikasi;
-        end;
-      Qappklasifikasi.next;
+         end;
+        Qappklasifikasi.next;
       end;
     end;
     QAppKlasifikasi.Close;
@@ -329,10 +427,46 @@ begin
     MessageDlg('Approval Berhasil..!!',mtInformation,[MBOK],0);
   end;
 
-   if ActiveIndex<>0 then
+  if ActiveIndex=1 then
   begin
-    ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
+    QSalesOrder.first;
+    while not QSalesOrder.Eof do
+    begin
+      if QSalesOrderpilih.value=true then
+      begin
+        rec:=rec+1;
+      end;
+    QSalesOrder.next;
+    end;
+
+    if rec=0 then
+    begin
+      ShowMessage('Tidak Ada Data Yang Di Tandai..!!!');
+      Exit;
+    end;
+    if rec<>0 then
+    begin
+      QSalesOrder.first;
+      while not QSalesOrder.Eof do
+      begin
+        if QSalesOrderpilih.value=true then
+        begin
+          ApproveSalesOrder;
+         end;
+        QSalesOrder.next;
+      end;
+    end;
+    QSalesOrder.Close;
+    QSalesOrder.Open;
+    QSalesOrderDetail.Close;
+    QSalesOrderDetail.Open;
+    MessageDlg('Approval Berhasil..!!',mtInformation,[MBOK],0);
   end;
+
+//  if ActiveIndex<>0 then
+//  begin
+//    ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
+//  end;
 end;
 
 procedure TFListPengajuanApprovePenjualan.ActRejectExecute(Sender: TObject);
@@ -381,10 +515,47 @@ begin
     MessageDlg('Reject Berhasil..!!',mtInformation,[MBOK],0);
   end;
 
-   if ActiveIndex<>0 then
+  if ActiveIndex=1 then
   begin
-    ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
+    QSalesOrder.first;
+    while not QSalesOrder.Eof do
+    begin
+      if QSalesOrderpilih.value=true then
+      begin
+        rec:=rec+1;
+      end;
+    QSalesOrder.next;
+    end;
+
+    if rec=0 then
+    begin
+      ShowMessage('Tidak Ada Data Yang Di Tandai..!!!');
+      Exit;
+    end;
+    if rec<>0 then
+    begin
+      QSalesOrder.first;
+      while not QSalesOrder.Eof do
+      begin
+        if QSalesOrderpilih.value=true then
+        begin
+          RejectSalesOrder;
+         end;
+        QSalesOrder.next;
+      end;
+    end;
+    QSalesOrder.Close;
+    QSalesOrder.Open;
+    QSalesOrderDetail.Close;
+    QSalesOrderDetail.Open;
+    MessageDlg('Reject Berhasil..!!',mtInformation,[MBOK],0);
   end;
+
+
+//  if ActiveIndex<>0 then
+//  begin
+//    ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
+//  end;
 end;
 
 procedure TFListPengajuanApprovePenjualan.ActROExecute(Sender: TObject);
@@ -400,12 +571,18 @@ begin
     QAppKlasifikasi.Open;
     QAppKlasifikasiDet.Close;
     QAppKlasifikasiDet.Open;
+  end else if ActiveIndex=1 then
+  begin
+    QSalesOrder.Close;
+    QSalesOrder.Open;
+    QSalesOrderDetail.Close;
+    QSalesOrderDetail.Open;
   end;
 
-   if ActiveIndex<>0 then
-  begin
-    ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
-  end;
+//  if ActiveIndex<>0 then
+//  begin
+//    ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
+//  end;
 end;
 
 procedure TFListPengajuanApprovePenjualan.QAppKlasifikasiname_customer_selling_typeGetText(

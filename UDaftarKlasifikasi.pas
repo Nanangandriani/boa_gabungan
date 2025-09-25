@@ -8,7 +8,8 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzButton, Vcl.StdCtrls, RzCmboBx,
   Vcl.Buttons, Vcl.Mask, RzEdit, RzBtnEdt, RzPanel, RzRadGrp, Data.DB, DBAccess,
-  Uni, MemTableDataEh, MemTableEh;
+  Uni, MemTableDataEh, MemTableEh, IdBaseComponent, IdZLibCompressorBase,
+  IdCompressorZLib, RzLabel;
 
 type
   TFDaftarKlasifikasi = class(TForm)
@@ -124,6 +125,8 @@ type
     ednm_jenis_usaha: TRzButtonEdit;
     Label1: TLabel;
     Label4: TLabel;
+    IdCompressorZLib1: TIdCompressorZLib;
+    RzLabel1: TRzLabel;
   procedure edKode_PelangganButtonClick(Sender: TObject);
   procedure ednm_jenis_pelButtonClick(Sender: TObject);
   procedure ednm_kategoriButtonClick(Sender: TObject);
@@ -145,6 +148,12 @@ type
     procedure DBGridMasterDblClick(Sender: TObject);
     procedure DBGridKlasifikasiDblClick(Sender: TObject);
     procedure ednm_jenis_usahaButtonClick(Sender: TObject);
+    procedure ednm_kategoriChange(Sender: TObject);
+    procedure edkd_kategoriChange(Sender: TObject);
+    procedure ednm_type_jualChange(Sender: TObject);
+    procedure ednm_jenis_jualChange(Sender: TObject);
+    procedure edkd_jenis_jualChange(Sender: TObject);
+    procedure edkd_type_jualChange(Sender: TObject);
   private
   { Private declarations }
   public
@@ -172,14 +181,14 @@ uses Ubrowse_pelanggan, UMasterData, UDataModule, UHomeLogin;
 
 procedure TFDaftarKlasifikasi.SaveUpdateGroup;
 begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if FDaftarKlasifikasi.Status = 0 then
-      begin
-      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        //ShowMessage(IntToStr(Status));
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  if FDaftarKlasifikasi.Status = 0 then
+  begin
+    if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
+      //ShowMessage(IntToStr(Status));
       if MemMaster.RecordCount=0 then
       begin
         MessageDlg('Tidak Ada Data..!!',mtInformation,[mbRetry],0);
@@ -187,31 +196,30 @@ begin
         exit;
       end;
 
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' INSERT INTO "t_sales_classification_group" ("id_master", '+
-                    ' "id_master_det", "code_item", "code_unit", "code_cust", '+
-                    ' "stat_approve","created_at", "created_by" ) '+
-                    ' Values( '+
-                    ' '+QuotedStr(MemMaster['id_master'])+', '+
-                    ' '+QuotedStr(MemMaster['id_master_det'])+', '+
-                    ' '+QuotedStr(MemMaster['kd_barang'])+', '+
-                    ' '+QuotedStr(MemMaster['kd_satuan'])+', '+
-                    ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
-                    ' 0 ,NOW(), '+
-                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
-          ExecSQL;
-        end;
-        MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' INSERT INTO "t_sales_classification_group" ("id_master", '+
+                  ' "id_master_det", "code_item", "code_unit", "code_cust", '+
+                  ' "stat_approve","created_at", "created_by" ) '+
+                  ' Values( '+
+                  ' '+QuotedStr(MemMaster['id_master'])+', '+
+                  ' '+QuotedStr(MemMaster['id_master_det'])+', '+
+                  ' '+QuotedStr(MemMaster['kd_barang'])+', '+
+                  ' '+QuotedStr(MemMaster['kd_satuan'])+', '+
+                  ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
+                  ' 0 ,NOW(), '+
+                  ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+        ExecSQL;
       end;
-      end
-      else if FDaftarKlasifikasi.Status = 1 then
-      begin
-      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
+      MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
+      Dm.Koneksi.Commit;
+    end;
+  end else if FDaftarKlasifikasi.Status = 1 then
+  begin
+    if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
       if MemGroup.RecordCount=0 then
       begin
         MessageDlg('Tidak Ada Data..!!',mtInformation,[mbRetry],0);
@@ -219,37 +227,37 @@ begin
         exit;
       end;
 
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' DELETE FROM "t_sales_classification_group" '+
-                    ' WHERE "id_master"='+QuotedStr(MemGroup['id_master'])+' AND '+
-                    ' "id_master_det"='+QuotedStr(MemGroup['id_master_det'])+' AND '+
-                    ' "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+' '+
-                    ' ;';
-          ExecSQL;
-        end;
-        MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' DELETE FROM "t_sales_classification_group" '+
+                  ' WHERE "id_master"='+QuotedStr(MemGroup['id_master'])+' AND '+
+                  ' "id_master_det"='+QuotedStr(MemGroup['id_master_det'])+' AND '+
+                  ' "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+' '+
+                  ' ;';
+        ExecSQL;
       end;
+      MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
+      Dm.Koneksi.Commit;
+    end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
       end;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
-      RefreshGrid_Group;
-      RefreshGrid_Master;
+    end;
+  end;
+  RefreshGrid_Group;
+  RefreshGrid_Master;
 end;
 
 procedure TFDaftarKlasifikasi.save;
 begin
-    with dm.Qtemp2 do
-    begin
+  with dm.Qtemp2 do
+  begin
     close;
     sql.clear;
     sql.Text:=' INSERT INTO "public"."t_sales_classification" ("created_at", '+
@@ -272,10 +280,10 @@ begin
               ' '+IntToStr(rgPotongan.ItemIndex)+', '+
               ' '+IntToStr(rgPromo.ItemIndex)+');';
     ExecSQL;
-    end;
+  end;
 
-    if MemKlasifikasi.RecordCount<>0 then
-    begin
+  if MemKlasifikasi.RecordCount<>0 then
+  begin
     with Dm.Qtemp1 do //cek data master untuk dapat id master
     begin
       close;
@@ -299,7 +307,7 @@ begin
               ' Order By "code_type_customer" desc ');
       open;
     end;
-    //id_master:= Copy(Dm.Qtemp1.FieldByName('id_master').AsString, 2, Length(Dm.Qtemp1.FieldByName('id_master').AsString) - 2);
+  //id_master:= Copy(Dm.Qtemp1.FieldByName('id_master').AsString, 2, Length(Dm.Qtemp1.FieldByName('id_master').AsString) - 2);
 
     MemKlasifikasi.First;
     while not MemKlasifikasi.Eof do
@@ -379,9 +387,9 @@ begin
       //ShowMessage(MemKlasifikasi['kd_barang']);
     MemKlasifikasi.Next;
     end;
-    end;
-    //cek masterharga jual per jenis pelanggan dan jenis jual b2b b2c
-    MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  end;
+  //cek masterharga jual per jenis pelanggan dan jenis jual b2b b2c
+  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
 end;
 
 
@@ -541,48 +549,48 @@ begin
     open;
   end;
 
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if (edkd_jenis_usaha.Text='') OR (edkd_jenis_usaha.Text='0') then
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+    if (edkd_jenis_usaha.Text='') OR (edkd_jenis_usaha.Text='0') then
+    begin
+      MessageDlg('Jenis Usaha Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edkd_jenis_usaha.SetFocus;
+    end
+    else if (edkd_jenis_pel.Text='') OR (edkd_jenis_pel.Text='0') then
+    begin
+      MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edkd_jenis_pel.SetFocus;
+    end
+    else if (edkd_kategori.Text='') OR (edkd_kategori.Text='0') then
+    begin
+      MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      edkd_kategori.SetFocus;
+    end
+    else if Dm.Qtemp3.RecordCount=0 then
+    begin
+    if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
+      Save;
+      Dm.Koneksi.Commit;
+    end;
+    end
+    else if Dm.Qtemp3.RecordCount<>0 then
+    begin
+    if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
+      Update;
+      Dm.Koneksi.Commit;
+    end;
+  end;
+  Except on E :Exception do
+    begin
       begin
-        MessageDlg('Jenis Usaha Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edkd_jenis_usaha.SetFocus;
-      end
-      else if (edkd_jenis_pel.Text='') OR (edkd_jenis_pel.Text='0') then
-      begin
-        MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edkd_jenis_pel.SetFocus;
-      end
-      else if (edkd_kategori.Text='') OR (edkd_kategori.Text='0') then
-      begin
-        MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edkd_kategori.SetFocus;
-      end
-      else if Dm.Qtemp3.RecordCount=0 then
-      begin
-      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        Save;
-        Dm.Koneksi.Commit;
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
       end;
-      end
-      else if Dm.Qtemp3.RecordCount<>0 then
-      begin
-      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        Update;
-        Dm.Koneksi.Commit;
-      end;
-      end;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    end;
+  end;
 end;
 
 procedure TFDaftarKlasifikasi.bt_m_tampilkanClick(Sender: TObject);
@@ -683,7 +691,7 @@ begin
             ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual_pel.Text)+' AND  '+
             ' "code_sell_type"='+QuotedStr(edkd_jenis_jual_pel.Text)+' AND '+
             ' "code_item_category"='+QuotedStr(edkd_kategori_pel.Text)+' AND '+
-            ' "status_grouping"=1  )xx where  id_detail NOT IN (SELECT "id_master_det" '+
+            ' "status_grouping"=1 and a.status_approval=1 )xx where  id_detail NOT IN (SELECT "id_master_det" '+
             ' FROM "t_sales_classification_group" where "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+') '+
             ' Order By "code_item" desc ');
     open;
@@ -802,15 +810,30 @@ begin
   edkd_jenis_jual.Clear;
   ednm_type_hitung.Clear;
   edkd_type_hitung.Clear;
+  MemKlasifikasi.Active:=False;
+  MemKlasifikasi.Active:=Active;
+  MemGroup.Active:=False;
+  MemGroup.Active:=Active;
+  MemMaster.Active:=False;
+  MemMaster.Active:=Active;
+  MemKlasifikasi.EmptyTable;
+  MemGroup.EmptyTable;
+  MemMaster.EmptyTable;
 end;
 
 procedure TFDaftarKlasifikasi.DBGridDetailColumns1CellButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-  FMasterData.Caption:='Master Data Barang';
-  FMasterData.vcall:='m_klasifikasi';
-  FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE category_id='+QuotedStr(edkd_kategori.Text)+' and	deleted_at IS NULL');
-  FMasterData.ShowModal;
+  if ednm_kategori.Text='' then
+  begin
+    MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    FMasterData.Caption:='Master Data Barang';
+    FMasterData.vcall:='m_klasifikasi';
+    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE group_id='+QuotedStr(edkd_kategori.Text)+' and	deleted_at IS NULL');
+    FMasterData.ShowModal;
+  end;
 end;
 
 procedure TFDaftarKlasifikasi.DBGridKlasifikasiDblClick(Sender: TObject);
@@ -851,6 +874,21 @@ begin
   Close;
 end;
 
+procedure TFDaftarKlasifikasi.edkd_jenis_jualChange(Sender: TObject);
+begin
+  edkd_jenis_jual_pel.Text:=edkd_jenis_jual.Text;
+end;
+
+procedure TFDaftarKlasifikasi.edkd_kategoriChange(Sender: TObject);
+begin
+  edkd_kategori_pel.Text:=edkd_kategori.Text;
+end;
+
+procedure TFDaftarKlasifikasi.edkd_type_jualChange(Sender: TObject);
+begin
+  edkd_type_jual_pel.Text:=edkd_type_jual.Text;
+end;
+
 procedure TFDaftarKlasifikasi.edKode_PelangganButtonClick(Sender: TObject);
 begin
   Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
@@ -864,6 +902,11 @@ begin
   FMasterData.vcall:='jns_jual_klasifikasi';
   FMasterData.update_grid('code','name','description','t_sell_type','WHERE	deleted_at IS NULL Order By code Asc');
   FMasterData.ShowModal;
+end;
+
+procedure TFDaftarKlasifikasi.ednm_jenis_jualChange(Sender: TObject);
+begin
+  ednm_jenis_jual_pel.Text:=ednm_jenis_jual.Text;
 end;
 
 procedure TFDaftarKlasifikasi.ednm_jenis_jual_pelButtonClick(Sender: TObject);
@@ -898,6 +941,11 @@ begin
   FMasterData.ShowModal;
 end;
 
+procedure TFDaftarKlasifikasi.ednm_kategoriChange(Sender: TObject);
+begin
+  ednm_kategori_pel.Text:=ednm_kategori.Text;
+end;
+
 procedure TFDaftarKlasifikasi.ednm_kategori_pelButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Kategori';
@@ -920,6 +968,11 @@ begin
   FMasterData.vcall:='type_jual_klasifikasi';
   FMasterData.update_grid('code','name','description','t_customer_selling_type','WHERE	deleted_at IS NULL Order By code Asc');
   FMasterData.ShowModal;
+end;
+
+procedure TFDaftarKlasifikasi.ednm_type_jualChange(Sender: TObject);
+begin
+  ednm_type_jual_pel.Text:=ednm_type_jual.Text;
 end;
 
 procedure TFDaftarKlasifikasi.ednm_type_jual_pelButtonClick(Sender: TObject);

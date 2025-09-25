@@ -37,14 +37,16 @@ type
     MemDetailPiutangno_Faktur: TStringField;
     MemDetailPiutangtglfaktur: TDateField;
     MemDetailPiutangpilih: TBooleanField;
+    MemDetailPiutangid_dpp: TStringField;
     procedure btTampilkanClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     kd_outlet, vcall: string;
     Status: Integer;
-    tglTagih: TDate;
+    tglTagih1,tglTagih2: TDate;
     { Public declarations }
     procedure RefreshGrid;
     procedure Clear;
@@ -111,6 +113,7 @@ begin
                   FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=MemDetailPiutang['jum_piutang'];
                   FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=MemDetailPiutang['jum_piutang'];
                   FDataPenerimaanBank.MemDetailPiutang['keterangan']:='PELUNASAN PIUTANG ';
+                  FDataPenerimaanBank.MemDetailPiutang['id_dpp']:=MemDetailPiutang['id_dpp'];;
                   FDataPenerimaanBank.MemDetailPiutang.post;
              end;
            MemDetailPiutang.Next;
@@ -131,7 +134,7 @@ end;
 procedure TFDaftarPenagihanPiutang.btTampilkanClick(Sender: TObject);
 begin
   FDaftarPenagihanPiutang.kd_outlet:=FDaftarPenagihanPiutang.edKode_Pelanggan.Text;
-  FDaftarPenagihanPiutang.tglTagih:=FDaftarPenagihanPiutang.dtTagih.Date;
+  FDaftarPenagihanPiutang.tglTagih1:=FDaftarPenagihanPiutang.dtTagih.Date;
   FDaftarPenagihanPiutang.RefreshGrid;
 end;
 
@@ -144,6 +147,11 @@ begin
   MemDetailPiutang.Active:=true;
 end;
 
+procedure TFDaftarPenagihanPiutang.FormShow(Sender: TObject);
+begin
+  if vcall='PenagihanPiutang' then Panel1.Visible:=False else Panel1.Visible:=True;
+end;
+
 procedure TFDaftarPenagihanPiutang.RefreshGrid;
 var
 URUTAN_KE : Integer;
@@ -154,16 +162,16 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' SELECT *,customer_name from ('+
-              ' SELECT * '+
-              ' FROM "public"."t_dpp")  a '+
-              ' LEFT JOIN t_customer b ON a.code_cust=b.customer_code '+
-              ' WHERE date_dpp ='+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih))+' ');
+      sql.add('SELECT a.id,a.date_trans,a.date_dpp,a.no_invoice,a.no_invoice_tax,'+
+              'a.code_cust,b.customer_name,a.paid_amount from t_dpp  a '+
+              'LEFT JOIN t_customer b ON a.code_cust=b.customer_code '+
+              'WHERE (a.date_dpp BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih1))+' AND '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih2))+')');
       if Length(edKode_Pelanggan.Text)<>0 then
       begin
-        sql.add(' AND "code_cust"='+QuotedStr(kd_outlet)+' ');
+        sql.add(' AND a.code_cust='+QuotedStr(kd_outlet)+' ');
       end;
-      sql.add(' ORDER BY code_cust,date_dpp desc');
+      sql.add(' ORDER BY a.code_cust,a.date_dpp desc');
       open;
     end;
   end;
@@ -195,6 +203,7 @@ begin
      FDaftarPenagihanPiutang.MemDetailPiutang['nama_pelanggan']:=Dm.Qtemp.FieldByName('customer_name').AsString;
      FDaftarPenagihanPiutang.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('paid_amount').AsFloat;
      FDaftarPenagihanPiutang.MemDetailPiutang['pilih']:=0;
+     FDaftarPenagihanPiutang.MemDetailPiutang['id_dpp']:=dm.Qtemp.FieldValues['id'];
      FDaftarPenagihanPiutang.MemDetailPiutang.post;
      Dm.Qtemp.next;
     end;

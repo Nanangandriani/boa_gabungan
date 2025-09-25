@@ -174,7 +174,7 @@ begin
 {  sql.Text:='select a.tgl,keterangan,b.*,c.nama_perkiraan,to_char((SELECT (date_trunc(''MONTH'', tgl ) + INTERVAL ''1 MONTH - 1 day'')::date as hari),''dd'') tgl2'+
   ' from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c '+
   ' on b.akun_kredit=c.kode WHERE a.no_bukti_memo='+QuotedStr(MemTableEh1['no_bukti_memo'])+' and kredit >0 '; }
- sql.Text:='select * from "V_BukuMemorial" WHERE no_bukti_memo='+QuotedStr(MemTableEh1['no_bukti_memo'])+' and kredit >0 ';
+ sql.Text:='select * from "V_BukuMemorial" WHERE memo_no='+QuotedStr(MemTableEh1['memo_no'])+' and kredit >0 ';
   open;
 end;
 with QBukti_memo2 do
@@ -184,7 +184,7 @@ begin
  { sql.Text:='select a.tgl,keterangan,b.*,c.nama_perkiraan from t_jurnal_memorial a INNER JOIN '+
   ' t_jurnal_memorial_detail b on a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c '+
   ' on b.akun_kredit=c.kode WHERE a.no_bukti_memo='+QuotedStr(MemTableEh1['no_bukti_memo'])+'order by debit desc';   }
- sql.Text:='select * from "V_BukuMemorial" WHERE no_bukti_memo='+QuotedStr(MemTableEh1['no_bukti_memo'])+'order by debit desc';
+ sql.Text:='select * from "V_BukuMemorial" WHERE memo_no='+QuotedStr(MemTableEh1['memo_no'])+'order by debit desc';
 
   open;
 end;
@@ -200,58 +200,58 @@ end;
 
 procedure TFlist_jurnal_memorial.ActUpdateExecute(Sender: TObject);
 begin
-{  with dm.Qtemp do
+  with dm.Qtemp do
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='SELECT case when id_ket isnull then keterangan else concat(b.nm_ket,'' '',a.bln,'' '',a.thn )end'+
-    ' keterangan,case when id_ket ISNULL then keterangan else b.nm_ket end ket,b.nm_ket,a.no_bukti_memo,a.tgl, '+
-    ' a.no_bk,a.no_faktur,a.status_pembulatan,a.status_post,a.status_koreksi,a.bln,a.thn,a.id_ket FROM   '+
-    '	t_jurnal_memorial AS a LEFT JOIN t_ket_memorial AS b ON a.id_ket=b.id '+
-    ' where no_bukti_memo='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id desc';
+    Sql.Text:='SELECT case when notes_id isnull then a.notes else concat(b.notes,'' '', f_bulan(a.trans_month::integer),'' '',a.trans_year )end'+
+    ' keterangan,case when notes_id ISNULL then a.notes else b.notes end ket,b.notes,a.memo_no,a.trans_date, '+
+    ' a.bk_no,a.faktur_no,a.rounding_status,a.post_status,a.koreksi_status,f_bulan(a.trans_month::integer) bln,a.trans_year,a.notes_id FROM   '+
+    '	t_memorial_journal AS a LEFT JOIN t_memorial_notes AS b ON a.notes_id=b.id '+
+    ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id desc';
     Open;
   end;
-  if dm.Qtemp.FieldByName('status_post').AsInteger=0 then
+  if dm.Qtemp.FieldByName('post_status').AsInteger=0 then
   begin
     FNewJurnal_memo.Clear;
     with MemTableEh1 do
     begin
-      FNewJurnal_memo.edno_bukti_memorial.Text:=FieldByName('no_bukti_memo').AsString;
-      FNewJurnal_memo.DTtgl.Text:=FieldByName('tgl').AsString;
+      FNewJurnal_memo.edno_bukti_memorial.Text:=FieldByName('memo_no').AsString;
+      FNewJurnal_memo.DTtgl.Text:=FieldByName('trans_date').AsString;
       FNewJurnal_memo.Memket.Text:=FieldByName('keterangan').AsString;
       FNewJurnal_memo.cbbulan.Text:=FieldByName('bln').AsString;
-      FNewJurnal_memo.edth.Text:=FieldByName('thn').AsString;
-      FNewJurnal_memo.Edkd_ket.Text:=FieldByName('id_ket').AsString;
+      FNewJurnal_memo.edth.Text:=FieldByName('trans_year').AsString;
+      FNewJurnal_memo.Edkd_ket.Text:=FieldByName('notes_id').AsString;
       FNewJurnal_memo.Memket.Text:=FieldByName('ket').AsString;
-      if FieldByName('no_bk').AsString<>'' then
+      if FieldByName('bk_no').AsString<>'' then
       begin
         FNewJurnal_memo.Checkpembuatan.Checked:=false;
         FNewJurnal_memo.CheckpembuatanClick(sender);
-        FNewJurnal_memo.edno_bk_pembulatan.Text:=FieldByName('no_bk').AsString;
-        FNewJurnal_memo.edno_faktur_pembulatan.Text:=FieldByName('no_faktur').AsString;
+        FNewJurnal_memo.edno_bk_pembulatan.Text:=FieldByName('bk_no').AsString;
+        FNewJurnal_memo.edno_faktur_pembulatan.Text:=FieldByName('faktur_no').AsString;
       end
-      else if FieldByName('no_bk').AsString='' then
+      else if FieldByName('bk_no').AsString='' then
       begin
         FNewJurnal_memo.Checkpembuatan.checked:=false;
         FNewJurnal_memo.Panel_pembulatan.Visible:=false;
       end;
     end;
-{    with dm.Qtemp do
+    with dm.Qtemp do
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select a.*,b.nama_perkiraan nama_akun from t_jurnal_memorial_detail a  '+
-      ' left join t_daftar_perkiraan b on a.akun_kredit=b.kode '+
-      ' where no_bukti_memo='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id asc';
+      Sql.Text:='select a.*,b.account_name from t_memorial_journal_detail a  '+
+      ' left join t_ak_account b on a.account_code=b.code '+
+      ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id asc';
       Open;
-    end;        }
-  {  Qjurnal_detail.First;
+    end;
+    Qjurnal_detail.First;
     while not Qjurnal_detail.Eof do
     begin
       with Qjurnal_detail do
       begin
         FNewJurnal_memo.MemTableEh1.Insert;
-        FNewJurnal_memo.MemTableEh1['kode_akun']:=FieldByName('akun_kredit').AsString;
+        FNewJurnal_memo.MemTableEh1['kode_akun']:=FieldByName('account_code').AsString;
         FNewJurnal_memo.MemTableEh1['nama_akun']:=FieldByName('nama_akun').AsString;
         FNewJurnal_memo.MemTableEh1['debit']:=FieldByName('debit').AsString;
         FNewJurnal_memo.MemTableEh1['kredit']:=FieldByName('kredit').AsString;
@@ -265,7 +265,7 @@ begin
   else
   begin
     MessageDlg('Maaf Memorial '+DBGridEh1.Fields[0].AsString+' belum ada approval koreksi, tidak dapat diubah..!!',mtInformation,[MBOK],0);
-  end;        }
+  end;
 end;
 
 procedure TFlist_jurnal_memorial.DBGridEh1AdvDrawDataCell(
@@ -274,7 +274,7 @@ procedure TFlist_jurnal_memorial.DBGridEh1AdvDrawDataCell(
 var
 status_posting: String;
 begin
-  status_posting := Column.Field.DataSet.FieldByName('status_post').AsString;
+  status_posting := Column.Field.DataSet.FieldByName('post_status').AsString;
   if (status_posting ='1') then
   begin
     Params.Background := $0091FFFF;

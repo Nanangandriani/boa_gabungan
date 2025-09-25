@@ -88,7 +88,6 @@ object FNewBank: TFNewBank
     Width = 3
     Height = 15
     Caption = ':'
-    Visible = False
   end
   object Label8: TLabel
     Left = 7
@@ -96,7 +95,6 @@ object FNewBank: TFNewBank
     Width = 80
     Height = 15
     Caption = 'Akun Perkiraan'
-    Visible = False
   end
   object edkode_bank: TEdit
     Left = 103
@@ -295,7 +293,6 @@ object FNewBank: TFNewBank
     Height = 23
     Text = ''
     TabOrder = 7
-    Visible = False
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
     OnButtonClick = Ednm_akun1ButtonClick
@@ -307,6 +304,5 @@ object FNewBank: TFNewBank
     Height = 23
     Text = ''
     TabOrder = 8
-    Visible = False
   end
 end

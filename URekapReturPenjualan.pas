@@ -229,30 +229,29 @@ end;
 
 procedure TFRekapReturPenjualan.btSearchClick(Sender: TObject);
 begin
-
   DBGrid.StartLoadingStatus();
   try
-   with QRekapReturPenjualan do
-   begin
-       close;
-       sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vrekap_returpenjualan" a  '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-         end;
-       sql.add(' ORDER BY trans_date, trans_no');
-       open;
-   end;
+  with QRekapReturPenjualan do
+  begin
+    close;
+    sql.Clear;
+    sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vrekap_returpenjualan" a  '+
+           ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+           ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+           ' ON "left"(code_region, 4)=b.code_kab '+
+           ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+           ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+     if edKaresidenan.EditValue<>'' then
+     begin
+      sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+     end;
+     if edKabupaten.EditValue<>'' then
+     begin
+      sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+     end;
+    sql.add(' ORDER BY trans_date, trans_no');
+    open;
+  end;
   finally
   DBGrid.FinishLoadingStatus();
   end;

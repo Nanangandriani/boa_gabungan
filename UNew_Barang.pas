@@ -78,6 +78,7 @@ type
     Label6: TLabel;
     Label8: TLabel;
     Ck_NoUrut: TCheckBox;
+    Button1: TButton;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -101,14 +102,16 @@ type
     procedure CbkelompokSelect(Sender: TObject);
     procedure ck_st_penjualanClick(Sender: TObject);
     procedure Ck_NoUrutClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    id_ct,idmaterial,no_urut,kode,group_id,st_penjualan,st_nourut:string;
+    id_ct,idmaterial,no_urut,kode,group_id,st_penjualan,st_nourut,KodeHeaderPerkiraan:string;
     status_tr:integer;
     Procedure Load;
     Procedure clear;
+    procedure Autocode_perkiraan;
   end;
 
 Function FNew_Barang: TFNew_Barang;
@@ -127,6 +130,54 @@ function FNew_Barang: TFNew_Barang;
 begin
   if RealFNew_barang <> nil then FNew_barang:= RealFNew_barang
   else  Application.CreateForm(TFNew_Barang, Result);
+end;
+
+procedure TFNew_barang.Autocode_perkiraan;
+var
+  kode : String;
+  Urut : Integer;
+begin
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      Sql.Text :=' SELECT * FROM t_ak_account '+
+                 ' WHERE code='+Quotedstr(KodeHeaderPerkiraan)+'  ';
+      open;
+    end;
+
+    if Dm.Qtemp.RecordCount = 0 then urut := 1 else
+    if Dm.Qtemp.RecordCount > 0 then
+    begin
+        With Dm.Qtemp do
+        begin
+          Close;
+          Sql.Clear;
+          Sql.Text :=' select count(code) as hasil '+
+                     ' from  t_ak_account where code='+QuotedSTR(KodeHeaderPerkiraan)+'  ';
+          Open;
+        end;
+        Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+    end;
+    Edkd_akun.Clear;
+    kode := inttostr(urut);
+
+    if Length(kode)=1 then
+    begin
+      kode := '00'+kode;
+    end
+    else
+    if Length(kode)=2 then
+    begin
+      kode := '0'+kode;
+    end
+    else
+    if Length(kode)=3 then
+    begin
+      kode := kode;
+    end;
+//    edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+kode;  of sementara ds 13/01/2025
+    Edkd_akun.Text := KodeHeaderPerkiraan+'.'+edkd.Text;
 end;
 
 Procedure TFNew_Barang.Load;
@@ -348,6 +399,7 @@ begin
     EdSatuan.SetFocus;
     Exit;
   end;
+   Autocode_perkiraan;
    with dm.Qtemp do
   begin
     close;
@@ -365,8 +417,8 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into t_item(order_no,item_code,item_code2,item_name,category_id,unit,merk,account_code,created_by,description,group_id,sell_status,"buy","disc_buy","sell","disc_sell",lot_status)'+
-       ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,:lot_status)';
+       sql.Text:='insert into t_item(order_no,item_code,item_code2,item_name,category_id,unit,merk,account_code,created_by,description,group_id,sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code)'+
+       ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,:lot_status,:header_code)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -384,6 +436,7 @@ begin
          ParamByName('sell').Value:=edharga_penj.Value;
          ParamByName('discount_sell').Value:=eddisc_penj.Value;
          ParamByName('lot_status').Value:=st_nourut;
+         ParamByName('header_code').Value:=KodeHeaderPerkiraan;
        ExecSQL;
        end;
          with dm.Qtemp do
@@ -411,7 +464,7 @@ begin
        sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_code2=:item_cd2,item_name=:item_name,'+
        ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
-       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,lot_status=:lot_status where "id"=:id';
+       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,lot_status=:lot_status,header_code=:Header_code where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -430,6 +483,7 @@ begin
          ParamByName('sell').Value:=edharga_penj.Value;
          ParamByName('discount_sell').Value:=eddisc_penj.Value;
          ParamByName('lot_status').Value:=st_nourut;
+         ParamByName('header_code').Value:=KodeHeaderPerkiraan;
        ExecSQL;
        end;
         with dm.Qtemp do
@@ -478,6 +532,11 @@ begin
   end;
 end;
 
+procedure TFNew_Barang.Button1Click(Sender: TObject);
+begin
+  Autocode_perkiraan;
+end;
+
 procedure TFNew_Barang.CbkelompokSelect(Sender: TObject);
 var i:integer;
 begin
@@ -500,13 +559,18 @@ begin
    group_id:=Dm.Qtemp2['group_id'];
    kode:=DM.Qtemp2['code'];
    Edkd_akun.Text:=Dm.Qtemp2['account_code'];
+   KodeHeaderPerkiraan:=Dm.Qtemp2['account_code'];
    Edkd_akunPemb.Text:=Dm.Qtemp2['account_code'];
    Edkd_akunrt_Pemb.Text:=Dm.Qtemp2['account_code'];
    Edkd_akunPot_Pemb.Text:=Dm.Qtemp2['account_code'];
+   Edkd_akunPenj.Text:=Dm.Qtemp2['account_code'];
+   Edkd_akunRt_Penj.Text:=Dm.Qtemp2['account_code'];
    EdNm_akun.Text:=Dm.Qtemp2['account_name'];
    Ednm_akunPemb.Text:=Dm.Qtemp2['account_name'];
    Ednm_akunrt_Pemb.Text:=Dm.Qtemp2['account_name'];
    Ednm_akunPot_Pemb.Text:=Dm.Qtemp2['account_name'];
+   EdNm_akunPenj.Text:=Dm.Qtemp2['account_name'];
+   EdNm_akunRt_Penj.Text:=Dm.Qtemp2['account_name'];
    if dm.Qtemp.RecordCount=0 then
     begin
       //Edno.Text:=dm.Qtemp2['order_no'];
@@ -548,36 +612,6 @@ begin
               ' where a.category='+QuotedStr(EdCategory.Text);
     Execute;
   end;
- { if dm.Qtemp.RecordCount=0 then
-  begin
-    with dm.Qtemp2 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='Select "id",category,code,order_no from t_item_category where category='+QuotedStr(EdCategory.Text);
-      ExecSQL;
-    end;
-  //   edkd.Text:=DM.Qtemp2['code'];
-     Edno.Text:=dm.Qtemp2['order_no'];
-     id_ct:=dm.Qtemp2['id'];
-   //  Edit1.Text:=dm.Qtemp2['id'];
-     no_urut:='00001';
-     kode:=DM.Qtemp2['code'];
-  end;
-  //
-  if dm.Qtemp.RecordCount<>0 then
-    begin
-     id_ct:=dm.Qtemp['id'];
-     kode:=DM.Qtemp['code'];
-     no_urut:=IntToStr(dm.Qtemp.FieldByName('kode').AsInteger+1);
-     if length(No_urut) < 5 then
-      begin
-        for i := length(No_urut) to 4 do
-          No_urut := '0' + No_urut;
-      end;
-    end;
-    Edno.Text:=no_urut;
-    EdKd.Text:=kode + No_urut;     }
   id_ct:=dm.Qtemp2['category_id'];
   Cbkelompok.Clear;
   with dm.Qtemp do

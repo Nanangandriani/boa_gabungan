@@ -163,6 +163,10 @@ type
     MemterimaDetref_no: TStringField;
     Edkd_akun: TRzEdit;
     Edkd_akunum: TRzEdit;
+    MemterimaDetid_pengajuan_asset: TStringField;
+    MemterimaDetno_pengajuan_asset: TStringField;
+    MemterimaDetid_detail_asset: TStringField;
+    MemterimaDetSpesifikasi_asset: TStringField;
     procedure Button1Click(Sender: TObject);
     procedure EdjenisSelect(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -195,6 +199,9 @@ type
     procedure EdJum_HutangChange(Sender: TObject);
     procedure EdJum_PotPemChange(Sender: TObject);
     procedure EdJum_ReturPembChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -213,8 +220,8 @@ type
     procedure Load_ref_receive;
   end;
 
-var
-//function
+//var
+function
   FNew_Pembelian: TFNew_Pembelian;
 var
    thn,bln,status_pos,kd_akppn,kd_akpph,kd_akbea,Nofk,nopo,nourut,jenis_pembelian,kd_urut,tgl,statustr:String;
@@ -227,20 +234,20 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UMainMenu, UMy_Function, USearch_TerimaBarang,
-  UAkun_Perkiraan_TerimaMat, UPembelian,USupp_Pembelian, UCari_UM;
+  UAkun_Perkiraan_TerimaMat, UPembelian,USupp_Pembelian, UCari_UM,
+  USearch_Supplier;
 
-//var
-  //realfnew_pemb : TFNew_Pembelian;
+var
+  realfnew_pemb : TFNew_Pembelian;
 
 // implementasi function
-{function fNew_pembelian: TFNew_Pembelian;
+Function fNew_pembelian: TFNew_Pembelian;
 begin
   if realfnew_pemb <> nil then
     fNew_pembelian:= realfnew_pemb
   else
     Application.CreateForm(TFNew_Pembelian, Result);
-end;}
-
+end;
 
 procedure TFNew_Pembelian.Load_ref_receive;
 begin
@@ -323,7 +330,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='SELECT * FROM t_returnpembelian where no_terima='+quotedstr(EdNo.text);
+        sql.Text:='SELECT * FROM t_purchase_return where receive_no='+quotedstr(EdNo.text);
         ExecSQL;
       end;
       if dm.Qtemp.RecordCount > 0 then
@@ -338,7 +345,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='SELECT * FROM t_pot_pembelian where no_terima='+quotedstr(EdNo.text);
+        sql.Text:='SELECT * FROM t_purchase_discount where receive_no='+quotedstr(EdNo.text);
         ExecSQL;
       end;
       if dm.Qtemp.RecordCount > 0 then
@@ -353,7 +360,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='SELECT * FROM tbl_det_lunas_hutang where nofaktur='+quotedstr(Edno_Faktur.text)+' and noinv='+QuotedStr(edno.Text);
+        sql.Text:='SELECT * FROM t_paid_debt_det where faktur_no='+quotedstr(Edno_Faktur.text)+' and inv_no='+QuotedStr(edno.Text);
         ExecSQL;
       end;
       if dm.Qtemp.RecordCount > 0 then
@@ -366,7 +373,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='SELECT * FROM t_terima_material where nofaktur='+quotedstr(edno_faktur.text)+' and no_terima<>'+QuotedStr(EdNo.Text);
+        sql.Text:='SELECT * FROM t_purchase_invoice where faktur_no='+quotedstr(edno_faktur.text)+' and trans_no='+QuotedStr(EdNo.Text);
         ExecSQL;
       end;
       if dm.Qtemp.RecordCount > 0 then
@@ -381,12 +388,12 @@ begin
         EdNo.SetFocus;
         Exit;
       end;
-      if EdNoSPB.Text='' then
+     { if EdNoSPB.Text='' then
       begin
         MessageDlg('No. SP Tidak boleh Kosong ',MtWarning,[MbOk],0);
         EdNoSPB.SetFocus;
         Exit;
-      end;
+      end;    }
       if  Dtterima.Text='' then
       begin
         MessageDlg('Tanggal Tidak boleh Kosong ',MtWarning,[MbOk],0);
@@ -531,7 +538,7 @@ begin
         begin
           MessageDlg('Tanggal Tidak boleh Kosong ',MtWarning,[MbOk],0);
           Dtterima.SetFocus;
-          Exit;  
+          Exit;
         end;}
         if EdSJ.Text='' then
         begin
@@ -571,7 +578,7 @@ begin
               begin
                   close;
                   sql.Clear;
-                  sql.Text:=' insert into t_purchase_invoice(trans_no_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
+                  sql.Text:=' insert into t_purchase_invoice(trans_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                             ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                             ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
                             ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no,ref_code)values(:parno_terima,'+
@@ -627,11 +634,15 @@ begin
                       sql.Text:=' insert into t_purchase_invoice_det(item_stock_code,stock_code,qty,unit,wh_code,'+
                                 ' trans_year,po_no,receive_no,qty_po,unit_po,qty_difference,qty_per_conversion,qty_conversion,'+
                                 ' unit_conversion,subtotal,ppn,ppn_rp,pph,pph_rp,grandtotal,price,account_code,'+
-                                ' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no,trans_no,ppn_account)values(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
+                                ' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,'+
+                                ' order_no,trans_no,ppn_account,'+
+                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                      '(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
                                 ' :parTahun,:parnopo,:parno_terima,:parqtypo,:parsatuanpo,:parqtyselisih,:parqtyperkonversi,'+
-                                ' :parqtykonversi,:parsatuankonversi,:parsubtotal,:fparppn,:parppn_rp,:parpph,'+
+                                ' :parqtykonversi,:parsatuankonversi,:parsubtotal,:parppn,:parppn_rp,:parpph,'+
                                 ' :parpph_rp,:pargrandtotal,:parharga,:parkd_akun,:parstatustrans,:parppn_pembulatan,'+
-                                ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,:partrans_no,:ppn_ak)';
+                                ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,:partrans_no,:ppn_ak,'+
+                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
 
                                 ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
                                 //ParamByName('parkd_material_stok').Value:=MemterimaDet['kd_material'];
@@ -669,6 +680,11 @@ begin
 
                                 ParamByName('parnourut').Value:=MemterimaDet['nourut'];
                                 ParamByName('ppn_ak').Value:=kd_akppn;
+
+            ParamByName('id_pengajuan_asset').Value:=MemterimaDet['id_pengajuan_asset'];
+            ParamByName('no_pengajuan_asset').Value:=MemterimaDet['no_pengajuan_asset'];
+            ParamByName('id_detail_asset').Value:=MemterimaDet['id_detail_asset'];
+            ParamByName('spesifikasi_asset').Value:=MemterimaDet['spesifikasi_asset'];
                       ExecSQL;
                       MemterimaDet.Next;
                 end;
@@ -687,7 +703,7 @@ begin
                   sql.Text:='Update t_item_receive set status_on_faktur=''1'' where receive_no='+QuotedStr(Cb_ref.Text);
                   ExecSQL;
                 end;
-                MemterimaDet.First;
+             {   MemterimaDet.First;
                 while not MemterimaDet.Eof do
                 begin
                    with dm.Qtemp2 do
@@ -718,7 +734,7 @@ begin
                       ExecSQL;
                        MemterimaDet.Next;
                    end;
-                end;
+                end;  }
               end;
            end;
 
@@ -912,7 +928,6 @@ begin
         end;
       end;
     end;
-
 end;
 
 procedure TFNew_Pembelian.Button1Click(Sender: TObject);
@@ -1067,7 +1082,6 @@ begin
   else
   if Cb_Sumber.ItemIndex=2 then
   begin
-
   end;    }
 // cr ds 25-10-2024
   with dm.Qtemp do
@@ -1082,7 +1096,7 @@ begin
      with dm.Qtemp2 do
      begin
         close;
-        sql.Text:='SELECT '+dm.Qtemp['ref_field']+' as ref_no from '+dm.Qtemp['ref_trans']+' WHERE supplier_code='+Quotedstr(EdKd_supp.Text)+' and '+dm.Qtemp['ref_field']+' in (select '+dm.Qtemp['ref_field']+' from '+dm.Qtemp['ref_trans']+'  EXCEPT select ref_no from t_purchase_invoice) Order by '+dm.Qtemp['ref_field']+' DESC ';
+        sql.Text:='SELECT '+dm.Qtemp['ref_field']+' as ref_no from '+dm.Qtemp['ref_trans']+' WHERE supplier_code='+Quotedstr(EdKd_supp.Text)+' and '+dm.Qtemp['ref_field']+' in (select '+dm.Qtemp['ref_field']+' from '+dm.Qtemp['ref_trans']+'  EXCEPT select ref_no from ( select ref_no from t_purchase_invoice UNION select po_no from t_item_receive_det)a GROUP BY ref_no ) Order by '+dm.Qtemp['ref_field']+' DESC ';
         Open;
      end;
      Dm.Qtemp2.First;
@@ -1091,43 +1105,30 @@ begin
        Cb_Ref.Items.Add(Dm.Qtemp2.FieldByName('ref_no').AsString);
        Dm.Qtemp2.Next;
      end;
-
-
-
-
 end;
 
 procedure TFNew_Pembelian.CkFkClick(Sender: TObject);
 begin
     if CkFk.Checked=True then status_fk:=1 else status_fk:=0;
     stts:=status_sj+status_fk+status_inv;
-    if stts=3 then BPosting.visible:=True
-       else BPosting.Visible:=False;
-    if status_pos='POSTING' then
-       BPosting.Enabled:=False else BPosting.Enabled:=True;
+    if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
+    if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
 end;
 
 procedure TFNew_Pembelian.CkInvClick(Sender: TObject);
 begin
-    if CkInv.Checked=True then status_inv:=1
-       else status_inv:=0;
+    if CkInv.Checked=True then status_inv:=1 else status_inv:=0;
     stts:=status_sj+status_fk+status_inv;
-    if stts=3 then BPosting.visible:=True
-       else BPosting.Visible:=False;
-    if status_pos='POSTING' then BPosting.Enabled:=False
-       else BPosting.Enabled:=True;
+    if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
+    if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
 end;
 
 procedure TFNew_Pembelian.CksjClick(Sender: TObject);
 begin
-    if Cksj.Checked=True then
-       status_sj:=1 else status_sj:=0;
+    if Cksj.Checked=True then status_sj:=1 else status_sj:=0;
     stts:=status_sj+status_fk+status_inv;
-    if stts=3 then BPosting.visible:=True
-       else BPosting.Visible:=False;
-    if status_pos='POSTING' then
-       BPosting.Enabled:=False
-       else BPosting.Enabled:=True;
+    if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
+    if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
 end;
 
 procedure TFNew_Pembelian.clear;
@@ -1261,16 +1262,19 @@ begin
               Close;
               SQL.Clear;
               SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
-                        ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
-                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a '+
+                        ' b.unit,b.wh_code,f.wh_name,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then b.pph else 0 end pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
+                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp'+
+                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset  '+
+                        ' from t_item_stock a '+
                         ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
                         ' inner join t_po c on b.po_no=c.po_no '+
                         ' inner join t_item e on a.item_code=e.item_code '+
                         ' inner join t_wh f on c.wh_code=f.wh_code'+
-                        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and b.po_no='+QuotedStr(Cb_ref.Text)+' and b.remaining_qty > 0'+
+                        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' '+//and b.po_no='+QuotedStr(Cb_ref.Text)+'
+                        ' and b.remaining_qty > 0'+
                         ' GROUP BY a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty,'+
                         ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code,e.account_code, c.due_date '+
-                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp';
+                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset ';
               ExecSQL;
            end;
            QMaterial.open;
@@ -1290,15 +1294,20 @@ begin
               Close;
               SQL.Clear;
               SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty, '+
-                        ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
+                        ' b.unit,b.wh_code,f.wh_name,c.receive_no,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then b.pph else 0 end pph,b.po_no,'+
+                        ' c.supplier_code,case when d.spb_no ISNULL then '''' else d.spb_no end spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
+                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset  '+
                         ' from t_item_stock a inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code inner join t_item_receive C on b.receive_no=c.receive_no '+
                         ' left join t_spb_det d on d.spb_no=c.spb_no and b.item_stock_code=d.item_stock_code '+
                         ' left join t_po h on b.po_no=h.po_no inner join t_item e on a.item_code=e.item_code '+
                         ' inner join t_wh f on b.wh_code=f.wh_code where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' '+
-                        ' and b.receive_no='+QuotedStr(Cb_Ref.Text)+' '+
+                        //' and b.receive_no='+QuotedStr(Cb_Ref.Text)+' '+
                         ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty,  '+
-                        ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type" ';
+                        ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,'+
+                        'b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,'+
+                        'c.due_date,c.valas,c.valas_value,h."type"'+
+                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset';
                         ExecSQL;
            end;
            QMaterial2.open;
@@ -1398,6 +1407,42 @@ begin
       QMaterial.open;
       jenis_pembelian:=Edjenis.Text;
     end;}
+  {    with FSearch_TerimaBarang do
+         begin
+           with QMaterial2 do
+           begin
+              Close;
+              SQL.Clear;
+              SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty, '+
+                        ' b.unit,b.wh_code,f.wh_name,c.receive_no,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then b.pph else 0 end pph,b.po_no,'+
+                        ' c.supplier_code,case when d.spb_no ISNULL then '''' else d.spb_no end spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
+                        ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
+                        ' from t_item_stock a inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code inner join t_item_receive C on b.receive_no=c.receive_no '+
+                        ' left join t_spb_det d on d.spb_no=c.spb_no and b.item_stock_code=d.item_stock_code '+
+                        ' left join t_po h on b.po_no=h.po_no inner join t_item e on a.item_code=e.item_code '+
+                        ' inner join t_wh f on b.wh_code=f.wh_code '+
+                        ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty,  '+
+                        ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type" '+
+                        ' UNION'+
+                        ' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
+                        ' b.unit,b.wh_code,f.wh_name,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then b.pph else 0 end pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
+                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp from t_item_stock a '+
+                        ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
+                        ' inner join t_po c on b.po_no=c.po_no '+
+                        ' inner join t_item e on a.item_code=e.item_code '+
+                        ' inner join t_wh f on c.wh_code=f.wh_code'+
+                        ' where  b.remaining_qty > 0'+
+                        ' GROUP BY a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty,'+
+                        ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code,e.account_code, c.due_date '+
+                        ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp';
+                        ExecSQL;
+           end;
+           QMaterial2.open;
+           jenis_pembelian:=Edjenis.Text;
+           DBGridEh1.Visible:=false;
+          DBGridEh2.Visible:=true;
+           show;
+      end;    }
 end;
 
 procedure TFNew_Pembelian.DBGridDetailpoColumns22EditButtons0Click(
@@ -1807,7 +1852,6 @@ begin
       DBGridDetailpo.Columns[16].Visible:=true
    else
       DBGridDetailpo.Columns[16].Visible:=False;     }
-
       DBGridDetailpo.Columns[16].Visible:=true;
 end;
 
@@ -1883,12 +1927,19 @@ end;
 
 procedure TFNew_Pembelian.EdNm_suppButtonClick(Sender: TObject);
 begin
-    with FSupp_Pembelian do
+   with FSupp_Pembelian do
     begin
     jenis_tr:='pemb';
       Show;
       if Qsupplier.Active=False then Qsupplier.Active:=True;
     end;
+  {  with FSearch_Supplier do
+    begin
+      Show;
+      vcall:='Pemb';
+      QSupplier.Close;
+      QSupplier.Open;
+    end;      }
 end;
 
 procedure TFNew_Pembelian.EdNoSPBSelect(Sender: TObject);
@@ -1944,6 +1995,21 @@ begin
     DBGridDetailpo.Columns[15].Visible:=True;
   end;
 
+end;
+
+procedure TFNew_Pembelian.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNew_Pembelian.FormCreate(Sender: TObject);
+begin
+  realfnew_pemb:=self;
+end;
+
+procedure TFNew_Pembelian.FormDestroy(Sender: TObject);
+begin
+  realfnew_pemb:=nil;
 end;
 
 procedure TFNew_Pembelian.FormShow(Sender: TObject);

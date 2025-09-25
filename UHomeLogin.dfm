@@ -4454,6 +4454,9 @@ object FHomeLogin: TFHomeLogin
         220720D3881C804CFB055CAB80D3C6C37F100000000049454E44AE426082}
       Proportional = True
       OnClick = ImgTransaksiClick
+      OnDragDrop = ImgTransaksiDragDrop
+      OnMouseDown = ImgTransaksiMouseDown
+      OnMouseUp = ImgTransaksiMouseUp
     end
     object Image1: TImage
       Left = 200
@@ -4560,6 +4563,8 @@ object FHomeLogin: TFHomeLogin
         0020D4FC1FBB5A9DD3D4A8DA340000000049454E44AE426082}
       Proportional = True
       OnClick = Image1Click
+      OnMouseDown = Image1MouseDown
+      OnMouseUp = Image1MouseUp
     end
     object EdPass: TEdit
       Left = 79
@@ -4578,12 +4583,12 @@ object FHomeLogin: TFHomeLogin
       ParentFont = False
       PasswordChar = '*'
       TabOrder = 2
-      Text = '123456'
+      Text = '12345'
       TextHint = 'Password'
       OnKeyPress = EdPassKeyPress
     end
     object Eduser: TEdit
-      Left = 117
+      Left = 119
       Top = 174
       Width = 198
       Height = 29
@@ -4598,8 +4603,9 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      Text = 'Admin'
+      Text = 'RIKY'
       TextHint = 'Username'
+      OnKeyPress = EduserKeyPress
     end
     object CbSBU: TcxComboBox
       Left = 66

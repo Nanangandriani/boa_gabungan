@@ -1,14 +1,24 @@
 unit maenangka;
 
 interface
-Uses SysUtils, frxClass;
+Uses SysUtils, frxClass,math;
 
 Function UraikanAngka(S:String):String;
+function CustomRound(Value: Double): Integer;
 procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
+
 
 implementation
 Var
    Voice:array[1..100] of string;
+// cr ds 20-03-2025
+function CustomRound(Value: Double): Integer;
+begin
+  if Frac(Value) = 0.5 then
+    Result := Ceil(Value)  // Jika desimalnya 0.5, bulatkan ke atas
+  else
+    Result := Round(Value); // Jika bukan, gunakan Round biasa
+end;
 
 procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
 var

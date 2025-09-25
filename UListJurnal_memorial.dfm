@@ -54,7 +54,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_bukti_memo'
+            FieldName = 'memo_no'
             Footers = <>
             Title.Alignment = taCenter
             Title.Caption = 'No Bukti  Memorial'
@@ -64,7 +64,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'tgl'
+            FieldName = 'trans_date'
             Footers = <>
             Title.Alignment = taCenter
             Title.Caption = 'Tanggal'
@@ -73,7 +73,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_bk'
+            FieldName = 'bk_no'
             Footers = <>
             Title.Alignment = taCenter
             Title.Caption = 'No BK'
@@ -83,7 +83,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_faktur'
+            FieldName = 'faktur_no'
             Footers = <>
             Title.Alignment = taCenter
             Title.Caption = 'No Faktur'
@@ -93,7 +93,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'keterangan'
+            FieldName = 'notes'
             Footers = <>
             Title.Alignment = taCenter
             Title.Caption = 'Keterangan'
@@ -122,7 +122,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
                 CellButtons = <>
                 DynProps = <>
                 EditButtons = <>
-                FieldName = 'no_bukti_memo'
+                FieldName = 'memo_no'
                 Footers = <>
                 Title.Alignment = taCenter
                 Visible = False
@@ -131,7 +131,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
                 CellButtons = <>
                 DynProps = <>
                 EditButtons = <>
-                FieldName = 'akun_kredit'
+                FieldName = 'account_code'
                 Footers = <>
                 Title.Alignment = taCenter
                 Title.Caption = 'Kode Akun Kredit'
@@ -209,15 +209,18 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
       'SELECT'
       
         #9'case when a.notes_id isnull then a.notes else concat(b.notes,'#39' ' +
-        #39',a.trans_month,'#39' '#39',a.trans_year ) end keterangan, '
+        #39',f_bulan(a.trans_month::integer),'#39' '#39',a.trans_year ) end keteran' +
+        'gan, '
       
         #9'case when a.notes_id ISNULL then a.notes else b.notes end ket,b' +
         '.notes,"a".memo_no,"a".trans_date,"a".bk_no,"a".faktur_no,"a".ro' +
-        'unding_status, "a".post_status,"a".koreksi_status,"a".trans_mont' +
-        'h,"a".trans_year,a.notes_id'
+        'unding_status,'
+      
+        ' "a".post_status,"a".koreksi_status,f_bulan(a.trans_month::integ' +
+        'er) bln,"a".trans_year,a.notes_id'
       ' FROM'
       
-        ' t_memorial_juornal AS "a" LEFT JOIN t_memorial_notes  b ON "a".' +
+        ' t_memorial_journal AS "a" LEFT JOIN t_memorial_notes  b ON "a".' +
         'notes_id = b."id" ORDER BY "a"."id" DESC')
     Left = 332
   end
@@ -984,80 +987,57 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
       Category = 0
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
-        424D360900000000000036000000280000001800000018000000010020000000
-        000000000000C40E0000C40E00000000000000000000FDFDFDFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
-        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFCFCFCFFFBFBFBFFFBFB
-        FBFFFBFBFBFFFBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFC
-        FCFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFFFBFBFBFF000000FF1C1C1CFF1B1B1BFF1B1B1BFF1B1B
-        1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1B1B1BFF1A1A1AFF141414FFFFFF
-        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFF8D8D8DFF979797FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FFD1D1
-        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFF929292FF959595FFFFFFFFFF595959FF666666FF6666
-        66FF666666FF666666FF666666FF666666FF575757FFFFFFFFFF525252FFD3D3
-        D3FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
-        FFFFFFFFFFFFFFFFFFFF9C9C9CFF939393FFFFFFFFFFC9C9C9FFD0D0D0FFD0D0
-        D0FFD0D0D0FFD0D0D0FFD0D0D0FFD0D0D0FFC9C9C9FFFFFFFFFF515252FFE0E0
-        E0FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFFFFFFFF6E6E
-        6EFF737373FF7A7A7AFF3A3A3AFF9F9F9FFFFFFFFFFF323232FF434343FF4343
-        43FF434343FF434343FF434343FF434343FF303030FFFFFFFFFF5F5F5FFF5A5A
-        5AFF777777FF686868FF7E7E7EFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FF000000FF000000FFB5B5B5FFFFFFFFFFFCFCFCFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFFFFFFFF757575FF0000
-        00FF000000FF525252FF000000FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FF010101FF000000FF202020FF333333FF333333FF333333FF3333
-        33FF333333FF333333FF333333FF333333FF333333FF343434FF141414FF0000
-        00FF000000FF505050FF0B0B0BFFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-        00FF000000FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FF606060FFA0A0A0FF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B
-        9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFF9B9B9BFFA2A2
-        A2FF4F4F4FFF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FFB9B9B9FF000000FF040404FF040404FF040404FF040404FF0404
-        04FF040404FF040404FF040404FF040404FF040404FF040404FF040404FF0000
-        00FFB8B9B9FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
-        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FFB1B1B1FF000000FF000000FF000000FF000000FF000000FF0000
-        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
-        00FFB1B1B1FF000000FF121212FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFF0000
-        00FF000000FFAAAAAAFF000000FF262626FF3D3D3DFF393939FF393939FF3939
-        39FF393939FF393939FF393939FF393939FF393939FF3E3E3EFF181818FF0000
-        00FFA9A9A9FF000000FF040404FFFFFFFFFFFCFCFCFFFCFCFCFFFFFFFFFFD6D6
-        D6FF9A9A9AFFE3E3E3FF121212FFADADADFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6C6C6CFF2929
-        29FFEAEAEAFF9A9A9AFFD4D4D4FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFFFF
-        FFFFFFFFFFFFFFFFFFFF9F9F9FFF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFFFFFFFF515151FFE4E4
-        E4FFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFFFFFFFFFF5A5A5AFFD1D1
-        D1FFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFF929292FF929292FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFDFDFDFFFFFFFFFF363636FF3E3E3EFF000000FFEFEF
-        EFFFFFFFFFFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFF919191FF939393FFFFFFFFFFFCFCFCFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFFFFFFFFDDDDDDFF000000FF000000FF757575FFFFFF
-        FFFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFFFFFFFF919191FF8B8B8BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF646464FFFFFFFFFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFCFC
-        FCFFFCFCFCFFFDFDFDFFFFFFFFFF141414FF0F0F0FFF101010FF101010FF1010
-        10FF101010FF101010FF131313FF000000FF636363FFFFFFFFFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFBFBFBFFFCFCFCFFFCFCFCFFFBFBFBFFFBFB
-        FBFFFBFBFBFFFBFBFBFFFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFFFBFBFBFFFBFB
-        FBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFCFCFCFFFDFDFDFFFCFCFCFFFDFD
-        FDFFFDFDFDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFC
-        FCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFDFDFDFFFDFDFDFFFDFDFDFFFDFD
-        FDFFFDFDFDFFFDFDFDFFFCFCFCFFFCFCFCFFFDFDFDFF}
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
     end
   end
   object MemTableEh1: TMemTableEh
@@ -1086,9 +1066,16 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
         'left join t_ak_account b on a.account_code=b.code order by a.id ' +
         'asc')
     MasterSource = DsJurnal
-    DetailFields = 'no_bukti_memo'
+    MasterFields = 'memo_no'
+    DetailFields = 'memo_no'
     Left = 312
     Top = 64
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'memo_no'
+        Value = nil
+      end>
   end
   object Rpt: TfrxReport
     Version = '2022.1.3'
@@ -1099,7 +1086,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44974.697266967600000000
-    ReportOptions.LastChange = 44985.015718669000000000
+    ReportOptions.LastChange = 44985.415538044000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1172,7 +1159,6 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Left = 151.181200000000000000
           Width = 566.929500000000000000
           Height = 41.574830000000000000
-          DataField = 'keterangan'
           DataSet = DbBukti_memo
           DataSetName = 'DbBukti_memo'
           Font.Charset = DEFAULT_CHARSET
@@ -1182,7 +1168,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
-            '[DbBukti_memo."keterangan"]')
+            '[DbBukti_memo."notes"]')
           ParentFont = False
         end
       end
@@ -1447,7 +1433,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'Tanggal :  [DbBukti_memo."tgl2"] [DbBukti_memo."tgl"]')
+            'Tanggal :  [DbBukti_memo."tgl2"] [DbBukti_memo."trans_date"]')
           ParentFont = False
           VAlign = vaCenter
           Formats = <
@@ -1471,7 +1457,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'No. BM : [DbBukti_memo."no_bukti_memo"]')
+            'No. BM : [DbBukti_memo."memo_no"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1700,7 +1686,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Width = 207.874015750000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
-          DataField = 'nama_perkiraan'
+          DataField = 'account_name'
           DataSet = DbBukti_memo
           DataSetName = 'DbBukti_memo'
           Font.Charset = DEFAULT_CHARSET
@@ -1710,7 +1696,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Font.Style = []
           Frame.Typ = [ftLeft]
           Memo.UTF8W = (
-            '[DbBukti_memo."nama_perkiraan"]')
+            '[DbBukti_memo."account_name"]')
           ParentFont = False
         end
         object Memo8: TfrxMemoView
@@ -2034,7 +2020,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Width = 151.181102360000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
-          DataField = 'nama_perkiraan'
+          DataField = 'account_name'
           DataSet = DbBukti_memo2
           DataSetName = 'DbBukti_memo2'
           Font.Charset = DEFAULT_CHARSET
@@ -2430,13 +2416,15 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.tgl,keterangan,b.*,c.nama_perkiraan,to_char((SELECT (da' +
-        'te_trunc('#39'MONTH'#39', tgl ) + INTERVAL '#39'1 MONTH - 1 day'#39')::date as h' +
-        'ari),'#39'dd'#39') tgl2 from t_jurnal_memorial a INNER JOIN t_jurnal_mem' +
-        'orial_detail b on a.no_bukti_memo=b.no_bukti_memo INNER JOIN '
+        'select a.trans_date,a.notes,b.*,c.account_name,to_char((SELECT (' +
+        'date_trunc('#39'MONTH'#39', trans_date) + INTERVAL '#39'1 MONTH - 1 day'#39')::d' +
+        'ate as hari),'
       
-        't_daftar_perkiraan c on b.akun_kredit=c.kode WHERE a.no_bukti_me' +
-        'mo='#39'JM0421022'#39' and kredit >0')
+        #39'dd'#39') tgl2 from t_memorial_journal a INNER JOIN t_memorial_journ' +
+        'al_detail b on a.memo_no=b.memo_no INNER JOIN '
+      
+        't_ak_account c on b.account_code=c.code WHERE a.memo_no='#39'JM04210' +
+        '22'#39' and kredit >0')
     Left = 518
     Top = 179
   end
@@ -2444,14 +2432,14 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     UserName = 'DbBukti_memo'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'tgl=tgl'
-      'keterangan=keterangan'
+      'trans_date=trans_date'
+      'notes=notes'
       'id=id'
-      'no_bukti_memo=no_bukti_memo'
-      'akun_kredit=akun_kredit'
+      'memo_no=memo_no'
+      'account_code=account_code'
       'debit=debit'
       'kredit=kredit'
-      'nama_perkiraan=nama_perkiraan'
+      'account_name=account_name'
       'tgl2=tgl2')
     DataSet = QBukti_memo
     BCDToCurrency = False
@@ -2463,12 +2451,13 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.tgl,keterangan,b.*,c.nama_perkiraan from t_jurnal_memor' +
-        'ial a INNER JOIN t_jurnal_memorial_detail b on a.no_bukti_memo=b' +
-        '.no_bukti_memo INNER JOIN '
+        'select a.trans_date,a.notes,b.*,c.account_name from t_memorial_j' +
+        'ournal a INNER JOIN t_memorial_journal_detail b on a.memo_no=b.m' +
+        'emo_no'
       
-        't_daftar_perkiraan c on b.akun_kredit=c.kode left join t_ket_mem' +
-        'orial d on WHERE a.no_bukti_memo='#39'JM0421022'#39' order by debit desc')
+        'INNER JOIN t_ak_account c on b.account_code=c.code left join t_m' +
+        'emorial_notes d on a.notes_id=d.id WHERE a.memo_no='#39'JM0421022'#39' o' +
+        'rder by debit desc')
     Left = 598
     Top = 187
   end
@@ -2476,14 +2465,14 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     UserName = 'DbBukti_memo2'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'tgl=tgl'
-      'keterangan=keterangan'
+      'trans_date=trans_date'
+      'notes=notes'
       'id=id'
-      'no_bukti_memo=no_bukti_memo'
-      'akun_kredit=akun_kredit'
+      'memo_no=memo_no'
+      'account_code=account_code'
       'debit=debit'
       'kredit=kredit'
-      'nama_perkiraan=nama_perkiraan')
+      'account_name=account_name')
     DataSet = QBukti_memo2
     BCDToCurrency = False
     DataSetOptions = []
@@ -2491,8 +2480,8 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     Top = 139
   end
   object ActMenu: TActionManager
-    Left = 336
-    Top = 136
+    Left = 376
+    Top = 128
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '

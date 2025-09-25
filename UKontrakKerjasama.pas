@@ -25,7 +25,8 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
   Data.DB, frxClass, frxDBSet, MemDS, DBAccess, Uni, MemTableEh, DataDriverEh,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBar, cxClasses,
-  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
+  cxCalendar, cxBarEditItem;
 
 type
   TFKontrakkerjasama = class(TForm)
@@ -60,6 +61,10 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
+    DtMulai: TcxBarEditItem;
+    DtSelesai: TcxBarEditItem;
+    dxBarLargeButton1: TdxBarLargeButton;
+    DxRefresh: TdxBarButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure DBGridKontrakCellClick(Column: TColumnEh);
@@ -74,6 +79,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxbarRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -266,6 +273,108 @@ begin
    Memkerjasama.Active:=true;
 end;
 
+procedure TFKontrakkerjasama.dxBarLargeButton1Click(Sender: TObject);
+begin
+  DM.QPerusahaan.Close;
+  DM.QPerusahaan.Open;
+  if (DBGridKontrak.Fields[5].AsString='USD') and (DBGridKontrak.Fields[7].AsString='LOKAL') then
+  begin
+   QRptKontrak.Close;
+  with QRptKontrak do
+  begin
+    Filtered:=False;
+    Filter:=' contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+    QRptKontrak.open;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_KontrakKerjasama$.Fr3');
+    SetMemo(Rpt,'MTerbilang',':  '+terbilang(QRptKontrak['qty'])+' '+QRptKontrak['unit']);
+    //SetMemo(Rpt,'MHarga',':  '+QRptKontrak['currency']+' ');//+QRptKontrak['harga2']+'/'+QRptKontrak['satuan']+'PPN'+'(Kurs'+QRptKontrak['nilaicurrency']+')');
+    //TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+  //  TfrxPictureView(Rpt.FindObject('Plogo')).Picture.loadfromfile('Report\logo.jpg');
+  //  TfrxPictureView(Rpt.FindObject('Plogoiso')).Picture.loadfromfile('Report\logoiso.jpg');
+  //  SetMemo(Rpt,'MPt1',' '+dm.QPerusahaan['nama_perusahaan']+' ');
+  //  SetMemo(Rpt,'Malamat',' '+dm.QPerusahaan['alamat']+' ');
+  // TfrxPictureView(Rpt.FindObject('Picture1')).Visible:=false;
+  //  TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\ttd3.jpg');
+  //  SetMemo(Rpt,'MPt',''+SBU);
+    Rpt.ShowReport();
+  end;
+  if (DBGridKontrak.Fields[5].AsString='USD') and (DBGridKontrak.Fields[7].AsString='IMPORT') then
+  begin
+   QRptKontrak.Close;
+  with QRptKontrak do
+  begin
+    Filtered:=False;
+    Filter:=' contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+    QRptKontrak.open;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_KontrakKerjasama_Import.Fr3');
+    SetMemo(Rpt,'MTerbilang',':  '+terbilang(QRptKontrak['qty'])+' '+QRptKontrak['unit']);
+    //SetMemo(Rpt,'MHarga',':  '+QRptKontrak['currency']+' ');//+QRptKontrak['harga2']+'/'+QRptKontrak['satuan']+'PPN'+'(Kurs'+QRptKontrak['nilaicurrency']+')');
+  //  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+  //  TfrxPictureView(Rpt.FindObject('Plogo')).Picture.loadfromfile('Report\logo.jpg');
+  //  TfrxPictureView(Rpt.FindObject('Plogoiso')).Picture.loadfromfile('Report\logoiso.jpg');
+  //   SetMemo(Rpt,'MPt1',' '+dm.QPerusahaan['nama_perusahaan']+' ');
+  //  SetMemo(Rpt,'Malamat',' '+dm.QPerusahaan['alamat']+' ');
+  //TfrxPictureView(Rpt.FindObject('Picture1')).Visible:=false;
+  // TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\ttd3.jpg');
+  //  SetMemo(Rpt,'MPt',''+SBU);
+    Rpt.ShowReport();
+  end;
+  if DBGridKontrak.Fields[5].AsString='IDR' then
+  begin
+  QRptKontrak.Close;
+  with QRptKontrak do
+  begin
+    Filtered:=False;
+    Filter:='contract_no='+QuotedStr(DBGridKontrak.Fields[0].AsString);
+    FilterOptions:=[];
+    Filtered:=True;
+  end;
+    QRptKontrak.open;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_KontrakKerjasama.Fr3');
+    SetMemo(Rpt,'MTerbilang',':  '+terbilang(QRptKontrak['qty'])+' '+QRptKontrak['unit']);
+   // SetMemo(Rpt,'Mregu',':  '+CbShift.Text);
+  //  TfrxPictureView(Rpt.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
+  //  TfrxPictureView(Rpt.FindObject('Plogo')).Picture.loadfromfile('Report\logo.jpg');
+  //  TfrxPictureView(Rpt.FindObject('Plogoiso')).Picture.loadfromfile('Report\logoiso.jpg');
+  //  SetMemo(Rpt,'MPt1',' '+dm.QPerusahaan['nama_perusahaan']+' ');
+  //  SetMemo(Rpt,'Malamat',' '+dm.QPerusahaan['alamat']+' ');
+  //  TfrxPictureView(Rpt.FindObject('Picture1')).Visible:=false;
+  //  TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\ttd3.jpg');
+  //  SetMemo(Rpt,'MPt',''+SBU);
+    Rpt.ShowReport();
+  end;
+end;
+
+procedure TFKontrakkerjasama.dxbarRefreshClick(Sender: TObject);
+begin
+    DBGridKontrak.StartLoadingStatus();
+    DBGridKontrak.FinishLoadingStatus();
+    QKerjasama.close;
+    Memkerjasama.Close;
+    with QKerjasama do
+    begin
+      close;
+      clear;
+      //      SQL.Text:='SELECT * FROM f_Kontrakkerjasama('','')';
+      //SQL.Text:='SELECT * FROM f_Kontrakkerjasama('+QuotedStr(FormatDateTime('yyyy-mm-dd',(DtMulai.EditValue)))+',' +QuotedStr(FormatDateTime('yyyy-mm-dd',(DtSelesai.EditValue)))+')';
+      sql.Text:='select	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN '+
+      ' ''APPROVE'' else ''REJECT'' END) AS status_approval,(case WHEN status=''1'' THEN ''AKTIF'' WHEN status=''0'' THEN '+
+      ' ''SELESAI'' END) AS status,a.*,b.supplier_name from t_coop_contract A inner join t_supplier B  '+
+      ' on A.supplier_code=B.supplier_code where a.contract_date >'+QuotedStr(FormatDateTime('yyyy-mm-dd',(DtMulai.EditValue)))+''+
+      ' and a.contract_date<'+QuotedStr(FormatDateTime('yyyy-mm-dd',(DtSelesai.EditValue)))+' order by id Desc';
+      Execute;
+    end;
+    QKerjasama.Active:=True;
+    Memkerjasama.Active:=True;
+    QKerjasama_det.Active:=True;
+end;
+
 procedure TFKontrakkerjasama.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -285,6 +394,8 @@ end;
 
 procedure TFKontrakkerjasama.FormShow(Sender: TObject);
 begin
+  DtMulai.EditValue:=now();
+  DtSelesai.EditValue:=now();
   ActROExecute(sender);
 end;
 
@@ -325,7 +436,6 @@ begin
     end;
     Except;
     End;
-
 end;
 
 procedure TFKontrakkerjasama.ActCloseExecute(Sender: TObject);
@@ -436,10 +546,24 @@ begin
     DBGridKontrak.FinishLoadingStatus();
     QKerjasama.close;
     Memkerjasama.Close;
-    QKerjasama_det.Close;
-    if Qkerjasama.Active=False then QKerjasama.Active:=True;
-    if Memkerjasama.Active=false then Memkerjasama.Active:=True;
-    if QKerjasama_det.Active=False then QKerjasama_det.Active:=True;
+    with QKerjasama do
+    begin
+      close;
+      clear;
+      //      SQL.Text:='SELECT * FROM f_Kontrakkerjasama('','')';
+      //SQL.Text:='SELECT * FROM f_Kontrakkerjasama('+QuotedStr(FormatDateTime('yyyy-mm-dd',(DtMulai.EditValue)))+',' +QuotedStr(FormatDateTime('yyyy-mm-dd',(DtSelesai.EditValue)))+')';
+      sql.Text:='select	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN '+
+      ' ''APPROVE'' else ''REJECT'' END) AS status_approval,(case WHEN status=''1'' THEN ''AKTIF'' WHEN status=''0'' THEN '+
+      ' ''SELESAI'' END) AS status,a.*,b.supplier_name from t_coop_contract A inner join t_supplier B  '+
+      ' on A.supplier_code=B.supplier_code '+
+   //   ' where a.contract_date >'+QuotedStr(FormatDateTime('yyyy-mm-dd',(DtMulai.EditValue)))+''+
+  //    ' and a.contract_date<'+QuotedStr(FormatDateTime('yyyy-mm-dd',(DtSelesai.EditValue)))+'
+      ' order by id Desc';
+      Execute;
+    end;
+    QKerjasama.Active:=True;
+    Memkerjasama.Active:=True;
+    QKerjasama_det.Active:=True;
 end;
 
 procedure TFKontrakkerjasama.ActUpdateExecute(Sender: TObject);

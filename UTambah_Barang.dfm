@@ -3,7 +3,7 @@ object FTambah_Barang: TFTambah_Barang
   Top = 0
   Caption = 'Tambah Barang'
   ClientHeight = 193
-  ClientWidth = 489
+  ClientWidth = 484
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,18 +11,21 @@ object FTambah_Barang: TFTambah_Barang
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 489
+    Width = 484
     Height = 161
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 541
-    ExplicitHeight = 191
+    ExplicitWidth = 480
+    ExplicitHeight = 160
     object LabelPelanggan: TLabel
       Left = 370
       Top = 180
@@ -109,6 +112,20 @@ object FTambah_Barang: TFTambah_Barang
       Height = 15
       Caption = ':'
     end
+    object LabelValue: TLabel
+      Left = 20
+      Top = 121
+      Width = 28
+      Height = 15
+      Caption = 'Value'
+    end
+    object LabelValue2: TLabel
+      Left = 117
+      Top = 121
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object Edkode: TEdit
       Left = 482
       Top = 177
@@ -139,7 +156,7 @@ object FTambah_Barang: TFTambah_Barang
     end
     object edKodeSatuan: TEdit
       Left = 323
-      Top = 60
+      Top = 55
       Width = 200
       Height = 23
       TabOrder = 3
@@ -182,18 +199,34 @@ object FTambah_Barang: TFTambah_Barang
       ButtonNumGlyphs = 1
       OnButtonClick = edSatuanButtonClick
     end
+    object edValue: TRzNumericEdit
+      Left = 132
+      Top = 118
+      Width = 109
+      Height = 23
+      TabOrder = 8
+      DisplayFormat = ',0;(,0)'
+    end
+    object edcategory_id: TEdit
+      Left = 370
+      Top = 118
+      Width = 200
+      Height = 23
+      TabOrder = 9
+      Visible = False
+    end
   end
   object Panel2: TPanel
     Left = 0
     Top = 161
-    Width = 489
+    Width = 484
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 191
-    ExplicitWidth = 541
+    ExplicitTop = 160
+    ExplicitWidth = 480
     object BBatal: TRzBitBtn
-      Left = 413
+      Left = 408
       Top = 1
       Height = 30
       Align = alRight
@@ -252,10 +285,10 @@ object FTambah_Barang: TFTambah_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 465
+      ExplicitLeft = 404
     end
     object btAdd: TRzBitBtn
-      Left = 338
+      Left = 333
       Top = 1
       Height = 30
       Align = alRight
@@ -314,7 +347,7 @@ object FTambah_Barang: TFTambah_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 390
+      ExplicitLeft = 329
     end
   end
   object edKodeGudang: TEdit

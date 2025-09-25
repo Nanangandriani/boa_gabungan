@@ -20,20 +20,20 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1030
+    ExplicitWidth = 1032
     object Label38: TLabel
       Left = 124
-      Top = 29
+      Top = 5
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label39: TLabel
       Left = 27
-      Top = 29
-      Width = 89
+      Top = 5
+      Width = 73
       Height = 15
-      Caption = 'Vendor Transport'
+      Caption = 'Jasa Transport'
     end
     object Label12: TLabel
       Left = 27
@@ -56,9 +56,23 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
       Height = 15
       Caption = 'S/D'
     end
+    object Label37: TLabel
+      Left = 27
+      Top = 62
+      Width = 56
+      Height = 15
+      Caption = 'Kendaraan'
+    end
+    object Label36: TLabel
+      Left = 124
+      Top = 62
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object edKodeVendorMuatan: TRzButtonEdit
       Left = 133
-      Top = 26
+      Top = 2
       Width = 164
       Height = 23
       Text = ''
@@ -69,7 +83,7 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
     end
     object edNamaVendorMuatan: TEdit
       Left = 133
-      Top = 55
+      Top = 31
       Width = 359
       Height = 23
       TabOrder = 1
@@ -95,8 +109,8 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
       TabOrder = 3
     end
     object btTampilkan: TRzBitBtn
-      Left = 502
-      Top = 77
+      Left = 236
+      Top = 111
       Width = 147
       Height = 30
       Caption = 'Tampilkan'
@@ -156,8 +170,8 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
       NumGlyphs = 2
     end
     object btProses: TRzBitBtn
-      Left = 655
-      Top = 77
+      Left = 389
+      Top = 111
       Width = 147
       Height = 30
       Caption = 'Proses'
@@ -224,6 +238,18 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
       Caption = 'Tandai Semua'
       TabOrder = 6
     end
+    object edNoKendMuatan: TRzButtonEdit
+      Left = 133
+      Top = 57
+      Width = 250
+      Height = 23
+      Text = ''
+      CharCase = ecUpperCase
+      TabOrder = 7
+      AllowKeyEdit = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+    end
   end
   object DBGrid_SumberOrder: TDBGridEh
     Left = 0
@@ -231,8 +257,10 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
     Width = 1036
     Height = 315
     Align = alClient
-    DataSource = dsDetail
+    DataSource = DSDO
     DynProps = <>
+    RowDetailPanel.Active = True
+    RowDetailPanel.Height = 170
     SearchPanel.Enabled = True
     TabOrder = 1
     Columns = <
@@ -242,8 +270,9 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
         EditButtons = <>
         FieldName = 'notrans'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nomor Transaksi'
-        Width = 150
+        Width = 171
       end
       item
         CellButtons = <>
@@ -251,6 +280,7 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
         EditButtons = <>
         FieldName = 'kode_vendor'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
         Width = 150
       end
@@ -258,169 +288,218 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_vendor'
+        FieldName = 'date_trans'
         Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tanggal'
+        Width = 71
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'vendor_name_transport'
+        Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Vendor'
-        Width = 200
+        Width = 290
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'no_reff'
+        FieldName = 'vehicles'
         Footers = <>
-        Title.Caption = 'No Reff'
-        Width = 150
+        Title.Alignment = taCenter
+        Title.Caption = 'Kendaraan'
+        Width = 196
       end
       item
         CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kd_barang'
-        Footers = <>
-        Visible = False
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_barang'
-        Footers = <>
-        Title.Caption = 'Nama Barang'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'jumlah'
-        Footers = <>
-        Title.Caption = 'Jumlah'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'satuan'
-        Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 100
-      end
-      item
-        CellButtons = <>
+        Checkboxes = True
         DynProps = <>
         EditButtons = <>
         FieldName = 'pilih'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Pilih'
       end>
     object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 746
+        Height = 168
+        Align = alClient
+        DataSource = DataSource1
+        DynProps = <>
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'id'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'notrans'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_code'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'item_name'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Nama Barang'
+            Width = 360
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'amount'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Jumlah'
+            Width = 110
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'unit'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Satuan'
+            Width = 117
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
-  object dsDetail: TDataSource
+  object DSDO: TDataSource
     DataSet = MemDetail
-    Left = 368
-    Top = 8
+    Left = 424
+    Top = 392
   end
   object MemDetail: TMemTableEh
+    Active = True
     Params = <>
-    Left = 432
-    Top = 8
+    DataDriver = DataSetDriverDO
+    Left = 440
+    Top = 56
+    object MemDetaildate_trans: TDateField
+      FieldName = 'date_trans'
+    end
     object MemDetailnotrans: TStringField
       FieldName = 'notrans'
       Size = 100
     end
-    object MemDetailkode_vendor: TStringField
-      FieldName = 'kode_vendor'
+    object MemDetailvendor_code_transport: TStringField
+      FieldName = 'vendor_code_transport'
       Size = 100
     end
-    object MemDetailname_vendor: TStringField
-      FieldName = 'name_vendor'
-      Size = 200
-    end
-    object MemDetailno_reff: TStringField
-      FieldName = 'no_reff'
-      Size = 50
-    end
-    object MemDetailkd_barang: TStringField
-      FieldName = 'kd_barang'
+    object MemDetailvendor_name_transport: TStringField
+      FieldName = 'vendor_name_transport'
       Size = 255
     end
-    object MemDetailnm_barang: TStringField
-      FieldName = 'nm_barang'
+    object MemDetailvehicles: TStringField
+      FieldName = 'vehicles'
       Size = 255
-    end
-    object MemDetailsatuan: TStringField
-      FieldName = 'satuan'
     end
     object MemDetailpilih: TBooleanField
       FieldName = 'pilih'
     end
-    object MemDetailjumlah: TCurrencyField
-      FieldName = 'jumlah'
-      DisplayFormat = '#,##0.##'
-      EditFormat = '#,##0.##'
+  end
+  object DataSource1: TDataSource
+    DataSet = Qdetail
+    Left = 568
+    Top = 328
+  end
+  object Qdetail: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT id,notrans,item_code,item_name,unit,amount,notrans_load f' +
+        'rom t_delivery_order_load')
+    MasterSource = DSDO
+    MasterFields = 'notrans'
+    DetailFields = 'notrans'
+    Left = 438
+    Top = 299
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'notrans'
+        ParamType = ptInput
+        Value = 'DO/XII-240001'
+      end>
+  end
+  object Qdo: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select DISTINCT *,false as pilih  from ( SELECT date_trans, a."n' +
+        'otrans", "vendor_code_transport",  "vendor_name_transport",    v' +
+        'ehicles  from "public"."t_delivery_order" a  LEFT JOIN (SELECT a' +
+        '.*, vendor_code as vendor_code_transport, vendor_name  as vendor' +
+        '_name_transport,vehicles from "public"."t_delivery_order_load" a' +
+        '  LEFT JOIN "public"."t_delivery_order_services" b ON a.notrans=' +
+        'b.notrans  )b ON  a.notrans=b.notrans where deleted_at  is null)' +
+        ' deo   where notrans not in (SELECT notrans from "public"."t_spm' +
+        '" a  where a.deleted_at  is null) ')
+    Active = True
+    Left = 352
+    Top = 352
+    object Qdodate_trans: TDateField
+      FieldName = 'date_trans'
+      ReadOnly = True
     end
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object notrans: TMTStringDataFieldEh
-          FieldName = 'notrans'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
-        end
-        object kode_vendor: TMTStringDataFieldEh
-          FieldName = 'kode_vendor'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
-        end
-        object name_vendor: TMTStringDataFieldEh
-          FieldName = 'name_vendor'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 200
-        end
-        object no_reff: TMTStringDataFieldEh
-          FieldName = 'no_reff'
-          StringDataType = fdtStringEh
-          DisplayWidth = 50
-          Size = 50
-        end
-        object kd_barang: TMTStringDataFieldEh
-          FieldName = 'kd_barang'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 255
-        end
-        object nm_barang: TMTStringDataFieldEh
-          FieldName = 'nm_barang'
-          StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 255
-        end
-        object jumlah: TMTNumericDataFieldEh
-          FieldName = 'jumlah'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object satuan: TMTStringDataFieldEh
-          FieldName = 'satuan'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object pilih: TMTBooleanDataFieldEh
-          FieldName = 'pilih'
-          DisplayWidth = 20
-        end
-      end
-      object RecordsList: TRecordsListEh
-      end
+    object Qdonotrans: TStringField
+      FieldName = 'notrans'
+      ReadOnly = True
+      Size = 100
     end
+    object Qdovendor_code_transport: TStringField
+      FieldName = 'vendor_code_transport'
+      ReadOnly = True
+      Size = 100
+    end
+    object Qdovendor_name_transport: TStringField
+      FieldName = 'vendor_name_transport'
+      ReadOnly = True
+      Size = 255
+    end
+    object Qdovehicles: TStringField
+      FieldName = 'vehicles'
+      ReadOnly = True
+      Size = 255
+    end
+    object Qdopilih: TBooleanField
+      FieldName = 'pilih'
+    end
+  end
+  object DataSetDriverDO: TDataSetDriverEh
+    ProviderDataSet = Qdo
+    Left = 824
+    Top = 392
   end
 end

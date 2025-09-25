@@ -151,7 +151,11 @@ begin
                 EdValas.Text:=QMaterial['valas'];
                 EdNilai_Valas.Text:=QMaterial['valas_value'];
                 Edjenispo.Text:=QMaterial['type'];
-                MemterimaDet.Post;
+                memterimadet['id_pengajuan_asset']:=QMaterial['id_pengajuan_asset'];
+                memterimadet['no_pengajuan_asset']:=QMaterial['no_pengajuan_asset'];
+                memterimadet['id_detail_asset']:=QMaterial['id_detail_asset'];
+                memterimadet['spesifikasi_asset']:=QMaterial['spesifikasi_asset'];
+               MemterimaDet.Post;
               end;
            end;
        end;
@@ -274,6 +278,10 @@ begin
       EdValas.Text:=QMaterial['valas'];
       EdNilai_Valas.Text:=QMaterial['valas_value'];
       Edjenispo.Text:=QMaterial['type'];
+      memterimadet['id_pengajuan_asset']:=QMaterial['id_pengajuan_asset'];
+      memterimadet['no_pengajuan_asset']:=QMaterial['no_pengajuan_asset'];
+      memterimadet['id_detail_asset']:=QMaterial['id_detail_asset'];
+      memterimadet['spesifikasi_asset']:=QMaterial['spesifikasi_asset'];
       MemterimaDet.Post;
     end;
     with Dm.Qtemp do

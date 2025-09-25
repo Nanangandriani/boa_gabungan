@@ -32,6 +32,7 @@ object FMasterData: TFMasterData
         EditButtons = <>
         FieldName = 'KD_MASTER'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode'
         Width = 125
       end
@@ -41,6 +42,7 @@ object FMasterData: TFMasterData
         EditButtons = <>
         FieldName = 'NM_MASTER'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama'
         Width = 300
       end
@@ -50,6 +52,7 @@ object FMasterData: TFMasterData
         EditButtons = <>
         FieldName = 'KETERANGAN'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Keterangan'
         Width = 300
       end>

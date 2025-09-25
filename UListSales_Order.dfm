@@ -28,6 +28,9 @@ object FSalesOrder: TFSalesOrder
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
@@ -40,6 +43,8 @@ object FSalesOrder: TFSalesOrder
     Align = alClient
     DataSource = DsSalesOrder
     DynProps = <>
+    RowDetailPanel.Active = True
+    RowDetailPanel.Height = 170
     SearchPanel.Enabled = True
     TabOrder = 1
     Columns = <
@@ -49,6 +54,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'notrans'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'No Transaksi'
         Width = 200
       end
@@ -58,6 +64,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'order_date'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Tanggal Order'
         Width = 100
       end
@@ -67,6 +74,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'name_source'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Sumber'
         Width = 150
       end
@@ -76,6 +84,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Pelanggan'
         Width = 200
       end
@@ -85,6 +94,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'name_sales'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Sales'
         Width = 200
       end
@@ -94,6 +104,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'no_reference'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'No Reference'
         Width = 200
       end
@@ -103,10 +114,73 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'payment_term'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jatuh Tempo (Hari)'
         Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1165
+        Height = 168
+        Align = alClient
+        DataSource = DsDetail
+        DynProps = <>
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'notrans'
+            Footers = <>
+            Title.Alignment = taCenter
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_item'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Kode Barang'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_item'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Nama Barang'
+            Width = 250
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'amount'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Jumlah'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_unit'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Satuan'
+            Width = 100
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
   object ActMenu: TActionManager
@@ -188,7 +262,37 @@ object FSalesOrder: TFSalesOrder
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Filter'
+      CaptionButtons = <>
+      DockedLeft = 125
+      DockedTop = 0
+      FloatLeft = 1226
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 147
+          Visible = True
+          ItemName = 'cbBulan'
+        end
+        item
+          Visible = True
+          ItemName = 'edTahun'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -676,12 +780,75 @@ object FSalesOrder: TFSalesOrder
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+    object cbBulan: TdxBarCombo
+      Caption = 'Bulan'
+      Category = 0
+      Hint = 'Bulan'
+      Visible = ivAlways
+      Items.Strings = (
+        'Januari'
+        'Februari'
+        'Maret'
+        'April'
+        'Mei'
+        'Juni'
+        'Juli'
+        'Agustus'
+        'September'
+        'Oktober'
+        'November'
+        'Desember')
+      ItemIndex = -1
+    end
+    object edTahun: TdxBarSpinEdit
+      Caption = 'Tahun'
+      Category = 0
+      Hint = 'Tahun'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Search'
+      Category = 0
+      Hint = 'Search'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton1Click
+    end
+    object dxBarCombo1: TdxBarCombo
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QSalesOrder: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from "public"."t_sales_order"  '
-      'where deleted_at is null order by created_at Desc')
+      'where deleted_at is null and status=1 order by created_at Desc')
     Left = 428
     Top = 56
     object QSalesOrdernotrans: TStringField
@@ -734,5 +901,28 @@ object FSalesOrder: TFSalesOrder
     DataSet = QSalesOrder
     Left = 553
     Top = 40
+  end
+  object Qdetail: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select notrans,code_item,name_item,amount,name_unit from t_sales' +
+        '_order_det order by name_item ASC')
+    MasterSource = DsSalesOrder
+    MasterFields = 'notrans'
+    DetailFields = 'notrans'
+    Left = 662
+    Top = 297
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'notrans'
+        Value = nil
+      end>
+  end
+  object DsDetail: TDataSource
+    DataSet = Qdetail
+    Left = 592
+    Top = 288
   end
 end

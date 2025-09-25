@@ -19,6 +19,9 @@ type
     Label8: TLabel;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,15 +29,26 @@ type
      procedure Autonumber;
   end;
 
-var
+Function
   FNew_Jabatan: TFNew_Jabatan;
-  Status:integer;
+var  Status:integer;
 
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UJabatan, UMainMenu;
+
+var
+  RealNew_jabatan: TFNew_jabatan;
+
+function FNew_jabatan: TFNew_jabatan;
+begin
+  if RealNew_jabatan <> nil then
+    FNew_jabatan:= RealNew_jabatan
+  else
+    Application.CreateForm(TFNew_jabatan, Result);
+end;
 
 procedure TFNew_Jabatan.Autonumber;
 begin
@@ -112,6 +126,21 @@ begin
     end;
     refresh;
     FMainMenu.TampilTabForm2;
+end;
+
+procedure TFNew_Jabatan.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action:=cafree;
+end;
+
+procedure TFNew_Jabatan.FormCreate(Sender: TObject);
+begin
+  RealNew_jabatan:=self;
+end;
+
+procedure TFNew_Jabatan.FormDestroy(Sender: TObject);
+begin
+  RealNew_jabatan:=nil;
 end;
 
 end.

@@ -81,14 +81,16 @@ object FCari_Barang2: TFCari_Barang2
     SQL.Strings = (
       
         'select a.item_stock_code,a.item_name,b.supplier_name,f.type,a.it' +
-        'em_code,a.supplier_code,a.unit,0 qty from warehouse.t_item_stock' +
-        ' a '
+        'em_code,a.supplier_code,a.unit,0 qty from t_item_stock a '
       'inner join t_supplier b on a.supplier_code=b.supplier_code'
       'inner join t_item c on a.item_code=c.item_code '
       'inner join t_item_group d on c.group_id=d.group_id '
       'inner join t_item_category e on d.category_id=d.category_id'
       'inner join t_item_type f on f.type_id=e.type_id '
       '-- where f.type='#39'PRODUKSI'#39
+      
+        'group by a.item_stock_code,a.item_name,b.supplier_name,f.type,a.' +
+        'item_code,a.supplier_code,a.unit'
       'ORDER BY a.item_stock_code asc')
     Left = 240
     Top = 104

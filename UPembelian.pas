@@ -75,20 +75,32 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FPembelian: TFPembelian;
+Function FPembelian: TFPembelian;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_Pembelian, UMy_Function, UMainMenu, UHomeLogin, UDataModule;
+var
+  RealFPembelian: TFPembelian;
+// implementasi function
+function FPembelian: TFPembelian;
+begin
+  if RealFPembelian <> nil then
+    FPembelian:= RealFPembelian
+  else
+    Application.CreateForm(TFPembelian, Result);
+end;
 
 procedure TFPembelian.ActBaruExecute(Sender: TObject);
 begin
@@ -123,7 +135,7 @@ begin
     ' where a.trans_no='+QuotedStr(Memterima_material['trans_no'])+' order by e.id asc';
     Execute;
   end;
-    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPN.fr3');
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPNgb.fr3');
     Rpt.ShowReport();
 end;
 
@@ -315,6 +327,21 @@ begin
      //Report.DesignReport();
      FMainMenu.Report.ShowReport();
    end;
+end;
+
+procedure TFPembelian.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFPembelian.FormCreate(Sender: TObject);
+begin
+  RealFPembelian:=self;
+end;
+
+procedure TFPembelian.FormDestroy(Sender: TObject);
+begin
+  RealFPembelian:=nil;
 end;
 
 procedure TFPembelian.FormShow(Sender: TObject);

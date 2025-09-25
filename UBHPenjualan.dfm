@@ -111,6 +111,7 @@ object FBHPenjualan: TFBHPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'amount'
@@ -209,6 +210,7 @@ object FBHPenjualan: TFBHPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'jum_ak_kre'
@@ -218,6 +220,7 @@ object FBHPenjualan: TFBHPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'ppn_ak_kre'
@@ -245,6 +248,7 @@ object FBHPenjualan: TFBHPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'jum_ak_kre_lain'
@@ -256,8 +260,8 @@ object FBHPenjualan: TFBHPenjualan
     end
   end
   object ActMenu: TActionManager
-    Left = 1016
-    Top = 432
+    Left = 864
+    Top = 264
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -301,8 +305,8 @@ object FBHPenjualan: TFBHPenjualan
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 1096
-    Top = 432
+    Left = 880
+    Top = 320
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -484,9 +488,9 @@ object FBHPenjualan: TFBHPenjualan
         377A222F3E0D0A3C2F7376673E0D0A}
     end
     object dtAwal: TcxBarEditItem
-      Caption = 'Tanggal Awal  '
+      Caption = 'Tanggal Awal '
       Category = 0
-      Hint = 'Tanggal Awal  '
+      Hint = 'Tanggal Awal '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
@@ -498,9 +502,9 @@ object FBHPenjualan: TFBHPenjualan
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP                   '
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP                   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -680,7 +684,7 @@ object FBHPenjualan: TFBHPenjualan
     SQL.Strings = (
       'SELECT * from "public"."vbhpenjualan"')
     Left = 1012
-    Top = 376
+    Top = 280
     object QBHPenjualantrans_no: TStringField
       FieldName = 'trans_no'
       Size = 255
@@ -771,8 +775,8 @@ object FBHPenjualan: TFBHPenjualan
   end
   object DsBHPenjualan: TDataSource
     DataSet = QBHPenjualan
-    Left = 1089
-    Top = 376
+    Left = 1081
+    Top = 256
   end
   object QCetak: TUniQuery
     Connection = dm.Koneksi
@@ -865,8 +869,8 @@ object FBHPenjualan: TFBHPenjualan
       'begin'
       ''
       'end.')
-    Left = 1032
-    Top = 40
+    Left = 976
+    Top = 32
     Datasets = <
       item
         DataSet = frxDBDRincianBarang
@@ -1527,8 +1531,8 @@ object FBHPenjualan: TFBHPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * from "public"."vbhpenjualan"')
-    Left = 860
-    Top = 184
+    Left = 780
+    Top = 96
     object StringField16: TStringField
       FieldName = 'trans_no'
       Size = 255
@@ -1650,8 +1654,8 @@ object FBHPenjualan: TFBHPenjualan
     DataSet = QCetakRincianBarang
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 944
-    Top = 184
+    Left = 992
+    Top = 128
   end
   object dsCetakRincianBarang: TDataSource
     DataSet = QCetakRincianBarang

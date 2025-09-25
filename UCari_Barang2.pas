@@ -31,7 +31,7 @@ implementation
 {$R *.dfm}
 
 uses Udatamodule, UItem_TransferBarang, UNew_PengStok, UMainMenu,
-  UNew_PercBarang, UNew_MasterFormulaTest;
+  UNew_PercBarang, UNew_MasterFormulaTest, UDetailPengajuanAsset;
 var
   RealFCari_Barang2: TFCari_Barang2;
 function FCari_Barang2: TFCari_Barang2;
@@ -85,6 +85,16 @@ begin
       Memformuladet['pack_qty']:=Qbarang.FieldByName('qty_conv').AsString;
       Memformuladet.Post;
       DBGridEh2ColEnter(sender);
+    end;
+  end;
+    if VMenu='3' then
+  begin
+    with FDetailPengajuanAsset do
+    begin
+      Memdetailasset.Edit;
+      Memdetailasset['kode_barang_boa']:=QBarang.FieldByName('item_stock_code').AsString;
+      Memdetailasset['kode_barang']:=QBarang.FieldByName('item_code').AsString;
+      Memdetailasset.post;
     end;
   end;
   Close;

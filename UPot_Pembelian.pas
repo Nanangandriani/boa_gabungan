@@ -78,6 +78,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -85,8 +88,7 @@ type
 
   end;
 
-var
-  FPot_Pembelian: TFPot_Pembelian;
+Function  FPot_Pembelian: TFPot_Pembelian;
 
 implementation
 
@@ -96,6 +98,15 @@ uses UNew_Pot_Pembelian, UDataModule;
 
 var
   realfpotp : TFPot_Pembelian;
+
+function FPot_Pembelian: TFPot_Pembelian;
+begin
+  if realfpotp <> nil then
+    FPot_Pembelian:= realfpotp
+  else
+    Application.CreateForm(TFPot_Pembelian, Result);
+end;
+  
 const
   Digits: array [1 .. 9] of string = (
     'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
@@ -263,6 +274,21 @@ begin
       Edppn_rp.Value:=MemReturn['ppnrp']*MemReturn['n_valas'];
       Edgrandtotal.Value:=MemReturn['total'];
    end;
+end;
+
+procedure TFPot_Pembelian.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFPot_Pembelian.FormCreate(Sender: TObject);
+begin
+  realfpotp:=Self;
+end;
+
+procedure TFPot_Pembelian.FormDestroy(Sender: TObject);
+begin
+  realfpotp:=nil;
 end;
 
 procedure TFPot_Pembelian.FormShow(Sender: TObject);

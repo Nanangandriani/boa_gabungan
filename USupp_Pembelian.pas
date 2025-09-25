@@ -23,8 +23,18 @@ type
       stat:string;
   end;
 
-var
-  FSupp_Pembelian: TFSupp_Pembelian;
+var  FSupp_Pembelian: TFSupp_Pembelian;
+
+
+{var
+  RealFSupp_Pembelian: TFSupp_Pembelian;
+function FSupp_Pembelian: TFSupp_Pembelian;
+begin
+  if RealFSupp_Pembelian <> nil then
+     FSupp_Pembelian:= RealFSupp_Pembelian
+  else
+    Application.CreateForm(TFSupp_Pembelian, Result);
+end;}
 
 implementation
 

@@ -134,7 +134,7 @@ var
 implementation
 
 {$R *.dfm}
-uses UDataModule;
+uses UDataModule, UHomeLogin, UMy_Function;
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
 var
@@ -342,6 +342,17 @@ begin
     end;
     if dm.Qtemp.RecordCount=1 then
     begin
+      if vCaptionButton='Logout' then
+      begin
+        FMainMenu.Close;
+        FHomeLogin.Show;
+        Exit;
+      end else
+      if vCaptionButton='Exit' then
+      begin
+        Application.Terminate;
+      end else
+
        //create new Tabsheet
         ANewTabs := TRzTabSheet.Create(nil);
         ANewTabs.Name := 'Tab'+vNamaButton;
@@ -732,7 +743,15 @@ end;
 
 procedure TFMainMenu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Application.Terminate;
+//  Application.Terminate;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
+    ExecSQL;
+  end;
+  FHomeLogin.show;
 end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
@@ -745,6 +764,7 @@ begin
   {kdsbu:='MLB/1';
   loksbu:='MLB/1';
   format_tgl:='YYYY/MM/DD'; } //Tes default loksbu
+  FHomeLogin.Close;
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

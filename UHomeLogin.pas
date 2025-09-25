@@ -36,7 +36,6 @@ type
     ImgTransaksi: TImage;
     Image1: TImage;
     CbSBU: TcxComboBox;
-    procedure RzPanel1Paint(Sender: TObject);
     procedure ImgTransaksiClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure EdPassKeyPress(Sender: TObject; var Key: Char);
@@ -44,10 +43,19 @@ type
     procedure FormShow(Sender: TObject);
     procedure CbSBUKeyPress(Sender: TObject; var Key: Char);
     procedure EduserKeyPress(Sender: TObject; var Key: Char);
+    procedure ImgTransaksiMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ImgTransaksiMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ImgTransaksiDragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure Image1MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
-    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH : string;
+    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH, vPosition : string;
     { Public declarations }
    // nm,loksbu,kdsbu,id_dept:string;
   end;
@@ -130,6 +138,18 @@ begin
    Application.Terminate;
 end;
 
+procedure TFHomeLogin.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+   Image1.Picture.LoadFromFile('BCancelo.png');
+end;
+
+procedure TFHomeLogin.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+   image1.Picture.LoadFromFile('BCancel.png');
+end;
+
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
    //Cek User
@@ -206,26 +226,46 @@ begin
     end;
     if dm.Qtemp.RecordCount<>0 then
     begin
-    with FHomeLogin do
-    begin
-      vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
-      vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
-      vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
-      vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
-      vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+      with FHomeLogin do
+      begin
+        vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
+        vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
+        vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
+        vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
+        vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+      end;
     end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(Eduser.Text)+','+QuotedStr(GetLocalIP)+',True,False,''2.0'');';
+      ExecSQL;
     end;
     Nm:=Eduser.Text;
    end;
-
-   FMainMenu.showmodal;
    FHomeLogin.Close;
+   FMainMenu.show;//modal;
 end;
 
-procedure TFHomeLogin.RzPanel1Paint(Sender: TObject);
+procedure TFHomeLogin.ImgTransaksiDragDrop(Sender, Source: TObject; X,
+  Y: Integer);
 begin
-
+//   ImgTransaksi.Picture.LoadFromFile('BOrange.png');
 end;
+
+procedure TFHomeLogin.ImgTransaksiMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+   ImgTransaksi.Picture.LoadFromFile('BOrange.png');
+end;
+
+procedure TFHomeLogin.ImgTransaksiMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+   ImgTransaksi.Picture.LoadFromFile('login.png');
+end;
+
 //ShowMessage('A');
 //ShellExecute(0, 'open', PChar('https://helpdesk.hastaprimasolusi.com/'), nil, nil, SW_SHOWNORMAL);
 

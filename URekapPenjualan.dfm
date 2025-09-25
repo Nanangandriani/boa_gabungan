@@ -3,7 +3,7 @@ object FRekapPenjualan: TFRekapPenjualan
   Top = 0
   Caption = 'Rekap Penjualan'
   ClientHeight = 675
-  ClientWidth = 1383
+  ClientWidth = 1374
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FRekapPenjualan: TFRekapPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1383
+    Width = 1374
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -40,7 +40,7 @@ object FRekapPenjualan: TFRekapPenjualan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1383
+    Width = 1374
     Height = 548
     Align = alClient
     DataSource = DsRekapPenjualan
@@ -417,9 +417,9 @@ object FRekapPenjualan: TFRekapPenjualan
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP                   '
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP                   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -727,7 +727,6 @@ object FRekapPenjualan: TFRekapPenjualan
         #9'LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" a' +
         's name_kab, "code_karesidenan"  from t_region_regency WHERE dele' +
         'ted_at IS NULL)b ON "left"(code_region, 4)=b.code_kab')
-    Active = True
     Left = 860
     Top = 72
     object QCetaktrans_no: TStringField

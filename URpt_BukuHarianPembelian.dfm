@@ -3,7 +3,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form Laporan Buku Harian Pembelian'
-  ClientHeight = 268
+  ClientHeight = 328
   ClientWidth = 741
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -59,14 +59,14 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   end
   object Panel1: TPanel
     Left = 0
-    Top = 233
+    Top = 293
     Width = 741
     Height = 35
     Align = alBottom
     TabOrder = 0
     Visible = False
     OnClick = Panel1Click
-    ExplicitTop = 232
+    ExplicitTop = 292
     ExplicitWidth = 737
     object Bprint: TRzBitBtn
       Left = 1
@@ -397,8 +397,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45678.653784849540000000
-    ReportOptions.LastChange = 45678.653784849540000000
+    ReportOptions.CreateDate = 45719.366668750000000000
+    ReportOptions.LastChange = 45719.366668750000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -522,8 +522,10 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         ','#39')'#39') else '#39#39' end ak_ppn,'
       
         'case when a.account_um_code <> '#39#39' then concat(a.account_um_code,' +
-        #39' ('#39',g.account_name,'#39')'#39') else '#39#39' end ak_um,c.group_name,h.suppli' +
-        'er_name,b.qty,b.unit'
+        #39' ('#39',g.account_name,'#39')'#39') else '#39#39' end ak_um,c.group_name'
+      
+        ',h.supplier_name,b.qty,b.unit,"left"(c.item_stock_code, 8) item_' +
+        'code '
       'from t_purchase_invoice a'
       'INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no'
       
@@ -536,7 +538,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       'LEFT JOIN t_ak_account F on b.ppn_account=f.code  '
       'LEFT JOIN t_ak_account g on a.account_um_code=g.code'
       'INNER JOIN t_supplier h on a.supplier_code=h.supplier_code')
-    Active = True
     Left = 163
     Top = 109
   end
@@ -899,12 +900,13 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       'group_name=group_name'
       'supplier_name=supplier_name'
       'qty=qty'
-      'unit=unit')
+      'unit=unit'
+      'item_code=item_code')
     DataSet = QRptBHP
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 312
-    Top = 173
+    Left = 304
+    Top = 165
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -1033,7 +1035,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
       Caption = 'Cari'
       Category = 0
       Hint = 'Cari'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554

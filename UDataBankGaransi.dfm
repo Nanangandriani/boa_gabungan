@@ -1,6 +1,7 @@
 object FDataBankGaransi: TFDataBankGaransi
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Bank Garansi'
   ClientHeight = 505
   ClientWidth = 1010
@@ -19,8 +20,8 @@ object FDataBankGaransi: TFDataBankGaransi
     Height = 34
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 462
-    ExplicitWidth = 1004
+    ExplicitTop = 470
+    ExplicitWidth = 1006
     object BBatal: TRzBitBtn
       Left = 934
       Top = 1
@@ -80,7 +81,7 @@ object FDataBankGaransi: TFDataBankGaransi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 928
+      ExplicitLeft = 930
     end
     object BSave: TRzBitBtn
       Left = 859
@@ -142,7 +143,7 @@ object FDataBankGaransi: TFDataBankGaransi
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 853
+      ExplicitLeft = 855
     end
   end
   object Panel6: TPanel
@@ -154,7 +155,7 @@ object FDataBankGaransi: TFDataBankGaransi
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 1004
+    ExplicitWidth = 1006
     object LabelPelanggan: TLabel
       Left = 24
       Top = 19
@@ -223,6 +224,16 @@ object FDataBankGaransi: TFDataBankGaransi
       ReadOnly = True
       TabOrder = 2
     end
+    object Memo1: TMemo
+      Left = 600
+      Top = 16
+      Width = 265
+      Height = 89
+      Lines.Strings = (
+        'Memo1')
+      TabOrder = 3
+      Visible = False
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
@@ -235,13 +246,13 @@ object FDataBankGaransi: TFDataBankGaransi
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitWidth = 1004
-    ExplicitHeight = 349
+    ExplicitWidth = 1006
+    ExplicitHeight = 357
     FixedDimension = 21
     object TabSDetail: TRzTabSheet
       Caption = 'Data Bank Garansi'
-      ExplicitWidth = 1000
-      ExplicitHeight = 324
+      ExplicitWidth = 1002
+      ExplicitHeight = 332
       object DBGrid: TDBGridEh
         Left = 0
         Top = 0
@@ -293,7 +304,7 @@ object FDataBankGaransi: TFDataBankGaransi
               end>
             FieldName = 'nama_kategori'
             Footers = <>
-            Title.Caption = 'Kategori'
+            Title.Caption = 'Kelompok'
             Width = 200
           end
           item

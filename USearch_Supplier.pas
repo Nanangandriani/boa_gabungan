@@ -40,7 +40,8 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew
   UDelivery_Order_Sumber, UDataPerintahMuat, UPerintahMuat_Sumber,
   UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
   UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
-  UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian,ULap_Kartu_Hutang;
+  UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian,ULap_Kartu_Hutang,
+  UNew_Pembelian;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -181,7 +182,7 @@ begin
         Edkd_supp.Text:=QSupplier['supplier_code'];
         ednm_supp.Text:=QSupplier['supplier_name'];
         Edheader.Text:=QSupplier['header_code_um'];
-        Ednm_akun.Text:=QSupplier['header_name'];
+        Ednm_akun.Text:=QSupplier['account_name'];
         Edkd_akun.text:=QSupplier['account_code_um'];
       end;
     end;
@@ -194,6 +195,14 @@ begin
     begin
       FRptRekap_Pembelian.Edkd_sp.Text:=QSupplier['supplier_code'];
       FRptRekap_Pembelian.CbSupplier.EditValue:=QSupplier['supplier_name'];
+    end;
+    if vcall='Pemb' then
+    begin
+      with FNew_Pembelian do
+      begin
+        Edkd_supp.Text:=Qsupplier['supplier_code'];
+        ednm_supp.text:=Qsupplier['supplier_name'];
+      end;
     end;
     close;
 end;

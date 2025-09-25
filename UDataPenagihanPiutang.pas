@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
-  Vcl.StdCtrls, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.ExtCtrls;
+  Vcl.StdCtrls, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.ExtCtrls, frxClass, frxDBSet,
+  MemDS, DBAccess, Uni;
 
 type
   TFDataPenagihanPiutang = class(TForm)
@@ -49,6 +50,20 @@ type
     btTampilkan: TRzBitBtn;
     RzBitBtn1: TRzBitBtn;
     MemDetailnama_bank_cek: TStringField;
+    edKdWilayah: TEdit;
+    BtnCetakDpp: TRzBitBtn;
+    Report: TfrxReport;
+    frxDBDatasetDpp: TfrxDBDataset;
+    QdppSudahTagih: TUniQuery;
+    frxDBDatasetDPPBlmDitagih: TfrxDBDataset;
+    Qdppbelumditagih: TUniQuery;
+    MemDetailisdpp_prev: TSmallintField;
+    Label3: TLabel;
+    Label4: TLabel;
+    edKaresidenan: TRzButtonEdit;
+    edKabupaten: TRzButtonEdit;
+    Label5: TLabel;
+    Label6: TLabel;
     procedure edNamaKolektorButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridDetailColumns1EditButtons0Click(Sender: TObject;
@@ -58,10 +73,17 @@ type
     procedure btTampilkanClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BtnCetakDppClick(Sender: TObject);
+    procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure edKaresidenanButtonClick(Sender: TObject);
+    procedure edKabupatenButtonClick(Sender: TObject);
+    procedure edKaresidenanChange(Sender: TObject);
   private
     { Private declarations }
   public
     Status : integer;
+    strKaresidenanID,strKabupatenID: String;
     { Public declarations }
     procedure Clear;
     procedure Save;
@@ -77,7 +99,7 @@ implementation
 {$R *.dfm}
 
 uses Ubrowse_pelanggan, UMasterData, UDaftarTagihan, UMovingDPP, UDataModule,
-  UHomeLogin;
+  UHomeLogin, UMy_Function;
 
 procedure TFDataPenagihanPiutang.RefreshGrid;
 var
@@ -146,6 +168,25 @@ begin
     end;
 end;
 
+procedure TFDataPenagihanPiutang.ReportGetValue(const VarName: string;
+  var Value: Variant);
+var
+  tgl,bulan,tahun: STRING;
+begin
+  tgl:=FormatDateTime('DD', dtCetak.Date);
+  bulan:=convbulanInd(StrToInt(FormatDateTime('M', dtCetak.Date)));
+  tahun:=FormatDateTime('YYYY', dtCetak.Date);
+
+  if CompareText(VarName, 'parSBU') = 0 then
+  Value := FHomeLogin.vKodePRSH;
+
+  if CompareText(VarName, 'parNmKolektor') = 0 then
+  Value := edNamaKolektor.Text;
+
+  if CompareText(VarName, 'parTglDppCetak') = 0 then
+  Value := tgl+' '+bulan+' '+tahun ;
+end;
+
 procedure TFDataPenagihanPiutang.Update;
 begin
   MemDetail.First;
@@ -172,9 +213,9 @@ begin
               ' "bank_receipt"='+QuotedStr(MemDetail['bank_resi'])+' ');
               if ((MemDetail['tgl_resi']=null) OR (MemDetail['tgl_resi']=''))then
               begin
-                sql.add( '  "date_receipt"=null, ');
+                sql.add( '  ,"date_receipt"=null, ');
               end  else
-                sql.add(  '  "date_receipt"='+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
+                sql.add(  '  ,"date_receipt"='+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
     sql.add(  ' "name_bank_cheque"='+QuotedStr(MemDetail['nama_bank_cek'])+', '+
               ' "no_cheque"='+QuotedStr(MemDetail['no_cek'])+', '+
               ' "cheque_amount1"='+QuotedStr(MemDetail['nilai_cek'])+', '+
@@ -200,12 +241,12 @@ procedure TFDataPenagihanPiutang.Save;
 begin
   with dm.Qtemp do
   begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM "public"."t_dpp"'+
-            ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
-            ' "date_trans"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+';';
-  ExecSQL;
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM "public"."t_dpp"'+
+              ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
+              ' "date_trans"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+';';
+    ExecSQL;
   end;
 
   MemDetail.First;
@@ -213,49 +254,50 @@ begin
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.add(  ' INSERT INTO "public"."t_dpp" ("created_at", "created_by", '+
-              ' "date_dpp", "date_print", '+
-              ' "code_collector", "name_collector", "code_cust", "no_invoice", '+
-              ' "no_invoice_tax", "date_trans", "date_tempo", "paid_amount", "cash", '+
-              ' "receipt", "counter_bill", "bank_receipt", '+
-              ' "date_receipt", "name_bank_cheque", "no_cheque", '+
-              ' "cheque_amount1", "cheque_amount2", "date_tempo_cheque") '+
-              ' Values( '+
-              ' NOW(), '+
-              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+', '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtCetak.Date))+', '+
-              ' '+QuotedStr(edKodeKolektor.Text)+', '+
-              ' '+QuotedStr(edNamaKolektor.Text)+', '+
-              ' '+QuotedStr(MemDetail['kode_pel'])+', '+
-              ' '+QuotedStr(MemDetail['no_invoice'])+', '+
-              ' '+QuotedStr(MemDetail['no_invoice_tax'])+', '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_faktur']))+', '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo']))+', '+
-              ' '+QuotedStr(FloatToStr(MemDetail['jum_piutang']))+', '+
-              ' '+QuotedStr(FloatToStr(MemDetail['tunai']))+', '+
-              ' '+QuotedStr(FloatToStr(MemDetail['resi']))+', '+
-              ' '+QuotedStr(FloatToStr(MemDetail['kontra_bon']))+', '+
-              ' '+QuotedStr(MemDetail['bank_resi'])+', ');
-              if ((MemDetail['tgl_resi']=null) OR (MemDetail['tgl_resi']=''))then
-              begin
-                sql.add( ' null, ');
-              end  else
-                sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
-    sql.add(  ' '+QuotedStr(MemDetail['nama_bank_cek'])+', '+
-              ' '+QuotedStr(MemDetail['no_cek'])+', '+
-              ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', '+
-              ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', ');
+      close;
+      sql.clear;
+      sql.add(  ' INSERT INTO "public"."t_dpp" ("created_at", "created_by", '+
+                ' "date_dpp", "date_print", '+
+                ' "code_collector", "name_collector", "code_cust", "no_invoice", '+
+                ' "no_invoice_tax", "date_trans", "date_tempo", "paid_amount", "cash", '+
+                ' "receipt", "counter_bill", "bank_receipt", '+
+                ' "date_receipt", "name_bank_cheque", "no_cheque", '+
+                ' "cheque_amount1", "cheque_amount2", "date_tempo_cheque",isdpp_prev) '+
+                ' Values( '+
+                ' NOW(), '+
+                ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+', '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtCetak.Date))+', '+
+                ' '+QuotedStr(edKodeKolektor.Text)+', '+
+                ' '+QuotedStr(edNamaKolektor.Text)+', '+
+                ' '+QuotedStr(MemDetail['kode_pel'])+', '+
+                ' '+QuotedStr(MemDetail['no_invoice'])+', '+
+                ' '+QuotedStr(MemDetail['no_invoice_tax'])+', '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_faktur']))+', '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo']))+', '+
+                ' '+QuotedStr(FloatToStr(MemDetail['jum_piutang']))+', '+
+                ' '+QuotedStr(FloatToStr(MemDetail['tunai']))+', '+
+                ' '+QuotedStr(FloatToStr(MemDetail['resi']))+', '+
+                ' '+QuotedStr(FloatToStr(MemDetail['kontra_bon']))+', '+
+                ' '+QuotedStr(MemDetail['bank_resi'])+', ');
+                if ((MemDetail['tgl_resi']=null) OR (MemDetail['tgl_resi']=''))then
+                begin
+                  sql.add( ' null, ');
+                end  else
+                  sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
+      sql.add(  ' '+QuotedStr(MemDetail['nama_bank_cek'])+', '+
+                ' '+QuotedStr(MemDetail['no_cek'])+', '+
+                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', '+
+                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', ');
               if ((MemDetail['tgl_tempo_cek']=null) OR (MemDetail['tgl_tempo_cek']=''))then
               begin
-                sql.add( ' null );');
+                sql.add( ' null,'+QuotedStr(MemDetail['isdpp_prev'])+' );');
               end  else
-                sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+' );');
-    ExecSQL;
+                sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+','+QuotedStr(MemDetail['isdpp_prev'])+' );');
+
+      ExecSQL;
     end;
-  MemDetail.Next;
+    MemDetail.Next;
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
@@ -271,68 +313,142 @@ end;
 
 procedure TFDataPenagihanPiutang.BSaveClick(Sender: TObject);
 begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if edKodeKolektor.Text='' then
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  if edKodeKolektor.Text='' then
+  begin
+    MessageDlg('Data Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edKodeKolektor.SetFocus;
+  end
+  else if MemDetail.RecordCount=0 then
+  begin
+    MessageDlg('Tidak Ada Data Yang Dapat Diproses..!!',mtInformation,[mbRetry],0);
+    edKodeKolektor.SetFocus;
+  end
+  else if Status = 0 then
+  begin
+  if MessageDlg ('Apa Anda Yakin Akan Simpan Data Ini.'+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+  begin
+    Save;
+    Dm.Koneksi.Commit;
+  end;
+  end
+  else if Status = 1 then
+  begin
+  if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+  begin
+    Update;
+    Dm.Koneksi.Commit;
+  end;
+  end;
+  Except on E :Exception do
+    begin
       begin
-        MessageDlg('Data Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKodeKolektor.SetFocus;
-      end
-      else if MemDetail.RecordCount=0 then
-      begin
-        MessageDlg('Tidak Ada Data Yang Dapat Diproses..!!',mtInformation,[mbRetry],0);
-        edKodeKolektor.SetFocus;
-      end
-      else if Status = 0 then
-      begin
-      if MessageDlg ('Apa Anda Yakin Akan Simpan Data Ini.'+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-      begin
-        Save;
-        Dm.Koneksi.Commit;
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
       end;
-      end
-      else if Status = 1 then
-      begin
-      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        Update;
-        Dm.Koneksi.Commit;
-      end;
-      end;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    end;
+  end;
+end;
+
+procedure TFDataPenagihanPiutang.BtnCetakDppClick(Sender: TObject);
+begin
+  with QdppSudahTagih do
+  begin
+    close;
+    sql.clear;
+    sql.add('SELECT b.customer_code,b.customer_name,case when c.total_receivables is NULL '+
+            'then 0 else c.total_receivables end total_receivables,a.no_invoice,a.date_dpp,'+
+            'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
+            'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
+            'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+            'LEFT JOIN (SELECT no_trans,code_cust,total_receivables  FROM "public"."vget_piutang") c '+
+            'on c.code_cust=a.code_cust and c.no_trans=a.no_invoice '+
+            'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
+            ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTagih.Date))+' '+
+            'and isdpp_prev=True  Order By "date_dpp", "no_invoice" desc');
+    open;
+  end;
+
+  with Qdppbelumditagih do
+  begin
+    close;
+    sql.clear;
+    sql.add('SELECT b.customer_code,b.customer_name,case when c.total_receivables is NULL '+
+            'then 0 else c.total_receivables end total_receivables,a.no_invoice,a.date_dpp,'+
+            'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
+            'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
+            'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+            'LEFT JOIN (SELECT no_trans,code_cust,total_receivables  FROM "public"."vget_piutang") c '+
+            'on c.code_cust=a.code_cust and c.no_trans=a.no_invoice '+
+            'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
+            ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTagih.Date))+' '+
+            'and isdpp_prev=False Order By "date_dpp", "no_invoice" desc');
+    open;
+  end;
+
+  cLocation := ExtractFilePath(Application.ExeName);
+
+  //ShowMessage(cLocation);
+  Report.LoadFromFile(cLocation +'report/rpt_daftar_penagihan_piutang'+ '.fr3');
+//  SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+//  SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
+//  SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
+//  SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+
+   //Report.DesignReport();
+   //Report.ShowReport();
+//  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+//  begin
+//    Report.DesignReport();
+//  end else
+//  begin
+    Report.ShowReport();
+//  end;
+
 end;
 
 procedure TFDataPenagihanPiutang.btTampilkanClick(Sender: TObject);
 begin
-  MemDetail.EmptyTable;
-  MemDetail.Active:=true;
-  RefreshGrid;
+  if edNamaKolektor.Text='' then
+  begin
+    MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else begin
+    MemDetail.EmptyTable;
+    MemDetail.Active:=true;
+    RefreshGrid;
+  end;
 end;
 
 procedure TFDataPenagihanPiutang.Clear;
 begin
   dtTagih.Date:=now();
   dtCetak.Date:=now();
+  edKdWilayah.Text:='';
+  edKaresidenan.Text:='';
+  edKabupaten.Text:='';
   edNamaKolektor.Clear;
   edKodeKolektor.Clear;
   MemDetail.EmptyTable;
+  QdppSudahTagih.Close;
+  Qdppbelumditagih.Close;
+  MemDetail.Close;
+  MemDetail.Open;
 end;
-
 
 procedure TFDataPenagihanPiutang.DBGridDetailColumns1EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-  Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
-  Fbrowse_data_pelanggan.vcall:='dpp';
-  Fbrowse_data_pelanggan.ShowModal;
+  if edNamaKolektor.Text<>'' then
+  begin
+    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+    Fbrowse_data_pelanggan.vcall:='dpp';
+    Fbrowse_data_pelanggan.ShowModal;
+  end else
+  begin
+    MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
 end;
 
 procedure TFDataPenagihanPiutang.DBGridDetailColumns2EditButtons0Click(
@@ -344,12 +460,50 @@ begin
   FDaftarTagihan.show;
 end;
 
+procedure TFDataPenagihanPiutang.edKabupatenButtonClick(Sender: TObject);
+begin
+  if edKaresidenan.Text<>'' then
+  begin
+    FMasterData.Caption:='Master Data Kabupaten';
+    FMasterData.vcall:='dppkab';
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL AND code_karesidenan='+QuotedStr(strKaresidenanID)+'');
+    FMasterData.ShowModal;
+  end else
+  begin
+    MessageDlg('TP wajib di isi..!!',mtInformation,[mbRetry],0);
+  end;
+end;
+
+procedure TFDataPenagihanPiutang.edKaresidenanButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='dppkares';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFDataPenagihanPiutang.edKaresidenanChange(Sender: TObject);
+begin
+  edKabupaten.Text:='';
+  strKabupatenID:='';
+end;
+
 procedure TFDataPenagihanPiutang.edNamaKolektorButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data Kolektor';
-  FMasterData.vcall:='m_kolektor';
-  FMasterData.update_grid('code','name','concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency) ','"public"."t_collector"','WHERE	deleted_at IS NULL ');
-  FMasterData.ShowModal;
+  if (MemDetail.RecordCount=0) AND (edKabupaten.Text<>'') then
+  begin
+    FMasterData.Caption:='Master Data Kolektor';
+    FMasterData.vcall:='m_kolektor';
+    FMasterData.update_grid('code','name','concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency) ','"public"."t_collector"','WHERE	deleted_at IS NULL AND code_regency='+QuotedStr(strKabupatenID)+' ');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Kabupaten wajib di isi dan Data harus kosong..!!',mtInformation,[mbRetry],0);
+  end;
+end;
+
+procedure TFDataPenagihanPiutang.FormShow(Sender: TObject);
+begin
+  Clear;
 end;
 
 procedure TFDataPenagihanPiutang.RzBitBtn1Click(Sender: TObject);

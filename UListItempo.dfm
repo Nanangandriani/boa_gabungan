@@ -4,7 +4,7 @@ object Flistitempo: TFlistitempo
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Form List Item PO'
-  ClientHeight = 403
+  ClientHeight = 318
   ClientWidth = 583
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object Flistitempo: TFlistitempo
     Left = 0
     Top = 0
     Width = 583
-    Height = 129
+    Height = 193
     Align = alTop
     DataSource = DsMaterial_stok
     DynProps = <>
@@ -105,12 +105,12 @@ object Flistitempo: TFlistitempo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 371
+    Top = 286
     Width = 583
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 370
+    ExplicitTop = 285
     ExplicitWidth = 579
     object BBatal: TRzBitBtn
       Left = 507
@@ -243,6 +243,7 @@ object Flistitempo: TFlistitempo
       Align = alRight
       Caption = 'OK'
       TabOrder = 2
+      Visible = False
       OnClick = Bedit2Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -305,6 +306,7 @@ object Flistitempo: TFlistitempo
       Align = alRight
       Caption = 'OK'
       TabOrder = 3
+      Visible = False
       OnClick = BEdit3Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -367,6 +369,7 @@ object Flistitempo: TFlistitempo
       Align = alRight
       Caption = 'OK'
       TabOrder = 4
+      Visible = False
       OnClick = BEdit4Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100

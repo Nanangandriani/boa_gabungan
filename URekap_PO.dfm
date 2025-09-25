@@ -1233,7 +1233,6 @@ object FRekap_PO: TFRekap_PO
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from "V_RekapPO"')
-    Active = True
     Left = 320
     Top = 88
   end
@@ -1272,8 +1271,8 @@ object FRekap_PO: TFRekap_PO
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45677.955804432870000000
-    ReportOptions.LastChange = 45677.955804432870000000
+    ReportOptions.CreateDate = 45719.377691006940000000
+    ReportOptions.LastChange = 45719.377691006940000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''

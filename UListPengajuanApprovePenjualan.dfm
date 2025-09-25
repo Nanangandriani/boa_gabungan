@@ -10,6 +10,7 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -22,7 +23,6 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1112
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -38,53 +38,44 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     Width = 1106
     Height = 448
     Hint = ''
-    ActivePage = TabForm
+    ActivePage = TabSheet1
     Align = alClient
     ShowCloseButtonOnActiveTab = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 1
-    ExplicitTop = 133
-    ExplicitWidth = 1112
-    ExplicitHeight = 457
+    ExplicitWidth = 1102
+    ExplicitHeight = 447
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Klasifikasi Penjualan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1102
-      ExplicitHeight = 423
       object PanelParent: TPanel
         Left = 0
         Top = 0
-        Width = 1108
-        Height = 432
+        Width = 1102
+        Height = 423
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 1102
-        ExplicitHeight = 423
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 1
-          Width = 1106
-          Height = 430
+          Width = 1100
+          Height = 421
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 1100
-          ExplicitHeight = 421
         end
         object WebBrowser1: TWebBrowser
           Left = 1
           Top = 1
-          Width = 1106
-          Height = 430
+          Width = 1100
+          Height = 421
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 1100
-          ExplicitHeight = 421
+          ExplicitWidth = 1096
+          ExplicitHeight = 420
           ControlData = {
-            4C000000725B00008E2300000000000000000000000000000000000000000000
+            4C000000B0710000832B00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -93,11 +84,13 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
         object DBGridList: TDBGridEh
           Left = 1
           Top = 1
-          Width = 1106
-          Height = 430
+          Width = 1100
+          Height = 421
           Align = alClient
           DataSource = dsAppKlasifikasii
           DynProps = <>
+          IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+          OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
           RowDetailPanel.Active = True
           SearchPanel.Enabled = True
           TabOrder = 2
@@ -111,6 +104,14 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
               Footers = <>
               Visible = False
               Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'pilih'
+              Footers = <>
+              Title.Caption = 'Pilih'
             end
             item
               CellButtons = <>
@@ -201,14 +202,6 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
               Footers = <>
               Title.Caption = 'Status Promo'
               Width = 100
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'pilih'
-              Footers = <>
-              Title.Caption = 'Pilih'
             end>
           object RowDetailData: TRowDetailPanelControlEh
             object DBGridEh1: TDBGridEh
@@ -352,11 +345,183 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
       end
     end
     object TabSheet1: TRzTabSheet
-      Caption = 'TabSheet1'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      Caption = 'Sales Order'
+      ExplicitWidth = 1098
+      ExplicitHeight = 422
+      object DBGridOrder: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1102
+        Height = 423
+        Align = alClient
+        DataSource = DsSalesOrder
+        DrawMemoText = True
+        DynProps = <>
+        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+        EmptyDataInfo.Active = True
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+        RowDetailPanel.Active = True
+        RowDetailPanel.Height = 170
+        SearchPanel.Enabled = True
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            Checkboxes = True
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pilih'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Pilih'
+            Width = 39
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'notrans'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'No Transaksi'
+            Width = 153
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'order_date'
+            Footers = <>
+            ReadOnly = True
+            Title.Alignment = taCenter
+            Title.Caption = 'Tanggal Order'
+            Width = 80
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_source'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Sumber'
+            Width = 119
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_cust'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Pelanggan'
+            Width = 200
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_sales'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Nama Sales'
+            Width = 180
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_reference'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'No Reference'
+            Width = 172
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'payment_term'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Jatuh Tempo (Hari)'
+            Width = 110
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'note_pengajuan'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Keterangan'
+            Width = 300
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+          object DBGridEh2: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 1054
+            Height = 168
+            Align = alClient
+            DataSource = DsSalesOrderDetail
+            DynProps = <>
+            TabOrder = 0
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'notrans'
+                Footers = <>
+                Title.Alignment = taCenter
+                Visible = False
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'code_item'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Kode Barang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'name_item'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Nama Barang'
+                Width = 250
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'amount'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Jumlah'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'name_unit'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Satuan'
+                Width = 100
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
     end
   end
   object ActMenu: TActionManager
@@ -381,12 +546,10 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     end
     object ActApp: TAction
       Caption = 'Approve  '
-      Enabled = False
       OnExecute = ActAppExecute
     end
     object ActReject: TAction
       Caption = 'Reject  '
-      Enabled = False
       OnExecute = ActRejectExecute
     end
     object ActClose: TAction
@@ -1047,13 +1210,13 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object DsAppKlasifikasi: TDataSource
     DataSet = MemAppKlasifikasi
-    Left = 209
-    Top = 88
+    Left = 97
+    Top = 64
   end
   object dsAppKlasifikasiDet: TDataSource
     DataSet = QAppKlasifikasiDet
-    Left = 320
-    Top = 88
+    Left = 176
+    Top = 80
   end
   object QAppKlasifikasiDet: TUniQuery
     Connection = dm.Koneksi
@@ -1081,8 +1244,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     MasterFields = 'id_master_klas'
     DetailFields = 'id_master'
     IndexFieldNames = 'id_master'
-    Left = 320
-    Top = 32
+    Left = 224
+    Top = 24
     ParamData = <
       item
         DataType = ftUnknown
@@ -1141,8 +1304,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object MemAppKlasifikasi: TMemTableEh
     Params = <>
-    Left = 208
-    Top = 32
+    Left = 96
+    Top = 8
     object MemAppKlasifikasiid_master: TStringField
       FieldName = 'id_master'
       Size = 100
@@ -1287,16 +1450,16 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
         'ode   LEFT JOIN t_customer_selling_type e ON a.code_customer_sel' +
         'ling_type = e.code   LEFT JOIN t_sell_type f ON a.code_sell_type' +
         ' = f.code  LEFT JOIN t_sales_classification_det g ON a."id"=g."i' +
-        'd_master" :: UUID  WHERE stat_approve=0 )xx  GROUP BY "id_master' +
-        '_klas", "code_type_customer", "name_type_customer",  "code_item_' +
-        'category", "name_item_category", "code_type_count",  "name_type_' +
-        'count", "code_customer_selling_type", "name_customer_selling_typ' +
-        'e",  "code_sell_type", "name_sell_type", "status_payment", "name' +
-        '_payment",  "status_grouping", "name_grouping", "status_tax", "n' +
-        'ame_tax", "status_disc",  "name_disc", "status_promo", "name_pro' +
-        'mo"  Order By name_type_customer asc')
-    Left = 440
-    Top = 32
+        'd_master" :: UUID  WHERE a.status_approval=0 )xx  GROUP BY "id_m' +
+        'aster_klas", "code_type_customer", "name_type_customer",  "code_' +
+        'item_category", "name_item_category", "code_type_count",  "name_' +
+        'type_count", "code_customer_selling_type", "name_customer_sellin' +
+        'g_type",  "code_sell_type", "name_sell_type", "status_payment", ' +
+        '"name_payment",  "status_grouping", "name_grouping", "status_tax' +
+        '", "name_tax", "status_disc",  "name_disc", "status_promo", "nam' +
+        'e_promo"  Order By name_type_customer asc')
+    Left = 304
+    Top = 40
     object QAppKlasifikasicode_type_customer: TStringField
       FieldName = 'code_type_customer'
       ReadOnly = True
@@ -1411,7 +1574,149 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object dsAppKlasifikasii: TDataSource
     DataSet = QAppKlasifikasi
-    Left = 440
-    Top = 88
+    Left = 272
+    Top = 72
+  end
+  object QSalesOrder: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select *,case when substr(note,1,1)='#39','#39' then substr(note,2) else' +
+        '  note end note_pengajuan,false as pilih from "public"."t_sales_' +
+        'order"  '
+      'where deleted_at is null and status=0 order by created_at Desc')
+    Left = 524
+    Top = 32
+    object QSalesOrderid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object QSalesOrdercreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object QSalesOrdercreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object QSalesOrderupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object QSalesOrderupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object QSalesOrderdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QSalesOrderdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object QSalesOrdernotrans: TStringField
+      FieldName = 'notrans'
+      Required = True
+      Size = 255
+    end
+    object QSalesOrderorder_date: TDateField
+      FieldName = 'order_date'
+    end
+    object QSalesOrdersent_date: TDateField
+      FieldName = 'sent_date'
+    end
+    object QSalesOrdercode_cust: TStringField
+      FieldName = 'code_cust'
+      Size = 100
+    end
+    object QSalesOrdername_cust: TStringField
+      FieldName = 'name_cust'
+      Size = 255
+    end
+    object QSalesOrdercode_sales: TStringField
+      FieldName = 'code_sales'
+      Size = 100
+    end
+    object QSalesOrdername_sales: TStringField
+      FieldName = 'name_sales'
+      Size = 255
+    end
+    object QSalesOrderpayment_term: TSmallintField
+      FieldName = 'payment_term'
+    end
+    object QSalesOrdercode_source: TStringField
+      FieldName = 'code_source'
+      Size = 100
+    end
+    object QSalesOrdername_source: TStringField
+      FieldName = 'name_source'
+      Size = 255
+    end
+    object QSalesOrderorder_no: TIntegerField
+      FieldName = 'order_no'
+    end
+    object QSalesOrderadditional_code: TStringField
+      FieldName = 'additional_code'
+      Size = 200
+    end
+    object QSalesOrdertrans_day: TStringField
+      FieldName = 'trans_day'
+      Size = 10
+    end
+    object QSalesOrdertrans_month: TStringField
+      FieldName = 'trans_month'
+      Size = 10
+    end
+    object QSalesOrdertrans_year: TStringField
+      FieldName = 'trans_year'
+      Size = 10
+    end
+    object QSalesOrderno_reference: TStringField
+      FieldName = 'no_reference'
+      Size = 255
+    end
+    object QSalesOrderstatus: TSmallintField
+      FieldName = 'status'
+    end
+    object QSalesOrdernote: TMemoField
+      FieldName = 'note'
+      BlobType = ftMemo
+    end
+    object QSalesOrdernote_pengajuan: TMemoField
+      FieldName = 'note_pengajuan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QSalesOrderpilih: TBooleanField
+      FieldName = 'pilih'
+    end
+  end
+  object DsSalesOrder: TDataSource
+    DataSet = QSalesOrder
+    Left = 529
+    Top = 80
+  end
+  object DsSalesOrderDetail: TDataSource
+    DataSet = QSalesOrderDetail
+    Left = 624
+    Top = 96
+  end
+  object QSalesOrderDetail: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select notrans,code_item,name_item,amount,name_unit from t_sales' +
+        '_order_det order by name_item ASC')
+    MasterSource = DsSalesOrder
+    MasterFields = 'notrans'
+    DetailFields = 'notrans'
+    Left = 614
+    Top = 33
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'notrans'
+        ParamType = ptInput
+        Value = nil
+      end>
   end
 end

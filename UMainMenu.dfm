@@ -37,15 +37,6 @@ object FMainMenu: TFMainMenu
     TabOrder = 0
     ExplicitTop = 588
     ExplicitWidth = 1023
-    object RzDBStateStatus1: TRzDBStateStatus
-      Left = 0
-      Top = 0
-      Height = 19
-      Align = alLeft
-      StyleName = 'Windows'
-      ExplicitLeft = 1043
-      ExplicitHeight = 20
-    end
     object RzVersionInfoStatus1: TRzVersionInfoStatus
       Left = 927
       Top = 0
@@ -55,7 +46,7 @@ object FMainMenu: TFMainMenu
       ExplicitLeft = 943
     end
     object RzProgressStatus1: TRzProgressStatus
-      Left = 100
+      Left = 0
       Top = 0
       Height = 19
       Align = alLeft
@@ -74,7 +65,7 @@ object FMainMenu: TFMainMenu
       ExplicitLeft = 637
     end
     object RzGlyphStatus1: TRzGlyphStatus
-      Left = 200
+      Left = 100
       Top = 0
       Height = 19
       Align = alLeft
@@ -154,7 +145,6 @@ object FMainMenu: TFMainMenu
     ActivePage = TabForm
     Align = alClient
     ShowCloseButtonOnActiveTab = True
-    TabIndex = 0
     TabOrder = 3
     OnClose = PageControl1Close
     ExplicitWidth = 842
@@ -162,40 +152,41 @@ object FMainMenu: TFMainMenu
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
+      TabVisible = False
       Caption = 'Dashboard'
       ExplicitWidth = 838
-      ExplicitHeight = 437
+      ExplicitHeight = 458
       object PanelParent: TPanel
         Left = 0
         Top = 0
         Width = 842
-        Height = 438
+        Height = 459
         Align = alClient
         TabOrder = 0
+        Visible = False
         ExplicitWidth = 838
-        ExplicitHeight = 437
+        ExplicitHeight = 458
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
-          Top = 1
+          Top = 249
           Width = 840
-          Height = 436
+          Height = 209
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
           ExplicitWidth = 836
-          ExplicitHeight = 435
+          ExplicitHeight = 208
         end
         object WebBrowser1: TWebBrowser
           Left = 1
           Top = 1
           Width = 840
-          Height = 436
-          Align = alClient
+          Height = 248
+          Align = alTop
           TabOrder = 1
           ExplicitWidth = 836
-          ExplicitHeight = 435
           ControlData = {
-            4C000000D1560000102D00000000000000000000000000000000000000000000
+            4C000000D1560000A21900000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -873,7 +864,6 @@ object FMainMenu: TFMainMenu
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Active = True
     Left = 332
     Top = 136
   end

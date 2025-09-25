@@ -36,6 +36,7 @@ type
     MemMasternomor_bg: TStringField;
     MemMastertgl_tempo: TDateField;
     MemMasternilai: TFloatField;
+    Memo1: TMemo;
     procedure DBGridCustomerColumns1EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure DBGridCustomerColumns3EditButtons0Click(Sender: TObject;
@@ -47,6 +48,7 @@ type
     Status :integer;
     { Public declarations }
     procedure RefreshGrid;
+    procedure Save;
   end;
 
 var
@@ -102,90 +104,88 @@ begin
     end;
 end;
 
+procedure TFDataBankGaransi.Save;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM  "public"."t_customer_bank_guarantee" '+
+              ' WHERE customer_code='+QuotedStr(Edkode.Text)+';';
+    ExecSQL;
+  end;
+
+  MemMaster.First;
+  while not MemMaster.Eof do
+  begin
+    if MemMaster['nomor_bg']='' then
+    begin
+      MessageDlg('No Registrasi wajib diisi !!!',mtInformation,[mbCancel],0);
+      exit;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_customer_bank_guarantee" ("created_at", "created_by", '+
+                ' "customer_code", "bank_code", "bank_name", "category_item_code",'+
+                ' "category_item_name", "first_date", "end_date", "guarantee_number", "amount" ) '+
+                ' Values( '+
+                ' NOW(), '+
+                ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                ' '+QuotedStr(Edkode.Text)+', '+
+                ' '+QuotedStr(MemMaster['kode_bank'])+', '+
+                ' '+QuotedStr(MemMaster['nama_bank'])+', '+
+                ' '+QuotedStr(MemMaster['kode_kategori'])+', '+
+                ' '+QuotedStr(MemMaster['nama_kategori'])+', '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_aktif']))+', '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_tempo']))+', '+
+                ' '+QuotedStr(MemMaster['nomor_bg'])+', '+
+                ' '+QuotedStr(MemMaster['nilai'])+');';
+      ExecSQL;
+    end;
+    MemMaster.Next;
+  end;
+
+end;
+
 procedure TFDataBankGaransi.BSaveClick(Sender: TObject);
 begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if Edkode.Text='' then
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+    try
+    if Edkode.Text='' then
+    begin
+      MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      Ednama.SetFocus;
+    end
+    else begin
+    //if application.MessageBox('Apa Anda Yakin Menyimpan Data '+Edkode.Text+' - '+Ednama.Text+'ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    if MessageDlg ('Apa Anda Yakin Menyimpan Data '+Edkode.Text+' - '+Ednama.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+      if MemMaster.RecordCount=0 then
       begin
-        MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        Ednama.SetFocus;
-      end
-      else begin
-      //if application.MessageBox('Apa Anda Yakin Menyimpan Data '+Edkode.Text+' - '+Ednama.Text+'ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Apa Anda Yakin Menyimpan Data '+Edkode.Text+' - '+Ednama.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+        MessageDlg('Detail Data Tidak Ditemukan !!!',mtInformation,[mbCancel],0);
+        exit;
+      end;
+
+      if MemMaster.RecordCount>0 then
       begin
-
-        if MemMaster.RecordCount=0 then
-        begin
-          MessageDlg('Detail Data Tidak Ditemukan !!!',mtInformation,[mbCancel],0);
-          exit;
-        end;
-
-        if MemMaster.RecordCount<>0 then
-        begin
-        with dm.Qtemp1 do
-        begin
-          close;
-          sql.Clear;
-          SQL.Text:=' SELECT * from "public"."t_customer_bank_guarantee" '+
-                    ' where "customer_code"='+QuotedStr(Edkode.Text)+'';
-          Execute;
-        end;
-
-        if dm.Qtemp1.RecordCount<>0 then
-        begin
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' delete from "public"."t_customer_bank_guarantee" '+
-                    ' where "customer_code"='+QuotedStr(Edkode.Text)+';';
-          ExecSQL;
-        end;
-        end;
-
-        MemMaster.First;
-        while not MemMaster.Eof do
-        begin
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' INSERT INTO "public"."t_customer_bank_guarantee" ("created_at", "created_by", '+
-                    ' "customer_code", "bank_code", "bank_name", "category_item_code",'+
-                    ' "category_item_name", "first_date", "end_date", "guarantee_number", "amount" ) '+
-                    ' Values( '+
-                    ' NOW(), '+
-                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-                    ' '+QuotedStr(Edkode.Text)+', '+
-                    ' '+QuotedStr(MemMaster['kode_bank'])+', '+
-                    ' '+QuotedStr(MemMaster['nama_bank'])+', '+
-                    ' '+QuotedStr(MemMaster['kode_kategori'])+', '+
-                    ' '+QuotedStr(MemMaster['nama_kategori'])+', '+
-                    ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_aktif']))+', '+
-                    ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_tempo']))+', '+
-                    ' '+QuotedStr(MemMaster['nomor_bg'])+', '+
-                    ' '+QuotedStr(MemMaster['nilai'])+');';
-          ExecSQL;
-        end;
-        MemMaster.Next;
-        end;
-        MessageDlg('Proses Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-        FDataBankGaransi.Close;
-        end;
+        Save;
       end;
+      MessageDlg('Proses Berhasil..!!',mtInformation,[MBOK],0);
+      Dm.Koneksi.Commit;
+      FDataBankGaransi.Close;
+    end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
       end;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    end;
+  end;
 end;
 
 procedure TFDataBankGaransi.DBGridCustomerColumns1EditButtons0Click(Sender: TObject;

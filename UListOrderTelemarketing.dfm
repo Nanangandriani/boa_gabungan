@@ -3,71 +3,56 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
   Top = 0
   Caption = 'List Order Telemarketing'
   ClientHeight = 509
-  ClientWidth = 1035
+  ClientWidth = 854
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object pnlFilter: TPanel
     Left = 0
     Top = 0
-    Width = 1035
-    Height = 146
+    Width = 854
+    Height = 89
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 850
     object GBType1: TGroupBox
       Left = 1
       Top = 1
-      Width = 536
-      Height = 144
+      Width = 853
+      Height = 87
       Align = alLeft
       TabOrder = 0
-      object Label24: TLabel
-        Left = 100
-        Top = 38
-        Width = 3
-        Height = 15
-        Caption = ':'
-      end
       object Label23: TLabel
-        Left = 34
-        Top = 37
-        Width = 42
+        Left = 33
+        Top = 20
+        Width = 94
         Height = 15
-        Caption = 'Wilayah'
+        Caption = 'Karesidenan / TP :'
       end
-      object Ednamawilayah: TEdit
-        Left = 115
-        Top = 63
+      object edKodeKaresidenan: TEdit
+        Left = 395
+        Top = 17
         Width = 349
         Height = 23
         ReadOnly = True
         TabOrder = 0
-      end
-      object Edkodewilayah: TRzButtonEdit
-        Left = 115
-        Top = 34
-        Width = 240
-        Height = 23
-        Text = ''
-        TabOrder = 1
-        AltBtnNumGlyphs = 1
-        ButtonNumGlyphs = 1
-        OnButtonClick = EdkodewilayahButtonClick
+        Visible = False
       end
       object Panel2: TPanel
         Left = 2
-        Top = 110
-        Width = 532
+        Top = 53
+        Width = 849
         Height = 32
         Align = alBottom
-        TabOrder = 2
+        TabOrder = 1
         object progress: TGauge
           Left = 8
           Top = 8
@@ -86,7 +71,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
           TextHint = 'Autonumber'
         end
         object btTampilkan: TRzBitBtn
-          Left = 384
+          Left = 701
           Top = 1
           Width = 147
           Height = 30
@@ -148,7 +133,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
           NumGlyphs = 2
         end
         object btGetDataProspek: TRzBitBtn
-          Left = 237
+          Left = 554
           Top = 1
           Width = 147
           Height = 30
@@ -210,39 +195,51 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
+        object edlink: TEdit
+          Left = 352
+          Top = 8
+          Width = 121
+          Height = 23
+          TabOrder = 3
+          Text = 'edlink'
+          Visible = False
+        end
       end
-    end
-    object GBType2: TGroupBox
-      Left = 537
-      Top = 1
-      Width = 400
-      Height = 144
-      Align = alLeft
-      Caption = 'GBType2'
-      TabOrder = 1
-      Visible = False
       object Memo1: TMemo
-        Left = 16
-        Top = 19
+        Left = 771
+        Top = -32
         Width = 369
         Height = 89
         Lines.Strings = (
           'Memo1')
-        TabOrder = 0
+        TabOrder = 2
+        Visible = False
+      end
+      object edKaresidenan: TRzButtonEdit
+        Left = 133
+        Top = 17
+        Width = 240
+        Height = 23
+        Text = ''
+        TabOrder = 3
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edKaresidenanButtonClick
       end
     end
   end
   object DBGrid: TDBGridEh
     Left = 0
-    Top = 146
-    Width = 1035
-    Height = 363
+    Top = 89
+    Width = 854
+    Height = 420
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
+    OnDblClick = DBGridDblClick
     Columns = <
       item
         CellButtons = <>
@@ -250,6 +247,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         EditButtons = <>
         FieldName = 'ticket_number'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nomor Tiket'
         Width = 200
       end
@@ -259,6 +257,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         EditButtons = <>
         FieldName = 'order_date'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Tanggal'
         Width = 100
       end
@@ -268,6 +267,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         EditButtons = <>
         FieldName = 'outlet_name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
       end
       item
@@ -276,6 +276,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         EditButtons = <>
         FieldName = 'status_name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Status Pesanan'
         Width = 300
       end>
@@ -301,6 +302,12 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
       FieldName = 'status_name'
       Size = 255
     end
+    object MemMasterDataoutlet_code: TStringField
+      FieldName = 'outlet_code'
+    end
+    object MemMasterDatapayment_term: TSmallintField
+      FieldName = 'payment_term'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object ticket_number: TMTStringDataFieldEh
@@ -325,6 +332,19 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
           StringDataType = fdtStringEh
           DisplayWidth = 255
           Size = 255
+        end
+        object outlet_code: TMTStringDataFieldEh
+          FieldName = 'outlet_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object payment_term: TMTNumericDataFieldEh
+          FieldName = 'payment_term'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
       end
       object RecordsList: TRecordsListEh

@@ -64,6 +64,9 @@ type
     procedure EdppnrpChange(Sender: TObject);
     procedure Edppn_rpChange(Sender: TObject);
     procedure edrpChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,8 +76,9 @@ type
     Procedure Clear;
   end;
 
-var
+Function
   FNew_Pot_Pembelian: TFNew_Pot_Pembelian;
+var
   status:integer;
   kdstok,thn,bln,tgl,nourut:string;
   subtotal,ppn_rp,grandtotal:real;
@@ -91,7 +95,7 @@ implementation
 uses UDataModule, UReturnPembelian, UPot_Pembelian, USearch_ItemRetur,
   UMainMenu, UMy_Function, USupp_Pembelian;
 
-{var
+var
   realfNew_pot : TFNew_Pot_Pembelian;
 // implementasi function
 function FNew_Pot_Pembelian: TFNew_Pot_Pembelian;
@@ -100,7 +104,7 @@ begin
     FNew_Pot_Pembelian:= realfNew_pot
   else
     Application.CreateForm(TFNew_Pot_Pembelian, Result);
-end;}
+end;
 
 procedure TFNew_Pot_Pembelian.Autonumber;
 begin
@@ -242,6 +246,22 @@ end;
 procedure TFNew_Pot_Pembelian.edrpChange(Sender: TObject);
 begin
     EdTotal_rp.Value:=edrp.Value+Edppn_rp.Value;
+end;
+
+procedure TFNew_Pot_Pembelian.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  action:=cafree;
+end;
+
+procedure TFNew_Pot_Pembelian.FormCreate(Sender: TObject);
+begin
+  realfNew_pot:=self;
+end;
+
+procedure TFNew_Pot_Pembelian.FormDestroy(Sender: TObject);
+begin
+  realfNew_pot:=nil;
 end;
 
 procedure TFNew_Pot_Pembelian.FormShow(Sender: TObject);

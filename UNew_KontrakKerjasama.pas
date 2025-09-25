@@ -144,7 +144,7 @@ end;
 
 procedure TFNewKontrak_ks.BBatalClick(Sender: TObject);
 begin
-   FKontrakkerjasama.ActROExecute(sender);
+//   FKontrakkerjasama.ActROExecute(sender);
    Close;
 end;
 

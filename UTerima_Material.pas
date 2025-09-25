@@ -187,6 +187,7 @@ begin
           FNew_TerimaMaterial.MemterimaDet['satuan']:=QTerimaDet.FieldByName('unit').AsString;
           //FNew_TerimaMaterial.MemterimaDet['gudang']:=QTerimaDet.FieldByName('gudang').AsString;
           FNew_TerimaMaterial.MemterimaDet['gudang']:=QTerimaDet.FieldByName('wh_name').AsString;
+          FNew_TerimaMaterial.MemterimaDet['wh_code']:=QTerimaDet.FieldByName('wh_code').AsString;
           FNew_TerimaMaterial.MemterimaDet['tahun']:=QTerimaDet.FieldByName('trans_year').AsString;
           FNew_TerimaMaterial.MemterimaDet['qtypo']:=QTerimaDet.FieldByName('qty_po').AsString;
           FNew_TerimaMaterial.MemterimaDet['satuanpo']:=QTerimaDet.FieldByName('unit_po').AsString;
@@ -199,6 +200,8 @@ begin
           FNew_TerimaMaterial.MemterimaDet['pph_rp']:=QTerimaDet.FieldByName('pph_rp').AsString;
           FNew_TerimaMaterial.MemterimaDet['nopo']:=QTerimaDet.FieldByName('po_no').AsString;
           FNew_TerimaMaterial.MemterimaDet['grandtotal']:=QTerimaDet.FieldByName('grandtotal').AsString;
+          FNew_TerimaMaterial.MemterimaDet['kd_akun']:=QTerimaDet.FieldByName('Account_code').AsString;
+
           FNew_TerimaMaterial.MemterimaDet.Post;
           QTerimaDet.Next;
         end;

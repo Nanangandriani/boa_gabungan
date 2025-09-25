@@ -251,7 +251,7 @@ begin
    FMasterData.DBGridCustomer.SearchPanel.SearchingText:='';
    FMasterData.Caption:='Master Data Perkiraan';
    FMasterData.vcall:='perkiraan_supplier';
-   FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
+   FMasterData.update_grid('code','account_name','header_name','(SELECT a.deleted_at,a.code,a.account_name,b.header_name FROM "t_ak_account" a inner join t_ak_header b on a.header_code=b.header_code) aa','WHERE	deleted_at IS NULL order by code ASC');
    FMasterData.Showmodal;
 end;
 
@@ -260,7 +260,7 @@ begin
    FMasterData.DBGridCustomer.SearchPanel.SearchingText:='';
    FMasterData.Caption:='Master Data Perkiraan';
    FMasterData.vcall:='perkiraan_supplier_um';
-   FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
+   FMasterData.update_grid('code','account_name','header_name','(SELECT  a.deleted_at,a.code,a.account_name,b.header_name FROM "t_ak_account" a inner join t_ak_header b on a.header_code=b.header_code) aa','WHERE	deleted_at IS NULL order by code ASC');
    FMasterData.ShowModal;
 end;
 
@@ -268,7 +268,7 @@ procedure TFNew_Supplier.edKodePerkiraan_xButtonClick(Sender: TObject);
 begin
    FMasterData.Caption:='Master Data Perkiraan';
    FMasterData.vcall:='perkiraan_supplier';
-   FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
+   FMasterData.update_grid('code','account_name','header_name','(SELECT  a.deleted_at,a.code,a.account_name,b.header_name FROM "t_ak_account" a inner join t_ak_header b on a.header_code=b.header_code) aa','WHERE	deleted_at IS NULL order by code ASC');
    FMasterData.ShowModal;
 end;
 

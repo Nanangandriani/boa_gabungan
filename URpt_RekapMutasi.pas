@@ -191,6 +191,7 @@ begin
       DtSelesai.SetFocus;
       Exit;
     end;
+    QRekap_Mutasi.Close;
     tgl_mulai:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
     tgl_selesai:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
       WITH QRekap_Mutasi DO
@@ -259,6 +260,8 @@ begin
 //  MemRekapMutasi.EmptyTable;
  // MemRekapMutasi.Close;
  // MemRekapMutasi.Open;
+  DtMulai.EditValue:=now();
+  DtSelesai.EditValue:=now();
 end;
 
 procedure TFRpt_RekapMutasi.RptAfterPrint(Sender: TfrxReportComponent);

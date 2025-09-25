@@ -142,15 +142,15 @@ end;
 
 procedure TFListPelanggan.dxBarUpdateClick(Sender: TObject);
 begin
-   with Dm.Qtemp do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from t_customer a '+
-                 ' WHERE customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
-                 ' AND deleted_at is null order by created_at Desc ';
-       open;
-   end;
+  with Dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' select * from t_customer a '+
+             ' WHERE customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
+             ' AND deleted_at is null order by created_at Desc ';
+    open;
+  end;
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
@@ -159,44 +159,44 @@ begin
 
   if Dm.Qtemp.RecordCount<>0 then
   begin
-  with FNew_Pelanggan do
-  begin
-    Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
-    Edautocode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
-    Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
-    Edemail.Text:=Dm.Qtemp.FieldByName('email').AsString;
-    Edtempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
-    Ednamapkp.Text:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
-    Ednpwp.Text:=Dm.Qtemp.FieldByName('no_npwp').AsString;
-    Ednik.Text:=Dm.Qtemp.FieldByName('no_nik').AsString;
-    edKd_Jenis_Pajak.Text:=Dm.Qtemp.FieldByName('cust_type_code_tax').AsString;
-    edNm_Jenis_Pajak.Text:=Dm.Qtemp.FieldByName('cust_type_name_tax').AsString;
-    edKd_Negara.Text:=Dm.Qtemp.FieldByName('country_code_tax').AsString;
-    edNm_Negara.Text:=Dm.Qtemp.FieldByName('country_name_tax').AsString;
-    EdNitKu.Text:=Dm.Qtemp.FieldByName('no_nitku').AsString;
-    EdPaspor.Text:=Dm.Qtemp.FieldByName('no_passport').AsString;
-    Ednomorva.Text:=Dm.Qtemp.FieldByName('number_va').AsString;
-    Edkodewilayah.Text:=Dm.Qtemp.FieldByName('code_region').AsString;
-    Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
-    Edkodepos.Text:=Dm.Qtemp.FieldByName('postal_code').AsString;
-    edKode_jnispel.Text:=Dm.Qtemp.FieldByName('code_type').AsString;
-    edJenisPelanggan.Text:=Dm.Qtemp.FieldByName('name_type').AsString;
-    edKode_typejual.Text:=Dm.Qtemp.FieldByName('code_selling_type').AsString;
-    edTypePenjualan.Text:=Dm.Qtemp.FieldByName('name_selling_type').AsString;
-    edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
-    edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
-    vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
-    edAkunPiutang.Text:=Dm.Qtemp.FieldByName('account_code').AsString;
-    edNamaPiutang.Text:=SelectRow('select account_name from t_ak_account where code='+QuotedSTR(Dm.Qtemp.FieldByName('account_code').AsString));
-    KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code').AsString;
-    edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
-    edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account where code='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
-    KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code2').AsString;
-    Edkodeinitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
-    edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
-    edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
-    edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
-    edJenisUsaha.Text:=Dm.Qtemp.FieldByName('name_type_business').AsString;
+    with FNew_Pelanggan do
+    begin
+      Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
+      Edautocode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
+      Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
+      Edemail.Text:=Dm.Qtemp.FieldByName('email').AsString;
+      Edtempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
+      Ednamapkp.Text:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
+      Ednpwp.Text:=Dm.Qtemp.FieldByName('no_npwp').AsString;
+      Ednik.Text:=Dm.Qtemp.FieldByName('no_nik').AsString;
+      edKd_Jenis_Pajak.Text:=Dm.Qtemp.FieldByName('cust_type_code_tax').AsString;
+      edNm_Jenis_Pajak.Text:=Dm.Qtemp.FieldByName('cust_type_name_tax').AsString;
+      edKd_Negara.Text:=Dm.Qtemp.FieldByName('country_code_tax').AsString;
+      edNm_Negara.Text:=Dm.Qtemp.FieldByName('country_name_tax').AsString;
+      EdNitKu.Text:=Dm.Qtemp.FieldByName('no_nitku').AsString;
+      EdPaspor.Text:=Dm.Qtemp.FieldByName('no_passport').AsString;
+      Ednomorva.Text:=Dm.Qtemp.FieldByName('number_va').AsString;
+      Edkodewilayah.Text:=Dm.Qtemp.FieldByName('code_region').AsString;
+      Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
+      Edkodepos.Text:=Dm.Qtemp.FieldByName('postal_code').AsString;
+      edKode_jnispel.Text:=Dm.Qtemp.FieldByName('code_type').AsString;
+      edJenisPelanggan.Text:=Dm.Qtemp.FieldByName('name_type').AsString;
+      edKode_typejual.Text:=Dm.Qtemp.FieldByName('code_selling_type').AsString;
+      edTypePenjualan.Text:=Dm.Qtemp.FieldByName('name_selling_type').AsString;
+      edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
+      edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
+      vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
+      edAkunPiutang.Text:=Dm.Qtemp.FieldByName('account_code').AsString;
+      edNamaPiutang.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code').AsString));
+      KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code').AsString;
+      edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
+      edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
+      KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code2').AsString;
+      Edkodeinitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+      edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
+      edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
+      edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
+      edJenisUsaha.Text:=Dm.Qtemp.FieldByName('name_type_business').AsString;
       if Dm.Qtemp.FieldByName('stat_pkp').AsBoolean=false then
       begin
         cbpkp.Checked:=false;
@@ -205,7 +205,7 @@ begin
       begin
         cbpkp.Checked:=true;
       end;
-  end;
+    end;
   end;
   FNew_Pelanggan.Edkode.Enabled:=false;
   FNew_Pelanggan.edAkunPiutang.Enabled:=false;
@@ -225,7 +225,7 @@ end;
 procedure TFListPelanggan.QPelangganaddressGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
-   Text := Copy(QPelangganaddress.AsString, 1, 200);
+  Text := Copy(QPelangganaddress.AsString, 1, 200);
 end;
 
 procedure TFListPelanggan.dxBarRefreshClick(Sender: TObject);
@@ -258,14 +258,14 @@ begin
 
   if Dm.Qtemp.RecordCount<>0 then
   begin
-  with FDataBankGaransi do
-  begin
-    Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
-    Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
-    Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
-  end;
-  FDataBankGaransi.RefreshGrid;
-  FDataBankGaransi.show;
+    with FDataBankGaransi do
+    begin
+      Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
+      Ednama.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
+      Ednamawilayah.Text:=Dm.Qtemp.FieldByName('name_region').AsString;
+    end;
+    FDataBankGaransi.RefreshGrid;
+    FDataBankGaransi.show;
   end;
 end;
 

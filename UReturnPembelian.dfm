@@ -42,7 +42,6 @@ object FReturnPembelian: TFReturnPembelian
     Width = 826
     Height = 306
     Align = alClient
-    DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
         ColumnName = 'Column_0_trans_year'
@@ -68,6 +67,7 @@ object FReturnPembelian: TFReturnPembelian
         FieldName = 'trans_year'
         Footers = <>
         Title.Caption = 'Tahun'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -76,6 +76,7 @@ object FReturnPembelian: TFReturnPembelian
         FieldName = 'trans_month'
         Footers = <>
         Title.Caption = 'Bulan'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -84,6 +85,7 @@ object FReturnPembelian: TFReturnPembelian
         FieldName = 'trans_day'
         Footers = <>
         Title.Caption = 'Tanggal'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -946,7 +948,7 @@ object FReturnPembelian: TFReturnPembelian
     end
   end
   object frxReport1: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -954,7 +956,7 @@ object FReturnPembelian: TFReturnPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44112.640537094900000000
-    ReportOptions.LastChange = 45426.364998518500000000
+    ReportOptions.LastChange = 45715.454627928200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -964,12 +966,16 @@ object FReturnPembelian: TFReturnPembelian
     Top = 108
     Datasets = <
       item
-        DataSet = frxDBReturnPemb
-        DataSetName = 'frxDBDo'
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
       end
       item
         DataSet = DbrptDet
         DataSetName = 'ReportDet'
+      end
+      item
+        DataSet = frxDBReturnPemb
+        DataSetName = 'frxDBDo'
       end>
     Variables = <>
     Style = <>
@@ -1016,6 +1022,7 @@ object FReturnPembelian: TFReturnPembelian
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
+          Top = 0.000000000000022454
           Width = 569.821583330000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1031,7 +1038,7 @@ object FReturnPembelian: TFReturnPembelian
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Top = 18.414346670000000000
+          Top = 18.414346670000200000
           Width = 569.821583330000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1047,7 +1054,7 @@ object FReturnPembelian: TFReturnPembelian
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Top = 36.414346670000000000
+          Top = 36.414346670000200000
           Width = 569.821583330000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1067,7 +1074,7 @@ object FReturnPembelian: TFReturnPembelian
           Top = 18.519685050000000000
           Width = 168.367454060000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.0000'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1077,14 +1084,14 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDo."ppn_rp"]  ')
+            '[frxDBDo."ppn_rp"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 569.952755910000000000
-          Top = 36.828693340000000000
+          Top = 36.828693340000300000
           Width = 169.700787400000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1099,6 +1106,7 @@ object FReturnPembelian: TFReturnPembelian
         object Memo50: TfrxMemoView
           AllowVectorExport = True
           Left = 569.952755910000000000
+          Top = 0.000000000000022454
           Width = 169.700787400000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1112,7 +1120,7 @@ object FReturnPembelian: TFReturnPembelian
         end
         object Mtgl: TfrxMemoView
           AllowVectorExport = True
-          Left = 510.000000000000000000
+          Left = 510.666666670000000000
           Top = 83.414346670000000000
           Width = 213.821583330000000000
           Height = 18.897650000000000000
@@ -1126,13 +1134,14 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Tegal, [frxDBDo."return_date"]  ')
+            '[DBPerusahaan."city"], [frxDBDo."return_date"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Top = 175.747680010000000000
+          Left = -0.666666670000000000
+          Top = 192.414346680000000000
           Width = 739.821583330000000000
           Height = 94.230983330000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1198,7 +1207,7 @@ object FReturnPembelian: TFReturnPembelian
           AllowVectorExport = True
           Left = 162.666666670000000000
           Top = 230.430116680000000000
-          Width = 151.181102360000000000
+          Width = 161.847769030000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1235,7 +1244,7 @@ object FReturnPembelian: TFReturnPembelian
           Top = 55.096783330000000000
           Width = 169.700787400000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.0000'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1245,17 +1254,17 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '   [frxDBDo."total_price"]  ')
+            ' [frxDBDo."total_price"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object mtotal: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 580.666666670000000000
+          Left = 585.225726670000000000
           Top = 0.430116670000000000
           Width = 151.821583330000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.0000'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1514,7 +1523,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Harga Satuan Menurut Faktur pajak (Rp)')
+            'Harga Satuan Menurut Faktur Pajak ')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1532,7 +1541,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Harga Jual BKP (Rp)')
+            'Harga Jual BKP ')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1653,7 +1662,6 @@ object FReturnPembelian: TFReturnPembelian
           Top = 58.375077270000000000
           Width = 335.821583320000000000
           Height = 18.897650000000000000
-          DataField = 'return_no'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Frame.Typ = []
@@ -1708,6 +1716,8 @@ object FReturnPembelian: TFReturnPembelian
           Top = 176.041743940000000000
           Width = 335.727034120000000000
           Height = 18.897650000000000000
+          DataSet = frxDBReturnPemb
+          DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
             '[DBPerusahaan."address"]')
@@ -1718,6 +1728,8 @@ object FReturnPembelian: TFReturnPembelian
           Top = 197.041743940000000000
           Width = 335.060367460000000000
           Height = 18.897650000000000000
+          DataSet = frxDBReturnPemb
+          DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
             '[DBPerusahaan."npwp"]')
@@ -1747,12 +1759,12 @@ object FReturnPembelian: TFReturnPembelian
           Top = 265.708410610000000000
           Width = 579.727034120000000000
           Height = 41.564316660000000000
-          DataField = 'total_price'
-          DataSet = DbrptDet
-          DataSetName = 'ReportDet'
+          DataField = 'address'
+          DataSet = frxDBReturnPemb
+          DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[ReportDet."total_price"]')
+            '[frxDBDo."address"]')
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
@@ -1847,6 +1859,7 @@ object FReturnPembelian: TFReturnPembelian
         object Memo3: TfrxMemoView
           AllowVectorExport = True
           Left = 44.000000000000000000
+          Top = 0.000000000000006356
           Width = 206.488250000000000000
           Height = 36.897650000000000000
           DataField = 'item_name'
@@ -1866,6 +1879,7 @@ object FReturnPembelian: TFReturnPembelian
         object Memo4: TfrxMemoView
           AllowVectorExport = True
           Left = 251.333333340000000000
+          Top = 0.000000000000006356
           Width = 145.154916660000000000
           Height = 36.897650000000000000
           DataField = 'qty'
@@ -1891,7 +1905,7 @@ object FReturnPembelian: TFReturnPembelian
           DataField = 'price'
           DataSet = DbrptDet
           DataSetName = 'ReportDet'
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.0000'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1914,7 +1928,7 @@ object FReturnPembelian: TFReturnPembelian
           DataField = 'total_price'
           DataSet = DbrptDet
           DataSetName = 'ReportDet'
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.0000'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1931,7 +1945,7 @@ object FReturnPembelian: TFReturnPembelian
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
           Left = 0.666666670000000000
-          Top = 7.364563330000000000
+          Top = 7.364563330000020000
           Width = 38.488250000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -1983,7 +1997,7 @@ object FReturnPembelian: TFReturnPembelian
       #9'a.price '
       'from t_purchase_return A '
       'inner join t_supplier D on A.supplier_code=D.supplier_code'
-      'inner join t_item_receive f on a.faktur_no=f.faktur_no'
+      'inner join t_purchase_invoice f on a.faktur_no=f.faktur_no'
       'Group by d.supplier_name, '
       #9'f.faktur_date, '
       #9'd.address, '
@@ -2029,7 +2043,7 @@ object FReturnPembelian: TFReturnPembelian
         DataType = ftString
         Name = 'return_no'
         ParamType = ptInput
-        Value = '0001/07/V/24/PR'
+        Value = 'RB/001/27/II/2025/HLJ'
       end>
   end
   object DsDetail: TDataSource

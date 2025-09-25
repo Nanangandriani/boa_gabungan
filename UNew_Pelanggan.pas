@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzButton, Vcl.ExtCtrls,
   RzEdit, Vcl.Mask, RzBtnEdt, RzCmboBx, Vcl.ComCtrls, DBGridEhGrouping,
   ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB,
-  MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Vcl.Buttons, RzTabs;
+  MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Vcl.Buttons, RzTabs,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, uJSON;
 
 type
   TFNew_Pelanggan = class(TForm)
@@ -133,6 +134,8 @@ type
     Label43: TLabel;
     Label44: TLabel;
     EdPaspor: TEdit;
+    IdHTTP1: TIdHTTP;
+    Memo1: TMemo;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -171,6 +174,11 @@ type
     procedure RzBitBtn4Click(Sender: TObject);
     procedure edKd_Jenis_PajakButtonClick(Sender: TObject);
     procedure edKd_NegaraButtonClick(Sender: TObject);
+    procedure EdnpwpChange(Sender: TObject);
+    procedure EdnikChange(Sender: TObject);
+    procedure EdNitKuChange(Sender: TObject);
+    procedure EdPasporChange(Sender: TObject);
+    procedure EdnomorvaChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -185,11 +193,17 @@ type
     procedure Autocode_AkPiutangLain;
     procedure RefreshGrid;
     procedure InsertDetailAlamat;
+    procedure CekTabMasterPelanggan;
+    procedure UpdateStatusProspek;
+    procedure DeleteProspekTmp;
+//    procedure CekTabDetailPelanggan;
+//    procedure CekTabAkunPerkiraanPelanggan;
   end;
 
 var
   FNew_Pelanggan: TFNew_Pelanggan;
   status: integer;
+  json: TMyJSON;
 
 implementation
 
@@ -198,6 +212,104 @@ implementation
 uses UDataModule, UListPelanggan, UMainMenu, USetMasterPelanggan,
   UMasterWilayah, UDaftarKlasifikasi, UMasterData, UHomeLogin, UMy_Function,
   UDataProspekPelanggan;
+
+procedure TFNew_Pelanggan.DeleteProspekTmp;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='DELETE FROM t_customer_prospect_tmp WHERE idprospek='+inttostr(vid_prospek);
+    ExecSQL;
+  end;
+end;
+
+procedure TFNew_Pelanggan.UpdateStatusProspek;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  vBody,vBody2  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt,cnt2: Integer;
+  iii,iiii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date: TDate;
+  max,min: Integer;
+        //component
+  gNet:TIdHTTP;
+  //respon component
+  httpresult: TIdHTTP ;
+  resp: TMemoryStream;
+begin
+
+  try
+  //BaseUrl:=edBaseURL.Text;
+  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlprospek''');
+  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapiprospek''');
+  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapiprospek''');
+  vBody:='?idProspek='+inttostr(vid_prospek)+'&approve=1';
+  Vpath:='outlet/update';
+  url:= BaseUrl+Vpath+vBody;
+  try
+  gNet :=  TIdHTTP.Create(nil);
+  gNet.Request.Accept := 'application/json';
+  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+  res:=  gNet.get(url);
+  jumdata:=1;
+  memo1.text := res;
+  except
+  on E: EIdHTTPProtocolException do
+
+  if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+  begin
+    jumdata:=0;
+    gNet.free;
+    resp.Free;
+  end;
+  on E: Exception do
+  ShowMessage('A non-Indy related exception has been raised!');
+  end;
+  finally
+    gNet.free;
+    resp.Free;
+  end;
+
+end;
+
+
+procedure TFNew_Pelanggan.CekTabMasterPelanggan;
+begin
+  if Ednama.Text='' then
+  begin
+    MessageDlg('Nama Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end;
+  if edJenisUsaha.Text='' then
+  begin
+    MessageDlg('Jenis Usaha Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end;
+  if edJenisPelanggan.Text='' then
+  begin
+    MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end;
+  if edTypePenjualan.Text='' then
+  begin
+    MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end;
+  if edGolonganPelanggan.Text='' then
+  begin
+    MessageDlg('Golongan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end;
+
+end;
 
 
 procedure TFNew_Pelanggan.InsertDetailAlamat;
@@ -257,9 +369,9 @@ begin
   begin
     //Showmessage('Maaf, Data Tidak Ditemukan..');
     URUTAN_KE:=0;
-      Dm.Qtemp1.first;
-      while not Dm.Qtemp1.Eof do
-      begin
+    Dm.Qtemp1.first;
+    while not Dm.Qtemp1.Eof do
+    begin
       URUTAN_KE:=URUTAN_KE+1;
       with Dm.Qtemp do
       begin
@@ -314,7 +426,7 @@ begin
        FNew_Pelanggan.MemDetailPel.post;
       end;
        Dm.Qtemp1.next;
-      end;
+    end;
   end;
 end;
 
@@ -403,58 +515,57 @@ var
   kode : String;
   Urut : Integer;
 begin
-  With DM.Qtemp2 do
-  begin
-    Close;
-    SQL.Clear;
-    Sql.Text :=' select * from t_ak_account '+
-               ' where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
-    open;
-  end;
-
-  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
-  if Dm.Qtemp2.RecordCount > 0 then
-  begin
-      With Dm.Qtemp do
-      begin
-        Close;
-        Sql.Clear;
-        Sql.Text :=' select count(header_code) as hasil '+
-                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
-        Open;
-      end;
-      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
-  end;
-  edAkunPiutang.Clear;
-  kode := inttostr(urut);
-  //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
-
-  if Length(kode)=1 then
-  begin
-    kode := '0000'+kode;
-  end
-  else
-  if Length(kode)=2 then
-  begin
-    kode := '000'+kode;
-  end
-  else
-  if Length(kode)=3 then
-  begin
-    kode := '00'+kode;
-  end
-  else
-  if Length(kode)=4 then
-  begin
-    kode := '0'+kode;
-  end
-  else
-  if Length(kode)=5 then
-  begin
-    kode := kode;
-  end;
-
-  edAkunPiutang.Text := KodeHeaderPiutang+'.'+kode;
+//  With DM.Qtemp2 do
+//  begin
+//    Close;
+//    SQL.Clear;
+//    Sql.Text :=' select * from t_ak_account '+
+//               ' where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
+//    open;
+//  end;
+//
+//  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
+//  if Dm.Qtemp2.RecordCount > 0 then
+//  begin
+//      With Dm.Qtemp do
+//      begin
+//        Close;
+//        Sql.Clear;
+//        Sql.Text :=' select count(header_code) as hasil '+
+//                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
+//        Open;
+//      end;
+//      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+//  end;
+//  edAkunPiutang.Clear;
+//  kode := inttostr(urut);
+//
+//  if Length(kode)=1 then
+//  begin
+//    kode := '0000'+kode;
+//  end
+//  else
+//  if Length(kode)=2 then
+//  begin
+//    kode := '000'+kode;
+//  end
+//  else
+//  if Length(kode)=3 then
+//  begin
+//    kode := '00'+kode;
+//  end
+//  else
+//  if Length(kode)=4 then
+//  begin
+//    kode := '0'+kode;
+//  end
+//  else
+//  if Length(kode)=5 then
+//  begin
+//    kode := kode;
+//  end;
+//  edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode;
+  edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode.Text;
 end;
 
 procedure TFNew_Pelanggan.Autocode_AkPiutangLain;
@@ -462,58 +573,58 @@ var
   kode : String;
   Urut : Integer;
 begin
-  With DM.Qtemp2 do
-  begin
-    Close;
-    SQL.Clear;
-    Sql.Text :=' select * from t_ak_account '+
-               ' where header_code='+QuotedSTR(KodeHeaderPiutangLain)+'  ';
-    open;
-  end;
+//  With DM.Qtemp2 do
+//  begin
+//    Close;
+//    SQL.Clear;
+//    Sql.Text :=' select * from t_ak_account '+
+//               ' where header_code='+QuotedSTR(KodeHeaderPiutangLain)+'  ';
+//    open;
+//  end;
+//
+//  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
+//  if Dm.Qtemp2.RecordCount > 0 then
+//  begin
+//      With Dm.Qtemp do
+//      begin
+//        Close;
+//        Sql.Clear;
+//        Sql.Text :=' select count(header_code) as hasil '+
+//                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutangLain)+'  ';
+//        Open;
+//      end;
+//      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+//  end;
+//  edAkunPiutangLainLain.Clear;
+//  kode := inttostr(urut);
+//
+//  if Length(kode)=1 then
+//  begin
+//    kode := '0000'+kode;
+//  end
+//  else
+//  if Length(kode)=2 then
+//  begin
+//    kode := '000'+kode;
+//  end
+//  else
+//  if Length(kode)=3 then
+//  begin
+//    kode := '00'+kode;
+//  end
+//  else
+//  if Length(kode)=4 then
+//  begin
+//    kode := '0'+kode;
+//  end
+//  else
+//  if Length(kode)=5 then
+//  begin
+//    kode := kode;
+//  end;
 
-  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
-  if Dm.Qtemp2.RecordCount > 0 then
-  begin
-      With Dm.Qtemp do
-      begin
-        Close;
-        Sql.Clear;
-        Sql.Text :=' select count(header_code) as hasil '+
-                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutangLain)+'  ';
-        Open;
-      end;
-      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
-  end;
-  edAkunPiutangLainLain.Clear;
-  kode := inttostr(urut);
-  //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
-
-  if Length(kode)=1 then
-  begin
-    kode := '0000'+kode;
-  end
-  else
-  if Length(kode)=2 then
-  begin
-    kode := '000'+kode;
-  end
-  else
-  if Length(kode)=3 then
-  begin
-    kode := '00'+kode;
-  end
-  else
-  if Length(kode)=4 then
-  begin
-    kode := '0'+kode;
-  end
-  else
-  if Length(kode)=5 then
-  begin
-    kode := kode;
-  end;
-
-  edAkunPiutangLainLain.Text := KodeHeaderPiutangLain+'.'+kode;
+//  edAkunPiutangLainLain.Text := KodeHeaderPiutangLain+'.'+kode;
+  edAkunPiutangLainLain.Text := KodeHeaderPiutangLain+'.'+Edkode.Text;
 end;
 
 procedure TFNew_Pelanggan.CbtypejualKeyPress(Sender: TObject; var Key: Char);
@@ -675,6 +786,11 @@ begin
   end;
 end;
 
+procedure TFNew_Pelanggan.EdnikChange(Sender: TObject);
+begin
+  if Ednik.Text='' then Ednik.Text:='0';
+end;
+
 procedure TFNew_Pelanggan.EdnikKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = chr(13) then
@@ -683,12 +799,32 @@ begin
   end;
 end;
 
+procedure TFNew_Pelanggan.EdNitKuChange(Sender: TObject);
+begin
+  if EdNitKu.Text='' then EdNitKu.Text:='0';
+end;
+
+procedure TFNew_Pelanggan.EdnomorvaChange(Sender: TObject);
+begin
+  if Ednomorva.Text='' then Ednomorva.Text:='0';
+end;
+
+procedure TFNew_Pelanggan.EdnpwpChange(Sender: TObject);
+begin
+  if Ednpwp.Text='' then Ednpwp.Text:='0';
+end;
+
 procedure TFNew_Pelanggan.EdnpwpKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = chr(13) then
   begin
     Ednik.SetFocus;
   end;
+end;
+
+procedure TFNew_Pelanggan.EdPasporChange(Sender: TObject);
+begin
+  if EdPaspor.Text='' then EdPaspor.Text:='0';
 end;
 
 procedure TFNew_Pelanggan.EdtelpKeyPress(Sender: TObject; var Key: Char);
@@ -712,6 +848,9 @@ begin
    //Clear;
    RefreshGrid;
    //Autocode;
+
+//   Autocode;
+//   Autocode_AkPiutang;
 
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
@@ -806,7 +945,7 @@ begin
     sql.add(' Insert into t_customer(idprospek,customer_code,customer_name,'+
             ' customer_name_pkp, no_npwp, no_nik, cust_type_code_tax, cust_type_name_tax, '+
             ' country_code_tax, country_name_tax, no_nitku, no_passport, number_va, '+
-            ' code_region, name_region, postal_code, code_type, no_passport, name_type, '+
+            ' code_region, name_region, postal_code, code_type, name_type, '+
             ' account_code, header_code, account_code2, header_code2, initial_code, '+
             ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
@@ -859,6 +998,8 @@ begin
     ExecSQL;
   end;
   InsertDetailAlamat;
+  UpdateStatusProspek;
+  DeleteProspekTmp;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -878,36 +1019,58 @@ end;
 
 procedure TFNew_Pelanggan.BSaveClick(Sender: TObject);
 begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if Edkode.Text='' then
-      begin
-        MessageDlg('Kode Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        Edkode.SetFocus;
-      end
-      else if Ednama.Text='' then
-      begin
-        MessageDlg('Nama Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        Ednama.SetFocus;
-      end
-      else if Edtempo.Text='' then
-      begin
-        MessageDlg('Tempo Pembayaran Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        Ednama.SetFocus;
-      end
-      else if edAkunPiutang.Text='' then
-      begin
-        MessageDlg('Kode Perkiraan Piutang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edAkunPiutang.SetFocus;
-      end
-      else if edAkunPiutangLainLain.Text='' then
-      begin
-        MessageDlg('Kode Perkiraan Piutang Lain - Lain Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edAkunPiutangLainLain.SetFocus;
-      end
-      else if Status = 0 then
-      begin
+  if Ednama.Text='' then
+  begin
+    MessageDlg('Nama Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if edJenisUsaha.Text='' then
+  begin
+    MessageDlg('Jenis Usaha Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if edJenisPelanggan.Text='' then
+  begin
+    MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if edTypePenjualan.Text='' then
+  begin
+    MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if edGolonganPelanggan.Text='' then
+  begin
+    MessageDlg('Golongan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if (edKd_Jenis_Pajak.Text='') AND (cbpkp.Checked=True) then
+  begin
+    MessageDlg('Jenis Pajak Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if (edKd_Negara.Text='') AND (cbpkp.Checked=True) then
+  begin
+    MessageDlg('Negara Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if (Ednamapkp.Text='') AND (cbpkp.Checked=True) then
+  begin
+    MessageDlg('Nama PKP Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if (Ednpwp.Text='') AND (cbpkp.Checked=True) then
+  begin
+    MessageDlg('NPWP Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if (Ednik.Text='') AND (cbpkp.Checked=True) then
+  begin
+    MessageDlg('NIK Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else if (EdNitKu.Text='') AND (cbpkp.Checked=True) then
+  begin
+    MessageDlg('NITKU Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
+  end else
+  begin
+
+    if not dm.Koneksi.InTransaction then
+     dm.Koneksi.StartTransaction;
+    try
+    if Status = 0 then
+    begin
       if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         Autocode;
@@ -916,24 +1079,26 @@ begin
         Save;
         Dm.Koneksi.Commit;
       end;
-      end
-      else if Status = 1 then
-      begin
+    end else if Status = 1 then
+    begin
       if application.MessageBox('Apa Anda Yakin Merubah Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         Update;
         Dm.Koneksi.Commit;
       end;
-      end;
-      Except on E :Exception do
+    end;
+    Except on E :Exception do
+      begin
         begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
+          MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+          Dm.koneksi.Rollback ;
         end;
       end;
-      FMainMenu.TampilTabForm2;
+    end;
+    FMainMenu.TampilTabForm2;
+  end;
+
+
 end;
 
 procedure TFNew_Pelanggan.btBackStepClick(Sender: TObject);
@@ -1040,6 +1205,7 @@ end;
 
 procedure TFNew_Pelanggan.btNextStepClick(Sender: TObject);
 begin
+  CekTabMasterPelanggan;
   FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabDetailPelanggan;
 end;
 

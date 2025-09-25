@@ -60,8 +60,8 @@ object FNew_Penomoran: TFNew_Penomoran
       Caption = 'Komponen Penomoran'
     end
     object Label6: TLabel
-      Left = 25
-      Top = 259
+      Left = 24
+      Top = 217
       Width = 134
       Height = 15
       Caption = 'Contoh Hasil Penomoran'
@@ -72,6 +72,7 @@ object FNew_Penomoran: TFNew_Penomoran
       Width = 246
       Height = 15
       AutoSize = False
+      Visible = False
     end
     object Label7: TLabel
       Left = 163
@@ -109,8 +110,8 @@ object FNew_Penomoran: TFNew_Penomoran
       Caption = ':'
     end
     object Label12: TLabel
-      Left = 163
-      Top = 259
+      Left = 162
+      Top = 217
       Width = 3
       Height = 15
       Caption = ':'

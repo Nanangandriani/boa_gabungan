@@ -201,7 +201,6 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
     Contexts = <>
     TabOrder = 3
     TabStop = False
-    ExplicitLeft = 8
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -425,7 +424,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
     end
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -433,21 +432,21 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44708.624305300900000000
-    ReportOptions.LastChange = 45626.453932442100000000
+    ReportOptions.LastChange = 45719.590776030090000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo30OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       '  if <DbRekap_mutasi."notr"> = 0 then'
       '  begin'
-      '    memo30.left:=55;'
-      '    memo30.Width:=112;'
+      ' //   memo30.left:=55;'
+      ' //   memo30.Width:=112;'
       ' //   memo30.Font.Style:=[fsBold];'
       '  end else'
       '  if <DbRekap_mutasi."notr"> = 1 then'
       '  begin'
-      '    memo30.left:=65;'
-      '    memo30.Width:=102;'
+      '//    memo30.left:=65;'
+      '//    memo30.Width:=102;'
       '  end;'
       'end;'
       ''
@@ -1746,7 +1745,6 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         '         (select * from "VRekap_Mutasi" where trans_date >= '#39'202' +
         '4-11-01'#39' and trans_date <= '#39'2024-11-30'#39') a'
       'GROUP BY account_code,account_name,notr')
-    Active = True
     Left = 277
     Top = 312
   end
@@ -2295,6 +2293,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       Hint = 'Tanggal Awal  '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
+      Properties.DisplayFormat = 'dd-mm-yyyy'
     end
     object DtSelesai: TcxBarEditItem
       Caption = 'Tanggal Akhir '
@@ -2302,6 +2301,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       Hint = 'Tanggal Akhir '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
+      Properties.DisplayFormat = 'dd-mm-yyyy'
     end
   end
   object DsRekap_Mutasi: TDataSource

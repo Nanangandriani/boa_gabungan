@@ -1,0 +1,970 @@
+object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'Penjualan Promosi'
+  ClientHeight = 635
+  ClientWidth = 628
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Position = poDesktopCenter
+  OnShow = FormShow
+  TextHeight = 15
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 628
+    Height = 305
+    Align = alTop
+    Color = clGradientInactiveCaption
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitWidth = 624
+    object LabelPelanggan: TLabel
+      Left = 20
+      Top = 19
+      Width = 93
+      Height = 15
+      Caption = 'Kode Transaksi FP'
+    end
+    object Label3: TLabel
+      Left = 117
+      Top = 19
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label39: TLabel
+      Left = 19
+      Top = 46
+      Width = 91
+      Height = 15
+      Caption = 'Nama Pelanggan'
+    end
+    object Label38: TLabel
+      Left = 116
+      Top = 46
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label4: TLabel
+      Left = 117
+      Top = 181
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label5: TLabel
+      Left = 20
+      Top = 181
+      Width = 67
+      Height = 15
+      Caption = 'Jatuh Tempo'
+    end
+    object Label14: TLabel
+      Left = 197
+      Top = 180
+      Width = 22
+      Height = 15
+      Caption = 'Hari'
+    end
+    object Label8: TLabel
+      Left = 19
+      Top = 209
+      Width = 41
+      Height = 15
+      Caption = 'Sumber'
+    end
+    object Label9: TLabel
+      Left = 117
+      Top = 209
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label10: TLabel
+      Left = 20
+      Top = 72
+      Width = 41
+      Height = 15
+      Caption = 'Tanggal'
+    end
+    object Label11: TLabel
+      Left = 117
+      Top = 72
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label13: TLabel
+      Left = 118
+      Top = 99
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label12: TLabel
+      Left = 20
+      Top = 99
+      Width = 69
+      Height = 15
+      Caption = 'No. Transaksi'
+    end
+    object Label1: TLabel
+      Left = 21
+      Top = 126
+      Width = 78
+      Height = 15
+      Caption = 'No. Surat Jalan'
+    end
+    object Label2: TLabel
+      Left = 118
+      Top = 126
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label15: TLabel
+      Left = 117
+      Top = 236
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label16: TLabel
+      Left = 19
+      Top = 236
+      Width = 43
+      Height = 15
+      Caption = 'No. Reff'
+    end
+    object btMasterSumber: TSpeedButton
+      Left = 320
+      Top = 207
+      Width = 23
+      Height = 22
+      Caption = '+'
+    end
+    object Label6: TLabel
+      Left = 118
+      Top = 154
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label7: TLabel
+      Left = 21
+      Top = 154
+      Width = 55
+      Height = 15
+      Caption = 'No. Faktur'
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 480
+      Top = 42
+      Width = 23
+      Height = 22
+      Glyph.Data = {
+        76060000424D7606000000000000360000002800000014000000140000000100
+        2000000000004006000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000002020678D3139C8FF3140CCFF3348
+        CFFF344FD3FF3557D6FF365FD9FF3766DCFF386EDFFF3975E3FF3A7DE6FF3A85
+        E9FF3B8CECFF3D92EFFF3062A5AE030E13130000000000000000000000001D19
+        90B63132C3FF3037C3F81B216A851118465610194250101C4451111E45511120
+        4651112347511226485112284850132B4C531B406D75337DCAD84395F1FF3396
+        DAE202090B0B00000000120E4762342DBDFF2527ABD60202090B000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000000000000001F739FA5439AF4FF3169A4A800000000271BA7E12F2A
+        C3FF0707222B0000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000003A9B
+        EAF441AAF9FF000000002E22BFFF2E2AC1FC0000000000000000000000001A23
+        667F21368CAC03030A0B000000000000000000000000000000002548919D2659
+        98AB0000010100000000000000003083C3CA40AAF9FF000000002D21BFFF2E29
+        BEF80000000000000000000000001C3491AD304FD4FF3042C0DC060B131A0000
+        0000000000002B4BA2B0377EDDFF3486E0F2000101010000000000000000307F
+        BFC63FABF9FF000000002D21BFFF2E29BEF90000020200000000000000000000
+        0000312B6D9B2A55D6FF2F61C0EE141E3F492E49A8B6307AD6FF3751B8C80209
+        0D0D0000000000000000000000003180C2C93FABF9FF000000002D21BFFF2E29
+        BEF900000202000000000000000000000000000000001F266370335BE2FF3265
+        DBFF3371D9FF24498E9900000000000000000000000000000000000000003180
+        C2C93FABF9FF000000002D21BFFF2E29BEF90000020200000000000000000000
+        00000000000004040A0B3257D7F13065D9FF346FDAFF11214244000000000000
+        00000000000000000000000000003180C2C93FABF9FF000000002D21BFFF2E29
+        BEF900000202000000000000000000000000151623363054CFF62F61D9FF2B48
+        9EB5366FDFFF3478DDFF1D286063000000000000000000000000000000003180
+        C2C93FABF9FF000000002D21BFFF2E29BEF90000010100000000000000000C0E
+        45503A5AC9FF2D52DCFF1C35607E00000000161744453478DDFF3D72DEFF174D
+        767B0000000000000000000000003180C1C83FABF9FF000000002D21BEFF2E29
+        BFF900000000000000000000000026399DC12E4FD5FF1C1C5A67000000000000
+        00000000000013153A3B377FE4FF3A84E4FF0000010100000000000000002F7D
+        BCC33FAAF9FF000000002F22BDFD2F2AC3FF0000010100000000000000000407
+        1317090D222A0000000000000000000000000000000000000000080D1E200815
+        22260000000000000000000000003592D7E041A9F9FF000000001C1481A9312B
+        C0FF181865820000000000000000000000000000000000000000000000000000
+        00000000000000000000000000000000000000000000000000000E2A3E41419F
+        F5FF3A9CE6EC000000000403151B302ABFFF3132C7FF191D647E02030A0C0000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000001535545A3A9EF2FF42A0F5FF1331484900000000000000000706
+        38423535BBFC313AC8FF3240CCFF2C3EB2DB2A41AFD32C49B3D52D4FB5D52D55
+        B8D52F5CBAD53062BED53068BFD43170C4D73B8BEAFD3E91EEFF468DF1FF1551
+        6E71000000000000000000000000000000000606141B191D6C882C39B5E23348
+        CFFF344FD3FF3557D6FF365FD9FF3766DCFF386EDFFF3975E3FF3A7DE6FF3A85
+        E9FF3983DFF1246197A00E1F3336000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000}
+      OnClick = SpeedButton1Click
+    end
+    object edNama_Pelanggan: TRzButtonEdit
+      Left = 132
+      Top = 43
+      Width = 344
+      Height = 23
+      Text = ''
+      TabOrder = 0
+      AllowKeyEdit = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edNama_PelangganButtonClick
+    end
+    object edKode_Pelanggan: TEdit
+      Left = 529
+      Top = 43
+      Width = 200
+      Height = 23
+      TabOrder = 1
+      Visible = False
+    end
+    object spJatuhTempo: TSpinEdit
+      Left = 132
+      Top = 178
+      Width = 60
+      Height = 24
+      MaxValue = 0
+      MinValue = 0
+      TabOrder = 2
+      Value = 0
+    end
+    object edNamaSumber: TRzButtonEdit
+      Left = 132
+      Top = 206
+      Width = 185
+      Height = 23
+      Text = ''
+      TabOrder = 3
+      AllowKeyEdit = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+    end
+    object edKodeSumber: TEdit
+      Left = 362
+      Top = 204
+      Width = 100
+      Height = 23
+      TabOrder = 4
+      Visible = False
+    end
+    object dtTanggal: TRzDateTimePicker
+      Left = 132
+      Top = 69
+      Width = 186
+      Height = 23
+      Date = 45405.000000000000000000
+      Format = ''
+      Time = 0.597438842589326700
+      TabOrder = 5
+    end
+    object btAddDetail: TRzBitBtn
+      Left = 20
+      Top = 267
+      Width = 116
+      Height = 30
+      Align = alCustom
+      Caption = 'Tambah Detail'
+      TabOrder = 6
+      OnClick = btAddDetailClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000830B0000830B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E809090909
+        0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E809101010
+        1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809101010
+        1010101010101009E8E8E8E881ACACACACACACACACACAC81E8E8E8E809090909
+        0910100909090909E8E8E8E88181818181ACAC8181818181E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E8E8
+        09090909E8E8E8E8E8E8E8E8E8E8E8E881818181E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+    end
+    object edNomorTrans: TEdit
+      Left = 132
+      Top = 96
+      Width = 250
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 7
+    end
+    object edKode_Trans: TRzButtonEdit
+      Left = 132
+      Top = 16
+      Width = 59
+      Height = 23
+      Text = ''
+      TabOrder = 8
+      AllowKeyEdit = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+    end
+    object edSuratJalanTrans: TEdit
+      Left = 132
+      Top = 123
+      Width = 250
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 9
+    end
+    object edNoReff: TEdit
+      Left = 132
+      Top = 233
+      Width = 250
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 10
+    end
+    object edNomorFaktur: TEdit
+      Left = 132
+      Top = 151
+      Width = 250
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 11
+    end
+    object edNama_Trans: TEdit
+      Left = 197
+      Top = 16
+      Width = 279
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 12
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 603
+    Width = 628
+    Height = 32
+    Align = alBottom
+    TabOrder = 1
+    ExplicitTop = 602
+    ExplicitWidth = 624
+    object BBatal: TRzBitBtn
+      Left = 552
+      Top = 1
+      Height = 30
+      Align = alRight
+      Caption = 'Close'
+      TabOrder = 1
+      OnClick = BBatalClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000630B0000630B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8B46C6C6CE8
+        E8E8E8E8B46C6C6CE8E8E8E2DFDFDFE8E8E8E8E8E2DFDFDFE8E8E8B49090906C
+        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8E8B4909090
+        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8E8E8B49090
+        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8E8E8B490
+        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8E8E8B4
+        9090906CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8B490
+        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8B49090
+        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8B4909090
+        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8B49090906C
+        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8B4B4B4B4E8
+        E8E8E8E8B4B4B4B4E8E8E8E2E2E2E2E8E8E8E8E8E2E2E2E2E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 548
+    end
+    object BSave: TRzBitBtn
+      Left = 477
+      Top = 1
+      Height = 30
+      Align = alRight
+      Caption = 'Save'
+      TabOrder = 0
+      OnClick = BSaveClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000730E0000730E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
+        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
+        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
+        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
+        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
+        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
+        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 473
+    end
+    object BCorrection: TRzBitBtn
+      Left = 379
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 2
+      OnClick = BCorrectionClick
+      ExplicitLeft = 375
+    end
+  end
+  object RzPageControl1: TRzPageControl
+    Left = 0
+    Top = 305
+    Width = 628
+    Height = 298
+    Hint = ''
+    ActivePage = TabSDetailPel
+    Align = alClient
+    UseColoredTabs = True
+    TabIndex = 0
+    TabOrder = 2
+    ExplicitWidth = 624
+    ExplicitHeight = 297
+    FixedDimension = 21
+    object TabSDetailPel: TRzTabSheet
+      Caption = 'Detail Order'
+      ExplicitWidth = 620
+      ExplicitHeight = 272
+      object DBGridDetail: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 624
+        Height = 273
+        Align = alClient
+        DataSource = DSDetail
+        DynProps = <>
+        FooterRowCount = 1
+        HorzScrollBar.ExtraPanel.Visible = True
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+        SearchPanel.Enabled = True
+        SumList.Active = True
+        TabOrder = 0
+        TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'NO_SUMBER'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'KD_ITEM'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'NM_ITEM'
+            Footers = <>
+            Title.Caption = 'Nama Item'
+            Width = 183
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <
+              item
+                Style = ebsPlusEh
+              end>
+            FieldName = 'JUMLAH'
+            Footers = <>
+            Title.Caption = 'Qty'
+            Width = 68
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'KD_SATUAN'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footers = <>
+            Title.Caption = 'Satuan'
+            Width = 205
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'NM_ SATUAN'
+            Footers = <>
+            Visible = False
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+  end
+  object DSDetail: TDataSource
+    DataSet = MemDetail
+    Left = 32
+    Top = 486
+  end
+  object MemDetail: TMemTableEh
+    Active = True
+    CachedUpdates = True
+    Params = <>
+    SortOrder = 'NM_ITEM'
+    Left = 32
+    Top = 430
+    object MemDetailNO_SUMBER: TStringField
+      FieldName = 'NO_SUMBER'
+    end
+    object MemDetailKD_ITEM: TStringField
+      FieldName = 'KD_ITEM'
+      Size = 50
+    end
+    object MemDetailNM_ITEM: TStringField
+      FieldName = 'NM_ITEM'
+      Size = 500
+    end
+    object MemDetailJUMLAH: TFloatField
+      FieldName = 'JUMLAH'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailKD_SATUAN: TStringField
+      FieldName = 'KD_SATUAN'
+      Size = 50
+    end
+    object MemDetailSUB_TOTAL: TCurrencyField
+      FieldName = 'SUB_TOTAL'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailJUMLAH_HARGA: TCurrencyField
+      FieldName = 'JUMLAH_HARGA'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailPPN_PERSEN: TFloatField
+      FieldName = 'PPN_PERSEN'
+    end
+    object MemDetailPPN_NILAI: TCurrencyField
+      FieldName = 'PPN_NILAI'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailPPH_AKUN: TStringField
+      FieldName = 'PPH_AKUN'
+    end
+    object MemDetailNAMA_PPH: TStringField
+      FieldName = 'NAMA_PPH'
+      Size = 100
+    end
+    object MemDetailPPH_PERSEN: TFloatField
+      FieldName = 'PPH_PERSEN'
+    end
+    object MemDetailPPH_NILAI: TCurrencyField
+      FieldName = 'PPH_NILAI'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailPOTONGAN_NILAI: TCurrencyField
+      FieldName = 'POTONGAN_NILAI'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailPOTONGAN_PERSEN: TFloatField
+      FieldName = 'POTONGAN_PERSEN'
+    end
+    object MemDetailGRAND_TOTAL: TCurrencyField
+      FieldName = 'GRAND_TOTAL'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailPPN_AKUN: TStringField
+      FieldName = 'PPN_AKUN'
+    end
+    object MemDetailHARGA_SATUAN: TCurrencyField
+      FieldName = 'HARGA_SATUAN'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailNM_SATUAN: TStringField
+      FieldName = 'NM_SATUAN'
+      Size = 500
+    end
+    object MemDetailAKUN_PERK_ITEM: TStringField
+      FieldName = 'AKUN_PERK_ITEM'
+    end
+    object MemDetailMENEJ_FEE_PERSEN: TFloatField
+      FieldName = 'MENEJ_FEE_PERSEN'
+    end
+    object MemDetailMENEJ_FEE_NILAI: TFloatField
+      FieldName = 'MENEJ_FEE_NILAI'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailGROUP_ID: TSmallintField
+      FieldName = 'GROUP_ID'
+    end
+    object MemDetailPOTONGAN1: TCurrencyField
+      FieldName = 'POTONGAN1'
+    end
+    object MemDetailPOTONGAN2: TCurrencyField
+      FieldName = 'POTONGAN2'
+    end
+    object MemDetailPOTONGAN3: TCurrencyField
+      FieldName = 'POTONGAN3'
+    end
+    object MemDetailPOTONGAN4: TCurrencyField
+      FieldName = 'POTONGAN4'
+    end
+    object MemDetailPPN_NILAI_CORTEX: TCurrencyField
+      FieldName = 'PPN_NILAI_CORTEX'
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object NO_SUMBER: TMTStringDataFieldEh
+          FieldName = 'NO_SUMBER'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object KD_ITEM: TMTStringDataFieldEh
+          FieldName = 'KD_ITEM'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object NM_ITEM: TMTStringDataFieldEh
+          FieldName = 'NM_ITEM'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 500
+        end
+        object JUMLAH: TMTNumericDataFieldEh
+          FieldName = 'JUMLAH'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object HARGA_SATUAN: TMTNumericDataFieldEh
+          FieldName = 'HARGA_SATUAN'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object KD_SATUAN: TMTStringDataFieldEh
+          FieldName = 'KD_SATUAN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object NM_SATUAN: TMTStringDataFieldEh
+          FieldName = 'NM_SATUAN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 500
+        end
+        object SUB_TOTAL: TMTNumericDataFieldEh
+          FieldName = 'SUB_TOTAL'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object PPN_AKUN: TMTStringDataFieldEh
+          FieldName = 'PPN_AKUN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object PPN_PERSEN: TMTNumericDataFieldEh
+          FieldName = 'PPN_PERSEN'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object PPN_NILAI: TMTNumericDataFieldEh
+          FieldName = 'PPN_NILAI'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object PPH_AKUN: TMTStringDataFieldEh
+          FieldName = 'PPH_AKUN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object NAMA_PPH: TMTStringDataFieldEh
+          FieldName = 'NAMA_PPH'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object PPH_PERSEN: TMTNumericDataFieldEh
+          FieldName = 'PPH_PERSEN'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object PPH_NILAI: TMTNumericDataFieldEh
+          FieldName = 'PPH_NILAI'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN_NILAI: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN_NILAI'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN_PERSEN: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN_PERSEN'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object GRAND_TOTAL: TMTNumericDataFieldEh
+          FieldName = 'GRAND_TOTAL'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object AKUN_PERK_ITEM: TMTStringDataFieldEh
+          FieldName = 'AKUN_PERK_ITEM'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object MENEJ_FEE_PERSEN: TMTNumericDataFieldEh
+          FieldName = 'MENEJ_FEE_PERSEN'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object MENEJ_FEE_NILAI: TMTNumericDataFieldEh
+          FieldName = 'MENEJ_FEE_NILAI'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object GROUP_ID: TMTNumericDataFieldEh
+          FieldName = 'GROUP_ID'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN1: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN1'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN2: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN2'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 10
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN3: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN3'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN4: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN4'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object JUMLAH_HARGA: TMTNumericDataFieldEh
+          FieldName = 'JUMLAH_HARGA'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object PPN_NILAI_CORTEX: TMTNumericDataFieldEh
+          FieldName = 'PPN_NILAI_CORTEX'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+end

@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
 
 type
   TFListPenerimaanBank = class(TForm)
@@ -101,6 +101,11 @@ type
     dsBukti_Terima: TDataSource;
     dsBukti_Terima_det: TDataSource;
     QBukti_Terima_detket: TMemoField;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton3: TdxBarLargeButton;
+    cbTransaksi: TdxBarCombo;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -109,10 +114,14 @@ type
       var Text: string; DisplayText: Boolean);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+
+    procedure Refresh;
   end;
 
 var
@@ -123,6 +132,35 @@ implementation
 {$R *.dfm}
 
 uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin;
+
+procedure TFListPenerimaanBank.Refresh;
+var mm: Integer;
+    strTransaksi: String;
+begin
+  if cbTransaksi.Text='SEMUA' then
+  begin
+    strTransaksi:='';
+  end else begin
+    strTransaksi:=' AND b.name_module='+QuotedStr(cbTransaksi.Text)+' ';
+  end;
+  mm:=cbBulan.ItemIndex+1;
+  DBGridOrder.StartLoadingStatus();
+  try
+   with QPenerimaanBank do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:= 'select a.* from "public"."t_cash_bank_acceptance" a  '+
+                  'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
+                  'where EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
+                  'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' AND '+
+                  'a.deleted_at is null'+ strTransaksi+' order by a.created_at Desc ';
+       open;
+   end;
+  finally
+  DBGridOrder.FinishLoadingStatus();
+  end;
+end;
 
 procedure TFListPenerimaanBank.ActBaruExecute(Sender: TObject);
 begin
@@ -168,20 +206,14 @@ begin
 end;
 
 procedure TFListPenerimaanBank.ActROExecute(Sender: TObject);
+var month,year:String;
 begin
-  DBGridOrder.StartLoadingStatus();
-  try
-   with QPenerimaanBank do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_cash_bank_acceptance"   '+
-                 ' where deleted_at is null order by created_at Desc ';
-       open;
-   end;
-  finally
-  DBGridOrder.FinishLoadingStatus();
-  end;
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun.Text:=(year);
+  cbBulan.ItemIndex:=StrToInt(month)-1;
+  cbTransaksi.ItemIndex:=0;
+  Refresh;
 end;
 
 procedure TFListPenerimaanBank.ActUpdateExecute(Sender: TObject);
@@ -215,11 +247,11 @@ begin
       first;
     end;
 
-    cbTransaksi.clear;
-    cbTransaksi.items.Add('');
+    FDataPenerimaanBank.cbTransaksi.clear;
+    FDataPenerimaanBank.cbTransaksi.items.Add('');
     while not dm.Qtemp3.eof do
     begin
-     cbTransaksi.Items.add(dm.Qtemp3.fieldbyname('module_name').asstring);
+     FDataPenerimaanBank.cbTransaksi.Items.add(dm.Qtemp3.fieldbyname('module_name').asstring);
      dm.Qtemp3.next;
     end;
 
@@ -518,6 +550,32 @@ begin
    Report.ShowReport();
  end;
 
+end;
+
+procedure TFListPenerimaanBank.dxBarLargeButton3Click(Sender: TObject);
+begin
+  Refresh;
+end;
+
+procedure TFListPenerimaanBank.FormShow(Sender: TObject);
+begin
+  with dm.Qtemp3 do
+  begin
+    close;
+    sql.clear;
+    sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
+    open;
+    first;
+  end;
+
+  cbTransaksi.Items.Clear;
+  cbTransaksi.items.Add('SEMUA');
+  while not dm.Qtemp3.eof do
+  begin
+   cbTransaksi.Items.add(dm.Qtemp3.fieldbyname('module_name').asstring);
+   dm.Qtemp3.next;
+  end;
+  ActROExecute(sender);
 end;
 
 procedure TFListPenerimaanBank.QPenerimaanBankdescriptionGetText(Sender: TField;

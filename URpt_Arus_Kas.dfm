@@ -10,6 +10,9 @@ object FRpt_arus_kas: TFRpt_arus_kas
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
@@ -23,8 +26,6 @@ object FRpt_arus_kas: TFRpt_arus_kas
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -125
-    ExplicitWidth = 753
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -754,7 +755,6 @@ object FRpt_arus_kas: TFRpt_arus_kas
     Connection = dm.Koneksi
     SQL.Strings = (
       'select *,db-kd total from "VTrans_JournalReal" ')
-    Active = True
     Left = 320
     Top = 88
   end

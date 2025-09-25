@@ -149,7 +149,7 @@ var
 row: integer; number:real;
 periode1,periode2,subquery,subquery2,th,prd1,prd2:string;
 begin
- if cbbulan.Text= '' then
+{ if cbbulan.Text= '' then
     begin
       MessageDlg('Bulan Tidak boleh Kosong ',MtWarning,[MbOk],0);
       cbbulan.SetFocus;
@@ -203,7 +203,7 @@ begin
  ' then 0 else debit end debit,case when kredit ISNULL then 0 else kredit end kredit,case when db isnull then 0 else db end db, case when kd ISNULL then 0 else kd end kd,case when dbpy isnull then 0 else dbpy end dbpy,case when kdpy ISNULL then 0 else'+
  ' kdpy end kdpy from(SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit>0 then aa.debit else NULL end debit,case when aa.kredit>0 then aa.kredit else null end kredit,case when b.db>0 then b.db else null end db,case when b.kd>0 then'+
  ' b.kd else null end kd, case when c.db>0 then c.db else null end dbpy,case when c.kd>0 then c.kd else null end kdpy from (SELECT c.kode kd_akun,c.kode_header,c.kelompok_akun,c.nama_perkiraan,d.debit,d.kredit from (SELECT DISTINCT kelompok_akun,kode,'+
- ' kode_header, nama_perkiraan,status_neraca from t_daftar_perkiraan WHERE status_neraca=''1'' and kode<>kode_header and kode_header=''5400'')c INNER JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+''+
+ ' kode_header, nama_perkiraan,status_neraca from t_daftar_perkiraan WHERE status_neraca=''1'')c INNER JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+''+
  ' order by periode2 desc limit 1) a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d  on c.kode=d.kd_akun GROUP BY c.kelompok_akun,c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit ORDER BY  c.kode ASC)AA '+
  ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and  c.jenis_tr<>''MEMORIAL'' and '+
  ' (tgl_in >='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') GROUP BY b.kode)b on 1=1 '+
@@ -250,9 +250,10 @@ begin
  ' /*Tambahan baru di atas*/'+
  ' left JOIN t_header_perkiraan yy on xxx.kd_akun=yy.kode_header) w';
  th:=FormatDateTime('yyyy',dtmulai.editvalue);
-  ProgressBar1.Visible:=true;
+  ProgressBar1.Visible:=true;     }
   QNeraca_lajur.Close;
-  if th <='2022' then
+  QNeraca_lajur.Open;
+ { if th <='2022' then
   begin
     with QNeraca_lajur do
     begin
@@ -341,8 +342,8 @@ begin
           ParamByName('db_nr').AsString:=QNeraca_lajur['dbnr3'];
           ParamByName('kr_nr').AsString:=QNeraca_lajur['kdnr3'];
           ParamByName('periode1').AsString:=FormatDateTime('yyy-mm-dd',DtMulai.editvalue);
-     //     ParamByName('periode2').AsString:=FormatDateTime('yyy-mm-dd',DtSelesai.editvalue);
-       //   ParamByName('thn').AsString:=FormatDateTime('yyy',DtSelesai.editvalue);
+     //   ParamByName('periode2').AsString:=FormatDateTime('yyy-mm-dd',DtSelesai.editvalue);
+     //   ParamByName('thn').AsString:=FormatDateTime('yyy',DtSelesai.editvalue);
           ParamByName('notrans').AsString:=EditNo;
           ParamByName('debit2').AsString:=QNeraca_lajur['dblr'];
           ParamByName('kredit2').AsString:=QNeraca_lajur['kdlr'];
@@ -388,17 +389,17 @@ begin
               ParamByName('db_nr').AsString:='0';
               ParamByName('kr_nr').AsString:=dm.QTemp2['saldo']+DM.QTemp3['kredit'];
               ParamByName('notrans').AsString:=EditNo;
-            //  ParamByName('periode1').AsString:=FormatDateTime('yyy-mm-dd',DtMulai.editvalue);
-              //ParamByName('periode2').AsString:=FormatDateTime('yyy-mm-dd',DtSelesai.editvalue);
-    //          ParamByName('thn').AsString:=FormatDateTime('yyy',DtSelesai.editvalue);
+            // ParamByName('periode1').AsString:=FormatDateTime('yyy-mm-dd',DtMulai.editvalue);
+            // ParamByName('periode2').AsString:=FormatDateTime('yyy-mm-dd',DtSelesai.editvalue);
+            // ParamByName('thn').AsString:=FormatDateTime('yyy',DtSelesai.editvalue);
               ExecSQL;
             end;
-  end;
+  end;       }
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_neracalajur.fr3');
   Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+FormatDateTime('dd MMMM yyy',DtMulai.editvalue)+' - '+FormatDateTime('dd MMMM yyy',sptahun.editvalue);
-  GProses.Progress:=row+100;
+ // GProses.Progress:=row+100;
   Rpt.ShowReport();
-  ProgressBar1.Visible:=false;
+  //ProgressBar1.Visible:=false;
 end;
 
 procedure TFRpt_NeracaLajur.dxBarLargeButton2Click(Sender: TObject);
@@ -406,17 +407,18 @@ begin
   if CbBulan.Text= '' then
     begin
       MessageDlg('Bulan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      DtMulai.SetFocus;
+      CbBulan.SetFocus;
       Exit;
     end;
     if sptahun.EditValue= null then
     begin
       MessageDlg('Tahun Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      DtMulai.SetFocus;
+      spTahun.SetFocus;
       Exit;
     end;
+    QNeraca_lajur.Close;
 //MemNeraca_lajur.Open;
-with QNeraca_lajur do
+{with QNeraca_lajur do
   begin
     close;
     sql.Clear;
@@ -441,10 +443,10 @@ with QNeraca_lajur do
     ' /*balance_status=''1'' and*/ code = header_code AND header_code <> ''5400'' ) C  GROUP BY C.code,C.header_code,C.group_id,C.account_name ORDER BY	C.code ASC) AA'+
     ' LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = ''D'' THEN SUM(amount) ELSE 0 END db,CASE WHEN status_dk = ''K'' THEN	SUM(amount)ELSE 0 END kd,b.code FROM	t_general_ledger_real	A '+
     ' INNER JOIN t_ak_account b ON A.account_code = b.code WHERE	b.code = aa.kd_akun AND A.module_id <> 7 AND'+
-    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+') GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
+    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+') GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
     '	LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = ''D'' THEN SUM ( amount ) ELSE 0 END db,CASE	WHEN status_dk = ''K'' THEN	SUM (amount) ELSE 0 	END kd,	b.code FROM'+
     '	t_general_ledger_real	A INNER JOIN t_ak_account b ON A.account_code = b.code WHERE	b.code = aa.kd_akun AND b.code <> ''1112.01'' 	AND A.module_id = 7 	AND '+
-    ' ( to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   GROUP BY	b.code,A.status_dk '+
+    ' ( to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+')   GROUP BY	b.code,A.status_dk '+
     '	) C ON 1 = 1 ORDER BY	kd_akun ASC ) xx ) xx2) xx3  '+
     ' UNION '+
     ' SELECT	xx31.kelompok_akun,xx31.kd_akun,xx31.nama_perkiraan,xx31.debit,xx31.kredit,xx31.db,xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,xx31.kdnr,'+
@@ -457,19 +459,20 @@ with QNeraca_lajur do
     ' CASE	WHEN xx.db >0 THEN xx.db ELSE 0 END db,CASE	WHEN xx.kd >0 THEN xx.kd  ELSE 0 END kd,CASE	WHEN xx.dbpy>0  THEN xx.dbpy ELSE 0	END dbpy,CASE	WHEN xx.kdpy >0 THEN	xx.kdpy ELSE 0	END kdpy FROM'+
     ' (SELECT	aa.group_id kelompok_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE	WHEN aa.debit > 0 THEN	aa.debit ELSE NULL END debit,CASE	WHEN aa.kredit IS NULL THEN	0 ELSE aa.kredit END kredit,'+
     ' CASE	WHEN b.db IS NULL THEN 0 ELSE b.db END db,CASE	WHEN b.kd IS NULL THEN 0 ELSE b.kd END kd,CASE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy,CASE WHEN C.kd IS NULL THEN 0 ELSE C.kd END kdpy FROM '+
-    '	(SELECT C.code kd_akun,C.header_code,C.group_id,C.account_name,d.debit,d.kredit FROM '+
-    ' (SELECT DISTINCT code, header_code, account_name, balance_status, group_id FROM t_ak_account A WHERE balance_status = ''1'' AND code =header_code AND header_code <> ''5400'' ) C '+
+    '	(1)	A INNER JOIN '+
+    ' t_neraca_lajur_det b ON A.trans_no = b.trans_no) d ON C.code = d.account_code GROUP BY	C.code,C.header_code,C.group_id,C.account_name,d.debit,d.kredit ORDER BY C.code SELECT C.code kd_akun,C.header_code,C.group_id,C.account_name,d.debit,d.kredit FROM '+
+    ' (SELECT DISTINCT code, header_code, account_name, balance_status, group_id FROM t_ak_account A WHERE balance_status = ''1'') C '+
     ' INNER JOIN (SELECT	trans_year,A.periode1,A.periode2,trans_month,A.trans_no,b.debit,b.kredit,		account_code FROM	(SELECT trans_year, periode1, periode2, trans_month, trans_no FROM t_neraca_lajur WHERE '+
-    ' (to_char( periode2, ''yyyy'' ) <= '+QuotedStr(spTahun.EditValue)+') AND ( to_char( periode2, ''mm'' ) < '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   ORDER BY periode2 DESC LIMIT 1)	A INNER JOIN t_neraca_lajur_det b ON A.trans_no = b.trans_no) d ON C.code = d.account_code GROUP BY	C.code,C.header_code,C.group_id,C.account_name,d.debit,d.kredit ORDER BY C.code ASC) AA   '+
+    ' (to_char( periode2, ''yyyy'' ) <= '+QuotedStr(spTahun.EditValue)+') AND ( to_char( periode2, ''mm'' ) < '+QuotedStr(bln)+')   ORDER BY periode2 DESC LIMIT ASC) AA   '+
     ' LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = ''D'' THEN SUM ( amount ) ELSE 0 END db,CASE	WHEN status_dk = ''K'' THEN SUM ( amount ) ELSE 0 END kd,b.code FROM t_general_ledger_real	A'+
     ' INNER JOIN t_ak_account b ON A.account_code = b.code WHERE b.code = aa.kd_akun AND A.module_id <> 7 AND'+
-    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
+    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+')   GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
     '	LEFT JOIN LATERAL (SELECT	CASE	WHEN	status_dk = ''D'' THEN	SUM ( amount ) ELSE 0 END db,CASE	WHEN status_dk = ''K'' THEN SUM ( amount ) ELSE 0 END kd,b.code FROM	t_general_ledger_real	A '+
     ' INNER JOIN t_ak_account b ON A.account_code = b.code WHERE	b.code = aa.kd_akun AND b.code <> ''1112.01'' AND A.module_id = 7 	AND'+
-    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   GROUP BY	b.code,	A.status_dk 	) C ON 1 = 1 ORDER BY '+
+    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+')   GROUP BY	b.code,	A.status_dk 	) C ON 1 = 1 ORDER BY '+
     '	kd_akun ASC) xx ) xx2) xx3) xx31) xx4 ORDER BY kd_akun) XXX /*Tambahan baru di atas*/LEFT JOIN t_ak_header yy ON xxx.kd_akun = yy.header_code) w GROUP BY	w.kelompok_akun,w.kd_akun,w.notr,w.nama_perkiraan ' ;
     Execute;
-  end;
+  end;      }
   QNeraca_lajur.Open;
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_neracalajur.fr3');
  // Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+FormatDateTime('dd MMMM yyy',DtMulai.editvalue)+' - '+FormatDateTime('dd MMMM yyy',sptahun.editvalue);
@@ -503,24 +506,25 @@ begin
    //   DtSelesai.SetFocus;
       Exit;
   end;}
-  MemNeraca_lajur.EmptyTable;
-  MemNeraca_lajur.Active:=true;
+  //MemNeraca_lajur.EmptyTable;
+  QNeraca_lajur.Close;
   if CbBulan.Text= '' then
     begin
       MessageDlg('Bulan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      DtMulai.SetFocus;
+      cbbulan.SetFocus;
       Exit;
     end;
     if sptahun.EditValue= null then
     begin
       MessageDlg('Tahun Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      DtMulai.SetFocus;
+      sptahun.SetFocus;
       Exit;
     end;
     //mm:=IntToStr(CbBulan.ItemIndex);
    // yy:=sptahun.EditValue+'-'+IntToStr(CbBulan.ItemIndex);
    // edit1.Text:=sptahun.EditValue;//+'-'+IntToStr(CbBulan.ItemIndex);
-  with QNeraca_lajur do
+// bln:=FormatDateTime('mm',DtMulai.EditValue);
+ { with QNeraca_lajur do
   begin
     close;
     sql.Clear;
@@ -545,10 +549,10 @@ begin
     ' /*balance_status=''1'' and*/ code = header_code AND header_code <> ''5400'' ) C  GROUP BY C.code,C.header_code,C.group_id,C.account_name ORDER BY	C.code ASC) AA'+
     ' LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = ''D'' THEN SUM(amount) ELSE 0 END db,CASE WHEN status_dk = ''K'' THEN	SUM(amount)ELSE 0 END kd,b.code FROM	t_general_ledger_real	A '+
     ' INNER JOIN t_ak_account b ON A.account_code = b.code WHERE	b.code = aa.kd_akun AND A.module_id <> 7 AND'+
-    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+') GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
+    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+') GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
     '	LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = ''D'' THEN SUM ( amount ) ELSE 0 END db,CASE	WHEN status_dk = ''K'' THEN	SUM (amount) ELSE 0 	END kd,	b.code FROM'+
     '	t_general_ledger_real	A INNER JOIN t_ak_account b ON A.account_code = b.code WHERE	b.code = aa.kd_akun AND b.code <> ''1112.01'' 	AND A.module_id = 7 	AND '+
-    ' ( to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   GROUP BY	b.code,A.status_dk '+
+    ' ( to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+')   GROUP BY	b.code,A.status_dk '+
     '	) C ON 1 = 1 ORDER BY	kd_akun ASC ) xx ) xx2) xx3  '+
     ' UNION '+
     ' SELECT	xx31.kelompok_akun,xx31.kd_akun,xx31.nama_perkiraan,xx31.debit,xx31.kredit,xx31.db,xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,xx31.kdnr,'+
@@ -562,19 +566,20 @@ begin
     ' (SELECT	aa.group_id kelompok_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE	WHEN aa.debit > 0 THEN	aa.debit ELSE NULL END debit,CASE	WHEN aa.kredit IS NULL THEN	0 ELSE aa.kredit END kredit,'+
     ' CASE	WHEN b.db IS NULL THEN 0 ELSE b.db END db,CASE	WHEN b.kd IS NULL THEN 0 ELSE b.kd END kd,CASE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy,CASE WHEN C.kd IS NULL THEN 0 ELSE C.kd END kdpy FROM '+
     '	(SELECT C.code kd_akun,C.header_code,C.group_id,C.account_name,d.debit,d.kredit FROM '+
-    ' (SELECT DISTINCT code, header_code, account_name, balance_status, group_id FROM t_ak_account A WHERE balance_status = ''1'' AND code =header_code AND header_code <> ''5400'' ) C '+
+    ' (SELECT DISTINCT code, header_code, account_name, balance_status, group_id FROM t_ak_account A WHERE balance_status = ''1'' ) C '+
     ' INNER JOIN (SELECT	trans_year,A.periode1,A.periode2,trans_month,A.trans_no,b.debit,b.kredit,		account_code FROM	(SELECT trans_year, periode1, periode2, trans_month, trans_no FROM t_neraca_lajur WHERE '+
-    ' (to_char( periode2, ''yyyy'' ) <= '+QuotedStr(spTahun.EditValue)+') AND ( to_char( periode2, ''mm'' ) < '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   ORDER BY periode2 DESC LIMIT 1)	A INNER JOIN t_neraca_lajur_det b ON A.trans_no = b.trans_no) d ON C.code = d.account_code GROUP BY	C.code,C.header_code,C.group_id,C.account_name,d.debit,d.kredit ORDER BY C.code ASC) AA   '+
+    ' (to_char( periode2, ''yyyy'' ) <= '+QuotedStr(spTahun.EditValue)+') AND ( to_char( periode2, ''mm'' ) < '+QuotedStr(bln)+')   ORDER BY periode2 DESC LIMIT 1)	A INNER JOIN t_neraca_lajur_det b ON A.trans_no = b.trans_no) d ON C.code = d.account_code GROUP BY	C.code,C.header_code,C.group_id,C.account_name,d.debit,d.kredit ORDER BY C.code ASC) AA   '+
     ' LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = ''D'' THEN SUM ( amount ) ELSE 0 END db,CASE	WHEN status_dk = ''K'' THEN SUM ( amount ) ELSE 0 END kd,b.code FROM t_general_ledger_real	A'+
     ' INNER JOIN t_ak_account b ON A.account_code = b.code WHERE b.code = aa.kd_akun AND A.module_id <> 7 AND'+
-    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
+    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+')   GROUP BY b.code,A.status_dk) b ON 1 = 1  '+
     '	LEFT JOIN LATERAL (SELECT	CASE	WHEN	status_dk = ''D'' THEN	SUM ( amount ) ELSE 0 END db,CASE	WHEN status_dk = ''K'' THEN SUM ( amount ) ELSE 0 END kd,b.code FROM	t_general_ledger_real	A '+
     ' INNER JOIN t_ak_account b ON A.account_code = b.code WHERE	b.code = aa.kd_akun AND b.code <> ''1112.01'' AND A.module_id = 7 	AND'+
-    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(inttostr(CbBulan.ItemIndex))+')   GROUP BY	b.code,	A.status_dk 	) C ON 1 = 1 ORDER BY '+
+    ' (to_char( trans_date, ''yyyy'' ) = '+QuotedStr(spTahun.EditValue)+') AND ( to_char( trans_date, ''mm'' ) = '+QuotedStr(bln)+')   GROUP BY	b.code,	A.status_dk 	) C ON 1 = 1 ORDER BY '+
     '	kd_akun ASC) xx ) xx2) xx3) xx31) xx4 ORDER BY	kd_akun ) XXX /*Tambahan baru di atas*/LEFT JOIN t_ak_header yy ON xxx.kd_akun = yy.header_code) w GROUP BY	w.kelompok_akun,w.kd_akun,w.notr,w.nama_perkiraan ' ;
     Execute;
-  end;
+  end;         }
   QNeraca_lajur.Open;
+  MemNeraca_lajur.Active:=true;
 end;
 
 procedure TFRpt_NeracaLajur.FormClose(Sender: TObject;

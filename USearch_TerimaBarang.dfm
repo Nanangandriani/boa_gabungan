@@ -2,8 +2,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   Left = 0
   Top = 0
   Caption = 'Search Material'
-  ClientHeight = 417
-  ClientWidth = 580
+  ClientHeight = 386
+  ClientWidth = 465
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,15 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 385
-    Width = 580
+    Top = 354
+    Width = 465
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 384
-    ExplicitWidth = 576
+    ExplicitTop = 345
+    ExplicitWidth = 459
     object BBatal: TRzBitBtn
-      Left = 504
+      Left = 389
       Top = 1
       Height = 30
       Align = alRight
@@ -85,10 +85,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 500
+      ExplicitLeft = 383
     end
     object BEdit: TRzBitBtn
-      Left = 429
+      Left = 314
       Top = 1
       Height = 30
       Align = alRight
@@ -147,7 +147,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 425
+      ExplicitLeft = 308
     end
     object BSelectAll: TRzBitBtn
       Left = 114
@@ -223,21 +223,11 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       OnClick = CkAllClick
     end
   end
-  object DTth: TRzDateTimeEdit
-    Left = 433
-    Top = 64
-    Width = 69
-    Height = 23
-    EditType = etDate
-    Format = 'yyy'
-    TabOrder = 1
-    Visible = False
-  end
   object DBGridEh2: TDBGridEh
     Left = 0
     Top = 0
-    Width = 580
-    Height = 385
+    Width = 465
+    Height = 354
     Align = alClient
     DataSource = DSMaterial2
     DynProps = <>
@@ -246,7 +236,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 3
-    OnDblClick = DBGridEh1DblClick
+    OnDblClick = DBGridEh2DblClick
     Columns = <
       item
         CellButtons = <>
@@ -315,8 +305,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 580
-    Height = 385
+    Width = 465
+    Height = 354
     Align = alClient
     DataSource = DSMaterial
     DynProps = <>
@@ -390,6 +380,15 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
+  end
+  object DTth: TRzDateTimeEdit
+    Left = 125
+    Top = 72
+    Width = 69
+    Height = 23
+    EditType = etDate
+    Format = 'yyy'
+    TabOrder = 1
   end
   object DSMaterial: TDataSource
     DataSet = QMaterial

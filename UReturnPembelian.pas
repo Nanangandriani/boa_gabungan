@@ -187,12 +187,12 @@ begin
       sql.Clear;
       sql.Text:=' select	d.supplier_name,f.faktur_date,d.address,d.npwp,((a.price/100)*a.ppn) AS ppn_rp,a.return_no,a.return_date,a.faktur_no,a.total_price,'+
                 ' a.ppn,a.price,a.valas,a.valas_value from t_purchase_return a inner join t_supplier d on a.supplier_code=d.supplier_code '+
-                ' inner join t_item_receive f on a.faktur_no=f.faktur_no  where a.return_no='+QuotedStr(DBGridReturnPemb.Fields[3].asstring)+''+
+                ' inner join t_purchase_invoice f on a.faktur_no=f.faktur_no where a.return_no='+QuotedStr(DBGridReturnPemb.Fields[3].asstring)+''+
                 ' Group by d.supplier_name,f.faktur_date,d.address,d.npwp,a.return_no,a.return_date,a.faktur_no,a.total_price,a.ppn,a.price,a.valas,a.valas_value ';
       ExecSQL;
    end;
    QRptReturnPemb.Open;
-   //frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_ReturnPembelian.Fr3');
+   frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_ReturnPembelian.Fr3');
    frxReport1.ShowReport();
 end;
 

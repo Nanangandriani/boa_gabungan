@@ -108,7 +108,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue));
+      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai.EditValue))+' and po_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue));
       ExecSQL;
     end;
   end;
@@ -118,7 +118,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from "V_RekapPO" where po_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+' and kategori_tr='+QuotedStr(CbKategori.EditValue);
+      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai.EditValue))+' and po_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+' and trans_category='+QuotedStr(CbKategori.EditValue);
       ExecSQL;
     end;
   end;
@@ -159,7 +159,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue));
+      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai.EditValue))+' and po_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue));
       ExecSQL;
     end;
   end;
@@ -169,7 +169,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from "V_RekapPO" where po_date='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+' and kategori_tr='+QuotedStr(CbKategori.EditValue);
+      sql.Text:='select * from "V_RekapPO" where po_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai.EditValue))+' and po_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai.EditValue))+' and trans_category='+QuotedStr(CbKategori.EditValue);
       ExecSQL;
     end;
   end;

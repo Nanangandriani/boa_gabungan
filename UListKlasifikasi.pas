@@ -79,6 +79,10 @@ type
     QMasterKlasifikasiname_promo: TMemoField;
     QMasterKlasifikasicode_type_business: TStringField;
     QMasterKlasifikasiname_type_business: TStringField;
+    QMasterKlasifikasistatus_approval: TMemoField;
+    dxBarManager1Bar2: TdxBar;
+    cbStatusApproval: TdxBarCombo;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -94,11 +98,13 @@ type
       var Text: string; DisplayText: Boolean);
     procedure QMasterKlasifikasiname_promoGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    procedure Clear;
+    procedure Refresh;
   end;
 
 var
@@ -110,9 +116,58 @@ implementation
 
 uses UDataModule, UDaftarKlasifikasi;
 
-procedure TFListKlasifikasi.Clear;
+procedure TFListKlasifikasi.Refresh;
+var strStatusApproval: String;
 begin
+
+  if cbStatusApproval.Text='Pengajuan' then
+  begin
+    strStatusApproval:=' WHERE a.status_approval=0 ';
+  end else if cbStatusApproval.Text='Disetujui' then
+  begin
+    strStatusApproval:=' WHERE a.status_approval=1 ';
+  end else if cbStatusApproval.Text='Ditolak' then
+  begin
+    strStatusApproval:=' WHERE a.status_approval=99 ';
+  end else begin
+    strStatusApproval:='';
+  end;
+
+  DBGrid.StartLoadingStatus();
+  try
+    with QMasterKlasifikasi do
+    begin
+       close;
+       sql.Clear;
+       sql.Text:=' SELECT a."id" AS id_master, '+
+                 ' a."code_type_business", g.NAME AS "name_type_business", '+
+                 ' "code_type_customer", b.NAME AS "name_type_customer", '+
+                 ' "code_item_category", c.group_name as "name_item_category", '+
+                 ' "code_type_count",	d.name as "name_type_count", "code_customer_selling_type", '+
+                 ' e.name as "name_customer_selling_type", "code_sell_type", f.name as "name_sell_type", '+
+                 ' "status_payment", case when "status_payment"=0 then ''Cash'' else ''Kredit'' end "name_payment", '+
+                 ' "status_grouping",	case when "status_grouping"=0 then ''Non Grouping'' else ''Grouping'' end "name_grouping", '+
+                 ' "status_tax", case when "status_tax"=0 then ''Tidak'' else ''Iya'' end "name_tax", '+
+                 ' "status_disc",	case when "status_disc"=0 then ''Disc'' else ''Value (Rp)'' end "name_disc", '+
+                 ' "status_promo", case when "status_promo"=0 then ''Tidak'' else ''Iya'' end "name_promo",'+
+                 'case when a.status_approval=1 then ''Disetujui'' when a.status_approval=99 then ''Ditolak'' else ''Pengajuan'' end status_approval '+
+                 ' FROM	"t_sales_classification" a '+
+                 ' LEFT JOIN t_customer_type b ON a.code_type_customer = b.code '+
+                 //' LEFT JOIN t_item_category c ON a.code_item_category = c.code  '+
+                 ' LEFT JOIN t_item_group c ON a.code_item_category = c.group_id ::VARCHAR   '+
+                 ' LEFT JOIN t_sell_type_count d ON a.code_type_count = d.code '+
+                 ' LEFT JOIN t_customer_selling_type e ON a.code_customer_selling_type = e.code '+
+                 ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+
+                 ' LEFT JOIN t_customer_type_business g ON a.code_type_business = g.code '+
+                 ' '+strStatusApproval+' Order By b.created_at DESC ';
+       open;
+    end;
+    finally
+    DBGrid.FinishLoadingStatus();
+  end;
 end;
+
+
 
 procedure TFListKlasifikasi.QMasterKlasifikasiname_discGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
@@ -161,37 +216,7 @@ end;
 
 procedure TFListKlasifikasi.ActROExecute(Sender: TObject);
 begin
-  DBGrid.StartLoadingStatus();
-  try
-   with QMasterKlasifikasi do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' SELECT a."id" AS id_master, '+
-                 ' a."code_type_business", g.NAME AS "name_type_business", '+
-                 ' "code_type_customer", b.NAME AS "name_type_customer", '+
-                 ' "code_item_category", c.group_name as "name_item_category", '+
-                 ' "code_type_count",	d.name as "name_type_count", "code_customer_selling_type", '+
-                 ' e.name as "name_customer_selling_type", "code_sell_type", f.name as "name_sell_type", '+
-                 ' "status_payment", case when "status_payment"=0 then ''Cash'' else ''Kredit'' end "name_payment", '+
-                 ' "status_grouping",	case when "status_grouping"=0 then ''Non Grouping'' else ''Grouping'' end "name_grouping", '+
-                 ' "status_tax", case when "status_tax"=0 then ''Tidak'' else ''Iya'' end "name_tax", '+
-                 ' "status_disc",	case when "status_disc"=0 then ''Disc'' else ''Value (Rp)'' end "name_disc", '+
-                 ' "status_promo", case when "status_promo"=0 then ''Tidak'' else ''Iya'' end "name_promo" '+
-                 ' FROM	"t_sales_classification" a '+
-                 ' LEFT JOIN t_customer_type b ON a.code_type_customer = b.code '+
-                 //' LEFT JOIN t_item_category c ON a.code_item_category = c.code  '+
-                 ' LEFT JOIN t_item_group c ON a.code_item_category = c.group_id ::VARCHAR   '+
-                 ' LEFT JOIN t_sell_type_count d ON a.code_type_count = d.code '+
-                 ' LEFT JOIN t_customer_selling_type e ON a.code_customer_selling_type = e.code '+
-                 ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+
-                 ' LEFT JOIN t_customer_type_business g ON a.code_type_business = g.code '+
-                 ' Order By b.NAME asc ';
-       open;
-   end;
-  finally
-  DBGrid.FinishLoadingStatus();
-  end;
+  Refresh;
 end;
 
 procedure TFListKlasifikasi.ActUpdateExecute(Sender: TObject);
@@ -222,6 +247,17 @@ begin
   end;
   FDaftarKlasifikasi.RefreshGrid;
   FDaftarKlasifikasi.ShowModal;
+end;
+
+procedure TFListKlasifikasi.dxBarLargeButton1Click(Sender: TObject);
+begin
+  Refresh;
+end;
+
+procedure TFListKlasifikasi.FormShow(Sender: TObject);
+begin
+  cbStatusApproval.ItemIndex:=2;
+  Refresh;
 end;
 
 initialization

@@ -10,6 +10,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -30,6 +31,10 @@ object FListPenerimaanBank: TFListPenerimaanBank
         end
         item
           ToolbarName = 'dxBarManager1Bar2'
+        end
+        item
+          Caption = 'Filter'
+          ToolbarName = 'dxBarManager1Bar3'
         end>
       Index = 0
     end
@@ -51,6 +56,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'voucher_no'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'No Voucher'
         Width = 200
       end
@@ -60,6 +66,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'trans_date'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Tanggal'
         Width = 100
       end
@@ -69,6 +76,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'code_type_trans'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -77,6 +85,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'name_type_trans'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jenis Transaksi'
         Width = 250
       end
@@ -86,6 +95,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'account_number_bank'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nomor Rekening'
         Width = 150
       end
@@ -95,6 +105,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'account_name_bank'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Rekening'
         Width = 200
       end
@@ -104,6 +115,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'paid_amount'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jumlah'
         Width = 100
       end
@@ -113,6 +125,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         EditButtons = <>
         FieldName = 'description'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Keterangan'
         Width = 250
       end>
@@ -221,6 +234,42 @@ object FListPenerimaanBank: TFListPenerimaanBank
         item
           Visible = True
           ItemName = 'dxBarLargeButton2'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar3: TdxBar
+      Caption = 'Custom 1'
+      CaptionButtons = <>
+      DockedLeft = 262
+      DockedTop = 0
+      FloatLeft = 1267
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 150
+          Visible = True
+          ItemName = 'cbBulan'
+        end
+        item
+          Visible = True
+          ItemName = 'edTahun'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 154
+          Visible = True
+          ItemName = 'cbTransaksi'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton3'
         end>
       OneOnRow = False
       Row = 0
@@ -832,6 +881,69 @@ object FListPenerimaanBank: TFListPenerimaanBank
         4E44AE426082}
       OnClick = dxBarLargeButton2Click
     end
+    object cbBulan: TdxBarCombo
+      Caption = 'Bulan      '
+      Category = 0
+      Hint = 'Bulan      '
+      Visible = ivAlways
+      Items.Strings = (
+        'Januari'
+        'Februari'
+        'Maret'
+        'April'
+        'Mei'
+        'Juni'
+        'Juli'
+        'Agustus'
+        'September'
+        'Oktober'
+        'November'
+        'Desember')
+      ItemIndex = -1
+    end
+    object edTahun: TdxBarSpinEdit
+      Caption = 'Tahun     '
+      Category = 0
+      Hint = 'Tahun     '
+      Visible = ivAlways
+    end
+    object dxBarLargeButton3: TdxBarLargeButton
+      Caption = 'Search'
+      Category = 0
+      Hint = 'Search'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton3Click
+    end
+    object cbTransaksi: TdxBarCombo
+      Caption = 'Transaksi'
+      Category = 0
+      Hint = 'Transaksi'
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QPenerimaanBank: TUniQuery
     Connection = dm.Koneksi
@@ -1016,7 +1128,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     Top = 48
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

@@ -1,7 +1,6 @@
 object FNew_PO: TFNew_PO
   Left = 0
   Top = 49
-  BorderIcons = [biSystemMenu]
   Caption = 'Form New Purchase Order'
   ClientHeight = 679
   ClientWidth = 1206
@@ -12,6 +11,9 @@ object FNew_PO: TFNew_PO
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object pninput: TPanel
@@ -23,7 +25,7 @@ object FNew_PO: TFNew_PO
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1202
+    ExplicitWidth = 1200
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -322,8 +324,7 @@ object FNew_PO: TFNew_PO
       Top = 124
       Width = 73
       Height = 23
-      Color = clInfoBk
-      ReadOnly = True
+      Color = clWhite
       TabOrder = 7
       OnChange = EdCurrChange
       Items.Strings = (
@@ -360,6 +361,7 @@ object FNew_PO: TFNew_PO
       CharCase = ecUpperCase
       TabOrder = 10
       Text = 'LOKAL'
+      OnSelect = EdjenispoSelect
       Items.Strings = (
         'IMPORT'
         'LOKAL')
@@ -558,11 +560,13 @@ object FNew_PO: TFNew_PO
     end
     object ckAs: TCheckBox
       Left = 870
-      Top = 10
+      Top = 13
       Width = 153
       Height = 17
       Caption = 'Approve Supplier'
       TabOrder = 26
+      Visible = False
+      WordWrap = True
       OnClick = ckAsClick
     end
     object CkUangmk: TCheckBox
@@ -693,6 +697,16 @@ object FNew_PO: TFNew_PO
       TabOrder = 40
       Visible = False
     end
+    object Button2: TButton
+      Left = 983
+      Top = 214
+      Width = 75
+      Height = 25
+      Caption = 'Button2'
+      TabOrder = 41
+      Visible = False
+      OnClick = Button2Click
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -701,7 +715,7 @@ object FNew_PO: TFNew_PO
     Height = 139
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1202
+    ExplicitWidth = 1200
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -873,8 +887,8 @@ object FNew_PO: TFNew_PO
     Height = 32
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1202
-    ExplicitHeight = 31
+    ExplicitWidth = 1200
+    ExplicitHeight = 23
     object BBatal: TRzBitBtn
       Left = 1130
       Top = 1
@@ -935,8 +949,8 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1126
-      ExplicitHeight = 29
+      ExplicitLeft = 1124
+      ExplicitHeight = 21
     end
     object BSimpan: TRzBitBtn
       Left = 1055
@@ -999,8 +1013,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1051
-      ExplicitHeight = 29
+      ExplicitLeft = 1049
+      ExplicitHeight = 21
     end
     object BEdit: TRzBitBtn
       Left = 980
@@ -1063,18 +1077,71 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 976
-      ExplicitHeight = 29
+      ExplicitLeft = 974
+      ExplicitHeight = 21
     end
-    object Button1: TButton
-      Left = 856
-      Top = 2
-      Width = 75
-      Height = 25
-      Caption = 'Button1'
+    object RzBitBtn2: TRzBitBtn
+      Left = 1
+      Top = 1
+      Width = 131
+      Height = 30
+      Align = alLeft
+      Caption = 'Monitoring Asset'
       TabOrder = 3
-      Visible = False
-      OnClick = Button1Click
+      OnClick = RzBitBtn2Click
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000330B0000330B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8ACDEE3E8E8
+        E8E8E8E8E8E8E8E8E8E8E8ACDEE3E8E8E8E8E8E8E8E8E8E8E8E8AC807A81E3E8
+        E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8E8CEA37A81E3
+        E8E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A81
+        E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A
+        81E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA3
+        7AACAD82828288E3E8E8E8E8E8E3ACE281ACE3818181E2E3E8E8E8E8E8E8D0CE
+        E28288E6B3E6E682EBE8E8E8E8E8E3ACE281E2ACACACAC81E3E8E8E8E8E8E8E3
+        8289B3B3B3D7D7D782E3E8E8E8E8E8E381E3ACACACE3E3E381E3E8E8E8E8E8AD
+        88B3E6B3B3D7D7D7E688E8E8E8E8E8E3E2ACACACACE3E3E3ACE2E8E8E8E8E888
+        89E6E6B3B3B3D7D7E682E8E8E8E8E8E2E3ACACACACACE3E3AC81E8E8E8E8E882
+        E6E6E6E6B3B3B3B3B382E8E8E8E8E881ACACACACACACACACAC81E8E8E8E8E888
+        E6B3E6E6E6B3B3B3E682E8E8E8E8E8E2ACACACACACACACACAC81E8E8E8E8E8AD
+        88D7D7E6E6E6E6B38888E8E8E8E8E8E3E2E3E3ACACACACACE2E2E8E8E8E8E8E3
+        82EBD7B3E6E6E68982E3E8E8E8E8E8E381E3E3ACACACACE381E3E8E8E8E8E8E8
+        AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
+        E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
+      NumGlyphs = 2
+      ExplicitHeight = 21
     end
   end
   object Panel3: TPanel
@@ -1084,7 +1151,7 @@ object FNew_PO: TFNew_PO
     Height = 265
     Align = alTop
     TabOrder = 3
-    ExplicitWidth = 1202
+    ExplicitWidth = 1200
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1
@@ -1382,6 +1449,7 @@ object FNew_PO: TFNew_PO
           LookupParams.LookupDisplayFieldName = 'nm_gudang'
           LookupParams.LookupKeyFieldNames = 'nm_gudang'
           Title.Caption = 'Lokasi Gudang'
+          Visible = False
           Width = 200
         end
         item
@@ -1491,6 +1559,36 @@ object FNew_PO: TFNew_PO
           Footers = <>
           Title.Caption = 'Qty Konversi'
           Visible = False
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_pengajuan_asset'
+          Footers = <>
+          Width = 108
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'no_pengajuan_asset'
+          Footers = <>
+          Width = 88
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_detail_asset'
+          Footers = <>
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'spesifikasi_asset'
+          Footers = <>
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
@@ -1517,98 +1615,32 @@ object FNew_PO: TFNew_PO
     Params = <>
     Left = 1041
     Top = 16
-    object MemItempokd_material: TStringField
-      FieldName = 'kd_material'
-    end
-    object MemItempoKd_Material_stok: TStringField
-      FieldName = 'Kd_Material_stok'
-    end
-    object MemItempoNm_material: TStringField
-      FieldName = 'Nm_material'
-      Size = 100
-    end
-    object MemItemposatuan: TStringField
-      FieldName = 'satuan'
-    end
-    object MemItempoQty: TFloatField
-      FieldName = 'Qty'
-    end
-    object MemItempoharga: TCurrencyField
-      FieldName = 'harga'
-    end
-    object MemItempogudang: TStringField
-      FieldName = 'gudang'
-      Size = 50
-    end
-    object MemItempoqtyperkonversi: TFloatField
-      FieldName = 'qtyperkonversi'
-    end
-    object MemItempoqtykonversi: TFloatField
-      FieldName = 'qtykonversi'
-    end
-    object MemItemposatuankonversi: TStringField
-      FieldName = 'satuankonversi'
-    end
-    object MemItempototalbayar: TFloatField
-      FieldName = 'totalbayar'
-    end
-    object MemItemposisabayar: TFloatField
-      FieldName = 'sisabayar'
-    end
-    object MemItemposisaqty: TFloatField
-      FieldName = 'sisaqty'
-    end
-    object MemItempoqtyterkirim: TFloatField
-      FieldName = 'qtyterkirim'
-    end
-    object MemItempoqtykontrak: TFloatField
-      FieldName = 'qtykontrak'
-    end
-    object MemItempoppn: TFloatField
-      FieldName = 'ppn'
-    end
-    object MemItempoppn_rp: TFloatField
-      FieldName = 'ppn_rp'
-    end
-    object MemItempopph: TFloatField
-      FieldName = 'pph'
-      OnChange = MemItempopphChange
-    end
-    object MemItempopph_rp: TFloatField
-      FieldName = 'pph_rp'
-    end
-    object MemItemposubtotal: TCurrencyField
-      FieldName = 'subtotal'
-    end
-    object MemItempograndtotal: TCurrencyField
-      FieldName = 'grandtotal'
-    end
-    object MemItemposubtotal_rp: TFloatField
-      FieldName = 'subtotal_rp'
-    end
-    object MemItempoharga_rp: TFloatField
-      FieldName = 'harga_rp'
-    end
-    object MemItempograndtotalrp: TFloatField
-      FieldName = 'grandtotalrp'
-    end
-    object MemItempoppn_us: TCurrencyField
-      FieldName = 'ppn_us'
-    end
-    object MemItempopemb_ppn: TFloatField
-      FieldName = 'pemb_ppn'
-    end
-    object MemItempopemb_ppn_us: TFloatField
-      FieldName = 'pemb_ppn_us'
-    end
-    object MemItempopemb_dpp: TCurrencyField
-      FieldName = 'pemb_dpp'
-    end
-    object MemItempokd_gudang: TStringField
-      FieldName = 'kd_gudang'
-    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
+        object id_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'id_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object no_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'no_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object id_detail_asset: TMTStringDataFieldEh
+          FieldName = 'id_detail_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object spesifikasi_asset: TMTStringDataFieldEh
+          FieldName = 'spesifikasi_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
         object kd_material: TMTStringDataFieldEh
           FieldName = 'kd_material'
           StringDataType = fdtStringEh
@@ -1632,7 +1664,7 @@ object FNew_PO: TFNew_PO
         end
         object Qty: TMTNumericDataFieldEh
           FieldName = 'Qty'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 50
           currency = False

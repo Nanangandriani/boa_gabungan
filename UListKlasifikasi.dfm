@@ -10,6 +10,7 @@ object FListKlasifikasi: TFListKlasifikasi
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -22,12 +23,16 @@ object FListKlasifikasi: TFListKlasifikasi
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 827
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
@@ -39,11 +44,21 @@ object FListKlasifikasi: TFListKlasifikasi
     Height = 364
     Align = alClient
     DataSource = DsMasterKlasifikasi
+    DrawMemoText = True
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'status_approval'
+        Footers = <>
+        Title.Caption = 'Status Approval'
+        Width = 90
+      end
       item
         CellButtons = <>
         DynProps = <>
@@ -67,7 +82,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_type_customer'
         Footers = <>
         Title.Caption = 'Jenis Pelanggan'
-        Width = 200
+        Width = 122
       end
       item
         CellButtons = <>
@@ -84,7 +99,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_item_category'
         Footers = <>
         Title.Caption = 'Kategori Barang'
-        Width = 200
+        Width = 153
       end
       item
         CellButtons = <>
@@ -101,7 +116,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_type_count'
         Footers = <>
         Title.Caption = 'Jenis Perhitungan'
-        Width = 200
+        Width = 102
       end
       item
         CellButtons = <>
@@ -118,7 +133,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_customer_selling_type'
         Footers = <>
         Title.Caption = 'Jenis Penjualan Pelanggan'
-        Width = 200
+        Width = 87
       end
       item
         CellButtons = <>
@@ -135,7 +150,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_sell_type'
         Footers = <>
         Title.Caption = 'Jenis Penjualan'
-        Width = 200
+        Width = 76
       end
       item
         CellButtons = <>
@@ -152,7 +167,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_payment'
         Footers = <>
         Title.Caption = 'Status Pembayaran'
-        Width = 200
+        Width = 78
       end
       item
         CellButtons = <>
@@ -169,7 +184,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_grouping'
         Footers = <>
         Title.Caption = 'Status Grouping'
-        Width = 200
+        Width = 98
       end
       item
         CellButtons = <>
@@ -186,15 +201,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_tax'
         Footers = <>
         Title.Caption = 'Status Pajak'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'status_disc'
-        Footers = <>
-        Visible = False
+        Width = 62
       end
       item
         CellButtons = <>
@@ -203,7 +210,15 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_disc'
         Footers = <>
         Title.Caption = 'Status Potongan'
-        Width = 200
+        Width = 60
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'status_disc'
+        Footers = <>
+        Visible = False
       end
       item
         CellButtons = <>
@@ -220,7 +235,7 @@ object FListKlasifikasi: TFListKlasifikasi
         FieldName = 'name_promo'
         Footers = <>
         Title.Caption = 'Status Promo'
-        Width = 200
+        Width = 48
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -303,7 +318,33 @@ object FListKlasifikasi: TFListKlasifikasi
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Filter'
+      CaptionButtons = <>
+      DockedLeft = 125
+      DockedTop = 0
+      FloatLeft = 845
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 144
+          Visible = True
+          ItemName = 'cbStatusApproval'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -791,6 +832,48 @@ object FListKlasifikasi: TFListKlasifikasi
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+    object cbStatusApproval: TdxBarCombo
+      Caption = 'Status Approval  '
+      Category = 0
+      Hint = 'Status Approval  '
+      Visible = ivAlways
+      Items.Strings = (
+        'Semua'
+        'Pengajuan'
+        'Disetujui'
+        'Ditolak')
+      ItemIndex = -1
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Filter'
+      Category = 0
+      Hint = 'Filter'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton1Click
+    end
   end
   object QMasterKlasifikasi: TUniQuery
     Connection = dm.Koneksi
@@ -829,7 +912,10 @@ object FListKlasifikasi: TFListKlasifikasi
       #9'"status_promo", '
       
         #9'case when "status_promo"=0 then '#39'Tidak'#39' else '#39'Iya'#39' end "name_pr' +
-        'omo"'
+        'omo",'
+      
+        'case when a.status_approval=1 then '#39'Disetujui'#39' when a.status_app' +
+        'roval=99 then '#39'Ditolak'#39' else '#39'Pengajuan'#39' end status_approval'
       'FROM'
       #9'"t_sales_classification" a'
       #9'LEFT JOIN t_customer_type b ON a.code_type_customer = b.code'
@@ -948,6 +1034,11 @@ object FListKlasifikasi: TFListKlasifikasi
       FieldName = 'name_type_business'
       ReadOnly = True
       Size = 255
+    end
+    object QMasterKlasifikasistatus_approval: TMemoField
+      FieldName = 'status_approval'
+      ReadOnly = True
+      BlobType = ftMemo
     end
   end
   object DsMasterKlasifikasi: TDataSource

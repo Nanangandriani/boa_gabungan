@@ -160,7 +160,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 773
+    ExplicitLeft = -1
     object Label1: TLabel
       Left = 10
       Top = 54
@@ -336,6 +336,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Height = 21
       TabOrder = 6
       Items.Strings = (
+        ''
         'Januari'
         'Februari'
         'Maret'
@@ -415,11 +416,11 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Width = 777
     Height = 210
     Align = alClient
-    AllowedOperations = [alopUpdateEh, alopDeleteEh]
+    AllowedOperations = [alopInsertEh, alopUpdateEh, alopDeleteEh]
     DataSource = DataSource1
     DrawMemoText = True
     DynProps = <>
-    EditActions = [geaCutEh, geaCopyEh, geaDeleteEh, geaSelectAllEh]
+    EditActions = [geaCutEh, geaCopyEh, geaPasteEh, geaDeleteEh, geaSelectAllEh]
     FooterRowCount = 1
     HorzScrollBar.ExtraPanel.Visible = True
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]

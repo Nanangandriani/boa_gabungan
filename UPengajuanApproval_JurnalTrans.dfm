@@ -30,6 +30,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
+      ExplicitWidth = 888
+      ExplicitHeight = 415
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 105
@@ -121,10 +123,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           object DBGridEh3: TDBGridEh
             Left = 0
             Top = 0
-            Width = 855
+            Width = 851
             Height = 118
             Align = alClient
             DataSource = Ds_DetailPembelian
+            DrawMemoText = True
             DynProps = <>
             FooterRowCount = 1
             SumList.Active = True
@@ -188,6 +191,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 888
         object Label1: TLabel
           Left = 40
           Top = 27
@@ -225,6 +229,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
+          ExplicitWidth = 886
           object BTampil_Pemb: TRzBitBtn
             Left = 518
             Top = 1
@@ -286,6 +291,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 514
           end
           object BSelect_Pemb: TRzBitBtn
             Left = 612
@@ -348,6 +354,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 608
           end
           object BApp_Pemb: TRzBitBtn
             Left = 710
@@ -410,6 +417,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 706
           end
           object BPrint_Pemb: TRzBitBtn
             Left = 795
@@ -472,6 +480,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 791
           end
         end
       end
@@ -952,8 +961,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabKas: TRzTabSheet
       Caption = 'Kas && Bank'
-      ExplicitWidth = 888
-      ExplicitHeight = 415
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -963,7 +970,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 888
         object Label7: TLabel
           Left = 40
           Top = 56
@@ -1008,7 +1014,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
-          ExplicitWidth = 886
           object Btampil_kas: TRzBitBtn
             Left = 518
             Top = 1
@@ -1070,7 +1075,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 514
           end
           object RzBitBtn11: TRzBitBtn
             Left = 612
@@ -1133,7 +1137,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 608
           end
           object RzBitBtn12: TRzBitBtn
             Left = 710
@@ -1196,7 +1199,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 706
           end
           object RzBitBtn13: TRzBitBtn
             Left = 795
@@ -1259,7 +1261,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 791
           end
         end
         object Cbmodule: TComboBox
@@ -1740,7 +1741,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       
         'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd  from t_gene' +
         'ral_ledger) A left JOIN t_ak_account b '
-      'on a.account_code=b.code where a.account_code is not null '
+      
+        'on LEFT(a.account_code,7)=b.code where a.account_code is not nul' +
+        'l '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
         '.status_dk order by status_dk desc')

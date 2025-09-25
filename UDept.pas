@@ -63,6 +63,9 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -70,7 +73,7 @@ type
     procedure refresh;
   end;
 
-var
+function
   FDept: TFDept;
 
 implementation
@@ -79,6 +82,16 @@ implementation
 
 uses UNew_Dept, UDataModule;
 
+var
+  RealDept: TFDept;
+
+function FDept: TFDept;
+begin
+  if RealDept <> nil then
+    FDept:= RealDept
+  else
+    Application.CreateForm(TFDept, Result);
+end;
 
 procedure TFDept.refresh;
 begin
@@ -120,9 +133,9 @@ begin
       Close;
       sql.Clear;
       //sql.Text:='Delete From t_dept where no_dept='+QuotedStr(DBGridDept.Fields[0].AsString);
-      sql.Text:=' Update t_dept set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+      sql.Text:=' Update t_dept set deleted_at=now(),deleted_by=:deleted_by '+
                 ' where dept_code='+QuotedStr(DBGridDept.Fields[0].AsString);
-      parambyname('deleted_at').AsDateTime:=Now;
+     // parambyname('deleted_at').AsDateTime:=Now;
       parambyname('deleted_by').AsString:='Admin';
       Execute;
     end;
@@ -152,6 +165,21 @@ begin
       Edkd.Text:=MemDept['Dept_code'];
       EdDept.Text:=MemDept['dept'];
     end;
+end;
+
+procedure TFDept.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFDept.FormCreate(Sender: TObject);
+begin
+  RealDept:=self;
+end;
+
+procedure TFDept.FormDestroy(Sender: TObject);
+begin
+  RealDept:=nil;
 end;
 
 procedure TFDept.FormShow(Sender: TObject);

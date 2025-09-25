@@ -128,8 +128,8 @@ begin
     ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
     ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
     ' t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
-    ' left join t_ak_account c on a.account_code=c.code'+
-    ' left join t_ak_account d on a.account_um_code=d.code'+
+    ' left join t_ak_account_sub c on a.account_code=c.account_code2 '+
+    ' left join t_ak_account_sub d on a.account_um_code=d.account_code2 '+
     ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
     ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY approved_status,trans_no) g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
     ' order by a.id desc) a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+

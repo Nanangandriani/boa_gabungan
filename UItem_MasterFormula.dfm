@@ -2,7 +2,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
   Left = 0
   Top = 0
   Caption = 'Form Item Master Formula'
-  ClientHeight = 356
+  ClientHeight = 449
   ClientWidth = 597
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,17 +15,16 @@ object FItem_MasterFormula: TFItem_MasterFormula
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 321
+    Top = 416
     Width = 597
-    Height = 35
+    Height = 33
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 312
-    ExplicitWidth = 591
+    ExplicitTop = 409
     object BClose: TRzBitBtn
       Left = 521
       Top = 1
-      Height = 33
+      Height = 31
       Align = alRight
       Caption = 'Cancel'
       TabOrder = 0
@@ -82,12 +81,13 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 515
+      ExplicitLeft = 517
+      ExplicitHeight = 33
     end
     object BSimpan: TRzBitBtn
       Left = 446
       Top = 1
-      Height = 33
+      Height = 31
       Align = alRight
       Caption = 'Save'
       TabOrder = 1
@@ -144,12 +144,13 @@ object FItem_MasterFormula: TFItem_MasterFormula
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 440
+      ExplicitLeft = 442
+      ExplicitHeight = 33
     end
     object Brefresh: TRzBitBtn
       Left = 296
       Top = 1
-      Height = 33
+      Height = 31
       Align = alRight
       Caption = 'Refresh'
       TabOrder = 2
@@ -206,12 +207,13 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 290
+      ExplicitLeft = 292
+      ExplicitHeight = 33
     end
     object BNew: TRzBitBtn
       Left = 221
       Top = 1
-      Height = 33
+      Height = 31
       Align = alRight
       Caption = 'New'
       TabOrder = 3
@@ -268,12 +270,13 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 215
+      ExplicitLeft = 217
+      ExplicitHeight = 33
     end
     object BUpdate: TRzBitBtn
       Left = 371
       Top = 1
-      Height = 33
+      Height = 31
       Align = alRight
       Caption = 'Update'
       TabOrder = 4
@@ -330,18 +333,18 @@ object FItem_MasterFormula: TFItem_MasterFormula
         10171710101010101009E8E8E8E8E8E8568181DFDFDFDFDFDF56E8E8E8E8E8E8
         E8101717101010101010E8E8E8E8E8E8E8568181DFDFDFDFDFDF}
       NumGlyphs = 2
-      ExplicitLeft = 365
+      ExplicitLeft = 367
+      ExplicitHeight = 33
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
     Width = 597
-    Height = 321
+    Height = 410
     Align = alTop
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 591
     object Label14: TLabel
       Left = 22
       Top = 19
@@ -360,7 +363,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
       Left = 1
       Top = 64
       Width = 595
-      Height = 256
+      Height = 345
       Align = alBottom
       DataSource = DataSource1
       DynProps = <>
@@ -412,9 +415,9 @@ object FItem_MasterFormula: TFItem_MasterFormula
   end
   object DBGridEh2: TDBGridEh
     Left = 0
-    Top = 321
+    Top = 410
     Width = 597
-    Height = 0
+    Height = 6
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
@@ -513,8 +516,9 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.*,b.item_name from "warehouse".t_master_test a inner jo' +
-        'in t_item b on a.item_code=b.item_code')
+        'select a.*,b.item_name from t_master_test a inner join t_item b ' +
+        'on a.item_code=b.item_code')
+    Active = True
     Left = 344
     Top = 88
   end
@@ -524,6 +528,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Top = 144
   end
   object MemMasterTest: TMemTableEh
+    Active = True
     Params = <>
     DataDriver = DsdMasterTest
     Left = 448

@@ -1,6 +1,7 @@
 object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Daftar Penagihan Piutang'
   ClientHeight = 558
   ClientWidth = 1070
@@ -10,6 +11,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -20,6 +22,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1066
     object Label8: TLabel
       Left = 21
       Top = 74
@@ -149,18 +152,18 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
+    ExplicitWidth = 1066
+    ExplicitHeight = 420
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1066
-      ExplicitHeight = 396
+      ExplicitWidth = 1062
+      ExplicitHeight = 395
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1072
-        Height = 405
+        Width = 1066
+        Height = 396
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -242,8 +245,10 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     Height = 32
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 525
+    ExplicitWidth = 1066
     object BBatal: TRzBitBtn
-      Left = 1000
+      Left = 994
       Top = 1
       Height = 30
       Align = alRight
@@ -301,10 +306,10 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 994
+      ExplicitLeft = 990
     end
     object BSave: TRzBitBtn
-      Left = 925
+      Left = 919
       Top = 1
       Height = 30
       Align = alRight
@@ -363,7 +368,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 919
+      ExplicitLeft = 915
     end
   end
   object MemDetailPiutang: TMemTableEh
@@ -401,6 +406,10 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     end
     object MemDetailPiutangpilih: TBooleanField
       FieldName = 'pilih'
+    end
+    object MemDetailPiutangid_dpp: TStringField
+      FieldName = 'id_dpp'
+      Size = 250
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -456,6 +465,12 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         object pilih: TMTBooleanDataFieldEh
           FieldName = 'pilih'
           DisplayWidth = 20
+        end
+        object id_dpp: TMTStringDataFieldEh
+          FieldName = 'id_dpp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 250
         end
       end
       object RecordsList: TRecordsListEh

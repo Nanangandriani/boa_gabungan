@@ -42,7 +42,12 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UBHPenjualan, URekapPenjualan, UListStockBarang, UBHReturPenjualan,
   URekapReturPenjualan, USetJenisKontrakTagihan, UNewKontrakTagihan,UDataPengajuanPengeluaranKasBank,
   UDaftarKontrak, UKartuPiutang, UBHPenerimaanKasBank, UDataKasBon,
-  UDataKasKecil, UDaftarRekeningKoran, UDataBankGaransi, UDataPeLakuBiaya;
+  UDataKasKecil, UDaftarRekeningKoran, UDataBankGaransi, UDataPeLakuBiaya,
+  UListOrderTelemarketing, UExportFaktur, UDaftarPiutangBermasalah,
+  UAmplopPelanggan, URekapTagihanKolektor, UListPiutangBermasalah,
+  URekapPenjualanPerPelanggan, UMonitoringTargetOmset, ULaporanHarianSisaNota,
+  Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
+  ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -200,73 +205,71 @@ begin
       additional_code4:='0';
       additional_code5:='0';
     end;
-  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
-  if vid_modul='3' then // Bank
-  begin
-    FDataPenerimaanBank.gbDataBank.Visible:=True;
-  end;
-  if vid_modul='4' then // Kas
-  begin
-    FDataPenerimaanBank.gbDataBank.Visible:=False;
-  end;
-
-
-  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
-  begin
-    with FDataPenerimaanBank do
+    vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+    if vid_modul='3' then // Bank
     begin
-      //ShowMessage('0');
-      //edKodeSumberTagihan.Visible:=true;
-      //edKodeJenisBayar.Visible:=true;
-      lbSumberTagihan.Visible:=true;
-      lbSumberTagihann.Visible:=true;
-      lbJenisBayar.Visible:=true;
-      lbJenisBayarr.Visible:=true;
-      edNMSumberTagihan.Visible:=true;
-      edNMJenisBayar.Visible:=true;
+      FDataPenerimaanBank.gbDataBank.Visible:=True;
     end;
-  end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
-  begin
-    with FDataPenerimaanBank do
+    if vid_modul='4' then // Kas
     begin
-      //ShowMessage('1');
-      //edKodeSumberTagihan.Visible:=false;
-      //edKodeJenisBayar.Visible:=false;
-      lbSumberTagihan.Visible:=false;
-      lbSumberTagihann.Visible:=false;
-      lbJenisBayar.Visible:=false;
-      lbJenisBayarr.Visible:=false;
-      edNMSumberTagihan.Visible:=false;
-      edNMJenisBayar.Visible:=false;
-    end;
-  end;
-
-  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
-  begin
-    with FDataPenerimaanBank do
-    begin
-      Panel5.Visible:=true;
-      gbDataPiutang.Visible:=false;
-      TabDetailFaktur.TabVisible:=false;
-    end;
-  end;
-  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
-  begin
-    with FDataPenerimaanBank do
-    begin
-      Panel5.Visible:=true;
-      gbDataPiutang.Visible:=true;
-      TabDetailFaktur.TabVisible:=true;
+      FDataPenerimaanBank.gbDataBank.Visible:=False;
     end;
 
-    if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
-      FDataPenerimaanBank.Panel5.Visible:=false
-    else
-      FDataPenerimaanBank.Panel5.Visible:=true;
-  end;
 
+    if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
+    begin
+      with FDataPenerimaanBank do
+      begin
+        //ShowMessage('0');
+        //edKodeSumberTagihan.Visible:=true;
+        //edKodeJenisBayar.Visible:=true;
+        lbSumberTagihan.Visible:=true;
+        lbSumberTagihann.Visible:=true;
+        lbJenisBayar.Visible:=true;
+        lbJenisBayarr.Visible:=true;
+        edNMSumberTagihan.Visible:=true;
+        edNMJenisBayar.Visible:=true;
+      end;
+    end;
+    if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '1' then
+    begin
+      with FDataPenerimaanBank do
+      begin
+        //ShowMessage('1');
+        //edKodeSumberTagihan.Visible:=false;
+        //edKodeJenisBayar.Visible:=false;
+        lbSumberTagihan.Visible:=false;
+        lbSumberTagihann.Visible:=false;
+        lbJenisBayar.Visible:=false;
+        lbJenisBayarr.Visible:=false;
+        edNMSumberTagihan.Visible:=false;
+        edNMJenisBayar.Visible:=false;
+      end;
+    end;
 
+    if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
+    begin
+      with FDataPenerimaanBank do
+      begin
+        Panel5.Visible:=true;
+        gbDataPiutang.Visible:=false;
+        TabDetailFaktur.TabVisible:=false;
+      end;
+    end;
+    if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
+    begin
+      with FDataPenerimaanBank do
+      begin
+        Panel5.Visible:=true;
+        gbDataPiutang.Visible:=true;
+        TabDetailFaktur.TabVisible:=true;
+      end;
+
+      if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
+        FDataPenerimaanBank.Panel5.Visible:=false
+      else
+        FDataPenerimaanBank.Panel5.Visible:=true;
+    end;
   end;
   if vcall='kaskecil_group_biaya' then
   begin
@@ -331,13 +334,13 @@ begin
       begin
         if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])) then
         begin
-        MemDetailAkun.Edit;
-        MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
-        MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
-        MemDetailAkun.post;
+          MemDetailAkun.Edit;
+          MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+          MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+          MemDetailAkun.post;
+        end;
+        MemDetailAkun.Next;
       end;
-    MemDetailAkun.Next;
-    end;
     end;
   end;
   if vcall='KL_kasbank_bank_ajuan' then
@@ -352,13 +355,13 @@ begin
       begin
         if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])) then
         begin
-        MemDetailAkun.Edit;
-        MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
-        MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
-        MemDetailAkun.post;
+          MemDetailAkun.Edit;
+          MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+          MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+          MemDetailAkun.post;
+        end;
+        MemDetailAkun.Next;
       end;
-    MemDetailAkun.Next;
-    end;
     end;
   end;
   if vcall='KL_kasbank_bank' then
@@ -677,20 +680,34 @@ begin
     FNew_TujuanAwal.edKodeKecamatan.Text:=MemMasterData['KD_MASTER'];
     FNew_TujuanAwal.edNamaKecamatan.Text:=MemMasterData['NM_MASTER'];
   end;
+//  if vcall='barang_order' then
+//  begin
+//    FTambah_Barang.edKodeBarang.Text:=MemMasterData['KD_MASTER'];
+//    FTambah_Barang.edNamaBarang.Text:=MemMasterData['NM_MASTER'];
+//    FTambah_Barang.edKodeSatuan.Text:=MemMasterData['KETERANGAN'];
+//    FTambah_Barang.edSatuan.Text:=SelectRow('SELECT unit_name from t_unit where unit_code='+QuotedStr(MemMasterData['KETERANGAN'])+' ');
+//    FTambah_Barang.Parent:=FTemplate_Temp.PanelParent;
+//    FTambah_Barang.Align:=Alclient;
+//    FTambah_Barang.BorderStyle:=BsNone;
+//    FTambah_Barang.Show;
+//    FTemplate_Temp.Show;
+//  end;
   if vcall='barang_order' then
   begin
     FTambah_Barang.edKodeBarang.Text:=MemMasterData['KD_MASTER'];
     FTambah_Barang.edNamaBarang.Text:=MemMasterData['NM_MASTER'];
     FTambah_Barang.edKodeSatuan.Text:=MemMasterData['KETERANGAN'];
     FTambah_Barang.edSatuan.Text:=SelectRow('SELECT unit_name from t_unit where unit_code='+QuotedStr(MemMasterData['KETERANGAN'])+' ');
-    FTambah_Barang.Parent:=FTemplate_Temp.PanelParent;
-    FTambah_Barang.Align:=Alclient;
-    FTambah_Barang.BorderStyle:=BsNone;
+//    FTambah_Barang.Parent:=FTemplate_Temp.PanelParent;
+//    FTambah_Barang.Align:=Alclient;
+//    FTambah_Barang.BorderStyle:=BsNone;
     //FTemplate_Temp.Height:=FTambah_Barang.Height+50;
     //FTemplate_Temp.Width:=FTambah_Barang.Width+50;
-    FTambah_Barang.Show;
-    FTemplate_Temp.Show;
+//    FTambah_Barang.Show;
+//    FTemplate_Temp.Show;
   end;
+
+
   if vcall='jasa_jns_kontrak' then
   begin
      FSetJenisKontrakTagihan.MemJenis.insert;
@@ -874,75 +891,218 @@ begin
       additional_code4:='0';
       additional_code5:='0';
     end;
-  vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
-  if vid_modul='5' then // Bank
-  begin
-    FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
-  end;
-  if vid_modul='6' then // Kas
-  begin
-    //FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
-    FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=False;
-  end;
-
-  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
-  begin
-    with FDataPengajuanPengeluaranKasBank do
+    vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
+    if vid_modul='5' then // Bank
     begin
-      Panel5.Visible:=true;
-      gbDataHutang.Visible:=false;
-      TabDetailFaktur.TabVisible:=false;
-      //Panel1.Height:=230;
-      //Panel1.Height:=340;
-      //lbSumberTagihan.Visible:=false;
-      //lbSumberTagihann.Visible:=false;
-      lbSumberTagihan.Visible:=true;
-      lbSumberTagihann.Visible:=true;
-      lbJenisBayar.Visible:=false;
-      lbJenisBayarr.Visible:=false;
-      //edKodeSumberPengeluaran.Visible:=false;
-      edKodeSumberPengeluaran.Visible:=true;
-      edNMSumberHutang.Visible:=true;
-      edKodeJenisBayar.Visible:=false;
-      edNMJenisBayar.Visible:=false;
-      edKodeSumberPengeluaran.Clear;
-      edNMSumberHutang.Clear;
-      edKodeJenisBayar.Clear;
-      edNMJenisBayar.Clear;
+      FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
     end;
-  end;
-  if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
-  begin
-    with FDataPengajuanPengeluaranKasBank do
+    if vid_modul='6' then // Kas
     begin
-      Panel5.Visible:=true;
-      gbDataHutang.Visible:=true;
-      TabDetailFaktur.TabVisible:=true;
-      //Panel1.Height:=340;
-      lbSumberTagihan.Visible:=true;
-      lbSumberTagihann.Visible:=true;
-      //lbJenisBayar.Visible:=true;
-      //lbJenisBayarr.Visible:=true;
-      lbJenisBayar.Visible:=false;
-      lbJenisBayarr.Visible:=false;
-      //edKodeSumberPengeluaran.Visible:=false;
-      edKodeSumberPengeluaran.Visible:=true;
-      edNMSumberHutang.Visible:=true;
-      edKodeJenisBayar.Visible:=false;
-      //edNMJenisBayar.Visible:=true;
-      edNMJenisBayar.Visible:=false;
-      edKodeSumberPengeluaran.Clear;
-      edNMSumberHutang.Clear;
-      edKodeJenisBayar.Clear;
-      edNMJenisBayar.Clear;
+      //FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
+      FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=False;
     end;
 
-    //if (FDataPengajuanPengeluaranKasBank.gbDataHutang.Visible=false) and (FDataPengajuanPengeluaranKasBank.gbDataBank.Visible=false) then
-      //FDataPengajuanPengeluaranKasBank.Panel5.Visible:=false
-    //else
-      //FDataPengajuanPengeluaranKasBank.Panel5.Visible:=true;
-  end;
+    if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '0' then
+    begin
+      with FDataPengajuanPengeluaranKasBank do
+      begin
+        Panel5.Visible:=true;
+        gbDataHutang.Visible:=false;
+        TabDetailFaktur.TabVisible:=false;
+        //Panel1.Height:=230;
+        //Panel1.Height:=340;
+        //lbSumberTagihan.Visible:=false;
+        //lbSumberTagihann.Visible:=false;
+        lbSumberTagihan.Visible:=true;
+        lbSumberTagihann.Visible:=true;
+        lbJenisBayar.Visible:=false;
+        lbJenisBayarr.Visible:=false;
+        //edKodeSumberPengeluaran.Visible:=false;
+        edKodeSumberPengeluaran.Visible:=true;
+        edNMSumberHutang.Visible:=true;
+        edKodeJenisBayar.Visible:=false;
+        edNMJenisBayar.Visible:=false;
+        edKodeSumberPengeluaran.Clear;
+        edNMSumberHutang.Clear;
+        edKodeJenisBayar.Clear;
+        edNMJenisBayar.Clear;
+      end;
+    end;
+    if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(MemMasterData['KD_MASTER'])+' ')= '1' then
+    begin
+      with FDataPengajuanPengeluaranKasBank do
+      begin
+        Panel5.Visible:=true;
+        gbDataHutang.Visible:=true;
+        TabDetailFaktur.TabVisible:=true;
+        //Panel1.Height:=340;
+        lbSumberTagihan.Visible:=true;
+        lbSumberTagihann.Visible:=true;
+        //lbJenisBayar.Visible:=true;
+        //lbJenisBayarr.Visible:=true;
+        lbJenisBayar.Visible:=false;
+        lbJenisBayarr.Visible:=false;
+        //edKodeSumberPengeluaran.Visible:=false;
+        edKodeSumberPengeluaran.Visible:=true;
+        edNMSumberHutang.Visible:=true;
+        edKodeJenisBayar.Visible:=false;
+        //edNMJenisBayar.Visible:=true;
+        edNMJenisBayar.Visible:=false;
+        edKodeSumberPengeluaran.Clear;
+        edNMSumberHutang.Clear;
+        edKodeJenisBayar.Clear;
+        edNMJenisBayar.Clear;
+      end;
+
+      //if (FDataPengajuanPengeluaranKasBank.gbDataHutang.Visible=false) and (FDataPengajuanPengeluaranKasBank.gbDataBank.Visible=false) then
+        //FDataPengajuanPengeluaranKasBank.Panel5.Visible:=false
+      //else
+        //FDataPengajuanPengeluaranKasBank.Panel5.Visible:=true;
+    end;
   end; //Pengajuan pengeluaran kas
+
+  //Nanang
+  if vcall='m_kares_telemarketing' then
+  begin
+    FListOrderTelemarketing.edKodeKaresidenan.Text:=MemMasterData['KD_MASTER'];
+    FListOrderTelemarketing.EdKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekaptagihankolektor_wilayah' then
+  begin
+    FRekapTagihanKolektor.strWilayahID:=MemMasterData['KD_MASTER'];
+    FRekapTagihanKolektor.edWilayah.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekaptagihankolektor_area' then
+  begin
+    FRekapTagihanKolektor.strAreaID:=MemMasterData['KD_MASTER'];
+    FRekapTagihanKolektor.edArea.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekaptagihankolektor_kares' then
+  begin
+    FRekapTagihanKolektor.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FRekapTagihanKolektor.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekappenjualanpercustomerkares' then
+  begin
+    FRekapPenjualanPerPelanggan.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FRekapPenjualanPerPelanggan.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekappenjualanpercustomerkab' then
+  begin
+    FRekapPenjualanPerPelanggan.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FRekapPenjualanPerPelanggan.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekappenjualanpercustomerkec' then
+  begin
+    FRekapPenjualanPerPelanggan.strKecamatanID:=MemMasterData['KD_MASTER'];
+    FRekapPenjualanPerPelanggan.cbKecamatan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekappenjualanpercustomerkelompokbarang' then
+  begin
+    FRekapPenjualanPerPelanggan.strKelompokID:=MemMasterData['KD_MASTER'];
+    FRekapPenjualanPerPelanggan.cbKelompok.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='rekapmonitoringtargetkares' then
+  begin
+    FMonitoringTargetOmset.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FMonitoringTargetOmset.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekapmonitoringtargetkab' then
+  begin
+    FMonitoringTargetOmset.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FMonitoringTargetOmset.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekapmonitoringtargetkec' then
+  begin
+    FMonitoringTargetOmset.strKecamatanID:=MemMasterData['KD_MASTER'];
+    FMonitoringTargetOmset.cbKecamatan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='rekapmonitoringtargetkelompokbarang' then
+  begin
+    FMonitoringTargetOmset.strKelompokID:=MemMasterData['KD_MASTER'];
+    FMonitoringTargetOmset.cbKelompok.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='laporanhariansisanotakares' then
+  begin
+    FLaporanHarianSisaNota.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNota.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='laporanhariansisanotakab' then
+  begin
+    FLaporanHarianSisaNota.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNota.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='laporanhariansisanotakec' then
+  begin
+    FLaporanHarianSisaNota.strKecamatanID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNota.cbKecamatan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='laporanhariansisanotapertpkares' then
+  begin
+    FLaporanHarianSisaNotaPerTP.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+   //Nanang
+  if vcall='laporanhariansisanotaperkabkares' then
+  begin
+    FLaporanHarianSisaNotaPerKabupaten.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNotaPerKabupaten.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='laporanhariansisanotaperkabkab' then
+  begin
+//    FLaporanHarianSisaNotaPerKabupaten.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNotaPerKabupaten.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='laporanhariansisanotapiutangperoutletkares' then
+  begin
+    FLaporanHarianSisaNotaPiutangPerOutlet.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='stockopnamenota' then
+  begin
+    FStockOpnameNota.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='dppkares' then
+  begin
+    FDataPenagihanPiutang.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FDataPenagihanPiutang.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='dppkab' then
+  begin
+    FDataPenagihanPiutang.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FDataPenagihanPiutang.edKabupaten.Text:=MemMasterData['NM_MASTER'];
+  end;
+
+   //Nanang
+  if vcall='loguser' then
+  begin
+    FLog.edUser.EditValue:=MemMasterData['NM_MASTER'];
+  end;
 
   //ShowMessage(FTambah_Barang.edKodeBarang.Text);
   FMasterData.Close;

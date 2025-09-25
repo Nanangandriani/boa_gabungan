@@ -85,6 +85,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
     procedure ActCloseExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -95,15 +98,25 @@ type
     Procedure PrintPodmlt;
   end;
 
-var
+function
   FPO: TFPO;
+
+var
+  realPO: TFPO;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_PO, UDataModule;
-
+// implementasi function
+function FPO: TFPO;
+begin
+  if realPO <> nil then
+    FPO:= realPO
+  else
+    Application.CreateForm(TFPO, Result);
+end;
 
 procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
 var
@@ -499,7 +512,7 @@ begin
          ShowMessage('Maaf data po kosong');
       end
       else
-        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_KolektifPOPPN.Fr3');
+        RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_POgb.Fr3');
        // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
       //  SetMemo(Rptpo,'MTerbilang',' '+ConvKeHuruf(Qrptdetailpo2['qtysum'])+' ');
       //  SetMemo(Rptpo,'MTerbilang2',' '+ConvKeHuruf(Qrptpo['sumtotal'])+' Rupiah ');
@@ -546,7 +559,7 @@ begin
       begin
          if QRptPO['ppn']<>'0' then
          begin
-           RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_KolektifPOPPN.Fr3');
+           RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_POgb.Fr3');
           // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
            SetMemo(Rptpo,'MTerbilang',' '+NumberInWords(Qrptdetailpo2['qtysum'])+' ');
            SetMemo(Rptpo,'MTerbilang2',' '+NumberInWords(Qrptpo['sumtotal'])+' US Dolar ');
@@ -554,7 +567,8 @@ begin
          end;
          if QRptPO['ppn']='0' then
          begin
-           RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_KolektifPOPPN.Fr3');
+       // podmlt    RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_KolektifPOPPN.Fr3');
+           RptPO.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_POgb.Fr3');
            //TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Kop Surat2.jpg');
            SetMemo(Rptpo,'MTerbilang',' '+NumberInWords(Qrptdetailpo2['qtysum'])+' ');
            SetMemo(Rptpo,'MTerbilang2',' '+NumberInWords(Qrptpo['sumtotal'])+' US Dolar ');
@@ -681,6 +695,14 @@ begin
                 //FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').AsString;
                 FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
                 FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+                FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
+                FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+                FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
+                FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+                FNew_PO.memitempo['id_pengajuan_asset']:=Qdetailpo['id_pengajuan_asset'];
+                FNew_PO.memitempo['no_pengajuan_asset']:=Qdetailpo['no_pengajuan_asset'];
+                FNew_PO.memitempo['id_detail_asset']:=Qdetailpo['id_detail_asset'];
+                FNew_PO.memitempo['spesifikasi_asset']:=Qdetailpo['spesifikasi_asset'];
                 FNew_PO.MemItempo.Post;
                 Qdetailpo.Next;
               end;
@@ -715,6 +737,10 @@ begin
                 //FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').AsString;
                 FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').Value;
                 FNew_PO.MemItempo['pemb_ppn']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
+                FNew_PO.memitempo['id_pengajuan_asset']:=Qdetailpo['id_pengajuan_asset'];
+                FNew_PO.memitempo['no_pengajuan_asset']:=Qdetailpo['no_pengajuan_asset'];
+                FNew_PO.memitempo['id_detail_asset']:=Qdetailpo['id_detail_asset'];
+                FNew_PO.memitempo['spesifikasi_asset']:=Qdetailpo['spesifikasi_asset'];
                 FNew_PO.MemItempo.Post;
                 Qdetailpo.Next;
               end;
@@ -789,6 +815,21 @@ begin
      nopo.Text:='';
      Edurut.Text:='';
   end;
+end;
+
+procedure TFPO.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+ action:=caFree;
+end;
+
+procedure TFPO.FormCreate(Sender: TObject);
+begin
+  realPO:=self;
+end;
+
+procedure TFPO.FormDestroy(Sender: TObject);
+begin
+  realPO:=nil;
 end;
 
 procedure TFPO.FormShow(Sender: TObject);

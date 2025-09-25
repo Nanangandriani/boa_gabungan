@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
 
 type
   TFDataListPenjualan = class(TForm)
@@ -118,6 +118,13 @@ type
     QJurnal: TUniQuery;
     frxDBDJurnal: TfrxDBDataset;
     dxBarLargeButton5: TdxBarLargeButton;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton6: TdxBarLargeButton;
+    frxReport1: TfrxReport;
+    dxBarLargeButton7: TdxBarLargeButton;
+    dxBarLargeButton8: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -126,11 +133,16 @@ type
     procedure dxBarLargeButton4Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton5Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton6Click(Sender: TObject);
+    procedure dxBarLargeButton7Click(Sender: TObject);
+    procedure dxBarLargeButton8Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure reset_stock;
+    procedure Refresh;
   end;
 
 var
@@ -141,7 +153,28 @@ implementation
 {$R *.dfm}
 
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
-  UNewKontrakTagihan, UMainMenu;
+  UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan;
+
+procedure TFDataListPenjualan.Refresh;
+var mm: Integer;
+begin
+  mm:=cbBulan.ItemIndex+1;
+  DBGridOrder.StartLoadingStatus();
+  try
+   with QPenjualan do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from t_selling '+
+                 'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
+                 'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
+                 'deleted_at is null order by created_at Desc ';
+       open;
+   end;
+  finally
+  DBGridOrder.FinishLoadingStatus();
+  end;
+end;
 
 procedure TFDataListPenjualan.reset_stock;
 begin
@@ -191,27 +224,35 @@ begin
   FNew_Penjualan.MemDetail.EmptyTable;
   FNew_Penjualan.trans_id_link:=SelectRow('SELECT uuid_generate_v4()::VARCHAR AS uuid_as_varchar;');
   FNew_Penjualan.Status:=0;
-  FNew_Penjualan.edKode_Trans.Enabled:=true;
-  FNew_Penjualan.edSuratJalanTrans.Enabled:=true;
+  with FNew_Penjualan do
+  begin
+    edNomorTrans.ReadOnly:=False;
+    edSuratJalanTrans.ReadOnly:=False;
+    edNama_Pelanggan.ReadOnly:=False;
+    dtTanggal.Enabled:=True;
+    edNamaSumber.ReadOnly:=False;
+    edNoReff.ReadOnly:=False;
+  end;
+
   FNew_Penjualan.ShowModal;
 end;
 
 procedure TFDataListPenjualan.ActDelExecute(Sender: TObject);
 begin
-   {with dm.Qtemp do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_selling"   '+
-                 ' where no_reference='+QuotedStr(QPenjualan.FieldByName('notrans').AsString)+' '+
-                 ' AND deleted_at is null order by created_at Desc ';
-       open;
-   end;
-   if dm.Qtemp.RecordCount<>0 then
-   begin
-     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Tagihan...!!!');
-     exit;
-   end;}
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' select * from "public"."t_selling"   '+
+             ' where no_reference='+QuotedStr(QPenjualan.FieldByName('notrans').AsString)+' '+
+             ' AND deleted_at is null order by created_at Desc ';
+    open;
+  end;
+  if dm.Qtemp.RecordCount<>0 then
+  begin
+    ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Tagihan...!!!');
+    exit;
+  end;
 
   MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
 
@@ -256,20 +297,13 @@ begin
 end;
 
 procedure TFDataListPenjualan.ActROExecute(Sender: TObject);
+var month,year:String;
 begin
-  DBGridOrder.StartLoadingStatus();
-  try
-   with QPenjualan do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_selling"   '+
-                 ' where deleted_at is null order by created_at Desc ';
-       open;
-   end;
-  finally
-  DBGridOrder.FinishLoadingStatus();
-  end;
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun.Text:=(year);
+  cbBulan.ItemIndex:=StrToInt(month)-1;
+  Refresh;
 end;
 
 procedure TFDataListPenjualan.ActUpdateExecute(Sender: TObject);
@@ -312,80 +346,105 @@ begin
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
     kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
+    IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
   end;
   end;
-  FNew_Penjualan.edNomorTrans.Enabled:=false;
-  FNew_Penjualan.edSuratJalanTrans.Enabled:=false;
-  FNew_Penjualan.Show;
+  with FNew_Penjualan do
+  begin
+    edNomorTrans.ReadOnly:=True;
+    edSuratJalanTrans.ReadOnly:=True;
+    edNama_Pelanggan.ReadOnly:=True;
+    dtTanggal.Enabled:=False;
+    edNamaSumber.ReadOnly:=True;
+    edNoReff.ReadOnly:=True;
+  end;
   FNew_Penjualan.Status := 1;
+  FNew_Penjualan.ShowModal;
+
 end;
 
 procedure TFDataListPenjualan.dxBarLargeButton3Click(Sender: TObject);
 begin
-   with QCetak do
-    begin
-     close;
-     sql.clear;
-     sql.add(' select a."trans_no", "no_inv_tax", "trans_date", a."code_cust", a."name_cust", '+
-             ' d."address", b."code_item", b."name_item", '+
-             ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
-             ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
-             ' b."pph_name", b."pph_percent", b."pph_value", b."tot_piece_value", '+
-             ' b."tot_piece_percent", b."grand_tot",  '+
-             ' case when "piece_first" is null then 0 else "piece_first" end "piece_first", '+
-             ' case when "piece_second" is null then 0 else "piece_second" end "piece_second", '+
-             ' case when "piece_third" is null then 0 else "piece_third" end "piece_third", '+
-             ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth" '+
-             ' from "public"."t_selling" a '+
-             ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
-             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no '+
-             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
-             ' where a.deleted_at is null and '+
-             ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
-             ' order by b.created_at Desc');
-     open;
-    end;
+  with QCetak do
+  begin
+    close;
+    sql.clear;
+    sql.add(' select a."trans_no", "no_inv_tax", "trans_date", a."code_cust", a."name_cust", '+
+           ' d."address", b."code_item", b."name_item", '+
+           ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
+           ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
+           ' b."pph_name", b."pph_percent", b."pph_value", b."tot_piece_value", '+
+           ' b."tot_piece_percent", b."grand_tot",  '+
+           ' case when "piece_first" is null then 0 else "piece_first" end "piece_first", '+
+           ' case when "piece_second" is null then 0 else "piece_second" end "piece_second", '+
+           ' case when "piece_third" is null then 0 else "piece_third" end "piece_third", '+
+           ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth" '+
+           ' from "public"."t_selling" a '+
+           ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
+           ' LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item '+
+           ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
+           ' where a.deleted_at is null and '+
+           ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
+           ' order by b.created_at Desc');
+    open;
+  end;
 
 
- if QCetak.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+  if QCetak.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if QCetak.RecordCount<>0 then
- begin
-   // Dapetin Grand Total
-   with dm.Qtemp do
-    begin
-     close;
-     sql.clear;
-     sql.add(' select * '+
-             ' from "public"."t_selling" a '+
-             ' where a.deleted_at is null and '+
-             ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
-     open;
-    end;
-    //
+   if QCetak.RecordCount<>0 then
+   begin
+     // Dapetin Grand Total
+      with dm.Qtemp do
+      begin
+       close;
+       sql.clear;
+       sql.add(' select * '+
+               ' from "public"."t_selling" a '+
+               ' where a.deleted_at is null and '+
+               ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
+       open;
+      end;
 
-   cLocation := ExtractFilePath(Application.ExeName);
 
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
-   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-   SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
-   SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
-   SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
-   SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
-   //Report.DesignReport();
-   //Report.ShowReport();
-   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
-    begin
-     Report.DesignReport();
-    end else
-    begin
-      Report.ShowReport();
- end;
+
+
+     cLocation := ExtractFilePath(Application.ExeName);
+
+     //ShowMessage(cLocation);
+     Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
+     SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+     SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
+     SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
+     SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+     SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
+     //Report.DesignReport();
+     //Report.ShowReport();
+
+      with dm.Qtemp3 do
+      begin
+        Close;
+        SQl.Clear;
+        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+                  ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                  ' ''Cetak Nota Tagihan untuk pelanggan '+
+                  QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                  QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                  'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+        ExecSQL;
+      end;
+
+//     if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+//      begin
+//       Report.DesignReport();
+//      end else
+//      begin
+        Report.ShowReport();
+//   end;
  end;
 end;
 
@@ -399,7 +458,7 @@ begin
              ' a."name_cust",  d."address", b."code_item", b."name_item",  b."amount", '+
              ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket from "public"."t_selling" a  '+
              ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
-             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
+//             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
              ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
              ' where "code_details"=''001'') d on a.code_cust=d.customer_code  '+
              ' where a.deleted_at is null and  '+
@@ -409,24 +468,36 @@ begin
     end;
 
 
- if QCetakSJ.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+  if QCetakSJ.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if QCetakSJ.RecordCount<>0 then
- begin
-   cLocation := ExtractFilePath(Application.ExeName);
+  if QCetakSJ.RecordCount<>0 then
+  begin
+    with dm.Qtemp3 do
+      begin
+        Close;
+        SQl.Clear;
+        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+                  ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                  ' ''Cetak Surat Jalan untuk pelanggan '+
+                  QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                  QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                  'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+        ExecSQL;
+      end;
+    cLocation := ExtractFilePath(Application.ExeName);
 
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_suratjalan'+ '.fr3');
-   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
-   SetMemo(Report,'alamat_pt',FHomeLogin.vAlamatPRSH);
-   //Report.DesignReport();
-   Report.ShowReport();
- end;
+    //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_suratjalan'+ '.fr3');
+    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+    SetMemo(Report,'alamat_pt',FHomeLogin.vAlamatPRSH);
+    //Report.DesignReport();
+    Report.ShowReport();
+  end;
 
 end;
 
@@ -450,6 +521,19 @@ begin
 
  if fmainmenu.QJurnal.RecordCount<>0 then
  begin
+    with dm.Qtemp3 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                ' ''Cetak Jurnal untuk pelanggan '+
+                QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+      ExecSQL;
+    end;
+
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
@@ -462,14 +546,41 @@ begin
 
 end;
 
+procedure TFDataListPenjualan.dxBarLargeButton6Click(Sender: TObject);
+begin
+  Refresh;
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton7Click(Sender: TObject);
+begin
+  FExportFaktur.Clear;
+  FExportFaktur.ShowModal;
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton8Click(Sender: TObject);
+begin
+  FAmplopPelanggan.Show;
+end;
+
+procedure TFDataListPenjualan.FormShow(Sender: TObject);
+begin
+  ActROExecute(sender);
+end;
+
 procedure TFDataListPenjualan.ReportGetValue(const VarName: string;
   var Value: Variant);
 begin
-if CompareText(VarName, 'vTerbilang_qty') = 0 then
+  if CompareText(VarName, 'vTerbilang_qty') = 0 then
   begin
     status_pakai_terbilang:= 2;
     Value := '(  '+terbilang(FloatToStr(QCetakSJ.FieldByName('amount').AsFloat))+'  )  '+ QCetakSJ.FieldByName('code_unit').Asstring;
   end;
+  if CompareText(VarName, 'parSubTotal') = 0 then
+  Value := dm.Qtemp.FieldValues['sub_total'];
+  if CompareText(VarName, 'parPPN') = 0 then
+  Value := dm.Qtemp.FieldValues['ppn_value'];
+  if CompareText(VarName, 'parGrandTotal') = 0 then
+  Value := dm.Qtemp.FieldValues['grand_tot'];
 end;
 
 initialization

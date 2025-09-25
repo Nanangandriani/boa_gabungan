@@ -38,7 +38,6 @@ object FTerima_Material: TFTerima_Material
     Width = 813
     Height = 315
     Align = alClient
-    DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
         ColumnName = 'Column_11_trans_year'

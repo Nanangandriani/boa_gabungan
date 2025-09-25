@@ -3,7 +3,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   Top = 0
   Caption = 'List Penagihan Piutang'
   ClientHeight = 581
-  ClientWidth = 1381
+  ClientWidth = 1374
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1381
+    Width = 1374
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -34,7 +34,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1381
+    Width = 1374
     Height = 454
     Align = alClient
     DataSource = DsListPenagihanPiutang
@@ -680,42 +680,18 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   object QListPenagihanPiutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT'
-      #9'"date_dpp",'
-      #9'"date_print",'
-      #9'"code_collector",'
-      #9'"name_collector",'
-      #9'b."wilayah",'
-      #9'COUNT ( no_invoice ) AS tot_lmbr_invoice,'
-      #9'SUM ( "paid_amount" ) jum_tagihan '
-      'FROM'
-      #9'"public"."t_dpp"'
-      #9'A LEFT JOIN ('
-      #9'SELECT'
-      #9#9'code AS kd_master,'
-      #9#9'NAME AS nm_master,'
       
-        #9#9'concat ( '#39'Kares. '#39', name_kares, '#39', Kabupaten. '#39', name_regency ' +
-        ') AS wilayah '
-      #9'FROM'
-      #9#9'"public"."t_collector" '
-      #9'WHERE'
-      #9#9'deleted_at IS NULL '
-      #9') b ON A."code_collector" = b."kd_master" '
-      'WHERE'
-      #9'deleted_at IS NULL '
-      'GROUP BY'
-      #9'"date_dpp",'
-      #9'"date_print",'
-      #9'"code_collector",'
-      #9'"name_collector",'
-      #9'b."wilayah" '
-      'ORDER BY'
-      #9'"date_dpp",'
-      #9'"date_print",'
-      #9'"code_collector",'
-      #9'"name_collector",'
-      #9'b."wilayah" DESC')
+        'SELECT b.code_regency,"date_dpp", "date_print", "code_collector"' +
+        ' , "name_collector",  b."wilayah", count(no_invoice) as tot_lmbr' +
+        '_invoice, SUM("paid_amount") jum_tagihan  from "public"."t_dpp" ' +
+        'a  LEFT JOIN (SELECT code AS kd_master, name AS nm_master,   con' +
+        'cat('#39'Kares. '#39', name_kares, '#39', Kabupaten. '#39', name_regency)  AS wi' +
+        'layah,code_regency   from "public"."t_collector"  WHERE'#9'deleted_' +
+        'at IS NULL) b ON a."code_collector"=b."kd_master"  where deleted' +
+        '_at is null  GROUP BY "date_dpp", "date_print", "code_collector"' +
+        ', "name_collector", b."wilayah",b.code_regency  ORDER BY "date_d' +
+        'pp", "date_print", "code_collector", "name_collector", b."wilaya' +
+        'h" Desc')
     Left = 428
     Top = 56
     object QListPenagihanPiutangdate_dpp: TDateField
@@ -747,6 +723,11 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
       FieldName = 'jum_tagihan'
       ReadOnly = True
       DisplayFormat = '#,##0.##'
+    end
+    object QListPenagihanPiutangcode_regency: TStringField
+      FieldName = 'code_regency'
+      ReadOnly = True
+      Size = 100
     end
   end
   object DsListPenagihanPiutang: TDataSource

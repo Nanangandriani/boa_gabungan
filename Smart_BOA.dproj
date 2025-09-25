@@ -800,27 +800,15 @@
         </DCCReference>
         <DCCReference Include="U_keluarkasbank_ajuan.pas">
             <Form>FKeluarKasBank_Ajuan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="U_Data_rencana_lunas_hutang_pengajuan.pas">
             <Form>FDataRencanaLunasHutangPengajuan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="u_daf_keluar_kas_bank.pas">
             <Form>Fdaf_pengeluaran_kas_bank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UDataPengajuanPengeluaranKasBank.pas">
-            <Form>FDataPengajuanPengeluaranKasBank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UDataPengeluaranKasBank.pas">
-            <Form>FDataPengeluaranKasBank</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URpt_Buku_Besar.pas">
             <Form>FRpt_Buku_Besar</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekap_Kontrakks.pas">
             <Form>FRekapKontrak</Form>
@@ -860,7 +848,6 @@
         </DCCReference>
         <DCCReference Include="Unew_spb.pas">
             <Form>FNew_SPB</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDaftarKontrak.pas">
             <Form>FDaftarKontrak</Form>
@@ -873,7 +860,6 @@
         </DCCReference>
         <DCCReference Include="UHomeLogin.pas">
             <Form>FHomeLogin</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URpt_Rekap_Pembelian.pas">
             <Form>FRptRekap_Pembelian</Form>
@@ -893,69 +879,54 @@
         <DCCReference Include="UMy_Function.pas"/>
         <DCCReference Include="UListPenerimaanBank.pas">
             <Form>FListPenerimaanBank</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UPengajuanApproval_JurnalTrans.pas">
             <Form>FPengajuan_AppJurnal_Trans</Form>
         </DCCReference>
         <DCCReference Include="UDataListPelakuBiaya.pas">
             <Form>FDataListPelakuBiaya</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataListKelompokBiaya.pas">
             <Form>FDataListKelompokBiaya</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataKelompokBiaya.pas">
             <Form>FDataKelompokBiaya</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataKasKecil.pas">
             <Form>FDataKasKecil</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDataKasBon.pas">
             <Form>FDataKasBon</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListKasKecil.pas">
             <Form>FListKasKecil</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListKasBon.pas">
             <Form>FListKasBon</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UMaster_FormulaProd.pas">
             <Form>FMaster_FormulaProd</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="USPK_Produksi.pas">
             <Form>FSPK_Produksi</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UBonPermt_Barang.pas">
             <Form>FBonPermt_Barang</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UBon_Produksi.pas">
             <Form>FBon_Produksi</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UBon_KmsnProd.pas">
             <Form>FBon_Kmsn_prod</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UStokMat_Prod.pas">
             <Form>FStokMat_Prod</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="U_List_Kasbon.pas">
             <Form>FKasbon</Form>
         </DCCReference>
         <DCCReference Include="UList_Pelaku_Biaya.pas">
             <Form>FListPelakuBiaya</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="U_Pelaku_Biaya.pas">
             <Form>FPelaku_Biaya</Form>
@@ -966,18 +937,14 @@
         <DCCReference Include="UApproval_Keluar_Kas_Bank.pas">
             <Form>FApproval_Keluar_Kas_Bank</Form>
         </DCCReference>
-        <DCCReference Include="UListOrderTelemarketing.pas">
-            <Form>FListOrderTelemarketing</Form>
         <DCCReference Include="URpt_BHKeluarKasdanBank.pas">
             <Form>FRpt_BHKeluarKasdanBank</Form>
         </DCCReference>
-        <DCCReference Include="ULap_Buku_Harian_Kas.pas">
-            <Form>FLap_Buku_Harian_Kas</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UMasterWilayahAdministratif.pas">
             <Form>FMasterWilayahAdministratif</Form>
-            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListOrderTelemarketing.pas">
+            <Form>FListOrderTelemarketing</Form>
         </DCCReference>
         <DCCReference Include="UDaftarRekeningKoran.pas">
             <Form>FDaftarRekeningKoran</Form>
@@ -990,15 +957,78 @@
         </DCCReference>
         <DCCReference Include="UDataPeLakuBiaya.pas">
             <Form>FDataPeLakuBiaya</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UDashboard2.pas">
             <Form>FDashboard2</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ULap_Buku_Harian_Kas_Kecil.pas">
-            <Form>FLap_Buku_Harian_Kas_Kecil</Form>
-            <FormType>dfm</FormType>
+        <DCCReference Include="URpt_Arus_Kas.pas">
+            <Form>FRpt_arus_kas</Form>
+        </DCCReference>
+        <DCCReference Include="UListJurnal_memorial.pas">
+            <Form>Flist_jurnal_memorial</Form>
+        </DCCReference>
+        <DCCReference Include="UNewJurnal_memorial.pas">
+            <Form>FNewJurnal_memo</Form>
+        </DCCReference>
+        <DCCReference Include="UCari_ket_memorial.pas">
+            <Form>FKet_Memorial</Form>
+        </DCCReference>
+        <DCCReference Include="UCari_SumberMemorial.pas">
+            <Form>FCari_SumberMemorial</Form>
+        </DCCReference>
+        <DCCReference Include="Usaldo_bank_rencana_pelunasan_hutang.pas">
+            <Form>Fsaldo_bank_rencana_pelunasan_hutang</Form>
+        </DCCReference>
+        <DCCReference Include="Udaftar_deposito.pas">
+            <Form>Fdaftar_deposito</Form>
+        </DCCReference>
+        <DCCReference Include="Utrx_deposito.pas">
+            <Form>Ftrx_deposito</Form>
+        </DCCReference>
+        <DCCReference Include="Utrx_deposito_ajuan.pas">
+            <Form>Ftrx_deposito_ajuan</Form>
+        </DCCReference>
+        <DCCReference Include="Utrx_deposito2.pas">
+            <Form>Ftrx_deposito2</Form>
+        </DCCReference>
+        <DCCReference Include="Ufoto_deposito.pas">
+            <Form>Form1</Form>
+        </DCCReference>
+        <DCCReference Include="ULap_Kartu_Hutang.pas">
+            <Form>FLap_Kartu_Hutang</Form>
+        </DCCReference>
+        <DCCReference Include="Ustock_opname_kas_besar.pas">
+            <Form>Fstock_opname_kas_besar</Form>
+        </DCCReference>
+        <DCCReference Include="Ustock_opname_kas_kecil.pas">
+            <Form>Fstock_opname_kas_kecil</Form>
+        </DCCReference>
+        <DCCReference Include="Udata_uang_kas_kecil.pas">
+            <Form>Fdata_uang_cash_kecil</Form>
+        </DCCReference>
+        <DCCReference Include="Udata_uang_kas_besar.pas">
+            <Form>Fdata_uang_cash_besar</Form>
+        </DCCReference>
+        <DCCReference Include="UMutasi_Bank.pas">
+            <Form>FMutasiBank</Form>
+        </DCCReference>
+        <DCCReference Include="ULap_Buku_Harian_Kas.pas">
+            <Form>FLap_Buku_Harian_Kas</Form>
+        </DCCReference>
+        <DCCReference Include="UDataPengajuanPengeluaranKasBank.pas">
+            <Form>FDataPengajuanPengeluaranKasBank</Form>
+        </DCCReference>
+        <DCCReference Include="UDataPengeluaranKasBank.pas">
+            <Form>FDataPengeluaranKasBank</Form>
+        </DCCReference>
+        <DCCReference Include="ULap_Deposito.pas">
+            <Form>Form2</Form>
+        </DCCReference>
+        <DCCReference Include="Udaftar_deposito_ajuan.pas">
+            <Form>Fdaftar_deposito_ajuan</Form>
+        </DCCReference>
+        <DCCReference Include="udafajuankeluarkasbank.pas">
+            <Form>Fdafajuankeluarkasbank</Form>
         </DCCReference>
         <DCCReference Include="ULap_Ikhtisar_Biaya_KasKecil_BOP.pas">
             <Form>FLap_Ikhtisar_Biaya_KasKecil_BOP</Form>
@@ -1012,84 +1042,104 @@
             <Form>FRekap_Ikhtisar_Kas_Kecil</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UDaftarRekeningKoran.pas">
-            <Form>FDaftarRekeningKoran</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Usaldo_bank_rencana_pelunasan_hutang.pas">
-            <Form>Fsaldo_bank_rencana_pelunasan_hutang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Udaftar_deposito.pas">
-            <Form>Fdaftar_deposito</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Upengajuan_deposito.pas">
             <Form>Fpengajuan_deposito</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Utrx_deposito.pas">
-            <Form>Ftrx_deposito</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Udaftar_deposito_ajuan.pas">
-            <Form>Fdaftar_deposito_ajuan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Utrx_deposito_ajuan.pas">
-            <Form>Ftrx_deposito_ajuan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Utrx_deposito2.pas">
-            <Form>Ftrx_deposito2</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Ufoto_deposito.pas">
-            <Form>Form1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="ULap_Kartu_Hutang.pas">
-            <Form>FLap_Kartu_Hutang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Ustock_opname_kas_besar.pas">
-            <Form>Fstock_opname_kas_besar</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Ustock_opname_kas_kecil.pas">
-            <Form>Fstock_opname_kas_kecil</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Udata_uang_kas_kecil.pas">
-            <Form>Fdata_uang_cash_kecil</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Udata_uang_kas_besar.pas">
-            <Form>Fdata_uang_cash_besar</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UMutasi_Bank.pas">
-            <Form>FMutasiBank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="udafajuankeluarkasbank.pas">
-            <Form>Fdafajuankeluarkasbank</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="ULap_Buku_Harian_Kas_Kecil.pas">
             <Form>FLap_Buku_Harian_Kas_Kecil</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ULap_Buku_Harian_Kas.pas">
-            <Form>FLap_Buku_Harian_Kas</Form>
+        <DCCReference Include="USearch_MaterialRetur.pas">
+            <Form>FSearch_MaterialRetur</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ULap_Buku_Harian_Kas_Kecil.pas">
-            <Form>FLap_Buku_Harian_Kas_Kecil</Form>
+        <DCCReference Include="URpt_Kartu_Gudang.pas">
+            <Form>FRpt_Kartu_Gudang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ULap_Buku_Harian_Kas.pas">
-            <Form>FLap_Buku_Harian_Kas</Form>
+        <DCCReference Include="URpt_Lr.pas">
+            <Form>FRpt_Lr</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="browse_akun_kredit.pas">
+            <Form>Fbrowse_akun_kredit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPengajuanAsset.pas">
+            <Form>FPengajuanAsset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDetailPengajuanAsset.pas">
+            <Form>FDetailPengajuanAsset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMasterDataAsset.pas">
+            <Form>FMasterDataAsset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_master_asset.pas">
+            <Form>FMasterAsset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_master_asset2.pas">
+            <Form>frm_master_asset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ututup_buku_akunting.pas">
+            <Form>Form3</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_Tutup_Buku.pas">
+            <Form>FRpt_Tutup_Buku</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMasterSetiingAsset.pas">
+            <Form>FMasterSetingAsset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPerhitunganAsset.pas">
+            <Form>FPerhitunganAsset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDepresiasi.pas">
+            <Form>FDepresiasi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UStockOpnameNota.pas">
+            <Form>FStockOpnameNota</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapTagihanKolektor.pas">
+            <Form>FRekapTagihanKolektor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapPenjualanPerPelanggan.pas">
+            <Form>FRekapPenjualanPerPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ulog.pas">
+            <Form>FLog</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDaftarPiutangBermasalah.pas">
+            <Form>FDaftarPiutangBermasalah</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapUmurPiutang.pas">
+            <Form>FRekapUmurPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapSaldoPiutangPerKaresidenan.pas">
+            <Form>FRekapSaldoPiutangPerKaresidenan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListKoreksi.pas">
+            <Form>FListKoreksi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UKoreksi.pas">
+            <Form>FKoreksi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

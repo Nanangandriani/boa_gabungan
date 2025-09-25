@@ -22,8 +22,8 @@ object FDataPerintahMuat: TFDataPerintahMuat
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1221
-    ExplicitHeight = 223
+    ExplicitWidth = 1223
+    ExplicitHeight = 231
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -254,8 +254,8 @@ object FDataPerintahMuat: TFDataPerintahMuat
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 468
-    ExplicitWidth = 1221
+    ExplicitTop = 476
+    ExplicitWidth = 1223
     object BBatal: TRzBitBtn
       Left = 1151
       Top = 1
@@ -316,8 +316,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1157
-      ExplicitTop = 3
+      ExplicitLeft = 1147
     end
     object BSave: TRzBitBtn
       Left = 1076
@@ -379,7 +378,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1070
+      ExplicitLeft = 1072
     end
     object Edautocode: TEdit
       Left = 712
@@ -403,12 +402,12 @@ object FDataPerintahMuat: TFDataPerintahMuat
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 223
-    ExplicitWidth = 1221
+    ExplicitTop = 231
+    ExplicitWidth = 1223
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Muatan'
-      ExplicitWidth = 1217
+      ExplicitWidth = 1219
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -432,6 +431,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
               end>
             FieldName = 'nodo'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nomor DO'
             Width = 150
           end
@@ -441,6 +441,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'notrans'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nomor Penjualan'
             Width = 150
           end
@@ -450,6 +451,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'kode_vendor'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Kode Pelanggan'
             Width = 150
           end
@@ -459,6 +461,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'name_vendor'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Pelanggan'
             Width = 200
           end
@@ -468,6 +471,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'kd_barang'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Kode Barang'
             Visible = False
             Width = 50
@@ -478,6 +482,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'nm_barang'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Barang'
             Width = 150
           end
@@ -487,6 +492,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'jumlah'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Jumlah'
             Width = 75
           end
@@ -496,6 +502,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
             EditButtons = <>
             FieldName = 'satuan'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Satuan'
             Width = 100
           end>

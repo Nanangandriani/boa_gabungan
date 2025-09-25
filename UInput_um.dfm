@@ -26,8 +26,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     BorderOuter = fsFlat
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 508
-    ExplicitHeight = 235
+    ExplicitWidth = 506
+    ExplicitHeight = 227
     object Label1: TLabel
       Left = 34
       Top = 81
@@ -205,6 +205,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 7
+      Visible = False
       OnChange = Edkd_akunChange
     end
     object Edbln: TEdit
@@ -286,8 +287,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     BorderOuter = fsFlat
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 235
-    ExplicitWidth = 508
+    ExplicitTop = 227
+    ExplicitWidth = 506
     object BBatal: TRzBitBtn
       Left = 436
       Top = 1
@@ -348,7 +349,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 432
+      ExplicitLeft = 430
     end
     object BSimpan: TRzBitBtn
       Left = 361
@@ -411,7 +412,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 357
+      ExplicitLeft = 355
     end
     object BEdit: TRzBitBtn
       Left = 286
@@ -474,7 +475,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 282
+      ExplicitLeft = 280
     end
     object BitBtn1: TBitBtn
       Left = 2

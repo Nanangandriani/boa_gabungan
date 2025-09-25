@@ -26,10 +26,10 @@ type
     Edkodewilayah: TRzButtonEdit;
     Label24: TLabel;
     Label23: TLabel;
+    MemMasterDataKD_KARES: TStringField;
     Panel2: TPanel;
     Edautocode: TEdit;
     btTampilkan: TRzBitBtn;
-    MemMasterDataKD_KARES: TStringField;
     procedure FormShow(Sender: TObject);
     procedure RefreshGrid;
     procedure DBGridCustomerDblClick(Sender: TObject);
@@ -55,10 +55,25 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UTemplate_Temp, UNewDeliveryOrder, UListItempo, USetDeliveryOrder,
   UDelivery_Order_Sumber, UDataReturPenjualan, UReturPenjualan_Sumber,
   UNew_DataPenjualan, UDataPenerimaanBank, UDataRencanaLunasPiutang,
-  UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak;
+  UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
+  UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
+  UBrowseNotaPenjualan, UNew_DataPenjualanPromosi;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
+var strWhere: String;
 begin
+  if vcall='daftar_klasifikasi' then
+  begin
+    strWhere:=' and a.code_type_business='+QuotedStr(FDaftarKlasifikasi.edkd_jenis_usaha.Text)+' AND '+
+              'a.code_selling_type='+QuotedStr(FDaftarKlasifikasi.edkd_type_jual_pel.Text)+' AND '+
+              'a.code_type='+QuotedStr(FDaftarKlasifikasi.edkd_jenis_pel.Text);
+  end else if vcall='dpp' then
+  begin
+    strWhere:=' and getkares.code='+QuotedStr(FDataPenagihanPiutang.edKdWilayah.Text) ;
+  end else begin
+    strWhere:='';
+  end;
+
   with Dm.Qtemp do
   begin
     close;
@@ -71,29 +86,29 @@ begin
               ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
             ' LEFT JOIN (SELECT code, name, code_karesidenan from t_region_regency) getkares '+
               ' ON "left"(a.code_region,4)=getkares.code '+
-            ' where deleted_at is null ');
-      if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
+            ' where deleted_at is null '+strWhere);
+    if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
+    begin
+      if ( Edkodewilayah.Text<>'' ) AND ( Edkodewilayah.Text<>'0' ) then
       begin
-        if ( Edkodewilayah.Text<>'' ) AND ( Edkodewilayah.Text<>'0' ) then
-        begin
         sql.add(' AND code_region='+QuotedStr(Edkodewilayah.Text)+' ');
-        end;
       end;
+    end;
     sql.add(' ORDER BY created_at Desc ');
     open;
   end;
 
-    Fbrowse_data_pelanggan.MemMasterData.active:=false;
-    Fbrowse_data_pelanggan.MemMasterData.active:=true;
-    Fbrowse_data_pelanggan.MemMasterData.EmptyTable;
+  Fbrowse_data_pelanggan.MemMasterData.active:=false;
+  Fbrowse_data_pelanggan.MemMasterData.active:=true;
+  Fbrowse_data_pelanggan.MemMasterData.EmptyTable;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      Showmessage('Maaf, Data Tidak Ditemukan..');
-    end;
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
+    Showmessage('Maaf, Data Tidak Ditemukan..');
+  end;
 
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
@@ -108,7 +123,7 @@ begin
      Fbrowse_data_pelanggan.MemMasterData.post;
      Dm.Qtemp.next;
     end;
-    end;
+  end;
 end;
 
 procedure TFbrowse_data_pelanggan.btTampilkanClick(Sender: TObject);
@@ -144,6 +159,16 @@ begin
   begin
     FDataRencanaLunasPiutang.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FDataRencanaLunasPiutang.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+  if vcall='piutang_bermasalah' then
+  begin
+    FNew_PiutangBermasalah.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FNew_PiutangBermasalah.edPelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+  if vcall='browse_nota_penjualan' then
+  begin
+    FBrowseNotaPenjualan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FBrowseNotaPenjualan.edPelanggan.Text:=MemMasterData['NM_PELANGGAN'];
   end;
   if vcall='terima_bank' then
   begin
@@ -190,6 +215,8 @@ begin
   begin
     FDataReturPenjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FDataReturPenjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FDataReturPenjualan.kd_kares:=MemMasterData['KD_KARES'];
+    FDataReturPenjualan.edNoFaktur.Text:='';
     FDataReturPenjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
   if vcall='retur_penjualan_sumber' then
@@ -211,7 +238,7 @@ begin
     FNew_SalesOrder.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
     FNew_SalesOrder.edNama_Sales.Text:=SelectRow('SELECT name from t_sales  WHERE	code_region='+QuotedStr(MemMasterData['KD_WILAYAH'])+' AND deleted_at IS NULL ORDER BY code desc LIMIT 1');
     FNew_SalesOrder.edKode_Sales.Text:=SelectRow('SELECT code from t_sales  WHERE	code_region='+QuotedStr(MemMasterData['KD_WILAYAH'])+' AND deleted_at IS NULL ORDER BY code desc LIMIT 1');
-    FNew_SalesOrder.Autonumber;
+//    FNew_SalesOrder.Autonumber;
   end;
   if vcall='penjualan' then
   begin
@@ -232,6 +259,24 @@ begin
   begin
     FNew_MasterBiayaDO.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FNew_MasterBiayaDO.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+  if vcall='targetpenjualan' then
+  begin
+    FNew_DataTargetPenjualan.edKodePelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FNew_DataTargetPenjualan.edNamaPelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+  if vcall='skpiutang' then
+  begin
+    FSuratKonfirmasiPiutang.edNamaPelanggan.EditValue:=MemMasterData['NM_PELANGGAN'];
+    FSuratKonfirmasiPiutang.StrSKPKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+  end;
+  if vcall='penjualanpromosi' then
+  begin
+    FNew_DataPenjualanPromosi.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+    FNew_DataPenjualanPromosi.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FNew_DataPenjualanPromosi.kd_kares:=MemMasterData['KD_KARES'];
+    FNew_DataPenjualanPromosi.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+    FNew_DataPenjualanPromosi.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
 
   Fbrowse_data_pelanggan.Close;
@@ -263,7 +308,17 @@ begin
     GBType1.Visible:=false;
     GBType2.Visible:=true;
   end;
+
+  if (vcall='daftar_klasifikasi') OR (vcall='dpp') then
+  begin
+    pnlfilter.Visible:=false;
+    RefreshGrid;
+  end else begin
+    pnlfilter.Visible:=true;
+  end;
 end;
+
+
 
 //Initialization
   //RegisterClasses([TFNewDeliveryOrder,TFTemplate_Temp,TFbrowse_data_pelanggan]);

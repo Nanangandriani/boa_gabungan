@@ -91,20 +91,32 @@ type
     procedure ActPrintExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BRejectClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  FSPB: TFSPB;
+function FSPB: TFSPB;
 
 implementation
 
 {$R *.dfm}
 
 uses Unew_spb, UDataModule, UMainMenu;
+var
+  RealFSPB: TFSPB;
+// implementasi function
+function FSPB: TFSPB;
+begin
+  if RealFSPB <> nil then
+    FSPB:= RealFSPB
+  else
+    Application.CreateForm(TFSPB, Result);
+end;
 
 procedure TFSPB.ActBaruExecute(Sender: TObject);
 begin
@@ -314,6 +326,21 @@ begin
       BApprove.Enabled:=True;
       BReject.Enabled:=True;
     end;
+end;
+
+procedure TFSPB.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFSPB.FormCreate(Sender: TObject);
+Begin
+  RealFSPB:=Self;
+end;
+
+procedure TFSPB.FormDestroy(Sender: TObject);
+begin
+  RealFSPB:=nil;
 end;
 
 procedure TFSPB.FormShow(Sender: TObject);

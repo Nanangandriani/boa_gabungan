@@ -39,7 +39,7 @@ uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
   U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan,
-  UDataKasBon, UDataKasKecil, UDataPengeluaranKasBank;
+  UDataKasBon, UDataKasKecil, UDataPengeluaranKasBank, UPerhitunganAsset;
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
 function FCari_DaftarPerk: TFCari_DaftarPerk;
@@ -173,6 +173,7 @@ begin
     if (vpanggil = 'barang')then
     begin
       FNew_barang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FNew_barang.KodeHeaderPerkiraan:=QDaftar_Perk.fieldbyname('code').AsString;
       FNew_barang.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
@@ -269,9 +270,17 @@ begin
       FDataPengeluaranKasBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
+    if vpanggil='assetkr' then
+    begin
+      FPerhitunganAsset.edKodeKredit.text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FPerhitunganAsset.edNamaKredit.text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+    end;
+    if vpanggil='assetdb' then
+    begin
+      FPerhitunganAsset.edKodeDebit.text:=QDaftar_Perk.fieldbyname('code').AsString;
+      FPerhitunganAsset.edNamaDebit.text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+    end;
     close;
-    close;
-
 end;
 
 procedure TFCari_DaftarPerk.FormClose(Sender: TObject;

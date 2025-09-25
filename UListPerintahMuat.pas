@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
 
 type
   TFListPerintahMuat = class(TForm)
@@ -80,6 +80,10 @@ type
     QCetakamount: TFloatField;
     QCetakunit: TStringField;
     QCetakbanyaknya: TMemoField;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton3: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -87,11 +91,14 @@ type
     procedure QListPerintahMuatdescriptionGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure reset_stock;
+    procedure Refresh;
   end;
 
 var
@@ -103,6 +110,26 @@ implementation
 {$R *.dfm}
 
 uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin;
+
+procedure TFListPerintahMuat.Refresh;
+var mm: Integer;
+begin
+  mm:=cbBulan.ItemIndex+1;
+  DBGridList.StartLoadingStatus();
+  try
+   with QListPerintahMuat do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from "public"."t_spm" '+
+                 'where deleted_at is null and EXTRACT(YEAR FROM loading_date)='+edTahun.Text+' AND '+
+                 'EXTRACT(MONTH FROM loading_date)='+(IntToStr(mm))+' order by created_at Desc ';
+       open;
+   end;
+  finally
+  DBGridList.FinishLoadingStatus();
+  end;
+end;
 
 procedure TFListPerintahMuat.reset_stock;
 begin
@@ -154,6 +181,7 @@ begin
   FDataPerintahMuat.Status:=0;
   FDataPerintahMuat.stat_proses:=true;
   FDataPerintahMuat.edKodeMuat.Enabled:=true;
+  FDataPerintahMuat.CheckJasaTransportDefault;
   FDataPerintahMuat.ShowModal;
 end;
 
@@ -192,20 +220,13 @@ begin
 end;
 
 procedure TFListPerintahMuat.ActROExecute(Sender: TObject);
+var month,year:String;
 begin
-  DBGridList.StartLoadingStatus();
-  try
-   with QListPerintahMuat do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_spm"   '+
-                 ' where deleted_at is null order by created_at Desc ';
-       open;
-   end;
-  finally
-  DBGridList.FinishLoadingStatus();
-  end;
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun.Text:=(year);
+  cbBulan.ItemIndex:=StrToInt(month)-1;
+  Refresh;
 end;
 
 procedure TFListPerintahMuat.ActUpdateExecute(Sender: TObject);
@@ -324,6 +345,16 @@ begin
    Report.ShowReport();
  end;
 
+end;
+
+procedure TFListPerintahMuat.dxBarLargeButton3Click(Sender: TObject);
+begin
+  Refresh;
+end;
+
+procedure TFListPerintahMuat.FormShow(Sender: TObject);
+begin
+  ActROExecute(sender);
 end;
 
 procedure TFListPerintahMuat.QListPerintahMuatdescriptionGetText(Sender: TField;

@@ -24,8 +24,8 @@ object FNew_Barang: TFNew_Barang
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 332
-    ExplicitWidth = 553
+    ExplicitTop = 324
+    ExplicitWidth = 551
     object BBatal: TRzBitBtn
       Left = 481
       Top = 1
@@ -86,7 +86,7 @@ object FNew_Barang: TFNew_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 477
+      ExplicitLeft = 475
     end
     object BSimpan: TRzBitBtn
       Left = 406
@@ -148,7 +148,7 @@ object FNew_Barang: TFNew_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 402
+      ExplicitLeft = 400
     end
     object RzBitBtn1: TRzBitBtn
       Left = 83
@@ -273,6 +273,16 @@ object FNew_Barang: TFNew_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
     end
+    object Button1: TButton
+      Left = 296
+      Top = 16
+      Width = 75
+      Height = 25
+      Caption = 'Button1'
+      TabOrder = 4
+      Visible = False
+      OnClick = Button1Click
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
@@ -285,8 +295,8 @@ object FNew_Barang: TFNew_Barang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 553
-    ExplicitHeight = 332
+    ExplicitWidth = 551
+    ExplicitHeight = 324
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
@@ -552,10 +562,8 @@ object FNew_Barang: TFNew_Barang
     object TabSheet2: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 547
+      ExplicitHeight = 301
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
@@ -636,8 +644,6 @@ object FNew_Barang: TFNew_Barang
     object TabSheet3: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Akun'
-      ExplicitWidth = 549
-      ExplicitHeight = 309
       object Label19: TLabel
         Left = 27
         Top = 28
@@ -681,9 +687,9 @@ object FNew_Barang: TFNew_Barang
         Caption = 'Potongan Pembelian'
       end
       object Edkd_akun: TRzEdit
-        Left = 158
+        Left = 140
         Top = 25
-        Width = 90
+        Width = 130
         Height = 21
         Text = ''
         Color = clInfoBk
@@ -691,9 +697,9 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 0
       end
       object EdNm_akun: TRzButtonEdit
-        Left = 253
+        Left = 275
         Top = 25
-        Width = 228
+        Width = 230
         Height = 21
         Text = ''
         CharCase = ecUpperCase
@@ -704,9 +710,9 @@ object FNew_Barang: TFNew_Barang
         OnButtonClick = EdNm_akunButtonClick
       end
       object Edkd_akunPemb: TRzEdit
-        Left = 158
+        Left = 140
         Top = 54
-        Width = 90
+        Width = 130
         Height = 21
         Text = ''
         Color = clInfoBk
@@ -714,9 +720,9 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 2
       end
       object EdNm_akunPemb: TRzButtonEdit
-        Left = 253
+        Left = 275
         Top = 54
-        Width = 228
+        Width = 230
         Height = 21
         Text = ''
         CharCase = ecUpperCase
@@ -727,9 +733,9 @@ object FNew_Barang: TFNew_Barang
         OnButtonClick = EdNm_akunPembButtonClick
       end
       object Edkd_akunrt_Pemb: TRzEdit
-        Left = 158
+        Left = 140
         Top = 85
-        Width = 90
+        Width = 130
         Height = 21
         Text = ''
         Color = clInfoBk
@@ -737,9 +743,9 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 4
       end
       object EdNm_akunRt_Pemb: TRzButtonEdit
-        Left = 253
+        Left = 275
         Top = 85
-        Width = 228
+        Width = 230
         Height = 21
         Text = ''
         CharCase = ecUpperCase
@@ -750,9 +756,9 @@ object FNew_Barang: TFNew_Barang
         OnButtonClick = EdNm_akunRt_PembButtonClick
       end
       object Edkd_akunPenj: TRzEdit
-        Left = 158
+        Left = 140
         Top = 148
-        Width = 90
+        Width = 130
         Height = 21
         Text = ''
         Color = clInfoBk
@@ -760,9 +766,9 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 6
       end
       object EdNm_akunPenj: TRzButtonEdit
-        Left = 253
+        Left = 275
         Top = 148
-        Width = 228
+        Width = 230
         Height = 21
         Text = ''
         CharCase = ecUpperCase
@@ -773,9 +779,9 @@ object FNew_Barang: TFNew_Barang
         OnButtonClick = EdNm_akunPenjButtonClick
       end
       object Edkd_akunRt_Penj: TRzEdit
-        Left = 158
+        Left = 140
         Top = 180
-        Width = 90
+        Width = 130
         Height = 21
         Text = ''
         Color = clInfoBk
@@ -783,9 +789,9 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 8
       end
       object EdNm_akunRt_Penj: TRzButtonEdit
-        Left = 253
+        Left = 275
         Top = 180
-        Width = 228
+        Width = 230
         Height = 21
         Text = ''
         CharCase = ecUpperCase
@@ -796,9 +802,9 @@ object FNew_Barang: TFNew_Barang
         OnButtonClick = EdNm_akunRt_PenjButtonClick
       end
       object Edkd_akunPot_Pemb: TRzEdit
-        Left = 158
+        Left = 140
         Top = 116
-        Width = 90
+        Width = 130
         Height = 21
         Text = ''
         Color = clInfoBk
@@ -806,9 +812,9 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 10
       end
       object EdNm_akunPot_Pemb: TRzButtonEdit
-        Left = 253
+        Left = 275
         Top = 116
-        Width = 228
+        Width = 230
         Height = 21
         Text = ''
         CharCase = ecUpperCase

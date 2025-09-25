@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
 
 type
   TFListReturPenjualan = class(TForm)
@@ -110,6 +110,13 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     QJurnal: TUniQuery;
     frxDBDJurnal: TfrxDBDataset;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton3: TdxBarLargeButton;
+    DBGridEh1: TDBGridEh;
+    DSdetail: TDataSource;
+    Qdetail: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -118,10 +125,14 @@ type
       DisplayText: Boolean);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ReportGetValue(const VarName: string; var Value: Variant);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure Refresh;
   end;
 
 var
@@ -133,6 +144,40 @@ implementation
 {$R *.dfm}
 
 uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function, UMainMenu;
+
+procedure TFListReturPenjualan.Refresh;
+var mm: Integer;
+begin
+  mm:=cbBulan.ItemIndex+1;
+  DBGridList.StartLoadingStatus();
+  try
+   with QReturJual do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:= 'select * from "public"."t_sales_returns"   '+
+                  'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
+                  'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
+                  'deleted_at is null order by created_at Desc ';
+       open;
+   end;
+   Qdetail.Close;
+   Qdetail.Open;
+  finally
+  DBGridList.FinishLoadingStatus();
+  end;
+end;
+
+procedure TFListReturPenjualan.ReportGetValue(const VarName: string;
+  var Value: Variant);
+begin
+  if CompareText(VarName, 'parSubTotal') = 0 then
+  Value := dm.Qtemp.FieldValues['sub_total'];
+  if CompareText(VarName, 'parPPN') = 0 then
+  Value := dm.Qtemp.FieldValues['ppn_value'];
+  if CompareText(VarName, 'parGrandTotal') = 0 then
+  Value := dm.Qtemp.FieldValues['grand_tot'];
+end;
 
 procedure TFListReturPenjualan.ActBaruExecute(Sender: TObject);
 begin
@@ -149,61 +194,54 @@ begin
   MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
   if MessageDlg('Apakah anda yakin ingin Membatalkan Retur ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_selling"  SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString);
-          ExecSQL;
-        end;
-        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
+    if not dm.Koneksi.InTransaction then
+     dm.Koneksi.StartTransaction;
+    try
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' UPDATE "public"."t_selling"  SET '+
+                  ' "deleted_at"=now(), '+
+                  ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                  ' WHERE "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString);
+        ExecSQL;
+      end;
+      MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
+      Dm.Koneksi.Commit;
       Except on E :Exception do
+      begin
         begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
+          MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+          Dm.koneksi.Rollback ;
         end;
       end;
+    end;
   end;
 end;
 
 procedure TFListReturPenjualan.ActROExecute(Sender: TObject);
+var month,year:String;
 begin
-  DBGridList.StartLoadingStatus();
-  try
-   with QReturJual do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_sales_returns"   '+
-                 ' where deleted_at is null order by created_at Desc ';
-       open;
-   end;
-  finally
-  DBGridList.FinishLoadingStatus();
-  end;
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun.Text:=(year);
+  cbBulan.ItemIndex:=StrToInt(month)-1;
+  Refresh;
 end;
 
 procedure TFListReturPenjualan.ActUpdateExecute(Sender: TObject);
 begin
-   FDataReturPenjualan.Clear;
-   with Dm.Qtemp do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_sales_returns" a '+
-                 ' WHERE "trans_no"='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
-                 ' AND deleted_at is null order by created_at Desc ';
-       open;
-   end;
+  FDataReturPenjualan.Clear;
+  with Dm.Qtemp do
+  begin
+     close;
+     sql.Clear;
+     sql.Text:=' select * from "public"."t_sales_returns" a '+
+               ' WHERE "trans_no"='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
+               ' AND deleted_at is null order by created_at Desc ';
+     open;
+  end;
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
@@ -211,22 +249,23 @@ begin
   end;
   if Dm.Qtemp.RecordCount<>0 then
   begin
-  with FDataReturPenjualan do
-  begin
-    edNoTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
-    dtTanggal.Date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
-    edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
-    edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
-    kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
-    edKodeJenis.Text:=Dm.Qtemp.FieldByName('code_type_return').AsString;
-    edNamaJenis.Text:=Dm.Qtemp.FieldByName('name_type_return').AsString;
-    MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
-    order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-    //kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
-    strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
-    strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
-    strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
-  end;
+    with FDataReturPenjualan do
+    begin
+      edNoTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
+      dtTanggal.Date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
+      edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
+      edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
+      kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
+      edKodeJenis.Text:=Dm.Qtemp.FieldByName('code_type_return').AsString;
+      edNamaJenis.Text:=Dm.Qtemp.FieldByName('name_type_return').AsString;
+      MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
+      order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
+      edNoFaktur.Text:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
+      //kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
+      strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
+      strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
+      strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+    end;
   end;
   FDataReturPenjualan.edNoTrans.Enabled:=false;
   FDataReturPenjualan.RefreshGrid;
@@ -236,91 +275,101 @@ end;
 
 procedure TFListReturPenjualan.dxBarLargeButton1Click(Sender: TObject);
 begin
-   with QCetak do
+  with QCetak do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * from '+
+            ' ( SELECT "trans_no", "code_item", "name_item", "amount", "amount_sale", '+
+            ' "code_unit",  "name_unit", "unit_price", "unit_price_sale", "sub_total", '+
+            ' "ppn_account", "ppn_percent",  "ppn_value", "pph_account", "pph_value", '+
+            ' "pph_name", "pph_percent", "grand_tot", "account_code", "no_trans_sale"  '+
+            ' FROM  "public"."t_sales_returns_det") a  '+
+            ' LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_cust" '+
+            ' from "public"."t_sales_returns") b  ON a.trans_no=b.trans_no '+
+            ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on b.code_cust=d.customer_code '+
+            ' WHERE a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' '+
+            ' Order By a.trans_no, code_item desc');
+    open;
+  end;
+
+
+  if QCetak.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+
+  if QCetak.RecordCount<>0 then
+  begin
+    // Dapetin Grand Total
+    with dm.Qtemp do
     begin
-     close;
-     sql.clear;
-     sql.add(' SELECT * from '+
-             ' ( SELECT "trans_no", "code_item", "name_item", "amount", "amount_sale", '+
-             ' "code_unit",  "name_unit", "unit_price", "unit_price_sale", "sub_total", '+
-             ' "ppn_account", "ppn_percent",  "ppn_value", "pph_account", "pph_value", '+
-             ' "pph_name", "pph_percent", "grand_tot", "account_code", "no_trans_sale"  '+
-             ' FROM  "public"."t_sales_returns_det") a  '+
-             ' LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_cust" '+
-             ' from "public"."t_sales_returns") b  ON a.trans_no=b.trans_no '+
-             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on b.code_cust=d.customer_code '+
-             ' WHERE a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' '+
-             ' Order By a.trans_no, code_item desc');
-     open;
-    end;
-
-
- if QCetak.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
-
- if QCetak.RecordCount<>0 then
- begin
-   // Dapetin Grand Total
-   with dm.Qtemp do
-    begin
-     close;
-     sql.clear;
-     sql.add(' select * '+
-             ' from "public"."t_sales_returns" a '+
-             ' where a.deleted_at is null and '+
-             ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
-     open;
+    close;
+    sql.clear;
+    sql.add(' select * '+
+           ' from "public"."t_sales_returns" a '+
+           ' where a.deleted_at is null and '+
+           ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
+    open;
     end;
     //
 
-   cLocation := ExtractFilePath(Application.ExeName);
+     cLocation := ExtractFilePath(Application.ExeName);
 
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_retur_penjualan'+ '.fr3');
-   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-   SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
-   SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
-   SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
-   SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
-   //Report.DesignReport();
-   Report.ShowReport();
- end;
+     //ShowMessage(cLocation);
+     Report.LoadFromFile(cLocation +'report/rpt_retur_penjualan'+ '.fr3');
+     SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+     SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
+     SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
+     SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+     SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
+     //Report.DesignReport();
+     Report.ShowReport();
+  end;
 
 end;
 
 procedure TFListReturPenjualan.dxBarLargeButton2Click(Sender: TObject);
 begin
-   with fmainmenu.QJurnal do
-    begin
-     close;
-     sql.clear;
-     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
-             ' where "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+'');
-     open;
-    end;
+  with fmainmenu.QJurnal do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+         ' where "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+'');
+    open;
+  end;
 
 
- if fmainmenu.QJurnal.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+  if fmainmenu.QJurnal.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if fmainmenu.QJurnal.RecordCount<>0 then
- begin
-   cLocation := ExtractFilePath(Application.ExeName);
+  if fmainmenu.QJurnal.RecordCount<>0 then
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
 
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
-   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-   SetMemo(Report,'nm_judul','DAFTAR JURNAL PENJUALAN');
-   //Report.DesignReport();
-   Report.ShowReport();
- end;
+    //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'nm_judul','DAFTAR JURNAL PENJUALAN');
+    //Report.DesignReport();
+    Report.ShowReport();
+  end;
 
+end;
+
+procedure TFListReturPenjualan.dxBarLargeButton3Click(Sender: TObject);
+begin
+  Refresh;
+end;
+
+procedure TFListReturPenjualan.FormShow(Sender: TObject);
+begin
+  ActROExecute(sender);
 end;
 
 procedure TFListReturPenjualan.QReturJualdescriptionGetText(Sender: TField;

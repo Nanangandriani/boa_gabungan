@@ -111,6 +111,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'amount'
@@ -155,6 +156,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'jum_ak_deb'
@@ -182,6 +184,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'jum_ak_deb_lain'
@@ -209,6 +212,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'jum_ak_kre'
@@ -218,6 +222,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'ppn_ak_kre'
@@ -245,6 +250,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'jum_ak_kre_lain'
@@ -494,9 +500,9 @@ object FBHReturPenjualan: TFBHReturPenjualan
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP                   '
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP                   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -927,7 +933,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
     Top = 72
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

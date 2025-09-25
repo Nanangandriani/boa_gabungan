@@ -1,6 +1,7 @@
 object FDataPenerimaanBank: TFDataPenerimaanBank
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Penerimaan Bank'
   ClientHeight = 554
   ClientWidth = 1133
@@ -23,7 +24,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1127
+    ExplicitWidth = 1129
     object LabelPelanggan: TLabel
       Left = 10
       Top = 73
@@ -95,7 +96,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Caption = ':'
     end
     object Label10: TLabel
-      Left = 279
+      Left = 223
       Top = 126
       Width = 17
       Height = 15
@@ -174,7 +175,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object edNoTrans: TEdit
       Left = 132
       Top = 70
-      Width = 344
+      Width = 369
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 0
@@ -202,7 +203,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object dtTrans: TRzDateTimePicker
       Left = 132
       Top = 96
-      Width = 141
+      Width = 85
       Height = 23
       Date = 45405.000000000000000000
       Format = ''
@@ -220,22 +221,24 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object dtPeriode1: TRzDateTimePicker
       Left = 132
       Top = 123
-      Width = 141
+      Width = 85
       Height = 23
       Date = 45405.000000000000000000
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 5
+      OnChange = dtPeriode1Change
     end
     object dtPeriode2: TRzDateTimePicker
-      Left = 302
+      Left = 246
       Top = 123
-      Width = 141
+      Width = 83
       Height = 23
       Date = 45405.000000000000000000
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 6
+      OnChange = dtPeriode2Change
     end
     object edNamaMataUang: TRzButtonEdit
       Left = 132
@@ -284,7 +287,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object cbJenisTransaksi: TRzComboBox
       Left = 132
       Top = 43
-      Width = 197
+      Width = 370
       Height = 23
       TabOrder = 12
       OnChange = cbJenisTransaksiChange
@@ -296,7 +299,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object cbTransaksi: TRzComboBox
       Left = 132
       Top = 16
-      Width = 197
+      Width = 370
       Height = 23
       TabOrder = 13
       OnChange = cbTransaksiChange
@@ -309,8 +312,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 513
-    ExplicitWidth = 1127
+    ExplicitTop = 521
+    ExplicitWidth = 1129
     object BBatal: TRzBitBtn
       Left = 1057
       Top = 1
@@ -371,7 +374,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1051
+      ExplicitLeft = 1053
     end
     object BSave: TRzBitBtn
       Left = 982
@@ -434,6 +437,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 976
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -457,13 +461,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     UseColoredTabs = True
     TabIndex = 1
     TabOrder = 2
-    ExplicitWidth = 1127
-    ExplicitHeight = 211
+    ExplicitWidth = 1129
+    ExplicitHeight = 219
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1123
-      ExplicitHeight = 186
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -556,6 +558,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
+      ExplicitWidth = 1125
+      ExplicitHeight = 194
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -635,7 +639,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
-    ExplicitWidth = 1127
+    ExplicitWidth = 1129
     object gbDataPiutang: TGroupBox
       Left = 0
       Top = 0
@@ -665,6 +669,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         Text = ''
         TabOrder = 0
+        AllowKeyEdit = False
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = edKode_PelangganButtonClick
@@ -674,6 +679,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Top = 53
         Width = 354
         Height = 23
+        ReadOnly = True
         TabOrder = 1
       end
     end
@@ -748,6 +754,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         Text = ''
         TabOrder = 0
+        AllowKeyEdit = False
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = edNamaBankButtonClick
@@ -788,6 +795,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         Text = ''
         TabOrder = 4
+        AllowKeyEdit = False
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = edNMJenisBayarButtonClick
@@ -799,6 +807,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         Text = ''
         TabOrder = 5
+        AllowKeyEdit = False
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = edNMSumberTagihanButtonClick
@@ -807,12 +816,12 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
-    Left = 504
+    Left = 80
     Top = 424
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
-    Left = 576
+    Left = 152
     Top = 424
     object MemDetailAkunkd_akun: TStringField
       FieldName = 'kd_akun'
@@ -903,12 +912,12 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   end
   object dsDetailPiutang: TDataSource
     DataSet = MemDetailPiutang
-    Left = 672
+    Left = 248
     Top = 424
   end
   object MemDetailPiutang: TMemTableEh
     Params = <>
-    Left = 776
+    Left = 352
     Top = 424
     object MemDetailPiutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
@@ -932,6 +941,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       FieldName = 'jum_piutang_real'
       DisplayFormat = '#,##0.00'
       EditFormat = '#,##0.00'
+    end
+    object MemDetailPiutangid_dpp: TStringField
+      FieldName = 'id_dpp'
+      Size = 250
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -973,6 +986,12 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object id_dpp: TMTStringDataFieldEh
+          FieldName = 'id_dpp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+          Size = 250
         end
       end
       object RecordsList: TRecordsListEh

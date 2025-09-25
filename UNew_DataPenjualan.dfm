@@ -1,7 +1,8 @@
 object FNew_Penjualan: TFNew_Penjualan
   Left = 0
   Top = 0
-  Caption = 'Data Penjualan'
+  BorderStyle = bsDialog
+  Caption = 'Penjualan'
   ClientHeight = 594
   ClientWidth = 1257
   Color = clBtnFace
@@ -23,7 +24,8 @@ object FNew_Penjualan: TFNew_Penjualan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 277
+    ExplicitWidth = 1253
+    ExplicitHeight = 311
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -165,6 +167,66 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 15
       Caption = 'No. Faktur'
     end
+    object SpeedButton1: TSpeedButton
+      Left = 480
+      Top = 42
+      Width = 23
+      Height = 22
+      Glyph.Data = {
+        76060000424D7606000000000000360000002800000014000000140000000100
+        2000000000004006000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000002020678D3139C8FF3140CCFF3348
+        CFFF344FD3FF3557D6FF365FD9FF3766DCFF386EDFFF3975E3FF3A7DE6FF3A85
+        E9FF3B8CECFF3D92EFFF3062A5AE030E13130000000000000000000000001D19
+        90B63132C3FF3037C3F81B216A851118465610194250101C4451111E45511120
+        4651112347511226485112284850132B4C531B406D75337DCAD84395F1FF3396
+        DAE202090B0B00000000120E4762342DBDFF2527ABD60202090B000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000000000000001F739FA5439AF4FF3169A4A800000000271BA7E12F2A
+        C3FF0707222B0000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000003A9B
+        EAF441AAF9FF000000002E22BFFF2E2AC1FC0000000000000000000000001A23
+        667F21368CAC03030A0B000000000000000000000000000000002548919D2659
+        98AB0000010100000000000000003083C3CA40AAF9FF000000002D21BFFF2E29
+        BEF80000000000000000000000001C3491AD304FD4FF3042C0DC060B131A0000
+        0000000000002B4BA2B0377EDDFF3486E0F2000101010000000000000000307F
+        BFC63FABF9FF000000002D21BFFF2E29BEF90000020200000000000000000000
+        0000312B6D9B2A55D6FF2F61C0EE141E3F492E49A8B6307AD6FF3751B8C80209
+        0D0D0000000000000000000000003180C2C93FABF9FF000000002D21BFFF2E29
+        BEF900000202000000000000000000000000000000001F266370335BE2FF3265
+        DBFF3371D9FF24498E9900000000000000000000000000000000000000003180
+        C2C93FABF9FF000000002D21BFFF2E29BEF90000020200000000000000000000
+        00000000000004040A0B3257D7F13065D9FF346FDAFF11214244000000000000
+        00000000000000000000000000003180C2C93FABF9FF000000002D21BFFF2E29
+        BEF900000202000000000000000000000000151623363054CFF62F61D9FF2B48
+        9EB5366FDFFF3478DDFF1D286063000000000000000000000000000000003180
+        C2C93FABF9FF000000002D21BFFF2E29BEF90000010100000000000000000C0E
+        45503A5AC9FF2D52DCFF1C35607E00000000161744453478DDFF3D72DEFF174D
+        767B0000000000000000000000003180C1C83FABF9FF000000002D21BEFF2E29
+        BFF900000000000000000000000026399DC12E4FD5FF1C1C5A67000000000000
+        00000000000013153A3B377FE4FF3A84E4FF0000010100000000000000002F7D
+        BCC33FAAF9FF000000002F22BDFD2F2AC3FF0000010100000000000000000407
+        1317090D222A0000000000000000000000000000000000000000080D1E200815
+        22260000000000000000000000003592D7E041A9F9FF000000001C1481A9312B
+        C0FF181865820000000000000000000000000000000000000000000000000000
+        00000000000000000000000000000000000000000000000000000E2A3E41419F
+        F5FF3A9CE6EC000000000403151B302ABFFF3132C7FF191D647E02030A0C0000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000001535545A3A9EF2FF42A0F5FF1331484900000000000000000706
+        38423535BBFC313AC8FF3240CCFF2C3EB2DB2A41AFD32C49B3D52D4FB5D52D55
+        B8D52F5CBAD53062BED53068BFD43170C4D73B8BEAFD3E91EEFF468DF1FF1551
+        6E71000000000000000000000000000000000606141B191D6C882C39B5E23348
+        CFFF344FD3FF3557D6FF365FD9FF3766DCFF386EDFFF3975E3FF3A7DE6FF3A85
+        E9FF3983DFF1246197A00E1F3336000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000}
+      OnClick = SpeedButton1Click
+    end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
       Top = 43
@@ -172,12 +234,13 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 23
       Text = ''
       TabOrder = 0
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNama_PelangganButtonClick
     end
     object edKode_Pelanggan: TEdit
-      Left = 481
+      Left = 529
       Top = 43
       Width = 200
       Height = 23
@@ -201,6 +264,8 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 23
       Text = ''
       TabOrder = 3
+      OnChange = edNamaSumberChange
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaSumberButtonClick
@@ -301,6 +366,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 23
       Text = ''
       TabOrder = 8
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edKode_TransButtonClick
@@ -346,8 +412,8 @@ object FNew_Penjualan: TFNew_Penjualan
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 553
-    ExplicitWidth = 1251
+    ExplicitTop = 561
+    ExplicitWidth = 1253
     object BBatal: TRzBitBtn
       Left = 1181
       Top = 1
@@ -408,10 +474,10 @@ object FNew_Penjualan: TFNew_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1175
+      ExplicitLeft = 1177
     end
     object BSave: TRzBitBtn
-      Left = 1106
+      Left = 1008
       Top = 1
       Height = 30
       Align = alRight
@@ -470,7 +536,8 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1100
+      ExplicitLeft = 1083
+      ExplicitTop = 3
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -596,6 +663,17 @@ object FNew_Penjualan: TFNew_Penjualan
         5E5E5E5E5E5EE8E8E8E8818181818181818181818181E8E8E8E8}
       NumGlyphs = 2
     end
+    object BCorrection: TRzBitBtn
+      Left = 1083
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 4
+      OnClick = BCorrectionClick
+      ExplicitLeft = 1004
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
@@ -608,11 +686,12 @@ object FNew_Penjualan: TFNew_Penjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
+    ExplicitTop = 311
+    ExplicitWidth = 1253
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 1247
-      ExplicitHeight = 260
+      ExplicitWidth = 1249
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -621,8 +700,11 @@ object FNew_Penjualan: TFNew_Penjualan
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
+        FooterRowCount = 1
         HorzScrollBar.ExtraPanel.Visible = True
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SearchPanel.Enabled = True
+        SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         OnCellClick = DBGridDetailCellClick
@@ -630,6 +712,7 @@ object FNew_Penjualan: TFNew_Penjualan
         OnColExit = DBGridDetailColExit
         OnEnter = DBGridDetailEnter
         OnExit = DBGridDetailExit
+        OnKeyPress = DBGridDetailKeyPress
         Columns = <
           item
             CellButtons = <>
@@ -654,7 +737,7 @@ object FNew_Penjualan: TFNew_Penjualan
             FieldName = 'NM_ITEM'
             Footers = <>
             Title.Caption = 'Nama Item'
-            Width = 200
+            Width = 183
           end
           item
             CellButtons = <>
@@ -666,26 +749,39 @@ object FNew_Penjualan: TFNew_Penjualan
               end>
             FieldName = 'JUMLAH'
             Footers = <>
-            Title.Caption = 'Jumlah'
-            Width = 80
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'HARGA_SATUAN'
-            Footers = <>
-            Title.Caption = 'Harga Satuan'
-            Width = 100
+            Title.Caption = 'Qty'
+            Width = 67
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
             FieldName = 'KD_SATUAN'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
             Footers = <>
             Title.Caption = 'Satuan'
-            Width = 100
+            Width = 81
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'HARGA_SATUAN'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.Value = 'Total:'
+            Footer.ValueType = fvtStaticText
+            Footers = <>
+            Title.Caption = 'Harga Satuan'
+            Title.ShowImageAndText = False
+            Width = 115
           end
           item
             CellButtons = <>
@@ -699,24 +795,74 @@ object FNew_Penjualan: TFNew_Penjualan
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'SUB_TOTAL'
+            FieldName = 'JUMLAH_HARGA'
+            Footer.DisplayFormat = '#,##0.##'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
             Footers = <>
-            Title.Caption = 'Sub Total'
-            Width = 150
+            Title.Caption = 'Total Harga'
+            Width = 107
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'POTONGAN_NILAI'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Potongan'
+            Width = 138
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'SUB_TOTAL'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.FieldName = 'SUB_TOTAL'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'DPP'
+            Width = 121
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
             FieldName = 'PPN_PERSEN'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
             Footers = <>
             Title.Caption = 'PPN|Persen (%)'
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'PPN_NILAI'
+            Footer.DisplayFormat = '#,##0.##'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'PPN|Nilai'
             Width = 100
@@ -768,15 +914,6 @@ object FNew_Penjualan: TFNew_Penjualan
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'POTONGAN_NILAI'
-            Footers = <>
-            Title.Caption = 'Potongan'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
             FieldName = 'POTONGAN_PERSEN'
             Footers = <>
             Visible = False
@@ -791,21 +928,37 @@ object FNew_Penjualan: TFNew_Penjualan
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'MENEJ_FEE_NILAI'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Menejmen Fee | Nilai'
             Width = 100
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'GRAND_TOTAL'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
             Footers = <>
-            Title.Caption = 'Grand Total'
-            Width = 150
+            Title.Caption = 'Total'
+            Width = 135
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -814,13 +967,15 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object DSDetail: TDataSource
     DataSet = MemDetail
-    Left = 24
-    Top = 473
+    Left = 16
+    Top = 433
   end
   object MemDetail: TMemTableEh
     Active = True
+    CachedUpdates = True
     Params = <>
-    Left = 96
+    SortOrder = 'NM_ITEM'
+    Left = 16
     Top = 473
     object MemDetailNO_SUMBER: TStringField
       FieldName = 'NO_SUMBER'
@@ -843,6 +998,10 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object MemDetailSUB_TOTAL: TCurrencyField
       FieldName = 'SUB_TOTAL'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailJUMLAH_HARGA: TCurrencyField
+      FieldName = 'JUMLAH_HARGA'
       DisplayFormat = '#,##0.##'
     end
     object MemDetailPPN_PERSEN: TFloatField
@@ -898,6 +1057,24 @@ object FNew_Penjualan: TFNew_Penjualan
       FieldName = 'MENEJ_FEE_NILAI'
       DisplayFormat = '#,##0.##'
     end
+    object MemDetailGROUP_ID: TSmallintField
+      FieldName = 'GROUP_ID'
+    end
+    object MemDetailPOTONGAN1: TCurrencyField
+      FieldName = 'POTONGAN1'
+    end
+    object MemDetailPOTONGAN2: TCurrencyField
+      FieldName = 'POTONGAN2'
+    end
+    object MemDetailPOTONGAN3: TCurrencyField
+      FieldName = 'POTONGAN3'
+    end
+    object MemDetailPOTONGAN4: TCurrencyField
+      FieldName = 'POTONGAN4'
+    end
+    object MemDetailPPN_NILAI_CORTEX: TCurrencyField
+      FieldName = 'PPN_NILAI_CORTEX'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object NO_SUMBER: TMTStringDataFieldEh
@@ -929,7 +1106,7 @@ object FNew_Penjualan: TFNew_Penjualan
         end
         object HARGA_SATUAN: TMTNumericDataFieldEh
           FieldName = 'HARGA_SATUAN'
-          NumericDataType = fdtFloatEh
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           DisplayFormat = '#,##0.##'
@@ -1045,6 +1222,62 @@ object FNew_Penjualan: TFNew_Penjualan
         object MENEJ_FEE_NILAI: TMTNumericDataFieldEh
           FieldName = 'MENEJ_FEE_NILAI'
           NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object GROUP_ID: TMTNumericDataFieldEh
+          FieldName = 'GROUP_ID'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN1: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN1'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN2: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN2'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 10
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN3: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN3'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN4: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN4'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object JUMLAH_HARGA: TMTNumericDataFieldEh
+          FieldName = 'JUMLAH_HARGA'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object PPN_NILAI_CORTEX: TMTNumericDataFieldEh
+          FieldName = 'PPN_NILAI_CORTEX'
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False

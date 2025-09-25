@@ -11,6 +11,9 @@ object FNew_Jabatan: TFNew_Jabatan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object Label1: TLabel
     Left = 32
@@ -47,8 +50,8 @@ object FNew_Jabatan: TFNew_Jabatan
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 84
-    ExplicitWidth = 358
+    ExplicitTop = 92
+    ExplicitWidth = 360
     object BBatal: TRzBitBtn
       Left = 288
       Top = 1
@@ -109,6 +112,7 @@ object FNew_Jabatan: TFNew_Jabatan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 284
     end
     object BSimpan: TRzBitBtn
       Left = 213
@@ -170,7 +174,7 @@ object FNew_Jabatan: TFNew_Jabatan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 207
+      ExplicitLeft = 209
     end
   end
   object EdJab: TEdit

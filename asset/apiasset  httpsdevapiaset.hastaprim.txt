@@ -1,0 +1,7 @@
+apiasset : https://devapiaset.hastaprimasolusi.com
+token : 78d9dae9-6f83-4659-96e0-b7c723ac6fd6
+key : api-asset-key
+
+basseurl asset lama : http://aset.hastaprimasolusi.com/
+token : 436be6ca3e99ae8612605e00a849162888211ec151b1e6c390855dbd55f6313e
+key :dmlt-asset-key

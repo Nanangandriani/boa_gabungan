@@ -1,8 +1,9 @@
 object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Sumber Retur'
-  ClientHeight = 655
+  ClientHeight = 454
   ClientWidth = 1116
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -10,69 +11,85 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object Panel5: TPanel
     Left = 0
     Top = 0
     Width = 1116
-    Height = 145
+    Height = 129
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1112
     object Label38: TLabel
       Left = 124
-      Top = 29
+      Top = 8
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label39: TLabel
       Left = 27
-      Top = 29
+      Top = 8
       Width = 27
       Height = 15
       Caption = 'Kode'
     end
     object Label12: TLabel
       Left = 27
-      Top = 87
+      Top = 66
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
     object Label13: TLabel
       Left = 124
-      Top = 87
+      Top = 66
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label1: TLabel
       Left = 302
-      Top = 87
+      Top = 66
       Width = 19
       Height = 15
       Caption = 'S/D'
     end
     object Label2: TLabel
       Left = 124
-      Top = 58
+      Top = 37
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label3: TLabel
       Left = 27
-      Top = 58
+      Top = 37
       Width = 32
       Height = 15
       Caption = 'Nama'
     end
+    object Label4: TLabel
+      Left = 27
+      Top = 95
+      Width = 52
+      Height = 15
+      Caption = 'No Faktur'
+    end
+    object Label5: TLabel
+      Left = 124
+      Top = 96
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object edKode_Pelanggan: TRzButtonEdit
       Left = 133
-      Top = 26
+      Top = 5
       Width = 164
       Height = 23
       Text = ''
@@ -83,14 +100,14 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
     end
     object edNama_Pelanggan: TEdit
       Left = 133
-      Top = 55
+      Top = 34
       Width = 359
       Height = 23
       TabOrder = 1
     end
     object dtTanggal1: TRzDateTimePicker
       Left = 133
-      Top = 84
+      Top = 63
       Width = 164
       Height = 23
       Date = 45405.000000000000000000
@@ -100,7 +117,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
     end
     object dtTanggal2: TRzDateTimePicker
       Left = 328
-      Top = 84
+      Top = 63
       Width = 164
       Height = 23
       Date = 45405.000000000000000000
@@ -110,7 +127,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
     end
     object btTampilkan: TRzBitBtn
       Left = 502
-      Top = 77
+      Top = 56
       Width = 147
       Height = 30
       Caption = 'Tampilkan'
@@ -171,7 +188,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
     end
     object btProses: TRzBitBtn
       Left = 655
-      Top = 77
+      Top = 56
       Width = 147
       Height = 30
       Caption = 'Proses'
@@ -231,24 +248,33 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
       NumGlyphs = 2
     end
     object ckTandai: TCheckBox
-      Left = 133
-      Top = 113
+      Left = 395
+      Top = 95
       Width = 97
       Height = 17
       Caption = 'Tandai Semua'
       TabOrder = 6
+      Visible = False
+    end
+    object edNoFaktur: TEdit
+      Left = 133
+      Top = 92
+      Width = 228
+      Height = 23
+      ReadOnly = True
+      TabOrder = 7
     end
   end
   object DBGrid_SumberOrder: TDBGridEh
-    Left = 0
-    Top = 145
+    Left = -24
+    Top = 273
     Width = 1116
-    Height = 510
-    Align = alClient
+    Height = 526
     DataSource = dsDetail
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 1
+    OnDblClick = DBGrid_SumberOrderDblClick
     Columns = <
       item
         CellButtons = <>
@@ -256,8 +282,19 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'no_trans'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nomor Penjualan'
-        Width = 200
+        Width = 141
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_faktur'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'No Faktur'
+        Width = 143
       end
       item
         CellButtons = <>
@@ -265,8 +302,10 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'date_trans'
         Footers = <>
+        ReadOnly = True
+        Title.Alignment = taCenter
         Title.Caption = 'Tanggal'
-        Width = 100
+        Width = 89
       end
       item
         CellButtons = <>
@@ -274,6 +313,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'code_cust'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
         Width = 100
       end
@@ -283,6 +323,8 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
+        ReadOnly = True
+        Title.Alignment = taCenter
         Title.Caption = 'Pelanggan'
         Width = 250
       end
@@ -292,6 +334,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'code_source'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -300,8 +343,10 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'name_source'
         Footers = <>
+        ReadOnly = True
+        Title.Alignment = taCenter
         Title.Caption = 'Sumber'
-        Width = 200
+        Width = 172
       end
       item
         CellButtons = <>
@@ -309,8 +354,9 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'no_reference'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'No Reference'
-        Width = 200
+        Width = 166
       end
       item
         CellButtons = <>
@@ -318,21 +364,96 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         EditButtons = <>
         FieldName = 'pilih'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Pilih'
-        Width = 50
+        Width = 60
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object DBGridBarang: TDBGridEh
+    Left = 0
+    Top = 135
+    Width = 913
+    Height = 146
+    DataSource = dsBarang
+    DynProps = <>
+    TabOrder = 2
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id'
+        Footers = <>
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_no'
+        Footers = <>
+        Title.Alignment = taCenter
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'code_item'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kode Barang'
+        Width = 118
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_item'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama Barang'
+        Width = 368
+      end
+      item
+        ButtonStyle = cbsDropDown
+        CellButtons = <>
+        DropDownBox.ListFieldNames = 'unit_code'
+        DropDownShowTitles = True
+        DynProps = <>
+        EditButton.Visible = True
+        EditButtons = <>
+        FieldName = 'code_unit'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Satuan'
+        Width = 137
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pilih'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Pilih'
+        Width = 36
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object dsDetail: TDataSource
     DataSet = MemDetail
-    Left = 368
-    Top = 8
+    Left = 376
+    Top = 136
   end
   object MemDetail: TMemTableEh
+    Active = True
     Params = <>
-    Left = 432
-    Top = 8
+    Left = 448
+    Top = 136
     object MemDetailno_trans: TStringField
       FieldName = 'no_trans'
       Size = 100
@@ -362,6 +483,16 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
     end
     object MemDetailpilih: TBooleanField
       FieldName = 'pilih'
+    end
+    object MemDetailno_faktur: TStringField
+      FieldName = 'no_faktur'
+      Size = 50
+    end
+    object MemDetailgrand_tot: TCurrencyField
+      FieldName = 'grand_tot'
+    end
+    object MemDetailgrand_tot_returns: TCurrencyField
+      FieldName = 'grand_tot_returns'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -410,9 +541,124 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
           FieldName = 'pilih'
           DisplayWidth = 20
         end
+        object no_faktur: TMTStringDataFieldEh
+          FieldName = 'no_faktur'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object grand_tot: TMTNumericDataFieldEh
+          FieldName = 'grand_tot'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object grand_tot_returns: TMTNumericDataFieldEh
+          FieldName = 'grand_tot_returns'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object MemBarang: TMemTableEh
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 488
+    Top = 200
+    object MemBarangid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object MemBarangtrans_no: TStringField
+      FieldName = 'trans_no'
+      Required = True
+      Size = 255
+    end
+    object MemBarangcode_item: TStringField
+      FieldName = 'code_item'
+      Size = 100
+    end
+    object MemBarangname_item: TStringField
+      FieldName = 'name_item'
+      Size = 255
+    end
+    object MemBarangcode_unit: TStringField
+      FieldName = 'code_unit'
+      Size = 100
+    end
+    object MemBarangpilih: TBooleanField
+      FieldName = 'pilih'
+    end
+  end
+  object QBarang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.id,a.trans_no,a.code_item,a.name_item,a.code_unit,false' +
+        ' pilih, amount-COALESCE((SELECT SUM(aa.amount) FROM t_sales_retu' +
+        'rns_det aa LEFT JOIN  t_sales_returns bb on aa.no_trans_sale=bb.' +
+        'trans_no where bb.no_inv_tax=b.no_inv_tax and bb.deleted_at is N' +
+        'ULL and aa.code_item=a.code_item GROUP BY aa.code_item),0) jumla' +
+        'h from t_selling_det a left join t_selling b on b.trans_no=a.tra' +
+        'ns_no  and  b.deleted_at is NULL where b.no_inv_tax ='#39'FP/001/15/' +
+        'VIII/2025/HLJ'#39' and a.deleted_at is NULL')
+    Left = 392
+    Top = 200
+    object QBarangid: TGuidField
+      FieldName = 'id'
+      Required = True
+      Size = 38
+    end
+    object QBarangtrans_no: TStringField
+      FieldName = 'trans_no'
+      Required = True
+      Size = 255
+    end
+    object QBarangcode_item: TStringField
+      FieldName = 'code_item'
+      Size = 100
+    end
+    object QBarangname_item: TStringField
+      FieldName = 'name_item'
+      Size = 255
+    end
+    object QBarangcode_unit: TStringField
+      FieldName = 'code_unit'
+      Size = 100
+    end
+    object QBarangpilih: TBooleanField
+      FieldName = 'pilih'
+    end
+  end
+  object dsBarang: TDataSource
+    DataSet = MemBarang
+    Left = 624
+    Top = 200
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QBarang
+    Left = 560
+    Top = 264
+  end
+  object QSatuan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT *  from t_unit')
+    Left = 88
+    Top = 192
+  end
+  object DSsatuan: TDataSource
+    DataSet = QSatuan
+    Left = 168
+    Top = 200
   end
 end

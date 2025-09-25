@@ -64,6 +64,10 @@ end;
 procedure TFItem_masterFormula.load;
 begin
   EdProduk.Clear;
+  MemMaterial.Close;
+  MemMaterial.Open;
+  MemMasterTest.Close;
+  MemMasterTest.Open;
   with dm.Qtemp do
   begin
     Close;
@@ -74,7 +78,7 @@ begin
   Dm.Qtemp.First;
   while NOT Dm.Qtemp.Eof do
   BEGIN
-    EdProduk.Items.Add(DM.Qtemp['item_code2']);
+    EdProduk.Items.Add(DM.Qtemp['item_name']);
     Dm.Qtemp.Next;
   END;
 end;
@@ -88,7 +92,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' insert into "warehouse".t_master_test(item_code,qty,product_code,conversion_qty)values'+
+      sql.Text:=' insert into t_master_test(item_code,qty,product_code,conversion_qty)values'+
                 ' (:paritem_code,:parqty,:parproduct_code,:parconv)';
                 ParamByName('parproduct_code').Value:=EdProduk.Text;
                 ParamByName('paritem_code').Value:=MemMaterial['kd_barang'];
@@ -106,7 +110,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='delete from "warehouse".t_master_test where product_code='+QuotedStr(EdProduk.Text);
+    sql.Text:='delete from t_master_test where product_code='+QuotedStr(EdProduk.Text);
     Execute;
   end;
   MemMaterial.First;
@@ -116,7 +120,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' insert into "warehouse".t_master_test(item_code,qty,product_code,conversion_qty)values'+
+      sql.Text:=' insert into t_master_test(item_code,qty,product_code,conversion_qty)values'+
                 ' (:paritem_code,:parqty,:parproduct_code,:parconv)';
                 ParamByName('parproduct_code').Value:=EdProduk.Text;
                 ParamByName('paritem_code').Value:=MemMaterial['kd_barang'];
@@ -133,8 +137,11 @@ begin
   if statustr='0' then
   begin
     simpan;
-  end else
+  end;
+  if statustr='1' then
+  begin
     update;
+  end;
     BCloseClick(sender);
     BUpdate.Enabled:=true;
     BNew.Enabled:=true;
@@ -182,7 +189,7 @@ begin
   with FCari_Barang do
   begin
     show;
-    VMenu:='9';
+    status_tr:='10';
     with QBarang do
     begin
       Close;

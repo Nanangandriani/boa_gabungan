@@ -25,7 +25,7 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   Data.DB, MemDS, DBAccess, Uni, dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBarExtItems;
 
 type
   TFSalesOrder = class(TForm)
@@ -67,6 +67,14 @@ type
     QSalesOrderno_reference: TStringField;
     QSalesOrdercode_source: TStringField;
     QSalesOrdername_source: TStringField;
+    dxBarManager1Bar2: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton1: TdxBarLargeButton;
+    DBGridEh1: TDBGridEh;
+    Qdetail: TUniQuery;
+    DsDetail: TDataSource;
+    dxBarCombo1: TdxBarCombo;
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);
@@ -74,6 +82,7 @@ type
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,7 +100,10 @@ implementation
 uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin;
 
 procedure TFSalesOrder.Refresh;
+var mm: Integer;
 begin
+  mm:=cbBulan.ItemIndex+1;
+
   DBGridOrder.StartLoadingStatus();
   try
    Sys_Batas_Data('order_date');
@@ -99,12 +111,16 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' select * from "public"."t_sales_order"   '+
-               ' where deleted_at is null ');
+       sql.add('SELECT * FROM t_sales_order '+
+               'where EXTRACT(YEAR FROM order_date)='+edTahun.Text+' AND '+
+               'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' AND '+
+               'deleted_at is null and status=1 ');
        sql.add( vBatas_Data );
        sql.add(' order by created_at Desc ');
        open;
    end;
+   Qdetail.Close;
+   Qdetail.Open;
   finally
   DBGridOrder.FinishLoadingStatus();
   end;
@@ -113,12 +129,27 @@ end;
 
 procedure TFSalesOrder.ActBaruExecute(Sender: TObject);
 begin
-  FNew_SalesOrder.Clear;
-  //FNew_SalesOrder.Autonumber;
-  FNew_SalesOrder.MemDetail.EmptyTable;
-  Status:=0;
-  FNew_SalesOrder.edKodeOrder.Enabled:=true;
-  FNew_SalesOrder.ShowModal;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * FROM t_sales_order where deleted_at is NULL and status=0';
+    open;
+  end;
+
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Masih ada Sales Order yang diajukan, silahkan Disetujui/Ditolak terlebih dahulu..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    FNew_SalesOrder.Clear;
+    //FNew_SalesOrder.Autonumber;
+    FNew_SalesOrder.MemDetail.EmptyTable;
+    Status:=0;
+    FNew_SalesOrder.edKodeOrder.Enabled:=true;
+    FNew_SalesOrder.BSave.Enabled:=True;
+    FNew_SalesOrder.ShowModal;
+  end;
 end;
 
 procedure TFSalesOrder.ActDelExecute(Sender: TObject);
@@ -165,6 +196,7 @@ begin
         end;
         MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
         Dm.Koneksi.Commit;
+        Refresh;
       Except on E :Exception do
         begin
           begin
@@ -177,69 +209,81 @@ begin
 end;
 
 procedure TFSalesOrder.ActROExecute(Sender: TObject);
+var month,year:String;
 begin
-  DBGridOrder.StartLoadingStatus();
-  try
-   Sys_Batas_Data('order_date');
-   with QSalesOrder do
-   begin
-       close;
-       sql.Clear;
-       sql.add(' select * from "public"."t_sales_order"   '+
-               ' where deleted_at is null ');
-       sql.add( vBatas_Data );
-       sql.add(' order by created_at Desc ');
-       open;
-   end;
-  finally
-  DBGridOrder.FinishLoadingStatus();
-  end;
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun.Text:=(year);
+  cbBulan.ItemIndex:=StrToInt(month)-1;
+  Refresh;
 end;
 
 procedure TFSalesOrder.ActUpdateExecute(Sender: TObject);
 begin
-   FNew_SalesOrder.Clear;
-   with Dm.Qtemp do
-   begin
+  FNew_SalesOrder.Clear;
+  with Dm.Qtemp do
+  begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "public"."t_sales_order" a '+
-                 ' WHERE "notrans"='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString)+' '+
-                 ' AND deleted_at is null order by created_at Desc ';
+       sql.Text:= 'SELECT a.*,b.no_reference no_reference_selling FROM t_sales_order a '+
+                  'LEFT JOIN t_selling b on b.no_reference=a.notrans '+
+                  'WHERE a.notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString)+' '+
+                  'AND a.deleted_at is NULL';
        open;
-   end;
+  end;
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
     exit;
   end;
+
+  //Jika sudah ada penjualan tidak bisa update
+  if Dm.Qtemp.FieldByName('no_reference_selling').AsString=NULL then
+  begin
+    ShowMessage('SO sudah dibuat Penjualan tidak dapat diubah...!!!');
+    FNew_SalesOrder.BSave.Enabled:=False;
+    FNew_SalesOrder.Panel1.Enabled:=False;
+    FNew_SalesOrder.DBGridDetail.Enabled:=False;
+  end else
+  begin
+    FNew_SalesOrder.BSave.Enabled:=True;
+    FNew_SalesOrder.Panel1.Enabled:=True;
+    FNew_SalesOrder.DBGridDetail.Enabled:=True;
+  end;
+
+
   if Dm.Qtemp.RecordCount<>0 then
   begin
-  with FNew_SalesOrder do
-  begin
-    edKodeOrder.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
-    dtTanggal_Kirim.Date:=Dm.Qtemp.FieldByName('sent_date').AsDateTime;
-    dtTanggal_Pesan.Date:=Dm.Qtemp.FieldByName('order_date').AsDateTime;
-    edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
-    edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
-    edKode_Sales.Text:=Dm.Qtemp.FieldByName('code_sales').AsString;
-    edNama_Sales.Text:=Dm.Qtemp.FieldByName('name_sales').AsString;
-    edKodeSumber.Text:=Dm.Qtemp.FieldByName('code_source').AsString;
-    edNamaSumber.Text:=Dm.Qtemp.FieldByName('name_source').AsString;
-    spJatuhTempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
-    edNoReff.Text:=Dm.Qtemp.FieldByName('no_reference').AsString;
-    vFormSumber:=SelectRow('SELECT form_target from t_order_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_source').AsString)+' ');
-    Edautocode.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
-    order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-    kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
-    strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
-    strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
-    strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
-  end;
+    with FNew_SalesOrder do
+    begin
+      edKodeOrder.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
+      dtTanggal_Kirim.Date:=Dm.Qtemp.FieldByName('sent_date').AsDateTime;
+      dtTanggal_Pesan.Date:=Dm.Qtemp.FieldByName('order_date').AsDateTime;
+      edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
+      edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
+      edKode_Sales.Text:=Dm.Qtemp.FieldByName('code_sales').AsString;
+      edNama_Sales.Text:=Dm.Qtemp.FieldByName('name_sales').AsString;
+      edKodeSumber.Text:=Dm.Qtemp.FieldByName('code_source').AsString;
+      edNamaSumber.Text:=Dm.Qtemp.FieldByName('name_source').AsString;
+      spJatuhTempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
+      edNoReff.Text:=Dm.Qtemp.FieldByName('no_reference').AsString;
+      vFormSumber:=SelectRow('SELECT form_target from t_order_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_source').AsString)+' ');
+      Edautocode.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
+      order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
+      kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
+      strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
+      strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
+      strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+    end;
   end;
   FNew_SalesOrder.edKodeOrder.Enabled:=false;
   FNew_SalesOrder.Show;
   Status := 1;
+end;
+
+procedure TFSalesOrder.dxBarLargeButton1Click(Sender: TObject);
+begin
+  Refresh;
 end;
 
 procedure TFSalesOrder.dxBarLargeNewClick(Sender: TObject);
@@ -262,7 +306,7 @@ end;
 
 procedure TFSalesOrder.FormShow(Sender: TObject);
 begin
-  Refresh;
+  ActROExecute(sender);
 end;
 
 

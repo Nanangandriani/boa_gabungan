@@ -73,12 +73,13 @@ type
     CbBulan2: TComboBox;
     procedure BBatalClick(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
-    procedure cbbulanSelect(Sender: TObject);
+    procedure cbbulan2Select(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
+    procedure CbBulan2Change(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,9 +113,9 @@ begin
 end;
 
 procedure TFRpt_Neraca.BPrintClick(Sender: TObject);
-var tgl,tgl2 :string;
+var tgl,tgl2,periode1,periode2:string;
 begin
-  if dtmulai.EditValue = null then
+{  if dtmulai.EditValue = null then
   begin
     MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
     DtMulai.SetFocus;
@@ -125,13 +126,13 @@ begin
     MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
     DtSelesai.SetFocus;
     Exit;
-  end;
+  end;         }
 //  tgl:=FormatDateTime('yyy-mm-dd',dtmulai.editvalue);
  // tgl2:=FormatDateTime('yyy-mm-dd',dtselesai.editvalue);
   // neraca per periode
 //  if statustr='0' then
 //  begin
-    WITH QRpt_Neraca do
+  {  WITH QRpt_Neraca do
     begin
     {  close;
       sql.Clear;
@@ -172,12 +173,56 @@ begin
       ' and a.tgl_in <='+QuotedStr(FormatDateTime('yyy-mm-dd',dtmulai.editvalue))+'))x2 on x2.kd_akun=x.kode WHERE x.status_neraca=''1'' and '+
       ' posisi_dk=''K'' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan)xx left JOIN tsa_akundet x3 on xx.kd_akun=x3.kd_akun '+
       ' ORDER BY kode asc';
-      }open;
+      open; }
+
+ {   if dtmulai.EditValue = null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
     end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+    periode1:=FormatDateTime('yyy-mm-dd',DtMulai.EditValue);
+    periode2:=FormatDateTime('yyy-mm-dd',DtSelesai.EditValue);
+   { with QRpt_Neraca do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select "type",type_balance,header_code,bulan,tahun,kd_akun,account_name,sum(total) total from ( '+
+      ' select "type",type_balance,header_code,bulan,xx.tahun,xx.kd_akun,account_name,case when (db-kr) > 0 then '+
+      ' (db-kr) else 0 end total from  (select x.header_code,x2.bulan,x2.tahun,x.code kd_akun,x.account_name,'+
+      ' b."type",b.type_balance,sum(x2.kredit)kr,sum(x2.debit)db from  t_ak_account x INNER JOIN t_ak_type_balance b '+
+      ' on x.balance_st_id=b."id" LEFT JOIN(select b.*,a.trans_month bulan,a.trans_year tahun from t_neraca_lajur_det b'+
+      ' INNER JOIN t_neraca_lajur a on a.trans_no=b.trans_no'+
+      ' WHERE a.trans_month='+QuotedStr(bln)+' and a.trans_year='+QuotedStr(SpTahun.EditValue)+' and  '+
+      ' (a.periode1 >='+QuotedStr(periode1)+' and a.periode2 <='+QuotedStr(periode2)+'))x2 on x2.account_code=x.code '+
+      ' WHERE x.balance_status=''1'' and  posisi_dk=''D'' GROUP BY x.header_code,x2.bulan,x2.tahun,x.code,x.account_name,b."type",b.type_balance)xx '+
+      ' UNION '+
+      ' select "type","type_balance",header_code,bulan,tahun,kd_akun,account_name,case when type_balance=''AKM. PENYUSUTAN'''+
+      ' then -(case when (kr-db) > 0 then (kr-db) else 0 end) else (case when (kr-db) > 0 then (kr-db) else 0 end) end total '+
+      ' from (select header_code,bulan,tahun,kd_akun,account_name,"type",type_balance,sum(kredit)kr,sum(debit)db from '+
+      ' (select x.header_code,x2.bulan,x2.tahun,x.code kd_akun,x.account_name,b."type",b.type_balance,x2.kredit,x2.debit from  t_ak_account x '+
+      ' INNER JOIN t_ak_type_balance b on  x.balance_st_id=b."id"  '+
+      ' LEFT JOIN(select b.*,a.trans_month bulan,a.trans_year tahun from t_neraca_lajur_det b INNER JOIN t_neraca_lajur a '+
+      ' on a.trans_no=b.trans_no WHERE  a.trans_month='+QuotedStr(bln)+' and a.trans_year='+QuotedStr(SpTahun.EditValue)+''+
+      ' and (a.periode1 >='+QuotedStr(periode1)+' and a.periode2 <='+QuotedStr(periode2)+'))x2 on x2.account_code=x.code '+
+      ' WHERE x.balance_status=''1'' and  posisi_dk=''K'' AND X.balance_status=''1'') xxx '+
+      ' GROUP BY header_code,bulan,tahun,kd_akun,account_name,"type",type_balance)x4 ORDER BY "type",kd_akun asc) xxx '+
+      ' GROUP BY "type",type_balance,header_code,bulan,tahun,kd_akun,account_name ORDER BY "type",kd_akun asc';
+      Execute;
+    end;  }
+    QRpt_Neraca.Close;
+    QRpt_Neraca.Open;
+    //end;
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Neraca.fr3');
-    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
+  //  Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
   //  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
-   Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
+ //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
     Rpt.ShowReport();
   //end;
   // Neraca 1 tahun
@@ -283,9 +328,27 @@ begin
   end;         }
 end;
 
-procedure TFRpt_Neraca.cbbulanSelect(Sender: TObject);
+procedure TFRpt_Neraca.CbBulan2Change(Sender: TObject);
 begin
-  case cbbulan.Itemindex of
+    case cbbulan2.Itemindex of
+    0:bln:='01';
+    1:bln:='02';
+    2:bln:='03';
+    3:bln:='04';
+    4:bln:='05';
+    5:bln:='06';
+    6:bln:='07';
+    7:bln:='08';
+    8:bln:='09';
+    9:bln:='10';
+    10:bln:='11';
+    11:bln:='12';
+  end;
+end;
+
+procedure TFRpt_Neraca.cbbulan2Select(Sender: TObject);
+begin
+  case cbbulan2.Itemindex of
     0:bln:='01';
     1:bln:='02';
     2:bln:='03';
@@ -302,8 +365,9 @@ begin
 end;
 
 procedure TFRpt_Neraca.DxRefreshClick(Sender: TObject);
+var periode1,periode2:string;
 begin
-    if dtmulai.EditValue = null then
+{    if dtmulai.EditValue = null then
     begin
       MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
       DtMulai.SetFocus;
@@ -315,6 +379,36 @@ begin
       DtSelesai.SetFocus;
       Exit;
     end;
+    periode1:=FormatDateTime('yyy-mm-dd',DtMulai.EditValue);
+    periode2:=FormatDateTime('yyy-mm-dd',DtSelesai.EditValue);
+    {with QRpt_Neraca do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select "type",type_balance,header_code,bulan,tahun,kd_akun,account_name,sum(total) total from ( '+
+      ' select "type",type_balance,header_code,bulan,xx.tahun,xx.kd_akun,account_name,case when (db-kr) > 0 then '+
+      ' (db-kr) else 0 end total from  (select x.header_code,x2.bulan,x2.tahun,x.code kd_akun,x.account_name,'+
+      ' b."type",b.type_balance,sum(x2.kredit)kr,sum(x2.debit)db from  t_ak_account x INNER JOIN t_ak_type_balance b '+
+      ' on x.balance_st_id=b."id" LEFT JOIN(select b.*,a.trans_month bulan,a.trans_year tahun from t_neraca_lajur_det b'+
+      ' INNER JOIN t_neraca_lajur a on a.trans_no=b.trans_no'+
+      ' WHERE a.trans_month='+QuotedStr(bln)+' and a.trans_year='+QuotedStr(SpTahun.EditValue)+' and  '+
+      ' (a.periode1 >='+QuotedStr(periode1)+' and a.periode2 <='+QuotedStr(periode2)+'))x2 on x2.account_code=x.code '+
+      ' WHERE x.balance_status=''1'' and  posisi_dk=''D'' GROUP BY x.header_code,x2.bulan,x2.tahun,x.code,x.account_name,b."type",b.type_balance)xx '+
+      ' UNION '+
+      ' select "type","type_balance",header_code,bulan,tahun,kd_akun,account_name,case when type_balance=''AKM. PENYUSUTAN'''+
+      ' then -(case when (kr-db) > 0 then (kr-db) else 0 end) else (case when (kr-db) > 0 then (kr-db) else 0 end) end total '+
+      ' from (select header_code,bulan,tahun,kd_akun,account_name,"type",type_balance,sum(kredit)kr,sum(debit)db from '+
+      ' (select x.header_code,x2.bulan,x2.tahun,x.code kd_akun,x.account_name,b."type",b.type_balance,x2.kredit,x2.debit from  t_ak_account x '+
+      ' INNER JOIN t_ak_type_balance b on  x.balance_st_id=b."id"  '+
+      ' LEFT JOIN(select b.*,a.trans_month bulan,a.trans_year tahun from t_neraca_lajur_det b INNER JOIN t_neraca_lajur a '+
+      ' on a.trans_no=b.trans_no WHERE  a.trans_month='+QuotedStr(bln)+' and a.trans_year='+QuotedStr(SpTahun.EditValue)+''+
+      ' and (a.periode1 >='+QuotedStr(periode1)+' and a.periode2 <='+QuotedStr(periode2)+'))x2 on x2.account_code=x.code '+
+      ' WHERE x.balance_status=''1'' and  posisi_dk=''K'' AND X.balance_status=''1'') xxx '+
+      ' GROUP BY header_code,bulan,tahun,kd_akun,account_name,"type",type_balance)x4 ORDER BY "type",kd_akun asc) xxx '+
+      ' GROUP BY "type",type_balance,header_code,bulan,tahun,kd_akun,account_name ORDER BY "type",kd_akun asc';
+      Execute;
+    end;    }
+    QRpt_Neraca.Close;
     QRpt_Neraca.Open;
 end;
 
@@ -338,6 +432,8 @@ begin
   edth.Text:=FormatDateTime('yyyy',now());
   edthn2.Text:=FormatDateTime('yyyy',now());
   spTahun.EditValue := YearOf(Now);
+  dtmulai.EditValue:=FormatDateTime('dd-mm-yyy',Now());
+  DtSelesai.EditValue:=FormatDateTime('dd-mm-yyy',Now());
 end;
 
 initialization

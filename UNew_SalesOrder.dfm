@@ -1,6 +1,7 @@
 object FNew_SalesOrder: TFNew_SalesOrder
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Sales Order'
   ClientHeight = 513
   ClientWidth = 1055
@@ -22,7 +23,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 268
+    ExplicitWidth = 1051
+    ExplicitHeight = 276
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -31,7 +33,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = 'No. Transaksi'
     end
     object Label3: TLabel
-      Left = 117
+      Left = 118
       Top = 19
       Width = 3
       Height = 15
@@ -39,83 +41,83 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object Label39: TLabel
       Left = 20
-      Top = 99
+      Top = 126
       Width = 91
       Height = 15
       Caption = 'Nama Pelanggan'
     end
     object Label38: TLabel
       Left = 117
-      Top = 99
+      Top = 126
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label1: TLabel
       Left = 20
-      Top = 126
+      Top = 153
       Width = 61
       Height = 15
       Caption = 'Nama Sales'
     end
     object Label2: TLabel
       Left = 117
-      Top = 126
+      Top = 153
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
       Left = 118
-      Top = 153
+      Top = 180
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
       Left = 21
-      Top = 153
+      Top = 180
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label14: TLabel
       Left = 198
-      Top = 100
+      Top = 183
       Width = 22
       Height = 15
       Caption = 'Hari'
     end
     object Label6: TLabel
       Left = 20
-      Top = 181
+      Top = 208
       Width = 43
       Height = 15
       Caption = 'No. Reff'
     end
     object Label7: TLabel
       Left = 117
-      Top = 181
+      Top = 208
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label8: TLabel
-      Left = 20
-      Top = 210
+      Left = 21
+      Top = 99
       Width = 41
       Height = 15
       Caption = 'Sumber'
     end
     object Label9: TLabel
       Left = 117
-      Top = 210
+      Top = 99
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
-      Left = 21
+      Left = 20
       Top = 72
       Width = 72
       Height = 15
@@ -129,7 +131,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = ':'
     end
     object Label12: TLabel
-      Left = 21
+      Left = 20
       Top = 45
       Width = 75
       Height = 15
@@ -143,8 +145,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = ':'
     end
     object btMasterSumber: TSpeedButton
-      Left = 320
-      Top = 207
+      Left = 323
+      Top = 96
       Width = 23
       Height = 22
       Caption = '+'
@@ -152,11 +154,72 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object btMasterSales: TSpeedButton
       Left = 482
-      Top = 125
+      Top = 152
       Width = 23
       Height = 22
       Caption = '+'
       OnClick = btMasterSalesClick
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 480
+      Top = 124
+      Width = 23
+      Height = 22
+      Glyph.Data = {
+        76060000424D7606000000000000360000002800000014000000140000000100
+        2000000000004006000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000002020678D3139C8FF3140CCFF3348
+        CFFF344FD3FF3557D6FF365FD9FF3766DCFF386EDFFF3975E3FF3A7DE6FF3A85
+        E9FF3B8CECFF3D92EFFF3062A5AE030E13130000000000000000000000001D19
+        90B63132C3FF3037C3F81B216A851118465610194250101C4451111E45511120
+        4651112347511226485112284850132B4C531B406D75337DCAD84395F1FF3396
+        DAE202090B0B00000000120E4762342DBDFF2527ABD60202090B000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000000000000001F739FA5439AF4FF3169A4A800000000271BA7E12F2A
+        C3FF0707222B0000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000003A9B
+        EAF441AAF9FF000000002E22BFFF2E2AC1FC0000000000000000000000001A23
+        667F21368CAC03030A0B000000000000000000000000000000002548919D2659
+        98AB0000010100000000000000003083C3CA40AAF9FF000000002D21BFFF2E29
+        BEF80000000000000000000000001C3491AD304FD4FF3042C0DC060B131A0000
+        0000000000002B4BA2B0377EDDFF3486E0F2000101010000000000000000307F
+        BFC63FABF9FF000000002D21BFFF2E29BEF90000020200000000000000000000
+        0000312B6D9B2A55D6FF2F61C0EE141E3F492E49A8B6307AD6FF3751B8C80209
+        0D0D0000000000000000000000003180C2C93FABF9FF000000002D21BFFF2E29
+        BEF900000202000000000000000000000000000000001F266370335BE2FF3265
+        DBFF3371D9FF24498E9900000000000000000000000000000000000000003180
+        C2C93FABF9FF000000002D21BFFF2E29BEF90000020200000000000000000000
+        00000000000004040A0B3257D7F13065D9FF346FDAFF11214244000000000000
+        00000000000000000000000000003180C2C93FABF9FF000000002D21BFFF2E29
+        BEF900000202000000000000000000000000151623363054CFF62F61D9FF2B48
+        9EB5366FDFFF3478DDFF1D286063000000000000000000000000000000003180
+        C2C93FABF9FF000000002D21BFFF2E29BEF90000010100000000000000000C0E
+        45503A5AC9FF2D52DCFF1C35607E00000000161744453478DDFF3D72DEFF174D
+        767B0000000000000000000000003180C1C83FABF9FF000000002D21BEFF2E29
+        BFF900000000000000000000000026399DC12E4FD5FF1C1C5A67000000000000
+        00000000000013153A3B377FE4FF3A84E4FF0000010100000000000000002F7D
+        BCC33FAAF9FF000000002F22BDFD2F2AC3FF0000010100000000000000000407
+        1317090D222A0000000000000000000000000000000000000000080D1E200815
+        22260000000000000000000000003592D7E041A9F9FF000000001C1481A9312B
+        C0FF181865820000000000000000000000000000000000000000000000000000
+        00000000000000000000000000000000000000000000000000000E2A3E41419F
+        F5FF3A9CE6EC000000000403151B302ABFFF3132C7FF191D647E02030A0C0000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000001535545A3A9EF2FF42A0F5FF1331484900000000000000000706
+        38423535BBFC313AC8FF3240CCFF2C3EB2DB2A41AFD32C49B3D52D4FB5D52D55
+        B8D52F5CBAD53062BED53068BFD43170C4D73B8BEAFD3E91EEFF468DF1FF1551
+        6E71000000000000000000000000000000000606141B191D6C882C39B5E23348
+        CFFF344FD3FF3557D6FF365FD9FF3766DCFF386EDFFF3975E3FF3A7DE6FF3A85
+        E9FF3983DFF1246197A00E1F3336000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000}
+      Visible = False
+      OnClick = SpeedButton1Click
     end
     object edKodeOrder: TEdit
       Left = 132
@@ -164,22 +227,24 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Width = 185
       Height = 23
       CharCase = ecUpperCase
+      ReadOnly = True
       TabOrder = 0
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 96
+      Top = 123
       Width = 344
       Height = 23
       Text = ''
       TabOrder = 1
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNama_PelangganButtonClick
     end
     object edKode_Pelanggan: TEdit
-      Left = 482
-      Top = 96
+      Left = 530
+      Top = 123
       Width = 200
       Height = 23
       TabOrder = 2
@@ -187,18 +252,19 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNama_Sales: TRzButtonEdit
       Left = 132
-      Top = 123
+      Top = 150
       Width = 344
       Height = 23
       Text = ''
       TabOrder = 3
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNama_SalesButtonClick
     end
     object edKode_Sales: TEdit
       Left = 511
-      Top = 125
+      Top = 152
       Width = 200
       Height = 23
       TabOrder = 4
@@ -206,7 +272,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object spJatuhTempo: TSpinEdit
       Left = 132
-      Top = 150
+      Top = 177
       Width = 60
       Height = 24
       MaxValue = 0
@@ -216,7 +282,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNoReff: TEdit
       Left = 132
-      Top = 178
+      Top = 205
       Width = 185
       Height = 23
       CharCase = ecUpperCase
@@ -224,18 +290,20 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNamaSumber: TRzButtonEdit
       Left = 132
-      Top = 207
+      Top = 96
       Width = 185
       Height = 23
       Text = ''
       TabOrder = 7
+      OnChange = edNamaSumberChange
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaSumberButtonClick
     end
     object edKodeSumber: TEdit
-      Left = 344
-      Top = 207
+      Left = 347
+      Top = 96
       Width = 100
       Height = 23
       TabOrder = 8
@@ -250,6 +318,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 9
+      OnCloseUp = dtTanggal_KirimCloseUp
     end
     object btAddDetail: TRzBitBtn
       Left = 21
@@ -324,6 +393,25 @@ object FNew_SalesOrder: TFNew_SalesOrder
       TabOrder = 11
       OnChange = dtTanggal_PesanChange
     end
+    object Memo1: TMemo
+      Left = 761
+      Top = 88
+      Width = 248
+      Height = 89
+      Lines.Strings = (
+        'Memo1')
+      TabOrder = 12
+      Visible = False
+    end
+    object Edit1: TEdit
+      Left = 872
+      Top = 226
+      Width = 337
+      Height = 23
+      TabOrder = 13
+      Text = 'Edit1'
+      Visible = False
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -332,8 +420,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 472
-    ExplicitWidth = 1049
+    ExplicitTop = 480
+    ExplicitWidth = 1051
     object BBatal: TRzBitBtn
       Left = 979
       Top = 1
@@ -394,7 +482,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 973
+      ExplicitLeft = 975
     end
     object BSave: TRzBitBtn
       Left = 904
@@ -456,7 +544,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 898
+      ExplicitLeft = 903
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -480,11 +569,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
+    ExplicitTop = 276
+    ExplicitWidth = 1051
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 1045
-      ExplicitHeight = 188
+      ExplicitWidth = 1047
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -504,6 +594,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_ITEM'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Kode Barang'
             Width = 100
           end
@@ -514,26 +605,19 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_ITEM'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Barang'
             Width = 250
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'JUMLAH'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Jumlah'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'KD_SATUAN'
-            Footers = <>
-            ReadOnly = True
-            Visible = False
             Width = 100
           end
           item
@@ -543,6 +627,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_ SATUAN'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Satuan'
             Width = 100
           end
@@ -553,6 +638,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_SUPPLIER'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Kode Supplier'
             Visible = False
             Width = 100
@@ -564,6 +650,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_SUPPLIER'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Supplier'
             Visible = False
             Width = 250
@@ -575,6 +662,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_GUDANG'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Kode Gudang'
             Visible = False
             Width = 100
@@ -586,9 +674,30 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_GUDANG'
             Footers = <>
             ReadOnly = True
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Gudang'
             Visible = False
             Width = 250
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'CATEGORY_ID'
+            Footers = <>
+            Title.Caption = 'Category'
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'KD_SATUAN'
+            Footers = <>
+            ReadOnly = True
+            Title.Alignment = taCenter
+            Visible = False
+            Width = 100
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -598,12 +707,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
   object DSDetail: TDataSource
     DataSet = MemDetail
     Left = 64
-    Top = 496
+    Top = 472
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 136
-    Top = 496
+    Left = 168
+    Top = 352
     object MemDetailKD_ITEM: TStringField
       FieldName = 'KD_ITEM'
       Size = 50
@@ -640,6 +749,12 @@ object FNew_SalesOrder: TFNew_SalesOrder
     object MemDetailNM_SUPPLIER: TStringField
       FieldName = 'NM_SUPPLIER'
       Size = 500
+    end
+    object MemDetailCATEGORY_ID: TIntegerField
+      FieldName = 'CATEGORY_ID'
+    end
+    object MemDetailCATEGORY_NAME: TStringField
+      FieldName = 'CATEGORY_NAME'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -700,6 +815,53 @@ object FNew_SalesOrder: TFNew_SalesOrder
           StringDataType = fdtStringEh
           DisplayWidth = 500
           Size = 500
+        end
+        object CATEGORY_ID: TMTNumericDataFieldEh
+          FieldName = 'CATEGORY_ID'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object CATEGORY_NAME: TMTStringDataFieldEh
+          FieldName = 'CATEGORY_NAME'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object MemCategori: TMemTableEh
+    Active = True
+    Params = <>
+    Left = 360
+    Top = 224
+    object MemCategoricategory_id: TSmallintField
+      FieldName = 'category_id'
+    end
+    object MemCategoriqty: TSmallintField
+      FieldName = 'qty'
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object category_id: TMTNumericDataFieldEh
+          FieldName = 'category_id'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object qty: TMTNumericDataFieldEh
+          FieldName = 'qty'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
       end
       object RecordsList: TRecordsListEh

@@ -19,6 +19,9 @@ type
     Label1: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -26,9 +29,9 @@ type
     procedure Autonumber;
   end;
 
-var
+Function
   FNew_Dept: TFNew_Dept;
-  Status:integer;
+var  Status:integer;
 
 implementation
 
@@ -36,6 +39,16 @@ implementation
 
 uses UDataModule, UDept, UMainMenu;
 
+var
+  RealNew_Dept: TFNew_Dept;
+
+function FNew_Dept: TFNew_Dept;
+begin
+  if RealNew_Dept <> nil then
+    FNew_Dept:= RealNew_Dept
+  else
+    Application.CreateForm(TFNew_Dept, Result);
+end;
 
 Procedure TFNew_Dept.Autonumber;
 begin
@@ -94,9 +107,9 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' Update t_dept set dept='+QuotedStr(EdDept.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+        sql.Text:=' Update t_dept set dept='+QuotedStr(EdDept.Text)+',updated_at=now(),updated_by=:updated_by '+
                   ' where dept_code='+QuotedStr(Edkd.Text);
-        parambyname('updated_at').AsDateTime:=Now;
+        //parambyname('updated_at').AsDateTime:=Now;
         parambyname('updated_by').AsString:='Admin';
         ExecSQL;
       end;
@@ -114,6 +127,21 @@ begin
     end;
     refresh;
     FMainMenu.TampilTabForm2;
+end;
+
+procedure TFNew_Dept.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=cafree;
+end;
+
+procedure TFNew_Dept.FormCreate(Sender: TObject);
+begin
+  RealNew_Dept:=self;
+end;
+
+procedure TFNew_Dept.FormDestroy(Sender: TObject);
+begin
+  RealNew_Dept:=nil;
 end;
 
 end.

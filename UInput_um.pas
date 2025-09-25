@@ -405,6 +405,14 @@ begin
       Show;
       vcall:='Uang_Muka';
       QSupplier.Close;
+      with QSupplier do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT a.*,b.code,b.account_name from t_supplier a left JOIN t_ak_account b on'+
+        ' a.header_code_um=b.code where a.deleted_at is null order by supplier_code asc ';
+        Open;
+      end;
       QSupplier.Open;
     end;
 end;

@@ -8,7 +8,8 @@ uses
   DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS, DBAccess, Uni, Vcl.StdCtrls,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzButton, Vcl.ExtCtrls, RzTabs,
   Vcl.ComCtrls, RzDTP, RzPanel, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Buttons,
-  Vcl.Samples.Spin, MemTableDataEh, MemTableEh;
+  Vcl.Samples.Spin, MemTableDataEh, MemTableEh, IdBaseComponent, IdComponent,
+  IdTCPConnection, IdTCPClient, IdHTTP, uJSON;
 
 type
   TFNewDeliveryOrder = class(TForm)
@@ -158,6 +159,11 @@ type
     MemDataBiayano_invoice: TStringField;
     MemDataBiayatgl_invoice: TDateField;
     btBackStep: TRzBitBtn;
+    BtnCekBiaya: TRzBitBtn;
+    Memo1: TMemo;
+    IdHTTP1: TIdHTTP;
+    MemoAPI: TMemo;
+    edlokasiregencyid: TEdit;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -175,8 +181,6 @@ type
     procedure DBGridSumberPenjualanColEnter(Sender: TObject);
     procedure DBGridSumberPenjualanColumns0CellButtons0Click(Sender: TObject;
       var Handled: Boolean);
-    procedure DBGridSumberPenjualanCellClick(Column: TColumnEh);
-    procedure DBGridSumberPenjualanColExit(Sender: TObject);
     procedure DBGridSumberPenjualanEnter(Sender: TObject);
     procedure DBGridSumberPenjualanExit(Sender: TObject);
     procedure DBGridSumberPenjualanMouseEnter(Sender: TObject);
@@ -195,14 +199,16 @@ type
     procedure btBackStepClick(Sender: TObject);
     procedure DBGridSumberPenjualanKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure BtnCekBiayaClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    sumber_do: Integer;
+    sumber_do,IntAdaPerubahan: Integer;
     Grand_Tot: Real;
     vFormSumber01,vFormSumber02, kd_kares: string;
     strtgl, strbulan, strtahun: string;
+    IntStatusDO: Integer;
     Year, Month, Day: Word;
     procedure RefreshGridRincianBiaya;
     procedure HitungGrid;
@@ -213,15 +219,21 @@ type
     procedure InsertDetailCost;
     procedure InsertDetailLoad;
     procedure InsertDetailService;
+    procedure GetApiBiayaChakra;
+    procedure UpdateStatusTele;
+    procedure InsertStatus;
+    procedure GetApiBiayaKoreksiChakra;
+    procedure CekGetApiBiayaKoreksiChakra;
   end;
 
 var
   FNewDeliveryOrder: TFNewDeliveryOrder;
-  Status: Integer;
+  Status,StatusDO: Integer;
   AClass: TPersistentClass;
   AFormClass: TFormClass;
   AForm: TForm;
   AForm1: TForm;
+  json: TMyJSON;
 
 implementation
 
@@ -229,10 +241,435 @@ implementation
 
 uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
-  UListDeliveryOrder, UHomeLogin, UDaftarKendaraan;
+  UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
+  UListPerbandinganBiayaDo, UMainMenu;
+
+procedure TFNewDeliveryOrder.InsertStatus;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='INSERT INTO t_delivery_order_log_status (no_trans,status,date,user_cretae) '+
+              ' VALUES ('+QuotedStr(edKodeDOMuatan.Text)+','+IntToStr(StatusDO)+',NOW(),'+
+              ''+QuotedStr(FHomeLogin.Eduser.Text)+')';
+    Execute;
+  end;
+end;
+
+procedure TFNewDeliveryOrder.UpdateStatusTele;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  vBody,vBody2  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt,cnt2: Integer;
+  iii,iiii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date: TDate;
+  max,min: Integer;
+        //component
+  gNet:TIdHTTP;
+  //respon component
+  httpresult: TIdHTTP ;
+  resp: TMemoryStream;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:= 'select c.no_reference no_tiket from t_delivery_order_load a '+
+               'left join t_selling b on b.trans_no=a.notrans_load and b.deleted_at is null '+
+               'left JOIN t_sales_order c on c.notrans=b.no_reference and c.deleted_at is null '+
+               'WHERE a.notrans='+QuotedStr(edKodeDOMuatan.Text)+' and c.no_reference is not null';
+    open;
+  end;
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    dm.Qtemp.First;
+    while not dm.Qtemp.Eof do
+    begin
+    try
+        //BaseUrl:=edBaseURL.Text;
+    BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
+    key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
+    vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
+    vBody:='?ticket_number='+dm.Qtemp.FieldByName('no_tiket').AsString+
+           '&status=4';
+    Vpath:='/update-order';
+    url:= BaseUrl+Vpath+vBody;
+    try
+    gNet :=  TIdHTTP.Create(nil);
+    gNet.Request.Accept := 'application/json';
+    gNet.Request.CustomHeaders.Values[key] := Vtoken;
+    gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+    UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+    UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+    res:=  gNet.get(url);
+    jumdata:=1;
+    memo1.text := res;
+    except
+    on E: EIdHTTPProtocolException do
+
+    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+    begin
+      jumdata:=0;
+      gNet.free;
+      resp.Free;
+    end;
+
+
+   on E: Exception do
+   ShowMessage('A non-Indy related exception has been raised!');
+   end;
+    finally
+      gNet.free;
+      resp.Free;
+    end;
+
+    //MOVE JSON
+    json.JSONText := memo1.text;
+  end;
+  end;
+end;
+
+procedure TFNewDeliveryOrder.GetApiBiayaChakra;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  vBody,vBody2  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt,cnt2, IntTitikTambahan: Integer;
+  iii,iiii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date: TDate;
+  max,min: Integer;
+        //component
+  gNet:TIdHTTP;
+  //respon component
+  httpresult: TIdHTTP ;
+  resp: TMemoryStream;
+begin
+  try
+  IntTitikTambahan:=StrToInt(spTotalTitik.Text)-1;
+  //BaseUrl:=edBaseURL.Text;
+  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
+  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
+  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapichakra''');
+//  vBody:='?type_id='+edKodeJenisKendMuatan.Text+
+//         '&regencie_from_id='+edlokasiregencyid.Text+
+//         '&regencie_to_id='+edKodeKabupaten.Text+'&point='+IntToStr(IntTitikTambahan);
+  vBody:='?type_id=CDE&regencie_from_id=3515&regencie_to_id=3513&point=0';
+  Vpath:='/api/get-tariff';
+  url:= BaseUrl+Vpath+vBody;
+  MemoAPI.Text:=url;
+  try
+  gNet :=  TIdHTTP.Create(nil);
+  gNet.Request.Accept := 'application/json';
+  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+  res:=  gNet.get(url);
+  jumdata:=1;
+  MemoAPI.text := res;
+  json.JSONText := MemoAPI.text;
+  if json.StringTree['status']='false' then
+  begin
+    MessageDlg(json.StringTree['message']+'..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end;
+
+  except
+  on E: EIdHTTPProtocolException do
+    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+    begin
+      jumdata:=0;
+      gNet.free;
+      resp.Free;
+    end;
+    on E: Exception do
+    ShowMessage('A non-Indy related exception has been raised!');
+    end;
+    finally
+      gNet.free;
+      resp.Free;
+  end;
+
+  //MOVE JSON
+//  json.JSONText := MemoAPI.text;
+  cnt := json.TreeCount['data'];
+
+  if cnt = 0 then
+  begin
+    Showmessage('Data Tidak Ditemukan');
+    exit;
+  end;
+
+  MemDataBiaya.First;
+  while not MemDataBiaya.Eof do
+  begin
+    MemDataBiaya.Edit;
+    if MemDataBiaya['kd_biaya']='BTT' then
+    begin
+     MemDataBiaya['dpp']:=json.StringTree['data/additional_point'];
+     MemDataBiaya['total']:=json.StringTree['data/additional_point'];
+    end;
+    if MemDataBiaya['kd_biaya']='BKM' then
+    begin
+      MemDataBiaya['dpp']:=json.StringTree['data/additional_km'];
+      MemDataBiaya['total']:=json.StringTree['data/additional_km'];
+    end;
+    if MemDataBiaya['kd_biaya']='BANG' then
+    begin
+      MemDataBiaya['dpp']:=json.StringTree['data/transport_cost'];
+      MemDataBiaya['total']:=json.StringTree['data/transport_cost'];
+    end;
+    if MemDataBiaya['kd_biaya']='BONGKAR' then
+    begin
+      MemDataBiaya['dpp']:=json.StringTree['data/unloading_fee'];
+      MemDataBiaya['total']:=json.StringTree['data/unloading_fee'];
+    end;
+    MemDataBiaya.Post;
+    MemDataBiaya.Next;
+  end;
+
+end;
+
+procedure TFNewDeliveryOrder.GetApiBiayaKoreksiChakra;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str,notrans : string;
+  vBody,vBody2  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt,cnt2: Integer;
+  iii,iiii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date: TDate;
+  max,min: Integer;
+        //component
+  gNet:TIdHTTP;
+  //respon component
+  httpresult: TIdHTTP ;
+  resp: TMemoryStream;
+begin
+  try
+//  IntTitikTambahan:=StrToInt(spTotalTitik.Text)-1;
+//  notrans:=edKodeJenisKendMuatan.Text;
+  notrans:='DO/001/13/III/2025/HLJ';
+  //BaseUrl:=edBaseURL.Text;
+  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
+  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
+  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapichakra''');
+  vBody:='?notrans='+notrans;
+  Vpath:='/api/get-correction-cost';
+  url:= BaseUrl+Vpath+vBody;
+  try
+  gNet :=  TIdHTTP.Create(nil);
+  gNet.Request.Accept := 'application/json';
+  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+  res:=  gNet.get(url);
+  jumdata:=1;
+  MemoAPI.text := res;
+  json.JSONText := MemoAPI.text;
+  if json.StringTree['status']='false' then
+  begin
+    MessageDlg(json.StringTree['message']+'..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end;
+
+  except
+  on E: EIdHTTPProtocolException do
+
+    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+    begin
+
+      jumdata:=0;
+      gNet.free;
+      resp.Free;
+    end;
+    on E: Exception do
+    ShowMessage('A non-Indy related exception has been raised!');
+    end;
+    finally
+      gNet.free;
+      resp.Free;
+  end;
+
+  //MOVE JSON
+//  json.JSONText := MemoAPI.text;
+  cnt := json.TreeCount['data'];
+
+  if cnt = 0 then
+  begin
+    Showmessage('Data Tidak Ditemukan');
+    exit;
+  end;
+
+  xxx := 0;
+  for iii := 0 to cnt - 1 do
+  begin
+    inc(xxx);
+
+    row1 := format('data/%d/', [iii]);
+
+    with FListPerbandinganBiayaDo do
+    begin
+      MemDataBiayaCorrection.First;
+      while not MemDataBiayaCorrection.Eof do
+      begin
+        MemDataBiayaCorrection.Edit;
+        if MemDataBiayaCorrection['kd_biaya']='BTT' then
+        begin
+         MemDataBiayaCorrection['dpp']:=json.StringTree[row1+'additional_point'];
+        end;
+        if MemDataBiayaCorrection['kd_biaya']='BKM' then
+        begin
+          MemDataBiayaCorrection['dpp']:=json.StringTree[row1+'additional_km'];
+        end;
+        if MemDataBiayaCorrection['kd_biaya']='BANG' then
+        begin
+          MemDataBiayaCorrection['dpp']:=json.StringTree[row1+'transport_cost'];
+        end;
+        if MemDataBiayaCorrection['kd_biaya']='BONGKAR' then
+        begin
+          MemDataBiayaCorrection['dpp']:=json.StringTree[row1+'unloading_fee'];
+        end;
+        MemDataBiayaCorrection.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNewDeliveryOrder.CekGetApiBiayaKoreksiChakra;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str,notrans : string;
+  vBody,vBody2  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt,cnt2: Integer;
+  iii,iiii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date: TDate;
+  max,min: Integer;
+        //component
+  gNet:TIdHTTP;
+  //respon component
+  httpresult: TIdHTTP ;
+  resp: TMemoryStream;
+begin
+  try
+  IntAdaPerubahan:=0;
+//  notrans:=edKodeJenisKendMuatan.Text;
+  notrans:='DO/001/13/III/2025/HLJ';
+  //BaseUrl:=edBaseURL.Text;
+  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
+  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
+  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapichakra''');
+  vBody:='?notrans='+notrans;
+  Vpath:='/api/get-correction-cost';
+  url:= BaseUrl+Vpath+vBody;
+  MemoAPI.Text:=url;
+  try
+  gNet :=  TIdHTTP.Create(nil);
+  gNet.Request.Accept := 'application/json';
+  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+  res:=  gNet.get(url);
+  jumdata:=1;
+  MemoAPI.text := res;
+  json.JSONText := MemoAPI.text;
+  if json.StringTree['status']='false' then
+  begin
+    MessageDlg(json.StringTree['message']+'..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end;
+
+  except
+  on E: EIdHTTPProtocolException do
+
+    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+    begin
+
+      jumdata:=0;
+      gNet.free;
+      resp.Free;
+    end;
+    on E: Exception do
+    ShowMessage('A non-Indy related exception has been raised!');
+    end;
+    finally
+      gNet.free;
+      resp.Free;
+  end;
+
+  //MOVE JSON
+//  json.JSONText := MemoAPI.text;
+  cnt := json.TreeCount['data'];
+
+  if cnt = 0 then
+  begin
+    Showmessage('Data Tidak Ditemukan');
+    exit;
+  end;
+
+  xxx := 0;
+  for iii := 0 to cnt - 1 do
+  begin
+    inc(xxx);
+
+    row1 := format('data/%d/', [iii]);
+
+//    with FListPerbandinganBiayaDo do
+//    begin
+    MemDataBiaya.First;
+    while not MemDataBiaya.Eof do
+    begin
+      if MemDataBiaya['kd_biaya']='BTT' then
+      begin
+        if MemDataBiaya['dpp']<>json.StringTree[row1+'additional_point'] then
+        IntAdaPerubahan:=1;
+      end;
+      if MemDataBiaya['kd_biaya']='BKM' then
+      begin
+        if MemDataBiaya['dpp']<>json.StringTree[row1+'additional_km'] then
+        IntAdaPerubahan:=1;
+      end;
+      if MemDataBiaya['kd_biaya']='BANG' then
+      begin
+        if MemDataBiaya['dpp']<>json.StringTree[row1+'transport_cost'] then
+        IntAdaPerubahan:=1;
+      end;
+      if MemDataBiaya['kd_biaya']='BONGKAR' then
+      begin
+        if MemDataBiaya['dpp']<>json.StringTree[row1+'unloading_fee'] then
+        IntAdaPerubahan:=1;
+      end;
+      MemDataBiaya.Next;
+    end;
+    if IntAdaPerubahan=1 then
+    begin
+      MessageDlg('Ada perubahan biaya..!!',mtInformation,[mbOK],0);
+      BtnCekBiaya.Click;
+      Exit;
+    end;
+
+//    end;
+  end;
+end;
 
 procedure TFNewDeliveryOrder.Save;
 begin
+
   with dm.Qtemp do
   begin
     close;
@@ -242,7 +679,7 @@ begin
             ' "starting_loc_name", "province_code", "province_name", "regency_code", '+
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
             //' "additional_code", '+
-            ' "trans_day", "trans_month", "trans_year") '+
+            ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -263,12 +700,13 @@ begin
             //' '+QuotedStr('0')+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+'  );');
+            ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+');');
     ExecSQL;
   end;
   InsertDetailLoad;
   InsertDetailCost;
   InsertDetailService;
+  UpdateStatusTele;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -276,39 +714,43 @@ begin
 end;
 
 procedure TFNewDeliveryOrder.Update;
+var strStatus: String;
 begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' UPDATE "public"."t_delivery_order" SET '+
-              ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-              ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggalMuatan.Date))+','+
-              ' type_do_code='+QuotedStr(edKodeJenisMuatan.Text)+','+
-              ' type_do_name='+QuotedStr(edNamaJenisMuatan.Text)+','+
-              ' starting_loc_code='+QuotedStr(edKodeLokasi.Text)+','+
-              ' starting_loc_name='+QuotedStr(edNamaLokasi.Text)+','+
-              ' province_code='+QuotedStr(edKodeProvinsi.Text)+','+
-              ' province_name='+QuotedStr(edNamaProvinsi.Text)+','+
-              ' regency_code='+QuotedStr(edKodeKabupaten.Text)+','+
-              ' regency_name='+QuotedStr(edNamaKabupaten.Text)+','+
-              ' number_of_points='+QuotedStr(IntToStr(spTotalTitik.Value))+','+
-              ' description='+QuotedStr(MemKeteranganBiaya.Text)+', '+
-              ' order_no='+QuotedStr(order_no)+','+
-              ' additional_code='+QuotedStr('0')+','+
-              ' trans_day='+QuotedStr(strtgl)+','+
-              ' trans_month='+QuotedStr(strbulan)+','+
-              ' trans_year='+QuotedStr(strtahun)+' '+
-              ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
-      ExecSQL;
-    end;
-    InsertDetailLoad;
-    InsertDetailCost;
-    InsertDetailService;
-    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
-    Close;
-    FListDeliveryOrder.Refresh;
+  if FNewDeliveryOrder.IntStatusDO=2 then strStatus:=',status=3' else strStatus:='';
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "public"."t_delivery_order" SET '+
+            ' updated_at=NOW(),'+
+            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+            ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggalMuatan.Date))+','+
+            ' type_do_code='+QuotedStr(edKodeJenisMuatan.Text)+','+
+            ' type_do_name='+QuotedStr(edNamaJenisMuatan.Text)+','+
+            ' starting_loc_code='+QuotedStr(edKodeLokasi.Text)+','+
+            ' starting_loc_name='+QuotedStr(edNamaLokasi.Text)+','+
+            ' province_code='+QuotedStr(edKodeProvinsi.Text)+','+
+            ' province_name='+QuotedStr(edNamaProvinsi.Text)+','+
+            ' regency_code='+QuotedStr(edKodeKabupaten.Text)+','+
+            ' regency_name='+QuotedStr(edNamaKabupaten.Text)+','+
+            ' number_of_points='+QuotedStr(IntToStr(spTotalTitik.Value))+','+
+            ' description='+QuotedStr(MemKeteranganBiaya.Text)+', '+
+            ' order_no='+QuotedStr(order_no)+','+
+            ' additional_code='+QuotedStr('0')+','+
+            ' trans_day='+QuotedStr(strtgl)+','+
+            ' trans_month='+QuotedStr(strbulan)+','+
+            ' trans_year='+QuotedStr(strtahun)+strStatus+' '+
+            ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
+    ExecSQL;
+  end;
+  InsertDetailLoad;
+  InsertDetailCost;
+  InsertDetailService;
+  MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+  Close;
+//  FListDeliveryOrder.Refresh;
+  FMainMenu.TampilTabForm2;
 end;
 
 procedure TFNewDeliveryOrder.InsertDetailLoad;
@@ -533,12 +975,28 @@ begin
   edNomorTagihanVendor.Clear;
   dtTerimaTagihan.Date:=NOW();
   edTotalBiaya.Clear;
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select supplier_code,supplier_name from t_supplier '+
+              'where supplier_code='+
+              '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
+              'and deleted_at is null';
+    open;
+  end;
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    edKodeVendorTransMuatan.Text:=dm.Qtemp.FieldValues['supplier_code'];
+    edNamaVendorTransMuatan.Text:=dm.Qtemp.FieldValues['supplier_name'];
+  end;
 end;
 
 procedure TFNewDeliveryOrder.HitungGrid;
 begin
-   try
-      begin
+  try
+    begin
       if MemDataBiaya['kd_biaya']<>'0' then
       begin
         MemDataBiaya.Edit;
@@ -564,9 +1022,9 @@ begin
         MemDataBiaya['total']:=MemDataBiaya['dpp']+MemDataBiaya['ppn']-MemDataBiaya['pph'];
         MemDataBiaya.Post;
       end;
-      end;
-        Except;
-   end;
+    end;
+    Except;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.RefreshGridRincianBiaya;
@@ -693,6 +1151,7 @@ begin
   FNewDeliveryOrder.edKodeDODok.Text:=edKodeDOMuatan.Text;
   FNewDeliveryOrder.edNamaJenisDoc.Text:=edNamaJenisMuatan.Text;
   FNewDeliveryOrder.dtTanggalDoc.Date:=dtTanggalMuatan.Date;
+  FNewDeliveryOrder.dtTerimaTagihan.Date:=dtTanggalMuatan.Date;
 end;
 
 procedure TFNewDeliveryOrder.btMasterSumberClick(Sender: TObject);
@@ -703,6 +1162,56 @@ begin
   FMasterData.vcall:='do_master_jenis';
   FMasterData.update_grid('code','name','description','t_type_delivery_order','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.Show;
+end;
+
+procedure TFNewDeliveryOrder.BtnCekBiayaClick(Sender: TObject);
+begin
+  if edNamaLokasi.Text='' then
+  begin
+    MessageDlg('Lokasi awal wajib diisi..!!',mtInformation,[mbRetry],0);
+  end else if edNamaKabupaten.Text='' then
+  begin
+    MessageDlg('Kabupaten Tujuan wajib diisi..!!',mtInformation,[mbRetry],0);
+  end else if spTotalTitik.Text='' then
+  begin
+    MessageDlg('Jumlah titik wajib diisi..!!',mtInformation,[mbRetry],0);
+  end
+  else if edNamaJenisKendMuatan.Text='' then
+  begin
+    MessageDlg('Nama lokasi wajib diisi..!!',mtInformation,[mbRetry],0);
+  end
+  else if (IntStatusDO=2) or (IntStatusDO=3) then
+  begin
+    with FListPerbandinganBiayaDo do
+    begin
+      MemDataBiayaLast.Active:=False;
+      MemDataBiayaLast.Active:=True;
+      MemDataBiayaCorrection.Active:=False;
+      MemDataBiayaCorrection.Active:=True;
+      MemDataBiayaLast.EmptyTable;
+      MemDataBiayaCorrection.EmptyTable;
+      MemDataBiaya.First;
+      while not MemDataBiaya.Eof do
+      begin
+        MemDataBiayaLast.Insert;
+        MemDataBiayaLast['kd_biaya']:=MemDataBiaya['kd_biaya'];
+        MemDataBiayaLast['nm_biaya']:=MemDataBiaya['nm_biaya'];
+        MemDataBiayaLast['dpp']:=MemDataBiaya['dpp'];
+        MemDataBiayaLast.Post;
+
+        MemDataBiayaCorrection.Insert;
+        MemDataBiayaCorrection['kd_biaya']:=MemDataBiaya['kd_biaya'];
+        MemDataBiayaCorrection['nm_biaya']:=MemDataBiaya['nm_biaya'];
+        MemDataBiayaCorrection.Post;
+        MemDataBiaya.Next
+      end;
+    end;
+    GetApiBiayaKoreksiChakra;
+    FListPerbandinganBiayaDo.ShowModal;
+  end else
+  begin
+    GetApiBiayaChakra;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.btSaveParameterClick(Sender: TObject);
@@ -719,8 +1228,8 @@ begin
   MemDataBiaya.First;
   while not MemDataBiaya.Eof do
   begin
-  Grand_Tot:=Grand_Tot+MemDataBiaya['total'];
-  MemDataBiaya.Next;
+    Grand_Tot:=Grand_Tot+MemDataBiaya['total'];
+    MemDataBiaya.Next;
   end;
 
   if Grand_Tot<> edTotalBiaya.Value then
@@ -731,29 +1240,29 @@ begin
   end;
 
 
-    with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' UPDATE "public"."t_delivery_order" SET '+
-              ' updated_at=NOW(), '+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
-              ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
-      ExecSQL;
-    end;
-    with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' UPDATE "public"."t_delivery_order_services" SET '+
-              ' date_invoice='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTerimaTagihan.Date))+','+
-              ' no_invoice='+QuotedStr(edNomorTagihanVendor.Text)+','+
-              ' total_cost='+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
-              ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
-      ExecSQL;
-    end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "public"."t_delivery_order" SET '+
+            ' updated_at=NOW(), '+
+            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+',status=6 '+
+            ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
+    ExecSQL;
+  end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "public"."t_delivery_order_services" SET '+
+            ' date_invoice='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTerimaTagihan.Date))+','+
+            ' no_invoice='+QuotedStr(edNomorTagihanVendor.Text)+','+
+            ' total_cost='+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
+            ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
+    ExecSQL;
+  end;
 
-    ShowMessage('Data Berhasil Diperbarui..');
+  ShowMessage('Data Berhasil Diperbarui..');
 end;
 
 procedure TFNewDeliveryOrder.btSimpanSumberJualClick(Sender: TObject);
@@ -764,33 +1273,32 @@ begin
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
-  //refresh grid
-      //ShowMessage(IntToStr(Status));
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if edKodeDOMuatan.Text='' then
-      begin
-        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-        edKodeDOMuatan.SetFocus;
-      end
-      else if edKodeVendorTransMuatan.Text='' then
-      begin
-        MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
-        edKodeVendorTransMuatan.SetFocus;
-      end
-      else if MemDataMuatan.RecordCount=0 then
-      begin
-        MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
-        edKodeDOMuatan.SetFocus;
-      end
-      else if MemDataBiaya.RecordCount=0 then
-      begin
-        MessageDlg('Pastikan Detail Biaya Sudah Lengkap..!!',mtInformation,[mbRetry],0);
-        edKodeDOMuatan.SetFocus;
-      end
-      else if Status = 0 then
-      begin
+
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+    if edKodeDOMuatan.Text='' then
+    begin
+      MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+      edKodeDOMuatan.SetFocus;
+    end
+    else if edKodeVendorTransMuatan.Text='' then
+    begin
+      MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+      edKodeVendorTransMuatan.SetFocus;
+    end
+    else if MemDataMuatan.RecordCount=0 then
+    begin
+      MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+      edKodeDOMuatan.SetFocus;
+    end
+    else if MemDataBiaya.RecordCount=0 then
+    begin
+      MessageDlg('Pastikan Detail Biaya Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+      edKodeDOMuatan.SetFocus;
+    end
+    else if Status = 0 then
+    begin
       FNewDeliveryOrder.Autonumber;
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeDOMuatan.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
@@ -798,39 +1306,34 @@ begin
         Save;
         Dm.Koneksi.Commit;
       end;
-      end
-      else if Status = 1 then
+    end
+    else if Status = 1 then
+    begin
+      CekGetApiBiayaKoreksiChakra;
+      if IntAdaPerubahan=0 then
       begin
-      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      begin
-        Update;
-        Dm.Koneksi.Commit;
-      end;
-      end;
-      Except on E :Exception do
+        if application.MessageBox('Apa Anda Yakin Memperbarui Data Ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
         begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
+          Update;
+          Dm.Koneksi.Commit;
         end;
       end;
+    end;
+    Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
 end;
 
-
-procedure TFNewDeliveryOrder.DBGridSumberPenjualanCellClick(Column: TColumnEh);
-begin
-  HitungGrid;
-end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanColEnter(Sender: TObject);
 begin
   HitungGrid;
-end;
-
-procedure TFNewDeliveryOrder.DBGridSumberPenjualanColExit(Sender: TObject);
-begin
-  HitungGrid;
+  spTotalTitik.Text:=IntToStr(MemDataMuatan.RecordCount);
 end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanColumns0CellButtons0Click(
@@ -914,14 +1417,14 @@ end;
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if ((Key = #13)) then // Enter key
+{  if ((Key = #13)) then // Enter key
   begin
     // Membatalkan operasi insert
     MemDataBiaya.Cancel;
     // Tampilkan pesan jika diperlukan
     ShowMessage('Tidak Dapat Menambah Item Baru');
     Key := #0; // Mematikan key event
-  end;
+  end;  }
 end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanMouseEnter(Sender: TObject);
@@ -1018,10 +1521,12 @@ end;
 
 procedure TFNewDeliveryOrder.edNamaLokasiButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data Lokasi Awal';
-  FMasterData.vcall:='do_lokasi_awal';
-  FMasterData.update_grid('code','name','address','"public"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
-  FMasterData.ShowModal;
+//  FMasterData.Caption:='Master Data Lokasi Awal';
+//  FMasterData.vcall:='do_lokasi_awal';
+//  FMasterData.update_grid('code','name','address','"public"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
+//  FMasterData.ShowModal;
+  FDataPool.Show;
+  FDataPool.GetApiPool;
 end;
 
 procedure TFNewDeliveryOrder.edNamaProvinsiButtonClick(Sender: TObject);
@@ -1078,6 +1583,9 @@ begin
   end else begin
     btMasterSumber.Visible:=true;
   end;
+  json := TMyJSON.Create(Self);
+
+
 end;
 
 Initialization

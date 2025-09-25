@@ -10,6 +10,9 @@ object FSPB: TFSPB
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
@@ -45,7 +48,6 @@ object FSPB: TFSPB
     Width = 826
     Height = 265
     Align = alClient
-    DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
         ColumnName = 'Column_8_trans_year'
@@ -1331,7 +1333,7 @@ object FSPB: TFSPB
     Top = 85
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
