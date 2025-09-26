@@ -1142,6 +1142,14 @@
             <Form>FKoreksi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListTargetPenjualan.pas">
+            <Form>FListTargetPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_DataTargetPenjualan.pas">
+            <Form>FNew_DataTargetPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

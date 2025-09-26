@@ -190,36 +190,36 @@ end;
 
 procedure TFListTargetPenjualan.ActUpdateExecute(Sender: TObject);
 begin
-  with dm.Qtemp do
-  begin
-    Close;
-    Sql.Clear;
-    Sql.Text:='SELECT b.item_name,a.item_code,a.qty,a.value,a.id_customer_sales_target,'+
-              'b.group_id FROM t_customer_sales_target_det a '+
-              'LEFT JOIN t_item b on b.item_code=a.item_code '+
-              'WHERE a.id_customer_sales_target='+UniQuery1.FieldByName('id_customer_sales_target').AsString+' and '+
-              'b.group_id='+UniQuery1.FieldByName('group_id').AsString+' and a.status=true '+
-              'ORDER BY b.item_name asc;';
-    Open;
-  end;
-  FNew_DataTargetPenjualan.MemDetail.active:=false;
-  FNew_DataTargetPenjualan.MemDetail.active:=true;
-  FNew_DataTargetPenjualan.MemDetail.EmptyTable;
-  dm.Qtemp.First;
-  while not dm.Qtemp.Eof do
-  begin
-    with FNew_DataTargetPenjualan do
-    begin
-      Memdetail.Insert;
-      Memdetail['item_code']:=dm.Qtemp.FieldByName('item_code').AsString;
-      Memdetail['item_name']:=dm.Qtemp.FieldByName('item_name').AsString;
-      Memdetail['qty']:=dm.Qtemp.FieldByName('qty').AsString;
-      Memdetail['value']:=dm.Qtemp.FieldByName('value').AsString;
-      Memdetail.Post;
-    end;
-    dm.Qtemp.Next;
-  end;
-  dm.Qtemp.Close;
+//  with dm.Qtemp do
+//  begin
+//    Close;
+//    Sql.Clear;
+//    Sql.Text:='SELECT b.item_name,a.item_code,a.qty,a.value,a.id_customer_sales_target,'+
+//              'b.group_id FROM t_customer_sales_target_det a '+
+//              'LEFT JOIN t_item b on b.item_code=a.item_code '+
+//              'WHERE a.id_customer_sales_target='+UniQuery1.FieldByName('id_customer_sales_target').AsString+' and '+
+//              'b.group_id='+UniQuery1.FieldByName('group_id').AsString+' and a.status=true '+
+//              'ORDER BY b.item_name asc;';
+//    Open;
+//  end;
+//  FNew_DataTargetPenjualan.MemDetail.active:=false;
+//  FNew_DataTargetPenjualan.MemDetail.active:=true;
+//  FNew_DataTargetPenjualan.MemDetail.EmptyTable;
+//  dm.Qtemp.First;
+//  while not dm.Qtemp.Eof do
+//  begin
+//    with FNew_DataTargetPenjualan do
+//    begin
+//      Memdetail.Insert;
+//      Memdetail['item_code']:=dm.Qtemp.FieldByName('item_code').AsString;
+//      Memdetail['item_name']:=dm.Qtemp.FieldByName('item_name').AsString;
+//      Memdetail['qty']:=dm.Qtemp.FieldByName('qty').AsString;
+//      Memdetail['value']:=dm.Qtemp.FieldByName('value').AsString;
+//      Memdetail.Post;
+//    end;
+//    dm.Qtemp.Next;
+//  end;
+//  dm.Qtemp.Close;
 
   with dm.Qtemp2 do
   begin
@@ -238,8 +238,10 @@ begin
     cbKategori.Text:=UniQuery1.FieldByName('category').AsString;
     cbKelompokBarang.Text:=UniQuery1.FieldByName('group_name').AsString;
     edTahun.Value:= dm.Qtemp2.FieldByName('year').AsInteger;
+    cbBulan.ItemIndex:= dm.Qtemp2.FieldByName('month').AsInteger-1;
   end;
   dm.Qtemp2.Close;
+  FNew_DataTargetPenjualan.GetDetail;
   Status:=1;
   FNew_DataTargetPenjualan.ShowModal;
 end;

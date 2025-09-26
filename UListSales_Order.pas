@@ -56,17 +56,6 @@ type
     DBGridOrder: TDBGridEh;
     QSalesOrder: TUniQuery;
     DsSalesOrder: TDataSource;
-    QSalesOrdernotrans: TStringField;
-    QSalesOrderorder_date: TDateField;
-    QSalesOrdersent_date: TDateField;
-    QSalesOrdercode_cust: TStringField;
-    QSalesOrdername_cust: TStringField;
-    QSalesOrdercode_sales: TStringField;
-    QSalesOrdername_sales: TStringField;
-    QSalesOrderpayment_term: TSmallintField;
-    QSalesOrderno_reference: TStringField;
-    QSalesOrdercode_source: TStringField;
-    QSalesOrdername_source: TStringField;
     dxBarManager1Bar2: TdxBar;
     cbBulan: TdxBarCombo;
     edTahun: TdxBarSpinEdit;
@@ -111,11 +100,10 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add('SELECT * FROM t_sales_order '+
+       sql.add('SELECT * FROM get_sales_order(1) '+
                'where EXTRACT(YEAR FROM order_date)='+edTahun.Text+' AND '+
-               'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' AND '+
-               'deleted_at is null and status=1 ');
-       sql.add( vBatas_Data );
+               'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' ');
+//       sql.add( vBatas_Data );
        sql.add(' order by created_at Desc ');
        open;
    end;
@@ -225,10 +213,8 @@ begin
   begin
        close;
        sql.Clear;
-       sql.Text:= 'SELECT a.*,b.no_reference no_reference_selling FROM t_sales_order a '+
-                  'LEFT JOIN t_selling b on b.no_reference=a.notrans '+
-                  'WHERE a.notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString)+' '+
-                  'AND a.deleted_at is NULL';
+       sql.Text:= 'SELECT * FROM get_sales_order(3)'+
+                  'WHERE notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString);
        open;
   end;
   if Dm.Qtemp.RecordCount=0 then
@@ -238,7 +224,7 @@ begin
   end;
 
   //Jika sudah ada penjualan tidak bisa update
-  if Dm.Qtemp.FieldByName('no_reference_selling').AsString=NULL then
+  if (Dm.Qtemp.FieldByName('no_invoice').AsString<>NULL) AND (Dm.Qtemp.FieldByName('no_invoice').AsString<>'') then
   begin
     ShowMessage('SO sudah dibuat Penjualan tidak dapat diubah...!!!');
     FNew_SalesOrder.BSave.Enabled:=False;
@@ -250,7 +236,6 @@ begin
     FNew_SalesOrder.Panel1.Enabled:=True;
     FNew_SalesOrder.DBGridDetail.Enabled:=True;
   end;
-
 
   if Dm.Qtemp.RecordCount<>0 then
   begin

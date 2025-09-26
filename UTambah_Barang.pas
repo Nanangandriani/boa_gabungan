@@ -58,6 +58,7 @@ type
     procedure AddTargetPenjualan;
     procedure AddPenjulanPromosi;
     procedure AddReturPenjualan;
+    procedure AddKlasifikasi;
   end;
   function FTambah_Barang: TFTambah_Barang;
 
@@ -70,7 +71,7 @@ implementation
 
 uses UCari_Barang2, UMasterData, UDataModule, UNew_SalesOrder, UTemplate_Temp,
   UNew_DataPenjualan, UMy_Function, UDataReturPenjualan,
-  UNew_DataTargetPenjualan, UNew_DataPenjualanPromosi;
+  UNew_DataTargetPenjualan, UNew_DataPenjualanPromosi, UDaftarKlasifikasi;
 
 var
 tambahbarang : TFTambah_Barang;
@@ -83,66 +84,122 @@ begin
     Application.CreateForm(TFTambah_Barang, Result);
 end;
 
+procedure TFTambah_Barang.AddKlasifikasi;
+var
+  vKodeSama: Boolean;
+begin
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  vKodeSama:=false;
+  if edKodeBarang.Text='' then
+  begin
+    MessageDlg('Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edKodeBarang.SetFocus;
+  end else
+  begin
+    FDaftarKlasifikasi.MemKlasifikasi.active:=false;
+    FDaftarKlasifikasi.MemKlasifikasi.active:=true;
+//    if FDaftarKlasifikasi.MemKlasifikasi.RecordCount<>0 then
+//    begin
+//      FDaftarKlasifikasi.MemKlasifikasi.First;
+//      while not FDaftarKlasifikasi.MemKlasifikasi.Eof do
+//      begin
+//        if (edKodeBarang.Text=FDaftarKlasifikasi.MemKlasifikasi['kd_barang']) AND (edKodeSatuan.Text=FDaftarKlasifikasi.MemKlasifikasi['kd_satuan']) then
+//        begin
+//          vKodeSama:=true;
+//          MessageDlg('Kode Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
+//          exit;
+//        end;
+//        FDaftarKlasifikasi.MemKlasifikasi.Next;
+//      end;
+//    end;
+
+    if vKodeSama=false then
+    begin
+      FDaftarKlasifikasi.MemKlasifikasi.Insert;
+      FDaftarKlasifikasi.MemKlasifikasi['kd_barang']:=edKodeBarang.Text;
+      FDaftarKlasifikasi.MemKlasifikasi['nm_barang']:=edNamaBarang.Text;
+      FDaftarKlasifikasi.MemKlasifikasi['kd_satuan']:=edKodeSatuan.Text;;
+      FDaftarKlasifikasi.MemKlasifikasi['nm_satuan']:=edSatuan.Text;
+      FDaftarKlasifikasi.MemKlasifikasi['harga_satuan']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['batas1']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['batas2']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['disc']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['disc1']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['disc2']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['disc3']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi['disc4']:='0';
+      FDaftarKlasifikasi.MemKlasifikasi.post;
+    end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
+end;
+
 procedure TFTambah_Barang.AddTargetPenjualan;
 var
   vKodeSama: Boolean;
 begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      vKodeSama:=false;
-      if edKodeBarang.Text='' then
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  vKodeSama:=false;
+  if edKodeBarang.Text='' then
+  begin
+    MessageDlg('Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end
+  else if edJumlah.Value=0 then
+  begin
+    MessageDlg('Jumlah Mininal Order 1 (Satu)..!!',mtInformation,[mbRetry],0);
+  end else if edValue.Value=0 then
+  begin
+    MessageDlg('Value Tidak Boleh 0 ..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    FNew_DataTargetPenjualan.MemDetail.active:=false;
+    FNew_DataTargetPenjualan.MemDetail.active:=true;
+    if FNew_DataTargetPenjualan.MemDetail.RecordCount<>0 then
+    begin
+    FNew_DataTargetPenjualan.MemDetail.First;
+    while not FNew_DataTargetPenjualan.MemDetail.Eof do
+    begin
+      if edKodeBarang.Text=FNew_DataTargetPenjualan.MemDetail['item_code'] then
       begin
-        MessageDlg('Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-        edKodeBarang.SetFocus;
-      end
-      else if edJumlah.Value=0 then
-      begin
-        MessageDlg('Jumlah Mininal Order 1 (Satu)..!!',mtInformation,[mbRetry],0);
-        edJumlah.SetFocus;
-      end else if edValue.Value=0 then
-      begin
-        MessageDlg('Value Tidak Boleh 0 ..!!',mtInformation,[mbRetry],0);
-        edValue.SetFocus;
-      end else
-      begin
-        FNew_DataTargetPenjualan.MemDetail.active:=false;
-        FNew_DataTargetPenjualan.MemDetail.active:=true;
-        if FNew_DataTargetPenjualan.MemDetail.RecordCount<>0 then
-        begin
-        FNew_DataTargetPenjualan.MemDetail.First;
-        while not FNew_DataTargetPenjualan.MemDetail.Eof do
-        begin
-          if edKodeBarang.Text=FNew_DataTargetPenjualan.MemDetail['item_code'] then
-          begin
-            vKodeSama:=true;
-            MessageDlg('Kode Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
-            exit;
-          end;
-        FNew_DataTargetPenjualan.MemDetail.Next;
-        end;
-        end;
+        vKodeSama:=true;
+        MessageDlg('Kode Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
+        exit;
+      end;
+    FNew_DataTargetPenjualan.MemDetail.Next;
+    end;
+    end;
 
-        if vKodeSama=false then
-        begin
-           FNew_DataTargetPenjualan.MemDetail.active:=false;
-           FNew_DataTargetPenjualan.MemDetail.active:=true;
-           FNew_DataTargetPenjualan.MemDetail.insert;
-           FNew_DataTargetPenjualan.MemDetail['item_code']:=edKodeBarang.Text;
-           FNew_DataTargetPenjualan.MemDetail['item_name']:=edNamaBarang.Text;
-           FNew_DataTargetPenjualan.MemDetail['qty']:=edJumlah.Value;
-           FNew_DataTargetPenjualan.MemDetail['value']:=edValue.Text;
-           FNew_DataTargetPenjualan.MemDetail.post;
-        end;
+    if vKodeSama=false then
+    begin
+       FNew_DataTargetPenjualan.MemDetail.active:=false;
+       FNew_DataTargetPenjualan.MemDetail.active:=true;
+       FNew_DataTargetPenjualan.MemDetail.insert;
+       FNew_DataTargetPenjualan.MemDetail['item_code']:=edKodeBarang.Text;
+       FNew_DataTargetPenjualan.MemDetail['item_name']:=edNamaBarang.Text;
+       FNew_DataTargetPenjualan.MemDetail['qty']:=edJumlah.Value;
+       FNew_DataTargetPenjualan.MemDetail['value']:=edValue.Text;
+       FNew_DataTargetPenjualan.MemDetail.post;
+    end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
       end;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    end;
+  end;
 end;
 
 procedure TFTambah_Barang.AddReturPenjualan;
@@ -357,10 +414,10 @@ begin
         FNew_SalesOrder.MemDetail.First;
         while not FNew_SalesOrder.MemDetail.Eof do
         begin
-          if edKodeBarang.Text=FNew_SalesOrder.MemDetail['KD_ITEM'] then
+          if (edKodeBarang.Text=FNew_SalesOrder.MemDetail['KD_ITEM']) AND (edKodeSatuan.Text=FNew_SalesOrder.MemDetail['KD_SATUAN']) then
           begin
             vKodeSama:=true;
-            MessageDlg('Kode Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
+            MessageDlg('Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
             exit;
           end;
         FNew_SalesOrder.MemDetail.Next;
@@ -527,6 +584,11 @@ begin
     AddReturPenjualan;
     Close;
   end;
+  if vStatusTrans='klasifikasi' then
+  begin
+    AddKlasifikasi;
+    Close;
+  end;
 end;
 
 procedure TFTambah_Barang.edNamaBarangButtonClick(Sender: TObject);
@@ -578,11 +640,29 @@ begin
     LabelValue.Visible:=True;
     LabelValue2.Visible:=True;
     edValue.Visible:=True;
+    FTambah_Barang.Height:=231;
+  end else if vStatusTrans='klasifikasi' then
+  begin
+    LabelValue.Visible:=False;
+    LabelValue2.Visible:=False;
+    edValue.Visible:=False;
+
+    Label8.Visible:=False;
+    Label9.Visible:=False;
+    edJumlah.Visible:=False;
+
+    FTambah_Barang.Height:=159;
   end else
   begin
     LabelValue.Visible:=False;
     LabelValue2.Visible:=False;
     edValue.Visible:=False;
+
+    Label8.Visible:=True;
+    Label9.Visible:=True;
+    edJumlah.Visible:=True;
+
+    FTambah_Barang.Height:=187;
   end;
 end;
 

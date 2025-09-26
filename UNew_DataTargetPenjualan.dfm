@@ -3,8 +3,8 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Target Penjualan'
-  ClientHeight = 517
-  ClientWidth = 426
+  ClientHeight = 518
+  ClientWidth = 430
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,13 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 426
+    Width = 430
     Height = 209
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 430
+    ExplicitWidth = 426
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -248,24 +248,21 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 209
-    Width = 426
-    Height = 276
+    Width = 430
+    Height = 277
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 169
-    ExplicitWidth = 430
-    ExplicitHeight = 317
+    ExplicitWidth = 426
+    ExplicitHeight = 276
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail'
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 422
-      ExplicitHeight = 244
+      ExplicitHeight = 251
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -339,12 +336,13 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 485
-    Width = 426
+    Top = 486
+    Width = 430
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 438
+    ExplicitTop = 485
+    ExplicitWidth = 426
     object BBatal: TRzBitBtn
       Left = 354
       Top = 1
@@ -534,6 +532,6 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   object DSDetail: TDataSource
     DataSet = MemDetail
     Left = 384
-    Top = 230
+    Top = 262
   end
 end

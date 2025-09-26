@@ -392,7 +392,6 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
             EditButtons = <>
             FieldName = 'order_date'
             Footers = <>
-            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'Tanggal Order'
             Width = 80
@@ -1582,103 +1581,139 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     SQL.Strings = (
       
         'select *,case when substr(note,1,1)='#39','#39' then substr(note,2) else' +
-        '  note end note_pengajuan,false as pilih from "public"."t_sales_' +
-        'order"  '
-      'where deleted_at is null and status=0 order by created_at Desc')
+        '  note end note_pengajuan,false as pilih from get_sales_order (0' +
+        ')')
     Left = 524
     Top = 32
     object QSalesOrderid: TGuidField
       FieldName = 'id'
-      Required = True
+      ReadOnly = True
       Size = 38
     end
     object QSalesOrdercreated_at: TDateTimeField
       FieldName = 'created_at'
+      ReadOnly = True
     end
-    object QSalesOrdercreated_by: TStringField
+    object QSalesOrdercreated_by: TMemoField
       FieldName = 'created_by'
-      Size = 50
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QSalesOrderupdated_at: TDateTimeField
       FieldName = 'updated_at'
+      ReadOnly = True
     end
-    object QSalesOrderupdated_by: TStringField
+    object QSalesOrderupdated_by: TMemoField
       FieldName = 'updated_by'
-      Size = 50
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QSalesOrderdeleted_at: TDateTimeField
       FieldName = 'deleted_at'
+      ReadOnly = True
     end
-    object QSalesOrderdeleted_by: TStringField
+    object QSalesOrderdeleted_by: TMemoField
       FieldName = 'deleted_by'
-      Size = 50
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdernotrans: TStringField
+    object QSalesOrdernotrans: TMemoField
       FieldName = 'notrans'
-      Required = True
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QSalesOrderorder_date: TDateField
       FieldName = 'order_date'
+      ReadOnly = True
     end
     object QSalesOrdersent_date: TDateField
       FieldName = 'sent_date'
+      ReadOnly = True
     end
-    object QSalesOrdercode_cust: TStringField
+    object QSalesOrdercode_cust: TMemoField
       FieldName = 'code_cust'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdername_cust: TStringField
+    object QSalesOrdername_cust: TMemoField
       FieldName = 'name_cust'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdercode_sales: TStringField
+    object QSalesOrdercode_sales: TMemoField
       FieldName = 'code_sales'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdername_sales: TStringField
+    object QSalesOrdername_sales: TMemoField
       FieldName = 'name_sales'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QSalesOrderpayment_term: TSmallintField
       FieldName = 'payment_term'
+      ReadOnly = True
     end
-    object QSalesOrdercode_source: TStringField
+    object QSalesOrdercode_source: TMemoField
       FieldName = 'code_source'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdername_source: TStringField
+    object QSalesOrdername_source: TMemoField
       FieldName = 'name_source'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QSalesOrderorder_no: TIntegerField
       FieldName = 'order_no'
+      ReadOnly = True
     end
-    object QSalesOrderadditional_code: TStringField
+    object QSalesOrderadditional_code: TMemoField
       FieldName = 'additional_code'
-      Size = 200
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdertrans_day: TStringField
+    object QSalesOrdertrans_day: TMemoField
       FieldName = 'trans_day'
-      Size = 10
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdertrans_month: TStringField
+    object QSalesOrdertrans_month: TMemoField
       FieldName = 'trans_month'
-      Size = 10
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrdertrans_year: TStringField
+    object QSalesOrdertrans_year: TMemoField
       FieldName = 'trans_year'
-      Size = 10
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QSalesOrderno_reference: TStringField
+    object QSalesOrderno_reference: TMemoField
       FieldName = 'no_reference'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QSalesOrderstatus: TSmallintField
       FieldName = 'status'
+      ReadOnly = True
     end
     object QSalesOrdernote: TMemoField
       FieldName = 'note'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QSalesOrderstatus_approval_at: TDateTimeField
+      FieldName = 'status_approval_at'
+      ReadOnly = True
+    end
+    object QSalesOrderstatus_approval_by: TMemoField
+      FieldName = 'status_approval_by'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QSalesOrderno_invoice: TMemoField
+      FieldName = 'no_invoice'
+      ReadOnly = True
       BlobType = ftMemo
     end
     object QSalesOrdernote_pengajuan: TMemoField

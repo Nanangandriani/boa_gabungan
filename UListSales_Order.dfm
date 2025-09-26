@@ -42,6 +42,7 @@ object FSalesOrder: TFSalesOrder
     Height = 344
     Align = alClient
     DataSource = DsSalesOrder
+    DrawMemoText = True
     DynProps = <>
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 170
@@ -847,55 +848,12 @@ object FSalesOrder: TFSalesOrder
   object QSalesOrder: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_sales_order"  '
-      'where deleted_at is null and status=1 order by created_at Desc')
+      
+        'SELECT * FROM get_sales_order(1) where EXTRACT(YEAR FROM order_d' +
+        'ate)=2025 AND EXTRACT(MONTH FROM order_date)=9 '
+      ' order by created_at Desc')
     Left = 428
     Top = 56
-    object QSalesOrdernotrans: TStringField
-      FieldName = 'notrans'
-      Size = 255
-    end
-    object QSalesOrderorder_date: TDateField
-      FieldName = 'order_date'
-    end
-    object QSalesOrdersent_date: TDateField
-      FieldName = 'sent_date'
-      Visible = False
-    end
-    object QSalesOrdercode_cust: TStringField
-      FieldName = 'code_cust'
-      Visible = False
-      Size = 100
-    end
-    object QSalesOrdername_cust: TStringField
-      FieldName = 'name_cust'
-      Size = 255
-    end
-    object QSalesOrdercode_sales: TStringField
-      FieldName = 'code_sales'
-      Visible = False
-      Size = 100
-    end
-    object QSalesOrdername_sales: TStringField
-      FieldName = 'name_sales'
-      Size = 255
-    end
-    object QSalesOrderpayment_term: TSmallintField
-      FieldName = 'payment_term'
-    end
-    object QSalesOrderno_reference: TStringField
-      FieldName = 'no_reference'
-      Size = 255
-    end
-    object QSalesOrdercode_source: TStringField
-      FieldName = 'code_source'
-      Visible = False
-      Size = 100
-    end
-    object QSalesOrdername_source: TStringField
-      FieldName = 'name_source'
-      Size = 255
-    end
   end
   object DsSalesOrder: TDataSource
     DataSet = QSalesOrder

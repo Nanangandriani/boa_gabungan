@@ -407,29 +407,31 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT * from ('+
+    sql.add(' SELECT a.*,b.category_id,c.category category_name from ('+
             ' SELECT "notrans", "code_item", '+
             ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
             ' "name_wh", "code_supp", "name_supp", "source" FROM  "public"."t_sales_order_det" '+
             ' WHERE deleted_at IS NULL ) a '+
+            ' LEFT JOIN t_item b on b.item_code=a.code_item '+
+            ' LEFT JOIN t_item_category c on c.category_id=b.category_id '+
             ' WHERE notrans='+QuotedStr(edKodeOrder.Text)+' '+
             ' Order By notrans, code_item desc');
     open;
   end;
 
+  FNew_SalesOrder.MemDetail.active:=false;
+  FNew_SalesOrder.MemDetail.active:=true;
+  FNew_SalesOrder.MemDetail.EmptyTable;
+
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
     FNew_SalesOrder.MemDetail.active:=false;
     FNew_SalesOrder.MemDetail.active:=true;
     FNew_SalesOrder.MemDetail.EmptyTable;
+  end;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      FNew_SalesOrder.MemDetail.active:=false;
-      FNew_SalesOrder.MemDetail.active:=true;
-      FNew_SalesOrder.MemDetail.EmptyTable;
-    end;
-
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
@@ -443,10 +445,12 @@ begin
      FNew_SalesOrder.MemDetail['NM_GUDANG']:=Dm.Qtemp.fieldbyname('name_wh').value;
      FNew_SalesOrder.MemDetail['KD_SUPPLIER']:=Dm.Qtemp.fieldbyname('code_supp').value;
      FNew_SalesOrder.MemDetail['NM_SUPPLIER']:=Dm.Qtemp.fieldbyname('name_supp').value;
+     FNew_SalesOrder.MemDetail['CATEGORY_ID']:=Dm.Qtemp.fieldbyname('category_id').value;
+     FNew_SalesOrder.MemDetail['CATEGORY_NAME']:=Dm.Qtemp.fieldbyname('category_name').value;
      FNew_SalesOrder.MemDetail.post;
      Dm.Qtemp.next;
     end;
-    end;
+  end;
 end;
 
 procedure TFNew_SalesOrder.RzBitBtn1Click(Sender: TObject);
@@ -576,11 +580,18 @@ begin
     end
     else if Status = 1 then
     begin
-    if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-    begin
-      CekTargetSales;
-      Update;
-      Dm.Koneksi.Commit;
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        CekTargetSales;
+        if islanjut=1 then begin
+          CekBankGaransi;
+          if islanjut=1 then begin
+            Update;
+            Dm.Koneksi.Commit;
+          end else begin
+            exit;
+          end;
+        end;
     end;
   end;
   Except on E :Exception do
@@ -619,8 +630,12 @@ begin
 //  end;
   vStatusTrans:='salesorder';
   if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
-  FListOrderTelemarketing.ShowModal
-  else FTambah_Barang.ShowModal;
+  begin
+    FListOrderTelemarketing.ShowModal
+  end else begin
+    FTambah_Barang.clear;
+    FTambah_Barang.ShowModal;
+  end;
 end;
 
 procedure TFNew_SalesOrder.btMasterSalesClick(Sender: TObject);
@@ -749,6 +764,21 @@ begin
   end;
   Strsubmenu_code:=QuotedStr(dm.Qtemp.FieldValues['submenu_code']);
   Strsubmenu:=QuotedStr('Sales Order');
+
+  if (Status=1) AND (edNamaSumber.Text='ORDER OFFLINE') then
+  begin
+    btAddDetail.Enabled:=False;
+  end else begin
+    btAddDetail.Enabled:=true;
+  end;
+
+  if Status=1 then
+  begin
+    dtTanggal_Pesan.Enabled:=False;
+  end else begin
+    dtTanggal_Pesan.Enabled:=True;
+  end;
+
 end;
 
 procedure TFNew_SalesOrder.Save;
@@ -845,37 +875,105 @@ begin
 end;
 
 procedure TFNew_SalesOrder.Update;
+var
+  Stradditional_code,StrStatus,StrNote,
+  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak : String;
 begin
-  with dm.Qtemp do
+  if Copy(StrKetLog, 1, 1)=',' then
+  Strketerangan:=QuotedStr(Copy(StrKetLog,2))
+  else Strketerangan:=QuotedStr(StrKetLog);
+
+  if (iserror=1) AND (islanjut=1) then
   begin
-    close;
-    sql.clear;
-    sql.add(' UPDATE "public"."t_sales_order" SET '+
-            ' updated_at=NOW(),'+
-            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
-            ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
-            ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
-            ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
-            ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
-            ' code_sales='+QuotedStr(edKode_Sales.Text)+','+
-            ' name_sales='+QuotedStr(edNama_Sales.Text)+','+
-            ' payment_term='+QuotedStr(spJatuhTempo.Text)+','+
-            ' no_reference='+QuotedStr(edNoReff.Text)+','+
-            ' code_source='+QuotedStr(edKodeSumber.Text)+','+
-            ' name_source='+QuotedStr(edNamaSumber.Text)+','+
-            ' order_no='+QuotedStr(order_no)+','+
-            ' additional_code='+QuotedStr(kd_kares)+','+
-            ' trans_day='+QuotedStr(strtgl)+','+
-            ' trans_month='+QuotedStr(strbulan)+','+
-            ' trans_year='+QuotedStr(strtahun)+' '+
-            ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
-    ExecSQL;
+    StrStatus:='0';
+    StrNote:=Strketerangan;
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Text:='CALL "InsertSPLogActivity" ('+StrUsername+', '+Strsubmenu+','+
+//                ''+Strsubmenu_code+', '+Strversi+','+Stripuser+','+StrInsert+','+
+//                ''+Strupdate+','+Strdelete+','+Strapproval+','+
+//                ''+Strketerangan+','+Stralasan+','+Strcetak+','+QuotedStr(edKodeOrder.Text)+');';
+//      ExecSQL;
+//    end;
+  end else
+  begin
+    StrStatus:='1';
+    StrNote:='NULL';
   end;
-  InsertDetailSO;
-  MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
-  Close;
-  FMainMenu.TampilTabForm2;
-//    FSalesOrder.Refresh;
+
+  if StrStatus='0' then
+  begin
+    if application.MessageBox('Apa Anda Yakin ingin mengajukan Order Ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.add(' UPDATE "public"."t_sales_order" SET '+
+                ' updated_at=NOW(),'+
+                ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+    //            ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
+                ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
+                ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
+                ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
+                ' code_sales='+QuotedStr(edKode_Sales.Text)+','+
+                ' name_sales='+QuotedStr(edNama_Sales.Text)+','+
+                ' payment_term='+QuotedStr(spJatuhTempo.Text)+','+
+                ' no_reference='+QuotedStr(edNoReff.Text)+','+
+                ' code_source='+QuotedStr(edKodeSumber.Text)+','+
+                ' name_source='+QuotedStr(edNamaSumber.Text)+','+
+                ' status='+StrStatus+','+
+                ' note='+StrNote+' '+
+    //            ' order_no='+QuotedStr(order_no)+','+
+    //            ' additional_code='+QuotedStr(kd_kares)+','+
+    //            ' trans_day='+QuotedStr(strtgl)+','+
+    //            ' trans_month='+QuotedStr(strbulan)+','+
+    //            ' trans_year='+QuotedStr(strtahun)+' '+
+                ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
+        ExecSQL;
+      end;
+      InsertDetailSO;
+      MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+      Close;
+      FMainMenu.TampilTabForm2;
+    end;
+  end else
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "public"."t_sales_order" SET '+
+              ' updated_at=NOW(),'+
+              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+  //            ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
+              ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
+              ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
+              ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+
+              ' code_sales='+QuotedStr(edKode_Sales.Text)+','+
+              ' name_sales='+QuotedStr(edNama_Sales.Text)+','+
+              ' payment_term='+QuotedStr(spJatuhTempo.Text)+','+
+              ' no_reference='+QuotedStr(edNoReff.Text)+','+
+              ' code_source='+QuotedStr(edKodeSumber.Text)+','+
+              ' name_source='+QuotedStr(edNamaSumber.Text)+','+
+              ' status='+StrStatus+','+
+              ' note='+StrNote+' '+
+  //            ' order_no='+QuotedStr(order_no)+','+
+  //            ' additional_code='+QuotedStr(kd_kares)+','+
+  //            ' trans_day='+QuotedStr(strtgl)+','+
+  //            ' trans_month='+QuotedStr(strbulan)+','+
+  //            ' trans_year='+QuotedStr(strtahun)+' '+
+              ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
+      ExecSQL;
+    end;
+    InsertDetailSO;
+    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+    Close;
+    FMainMenu.TampilTabForm2;
+  //    FSalesOrder.Refresh;
+  end;
 end;
 
 Initialization

@@ -1,6 +1,7 @@
 object FListSalesOrder: TFListSalesOrder
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'List Sales Order'
   ClientHeight = 495
   ClientWidth = 1029
@@ -10,6 +11,7 @@ object FListSalesOrder: TFListSalesOrder
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object pnlFilter: TPanel
@@ -21,6 +23,7 @@ object FListSalesOrder: TFListSalesOrder
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1025
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -318,6 +321,9 @@ object FListSalesOrder: TFListSalesOrder
       FieldName = 'NO_REFF'
       Size = 255
     end
+    object MemMasterDataPAYMENT_TERM: TSmallintField
+      FieldName = 'PAYMENT_TERM'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KD_PELANGGAN: TMTStringDataFieldEh
@@ -349,6 +355,14 @@ object FListSalesOrder: TFListSalesOrder
           StringDataType = fdtStringEh
           DisplayWidth = 255
           Size = 255
+        end
+        object PAYMENT_TERM: TMTNumericDataFieldEh
+          FieldName = 'PAYMENT_TERM'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
       end
       object RecordsList: TRecordsListEh

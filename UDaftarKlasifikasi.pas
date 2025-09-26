@@ -127,6 +127,7 @@ type
     Label4: TLabel;
     IdCompressorZLib1: TIdCompressorZLib;
     RzLabel1: TRzLabel;
+    btAddDetail: TRzBitBtn;
   procedure edKode_PelangganButtonClick(Sender: TObject);
   procedure ednm_jenis_pelButtonClick(Sender: TObject);
   procedure ednm_kategoriButtonClick(Sender: TObject);
@@ -154,6 +155,7 @@ type
     procedure ednm_jenis_jualChange(Sender: TObject);
     procedure edkd_jenis_jualChange(Sender: TObject);
     procedure edkd_type_jualChange(Sender: TObject);
+    procedure btAddDetailClick(Sender: TObject);
   private
   { Private declarations }
   public
@@ -176,7 +178,8 @@ implementation
 
 {$R *.dfm}
 
-uses Ubrowse_pelanggan, UMasterData, UDataModule, UHomeLogin;
+uses Ubrowse_pelanggan, UMasterData, UDataModule, UHomeLogin, UTambah_Barang,
+  UMy_Function;
 //uses UDataModule, UHomeLogin;
 
 procedure TFDaftarKlasifikasi.SaveUpdateGroup;
@@ -829,10 +832,13 @@ begin
     MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
   end else
   begin
-    FMasterData.Caption:='Master Data Barang';
-    FMasterData.vcall:='m_klasifikasi';
-    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE group_id='+QuotedStr(edkd_kategori.Text)+' and	deleted_at IS NULL');
-    FMasterData.ShowModal;
+    vStatusTrans:='klasifikasi';
+    FTambah_Barang.clear;
+    FTambah_Barang.ShowModal;
+//    FMasterData.Caption:='Master Data Barang';
+//    FMasterData.vcall:='m_klasifikasi';
+//    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE group_id='+QuotedStr(edkd_kategori.Text)+' and	deleted_at IS NULL');
+//    FMasterData.ShowModal;
   end;
 end;
 
@@ -864,6 +870,23 @@ procedure TFDaftarKlasifikasi.BSaveClick(Sender: TObject);
 begin
   FDaftarKlasifikasi.Status:=0;
   SaveUpdateGroup;
+end;
+
+procedure TFDaftarKlasifikasi.btAddDetailClick(Sender: TObject);
+begin
+  if ednm_kategori.Text='' then
+  begin
+    MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    vStatusTrans:='klasifikasi';
+    FTambah_Barang.clear;
+    FTambah_Barang.ShowModal;
+//    FMasterData.Caption:='Master Data Barang';
+//    FMasterData.vcall:='m_klasifikasi';
+//    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE group_id='+QuotedStr(edkd_kategori.Text)+' and	deleted_at IS NULL');
+//    FMasterData.ShowModal;
+  end;
 end;
 
 procedure TFDaftarKlasifikasi.bt_m_batalClick(Sender: TObject);

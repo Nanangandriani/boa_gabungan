@@ -286,7 +286,9 @@ uses
   URekapUmurPiutang in 'URekapUmurPiutang.pas' {FRekapUmurPiutang},
   URekapSaldoPiutangPerKaresidenan in 'URekapSaldoPiutangPerKaresidenan.pas' {FRekapSaldoPiutangPerKaresidenan},
   UListKoreksi in 'UListKoreksi.pas' {FListKoreksi},
-  UKoreksi in 'UKoreksi.pas' {FKoreksi};
+  UKoreksi in 'UKoreksi.pas' {FKoreksi},
+  UListTargetPenjualan in 'UListTargetPenjualan.pas' {FListTargetPenjualan},
+  UNew_DataTargetPenjualan in 'UNew_DataTargetPenjualan.pas' {FNew_DataTargetPenjualan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -345,7 +347,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDelivery_Order_Sumber, FDelivery_Order_Sumber);
   Application.CreateForm(TFListReturPenjualan, FListReturPenjualan);
   Application.CreateForm(TFDataReturPenjualan, FDataReturPenjualan);
-//  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
+  Application.CreateForm(TFListTargetPenjualan, FListTargetPenjualan);
+  Application.CreateForm(TFNew_DataTargetPenjualan, FNew_DataTargetPenjualan);
+  //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
   Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);

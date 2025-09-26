@@ -62,11 +62,11 @@ type
     procedure RefreshJenis;
     procedure RefreshKategori;
     procedure RefreshKelompok;
-    procedure GetDetail;
   public
     { Public declarations }
     procedure Clear;
     procedure GetTargetPenjualan;
+    procedure GetDetail;
   end;
 
 var

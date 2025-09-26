@@ -42,28 +42,28 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label39: TLabel
       Left = 19
-      Top = 46
+      Top = 73
       Width = 91
       Height = 15
       Caption = 'Nama Pelanggan'
     end
     object Label38: TLabel
       Left = 116
-      Top = 46
+      Top = 73
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
       Left = 117
-      Top = 181
+      Top = 208
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
       Left = 20
-      Top = 181
+      Top = 208
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
@@ -77,56 +77,56 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label8: TLabel
       Left = 19
-      Top = 209
+      Top = 45
       Width = 41
       Height = 15
       Caption = 'Sumber'
     end
     object Label9: TLabel
       Left = 117
-      Top = 209
+      Top = 45
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 20
-      Top = 72
+      Top = 99
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
     object Label11: TLabel
       Left = 117
-      Top = 72
+      Top = 99
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label13: TLabel
       Left = 118
-      Top = 99
+      Top = 126
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 20
-      Top = 99
+      Top = 126
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label1: TLabel
       Left = 21
-      Top = 126
+      Top = 153
       Width = 78
       Height = 15
       Caption = 'No. Surat Jalan'
     end
     object Label2: TLabel
       Left = 118
-      Top = 126
+      Top = 153
       Width = 3
       Height = 15
       Caption = ':'
@@ -147,7 +147,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object btMasterSumber: TSpeedButton
       Left = 320
-      Top = 207
+      Top = 43
       Width = 23
       Height = 22
       Caption = '+'
@@ -155,21 +155,21 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label6: TLabel
       Left = 118
-      Top = 154
+      Top = 181
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label7: TLabel
       Left = 21
-      Top = 154
+      Top = 181
       Width = 55
       Height = 15
       Caption = 'No. Faktur'
     end
     object SpeedButton1: TSpeedButton
       Left = 480
-      Top = 42
+      Top = 69
       Width = 23
       Height = 22
       Glyph.Data = {
@@ -229,7 +229,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 43
+      Top = 70
       Width = 344
       Height = 23
       Text = ''
@@ -241,7 +241,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edKode_Pelanggan: TEdit
       Left = 529
-      Top = 43
+      Top = 70
       Width = 200
       Height = 23
       TabOrder = 1
@@ -249,7 +249,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object spJatuhTempo: TSpinEdit
       Left = 132
-      Top = 178
+      Top = 205
       Width = 60
       Height = 24
       MaxValue = 0
@@ -259,7 +259,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNamaSumber: TRzButtonEdit
       Left = 132
-      Top = 206
+      Top = 42
       Width = 185
       Height = 23
       Text = ''
@@ -272,7 +272,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edKodeSumber: TEdit
       Left = 362
-      Top = 204
+      Top = 40
       Width = 100
       Height = 23
       TabOrder = 4
@@ -280,7 +280,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object dtTanggal: TRzDateTimePicker
       Left = 132
-      Top = 69
+      Top = 96
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -353,7 +353,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNomorTrans: TEdit
       Left = 132
-      Top = 96
+      Top = 123
       Width = 250
       Height = 23
       CharCase = ecUpperCase
@@ -373,7 +373,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edSuratJalanTrans: TEdit
       Left = 132
-      Top = 123
+      Top = 150
       Width = 250
       Height = 23
       CharCase = ecUpperCase
@@ -389,7 +389,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNomorFaktur: TEdit
       Left = 132
-      Top = 151
+      Top = 178
       Width = 250
       Height = 23
       CharCase = ecUpperCase
@@ -536,8 +536,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1083
-      ExplicitTop = 3
+      ExplicitLeft = 1004
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -672,7 +671,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = 'Submit Correction'
       TabOrder = 4
       OnClick = BCorrectionClick
-      ExplicitLeft = 1004
+      ExplicitLeft = 1079
     end
   end
   object RzPageControl1: TRzPageControl

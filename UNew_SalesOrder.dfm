@@ -23,8 +23,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1051
-    ExplicitHeight = 276
+    ExplicitLeft = -8
+    ExplicitTop = -6
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -544,8 +544,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 903
-      ExplicitTop = 3
+      ExplicitLeft = 900
     end
     object Edautocode: TEdit
       Left = 712
