@@ -1150,6 +1150,10 @@
             <Form>FNew_DataTargetPenjualan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UPenyesuaianFaktur.pas">
+            <Form>FPenyesuaianFaktur</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

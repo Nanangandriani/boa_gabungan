@@ -288,7 +288,8 @@ uses
   UListKoreksi in 'UListKoreksi.pas' {FListKoreksi},
   UKoreksi in 'UKoreksi.pas' {FKoreksi},
   UListTargetPenjualan in 'UListTargetPenjualan.pas' {FListTargetPenjualan},
-  UNew_DataTargetPenjualan in 'UNew_DataTargetPenjualan.pas' {FNew_DataTargetPenjualan};
+  UNew_DataTargetPenjualan in 'UNew_DataTargetPenjualan.pas' {FNew_DataTargetPenjualan},
+  UPenyesuaianFaktur in 'UPenyesuaianFaktur.pas' {FPenyesuaianFaktur};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -349,6 +350,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataReturPenjualan, FDataReturPenjualan);
   Application.CreateForm(TFListTargetPenjualan, FListTargetPenjualan);
   Application.CreateForm(TFNew_DataTargetPenjualan, FNew_DataTargetPenjualan);
+  Application.CreateForm(TFPenyesuaianFaktur, FPenyesuaianFaktur);
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
