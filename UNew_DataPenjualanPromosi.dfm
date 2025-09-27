@@ -4,7 +4,7 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
   BorderStyle = bsDialog
   Caption = 'Penjualan Promosi'
   ClientHeight = 635
-  ClientWidth = 628
+  ClientWidth = 918
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 628
+    Width = 918
     Height = 305
     Align = alTop
     Color = clGradientInactiveCaption
@@ -143,13 +143,6 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
       Height = 15
       Caption = 'No. Reff'
     end
-    object btMasterSumber: TSpeedButton
-      Left = 320
-      Top = 207
-      Width = 23
-      Height = 22
-      Caption = '+'
-    end
     object Label6: TLabel
       Left = 118
       Top = 154
@@ -260,6 +253,8 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
       Width = 185
       Height = 23
       Text = ''
+      Color = clInfoBk
+      ReadOnly = True
       TabOrder = 3
       AllowKeyEdit = False
       AltBtnNumGlyphs = 1
@@ -284,8 +279,8 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
       TabOrder = 5
     end
     object btAddDetail: TRzBitBtn
-      Left = 20
-      Top = 267
+      Left = 21
+      Top = 269
       Width = 116
       Height = 30
       Align = alCustom
@@ -404,14 +399,14 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
   object Panel2: TPanel
     Left = 0
     Top = 603
-    Width = 628
+    Width = 918
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 602
     ExplicitWidth = 624
     object BBatal: TRzBitBtn
-      Left = 552
+      Left = 842
       Top = 1
       Height = 30
       Align = alRight
@@ -473,7 +468,7 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
       ExplicitLeft = 548
     end
     object BSave: TRzBitBtn
-      Left = 477
+      Left = 767
       Top = 1
       Height = 30
       Align = alRight
@@ -535,7 +530,7 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
       ExplicitLeft = 473
     end
     object BCorrection: TRzBitBtn
-      Left = 379
+      Left = 669
       Top = 1
       Width = 98
       Height = 30
@@ -549,7 +544,7 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 305
-    Width = 628
+    Width = 918
     Height = 298
     Hint = ''
     ActivePage = TabSDetailPel
@@ -567,7 +562,7 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 624
+        Width = 914
         Height = 273
         Align = alClient
         DataSource = DSDetail
@@ -622,11 +617,14 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
             DynProps = <>
             EditButtons = <>
             FieldName = 'KD_SATUAN'
+            Footer.Alignment = taRightJustify
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
             Footer.Font.Height = -12
             Footer.Font.Name = 'Segoe UI'
             Footer.Font.Style = [fsBold]
+            Footer.Value = 'Total  :'
+            Footer.ValueType = fvtStaticText
             Footers = <>
             Title.Caption = 'Satuan'
             Width = 205
@@ -638,6 +636,50 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
             FieldName = 'NM_ SATUAN'
             Footers = <>
             Visible = False
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'SUB_TOTAL'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Harga|DPP'
+            Width = 122
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'PPN_PERSEN'
+            Footers = <>
+            Title.Caption = 'Harga|PPN|%'
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'PPN_NILAI'
+            Footer.DisplayFormat = '#,##0.##'
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Harga|PPN|Nilai'
+            Width = 115
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'GRAND_TOTAL'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Harga|Total'
+            Width = 128
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -646,16 +688,16 @@ object FNew_DataPenjualanPromosi: TFNew_DataPenjualanPromosi
   end
   object DSDetail: TDataSource
     DataSet = MemDetail
-    Left = 32
-    Top = 486
+    Left = 24
+    Top = 534
   end
   object MemDetail: TMemTableEh
     Active = True
     CachedUpdates = True
     Params = <>
     SortOrder = 'NM_ITEM'
-    Left = 32
-    Top = 430
+    Left = 24
+    Top = 470
     object MemDetailNO_SUMBER: TStringField
       FieldName = 'NO_SUMBER'
     end

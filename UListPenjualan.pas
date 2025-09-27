@@ -55,14 +55,7 @@ type
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
     QPenjualan: TUniQuery;
-    QPenjualancode_cust: TStringField;
-    QPenjualanname_cust: TStringField;
-    QPenjualanpayment_term: TSmallintField;
-    QPenjualanno_purchase: TStringField;
-    QPenjualancode_source: TStringField;
-    QPenjualanname_source: TStringField;
     DsPenjualan: TDataSource;
-    QPenjualandate_trans: TDateField;
     dxBarLargeButton1: TdxBarLargeButton;
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarManager1Bar2: TdxBar;
@@ -110,7 +103,6 @@ type
     QCetakSJname_unit: TStringField;
     QCetakSJno_reference: TStringField;
     QCetakSJket: TStringField;
-    QPenjualantrans_no: TStringField;
     QCetakSJtrans_no: TStringField;
     QCetaktrans_no: TStringField;
     QCetaktrans_date: TDateField;
@@ -165,7 +157,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from t_selling '+
+       sql.Text:='select * from get_selling(False) '+
                  'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
                  'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
                  'deleted_at is null order by created_at Desc ';

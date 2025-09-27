@@ -128,6 +128,9 @@ type
     procedure dxBarLargeButton4Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton8Click(Sender: TObject);
+    procedure dxBarLargeButton5Click(Sender: TObject);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -144,7 +147,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_DataPenjualanPromosi, UMy_Function, UDataModule, UHomeLogin;
+uses UNew_DataPenjualanPromosi, UMy_Function, UDataModule, UHomeLogin,
+  UAmplopPelanggan, UMainMenu, UExportFaktur;
 
 var
   listpenjualanpromosi : TFListPenjualanPromosi;
@@ -388,9 +392,64 @@ begin
   end;
 end;
 
+procedure TFListPenjualanPromosi.dxBarLargeButton5Click(Sender: TObject);
+begin
+   with fmainmenu.QJurnal do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'');
+     open;
+    end;
+
+
+ if fmainmenu.QJurnal.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if fmainmenu.QJurnal.RecordCount<>0 then
+ begin
+    with dm.Qtemp3 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                ' ''Cetak Jurnal untuk pelanggan '+
+                QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+      ExecSQL;
+    end;
+
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(Report,'nm_judul','DAFTAR JURNAL PENJUALAN');
+   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   //Report.DesignReport();
+   Report.ShowReport();
+ end;
+end;
+
 procedure TFListPenjualanPromosi.dxBarLargeButton6Click(Sender: TObject);
 begin
   Refresh;
+end;
+
+procedure TFListPenjualanPromosi.dxBarLargeButton7Click(Sender: TObject);
+begin
+  FExportFaktur.Clear;
+  FExportFaktur.ShowModal;
+end;
+
+procedure TFListPenjualanPromosi.dxBarLargeButton8Click(Sender: TObject);
+begin
+  FAmplopPelanggan.Show;
 end;
 
 procedure TFListPenjualanPromosi.FormCreate(Sender: TObject);

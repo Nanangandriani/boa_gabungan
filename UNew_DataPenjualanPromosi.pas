@@ -30,7 +30,6 @@ type
     Label2: TLabel;
     Label15: TLabel;
     Label16: TLabel;
-    btMasterSumber: TSpeedButton;
     Label6: TLabel;
     Label7: TLabel;
     SpeedButton1: TSpeedButton;
@@ -118,7 +117,8 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UHomeLogin, UMy_Function, UMasterData, UTemplate_Temp,
-  UListPenjualan, UListPenjualanPromosi, Ubrowse_pelanggan, UMainMenu, UKoreksi;
+  UListPenjualan, UListPenjualanPromosi, Ubrowse_pelanggan, UMainMenu, UKoreksi,
+  UTambah_Barang;
 
 procedure TFNew_DataPenjualanPromosi.Autonumber;
 begin
@@ -243,6 +243,19 @@ begin
   tot_grand:=0;
   stat_proses:=True;
 
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    tot_jumlah:=tot_jumlah+MemDetail['JUMLAH'];
+    tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
+    tot_ppn:=tot_ppn+MemDetail['PPN_NILAI'];
+//    tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
+//    tot_pot:=tot_pot+MemDetail['POTONGAN_NILAI'];
+//    tot_menej_fee:=tot_menej_fee+MemDetail['MENEJ_FEE_NILAI'];
+    tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
+    MemDetail.Next;
+  end;
+
   //cek balancestock
   //check_stock;
 
@@ -288,22 +301,9 @@ end;
 
 procedure TFNew_DataPenjualanPromosi.btAddDetailClick(Sender: TObject);
 begin
-  vFormSumber:=SelectRow('SELECT form_target from t_selling_source where code='+QuotedStr(edKodeSumber.Text)+' ');
-
-  AClass := FindClass('T'+vFormSumber);
-  AFormClass := TFormClass(AClass);
-  AForm := AFormClass.Create(Application.MainForm);
-  AForm.Parent:=FTemplate_Temp.PanelParent;
-  AForm.Align:=Alclient;
-  AForm.BorderStyle:=BsNone;
-  FTemplate_Temp.Height:=AForm.Height;
-  FTemplate_Temp.Width:=AForm.Width;
-
-  AForm.Show;
-  FTemplate_Temp.Caption:='';
-  FTemplate_Temp.TabForm.Caption:=AForm.Caption;
   vStatusTrans:='penjualanpromosi';
-  FTemplate_Temp.ShowModal;
+  FTambah_Barang.clear;
+  FTambah_Barang.ShowModal;
 end;
 
 procedure TFNew_DataPenjualanPromosi.Clear;
@@ -335,7 +335,13 @@ end;
 procedure TFNew_DataPenjualanPromosi.FormShow(Sender: TObject);
 begin
   if Status=1 then
-  RefreshGrid;
+  begin
+    RefreshGrid;
+    edNomorFaktur.ReadOnly:=False;
+  end else begin
+    edNomorFaktur.ReadOnly:=True;
+  end;
+
 
   if (Status=1) AND (IntStatusKoreksi=2) then
   begin
@@ -355,6 +361,7 @@ begin
 end;
 
 procedure TFNew_DataPenjualanPromosi.InsertDetailJU;
+var ppncortex:real;
 begin
 
   with dm.Qtemp do
@@ -365,6 +372,9 @@ begin
               ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+';';
     ExecSQL;
   end;
+
+  ppncortex:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_ppn_cortex'' '));
+
 
   MemDetail.First;
   while not MemDetail.Eof do
@@ -392,11 +402,11 @@ begin
                 parambyname('parcode_unit').Value:=MemDetail['KD_SATUAN'];
                 parambyname('parname_unit').Value:=MemDetail['NM_SATUAN'];
                 parambyname('parno_reference').Value:=edNoReff.Text;
-                parambyname('parunit_price').Value:=0;
-                parambyname('parsub_total').Value:=0;
-                parambyname('parppn_percent').Value:=0;
-                parambyname('parppn_account').Value:=NULL;
-                parambyname('parppn_value').Value:=0;
+                parambyname('parunit_price').Value:=MemDetail['SUB_TOTAL'];
+                parambyname('parsub_total').Value:=MemDetail['SUB_TOTAL'];
+                parambyname('parppn_percent').Value:=MemDetail['PPN_PERSEN'];
+                parambyname('parppn_account').Value:=MemDetail['PPN_AKUN'];
+                parambyname('parppn_value').Value:=MemDetail['PPN_NILAI'];
                 parambyname('parpph_account').Value:=NULL;
                 parambyname('parpph_name').Value:=NULL;
                 parambyname('parpph_percent').Value:=0;
@@ -405,10 +415,10 @@ begin
                 parambyname('partot_piece_percent').Value:=0;
                 parambyname('parmenejmen_fee').Value:=0;
                 parambyname('parmenejmen_fee_value').Value:=0;
-                parambyname('pargrand_tot').Value:=0;
-                parambyname('pardpp_lain_lain').Value:=0;
-                parambyname('parppn_value_cortex').Value:=0;
-                parambyname('parppn_percent_cortex').Value:=0;
+                parambyname('pargrand_tot').Value:=MemDetail['GRAND_TOTAL'];
+                parambyname('pardpp_lain_lain').Value:=MemDetail['SUB_TOTAL']*11/12;
+                parambyname('parppn_value_cortex').Value:=(MemDetail['SUB_TOTAL']*11/12)*(ppncortex/100);
+                parambyname('parppn_percent_cortex').Value:=ppncortex;
     ExecSQL;
     end;
     MemDetail.Next;
@@ -452,12 +462,12 @@ begin
             parambyname('parcode_source').Value:=edKodeSumber.Text;
             parambyname('parname_source').Value:=edNamaSumber.Text;
             parambyname('parno_reference').Value:=edNoReff.Text;
-            parambyname('parsub_total').Value:=0;
-            parambyname('parppn_value').Value:=0;
+            parambyname('parsub_total').Value:=ROUND(tot_dpp);
+            parambyname('parppn_value').Value:=ROUND(tot_ppn);
             parambyname('parpph_value').Value:=0;
             parambyname('partot_piece_value').Value:=0;
             parambyname('partot_menj_fee').Value:=0;
-            parambyname('pargrand_tot').Value:=0;
+            parambyname('pargrand_tot').Value:=ROUND(tot_grand);
             parambyname('parorder_no').Value:=order_no;
             if (kd_kares='') OR (kd_kares='0') then
             parambyname('paradditional_code').Value:=NULL
@@ -497,6 +507,9 @@ begin
             ' no_reference='+QuotedStr(edNoReff.Text)+','+
             ' code_source='+QuotedStr(edKodeSumber.Text)+','+
             ' name_source='+QuotedStr(edNamaSumber.Text)+','+
+            ' sub_total='+QuotedStr(FloatToStr(ROUND(tot_dpp)))+', '+
+            ' ppn_value='+QuotedStr(FloatToStr(ROUND(tot_ppn)))+', '+
+            ' grand_tot='+QuotedStr(FloatToStr(ROUND(tot_grand)))+', '+
             ' status_correction=0 '+
             ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');
     ExecSQL;

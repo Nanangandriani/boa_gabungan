@@ -120,7 +120,7 @@ type
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
     strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,Str: string;
     Year, Month, Day: Word;
-    status,StatusCekKasifikasi,IntStatusKoreksi: integer;
+    status,StatusCekKasifikasi,IntStatusKoreksi,iserror: integer;
     procedure Clear;
     procedure Save;
     procedure SimpanTempDetail;
@@ -135,6 +135,8 @@ type
     procedure proses_stock;
     procedure SavePotongan;
     procedure HitungTotal;
+    procedure CheckPembayaran;
+    procedure CheckJurnalPosting;
   end;
 
 var
@@ -192,6 +194,40 @@ begin
               ' SET status=true, code_trans='+QuotedStr(FNew_Penjualan.edKode_Trans.text)+' '+
               ' WHERE "no_invoice_tax"='+QuotedStr(FNew_Penjualan.vHasilGetFakturPajak)+';';
     ExecSQL;
+  end;
+end;
+
+procedure TFNew_Penjualan.CheckPembayaran;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='SELECT * FROM t_cash_bank_acceptance_receivable WHERE no_invoice='+QuotedStr(edNomorTrans.Text);
+    Open;
+  end;
+
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Nota sudah ada pembayaran tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+end;
+
+procedure TFNew_Penjualan.CheckJurnalPosting;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:='SELECT * FROM t_general_ledger WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' AND approved_status=True';
+    Open;
+  end;
+
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
   end;
 end;
 
@@ -338,12 +374,17 @@ end;
 
 procedure TFNew_Penjualan.BCorrectionClick(Sender: TObject);
 begin
-  FKoreksi.vcall:=SelectRow('select Upper(a.menu) menu from t_menu a '+
-                  'left join t_menu_sub b on b.menu_code=a.menu_code '+
-                  'where link='+QuotedStr(FDataListPenjualan.Name)); //Mendapatkan nama Menu
-  FKoreksi.Status:=0;
-  FKoreksi.vnotransaksi:=edNomorTrans.Text; //Mendapatkan Nomor Transaksi
-  FKoreksi.ShowModal;
+  CheckPembayaran;
+  CheckJurnalPosting;
+  if iserror=0 then
+  begin
+    FKoreksi.vcall:=SelectRow('select Upper(a.menu) menu from t_menu a '+
+                    'left join t_menu_sub b on b.menu_code=a.menu_code '+
+                    'where link='+QuotedStr(FDataListPenjualan.Name)); //Mendapatkan nama Menu
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=edNomorTrans.Text; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
 end;
 
 procedure TFNew_Penjualan.UpdateDataMenejFee;
@@ -955,9 +996,19 @@ begin
   edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
   DecodeDate(dtTanggal.Date, Year, Month, Day);
   dtTanggal.Date:=now();
-  RefreshGrid;
+
   MemDetail.Close;
   MemDetail.Open;
+  iserror:=0;
+
+  if Status=1 then
+  begin
+    RefreshGrid;
+    edNomorFaktur.ReadOnly:=False;
+  end else begin
+    edNomorFaktur.ReadOnly:=True;
+  end;
+
   //GetFakturPajak(IntToStr(Year));
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin

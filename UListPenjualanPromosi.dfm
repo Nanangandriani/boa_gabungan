@@ -212,10 +212,6 @@ object FListPenjualanPromosi: TFListPenjualanPromosi
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarLargeButton3'
-        end
-        item
-          Visible = True
           ItemName = 'dxBarLargeButton4'
         end
         item
@@ -239,7 +235,7 @@ object FListPenjualanPromosi: TFListPenjualanPromosi
     object dxBarManager1Bar3: TdxBar
       Caption = 'Filter'
       CaptionButtons = <>
-      DockedLeft = 463
+      DockedLeft = 377
       DockedTop = 0
       FloatLeft = 852
       FloatTop = 2
@@ -942,6 +938,7 @@ object FListPenjualanPromosi: TFListPenjualanPromosi
         CB53228C564703F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3
         FD77EC2BF95211609209DC78B818F9E4F10F4824A6D94EC853CD000000004945
         4E44AE426082}
+      OnClick = dxBarLargeButton5Click
     end
     object cbBulan: TdxBarCombo
       Caption = 'Bulan'
@@ -1057,6 +1054,7 @@ object FListPenjualanPromosi: TFListPenjualanPromosi
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton7Click
     end
     object dxBarLargeButton8: TdxBarLargeButton
       Caption = 'Amplop Pelanggan'
@@ -1116,15 +1114,16 @@ object FListPenjualanPromosi: TFListPenjualanPromosi
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton8Click
     end
   end
   object QPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select * from get_selling(TRUE) where EXTRACT(YEAR FROM trans_da' +
-        'te)=2025 AND EXTRACT(MONTH FROM trans_date)=9 ORDER BY created_a' +
-        't DESC')
+        'select * from get_selling(False) where EXTRACT(YEAR FROM trans_d' +
+        'ate)=2025 AND EXTRACT(MONTH FROM trans_date)=9 AND deleted_at is' +
+        ' null order by created_at Desc')
     Left = 520
     Top = 208
   end

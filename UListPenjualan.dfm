@@ -46,6 +46,7 @@ object FDataListPenjualan: TFDataListPenjualan
     Height = 391
     Align = alClient
     DataSource = DsPenjualan
+    DrawMemoText = True
     DynProps = <>
     EmptyDataInfo.Active = True
     SearchPanel.Enabled = True
@@ -1123,42 +1124,12 @@ object FDataListPenjualan: TFDataListPenjualan
   object QPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_selling"  '
-      'where deleted_at is null order by created_at Desc')
+      
+        'select * from get_selling(False) where EXTRACT(YEAR FROM trans_d' +
+        'ate)=2025 AND EXTRACT(MONTH FROM trans_date)=9 AND deleted_at is' +
+        ' null order by created_at Desc')
     Left = 660
     Top = 16
-    object QPenjualancode_cust: TStringField
-      FieldName = 'code_cust'
-      Visible = False
-      Size = 100
-    end
-    object QPenjualanname_cust: TStringField
-      FieldName = 'name_cust'
-      Size = 255
-    end
-    object QPenjualanpayment_term: TSmallintField
-      FieldName = 'payment_term'
-    end
-    object QPenjualanno_purchase: TStringField
-      FieldName = 'no_reference'
-      Size = 255
-    end
-    object QPenjualancode_source: TStringField
-      FieldName = 'code_source'
-      Visible = False
-      Size = 100
-    end
-    object QPenjualanname_source: TStringField
-      FieldName = 'name_source'
-      Size = 255
-    end
-    object QPenjualandate_trans: TDateField
-      FieldName = 'trans_date'
-    end
-    object QPenjualantrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 255
-    end
   end
   object DsPenjualan: TDataSource
     DataSet = QPenjualan
@@ -2502,8 +2473,8 @@ object FDataListPenjualan: TFDataListPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Left = 676
-    Top = 336
+    Left = 556
+    Top = 296
   end
   object frxDBDJurnal: TfrxDBDataset
     UserName = 'frxDBDJurnal'

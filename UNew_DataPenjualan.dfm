@@ -671,7 +671,8 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = 'Submit Correction'
       TabOrder = 4
       OnClick = BCorrectionClick
-      ExplicitLeft = 1079
+      ExplicitLeft = 1089
+      ExplicitTop = 3
     end
   end
   object RzPageControl1: TRzPageControl

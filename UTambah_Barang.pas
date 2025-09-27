@@ -95,7 +95,6 @@ begin
   if edKodeBarang.Text='' then
   begin
     MessageDlg('Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    edKodeBarang.SetFocus;
   end else
   begin
     FDaftarKlasifikasi.MemKlasifikasi.active:=false;
@@ -348,8 +347,9 @@ begin
        FNew_DataPenjualanPromosi.MemDetail['NM_SATUAN']:=edSatuan.Text;
        FNew_DataPenjualanPromosi.MemDetail['SUB_TOTAL']:= FNew_DataPenjualanPromosi.MemDetail['JUMLAH']*FNew_Penjualan.MemDetail['HARGA_SATUAN'];
        FNew_DataPenjualanPromosi.MemDetail['PPN_AKUN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_jual''');
+       FNew_DataPenjualanPromosi.MemDetail['SUB_TOTAL']:=0;
        FNew_DataPenjualanPromosi.MemDetail['PPN_PERSEN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual''');
-       FNew_DataPenjualanPromosi.MemDetail['PPN_NILAI']:=FNew_DataPenjualanPromosi.MemDetail['SUB_TOTAL']*(FNew_Penjualan.MemDetail['PPN_PERSEN']/100);
+       FNew_DataPenjualanPromosi.MemDetail['PPN_NILAI']:=0;
        FNew_DataPenjualanPromosi.MemDetail['PPH_AKUN']:='0';
        FNew_DataPenjualanPromosi.MemDetail['NAMA_PPH']:='0';
        FNew_DataPenjualanPromosi.MemDetail['PPH_PERSEN']:='0';
@@ -578,6 +578,7 @@ begin
   if vStatusTrans='penjualanpromosi' then
   begin
     AddPenjulanPromosi;
+    Close;
   end;
   if vStatusTrans='returpenjualan' then
   begin
@@ -635,6 +636,7 @@ end;
 
 procedure TFTambah_Barang.FormShow(Sender: TObject);
 begin
+  clear;
   if vStatusTrans='targetpenjualan' then
   begin
     LabelValue.Visible:=True;
