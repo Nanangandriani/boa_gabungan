@@ -43,6 +43,7 @@ type
     MemMasterDatatotal: TFloatField;
     MemMasterDatadpp: TCurrencyField;
     MemMasterDatanilai_ppn_cortex: TFloatField;
+    LabelInformasi: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
   private
@@ -52,7 +53,7 @@ type
     jenis_disc,batastTotalValue,batasTotalQty,batasValuePerItem,batasQtyPerItem:integer;
     tot_bruto,dpp_sbn,ndisc_sbn,dpp_temp,diskon,hdisc:real;
     disc_stat,special_proses,next_proses:boolean;
-    kd_cust,kd_item,satuan,kd_JenisOutlet, kd_Kategori, get_uuid, type_jual,jenis_jual :string;
+    kd_cust,kd_item,satuan,kd_JenisOutlet, kd_Kategori, get_uuid, type_jual,jenis_jual,strStatusIncludePPN :string;
     stat_fp,qty,stat_bayar,stat_promo,jumlah_item:integer;
     stat_klasifikasi,hsatuan,hjual,disc1,disc2,disc3,disc4,disc,
     bruto,ndisc,ndiscBruto1,ndiscBruto2,ndiscBruto3,ndiscBruto4,dpp,ppn,nppn,netto,total,hsatuan_cortex,dpp_cortex,nppn_cortex,netto_cortex:real;
@@ -93,6 +94,7 @@ begin
               ' -- Baca Detail Penjualan ';
     Open;
   end;
+
   if query2.RecordCount=0 then  //looping detail order
   begin
     ShowMessage('Tidak Ditemukan Data, Silakan Proses Hitung Potongan...');
@@ -223,14 +225,14 @@ end;
 
 procedure TFRincianPot_Penjualan.AmbilDataKlasifikasi;
 begin
-  with Dm.Qtemp3 do //cek Data di grouping
+  with Dm.Qtemp3 do //Cek Data Klasifikasi Grouping / Per Pelanggan
   begin
     close;
     sql.clear;
     sql.add(' Select * from t_sales_classification_group a '+
             ' left JOIN t_sales_classification b on a.id_master=b.id::VARCHAR '+
             ' left JOIN t_sales_classification_det c on a.id_master_det=c.id::VARCHAR '+
-            ' where code_cust='+QuotedSTR(kd_cust)+' and '+
+            ' where a.code_cust='+QuotedSTR(kd_cust)+' and '+
             ' a.code_item='+QuotedSTR(kd_item)+' and '+
             ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
             ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
@@ -238,9 +240,10 @@ begin
     open;
   end;
 
-  if Dm.Qtemp3.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping
+  if Dm.Qtemp3.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping / Per Pelanggan
   begin
-  //with FMainMenu.qexec do
+
+    LabelInformasi.Caption:= 'Harga yang dipakai adalah Klasifikasi Grouping';
     with Dm.Qtemp3 do
     begin
       close;
@@ -275,6 +278,7 @@ begin
   end
   else if Dm.Qtemp3.RecordCount=0 then //Klasifikasi Umum/Non Grouping Cek Type Perhitungan
   begin
+    LabelInformasi.Caption:= 'Harga yang dipakai adalah Klasifikasi Non Grouping';
     with Dm.Qtemp2 do
     begin
       close;
@@ -466,10 +470,18 @@ begin
     //showmessage('Disc 1 '+floattostr(ndisc)+'= ndiscBruto1 '+floattostr(ndiscBruto1)+'+ ndiscBruto2 '+floattostr(ndiscBruto2)+'+ ndiscBruto3 '+floattostr(ndiscBruto3)+'+ ndiscBruto4 '+floattostr(ndiscBruto4));
     end;
 
-    dpp:=RoundTo(((hjual-(ndisc/qty))/1.11)*qty,-2);
+    ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
+    strStatusIncludePPN:=Selectrow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' ');
+
+    if strStatusIncludePPN='1' then
+    begin
+      dpp:=RoundTo(((hjual-(ndisc/qty))/1.11)*qty,-2);
+    end else begin
+      dpp:=RoundTo((hjual-(ndisc/qty))*qty,-2);
+    end;
 
 //    dpp:=round((hjual/1.11)*qty);
-    ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
+
     nppn:=dpp*(ppn/100);
 //    nppn:=Round(dpp*(ppn/100));
     //nppn:=StrToFloat(parsing_koma(FloatToStr(nppn)));
@@ -477,7 +489,14 @@ begin
     ndisc:=round(ndisc);
     netto:=dpp+nppn;
     total:=dpp+nppn;
-    hsatuan_cortex:=RoundTo((((netto)/1.11)/qty),-2);
+
+    if strStatusIncludePPN='1' then
+    begin
+      hsatuan_cortex:=RoundTo((((netto)/1.11)/qty),-2);
+    end else begin
+      hsatuan_cortex:=RoundTo(((netto)/qty),-2);
+    end;
+
     dpp_cortex:= hsatuan_cortex*qty;
     nppn_cortex:= Round(dpp_cortex*(ppn/100));
     netto_cortex:= dpp_cortex+nppn;

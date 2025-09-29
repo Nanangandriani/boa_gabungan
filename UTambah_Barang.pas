@@ -618,10 +618,15 @@ end;
 
 procedure TFTambah_Barang.edSatuanButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data Satuan';
-  FMasterData.vcall:='satuan_order';
-  FMasterData.update_grid('unit_code','unit_name','0','t_unit','');
-  FMasterData.ShowModal;
+  if edKodeBarang.Text<>'' then
+  begin
+    FMasterData.Caption:='Master Data Satuan';
+    FMasterData.vcall:='satuan_order';
+    FMasterData.update_grid('unit_code','unit_name','0','get_unit('+QuotedStr(edKodeBarang.Text)+')','');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Barang wajib diisi..!!',mtInformation,[mbRetry],0);
+  end;
 end;
 
 procedure TFTambah_Barang.FormCreate(Sender: TObject);

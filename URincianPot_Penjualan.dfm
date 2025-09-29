@@ -1,7 +1,6 @@
 object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
   Caption = 'Rincian Potongan'
   ClientHeight = 443
   ClientWidth = 1258
@@ -52,6 +51,19 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
       Height = 15
       Caption = 'No. Transaksi'
       Visible = False
+    end
+    object LabelInformasi: TLabel
+      Left = 14
+      Top = 60
+      Width = 1003
+      Height = 15
+      Caption = 'LabelInformasi'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 126

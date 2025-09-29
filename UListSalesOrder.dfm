@@ -1,7 +1,6 @@
 object FListSalesOrder: TFListSalesOrder
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
   Caption = 'List Sales Order'
   ClientHeight = 495
   ClientWidth = 1029
@@ -11,7 +10,6 @@ object FListSalesOrder: TFListSalesOrder
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object pnlFilter: TPanel
@@ -254,6 +252,7 @@ object FListSalesOrder: TFListSalesOrder
         EditButtons = <>
         FieldName = 'NO_REFF'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nomor Referensi'
         Width = 200
       end
@@ -263,6 +262,7 @@ object FListSalesOrder: TFListSalesOrder
         EditButtons = <>
         FieldName = 'KD_PELANGGAN'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode Pelanggan'
         Width = 150
       end
@@ -272,6 +272,7 @@ object FListSalesOrder: TFListSalesOrder
         EditButtons = <>
         FieldName = 'NM_PELANGGAN'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
         Width = 250
       end
@@ -281,6 +282,7 @@ object FListSalesOrder: TFListSalesOrder
         EditButtons = <>
         FieldName = 'KD_WILAYAH'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode Wilayah'
         Visible = False
         Width = 150
@@ -291,6 +293,7 @@ object FListSalesOrder: TFListSalesOrder
         EditButtons = <>
         FieldName = 'WILAYAH'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Wilayah'
         Width = 300
       end>

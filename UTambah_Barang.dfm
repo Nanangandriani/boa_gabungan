@@ -26,7 +26,7 @@ object FTambah_Barang: TFTambah_Barang
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 480
-    ExplicitHeight = 88
+    ExplicitHeight = 161
     object LabelPelanggan: TLabel
       Left = 370
       Top = 180
@@ -223,7 +223,7 @@ object FTambah_Barang: TFTambah_Barang
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 88
+    ExplicitTop = 161
     ExplicitWidth = 480
     object BBatal: TRzBitBtn
       Left = 408

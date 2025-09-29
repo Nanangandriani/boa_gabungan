@@ -62,19 +62,20 @@ var
 begin
   DBGridcustomer.StartLoadingStatus();
   try
-  with Dm.Qtemp do
-  begin
-    close;
-    sql.clear;
-    sql.add(' select notrans, order_date, code_cust, name_cust, code_region, '+
-            ' name_region  from get_sales_order(1)  a  '+
-            ' LEFT JOIN vcustomer b ON a.code_cust=b.customer_code '+
-            ' where  a.deleted_at is null and notrans not in (select no_reference '+
-            ' from get_selling(False)) '+
-            ' AND code_cust='+QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text)+' '+
-            ' ORDER BY a.created_at,a.order_date desc ');
-    open;
-  end;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' select notrans, order_date, code_cust, name_cust, code_region, '+
+              ' name_region  from "public"."t_sales_order"  a  '+
+              ' LEFT JOIN (select * from "public"."t_customer"  where  deleted_at '+
+                ' is null order by created_at Desc) b ON a.code_cust=b.customer_code '+
+              ' where  a.deleted_at is null and notrans not in (select no_reference '+
+              ' from "public"."t_selling" where  deleted_at is null order by created_at Desc ) '+
+              ' AND code_cust='+QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text)+' '+
+              ' ORDER BY a.created_at,order_date desc ');
+      open;
+    end;
 
     MemMasterData.active:=false;
     MemMasterData.active:=true;
@@ -87,22 +88,22 @@ begin
 
     if  Dm.Qtemp.RecordCount<>0 then
     begin
-    max:= Dm.Qtemp.RecordCount;
-    progress.Progress:=0;
-    progress.MaxValue:= max;
-    Dm.Qtemp.first;
-    while not Dm.Qtemp.Eof do
-    begin
-     MemMasterData.insert;
-     MemMasterData['KD_PELANGGAN']:=Dm.Qtemp.fieldbyname('code_cust').value;
-     MemMasterData['NM_PELANGGAN']:=Dm.Qtemp.fieldbyname('name_cust').value;
-     MemMasterData['KD_WILAYAH']:=Dm.Qtemp.fieldbyname('code_region').value;
-     MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
-     MemMasterData['NO_REFF']:=Dm.Qtemp.fieldbyname('notrans').value;
-     MemMasterData.post;
-     progress.Progress:= progress.Progress+1;
-     Dm.Qtemp.next;
-    end;
+      max:= Dm.Qtemp.RecordCount;
+      progress.Progress:=0;
+      progress.MaxValue:= max;
+      Dm.Qtemp.first;
+      while not Dm.Qtemp.Eof do
+      begin
+        MemMasterData.insert;
+        MemMasterData['KD_PELANGGAN']:=Dm.Qtemp.fieldbyname('code_cust').value;
+        MemMasterData['NM_PELANGGAN']:=Dm.Qtemp.fieldbyname('name_cust').value;
+        MemMasterData['KD_WILAYAH']:=Dm.Qtemp.fieldbyname('code_region').value;
+        MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
+        MemMasterData['NO_REFF']:=Dm.Qtemp.fieldbyname('notrans').value;
+        MemMasterData.post;
+        progress.Progress:= progress.Progress+1;
+        Dm.Qtemp.next;
+      end;
     end;
   finally
   DBGridcustomer.FinishLoadingStatus();
@@ -112,7 +113,7 @@ end;
 procedure TFListSalesOrder.btTampilkanClick(Sender: TObject);
 var
   max,min : Integer;
-  strkodekares,strKodePelanggan: String;
+  strkodekares,strKodePelanggan,strDate: String;
 begin
 //  if Length(Edkodewilayah.Text)=0 then
 //  begin
@@ -120,13 +121,17 @@ begin
 //    exit
 //  end;
 
+  strDate:=QuotedStr(formatdatetime('yyyy-mm-dd',FNew_Penjualan.dtTanggal.date));
+
+
   if FNew_Penjualan.edKode_Pelanggan.Text<>'' then
-  strKodePelanggan:=' AND code_cust='+QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text) else strKodePelanggan:='';
+  strKodePelanggan:=QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text)
+  else strKodePelanggan:='';
 
 
   if Edkodewilayah.Text<>'' then
-  strkodekares:=' AND code_region='+QuotedStr(Edkodewilayah.Text)
-  else strkodekares:='';
+  strKodeKares:=QuotedStr(Edkodewilayah.Text)
+  else strkodeKares:='';
 
 //  if Length(Edkodewilayah.Text)<>0 then
 //  begin
@@ -137,10 +142,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.add('SELECT * FROM vsalesorder_not_in_selling  '+
-                'WHERE order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',FNew_Penjualan.dtTanggal.date))+' '+
-                strkodekares+strKodePelanggan+'  '+
-                'ORDER BY created_at,order_date desc ');
+        sql.add('select * from get_sales_order_not_in_selling('+strDate+','+strKodePelanggan+','+strKodeKares+')');
         open;
       end;
 
