@@ -250,13 +250,13 @@ begin
     begin
       SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
     end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
-  begin
-   Report.DesignReport();
-  end else
-  begin
+//  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+//  begin
+//   Report.DesignReport();
+//  end else
+//  begin
     Report.ShowReport();
-  end;
+//  end;
 
  end;
 
@@ -369,13 +369,13 @@ begin
     begin
       SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
     end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
-  begin
-   Report.DesignReport();
-  end else
-  begin
+//  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+//  begin
+//   Report.DesignReport();
+//  end else
+//  begin
     Report.ShowReport();
-  end;
+//  end;
 
  end;
 
