@@ -141,13 +141,17 @@ end;
 procedure TFHomeLogin.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-   Image1.Picture.LoadFromFile('BCancelo.png');
+    cLocation := ExtractFilePath(Application.ExeName);
+//   Image1.Picture.LoadFromFile('BCancelo.png');
+   Image1.Picture.LoadFromFile(cLocation +'Image/BCancelo.png');
 end;
 
 procedure TFHomeLogin.Image1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-   image1.Picture.LoadFromFile('BCancel.png');
+  cLocation := ExtractFilePath(Application.ExeName);
+//   image1.Picture.LoadFromFile('BCancel.png');
+   Image1.Picture.LoadFromFile(cLocation +'Image/BCancel.png');
 end;
 
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
@@ -257,13 +261,17 @@ end;
 procedure TFHomeLogin.ImgTransaksiMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-   ImgTransaksi.Picture.LoadFromFile('BOrange.png');
+  cLocation := ExtractFilePath(Application.ExeName);
+  ImgTransaksi.Picture.LoadFromFile(cLocation +'Image/BOrange.png');
+//   ImgTransaksi.Picture.LoadFromFile('BOrange.png');
 end;
 
 procedure TFHomeLogin.ImgTransaksiMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-   ImgTransaksi.Picture.LoadFromFile('login.png');
+  cLocation := ExtractFilePath(Application.ExeName);
+  ImgTransaksi.Picture.LoadFromFile(cLocation +'Image/login.png');
+//   ImgTransaksi.Picture.LoadFromFile('login.png');
 end;
 
 //ShowMessage('A');

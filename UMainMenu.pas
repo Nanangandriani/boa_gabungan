@@ -32,7 +32,6 @@ uses
 type
   TFMainMenu = class(TForm)
     RzStatusBar1: TRzStatusBar;
-    RzDBStateStatus1: TRzDBStateStatus;
     RzVersionInfoStatus1: TRzVersionInfoStatus;
     RzProgressStatus1: TRzProgressStatus;
     RzClockStatus1: TRzClockStatus;
@@ -108,6 +107,7 @@ type
     Procedure CallFoo(S: string; I: Integer);
     procedure Getsubmenutree(Sender: TObject);
     procedure CloseAllTabsheets;
+    procedure TanyaUpdate;
   end;
 
 var
@@ -133,7 +133,7 @@ var
  // statustr:integer;
 implementation
 
-{$R *.dfm}
+{$R *.dfm} {$R resource.RES}
 uses UDataModule, UHomeLogin, UMy_Function;
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
@@ -179,6 +179,42 @@ begin
      Tag:=Tags.item(I, EmptyParam) as IHTMLElement;
      if Tag.id=TagId then Result := Tag.getAttribute(TagAttrib, 0);
    end;
+end;
+
+procedure TFMainMenu.TanyaUpdate;
+var
+  rStream: TResourceStream;
+  fStream: TFileStream;
+  fname: string;
+begin
+  if MessageBox(Handle,'Mau MengUpdate Versi Aplikasi?','APP Version',MB_OKCANCEL or MB_ICONEXCLAMATION or MB_SYSTEMMODAL or MB_SETFOREGROUND)=1 then begin
+    fname := ExtractFileDir(Paramstr(0))+'\SmartBOAUpDater.exe';
+    rStream := TResourceStream.Create(hInstance, 'UpDater', RT_RCDATA);
+    try
+      fStream := TFileStream.Create(fname, fmCreate) ;
+      try
+        fStream.CopyFrom(rStream, 0) ;
+      finally
+        fStream.Free;
+      end;
+    finally
+      rStream.Free;
+    end;
+//    fname := ExtractFileDir(Paramstr(0))+'\unzip32.dll';
+//    rStream := TResourceStream.Create(hInstance, 'zipdll', RT_RCDATA);
+//    try
+//      fStream := TFileStream.Create(fname, fmCreate) ;
+//      try
+//        fStream.CopyFrom(rStream, 0) ;
+//      finally
+//        fStream.Free;
+//      end;
+//    finally
+//      rStream.Free;
+//    end;
+    ShellExecute(Handle,'open','SmartBOAUpDater.exe',nil,nil,SW_SHOWNORMAL);
+    Application.Terminate;
+  end;
 end;
 
 procedure TFMainMenu.CallFoo(S: string; I: Integer);
@@ -351,6 +387,12 @@ begin
       if vCaptionButton='Exit' then
       begin
         Application.Terminate;
+      end else if vCaptionButton='Cek Update' then
+      begin
+        TanyaUpdate;
+      end else if vCaptionButton='Refresh Menu' then
+      begin
+//        TampilTabForm ;
       end else
 
        //create new Tabsheet
