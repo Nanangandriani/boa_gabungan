@@ -69,6 +69,7 @@ type
     RzStatusPane1: TRzStatusPane;
     StatusVersion: TRzStatusPane;
     RzVersionInfo1: TRzVersionInfo;
+    StatusPerusahaan: TRzStatusPane;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -371,7 +372,7 @@ begin
    begin
     SQL.Clear;
     SQL.Text := 'select * from t_menu_sub where submenu=' +
-                QuotedStr(vCaptionButton);
+                QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
     open;
    end;
     if dm.Qtemp.RecordCount<>1 then
@@ -458,7 +459,7 @@ begin
      begin
       SQL.Clear;
       SQL.Text := 'select * from t_menu_sub where submenu=' +
-                  QuotedStr(vCaptionButton);
+                  QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
       open;
      end;
 
@@ -573,7 +574,7 @@ begin
    begin
        SQL.Clear;
        SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
-       ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code '+
+       ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at is NULL '+
        ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
        ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
        ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
@@ -605,7 +606,7 @@ begin
      begin
           SQL.Clear;
           SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
-          ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code INNER JOIN t_menu b '+
+          ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL INNER JOIN t_menu b '+
           ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
           ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
           ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
@@ -756,7 +757,7 @@ begin
        begin
             SQL.Clear;
             SQL.Text := 'SELECT aa.* FROM t_akses aa '+
-            ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu '+
+            ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu AND bb.deleted_at IS NULL '+
             ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
             ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
             ' WHERE aa.dept_code='+QuotedStr(dept_code)+

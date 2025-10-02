@@ -1,4 +1,4 @@
-object Form2: TForm2
+object FLap_Deposito: TFLap_Deposito
   Left = 0
   Top = 0
   Caption = 'Laporan Deposito'
@@ -10,8 +10,12 @@ object Form2: TForm2
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
-  object DBGridKasKecilBOP: TDBGridEh
+  object DBGridDeposito: TDBGridEh
     Left = 0
     Top = 127
     Width = 817
@@ -23,12 +27,61 @@ object Form2: TForm2
       end
       item
       end>
+    DataSource = DSDeposito
     DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 0
     TitleParams.MultiTitle = True
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'deposito_date'
+        Footers = <>
+        Title.Caption = 'Tgl. Deposito'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bank_code'
+        Footers = <>
+        Title.Caption = 'Bank'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bank_norek'
+        Footers = <>
+        Title.Caption = 'No. Rekening'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'due_date'
+        Footers = <>
+        Title.Caption = 'Tgl. Jatuh Tempo'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'deposito_value'
+        Footers = <>
+        Title.Caption = 'Nilai Deposito'
+        Width = 120
+      end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
@@ -40,8 +93,8 @@ object Form2: TForm2
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitLeft = -368
-    ExplicitWidth = 996
+    ExplicitTop = 392
+    ExplicitWidth = 811
     object BBatal: TRzBitBtn
       Left = 741
       Top = 1
@@ -101,7 +154,7 @@ object Form2: TForm2
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 920
+      ExplicitLeft = 735
     end
     object BPrint: TRzBitBtn
       Left = 662
@@ -163,7 +216,7 @@ object Form2: TForm2
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 841
+      ExplicitLeft = 656
     end
   end
   object dxRibbon1: TdxRibbon
@@ -177,8 +230,6 @@ object Form2: TForm2
     Contexts = <>
     TabOrder = 2
     TabStop = False
-    ExplicitLeft = -368
-    ExplicitWidth = 996
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -203,8 +254,8 @@ object Form2: TForm2
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 496
-    Top = 32
+    Left = 560
+    Top = 31
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -227,6 +278,11 @@ object Form2: TForm2
           UserWidth = 107
           Visible = True
           ItemName = 'DTPick2'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
         end
         item
           Visible = True
@@ -902,10 +958,8 @@ object Form2: TForm2
         F7FFF7F7F7FF}
     end
     object dxPrint: TdxBarLargeButton
-      Caption = 'Print'
+      Action = ActPrint
       Category = 0
-      Hint = 'Print'
-      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -988,6 +1042,7 @@ object Form2: TForm2
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Awal   '
@@ -1161,6 +1216,10 @@ object Form2: TForm2
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Category = 0
+      Visible = ivNever
+    end
   end
   object frxDBDatasetPers: TfrxDBDataset
     UserName = 'frxDBDatasetPers'
@@ -1189,16 +1248,15 @@ object Form2: TForm2
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 696
-    Top = 56
+    Left = 704
+    Top = 24
   end
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
-    Left = 760
-    Top = 56
+    Left = 720
+    Top = 80
     object QPerusahaancompany_code: TStringField
       FieldName = 'company_code'
       Required = True
@@ -1278,8 +1336,8 @@ object Form2: TForm2
     end
   end
   object ActMenu: TActionManager
-    Left = 600
-    Top = 29
+    Left = 624
+    Top = 37
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -1295,6 +1353,7 @@ object Form2: TForm2
     end
     object ActPrint: TAction
       Caption = 'Print  '
+      OnExecute = ActPrintExecute
     end
     object ActApp: TAction
       Caption = 'Approve  '
@@ -1308,5 +1367,1037 @@ object Form2: TForm2
       Caption = 'CLose PO    '
       Enabled = False
     end
+  end
+  object QLap_Deposito: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select a.* --FROM'
+      
+        ',c.bank_name as nabankkk,d.bank_name as nabankkm, b.deposito_no,' +
+        'b.bk_no,b.interest_value,b.bm_no,b.description,b.description2,c.' +
+        'amount as jum_kk,d.amount as jum_km,c.trans_date as tglbk,d.tran' +
+        's_date as tglbm from  '
+      
+        '(select * from t_deposito_submission where deposito_date between' +
+        ' '#39'2022-05-23'#39' and '#39'2022-05-23'#39')a '
+      'left join t_deposito b on a.id=b.id_submission  '
+      
+        'left join(select a.voucher_no,a.bank_name,a.amount,b.trans_date ' +
+        'from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditur' +
+        'e_det b on a.voucher_no=b.no_voucher) c on b.bk_no=c.voucher_no '
+      
+        'left join(select a.voucher_no,a.amount,a.bank_name,b.trans_date ' +
+        'from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditur' +
+        'e_det b on a.voucher_no=b.no_voucher) d on b.bm_no=d.voucher_no ' +
+        ' order by deposito_date,deposito_no')
+    Left = 464
+    Top = 29
+  end
+  object frxdbdeposito: TfrxDBDataset
+    UserName = 'frxdbdeposito'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'id=id'
+      'bank_code=bank_code'
+      'nobk_submission=nobk_submission'
+      'on_behalf=on_behalf'
+      'bank_norek=bank_norek'
+      'deposito_date=deposito_date'
+      'due_date=due_date'
+      'deposito_value=deposito_value'
+      'description=description'
+      'company_code=company_code'
+      'nabankkk=nabankkk'
+      'nabankkm=nabankkm'
+      'deposito_no=deposito_no'
+      'bk_no=bk_no'
+      'interest_value=interest_value'
+      'bm_no=bm_no'
+      'description_1=description_1'
+      'description2=description2'
+      'jum_kk=jum_kk'
+      'jum_km=jum_km'
+      'tglbk=tglbk'
+      'tglbm=tglbm')
+    DataSet = QLap_Deposito
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 372
+    Top = 29
+  end
+  object frxlapdeposito: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 40907.381461944500000000
+    ReportOptions.LastChange = 45931.576932395830000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 380
+    Top = 84
+    Datasets = <
+      item
+        DataSet = frxDBDatasetPers
+        DataSetName = 'frxDBDatasetPers'
+      end
+      item
+        DataSet = frxdbdeposito
+        DataSetName = 'frxdbdeposito'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      Orientation = poLandscape
+      PaperWidth = 330.000000000000000000
+      PaperHeight = 215.900000000000000000
+      PaperSize = 256
+      LeftMargin = 7.500000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 75.590600000000000000
+        Top = 18.897650000000000000
+        Width = 1200.000775000000000000
+        object Memo1: TfrxMemoView
+          Align = baCenter
+          AllowVectorExport = True
+          Left = 231.496212500000000000
+          Top = 3.779530000000000000
+          Width = 737.008350000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'DATA DEPOSITO')
+          ParentFont = False
+        end
+        object Memo9: TfrxMemoView
+          Align = baCenter
+          AllowVectorExport = True
+          Left = 231.496212500000000000
+          Top = 44.252010000000000000
+          Width = 737.008350000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold, fsUnderline]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[periode]')
+          ParentFont = False
+        end
+        object Memo10: TfrxMemoView
+          Align = baCenter
+          AllowVectorExport = True
+          Left = 231.496212500000000000
+          Top = 22.897650000000000000
+          Width = 737.008350000000000000
+          Height = 18.897650000000000000
+          DataField = 'company_name'
+          DataSet = frxDBDatasetPers
+          DataSetName = 'frxDBDatasetPers'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDatasetPers."company_name"]')
+          ParentFont = False
+        end
+      end
+      object ColumnHeader1: TfrxColumnHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 56.913420000000000000
+        Top = 117.165430000000000000
+        Width = 1200.000775000000000000
+        object Shape5: TfrxShapeView
+          AllowVectorExport = True
+          Width = 453.921259842520000000
+          Height = 56.692950000000000000
+          Frame.Typ = []
+        end
+        object Shape3: TfrxShapeView
+          AllowVectorExport = True
+          Left = 453.921259840000000000
+          Top = 34.015770000000000000
+          Width = 717.291590000000000000
+          Height = 22.677180000000000000
+          Frame.Typ = []
+        end
+        object Shape1: TfrxShapeView
+          AllowVectorExport = True
+          Left = 453.921259840000000000
+          Width = 717.291590000000000000
+          Height = 34.015770000000000000
+          Frame.Typ = []
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 2.669295000000000000
+          Top = 1.779530000000000000
+          Width = 26.456710000000000000
+          Height = 52.913420000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No.')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 174.756030000000000000
+          Top = 2.779530000000000000
+          Width = 94.488250000000000000
+          Height = 52.811070000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Rekening')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Left = 31.574830000000000000
+          Height = 34.015770000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 351.732530000000000000
+          Top = 1.000000000000000000
+          Height = 56.692901180000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo92: TfrxMemoView
+          AllowVectorExport = True
+          Left = 35.354360000000000000
+          Top = 2.779530000000000000
+          Width = 64.252010000000000000
+          Height = 52.913420000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tgl. Deposito')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 354.205010000000000000
+          Top = 2.779530000000000000
+          Width = 96.740260000000000000
+          Height = 50.031540000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nilai Deposito')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line3: TfrxLineView
+          AllowVectorExport = True
+          Left = 100.157480314961000000
+          Top = 1.000000000000000000
+          Height = 34.015770000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 458.275820000000000000
+          Top = 37.779530000000000000
+          Width = 83.149660000000000000
+          Height = 15.015770000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 456.764070000000000000
+          Top = 2.763760000000000000
+          Width = 313.700990000000000000
+          Height = 27.354360000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Dikeluarkan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line14: TfrxLineView
+          AllowVectorExport = True
+          Left = 860.890230000000000000
+          Top = 34.220470000000000000
+          Height = 24.354360000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line18: TfrxLineView
+          AllowVectorExport = True
+          Left = 271.740260000000000000
+          Height = 56.692950000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo17: TfrxMemoView
+          AllowVectorExport = True
+          Left = 103.677180000000000000
+          Top = 2.779530000000000000
+          Width = 64.252010000000000000
+          Height = 52.913420000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Bank')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 31.748031496063000000
+          Top = 34.015770000000000000
+          Height = 22.677180000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Left = 100.157480310000000000
+          Top = 34.015770000000000000
+          Height = 22.677180000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line19: TfrxLineView
+          AllowVectorExport = True
+          Left = 171.417440000000000000
+          Top = 34.015770000000000000
+          Height = 22.677180000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line22: TfrxLineView
+          AllowVectorExport = True
+          Left = 545.386210000000000000
+          Top = 34.015770000000000000
+          Height = 22.677180000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line23: TfrxLineView
+          AllowVectorExport = True
+          Left = 663.425196850000000000
+          Top = 34.015770000000000000
+          Height = 22.677180000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Left = 171.417440000000000000
+          Height = 34.015770000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 273.905690000000000000
+          Top = 2.779530000000000000
+          Width = 75.590600000000000000
+          Height = 52.913420000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tgl. Jatuh Tempo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 549.047620000000000000
+          Top = 37.795300000000000000
+          Width = 109.606370000000000000
+          Height = 15.015770000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Bank')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 664.803650000000000000
+          Top = 35.795300000000000000
+          Width = 105.826840000000000000
+          Height = 18.795300000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 776.181510000000000000
+          Top = 38.795300000000000000
+          Width = 83.149660000000000000
+          Height = 11.236240000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 777.331170000000000000
+          Top = 3.779530000000000000
+          Width = 389.291590000000000000
+          Height = 27.354360000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Dicairkan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 864.205320000000000000
+          Top = 38.811070000000000000
+          Width = 94.488250000000000000
+          Height = 11.236240000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Bank')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 963.543910000000000000
+          Top = 38.811070000000000000
+          Width = 102.047310000000000000
+          Height = 11.236240000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line11: TfrxLineView
+          AllowVectorExport = True
+          Left = 773.142240000000000000
+          Height = 56.692950000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1072.016390000000000000
+          Top = 37.795300000000000000
+          Width = 94.488250000000000000
+          Height = 11.236240000000000000
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Bunga')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line10: TfrxLineView
+          AllowVectorExport = True
+          Left = 959.221090000000000000
+          Top = 34.015770000000000000
+          Height = 24.354360000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line25: TfrxLineView
+          AllowVectorExport = True
+          Left = 1069.606990000000000000
+          Top = 34.015770000000000000
+          Height = 24.354360000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897650000000000000
+        Top = 234.330860000000000000
+        Width = 1200.000775000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
+        DataSet = frxdbdeposito
+        DataSetName = 'frxdbdeposito'
+        RowCount = 0
+        object Shape4: TfrxShapeView
+          AllowVectorExport = True
+          Width = 1170.835190000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.338590000000000000
+          Top = 1.000000000000000000
+          Width = 26.456710000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[line#]')
+          ParentFont = False
+        end
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 34.031540000000000000
+          Top = 1.000000000000000000
+          Width = 64.252010000000000000
+          Height = 15.118120000000000000
+          DataField = 'deposito_date'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."deposito_date"]')
+          ParentFont = False
+        end
+        object Line13: TfrxLineView
+          AllowVectorExport = True
+          Left = 171.590551181102000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line5: TfrxLineView
+          AllowVectorExport = True
+          Left = 31.748031500000000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 175.921460000000000000
+          Top = 1.000000000000000000
+          Width = 94.488250000000000000
+          Height = 15.118110240000000000
+          DataField = 'bank_norek'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."bank_norek"]')
+          ParentFont = False
+        end
+        object lblsisasaldo: TfrxMemoView
+          AllowVectorExport = True
+          Left = 550.386210000000000000
+          Top = 1.881880000000000000
+          Width = 109.960730000000000000
+          Height = 15.118120000000000000
+          DataField = 'nabankkk'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."nabankkk"]')
+          ParentFont = False
+        end
+        object Line24: TfrxLineView
+          AllowVectorExport = True
+          Left = 271.748031496063000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line4: TfrxLineView
+          AllowVectorExport = True
+          Left = 545.385826771654000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 663.307086614173000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 274.480520000000000000
+          Top = 2.779530000000000000
+          Width = 75.944960000000000000
+          Height = 15.118110240000000000
+          DataField = 'interest_value'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."interest_value"]')
+          ParentFont = False
+        end
+        object Line12: TfrxLineView
+          AllowVectorExport = True
+          Left = 453.748031500000000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 458.307360000000000000
+          Top = 2.000000000000000000
+          Width = 83.504020000000000000
+          Height = 15.118110240000000000
+          DataField = 'tglbk'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."tglbk"]')
+          ParentFont = False
+        end
+        object Line17: TfrxLineView
+          AllowVectorExport = True
+          Left = 100.157480310000000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 103.047310000000000000
+          Top = 1.000000000000000000
+          Width = 60.472480000000000000
+          Height = 15.118120000000000000
+          DataField = 'bank_code'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."bank_code"]')
+          ParentFont = False
+        end
+        object Line26: TfrxLineView
+          AllowVectorExport = True
+          Left = 351.874015748031000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line27: TfrxLineView
+          AllowVectorExport = True
+          Left = 773.291338580000000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line28: TfrxLineView
+          AllowVectorExport = True
+          Left = 860.976377952756000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line29: TfrxLineView
+          AllowVectorExport = True
+          Left = 959.244094488189000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line30: TfrxLineView
+          AllowVectorExport = True
+          Left = 1069.606299212600000000
+          Height = 18.897632910000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 664.417750000000000000
+          Top = 2.000000000000000000
+          Width = 102.401670000000000000
+          Height = 15.118120000000000000
+          DataField = 'jum_kk'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxdbdeposito."jum_kk"]')
+          ParentFont = False
+        end
+        object Memo16: TfrxMemoView
+          AllowVectorExport = True
+          Left = 775.583180000000000000
+          Top = 2.000000000000000000
+          Width = 83.504020000000000000
+          Height = 15.118120000000000000
+          DataField = 'tglbm'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."tglbm"]')
+          ParentFont = False
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 865.512370000000000000
+          Top = 2.000000000000000000
+          Width = 91.063080000000000000
+          Height = 15.118120000000000000
+          DataField = 'nabankkm'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxdbdeposito."nabankkm"]')
+          ParentFont = False
+        end
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 963.780150000000000000
+          Top = 1.000000000000000000
+          Width = 102.401670000000000000
+          Height = 15.118120000000000000
+          DataField = 'jum_km'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxdbdeposito."jum_km"]')
+          ParentFont = False
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.386520000000000000
+          Top = 1.000000000000000000
+          Width = 94.842610000000000000
+          Height = 15.118120000000000000
+          DataField = 'interest_value'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxdbdeposito."interest_value"]')
+          ParentFont = False
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 355.275820000000000000
+          Top = 2.779530000000000000
+          Width = 94.842610000000000000
+          Height = 15.118110240000000000
+          DataField = 'deposito_value'
+          DataSet = frxdbdeposito
+          DataSetName = 'frxdbdeposito'
+          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxdbdeposito."deposito_value"]')
+          ParentFont = False
+        end
+      end
+      object ReportSummary1: TfrxReportSummary
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 26.456710000000000000
+        Top = 313.700990000000000000
+        Width = 1200.000775000000000000
+      end
+    end
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QDeposito
+    Left = 520
+    Top = 208
+  end
+  object MemDeposito: TMemTableEh
+    Active = True
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 520
+    Top = 168
+  end
+  object DSDeposito: TDataSource
+    AutoEdit = False
+    DataSet = MemDeposito
+    Left = 448
+    Top = 200
+  end
+  object QDeposito: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.* ,c.bank_name as nabankkk,d.bank_name as nabankkm, b.d' +
+        'eposito_no,b.bk_no,b.interest_value,b.bm_no,b.description,b.desc' +
+        'ription2,c.amount as jum_kk,d.amount as jum_km,c.trans_date as t' +
+        'glbk,d.trans_date as tglbm from  '
+      
+        '(select * from t_deposito_submission where deposito_date between' +
+        ' '#39'2022-05-23'#39' and '#39'2022-05-23'#39')a '
+      'left join t_deposito b on a.id=b.id_submission  '
+      
+        'left join(select a.voucher_no,a.bank_name,a.amount,b.trans_date ' +
+        'from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditur' +
+        'e_det b on a.voucher_no=b.no_voucher) c on b.bk_no=c.voucher_no '
+      
+        'left join(select a.voucher_no,a.amount,a.bank_name,b.trans_date ' +
+        'from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditur' +
+        'e_det b on a.voucher_no=b.no_voucher) d on b.bm_no=d.voucher_no ' +
+        ' order by deposito_date,deposito_no')
+    Active = True
+    Left = 472
+    Top = 144
   end
 end

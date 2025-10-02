@@ -10,6 +10,9 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -2905,7 +2908,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
       
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no)xx group by tanggal order by tanggal;')
-    Active = True
     Left = 616
     Top = 64
   end
@@ -4257,7 +4259,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no)xx'
       'group by tanggal order by tanggal')
-    Active = True
     Left = 603
     Top = 6
   end
@@ -4289,7 +4290,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 790
     Top = 80
     object QPerusahaancompany_code: TStringField
@@ -5690,7 +5690,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
       
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no)xx group by tanggal order by tanggal;')
-    Active = True
     Left = 624
     Top = 256
   end
@@ -8282,7 +8281,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no)xx'
       'group by tanggal order by tanggal')
-    Active = True
     Left = 611
     Top = 198
   end

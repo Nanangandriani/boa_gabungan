@@ -35,8 +35,7 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 588
-    ExplicitWidth = 1023
+    ExplicitTop = 591
     object RzVersionInfoStatus1: TRzVersionInfoStatus
       Left = 904
       Top = 0
@@ -48,7 +47,7 @@ object FMainMenu: TFMainMenu
       VersionInfo = RzVersionInfo1
     end
     object RzProgressStatus1: TRzProgressStatus
-      Left = 0
+      Left = 459
       Top = 0
       Height = 19
       Align = alLeft
@@ -56,8 +55,8 @@ object FMainMenu: TFMainMenu
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitLeft = 1043
-      ExplicitHeight = 20
+      ExplicitLeft = 408
+      ExplicitTop = 2
     end
     object RzClockStatus1: TRzClockStatus
       Left = 693
@@ -68,7 +67,7 @@ object FMainMenu: TFMainMenu
       ExplicitTop = 6
     end
     object StatusUser: TRzGlyphStatus
-      Left = 145
+      Left = 226
       Top = 0
       Width = 233
       Height = 19
@@ -77,12 +76,13 @@ object FMainMenu: TFMainMenu
       ExplicitLeft = 176
     end
     object RzStatusPane1: TRzStatusPane
-      Left = 100
+      Left = 181
       Top = 0
       Width = 45
       Height = 19
       Align = alLeft
-      Caption = 'User : '
+      Caption = 'USER : '
+      ExplicitLeft = 100
     end
     object StatusVersion: TRzStatusPane
       Left = 843
@@ -92,6 +92,14 @@ object FMainMenu: TFMainMenu
       Align = alRight
       Caption = ' Version :'
       ExplicitLeft = 804
+    end
+    object StatusPerusahaan: TRzStatusPane
+      Left = 0
+      Top = 0
+      Width = 181
+      Height = 19
+      Align = alLeft
+      Caption = ''
     end
   end
   object dxRibbon1: TdxRibbon

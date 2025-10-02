@@ -1,7 +1,7 @@
 object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
   Left = 0
   Top = 0
-  Caption = 'Laporan Ikhtisar Biaya Kas Kecil BOP'
+  Caption = 'Laporan Ikhtisar Dana Biaya Kas Kecil Penjualan'
   ClientHeight = 442
   ClientWidth = 996
   Color = clBtnFace
@@ -10,6 +10,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -22,7 +25,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 990
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -1629,7 +1631,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no;')
-    Active = True
     Left = 560
     Top = 32
   end
@@ -1663,7 +1664,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 704
     Top = 80
     object QPerusahaancompany_code: TStringField
@@ -4013,7 +4013,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no;')
-    Active = True
     Left = 672
     Top = 232
   end

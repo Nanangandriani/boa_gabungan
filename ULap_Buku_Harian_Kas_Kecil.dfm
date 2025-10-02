@@ -10,6 +10,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object DBGridKasKecil: TDBGridEh
@@ -582,7 +585,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Contexts = <>
     TabOrder = 3
     TabStop = False
-    ExplicitWidth = 965
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -2143,7 +2145,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         '.sa,zzz.debit,zzz.kredit ORDER BY nomor ASC'
       ''
       '')
-    Active = True
     Left = 560
     Top = 32
   end
@@ -3090,14 +3091,14 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       Category = 0
       Hint = 'Account Yang Dikredit :'
       Visible = ivNever
-      Text = '1112'
+      Text = '1101.02'
     end
     object dxBarEdit3: TdxBarEdit
       Caption = 'Akun Perkiraan   '
       Category = 0
       Hint = 'Akun Perkiraan   '
       Visible = ivAlways
-      Text = 'KAS KECIL'
+      Text = 'Kas Kecil'
     end
     object dxBarEdit2: TdxBarEdit
       Caption = 'Tanggal'

@@ -108,13 +108,17 @@ type
     frxReport3: TfrxReport;
     QRekap_KasKecil_ADM2: TUniQuery;
     procedure dxPrintClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
+//var
+function
   FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil;
 
 implementation
@@ -122,6 +126,17 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UMy_Function;
+
+var
+  RealFRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil;
+
+function FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil;
+begin
+  if RealFRekap_Ikhtisar_Kas_Kecil <> nil then
+     FRekap_Ikhtisar_Kas_Kecil:=RealFRekap_Ikhtisar_Kas_Kecil
+  else
+     Application.CreateForm(TFRekap_Ikhtisar_Kas_Kecil,Result);
+end;
 
 procedure TFRekap_Ikhtisar_Kas_Kecil.dxPrintClick(Sender: TObject);
 begin
@@ -317,6 +332,22 @@ begin
     //frxReport2.showreport;
     //Tfrxmemoview(frxReport2.FindObject('Memojumlah')).Memo.Text:='TOTAL BIAYA ADM.UMUM & BOP  : '+formatcurr('Rp. #,##',dm.Qtemp.fieldbyname('jumlah').AsCurrency+dm.Qtemp1.fieldbyname('jumlah').AsCurrency)+'  ('+UraikanAngka(currtostr(dm.Qtemp.fieldbyname('jumlah').ascurrency+dm.Qtemp1.fieldbyname('jumlah').ascurrency))+')';
     //Tfrxmemoview(frxReport2.FindObject('Memoperiode')).Memo.Text:=uppercase('Periode : '+formatdatetime('dd',FRekap_Ikhtisar_Kas_Kecil.DTPick1.EditValue)+' s/d '+   formatdatetime('dd mmmm yyyy',FRekap_Ikhtisar_Kas_Kecil.DTPick2.EditValue));
+end;
+
+procedure TFRekap_Ikhtisar_Kas_Kecil.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Action:=CaFree;
+end;
+
+procedure TFRekap_Ikhtisar_Kas_Kecil.FormCreate(Sender: TObject);
+begin
+   RealFRekap_Ikhtisar_Kas_Kecil:=Self;
+end;
+
+procedure TFRekap_Ikhtisar_Kas_Kecil.FormDestroy(Sender: TObject);
+begin
+   RealFRekap_Ikhtisar_Kas_Kecil:=Nil;
 end;
 
 Initialization

@@ -1155,6 +1155,14 @@
             <Form>FPenyesuaianFaktur</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="U_rekap_ppn_masukan.pas">
+            <Form>Frekap_ppn_masukan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_cetak_rekap_hutang.pas">
+            <Form>F_cetak_rekap_hutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -289,7 +289,9 @@ uses
   UKoreksi in 'UKoreksi.pas' {FKoreksi},
   UListTargetPenjualan in 'UListTargetPenjualan.pas' {FListTargetPenjualan},
   UNew_DataTargetPenjualan in 'UNew_DataTargetPenjualan.pas' {FNew_DataTargetPenjualan},
-  UPenyesuaianFaktur in 'UPenyesuaianFaktur.pas' {FPenyesuaianFaktur};
+  UPenyesuaianFaktur in 'UPenyesuaianFaktur.pas' {FPenyesuaianFaktur},
+  U_rekap_ppn_masukan in 'U_rekap_ppn_masukan.pas' {Frekap_ppn_masukan},
+  U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -446,35 +448,35 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFKoreksi, FKoreksi);
   //  Application.CreateForm(TFRpt_arus_kas, FRpt_arus_kas);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
-  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
-  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
-  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
+//  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
+//  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
+//  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
   Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
-  Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
-  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, FLap_Ikhtisar_Biaya_KasKecil_BOP);
-  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, FLap_Ikhtisar_Biaya_KasKecil_ADM);
-  Application.CreateForm(TFRekap_Ikhtisar_Kas_Kecil, FRekap_Ikhtisar_Kas_Kecil);
-  Application.CreateForm(TFpengajuan_deposito, Fpengajuan_deposito);
-  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
-  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, FLap_Ikhtisar_Biaya_KasKecil_BOP);
-  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, FLap_Ikhtisar_Biaya_KasKecil_ADM);
-  Application.CreateForm(TFRekap_Ikhtisar_Kas_Kecil, FRekap_Ikhtisar_Kas_Kecil);
-  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
+//  Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
+//  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, FLap_Ikhtisar_Biaya_KasKecil_BOP);
+//  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, FLap_Ikhtisar_Biaya_KasKecil_ADM);
+//  Application.CreateForm(TFRekap_Ikhtisar_Kas_Kecil, FRekap_Ikhtisar_Kas_Kecil);
+//  Application.CreateForm(TFpengajuan_deposito, Fpengajuan_deposito);
+//  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+//  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, FLap_Ikhtisar_Biaya_KasKecil_BOP);
+//  Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, FLap_Ikhtisar_Biaya_KasKecil_ADM);
+//  Application.CreateForm(TFRekap_Ikhtisar_Kas_Kecil, FRekap_Ikhtisar_Kas_Kecil);
+//  Application.CreateForm(TFsaldo_bank_rencana_pelunasan_hutang, Fsaldo_bank_rencana_pelunasan_hutang);
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TFdafajuankeluarkasbank, Fdafajuankeluarkasbank);
-  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+//  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
   Application.CreateForm(TFDataPengajuanPengeluaranKasBank, FDataPengajuanPengeluaranKasBank);
   Application.CreateForm(TFDataPengeluaranKasBank, FDataPengeluaranKasBank);
-  Application.CreateForm(TForm2, Form2);
+//  Application.CreateForm(TForm2, Form2);
   Application.CreateForm(TFpengajuan_deposito, Fpengajuan_deposito);
-  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
-  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
+//  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+//  Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
+//  Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
-  Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);
-  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
-  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
-  Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
+//  Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil, FLap_Buku_Harian_Kas_Kecil);
+//  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
+//  Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
   Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);

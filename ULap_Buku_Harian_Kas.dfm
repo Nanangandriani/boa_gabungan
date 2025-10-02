@@ -10,6 +10,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object DBGridBukuHarianKas: TDBGridEh
     Left = 0
@@ -41,7 +43,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         FieldName = 'no_voucher'
         Footers = <>
         Title.Caption = 'Voucher'
-        Width = 100
+        Width = 120
       end
       item
         CellButtons = <>
@@ -76,7 +78,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 584
+        Width = 604
         Height = 118
         Align = alClient
         DynProps = <>
@@ -98,6 +100,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 701
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -685,6 +688,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       Visible = ivAlways
       OnChange = datetimepicker1Change
       PropertiesClassName = 'TcxDateEditProperties'
+      InternalEditValue = 0d
     end
     object dxBarLargeButton1: TdxBarLargeButton
       Caption = 'Print'
@@ -1927,6 +1931,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         'count=x.kodesp) xx) xxx ORDER BY nomor ASC')
     MasterFields = 'voucher'
     DetailFields = 'voucher'
+    Active = True
     Left = 368
     Top = 88
   end

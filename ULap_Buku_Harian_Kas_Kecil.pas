@@ -117,6 +117,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -124,7 +127,8 @@ type
     tgl_htg,tgl_mulai,tgl_cutoff,tgl_saldobank:tdatetime;
   end;
 
-var
+//var
+function
   FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil;
 
 implementation
@@ -132,6 +136,17 @@ implementation
 {$R *.dfm}
 
 uses UMy_Function, UDataModule;
+
+var
+  RealFLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil;
+
+function FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil;
+begin
+  if RealFLap_Buku_Harian_Kas_Kecil <> nil then
+     FLap_Buku_Harian_Kas_Kecil:=RealFLap_Buku_Harian_Kas_Kecil
+  else
+     Application.CreateForm(TFLap_Buku_Harian_Kas_Kecil,Result);
+end;
 
 procedure TFLap_Buku_Harian_Kas_Kecil.dxBarLargeButton1Click(Sender: TObject);
 var
@@ -149,7 +164,8 @@ begin
       open;
     end;
     tgl_htg:=dm.qtemp.FieldByName('debt_date').asdatetime;
-    tgl_mulai:=dm.qtemp.FieldByName('start_date').asdatetime;
+    //tgl_mulai:=dm.qtemp.FieldByName('start_date').asdatetime;
+    tgl1:=dm.qtemp.FieldByName('start_date').asdatetime;
     tgl_saldobank:=dm.qtemp.FieldByName('bankbalance_date').asdatetime;
 
 
@@ -157,7 +173,7 @@ begin
             '(SELECT  "row_number"() over (ORDER BY urutan)+1 nomor,trans_date,voucher_no,description,actors_name,order_no,actors_code,code '+
             ',jumdebit,jumkredit,penjualan,adm,bop,urutan,0 sa,jumdebit debit,jumkredit kredit '+
             'FROM '+
-            '(select distinct a.trans_date,a.voucher_no,a.description,a.actors_name,a.order_no,a.actors_code,a.code,'+
+            '(/*transaksi*/ select distinct a.trans_date,a.voucher_no,a.description,a.actors_name,a.order_no,a.actors_code,a.code,'+
             '(case when debit.jumlah is null then 0 else debit.jumlah end)jumdebit,(case when kredit.jumlah is null then 0 else kredit.jumlah end)jumkredit,'+
             '(case when d.jumlah is null then 0 else d.jumlah end)penjualan,(case when b.jumlah is null then 0 else b.jumlah end)adm,(case when c.jumlah is null then 0 else c.jumlah end)bop,(case when debit.jumlah>0 then 1 else 10 end)urutan from '+
             '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
@@ -177,7 +193,7 @@ begin
             '(select voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
             'where (a.code_account=b.code)and (b.type_id=4) group by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_no order by trans_date,urutan,order_no,voucher_no)xxx '+
             'UNION ALL '+
-            'SELECT 1 nomor,null as tgltrans,'''' as voucher,''Saldo Awal'' ket,'''' kepada,0 nourut,''0'' id_pelaku,'''' kode_tp '+
+            '/*Saldo Awal*/ SELECT 1 nomor,null as tgltrans,'''' as voucher,''Saldo Awal'' ket,'''' kepada,0 nourut,''0'' id_pelaku,'''' kode_tp '+
             ',0 jum_debit,0 jum_kredit,0 penjualan,0 adm,0 bop,0 urutan,0 sa,0 debit,0 kredit '+
             'FROM '+
             '(select yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit,sum(yy.balance+xx.jum_debit-xx.jum_kredit) as saldo_awal from '+
@@ -255,9 +271,26 @@ begin
       DBGridKasKecil.FinishLoadingStatus();
 end;
 
+procedure TFLap_Buku_Harian_Kas_Kecil.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=CaFree;
+end;
+
+procedure TFLap_Buku_Harian_Kas_Kecil.FormCreate(Sender: TObject);
+begin
+  RealFLap_Buku_Harian_Kas_Kecil:=Self;
+end;
+
+procedure TFLap_Buku_Harian_Kas_Kecil.FormDestroy(Sender: TObject);
+begin
+   RealFLap_Buku_Harian_Kas_Kecil:=Nil;
+end;
+
 procedure TFLap_Buku_Harian_Kas_Kecil.FormShow(Sender: TObject);
 begin
-   DTPick1.Date:=Now;
+   DTPick1.Date:=Now();
+   DTPick11.EditValue:=date();
 end;
 
 procedure TFLap_Buku_Harian_Kas_Kecil.SpeedButton1Click(Sender: TObject);

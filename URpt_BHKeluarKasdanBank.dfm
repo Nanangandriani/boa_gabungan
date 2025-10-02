@@ -2,19 +2,23 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
   Left = 0
   Top = 0
   Caption = 'Laporan Buku Harian Kas dan Bank'
-  ClientHeight = 630
-  ClientWidth = 1007
+  ClientHeight = 590
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1007
+    Width = 866
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -36,11 +40,9 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1007
-    Height = 503
+    Width = 866
+    Height = 463
     Align = alClient
-    DataSource = Dskasbank
-    DrawMemoText = True
     DynProps = <>
     TabOrder = 1
     TitleParams.MultiTitle = True
@@ -49,36 +51,30 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'voucher'
         Footers = <>
         Title.Caption = 'Bukti'
-        Width = 138
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'ket'
         Footers = <>
         Title.Caption = 'Keterangan'
-        Width = 187
+        Width = 100
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jum_kas'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Kas'
-        Width = 93
+        Width = 100
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jum_bank'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Bank'
         Width = 100
@@ -87,7 +83,6 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kodesp_k'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Lain-lain|No. Perkiraan'
         Width = 100
@@ -96,27 +91,22 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'namasp_k'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Lain-lain|Nama Perkiraan'
         Width = 100
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jum_akun_k'
         Footers = <>
         Title.Caption = 'Akun yang dikredit|Lain-lain|Jumlah'
         Width = 100
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jum_debit_hutang'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|Hutang Dagang'
         Width = 100
@@ -125,7 +115,6 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nopk'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|No. Perkiraan'
         Width = 100
@@ -134,17 +123,14 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nmpk'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|Nama Perkiraan'
         Width = 100
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jum'
         Footers = <>
         Title.Caption = 'Akun yang didebit|Lain-lain|Jumlah'
         Width = 100
@@ -161,12 +147,12 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44224.360934872700000000
-    ReportOptions.LastChange = 45667.454080914400000000
+    ReportOptions.LastChange = 45876.411425358800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      ''
+      '                 '
       'end;'
       ''
       'procedure Page1OnAfterPrint(Sender: TfrxComponent);'
@@ -181,22 +167,22 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       ''
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      ''
+      '     '
       'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 344
-    Top = 69
+    Left = 144
+    Top = 200
     Datasets = <
-      item
-        DataSet = dm.DBPerusahaan
-        DataSetName = 'DBPerusahaan'
-      end
       item
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
+      end
+      item
+        DataSet = frxDBDatasetPers
+        DataSetName = 'frxDBDatasetPers'
       end>
     Variables = <>
     Style = <>
@@ -246,7 +232,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 81.637795275590600000
+          Left = 81.637795280000000000
           Top = 64.316261580000000000
           Width = 244.157480310000000000
           Height = 64.251968500000000000
@@ -318,7 +304,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 792.566929130000000000
+          Left = 792.566929133858000000
           Top = 98.267716540000000000
           Width = 92.598425196850400000
           Height = 29.480314960000000000
@@ -354,9 +340,9 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object frxDBDataset1produk1: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
+          Left = 325.551181100000000000
           Top = 79.434381580000000000
-          Width = 102.047244094488000000
+          Width = 103.047244090000000000
           Height = 49.133848500000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -374,7 +360,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
+          Left = 530.267716535433000000
           Top = 98.332031580000000000
           Width = 68.031496062992100000
           Height = 29.480314960000000000
@@ -392,9 +378,9 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 950.709340000000000000
+          Left = 950.551181102362000000
           Top = 98.267716540000000000
-          Width = 116.165430000000000000
+          Width = 116.031496062992000000
           Height = 29.480314960000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -410,7 +396,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
-          Left = 1067.716535430000000000
+          Left = 1066.582677165350000000
           Top = 98.267716540000000000
           Width = 102.803149606299000000
           Height = 29.480314960000000000
@@ -487,7 +473,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 598.299212600000000000
+          Left = 598.299212598425000000
           Top = 98.267780000000000000
           Width = 103.937007874016000000
           Height = 29.480314960000000000
@@ -507,7 +493,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           AllowVectorExport = True
           Left = 702.992125984252000000
           Top = 98.267780000000000000
-          Width = 90.330708660000000000
+          Width = 90.330708661417300000
           Height = 29.480314960000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -523,9 +509,9 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
-          Left = 884.582677170000000000
+          Left = 884.409448818898000000
           Top = 98.267716540000000000
-          Width = 66.921259840000000000
+          Width = 66.897637795275600000
           Height = 29.480314960000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -545,6 +531,9 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Top = 6.102350000000000000
           Width = 215.488250000000000000
           Height = 18.897650000000000000
+          DataField = 'company_name'
+          DataSet = frxDBDatasetPers
+          DataSetName = 'frxDBDatasetPers'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -553,7 +542,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[DBPerusahaan."company_name"]')
+            '[frxDBDatasetPers."company_name"]')
           ParentFont = False
         end
         object Memoalamat: TfrxMemoView
@@ -563,6 +552,9 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Width = 214.771653540000000000
           Height = 34.574830000000000000
           StretchMode = smMaxHeight
+          DataField = 'address'
+          DataSet = frxDBDatasetPers
+          DataSetName = 'frxDBDatasetPers'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -571,7 +563,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[DBPerusahaan."address"]')
+            '[frxDBDatasetPers."address"]')
           ParentFont = False
         end
         object SysMemo8: TfrxSysMemoView
@@ -634,8 +626,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo40: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
-          Width = 102.047244090000000000
+          Left = 428.220472440945000000
+          Width = 102.047244094488000000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -656,8 +648,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 792.566929130000000000
-          Width = 92.598425200000000000
+          Left = 792.566929133858000000
+          Width = 92.598425196850400000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -678,8 +670,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
-          Width = 102.047244090000000000
+          Left = 325.551181100000000000
+          Width = 103.047244090000000000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -700,8 +692,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
-          Width = 68.031496060000000000
+          Left = 530.267716535433000000
+          Width = 68.031496062992100000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataField = 'kodesp_k'
@@ -721,8 +713,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 950.883150260000000000
-          Width = 116.543307090000000000
+          Left = 950.551181100000000000
+          Width = 116.031496060000000000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -740,8 +732,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo47: TfrxMemoView
           AllowVectorExport = True
-          Left = 1067.716535430000000000
-          Width = 102.803149610000000000
+          Left = 1066.582677165350000000
+          Width = 102.803149606299000000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -762,8 +754,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 598.299212600000000000
-          Width = 103.937007870000000000
+          Left = 598.299212598425000000
+          Width = 103.937007874016000000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataField = 'namasp_k'
@@ -782,8 +774,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo50: TfrxMemoView
           AllowVectorExport = True
-          Left = 702.992125980000000000
-          Width = 89.952755910000000000
+          Left = 702.992125984252000000
+          Width = 90.330708661417300000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -804,8 +796,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 884.582677170000000000
-          Width = 67.102335350000000000
+          Left = 884.409448818898000000
+          Width = 66.897637795275600000
           Height = 56.692913390000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -863,7 +855,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         Width = 1171.654300000000000000
         object Memo39: TfrxMemoView
           AllowVectorExport = True
-          Width = 326.698777960000000000
+          Width = 325.698777960000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -879,7 +871,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
+          Left = 428.220472440945000000
           Width = 102.047244094488000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -896,8 +888,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo43: TfrxMemoView
           AllowVectorExport = True
-          Left = 793.700787400000000000
-          Width = 92.598425200000000000
+          Left = 792.566929133858000000
+          Width = 92.598425196850400000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -913,8 +905,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 325.717410260000000000
-          Width = 102.047244090000000000
+          Left = 325.551181100000000000
+          Width = 103.047244090000000000
           Height = 30.236220470000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -932,7 +924,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
+          Left = 530.267716535433000000
           Width = 68.031496062992100000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -947,8 +939,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo53: TfrxMemoView
           AllowVectorExport = True
-          Left = 952.883150260000000000
-          Width = 115.275590550000000000
+          Left = 950.551181102362000000
+          Width = 116.031496062992000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -962,8 +954,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Left = 1066.828110260000000000
-          Width = 102.803142280000000000
+          Left = 1066.582677165350000000
+          Width = 102.803149606299000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -979,7 +971,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 598.299212600000000000
+          Left = 598.299212598425000000
           Width = 103.937007874016000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -994,8 +986,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 702.268740260000000000
-          Width = 90.708656540000000000
+          Left = 702.992125984252000000
+          Width = 90.330708661417300000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1011,8 +1003,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo57: TfrxMemoView
           AllowVectorExport = True
-          Left = 886.788530260000000000
-          Width = 65.275590550000000000
+          Left = 884.409448818898000000
+          Width = 66.897637795275600000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1037,7 +1029,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         Width = 1171.654300000000000000
         object Memo58: TfrxMemoView
           AllowVectorExport = True
-          Left = 81.637795275590600000
+          Left = 81.637795280000000000
           Width = 244.157480310000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1054,8 +1046,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo59: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
-          Width = 102.047244090000000000
+          Left = 428.220472440945000000
+          Width = 102.047244094488000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1073,8 +1065,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo60: TfrxMemoView
           AllowVectorExport = True
-          Left = 792.566929130000000000
-          Width = 92.598425200000000000
+          Left = 792.566929133858000000
+          Width = 92.598425196850400000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1092,8 +1084,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo61: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
-          Width = 102.047244090000000000
+          Left = 325.551181100000000000
+          Width = 103.047244090000000000
           Height = 30.236220470000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1113,7 +1105,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
+          Left = 530.267716535433000000
           Width = 68.031496062992100000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1128,8 +1120,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo63: TfrxMemoView
           AllowVectorExport = True
-          Left = 950.883150260000000000
-          Width = 115.165430000000000000
+          Left = 950.551181102362000000
+          Width = 116.031496062992000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1143,8 +1135,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo64: TfrxMemoView
           AllowVectorExport = True
-          Left = 1067.716535430000000000
-          Width = 102.803149610000000000
+          Left = 1066.582677165350000000
+          Width = 102.803149606299000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1162,7 +1154,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo65: TfrxMemoView
           AllowVectorExport = True
-          Left = 598.299212600000000000
+          Left = 598.299212598425000000
           Width = 103.937007874016000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1177,8 +1169,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo66: TfrxMemoView
           AllowVectorExport = True
-          Left = 702.992125980000000000
-          Width = 90.708656540000000000
+          Left = 702.992125984252000000
+          Width = 90.330708661417300000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1196,8 +1188,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo67: TfrxMemoView
           AllowVectorExport = True
-          Left = 884.582677170000000000
-          Width = 67.275590550000000000
+          Left = 884.409448818898000000
+          Width = 66.897637795275600000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1239,7 +1231,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         Width = 1171.654300000000000000
         object Memo68: TfrxMemoView
           AllowVectorExport = True
-          Left = 81.637795275590600000
+          Left = 81.637795280000000000
           Width = 244.157480310000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1256,8 +1248,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo69: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
-          Width = 102.047244090000000000
+          Left = 428.220472440945000000
+          Width = 102.047244094488000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1275,8 +1267,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo70: TfrxMemoView
           AllowVectorExport = True
-          Left = 792.566929130000000000
-          Width = 92.598425200000000000
+          Left = 792.566929133858000000
+          Width = 92.598425196850400000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1294,8 +1286,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo71: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.717410260000000000
-          Width = 101.047244090000000000
+          Left = 325.551181100000000000
+          Width = 103.047244090000000000
           Height = 30.236220470000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1315,8 +1307,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo72: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
-          Width = 68.031496060000000000
+          Left = 530.267716535433000000
+          Width = 68.031496062992100000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1330,8 +1322,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo73: TfrxMemoView
           AllowVectorExport = True
-          Left = 950.883150260000000000
-          Width = 115.543307090000000000
+          Left = 950.551181102362000000
+          Width = 116.031496062992000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1345,8 +1337,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo74: TfrxMemoView
           AllowVectorExport = True
-          Left = 1067.716535430000000000
-          Width = 102.803149610000000000
+          Left = 1066.582677165350000000
+          Width = 102.803149606299000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1364,8 +1356,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo75: TfrxMemoView
           AllowVectorExport = True
-          Left = 598.299212600000000000
-          Width = 103.937007870000000000
+          Left = 598.299212598425000000
+          Width = 103.937007874016000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1379,8 +1371,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo76: TfrxMemoView
           AllowVectorExport = True
-          Left = 702.992125980000000000
-          Width = 90.708656540000000000
+          Left = 702.992125984252000000
+          Width = 90.330708661417300000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1398,8 +1390,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         end
         object Memo77: TfrxMemoView
           AllowVectorExport = True
-          Left = 884.582677170000000000
-          Width = 67.102335350000000000
+          Left = 884.409448818898000000
+          Width = 66.897637795275600000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1565,8 +1557,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
         'ode  GROUP BY'#9'C.item_code,C.item_name,b.unit ORDER BY'#9'C.item_nam' +
         'e,b.unit) A ) bb ON 1 = 1 )x2)x3')
     Active = True
-    Left = 344
-    Top = 16
+    Left = 224
+    Top = 160
     object QKasBankvoucher: TStringField
       FieldName = 'voucher'
       ReadOnly = True
@@ -1688,6 +1680,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       'nopk=nopk'
       'nmpk=nmpk'
       'jum=jum'
+      'row_number=row_number'
       'kode3_1=kode3_1'
       'kodesp_k_1=kodesp_k_1'
       'nopk_1=nopk_1'
@@ -1699,8 +1692,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     DataSet = QKasBank
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 400
-    Top = 40
+    Left = 304
+    Top = 184
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -2229,9 +2222,53 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       PropertiesClassName = 'TcxDateEditProperties'
     end
   end
-  object Dskasbank: TDataSource
-    DataSet = QKasBank
-    Left = 472
-    Top = 72
+  object QPerusahaan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_company')
+    Active = True
+    Left = 663
+    Top = 32
+  end
+  object frxDBDatasetPers: TfrxDBDataset
+    UserName = 'frxDBDatasetPers'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'company_code=company_code'
+      'company_name=company_name'
+      'address=address'
+      'telp=telp'
+      'email=email'
+      'npwp=npwp'
+      'city=city'
+      'address2=address2'
+      'id=id'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'type_of_business=type_of_business'
+      'latitude=latitude'
+      'longitude=longitude'
+      'tax_status=tax_status'
+      'currency=currency'
+      'fp_name=fp_name'
+      'kk_year=kk_year'
+      'kkas_year=kkas_year'
+      #13#10'inventory_date='#13#10'inventory_date'
+      #13#10'month_sa_acc='#13#10'month_sa_acc'
+      'item_date=item_date'
+      'debt_date=debt_date'
+      'expenditure_date=expenditure_date'
+      'serial_no=serial_no'
+      'reporter=reporter'
+      'position=position')
+    DataSet = QPerusahaan
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 711
+    Top = 32
   end
 end

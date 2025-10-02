@@ -238,6 +238,7 @@ begin
         vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
         vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
         vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+        FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
       end;
     end;
     with dm.Qtemp do

@@ -26,10 +26,11 @@ uses
   dxRibbonCustomizationForm, dxRibbon, RzButton, Vcl.ExtCtrls, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Data.DB, MemDS, DBAccess, Uni,
-  frxClass, frxDBSet, dxBar, cxBarEditItem, cxClasses;
+  frxClass, frxDBSet, dxBar, cxBarEditItem, cxClasses, MemTableDataEh,
+  MemTableEh, DataDriverEh;
 
 type
-  TForm2 = class(TForm)
+  TFLap_Deposito = class(TForm)
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
     dxBUpdate: TdxBarButton;
@@ -85,23 +86,164 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
-    DBGridKasKecilBOP: TDBGridEh;
+    DBGridDeposito: TDBGridEh;
     Panel1: TPanel;
     BBatal: TRzBitBtn;
     BPrint: TRzBitBtn;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
+    QLap_Deposito: TUniQuery;
+    frxdbdeposito: TfrxDBDataset;
+    frxlapdeposito: TfrxReport;
+    DataSetDriverEh1: TDataSetDriverEh;
+    MemDeposito: TMemTableEh;
+    DSDeposito: TDataSource;
+    QDeposito: TUniQuery;
+    dxBarLargeButton1: TdxBarLargeButton;
+    procedure ActPrintExecute(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
-  Form2: TForm2;
+//var
+function
+  FLap_Deposito: TFLap_Deposito;
 
 implementation
 
 {$R *.dfm}
+
+
+var
+  RealFLap_Deposito: TFLap_Deposito;
+
+function FLap_Deposito: TFLap_Deposito;
+begin
+  if RealFLap_Deposito <> nil then
+     FLap_Deposito:=RealFLap_Deposito
+  else
+     Application.CreateForm(TFLap_Deposito,Result);
+end;
+
+
+procedure TFLap_Deposito.ActPrintExecute(Sender: TObject);
+begin
+    if DTPick1.EditValue = null then
+    begin
+      MessageDlg('Tanggal Awal Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DTPick1.SetFocus;
+      Exit;
+    end;
+    if DTPick2.EditValue = null then
+    begin
+      MessageDlg('Tanggal Akhir Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DTPick2.SetFocus;
+      Exit;
+    end;
+
+    with Qlap_Deposito do
+    begin
+        close;
+        sql.Clear;
+        sql.Text:='select a.*,c.bank_name as nabankkk,d.bank_name as nabankkm, b.deposito_no,b.bk_no,b.interest_value, '+
+                  'b.bm_no,b.description,b.description2,c.amount as jum_kk,d.amount as jum_km,c.trans_date as tglbk,d.trans_date as tglbm from '+
+                  '(select * from t_deposito_submission where deposito_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+')a '+
+                  'left join t_deposito b on a.id=b.id_submission '+
+                  'left join(select a.voucher_no,a.bank_name,a.amount,b.trans_date from t_cash_bank_expenditure a '+
+                  'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) c on b.bk_no=c.voucher_no '+
+                  'left join(select a.voucher_no,a.amount,a.bank_name,b.trans_date from t_cash_bank_expenditure a '+
+                  'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) d on b.bm_no=d.voucher_no '+
+                  'order by deposito_date,deposito_no ';
+        open;
+    end;
+    //if QLap_Deposito.recordcount<>0 then
+    //begin
+       with frxlapdeposito do
+       begin
+          frxLapdeposito.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Lap_Deposito.fr3');
+          ReportOptions.Name := 'Laporan Deposito';
+          with ScriptText do
+          begin
+            clear;
+            add('var periode: string;');
+            add('begin');
+            Add('periode:='''+'PERIODE '+formatdatetime('dd mmmm yyyy',DTPick1.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',DTPick2.EditValue)+''' ;' );
+            add('end.');
+          end;
+          frxLapdeposito.ShowReport;
+       end;
+    //end
+    //else
+    //begin
+     //ShowMessage('Tidak ada data yang dapat diproses !');
+    //end;
+end;
+
+procedure TFLap_Deposito.DxRefreshClick(Sender: TObject);
+begin
+    if DTPick1.EditValue = null then
+    begin
+      MessageDlg('Tanggal Awal Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DTPick1.SetFocus;
+      Exit;
+    end;
+    if DTPick2.EditValue = null then
+    begin
+      MessageDlg('Tanggal Akhir Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DTPick2.SetFocus;
+      Exit;
+    end;
+
+    DBGridDeposito.StartLoadingStatus();
+    with QDeposito do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.*,c.bank_name as nabankkk,d.bank_name as nabankkm, b.deposito_no,b.bk_no,b.interest_value, '+
+                  'b.bm_no,b.description,b.description2,c.amount as jum_kk,d.amount as jum_km,c.trans_date as tglbk,d.trans_date as tglbm from '+
+                  '(select * from t_deposito_submission where deposito_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+')a '+
+                  'left join t_deposito b on a.id=b.id_submission '+
+                  'left join(select a.voucher_no,a.bank_name,a.amount,b.trans_date from t_cash_bank_expenditure a '+
+                  'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) c on b.bk_no=c.voucher_no '+
+                  'left join(select a.voucher_no,a.amount,a.bank_name,b.trans_date from t_cash_bank_expenditure a '+
+                  'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) d on b.bm_no=d.voucher_no '+
+                  'order by deposito_date,deposito_no ';
+      open;
+    end;
+    MemDeposito.Close;
+    MemDeposito.Open;
+    DBGridDeposito.FinishLoadingStatus();
+end;
+
+procedure TFLap_Deposito.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   Action:=CaFree;
+end;
+
+procedure TFLap_Deposito.FormCreate(Sender: TObject);
+begin
+   RealFLap_Deposito:=Self;
+end;
+
+procedure TFLap_Deposito.FormDestroy(Sender: TObject);
+begin
+   RealFLap_Deposito:=Nil;
+end;
+
+procedure TFLap_Deposito.FormShow(Sender: TObject);
+begin
+   DTPick1.EditValue:=date();
+   DTPick2.EditValue:=date();
+end;
+
+Initialization
+  RegisterClasses([TFLap_Deposito]);
 
 end.

@@ -27,8 +27,7 @@ object Fstock_opname_kas_besar: TFstock_opname_kas_besar
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -236
-    ExplicitWidth = 996
+    ExplicitWidth = 798
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -47,8 +46,8 @@ object Fstock_opname_kas_besar: TFstock_opname_kas_besar
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitLeft = -236
-    ExplicitWidth = 996
+    ExplicitTop = 392
+    ExplicitWidth = 798
     object BBatal: TRzBitBtn
       Left = 728
       Top = 1
@@ -108,7 +107,7 @@ object Fstock_opname_kas_besar: TFstock_opname_kas_besar
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 920
+      ExplicitLeft = 722
     end
     object BPrint: TRzBitBtn
       Left = 649
@@ -170,7 +169,7 @@ object Fstock_opname_kas_besar: TFstock_opname_kas_besar
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 841
+      ExplicitLeft = 643
     end
   end
   object DBGridKasKecilBOP: TDBGridEh

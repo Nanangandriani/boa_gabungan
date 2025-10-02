@@ -104,13 +104,17 @@ type
     QKasKecil_BiayaPenjualan: TUniQuery;
     procedure DxRefreshClick(Sender: TObject);
     procedure dxPrintClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-var
+//var
+function
   FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP;
 
 implementation
@@ -118,6 +122,17 @@ implementation
 {$R *.dfm}
 
 uses UMy_Function;
+
+var
+  RealFLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP;
+
+function  FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP;
+begin
+  if RealFLap_Ikhtisar_Biaya_KasKecil_BOP <> nil then
+     FLap_Ikhtisar_Biaya_KasKecil_BOP:= RealFLap_Ikhtisar_Biaya_KasKecil_BOP
+  else
+    Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_BOP, Result);
+end;
 
 procedure TFLap_Ikhtisar_Biaya_KasKecil_BOP.dxPrintClick(
   Sender: TObject);
@@ -195,7 +210,8 @@ begin
                 'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no ';
       open;
     end;
-    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Ikhtisar_Kas_Kecil_BOP.fr3');
+    //frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Ikhtisar_Kas_Kecil_BOP.fr3');
+    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Ikhtisar_Kas_Kecil_Biaya_Penjualan.fr3');
     Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmm yyyy',DTPick1.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmm yyyy',DTPick2.EditValue);
     frxReport1.ReportOptions.Name:='Laporan Ikhtisar Biaya Kas Kecil BOP';
     frxReport1.showreport;
@@ -297,6 +313,22 @@ begin
     QKasKecilBOP.Close;
     QKasKecilBOP.Open;
     DBGridKasKecilBOP.FinishLoadingStatus();
+end;
+
+procedure TFLap_Ikhtisar_Biaya_KasKecil_BOP.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Action:=CaFree;
+end;
+
+procedure TFLap_Ikhtisar_Biaya_KasKecil_BOP.FormCreate(Sender: TObject);
+begin
+  RealFLap_Ikhtisar_Biaya_KasKecil_BOP:=self;
+end;
+
+procedure TFLap_Ikhtisar_Biaya_KasKecil_BOP.FormDestroy(Sender: TObject);
+begin
+   RealFLap_Ikhtisar_Biaya_KasKecil_BOP:=nil;
 end;
 
 Initialization
