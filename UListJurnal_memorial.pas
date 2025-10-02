@@ -200,6 +200,8 @@ end;
 
 procedure TFlist_jurnal_memorial.ActUpdateExecute(Sender: TObject);
 begin
+  Status:=1;
+  FNewJurnal_memo.Show;
   with dm.Qtemp do
   begin
     Close;
@@ -259,8 +261,6 @@ begin
       end;
       Qjurnal_detail.Next;
     end;
-    Status:=1;
-    FNewJurnal_memo.ShowModal;
   end
   else
   begin

@@ -52,6 +52,8 @@ type
     Lbbulan: TLabel;
     edth: TSpinEdit;
     CbJenis: TComboBox;
+    Label7: TLabel;
+    CbHarta: TComboBox;
     procedure FormShow(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
@@ -64,6 +66,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure CbJenisSelect(Sender: TObject);
+    procedure CbHartaSelect(Sender: TObject);
+    procedure cbbulanSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -329,6 +333,13 @@ begin
       parambyname('pic').AsString:=nm;
       ExecSql;
     end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='delete from t_memorial_journal_detail where memo_no='+QuotedStr(edno_bukti_memorial.Text);
+      Execute;
+    end;
     MemTableEh1.First;
     while not MemTableEh1.Eof do
     begin
@@ -405,6 +416,8 @@ procedure TFNewJurnal_memo.FormShow(Sender: TObject);
 begin
   Panel_pembulatan.Visible:=false;
   edth.Text:=FormatDateTime('yyyy',now());
+  MemTableEh1.Close;
+  MemTableEh1.Open;
 end;
 
 procedure TFNewJurnal_memo.RzBitBtn1Click(Sender: TObject);
@@ -569,12 +582,82 @@ begin
   end;
 end;
 
+procedure TFNewJurnal_memo.cbbulanSelect(Sender: TObject);
+begin
+  bulan1:=cbbulan.ItemIndex;
+end;
+
+procedure TFNewJurnal_memo.CbHartaSelect(Sender: TObject);
+begin
+  MemTableEh1.EmptyTable;
+  if cbbulan.Text='' then
+  begin
+    ShowMessage('Bulan tidak boleh kosong');
+    CbHarta.Text:='';
+    cbbulan.SetFocus;
+    exit;
+  end;
+  if edth.Text='' then
+  begin
+    ShowMessage('tahun tidak boleh kosong');
+    CbHarta.Text:='';
+    cbbulan.SetFocus;
+    exit;
+  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select x.* FROM (select b.kd_harta,a.nama_harta,b.transno,b.total db ,0 kd,b.trans_year,'+
+      ' b.trans_month,aasd.account_name ak_name,a.kodedebit kd_akun from tmaster_harta_asset a  '+
+      ' INNER JOIN t_depresiasi b on a.kd_nama_harta=b.kd_harta  '+
+      ' LEFT JOIN  t_ak_account_sub aasd on a.kodedebit=aasd.account_code2 '+
+      ' UNION    '+
+      ' select b.kd_harta,a.nama_harta,b.transno,0 db,b.total kd,b.trans_year,b.trans_month,aask.account_name'+
+      ' kd_name,a.kodekredit from tmaster_harta_asset a  INNER JOIN t_depresiasi b on a.kd_nama_harta=b.kd_harta '+
+      ' LEFT JOIN  t_ak_account_sub aask on a.kodekredit=aask.account_code2) x   '+
+      ' where x.trans_year='+QuotedStr(edth.Text)+''+
+      ' and x.trans_month='+QuotedStr(inttostr(bulan1))+' and x.nama_harta ='+QuotedStr(CbHarta.Text);
+      open;
+    end;
+      edno_bk_pembulatan.Text:=dm.Qtemp['transno'];
+      dm.Qtemp.First;
+      while not dm.Qtemp.Eof do
+      begin
+        MemTableEh1.Insert;
+        MemTableEh1['kode_akun']:=dm.Qtemp['kd_akun'];
+        MemTableEh1['nama_akun']:=dm.Qtemp['ak_name'];
+        MemTableEh1['debit']:=dm.Qtemp['db'];
+        MemTableEh1['kredit']:=dm.Qtemp['kd'];
+        MemTableEh1.Post;
+        dm.Qtemp.Next;
+      end;
+end;
+
 procedure TFNewJurnal_memo.CbJenisSelect(Sender: TObject);
 begin
   jenismemo:=CbJenis.ItemIndex;
   edno_bk_pembulatan.Text:='';
   edno_faktur_pembulatan.Text:='';
   MemTableEh1.EmptyTable;
+  if CbJenis.Text='Penyusutan Asset' then
+  begin
+    CbHarta.Enabled:=true;
+    CbHarta.Clear;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from tmaster_harta_asset order by id';
+      open;
+    end;
+    Dm.Qtemp.First;
+    while not Dm.Qtemp.Eof do
+    begin
+      CbHarta.Items.Add(Dm.Qtemp['nama_harta']);
+      Dm.Qtemp.Next;
+    end;
+  end;
 end;
 
 procedure TFNewJurnal_memo.CheckpembuatanClick(Sender: TObject);
@@ -582,10 +665,12 @@ begin
   if Checkpembuatan.checked=true then
   begin
     Panel_pembulatan.Visible:=true;
+    CbJenis.Enabled:=true;
   end
   else
   begin
     Panel_pembulatan.Visible:=false;
+    cbjenis.Enabled:=false;
   end;
 end;
 

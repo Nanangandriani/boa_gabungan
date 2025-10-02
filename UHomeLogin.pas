@@ -212,6 +212,7 @@ begin
      open;
     end;
     status_akses:=dm.Qtemp['access_status'];
+    FMainMenu.StatusUser.Caption:=dm.Qtemp.FieldByName('full_name').AsString;
     if dm.Qtemp.RecordCount=0 then
     begin
       ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');
@@ -250,6 +251,28 @@ begin
    end;
    FHomeLogin.Close;
    FMainMenu.show;//modal;
+
+   with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * FROM app_versions';
+    open;
+  end;
+
+  if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status']=0) then
+  begin
+//    ShowMessage('Aplikasi tidak update');
+    MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
+    if MessageDlg('Apakah anda mau update?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FMainMenu.UpdateVersi;
+    end else exit;
+  end else if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status']=1) then
+  begin
+    MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
+    FMainMenu.UpdateVersi;
+  end
 end;
 
 procedure TFHomeLogin.ImgTransaksiDragDrop(Sender, Source: TObject; X,

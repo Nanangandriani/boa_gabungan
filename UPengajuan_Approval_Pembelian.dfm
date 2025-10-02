@@ -41,16 +41,17 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     Width = 939
     Height = 313
     Hint = ''
-    ActivePage = Tabkontrak
+    ActivePage = TabSPB
     Align = alClient
-    TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 935
-    ExplicitHeight = 312
+    ExplicitWidth = 933
+    ExplicitHeight = 304
     FixedDimension = 21
     object Tabkontrak: TRzTabSheet
       OnShow = TabkontrakShow
       Caption = 'Kontrak Kerjasama'
+      ExplicitWidth = 929
+      ExplicitHeight = 279
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -59,10 +60,11 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         Align = alTop
         Color = 15987699
         TabOrder = 0
+        ExplicitWidth = 929
         object Cbkontrak: TRzCheckBox
-          Left = 852
+          Left = 848
           Top = 2
-          Width = 81
+          Width = 85
           Height = 29
           Align = alRight
           AlignmentVertical = avCenter
@@ -70,8 +72,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           State = cbUnchecked
           TabOrder = 0
           OnClick = CbkontrakClick
-          ExplicitLeft = 848
-          ExplicitHeight = 17
+          ExplicitLeft = 852
+          ExplicitHeight = 19
         end
       end
       object DBGridKontrak: TDBGridEh
@@ -209,7 +211,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           object DBGridEh3: TDBGridEh
             Left = 0
             Top = 0
-            Width = 875
+            Width = 876
             Height = 148
             Align = alClient
             DataSource = DsKerjasama_det
@@ -393,6 +395,10 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     object TabSheet2: TRzTabSheet
       TabVisible = False
       Caption = 'Uang Muka Pembelian'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RzPanel4: TRzPanel
         Left = 0
         Top = 0
@@ -459,6 +465,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
     end
     object TabPO: TRzTabSheet
       Caption = 'PO'
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 931
       ExplicitHeight = 287
       object RzPanel2: TRzPanel
@@ -860,6 +868,7 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
       end
     end
     object TabSPB: TRzTabSheet
+      TabVisible = False
       Caption = 'SPB'
       object RzPanel3: TRzPanel
         Left = 0
@@ -870,9 +879,9 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
         Color = 15987699
         TabOrder = 0
         object Cb_spb: TRzCheckBox
-          Left = 852
+          Left = 848
           Top = 2
-          Width = 81
+          Width = 85
           Height = 29
           Align = alRight
           AlignmentVertical = avCenter
@@ -880,8 +889,8 @@ object FListPengajuanApprovePembelian: TFListPengajuanApprovePembelian
           State = cbUnchecked
           TabOrder = 0
           OnClick = CbkontrakClick
-          ExplicitLeft = 848
-          ExplicitHeight = 17
+          ExplicitLeft = 852
+          ExplicitHeight = 19
         end
       end
       object DBGridSPB: TDBGridEh

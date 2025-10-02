@@ -35,7 +35,7 @@ type
     RzVersionInfoStatus1: TRzVersionInfoStatus;
     RzProgressStatus1: TRzProgressStatus;
     RzClockStatus1: TRzClockStatus;
-    RzGlyphStatus1: TRzGlyphStatus;
+    StatusUser: TRzGlyphStatus;
     ImageList1: TImageList;
     dxBarManager1: TdxBarManager;
     dxRibbon1Tab1: TdxRibbonTab;
@@ -66,6 +66,9 @@ type
     QJurnal: TUniQuery;
     frxDBDJurnal: TfrxDBDataset;
     Report: TfrxReport;
+    RzStatusPane1: TRzStatusPane;
+    StatusVersion: TRzStatusPane;
+    RzVersionInfo1: TRzVersionInfo;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -107,7 +110,7 @@ type
     Procedure CallFoo(S: string; I: Integer);
     procedure Getsubmenutree(Sender: TObject);
     procedure CloseAllTabsheets;
-    procedure TanyaUpdate;
+    procedure UpdateVersi;
   end;
 
 var
@@ -181,13 +184,13 @@ begin
    end;
 end;
 
-procedure TFMainMenu.TanyaUpdate;
+procedure TFMainMenu.UpdateVersi;
 var
   rStream: TResourceStream;
   fStream: TFileStream;
   fname: string;
 begin
-  if MessageBox(Handle,'Mau MengUpdate Versi Aplikasi?','APP Version',MB_OKCANCEL or MB_ICONEXCLAMATION or MB_SYSTEMMODAL or MB_SETFOREGROUND)=1 then begin
+//  if MessageBox(Handle,'Mau MengUpdate Versi Aplikasi?','APP Version',MB_OKCANCEL or MB_ICONEXCLAMATION or MB_SYSTEMMODAL or MB_SETFOREGROUND)=1 then begin
     fname := ExtractFileDir(Paramstr(0))+'\SmartBOAUpDater.exe';
     rStream := TResourceStream.Create(hInstance, 'UpDater', RT_RCDATA);
     try
@@ -214,7 +217,7 @@ begin
 //    end;
     ShellExecute(Handle,'open','SmartBOAUpDater.exe',nil,nil,SW_SHOWNORMAL);
     Application.Terminate;
-  end;
+//  end;
 end;
 
 procedure TFMainMenu.CallFoo(S: string; I: Integer);
@@ -389,7 +392,30 @@ begin
         Application.Terminate;
       end else if vCaptionButton='Cek Update' then
       begin
-        TanyaUpdate;
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='SELECT * FROM app_versions';
+          open;
+        end;
+
+        if dm.Qtemp.FieldValues['version_number']=RzVersionInfo1.ProductVersion then
+        begin
+          ShowMessage('Aplikasi sudah terupdate');
+          if MessageDlg('Apakah anda mau update ulang?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+          begin
+            UpdateVersi;
+          end else exit;
+        end else begin
+          MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
+          UpdateVersi;
+        end;
+
+
+
+
+//        UpdateVersi;
       end else if vCaptionButton='Refresh Menu' then
       begin
 //        TampilTabForm ;
@@ -807,6 +833,10 @@ begin
   loksbu:='MLB/1';
   format_tgl:='YYYY/MM/DD'; } //Tes default loksbu
   FHomeLogin.Close;
+
+
+
+//  StatusVersion.Caption:=Application.show;
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

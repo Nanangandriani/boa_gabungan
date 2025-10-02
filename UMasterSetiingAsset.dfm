@@ -17,7 +17,7 @@ object FMasterSetingAsset: TFMasterSetingAsset
     Top = 0
     Width = 1374
     Height = 725
-    ActivePage = TabKategori
+    ActivePage = TabNamaHarta
     Align = alClient
     TabOrder = 0
     OnChange = PageControl1Change
@@ -887,7 +887,6 @@ object FMasterSetingAsset: TFMasterSetingAsset
         Align = alBottom
         TabOrder = 1
         Visible = False
-        ExplicitTop = 656
         object btProses: TRzBitBtn
           Left = 1210
           Top = 1
@@ -955,8 +954,6 @@ object FMasterSetingAsset: TFMasterSetingAsset
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 890
-          ExplicitTop = 41
         end
       end
       object DBGridEh3: TDBGridEh

@@ -38,12 +38,14 @@ object FMainMenu: TFMainMenu
     ExplicitTop = 588
     ExplicitWidth = 1023
     object RzVersionInfoStatus1: TRzVersionInfoStatus
-      Left = 927
+      Left = 904
       Top = 0
+      Width = 123
       Height = 19
       Align = alRight
+      StyleName = 'Windows'
       Field = vifProductVersion
-      ExplicitLeft = 943
+      VersionInfo = RzVersionInfo1
     end
     object RzProgressStatus1: TRzProgressStatus
       Left = 0
@@ -58,20 +60,38 @@ object FMainMenu: TFMainMenu
       ExplicitHeight = 20
     end
     object RzClockStatus1: TRzClockStatus
-      Left = 777
+      Left = 693
       Top = 0
       Height = 19
       Align = alRight
-      ExplicitLeft = 637
+      ExplicitLeft = 604
+      ExplicitTop = 6
     end
-    object RzGlyphStatus1: TRzGlyphStatus
-      Left = 100
+    object StatusUser: TRzGlyphStatus
+      Left = 145
       Top = 0
+      Width = 233
       Height = 19
       Align = alLeft
       Caption = ''
-      ExplicitLeft = 1043
-      ExplicitHeight = 20
+      ExplicitLeft = 176
+    end
+    object RzStatusPane1: TRzStatusPane
+      Left = 100
+      Top = 0
+      Width = 45
+      Height = 19
+      Align = alLeft
+      Caption = 'User : '
+    end
+    object StatusVersion: TRzStatusPane
+      Left = 843
+      Top = 0
+      Width = 61
+      Height = 19
+      Align = alRight
+      Caption = ' Version :'
+      ExplicitLeft = 804
     end
   end
   object dxRibbon1: TdxRibbon
@@ -963,5 +983,9 @@ object FMainMenu: TFMainMenu
         end
       end
     end
+  end
+  object RzVersionInfo1: TRzVersionInfo
+    Left = 624
+    Top = 453
   end
 end

@@ -291,7 +291,7 @@ object frm_master_asset: Tfrm_master_asset
     end
     object btTampilkan: TRzBitBtn
       Left = 499
-      Top = 46
+      Top = 54
       Width = 137
       Align = alCustom
       Caption = 'TAMPILKAN'
@@ -373,8 +373,8 @@ object frm_master_asset: Tfrm_master_asset
       TabOrder = 1
     end
     object cbSumber_Asset: TRzComboBox
-      Left = 194
-      Top = 50
+      Left = 196
+      Top = 54
       Width = 297
       Height = 24
       Font.Charset = DEFAULT_CHARSET

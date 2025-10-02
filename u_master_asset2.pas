@@ -72,7 +72,7 @@ begin
      ' a.supplier_code=c.supplier_code where a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+'  '+
      ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+' '+
      ' and a.purchase_type=''AKTIVA'' and a.flg_crate_asset isnull');
-             //' and flg_crate_asset=0  GROUP BY a.NO_INV_SUPP, a.kode ');
+             //' and flg_crate_asset=0  GROUP BY a.""NO_INV_SUPP"", a.kode ');
      open;
     end;
    end;
@@ -83,17 +83,17 @@ begin
     begin
      close;
      sql.clear;
-     sql.add(' select CONCAT(a.NOASSET) AS KODE_ASSET ,TGLTRANS, a.KODESUP,  '+
-             ' principle_name AS NASUP ,a.NO_INV_SUPP as NOINV ,a.NO_INV_SUPP, '+
-             ' a.NOASSET as KODE,KETERANGAN AS NAMA_BARANG,a.JUMLAH, SATUAN, a.HARGASATUAN, '+
-             ' TOTALHARGA, KETERANGAN AS KETBARANG,  ''0'' as id_pengajuan_asset, '+
+     sql.add(' select CONCAT(a."NOASSET") AS KODE_ASSET ,"TGLTRANS", a."KODESUP",  '+
+             ' c.supplier_name AS NASUP ,a."NO_INV_SUPP" as NOINV ,a."NO_INV_SUPP", '+
+             ' a."NOASSET" as KODE,"KETERANGAN" AS NAMA_BARANG,a."JUMLAH","SATUAN", a."HARGASATUAN", '+
+             ' "TOTALHARGA", "KETERANGAN" AS KETBARANG,  ''0'' as id_pengajuan_asset, '+
              ' ''0'' as no_pengajuan_asset,''0'' as id_detail_asset, '+
-             ' KETERANGAN as spesifikasi_asset from t_non_pembelian_asset a  '+
-             ' LEFT JOIN t_principle C on a.KODESUP=c.principle_code '+
-             ' where a.TGLTRANS between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+'  '+
+             ' "KETERANGAN" as spesifikasi_asset from t_non_pembelian_asset a  '+
+             ' LEFT JOIN t_supplier C on a."KODESUP"=c.supplier_code '+
+             ' where a."TGLTRANS" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+'  '+
              ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+' '+
              ' and flg_crate_asset=0  '+
-             ' GROUP BY a.NO_INV_SUPP, a.NOASSET ');
+             ' GROUP BY a."NOASSET" ,a."TGLTRANS", a."KODESUP",c."supplier_name",a."NO_INV_SUPP",a."NO_INV_SUPP",a."KETERANGAN",a."JUMLAH", "SATUAN", a."HARGASATUAN",  "TOTALHARGA" ');
      open;
     end;
    end;
@@ -183,7 +183,7 @@ begin
    edSatuan.text:=MemMasterDaftarAsset['SATUAN'];
    vInv_Pembelian:=MemMasterDaftarAsset['NOINV'];
    vFaktur_Pembelian:=MemMasterDaftarAsset['NO_INV_SUPP'];
-   vKode_Supp:=MemMasterDaftarAsset['KODESUP'];          
+   vKode_Supp:=MemMasterDaftarAsset['KODESUP'];
    vKode_Brg:=MemMasterDaftarAsset['KODE'];
    ID_PENGAJUAN_ASSET:=MemMasterDaftarAsset['ID_PENGAJUAN_ASSET'];         
    NO_PENGAJUAN_ASSET:=MemMasterDaftarAsset['NO_PENGAJUAN_ASSET'];

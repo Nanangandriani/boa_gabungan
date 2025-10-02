@@ -4,7 +4,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
   BorderStyle = bsDialog
   Caption = 'Jurnal Memorial'
   ClientHeight = 466
-  ClientWidth = 777
+  ClientWidth = 815
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,14 +20,14 @@ object FNewJurnal_memo: TFNewJurnal_memo
   object Panel2: TPanel
     Left = 0
     Top = 434
-    Width = 777
+    Width = 815
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 433
-    ExplicitWidth = 773
+    ExplicitTop = 425
+    ExplicitWidth = 771
     object BBatal: TRzBitBtn
-      Left = 701
+      Left = 739
       Top = 1
       Height = 30
       Align = alRight
@@ -86,10 +86,10 @@ object FNewJurnal_memo: TFNewJurnal_memo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 697
+      ExplicitLeft = 695
     end
     object BSave: TRzBitBtn
-      Left = 616
+      Left = 654
       Top = 1
       Width = 85
       Height = 30
@@ -149,18 +149,18 @@ object FNewJurnal_memo: TFNewJurnal_memo
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 612
+      ExplicitLeft = 610
     end
   end
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 777
-    Height = 183
+    Width = 815
+    Height = 201
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitLeft = -1
+    ExplicitWidth = 854
     object Label1: TLabel
       Left = 10
       Top = 54
@@ -205,25 +205,32 @@ object FNewJurnal_memo: TFNewJurnal_memo
     end
     object SpeedButton1: TSpeedButton
       Left = 405
-      Top = 118
+      Top = 87
       Width = 23
       Height = 22
       Caption = '...'
       OnClick = SpeedButton1Click
     end
     object Label15: TLabel
-      Left = 441
-      Top = 148
+      Left = 682
+      Top = 21
       Width = 30
       Height = 13
       Caption = 'Tahun'
     end
     object Lbbulan: TLabel
       Left = 440
-      Top = 122
+      Top = 22
       Width = 26
       Height = 13
       Caption = 'Bulan'
+    end
+    object Label7: TLabel
+      Left = 449
+      Top = 90
+      Width = 75
+      Height = 13
+      Caption = 'Kelompok Harta'
     end
     object edno_bukti_memorial: TEdit
       Left = 122
@@ -245,14 +252,14 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Left = 122
       Top = 84
       Width = 277
-      Height = 83
+      Height = 101
       Color = clBtnHighlight
       TabOrder = 2
     end
     object Panel_pembulatan: TRzPanel
-      Left = 405
-      Top = 34
-      Width = 355
+      Left = 434
+      Top = 118
+      Width = 361
       Height = 61
       Color = 15987699
       TabOrder = 3
@@ -309,8 +316,8 @@ object FNewJurnal_memo: TFNewJurnal_memo
       end
     end
     object Checkpembuatan: TRzCheckBox
-      Left = 405
-      Top = 9
+      Left = 434
+      Top = 53
       Width = 123
       Height = 19
       Caption = 'Memorial Sumber lain'
@@ -331,10 +338,11 @@ object FNewJurnal_memo: TFNewJurnal_memo
     end
     object cbbulan: TComboBox
       Left = 500
-      Top = 118
-      Width = 150
+      Top = 18
+      Width = 165
       Height = 21
       TabOrder = 6
+      OnSelect = cbbulanSelect
       Items.Strings = (
         ''
         'Januari'
@@ -351,9 +359,9 @@ object FNewJurnal_memo: TFNewJurnal_memo
         'Desember')
     end
     object edth: TSpinEdit
-      Left = 500
-      Top = 145
-      Width = 150
+      Left = 718
+      Top = 18
+      Width = 77
       Height = 22
       MaxValue = 3000
       MinValue = 2000
@@ -361,10 +369,11 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Value = 2022
     end
     object CbJenis: TComboBox
-      Left = 556
-      Top = 7
-      Width = 204
+      Left = 575
+      Top = 52
+      Width = 220
       Height = 21
+      Enabled = False
       TabOrder = 8
       OnSelect = CbJenisSelect
       Items.Strings = (
@@ -377,16 +386,40 @@ object FNewJurnal_memo: TFNewJurnal_memo
         'Retur Pembelian'
         'Penyusutan Asset')
     end
+    object CbHarta: TComboBox
+      Left = 535
+      Top = 87
+      Width = 260
+      Height = 21
+      Enabled = False
+      TabOrder = 9
+      OnSelect = CbHartaSelect
+      Items.Strings = (
+        ''
+        'Januari'
+        'Februari'
+        'Maret'
+        'April'
+        'Mei'
+        'Juni'
+        'Juli'
+        'Agustus'
+        'September'
+        'Oktober'
+        'November'
+        'Desember')
+    end
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 183
-    Width = 777
+    Top = 201
+    Width = 815
     Height = 41
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 773
+    ExplicitTop = 183
+    ExplicitWidth = 771
     object Label9: TLabel
       Left = 8
       Top = 12
@@ -412,9 +445,9 @@ object FNewJurnal_memo: TFNewJurnal_memo
   end
   object DBGridgrn: TDBGridEh
     Left = 0
-    Top = 224
-    Width = 777
-    Height = 210
+    Top = 242
+    Width = 815
+    Height = 192
     Align = alClient
     AllowedOperations = [alopInsertEh, alopUpdateEh, alopDeleteEh]
     DataSource = DataSource1
@@ -548,10 +581,9 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Top = 176
   end
   object MemTableEh1: TMemTableEh
-    Active = True
     Params = <>
-    Left = 720
-    Top = 128
+    Left = 632
+    Top = 192
     object MemTableEh1kode_akun: TStringField
       FieldName = 'kode_akun'
       Size = 25

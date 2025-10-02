@@ -238,18 +238,15 @@ object FDepresiasi: TFDepresiasi
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
-        ColumnName = 'Column_0_tahun'
+        ColumnName = 'Column_0_trans_year'
       end
       item
-        ColumnName = 'Column_1_bulan'
+        ColumnName = 'Column_1_month'
       end
       item
         ColumnName = 'Column_2_nama_harta'
-      end
-      item
-        ColumnName = 'Column_3_kelompok'
       end>
-    DataSource = DsPenyusutan_Bulan
+    DataSource = DsDepresiasi
     DynProps = <>
     TabOrder = 3
     Columns = <
@@ -257,7 +254,7 @@ object FDepresiasi: TFDepresiasi
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tahun'
+        FieldName = 'trans_year'
         Footers = <>
         Title.Caption = 'Tahun'
         Width = 40
@@ -266,7 +263,7 @@ object FDepresiasi: TFDepresiasi
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'bulan'
+        FieldName = 'month'
         Footers = <>
         Title.Caption = 'Bulan'
         Width = 70
@@ -284,7 +281,7 @@ object FDepresiasi: TFDepresiasi
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kelompok'
+        FieldName = 'nama_kelompok_penyusutan'
         Footers = <>
         Title.Caption = 'Kelompok'
         Width = 100
@@ -302,7 +299,7 @@ object FDepresiasi: TFDepresiasi
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_asset'
+        FieldName = 'kode_asset'
         Footers = <>
         Title.Caption = 'Kode Asset'
         Width = 120
@@ -311,7 +308,7 @@ object FDepresiasi: TFDepresiasi
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_material'
+        FieldName = 'nama_barang'
         Footers = <>
         Title.Caption = 'Nama Barang'
         Width = 200
@@ -321,7 +318,7 @@ object FDepresiasi: TFDepresiasi
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nominal'
+        FieldName = 'jumlah'
         Footers = <>
         Title.Caption = 'Nilai Penyusutan'
         Width = 110
@@ -336,6 +333,7 @@ object FDepresiasi: TFDepresiasi
     Height = 38
     Align = alTop
     TabOrder = 2
+    Visible = False
     object Label1: TLabel
       Left = 23
       Top = 9
@@ -518,8 +516,8 @@ object FDepresiasi: TFDepresiasi
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 655
-    Top = 32
+    Left = 591
+    Top = 8
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -1064,15 +1062,19 @@ object FDepresiasi: TFDepresiasi
   object QDepresiasi: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ''
       
-        'select c.nama_harta,d.kd_kelompok,b.nominal,b.kd_asset,e.kelompo' +
-        'k,f.nm_material,a.* from t_asset_penyusutan_perminggu a INNER JO' +
-        'IN t_asset_penyusutan_perminggu_det b on a.notrans=b.notrans '
+        'select a.*,b.nama_harta,c."month",dd.id urut,ma.kode_kel_penyusu' +
+        'tan,ma.nama_kelompok_penyusutan,dd.kode_asset,ma.nama_barang,dd.' +
+        'jumlah from t_depresiasi a INNER JOIN tmaster_harta_asset b on a' +
+        '.kd_harta=b.kd_nama_harta '
       
-        'INNER JOIN t_asset_nama_harta c on a.kd_akun=c.kd_akun INNER joi' +
-        'n t_asset d on b.kd_asset=d.kd_asset INNER JOIN t_asset_kelompok' +
-        ' e on d.kd_kelompok=e.kd_kelompok '
-      'INNER JOIN t_material_stok f ON d.kd_barang=f.kd_material_stok')
+        'INNER JOIN (select cast(id as VARCHAR(2)) id,"month" from t_mont' +
+        'h) c on a.trans_month=c.id'
+      
+        'INNER JOIN t_depresiasi_det dd on a.transno=dd.transno inner JOI' +
+        'N tmaster_asset ma on dd.kode_asset=ma.kode_asset ORDER BY dd.id' +
+        ' ASC')
     Left = 352
     Top = 32
   end
@@ -1108,65 +1110,5 @@ object FDepresiasi: TFDepresiasi
     ProviderDataSet = QDepresiasi
     Left = 520
     Top = 80
-  end
-  object QPenyusutan_Bulan: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select c.nama_harta,d.kd_kelompok,b.nominal,b.kd_asset,e.kelompo' +
-        'k,f.nm_material,a.* from t_asset_penyusutan_perbulan a INNER JOI' +
-        'N t_asset_penyusutan_perbulan_det b on a.notrans=b.notrans '
-      
-        'INNER JOIN t_asset_nama_harta c on a.kd_akun=c.kd_akun INNER joi' +
-        'n t_asset d on b.kd_asset=d.kd_asset INNER JOIN t_asset_kelompok' +
-        ' e on d.kd_kelompok=e.kd_kelompok '
-      'INNER JOIN t_material_stok f ON d.kd_barang=f.kd_material_stok')
-    Left = 368
-    Top = 176
-  end
-  object Qdetail2: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'SELECT a.kd_akun,d.nama_harta,b.nm_material,c.* from t_asset a I' +
-        'NNER JOIN t_material_stok b on b.kd_material_stok=a.kd_barang '
-      
-        'INNER JOIN t_asset_penyusutan_perbulan_det c on a.kd_asset=c.kd_' +
-        'asset INNER JOIN t_asset_nama_harta d on a.kd_akun=d.kd_akun'
-      'order by a.kd_asset asc')
-    MasterSource = DsPenyusutan_Bulan
-    MasterFields = 'notrans'
-    DetailFields = 'notrans'
-    Left = 368
-    Top = 224
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'notrans'
-        ParamType = ptInput
-        Value = '001/13/V/23/MLB'
-      end>
-  end
-  object DsDetail2: TDataSource
-    DataSet = Qdetail2
-    Left = 448
-    Top = 224
-  end
-  object DsPenyusutan_Bulan: TDataSource
-    DataSet = MemPenyusutan_Bulan
-    Left = 448
-    Top = 176
-  end
-  object MemPenyusutan_Bulan: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = DataSetDriverEh2
-    Left = 520
-    Top = 184
-  end
-  object DataSetDriverEh2: TDataSetDriverEh
-    ProviderDataSet = QPenyusutan_Bulan
-    Left = 520
-    Top = 224
   end
 end

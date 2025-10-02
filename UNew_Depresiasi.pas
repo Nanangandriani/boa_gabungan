@@ -14,7 +14,6 @@ type
   TFNew_Depresiasi = class(TForm)
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
     Label5: TLabel;
     Label6: TLabel;
     Label11: TLabel;
@@ -46,41 +45,15 @@ type
     Label2: TLabel;
     Label1: TLabel;
     Label4: TLabel;
-    Panel3: TPanel;
-    Label22: TLabel;
-    Label23: TLabel;
-    Label24: TLabel;
-    Label25: TLabel;
-    Label26: TLabel;
-    Label29: TLabel;
-    Label30: TLabel;
-    Label31: TLabel;
-    Label32: TLabel;
-    Label33: TLabel;
-    CbBulan2: TComboBox;
-    Edthn2: TSpinEdit;
-    CbHarta2: TComboBox;
-    Ed_DepNo2: TRzEdit;
-    Dt_Dep2: TRzDateTimeEdit;
-    RzComboBox1: TRzComboBox;
-    DBGridEh2: TDBGridEh;
-    Panel4: TPanel;
-    RzBitBtn1: TRzBitBtn;
-    BSimpan2: TRzBitBtn;
-    Gauge1: TGauge;
     MemDep2: TMemTableEh;
     DsDep2: TDataSource;
-    SpeedButton1: TSpeedButton;
     procedure Edkd_assetSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure EdNilaiChange(Sender: TObject);
-    procedure dt_depresiasiChange(Sender: TObject);
     procedure CbPeriodeSelect(Sender: TObject);
-    procedure DtPeriodeChange(Sender: TObject);
-    procedure DtPeriode2Change(Sender: TObject);
     procedure CbKelompokSelect(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -89,9 +62,6 @@ type
     procedure CbMingguanSelect(Sender: TObject);
     procedure CbhartaSelect(Sender: TObject);
     procedure CbHarta2Select(Sender: TObject);
-    procedure CbBulan2Select(Sender: TObject);
-    procedure BSimpan2Click(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,8 +69,6 @@ type
     Procedure Load;
     Procedure Autonumber;
     procedure Clear;
-    procedure SimpanBulanan;
-    procedure UpdateBulanan;
   end;
 
 Function  FNew_Depresiasi: TFNew_Depresiasi;
@@ -237,7 +205,7 @@ with dm.Qtemp do
   nourut:=code;
   showmessage(editcomplete) ;
   Edkd_Depresiasi.Text:= EditComplete+ '/'+maxmy + '/' +FHomeLogin.vkodeprsh;
-  Ed_DepNo2.Text:= EditComplete+ '/'+maxmy + '/' + FHomeLogin.vkodeprsh;
+  //Ed_DepNo2.Text:= EditComplete+ '/'+maxmy + '/' + FHomeLogin.vkodeprsh;
 end;
 
 Procedure TFNew_Depresiasi.Clear;
@@ -253,187 +221,6 @@ begin
   MemDepresiasi2.EmptyTable;
 end;
 
-procedure TFNew_Depresiasi.SimpanBulanan; //cr ds   22-11-2023
-begin
-  Gauge1.MinValue:=0;
-  Gauge1.MaxValue:=i;
-  Gauge1.Progress := 0;
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select * from t_asset_penyusutan_perbulan where tahun='+QuotedStr(edth.Text)+' '+
-  ' and bulan='+QuotedStr(bulan);
-  ExecSQL;
-end;
-  if DM.Qtemp.RecordCount=0 then
-  begin
-    Autonumber;
-    if messageDlg ('Anda Yakin Simpan No. '+Edkd_Depresiasi.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-    then begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='insert into t_asset_penyusutan_perbulan(notrans,tgl,bulan,bulan2,tahun,total,kd_akun)'+
-                  'Values(:notrans,:tgl,:bulan,:bulan2,:tahun,:total,:kd_akun)';
-                  ParamByName('notrans').Value:=Ed_DepNo2.Text;
-                  ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',dt_depresiasi.Date);
-                  ParamByName('tahun').Value:=edth.Text;
-                  ParamByName('bulan').Value:=cbbulan2.Text;
-                  ParamByName('bulan2').Value:=bulan;
-                  ParamByName('total').Value:=DBGridEh1.Columns[2].Footer.SumValue;
-                  ParamByName('kd_akun').AsString:=kd_akun;
-        ExecSQL;
-      end;
-      MemDep2.First;
-      while not MemDep2.Eof do
-      begin
-     {   with dm.QTemp3 do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:='select * from t_asset_pertahun_real where thn='+QuotedStr(edth.Text)+' and kd_asset='+QuotedStr(MemDepresiasi2['no_asset']);
-          ExecSQL;
-        end;
-       {   if DM.QTemp3.RecordCount=0 then
-          begin
-            with dm.QTemp2 do
-            begin
-              close;
-              sql.Clear;
-              sql.Text:='insert into t_asset_pertahun_real(thn,kd_asset,penyusutan)'+
-                        'Values(:thn,:kd_asset,:penyusutan)';
-                        ParamByName('thn').Value:=edth.Text;
-                        ParamByName('kd_asset').Value:=MemDepresiasi2['no_asset'];
-                        ParamByName('penyusutan').Value:=MemDepresiasi2['jmlh_dep'];
-              ExecSQL;
-            end;
-          end;
-          if DM.QTemp3.RecordCount=1 then
-            begin    }
-              i2:=0;
-              with dm.Qtemp do
-              begin
-                close;
-                sql.Clear;
-                sql.Text:='insert into t_asset_penyusutan_perbulan_det(notrans,kd_asset,nominal)'+
-                            'Values(:notrans,:kd_asset,:nominal)';
-                            ParamByName('notrans').Value:=Ed_DepNo2.Text;
-                            ParamByName('kd_asset').Value:=MemDep2['no_asset'];
-                            ParamByName('nominal').Value:=MemDep2['jmlh_dep'];
-                  ExecSQL;
-              end;
-           // end;
-            Gauge1.Progress:=Gauge1.Progress+1;
-            MemDep2.Next;
-      end;
-   // BBatalClick(sender);
-    ShowMessage('Data Berhasil di simpan');
-    end;
-  end else
-    ShowMessage('Maaf Periode ini Sudah Pernah di Input');
-    close;
-end;
-
-procedure TFNew_Depresiasi.SpeedButton1Click(Sender: TObject);
-begin
-  Autonumber;
-end;
-
-procedure TFNew_Depresiasi.UpdateBulanan; //cr ds 27-11-2023
-begin
-  Gauge1.MinValue:=0;
-  Gauge1.MaxValue:=i;
-  Gauge1.Progress := 0;
- if messageDlg ('Anda Yakin Simpan No. '+Edkd_Depresiasi.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-    then begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='update t_asset_penyusutan_perbulan set tgl=:tgl,bulan=:bulan,bulan2=:bulan2,tahun=:tahun,total=:total,kd_akun=:kd_akun '+
-                  ' where notrans=:notrans';
-                  ParamByName('notrans').Value:=Ed_DepNo2.Text;
-                  ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',Dt_Dep2.Date);
-                  ParamByName('tahun').Value:=Edthn2.Text;
-                  ParamByName('bulan').Value:=cbbulan2.Text;
-                  ParamByName('bulan2').Value:=bulan;
-                  ParamByName('total').Value:=DBGridEh1.Columns[2].Footer.SumValue;
-                  ParamByName('kd_akun').AsString:=kd_akun;
-        ExecSQL;
-      end;
-      with dm.QTemp3 do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='delete from t_asset_penyusutan_perbulan_det where notrans='+QuotedStr(Ed_DepNo2.Text);
-        ExecSQL;
-      end;
-     // i2:=0;
-      MemDep2.First;
-      while not MemDep2.Eof do
-      begin
-        with dm.Qtemp do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:='insert into t_asset_penyusutan_perbulan_det(notrans,kd_asset,nominal)'+
-                    'Values(:notrans,:kd_asset,:nominal)';
-                    ParamByName('notrans').Value:=Ed_DepNo2.Text;
-                    ParamByName('kd_asset').Value:=MemDep2['no_asset'];
-                    ParamByName('nominal').Value:=MemDep2['jmlh_dep'];
-          ExecSQL;
-        end;
-        Gauge1.Progress:=Gauge1.Progress+1;
-        MemDep2.Next;
-      end;
-    ShowMessage('Data Berhasil di simpan');
-  end else
-    ShowMessage('Maaf Periode ini Sudah Pernah di Input');
-    close;
-end;
-
-procedure TFNew_Depresiasi.DtPeriode2Change(Sender: TObject);
-begin
-//jmlh:=IntToStr(daysBetween(DtPeriode.Date,DtPeriode2.Date));
- { if jmlh='' then jmlh:='0' else jmlh:=IntToStr(daysBetween(DtPeriode.Date,DtPeriode2.Date));
-  {DM.Qtemp.First;
-  while not DM.Qtemp.Eof do
-  begin
-    MemDepresiasi.edit;
-    MemDepresiasi['nilai_susut']:=DM.Qtemp['nilai_depresiasi']*strtofloat(jmlh);
-    MemDepresiasi.Post;
-    DM.Qtemp.Next;
-  end;   }
-end;
-
-procedure TFNew_Depresiasi.DtPeriodeChange(Sender: TObject);
-begin
- // jmlh:=IntToStr(daysBetween(DtPeriode.Date,DtPeriode2.Date));
-  { jmlh='' then jmlh:='0' else jmlh:=IntToStr(daysBetween(DtPeriode.Date,DtPeriode2.Date));
-  {DM.Qtemp.First;
-  while not DM.Qtemp.Eof do
-  begin
-    MemDepresiasi.edit;
-    MemDepresiasi['nilai_susut']:=DM.Qtemp['nilai_depresiasi']*strtofloat(jmlh);
-    MemDepresiasi.Post;
-    DM.Qtemp.Next;
-  end;     }
-end;
-
-procedure TFNew_Depresiasi.dt_depresiasiChange(Sender: TObject);
-begin
-{with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:=' SELECT b.nm_material,A.* from t_asset a inner JOIN t_material_stok b on a.kd_barang=b.kd_material_stok'+
-            ' where kd_asset='+QuotedStr(Edkd_asset.Text);
-  ExecSQL;
-end;
-  EdNilai.Text:=Dm.Qtemp['nilai_depresiasi']; }
-end;
 
 procedure TFNew_Depresiasi.BBatalClick(Sender: TObject);
 begin
@@ -443,67 +230,22 @@ end;
 
 procedure TFNew_Depresiasi.BEditClick(Sender: TObject);
 begin
-{with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:=' update t_depresiasi set tgl=:partgl,periode=:parperiode,periode2=:parperiode2,jenis=:parjenis,'+
-            ' jmlh_hari=:parjmlh_hari where kd_depresiasi=:parkd_depresiasi ';
-            ParamByName('parkd_depresiasi').Value:=Edkd_Depresiasi.Text;
-            ParamByName('partgl').Value:=FormatDateTime('yyy-mm-dd',dt_depresiasi.Date);
-            ParamByName('parperiode').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
-            ParamByName('parperiode2').Value:=FormatDateTime('yyy-mm-dd',DtPeriode2.Date);
-            ParamByName('parjenis').Value:=CbKelompok.Text;
-            ParamByName('parjmlh_hari').Value:=jmlh;
-  ExecSQL;
-end;
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='delete from t_depresiasi_det where kd_depresiasi='+QuotedStr(Edkd_Depresiasi.Text);
-  ExecSQL
-end;
-MemDepresiasi2.First;
-while not MemDepresiasi2.Eof do
-begin
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='insert into t_depresiasi_det(kd_depresiasi,kd_asset,kd_akun,jmlh_dep,nilai_dep)'+
-            'Values(:parkd_depresiasi,:parkd_asset,:parkd_akun,:parjmlh_dep,:parnilai_dep)';
-            ParamByName('parkd_depresiasi').Value:=Edkd_Depresiasi.Text;
-            ParamByName('parkd_asset').Value:=MemDepresiasi2['no_asset'];
-            ParamByName('parkd_akun').Value:='1311.04';
-            ParamByName('parjmlh_dep').Value:=MemDepresiasi2['jmlh_dep'];
-            ParamByName('parnilai_dep').Value:=MemDepresiasi2['nilai_dep'];
-  ExecSQL;
-end;
-  MemDepresiasi2.Next;
-end;                    }
-with dm.Qtemp do
-begin
-  close;
-  sql.Clear;
- // sql.Text:='select * from t_asset_penyusutan_perminggu where tahun='+QuotedStr(edth.Text)+' '+
-  //' and bulan='+QuotedStr(cbbulan.Text)+' and minggu='+QuotedStr(CbMingguan.Text);
-  ExecSQL;
-end;
+    if messageDlg ('Anda Yakin Simpan No. '+Edkd_Depresiasi.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+    then begin
+    if not dm.koneksi.InTransaction then
+      dm.koneksi.StartTransaction;
+        try
+        begin
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:=' update t_asset_penyusutan_perminggu set tgl=:tgl,bulan=:bulan,bulan2=:bulan2,tahun=:tahun,total=:total,'+
-                ' minggu=:minggu,kd_akun=:kd_akun,periode1=:periode1,periode2=:periode2 where notrans=:notrans';
-                paramByName('notrans').Value:=Edkd_Depresiasi.Text;
+      sql.Text:=' update t_depresiasi set trans_date=:tgl,trans_month=:bulan,trans_year=:tahun,total=:total,'+
+                ' account_code=:kd_akun,change_by=:pic,change_date=now() where transno=:transno';
+                paramByName('transno').Value:=Edkd_Depresiasi.Text;
                 ParamByName('tgl').Value:=FormatDateTime('yyy-mm-dd',dt_depresiasi.Date);
-            //    ParamByName('periode1').Value:=FormatDateTime('yyy-mm-dd',DtPeriode.Date);
-          //      ParamByName('periode2').Value:=FormatDateTime('yyy-mm-dd',DtPeriode2.Date);
                 ParamByName('tahun').Value:=edth.Text;
-                ParamByName('bulan').Value:=cbbulan.Text;
-                ParamByName('bulan2').Value:=bulan;
-      //          ParamByName('minggu').Value:=CbMingguan.Text;
+                ParamByName('bulan').Value:=bulan;
                 ParamByName('total').Value:=DBGridEh1.Columns[2].Footer.SumValue;
                 ParamByName('kd_akun').AsString:=kd_akun;
       ExecSQL;
@@ -512,26 +254,37 @@ end;
     begin
       close;
       sql.Clear;
-      sql.Text:='delete from t_asset_penyusutan_perminggu_det where notrans='+QuotedStr(Edkd_Depresiasi.Text);
+      sql.Text:='delete from t_depresiasi_det where transno='+QuotedStr(Edkd_Depresiasi.Text);
       ExecSQL;
     end;
     MemDepresiasi2.First;
     while not MemDepresiasi2.Eof do
     begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='insert into t_asset_penyusutan_perminggu_det(notrans,kd_asset,nominal)'+
-                  'Values(:notrans,:kd_asset,:nominal)';
-                  ParamByName('notrans').Value:=Edkd_Depresiasi.Text;
-                  ParamByName('kd_asset').Value:=MemDepresiasi2['no_asset'];
-                  ParamByName('nominal').Value:=MemDepresiasi2['jmlh_dep'];
-        ExecSQL;
-      end;
+           with dm.Qtemp do
+              begin
+                close;
+                sql.Clear;
+                sql.Text:='insert into t_depresiasi_det(transno,kode_asset,jumlah)'+
+                            'Values(:notrans,:kd_asset,:jumlah)';
+                            ParamByName('notrans').Value:=Edkd_Depresiasi.Text;
+                            ParamByName('kd_asset').Value:=MemDepresiasi2['no_asset'];
+                            ParamByName('jumlah').Value:=MemDepresiasi2['jmlh_dep'];
+                  ExecSQL;
+              end;
       MemDepresiasi2.Next;
     end;
-      BBatalClick(sender);
+        dm.koneksi.Commit;
+        Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+        BBatalClick(sender);
+        end
+        Except
+        on E :Exception do
+        begin
+          MessageDlg(E.Message,mtError,[MBok],0);
+          dm.koneksi.Rollback;
+        end;
+        end;
+    end;
 end;
 
 procedure TFNew_Depresiasi.BSimpanClick(Sender: TObject);
@@ -547,7 +300,7 @@ end;
   if DM.Qtemp2.RecordCount=0 then
   begin
     Autonumber;
-    if messageDlg ('Anda Yakin Simpan No. '+Ed_Depno2.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+    if messageDlg ('Anda Yakin Simpan No. '+Edkd_Depresiasi.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
     then begin
     if not dm.koneksi.InTransaction then
       dm.koneksi.StartTransaction;
@@ -636,34 +389,6 @@ end;
     ShowMessage('Maaf Periode ini Sudah Pernah di Input');
 end;
 
-procedure TFNew_Depresiasi.CbBulan2Select(Sender: TObject);
-begin
-  bulan:=IntToStr(cbbulan2.ItemIndex);
-  MemDep2.EmptyTable;
-  With dm.Qtemp2 do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select tgl_perolehan,id,tahun,bulan,bulan2,nourut,kd_asset,pic,kd_akun,nm_material,'+
-    ' nominal from (select a.*,b.kd_akun,b.tgl_perolehan,c.nm_material from t_asset_perbulan a'+
-    ' INNER JOIN t_asset b on  a.kd_asset=b.kd_asset INNER JOIN t_material_stok c on c.kd_material_stok=b.kd_barang'+
-    ' WHERE kd_akun='+QuotedStr(kd_akun)+' and tahun='+QuotedStr(edthn2.Text)+' and bulan='+QuotedStr(CbBulan2.text)+') x ORDER BY id';
-    open;
-  end;
-    //i:=0;
-    DM.Qtemp2.First;
-    while not DM.Qtemp2.Eof do
-    begin
-      MemDep2.Insert;
-      MemDep2['no_asset']:=DM.Qtemp2['kd_asset'];
-      MemDep2['nm_barang']:=DM.Qtemp2['nm_material'];
-      MemDep2['jmlh_dep']:=DM.Qtemp2['nominal'];
-      MemDep2.Post;
-      DM.Qtemp2.Next;
-    end;
-      i:=DM.Qtemp2.RecordCount;
-end;
-
 procedure TFNew_Depresiasi.cbbulanSelect(Sender: TObject);
 begin
 with dm.qtemp do
@@ -742,22 +467,7 @@ Procedure TFNew_Depresiasi.Load;
 begin
   Edkd_asset.Clear;
   edth.Clear;
-  Edthn2.Clear;
-{   with dm.Qtemp do
-  begin
-    Close;
-    sql.Clear;
-    sql.Text:='select * from t_asset';
-    ExecSQL;
-  end;
-  Dm.Qtemp.First;
-  while not Dm.Qtemp.Eof do
-  begin
-    Edkd_asset.Items.Add(Dm.Qtemp['kd_asset']);
-    Dm.Qtemp.Next;
-  end;           }
   Cbharta.Clear;
-  Cbharta2.Clear;
   WITH DM.Qtemp DO
   begin
     close;
@@ -769,20 +479,6 @@ begin
   while not Dm.Qtemp.Eof do
   begin
     Cbharta.Items.Add(Dm.Qtemp['nama_harta']);
-    Dm.Qtemp.Next;
-  end;
- //   Cbharta.Clear;
-{  WITH DM.Qtemp DO
-  begin
-    close;
-    sql.Clear;
-    sql.Text:=' SELECT * from t_asset_nama_harta order by id';
-    ExecSQL;
-  end; }
-  Dm.Qtemp.First;
-  while not Dm.Qtemp.Eof do
-  begin
-    Cbharta2.Items.Add(Dm.Qtemp['nama_harta']);
     Dm.Qtemp.Next;
   end;
   cbbulan.Clear;
@@ -800,65 +496,11 @@ begin
     Dm.Qtemp.Next;
   end;
     dt_depresiasi.Date:=now();
-    Dt_Dep2.Date:=now();
     edth.Text:=FormatDateTime('yyyy',now());
-    Edthn2.Text:=FormatDateTime('yyyy',now());
-end;
-
-procedure TFNew_Depresiasi.BSimpan2Click(Sender: TObject);
-begin
-  Gauge1.Visible:=true;
-  if statustr=0 then
-  begin
-    with DM.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from t_asset_penyusutan_perbulan where tahun='+QuotedStr(Edthn2.Text)+' and bulan2='+QuotedStr(bulan)+' and kd_akun='+QuotedStr(kd_akun);
-      ExecSQL;
-    end;
-      if DM.Qtemp.RecordCount=0 then
-      begin
-        Autonumber;
-        SimpanBulanan;
-      end;
-      if DM.Qtemp.RecordCount>0 then
-      begin
-        ShowMessage('Maaf Data Periode ini sudah di input');
-      end;
-  end;
-  if statustr>0 then
-  begin
-      with DM.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from t_asset_penyusutan_perbulan where tahun='+QuotedStr(Edthn2.Text)+' and bulan2='+QuotedStr(bulan)+' and kd_akun='+QuotedStr(kd_akun)+' and notrans <> '+QuotedStr(Ed_DepNo2.Text);
-        ExecSQL;
-      end;
-      if DM.Qtemp.RecordCount=0 then
-      begin
-        UpdateBulanan;
-      end;
-      if DM.Qtemp.RecordCount>0 then
-      begin
-        ShowMessage('Maaf Data Periode ini sudah di input');
-      end;
-  end;
-  Gauge1.Visible:=false;
-  FDepresiasi.dxBRefreshClick(sender);
 end;
 
 procedure TFNew_Depresiasi.CbHarta2Select(Sender: TObject);
-begin
- with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select * from t_asset_nama_harta where nama_harta='+QuotedStr(Cbharta2.Text);
-    ExecSQL;
-  end;
-  kd_akun:=DM.Qtemp['kd_akun'];
+begin;
 end;
 
 procedure TFNew_Depresiasi.CbhartaSelect(Sender: TObject);
