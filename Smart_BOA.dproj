@@ -1163,6 +1163,10 @@
             <Form>F_cetak_rekap_hutang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Ulap_Rekap_Hutang_Kredit.pas">
+            <Form>Flap_Rekap_Hutang_Kredit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -291,7 +291,8 @@ uses
   UNew_DataTargetPenjualan in 'UNew_DataTargetPenjualan.pas' {FNew_DataTargetPenjualan},
   UPenyesuaianFaktur in 'UPenyesuaianFaktur.pas' {FPenyesuaianFaktur},
   U_rekap_ppn_masukan in 'U_rekap_ppn_masukan.pas' {Frekap_ppn_masukan},
-  U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang};
+  U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang},
+  Ulap_Rekap_Hutang_Kredit in 'Ulap_Rekap_Hutang_Kredit.pas' {Flap_Rekap_Hutang_Kredit};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},

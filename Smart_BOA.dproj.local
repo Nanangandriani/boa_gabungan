@@ -57,25 +57,26 @@
     <Transaction>1899/12/30 00.00.00.000.200,D:\back_office_automation\u_master_asset.dfm=D:\back_office_automation\__recovery\u_master_asset.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.486,=D:\Boa Gabungan\UNew_PiutangBeramasalah.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.435,=D:\back_office_automation\UMasterSetiingAsset.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.643,D:\back_office_automation\ULogout.dfm=D:\back_office_automation\Unit3.dfm</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.998,=D:\Boa Gabungan\Ulog.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.648,D:\back_office_automation\browse_akun_kredit.pas=D:\GitBOA\MLB\BOA MLB\browse_akun_kredit.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.575,D:\back_office_automation\USearch_MaterialRetur.dfm=D:\GitBOA\MLB\BOA MLB\USearch_MaterialRetur.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.535,D:\hps\APL HHA AKT 21-07-2025\APL HHA AKT 21-07-2025\APL HHA AKT Month\UDepresiasi.dfm=D:\back_office_automation\UDepresiasi.dfm</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.471,=D:\Boa Gabungan\UListPerbandinganBiayaDo.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.998,=D:\Boa Gabungan\Ulog.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.575,D:\back_office_automation\USearch_MaterialRetur.pas=D:\GitBOA\MLB\BOA MLB\USearch_MaterialRetur.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.339,=D:\Boa Gabungan\URekapSaldoPiutangPerKaresidenan.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.484,=D:\Boa Gabungan\URekapSaldoPiutangPerKaresidenan.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.739,=D:\Boa Gabungan\UListPiutangBermasalah.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.535,D:\hps\APL HHA AKT 21-07-2025\APL HHA AKT 21-07-2025\APL HHA AKT Month\UDepresiasi.pas=D:\back_office_automation\UDepresiasi.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.471,=D:\Boa Gabungan\UListPerbandinganBiayaDo.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.392,=D:\Boa Gabungan\UListPenjualanPromosi.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.002,=D:\Boa Gabungan\UStockOpnameNota.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.775,=D:\Boa Gabungan\UStockOpnameNota.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.643,D:\back_office_automation\ULogout.dfm=D:\back_office_automation\Unit3.dfm</Transaction>
     <Transaction>1899/12/30 00.00.00.000.925,=D:\hps\APL HHA AKT 21-07-2025\APL HHA AKT 21-07-2025\APL HHA AKT Month\UDepresiasi.pas</Transaction>
-    <Transaction>1899/12/30 00.00.00.000.662,=D:\Boa Gabungan\ULaporanHarianSisaNota.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.535,D:\hps\APL HHA AKT 21-07-2025\APL HHA AKT 21-07-2025\APL HHA AKT Month\UDepresiasi.pas=D:\back_office_automation\UDepresiasi.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.126,=D:\Boa Gabungan\ULaporanHarianSisaNota.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.662,=D:\Boa Gabungan\ULaporanHarianSisaNota.pas</Transaction>
+    <Transaction>1899/12/30 00.00.00.000.002,=D:\Boa Gabungan\UStockOpnameNota.pas</Transaction>
     <Transaction>1899/12/30 00.00.00.000.593,=D:\back_office_automation\u_master_asset2.pas</Transaction>
     <Transaction>2025/10/02 14.43.27.110,=D:\Boa Gabungan\U_rekap_ppn_masukan.pas</Transaction>
     <Transaction>2025/10/02 14.45.13.358,=D:\Boa Gabungan\U_cetak_rekap_hutang.pas</Transaction>
+    <Transaction>2025/10/02 15.21.05.282,=D:\Boa Gabungan\Ulap_Rekap_Hutang_Kredit.pas</Transaction>
   </Transactions>
 </BorlandProject>
