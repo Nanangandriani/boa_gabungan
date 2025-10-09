@@ -11,6 +11,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
