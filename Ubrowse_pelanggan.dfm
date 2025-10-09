@@ -92,6 +92,7 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 1106
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -145,11 +146,11 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     object Panel2: TPanel
       Left = 1
       Top = 96
-      Width = 1112
+      Width = 1108
       Height = 32
       Align = alBottom
       TabOrder = 2
-      ExplicitWidth = 1108
+      ExplicitWidth = 1104
       object Edautocode: TEdit
         Left = 712
         Top = 4

@@ -23,8 +23,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -8
-    ExplicitTop = -6
+    ExplicitWidth = 1051
+    ExplicitHeight = 276
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19

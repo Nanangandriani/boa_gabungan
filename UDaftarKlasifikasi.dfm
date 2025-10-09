@@ -293,7 +293,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Top = 122
           Width = 186
           Height = 46
-          Caption = 'Status Pajak'
+          Caption = 'Include PPN'
           Color = 15987699
           Columns = 2
           ItemHeight = 17
@@ -303,6 +303,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             'Ya')
           TabOrder = 14
           Transparent = True
+          OnClick = rgPajakClick
         end
         object edkd_jenis_usaha: TEdit
           Left = 847
@@ -481,6 +482,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          Visible = False
         end
         object bt_m_batal: TRzBitBtn
           Left = 997
@@ -730,8 +732,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 21
-          ExplicitTop = 2
         end
       end
     end
@@ -742,7 +742,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Left = 0
         Top = 0
         Width = 1073
-        Height = 105
+        Height = 131
         Align = alTop
         TabOrder = 0
         object Label6: TLabel
@@ -895,14 +895,30 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           ButtonNumGlyphs = 1
           OnButtonClick = edKode_PelangganButtonClick
         end
+        object rgPajakPel: TRzRadioGroup
+          Left = 20
+          Top = 75
+          Width = 186
+          Height = 46
+          Caption = 'Include PPN'
+          Color = 15987699
+          Columns = 2
+          ItemIndex = 1
+          Items.Strings = (
+            'Tidak'
+            'Ya')
+          TabOrder = 8
+          Transparent = True
+        end
       end
       object Panel2: TPanel
         Left = 0
-        Top = 316
+        Top = 342
         Width = 1073
         Height = 32
         Align = alTop
         TabOrder = 1
+        ExplicitTop = 316
         object BBatal: TRzBitBtn
           Left = 816
           Top = 1
@@ -1092,12 +1108,13 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
       end
       object GroupBox1: TGroupBox
         Left = 0
-        Top = 105
+        Top = 131
         Width = 1073
         Height = 211
         Align = alTop
         Caption = 'Daftar Klasifikasi'
         TabOrder = 2
+        ExplicitTop = 105
         object DBGridKlasifikasi: TDBGridEh
           Left = 2
           Top = 17
@@ -1239,12 +1256,13 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
       end
       object GroupBox2: TGroupBox
         Left = 0
-        Top = 348
+        Top = 374
         Width = 1073
         Height = 189
         Align = alTop
         Caption = 'Daftar Master Klasifikasi'
         TabOrder = 3
+        ExplicitTop = 348
         object DBGridMaster: TDBGridEh
           Left = 2
           Top = 17

@@ -42,6 +42,7 @@ type
     procedure btTampilkanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btProsesClick(Sender: TObject);
+    procedure ckTandaiClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -283,6 +284,24 @@ begin
   end;
 end;
 
+procedure TFDelivery_Order_Sumber.ckTandaiClick(Sender: TObject);
+begin
+  if MemDetail.RecordCount<>0 then
+  begin
+    MemDetail.First;
+    DBGrid_SumberOrder.StartLoadingStatus();
+    while not MemDetail.Eof do
+      begin
+        MemDetail.Edit;
+          MemDetail['pilih']:=ckTandai.Checked;
+        MemDetail.Next;
+      end;
+    MemDetail.Active:=false;
+    MemDetail.Active:=true;
+    DBGrid_SumberOrder.FinishLoadingStatus();
+  end;
+end;
+
 procedure TFDelivery_Order_Sumber.edKodeVendorMuatanButtonClick(
   Sender: TObject);
 begin
@@ -308,7 +327,10 @@ begin
   edNamaVendorMuatan.Clear;
   dtTanggal1.Date:=Now();
   dtTanggal2.Date:=Now();
-  ckTandai.Checked:=true;
+  ckTandai.Checked:=false;
+  MemDetail.Close;
+  MemDetail.Open;
+  MemDetail.EmptyTable;
 end;
 
 end.

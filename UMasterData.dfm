@@ -2,8 +2,8 @@ object FMasterData: TFMasterData
   Left = 0
   Top = 0
   Caption = 'Master Data'
-  ClientHeight = 412
-  ClientWidth = 760
+  ClientHeight = 411
+  ClientWidth = 756
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FMasterData: TFMasterData
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 0
-    Width = 760
-    Height = 412
+    Width = 756
+    Height = 411
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>

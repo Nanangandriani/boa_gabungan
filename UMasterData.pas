@@ -417,6 +417,13 @@ begin
       FDataMasterAkunTrans.MemDetail['nm_akun']:=MemMasterData['NM_MASTER'];
       FDataMasterAkunTrans.MemDetail.post;
   end;
+  if vcall='m_akuntrans_jual' then
+  begin
+      FDataMasterAkunTrans.MemDetailPenjualan.Edit;
+      FDataMasterAkunTrans.MemDetailPenjualan['kd_akun']:=MemMasterData['KD_MASTER'];
+      FDataMasterAkunTrans.MemDetailPenjualan['nm_akun']:=MemMasterData['NM_MASTER'];
+      FDataMasterAkunTrans.MemDetailPenjualan.post;
+  end;
   if vcall='m_akuntrans_kas' then
   begin
       FDataMasterAkunTrans.MemDetailKas.Edit;

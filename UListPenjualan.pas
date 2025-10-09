@@ -571,6 +571,8 @@ begin
   Value := dm.Qtemp.FieldValues['sub_total'];
   if CompareText(VarName, 'parPPN') = 0 then
   Value := dm.Qtemp.FieldValues['ppn_value'];
+  if CompareText(VarName, 'parPembulatan') = 0 then
+  Value := dm.Qtemp.FieldValues['pembulatan_value'];
   if CompareText(VarName, 'parGrandTotal') = 0 then
   Value := dm.Qtemp.FieldValues['grand_tot'];
 end;

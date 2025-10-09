@@ -367,120 +367,133 @@ begin
 end;
 
 procedure TFMainMenu.TampilTabForm;
+var i: Integer;
 begin
-   with dm.Qtemp do
-   begin
+  with dm.Qtemp do
+  begin
     SQL.Clear;
     SQL.Text := 'select * from t_menu_sub where submenu=' +
                 QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
     open;
-   end;
-    if dm.Qtemp.RecordCount<>1 then
+  end;
+  if dm.Qtemp.RecordCount<>1 then
+  begin
+    ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+    exit;
+  end;
+  if dm.Qtemp.RecordCount=1 then
+  begin
+    if vCaptionButton='Logout' then
     begin
-      ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
-      exit;
-    end;
-    if dm.Qtemp.RecordCount=1 then
+      FMainMenu.Close;
+      FHomeLogin.Show;
+      Exit;
+    end else
+    if vCaptionButton='Exit' then
     begin
-      if vCaptionButton='Logout' then
+      Application.Terminate;
+    end else if vCaptionButton='Cek Update' then
+    begin
+      with dm.Qtemp do
       begin
-        FMainMenu.Close;
-        FHomeLogin.Show;
-        Exit;
-      end else
-      if vCaptionButton='Exit' then
-      begin
-        Application.Terminate;
-      end else if vCaptionButton='Cek Update' then
-      begin
-        with dm.Qtemp do
-        begin
-          close;
-          sql.Clear;
-          sql.Text:='SELECT * FROM app_versions';
-          open;
-        end;
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM app_versions';
+        open;
+      end;
 
-        if dm.Qtemp.FieldValues['version_number']=RzVersionInfo1.ProductVersion then
+      if dm.Qtemp.FieldValues['version_number']=RzVersionInfo1.ProductVersion then
+      begin
+        ShowMessage('Aplikasi sudah terupdate');
+        if MessageDlg('Apakah anda mau update ulang?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
         begin
-          ShowMessage('Aplikasi sudah terupdate');
-          if MessageDlg('Apakah anda mau update ulang?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
-          begin
-            UpdateVersi;
-          end else exit;
-        end else begin
-          MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
           UpdateVersi;
-        end;
+        end else exit;
+      end else begin
+        MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
+        UpdateVersi;
+      end;
 
-
-
-
-//        UpdateVersi;
-      end else if vCaptionButton='Refresh Menu' then
-      begin
+    end else if vCaptionButton='Refresh Menu' then
+    begin
 //        TampilTabForm ;
-      end else
+    end else
+      for i := 0 to PageControl1.PageCount - 1 do
+      begin
+        if PageControl1.Pages[i].Name = 'Tab' + vNamaButton then
+        begin
+          // Tab ditemukan!
+          ANewTabs := TRzTabSheet(PageControl1.Pages[i]);
 
-       //create new Tabsheet
-        ANewTabs := TRzTabSheet.Create(nil);
-        ANewTabs.Name := 'Tab'+vNamaButton;
-        ANewTabs.Caption := vCaptionButton;
-        ANewTabs.PageControl := PageControl1; 
-        PageControl1.ActivePage := ANewTabs;
-        {//Create Close Tab
-        CloseButton := TButton.Create(ANewTabs);
-        CloseButton.Parent := ANewTabs;
-        CloseButton.Caption := 'X';
-        CloseButton.Left := ANewTabs.Width - CloseButton.Width - 5;
-        CloseButton.Top := 5;
-        CloseButton.OnClick := CloseTabs; }
-        //Create Panel Dalam Tab
-        ApnTabs := TRzPanel.Create(nil);
-        ApnTabs.Name := 'Panel'+vNamaButton;
-        ApnTabs.Caption := vCaptionButton;
-        ApnTabs.Parent := ANewTabs;
-        ApnTabs.Align:= alClient;
-        //Create Form Dalam Panel
-        //AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
-        AFormClass := TFormClass(FindClass('T'+dm.Qtemp.fieldbyname('link').AsString));
-        AForm := AFormClass.Create(Application.MainForm);
-        AForm.Parent:=ApnTabs;
-        AForm.Align:=Alclient;
-        AForm.BorderStyle:=BsNone;
-        AksesSub(AForm,HakAkses,vCaptionButton);
-        AForm.Show;
-    end;
+          // Aktifkan Tab tersebut
+          PageControl1.ActivePage := ANewTabs;
+
+          // Set fokus ke PageControl agar form di dalamnya menerima fokus
+          PageControl1.SetFocus;
+
+          // Keluar dari prosedur agar tidak membuat Tab baru
+          Exit;
+        end;
+      end;
+     //create new Tabsheet
+      ANewTabs := TRzTabSheet.Create(nil);
+      ANewTabs.Name := 'Tab'+vNamaButton;
+      ANewTabs.Caption := vCaptionButton;
+      ANewTabs.PageControl := PageControl1;
+      PageControl1.ActivePage := ANewTabs;
+      {//Create Close Tab
+      CloseButton := TButton.Create(ANewTabs);
+      CloseButton.Parent := ANewTabs;
+      CloseButton.Caption := 'X';
+      CloseButton.Left := ANewTabs.Width - CloseButton.Width - 5;
+      CloseButton.Top := 5;
+      CloseButton.OnClick := CloseTabs; }
+      //Create Panel Dalam Tab
+      ApnTabs := TRzPanel.Create(nil);
+      ApnTabs.Name := 'Panel'+vNamaButton;
+      ApnTabs.Caption := vCaptionButton;
+      ApnTabs.Parent := ANewTabs;
+      ApnTabs.Align:= alClient;
+      //Create Form Dalam Panel
+      //AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
+      AFormClass := TFormClass(FindClass('T'+dm.Qtemp.fieldbyname('link').AsString));
+      AForm := AFormClass.Create(Application.MainForm);
+      AForm.Parent:=ApnTabs;
+      AForm.Align:=Alclient;
+      AForm.BorderStyle:=BsNone;
+      AksesSub(AForm,HakAkses,vCaptionButton);
+      AForm.Show;
+  end;
 end;
 
 procedure TFMainMenu.TampilTabForm2;
 begin
-   with dm.Qtemp do
-     begin
-      SQL.Clear;
-      SQL.Text := 'select * from t_menu_sub where submenu=' +
-                  QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
-      open;
-     end;
+  with dm.Qtemp do
+  begin
+    SQL.Clear;
+    SQL.Text := 'select * from t_menu_sub where submenu=' +
+              QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
+    open;
+  end;
 
-    if dm.Qtemp.RecordCount<>1 then
-      begin
-        ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
-        exit;
-      end;
+  if dm.Qtemp.RecordCount<>1 then
+  begin
+    ShowMessage('Data Menu Tidak Di Temukan Silakan Hubungi IT');
+    exit;
+  end;
 
-    if dm.Qtemp.RecordCount=1 then
-      begin
-          //Create Form Dalam Panel
-          AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
-          AFormClass := TFormClass(AClass);
-          AForm := AFormClass.Create(Application.MainForm);
-          AForm.Parent:=ApnTabs;
-          AForm.Align:=Alclient;
-          AForm.BorderStyle:=BsNone;
-          AksesSub(AForm,HakAkses,vCaptionButton);
-          AForm.Show;
-      end;
+  if dm.Qtemp.RecordCount=1 then
+  begin
+    //Create Form Dalam Panel
+    AClass := FindClass('T'+dm.Qtemp.fieldbyname('link').AsString);
+    AFormClass := TFormClass(AClass);
+    AForm := AFormClass.Create(Application.MainForm);
+    AForm.Parent:=ApnTabs;
+    AForm.Align:=Alclient;
+    AForm.BorderStyle:=BsNone;
+    AksesSub(AForm,HakAkses,vCaptionButton);
+    AForm.Show;
+  end;
 end;
 
 procedure TFMainMenu.ShowForm;
@@ -562,90 +575,90 @@ begin
       end;
       dm.Qtemp1.Next;
     end;}
-    with dm.Qtemp do
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
+    ExecSQL;
+  end;
+  dept_code:=dm.Qtemp['dept_code'];
+  with dm.Qtemp1 do
+  begin
+    SQL.Clear;
+    SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
+    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at is NULL '+
+    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+    ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
+    ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
+    ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+
+    ' group by e.created_at,e.id, e.menu'+
+    ' Order by e.created_at asc';
+    open;
+    First;
+  end;
+  //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
+  TCategoryPanelGroup.Create(nil);
+  CategoryPanelUtama.Create(nil);
+  ClearCategoryPanelGroup;
+  //CategoryPanelUtama.Parent := SplitView1;
+  CategoryPanelUtama.Width:=260;
+  CategoryPanelUtama.HeaderFont.style:=[fsbold];
+  //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
+  while not dm.Qtemp1.Eof do
+  begin
+    //Create Category Panel
+    ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
+    ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
+    ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
+    //ACategoryPanel.Collapsed:=True;
+    ACategoryPanel.Width:=260;
+    //ACategoryPanel.Width:=CategoryPanelUtama.Width;
+
+    with dm.Qtemp2 do
     begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
-      ExecSQL;
-    end;
-    dept_code:=dm.Qtemp['dept_code'];
-    with dm.Qtemp1 do
-   begin
-       SQL.Clear;
-       SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
-       ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at is NULL '+
-       ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-       ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
-       ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
-       ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+
-       ' group by e.created_at,e.id, e.menu'+
-       ' Order by e.created_at asc';
+      SQL.Clear;
+      SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
+      ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL INNER JOIN t_menu b '+
+      ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
+      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+      ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+      ' and cc.master_name='+QuotedStr(Menu)+
+      ' Order by bb.created_at desc ';
       open;
       First;
-   end;
-   //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
-   TCategoryPanelGroup.Create(nil);
-   CategoryPanelUtama.Create(nil);
-   ClearCategoryPanelGroup;
-   //CategoryPanelUtama.Parent := SplitView1;
-   CategoryPanelUtama.Width:=260;
-   CategoryPanelUtama.HeaderFont.style:=[fsbold];
-   //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
-   while not dm.Qtemp1.Eof do
-   begin
-    //Create Category Panel
-      ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
-      ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
-      ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
-      //ACategoryPanel.Collapsed:=True;
-      ACategoryPanel.Width:=260;
-      //ACategoryPanel.Width:=CategoryPanelUtama.Width;
-
-     with dm.Qtemp2 do
-     begin
-          SQL.Clear;
-          SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
-          ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL INNER JOIN t_menu b '+
-          ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
-          ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-          ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
-          ' and cc.master_name='+QuotedStr(Menu)+
-          ' Order by bb.created_at desc ';
-          open;
-          First;
-     end;
-     while not dm.Qtemp2.Eof do
-     begin
-        //Create Button Dalam Category Panel
-        AButtonPanel:= TRzButton.Create(ACategoryPanel);
-        //AButtonPanel:= TButton.Create(ACategoryPanel);
-        AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
-        AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
-        AButtonPanel.Parent := ACategoryPanel;
-        AButtonPanel.Align := alTop;
-        AButtonPanel.Width:=260;
-        //AButtonPanel.Width:=ACategoryPanel.Width;
-        //AButtonPanel.Width:=Rzsplitter1.Width-2;
-        ACategoryPanel.Color:=clSkyBlue;
-        AButtonPanel.OnClick := btnApplyClick;
-        AButtonPanel.Alignment:=taleftjustify;
-        //AButtonPanel.Tag:=1;
-          if (dm.Qtemp2.RecordCount=1) then
-          begin
-            ACategoryPanel.Height:=65;
-            //ACategoryPanel.Height:=90;
-          end;
-          if dm.Qtemp2.RecordCount>1 then
-          begin
-            //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
-          //  ACategoryPanel.Height:=40+30*dm.Qtemp2.RecordCount;
-            ACategoryPanel.Height:=30+(AButtonPanel.Height*dm.Qtemp2.RecordCount);
-          end;
-         dm.Qtemp2.Next;
-     end;
-      ACategoryPanel.Collapsed:=True;
-      dm.Qtemp1.Next;
+    end;
+    while not dm.Qtemp2.Eof do
+    begin
+      //Create Button Dalam Category Panel
+      AButtonPanel:= TRzButton.Create(ACategoryPanel);
+      //AButtonPanel:= TButton.Create(ACategoryPanel);
+      AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
+      AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
+      AButtonPanel.Parent := ACategoryPanel;
+      AButtonPanel.Align := alTop;
+      AButtonPanel.Width:=260;
+      //AButtonPanel.Width:=ACategoryPanel.Width;
+      //AButtonPanel.Width:=Rzsplitter1.Width-2;
+      ACategoryPanel.Color:=clSkyBlue;
+      AButtonPanel.OnClick := btnApplyClick;
+      AButtonPanel.Alignment:=taleftjustify;
+      //AButtonPanel.Tag:=1;
+      if (dm.Qtemp2.RecordCount=1) then
+      begin
+        ACategoryPanel.Height:=65;
+        //ACategoryPanel.Height:=90;
+      end;
+      if dm.Qtemp2.RecordCount>1 then
+      begin
+        //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
+      //  ACategoryPanel.Height:=40+30*dm.Qtemp2.RecordCount;
+        ACategoryPanel.Height:=30+(AButtonPanel.Height*dm.Qtemp2.RecordCount);
+      end;
+      dm.Qtemp2.Next;
+    end;
+    ACategoryPanel.Collapsed:=True;
+    dm.Qtemp1.Next;
    end;
 end;
 
@@ -669,32 +682,32 @@ end;
 
 procedure TFMainMenu.dxBarLargeButtonApprovalClick(Sender: TObject);
 begin
-   CreateSubMenu('admin',dxBarLargeButtonApproval.Caption);
+  CreateSubMenu('admin',dxBarLargeButtonApproval.Caption);
 end;
 
 procedure TFMainMenu.dxBarLargeButtonDataMasterClick(Sender: TObject);
 begin
-   CreateSubMenu('admin',dxBarLargeButtonDataMaster.Caption);
+  CreateSubMenu('admin',dxBarLargeButtonDataMaster.Caption);
 end;
 
 procedure TFMainMenu.dxBarLargeButtonFileClick(Sender: TObject);
 begin
-    CreateSubMenu('admin',dxBarLargeButtonFile.Caption);
+  CreateSubMenu('admin',dxBarLargeButtonFile.Caption);
 end;
 
 procedure TFMainMenu.dxBarLargeButtonLaporanClick(Sender: TObject);
 begin
-   CreateSubMenu('admin',dxBarLargeButtonLaporan.Caption);
+  CreateSubMenu('admin',dxBarLargeButtonLaporan.Caption);
 end;
 
 procedure TFMainMenu.dxBarLargeButtonPengaturanClick(Sender: TObject);
 begin
-   CreateSubMenu('admin',dxBarLargeButtonPengaturan.Caption);
+  CreateSubMenu('admin',dxBarLargeButtonPengaturan.Caption);
 end;
 
 procedure TFMainMenu.dxBarLargeButtonTransaksiClick(Sender: TObject);
 begin
-   CreateSubMenu('admin',dxBarLargeButtonTransaksi.Caption);
+  CreateSubMenu('admin',dxBarLargeButtonTransaksi.Caption);
 end;
 
 procedure TFMainMenu.dxBarLargeButtonUtilityClick(Sender: TObject);
@@ -706,77 +719,77 @@ end;
 
 procedure TFMainMenu.CreateMenu(Role:String);
 begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
-      ExecSQL;
-    end;
-    dept_code:=dm.Qtemp['dept_code'];
- with dm.Qtemp1 do
-   begin
-       SQL.Clear;
-       {SQL.Text := 'SELECT DISTINCT cc.id, cc.menu FROM penjualan.t_akses aa '+
-                   ' INNER JOIN penjualan.t_submenu bb ON aa.submenu = bb.submenu '+
-                   ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
-                   ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
-                   ' WHERE dd.akses='+QuotedStr('Admin')+
-                   ' Order by cc.id DESC';}
-        SQL.Text := 'SELECT DISTINCT cc.id, cc.master_name menu FROM t_akses aa '+
-                   ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu '+
-                   ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code '+
-                   ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-                   ' WHERE dd.dept_code='+QuotedStr(dept_code)+
-                   ' Order by cc.created_at asc';
-      open;
-      First;
-   end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
+    ExecSQL;
+  end;
+  dept_code:=dm.Qtemp['dept_code'];
+  with dm.Qtemp1 do
+  begin
+    SQL.Clear;
+    {SQL.Text := 'SELECT DISTINCT cc.id, cc.menu FROM penjualan.t_akses aa '+
+               ' INNER JOIN penjualan.t_submenu bb ON aa.submenu = bb.submenu '+
+               ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
+               ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
+               ' WHERE dd.akses='+QuotedStr('Admin')+
+               ' Order by cc.id DESC';}
+    SQL.Text := 'SELECT DISTINCT cc.id, cc.master_name menu FROM t_akses aa '+
+               ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu '+
+               ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code '+
+               ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+               ' WHERE dd.dept_code='+QuotedStr(dept_code)+
+               ' Order by cc.created_at asc';
+    open;
+    First;
+  end;
    //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
-   TCategoryPanelGroup.Create(nil);
-   while not dm.Qtemp1.Eof do
-   begin
-      //Create Button Di Panel Header
-        //AButtonPanel:= TButton.Create(PenelHeader);
-        //AButtonPanel:= TRzButton.Create(PenelHeader);
-        //AButtonPanel:= TButton.Create(ACategoryPanel);
-        AButtonPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
-        AButtonPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
-        //AButtonPanel.Parent := PenelHeader;
-        AButtonPanel.Align := alLeft;
-        //AButtonPanel.Images:=ImageList1;
-        //AButtonPanel.ImageIndex:=1;
-        AButtonPanel.OnClick := GetSubMenu;
-      dm.Qtemp1.Next;
-    end;
+  TCategoryPanelGroup.Create(nil);
+  while not dm.Qtemp1.Eof do
+  begin
+    //Create Button Di Panel Header
+    //AButtonPanel:= TButton.Create(PenelHeader);
+    //AButtonPanel:= TRzButton.Create(PenelHeader);
+    //AButtonPanel:= TButton.Create(ACategoryPanel);
+    AButtonPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
+    AButtonPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
+    //AButtonPanel.Parent := PenelHeader;
+    AButtonPanel.Align := alLeft;
+    //AButtonPanel.Images:=ImageList1;
+    //AButtonPanel.ImageIndex:=1;
+    AButtonPanel.OnClick := GetSubMenu;
+    dm.Qtemp1.Next;
+  end;
 end;
 
 procedure TFMainMenu.AksesSub(Form: TForm; Akses, Sub: String);
 begin
   with dm.Qtemp1 do
-       begin
-            SQL.Clear;
-            SQL.Text := 'SELECT aa.* FROM t_akses aa '+
-            ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu AND bb.deleted_at IS NULL '+
-            ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
-            ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-            ' WHERE aa.dept_code='+QuotedStr(dept_code)+
-            ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
-            open;
-       end;
+  begin
+      SQL.Clear;
+      SQL.Text := 'SELECT aa.* FROM t_akses aa '+
+      ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu AND bb.deleted_at IS NULL '+
+      ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
+      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+      ' WHERE aa.dept_code='+QuotedStr(dept_code)+
+      ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
+      open;
+  end;
   if dm.Qtemp1.FieldByName('RAdd').AsInteger=2 then
   begin
-       for i:=0 to Form.ComponentCount-1 do
-       if (Form.Components[i] is TAction) then
-       if TAction(Form.Components[i]).Name='ActNew' then
-       TAction(Form.Components[i]).Enabled:=true;
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActNew' then
+    TAction(Form.Components[i]).Enabled:=true;
   end;
   if dm.Qtemp1.FieldByName('REdit').AsInteger=2 then
   begin
-       for i:=0 to Form.ComponentCount-1 do
-       if (Form.Components[i] is TAction) then
-       if TAction(Form.Components[i]).Name='ActEdit' then
-       TAction(Form.Components[i]).Enabled:=true;
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActEdit' then
+    TAction(Form.Components[i]).Enabled:=true;
        {for i:=0 to Form.ComponentCount-1 do
        if (Form.Components[i] is TAction) then
        if TAction(Form.Components[i]).Name='ActSaveNew' then
@@ -784,24 +797,24 @@ begin
   end;
   if dm.Qtemp1.FieldByName('RDelete').AsInteger=2 then
   begin
-       for i:=0 to Form.ComponentCount-1 do
-       if (Form.Components[i] is TAction) then
-       if TAction(Form.Components[i]).Name='ActDelete' then
-       TAction(Form.Components[i]).Enabled:=true;
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActDelete' then
+    TAction(Form.Components[i]).Enabled:=true;
   end;
   if dm.Qtemp1.FieldByName('RRefresh').AsInteger=2 then
   begin
-       for i:=0 to Form.ComponentCount-1 do
-       if (Form.Components[i] is TAction) then
-       if TAction(Form.Components[i]).Name='ActRefresh' then
-       TAction(Form.Components[i]).Enabled:=true;
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActRefresh' then
+    TAction(Form.Components[i]).Enabled:=true;
   end;
   if dm.Qtemp1.FieldByName('RPrint').AsInteger=2 then
   begin
-       for i:=0 to Form.ComponentCount-1 do
-       if (Form.Components[i] is TAction) then
-       if TAction(Form.Components[i]).Name='ActPrint' then
-       TAction(Form.Components[i]).Enabled:=true;
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActPrint' then
+    TAction(Form.Components[i]).Enabled:=true;
   end;
 end;
 

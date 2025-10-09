@@ -1,6 +1,7 @@
 object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Sumber Delivery Order'
   ClientHeight = 544
   ClientWidth = 1280
@@ -22,7 +23,7 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1274
+    ExplicitWidth = 1276
     object Label38: TLabel
       Left = 124
       Top = 29
@@ -239,6 +240,7 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
       Height = 17
       Caption = 'Tandai Semua'
       TabOrder = 6
+      OnClick = ckTandaiClick
     end
   end
   object DBGrid_SumberOrder: TDBGridEh

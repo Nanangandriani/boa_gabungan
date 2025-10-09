@@ -1126,6 +1126,7 @@ begin
   edNMSumberTagihan.Clear;
   edKodeJenisBayar.Clear;
   edNMJenisBayar.Clear;
+  MemDetailPiutang.EmptyTable;
 end;
 
 procedure TFDataPenerimaanBank.edKode_PelangganButtonClick(Sender: TObject);

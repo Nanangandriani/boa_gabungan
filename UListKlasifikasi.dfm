@@ -200,7 +200,7 @@ object FListKlasifikasi: TFListKlasifikasi
         EditButtons = <>
         FieldName = 'name_tax'
         Footers = <>
-        Title.Caption = 'Status Pajak'
+        Title.Caption = 'Include PPN'
         Width = 62
       end
       item

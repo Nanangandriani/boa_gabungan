@@ -136,6 +136,8 @@ begin
     Status:=0;
     FNew_SalesOrder.edKodeOrder.Enabled:=true;
     FNew_SalesOrder.BSave.Enabled:=True;
+    FNew_SalesOrder.Panel1.Enabled:=True;
+    FNew_SalesOrder.DBGridDetail.Enabled:=True;
     FNew_SalesOrder.ShowModal;
   end;
 end;
@@ -224,7 +226,7 @@ begin
   end;
 
   //Jika sudah ada penjualan tidak bisa update
-  if (Dm.Qtemp.FieldByName('no_invoice').AsString<>NULL) AND (Dm.Qtemp.FieldByName('no_invoice').AsString<>'') then
+  if (Dm.Qtemp.FieldByName('no_invoice').AsString<>NULL) then
   begin
     ShowMessage('SO sudah dibuat Penjualan tidak dapat diubah...!!!');
     FNew_SalesOrder.BSave.Enabled:=False;

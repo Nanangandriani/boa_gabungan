@@ -1,6 +1,7 @@
 object FDataPenagihanPiutang: TFDataPenagihanPiutang
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Penagihan Piutang'
   ClientHeight = 550
   ClientWidth = 1370
@@ -22,6 +23,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1366
     object Label39: TLabel
       Left = 31
       Top = 133
@@ -501,14 +503,13 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 113
     ExplicitWidth = 1366
-    ExplicitHeight = 404
+    ExplicitHeight = 356
     FixedDimension = 21
     object TabSDetail: TRzTabSheet
       Caption = 'Data'
       ExplicitWidth = 1362
-      ExplicitHeight = 379
+      ExplicitHeight = 331
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

@@ -35,7 +35,8 @@ object FMainMenu: TFMainMenu
     BorderWidth = 0
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 591
+    ExplicitTop = 588
+    ExplicitWidth = 1023
     object RzVersionInfoStatus1: TRzVersionInfoStatus
       Left = 904
       Top = 0
@@ -380,8 +381,8 @@ object FMainMenu: TFMainMenu
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 618
-    Top = 46
+    Left = 666
+    Top = 62
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'File'
@@ -930,8 +931,7 @@ object FMainMenu: TFMainMenu
       'begin'
       ''
       'end.')
-    Left = 480
-    Top = 16
+    Left = 664
     Datasets = <>
     Variables = <>
     Style = <>

@@ -46,6 +46,8 @@ type
     LabelInformasi: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -224,7 +226,12 @@ begin
 end;
 
 procedure TFRincianPot_Penjualan.AmbilDataKlasifikasi;
+var strWhereGroupIncludePPN,strWhereNonGroupIncludePPN : String;
 begin
+
+
+  strWhereGroupIncludePPN:=' AND b.status_tax='+strStatusIncludePPN+' ';
+
   with Dm.Qtemp3 do //Cek Data Klasifikasi Grouping / Per Pelanggan
   begin
     close;
@@ -236,7 +243,7 @@ begin
             ' a.code_item='+QuotedSTR(kd_item)+' and '+
             ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
             ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
-            ' c.code_unit='+QuotedSTR(satuan)+' and b.status_approval=1 ');
+            ' c.code_unit='+QuotedSTR(satuan)+' and b.status_approval=1 '+strWhereGroupIncludePPN+'');
     open;
   end;
 
@@ -260,7 +267,7 @@ begin
               ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
               ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
               ' b.code_item='+QuotedSTR(kd_item)+' and a.status_grouping=1 and '+
-              ' b.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1 ');
+              ' b.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1'+strWhereGroupIncludePPN+' ');
       open;
     end;
 
@@ -279,6 +286,7 @@ begin
   else if Dm.Qtemp3.RecordCount=0 then //Klasifikasi Umum/Non Grouping Cek Type Perhitungan
   begin
     LabelInformasi.Caption:= 'Harga yang dipakai adalah Klasifikasi Non Grouping';
+    strWhereNonGroupIncludePPN:=' AND a.status_tax='+strStatusIncludePPN+' ';
     with Dm.Qtemp2 do
     begin
       close;
@@ -293,13 +301,12 @@ begin
               ' where a.code_type_customer = '+QuotedSTR(kd_JenisOutlet)+' and '+
               ' a.code_item_category = '+QuotedSTR(kd_Kategori)+' and '+
               ' status_payment = '+IntToStr(stat_bayar)+' and '+
-              ' status_tax = '+IntToStr(stat_fp)+' and '+
               ' status_promo ='+IntToStr(stat_promo)+' and '+
               ' status_grouping= 0 and '+
               ' code_customer_selling_type='+QuotedSTR(type_jual)+'  and '+
               ' code_sell_type='+QuotedSTR(jenis_jual)+' and '+
               ' d.code_item='+QuotedSTR(kd_item)+' and '+
-              ' d.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1 LIMIT 1');
+              ' d.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1 '+strWhereNonGroupIncludePPN+' LIMIT 1');
       open;
     end;
 
@@ -325,13 +332,12 @@ begin
               ' where a.code_type_customer = '+QuotedSTR(kd_JenisOutlet)+' and '+
               ' a.code_item_category = '+QuotedSTR(kd_Kategori)+' and '+
               ' status_payment = '+IntToStr(stat_bayar)+' and '+
-              ' status_tax = '+IntToStr(stat_fp)+' and '+
               ' status_promo ='+IntToStr(stat_promo)+' and '+
               ' status_grouping= 0 and '+
               ' code_customer_selling_type= '+QuotedSTR(type_jual)+' and '+
               ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
               ' d.code_item='+QuotedSTR(kd_item)+' and '+
-              ' d.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1 ');
+              ' d.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1'+strWhereNonGroupIncludePPN+'  ');
 
       if Dm.Qtemp2.FieldByName('perhitungan').value= 'T001' then  //TOTAL VALUE
       begin
@@ -471,13 +477,12 @@ begin
     end;
 
     ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
-    strStatusIncludePPN:=Selectrow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' ');
 
     if strStatusIncludePPN='1' then
     begin
       dpp:=RoundTo(((hjual-(ndisc/qty))/1.11)*qty,-2);
     end else begin
-      dpp:=RoundTo((hjual-(ndisc/qty))*qty,-2);
+      dpp:=(hjual*qty)-ndisc;
     end;
 
 //    dpp:=round((hjual/1.11)*qty);
@@ -493,13 +498,19 @@ begin
     if strStatusIncludePPN='1' then
     begin
       hsatuan_cortex:=RoundTo((((netto)/1.11)/qty),-2);
+      dpp_cortex:= hsatuan_cortex*qty;
+      nppn_cortex:= Round(dpp_cortex*(ppn/100));
+      netto_cortex:= dpp_cortex+nppn;
     end else begin
-      hsatuan_cortex:=RoundTo(((netto)/qty),-2);
+//      hsatuan_cortex:=RoundTo(((netto)/qty),-2);
+      dpp_cortex:= dpp;
+      nppn_cortex:= Round(dpp*(ppn/100));
+      netto_cortex:= dpp_cortex+nppn;
     end;
 
-    dpp_cortex:= hsatuan_cortex*qty;
-    nppn_cortex:= Round(dpp_cortex*(ppn/100));
-    netto_cortex:= dpp_cortex+nppn;
+//    dpp_cortex:= hsatuan_cortex*qty;
+//    nppn_cortex:= Round(dpp_cortex*(ppn/100));
+//    netto_cortex:= dpp_cortex+nppn;
 
   end
   else
@@ -575,7 +586,28 @@ begin
     end;
     MemMasterData.Next;
   end;
+  FNew_Penjualan.HitungDetail;
   Close;
+end;
+
+procedure TFRincianPot_Penjualan.FormCreate(Sender: TObject);
+begin
+  strStatusIncludePPN:=Selectrow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' ');
+end;
+
+procedure TFRincianPot_Penjualan.FormShow(Sender: TObject);
+begin
+if strStatusIncludePPN='0' then
+begin
+  DBGridCustomer.Columns[9].Visible:=False;
+  DBGridCustomer.Columns[10].Visible:=False;
+  DBGridCustomer.Columns[15].Visible:=False;
+end else begin
+  DBGridCustomer.Columns[9].Visible:=True;
+  DBGridCustomer.Columns[10].Visible:=True;
+  DBGridCustomer.Columns[15].Visible:=True;
+end;
+
 end;
 
 end.

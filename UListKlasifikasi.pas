@@ -159,7 +159,7 @@ begin
                  ' LEFT JOIN t_customer_selling_type e ON a.code_customer_selling_type = e.code '+
                  ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+
                  ' LEFT JOIN t_customer_type_business g ON a.code_type_business = g.code '+
-                 ' '+strStatusApproval+' Order By b.created_at DESC ';
+                 ' '+strStatusApproval+' Order By a.created_at DESC ';
        open;
     end;
     finally

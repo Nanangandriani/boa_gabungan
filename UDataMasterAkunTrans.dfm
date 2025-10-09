@@ -1,9 +1,10 @@
 object FDataMasterAkunTrans: TFDataMasterAkunTrans
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Master Akun Transaksi'
-  ClientHeight = 572
-  ClientWidth = 923
+  ClientHeight = 654
+  ClientWidth = 862
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,24 +16,24 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   object RzPageControl2: TRzPageControl
     Left = 0
     Top = 0
-    Width = 923
-    Height = 572
+    Width = 862
+    Height = 654
     Hint = ''
-    ActivePage = TabKas
+    ActivePage = TabPenjualan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 3
+    TabIndex = 1
     TabOrder = 0
-    ExplicitWidth = 917
-    ExplicitHeight = 563
+    ExplicitWidth = 858
+    ExplicitHeight = 653
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Setting Transaksi Pembelian'
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 919
-        Height = 547
+        Width = 858
+        Height = 629
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
@@ -137,13 +138,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         end
         object Panel8: TPanel
           Left = 1
-          Top = 514
-          Width = 917
+          Top = 596
+          Width = 856
           Height = 32
           Align = alBottom
           TabOrder = 0
           object btClose_Beli: TRzBitBtn
-            Left = 841
+            Left = 780
             Top = 1
             Height = 30
             Align = alRight
@@ -204,7 +205,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             NumGlyphs = 2
           end
           object btSave_Beli: TRzBitBtn
-            Left = 766
+            Left = 705
             Top = 1
             Height = 30
             Align = alRight
@@ -359,46 +360,49 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Setting Transaksi Penjualan'
-      ExplicitWidth = 913
-      ExplicitHeight = 538
+      ExplicitWidth = 854
+      ExplicitHeight = 628
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 919
-        Height = 547
-        Align = alClient
+        Width = 858
+        Height = 355
+        Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 913
-        ExplicitHeight = 538
+        ExplicitWidth = 854
         object Label30: TLabel
-          Left = 178
-          Top = 246
+          Left = 848
+          Top = 197
           Width = 3
           Height = 15
           Caption = ':'
+          Visible = False
         end
         object Label36: TLabel
-          Left = 178
-          Top = 275
+          Left = 848
+          Top = 226
           Width = 3
           Height = 15
           Caption = ':'
+          Visible = False
         end
         object Label35: TLabel
-          Left = 28
-          Top = 274
+          Left = 698
+          Top = 225
           Width = 124
           Height = 15
           Caption = 'Akun Piutang Lain-Lain'
+          Visible = False
         end
         object Label29: TLabel
-          Left = 28
-          Top = 246
+          Left = 698
+          Top = 197
           Width = 72
           Height = 15
           Caption = 'Akun Piutang'
+          Visible = False
         end
         object Label18: TLabel
           Left = 178
@@ -471,176 +475,46 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Caption = 'Kode Initial'
         end
         object edAkunPiutangLainLain: TRzButtonEdit
-          Left = 193
-          Top = 271
+          Left = 863
+          Top = 222
           Width = 185
           Height = 23
           Text = ''
           TabOrder = 0
+          Visible = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edAkunPiutangLainLainButtonClick
         end
         object edAkunPiutang: TRzButtonEdit
-          Left = 193
-          Top = 242
+          Left = 863
+          Top = 193
           Width = 185
           Height = 23
           Text = ''
           TabOrder = 1
+          Visible = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edAkunPiutangButtonClick
         end
         object edNamaPiutang: TEdit
-          Left = 385
-          Top = 242
+          Left = 1054
+          Top = 193
           Width = 349
           Height = 23
           ReadOnly = True
           TabOrder = 2
+          Visible = False
         end
         object edNamaPiutangLain: TEdit
-          Left = 385
-          Top = 271
+          Left = 1054
+          Top = 222
           Width = 349
           Height = 23
           ReadOnly = True
           TabOrder = 3
-        end
-        object Panel7: TPanel
-          Left = 1
-          Top = 514
-          Width = 917
-          Height = 32
-          Align = alBottom
-          TabOrder = 4
-          ExplicitTop = 505
-          ExplicitWidth = 911
-          object btClose_Close: TRzBitBtn
-            Left = 841
-            Top = 1
-            Height = 30
-            Align = alRight
-            Caption = 'Close'
-            TabOrder = 1
-            OnClick = btClose_CloseClick
-            Glyph.Data = {
-              36060000424D3606000000000000360400002800000020000000100000000100
-              08000000000000020000630B0000630B00000001000000000000000000003300
-              00006600000099000000CC000000FF0000000033000033330000663300009933
-              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-              000000990000339900006699000099990000CC990000FF99000000CC000033CC
-              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-              330000333300333333006633330099333300CC333300FF333300006633003366
-              33006666330099663300CC663300FF6633000099330033993300669933009999
-              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-              66006600660099006600CC006600FF0066000033660033336600663366009933
-              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-              660000996600339966006699660099996600CC996600FF99660000CC660033CC
-              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-              990000339900333399006633990099339900CC339900FF339900006699003366
-              99006666990099669900CC669900FF6699000099990033999900669999009999
-              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-              000000808000800000008000800080800000C0C0C00080808000191919004C4C
-              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8B46C6C6CE8
-              E8E8E8E8B46C6C6CE8E8E8E2DFDFDFE8E8E8E8E8E2DFDFDFE8E8E8B49090906C
-              E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8E8B4909090
-              6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8E8E8B49090
-              906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8E8E8B490
-              909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8E8E8B4
-              9090906CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8B490
-              909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8B49090
-              906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8B4909090
-              6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8B49090906C
-              E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8B4B4B4B4E8
-              E8E8E8E8B4B4B4B4E8E8E8E2E2E2E2E8E8E8E8E8E2E2E2E2E8E8E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-            NumGlyphs = 2
-            ExplicitLeft = 835
-          end
-          object btSave_Jual: TRzBitBtn
-            Left = 766
-            Top = 1
-            Height = 30
-            Align = alRight
-            Caption = 'Save'
-            TabOrder = 0
-            OnClick = btSave_JualClick
-            Glyph.Data = {
-              36060000424D3606000000000000360400002800000020000000100000000100
-              08000000000000020000730E0000730E00000001000000000000000000003300
-              00006600000099000000CC000000FF0000000033000033330000663300009933
-              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-              000000990000339900006699000099990000CC990000FF99000000CC000033CC
-              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-              330000333300333333006633330099333300CC333300FF333300006633003366
-              33006666330099663300CC663300FF6633000099330033993300669933009999
-              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-              66006600660099006600CC006600FF0066000033660033336600663366009933
-              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-              660000996600339966006699660099996600CC996600FF99660000CC660033CC
-              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-              990000339900333399006633990099339900CC339900FF339900006699003366
-              99006666990099669900CC669900FF6699000099990033999900669999009999
-              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-              000000808000800000008000800080800000C0C0C00080808000191919004C4C
-              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-              090909090909090909E8E8E881818181818181818181818181E8E809101009E3
-              1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-              1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-              1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
-              E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
-              090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
-              101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
-              090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
-              D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
-              0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
-              D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
-              0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
-              D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
-              090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
-              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-            NumGlyphs = 2
-            ExplicitLeft = 760
-          end
+          Visible = False
         end
         object edNamaModulJual: TRzButtonEdit
           Left = 193
@@ -648,7 +522,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Width = 344
           Height = 23
           Text = ''
-          TabOrder = 5
+          TabOrder = 4
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edNamaModulJualButtonClick
@@ -658,7 +532,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Top = 26
           Width = 200
           Height = 23
-          TabOrder = 6
+          TabOrder = 5
           Visible = False
         end
         object MemKeteranganJual: TMemo
@@ -666,7 +540,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Top = 138
           Width = 261
           Height = 98
-          TabOrder = 7
+          TabOrder = 6
         end
         object edNamaTransJual: TEdit
           Left = 193
@@ -674,7 +548,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Width = 344
           Height = 23
           CharCase = ecUpperCase
-          TabOrder = 8
+          TabOrder = 7
         end
         object edKodeTransJual: TEdit
           Left = 193
@@ -683,7 +557,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Height = 23
           CharCase = ecUpperCase
           ReadOnly = True
-          TabOrder = 9
+          TabOrder = 8
         end
         object EdKodeInitialJual: TEdit
           Left = 193
@@ -692,14 +566,14 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Height = 23
           CharCase = ecUpperCase
           MaxLength = 5
-          TabOrder = 10
+          TabOrder = 9
         end
-        object rgPotongan: TRzRadioGroup
+        object rgMenejFee: TRzRadioGroup
           Left = 460
-          Top = 141
+          Top = 190
           Width = 186
           Height = 46
-          Caption = 'System Potongan Klasifikasi'
+          Caption = 'Menejmen Fee'
           Color = 15987699
           Columns = 2
           ItemHeight = 17
@@ -707,27 +581,26 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Items.Strings = (
             'Tidak'
             'Ya')
-          TabOrder = 11
+          TabOrder = 10
           Transparent = True
         end
         object RzPageControl4: TRzPageControl
           Left = 1
-          Top = 300
-          Width = 917
-          Height = 214
+          Top = 245
+          Width = 856
+          Height = 109
           Hint = ''
-          ActivePage = TabSheet1
+          ActivePage = TabSetPPn
           Align = alBottom
           UseColoredTabs = True
-          TabIndex = 1
-          TabOrder = 12
-          ExplicitTop = 291
-          ExplicitWidth = 911
+          TabIndex = 0
+          TabOrder = 11
+          ExplicitWidth = 852
           FixedDimension = 21
           object TabSetPPn: TRzTabSheet
             Color = clGradientInactiveCaption
             Caption = 'Seting PPn'
-            ExplicitWidth = 907
+            ExplicitWidth = 848
             object Label59: TLabel
               Left = 125
               Top = 115
@@ -745,16 +618,16 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             object Panel9: TPanel
               Left = 0
               Top = 0
-              Width = 913
-              Height = 189
+              Width = 852
+              Height = 84
               Align = alClient
               Color = clGradientInactiveCaption
               ParentBackground = False
               TabOrder = 0
-              ExplicitWidth = 907
+              ExplicitWidth = 848
               object Label58: TLabel
-                Left = 178
-                Top = 94
+                Left = 135
+                Top = 59
                 Width = 3
                 Height = 15
                 Caption = ':'
@@ -767,29 +640,29 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 Caption = ':'
               end
               object Label53: TLabel
-                Left = 178
-                Top = 67
+                Left = 264
+                Top = 19
                 Width = 3
                 Height = 15
                 Caption = ':'
               end
               object Label56: TLabel
-                Left = 237
-                Top = 67
+                Left = 323
+                Top = 19
                 Width = 10
                 Height = 15
                 Caption = '%'
               end
               object Label52: TLabel
-                Left = 50
-                Top = 67
+                Left = 223
+                Top = 19
                 Width = 35
                 Height = 15
                 Caption = 'Persen'
               end
               object Label51: TLabel
-                Left = 50
-                Top = 94
+                Left = 7
+                Top = 59
                 Width = 56
                 Height = 15
                 Caption = 'Jenis Pajak'
@@ -802,15 +675,15 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 Caption = 'Akun PPN'
               end
               object edPersenPPNJual: TEdit
-                Left = 191
-                Top = 64
+                Left = 277
+                Top = 16
                 Width = 40
                 Height = 23
                 TabOrder = 0
               end
               object edAkunJenisTax: TRzButtonEdit
-                Left = 191
-                Top = 91
+                Left = 148
+                Top = 56
                 Width = 185
                 Height = 23
                 Text = ''
@@ -839,16 +712,16 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 TabOrder = 3
               end
               object edNamaJenisTax: TEdit
-                Left = 382
-                Top = 91
+                Left = 339
+                Top = 56
                 Width = 349
                 Height = 23
                 ReadOnly = True
                 TabOrder = 4
               end
               object rgPPN: TRzRadioGroup
-                Left = 26
-                Top = 12
+                Left = 8
+                Top = 4
                 Width = 186
                 Height = 46
                 Caption = 'Default PPN'
@@ -871,29 +744,29 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             object Panel10: TPanel
               Left = 0
               Top = 0
-              Width = 913
-              Height = 189
+              Width = 852
+              Height = 84
               Align = alClient
               Color = clGradientInactiveCaption
               ParentBackground = False
               TabOrder = 0
               object Label61: TLabel
-                Left = 186
-                Top = 75
+                Left = 274
+                Top = 27
                 Width = 3
                 Height = 15
                 Caption = ':'
               end
               object Label62: TLabel
-                Left = 245
-                Top = 75
+                Left = 333
+                Top = 27
                 Width = 10
                 Height = 15
                 Caption = '%'
               end
               object Label63: TLabel
-                Left = 58
-                Top = 75
+                Left = 234
+                Top = 27
                 Width = 35
                 Height = 15
                 Caption = 'Persen'
@@ -930,8 +803,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 OnClick = rgPPHClick
               end
               object edPersenPPHJual: TEdit
-                Left = 199
-                Top = 72
+                Left = 287
+                Top = 24
                 Width = 40
                 Height = 23
                 TabOrder = 1
@@ -958,12 +831,29 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             end
           end
         end
-        object rgMenejFee: TRzRadioGroup
+        object rgPotongan: TRzRadioGroup
           Left = 460
-          Top = 190
-          Width = 186
+          Top = 138
+          Width = 165
           Height = 46
-          Caption = 'Menejmen Fee'
+          Caption = 'System Potongan Klasifikasi'
+          Color = 15987699
+          Columns = 2
+          ItemHeight = 17
+          ItemIndex = 1
+          Items.Strings = (
+            'Tidak'
+            'Ya')
+          TabOrder = 12
+          Transparent = True
+          OnClick = rgPotonganClick
+        end
+        object rgKlasifikasiIncludePPN: TRzRadioGroup
+          Left = 644
+          Top = 141
+          Width = 165
+          Height = 46
+          Caption = 'Klasifikasi Include PPN'
           Color = 15987699
           Columns = 2
           ItemHeight = 17
@@ -975,13 +865,238 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Transparent = True
         end
       end
+      object Panel7: TPanel
+        Left = 0
+        Top = 597
+        Width = 858
+        Height = 32
+        Align = alBottom
+        TabOrder = 1
+        ExplicitTop = 596
+        ExplicitWidth = 854
+        object btClose_Close: TRzBitBtn
+          Left = 782
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'Close'
+          TabOrder = 1
+          OnClick = btClose_CloseClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000630B0000630B00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8B46C6C6CE8
+            E8E8E8E8B46C6C6CE8E8E8E2DFDFDFE8E8E8E8E8E2DFDFDFE8E8E8B49090906C
+            E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8E8B4909090
+            6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8E8E8B49090
+            906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8E8E8B490
+            909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8E8E8B4
+            9090906CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8B490
+            909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8B49090
+            906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8B4909090
+            6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8B49090906C
+            E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8B4B4B4B4E8
+            E8E8E8E8B4B4B4B4E8E8E8E2E2E2E2E8E8E8E8E8E2E2E2E2E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+          ExplicitLeft = 778
+        end
+        object btSave_Jual: TRzBitBtn
+          Left = 707
+          Top = 1
+          Height = 30
+          Align = alRight
+          Caption = 'Save'
+          TabOrder = 0
+          OnClick = btSave_JualClick
+          Glyph.Data = {
+            36060000424D3606000000000000360400002800000020000000100000000100
+            08000000000000020000730E0000730E00000001000000000000000000003300
+            00006600000099000000CC000000FF0000000033000033330000663300009933
+            0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+            000000990000339900006699000099990000CC990000FF99000000CC000033CC
+            000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+            0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+            330000333300333333006633330099333300CC333300FF333300006633003366
+            33006666330099663300CC663300FF6633000099330033993300669933009999
+            3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+            330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+            66006600660099006600CC006600FF0066000033660033336600663366009933
+            6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+            660000996600339966006699660099996600CC996600FF99660000CC660033CC
+            660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+            6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+            990000339900333399006633990099339900CC339900FF339900006699003366
+            99006666990099669900CC669900FF6699000099990033999900669999009999
+            9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+            990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+            CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+            CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+            CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+            CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+            CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+            FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+            FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+            FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+            FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+            000000808000800000008000800080800000C0C0C00080808000191919004C4C
+            4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+            6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+            090909090909090909E8E8E881818181818181818181818181E8E809101009E3
+            1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+            1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+            1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+            E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
+            090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
+            101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
+            090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
+            D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
+            0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
+            D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
+            0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
+            D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
+            090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+            E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+          NumGlyphs = 2
+          ExplicitLeft = 703
+        end
+      end
+      object RzPageControl5: TRzPageControl
+        Left = 0
+        Top = 355
+        Width = 858
+        Height = 242
+        Hint = ''
+        ActivePage = RzTabSheet2
+        Align = alClient
+        UseColoredTabs = True
+        TabIndex = 0
+        TabOrder = 2
+        ExplicitWidth = 854
+        ExplicitHeight = 241
+        FixedDimension = 21
+        object RzTabSheet2: TRzTabSheet
+          Color = clGradientInactiveCaption
+          Caption = 'Data Akun'
+          ExplicitWidth = 850
+          ExplicitHeight = 216
+          object DBGridDetailJual: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 854
+            Height = 217
+            Align = alClient
+            DataSource = DSDetailPenjualan
+            DynProps = <>
+            HorzScrollBar.ExtraPanel.Visible = True
+            SearchPanel.Enabled = True
+            TabOrder = 0
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <
+                  item
+                    Style = ebsEllipsisEh
+                    OnClick = DBGridDetailJualColumns0EditButtons0Click
+                  end>
+                FieldName = 'kd_akun'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Kode Akun'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'nm_akun'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Nama Akun'
+                Width = 300
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'posisi'
+                Footers = <>
+                PickList.Strings = (
+                  'D'
+                  'K')
+                Title.Alignment = taCenter
+                Title.Caption = 'Posisi'
+                Width = 50
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'table_name'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Nama Table'
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'field_name'
+                Footers = <>
+                Title.Alignment = taCenter
+                Title.Caption = 'Nama Field'
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
     end
     object TabBank: TRzTabSheet
       Caption = 'Setting Transaksi Bank'
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 919
+        Width = 858
         Height = 233
         Align = alTop
         Color = clGradientInactiveCaption
@@ -1180,8 +1295,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       object RzPageControl1: TRzPageControl
         Left = 0
         Top = 233
-        Width = 919
-        Height = 282
+        Width = 858
+        Height = 364
         Hint = ''
         ActivePage = TabSDetailPel
         Align = alClient
@@ -1191,12 +1306,12 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         FixedDimension = 21
         object TabSDetailPel: TRzTabSheet
           Color = clGradientInactiveCaption
-          Caption = 'Detail Order'
+          Caption = 'Data Akun'
           object DBGridDetail: TDBGridEh
             Left = 0
             Top = 0
-            Width = 915
-            Height = 257
+            Width = 854
+            Height = 339
             Align = alClient
             DataSource = DSDetail
             DynProps = <>
@@ -1214,6 +1329,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                   end>
                 FieldName = 'kd_akun'
                 Footers = <>
+                Title.Alignment = taCenter
                 Title.Caption = 'Kode Akun'
                 Width = 150
               end
@@ -1223,6 +1339,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 EditButtons = <>
                 FieldName = 'nm_akun'
                 Footers = <>
+                Title.Alignment = taCenter
                 Title.Caption = 'Nama Akun'
                 Width = 300
               end
@@ -1235,6 +1352,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 PickList.Strings = (
                   'D'
                   'K')
+                Title.Alignment = taCenter
                 Title.Caption = 'Posisi'
                 Width = 50
               end>
@@ -1245,13 +1363,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       end
       object Panel2: TPanel
         Left = 0
-        Top = 515
-        Width = 919
+        Top = 597
+        Width = 858
         Height = 32
         Align = alBottom
         TabOrder = 2
         object BBatal: TRzBitBtn
-          Left = 843
+          Left = 782
           Top = 1
           Height = 30
           Align = alRight
@@ -1312,7 +1430,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           NumGlyphs = 2
         end
         object BSave: TRzBitBtn
-          Left = 768
+          Left = 707
           Top = 1
           Height = 30
           Align = alRight
@@ -1379,7 +1497,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 919
+        Width = 858
         Height = 233
         Align = alTop
         Color = clGradientInactiveCaption
@@ -1526,8 +1644,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       object RzPageControl3: TRzPageControl
         Left = 0
         Top = 233
-        Width = 919
-        Height = 282
+        Width = 858
+        Height = 364
         Hint = ''
         ActivePage = RzTabSheet1
         Align = alClient
@@ -1541,8 +1659,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           object DBGridEh1: TDBGridEh
             Left = 0
             Top = 0
-            Width = 915
-            Height = 257
+            Width = 854
+            Height = 339
             Align = alClient
             DataSource = DSDetailKas
             DynProps = <>
@@ -1591,13 +1709,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       end
       object Panel6: TPanel
         Left = 0
-        Top = 515
-        Width = 919
+        Top = 597
+        Width = 858
         Height = 32
         Align = alBottom
         TabOrder = 2
         object btClose_Kas: TRzBitBtn
-          Left = 843
+          Left = 782
           Top = 1
           Height = 30
           Align = alRight
@@ -1658,7 +1776,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           NumGlyphs = 2
         end
         object btSave_Kas: TRzBitBtn
-          Left = 768
+          Left = 707
           Top = 1
           Height = 30
           Align = alRight
@@ -1728,8 +1846,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 528
-    Top = 86
+    Left = 1080
+    Top = 254
     object MemDetailkd_akun: TStringField
       FieldName = 'kd_akun'
       Size = 50
@@ -1767,13 +1885,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   end
   object DSDetailKas: TDataSource
     DataSet = MemDetailKas
-    Left = 616
-    Top = 86
+    Left = 984
+    Top = 246
   end
   object MemDetailKas: TMemTableEh
     Params = <>
-    Left = 688
-    Top = 86
+    Left = 992
+    Top = 190
     object StringField1: TStringField
       FieldName = 'kd_akun'
       Size = 50
@@ -1808,5 +1926,66 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object MemDetailPenjualan: TMemTableEh
+    Active = True
+    Params = <>
+    Left = 1072
+    Top = 166
+    object StringField4: TStringField
+      FieldName = 'kd_akun'
+      Size = 50
+    end
+    object StringField5: TStringField
+      FieldName = 'nm_akun'
+      Size = 300
+    end
+    object StringField6: TStringField
+      FieldName = 'posisi'
+    end
+    object MemDetailPenjualantable_name: TStringField
+      FieldName = 'table_name'
+    end
+    object MemDetailPenjualanfield_name: TStringField
+      FieldName = 'field_name'
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object kd_akun: TMTStringDataFieldEh
+          FieldName = 'kd_akun'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object nm_akun: TMTStringDataFieldEh
+          FieldName = 'nm_akun'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 300
+        end
+        object posisi: TMTStringDataFieldEh
+          FieldName = 'posisi'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object table_name: TMTStringDataFieldEh
+          FieldName = 'table_name'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object field_name: TMTStringDataFieldEh
+          FieldName = 'field_name'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DSDetailPenjualan: TDataSource
+    DataSet = MemDetailPenjualan
+    Left = 1152
+    Top = 230
   end
 end

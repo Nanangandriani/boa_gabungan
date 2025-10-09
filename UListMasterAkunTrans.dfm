@@ -10,6 +10,7 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -22,6 +23,7 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -740,6 +742,10 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
     object QAkunTransaksiaccount_name_bank: TStringField
       FieldName = 'account_name_bank'
       Size = 255
+    end
+    object QAkunTransaksiinitial_code: TStringField
+      FieldName = 'initial_code'
+      Size = 5
     end
   end
   object DsAkunTransaksi: TDataSource

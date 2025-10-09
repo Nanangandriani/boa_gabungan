@@ -1167,6 +1167,14 @@
             <Form>Flap_Rekap_Hutang_Kredit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UListPenjualanPromosi.pas">
+            <Form>FListPenjualanPromosi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_DataPenjualanPromosi.pas">
+            <Form>FNew_DataPenjualanPromosi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

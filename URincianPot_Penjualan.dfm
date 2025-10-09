@@ -11,6 +11,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -55,7 +57,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     object LabelInformasi: TLabel
       Left = 14
       Top = 60
-      Width = 1003
+      Width = 78
       Height = 15
       Caption = 'LabelInformasi'
       Font.Charset = DEFAULT_CHARSET
@@ -147,7 +149,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'harga_satuan'
+        FieldName = 'c'
         Footers = <>
         Title.Caption = 'Harga'
         Width = 125
@@ -397,7 +399,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1103
+      ExplicitTop = 6
     end
   end
   object dsMasterData: TDataSource

@@ -1078,7 +1078,6 @@ object FListTargetPenjualan: TFListTargetPenjualan
     SQL.Strings = (
       'SELECT aa.*,bb.customer_name FROM t_customer_sales_target aa '
       'LEFT JOIN t_customer bb on bb.customer_code=aa.customer_code')
-    Active = True
     Left = 460
     Top = 136
     object QTargetPenjualancustomer_code: TStringField

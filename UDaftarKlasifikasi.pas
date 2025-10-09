@@ -128,6 +128,7 @@ type
     IdCompressorZLib1: TIdCompressorZLib;
     RzLabel1: TRzLabel;
     btAddDetail: TRzBitBtn;
+    rgPajakPel: TRzRadioGroup;
   procedure edKode_PelangganButtonClick(Sender: TObject);
   procedure ednm_jenis_pelButtonClick(Sender: TObject);
   procedure ednm_kategoriButtonClick(Sender: TObject);
@@ -156,6 +157,7 @@ type
     procedure edkd_jenis_jualChange(Sender: TObject);
     procedure edkd_type_jualChange(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
+    procedure rgPajakClick(Sender: TObject);
   private
   { Private declarations }
   public
@@ -694,7 +696,7 @@ begin
             ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual_pel.Text)+' AND  '+
             ' "code_sell_type"='+QuotedStr(edkd_jenis_jual_pel.Text)+' AND '+
             ' "code_item_category"='+QuotedStr(edkd_kategori_pel.Text)+' AND '+
-            ' "status_grouping"=1 and a.status_approval=1 )xx where  id_detail NOT IN (SELECT "id_master_det" '+
+            ' "status_grouping"=1 and a.status_approval=1 AND a.status_tax='+IntToStr(rgPajak.ItemIndex)+' )xx where  id_detail NOT IN (SELECT "id_master_det" '+
             ' FROM "t_sales_classification_group" where "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+') '+
             ' Order By "code_item" desc ');
     open;
@@ -735,6 +737,11 @@ begin
   end;
 end;
 
+procedure TFDaftarKlasifikasi.rgPajakClick(Sender: TObject);
+begin
+  rgPajakPel.ItemIndex:=rgPajak.ItemIndex;
+end;
+
 procedure TFDaftarKlasifikasi.RefreshGrid_Group;
 begin
   with Dm.Qtemp do
@@ -750,7 +757,7 @@ begin
             ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual_pel.Text)+' AND  '+
             ' "code_sell_type"='+QuotedStr(edkd_jenis_jual_pel.Text)+' AND '+
             ' "code_item_category"='+QuotedStr(edkd_kategori_pel.Text)+' AND '+
-            ' "status_grouping"=1 )xx where  id_detail IN (SELECT "id_master_det" '+
+            ' "status_grouping"=1 AND status_tax='+IntToStr(rgPajak.ItemIndex)+' )xx where  id_detail IN (SELECT "id_master_det" '+
             ' FROM "t_sales_classification_group" where "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+') '+
             ' Order By "code_item" desc ');
     open;

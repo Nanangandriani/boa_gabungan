@@ -149,9 +149,9 @@ object FListSalesOrder: TFListSalesOrder
           NumGlyphs = 2
         end
         object btGetDataProspek: TRzBitBtn
-          Left = 229
+          Left = 299
           Top = 1
-          Width = 155
+          Width = 85
           Height = 30
           Align = alRight
           Caption = 'GetDataSalesOrderPertokok'

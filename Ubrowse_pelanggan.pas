@@ -69,7 +69,7 @@ begin
               'a.code_type='+QuotedStr(FDaftarKlasifikasi.edkd_jenis_pel.Text);
   end else if vcall='dpp' then
   begin
-    strWhere:=' and getkares.code='+QuotedStr(FDataPenagihanPiutang.edKdWilayah.Text) ;
+    strWhere:=' and getkares.code='+QuotedStr(FDataPenagihanPiutang.strKabupatenID) ;
   end else begin
     strWhere:='';
   end;

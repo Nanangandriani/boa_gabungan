@@ -341,18 +341,19 @@ begin
        FNew_DataPenjualanPromosi.MemDetail['KD_ITEM']:=edKodeBarang.Text;
        FNew_DataPenjualanPromosi.MemDetail['NM_ITEM']:=edNamaBarang.Text;
        FNew_DataPenjualanPromosi.MemDetail['JUMLAH']:=edJumlah.Value;
-       FNew_DataPenjualanPromosi.MemDetail['HARGA_SATUAN']:=SelectRow('SELECT sell from t_item where item_code='+QuotedStr(edKodeBarang.Text)+' ');
+//       FNew_DataPenjualanPromosi.MemDetail['HARGA_SATUAN']:=SelectRow('SELECT sell from t_item where item_code='+QuotedStr(edKodeBarang.Text)+' ');
+       FNew_DataPenjualanPromosi.MemDetail['HARGA_SATUAN']:=0;
        FNew_DataPenjualanPromosi.MemDetail['AKUN_PERK_ITEM']:=SelectRow('SELECT account_code from t_item where item_code='+QuotedStr(edKodeBarang.Text)+' ');
        FNew_DataPenjualanPromosi.MemDetail['KD_SATUAN']:=edKodeSatuan.Text;
        FNew_DataPenjualanPromosi.MemDetail['NM_SATUAN']:=edSatuan.Text;
        FNew_DataPenjualanPromosi.MemDetail['SUB_TOTAL']:= FNew_DataPenjualanPromosi.MemDetail['JUMLAH']*FNew_Penjualan.MemDetail['HARGA_SATUAN'];
-       FNew_DataPenjualanPromosi.MemDetail['PPN_AKUN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_jual''');
+       FNew_DataPenjualanPromosi.MemDetail['PPN_AKUN']:='';
        FNew_DataPenjualanPromosi.MemDetail['SUB_TOTAL']:=0;
-       FNew_DataPenjualanPromosi.MemDetail['PPN_PERSEN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual''');
+       FNew_DataPenjualanPromosi.MemDetail['PPN_PERSEN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual_promosi''');
        FNew_DataPenjualanPromosi.MemDetail['PPN_NILAI']:=0;
-       FNew_DataPenjualanPromosi.MemDetail['PPH_AKUN']:='0';
-       FNew_DataPenjualanPromosi.MemDetail['NAMA_PPH']:='0';
-       FNew_DataPenjualanPromosi.MemDetail['PPH_PERSEN']:='0';
+       FNew_DataPenjualanPromosi.MemDetail['PPH_AKUN']:='';
+       FNew_DataPenjualanPromosi.MemDetail['NAMA_PPH']:='';
+       FNew_DataPenjualanPromosi.MemDetail['PPH_PERSEN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_pph_jual_promosi''');
        FNew_DataPenjualanPromosi.MemDetail['PPH_NILAI']:='0';
        FNew_DataPenjualanPromosi.MemDetail['POTONGAN_NILAI']:='0';
        FNew_DataPenjualanPromosi.MemDetail['POTONGAN_PERSEN']:='0';
@@ -596,7 +597,13 @@ procedure TFTambah_Barang.edNamaBarangButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Barang';
   FMasterData.vcall:='barang_order';
-  FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE	deleted_at IS NULL');
+  if vStatusTrans='klasifikasi' then
+  begin
+    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE group_id='+QuotedStr(FDaftarKlasifikasi.edkd_kategori.Text)+' AND	deleted_at IS NULL');
+  end else
+  begin
+    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE	deleted_at IS NULL');
+  end;
   FMasterData.ShowModal;
 end;
 

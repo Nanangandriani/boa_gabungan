@@ -292,7 +292,9 @@ uses
   UPenyesuaianFaktur in 'UPenyesuaianFaktur.pas' {FPenyesuaianFaktur},
   U_rekap_ppn_masukan in 'U_rekap_ppn_masukan.pas' {Frekap_ppn_masukan},
   U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang},
-  Ulap_Rekap_Hutang_Kredit in 'Ulap_Rekap_Hutang_Kredit.pas' {Flap_Rekap_Hutang_Kredit};
+  Ulap_Rekap_Hutang_Kredit in 'Ulap_Rekap_Hutang_Kredit.pas' {Flap_Rekap_Hutang_Kredit},
+  UListPenjualanPromosi in 'UListPenjualanPromosi.pas' {FListPenjualanPromosi},
+  UNew_DataPenjualanPromosi in 'UNew_DataPenjualanPromosi.pas' {FNew_DataPenjualanPromosi};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -354,6 +356,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListTargetPenjualan, FListTargetPenjualan);
   Application.CreateForm(TFNew_DataTargetPenjualan, FNew_DataTargetPenjualan);
   Application.CreateForm(TFPenyesuaianFaktur, FPenyesuaianFaktur);
+  Application.CreateForm(TFNew_DataPenjualanPromosi, FNew_DataPenjualanPromosi);
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);

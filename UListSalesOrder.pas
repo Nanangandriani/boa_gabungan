@@ -126,12 +126,12 @@ begin
 
   if FNew_Penjualan.edKode_Pelanggan.Text<>'' then
   strKodePelanggan:=QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text)
-  else strKodePelanggan:='';
+  else strKodePelanggan:=QuotedStr('');
 
 
   if Edkodewilayah.Text<>'' then
   strKodeKares:=QuotedStr(Edkodewilayah.Text)
-  else strkodeKares:='';
+  else strkodeKares:=QuotedStr('');
 
 //  if Length(Edkodewilayah.Text)<>0 then
 //  begin
@@ -245,9 +245,10 @@ begin
         FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('selling_price').AsFloat;
         FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp.FieldByName('group_id').AsString;
         FNew_Penjualan.MemDetail.post;
-        FNew_Penjualan.HitungGrid;
+//        FNew_Penjualan.HitungGrid;
         Dm.Qtemp.next;
       end;
+      FNew_Penjualan.HitungDetail;
     end;
     Except on E :Exception do
     begin

@@ -3,8 +3,8 @@ object FNew_Penjualan: TFNew_Penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Penjualan'
-  ClientHeight = 594
-  ClientWidth = 1257
+  ClientHeight = 632
+  ClientWidth = 870
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,158 +18,157 @@ object FNew_Penjualan: TFNew_Penjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1257
-    Height = 312
-    Align = alClient
+    Width = 870
+    Height = 147
+    Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1253
-    ExplicitHeight = 311
+    ExplicitWidth = 866
     object LabelPelanggan: TLabel
-      Left = 20
-      Top = 19
+      Left = 18
+      Top = 7
       Width = 93
       Height = 15
       Caption = 'Kode Transaksi FP'
     end
     object Label3: TLabel
       Left = 117
-      Top = 19
+      Top = 7
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label39: TLabel
       Left = 19
-      Top = 73
+      Top = 61
       Width = 91
       Height = 15
       Caption = 'Nama Pelanggan'
     end
     object Label38: TLabel
       Left = 116
-      Top = 73
+      Top = 61
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
-      Left = 117
-      Top = 208
+      Left = 623
+      Top = 88
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
-      Left = 20
-      Top = 208
+      Left = 526
+      Top = 88
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label14: TLabel
-      Left = 197
-      Top = 180
+      Left = 708
+      Top = 62
       Width = 22
       Height = 15
       Caption = 'Hari'
     end
     object Label8: TLabel
       Left = 19
-      Top = 45
+      Top = 33
       Width = 41
       Height = 15
       Caption = 'Sumber'
     end
     object Label9: TLabel
       Left = 117
-      Top = 45
+      Top = 33
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 20
-      Top = 99
+      Top = 87
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
     object Label11: TLabel
       Left = 117
-      Top = 99
+      Top = 87
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label13: TLabel
-      Left = 118
-      Top = 126
+      Left = 624
+      Top = 6
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
-      Left = 20
-      Top = 126
+      Left = 526
+      Top = 6
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label1: TLabel
-      Left = 21
-      Top = 153
+      Left = 527
+      Top = 33
       Width = 78
       Height = 15
       Caption = 'No. Surat Jalan'
     end
     object Label2: TLabel
-      Left = 118
-      Top = 153
+      Left = 624
+      Top = 33
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label15: TLabel
-      Left = 117
-      Top = 236
+      Left = 623
+      Top = 116
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label16: TLabel
-      Left = 19
-      Top = 236
+      Left = 525
+      Top = 116
       Width = 43
       Height = 15
       Caption = 'No. Reff'
     end
     object btMasterSumber: TSpeedButton
       Left = 320
-      Top = 43
+      Top = 31
       Width = 23
       Height = 22
       Caption = '+'
       OnClick = btMasterSumberClick
     end
     object Label6: TLabel
-      Left = 118
-      Top = 181
+      Left = 624
+      Top = 61
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label7: TLabel
-      Left = 21
-      Top = 181
+      Left = 527
+      Top = 61
       Width = 55
       Height = 15
       Caption = 'No. Faktur'
     end
     object SpeedButton1: TSpeedButton
       Left = 480
-      Top = 69
+      Top = 57
       Width = 23
       Height = 22
       Glyph.Data = {
@@ -229,7 +228,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 70
+      Top = 58
       Width = 344
       Height = 23
       Text = ''
@@ -240,16 +239,16 @@ object FNew_Penjualan: TFNew_Penjualan
       OnButtonClick = edNama_PelangganButtonClick
     end
     object edKode_Pelanggan: TEdit
-      Left = 529
-      Top = 70
+      Left = 303
+      Top = 113
       Width = 200
       Height = 23
       TabOrder = 1
       Visible = False
     end
     object spJatuhTempo: TSpinEdit
-      Left = 132
-      Top = 205
+      Left = 638
+      Top = 85
       Width = 60
       Height = 24
       MaxValue = 0
@@ -259,7 +258,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNamaSumber: TRzButtonEdit
       Left = 132
-      Top = 42
+      Top = 30
       Width = 185
       Height = 23
       Text = ''
@@ -272,7 +271,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edKodeSumber: TEdit
       Left = 362
-      Top = 40
+      Top = 28
       Width = 100
       Height = 23
       TabOrder = 4
@@ -280,7 +279,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object dtTanggal: TRzDateTimePicker
       Left = 132
-      Top = 96
+      Top = 84
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -291,7 +290,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object btAddDetail: TRzBitBtn
       Left = 20
-      Top = 267
+      Top = 113
       Width = 116
       Height = 30
       Align = alCustom
@@ -352,16 +351,16 @@ object FNew_Penjualan: TFNew_Penjualan
       NumGlyphs = 2
     end
     object edNomorTrans: TEdit
-      Left = 132
-      Top = 123
-      Width = 250
+      Left = 638
+      Top = 3
+      Width = 230
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 7
     end
     object edKode_Trans: TRzButtonEdit
       Left = 132
-      Top = 16
+      Top = 4
       Width = 59
       Height = 23
       Text = ''
@@ -372,32 +371,32 @@ object FNew_Penjualan: TFNew_Penjualan
       OnButtonClick = edKode_TransButtonClick
     end
     object edSuratJalanTrans: TEdit
-      Left = 132
-      Top = 150
-      Width = 250
+      Left = 638
+      Top = 30
+      Width = 230
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 9
     end
     object edNoReff: TEdit
-      Left = 132
-      Top = 233
-      Width = 250
+      Left = 638
+      Top = 113
+      Width = 230
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 10
     end
     object edNomorFaktur: TEdit
-      Left = 132
-      Top = 178
-      Width = 250
+      Left = 638
+      Top = 58
+      Width = 230
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 11
     end
     object edNama_Trans: TEdit
       Left = 197
-      Top = 16
+      Top = 4
       Width = 279
       Height = 23
       CharCase = ecUpperCase
@@ -407,15 +406,15 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 562
-    Width = 1257
+    Top = 600
+    Width = 870
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 561
-    ExplicitWidth = 1253
+    ExplicitTop = 599
+    ExplicitWidth = 866
     object BBatal: TRzBitBtn
-      Left = 1181
+      Left = 794
       Top = 1
       Height = 30
       Align = alRight
@@ -474,10 +473,10 @@ object FNew_Penjualan: TFNew_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1177
+      ExplicitLeft = 790
     end
     object BSave: TRzBitBtn
-      Left = 1008
+      Left = 719
       Top = 1
       Height = 30
       Align = alRight
@@ -536,7 +535,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1004
+      ExplicitLeft = 715
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -608,6 +607,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Align = alLeft
       Caption = 'Re-Calculate'
       TabOrder = 3
+      Visible = False
       OnClick = bt_re_calculateClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -663,7 +663,7 @@ object FNew_Penjualan: TFNew_Penjualan
       NumGlyphs = 2
     end
     object BCorrection: TRzBitBtn
-      Left = 1083
+      Left = 621
       Top = 1
       Width = 98
       Height = 30
@@ -671,36 +671,35 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = 'Submit Correction'
       TabOrder = 4
       OnClick = BCorrectionClick
-      ExplicitLeft = 1089
-      ExplicitTop = 3
+      ExplicitLeft = 617
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 312
-    Width = 1257
-    Height = 250
+    Top = 147
+    Width = 870
+    Height = 287
     Hint = ''
     ActivePage = TabSDetailPel
-    Align = alBottom
+    Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 311
-    ExplicitWidth = 1253
+    ExplicitWidth = 866
+    ExplicitHeight = 286
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 1249
+      ExplicitWidth = 862
+      ExplicitHeight = 261
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1253
-        Height = 225
+        Width = 866
+        Height = 262
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
-        FooterRowCount = 1
         HorzScrollBar.ExtraPanel.Visible = True
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SearchPanel.Enabled = True
@@ -770,42 +769,43 @@ object FNew_Penjualan: TFNew_Penjualan
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'HARGA_SATUAN'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.Value = 'Total:'
-            Footer.ValueType = fvtStaticText
-            Footers = <>
-            Title.Caption = 'Harga Satuan'
-            Title.ShowImageAndText = False
-            Width = 115
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
             FieldName = 'NM_ SATUAN'
             Footers = <>
             Visible = False
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'JUMLAH_HARGA'
+            FieldName = 'HARGA_SATUAN'
             Footer.DisplayFormat = '#,##0.##'
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
             Footer.Font.Height = -12
             Footer.Font.Name = 'Segoe UI'
             Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
             Footers = <>
-            Title.Caption = 'Total Harga'
+            Title.Caption = 'Harga|Satuan'
             Width = 107
+            WordWrap = True
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'JUMLAH_HARGA'
+            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+            Footer.FieldName = 'SUB_TOTAL'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footers = <>
+            Title.Caption = 'Harga|SubTotal'
+            Width = 121
           end
           item
             CellButtons = <>
@@ -818,28 +818,9 @@ object FNew_Penjualan: TFNew_Penjualan
             Footer.Font.Height = -12
             Footer.Font.Name = 'Segoe UI'
             Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Potongan'
             Width = 138
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'SUB_TOTAL'
-            Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
-            Footer.FieldName = 'SUB_TOTAL'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'DPP'
-            Width = 121
           end
           item
             CellButtons = <>
@@ -849,6 +830,7 @@ object FNew_Penjualan: TFNew_Penjualan
             Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
             Footers = <>
             Title.Caption = 'PPN|Persen (%)'
+            Visible = False
           end
           item
             CellButtons = <>
@@ -862,9 +844,9 @@ object FNew_Penjualan: TFNew_Penjualan
             Footer.Font.Height = -12
             Footer.Font.Name = 'Segoe UI'
             Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'PPN|Nilai'
+            Visible = False
             Width = 100
           end
           item
@@ -925,6 +907,7 @@ object FNew_Penjualan: TFNew_Penjualan
             FieldName = 'MENEJ_FEE_PERSEN'
             Footers = <>
             Title.Caption = 'Menejmen Fee | Persen (%)'
+            Visible = False
           end
           item
             CellButtons = <>
@@ -938,9 +921,9 @@ object FNew_Penjualan: TFNew_Penjualan
             Footer.Font.Height = -12
             Footer.Font.Name = 'Segoe UI'
             Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Menejmen Fee | Nilai'
+            Visible = False
             Width = 100
           end
           item
@@ -948,14 +931,13 @@ object FNew_Penjualan: TFNew_Penjualan
             DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'GRAND_TOTAL'
+            FieldName = 'SUB_TOTAL'
             Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
             Footer.Font.Charset = DEFAULT_CHARSET
             Footer.Font.Color = clWindowText
             Footer.Font.Height = -12
             Footer.Font.Name = 'Segoe UI'
             Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Total'
             Width = 135
@@ -963,6 +945,239 @@ object FNew_Penjualan: TFNew_Penjualan
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
+    end
+  end
+  object RzPanel1: TRzPanel
+    Left = 0
+    Top = 434
+    Width = 870
+    Height = 166
+    Align = alBottom
+    Color = 15987699
+    TabOrder = 3
+    ExplicitTop = 433
+    ExplicitWidth = 866
+    object RzLabel1: TRzLabel
+      Left = 501
+      Top = 138
+      Width = 65
+      Height = 15
+      Caption = 'Total Bersih'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object RzLabel2: TRzLabel
+      Left = 501
+      Top = 112
+      Width = 23
+      Height = 15
+      Caption = 'PPN'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object RzLabel3: TRzLabel
+      Left = 501
+      Top = 86
+      Width = 111
+      Height = 15
+      Caption = 'Total Sebelum Pajak'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object RzLabel4: TRzLabel
+      Left = 501
+      Top = 60
+      Width = 66
+      Height = 15
+      Caption = 'Pembulatan'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object RzLabel5: TRzLabel
+      Left = 501
+      Top = 36
+      Width = 83
+      Height = 15
+      Caption = 'Total Potongan'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object RzLabel6: TRzLabel
+      Left = 501
+      Top = 9
+      Width = 135
+      Height = 15
+      Caption = 'Total Sebelum Potongan'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label17: TLabel
+      Left = 642
+      Top = 9
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label18: TLabel
+      Left = 642
+      Top = 36
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label19: TLabel
+      Left = 642
+      Top = 60
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label20: TLabel
+      Left = 642
+      Top = 138
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label21: TLabel
+      Left = 642
+      Top = 112
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label22: TLabel
+      Left = 642
+      Top = 86
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object edTotSebelumPot: TRzNumericEdit
+      Left = 648
+      Top = 6
+      Width = 200
+      Height = 23
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 0
+      OnExit = edTotSebelumPotExit
+      DisplayFormat = '0.00#,##'
+    end
+    object edTotPot: TRzNumericEdit
+      Left = 648
+      Top = 31
+      Width = 200
+      Height = 23
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 1
+      OnExit = edTotPotExit
+      DisplayFormat = '0.00#,##'
+    end
+    object edTotPembulatan: TRzNumericEdit
+      Left = 648
+      Top = 57
+      Width = 200
+      Height = 23
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 2
+      OnExit = edTotPembulatanExit
+      DisplayFormat = '0.00#,##'
+    end
+    object edTotSebelumPajak: TRzNumericEdit
+      Left = 648
+      Top = 83
+      Width = 200
+      Height = 23
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 3
+      OnExit = edTotSebelumPajakExit
+      DisplayFormat = '0.00#,##'
+    end
+    object edTotPPN: TRzNumericEdit
+      Left = 648
+      Top = 109
+      Width = 200
+      Height = 23
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 4
+      OnExit = edTotPPNExit
+      DisplayFormat = '0.00#,##'
+    end
+    object edTotBersih: TRzNumericEdit
+      Left = 648
+      Top = 135
+      Width = 200
+      Height = 23
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 5
+      OnExit = edTotBersihExit
+      DisplayFormat = '0.00#,##'
     end
   end
   object DSDetail: TDataSource

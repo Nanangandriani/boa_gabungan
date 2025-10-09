@@ -70,12 +70,14 @@ type
     QAkunTransaksidescription: TMemoField;
     QAkunTransaksiaccount_number_bank: TStringField;
     QAkunTransaksiaccount_name_bank: TStringField;
+    QAkunTransaksiinitial_code: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure QAkunTransaksidescriptionGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -200,13 +202,14 @@ begin
       end;
     end;
     //Penjualan
-    if (QAkunTransaksi.FieldByName('code_module').AsString='1') then
+    if (QAkunTransaksi.FieldByName('code_module').AsString='1') AND(QAkunTransaksi.FieldByName('initial_code').AsString='PJ') then
     begin
       with FDataMasterAkunTrans do
       begin
         rgPPH.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual'' '));
         rgPPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_ppn_jual'' '));
         rgPotongan.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' '));
+        rgKlasifikasiIncludePPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' '));
         rgMenejFee.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_menej_fee_jual'' '));
         edPersenPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' ');
         edPersenPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_pph_jual'' ');
@@ -234,6 +237,46 @@ begin
         RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPenjualan;
       end;
     end;
+    //Penjualan Promosi
+    if (QAkunTransaksi.FieldByName('code_module').AsString='1') AND(QAkunTransaksi.FieldByName('initial_code').AsString='PJP') then
+    begin
+      with FDataMasterAkunTrans do
+      begin
+        rgPPH.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual_promosi'' '));
+        rgPPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_ppn_jual_promosi'' '));
+        rgPotongan.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual_promosi'' '));
+        if True then
+
+
+        rgKlasifikasiIncludePPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn_promosi'' '));
+        rgMenejFee.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_menej_fee_jual_promosi'' '));
+        edPersenPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual_promosi'' ');
+        edPersenPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_pph_jual_promosi'' ');
+        edAkunJenisTax.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax_promosi'' ');
+        edNamaJenisTax.Text:=SelectRow('select name from t_parameter a LEFT JOIN t_sales_transaction_source b ON a.value_parameter=b.code where key_parameter=''default_kode_tax_promosi'' ');
+//        edAkunPPNJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_jual'' ');
+//        edNamaPPNJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_jual'' ');
+//        edAkunPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_pph_jual'' ');
+//        edNamaPPHJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_pph_jual'' ');
+        edKodeModulJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModulJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTransJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTransJual.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        MemKeteranganJual.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitialJual.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+        edKodeModulJual.Enabled:=false;
+        edNamaModulJual.Enabled:=false;
+        edKodeTransJual.Enabled:=false;
+        edNamaTransJual.Enabled:=false;
+        RefreshPenjualan;
+        TabPembelian.TabVisible:=false;
+        TabPenjualan.TabVisible:=true;
+        TabBank.TabVisible:=false;
+        TabKas.TabVisible:=false;
+        RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPenjualan;
+      end;
+    end;
+
     //Bank
     if (QAkunTransaksi.FieldByName('code_module').AsString='3') or (QAkunTransaksi.FieldByName('code_module').AsString='5') then
     begin
@@ -306,6 +349,11 @@ begin
   end;
   FDataMasterAkunTrans.Show;
   FDataMasterAkunTrans.Status := 1;
+end;
+
+procedure TFListMasterAkunTrans.FormShow(Sender: TObject);
+begin
+  ActROExecute(sender);
 end;
 
 procedure TFListMasterAkunTrans.QAkunTransaksidescriptionGetText(Sender: TField;
