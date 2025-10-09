@@ -170,7 +170,7 @@ begin
   MemDetailPiutang.first;
   while not MemDetailPiutang.Eof do
   begin
-    ShowMessage(MemDetailPiutang['id_dpp']) ;
+//    ShowMessage(MemDetailPiutang['id_dpp']) ;
     if edKodeJenisBayar.Text='1' then
     begin
       curCash:= MemDetailPiutang['jum_piutang'];
