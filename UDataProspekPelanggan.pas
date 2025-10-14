@@ -121,130 +121,145 @@ end;
 
 procedure TFDataProspekPelanggan.DBGridCustomerDblClick(Sender: TObject);
 begin
-  if MemMasterData.RecordCount<>0  then
+  with dm.Qtemp do
   begin
-    FNew_Pelanggan.Clear;
-    FNew_Pelanggan.Autocode;
-    FNew_Pelanggan.Edkode.Enabled:=true;
-    FNew_Pelanggan.Autocode_AkPiutang;
-    FNew_Pelanggan.Autocode_AkPiutangLain;
-    with Dm.Qtemp do
-    begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from t_customer_prospect_tmp a '+
-                 ' WHERE idprospek='+QuotedSTr(MemMasterData['idprospek'])+' '+
-                 ' AND deleted_at is null  '+
-                 ' AND created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
-                 ' order by created_at Desc ';
-       open;
-    end;
-    if Dm.Qtemp.RecordCount=0 then
-    begin
-      ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
-      exit;
-    end;
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * FROM t_customer where idprospek='+QuotedStr(MemMasterData['idprospek'])+' AND deleted_at is NULL';
+    Open;
+  end;
 
-    if (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'0') OR (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'') then
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Prospek sudah ada didata pelanggan..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+
+    if MemMasterData.RecordCount<>0  then
     begin
-      with FNew_Pelanggan do
+      FNew_Pelanggan.Clear;
+      FNew_Pelanggan.Autocode;
+      FNew_Pelanggan.Edkode.Enabled:=true;
+      FNew_Pelanggan.Autocode_AkPiutang;
+      FNew_Pelanggan.Autocode_AkPiutangLain;
+      with Dm.Qtemp do
       begin
-        if Dm.Qtemp.FieldByName('outlet_name').AsString<>'' then
-        begin
-          Ednama.Text:=Dm.Qtemp.FieldByName('outlet_name').AsString;
-          Ednama.ReadOnly:=True;
-        end else begin
-          Ednama.Text:='';
-          Ednama.ReadOnly:=False;
-        end;
-        Edemail.Text:='';
-        Edtempo.Text:='30';
-        Ednamapkp.Text:=Dm.Qtemp.FieldByName('outlet_owner').AsString;
-        Ednpwp.Text:=Dm.Qtemp.FieldByName('no_npwp').AsString;
-        if (Dm.Qtemp.FieldByName('no_ktp').AsString<>'0') AND (Dm.Qtemp.FieldByName('no_ktp').AsString<>'') then
-        begin
-          Ednik.Text:=Dm.Qtemp.FieldByName('no_ktp').AsString;
-          Ednik.ReadOnly:=True;
-        end else begin
-          Ednik.Text:='';
-          Ednik.ReadOnly:=False;
-        end;
-        Ednomorva.Text:='0';
-        if (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'') then
-        begin
-          Edkodewilayah.Text:=Dm.Qtemp.FieldByName('wilayah_code').AsString;
-          Ednamawilayah.Text:=Dm.Qtemp.FieldByName('wilayah_name').AsString;
-          Edkodewilayah.ReadOnly:=True;
-          Ednamawilayah.ReadOnly:=True;
-        end else begin
-          Edkodewilayah.Text:='';
-          Ednamawilayah.ReadOnly:=False;
-          Edkodewilayah.ReadOnly:=False;
-          Ednamawilayah.ReadOnly:=False;
-        end;
+         close;
+         sql.Clear;
+         sql.Text:=' select * from t_customer_prospect_tmp a '+
+                   ' WHERE idprospek='+QuotedSTr(MemMasterData['idprospek'])+' '+
+                   ' AND deleted_at is null  '+
+                   ' AND created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                   ' order by created_at Desc ';
+         open;
+      end;
+      if Dm.Qtemp.RecordCount=0 then
+      begin
+        ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
+        exit;
+      end;
 
-        Edkodepos.Text:='00000';
-        if (Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString<>'') then
+      if (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'0') OR (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'') then
+      begin
+        with FNew_Pelanggan do
         begin
-          edKode_jnispel.Text:=Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString;
-          edJenisPelanggan.Text:=Dm.Qtemp.FieldByName('jenis_pelanggan_name').AsString;
-          edKode_jnispel.ReadOnly:=True;
-          edJenisPelanggan.ReadOnly:=True;
-        end else begin
-          edKode_jnispel.Text:='';
-          edJenisPelanggan.Text:='';
-          edKode_jnispel.ReadOnly:=False;
-          edJenisPelanggan.ReadOnly:=False;
-        end;
-        if (Dm.Qtemp.FieldByName('jenis_usaha_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('jenis_usaha_code').AsString<>'') then
-        begin
-          edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('jenis_usaha_code').AsString;
-          edJenisUsaha.Text:=Dm.Qtemp.FieldByName('jenis_usaha_name').AsString;
-          edKode_JenisUsaha.ReadOnly:=True;
-          edJenisUsaha.ReadOnly:=True;
-        end else begin
-          edKode_JenisUsaha.Text:='';
-          edJenisUsaha.Text:='';
-          edKode_JenisUsaha.ReadOnly:=False;
-          edJenisUsaha.ReadOnly:=False;
-        end;
-        if (Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString<>'') then
-        begin
-          edKode_typejual.Text:=Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString;
-          edTypePenjualan.Text:=Dm.Qtemp.FieldByName('kategori_pelanggan_name').AsString;
-          edKode_typejual.ReadOnly:=True;
-          edTypePenjualan.ReadOnly:=True;
-        end else begin
-          edKode_typejual.Text:='';
-          edTypePenjualan.Text:='';
-          edKode_typejual.ReadOnly:=False;
-          edTypePenjualan.ReadOnly:=False;
-        end;
-        if (Dm.Qtemp.FieldByName('customer_group_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('customer_group_code').AsString<>'') then
-        begin
-          edKode_gol.Text:=Dm.Qtemp.FieldByName('customer_group_code').AsString;
-          edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('customer_group_name').AsString;
-          edKode_gol.ReadOnly:=True;
-          edGolonganPelanggan.ReadOnly:=True;
-        end else begin
-          edKode_gol.Text:='';
-          edGolonganPelanggan.Text:='';
-          edKode_gol.ReadOnly:=False;
-          edGolonganPelanggan.ReadOnly:=False;
-        end;
-        vid_prospek:=MemMasterData['idprospek'];
-        if (Dm.Qtemp.FieldByName('no_npwp').AsString='0') AND (Dm.Qtemp.FieldByName('no_npwp').AsString='') then
-        begin
-          cbpkp.Checked:=false;
-        end else begin
-          cbpkp.Checked:=true;
+          if Dm.Qtemp.FieldByName('outlet_name').AsString<>'' then
+          begin
+            Ednama.Text:=Dm.Qtemp.FieldByName('outlet_name').AsString;
+            Ednama.ReadOnly:=True;
+          end else begin
+            Ednama.Text:='';
+            Ednama.ReadOnly:=False;
+          end;
+          Edemail.Text:='';
+          Edtempo.Text:='30';
+          Ednamapkp.Text:=Dm.Qtemp.FieldByName('outlet_owner').AsString;
+          Ednpwp.Text:=Dm.Qtemp.FieldByName('no_npwp').AsString;
+          if (Dm.Qtemp.FieldByName('no_ktp').AsString<>'0') AND (Dm.Qtemp.FieldByName('no_ktp').AsString<>'') then
+          begin
+            Ednik.Text:=Dm.Qtemp.FieldByName('no_ktp').AsString;
+            Ednik.ReadOnly:=True;
+          end else begin
+            Ednik.Text:='';
+            Ednik.ReadOnly:=False;
+          end;
+          Ednomorva.Text:='0';
+          if (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('wilayah_code').AsString<>'') then
+          begin
+            Edkodewilayah.Text:=Dm.Qtemp.FieldByName('wilayah_code').AsString;
+            Ednamawilayah.Text:=Dm.Qtemp.FieldByName('wilayah_name').AsString;
+            Edkodewilayah.ReadOnly:=True;
+            Ednamawilayah.ReadOnly:=True;
+          end else begin
+            Edkodewilayah.Text:='';
+            Ednamawilayah.ReadOnly:=False;
+            Edkodewilayah.ReadOnly:=False;
+            Ednamawilayah.ReadOnly:=False;
+          end;
+
+          Edkodepos.Text:='00000';
+          if (Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString<>'') then
+          begin
+            edKode_jnispel.Text:=Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString;
+            edJenisPelanggan.Text:=Dm.Qtemp.FieldByName('jenis_pelanggan_name').AsString;
+            edKode_jnispel.ReadOnly:=True;
+            edJenisPelanggan.ReadOnly:=True;
+          end else begin
+            edKode_jnispel.Text:='';
+            edJenisPelanggan.Text:='';
+            edKode_jnispel.ReadOnly:=False;
+            edJenisPelanggan.ReadOnly:=False;
+          end;
+          if (Dm.Qtemp.FieldByName('jenis_usaha_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('jenis_usaha_code').AsString<>'') then
+          begin
+            edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('jenis_usaha_code').AsString;
+            edJenisUsaha.Text:=Dm.Qtemp.FieldByName('jenis_usaha_name').AsString;
+            edKode_JenisUsaha.ReadOnly:=True;
+            edJenisUsaha.ReadOnly:=True;
+          end else begin
+            edKode_JenisUsaha.Text:='';
+            edJenisUsaha.Text:='';
+            edKode_JenisUsaha.ReadOnly:=False;
+            edJenisUsaha.ReadOnly:=False;
+          end;
+          if (Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString<>'') then
+          begin
+            edKode_typejual.Text:=Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString;
+            edTypePenjualan.Text:=Dm.Qtemp.FieldByName('kategori_pelanggan_name').AsString;
+            edKode_typejual.ReadOnly:=True;
+            edTypePenjualan.ReadOnly:=True;
+          end else begin
+            edKode_typejual.Text:='';
+            edTypePenjualan.Text:='';
+            edKode_typejual.ReadOnly:=False;
+            edTypePenjualan.ReadOnly:=False;
+          end;
+          if (Dm.Qtemp.FieldByName('customer_group_code').AsString<>'0') AND (Dm.Qtemp.FieldByName('customer_group_code').AsString<>'') then
+          begin
+            edKode_gol.Text:=Dm.Qtemp.FieldByName('customer_group_code').AsString;
+            edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('customer_group_name').AsString;
+            edKode_gol.ReadOnly:=True;
+            edGolonganPelanggan.ReadOnly:=True;
+          end else begin
+            edKode_gol.Text:='';
+            edGolonganPelanggan.Text:='';
+            edKode_gol.ReadOnly:=False;
+            edGolonganPelanggan.ReadOnly:=False;
+          end;
+          vid_prospek:=MemMasterData['idprospek'];
+          if (Dm.Qtemp.FieldByName('no_npwp').AsString='0') AND (Dm.Qtemp.FieldByName('no_npwp').AsString='') then
+          begin
+            cbpkp.Checked:=false;
+          end else begin
+            cbpkp.Checked:=true;
+          end;
         end;
       end;
+      FNew_Pelanggan.Edkode.Enabled:=false;
+      FNew_Pelanggan.ShowModal;
+      Status:=0;
+      Close;
     end;
-    FNew_Pelanggan.Edkode.Enabled:=false;
-    FNew_Pelanggan.ShowModal;
-    Status:=0;
-    Close;
   end;
 end;
 

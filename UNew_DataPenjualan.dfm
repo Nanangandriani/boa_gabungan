@@ -356,6 +356,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Width = 230
       Height = 23
       CharCase = ecUpperCase
+      ReadOnly = True
       TabOrder = 7
     end
     object edKode_Trans: TRzButtonEdit
@@ -376,6 +377,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Width = 230
       Height = 23
       CharCase = ecUpperCase
+      ReadOnly = True
       TabOrder = 9
     end
     object edNoReff: TEdit
@@ -607,7 +609,6 @@ object FNew_Penjualan: TFNew_Penjualan
       Align = alLeft
       Caption = 'Re-Calculate'
       TabOrder = 3
-      Visible = False
       OnClick = bt_re_calculateClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -698,6 +699,7 @@ object FNew_Penjualan: TFNew_Penjualan
         Width = 866
         Height = 262
         Align = alClient
+        AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSDetail
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
@@ -739,11 +741,13 @@ object FNew_Penjualan: TFNew_Penjualan
             Width = 183
           end
           item
+            AlwaysShowEditButton = True
             CellButtons = <>
             DynProps = <>
             EditButtons = <
               item
                 Style = ebsPlusEh
+                Visible = False
                 OnClick = DBGridDetailColumns3EditButtons0Click
               end>
             FieldName = 'JUMLAH'
@@ -1190,8 +1194,8 @@ object FNew_Penjualan: TFNew_Penjualan
     CachedUpdates = True
     Params = <>
     SortOrder = 'NM_ITEM'
-    Left = 16
-    Top = 473
+    Left = 96
+    Top = 449
     object MemDetailNO_SUMBER: TStringField
       FieldName = 'NO_SUMBER'
     end

@@ -1,6 +1,7 @@
 object FDataProspekPelanggan: TFDataProspekPelanggan
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Prospek Pelanggan'
   ClientHeight = 513
   ClientWidth = 1313
@@ -159,9 +160,7 @@ object FDataProspekPelanggan: TFDataProspekPelanggan
     Height = 32
     Align = alTop
     TabOrder = 2
-    ExplicitLeft = -30
-    ExplicitTop = 182
-    ExplicitWidth = 532
+    ExplicitWidth = 1309
     object progress: TGauge
       Left = 8
       Top = 8
@@ -303,7 +302,7 @@ object FDataProspekPelanggan: TFDataProspekPelanggan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 237
+      ExplicitLeft = 1161
     end
   end
   object dsMasterData: TDataSource

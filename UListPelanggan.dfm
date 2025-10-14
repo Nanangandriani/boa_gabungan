@@ -43,8 +43,10 @@ object FListPelanggan: TFListPelanggan
     Width = 822
     Height = 297
     Align = alClient
+    AllowedOperations = []
     DataSource = DsPelanggan
     DynProps = <>
+    ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
     Columns = <

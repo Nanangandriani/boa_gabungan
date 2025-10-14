@@ -320,7 +320,7 @@ object FExportFaktur: TFExportFaktur
     end
   end
   object SaveDialog1: TSaveDialog
-    Left = 8
-    Top = 16
+    Left = 32
+    Top = 176
   end
 end

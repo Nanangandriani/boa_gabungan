@@ -1418,8 +1418,8 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * from rekap_umur_piutang('#39'2025-09-08'#39')')
-    Left = 372
-    Top = 336
+    Left = 332
+    Top = 176
   end
   object DsRekapUmurPiutang: TDataSource
     DataSet = QRekapUmurPiutang

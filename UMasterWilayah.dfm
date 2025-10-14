@@ -1,6 +1,7 @@
 object FMasterWilayah: TFMasterWilayah
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Master Wilayah'
   ClientHeight = 336
   ClientWidth = 1022

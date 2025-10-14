@@ -102,6 +102,15 @@ object FMainMenu: TFMainMenu
       Align = alLeft
       Caption = ''
     end
+    object RzStatusVersion: TRzStatusPane
+      Left = 593
+      Top = 0
+      Height = 19
+      Align = alRight
+      Caption = ''
+      ExplicitLeft = 524
+      ExplicitTop = 2
+    end
   end
   object dxRibbon1: TdxRibbon
     Left = 0

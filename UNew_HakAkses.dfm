@@ -147,7 +147,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = 6
+      ExplicitLeft = 389
     end
     object Bhapus: TRzBitBtn
       Left = 1
@@ -210,8 +210,6 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 312
-      ExplicitTop = 6
     end
   end
   object BTambah: TRzBitBtn
@@ -471,8 +469,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
   end
   object DsDetail: TDataSource
     DataSet = QDetail
-    Left = 360
-    Top = 64
+    Left = 456
+    Top = 224
   end
   object DsMenu: TDataSource
     DataSet = QMenu
@@ -488,8 +486,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
       
         'inner join t_dept c on a.dept_code=c.dept_code order by a.akses_' +
         'no Asc')
-    Left = 360
-    Top = 8
+    Left = 464
+    Top = 120
   end
   object QMenu: TUniQuery
     Connection = dm.Koneksi

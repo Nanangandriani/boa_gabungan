@@ -52,10 +52,12 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure CbSBU3Change(Sender: TObject);
   private
     { Private declarations }
   public
     vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH, vPosition : string;
+    procedure Clear;
     { Public declarations }
    // nm,loksbu,kdsbu,id_dept:string;
   end;
@@ -73,12 +75,71 @@ uses UMainMenu, UDataModule, UMy_Function;
 
 procedure TFHomeLogin.CbSBUClick(Sender: TObject);
 begin
+
+
   with dm.abstable1 do
   begin
   Filtered:=false;
   Filter:='Nama_Sbu='+QuotedStr(CbSBU.Text);
   FilterOptions:=[];
   Filtered:=true;
+  end;
+  TRY
+    DM.Koneksi.Connected:=False;
+    DM.Koneksi.Server:=dm.abstable1Ip_db.AsString;
+    DM.Koneksi.ProviderName:='PostgreSQL';
+    DM.Koneksi.Database:=dm.abstable1Db_Name.AsString;
+    DM.Koneksi.Password:=dm.abstable1Password.AsString;
+    DM.Koneksi.Username:=dm.abstable1User_db.AsString;
+    Dm.Koneksi.Port:=dm.abstable1Port_db.AsInteger;
+    DM.Koneksi.Connected:=True;
+    //Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
+  EXCEPT
+    showmessage('Tidak terkoneksi dengan server !');
+    exit;
+  END;
+end;
+
+procedure TFHomeLogin.Clear;
+begin
+  Eduser.Text:='';
+  EdPass.Text:='';
+
+  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
+  DM.ABSTable1.Open;
+  CbSBU.Properties.Items.Clear;
+  while not DM.ABSTable1.Eof do
+  begin
+    CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
+    DM.ABSTable1.Next;
+  end;
+
+
+
+//  DM.ABSDatabase1.Close;
+
+//  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
+////  DM.ABSDatabase1.Open;
+////  DM.ABSTable1.Close;
+//  DM.ABSTable1.Open;
+////  DM.ABSTable1.Filtered:=False;
+//  FHomeLogin.CbSBU.Properties.Items.Clear;
+//  DM.ABSTable1.First;
+//  while not DM.ABSTable1.Eof do
+//  begin
+//    FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
+//    DM.ABSTable1.Next;
+//  end;
+end;
+
+procedure TFHomeLogin.CbSBU3Change(Sender: TObject);
+begin
+  with dm.abstable1 do
+  begin
+    Filtered:=false;
+    Filter:='Nama_Sbu='+QuotedStr(CbSBU.Text);
+    FilterOptions:=[];
+    Filtered:=true;
   end;
   TRY
     DM.Koneksi.Connected:=False;
@@ -122,20 +183,14 @@ end;
 
 procedure TFHomeLogin.FormShow(Sender: TObject);
 begin
-  // Misalnya menggunakan query untuk mendapatkan item di TcxDBComboBox
-  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
-  DM.ABSTable1.Open;
-  CbSBU.Clear;
-  while not DM.ABSTable1.Eof do
-  begin
-    CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
-    DM.ABSTable1.Next;
-  end;
+  Clear;
 end;
 
 procedure TFHomeLogin.Image1Click(Sender: TObject);
 begin
-   Application.Terminate;
+  Eduser.Text:='';
+  EdPass.Text:='';
+  Application.Terminate;
 end;
 
 procedure TFHomeLogin.Image1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -188,7 +243,7 @@ begin
              ' "deleted_at", "job_level_id", "created_by", "updated_by", '+
              ' "deleted_by", "dept_code", "position_code", "ttd" '+
              ' FROM "public"."t_user" '+
-             ' where "user_name"='+QuotedStr(Eduser.Text)+' ');
+             ' where "user_name"='+QuotedStr(Eduser.Text)+' and deleted_at IS NULL ');
      open;
     end;
     if dm.Qtemp.RecordCount=0 then
@@ -197,7 +252,7 @@ begin
       Exit;
     end;
 
-   with dm.Qtemp do
+    with dm.Qtemp do
     begin
      close;
      sql.clear;
@@ -208,38 +263,39 @@ begin
              ' "deleted_by", "dept_code", "position_code", "ttd","access_status" '+
              ' FROM "public"."t_user" '+
              ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
-             ' and "password"='+QuotedStr(EdPass.Text)+'  ');
+             ' and "password"='+QuotedStr(EdPass.Text)+'  and deleted_at IS NULL  ');
      open;
     end;
-    status_akses:=dm.Qtemp['access_status'];
-    FMainMenu.StatusUser.Caption:=dm.Qtemp.FieldByName('full_name').AsString;
     if dm.Qtemp.RecordCount=0 then
     begin
       ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');
       Exit;
     end;
+    status_akses:=dm.Qtemp['access_status'];
+    FMainMenu.StatusUser.Caption:=dm.Qtemp.FieldByName('full_name').AsString;
+
 
    //Buat Variable Perusahaan
    with dm.Qtemp do
+  begin
+   close;
+   sql.clear;
+   sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
+           ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
+           ' "tax_status", "currency" FROM "t_company" ');
+   open;
+  end;
+  if dm.Qtemp.RecordCount<>0 then
+  begin
+    with FHomeLogin do
     begin
-     close;
-     sql.clear;
-     sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
-             ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
-             ' "tax_status", "currency" FROM "t_company" ');
-     open;
+      vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
+      vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
+      vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
+      vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
+      vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+      FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
     end;
-    if dm.Qtemp.RecordCount<>0 then
-    begin
-      with FHomeLogin do
-      begin
-        vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
-        vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
-        vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
-        vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
-        vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
-        FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
-      end;
     end;
     with dm.Qtemp do
     begin
@@ -249,19 +305,17 @@ begin
       ExecSQL;
     end;
     Nm:=Eduser.Text;
-   end;
-   FHomeLogin.Close;
-   FMainMenu.show;//modal;
+  end;
 
-   with dm.Qtemp do
+  with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT * FROM app_versions';
+    sql.Text:='SELECT * FROM app_versions ORDER BY release_date DESC LIMIT 1';
     open;
   end;
 
-  if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status']=0) then
+  if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=0) then
   begin
 //    ShowMessage('Aplikasi tidak update');
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
@@ -269,11 +323,15 @@ begin
     begin
       FMainMenu.UpdateVersi;
     end else exit;
-  end else if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status']=1) then
+  end else if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=1) then
   begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;
-  end
+  end;
+  CbSBU.Clear;
+  FMainMenu.Show;//modal;
+  FHomeLogin.Close;
+
 end;
 
 procedure TFHomeLogin.ImgTransaksiDragDrop(Sender, Source: TObject; X,

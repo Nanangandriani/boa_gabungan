@@ -1,6 +1,7 @@
 object FMasterData: TFMasterData
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Master Data'
   ClientHeight = 411
   ClientWidth = 756
@@ -19,6 +20,7 @@ object FMasterData: TFMasterData
     Width = 756
     Height = 411
     Align = alClient
+    AllowedOperations = []
     DataSource = dsMasterData
     DynProps = <>
     ReadOnly = True

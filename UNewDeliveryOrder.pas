@@ -361,7 +361,7 @@ begin
 //  vBody:='?type_id='+edKodeJenisKendMuatan.Text+
 //         '&regencie_from_id='+edlokasiregencyid.Text+
 //         '&regencie_to_id='+edKodeKabupaten.Text+'&point='+IntToStr(IntTitikTambahan);
-  vBody:='?type_id=CDE&regencie_from_id=3515&regencie_to_id=3513&point=0';
+  vBody:='?type_id=CDE&regencie_from_id='+edlokasiregencyid.Text+'&regencie_to_id='+edlokasiregencyid.Text+'&point='+spTotalTitik.Text+'';
   Vpath:='/api/get-tariff';
   url:= BaseUrl+Vpath+vBody;
   MemoAPI.Text:=url;

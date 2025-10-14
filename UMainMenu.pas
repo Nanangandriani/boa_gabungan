@@ -70,6 +70,7 @@ type
     StatusVersion: TRzStatusPane;
     RzVersionInfo1: TRzVersionInfo;
     StatusPerusahaan: TRzStatusPane;
+    RzStatusVersion: TRzStatusPane;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -385,8 +386,29 @@ begin
   begin
     if vCaptionButton='Logout' then
     begin
-      FMainMenu.Close;
       FHomeLogin.Show;
+      CloseAllTabsheets;
+      ClearCategoryPanelGroup;
+      FHomeLogin.Eduser.Text:='';
+      FHomeLogin.EdPass.Text:='';
+
+      FHomeLogin.CbSBU.Properties.Items.Clear;
+      DM.ABSDatabase1.Close;
+      DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
+      DM.ABSDatabase1.Open;
+      DM.ABSTable1.Close;
+      DM.ABSTable1.Open;
+      DM.ABSTable1.Filtered:=False;
+
+      DM.ABSTable1.First;
+      while not DM.ABSTable1.Eof do
+      begin
+        FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
+        DM.ABSTable1.Next;
+      end;
+      CategoryPanelUtama.Panels.Clear;
+//      PageControl1.ActivePage:=TabForm;
+      Close;
       Exit;
     end else
     if vCaptionButton='Exit' then
@@ -398,7 +420,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='SELECT * FROM app_versions';
+        sql.Text:='SELECT * FROM app_versions ORDER BY release_date DESC LIMIT 1';
         open;
       end;
 
@@ -587,11 +609,11 @@ begin
   begin
     SQL.Clear;
     SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
-    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at is NULL '+
+    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code '+
     ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
     ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
     ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
-    ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+
+    ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+' AND bb.deleted_at IS NULL '+
     ' group by e.created_at,e.id, e.menu'+
     ' Order by e.created_at asc';
     open;
@@ -826,6 +848,28 @@ end;
 procedure TFMainMenu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 //  Application.Terminate;
+  FHomeLogin.Show;
+  CloseAllTabsheets;
+  ClearCategoryPanelGroup;
+  FHomeLogin.Eduser.Text:='';
+  FHomeLogin.EdPass.Text:='';
+
+  FHomeLogin.CbSBU.Properties.Items.Clear;
+  DM.ABSDatabase1.Close;
+  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
+  DM.ABSDatabase1.Open;
+  DM.ABSTable1.Close;
+  DM.ABSTable1.Open;
+  DM.ABSTable1.Filtered:=False;
+
+  DM.ABSTable1.First;
+  while not DM.ABSTable1.Eof do
+  begin
+    FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
+    DM.ABSTable1.Next;
+  end;
+  CategoryPanelUtama.Panels.Clear;
+
   with dm.Qtemp do
   begin
     close;
@@ -847,8 +891,7 @@ begin
   loksbu:='MLB/1';
   format_tgl:='YYYY/MM/DD'; } //Tes default loksbu
   FHomeLogin.Close;
-
-
+//  RzStatusVersion.Caption:=GetFileVersion();
 
 //  StatusVersion.Caption:=Application.show;
 end;

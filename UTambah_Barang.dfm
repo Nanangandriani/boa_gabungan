@@ -3,7 +3,7 @@ object FTambah_Barang: TFTambah_Barang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Tambah Barang'
-  ClientHeight = 194
+  ClientHeight = 189
   ClientWidth = 484
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,13 +20,13 @@ object FTambah_Barang: TFTambah_Barang
     Left = 0
     Top = 0
     Width = 484
-    Height = 162
+    Height = 157
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 480
-    ExplicitHeight = 161
+    ExplicitHeight = 156
     object LabelPelanggan: TLabel
       Left = 370
       Top = 180
@@ -218,12 +218,12 @@ object FTambah_Barang: TFTambah_Barang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 162
+    Top = 157
     Width = 484
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 161
+    ExplicitTop = 156
     ExplicitWidth = 480
     object BBatal: TRzBitBtn
       Left = 408

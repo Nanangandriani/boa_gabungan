@@ -237,6 +237,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Height = 23
       Text = ''
       TabOrder = 1
+      OnChange = edNama_PelangganChange
       AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -544,7 +545,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 900
+      ExplicitLeft = 903
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712

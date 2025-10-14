@@ -53,6 +53,16 @@ procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
   vid_modul: string;
 begin
+  if vcall='kode_trans_export_faktur' then
+  begin
+    FExportFaktur.kode_jenis_transaksi:=MemMasterData['KD_MASTER'];
+    FExportFaktur.edJenisTransaksi.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='exportfaktur' then
+  begin
+    FExportFaktur.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FExportFaktur.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
   //ShowMessage(vcall);
   if vcall='m_bank_garansi' then
   begin
@@ -758,6 +768,7 @@ begin
   if vcall='kode_trans_penjualan' then
   begin
     FNew_Penjualan.edKode_Trans.Text:=MemMasterData['KD_MASTER'];
+    FNew_Penjualan.edNama_Trans.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='m_provinsi' then
   begin
@@ -969,6 +980,12 @@ begin
   end; //Pengajuan pengeluaran kas
 
   //Nanang
+  if vcall='amploppelanggankaresidenan' then
+  begin
+    FAmplopPelanggan.StrKaresidananID:=MemMasterData['KD_MASTER'];
+    FAmplopPelanggan.EdKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
   if vcall='m_kares_telemarketing' then
   begin
     FListOrderTelemarketing.edKodeKaresidenan.Text:=MemMasterData['KD_MASTER'];
@@ -1134,17 +1151,17 @@ begin
     open;
   end;
 
-    FMasterData.MemMasterData.active:=false;
-    FMasterData.MemMasterData.active:=true;
-    FMasterData.MemMasterData.EmptyTable;
+  FMasterData.MemMasterData.active:=false;
+  FMasterData.MemMasterData.active:=true;
+  FMasterData.MemMasterData.EmptyTable;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      Showmessage('Maaf, Data Tidak Ditemukan..');
-    end;
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
+    Showmessage('Maaf, Data Tidak Ditemukan..');
+  end;
 
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
@@ -1156,7 +1173,7 @@ begin
      Dm.Qtemp.next;
     end;
     FMasterData.MemMasterData.SortByFields('KD_MASTER asc');
-    end;
+  end;
 
 
 end;

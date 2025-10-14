@@ -85,6 +85,7 @@ type
     procedure dtTanggal_KirimCloseUp(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure edNama_PelangganChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -730,6 +731,26 @@ begin
     Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
     Fbrowse_data_pelanggan.vcall:='sumber_order';
     Fbrowse_data_pelanggan.ShowModal;
+  end;
+end;
+
+procedure TFNew_SalesOrder.edNama_PelangganChange(Sender: TObject);
+begin
+  if edKode_Pelanggan.Text<>'' then
+  begin
+    with dm.Qtemp do
+    begin
+      Close;
+      Sql.Clear;
+      SQl.Text:='SELECT karesidenan FROM vcustomer WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
+      Open;
+    end;
+    if dm.Qtemp.FieldValues['karesidenan']=NULL then
+    begin
+      edNama_Pelanggan.Text:='';
+      edKode_Pelanggan.Text:='';
+      MessageDlg('Wilayah Pelanggan tersebut belum di setting Karesidenan..!!',mtInformation,[mbRetry],0);
+    end;
   end;
 end;
 

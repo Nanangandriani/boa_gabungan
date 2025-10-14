@@ -529,6 +529,7 @@ begin
            FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:='0';
            FNew_Penjualan.MemDetail['GRAND_TOTAL']:='0';
            FNew_Penjualan.MemDetail.post;
+           FNew_Penjualan.HitungDetail;
         end;
       end;
       Except on E :Exception do

@@ -53,7 +53,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UUser, UMainMenu;
+uses UDataModule, UUser, UMainMenu, UHomeLogin;
 
 
 procedure TFNew_User.BBatalClick(Sender: TObject);
@@ -65,76 +65,98 @@ end;
 
 procedure TFNew_User.BSimpanClick(Sender: TObject);
 begin
-    if EdNik.Text='' then
+  if EdNik.Text='' then
+  begin
+    MessageDlg('NIK Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNik.SetFocus;
+    Exit;
+  end;
+  if EdNama.Text='' then
+  begin
+    MessageDlg('Nama User Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdNama.SetFocus;
+    Exit;
+  end;
+  if EdPass.Text='' then
+  begin
+    MessageDlg('Password Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdPass.SetFocus;
+    Exit;
+  end;
+  if CbJabatan.Text='' then
+  begin
+    MessageDlg('Jabatan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    CbJabatan.SetFocus;
+    Exit;
+  end;
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * FROM t_user WHERE user_name='+QuotedStr(EdNama.Text);
+    open;
+  end;
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Nama User Sudah Digunakan..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end;
+
+  if not dm.koneksi.InTransaction then
+  dm.koneksi.StartTransaction;
+  try
+  begin
+  if Status=0 then
+  begin
+    with dm.Qtemp do
     begin
-      MessageDlg('NIK Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      EdNik.SetFocus;
-      Exit;
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM t_user WHERE user_name='+QuotedStr(EdNama.Text);
+      open;
     end;
-    if EdNama.Text='' then
+    with dm.Qtemp do
     begin
-      MessageDlg('Nama User Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      EdNama.SetFocus;
-      Exit;
+      close;
+      sql.Clear;
+      sql.Text:='insert into t_user(code,user_name,full_name,password,dept_code,position_code,created_at,created_by)values('+QuotedStr(EdNik.Text)+','+
+                ''+QuotedStr(EdNama.Text)+','+QuotedStr(Edfull_name.Text)+','+
+                ''+QuotedStr(EdPass.Text)+','+
+                ''+QuotedStr(kddept.Text)+','+
+                ''+QuotedStr(kdJab.Text)+',NOW(),'+QuotedStr(FHomeLogin.Eduser.Text)+' )';
+      ExecSQL;
     end;
-    if EdPass.Text='' then
+  end;
+  if Status=1 then
+  begin
+    with dm.Qtemp do
     begin
-      MessageDlg('Password Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      EdPass.SetFocus;
-      Exit;
+      close;
+      sql.Clear;
+      sql.Text:='Update t_user set '+
+                ' user_name='+QuotedStr(EdNama.Text)+','+
+                ' full_name='+QuotedStr(Edfull_name.Text)+','+
+                ' Password='+QuotedStr(EdPass.Text)+','+
+                ' dept_code='+QuotedStr(kddept.Text)+','+
+                ' position_code='+QuotedStr(kdjab.Text)+','+
+                ' updated_at=NOW(),updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                ' where code='+QuotedStr(EdNik.Text);
+      ExecSQL;
     end;
-    if CbJabatan.Text='' then
-    begin
-      MessageDlg('Jabatan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      CbJabatan.SetFocus;
-      Exit;
-    end;
-    if not dm.koneksi.InTransaction then
-    dm.koneksi.StartTransaction;
-    try
-    begin
-    if status=0 then
-    begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='insert into t_user(code,user_name,full_name,password,dept_code,position_code)values('+QuotedStr(EdNik.Text)+','+
-                  ''+QuotedStr(EdNama.Text)+','+QuotedStr(Edfull_name.Text)+','+
-                  ''+QuotedStr(EdPass.Text)+','+
-                  ''+QuotedStr(kddept.Text)+','+
-                  ''+QuotedStr(kdJab.Text)+' )';
-        ExecSQL;
-      end;
-    end;
-    if status=1 then
-    begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='Update t_user set '+
-                  ' user_name='+QuotedStr(EdNama.Text)+','+
-                  ' full_name='+QuotedStr(Edfull_name.Text)+','+
-                  ' Password='+QuotedStr(EdPass.Text)+','+
-                  ' dept_code='+QuotedStr(kddept.Text)+','+
-                  ' position_code='+QuotedStr(kdjab.Text)+''+
-                  ' where code='+QuotedStr(EdNik.Text);
-        ExecSQL;
-      end;
-    end;
-    dm.koneksi.Commit;
-    Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-    BBatalClick(sender);
-    end
-    Except
-    on E :Exception do
-    begin
-    MessageDlg(E.Message,mtError,[MBok],0);
-    dm.koneksi.Rollback;
-    end;
-    end;
-    FMainMenu.TampilTabForm2;
+  end;
+  dm.koneksi.Commit;
+  Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+  BBatalClick(sender);
+  end
+  Except
+  on E :Exception do
+  begin
+  MessageDlg(E.Message,mtError,[MBok],0);
+  dm.koneksi.Rollback;
+  end;
+  end;
+  FMainMenu.TampilTabForm2;
 end;
 
 procedure TFNew_User.CbJabatanSelect(Sender: TObject);

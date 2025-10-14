@@ -185,6 +185,7 @@ type
     { Public declarations }
     vid_prospek :Integer;
     KodeHeaderPiutang,KodeHeaderPiutangLain :string;
+    StatusErr:Boolean;
     procedure Clear;
     procedure Save;
     procedure Update;
@@ -286,26 +287,37 @@ begin
   if Ednama.Text='' then
   begin
     MessageDlg('Nama Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    StatusErr:=False;
     exit;
   end;
   if edJenisUsaha.Text='' then
   begin
     MessageDlg('Jenis Usaha Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    StatusErr:=False;
     exit;
   end;
   if edJenisPelanggan.Text='' then
   begin
     MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    StatusErr:=False;
     exit;
   end;
   if edTypePenjualan.Text='' then
   begin
     MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    StatusErr:=False;
     exit;
   end;
   if edGolonganPelanggan.Text='' then
   begin
     MessageDlg('Golongan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    StatusErr:=False;
+    exit;
+  end;
+  if Edtempo.Text='' then
+  begin
+    MessageDlg('Jatuh Tempo Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    StatusErr:=False;
     exit;
   end;
 
@@ -432,7 +444,15 @@ end;
 
 procedure TFNew_Pelanggan.RzBitBtn1Click(Sender: TObject);
 begin
-  FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabAkunPerkiraan;
+  if Edkodewilayah.Text='' then
+  begin
+    MessageDlg('Wilayah Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else if Edkodepos.Text='' then
+  begin
+    MessageDlg('Kode Pos Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else begin
+    FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabAkunPerkiraan;
+  end;
 end;
 
 procedure TFNew_Pelanggan.RzBitBtn2Click(Sender: TObject);
@@ -858,7 +878,7 @@ begin
     btJenisPelanggan.Visible:=false;
     btMasterTypePenjualan.Visible:=false;
     btMasterGolongan.Visible:=false;
-    Edautocode.Visible:=false;
+//    Edautocode.Visible:=false;
     btJenisUsaha.Visible:=false;
     btKantorPusat.Visible:=false;
   end else begin
@@ -866,7 +886,7 @@ begin
     btJenisPelanggan.Visible:=true;
     btMasterTypePenjualan.Visible:=true;
     btMasterGolongan.Visible:=true;
-    Edautocode.Visible:=true;
+//    Edautocode.Visible:=true;
     btJenisUsaha.Visible:=true;
     btKantorPusat.Visible:=true;
   end;
@@ -1051,21 +1071,24 @@ begin
   begin
     MessageDlg('Nama PKP Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
-  end else if (Ednpwp.Text='') AND (cbpkp.Checked=True) then
+  end else if (Ednpwp.Text='') AND (cbpkp.Checked=True) AND (edKd_Jenis_Pajak.Text='TIN') then
   begin
     MessageDlg('NPWP Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
-  end else if (Ednik.Text='') AND (cbpkp.Checked=True) then
+  end else if (Ednik.Text='') AND (cbpkp.Checked=True) AND (edKd_Jenis_Pajak.Text='National ID') then
   begin
     MessageDlg('NIK Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
-  end else if (EdNitKu.Text='') AND (cbpkp.Checked=True) then
+  end else if (EdNitKu.Text='') AND (cbpkp.Checked=True) AND (edKd_Jenis_Pajak.Text='TIN') then
   begin
     MessageDlg('NITKU Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
+  end else if (Edkodewilayah.Text='') then
+  begin
+    MessageDlg('Wilayah Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
   end else
   begin
-
     if not dm.Koneksi.InTransaction then
      dm.Koneksi.StartTransaction;
     try
@@ -1205,7 +1228,9 @@ end;
 
 procedure TFNew_Pelanggan.btNextStepClick(Sender: TObject);
 begin
+  StatusErr:=True;
   CekTabMasterPelanggan;
+  if StatusErr=True then
   FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabDetailPelanggan;
 end;
 

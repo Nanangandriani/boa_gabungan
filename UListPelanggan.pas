@@ -185,7 +185,8 @@ begin
       edTypePenjualan.Text:=Dm.Qtemp.FieldByName('name_selling_type').AsString;
       edKode_gol.Text:=Dm.Qtemp.FieldByName('code_group').AsString;
       edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('name_group').AsString;
-      vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger;
+      if dm.Qtemp.FieldValues['idprospek']<>NULL then
+      vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger else vid_prospek:=0;
       edAkunPiutang.Text:=Dm.Qtemp.FieldByName('account_code').AsString;
       edNamaPiutang.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code').AsString));
       KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code').AsString;

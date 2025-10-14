@@ -25,7 +25,8 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
+  frxRich;
 
 type
   TFDataListPenjualan = class(TForm)
@@ -63,10 +64,40 @@ type
     QCetak: TUniQuery;
     frxDBDPenjualan: TfrxDBDataset;
     Report: TfrxReport;
+    dxBarLargeButton4: TdxBarLargeButton;
+    QCetakSJ: TUniQuery;
+    frxDBDCetakSJ: TfrxDBDataset;
+    QCetakSJno_traveldoc: TStringField;
+    QCetakSJcode_cust: TStringField;
+    QCetakSJname_cust: TStringField;
+    QCetakSJaddress: TMemoField;
+    QCetakSJcode_item: TStringField;
+    QCetakSJname_item: TStringField;
+    QCetakSJamount: TFloatField;
+    QCetakSJcode_unit: TStringField;
+    QCetakSJname_unit: TStringField;
+    QCetakSJno_reference: TStringField;
+    QCetakSJket: TStringField;
+    QCetakSJtrans_no: TStringField;
+    QCetakSJtrans_date: TDateField;
+    QJurnal: TUniQuery;
+    frxDBDJurnal: TfrxDBDataset;
+    dxBarLargeButton5: TdxBarLargeButton;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton6: TdxBarLargeButton;
+    frxReport1: TfrxReport;
+    dxBarLargeButton7: TdxBarLargeButton;
+    dxBarLargeButton8: TdxBarLargeButton;
+    frxRichObject1: TfrxRichObject;
+    QCetaktrans_no: TStringField;
     QCetakno_inv_tax: TStringField;
+    QCetaktrans_date: TDateField;
     QCetakcode_cust: TStringField;
     QCetakname_cust: TStringField;
     QCetakaddress: TMemoField;
+    QCetakno_npwp: TMemoField;
     QCetakcode_item: TStringField;
     QCetakname_item: TStringField;
     QCetakamount: TFloatField;
@@ -89,34 +120,6 @@ type
     QCetakpiece_second: TFloatField;
     QCetakpiece_third: TFloatField;
     QCetakpiece_fourth: TFloatField;
-    dxBarLargeButton4: TdxBarLargeButton;
-    QCetakSJ: TUniQuery;
-    frxDBDCetakSJ: TfrxDBDataset;
-    QCetakSJno_traveldoc: TStringField;
-    QCetakSJcode_cust: TStringField;
-    QCetakSJname_cust: TStringField;
-    QCetakSJaddress: TMemoField;
-    QCetakSJcode_item: TStringField;
-    QCetakSJname_item: TStringField;
-    QCetakSJamount: TFloatField;
-    QCetakSJcode_unit: TStringField;
-    QCetakSJname_unit: TStringField;
-    QCetakSJno_reference: TStringField;
-    QCetakSJket: TStringField;
-    QCetakSJtrans_no: TStringField;
-    QCetaktrans_no: TStringField;
-    QCetaktrans_date: TDateField;
-    QCetakSJtrans_date: TDateField;
-    QJurnal: TUniQuery;
-    frxDBDJurnal: TfrxDBDataset;
-    dxBarLargeButton5: TdxBarLargeButton;
-    dxBarManager1Bar3: TdxBar;
-    cbBulan: TdxBarCombo;
-    edTahun: TdxBarSpinEdit;
-    dxBarLargeButton6: TdxBarLargeButton;
-    frxReport1: TfrxReport;
-    dxBarLargeButton7: TdxBarLargeButton;
-    dxBarLargeButton8: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -362,7 +365,7 @@ begin
     close;
     sql.clear;
     sql.add(' select a."trans_no", "no_inv_tax", "trans_date", a."code_cust", a."name_cust", '+
-           ' d."address", b."code_item", b."name_item", '+
+           ' d."address",COALESCE(e.no_npwp,'''') no_npwp, b."code_item", b."name_item", '+
            ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
            ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
            ' b."pph_name", b."pph_percent", b."pph_value", b."tot_piece_value", '+
@@ -375,6 +378,7 @@ begin
            ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
            ' LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item '+
            ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
+           ' LEFT JOIN t_customer e on e.customer_code=a.code_cust '+
            ' where a.deleted_at is null and '+
            ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
            ' order by b.created_at Desc');

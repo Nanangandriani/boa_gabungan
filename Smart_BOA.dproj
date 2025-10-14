@@ -98,6 +98,9 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
+        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.2.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.2.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -479,10 +482,6 @@
         </DCCReference>
         <DCCReference Include="UPermintaan_Barang2.pas">
             <Form>FPermintaan_Barang2</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UTerima_Amplop.pas">
-            <Form>FTerima_Amplop</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UNew_TerimaAmplop.pas">
@@ -1173,6 +1172,50 @@
         </DCCReference>
         <DCCReference Include="UNew_DataPenjualanPromosi.pas">
             <Form>FNew_DataPenjualanPromosi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UExportFaktur.pas">
+            <Form>FExportFaktur</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UPajakCapFasilitas_KetTambahan.pas">
+            <Form>FPajakCapFasilitas_KetTambahan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataPool.pas">
+            <Form>FDataPool</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UMonitoringTargetOmset.pas">
+            <Form>FMonitoringTargetOmset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListPiutangBermasalah.pas">
+            <Form>FListPiutangBermasalah</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UHak_Akses.pas">
+            <Form>FHak_Akses</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ULaporanHarianSisaNota.pas">
+            <Form>FLaporanHarianSisaNota</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_PiutangBeramasalah.pas">
+            <Form>FNew_PiutangBermasalah</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBrowseNotaPenjualan.pas">
+            <Form>FBrowseNotaPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UTerima_Amplop.pas">
+            <Form>FTerima_Amplop</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UAmplopPelanggan.pas">
+            <Form>FAmplopPelanggan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

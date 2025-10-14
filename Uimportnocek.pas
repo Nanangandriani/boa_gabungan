@@ -19,7 +19,7 @@ type
     SpinEdit2: TSpinEdit;
     Edit2: TEdit;
     SpinEdit1: TSpinEdit;
-    Edit1: TEdit;
+    Ed_header: TEdit;
     ProgressBar: TProgressBar;
     bConvertExcel: TButton;
     bCariExcel: TButton;
@@ -32,6 +32,9 @@ type
     Label1: TLabel;
     LProgress: TLabel;
     Label2: TLabel;
+    QMaster_Nocek: TUniQuery;
+    DSMaster_nocek: TDataSource;
+    Ed_trans_no: TEdit;
     procedure FormShow(Sender: TObject);
     procedure cbbankChange(Sender: TObject);
     procedure BProsesClick(Sender: TObject);
@@ -39,6 +42,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure clear;
   end;
 
 var
@@ -48,19 +52,70 @@ implementation
 
 {$R *.dfm}
 
-uses UMainMenu, UDataModule, Udafcek_entry;
+uses UMainMenu, UDataModule, Udafcek_entry, UHomeLogin;
 
 procedure TFImportnocek.BProsesClick(Sender: TObject);
 var i,j:integer;
     no_faktur,no_urut:string;
+    trans_no:integer;
 begin
+   if cbbank.Text='' then
+   begin
+      MessageDlg('Kode Bank Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      cbbank.SetFocus;
+      Exit;
+   end;
+   if Cbrek.Text='' then
+   begin
+      MessageDlg('Rekening Bank Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Cbrek.SetFocus;
+      Exit;
+   end;
+   if Cbcek.Text='' then
+   begin
+      MessageDlg('Cek atau Giro Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Cbrek.SetFocus;
+      Exit;
+   end;
+   if Ed_header.Text='' then
+   begin
+      MessageDlg('Header Cek atau Giro Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Cbrek.SetFocus;
+      Exit;
+   end;
+
+
    if Application.MessageBox('Import data No.Cek/BG akan diproses?','confirm',mb_yesno or mb_iconquestion)=id_yes then
    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT max(trans_no) as transno FROM t_nocek_master';
+        Open;
+        trans_no:=fieldbyname('transno').AsInteger+1;
+              //showmessage(inttostr(trans_no));
+      end;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Add('insert into t_nocek_master(trans_no,bank,rek_no,created_at,created_by,header)');
+        sql.Add('values (:trans,:bnk,:nrk,:created_at,:created_by,:parheader)');
+        Params.ParamByName('trans').Value:=trans_no;
+        Params.ParamByName('bnk').Value:=cbbank.Text;;
+        Params.ParamByName('nrk').Value:=cbrek.Text;
+        Params.parambyname('created_at').AsDateTime:=Now;
+        Params.parambyname('created_by').AsString:=FHomeLogin.Eduser.Text;
+        Params.ParamByName('parheader').Value:=Ed_header.Text;
+        Execute;
+      end;
+
       ProgressBar.Position:=0;
       j:=0;
       ProgressBar.Max:=SpinEdit2.Value-SpinEdit1.Value;
 
-      if (Length(cbbank.text)=0) or(Length(cbrek.Text)=0) or(Length(cbcek.Text)=0) or(Length(edit1.Text)=0) then
+      if (Length(cbbank.text)=0) or(Length(cbrek.Text)=0) or(Length(cbcek.Text)=0) or(Length(Ed_header.Text)=0) then
       begin
         showmessage('Data tidak dapat diproses, parameter belum lengkap !');
         exit;
@@ -86,7 +141,7 @@ begin
          if  (i>10000000) then
          no_urut:=inttostr(i);
 
-         no_faktur:=Edit1.Text+no_urut;
+         no_faktur:=Ed_header.Text+no_urut;
          with MyQuery1 do
          begin
             Close;
@@ -102,15 +157,16 @@ begin
             begin
               close;
               sql.clear;
-              sql.Add('insert into t_nocek(cek_no,bank,rek_no,cekbg,status,created_at,created_by)');
-              sql.Add('values (:nc,:kdb,:nrk,:ckb,:stat,:created_at,:created_by)');
+              sql.Add('insert into t_nocek(cek_no,bank,rek_no,cekbg,status,created_at,created_by,trans_no)');
+              sql.Add('values (:nc,:kdb,:nrk,:ckb,:stat,:created_at,:created_by,:trans_no)');
               Params.ParamByName('nc').Value:=no_faktur;
               Params.ParamByName('kdb').Value:=cbbank.Text;
               Params.ParamByName('nrk').Value:=cbrek.Text;
               Params.ParamByName('ckb').Value:=cbcek.Text;
               Params.ParamByName('stat').Value:='N';
               Params.parambyname('created_at').AsDateTime:=Now;
-              Params.parambyname('created_by').AsString:='Admin';
+              Params.parambyname('created_by').AsString:=FHomeLogin.Eduser.Text;
+              Params.parambyname('trans_no').Value:=trans_no;
               Execute;
             end;
          end;
@@ -149,7 +205,7 @@ begin
    begin
      close;
      sql.clear;
-     sql.add('select bank_code from t_bank');
+     sql.add('select bank_code from t_bank where deleted_at is null');
      open;
      first;
    end;
@@ -159,6 +215,16 @@ begin
      cbbank.Items.add(dm.Qtemp.fieldbyname('bank_code').asstring);
      dm.Qtemp.next;
    end;
+end;
+
+
+procedure TFImportnocek.clear;
+begin
+  Ed_trans_no.Text:='';
+  cbbank.Text:='';
+  cbcek.Text:='';
+  cbrek.Text:='';
+  Ed_header.Text:='';
 end;
 
 end.

@@ -26,7 +26,6 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 852
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -217,7 +216,9 @@ object FDaf_EntryCek: TFDaf_EntryCek
   object qnocek: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_nocek order by  trans_no ASC')
+      
+        'select * from t_nocek where deleted_at is null order by  trans_n' +
+        'o ASC')
     MasterSource = DSnocek_master
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
@@ -862,7 +863,9 @@ object FDaf_EntryCek: TFDaf_EntryCek
   object Qnocek_master: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_nocek_master order by trans_no ASC')
+      
+        'select * from t_nocek_master where deleted_at is null order by t' +
+        'rans_no ASC')
     Left = 440
     Top = 24
     object Qnocek_mastertrans_no: TIntegerField
@@ -884,6 +887,31 @@ object FDaf_EntryCek: TFDaf_EntryCek
     object Qnocek_masterrek_no: TStringField
       FieldName = 'rek_no'
       Size = 25
+    end
+    object Qnocek_mastercreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object Qnocek_mastercreated_by: TStringField
+      FieldName = 'created_by'
+      Size = 50
+    end
+    object Qnocek_masterupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object Qnocek_masterupdated_by: TStringField
+      FieldName = 'updated_by'
+      Size = 50
+    end
+    object Qnocek_masterdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object Qnocek_masterdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
+    end
+    object Qnocek_masterheader: TStringField
+      FieldName = 'header'
+      Size = 10
     end
   end
   object DSnocek_master: TDataSource

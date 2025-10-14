@@ -1,7 +1,8 @@
 object FUser: TFUser
   Left = 0
   Top = 0
-  Caption = 'FUser'
+  BorderStyle = bsDialog
+  Caption = 'Data User'
   ClientHeight = 433
   ClientWidth = 832
   Color = clBtnFace
@@ -29,7 +30,9 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'code'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode'
+        Width = 74
       end
       item
         CellButtons = <>
@@ -37,8 +40,9 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'user_name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama User'
-        Width = 200
+        Width = 213
       end
       item
         CellButtons = <>
@@ -46,8 +50,9 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'full_name'
         Footers = <>
-        Visible = False
-        Width = 200
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama Lengkap'
+        Width = 315
       end
       item
         CellButtons = <>
@@ -55,6 +60,7 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'password'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -63,8 +69,9 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'dept'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Departemen'
-        Width = 100
+        Width = 151
       end
       item
         CellButtons = <>
@@ -72,8 +79,9 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'position'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jabatan'
-        Width = 100
+        Width = 173
       end
       item
         CellButtons = <>
@@ -81,6 +89,7 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'dept_code'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
         Width = 0
       end
@@ -90,6 +99,7 @@ object FUser: TFUser
         EditButtons = <>
         FieldName = 'position_code'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
         Width = 0
       end>
@@ -693,12 +703,13 @@ object FUser: TFUser
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select A.code,A.user_name,a.full_name,a.password,B.dept_code,B.d' +
-        'ept,C.position_code,C.position from t_user a '
+        'select a.user_id,a.code,a.user_name,a.full_name,a.password,b.dep' +
+        't_code,b.dept,C.position_code,c.position,a.created_at from t_use' +
+        'r a '
       'inner join t_dept b on a.dept_code=b.dept_code'
-      
-        'inner join t_position c on a.position_code=c.position_code ORDER' +
-        ' BY A.code DESC')
+      'inner join t_position c on a.position_code=c.position_code '
+      'WHERE a.deleted_at is NULL'
+      'ORDER BY a.created_at DESC')
     Left = 464
     Top = 32
     object QUsercode: TStringField

@@ -1247,6 +1247,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Align = alLeft
           Caption = 'Data Klasifikasi Harga Jual'
           TabOrder = 4
+          Visible = False
           OnClick = btKlasifikasiHargaHargaJualClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100

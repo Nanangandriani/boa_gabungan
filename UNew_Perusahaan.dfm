@@ -2,7 +2,8 @@ object FNewPerusahaan: TFNewPerusahaan
   Left = 0
   Top = 0
   Anchors = []
-  Caption = 'Form New Perusahaan'
+  BorderStyle = bsDialog
+  Caption = 'Form Perusahaan'
   ClientHeight = 349
   ClientWidth = 524
   Color = clWhite
@@ -69,7 +70,7 @@ object FNewPerusahaan: TFNewPerusahaan
   object Label2: TLabel
     Left = 24
     Top = 140
-    Width = 21
+    Width = 22
     Height = 15
     Caption = 'Telp'
   end
@@ -131,14 +132,14 @@ object FNewPerusahaan: TFNewPerusahaan
   end
   object Label15: TLabel
     Left = 126
-    Top = 264
+    Top = 289
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label16: TLabel
     Left = 24
-    Top = 264
+    Top = 289
     Width = 58
     Height = 15
     Caption = 'Mata Uang'
@@ -150,6 +151,20 @@ object FNewPerusahaan: TFNewPerusahaan
     Height = 15
     Caption = 'NIK  :'
   end
+  object Label18: TLabel
+    Left = 24
+    Top = 260
+    Width = 34
+    Height = 15
+    Caption = 'NITKU'
+  end
+  object Label21: TLabel
+    Left = 126
+    Top = 260
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
   object Panel1: TPanel
     Left = 0
     Top = 312
@@ -157,8 +172,8 @@ object FNewPerusahaan: TFNewPerusahaan
     Height = 37
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 311
-    ExplicitWidth = 520
+    ExplicitTop = 303
+    ExplicitWidth = 518
     object BBatal: TRzBitBtn
       Left = 448
       Top = 1
@@ -219,7 +234,7 @@ object FNewPerusahaan: TFNewPerusahaan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 444
+      ExplicitLeft = 442
     end
     object BSimpan: TRzBitBtn
       Left = 298
@@ -281,7 +296,7 @@ object FNewPerusahaan: TFNewPerusahaan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 294
+      ExplicitLeft = 292
     end
     object BEdit: TRzBitBtn
       Left = 373
@@ -343,7 +358,7 @@ object FNewPerusahaan: TFNewPerusahaan
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 369
+      ExplicitLeft = 367
     end
   end
   object Ed_kode: TEdit
@@ -379,7 +394,6 @@ object FNewPerusahaan: TFNewPerusahaan
     Top = 229
     Width = 145
     Height = 23
-    Enabled = False
     TabOrder = 5
   end
   object cb_jenis_usaha: TRzComboBox
@@ -401,7 +415,7 @@ object FNewPerusahaan: TFNewPerusahaan
   end
   object Cb_Mata_uang: TRzComboBox
     Left = 135
-    Top = 261
+    Top = 286
     Width = 145
     Height = 23
     TabOrder = 8
@@ -424,11 +438,10 @@ object FNewPerusahaan: TFNewPerusahaan
     TabOrder = 10
   end
   object EdNik: TEdit
-    Left = 338
-    Top = 229
+    Left = 339
+    Top = 228
     Width = 133
     Height = 23
-    Enabled = False
     TabOrder = 11
   end
   object RzBitBtn1: TRzBitBtn
@@ -492,5 +505,12 @@ object FNewPerusahaan: TFNewPerusahaan
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFD
       FAFFC6EEC3FF71D86CFF3CCB39FF1FC41FFF1FC41FFF3CCB39FF71D86CFFC6EF
       C3FFFAFDFAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+  end
+  object Ed_nitku: TEdit
+    Left = 135
+    Top = 257
+    Width = 228
+    Height = 23
+    TabOrder = 13
   end
 end

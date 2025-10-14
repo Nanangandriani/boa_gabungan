@@ -355,21 +355,34 @@ begin
     MessageDlg('Tiket '+MemMasterData['ticket_number']+'sudah dipilih..!!',mtInformation,[mbRetry],0);
   end else
   begin
-    with FNew_SalesOrder do
+    with dm.Qtemp2 do
     begin
-      edKode_Pelanggan.Text:=MemMasterData['outlet_code'];
-      edNama_Pelanggan.Text:=MemMasterData['outlet_name'];
-      edNoReff.Text:=MemMasterData['ticket_number'];
-      spJatuhTempo.Text:=MemMasterData['payment_term'];
-      if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
-      begin
-        edKode_Pelanggan.ReadOnly:=true;
-        edNama_Pelanggan.ReadOnly:=true;
-        dtTanggal_Pesan.Enabled:=False;
-      end;
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM t_customer WHERE customer_code='+QuotedStr(MemMasterData['outlet_code']);
     end;
-    GetDetail;
-    Close;
+
+    if dm.Qtemp2.RecordCount=0 then
+    begin
+      MessageDlg('Pelanggan tidak ada di data pelanggan..!!',mtInformation,[mbRetry],0);
+    end else
+    begin
+      with FNew_SalesOrder do
+      begin
+        edKode_Pelanggan.Text:=MemMasterData['outlet_code'];
+        edNama_Pelanggan.Text:=MemMasterData['outlet_name'];
+        edNoReff.Text:=MemMasterData['ticket_number'];
+        spJatuhTempo.Text:=MemMasterData['payment_term'];
+        if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
+        begin
+          edKode_Pelanggan.ReadOnly:=true;
+          edNama_Pelanggan.ReadOnly:=true;
+          dtTanggal_Pesan.Enabled:=False;
+        end;
+      end;
+      GetDetail;
+      Close;
+    end;
   end;
 
 //  Showmessage(MemMasterData['ticket_number']);

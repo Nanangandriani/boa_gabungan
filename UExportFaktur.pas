@@ -570,6 +570,8 @@ begin
   end;
   kode_jenis_transaksi:=dm.Qtemp.FieldValues['code'];
   edJenisTransaksi.Text:=dm.Qtemp.FieldValues['name'];
+  cbExport.ItemIndex:=1;
+  cbExport.Enabled:=False;
 end;
 
 procedure TFExportFaktur.edCapFasilitasButtonClick(Sender: TObject);

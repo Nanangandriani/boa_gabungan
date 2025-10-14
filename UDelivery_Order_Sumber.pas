@@ -240,6 +240,7 @@ begin
              end;
            MemDetail.Next;
            end;
+           FNewDeliveryOrder.spTotalTitik.Text:=IntToStr(FNewDeliveryOrder.MemDataMuatan.RecordCount-1);
          end;
       end
       Except on E :Exception do

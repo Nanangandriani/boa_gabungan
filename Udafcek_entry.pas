@@ -84,6 +84,13 @@ type
     Qnocek_masterlast_nocek: TStringField;
     Qnocek_masterbank: TStringField;
     Qnocek_masterrek_no: TStringField;
+    Qnocek_mastercreated_at: TDateTimeField;
+    Qnocek_mastercreated_by: TStringField;
+    Qnocek_masterupdated_at: TDateTimeField;
+    Qnocek_masterupdated_by: TStringField;
+    Qnocek_masterdeleted_at: TDateTimeField;
+    Qnocek_masterdeleted_by: TStringField;
+    Qnocek_masterheader: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure cbbankChange(Sender: TObject);
@@ -106,7 +113,7 @@ implementation
 
 {$R *.dfm}
 
-uses Uimportnocek, UDataModule;
+uses Uimportnocek, UDataModule, UHomeLogin;
 
 
 var
@@ -124,9 +131,13 @@ end;
 
 procedure TFDaf_EntryCek.ActBaruExecute(Sender: TObject);
 begin
+    Status:=0;
     if not assigned(FImportnocek) then
     FImportnocek:=TFImportnocek.create(application);
     FImportnocek.show;
+    FImportnocek.Caption:='Input Nomor Cek';
+    FImportnocek.clear;
+
 end;
 
 procedure TFDaf_EntryCek.ActDelExecute(Sender: TObject);
@@ -139,8 +150,8 @@ begin
       sql.Clear;
       sql.Text:=' Update t_nocek_master set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                 ' where trans_no='+QuotedStr(DBGridCek.Fields[0].AsString);
-      parambyname('deleted_at').AsDateTime:=Now;
-      parambyname('deleted_by').AsString:='Admin';
+      parambyname('deleted_at').AsDateTime:=Now();
+      parambyname('deleted_by').AsString:=FHomeLogin.EdUser.Text;
       Execute;
     end;
     with dm.Qtemp1 do
@@ -149,8 +160,8 @@ begin
       sql.Clear;
       sql.Text:=' Update t_nocek set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                 ' where trans_no='+QuotedStr(DBGridCek.Fields[0].AsString);
-      parambyname('deleted_at').AsDateTime:=Now;
-      parambyname('deleted_by').AsString:='Admin';
+      parambyname('deleted_at').AsDateTime:=Now();
+      parambyname('deleted_by').AsString:=FHomeLogin.EdUser.Text;
       Execute;
     end;
     ActROExecute(sender);
@@ -172,14 +183,13 @@ procedure TFDaf_EntryCek.ActUpdateExecute(Sender: TObject);
 begin
     with qnocek do
     begin
-      with dm.Qtemp do
-      begin
         close;
         sql.Clear;
-        sql.Text:=' select * from t_nocek where trans_no='+QuotedStr(qnocek['trans_no']);
+        sql.Text:=' select * from t_nocek where trans_no='+DBGridCek.Fields[0].Asstring;
         ExecSQL;
-      end;
     end;
+    FImportnocek.cbcek.Text:=qnocek.FieldByName('cekbg').Asstring;
+
     with FImportnocek do
     begin
       show;
@@ -190,9 +200,32 @@ begin
       begin
           cbbank.Text:=qnocek_master.FieldByName('bank').AsString;
           cbrek.Text:=qnocek_master.FieldByName('rek_no').AsString;
+          ed_trans_no.Text:=qnocek_master.FieldByName('trans_no').Value;
+
+          ed_header.Text:=qnocek_master.FieldByName('header').Asstring;
       end;
 
     end;
+
+    {with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT a.*,b.cek_no,b.bank,b.rek_no FROM t_nocek_master a INNER JOIN t_nocek b on a.trans_no=b.trans_no '+
+                'WHERE a.trans_no='+QuotedStr(DBGridCek.Fields[0].Value)+' '+
+                'GROUP BY a.first_nocek,a.last_noceka.bank,a.rek_no,a.trans_no,	a.created_at,a.created_by,a.updated_at,a.updated_by,a.deleted_at,a.deleted_by,a.header,b.cek_no,b.bank,b.rek_no '+
+                'ORDER BY trans_no ';
+      Open;
+    end;
+    with FImportnocek do
+    begin
+      show;
+      Status:=1;
+      caption:='Update No Cek';
+
+      cbbank.Text:=dm.Qtemp.FieldByName('bank').AsString;
+      cbrek.Text:=dm.Qtemp.FieldByName('rek_no').AsString;
+    end;}
 
 end;
 

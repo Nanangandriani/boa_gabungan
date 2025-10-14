@@ -20,10 +20,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1350
     Height = 574
     Hint = ''
-    ActivePage = TabDataMuatan
+    ActivePage = TabDataBiaya
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1346
@@ -690,6 +690,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object TabDataBiaya: TRzTabSheet
       Caption = 'Data Biaya'
       OnClick = TabDataBiayaClick
+      ExplicitWidth = 1342
+      ExplicitHeight = 548
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -699,6 +701,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1342
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -793,9 +796,9 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         object Label49: TLabel
           Left = 28
           Top = 203
-          Width = 63
+          Width = 67
           Height = 15
-          Caption = 'Jumlah Titik'
+          Caption = 'Tambah Titik'
         end
         object Label54: TLabel
           Left = 661
@@ -1016,6 +1019,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 37
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 511
+        ExplicitWidth = 1342
         object btBatalSumberJual: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1076,6 +1081,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1266
         end
         object btSimpanSumberJual: TRzBitBtn
           Left = 1195
@@ -1137,6 +1143,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1191
         end
         object btBackStep: TRzBitBtn
           Left = 1
@@ -1410,8 +1417,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object TabDokumenPendukung: TRzTabSheet
       Caption = 'Dokumen Pendukung'
-      ExplicitWidth = 1342
-      ExplicitHeight = 548
       object Panel3: TPanel
         Left = 0
         Top = 517
@@ -1419,8 +1424,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 32
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 516
-        ExplicitWidth = 1342
         object btBatalParameter: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1481,7 +1484,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1266
         end
         object btSaveParameter: TRzBitBtn
           Left = 1195
@@ -1543,7 +1545,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1191
         end
       end
       object Panel4: TPanel
@@ -1555,8 +1556,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 1342
-        ExplicitHeight = 516
         object Label14: TLabel
           Left = 133
           Top = 94

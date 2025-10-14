@@ -159,6 +159,7 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
         CharCase = ecUpperCase
         TabOrder = 0
         TextHint = 'Autonumber'
+        Visible = False
       end
       object btTampilkan: TRzBitBtn
         Left = 383

@@ -2,7 +2,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
   Left = 0
   Top = 0
   Caption = 'Monitoring Target Omset'
-  ClientHeight = 441
+  ClientHeight = 452
   ClientWidth = 920
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -54,7 +54,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     Left = 0
     Top = 127
     Width = 920
-    Height = 314
+    Height = 325
     Align = alClient
     Ctl3D = True
     DataSource = DsMonitoringTargetOmset
@@ -2357,7 +2357,6 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from vmonitoring_target_omset')
-    Active = True
     Left = 32
     Top = 296
   end

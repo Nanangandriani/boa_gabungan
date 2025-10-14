@@ -56,6 +56,8 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     QPerusahaan: TUniQuery;
     DsPerusahaan: TDataSource;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -64,6 +66,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,13 +118,26 @@ end;
 
  end;
 
+procedure TFListPerusahaan.dxBarLargeButton1Click(Sender: TObject);
+begin
+     status:=0;
+     FNewPerusahaan.Caption:='New Perusahaan';
+     FNewPerusahaan.stat:='BO';
+     FNewPerusahaan.Show;
+     Clear;
+     FNewPerusahaan.BSimpan.Visible:=True;
+     FNewPerusahaan.BEdit.Visible:=False;
+end;
+
 procedure TFListPerusahaan.refresh;
 begin
    with QPerusahaan do
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_company where deleted_at is null Order by company_code ASC ';
+       sql.Text:=' select *, '+
+                 ' case when stat_office=0 then ''KANTOR PUSAT'' else ''KANTOR CABANG'' end status_kantor '+
+                 ' from T_company where deleted_at is null Order by stat_office ASC ';
        open;
    end;
    QPerusahaan.Close;
@@ -132,6 +148,7 @@ procedure TFListPerusahaan.ActBaruExecute(Sender: TObject);
 begin
      status:=0;
      FNewPerusahaan.Caption:='New Perusahaan';
+     FNewPerusahaan.stat:='HO';
      FNewPerusahaan.Show;
      Clear;
      FNewPerusahaan.BSimpan.Visible:=True;
@@ -182,9 +199,20 @@ begin
       FNewPerusahaan.Ed_telp.Text:=Qperusahaan.FieldByName('telp').AsString;
       FNewPerusahaan.Ed_email.Text:=Qperusahaan.FieldByName('email').AsString;
       FNewPerusahaan.Ed_NPWP.Text:=Qperusahaan.FieldByName('npwp').AsString;
+      FNewPerusahaan.Ed_nitku.Text:=Qperusahaan.FieldByName('nitku').AsString;
       //FNewPerusahaan.Cb_status_pajak.Text:=Qperusahaan.FieldByName('tax_status').AsString;
       FNewPerusahaan.Ed_status_tax.Text:=Qperusahaan.FieldByName('tax_status').AsString;
       FNewPerusahaan.Cb_mata_uang.Text:=Qperusahaan.FieldByName('currency').AsString;
+
+      if Qperusahaan.FieldByName('stat_office').Value=0 then
+      begin
+        FNewPerusahaan.stat:='HO';
+      end
+      else
+      if Qperusahaan.FieldByName('stat_office').Value=1 then
+      begin
+        FNewPerusahaan.stat:='BO';
+      end;
 
     end;
 end;

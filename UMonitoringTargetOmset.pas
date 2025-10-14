@@ -250,10 +250,14 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT '+strVolume+' * FROM vmonitoring_target_omset '+
-                'WHERE year='+edTahun1.Text+' AND month='+IntToStr(cbBulan1.ItemIndex+1)+' AND '+
-                'group_name='+QuotedStr(cbKelompok.EditValue)+strKaresidenan
-                +strKabupaten+strKecamatan;
+//      sql.Text:='SELECT '+strVolume+' * FROM vmonitoring_target_omset '+
+//                'WHERE year='+edTahun1.Text+' AND month='+IntToStr(cbBulan1.ItemIndex+1)+' AND '+
+//                'group_name='+QuotedStr(cbKelompok.EditValue)+strKaresidenan
+//                +strKabupaten+strKecamatan;
+      sql.Text:='SELECT * FROM get_monitoring_target_omset'+
+                '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
+                ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
+                +','+QuotedStr(cbKabupaten.EditValue)+')';
       open;
     end;
     if Qreport.RecordCount=0 then
@@ -303,10 +307,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM vmonitoring_target_omset '+
-                'WHERE year='+edTahun1.Text+' AND month='+IntToStr(cbBulan1.ItemIndex+1)+' AND '+
-                'group_name='+QuotedStr(cbKelompok.EditValue)+strKaresidenan
-                +strKabupaten+strKecamatan;
+      sql.Text:='SELECT * FROM get_monitoring_target_omset'+
+              '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
+              ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
+              +','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
       open;
     end;
   end;

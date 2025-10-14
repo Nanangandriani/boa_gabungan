@@ -91,8 +91,8 @@ begin
               ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
               ' and c.item_code=e.code_item '+
               ' where '+
-  //                "trans_no"='+QuotedStr(edNomorTrans.Text)+' and '+
-              ' "id_master"='+QuotedStr(get_uuid)+' '+
+//                  "trans_no"='+QuotedStr(edNomorTrans.Text)+'  '+
+              ' "trans_no"='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
               ' -- Baca Detail Penjualan ';
     Open;
   end;
@@ -250,7 +250,7 @@ begin
   if Dm.Qtemp3.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping / Per Pelanggan
   begin
 
-    LabelInformasi.Caption:= 'Harga yang dipakai adalah Klasifikasi Grouping';
+
     with Dm.Qtemp3 do
     begin
       close;

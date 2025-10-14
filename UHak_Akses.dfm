@@ -76,6 +76,7 @@ object FHak_Akses: TFHak_Akses
         FieldName = 'RAdd'
         Footers = <>
         Title.Caption = 'Baru'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -85,6 +86,7 @@ object FHak_Akses: TFHak_Akses
         FieldName = 'REdit'
         Footers = <>
         Title.Caption = 'Update'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -94,6 +96,7 @@ object FHak_Akses: TFHak_Akses
         FieldName = 'RRefresh'
         Footers = <>
         Title.Caption = 'Refresh'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -103,6 +106,7 @@ object FHak_Akses: TFHak_Akses
         FieldName = 'RDelete'
         Footers = <>
         Title.Caption = 'Delete'
+        Visible = False
       end
       item
         CellButtons = <>
@@ -112,6 +116,7 @@ object FHak_Akses: TFHak_Akses
         FieldName = 'rhandover'
         Footers = <>
         Title.Caption = 'Serah'
+        Visible = False
         Width = 64
       end
       item
@@ -122,6 +127,7 @@ object FHak_Akses: TFHak_Akses
         FieldName = 'raccept'
         Footers = <>
         Title.Caption = 'Terima'
+        Visible = False
         Width = 64
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -379,7 +385,7 @@ object FHak_Akses: TFHak_Akses
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        00000000000074120000741200000000000000000000F3F3F3FFF3F3F3FFF3F3
+        000000000000C40E0000C40E00000000000000000000F3F3F3FFF3F3F3FFF3F3
         F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
         F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
         F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3F3FFF3F3
@@ -438,7 +444,7 @@ object FHak_Akses: TFHak_Akses
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF

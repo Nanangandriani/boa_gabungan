@@ -99,7 +99,6 @@ uses
   UNew_HasilPercampuranBarang in 'UNew_HasilPercampuranBarang.pas' {FNew_Hasil_Perc_Barang},
   UNew_Permintaan_Barang2 in 'UNew_Permintaan_Barang2.pas' {FNew_Permintaan_Barang2},
   UPermintaan_Barang2 in 'UPermintaan_Barang2.pas' {FPermintaan_Barang2},
-  UTerima_Amplop in 'UTerima_Amplop.pas' {FTerima_Amplop},
   UNew_TerimaAmplop in 'UNew_TerimaAmplop.pas' {FNew_TerimaAmplop},
   UMaster_FormulaTest in 'UMaster_FormulaTest.pas' {FMaster_FormulaTest},
   UNew_MasterFormulaTest in 'UNew_MasterFormulaTest.pas' {FNew_MasterFormula},
@@ -294,7 +293,18 @@ uses
   U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang},
   Ulap_Rekap_Hutang_Kredit in 'Ulap_Rekap_Hutang_Kredit.pas' {Flap_Rekap_Hutang_Kredit},
   UListPenjualanPromosi in 'UListPenjualanPromosi.pas' {FListPenjualanPromosi},
-  UNew_DataPenjualanPromosi in 'UNew_DataPenjualanPromosi.pas' {FNew_DataPenjualanPromosi};
+  UNew_DataPenjualanPromosi in 'UNew_DataPenjualanPromosi.pas' {FNew_DataPenjualanPromosi},
+  UExportFaktur in 'UExportFaktur.pas' {FExportFaktur},
+  UPajakCapFasilitas_KetTambahan in 'UPajakCapFasilitas_KetTambahan.pas' {FPajakCapFasilitas_KetTambahan},
+  UDataPool in 'UDataPool.pas' {FDataPool},
+  UMonitoringTargetOmset in 'UMonitoringTargetOmset.pas' {FMonitoringTargetOmset},
+  UListPiutangBermasalah in 'UListPiutangBermasalah.pas' {FListPiutangBermasalah},
+  UHak_Akses in 'UHak_Akses.pas' {FHak_Akses},
+  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
+  UNew_PiutangBeramasalah in 'UNew_PiutangBeramasalah.pas' {FNew_PiutangBermasalah},
+  UBrowseNotaPenjualan in 'UBrowseNotaPenjualan.pas' {FBrowseNotaPenjualan},
+  UTerima_Amplop in 'UTerima_Amplop.pas' {FTerima_Amplop},
+  UAmplopPelanggan in 'UAmplopPelanggan.pas' {FAmplopPelanggan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -357,6 +367,14 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_DataTargetPenjualan, FNew_DataTargetPenjualan);
   Application.CreateForm(TFPenyesuaianFaktur, FPenyesuaianFaktur);
   Application.CreateForm(TFNew_DataPenjualanPromosi, FNew_DataPenjualanPromosi);
+  Application.CreateForm(TFExportFaktur, FExportFaktur);
+  Application.CreateForm(TFExportFaktur, FExportFaktur);
+  Application.CreateForm(TFExportFaktur, FExportFaktur);
+  Application.CreateForm(TFPajakCapFasilitas_KetTambahan, FPajakCapFasilitas_KetTambahan);
+  Application.CreateForm(TFDataPool, FDataPool);
+  Application.CreateForm(TFNew_PiutangBermasalah, FNew_PiutangBermasalah);
+  Application.CreateForm(TFBrowseNotaPenjualan, FBrowseNotaPenjualan);
+  Application.CreateForm(TFAmplopPelanggan, FAmplopPelanggan);
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);

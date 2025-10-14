@@ -1,6 +1,7 @@
 object FListSalesOrder: TFListSalesOrder
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'List Sales Order'
   ClientHeight = 495
   ClientWidth = 1029
@@ -10,6 +11,7 @@ object FListSalesOrder: TFListSalesOrder
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object pnlFilter: TPanel

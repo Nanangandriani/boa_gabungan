@@ -226,38 +226,88 @@ end;
 procedure TFNew_Penjualan.HitungDetail;
 var ppn : real;
 begin
-  tot_jumlah:=0;
-  tot_harga_sblm_pot:=0;
-  tot_dpp:=0;
-  tot_ppn:=0;
-  tot_pot:=0;
-  MemDetail.First;
-  while not MemDetail.Eof do
-  begin
-    tot_jumlah:=tot_jumlah+MemDetail['JUMLAH'];
-    tot_harga_sblm_pot:=tot_harga_sblm_pot+MemDetail['JUMLAH_HARGA'];
-    tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
+try
+    if Memdetail.RecordCount>0 then
+    begin
+      MemDetail.Edit;
+      MemDetail['JUMLAH_HARGA']:=MemDetail['JUMLAH']*MemDetail['HARGA_SATUAN'];
 
-//    tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
-    tot_pot:=tot_pot+MemDetail['POTONGAN_NILAI'];
-//    tot_menej_fee:=tot_menej_fee+MemDetail['MENEJ_FEE_NILAI'];
-//    tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
-    MemDetail.Next;
+      MemDetail['SUB_TOTAL']:=MemDetail['JUMLAH_HARGA']-MemDetail['POTONGAN_NILAI'];
+      //Validasi PPN
+      if MemDetail['PPN_PERSEN']=0 then
+      begin
+        MemDetail['PPN_NILAI']:=0;
+        MemDetail['PPN_AKUN']:=0;
+        MemDetail['PPN_PERSEN']:=0;
+      end;
+      if MemDetail['PPN_PERSEN']<>0 then
+      begin
+        MemDetail['PPN_NILAI']:=MemDetail['SUB_TOTAL']*(MemDetail['PPN_PERSEN']/100);
+      end;
+      //Validasi PPH
+//      if (MemDetail['NAMA_PPH']='0') AND (MemDetail['PPH_PERSEN']=0) then
+//      begin
+//        MemDetail['PPH_NILAI']:=0;
+//        MemDetail['PPH_AKUN']:=0;
+//        MemDetail['NAMA_PPH']:=0;
+//        MemDetail['PPH_PERSEN']:=0;
+//      end;
+//      if (MemDetail['PPH_PERSEN']<>0)  OR (MemDetail['PPH_PERSEN']<>'0')  then
+//      begin
+//        MemDetail['PPH_NILAI']:=(MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI'])*(MemDetail['PPH_PERSEN']/100);
+//      end;
+      //Validasi Menejmen Fee
+//      if (MemDetail['MENEJ_FEE_PERSEN']<>0)  OR (MemDetail['MENEJ_FEE_PERSEN']<>'0')  then
+//      begin
+//        MemDetail['MENEJ_FEE_NILAI']:=(MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI']-MemDetail['PPH_NILAI'])*(MemDetail['MENEJ_FEE_PERSEN']/100);
+//      end;
+//      if ((MemDetail['MENEJ_FEE_PERSEN']<>0)  OR (MemDetail['MENEJ_FEE_PERSEN']<>'0')) AND (MemDetail['KD_ITEM']<>'MENFEE') then
+//      begin
+//        //UpdateDataMenejFee;
+//      end;
+
+//      MemDetail['GRAND_TOTAL']:=MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI']-MemDetail['PPH_NILAI']-MemDetail['POTONGAN_NILAI']+MemDetail['MENEJ_FEE_NILAI'];
+
+      MemDetail.Post;
+
+      tot_jumlah:=0;
+      tot_harga_sblm_pot:=0;
+      tot_dpp:=0;
+      tot_ppn:=0;
+      tot_pot:=0;
+      MemDetail.First;
+      while not MemDetail.Eof do
+      begin
+        tot_jumlah:=tot_jumlah+MemDetail['JUMLAH'];
+        tot_harga_sblm_pot:=tot_harga_sblm_pot+MemDetail['JUMLAH_HARGA'];
+        tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
+
+    //    tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
+        tot_pot:=tot_pot+MemDetail['POTONGAN_NILAI'];
+    //    tot_menej_fee:=tot_menej_fee+MemDetail['MENEJ_FEE_NILAI'];
+    //    tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
+        MemDetail.Next;
+      end;
+
+    //  edTotSebelumPot.Text:=FloatToStr(tot_harga_sblm_pot);
+    //  edTotPot.Text:=FloatToStr(tot_pot);
+    //  edTotPembulatan.Text:=FloatToStr(tot_dpp-(tot_harga_sblm_pot-tot_pot));
+    //  edTotSebelumPajak.Text:=FloatToStr(tot_dpp);
+    //  edTotPPN.Text :=FloatToStr(ROUND(tot_dpp*(FRincianPot_Penjualan.ppn/100)));
+    //  edTotBersih.Text:=FloatToStr(tot_dpp+(ROUND(tot_dpp*(FRincianPot_Penjualan.ppn/100))));
+      ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
+      edTotSebelumPot.Value:=(tot_harga_sblm_pot);
+      edTotPot.Value:=(tot_pot);
+      edTotPembulatan.Value:=(tot_dpp-(tot_harga_sblm_pot-tot_pot));
+      edTotSebelumPajak.Value:=(tot_dpp);
+      edTotPPN.Value:=(ROUND(tot_dpp*(ppn/100)));
+      edTotBersih.Value:=(tot_dpp+(ROUND(tot_dpp*(ppn/100))));
+    end;
+    Except;
   end;
 
-//  edTotSebelumPot.Text:=FloatToStr(tot_harga_sblm_pot);
-//  edTotPot.Text:=FloatToStr(tot_pot);
-//  edTotPembulatan.Text:=FloatToStr(tot_dpp-(tot_harga_sblm_pot-tot_pot));
-//  edTotSebelumPajak.Text:=FloatToStr(tot_dpp);
-//  edTotPPN.Text :=FloatToStr(ROUND(tot_dpp*(FRincianPot_Penjualan.ppn/100)));
-//  edTotBersih.Text:=FloatToStr(tot_dpp+(ROUND(tot_dpp*(FRincianPot_Penjualan.ppn/100))));
-  ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
-  edTotSebelumPot.Value:=(tot_harga_sblm_pot);
-  edTotPot.Value:=(tot_pot);
-  edTotPembulatan.Value:=(tot_dpp-(tot_harga_sblm_pot-tot_pot));
-  edTotSebelumPajak.Value:=(tot_dpp);
-  edTotPPN.Value:=(ROUND(tot_dpp*(ppn/100)));
-  edTotBersih.Value:=(tot_dpp+(ROUND(tot_dpp*(ppn/100))))
+
+
 
 
 end;
@@ -666,6 +716,7 @@ begin
 end;
 
 procedure TFNew_Penjualan.Autonumber;
+var strSuratJalanNo,strKodeAwalInvoice :String;
 begin
   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FDataListPenjualan.Name)+'');
   strday2:=dtTanggal.Date;
@@ -678,7 +729,11 @@ begin
   end;
   if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
   edNomorTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
-  edSuratJalanTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
+  strKodeAwalInvoice:=SelectRow('select * from t_numb_det a inner join t_numb b on b.trans_no=a.trans_no WHERE b.numb_type='+QuotedStr(idmenu)+'  AND a.urutan=1');
+  StrSuratJalanNo:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
+
+  edSuratJalanTrans.Text:=StringReplace(StrSuratJalanNo, strKodeAwalInvoice, 'SJ', [rfReplaceAll, rfIgnoreCase]);
+
 //  edKodeOrder.Text:=getNourut(strday2,'public.t_sales_order',kd_kares);
 end;
 
@@ -810,6 +865,7 @@ begin
 end;
 
 procedure TFNew_Penjualan.btAddDetailClick(Sender: TObject);
+var FForm: TFormClass;
 begin
   if (vFormSumber='0') OR (vFormSumber='')  then
   begin
@@ -818,22 +874,25 @@ begin
   end;
   if (vFormSumber<>'0') AND (vFormSumber<>'') then
   begin
-    AClass := FindClass('T'+vFormSumber);
+//    AClass := FindClass('T'+vFormSumber);
+//    AFormClass := TFormClass(AClass);
+//    AForm := AFormClass.Create(Application.MainForm);
+//    AForm.Parent:=FTemplate_Temp.PanelParent;
+//    AForm.Align:=Alclient;
+//    AForm.BorderStyle:=BsNone;
+//    FTemplate_Temp.Height:=AForm.Height;
+//    FTemplate_Temp.Width:=AForm.Width;
+//
+//    AForm.Show;
+//    FTemplate_Temp.Caption:='';
+//    FTemplate_Temp.TabForm.Caption:=AForm.Caption;
+    vStatusTrans:='penjualan';
+//    FDaftarKontrak.vtanggalBA:=FNew_Penjualan.dtTanggal.Date;
+//    FTemplate_Temp.ShowModal;
+    AClass:=FindClass('T'+vFormSumber);
     AFormClass := TFormClass(AClass);
     AForm := AFormClass.Create(Application.MainForm);
-    AForm.Parent:=FTemplate_Temp.PanelParent;
-    AForm.Align:=Alclient;
-    AForm.BorderStyle:=BsNone;
-    FTemplate_Temp.Height:=AForm.Height;
-    FTemplate_Temp.Width:=AForm.Width;
-
-    AForm.Show;
-    FTemplate_Temp.Caption:='';
-    FTemplate_Temp.TabForm.Caption:=AForm.Caption;
-    vStatusTrans:='penjualan';
-    FDaftarKontrak.vtanggalBA:=FNew_Penjualan.dtTanggal.Date;
-    FTemplate_Temp.ShowModal;
-    //FTambah_Barang.ShowModal;
+    AForm.ShowModal;
   end;
 end;
 
@@ -940,11 +999,12 @@ end;
 procedure TFNew_Penjualan.DBGridDetailColEnter(Sender: TObject);
 begin
 //  HitungGrid;
+//  HitungDetail;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailColExit(Sender: TObject);
 begin
-//  HitungGrid;
+  HitungGrid;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailColumns11EditButtons0Click(
@@ -992,12 +1052,13 @@ end;
 procedure TFNew_Penjualan.DBGridDetailEnter(Sender: TObject);
 begin
 //  HitungGrid;
+  HitungDetail;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailExit(Sender: TObject);
 begin
 //  HitungGrid;
-//  HitungDetail;
+  HitungDetail;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailKeyPress(Sender: TObject; var Key: Char);
@@ -1097,7 +1158,13 @@ begin
   begin
     RefreshGrid;
     edNomorFaktur.ReadOnly:=False;
+    btAddDetail.Visible:=False;
+    btMasterSumber.Visible:=False;
+    SpeedButton1.Visible:=False;
   end else begin
+    SpeedButton1.Visible:=True;
+    btMasterSumber.Visible:=True;
+    btAddDetail.Visible:=True;
     edNomorFaktur.ReadOnly:=True;
     dtTanggal.Date:=NOW;
     edKode_Trans.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
@@ -1121,11 +1188,17 @@ begin
   end else begin
     btMasterSumber.Visible:=true;
   end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' ')<> '1' then
+  if (SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' ')= '1') AND (Status=0) then
   begin
-    btHitungPotongan.Visible:=false;
+    btHitungPotongan.Visible:=True;
+    bt_re_calculate.Visible:=False;
+  end else if (SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' ')= '1') AND (Status=1) then
+  begin
+    btHitungPotongan.Visible:=False;
+    bt_re_calculate.Visible:=True;
   end else begin
-    btHitungPotongan.Visible:=true;
+    btHitungPotongan.Visible:=False;
+    bt_re_calculate.Visible:=False;
   end;
 //  if SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual'' ')= '0' then
 //  begin
@@ -1328,15 +1401,15 @@ begin
   begin
     close;
     sql.clear;
-    sql.Add('SELECT * from ( SELECT b.piece_first,b.piece_second,b.piece_third,'+
-            'b.piece_fourth,a.trans_no, a.code_item, a.name_item, a.amount, a.code_unit, '+
-            'a.name_unit, a.no_reference, a.unit_price, a.sub_total, a.ppn_percent, '+
-            'a.ppn_value, a.pph_account, a.pph_name, a.pph_percent, a.pph_value,  '+
-            'a.tot_piece_value,a.tot_piece_percent, a.grand_tot, a.ppn_account,  '+
-            'account_code, a.menejmen_fee, a.menejmen_fee_value  '+
-            'FROM  public.t_selling_det  a '+
-            'left join t_selling_piece b on b.trans_no=a.trans_no AND b.code_item=a.code_item '+
-            'WHERE deleted_at IS NULL ) aa  '+
+    sql.Add('SELECT * from ( SELECT b.piece_first,b.piece_second,b.piece_third,b.piece_fourth,'+
+            'a.trans_no, a.code_item, a.name_item,c.group_id, a.amount, a.code_unit, a.name_unit, '+
+            'a.no_reference, a.unit_price, a.sub_total, a.ppn_percent, a.ppn_value, a.pph_account, '+
+            'a.pph_name, a.pph_percent, a.pph_value,  a.tot_piece_value,a.tot_piece_percent, '+
+            'a.grand_tot, a.ppn_account,  a.account_code, a.menejmen_fee, a.menejmen_fee_value  '+
+            'FROM  public.t_selling_det  a left join t_selling_piece b on b.trans_no=a.trans_no '+
+            'AND b.code_item=a.code_item '+
+            'LEFT JOIN t_item c on c.item_code=a.code_item '+
+            'WHERE a.deleted_at IS NULL ) aa  '+
             'WHERE aa.trans_no='+QuotedStr(edNomorTrans.Text)+' Order By aa.trans_no, aa.code_item desc;');
 
     open;
@@ -1385,6 +1458,7 @@ begin
       FNew_Penjualan.MemDetail['POTONGAN3']:=Dm.Qtemp.fieldbyname('piece_third').value;
       FNew_Penjualan.MemDetail['POTONGAN4']:=Dm.Qtemp.fieldbyname('piece_fourth').value;
       FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
+      FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp.fieldbyname('group_id').value;
       FNew_Penjualan.MemDetail.post;
       Dm.Qtemp.next;
     end;
@@ -1393,8 +1467,85 @@ begin
 end;
 
 procedure TFNew_Penjualan.bt_re_calculateClick(Sender: TObject);
+var IntTotGroup,IntGroupID : Integer;
 begin
-  UpdateDataMenejFee;
+//  UpdateDataMenejFee;
+  get_uuid:=SelectRow('SELECT gen_random_uuid()::TEXT AS clean_uuid;');
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM  "public"."t_selling_temp" '+
+              ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+';';
+    ExecSQL;
+  end;
+
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_selling_temp" ("trans_no", "cust_code", '+
+                ' "code_item", "name_item", "amount", "code_unit", "name_unit" '+
+                //' "unit_price", "sub_total", '+
+                //' "pot_value_1", "pot_value_2", "pot_value_3", "pot_value_4", '+
+                //' "ppn_value", "grand_tot"'+
+                ' ) '+
+                ' Values( '+
+                ' '+QuotedStr(edNomorTrans.Text)+', '+
+                ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
+                ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
+                ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
+                ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
+                ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
+                ' '+QuotedStr(MemDetail['NM_SATUAN'])+');';
+      ExecSQL;
+    end;
+    MemDetail.Next;
+  end;
+
+  with FRincianPot_Penjualan do
+  begin
+    get_uuid:=FNew_Penjualan.get_uuid;
+//    ShowMessage(get_uuid);
+    kd_cust:='';
+    kd_item:='';
+    satuan:='';
+    stat_fp:=0;
+    stat_bayar:=0;
+    stat_promo:=0;
+    jumlah_item:=0;
+    kd_JenisOutlet:='';
+    kd_Kategori:='';
+    edNomorTrans.Text:=FNew_Penjualan.edNomorTrans.Text;
+    edKode_Pelanggan.Text:=FNew_Penjualan.edKode_Pelanggan.Text;
+    edNama_Pelanggan.Text:=FNew_Penjualan.edNama_Pelanggan.Text;
+  end;
+  IntTotGroup:=1;
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+//    ShowMessage('tes');
+    IntGroupID:=MemDetail['GROUP_ID'];
+    MemDetail.First;
+    while not MemDetail.Eof do
+    begin
+      if MemDetail['GROUP_ID']<>IntGroupID then
+      IntTotGroup:=IntTotGroup+1;
+      MemDetail.Next;
+    end;
+    MemDetail.Next;
+  end;
+
+//    ShowMessage('Total Group '+IntToStr(IntTotGroup));
+  if IntTotGroup>1 then FRincianPot_Penjualan.jenis_jual:='T002'
+  else
+  FRincianPot_Penjualan.jenis_jual:='T001';
+
+  FRincianPot_Penjualan.HitungKlasifikasi;
+  FRincianPot_Penjualan.ShowModal;
 end;
 
 //Initialization

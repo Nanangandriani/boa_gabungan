@@ -85,7 +85,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_User, UDataModule;
+uses UNew_User, UDataModule, UHomeLogin;
 
 procedure TFUser.refresh;
 begin
@@ -109,39 +109,42 @@ end;
 procedure TFUser.ActBaruExecute(Sender: TObject);
 var nik:integer;
 begin
-    with FNew_User do
-    begin
-      Show;
-      Clear;
-      Status:=0;
-      Caption:='New User';
-      WITH DM.Qtemp DO
-      BEGIN
-        CLOSE;
-        sql.Clear;
-        sql.Text:='SELECT max("right"(code, 1)) nk from t_user';
-        ExecSQL;
-      END;
-        nik:=StrToInt(DM.Qtemp.FieldByName('nk').Value);
-        FNew_User.EdNik.Text:='0'+(IntToStr(nik+1));
-    end;
+  Status:=0;
+  with FNew_User do
+  begin
+    Show;
+    Clear;
+
+    Caption:='New User';
+    WITH DM.Qtemp DO
+    BEGIN
+      CLOSE;
+      sql.Clear;
+      sql.Text:='SELECT max("right"(code, 1)) nk from t_user';
+      ExecSQL;
+    END;
+      nik:=StrToInt(DM.Qtemp.FieldByName('nk').Value);
+      FNew_User.EdNik.Text:='0'+(IntToStr(nik+1));
+  end;
 end;
 
 procedure TFUser.ActDelExecute(Sender: TObject);
 begin
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridUser.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridUser.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+  begin
+    with dm.Qtemp do
     begin
-      with dm.Qtemp do
-      begin
-        Close;
-        sql.Clear;
-        sql.Text:='Delete From t_user where nik='+QuotedStr(DBGridUser.Fields[0].AsString);
-        Execute;
-      end;
-      //dxbarRefreshClick(sender);
-      ActROExecute(sender);
-      ShowMessage('Data Berhasil di Hapus');
+      Close;
+      sql.Clear;
+      sql.Text:='UPDATE t_user SET deleted_at=NOW(), '+
+                'deleted_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                'WHERE code='+QuotedStr(DBGridUser.Fields[0].AsString);
+      ExecSQL;
     end;
+    ActROExecute(sender);
+//    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 procedure TFUser.ActROExecute(Sender: TObject);
@@ -156,21 +159,21 @@ end;
 
 procedure TFUser.ActUpdateExecute(Sender: TObject);
 begin
-    with FNew_User do
-    begin
-      Show;
-      Clear;
-      Status:=1;
-      Caption:='Update User';
-      EdNik.Text:=MemUser['Code'];
-      EdNama.Text:=MemUser['user_name'];
-      Edfull_Name.Text:=MemUser['full_name'];
-      EdPass.Text:=MemUser['Password'];
-      CbJabatan.Text:=MemUser['position'];
-      EdDept.Text:=MemUser['dept'];
-      kddept.Text:=MemUser['dept_code'];
-      kdjab.Text:= MemUser['position_code'];
-    end;
+  Status:=1;
+  with FNew_User do
+  begin
+    Show;
+    Clear;
+    Caption:='Update User';
+    EdNik.Text:=MemUser['Code'];
+    EdNama.Text:=MemUser['user_name'];
+    Edfull_Name.Text:=MemUser['full_name'];
+    EdPass.Text:=MemUser['Password'];
+    CbJabatan.Text:=MemUser['position'];
+    EdDept.Text:=MemUser['dept'];
+    kddept.Text:=MemUser['dept_code'];
+    kdjab.Text:= MemUser['position_code'];
+  end;
 end;
 
 procedure TFUser.FormShow(Sender: TObject);

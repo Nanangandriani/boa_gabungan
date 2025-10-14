@@ -269,13 +269,13 @@ begin
 
   if edKecamatan.EditValue<>'' then
   begin
-    strWhereWilayah:='WHERE code_region='+QuotedStr(StrKecamatanID);
+    strWhereWilayah:='WHERE code_region='+QuotedStr(StrKecamatanID)+' and status=True';
   end else if edKabupaten.EditValue<>'' then
   begin
-    strWhereWilayah:='WHERE code_regency='+QuotedStr(StrKabupatenID);
+    strWhereWilayah:='WHERE code_regency='+QuotedStr(StrKabupatenID)+' and status=True';
   end else if edKaresidenan.EditValue<>'' then
   begin
-    strWhereWilayah:='WHERE code_karesidenan='+QuotedStr(StrKaresidananID);
+    strWhereWilayah:='WHERE code_karesidenan='+QuotedStr(StrKaresidananID)+' and status=True';
   end else begin
     strWhereWilayah:='';
   end;
@@ -286,8 +286,8 @@ begin
   begin
      close;
      sql.Clear;
-     sql.Text:= 'SELECT * from vpiutangbermasalah '+
-                ' '+strWhereWilayah+' and status=True';
+     sql.Text:= 'SELECT * from get_piutang_bermasalah() '+
+                ' '+strWhereWilayah;
 //                'EXTRACT(YEAR FROM a.created_at)='+edTahun.Text+' AND '+
 //                'EXTRACT(MONTH FROM a.created_at)='+(IntToStr(mm))+' AND '+
 //                'a.deleted_at is null ORDER BY a.created_at DESC;';

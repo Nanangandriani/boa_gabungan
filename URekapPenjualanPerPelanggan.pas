@@ -335,7 +335,7 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='SELECT '+strVolume+'* FROM vrekap_penjualan_percustomer '+
+      sql.Text:='SELECT '+strVolume+'* FROM get_rekap_penjualan_percustomer() '+
                 'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
                 strKelompokBarang+' AND (trans_date BETWEEN '+QuotedStr(strTglAwal)+' AND '+QuotedStr(strTglAkhir)+')';
       Open;
@@ -391,7 +391,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:= 'SELECT thn,bln2,bln,kode FROM vrekap_penjualan_percustomer '+
+      sql.Text:= 'SELECT thn,bln2,bln,kode FROM get_rekap_penjualan_percustomer() '+
                  'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
                  strKelompokBarang+' AND (trans_date BETWEEN '+QuotedStr(strTglAwal)+' AND '+
                  QuotedStr(strTglAkhir)+') group by thn,bln2,bln,kode';
@@ -462,7 +462,7 @@ begin
         sql.Text:='SELECT nama_kabupaten,nama_kecamatan,outlet_name, '+
                   strSelectTotQty +' '+
                   'SUM('+strVolume+') AS grand_total '+
-                  'FROM vrekap_penjualan_percustomer '+
+                  'FROM get_rekap_penjualan_percustomer() '+
                   'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
                   strKelompokBarang+' '+
                   'AND thn IN ('+strWhereTahun+') '+

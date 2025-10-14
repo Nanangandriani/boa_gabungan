@@ -44,6 +44,9 @@ type
     EdNik: TEdit;
     RzBitBtn1: TRzBitBtn;
     Label17: TLabel;
+    Label18: TLabel;
+    Label21: TLabel;
+    Ed_nitku: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -63,6 +66,7 @@ type
     procedure Load_status_pajak;
   public
     { Public declarations }
+    stat : string;
   end;
 
 function
@@ -72,7 +76,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu, UNew_JenisUsaha;
+uses UDataModule, UMainMenu, UNew_JenisUsaha, UHomeLogin;
 
 var
   RealNewPT: TFNewPerusahaan;
@@ -160,6 +164,7 @@ procedure TFNewPerusahaan.clear;
     Ed_npwp.Text:='';
     cb_status_pajak.Text:='';
     cb_mata_uang.Text:='';
+    Ed_nitku.Text:='';
     //Ed_kode.SetFocus;
 
  end;
@@ -224,10 +229,16 @@ begin
       Ed_email.SetFocus;
       Exit;
     end;
-    if Ed_npwp.Text='' then
+     if (cb_status_pajak.Text='PKP')AND(Ed_NPWP.Text='') then
     begin
       MessageDlg('NPWP Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
       Ed_npwp.SetFocus;
+      Exit;
+    end;
+    if (cb_status_pajak.Text='PKP') AND (Ed_nitku.Text='') then
+    begin
+      MessageDlg('NITKU Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ed_nitku.SetFocus;
       Exit;
     end;
     if cb_status_pajak.Text='' then
@@ -236,7 +247,7 @@ begin
       cb_status_pajak.SetFocus;
       Exit;
     end;
-     if cb_mata_uang.Text='' then
+    if cb_mata_uang.Text='' then
     begin
       MessageDlg('Mata Uang Tidak boleh Kosong ',MtWarning,[MbOk],0);
       cb_mata_uang.SetFocus;
@@ -259,7 +270,9 @@ begin
         close;
         sql.clear;
         sql.Text:=' Update t_company set company_name='+QuotedStr(Ed_nama.Text)+ ' ,type_of_business='+QuotedStr(cb_jenis_usaha.Text)+', address='+QuotedStr(Ed_Alamat.Text)+' ,telp='+QuotedStr(Ed_telp.Text)+''+
-                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,currency='+QuotedStr(cb_mata_uang.Text)+',updated_at=NOW(),updated_by=:updated_by '+
+                  ' ,email='+QuotedStr(Ed_email.Text)+',npwp='+QuotedStr(Ed_NPWP.Text)+',tax_status=:partax_status,'+
+                  ' stat_office=:stat_office,currency='+QuotedStr(cb_mata_uang.Text)+','+
+                  'nitku='+QuotedStr(Ed_nitku.Text)+',updated_at=NOW(),updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
                   ' Where company_code='+QuotedStr(Ed_kode.Text);
 
         if Cb_Status_Pajak.Text='PKP' then
@@ -272,8 +285,15 @@ begin
            parambyname('partax_status').AsString:='0';
         end;
 
-       // parambyname('updated_at').AsDateTime:=Now;
-        parambyname('updated_by').AsString:='Admin';
+        if stat='HO' then //Kantor Pusat
+        begin
+          parambyname('stat_office').AsInteger:=0;
+        end
+        else
+        if stat='BO' then //Kantor Cabang
+        begin
+          parambyname('stat_office').AsInteger:=1;
+        end;
 
         ExecSQL;
       end;
@@ -337,13 +357,19 @@ begin
       Ed_npwp.SetFocus;
       Exit;
     end;}
-    if cb_status_pajak.Text='PKP' then
+    if (cb_status_pajak.Text='PKP')AND(Ed_NPWP.Text='') then
     begin
       MessageDlg('NPWP Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
       Ed_npwp.SetFocus;
       Exit;
     end;
-    if cb_status_pajak.Text='NON PKP' then
+    if (cb_status_pajak.Text='PKP') AND (Ed_nitku.Text='') then
+    begin
+      MessageDlg('NITKU Perusahaan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ed_nitku.SetFocus;
+      Exit;
+    end;
+    if (cb_status_pajak.Text='NON PKP') AND (EdNik.Text='') then
     begin
       MessageDlg('NIK Tidak boleh Kosong ',MtWarning,[MbOk],0);
       EdNik.SetFocus;
@@ -380,10 +406,14 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Insert into t_company (company_code,company_name,type_of_business,address,Telp,email,npwp,tax_status,currency,created_at,created_by) values'+
-                  '('+QuotedStr(Ed_kode.Text)+','+QuotedStr(Ed_Nama.Text)+','+QuotedStr(cb_jenis_usaha.Text)+','+QuotedStr(Ed_Alamat.Text)+','+
+        sql.Text:=' Insert into t_company (company_code,company_name,type_of_business, '+
+                  ' address,Telp,email,npwp,tax_status,currency,created_at,created_by,nitku,stat_office) values'+
+                  '('+QuotedStr(Ed_kode.Text)+','+QuotedStr(Ed_Nama.Text)+','+QuotedStr(cb_jenis_usaha.Text)+', '+
+                  ' '+QuotedStr(Ed_Alamat.Text)+','+
                   //''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+','+QuotedStr(cb_status_pajak.Text)+','+QuotedStr(cb_mata_uang.Text)+' ,now(),''Admin''  )';
-                  ''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+QuotedStr(Ed_NPWP.Text)+',:par_status_pajak,'+QuotedStr(cb_mata_uang.Text)+' ,:created_at,:created_by )';
+                  ''+QuotedStr(Ed_Telp.Text)+','+QuotedStr(Ed_email.Text)+','+
+                  ' '+QuotedStr(Ed_NPWP.Text)+',:par_status_pajak,'+QuotedStr(cb_mata_uang.Text)+' ,NOW(),'+
+                  ' '+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(Ed_nitku.Text)+',:stat_office )';
 
                   if Cb_Status_Pajak.Text='PKP' then
                   begin
@@ -394,8 +424,18 @@ begin
                   begin
                      parambyname('par_status_pajak').AsString:='0';
                   end;
-                  parambyname('created_at').AsDateTime:=Now;
-                  parambyname('created_by').AsString:='Admin';
+
+                  if stat='HO' then //Kantor Pusat
+                  begin
+                     parambyname('stat_office').AsInteger:=0;
+                  end
+                  else
+                  if stat='BO' then //Kantor Cabang
+                  begin
+                     parambyname('stat_office').AsInteger:=1;
+                  end;
+//                  parambyname('created_at').AsDateTime:=Now;
+//                  parambyname('created_by').AsString:='Admin';
         ExecSQL;
       end;
       dm.koneksi.Commit;

@@ -1,9 +1,9 @@
 object FListPerusahaan: TFListPerusahaan
   Left = 0
   Top = 0
-  Caption = 'FListPerusahaan'
+  Caption = 'Data Perusahaan'
   ClientHeight = 442
-  ClientWidth = 765
+  ClientWidth = 880
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FListPerusahaan: TFListPerusahaan
   object DBGridPerusahaan: TDBGridEh
     Left = 0
     Top = 127
-    Width = 765
+    Width = 880
     Height = 315
     Align = alClient
     DataSource = DsPerusahaan
@@ -32,6 +32,7 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'company_code'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode Perusahaan'
         Width = 100
       end
@@ -41,8 +42,9 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'company_name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Perusahaan'
-        Width = 200
+        Width = 215
       end
       item
         CellButtons = <>
@@ -50,8 +52,9 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'type_of_business'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jenis Usaha'
-        Width = 100
+        Width = 153
       end
       item
         CellButtons = <>
@@ -59,6 +62,7 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'address'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Alamat'
         Width = 250
       end
@@ -68,6 +72,7 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'telp'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Telp'
         Width = 100
       end
@@ -77,6 +82,7 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'email'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Email'
         Width = 100
       end
@@ -86,6 +92,7 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'npwp'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'NPWP'
         Width = 100
       end
@@ -95,6 +102,7 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'tax_status'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Status Pajak'
         Width = 100
       end
@@ -104,7 +112,18 @@ object FListPerusahaan: TFListPerusahaan
         EditButtons = <>
         FieldName = 'currency'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Mata Uang'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'status_kantor'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Status Kantor'
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -113,7 +132,7 @@ object FListPerusahaan: TFListPerusahaan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 765
+    Width = 880
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -121,12 +140,16 @@ object FListPerusahaan: TFListPerusahaan
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 765
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
@@ -209,6 +232,26 @@ object FListPerusahaan: TFListPerusahaan
         item
           Visible = True
           ItemName = 'dxBarDelete'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      Caption = 'Additional'
+      CaptionButtons = <>
+      DockedLeft = 125
+      DockedTop = 0
+      FloatLeft = 789
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = True
       Row = 0
@@ -697,13 +740,81 @@ object FListPerusahaan: TFListPerusahaan
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Tambah Cabang'
+      Category = 0
+      Hint = 'Tambah Cabang'
+      Visible = ivAlways
+      OnClick = dxBarLargeButton1Click
+      HotGlyph.SourceDPI = 96
+      HotGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000002C744558745469746C65004164643B4974656D3B4164644974656D3B
+        426172733B526962626F6E3B4974656D3B506C75734E32EF81000006C5494441
+        54785EC5977D8C156715C67F67E6EE2E1F5BF9E8F24DA17C7581A51B0256B450
+        124861050D04A3698AE2071A9BB4C6D694A405AABBA5D5261A4D89696A6825AD
+        B686B67FF847AD464B23AD0183144DC1AA8545285FBD65E9B2DFF763E63DC7DB
+        B9F7CD6CBA1756FFF29D9C9CF7CE4CEEF3E439CF9C33236686885059522D578D
+        EAD70CD0245F6399A597331F0190DDCF1CDC4F20ABC4C000D410044B0E1028EF
+        0CCCC084F206E8E9EA7DA4EDFEF5BB3C895DBBF71BA618D07ADFDA61D90810EE
+        7EF6900DB70A85C8FA060AD6D53D60EF5FEEB133E73AEDC8B1F3F6DAC193F6E0
+        63BF7E04A8010240FE71229B62A4983E862A601800B11AA84100A60280BFE614
+        CC4011D424B9F7C0E153DCFFF595F4E7A287EE6B7B491E6FFBC22E205E78D364
+        CC33181A43088033004C7D06F05A83014118008A95B20B0204A5508C005875EB
+        3C9CEACEFCF6E7E4678F7D2921212257F545304401AB009B80011E1F4BF7A604
+        41500A9050508442AE08401806DCBEA2B11437EFD8FA9DBDAD83CBF15F11508F
+        598134A59CAD1228000A090911408D5CA14C2013089930A06555136B572DDEFE
+        C5BB9FFCDE5012D54B2080982A00DEBD46596E4889F8A5188108865032262290
+        09852010C2D0D8D8D28CBA787B54DCCD8B4FDFDBE6FFE29A1EF000A9FA0A1680
+        F9320A8A672249D4D4858CB96E04773DF82B54D347148C75AB17D138FFA6EDC0
+        A3801BCE84A22983942A8A7A23E2814155094261D4885ABE7AC772FA06F2148B
+        112E36A258899D23230264014280E10978F7FB3A9B915AD893330C1001106A33
+        6505AE1B5D87734A1C39A20F73EC929238A778B9185E01F5E060E6354B5519AC
+        00026A88406D4D889A6116E26A436A9DE2624D08289E000C6F42E76B688094B3
+        571E3015F0347C5510CC925C366210608021D464048D199E800F5F02D2470E73
+        FED460265EA54A045E630331EA02C109D48442C3F8919E003B9F3FC6779F3F8E
+        89F0E8E645D53CA00024299014C5D2668C8FCA240D02E3726F9E6367BA3993ED
+        A773202610183B32E4C649A39833ABC1AB2D5FDED808407D4DE66A9DD05BCE30
+        3548EA0A8A619612C1774C537E7FF4224FEF3F4B8F13E6CF9FC0C6DB67B3A114
+        0B164CA2D732FCAD03BED2FAC216A0B6B1BE4E42110A4EAB1350054871141260
+        ADEC15C3A92F84F2CB3F9EE67C4FC49DEBE7D1BC7022E31AEAC959404E83D27E
+        34372F98C0A6357359B4B8F9C777EF7EFD85E98D4B47CF1D5D2B573561ECD483
+        E3D2B637A4378818AF1CBE40D184961533B9D81DA106FB5E3AC499772F0370E3
+        CC096CBEE3563202EB57CFE1D53782CFB46CFD41DBCF1F68D99109A458B50F78
+        995D0A3678831949ABEDB832C0919357D8B2A9897FBD97234C869324E03FFCC6
+        A792FDB63D87284446CE94AED23DB72D9BC1D9F3DDDF5EF7CD9FFC62C688CCDF
+        CD4CAB94C05BDE7CC2FC91EC054C39F05696E6B9D773AAA340AE60E48A8E42AC
+        00CC98369EC54D3300C817B514560AC7894BF9D2F989351F9B34EB6B40A6BA02
+        AA406A7E86CC060333DA2FF4F2895B1AB8D41773E0B5A3BCFF5E277E29920002
+        3CF1C46F00983C653CABD72EA561CC68241CB906D809148778C0392BE37A05D2
+        C193BE13A27474152861D39B8B12F01FDDB59C4024298521C44ED9B36D0D5114
+        539309B9E7A7AFD33BE0C810E234980A84D79C051E17F0E0A096641523978FB8
+        3250247202C0F429D727B3A0BF101348793E4C9B3CD68F704484C8299D7DC9AC
+        18D209252DC1A0DA6BFA16ACA90F112469327D7D053453C7D46913D8F2FDDF56
+        5E50846776AC43CDF87CEBCB84618804C20D332711C71F122F921BC89D05AC5A
+        1FC099626698FADF86A260E5304031E64C19C5E56C3786B17859131B3EB7920D
+        9B6EA3902F902FC40901173BD67FF6937C7ADD321636CF21564757470FFDDD1F
+        BC0AC455FB807F08D4069722C03332140858B5640AADCF1E67C9A4F174478E9E
+        A4250340FDC80C4E0D11E1524F11D50AF15839F5CEC5387BEA2FCF01D1470918
+        A06A0E03C6D6D7F8FAA5FE4F3B31B3A78F63C582B1BCF9D7D32C583A9BA23344
+        8D0925429B77BD9280374C1C47143B14408DF66367C99E3BFDE4C93F3D7512D0
+        6A04A2623EF7C6B776EC5B6996763E43C104C39F301AC6D73367E618C2FE2EDE
+        3ADCCEC225B3B04068BEA52919C12610474A4FDEA1B1A3FDF8592E9CF8F7EF8E
+        EEBBA715C86723334FC0832B90DFFBF8D60D401D100EF38D284098A9ADAF6F6C
+        697BE083EC953B6F9837353371EA3846D4D76140AEBF40C7852B9C6BBF90EB7C
+        F7ED87DFF9C3C37B809E12B8025455007040CE830E1771B12F78FBE56DF74EFF
+        F8D6A73AB34D9B6B478E594E104E01D45C9C2DE6BA0E769F3BB2377BECC57F02
+        390F5E9D401A8EFF6D15CEBFB9F7CFC0D1F41B000005A24AC45EF621C3E7FFB9
+        FE034F250E6FBC460FB00000000049454E44AE426082}
+    end
   end
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select * from t_company where deleted_at is null Order by compan' +
-        'y_code'
+        'select *, case when stat_office=0 then '#39'KANTOR PUSAT'#39' else '#39'KANT' +
+        'OR CABANG'#39' end status_kantor from t_company where deleted_at is ' +
+        'null Order by company_code'
       ''
       '')
     Left = 380

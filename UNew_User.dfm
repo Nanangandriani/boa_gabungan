@@ -1,7 +1,8 @@
 object FNew_User: TFNew_User
   Left = 0
   Top = 0
-  Caption = 'Form New User'
+  BorderStyle = bsDialog
+  Caption = 'Form User'
   ClientHeight = 275
   ClientWidth = 469
   Color = clBtnFace

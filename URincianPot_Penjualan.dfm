@@ -1,6 +1,7 @@
 object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Rincian Potongan'
   ClientHeight = 443
   ClientWidth = 1258
@@ -66,6 +67,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      Visible = False
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 126
@@ -149,7 +151,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'c'
+        FieldName = 'harga_satuan'
         Footers = <>
         Title.Caption = 'Harga'
         Width = 125
@@ -399,7 +401,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = 6
+      ExplicitLeft = 1103
     end
   end
   object dsMasterData: TDataSource

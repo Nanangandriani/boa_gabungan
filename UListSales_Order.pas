@@ -155,7 +155,7 @@ begin
    end;
    if dm.Qtemp.RecordCount<>0 then
    begin
-     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Tagihan...!!!');
+     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Penjualan...!!!');
      exit;
    end;
 
@@ -211,7 +211,7 @@ end;
 procedure TFSalesOrder.ActUpdateExecute(Sender: TObject);
 begin
   FNew_SalesOrder.Clear;
-  with Dm.Qtemp do
+  with Dm.Qtemp2 do
   begin
        close;
        sql.Clear;
@@ -219,48 +219,47 @@ begin
                   'WHERE notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString);
        open;
   end;
-  if Dm.Qtemp.RecordCount=0 then
+  if Dm.Qtemp2.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
     exit;
   end;
 
-  //Jika sudah ada penjualan tidak bisa update
-  if (Dm.Qtemp.FieldByName('no_invoice').AsString<>NULL) then
+  if Dm.Qtemp2.RecordCount<>0 then
   begin
-    ShowMessage('SO sudah dibuat Penjualan tidak dapat diubah...!!!');
-    FNew_SalesOrder.BSave.Enabled:=False;
-    FNew_SalesOrder.Panel1.Enabled:=False;
-    FNew_SalesOrder.DBGridDetail.Enabled:=False;
-  end else
-  begin
-    FNew_SalesOrder.BSave.Enabled:=True;
-    FNew_SalesOrder.Panel1.Enabled:=True;
-    FNew_SalesOrder.DBGridDetail.Enabled:=True;
-  end;
+    if (Dm.Qtemp2.FieldByName('no_invoice').AsString<>NULL) then
+    begin
+      ShowMessage('SO sudah dibuat Penjualan tidak dapat diubah...!!!');
+      FNew_SalesOrder.BSave.Enabled:=False;
+      FNew_SalesOrder.Panel1.Enabled:=False;
+      FNew_SalesOrder.DBGridDetail.Enabled:=False;
+    end else
+    begin
+      FNew_SalesOrder.BSave.Enabled:=True;
+      FNew_SalesOrder.Panel1.Enabled:=True;
+      FNew_SalesOrder.DBGridDetail.Enabled:=True;
+    end;
 
-  if Dm.Qtemp.RecordCount<>0 then
-  begin
     with FNew_SalesOrder do
     begin
-      edKodeOrder.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
-      dtTanggal_Kirim.Date:=Dm.Qtemp.FieldByName('sent_date').AsDateTime;
-      dtTanggal_Pesan.Date:=Dm.Qtemp.FieldByName('order_date').AsDateTime;
-      edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
-      edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
-      edKode_Sales.Text:=Dm.Qtemp.FieldByName('code_sales').AsString;
-      edNama_Sales.Text:=Dm.Qtemp.FieldByName('name_sales').AsString;
-      edKodeSumber.Text:=Dm.Qtemp.FieldByName('code_source').AsString;
-      edNamaSumber.Text:=Dm.Qtemp.FieldByName('name_source').AsString;
-      spJatuhTempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
-      edNoReff.Text:=Dm.Qtemp.FieldByName('no_reference').AsString;
-      vFormSumber:=SelectRow('SELECT form_target from t_order_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_source').AsString)+' ');
-      Edautocode.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
-      order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
-      kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
-      strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
-      strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
-      strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+      edKodeOrder.Text:=Dm.Qtemp2.FieldByName('notrans').AsString;
+      dtTanggal_Kirim.Date:=Dm.Qtemp2.FieldByName('sent_date').AsDateTime;
+      dtTanggal_Pesan.Date:=Dm.Qtemp2.FieldByName('order_date').AsDateTime;
+      edKode_Pelanggan.Text:=Dm.Qtemp2.FieldByName('code_cust').AsString;
+      edNama_Pelanggan.Text:=Dm.Qtemp2.FieldByName('name_cust').AsString;
+      edKode_Sales.Text:=Dm.Qtemp2.FieldByName('code_sales').AsString;
+      edNama_Sales.Text:=Dm.Qtemp2.FieldByName('name_sales').AsString;
+      edKodeSumber.Text:=Dm.Qtemp2.FieldByName('code_source').AsString;
+      edNamaSumber.Text:=Dm.Qtemp2.FieldByName('name_source').AsString;
+      spJatuhTempo.Text:=Dm.Qtemp2.FieldByName('payment_term').AsString;
+      edNoReff.Text:=Dm.Qtemp2.FieldByName('no_reference').AsString;
+      vFormSumber:=SelectRow('SELECT form_target from t_order_source where code='+QuotedStr(Dm.Qtemp2.FieldByName('code_source').AsString)+' ');
+      Edautocode.Text:=Dm.Qtemp2.FieldByName('notrans').AsString;
+      order_no:=Dm.Qtemp2.FieldByName('order_no').AsString;
+      kd_kares:=Dm.Qtemp2.FieldByName('additional_code').AsString;
+      strtgl:=Dm.Qtemp2.FieldByName('trans_day').AsString;
+      strbulan:=Dm.Qtemp2.FieldByName('trans_month').AsString;
+      strtahun:=Dm.Qtemp2.FieldByName('trans_year').AsString;
     end;
   end;
   FNew_SalesOrder.edKodeOrder.Enabled:=false;

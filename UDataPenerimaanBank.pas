@@ -639,7 +639,7 @@ begin
             ' "account_number_bank", "account_name_bank", "paid_amount", "description", "account_acc" '+
             ' from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
-            '  Order BY no_invoice_tax asc');
+            ' Order BY no_invoice_tax asc');
     open;
   end;
   MemDetailPiutang.active:=false;
@@ -898,7 +898,6 @@ begin
     next_proses:=false;
     exit;
   end;
-
 
   //Cek Piutang Dengan Pernerimaan Balance
   if MemDetailPiutang.RecordCount<>0 then

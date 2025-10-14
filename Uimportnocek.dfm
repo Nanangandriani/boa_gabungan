@@ -167,7 +167,7 @@ object FImportnocek: TFImportnocek
     Left = 402
     Top = 111
     Width = 121
-    Height = 21
+    Height = 23
     ImeName = 'US'
     TabOrder = 5
   end
@@ -181,11 +181,11 @@ object FImportnocek: TFImportnocek
     TabOrder = 6
     Value = 0
   end
-  object Edit1: TEdit
+  object Ed_header: TEdit
     Left = 17
     Top = 112
     Width = 321
-    Height = 23
+    Height = 21
     Ctl3D = False
     ImeName = 'US'
     ParentCtl3D = False
@@ -230,7 +230,7 @@ object FImportnocek: TFImportnocek
     Left = 402
     Top = 138
     Width = 232
-    Height = 21
+    Height = 23
     ImeName = 'US'
     TabOrder = 11
   end
@@ -244,6 +244,14 @@ object FImportnocek: TFImportnocek
     RowCount = 1
     FixedRows = 0
     TabOrder = 12
+    Visible = False
+  end
+  object Ed_trans_no: TEdit
+    Left = 306
+    Top = 8
+    Width = 43
+    Height = 23
+    TabOrder = 13
     Visible = False
   end
   object MyQuery2: TUniQuery
@@ -262,5 +270,17 @@ object FImportnocek: TFImportnocek
       'ls'
     Left = 412
     Top = 52
+  end
+  object QMaster_Nocek: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_nocek_master')
+    Left = 232
+    Top = 48
+  end
+  object DSMaster_nocek: TDataSource
+    DataSet = QMaster_Nocek
+    Left = 280
+    Top = 72
   end
 end

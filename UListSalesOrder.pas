@@ -142,20 +142,18 @@ begin
       begin
         close;
         sql.clear;
-        sql.add('select * from get_sales_order_not_in_selling('+strDate+','+strKodePelanggan+','+strKodeKares+')');
+        sql.Text:='select * from get_sales_order_not_in_selling('+strDate+','+strKodeKares+','+strKodePelanggan+')';
         open;
       end;
 
       MemMasterData.active:=false;
       MemMasterData.active:=true;
       MemMasterData.EmptyTable;
-
+       Showmessage(Dm.Qtemp.fieldbyname('code_cust').value) ;
       if  Dm.Qtemp.RecordCount=0 then
       begin
         Showmessage('Maaf, Data Tidak Ditemukan..');
-      end;
-
-      if  Dm.Qtemp.RecordCount<>0 then
+      end else
       begin
         max:= Dm.Qtemp.RecordCount;
         progress.Progress:=0;
@@ -258,8 +256,8 @@ begin
       end;
     end;
   end;
-  FListSalesOrder.Close;
-  FTemplate_Temp.close;
+  Close;
+//  FTemplate_Temp.close;
 end;
 
 procedure TFListSalesOrder.EdkodewilayahButtonClick(Sender: TObject);
