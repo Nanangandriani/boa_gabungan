@@ -30,8 +30,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     FixedDimension = 21
     object TabMasterPelanggan: TRzTabSheet
       Caption = 'Master Pelanggan'
-      ExplicitWidth = 1268
-      ExplicitHeight = 430
       object Panel3: TPanel
         Left = 0
         Top = 399
@@ -39,8 +37,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Height = 32
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 398
-        ExplicitWidth = 1268
         object btNextStep: TRzBitBtn
           Left = 1196
           Top = 1
@@ -101,7 +97,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1192
         end
       end
       object Panel1: TPanel
@@ -113,8 +108,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 1268
-        ExplicitHeight = 398
         object Label14: TLabel
           Left = 247
           Top = 283
@@ -449,10 +442,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object TabDetailPelanggan: TRzTabSheet
       Caption = 'Detail Pelanggan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel4: TPanel
         Left = 0
         Top = 394
@@ -597,10 +586,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
         FixedDimension = 21
         object TabSDetailPel: TRzTabSheet
           Caption = 'Detail Alamat Pelanggan'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object DBGridCustomer: TDBGridEh
             Left = 0
             Top = 0
@@ -828,10 +813,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object TabAkunPerkiraan: TRzTabSheet
       Caption = 'Akun Perkiraan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel5: TPanel
         Left = 1
         Top = 0
@@ -1049,6 +1030,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object TabPajak: TRzTabSheet
       Caption = 'Pajak'
+      ExplicitWidth = 1268
+      ExplicitHeight = 430
       object Panel2: TPanel
         Left = 0
         Top = 397
@@ -1056,6 +1039,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Height = 34
         Align = alBottom
         TabOrder = 0
+        ExplicitTop = 396
+        ExplicitWidth = 1268
         object BBatal: TRzBitBtn
           Left = 1196
           Top = 1
@@ -1116,6 +1101,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1192
         end
         object BSave: TRzBitBtn
           Left = 1121
@@ -1177,6 +1163,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitTop = 6
         end
         object BDataProspek: TRzBitBtn
           Left = 244
@@ -1386,6 +1373,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1268
+        ExplicitHeight = 396
         object Label37: TLabel
           Left = 130
           Top = 57
@@ -1580,8 +1569,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
   end
   object MemDetailPel: TMemTableEh
     Params = <>
-    Left = 984
-    Top = 384
+    Left = 960
+    Top = 256
     object MemDetailPelKODE_URUTAN_KE: TStringField
       FieldName = 'KODE_URUTAN_KE'
     end

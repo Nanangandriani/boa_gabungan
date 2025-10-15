@@ -118,9 +118,6 @@ end;
 procedure TFListPelanggan.Refresh;
 var strWhereKaresidenan,strWhereKabupaten: String;
 begin
-
-
-
   DBGridcustomer.StartLoadingStatus();
   try
     if cbKaresidenan.EditValue<>'' then

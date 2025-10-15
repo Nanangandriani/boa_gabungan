@@ -71,6 +71,7 @@ type
     Memo1: TMemo;
     Edit1: TEdit;
     SpeedButton1: TSpeedButton;
+    BTambahTargetPenjualan: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edNama_PelangganButtonClick(Sender: TObject);
@@ -86,6 +87,7 @@ type
     procedure RzBitBtn1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure edNama_PelangganChange(Sender: TObject);
+    procedure BTambahTargetPenjualanClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -122,7 +124,7 @@ implementation
 uses UTambah_Barang, UMasterData, Ubrowse_pelanggan, UMasterSales, UMy_Function,
   UDataModule, UTemplate_Temp, UListOrderTelemarketing, UListKontrakJasa,
   UHomeLogin, UListSales_Order, USetMasterPenjulan, USetMasterPelanggan,
-  UMainMenu;
+  UMainMenu, UNew_DataTargetPenjualan;
 //uses UDataModule, UMy_Function;
 
 procedure TFNew_SalesOrder.UpdateStatusTele;
@@ -411,13 +413,13 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT a.*,b.category_id,c.category category_name from ('+
+    sql.add(' SELECT a.*,b.group_id,c.group_name from ('+
             ' SELECT "notrans", "code_item", '+
             ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
             ' "name_wh", "code_supp", "name_supp", "source" FROM  "public"."t_sales_order_det" '+
             ' WHERE deleted_at IS NULL ) a '+
             ' LEFT JOIN t_item b on b.item_code=a.code_item '+
-            ' LEFT JOIN t_item_category c on c.category_id=b.category_id '+
+            ' LEFT JOIN t_item_group c on c.group_id=b.group_id '+
             ' WHERE notrans='+QuotedStr(edKodeOrder.Text)+' '+
             ' Order By notrans, code_item desc');
     open;
@@ -449,8 +451,8 @@ begin
      FNew_SalesOrder.MemDetail['NM_GUDANG']:=Dm.Qtemp.fieldbyname('name_wh').value;
      FNew_SalesOrder.MemDetail['KD_SUPPLIER']:=Dm.Qtemp.fieldbyname('code_supp').value;
      FNew_SalesOrder.MemDetail['NM_SUPPLIER']:=Dm.Qtemp.fieldbyname('name_supp').value;
-     FNew_SalesOrder.MemDetail['CATEGORY_ID']:=Dm.Qtemp.fieldbyname('category_id').value;
-     FNew_SalesOrder.MemDetail['CATEGORY_NAME']:=Dm.Qtemp.fieldbyname('category_name').value;
+     FNew_SalesOrder.MemDetail['CATEGORY_ID']:=Dm.Qtemp.fieldbyname('group_id').value;
+     FNew_SalesOrder.MemDetail['CATEGORY_NAME']:=Dm.Qtemp.fieldbyname('group_name').value;
      FNew_SalesOrder.MemDetail.post;
      Dm.Qtemp.next;
     end;
@@ -589,7 +591,7 @@ begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         CekTargetSales;
-        if islanjut=1 then begin
+        if iserror=0 then begin
           CekBankGaransi;
           if islanjut=1 then begin
             Update;
@@ -597,6 +599,8 @@ begin
           end else begin
             exit;
           end;
+        end else begin
+          exit;
         end;
     end;
   end;
@@ -641,6 +645,36 @@ begin
   end else begin
     FTambah_Barang.clear;
     FTambah_Barang.ShowModal;
+  end;
+end;
+
+procedure TFNew_SalesOrder.BTambahTargetPenjualanClick(Sender: TObject);
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
+      ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL INNER JOIN t_menu b '+
+      ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
+      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+      ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and bb.submenu=''Target Penjualan'' ;';
+    Open;
+  end;
+
+  if dm.Qtemp.RecordCount=0 then
+  begin
+    MessageDlg('Tidak Dapat Akses Target Penjualan..!!',mtInformation,[mbRetry],0);
+  end else if edNama_Pelanggan.Text='' then
+  begin
+    MessageDlg('Nama Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    FNew_DataTargetPenjualan.Clear;
+    Status:=0;
+    FNew_DataTargetPenjualan.edKodePelanggan.Text:=edKode_Pelanggan.Text;
+    FNew_DataTargetPenjualan.edNamaPelanggan.Text:=edNama_Pelanggan.Text;
+    FNew_DataTargetPenjualan.ShowModal;
   end;
 end;
 
@@ -791,12 +825,12 @@ begin
   Strsubmenu_code:=QuotedStr(dm.Qtemp.FieldValues['submenu_code']);
   Strsubmenu:=QuotedStr('Sales Order');
 
-  if (Status=1) AND (edNamaSumber.Text='ORDER OFFLINE') then
-  begin
-    btAddDetail.Enabled:=False;
-  end else begin
-    btAddDetail.Enabled:=true;
-  end;
+//  if (Status=1) AND (edNamaSumber.Text='ORDER OFFLINE') then
+//  begin
+//    btAddDetail.Enabled:=False;
+//  end else begin
+//    btAddDetail.Enabled:=true;
+//  end;
 
   if Status=1 then
   begin

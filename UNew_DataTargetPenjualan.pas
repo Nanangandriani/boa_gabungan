@@ -443,9 +443,9 @@ begin
   InsertDetail;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
-//  FListTargetPenjualan.Refresh;
+  FListTargetPenjualan.Refresh;
   Close;
-  FMainMenu.TampilTabForm2;
+//  FMainMenu.TampilTabForm2;
 
 end;
 
@@ -479,9 +479,9 @@ begin
   InsertDetail;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
-//  FListTargetPenjualan.Refresh;
+  FListTargetPenjualan.Refresh;
   Close;
-  FMainMenu.TampilTabForm2;
+//  FMainMenu.TampilTabForm2;
 end;
 
 

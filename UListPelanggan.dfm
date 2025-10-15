@@ -173,7 +173,7 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -193,7 +193,7 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -224,7 +224,7 @@ object FListPelanggan: TFListPelanggan
           Visible = True
           ItemName = 'dxBarLargeButton2'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

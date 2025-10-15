@@ -325,14 +325,21 @@ end;
 
 
 procedure TFNew_Pelanggan.InsertDetailAlamat;
+var strContactPerson1,strContactPerson2,strContactPerson3: String;
 begin
+  if (MemDetailPel['CONTACT_PERSON1']='') OR (MemDetailPel['CONTACT_PERSON1']=NULL) then
+  strContactPerson1:='' else  strContactPerson1:=MemDetailPel['CONTACT_PERSON1'];
+  if (MemDetailPel['CONTACT_PERSON2']='') OR (MemDetailPel['CONTACT_PERSON2']=NULL) then
+  strContactPerson2:='' else  strContactPerson2:=MemDetailPel['CONTACT_PERSON2'];
+  if (MemDetailPel['CONTACT_PERSON3']='') OR (MemDetailPel['CONTACT_PERSON3']=NULL) then
+  strContactPerson3:='' else  strContactPerson3:=MemDetailPel['CONTACT_PERSON3'];
   with dm.Qtemp do
   begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "t_customer_address" '+
-            ' WHERE "customer_code"='+QuotedStr(Edkode.Text)+';';
-  ExecSQL;
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM  "t_customer_address" '+
+              ' WHERE "customer_code"='+QuotedStr(Edkode.Text)+';';
+    ExecSQL;
   end;
 
   MemDetailPel.First;
@@ -348,9 +355,9 @@ begin
               ' '+QuotedStr(Edkode.Text)+', '+
               ' '+QuotedStr(MemDetailPel['KODE_URUTAN_KE'])+', '+
               ' '+QuotedStr(MemDetailPel['ALAMAT'])+', '+
-              ' '+QuotedStr(MemDetailPel['CONTACT_PERSON1'])+', '+
-              ' '+QuotedStr(MemDetailPel['CONTACT_PERSON2'])+', '+
-              ' '+QuotedStr(MemDetailPel['CONTACT_PERSON3'])+', '+
+              ' '+QuotedStr(strContactPerson1)+', '+
+              ' '+QuotedStr(strContactPerson2)+', '+
+              ' '+QuotedStr(strContactPerson3)+', '+
               ' '+QuotedStr(MemDetailPel['LONGITUDE'])+', '+
               ' '+QuotedStr(MemDetailPel['LATITUDE'])+' );';
     ExecSQL;
@@ -952,8 +959,8 @@ begin
     end;
     InsertDetailAlamat;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
-    Close;
     Flistpelanggan.Refresh;
+    Close;
 end;
 
 procedure TFNew_Pelanggan.Save;
@@ -1021,9 +1028,9 @@ begin
   UpdateStatusProspek;
   DeleteProspekTmp;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  Flistpelanggan.Refresh;
   Clear;
   Close;
-  Flistpelanggan.Refresh;
 end;
 
 procedure TFNew_Pelanggan.BBatalClick(Sender: TObject);
@@ -1118,7 +1125,7 @@ begin
         end;
       end;
     end;
-    FMainMenu.TampilTabForm2;
+//    FMainMenu.TampilTabForm2;
   end;
 
 

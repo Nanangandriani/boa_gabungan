@@ -124,9 +124,6 @@ object FMainMenu: TFMainMenu
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitLeft = 8
-    ExplicitTop = 19
-    ExplicitWidth = 1021
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Main Menu'
@@ -217,9 +214,8 @@ object FMainMenu: TFMainMenu
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitTop = 249
           ExplicitWidth = 836
-          ExplicitHeight = 208
+          ExplicitHeight = 456
         end
         object WebBrowser1: TWebBrowser
           Left = 1
@@ -229,7 +225,7 @@ object FMainMenu: TFMainMenu
           Align = alClient
           TabOrder = 1
           ExplicitWidth = 836
-          ExplicitHeight = 248
+          ExplicitHeight = 456
           ControlData = {
             4C000000D15600003B2F00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800

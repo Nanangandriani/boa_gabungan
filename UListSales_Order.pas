@@ -227,7 +227,8 @@ begin
 
   if Dm.Qtemp2.RecordCount<>0 then
   begin
-    if (Dm.Qtemp2.FieldByName('no_invoice').AsString<>NULL) then
+
+    if (Dm.Qtemp2.FieldValues['no_invoice']<>'') then
     begin
       ShowMessage('SO sudah dibuat Penjualan tidak dapat diubah...!!!');
       FNew_SalesOrder.BSave.Enabled:=False;
