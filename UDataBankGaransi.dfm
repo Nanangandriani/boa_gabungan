@@ -305,6 +305,7 @@ object FDataBankGaransi: TFDataBankGaransi
             FieldName = 'nama_kategori'
             Footers = <>
             Title.Caption = 'Kelompok'
+            Visible = False
             Width = 200
           end
           item

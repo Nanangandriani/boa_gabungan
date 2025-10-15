@@ -73,7 +73,7 @@ begin
   begin
     close;
     sql.clear;
-    Sql.Text := 'Update t_correction_trans set status=1,approved_rejected_by='+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+    Sql.Text := 'Update t_correction_trans set status=1,approved_rejected_by='+QuotedStr(Nm)+', '+
                 'approved_rejected_at=NOW(),note_approved_rejected='+QuotedStr(MemKetApprove.Text)+' Where '+
                 'code='+QuotedStr(edKode.Text);
     ExecSQL;
@@ -106,7 +106,7 @@ begin
   begin
     close;
     sql.clear;
-    Sql.Text := 'Update t_correction_trans set status=99,approved_rejected_by='+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+    Sql.Text := 'Update t_correction_trans set status=99,approved_rejected_by='+QuotedStr(Nm)+', '+
                 'approved_rejected_at=NOW(),note_approved_rejected='+QuotedStr(MemKetApprove.Text)+' Where '+
                 'code='+QuotedStr(edKode.Text);
     ExecSQL;
@@ -155,6 +155,7 @@ begin
               'deleted_at is NULL ORDER BY created_at DESC LIMIT 1;';
     Open;
   end;
+
   if dm.Qtemp2.FieldByName('status').Value = '0' then
   begin
     MessageDlg('No Transaksi '+edNoTransaksi.Text+' Sedang dalam pengajuan..!!',mtInformation,[mbRetry],0);
@@ -180,7 +181,7 @@ begin
               ' VALUES (  '+
               ' '+QuotedStr(edKode.Text)+', '+
               'NOW(), '+
-              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' '+QuotedStr(Nm)+', '+
               ' '+QuotedStr(strKodeSubMenu)+', '+
               ' '+QuotedStr(memKet.Text)+', '+
               ' '+QuotedStr(edNoTransaksi.Text)+', '+

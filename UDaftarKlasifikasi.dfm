@@ -320,6 +320,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Height = 23
           Text = ''
           TabOrder = 16
+          OnChange = ednm_jenis_usahaChange
           AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
@@ -616,6 +617,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Align = alRight
           Caption = 'Preview'
           TabOrder = 2
+          Visible = False
           OnClick = bt_m_tampilkanClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
@@ -732,6 +734,17 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+        end
+        object BCorrection: TRzBitBtn
+          Left = 719
+          Top = 1
+          Width = 98
+          Height = 30
+          Align = alRight
+          Caption = 'Submit Correction'
+          TabOrder = 4
+          OnClick = BCorrectionClick
+          ExplicitLeft = 715
         end
       end
     end
@@ -903,6 +916,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
           Caption = 'Include PPN'
           Color = 15987699
           Columns = 2
+          ItemHeight = 17
           ItemIndex = 1
           Items.Strings = (
             'Tidak'
@@ -918,7 +932,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 316
         object BBatal: TRzBitBtn
           Left = 816
           Top = 1
@@ -1114,7 +1127,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alTop
         Caption = 'Daftar Klasifikasi'
         TabOrder = 2
-        ExplicitTop = 105
         object DBGridKlasifikasi: TDBGridEh
           Left = 2
           Top = 17
@@ -1262,7 +1274,6 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
         Align = alTop
         Caption = 'Daftar Master Klasifikasi'
         TabOrder = 3
-        ExplicitTop = 348
         object DBGridMaster: TDBGridEh
           Left = 2
           Top = 17

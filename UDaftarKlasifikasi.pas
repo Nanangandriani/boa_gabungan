@@ -129,6 +129,7 @@ type
     RzLabel1: TRzLabel;
     btAddDetail: TRzBitBtn;
     rgPajakPel: TRzRadioGroup;
+    BCorrection: TRzBitBtn;
   procedure edKode_PelangganButtonClick(Sender: TObject);
   procedure ednm_jenis_pelButtonClick(Sender: TObject);
   procedure ednm_kategoriButtonClick(Sender: TObject);
@@ -158,6 +159,8 @@ type
     procedure edkd_type_jualChange(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
     procedure rgPajakClick(Sender: TObject);
+    procedure ednm_jenis_usahaChange(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
   private
   { Private declarations }
   public
@@ -181,7 +184,7 @@ implementation
 {$R *.dfm}
 
 uses Ubrowse_pelanggan, UMasterData, UDataModule, UHomeLogin, UTambah_Barang,
-  UMy_Function;
+  UMy_Function, UKoreksi, UListKlasifikasi, UMainMenu;
 //uses UDataModule, UHomeLogin;
 
 procedure TFDaftarKlasifikasi.SaveUpdateGroup;
@@ -215,7 +218,7 @@ begin
                   ' '+QuotedStr(MemMaster['kd_satuan'])+', '+
                   ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
                   ' 0 ,NOW(), '+
-                  ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+                  ' '+QuotedStr(Nm)+' );';
         ExecSQL;
       end;
       MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
@@ -272,7 +275,7 @@ begin
               ' "status_promo") '+
               ' Values( '+
               ' NOW(), '+
-              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' '+QuotedStr(Nm)+', '+
               ' '+QuotedStr(edkd_jenis_usaha.Text)+', '+
               ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
               ' '+QuotedStr(edkd_kategori.Text)+', '+
@@ -327,7 +330,7 @@ begin
                 ' "disc3", "disc4") '+
                 ' Values( '+
                 ' NOW(), 0, '+
-                ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                ' '+QuotedStr(Nm)+', '+
                 ' '+QuotedStr(Copy(Dm.Qtemp1.FieldByName('id_master').AsString, 2, Length(Dm.Qtemp1.FieldByName('id_master').AsString) - 2))+', '+
                 ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
                 ' '+QuotedStr(MemKlasifikasi['nm_barang'])+', '+
@@ -360,16 +363,16 @@ begin
       begin
         with dm.Qtemp2 do
         begin
-        close;
-        sql.clear;
-        sql.Text:=' INSERT INTO "public"."t_sales_classification_price_master" '+
-                  ' ("code_type_customer", "code_item", "code_unit", "unit_price") '+
-                  ' Values( '+
-                  ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
-                  ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
-                  ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
-                  ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
-        ExecSQL;
+          close;
+          sql.clear;
+          sql.Text:=' INSERT INTO "public"."t_sales_classification_price_master" '+
+                    ' ("code_type_customer", "code_item", "code_unit", "unit_price") '+
+                    ' Values( '+
+                    ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
+                    ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
+                    ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
+                    ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
+          ExecSQL;
         end;
       end;
 
@@ -395,6 +398,7 @@ begin
   end;
   //cek masterharga jual per jenis pelanggan dan jenis jual b2b b2c
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  FMainMenu.TampilTabForm2;
 end;
 
 
@@ -404,9 +408,9 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' Update "t_sales_classification" set '+
+      sql.add(' Update "t_sales_classification" set status_correction=0, '+
               ' updated_at=now(), '+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ');
+              ' updated_by='+QuotedStr(Nm)+' ');
       sql.add(' Where id='+QuotedStr(id_master)+';' );
       ExecSQL;
     end;
@@ -461,7 +465,7 @@ begin
                 ' "disc3", "disc4") '+
                 ' Values( '+
                 ' NOW(), 0, '+
-                ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                ' '+QuotedStr(Nm)+', '+
                 ' '+QuotedStr(id_master)+', '+
                 ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
                 ' '+QuotedStr(MemKlasifikasi['nm_barang'])+', '+
@@ -526,6 +530,7 @@ begin
     end;
   //cek masterharga jual per jenis pelanggan dan jenis jual b2b b2c
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  FMainMenu.TampilTabForm2;
 end;
 
 procedure TFDaftarKlasifikasi.bt_m_simpanClick(Sender: TObject);
@@ -553,6 +558,7 @@ begin
             ' Order By "code_item_category" desc ');
     open;
   end;
+
 
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
@@ -596,6 +602,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 procedure TFDaftarKlasifikasi.bt_m_tampilkanClick(Sender: TObject);
@@ -867,6 +874,15 @@ begin
   SaveUpdateGroup;
 end;
 
+procedure TFDaftarKlasifikasi.BCorrectionClick(Sender: TObject);
+begin
+  FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FListKlasifikasi.Name)); //Mendapatkan nama Menu
+  FKoreksi.Status:=0;
+  FKoreksi.vnotransaksi:=id_master; //Mendapatkan Nomor Transaksi
+  FKoreksi.ShowModal;
+end;
+
 procedure TFDaftarKlasifikasi.BRefreshClick(Sender: TObject);
 begin
   RefreshGrid_Group;
@@ -961,6 +977,12 @@ begin
   FMasterData.vcall:='jns_usaha_pelanggan_klasifikasi';
   FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL Order By code Asc');
   FMasterData.ShowModal;
+end;
+
+procedure TFDaftarKlasifikasi.ednm_jenis_usahaChange(Sender: TObject);
+begin
+  ednm_jenis_pel.Text:='';
+  edkd_jenis_pel.Text:='';
 end;
 
 procedure TFDaftarKlasifikasi.ednm_kategoriButtonClick(Sender: TObject);

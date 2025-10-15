@@ -324,9 +324,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFHomeLogin, FHomeLogin);
+  Application.CreateForm(TFMainMenu, FMainMenu);
   Application.CreateForm(TFHomeSreen, FHomeSreen);
   Application.CreateForm(Tdm, dm);
-  Application.CreateForm(TFMainMenu, FMainMenu);
   Application.CreateForm(TFUser, FUser);
   Application.CreateForm(TFNew_User, FNew_User);
   Application.CreateForm(TFListKolektor, FListKolektor);
@@ -500,7 +500,7 @@ while FHomeSreen.Timer1.Enabled do
 //  Application.CreateForm(TFLap_Buku_Harian_Kas, FLap_Buku_Harian_Kas);
 //  Application.CreateForm(TFRpt_BHKeluarKasdanBank, FRpt_BHKeluarKasdanBank);
   Application.CreateForm(TFupdate_faktur, Fupdate_faktur);
-  Application.CreateForm(TFListPelanggan, FListPelanggan);
+//  Application.CreateForm(TFListPelanggan, FListPelanggan);
   Application.CreateForm(TFNew_Pelanggan, FNew_Pelanggan);
   Application.CreateForm(TFFakturPajak, FFakturPajak);
   Application.CreateForm(TFinput_faktur_pajak, Finput_faktur_pajak);

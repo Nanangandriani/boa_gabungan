@@ -155,6 +155,16 @@ begin
       begin
          MessageDlg('Kelompok barang '+DBGridKelompok.Fields[0].AsString+' tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
       end;
+//      else
+//      begin
+//        with dm.Qtemp2 do
+//        begin
+//          close;
+//          sql.Clear;
+//          sql.Text:='UPDATE t';
+//          ExecSQL;
+//        end;
+//      end;
     end;
   end;
 

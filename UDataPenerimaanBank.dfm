@@ -173,8 +173,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Caption = ':'
     end
     object edNoTrans: TEdit
-      Left = 129
-      Top = 72
+      Left = 132
+      Top = 69
       Width = 369
       Height = 23
       CharCase = ecUpperCase

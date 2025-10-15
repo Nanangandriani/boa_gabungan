@@ -622,7 +622,6 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 1046
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -644,7 +643,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1046
+    ExplicitWidth = 1036
     object Label1: TLabel
       Left = 15
       Top = 13
@@ -1922,7 +1921,6 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
       'WHERE'
       #9'A."voucher_no" ='#39#39' '
       #9'AND "position" = '#39'D'#39)
-    Active = True
     Left = 880
     Top = 32
   end

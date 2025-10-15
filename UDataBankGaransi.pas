@@ -58,7 +58,8 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterData, UDataModule, UMy_Function, UHomeLogin, UListPelanggan;
+uses UMasterData, UDataModule, UMy_Function, UHomeLogin, UListPelanggan,
+  UMainMenu;
 
 
 procedure TFDataBankGaransi.RefreshGrid;
@@ -128,20 +129,18 @@ begin
       close;
       sql.clear;
       sql.Text:=' INSERT INTO "public"."t_customer_bank_guarantee" ("created_at", "created_by", '+
-                ' "customer_code", "bank_code", "bank_name", "category_item_code",'+
-                ' "category_item_name", "first_date", "end_date", "guarantee_number", "amount" ) '+
-                ' Values( '+
-                ' NOW(), '+
-                ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-                ' '+QuotedStr(Edkode.Text)+', '+
-                ' '+QuotedStr(MemMaster['kode_bank'])+', '+
-                ' '+QuotedStr(MemMaster['nama_bank'])+', '+
-                ' '+QuotedStr(MemMaster['kode_kategori'])+', '+
-                ' '+QuotedStr(MemMaster['nama_kategori'])+', '+
-                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_aktif']))+', '+
-                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_tempo']))+', '+
-                ' '+QuotedStr(MemMaster['nomor_bg'])+', '+
-                ' '+QuotedStr(MemMaster['nilai'])+');';
+                  ' "customer_code", "bank_code", "bank_name", '+
+                  ' "first_date", "end_date", "guarantee_number", "amount" ) '+
+                  ' Values( '+
+                  ' NOW(), '+
+                  ' '+QuotedStr(Nm)+', '+
+                  ' '+QuotedStr(Edkode.Text)+', '+
+                  ' '+QuotedStr(MemMaster['kode_bank'])+', '+
+                  ' '+QuotedStr(MemMaster['nama_bank'])+', '+
+                  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_aktif']))+', '+
+                  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_tempo']))+', '+
+                  ' '+QuotedStr(MemMaster['nomor_bg'])+', '+
+                  ' '+QuotedStr(MemMaster['nilai'])+');';
       ExecSQL;
     end;
     MemMaster.Next;
@@ -161,7 +160,7 @@ begin
     end
     else begin
     //if application.MessageBox('Apa Anda Yakin Menyimpan Data '+Edkode.Text+' - '+Ednama.Text+'ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-    if MessageDlg ('Apa Anda Yakin Menyimpan Data '+Edkode.Text+' - '+Ednama.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    if MessageDlg ('Apa Anda Yakin Menyimpan Data Ini ?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
       if MemMaster.RecordCount=0 then
       begin

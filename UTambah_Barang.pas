@@ -601,9 +601,12 @@ begin
   if vStatusTrans='klasifikasi' then
   begin
     FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE group_id='+QuotedStr(FDaftarKlasifikasi.edkd_kategori.Text)+' AND	deleted_at IS NULL');
+  end else if vStatusTrans='targetpenjualan' then
+  begin
+    FMasterData.update_grid('item_code','item_name','unit','t_item a LEFT JOIN t_item_group b on b.group_id=a.group_id','WHERE b.group_name='+QuotedStr(FNew_DataTargetPenjualan.cbKelompokBarang.Text)+' AND	a.deleted_at IS NULL');
   end else
   begin
-    FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE	deleted_at IS NULL');
+    FMasterData.update_grid('item_code','item_name','unit','t_item a LEFT JOIN t_item_category b on b.category_id=a.category_id ','WHERE	a.deleted_at IS NULL AND b.type_id=1');
   end;
   FMasterData.ShowModal;
 end;

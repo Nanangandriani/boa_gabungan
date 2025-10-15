@@ -92,6 +92,8 @@ type
     procedure dxBarLargeButtonApprovalClick(Sender: TObject);
     procedure dxBarLargeButtonUtilityClick(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
 
   private
     { Private declarations }
@@ -386,12 +388,20 @@ begin
   begin
     if vCaptionButton='Logout' then
     begin
-      FHomeLogin.Show;
+
+
       CloseAllTabsheets;
       ClearCategoryPanelGroup;
       FHomeLogin.Eduser.Text:='';
       FHomeLogin.EdPass.Text:='';
 
+
+      CategoryPanelUtama.Panels.Clear;
+//      PageControl1.ActivePage:=TabForm;
+
+      Self.Hide;
+//      Application.CreateForm(TFHomeLogin, FHomeLogin);
+      FHomeLogin.Show;
       FHomeLogin.CbSBU.Properties.Items.Clear;
       DM.ABSDatabase1.Close;
       DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
@@ -406,10 +416,8 @@ begin
         FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
         DM.ABSTable1.Next;
       end;
-      CategoryPanelUtama.Panels.Clear;
-//      PageControl1.ActivePage:=TabForm;
-      Close;
-      Exit;
+//      Application.Run;
+       exit;
     end else
     if vCaptionButton='Exit' then
     begin
@@ -845,43 +853,57 @@ begin
   Application.Terminate;
 end;
 
+procedure TFMainMenu.FormActivate(Sender: TObject);
+begin
+//Application.Restore;
+end;
+
 procedure TFMainMenu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-//  Application.Terminate;
-  FHomeLogin.Show;
-  CloseAllTabsheets;
-  ClearCategoryPanelGroup;
-  FHomeLogin.Eduser.Text:='';
-  FHomeLogin.EdPass.Text:='';
+  Application.Terminate;
+//  FHomeLogin.Show;
+//  CloseAllTabsheets;
+//  ClearCategoryPanelGroup;
+//  FHomeLogin.Eduser.Text:='';
+//  FHomeLogin.EdPass.Text:='';
+//
+//  FHomeLogin.CbSBU.Properties.Items.Clear;
+//  DM.ABSDatabase1.Close;
+//  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
+//  DM.ABSDatabase1.Open;
+//  DM.ABSTable1.Close;
+//  DM.ABSTable1.Open;
+//  DM.ABSTable1.Filtered:=False;
+//
+//  DM.ABSTable1.First;
+//  while not DM.ABSTable1.Eof do
+//  begin
+//    FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
+//    DM.ABSTable1.Next;
+//  end;
+//  CategoryPanelUtama.Panels.Clear;
+//
+//  with dm.Qtemp do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
+//    ExecSQL;
+//  end;
+//  FHomeLogin.show;
+end;
 
-  FHomeLogin.CbSBU.Properties.Items.Clear;
-  DM.ABSDatabase1.Close;
-  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
-  DM.ABSDatabase1.Open;
-  DM.ABSTable1.Close;
-  DM.ABSTable1.Open;
-  DM.ABSTable1.Filtered:=False;
-
-  DM.ABSTable1.First;
-  while not DM.ABSTable1.Eof do
-  begin
-    FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
-    DM.ABSTable1.Next;
-  end;
-  CategoryPanelUtama.Panels.Clear;
-
-  with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
-    ExecSQL;
-  end;
-  FHomeLogin.show;
+procedure TFMainMenu.FormResize(Sender: TObject);
+begin
+//  if Self.WindowState = wsMinimized then
+//  begin
+    Application.Restore; // Memastikan aplikasi kembali ke status normal dan aktif
+//  end;
 end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
+  FHomeLogin.Hide;
   //CreateMenu('admin');
   // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
@@ -890,7 +912,8 @@ begin
   {kdsbu:='MLB/1';
   loksbu:='MLB/1';
   format_tgl:='YYYY/MM/DD'; } //Tes default loksbu
-  FHomeLogin.Close;
+
+
 //  RzStatusVersion.Caption:=GetFileVersion();
 
 //  StatusVersion.Caption:=Application.show;

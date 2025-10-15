@@ -188,7 +188,7 @@ begin
             ' "pph_value", "grand_tot",no_inv_tax,no_inv) '+
             ' VALUES ( '+
             ' NOW(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+QuotedStr(Nm)+', '+
             ' '+QuotedStr(edNoTrans.Text)+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+', '+
             ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
@@ -225,7 +225,7 @@ begin
     sql.clear;
     sql.add(' UPDATE "public"."t_sales_returns" SET '+
             ' updated_at=NOW(),'+
-            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+            ' updated_by='+QuotedStr(Nm)+','+
             ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
             ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
             ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+

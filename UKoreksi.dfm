@@ -64,7 +64,7 @@ object FKoreksi: TFKoreksi
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 321
-    ExplicitWidth = 400
+    ExplicitWidth = 389
     object BBatal: TRzBitBtn
       Left = 317
       Top = 1
@@ -125,8 +125,7 @@ object FKoreksi: TFKoreksi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 320
-      ExplicitHeight = 30
+      ExplicitLeft = 313
     end
     object BSave: TRzBitBtn
       Left = 242
@@ -188,9 +187,7 @@ object FKoreksi: TFKoreksi
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 243
-      ExplicitTop = -7
-      ExplicitHeight = 30
+      ExplicitLeft = 238
     end
     object BtnReject: TRzBitBtn
       Left = 151
@@ -332,9 +329,7 @@ object FKoreksi: TFKoreksi
         0000000000000000000000000001000000010000000100000001000000010000
         0001000000010000000100000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      ExplicitLeft = 152
-      ExplicitTop = -7
-      ExplicitHeight = 30
+      ExplicitLeft = 147
     end
     object BtnApprove: TRzBitBtn
       Left = 49
@@ -476,8 +471,7 @@ object FKoreksi: TFKoreksi
         0000000000000000000000000001000000010000000100000001000000010000
         0001000000010000000100000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      ExplicitLeft = 56
-      ExplicitTop = -1
+      ExplicitLeft = 45
     end
   end
   object cbMenu: TRzComboBox

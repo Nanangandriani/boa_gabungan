@@ -11,7 +11,9 @@ object FMainMenu: TFMainMenu
   Font.Style = []
   Position = poDefaultSizeOnly
   WindowState = wsMaximized
+  OnActivate = FormActivate
   OnClose = FormClose
+  OnResize = FormResize
   OnShow = FormShow
   TextHeight = 15
   object Splitter1: TSplitter
@@ -122,6 +124,9 @@ object FMainMenu: TFMainMenu
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitLeft = 8
+    ExplicitTop = 19
+    ExplicitWidth = 1021
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Main Menu'
@@ -206,12 +211,13 @@ object FMainMenu: TFMainMenu
         ExplicitHeight = 458
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
-          Top = 249
+          Top = 1
           Width = 840
-          Height = 209
+          Height = 457
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
+          ExplicitTop = 249
           ExplicitWidth = 836
           ExplicitHeight = 208
         end
@@ -219,12 +225,13 @@ object FMainMenu: TFMainMenu
           Left = 1
           Top = 1
           Width = 840
-          Height = 248
-          Align = alTop
+          Height = 457
+          Align = alClient
           TabOrder = 1
           ExplicitWidth = 836
+          ExplicitHeight = 248
           ControlData = {
-            4C000000D1560000A21900000000000000000000000000000000000000000000
+            4C000000D15600003B2F00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000

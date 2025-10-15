@@ -54,9 +54,14 @@ type
     dxBarUpdate: TdxBarButton;
     dxBarRefresh: TdxBarButton;
     dxBarDelete: TdxBarButton;
-    QMasterKlasifikasi: TUniQuery;
     DsMasterKlasifikasi: TDataSource;
+    dxBarManager1Bar2: TdxBar;
+    cbStatusApproval: TdxBarCombo;
+    dxBarLargeButton1: TdxBarLargeButton;
+    QMasterKlasifikasi: TUniQuery;
     QMasterKlasifikasiid_master: TGuidField;
+    QMasterKlasifikasicode_type_business: TStringField;
+    QMasterKlasifikasiname_type_business: TStringField;
     QMasterKlasifikasicode_type_customer: TStringField;
     QMasterKlasifikasiname_type_customer: TStringField;
     QMasterKlasifikasicode_item_category: TStringField;
@@ -77,12 +82,8 @@ type
     QMasterKlasifikasiname_disc: TMemoField;
     QMasterKlasifikasistatus_promo: TIntegerField;
     QMasterKlasifikasiname_promo: TMemoField;
-    QMasterKlasifikasicode_type_business: TStringField;
-    QMasterKlasifikasiname_type_business: TStringField;
     QMasterKlasifikasistatus_approval: TMemoField;
-    dxBarManager1Bar2: TdxBar;
-    cbStatusApproval: TdxBarCombo;
-    dxBarLargeButton1: TdxBarLargeButton;
+    QMasterKlasifikasistatus_correction: TSmallintField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -150,7 +151,8 @@ begin
                  ' "status_tax", case when "status_tax"=0 then ''Tidak'' else ''Iya'' end "name_tax", '+
                  ' "status_disc",	case when "status_disc"=0 then ''Disc'' else ''Value (Rp)'' end "name_disc", '+
                  ' "status_promo", case when "status_promo"=0 then ''Tidak'' else ''Iya'' end "name_promo",'+
-                 'case when a.status_approval=1 then ''Disetujui'' when a.status_approval=99 then ''Ditolak'' else ''Pengajuan'' end status_approval '+
+                 'case when a.status_approval=1 then ''Disetujui'' when a.status_approval=99 then ''Ditolak'' else ''Pengajuan'' end status_approval, '+
+                 ' status_correction '+
                  ' FROM	"t_sales_classification" a '+
                  ' LEFT JOIN t_customer_type b ON a.code_type_customer = b.code '+
                  //' LEFT JOIN t_item_category c ON a.code_item_category = c.code  '+
@@ -211,6 +213,9 @@ begin
   FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
   FDaftarKlasifikasi.PageControl1.ActivePage:=FDaftarKlasifikasi.TabMasterKlasifikasi;
   FDaftarKlasifikasi.Clear;
+  FDaftarKlasifikasi.BCorrection.Visible:=False;
+  FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
+  FDaftarKlasifikasi.Panel3.Enabled:=True;
   FDaftarKlasifikasi.ShowModal;
 end;
 
@@ -225,6 +230,26 @@ begin
   FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
   FDaftarKlasifikasi.PageControl1.ActivePage:=FDaftarKlasifikasi.TabMasterKlasifikasi;
   FDaftarKlasifikasi.Clear;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' SELECT status_correction '+
+              ' FROM	"t_sales_classification" '+
+              ' WHERE id='+QuotedStr(QMasterKlasifikasi.FieldValues['id_master']);
+    Open;
+  end;
+
+  if dm.Qtemp2.FieldValues['status_correction']=2 then
+  begin
+    FDaftarKlasifikasi.BCorrection.Visible:=False;
+    FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
+  end else begin
+    FDaftarKlasifikasi.BCorrection.Visible:=True;
+    FDaftarKlasifikasi.bt_m_simpan.Enabled:=False;
+  end;
+
   with FDaftarKlasifikasi do
   begin
     ednm_jenis_usaha.Text:=QMasterKlasifikasi.FieldByName('name_type_business').AsString;
@@ -246,6 +271,8 @@ begin
 		rgPromo.ItemIndex:=QMasterKlasifikasi.FieldByName('status_promo').AsInteger;
   end;
   FDaftarKlasifikasi.RefreshGrid;
+
+  FDaftarKlasifikasi.Panel3.Enabled:=False;
   FDaftarKlasifikasi.ShowModal;
 end;
 

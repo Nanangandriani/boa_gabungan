@@ -99,7 +99,7 @@ implementation
 {$R *.dfm}
 
 uses Ubrowse_pelanggan, UMasterData, UDaftarTagihan, UMovingDPP, UDataModule,
-  UHomeLogin, UMy_Function;
+  UHomeLogin, UMy_Function, UMainMenu;
 
 procedure TFDataPenagihanPiutang.RefreshGrid;
 var
@@ -198,7 +198,7 @@ begin
     sql.clear;
     sql.add(  ' UPDATE "public"."t_dpp"  SET '+
               ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' updated_by='+QuotedStr(Nm)+','+
               ' "date_print"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtCetak.Date))+','+
               ' "name_collector"='+QuotedStr(edNamaKolektor.Text)+', '+
               ' "code_cust"='+QuotedStr(MemDetail['kode_pel'])+', '+
@@ -265,7 +265,7 @@ begin
                 ' "cheque_amount1", "cheque_amount2", "date_tempo_cheque",isdpp_prev) '+
                 ' Values( '+
                 ' NOW(), '+
-                ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+                ' '+QuotedStr(Nm)+', '+
                 ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+', '+
                 ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtCetak.Date))+', '+
                 ' '+QuotedStr(edKodeKolektor.Text)+', '+

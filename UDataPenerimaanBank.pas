@@ -155,7 +155,7 @@ implementation
 
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
-  UHomeLogin, UListPenerimaanBank;
+  UHomeLogin, UListPenerimaanBank, UMainMenu;
 
 procedure TFDataPenerimaanBank.UpdateDPP;
 var curCash,curReceipt,curChequeAmount1: Currency;
@@ -395,7 +395,7 @@ begin
       sql.clear;
       sql.add(' UPDATE "public"."t_cash_bank_acceptance" SET '+
               ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' updated_by='+QuotedStr(Nm)+','+
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
               ' period_date1='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+
               ' period_date2='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+
@@ -573,7 +573,7 @@ begin
             ' "order_no", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+QuotedStr(Nm)+', '+
             ' '+QuotedStr(edNoTrans.Text)+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+', '+

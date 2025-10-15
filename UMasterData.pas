@@ -47,7 +47,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UAmplopPelanggan, URekapTagihanKolektor, UListPiutangBermasalah,
   URekapPenjualanPerPelanggan, UMonitoringTargetOmset, ULaporanHarianSisaNota,
   Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
-  ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota;
+  ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -979,6 +979,18 @@ begin
     end;
   end; //Pengajuan pengeluaran kas
 
+  //Nanang
+  if vcall='listpelanggankaresidenan' then
+  begin
+    FListPelanggan.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FListPelanggan.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  //Nanang
+  if vcall='listpelanggankabupaten' then
+  begin
+    FListPelanggan.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FListPelanggan.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
   //Nanang
   if vcall='amploppelanggankaresidenan' then
   begin

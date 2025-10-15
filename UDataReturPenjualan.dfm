@@ -23,7 +23,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 1051
-    ExplicitHeight = 134
+    ExplicitHeight = 175
     object Label39: TLabel
       Left = 20
       Top = 80
@@ -269,11 +269,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
+    ExplicitTop = 175
+    ExplicitWidth = 1051
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 1047
-      ExplicitHeight = 404
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0

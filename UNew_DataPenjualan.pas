@@ -180,7 +180,7 @@ uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
   Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan,
   UListPenjualan, UTemplate_Temp, UTambah_Barang, UListSalesOrder,
   UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang, UDaftarKontrak,
-  UKoreksi;
+  UKoreksi, UMainMenu;
 
 function GetFakturPajak(vtahun:string): string;
 begin
@@ -1265,7 +1265,7 @@ begin
             ' :parname_cust, :paraccount_code, :parpayment_term, :parcode_source, :parname_source, :parno_reference, '+
             ' :parsub_total, :parppn_value, :parpph_value, :partot_piece_value, :partot_menj_fee, :pargrand_tot, '+
             ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, :parpembulatan_value,:partot_before_piece)';
-            parambyname('parcreated_by').Value:=FHomeLogin.Eduser.Text;
+            parambyname('parcreated_by').Value:=Nm;
             parambyname('parcode_trans').Value:=edKode_Trans.Text;
             parambyname('parno_inv_tax').Value:=edNomorFaktur.Text;
             parambyname('partrans_no').Value:=edNomorTrans.Text;
@@ -1350,7 +1350,7 @@ begin
     sql.clear;
     sql.add(' UPDATE "public"."t_selling" SET '+
             ' updated_at=NOW(),'+
-            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+            ' updated_by='+QuotedStr(Nm)+','+
             ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+','+
             ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
             ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+','+

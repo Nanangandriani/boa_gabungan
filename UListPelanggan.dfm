@@ -11,6 +11,8 @@ object FListPelanggan: TFListPelanggan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
@@ -33,6 +35,9 @@ object FListPelanggan: TFListPelanggan
         end
         item
           ToolbarName = 'dxBarManager1Bar2'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar3'
         end>
       Index = 0
     end
@@ -55,6 +60,7 @@ object FListPelanggan: TFListPelanggan
         DynProps = <>
         EditButtons = <>
         FieldName = 'customer_code'
+        Footer.ValueType = fvtCount
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Kode Pelanggan'
@@ -68,7 +74,17 @@ object FListPelanggan: TFListPelanggan
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
-        Width = 150
+        Width = 256
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'customer_name_pkp'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama PKP'
+        Width = 221
       end
       item
         CellButtons = <>
@@ -157,7 +173,7 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -177,6 +193,38 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar3: TdxBar
+      Caption = 'Filter'
+      CaptionButtons = <>
+      DockedLeft = 191
+      DockedTop = 0
+      FloatLeft = 846
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 194
+          Visible = True
+          ItemName = 'cbKaresidenan'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 195
+          Visible = True
+          ItemName = 'cbKabupaten'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
+        end>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -701,19 +749,72 @@ object FListPelanggan: TFListPelanggan
         0D0A}
       OnClick = dxBarLargeButton1Click
     end
+    object cbKaresidenan: TcxBarEditItem
+      Caption = 'TP               '
+      Category = 0
+      Hint = 'TP               '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cxBarEditItem1PropertiesButtonClick
+    end
+    object cbKabupaten: TcxBarEditItem
+      Caption = 'Kabupaten'
+      Category = 0
+      Hint = 'Kabupaten'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cxBarEditItem2PropertiesButtonClick
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Search'
+      Category = 0
+      Hint = 'Search'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton2Click
+    end
   end
   object QPelanggan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select a.customer_code, customer_name, email, address, contact_p' +
-        'erson1 as telp, payment_term from t_customer a'
-      
-        'LEFT JOIN (select customer_code, address, contact_person1 from t' +
-        '_customer_address limit 1) b ON a.customer_code=b.customer_code'
+        'select customer_code, customer_name, email, address, contact_per' +
+        'son1 as telp, payment_term, customer_name_pkp from vcustomer'
       'where deleted_at is null order by created_at Desc')
-    Left = 428
-    Top = 56
+    Left = 652
+    Top = 80
     object QPelanggancustomer_code: TStringField
       FieldName = 'customer_code'
       Required = True
@@ -738,11 +839,15 @@ object FListPelanggan: TFListPelanggan
     object QPelangganpayment_term: TSmallintField
       FieldName = 'payment_term'
     end
+    object QPelanggancustomer_name_pkp: TStringField
+      FieldName = 'customer_name_pkp'
+      Size = 255
+    end
   end
   object DsPelanggan: TDataSource
     DataSet = QPelanggan
-    Left = 553
-    Top = 40
+    Left = 617
+    Top = 24
   end
   object ActMenu: TActionManager
     Left = 672

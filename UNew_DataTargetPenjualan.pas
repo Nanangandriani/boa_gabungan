@@ -280,7 +280,7 @@ begin
   end else
   if cbKelompokBarang.Text='' then
   begin
-    MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Kelompok Wajib Diisi..!!',mtInformation,[mbRetry],0);
     cbKelompokBarang.SetFocus;
   end else
   begin
@@ -422,7 +422,7 @@ begin
               ' '+QuotedStr(edKodePelanggan.Text)+', '+
               ' '+QuotedStr(IntToStr(mm))+', '+
               ' '+QuotedStr(edTahun.Text)+', '+
-              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' '+QuotedStr(Nm)+', '+
               ' NOW()  );';
       ExecSQL;
     end;
@@ -471,7 +471,7 @@ begin
               ' where id_customer_sales_target=:parid_customer_sales_target';
     parambyname('parmonth').AsString:=IntToStr(mm);
     parambyname('paryear').AsString:=edTahun.Text;
-    parambyname('updated_by').AsString:='Admin';
+    parambyname('updated_by').AsString:=Nm;
     parambyname('parid_customer_sales_target').AsString:=IntToStr(IdCustomerSalesTarget);
     ExecSQL;
   end;

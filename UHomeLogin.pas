@@ -114,8 +114,6 @@ begin
     DM.ABSTable1.Next;
   end;
 
-
-
 //  DM.ABSDatabase1.Close;
 
 //  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
@@ -188,8 +186,6 @@ end;
 
 procedure TFHomeLogin.Image1Click(Sender: TObject);
 begin
-  Eduser.Text:='';
-  EdPass.Text:='';
   Application.Terminate;
 end;
 
@@ -328,10 +324,11 @@ begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;
   end;
-  CbSBU.Clear;
-  FMainMenu.Show;//modal;
-  FHomeLogin.Close;
-
+  Application.CreateForm(TFMainMenu, FMainMenu);
+//  CbSBU.Clear;
+  Self.Hide;
+  FMainMenu.Show;
+  Application.Run;
 end;
 
 procedure TFHomeLogin.ImgTransaksiDragDrop(Sender, Source: TObject; X,

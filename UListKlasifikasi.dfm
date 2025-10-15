@@ -236,6 +236,14 @@ object FListKlasifikasi: TFListKlasifikasi
         Footers = <>
         Title.Caption = 'Status Promo'
         Width = 48
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        Footers = <>
+        Title.Caption = 'Status Koreksi'
+        Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -875,6 +883,11 @@ object FListKlasifikasi: TFListKlasifikasi
       OnClick = dxBarLargeButton1Click
     end
   end
+  object DsMasterKlasifikasi: TDataSource
+    DataSet = QMasterKlasifikasi
+    Left = 505
+    Top = 40
+  end
   object QMasterKlasifikasi: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
@@ -915,7 +928,8 @@ object FListKlasifikasi: TFListKlasifikasi
         'omo",'
       
         'case when a.status_approval=1 then '#39'Disetujui'#39' when a.status_app' +
-        'roval=99 then '#39'Ditolak'#39' else '#39'Pengajuan'#39' end status_approval'
+        'roval=99 then '#39'Ditolak'#39' else '#39'Pengajuan'#39' end status_approval,a.s' +
+        'tatus_correction  '
       'FROM'
       #9'"t_sales_classification" a'
       #9'LEFT JOIN t_customer_type b ON a.code_type_customer = b.code'
@@ -927,13 +941,23 @@ object FListKlasifikasi: TFListKlasifikasi
       #9'LEFT JOIN t_sell_type f ON a.code_sell_type = f.code'
       
         '        LEFT JOIN t_customer_type_business g ON a.code_type_busi' +
-        'ness = g.code')
-    Left = 428
-    Top = 56
+        'ness = g.code'
+      '')
+    Left = 472
+    Top = 256
     object QMasterKlasifikasiid_master: TGuidField
       FieldName = 'id_master'
       Required = True
       Size = 38
+    end
+    object QMasterKlasifikasicode_type_business: TStringField
+      FieldName = 'code_type_business'
+      Size = 100
+    end
+    object QMasterKlasifikasiname_type_business: TStringField
+      FieldName = 'name_type_business'
+      ReadOnly = True
+      Size = 255
     end
     object QMasterKlasifikasicode_type_customer: TStringField
       FieldName = 'code_type_customer'
@@ -978,7 +1002,6 @@ object FListKlasifikasi: TFListKlasifikasi
     object QMasterKlasifikasiname_sell_type: TStringField
       FieldName = 'name_sell_type'
       ReadOnly = True
-      OnGetText = QMasterKlasifikasiname_sell_typeGetText
       Size = 255
     end
     object QMasterKlasifikasistatus_payment: TIntegerField
@@ -987,7 +1010,6 @@ object FListKlasifikasi: TFListKlasifikasi
     object QMasterKlasifikasiname_payment: TMemoField
       FieldName = 'name_payment'
       ReadOnly = True
-      OnGetText = QMasterKlasifikasiname_paymentGetText
       BlobType = ftMemo
     end
     object QMasterKlasifikasistatus_grouping: TIntegerField
@@ -996,7 +1018,6 @@ object FListKlasifikasi: TFListKlasifikasi
     object QMasterKlasifikasiname_grouping: TMemoField
       FieldName = 'name_grouping'
       ReadOnly = True
-      OnGetText = QMasterKlasifikasiname_groupingGetText
       BlobType = ftMemo
     end
     object QMasterKlasifikasistatus_tax: TIntegerField
@@ -1005,7 +1026,6 @@ object FListKlasifikasi: TFListKlasifikasi
     object QMasterKlasifikasiname_tax: TMemoField
       FieldName = 'name_tax'
       ReadOnly = True
-      OnGetText = QMasterKlasifikasiname_taxGetText
       BlobType = ftMemo
     end
     object QMasterKlasifikasistatus_disc: TIntegerField
@@ -1014,7 +1034,6 @@ object FListKlasifikasi: TFListKlasifikasi
     object QMasterKlasifikasiname_disc: TMemoField
       FieldName = 'name_disc'
       ReadOnly = True
-      OnGetText = QMasterKlasifikasiname_discGetText
       BlobType = ftMemo
     end
     object QMasterKlasifikasistatus_promo: TIntegerField
@@ -1023,27 +1042,15 @@ object FListKlasifikasi: TFListKlasifikasi
     object QMasterKlasifikasiname_promo: TMemoField
       FieldName = 'name_promo'
       ReadOnly = True
-      OnGetText = QMasterKlasifikasiname_promoGetText
       BlobType = ftMemo
-    end
-    object QMasterKlasifikasicode_type_business: TStringField
-      FieldName = 'code_type_business'
-      Size = 100
-    end
-    object QMasterKlasifikasiname_type_business: TStringField
-      FieldName = 'name_type_business'
-      ReadOnly = True
-      Size = 255
     end
     object QMasterKlasifikasistatus_approval: TMemoField
       FieldName = 'status_approval'
       ReadOnly = True
       BlobType = ftMemo
     end
-  end
-  object DsMasterKlasifikasi: TDataSource
-    DataSet = QMasterKlasifikasi
-    Left = 505
-    Top = 40
+    object QMasterKlasifikasistatus_correction: TSmallintField
+      FieldName = 'status_correction'
+    end
   end
 end

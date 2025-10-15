@@ -25,7 +25,7 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxButtonEdit, cxBarEditItem;
 
 type
   TFListPelanggan = class(TForm)
@@ -64,6 +64,11 @@ type
     DBGridCustomer: TDBGridEh;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
+    QPelanggancustomer_name_pkp: TStringField;
+    dxBarManager1Bar3: TdxBar;
+    cbKaresidenan: TcxBarEditItem;
+    cbKabupaten: TcxBarEditItem;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -72,41 +77,80 @@ type
     procedure QPelangganaddressGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure cxBarEditItem1PropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure cxBarEditItem2PropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    strKaresidenanID,strKabupatenID :String;
     procedure Refresh;
-
   end;
 
-var
-  FListPelanggan: TFListPelanggan;
+  function FListPelanggan: TFListPelanggan;
+
+//var
+//  FListPelanggan: TFListPelanggan;
 
 implementation
 
 {$R *.dfm}
 
 uses UNew_Pelanggan, UDataModule, UMy_Function, UDataProspekPelanggan,
-  UDataBankGaransi;
+  UDataBankGaransi, UMasterData;
+
+  var
+  listpelanggan : TFListPelanggan;
+
+function FListPelanggan: TFListPelanggan;
+begin
+  if listpelanggan <> nil then
+    FListPelanggan:= listpelanggan
+  else
+    Application.CreateForm(TFListPelanggan, Result);
+end;
 
 procedure TFListPelanggan.Refresh;
+var strWhereKaresidenan,strWhereKabupaten: String;
 begin
-   with QPelanggan do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select a.customer_code, customer_name, email, address, contact_person1 as telp, '+
-                 ' payment_term from t_customer a '+
-                 ' LEFT JOIN (select customer_code, address, contact_person1 '+
-                   ' from t_customer_address where code_details=''001'') b ON a.customer_code=b.customer_code '+
-                 ' where deleted_at is null order by created_at Desc ';
-       open;
-   end;
-   QPelanggan.Active:=False;
-   QPelanggan.Active:=True;
-   QPelanggan.Close;
-   QPelanggan.Open;
+
+
+
+  DBGridcustomer.StartLoadingStatus();
+  try
+    if cbKaresidenan.EditValue<>'' then
+    begin
+      strWhereKaresidenan:=' AND karesidenan='+QuotedStr(cbKaresidenan.EditValue);
+    end else
+    begin
+      strWhereKaresidenan:='';
+    end;
+
+    if cbKabupaten.EditValue<>'' then
+    begin
+      strWhereKabupaten:=' AND kabupaten='+QuotedStr(cbKabupaten.EditValue);
+    end else
+    begin
+      strWhereKabupaten:='';
+    end;
+
+    with QPelanggan do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text:='select customer_code, customer_name, email, address, contact_person1 as telp, '+
+                'payment_term, customer_name_pkp from vcustomer '+
+                'where deleted_at is null'+strWhereKaresidenan+strWhereKabupaten+' order by created_at Desc';
+      Open;
+    end;
+  finally
+  DBGridcustomer.FinishLoadingStatus();
+  end;
 end;
 
 {procedure TFListPelanggan.Refresh;
@@ -120,23 +164,68 @@ begin
   end;
 end;}
 
+procedure TFListPelanggan.cxBarEditItem1PropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='listpelanggankaresidenan';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.ShowModal
+end;
+
+procedure TFListPelanggan.cxBarEditItem2PropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  if cbKaresidenan.EditValue='' then
+  begin
+    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+    FMasterData.Caption:='Master Data Kabupaten';
+    FMasterData.vcall:='listpelanggankabupaten';
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
+    FMasterData.ShowModal;
+  end;
+end;
+
 procedure TFListPelanggan.dxBarDeleteClick(Sender: TObject);
 begin
-  if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  with dm.Qtemp do
   begin
-    with Dm.Qtemp do
+    Close;
+    Sql.Clear;
+    SQl.Text:='SELECT code_cust FROM t_sales_order WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString);
+    Open;
+  end;
+
+  with dm.Qtemp2 do
+  begin
+    Close;
+    Sql.Clear;
+    SQl.Text:='SELECT code_cust FROM t_selling WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString);
+    Open;
+  end;
+
+  if (dm.Qtemp.RecordCount>0) OR (dm.Qtemp2.RecordCount>0) then
+  begin
+     MessageDlg('Tidak dapat dihapus, Pelanggan sudah dibuat Order..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      close;
-      sql.Clear;
-      //sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
-      sql.Text:=' Update t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
-                ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
-      parambyname('deleted_at').AsDateTime:=Now;
-      parambyname('deleted_by').AsString:='Admin';
-      execsql;
+      with Dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        //sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
+        sql.Text:=' Update t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                  ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
+        parambyname('deleted_at').AsDateTime:=Now;
+        parambyname('deleted_by').AsString:='Admin';
+        execsql;
+      end;
+      MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
+      Refresh;
     end;
-    MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
-    Refresh;
   end;
 end;
 
@@ -218,9 +307,23 @@ begin
   Status := 1;
 end;
 
+procedure TFListPelanggan.FormCreate(Sender: TObject);
+begin
+  listpelanggan:=Self;
+end;
+
+procedure TFListPelanggan.FormDestroy(Sender: TObject);
+begin
+  listpelanggan:=nil;
+end;
+
 procedure TFListPelanggan.FormShow(Sender: TObject);
 begin
-  Refresh;
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  strKaresidenanID:='';
+  strKabupatenID:='';
+//  Refresh;
 end;
 
 procedure TFListPelanggan.QPelangganaddressGetText(Sender: TField;
@@ -230,14 +333,16 @@ begin
 end;
 
 procedure TFListPelanggan.dxBarRefreshClick(Sender: TObject);
+var strWhereKaresidenan,strWhereKabupaten : String;
 begin
-  DBGridcustomer.StartLoadingStatus();
-  try
-    Qpelanggan.Close;
-    Qpelanggan.Open;
-  finally
-  DBGridcustomer.FinishLoadingStatus();
-  end;
+
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  strKaresidenanID:='';
+  strKabupatenID:='';
+
+  Refresh;
+
 end;
 
 procedure TFListPelanggan.dxBarLargeButton1Click(Sender: TObject);
@@ -268,6 +373,11 @@ begin
     FDataBankGaransi.RefreshGrid;
     FDataBankGaransi.show;
   end;
+end;
+
+procedure TFListPelanggan.dxBarLargeButton2Click(Sender: TObject);
+begin
+  Refresh;
 end;
 
 procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);

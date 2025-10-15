@@ -22,7 +22,6 @@ object Fpengajuan_deposito: TFpengajuan_deposito
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 912
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -118,7 +117,7 @@ object Fpengajuan_deposito: TFpengajuan_deposito
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 849
+        Width = 685
         Height = 118
         Align = alClient
         DynProps = <>
@@ -139,7 +138,7 @@ object Fpengajuan_deposito: TFpengajuan_deposito
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
-    ExplicitWidth = 912
+    ExplicitWidth = 914
     object Label1: TLabel
       Left = 21
       Top = 66
@@ -918,7 +917,6 @@ object Fpengajuan_deposito: TFpengajuan_deposito
     SQL.Strings = (
       'select a.*,b.bank_name from t_deposito_submission a '
       'INNER JOIN t_bank b ON a.bank_norek=b.rekening_no')
-    Active = True
     Left = 720
     Top = 143
   end

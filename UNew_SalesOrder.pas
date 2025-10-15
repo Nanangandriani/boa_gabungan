@@ -287,14 +287,14 @@ begin
       begin
 //        MessageDlg('Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan ..!!',mtInformation,[mbRetry],0);
         iserror:=1;
-
-        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-        begin
-          islanjut:=1;
-          StrKetLog:=StrKetLog+', Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan';
-        end else begin
-          islanjut:=0;
-        end;
+        MessageDlg('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan..!!',mtInformation,[mbRetry],0);
+//        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+//        begin
+//          islanjut:=1;
+//          StrKetLog:=StrKetLog+', Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan';
+//        end else begin
+//          islanjut:=0;
+//        end;
 
         exit;
       end else
@@ -306,13 +306,14 @@ begin
       if TotBarangSO>TotTargetBarang then
       begin
 //        MessageDlg('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target '+IntToStr(TotTargetBarang)+' ..!!',mtInformation,[mbRetry],0);
-        if MessageDlg ('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-        begin
-          islanjut:=1;
-          StrKetLog:=StrKetLog+', Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target penjualan '+FloatToStr(TotTargetBarang);
-        end else begin
-          islanjut:=0;
-        end;
+//        if MessageDlg ('Jumlah baraORY_NAME']+' melebihi target, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+//        begin
+//          islanjut:=1;ng kategori '+MemDetail['CATEG
+//          StrKetLog:=StrKetLog+', Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target penjualan '+FloatToStr(TotTargetBarang);
+//        end else begin
+//          islanjut:=0;
+//        end;
+        MessageDlg('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target '+FloatToStr(TotTargetBarang)+'..!!',mtInformation,[mbRetry],0);
         iserror:=1;
 
         exit;
@@ -366,7 +367,7 @@ begin
     end;
     if dm.Qtemp.RecordCount>0 then
     begin
-      TotNilaiSO:=dm.Qtemp.FieldValues['price_bruto'];
+      TotNilaiSO:=TotNilaiSO+(dm.Qtemp.FieldValues['price_bruto']*MemDetail['JUMLAH']);
     end else begin
       iserror:=1;
       islanjut:=0;
@@ -375,6 +376,8 @@ begin
     end;
     MemDetail.Next;
   end;
+//  ShowMessage(FloatToStr(TotNilaiSO));
+
   TotSisaPiutangNilaiSO:=SisaPiutang+TotNilaiSO;
   SisaSaldo:=TotSaldoBankGaransi-TotSisaPiutangNilaiSO;
 
@@ -568,7 +571,7 @@ begin
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeOrder.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
         CekTargetSales;
-        if islanjut=1 then begin
+        if iserror=0 then begin
           CekBankGaransi;
           if islanjut=1 then begin
             Save;
@@ -576,6 +579,8 @@ begin
           end else begin
             exit;
           end;
+        end else begin
+          exit;
         end;
       end;
     end
@@ -814,8 +819,8 @@ begin
 
 //  ShowMessage(kd_kares);
 
-  StrUsername:=QuotedStr(FHomeLogin.Eduser.Text);
-  Strversi:=QuotedStr('1.0');
+  StrUsername:=QuotedStr(Nm);
+  Strversi:=QuotedStr(FMainMenu.RzStatusVersion.Caption);
   Stripuser:=QuotedStr(GetLocalIP);
 
   if Copy(StrKetLog, 1, 1)=',' then
@@ -858,7 +863,7 @@ begin
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",status,note) '+
             ' VALUES ( '+
             ' NOW(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+QuotedStr(Nm)+', '+
             ' '+QuotedStr(edKodeOrder.Text)+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+', '+
@@ -934,7 +939,7 @@ begin
         sql.clear;
         sql.add(' UPDATE "public"."t_sales_order" SET '+
                 ' updated_at=NOW(),'+
-                ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+                ' updated_by='+QuotedStr(Nm)+','+
     //            ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
                 ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
                 ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
@@ -968,7 +973,7 @@ begin
       sql.clear;
       sql.add(' UPDATE "public"."t_sales_order" SET '+
               ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' updated_by='+QuotedStr(Nm)+','+
   //            ' order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+','+
               ' sent_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Kirim.Date))+','+
               ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
