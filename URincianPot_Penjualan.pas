@@ -76,25 +76,50 @@ uses UDataModule, UMy_Function, UNew_Penjualan, UNew_DataPenjualan, System.Math;
 procedure TFRincianPot_Penjualan.HitungKlasifikasi;
 begin
   //Query baca tempdetail jual
-  with query2 do
+  if FNew_Penjualan.edNomorTrans.Text<>'' then
   begin
-    close;
-    sql.Clear;
-    SQL.Text:=' SELECT a."trans_no", a."id_master", a."code_item" as kd_brg, a."name_item", '+
-              ' "group_name", d."group_id",a."amount", a."code_unit", a."name_unit", a."unit_price", a."sub_total", '+
-              ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item  '+
-              ' FROM "public"."t_selling_temp" a '+
-              ' LEFT JOIN (SELECT customer_code, code_type, code_selling_type from t_customer where deleted_at is null) b '+
-              ' on a.cust_code=b.customer_code  '+
-              ' LEFT JOIN t_item c on a.code_item=c.item_code '+
-              ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
-              ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-              ' and c.item_code=e.code_item '+
-              ' where '+
-//                  "trans_no"='+QuotedStr(edNomorTrans.Text)+'  '+
-              ' "trans_no"='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
-              ' -- Baca Detail Penjualan ';
-    Open;
+
+    with query2 do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:=' SELECT a."trans_no", a."id_master", a."code_item" as kd_brg, a."name_item", '+
+                ' "group_name", d."group_id",a."amount", a."code_unit", a."name_unit", a."unit_price", a."sub_total", '+
+                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item  '+
+                ' FROM "public"."t_selling_temp" a '+
+                ' LEFT JOIN (SELECT customer_code, code_type, code_selling_type from t_customer where deleted_at is null) b '+
+                ' on a.cust_code=b.customer_code  '+
+                ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                ' and c.item_code=e.code_item '+
+                ' where '+
+  //                  "trans_no"='+QuotedStr(edNomorTrans.Text)+'  '+
+                ' "trans_no"='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
+                ' -- Baca Detail Penjualan ';
+      Open;
+    end;
+  end else begin
+    with query2 do
+    begin
+      close;
+      sql.Clear;
+      SQL.Text:=' SELECT a."trans_no", a."id_master", a."code_item" as kd_brg, a."name_item", '+
+                ' "group_name", d."group_id",a."amount", a."code_unit", a."name_unit", a."unit_price", a."sub_total", '+
+                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item  '+
+                ' FROM "public"."t_selling_temp" a '+
+                ' LEFT JOIN (SELECT customer_code, code_type, code_selling_type from t_customer where deleted_at is null) b '+
+                ' on a.cust_code=b.customer_code  '+
+                ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                ' and c.item_code=e.code_item '+
+                ' where '+
+  //                  "trans_no"='+QuotedStr(edNomorTrans.Text)+'  '+
+                 ' "id_master"='+QuotedStr(get_uuid)+' '+
+                ' -- Baca Detail Penjualan ';
+      Open;
+    end;
   end;
 
   if query2.RecordCount=0 then  //looping detail order

@@ -120,6 +120,8 @@ type
     QCetakpiece_second: TFloatField;
     QCetakpiece_third: TFloatField;
     QCetakpiece_fourth: TFloatField;
+    QCetakcustomer_name_pkp: TStringField;
+    ReportJurnal: TfrxReport;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -262,7 +264,7 @@ begin
           sql.clear;
           sql.Text:=' UPDATE "public"."t_selling"  SET '+
                     ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' "deleted_by"='+QuotedStr(Nm)+'  '+
                     ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
           ExecSQL;
         end;
@@ -272,7 +274,7 @@ begin
           sql.clear;
           sql.Text:=' UPDATE "public"."t_selling_det"  SET '+
                     ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' "deleted_by"='+QuotedStr(Nm)+'  '+
                     ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
           ExecSQL;
         end;
@@ -373,7 +375,8 @@ begin
            ' case when "piece_first" is null then 0 else "piece_first" end "piece_first", '+
            ' case when "piece_second" is null then 0 else "piece_second" end "piece_second", '+
            ' case when "piece_third" is null then 0 else "piece_third" end "piece_third", '+
-           ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth" '+
+           ' case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth", '+
+           ' e.customer_name_pkp '+
            ' from "public"."t_selling" a '+
            ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
            ' LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item '+
@@ -406,7 +409,13 @@ begin
        open;
       end;
 
-
+      with dm.Qtemp2 do
+      begin
+       close;
+       sql.clear;
+       sql.Text:='select * from get_user_signature(2) ';
+       open;
+      end;
 
 
      cLocation := ExtractFilePath(Application.ExeName);
@@ -417,6 +426,7 @@ begin
      SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
      SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
      SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+     SetMemo(Report,'signature_name',dm.Qtemp2.FieldValues['full_name']);
      SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
      //Report.DesignReport();
      //Report.ShowReport();
@@ -425,7 +435,7 @@ begin
       begin
         Close;
         SQl.Clear;
-        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
                   ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
                   ' ''Cetak Nota Tagihan untuk pelanggan '+
                   QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
@@ -476,9 +486,9 @@ begin
       begin
         Close;
         SQl.Clear;
-        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
                   ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
-                  ' ''Cetak Surat Jalan untuk pelanggan '+
+                  ' ''Cetak Surat Jalan Untuk Pelanggan '+
                   QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
                   QPenjualan.FieldByName('trans_no').AsString+' '', '+
                   'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
@@ -499,7 +509,7 @@ end;
 
 procedure TFDataListPenjualan.dxBarLargeButton5Click(Sender: TObject);
 begin
-   with fmainmenu.QJurnal do
+   with QJurnal do
     begin
      close;
      sql.clear;
@@ -509,21 +519,21 @@ begin
     end;
 
 
- if fmainmenu.QJurnal.RecordCount=0 then
+ if QJurnal.RecordCount=0 then
  begin
   showmessage('Tidak ada data yang bisa dicetak !');
   exit;
  end;
 
- if fmainmenu.QJurnal.RecordCount<>0 then
+ if QJurnal.RecordCount<>0 then
  begin
     with dm.Qtemp3 do
     begin
       Close;
       SQl.Clear;
-      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(FHomeLogin.Eduser.Text)+',''Penjualan'',''M13002'', '+
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
                 ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
-                ' ''Cetak Jurnal untuk pelanggan '+
+                ' ''Cetak Jurnal Penjualan Untuk Pelanggan '+
                 QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
                 QPenjualan.FieldByName('trans_no').AsString+' '', '+
                 'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
@@ -533,11 +543,11 @@ begin
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
-   SetMemo(Report,'nm_judul','DAFTAR JURNAL PENJUALAN');
-   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+   ReportJurnal.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+   SetMemo(ReportJurnal,'nm_judul','DAFTAR JURNAL PENJUALAN');
+   SetMemo(ReportJurnal,'nama_pt',FHomeLogin.vNamaPRSH);
    //Report.DesignReport();
-   Report.ShowReport();
+   ReportJurnal.ShowReport();
  end;
 
 end;

@@ -166,7 +166,6 @@ begin
     if edKabupaten.EditValue<>'' then
     strKab:=' AND b.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
 
-
     with QCetak do
     begin
       close;
@@ -193,7 +192,7 @@ begin
 //       end;
 //       sql.add(' ORDER BY trans_date, trans_no');
 //       open;
-      Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,name_cust from get_selling(FALSE) a '+
+      Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
             'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
             'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
             ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND b.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+

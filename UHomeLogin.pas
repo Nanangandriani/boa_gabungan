@@ -268,7 +268,7 @@ begin
       Exit;
     end;
     status_akses:=dm.Qtemp['access_status'];
-    FMainMenu.StatusUser.Caption:=dm.Qtemp.FieldByName('full_name').AsString;
+    NmFull:=dm.Qtemp.FieldByName('full_name').AsString;
 
 
    //Buat Variable Perusahaan

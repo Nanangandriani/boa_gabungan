@@ -226,8 +226,7 @@ end;
 
 procedure TFListKlasifikasi.ActUpdateExecute(Sender: TObject);
 begin
-  FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=true;
-  FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
+
   FDaftarKlasifikasi.PageControl1.ActivePage:=FDaftarKlasifikasi.TabMasterKlasifikasi;
   FDaftarKlasifikasi.Clear;
 
@@ -235,7 +234,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' SELECT status_correction '+
+    sql.Text:=' SELECT status_correction,status_approval '+
               ' FROM	"t_sales_classification" '+
               ' WHERE id='+QuotedStr(QMasterKlasifikasi.FieldValues['id_master']);
     Open;
@@ -245,9 +244,24 @@ begin
   begin
     FDaftarKlasifikasi.BCorrection.Visible:=False;
     FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
+  end else if dm.Qtemp2.FieldValues['status_approval']=99 then
+  begin
+    FDaftarKlasifikasi.BCorrection.Visible:=False;
+    FDaftarKlasifikasi.bt_m_simpan.Enabled:=False;
   end else begin
     FDaftarKlasifikasi.BCorrection.Visible:=True;
     FDaftarKlasifikasi.bt_m_simpan.Enabled:=False;
+  end;
+
+
+
+  if QMasterKlasifikasi.FieldByName('status_grouping').AsInteger=1 then
+  begin
+    FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=true;
+    FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
+  end else begin
+    FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=false;
+    FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
   end;
 
   with FDaftarKlasifikasi do

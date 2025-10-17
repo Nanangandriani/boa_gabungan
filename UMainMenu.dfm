@@ -49,16 +49,17 @@ object FMainMenu: TFMainMenu
       Field = vifProductVersion
       VersionInfo = RzVersionInfo1
     end
-    object RzProgressStatus1: TRzProgressStatus
+    object UserFullName: TRzProgressStatus
       Left = 459
       Top = 0
+      Width = 191
       Height = 19
       Align = alLeft
       ParentShowHint = False
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitLeft = 408
+      ExplicitLeft = 496
       ExplicitTop = 2
     end
     object RzClockStatus1: TRzClockStatus
@@ -85,7 +86,8 @@ object FMainMenu: TFMainMenu
       Height = 19
       Align = alLeft
       Caption = 'USER : '
-      ExplicitLeft = 100
+      ExplicitLeft = 187
+      ExplicitTop = 2
     end
     object StatusVersion: TRzStatusPane
       Left = 843

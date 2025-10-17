@@ -25,7 +25,6 @@ object FBHPenjualan: TFBHPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1205
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -839,7 +838,7 @@ object FBHPenjualan: TFBHPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 45938.576145243050000000
+    ReportOptions.LastChange = 45946.505474942130000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1424,7 +1423,7 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Line33: TfrxLineView
           AllowVectorExport = True
-          Left = 1002.473100000000000000
+          Left = 1001.473100000000000000
           Top = 109.606370000000000000
           Height = 22.677148270000000000
           Color = clBlack
@@ -1453,6 +1452,7 @@ object FBHPenjualan: TFBHPenjualan
         DataSet = frxDBDBHPenjualan
         DataSetName = 'frxDBDBHPenjualan'
         RowCount = 0
+        Stretched = True
         object Line3: TfrxLineView
           AllowVectorExport = True
           Left = 1.111111110000000000
@@ -1571,7 +1571,7 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Subreport3: TfrxSubreport
           AllowVectorExport = True
-          Left = 859.464566929134000000
+          Left = 859.464566930000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           Page = Report.Page4
@@ -1989,6 +1989,7 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Line6: TfrxLineView
           AllowVectorExport = True
+          Left = 1.511811023622050000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2060,7 +2061,7 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Line42: TfrxLineView
           AllowVectorExport = True
-          Left = 353.763779527559000000
+          Left = 353.763779530000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2077,14 +2078,6 @@ object FBHPenjualan: TFBHPenjualan
         object Line46: TfrxLineView
           AllowVectorExport = True
           Left = 575.244094490000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line47: TfrxLineView
-          AllowVectorExport = True
-          Left = 657.637795275591000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2239,6 +2232,24 @@ object FBHPenjualan: TFBHPenjualan
             '[frxDBDBHPenj_Debit."db"]')
           ParentFont = False
         end
+        object Line44: TfrxLineView
+          AllowVectorExport = True
+          Left = 61.111111110000000000
+          Top = -0.008761110000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line51: TfrxLineView
+          AllowVectorExport = True
+          Left = 139.000000000000000000
+          Top = -1.119872220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
       end
     end
     object Page4: TfrxReportPage
@@ -2262,13 +2273,15 @@ object FBHPenjualan: TFBHPenjualan
         Height = 19.343846670000000000
         Top = 18.897650000000000000
         Width = 1084.725110000000000000
+        AllowSplit = True
         DataSet = frxDBDBHPenj_Kredit
         DataSetName = 'frxDBDBHPenj_Kredit'
         RowCount = 0
+        Stretched = True
         object Memo36: TfrxMemoView
           AllowVectorExport = True
           Left = 0.555555560000000000
-          Width = 60.472443390000000000
+          Width = 58.250221170000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           DataField = 'account_code'
@@ -2305,8 +2318,8 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 142.398165560000000000
-          Width = 79.370088500000000000
+          Left = 143.509276670000000000
+          Width = 78.258977390000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataField = 'kd'
@@ -2324,6 +2337,24 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDBHPenj_Kredit."kd"]')
           ParentFont = False
+        end
+        object Line52: TfrxLineView
+          AllowVectorExport = True
+          Left = 142.000000000000000000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line53: TfrxLineView
+          AllowVectorExport = True
+          Left = 60.111111110000000000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
         end
       end
     end

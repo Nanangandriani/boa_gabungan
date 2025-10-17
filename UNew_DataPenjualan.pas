@@ -729,7 +729,7 @@ begin
   end;
   if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
   edNomorTrans.Text:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
-  strKodeAwalInvoice:=SelectRow('select * from t_numb_det a inner join t_numb b on b.trans_no=a.trans_no WHERE b.numb_type='+QuotedStr(idmenu)+'  AND a.urutan=1');
+  strKodeAwalInvoice:=SelectRow('select param_name from t_numb_det a inner join t_numb b on b.trans_no=a.trans_no WHERE b.numb_type='+QuotedStr(idmenu)+'  AND a.urutan=1');
   StrSuratJalanNo:=getNourut(strday2,'public.t_selling',FNew_Penjualan.kd_kares);
 
   edSuratJalanTrans.Text:=StringReplace(StrSuratJalanNo, strKodeAwalInvoice, 'SJ', [rfReplaceAll, rfIgnoreCase]);
@@ -899,6 +899,7 @@ end;
 procedure TFNew_Penjualan.btHitungPotonganClick(Sender: TObject);
 var IntTotGroup,IntGroupID : Integer;
 begin
+
   if MemDetail.RecordCount=0 then
   begin
     ShowMessage('Pastikan Anda Sudah Membuat Detail Penjualan..!!!');
@@ -1154,6 +1155,7 @@ procedure TFNew_Penjualan.FormShow(Sender: TObject);
 var
   Year, Month, Day: Word;
 begin
+//  Autonumber;
   if Status=1 then
   begin
     RefreshGrid;
@@ -1168,7 +1170,7 @@ begin
     edNomorFaktur.ReadOnly:=True;
     dtTanggal.Date:=NOW;
     edKode_Trans.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
-  edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
+    edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
   end;
 
   DecodeDate(dtTanggal.Date, Year, Month, Day);
@@ -1239,6 +1241,8 @@ begin
     BCorrection.Enabled:=True;
   end;
 
+  edNomorTrans.ReadOnly:=True;
+  edSuratJalanTrans.ReadOnly:=True;
 end;
 
 procedure TFNew_Penjualan.Save;

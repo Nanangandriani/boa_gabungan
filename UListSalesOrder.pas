@@ -35,6 +35,7 @@ type
     IdHTTP1: TIdHTTP;
     MemMasterDataNO_REFF: TStringField;
     MemMasterDataPAYMENT_TERM: TSmallintField;
+    MemMasterDataKD_KARES: TStringField;
     procedure btTampilkanClick(Sender: TObject);
     procedure btGetDataProspekClick(Sender: TObject);
     procedure DBGridCustomerDblClick(Sender: TObject);
@@ -149,7 +150,7 @@ begin
       MemMasterData.active:=false;
       MemMasterData.active:=true;
       MemMasterData.EmptyTable;
-       Showmessage(Dm.Qtemp.fieldbyname('code_cust').value) ;
+//       Showmessage(Dm.Qtemp.fieldbyname('code_cust').value) ;
       if  Dm.Qtemp.RecordCount=0 then
       begin
         Showmessage('Maaf, Data Tidak Ditemukan..');
@@ -168,6 +169,7 @@ begin
           MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
           MemMasterData['NO_REFF']:=Dm.Qtemp.fieldbyname('notrans').value;
           MemMasterData['PAYMENT_TERM']:=Dm.Qtemp.fieldbyname('payment_term').value;
+          MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname('code_karesidenan').value;
           MemMasterData.post;
           progress.Progress:= progress.Progress+1;
           Dm.Qtemp.next;
@@ -184,7 +186,7 @@ begin
   if not dm.Koneksi.InTransaction then
   dm.Koneksi.StartTransaction;
   try
-    with Dm.Qtemp do
+    with Dm.Qtemp2 do
     begin
       close;
       sql.clear;
@@ -201,18 +203,19 @@ begin
     FNew_Penjualan.MemDetail.active:=true;
     FNew_Penjualan.MemDetail.EmptyTable;
 
-    if  Dm.Qtemp.RecordCount=0 then
+    if  Dm.Qtemp2.RecordCount=0 then
     begin
       Showmessage('Maaf, Data Detail Tidak Ditemukan, Silakan Periksa Kembali Data..');
     end;
 
-    if  Dm.Qtemp.RecordCount<>0 then
+    if  Dm.Qtemp2.RecordCount<>0 then
     begin
       FNew_Penjualan.edNoReff.Text:=MemMasterData['NO_REFF'];
       FNew_Penjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
       FNew_Penjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
       FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
       FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];
+      FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
       Dm.Qtemp.first;
       while not Dm.Qtemp.Eof do
       begin
@@ -220,15 +223,15 @@ begin
         FNew_Penjualan.MemDetail.active:=true;
         FNew_Penjualan.MemDetail.insert;
         FNew_Penjualan.MemDetail['NO_SUMBER']:=FNew_Penjualan.edNomorTrans.Text;
-        FNew_Penjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
-        FNew_Penjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
-        FNew_Penjualan.MemDetail['JUMLAH']:=Dm.Qtemp.FieldByName('amount').AsFloat;
-        FNew_Penjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('selling_price').AsFloat;
-        FNew_Penjualan.MemDetail['JUMLAH_HARGA']:=Dm.Qtemp.FieldByName('selling_price').AsFloat*Dm.Qtemp.FieldByName('amount').AsFloat;
-        FNew_Penjualan.MemDetail['AKUN_PERK_ITEM']:=SelectRow('SELECT account_code from t_item where item_code='+QuotedStr(Dm.Qtemp.FieldByName('code_item').AsString)+' ');
-        FNew_Penjualan.MemDetail['KD_SATUAN']:=Dm.Qtemp.FieldByName('code_unit').AsString;
-        FNew_Penjualan.MemDetail['NM_SATUAN']:=Dm.Qtemp.FieldByName('name_unit').AsString;
-        FNew_Penjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('selling_price').AsFloat;
+        FNew_Penjualan.MemDetail['KD_ITEM']:=Dm.Qtemp2.FieldByName('code_item').AsString;
+        FNew_Penjualan.MemDetail['NM_ITEM']:=Dm.Qtemp2.FieldByName('name_item').AsString;
+        FNew_Penjualan.MemDetail['JUMLAH']:=Dm.Qtemp2.FieldByName('amount').AsFloat;
+        FNew_Penjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp2.FieldByName('selling_price').AsFloat;
+        FNew_Penjualan.MemDetail['JUMLAH_HARGA']:=Dm.Qtemp2.FieldByName('selling_price').AsFloat*Dm.Qtemp2.FieldByName('amount').AsFloat;
+        FNew_Penjualan.MemDetail['AKUN_PERK_ITEM']:=SelectRow('SELECT account_code from t_item where item_code='+QuotedStr(Dm.Qtemp2.FieldByName('code_item').AsString)+' ');
+        FNew_Penjualan.MemDetail['KD_SATUAN']:=Dm.Qtemp2.FieldByName('code_unit').AsString;
+        FNew_Penjualan.MemDetail['NM_SATUAN']:=Dm.Qtemp2.FieldByName('name_unit').AsString;
+        FNew_Penjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp2.FieldByName('amount').AsFloat*Dm.Qtemp2.FieldByName('selling_price').AsFloat;
         FNew_Penjualan.MemDetail['PPN_AKUN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_jual''');
         FNew_Penjualan.MemDetail['PPN_PERSEN']:=SelectRow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual''');
         FNew_Penjualan.MemDetail['PPN_NILAI']:=FNew_Penjualan.MemDetail['SUB_TOTAL']*(FNew_Penjualan.MemDetail['PPN_PERSEN']/100);
@@ -240,8 +243,8 @@ begin
         FNew_Penjualan.MemDetail['POTONGAN_PERSEN']:='0';
         FNew_Penjualan.MemDetail['MENEJ_FEE_PERSEN']:='0';
         FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:='0';
-        FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.FieldByName('amount').AsFloat*Dm.Qtemp.FieldByName('selling_price').AsFloat;
-        FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp.FieldByName('group_id').AsString;
+        FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp2.FieldByName('amount').AsFloat*Dm.Qtemp2.FieldByName('selling_price').AsFloat;
+        FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp2.FieldByName('group_id').AsString;
         FNew_Penjualan.MemDetail.post;
 //        FNew_Penjualan.HitungGrid;
         Dm.Qtemp.next;

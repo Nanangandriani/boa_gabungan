@@ -20,10 +20,10 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Width = 1276
     Height = 456
     Hint = ''
-    ActivePage = TabPajak
+    ActivePage = TabDetailPelanggan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 3
+    TabIndex = 1
     TabOrder = 0
     ExplicitWidth = 1272
     ExplicitHeight = 455
@@ -1163,7 +1163,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitTop = 6
+          ExplicitLeft = 1117
         end
         object BDataProspek: TRzBitBtn
           Left = 244

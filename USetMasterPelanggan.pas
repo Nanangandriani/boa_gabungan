@@ -957,7 +957,19 @@ begin
       if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
-      if edKodeKantorPusat.Text='' then
+
+      with dm.Qtemp do
+      begin
+        Close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM t_customer_head_office where code='+QuotedStr(edKodeKantorPusat.Text);
+        Open;
+      end;
+
+      if dm.Qtemp.RecordCount>0 then
+      begin
+         MessageDlg('Kode Kantor Pusat Sudah Di Pakai..!!',mtInformation,[mbRetry],0);
+      end else if edKodeKantorPusat.Text='' then
       begin
         MessageDlg('Kode Kantor Pusat Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeKantorPusat.SetFocus;
@@ -1021,6 +1033,7 @@ begin
           ExecSQL;
         end;
         MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+        btRefresh_KantorPusatClick(Sender);
         Dm.Koneksi.Commit;
       end;
       end
@@ -1060,6 +1073,7 @@ begin
         end;
         end;
         MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
+        btRefresh_KantorPusatClick(Sender);
         Dm.Koneksi.Commit;
       end;
       end;
@@ -1071,7 +1085,7 @@ begin
           end;
         end;
       end;
-      btRefresh_KantorPusatClick(Sender);
+
 end;
 
 

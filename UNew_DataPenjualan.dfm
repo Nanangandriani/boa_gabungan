@@ -352,7 +352,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNomorTrans: TEdit
       Left = 638
-      Top = 3
+      Top = 2
       Width = 230
       Height = 23
       CharCase = ecUpperCase

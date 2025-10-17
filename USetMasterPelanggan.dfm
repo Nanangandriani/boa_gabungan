@@ -25,8 +25,8 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     UseColoredTabs = True
     TabIndex = 5
     TabOrder = 0
-    ExplicitWidth = 804
-    ExplicitHeight = 444
+    ExplicitWidth = 806
+    ExplicitHeight = 452
     FixedDimension = 21
     object TabSetJenisPelanggan: TRzTabSheet
       Caption = 'Seting Jenis Pelanggan'
@@ -1974,8 +1974,8 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
     end
     object TabSetKantorPusat: TRzTabSheet
       Caption = 'Setting Kantor Pusat'
-      ExplicitWidth = 800
-      ExplicitHeight = 419
+      ExplicitWidth = 802
+      ExplicitHeight = 427
       object Panel11: TPanel
         Left = 0
         Top = 0
@@ -1985,7 +1985,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 800
+        ExplicitWidth = 802
         object Label32: TLabel
           Left = 20
           Top = 19
@@ -2104,7 +2104,6 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
           Width = 185
           Height = 23
           CharCase = ecUpperCase
-          ReadOnly = True
           TabOrder = 0
         end
         object edNamaKantorPusat: TEdit
@@ -2174,7 +2173,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitWidth = 800
+        ExplicitWidth = 802
         object btBatal_KantorPusat: TRzBitBtn
           Left = 730
           Top = 1
@@ -2235,7 +2234,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 724
+          ExplicitLeft = 726
         end
         object btSimpan_KantorPusat: TRzBitBtn
           Left = 580
@@ -2297,7 +2296,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 574
+          ExplicitLeft = 576
         end
         object btRefresh_KantorPusat: TRzBitBtn
           Left = 655
@@ -2359,7 +2358,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 649
+          ExplicitLeft = 651
         end
         object btBaru_KantorPusat: TRzBitBtn
           Left = 505
@@ -2421,7 +2420,7 @@ object FSetMasterPelanggan: TFSetMasterPelanggan
             5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 499
+          ExplicitLeft = 501
         end
       end
       object DBGrid_KantorPusat: TDBGridEh

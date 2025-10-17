@@ -449,12 +449,13 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='select ''000000'' kode_brg, a.name_item nama_brg,b.kode_satuan_pajak kd_satuan_pajak,'+
-                    ' a.sub_total/a.amount harga_satuan_coretax,a.amount jml_brg,0 tot_pot,'+
-                    ' a.sub_total dpp_coretax,a.dpp_lain_lain dpp_lain_coretax,a.ppn_percent_cortex tarif_ppn,'+
-                    ' a.ppn_value_cortex ppn_coretax,''0'' tarif_PPnBM,''0'' PPnBM FROM t_selling_det a '+
-                    'LEFT JOIN t_pajak_satuan_link b on b.kode_satuan=a.code_unit '+
-                    'WHERE a.trans_no='+QuotedStr(dm.Qtemp.FieldValues['referensi']);
+//          sql.Text:='select ''000000'' kode_brg, a.name_item nama_brg,b.kode_satuan_pajak kd_satuan_pajak,'+
+//                    ' a.sub_total/a.amount harga_satuan_coretax,a.amount jml_brg,a.tot_piece_value tot_pot,'+
+//                    ' a.sub_total dpp_coretax,a.dpp_lain_lain dpp_lain_coretax,a.ppn_percent_cortex tarif_ppn,'+
+//                    ' a.ppn_value_cortex ppn_coretax,''0'' tarif_PPnBM,''0'' PPnBM FROM t_selling_det a '+
+//                    'LEFT JOIN t_pajak_satuan_link b on b.kode_satuan=a.code_unit '+
+//                    'WHERE a.trans_no='+QuotedStr(dm.Qtemp.FieldValues['referensi']);
+          Sql.Text:='select * from get_selling_coretax_det('+QuotedStr(dm.Qtemp.FieldValues['referensi'])+')';
           open;
         end;
         gauge1.Progress:=0;

@@ -33,7 +33,7 @@ type
   TFMainMenu = class(TForm)
     RzStatusBar1: TRzStatusBar;
     RzVersionInfoStatus1: TRzVersionInfoStatus;
-    RzProgressStatus1: TRzProgressStatus;
+    UserFullName: TRzProgressStatus;
     RzClockStatus1: TRzClockStatus;
     StatusUser: TRzGlyphStatus;
     ImageList1: TImageList;
@@ -135,7 +135,7 @@ var
   MyTreeView : TRzTreeView;
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
-  Nm,loksbu,kdsbu,dept_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl:string;
+  Nm,loksbu,kdsbu,dept_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl,NmFull:string;
   JSFn: string;
  // statustr:integer;
 implementation
@@ -903,6 +903,8 @@ end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
+  StatusPerusahaan.Caption:=FHomeLogin.vNamaPRSH;
+  StatusUser.Caption:=NmFull;
   FHomeLogin.Hide;
   //CreateMenu('admin');
   // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');

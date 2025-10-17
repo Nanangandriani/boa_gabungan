@@ -329,6 +329,9 @@ object FListSalesOrder: TFListSalesOrder
     object MemMasterDataPAYMENT_TERM: TSmallintField
       FieldName = 'PAYMENT_TERM'
     end
+    object MemMasterDataKD_KARES: TStringField
+      FieldName = 'KD_KARES'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KD_PELANGGAN: TMTStringDataFieldEh
@@ -368,6 +371,11 @@ object FListSalesOrder: TFListSalesOrder
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object KD_KARES: TMTStringDataFieldEh
+          FieldName = 'KD_KARES'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

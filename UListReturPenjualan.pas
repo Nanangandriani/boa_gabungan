@@ -315,6 +315,19 @@ begin
     end;
     //
 
+    with dm.Qtemp3 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Retur Penjualan'',''M13004'', '+
+                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                ' ''Cetak Surat Retur Penjualan Untuk Pelanggan '+
+                QReturJual.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                QReturJual.FieldByName('trans_no').AsString+' '', '+
+                'True,'+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+');';
+      ExecSQL;
+    end;
+
      cLocation := ExtractFilePath(Application.ExeName);
 
      //ShowMessage(cLocation);
@@ -332,7 +345,7 @@ end;
 
 procedure TFListReturPenjualan.dxBarLargeButton2Click(Sender: TObject);
 begin
-  with fmainmenu.QJurnal do
+  with QJurnal do
   begin
     close;
     sql.clear;
@@ -342,14 +355,28 @@ begin
   end;
 
 
-  if fmainmenu.QJurnal.RecordCount=0 then
+
+  if QJurnal.RecordCount=0 then
   begin
     showmessage('Tidak ada data yang bisa dicetak !');
     exit;
   end;
 
-  if fmainmenu.QJurnal.RecordCount<>0 then
+  if QJurnal.RecordCount<>0 then
   begin
+    with dm.Qtemp3 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Retur Penjualan'',''M13004'', '+
+                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                ' ''Cetak Jurnal Retur Penjualan Untuk Pelanggan '+
+                QReturJual.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                QReturJual.FieldByName('trans_no').AsString+' '', '+
+                'True,'+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+');';
+      ExecSQL;
+    end;
+
     cLocation := ExtractFilePath(Application.ExeName);
 
     //ShowMessage(cLocation);
