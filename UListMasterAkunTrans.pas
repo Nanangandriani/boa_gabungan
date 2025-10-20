@@ -95,44 +95,44 @@ uses UDataMasterAkunTrans, UDataModule, UMy_Function;
 
 procedure TFListMasterAkunTrans.ActBaruExecute(Sender: TObject);
 begin
-  FDataMasterAkunTrans.Clear;
-  //FDataMasterAkunTrans.Autocode;
-  FDataMasterAkunTrans.Status:=0;
-  //Beli
-    FDataMasterAkunTrans.edKodeModulBeli.Enabled:=true;
-    FDataMasterAkunTrans.edNamaModulBeli.Enabled:=true;
-    FDataMasterAkunTrans.edKodeTransBeli.Enabled:=true;
-    FDataMasterAkunTrans.edNamaTransBeli.Enabled:=true;
-    FDataMasterAkunTrans.TabPembelian.TabVisible:=true;
-  //Jual
-    FDataMasterAkunTrans.edKodeModulJual.Enabled:=true;
-    FDataMasterAkunTrans.edNamaModulJual.Enabled:=true;
-    FDataMasterAkunTrans.edKodeTransJual.Enabled:=true;
-    FDataMasterAkunTrans.edNamaTransJual.Enabled:=true;
-    FDataMasterAkunTrans.TabPenjualan.TabVisible:=true;
-  //Bank
-    FDataMasterAkunTrans.edKodeModul.Enabled:=true;
-    FDataMasterAkunTrans.edNamaModul.Enabled:=true;
-    FDataMasterAkunTrans.edKodeTrans.Enabled:=true;
-    FDataMasterAkunTrans.edNamaTrans.Enabled:=true;
-    FDataMasterAkunTrans.edNamaBank.Enabled:=true;
-    FDataMasterAkunTrans.edNorekening.Enabled:=true;
-    FDataMasterAkunTrans.MemDetail.EmptyTable;
-    FDataMasterAkunTrans.MemDetail.active:=false;
-    FDataMasterAkunTrans.MemDetail.active:=true;
-    FDataMasterAkunTrans.TabBank.TabVisible:=true;
-  //Kas
-    FDataMasterAkunTrans.edKodeModulKas.Enabled:=true;
-    FDataMasterAkunTrans.edNamaModulKas.Enabled:=true;
-    FDataMasterAkunTrans.edKodeTransKas.Enabled:=true;
-    FDataMasterAkunTrans.edNamaTransKas.Enabled:=true;
-    FDataMasterAkunTrans.MemDetailKas.EmptyTable;
-    FDataMasterAkunTrans.MemDetailKas.active:=false;
-    FDataMasterAkunTrans.MemDetailKas.active:=true;
-    FDataMasterAkunTrans.TabKas.TabVisible:=true;
-  //
-  FDataMasterAkunTrans.RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPembelian;
-  FDataMasterAkunTrans.ShowModal;
+//  FDataMasterAkunTrans.Clear;
+//
+//  FDataMasterAkunTrans.Status:=0;
+//  //Beli
+//    FDataMasterAkunTrans.edKodeModulBeli.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaModulBeli.Enabled:=true;
+//    FDataMasterAkunTrans.edKodeTransBeli.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaTransBeli.Enabled:=true;
+//    FDataMasterAkunTrans.TabPembelian.TabVisible:=true;
+//  //Jual
+//    FDataMasterAkunTrans.edKodeModulJual.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaModulJual.Enabled:=true;
+//    FDataMasterAkunTrans.edKodeTransJual.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaTransJual.Enabled:=true;
+//    FDataMasterAkunTrans.TabPenjualan.TabVisible:=true;
+//  //Bank
+//    FDataMasterAkunTrans.edKodeModul.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaModul.Enabled:=true;
+//    FDataMasterAkunTrans.edKodeTrans.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaTrans.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaBank.Enabled:=true;
+//    FDataMasterAkunTrans.edNorekening.Enabled:=true;
+//    FDataMasterAkunTrans.MemDetail.EmptyTable;
+//    FDataMasterAkunTrans.MemDetail.active:=false;
+//    FDataMasterAkunTrans.MemDetail.active:=true;
+//    FDataMasterAkunTrans.TabBank.TabVisible:=true;
+//  //Kas
+//    FDataMasterAkunTrans.edKodeModulKas.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaModulKas.Enabled:=true;
+//    FDataMasterAkunTrans.edKodeTransKas.Enabled:=true;
+//    FDataMasterAkunTrans.edNamaTransKas.Enabled:=true;
+//    FDataMasterAkunTrans.MemDetailKas.EmptyTable;
+//    FDataMasterAkunTrans.MemDetailKas.active:=false;
+//    FDataMasterAkunTrans.MemDetailKas.active:=true;
+//    FDataMasterAkunTrans.TabKas.TabVisible:=true;
+//  //
+//  FDataMasterAkunTrans.RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPembelian;
+//  FDataMasterAkunTrans.ShowModal;
 end;
 
 procedure TFListMasterAkunTrans.ActDelExecute(Sender: TObject);

@@ -324,7 +324,7 @@ begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;
   end;
-  Application.CreateForm(TFMainMenu, FMainMenu);
+//  Application.CreateForm(TFMainMenu, FMainMenu);
 //  CbSBU.Clear;
   Self.Hide;
   FMainMenu.Show;

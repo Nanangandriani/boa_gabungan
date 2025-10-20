@@ -287,6 +287,8 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
             'Grouping')
           TabOrder = 13
           Transparent = True
+          OnChanging = rgGroupingChanging
+          OnClick = rgGroupingClick
         end
         object rgPajak: TRzRadioGroup
           Left = 391

@@ -1,6 +1,7 @@
 object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Sumber Perintah Muat'
   ClientHeight = 460
   ClientWidth = 1036
@@ -397,8 +398,8 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   end
   object DSDO: TDataSource
     DataSet = MemDetail
-    Left = 424
-    Top = 392
+    Left = 304
+    Top = 312
   end
   object MemDetail: TMemTableEh
     Active = True
@@ -431,8 +432,8 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   end
   object DataSource1: TDataSource
     DataSet = Qdetail
-    Left = 568
-    Top = 328
+    Left = 552
+    Top = 296
   end
   object Qdetail: TUniQuery
     Connection = dm.Koneksi
@@ -498,7 +499,7 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   end
   object DataSetDriverDO: TDataSetDriverEh
     ProviderDataSet = Qdo
-    Left = 824
-    Top = 392
+    Left = 488
+    Top = 232
   end
 end

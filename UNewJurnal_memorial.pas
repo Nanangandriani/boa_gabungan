@@ -305,15 +305,15 @@ begin
   end
   else
   begin
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Add('Delete From t_memorial_journal_detail');
-      sql.Add('where memo_no=:parno_bukti_memo');
-      ParamByName('parno_bukti_memo').Value := edno_bukti_memorial.Text;
-      execsql;
-    end;
+//    with Dm.Qtemp do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Add('Delete From t_memorial_journal_detail');
+//      sql.Add('where memo_no=:parno_bukti_memo');
+//      ParamByName('parno_bukti_memo').Value := edno_bukti_memorial.Text;
+//      execsql;
+//    end;
 
     with Dm.Qtemp2 do
     begin

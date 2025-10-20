@@ -221,7 +221,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:= 'SELECT a.group_id,b.istarget '+
+      Sql.Text:= 'SELECT DISTINCT a.group_id,b.istarget '+
                  'FROM t_item a '+
                  'LEFT JOIN t_item_group b on b.group_id=a.group_id '+
                  'WHERE a.item_code='+QuotedStr(MemDetail['KD_ITEM'])+';';

@@ -23,7 +23,6 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -431,6 +430,7 @@ object FListMasterAkunTrans: TFListMasterAkunTrans
       Action = ActBaru
       Caption = 'New'
       Category = 0
+      Enabled = False
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A

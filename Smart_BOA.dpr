@@ -177,16 +177,12 @@ uses
   USearch_Purchase_Order in 'USearch_Purchase_Order.pas' {FUSearch_PO},
   UPengajuan_Approval_Pembelian in 'UPengajuan_Approval_Pembelian.pas' {FListPengajuanApprovePembelian},
   URpt_Jurnal_Khusus in 'URpt_Jurnal_Khusus.pas' {FRpt_Jurnal_Khusus},
-  URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
   U_daftar_hutang in 'U_daftar_hutang.pas' {FDaftar_Hutang},
   U_daftar_Nocek in 'U_daftar_Nocek.pas' {Fdaftar_nocek},
   U_keluarkasbank_ajuan in 'U_keluarkasbank_ajuan.pas' {FKeluarKasBank_Ajuan},
   U_Data_rencana_lunas_hutang_pengajuan in 'U_Data_rencana_lunas_hutang_pengajuan.pas' {FDataRencanaLunasHutangPengajuan},
   u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
   URpt_Buku_Besar in 'URpt_Buku_Besar.pas' {FRpt_Buku_Besar},
-  URekap_Kontrakks in 'URekap_Kontrakks.pas' {FRekapKontrak},
-  URekap_PO in 'URekap_PO.pas' {FRekap_PO},
-  URekapSisa_PO in 'URekapSisa_PO.pas' {FRekapSisa_PO},
   UBHPenjualan in 'UBHPenjualan.pas' {FBHPenjualan},
   UNew_JenisUsaha in 'UNew_JenisUsaha.pas' {FNew_Jenis_Usaha},
   URekapPenjualan in 'URekapPenjualan.pas' {FRekapPenjualan},
@@ -201,7 +197,6 @@ uses
   UKartuPiutang in 'UKartuPiutang.pas' {FKartuPiutang},
   UBHPenerimaanKasBank in 'UBHPenerimaanKasBank.pas' {FBHPenerimaanKasBank},
   UHomeLogin in 'UHomeLogin.pas' {FHomeLogin},
-  URpt_Rekap_Pembelian in 'URpt_Rekap_Pembelian.pas' {FRptRekap_Pembelian},
   URekap_TerimaDok in 'URekap_TerimaDok.pas' {FRpt_RekapTerimaDok},
   URpt_RekapMutasi in 'URpt_RekapMutasi.pas' {FRpt_RekapMutasi},
   URpt_NeracaLajur in 'URpt_NeracaLajur.pas' {FRpt_NeracaLajur},
@@ -304,7 +299,13 @@ uses
   UNew_PiutangBeramasalah in 'UNew_PiutangBeramasalah.pas' {FNew_PiutangBermasalah},
   UBrowseNotaPenjualan in 'UBrowseNotaPenjualan.pas' {FBrowseNotaPenjualan},
   UTerima_Amplop in 'UTerima_Amplop.pas' {FTerima_Amplop},
-  UAmplopPelanggan in 'UAmplopPelanggan.pas' {FAmplopPelanggan};
+  UAmplopPelanggan in 'UAmplopPelanggan.pas' {FAmplopPelanggan},
+  URekap_Kontrakks in 'URekap_Kontrakks.pas' {FRekapKontrak},
+  URekap_PO in 'URekap_PO.pas' {FRekap_PO},
+  URekapSisa_PO in 'URekapSisa_PO.pas' {FRekapSisa_PO},
+  URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
+  URpt_Rekap_Pembelian in 'URpt_Rekap_Pembelian.pas' {FRptRekap_Pembelian},
+  UExportImportTargetPenjualan in 'UExportImportTargetPenjualan.pas' {FExportImportTargetPenjualan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -375,6 +376,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_PiutangBermasalah, FNew_PiutangBermasalah);
   Application.CreateForm(TFBrowseNotaPenjualan, FBrowseNotaPenjualan);
   Application.CreateForm(TFAmplopPelanggan, FAmplopPelanggan);
+  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);

@@ -161,6 +161,9 @@ type
     procedure rgPajakClick(Sender: TObject);
     procedure ednm_jenis_usahaChange(Sender: TObject);
     procedure BCorrectionClick(Sender: TObject);
+    procedure rgGroupingChanging(Sender: TObject; NewIndex: Integer;
+      var AllowChange: Boolean);
+    procedure rgGroupingClick(Sender: TObject);
   private
   { Private declarations }
   public
@@ -742,6 +745,18 @@ begin
        Dm.Qtemp.next;
       end;
   end;
+end;
+
+procedure TFDaftarKlasifikasi.rgGroupingChanging(Sender: TObject;
+  NewIndex: Integer; var AllowChange: Boolean);
+begin
+  if rgGrouping.ItemIndex=1 then  TabDaftarKlasifikasiPelanggan.Visible:=True
+  else TabDaftarKlasifikasiPelanggan.Visible:=False;
+end;
+
+procedure TFDaftarKlasifikasi.rgGroupingClick(Sender: TObject);
+begin
+  TabDaftarKlasifikasiPelanggan.Visible:=False;
 end;
 
 procedure TFDaftarKlasifikasi.rgPajakClick(Sender: TObject);

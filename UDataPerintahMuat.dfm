@@ -1,6 +1,7 @@
 object FDataPerintahMuat: TFDataPerintahMuat
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Perintah Muat'
   ClientHeight = 509
   ClientWidth = 1227

@@ -58,6 +58,7 @@ type
     DsPerusahaan: TDataSource;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
+    ActAdd: TAction;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -66,7 +67,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure ActAddExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -118,17 +119,6 @@ end;
 
  end;
 
-procedure TFListPerusahaan.dxBarLargeButton1Click(Sender: TObject);
-begin
-     status:=0;
-     FNewPerusahaan.Caption:='New Perusahaan';
-     FNewPerusahaan.stat:='BO';
-     FNewPerusahaan.Show;
-     Clear;
-     FNewPerusahaan.BSimpan.Visible:=True;
-     FNewPerusahaan.BEdit.Visible:=False;
-end;
-
 procedure TFListPerusahaan.refresh;
 begin
    with QPerusahaan do
@@ -142,6 +132,17 @@ begin
    end;
    QPerusahaan.Close;
    QPerusahaan.Open;
+end;
+
+procedure TFListPerusahaan.ActAddExecute(Sender: TObject);
+begin
+     status:=0;
+     FNewPerusahaan.Caption:='New Perusahaan';
+     FNewPerusahaan.stat:='BO';
+     FNewPerusahaan.Show;
+     Clear;
+     FNewPerusahaan.BSimpan.Visible:=True;
+     FNewPerusahaan.BEdit.Visible:=False;
 end;
 
 procedure TFListPerusahaan.ActBaruExecute(Sender: TObject);

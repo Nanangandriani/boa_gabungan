@@ -225,7 +225,7 @@ begin
     ExecSQL;
   end;
   InsertDetail;
-  proses_stock;
+//  proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -337,14 +337,14 @@ begin
   end;
 
   //cek balancestock
-  check_stock;
-  if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
-  begin
-    ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
-    ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
-    stat_proses:=false;
-    Exit;
-  end;
+//  check_stock;
+//  if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
+//  begin
+//    ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
+//    ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
+//    stat_proses:=false;
+//    Exit;
+//  end;
   //ShowMessage(IntToStr(FDataPerintahMuat.Status));
   if stat_proses=true then
   begin

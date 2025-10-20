@@ -167,6 +167,7 @@ begin
   end;
 end;
 
+
 function GetElementIdValue(WebBrowser: TWebBrowser;
   TagName, TagId, TagAttrib: string):string;
 var
@@ -895,10 +896,16 @@ end;
 
 procedure TFMainMenu.FormResize(Sender: TObject);
 begin
-//  if Self.WindowState = wsMinimized then
-//  begin
-    Application.Restore; // Memastikan aplikasi kembali ke status normal dan aktif
-//  end;
+if Self.WindowState = wsMaximized then
+begin
+//  ShowMessage('Form is now Maximized!');
+  CategoryPanelUtama.Align:=alNone;
+  Splitter1.Align:=alNone;
+  CategoryPanelUtama.Align:=alLeft;
+  Splitter1.Align:=alLeft;
+
+  // Place your code here (e.g., resizing controls, adjusting layout)
+end
 end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);

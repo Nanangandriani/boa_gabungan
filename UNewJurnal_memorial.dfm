@@ -24,8 +24,8 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 425
-    ExplicitWidth = 771
+    ExplicitTop = 433
+    ExplicitWidth = 811
     object BBatal: TRzBitBtn
       Left = 739
       Top = 1
@@ -86,7 +86,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 695
+      ExplicitLeft = 735
     end
     object BSave: TRzBitBtn
       Left = 654
@@ -149,7 +149,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 610
+      ExplicitTop = 6
     end
   end
   object RzPanel1: TRzPanel
@@ -160,7 +160,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 854
+    ExplicitWidth = 811
     object Label1: TLabel
       Left = 10
       Top = 54
@@ -418,8 +418,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitTop = 183
-    ExplicitWidth = 771
+    ExplicitWidth = 811
     object Label9: TLabel
       Left = 8
       Top = 12

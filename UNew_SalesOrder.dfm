@@ -421,6 +421,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Align = alCustom
       Caption = 'Tambah Target Penjualan'
       TabOrder = 14
+      Visible = False
       OnClick = BTambahTargetPenjualanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100

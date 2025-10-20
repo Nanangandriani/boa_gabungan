@@ -156,7 +156,7 @@ begin
               FDataPerintahMuat.MemDetail['jumlah']:=Qdetail.FieldValues['amount'];
               FDataPerintahMuat.MemDetail['satuan']:=Qdetail.FieldByName('unit').AsString;
               FDataPerintahMuat.MemDetail.post;
-              process_stock;
+//              process_stock;
          end;
        Qdetail.Next;
        end;

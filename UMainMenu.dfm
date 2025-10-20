@@ -23,8 +23,8 @@ object FMainMenu: TFMainMenu
     Height = 463
     ResizeStyle = rsUpdate
     StyleName = 'Windows'
-    ExplicitLeft = 160
-    ExplicitHeight = 482
+    ExplicitLeft = 57
+    ExplicitTop = 132
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0

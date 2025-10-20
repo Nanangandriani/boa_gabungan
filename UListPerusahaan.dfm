@@ -124,6 +124,7 @@ object FListPerusahaan: TFListPerusahaan
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Status Kantor'
+        Visible = False
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -140,7 +141,6 @@ object FListPerusahaan: TFListPerusahaan
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 765
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -155,7 +155,7 @@ object FListPerusahaan: TFListPerusahaan
     end
   end
   object ActMenu: TActionManager
-    Left = 512
+    Left = 520
     Top = 40
     StyleName = 'Platform Default'
     object ActBaru: TAction
@@ -189,6 +189,10 @@ object FListPerusahaan: TFListPerusahaan
       Caption = 'CLose PO    '
       Enabled = False
     end
+    object ActAdd: TAction
+      Caption = 'Add'
+      OnExecute = ActAddExecute
+    end
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -204,7 +208,7 @@ object FListPerusahaan: TFListPerusahaan
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 592
+    Left = 616
     Top = 48
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -233,8 +237,8 @@ object FListPerusahaan: TFListPerusahaan
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -253,7 +257,7 @@ object FListPerusahaan: TFListPerusahaan
           Visible = True
           ItemName = 'dxBarLargeButton1'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -741,11 +745,8 @@ object FListPerusahaan: TFListPerusahaan
         0000000049454E44AE426082}
     end
     object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'Tambah Cabang'
+      Action = ActAdd
       Category = 0
-      Hint = 'Tambah Cabang'
-      Visible = ivAlways
-      OnClick = dxBarLargeButton1Click
       HotGlyph.SourceDPI = 96
       HotGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -822,7 +823,7 @@ object FListPerusahaan: TFListPerusahaan
   end
   object DsPerusahaan: TDataSource
     DataSet = QPerusahaan
-    Left = 441
-    Top = 32
+    Left = 449
+    Top = 40
   end
 end

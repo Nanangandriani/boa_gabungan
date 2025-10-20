@@ -98,9 +98,10 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
-        <VerInfo_MinorVer>3</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.3.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.3.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>4</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.4.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.4.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -786,10 +787,6 @@
             <Form>FRpt_Jurnal_Khusus</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="URpt_BukuHarianPembelian.pas">
-            <Form>FRpt_BukuHarianPembelian</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="U_daftar_hutang.pas">
             <Form>FDaftar_Hutang</Form>
             <FormType>dfm</FormType>
@@ -809,15 +806,6 @@
         </DCCReference>
         <DCCReference Include="URpt_Buku_Besar.pas">
             <Form>FRpt_Buku_Besar</Form>
-        </DCCReference>
-        <DCCReference Include="URekap_Kontrakks.pas">
-            <Form>FRekapKontrak</Form>
-        </DCCReference>
-        <DCCReference Include="URekap_PO.pas">
-            <Form>FRekap_PO</Form>
-        </DCCReference>
-        <DCCReference Include="URekapSisa_PO.pas">
-            <Form>FRekapSisa_PO</Form>
         </DCCReference>
         <DCCReference Include="UBHPenjualan.pas">
             <Form>FBHPenjualan</Form>
@@ -860,9 +848,6 @@
         </DCCReference>
         <DCCReference Include="UHomeLogin.pas">
             <Form>FHomeLogin</Form>
-        </DCCReference>
-        <DCCReference Include="URpt_Rekap_Pembelian.pas">
-            <Form>FRptRekap_Pembelian</Form>
         </DCCReference>
         <DCCReference Include="URekap_TerimaDok.pas">
             <Form>FRpt_RekapTerimaDok</Form>
@@ -1216,6 +1201,30 @@
         </DCCReference>
         <DCCReference Include="UAmplopPelanggan.pas">
             <Form>FAmplopPelanggan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekap_Kontrakks.pas">
+            <Form>FRekapKontrak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekap_PO.pas">
+            <Form>FRekap_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapSisa_PO.pas">
+            <Form>FRekapSisa_PO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_BukuHarianPembelian.pas">
+            <Form>FRpt_BukuHarianPembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_Rekap_Pembelian.pas">
+            <Form>FRptRekap_Pembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UExportImportTargetPenjualan.pas">
+            <Form>FExportImportTargetPenjualan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
