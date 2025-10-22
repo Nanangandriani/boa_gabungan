@@ -85,7 +85,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_User, UDataModule, UHomeLogin;
+uses UNew_User, UDataModule, UHomeLogin, UMy_Function, UMainMenu;
 
 procedure TFUser.refresh;
 begin
@@ -120,11 +120,14 @@ begin
     BEGIN
       CLOSE;
       sql.Clear;
-      sql.Text:='SELECT max("right"(code, 1)) nk from t_user';
+      sql.Text:=' SELECT count(code) as nk from t_user ';
+      //sql.Text:='SELECT max("right"(code, 1)) nk from t_user';
       ExecSQL;
     END;
       nik:=StrToInt(DM.Qtemp.FieldByName('nk').Value);
       FNew_User.EdNik.Text:='0'+(IntToStr(nik+1));
+      EdNik.ReadOnly:=false;
+      EdNama.ReadOnly:=False;
   end;
 end;
 
@@ -137,7 +140,7 @@ begin
       Close;
       sql.Clear;
       sql.Text:='UPDATE t_user SET deleted_at=NOW(), '+
-                'deleted_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                'deleted_by='+QuotedStr(Nm)+' '+
                 'WHERE code='+QuotedStr(DBGridUser.Fields[0].AsString);
       ExecSQL;
     end;
@@ -164,6 +167,7 @@ begin
   begin
     Show;
     Clear;
+    EdNik.ReadOnly:=True;
     Caption:='Update User';
     EdNik.Text:=MemUser['Code'];
     EdNama.Text:=MemUser['user_name'];
@@ -173,6 +177,7 @@ begin
     EdDept.Text:=MemUser['dept'];
     kddept.Text:=MemUser['dept_code'];
     kdjab.Text:= MemUser['position_code'];
+    EdNama.ReadOnly:=True;
   end;
 end;
 

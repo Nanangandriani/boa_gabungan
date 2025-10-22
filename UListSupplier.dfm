@@ -120,13 +120,15 @@ object FListSupplier: TFListSupplier
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
       Groups = <
         item
           ToolbarName = 'dxBarManager1Bar1'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar2'
         end>
       Index = 0
     end
@@ -173,6 +175,27 @@ object FListSupplier: TFListSupplier
         item
           Visible = True
           ItemName = 'dxBarDelete'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar2: TdxBar
+      CaptionButtons = <>
+      DockedLeft = 125
+      DockedTop = 0
+      FloatLeft = 850
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 107
+          Visible = True
+          ItemName = 'Cb_sbu'
         end>
       OneOnRow = True
       Row = 0
@@ -552,10 +575,8 @@ object FListSupplier: TFListSupplier
       OnClick = dxBarBaruClick
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update'
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -590,13 +611,10 @@ object FListSupplier: TFListSupplier
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarUpdateClick
     end
     object dxbarRefresh: TdxBarButton
-      Caption = 'Refresh'
+      Action = ActRO
       Category = 0
-      Hint = 'Refresh'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -627,7 +645,6 @@ object FListSupplier: TFListSupplier
         DDE01390BEA805B325C9A252AA1CE97726F8FD7A0D8FA87AD7C933074222E5A3
         211BC557309CB5003765D913C1C93BA27AD78647F77A570E66368D7BCFCA8DFE
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
-      OnClick = dxbarRefreshClick
     end
     object dxBarDelete: TdxBarButton
       Caption = 'Delete'
@@ -672,6 +689,14 @@ object FListSupplier: TFListSupplier
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
       OnClick = dxBarDeleteClick
+    end
+    object Cb_sbu: TdxBarCombo
+      Caption = 'SBU     :'
+      Category = 0
+      Hint = 'SBU     :'
+      Visible = ivAlways
+      OnChange = Cb_sbuChange
+      ItemIndex = -1
     end
   end
   object DsSupplier: TDataSource

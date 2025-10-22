@@ -98,8 +98,8 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
-        <VerInfo_MinorVer>4</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.4.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.4.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>6</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.6.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.6.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
@@ -1139,18 +1139,6 @@
             <Form>FPenyesuaianFaktur</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="U_rekap_ppn_masukan.pas">
-            <Form>Frekap_ppn_masukan</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="U_cetak_rekap_hutang.pas">
-            <Form>F_cetak_rekap_hutang</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Ulap_Rekap_Hutang_Kredit.pas">
-            <Form>Flap_Rekap_Hutang_Kredit</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UListPenjualanPromosi.pas">
             <Form>FListPenjualanPromosi</Form>
             <FormType>dfm</FormType>
@@ -1225,6 +1213,46 @@
         </DCCReference>
         <DCCReference Include="UExportImportTargetPenjualan.pas">
             <Form>FExportImportTargetPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_cetak_sisa_htg.pas">
+            <Form>F_cetak_sisa_htg</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_cetak_rekap_hutang.pas">
+            <Form>F_cetak_rekap_hutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_catatan_ppn_pph.pas">
+            <Form>F_catatan_ppn_pph</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_Kartu_Hutang_UM.pas">
+            <Form>F_Kartu_Hutang_UM</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_rekap_ppn_masukan.pas">
+            <Form>Frekap_ppn_masukan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ulap_Rekap_Hutang_Kredit.pas">
+            <Form>Flap_Rekap_Hutang_Kredit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ULap_Rencana_Pelunasan_Hutang.pas">
+            <Form>Flap_Rencana_Pelunasan_Hutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ULap_Rencana_Pelunasan_Non_Hutang.pas">
+            <Form>Flap_Rencana_Pelunasan_Non_Hutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URptRekap_Memorial.pas">
+            <Form>FRekap_memorial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Udaftar_TP.pas">
+            <Form>FDaftar_TP</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

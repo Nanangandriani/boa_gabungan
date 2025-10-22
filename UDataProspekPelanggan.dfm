@@ -169,6 +169,13 @@ object FDataProspekPelanggan: TFDataProspekPelanggan
       ForeColor = clSkyBlue
       Progress = 0
     end
+    object RzLabel1: TRzLabel
+      Left = 324
+      Top = 9
+      Width = 24
+      Height = 15
+      Caption = 'SBU:'
+    end
     object Edit1: TEdit
       Left = 712
       Top = 4
@@ -180,7 +187,7 @@ object FDataProspekPelanggan: TFDataProspekPelanggan
       Visible = False
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 384
+      Left = 520
       Top = 2
       Width = 147
       Height = 30
@@ -303,6 +310,14 @@ object FDataProspekPelanggan: TFDataProspekPelanggan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 1161
+    end
+    object cbSBU: TRzComboBox
+      Left = 360
+      Top = 6
+      Width = 145
+      Height = 23
+      TabOrder = 3
+      OnChange = cbSBUChange
     end
   end
   object dsMasterData: TDataSource

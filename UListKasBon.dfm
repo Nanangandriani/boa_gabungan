@@ -22,8 +22,7 @@ object FListKasBon: TFListKasBon
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -210
-    ExplicitWidth = 1243
+    ExplicitWidth = 1252
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

@@ -11,6 +11,9 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object DBGrid_Rencana: TDBGridEh
@@ -39,7 +42,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 86
       end
@@ -53,7 +56,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -12
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 0
       end
@@ -68,7 +71,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 130
       end
@@ -83,7 +86,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 130
       end
@@ -98,7 +101,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 100
       end
@@ -116,7 +119,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -12
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 80
       end
@@ -138,7 +141,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 100
       end
@@ -156,7 +159,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 100
       end
@@ -174,7 +177,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
-        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
         Width = 120
       end
@@ -193,6 +196,14 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         FieldName = 'jumlah_dolar'
         Footers = <>
         Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'source_id'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -205,7 +216,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     Align = alBottom
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 466
+    ExplicitTop = 546
     ExplicitWidth = 856
     object Btutup: TRzBitBtn
       Left = 761
@@ -405,6 +416,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     Align = alTop
     ParentBackground = False
     TabOrder = 2
+    ExplicitWidth = 856
     object Label2: TLabel
       Left = 25
       Top = 14
@@ -583,6 +595,13 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Font.Style = []
       ParentFont = False
     end
+    object Label13: TLabel
+      Left = 25
+      Top = 213
+      Width = 68
+      Height = 15
+      Caption = 'Sumber Data'
+    end
     object dptgllunas: TDateTimePicker
       Left = 212
       Top = 13
@@ -723,6 +742,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Font.Style = []
       ParentFont = False
       TabOrder = 8
+      OnClick = rbkasClick
     end
     object rbbank: TRadioButton
       Left = 211
@@ -739,14 +759,16 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       ParentFont = False
       TabOrder = 9
       TabStop = True
+      OnClick = rbbankClick
     end
     object Bdaftar: TRzBitBtn
-      Left = 211
-      Top = 215
+      Left = 676
+      Top = 225
       Width = 185
       Height = 34
       Caption = 'Daftar Hutang'
       TabOrder = 10
+      Visible = False
       OnClick = BdaftarClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -847,6 +869,30 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       TabOrder = 13
       Visible = False
     end
+    object CbSumber: TRzComboBox
+      Left = 212
+      Top = 207
+      Width = 184
+      Height = 23
+      TabOrder = 14
+      OnSelect = CbSumberSelect
+    end
+    object Ed_sumber: TEdit
+      Left = 402
+      Top = 207
+      Width = 31
+      Height = 23
+      TabOrder = 15
+      Visible = False
+    end
+    object id_source: TEdit
+      Left = 439
+      Top = 207
+      Width = 31
+      Height = 23
+      TabOrder = 16
+      Visible = False
+    end
   end
   object MemRencana: TMemTableEh
     Active = True
@@ -863,7 +909,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         object noinv: TMTStringDataFieldEh
           FieldName = 'noinv'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object nofaktur: TMTStringDataFieldEh
           FieldName = 'nofaktur'
@@ -921,6 +968,14 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
           FieldName = 'nm_akun_pph'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object source_id: TMTNumericDataFieldEh
+          FieldName = 'source_id'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
         end
       end
       object RecordsList: TRecordsListEh

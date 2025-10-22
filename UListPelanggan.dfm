@@ -50,6 +50,7 @@ object FListPelanggan: TFListPelanggan
     Align = alClient
     AllowedOperations = []
     DataSource = DsPelanggan
+    DrawMemoText = True
     DynProps = <>
     ReadOnly = True
     SearchPanel.Enabled = True
@@ -208,6 +209,12 @@ object FListPelanggan: TFListPelanggan
       FloatClientWidth = 0
       FloatClientHeight = 0
       ItemLinks = <
+        item
+          UserDefine = [udWidth]
+          UserWidth = 139
+          Visible = True
+          ItemName = 'cbSBU'
+        end
         item
           UserDefine = [udWidth]
           UserWidth = 194
@@ -805,53 +812,78 @@ object FListPelanggan: TFListPelanggan
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
       OnClick = dxBarLargeButton2Click
     end
+    object cxBarEditItem1: TcxBarEditItem
+      Caption = 'SBU            '
+      Category = 0
+      Hint = 'SBU            '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU            '
+      Category = 0
+      Hint = 'SBU            '
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QPelanggan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
         'select customer_code, customer_name, email, address, contact_per' +
-        'son1 as telp, payment_term, customer_name_pkp from vcustomer'
-      'where deleted_at is null order by created_at Desc')
-    Left = 652
-    Top = 80
-    object QPelanggancustomer_code: TStringField
+        'son1 as telp, payment_term, customer_name_pkp from get_customer(' +
+        ') WHERE deleted_at is null order by created_at Desc')
+    Left = 644
+    Top = 144
+    object QPelanggancustomer_code: TMemoField
       FieldName = 'customer_code'
-      Required = True
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QPelanggancustomer_name: TStringField
+    object QPelanggancustomer_name: TMemoField
       FieldName = 'customer_name'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QPelanggantelp: TStringField
-      FieldName = 'telp'
-      Size = 14
-    end
-    object QPelangganemail: TStringField
+    object QPelangganemail: TMemoField
       FieldName = 'email'
-      Size = 50
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QPelangganaddress: TMemoField
       FieldName = 'address'
-      OnGetText = QPelangganaddressGetText
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QPelanggantelp: TMemoField
+      FieldName = 'telp'
+      ReadOnly = True
       BlobType = ftMemo
     end
     object QPelangganpayment_term: TSmallintField
       FieldName = 'payment_term'
+      ReadOnly = True
     end
-    object QPelanggancustomer_name_pkp: TStringField
+    object QPelanggancustomer_name_pkp: TMemoField
       FieldName = 'customer_name_pkp'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
   end
   object DsPelanggan: TDataSource
     DataSet = QPelanggan
-    Left = 617
-    Top = 24
+    Left = 769
+    Top = 128
   end
   object ActMenu: TActionManager
-    Left = 672
-    Top = 32
+    Left = 728
+    Top = 96
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '

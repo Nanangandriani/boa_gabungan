@@ -47,7 +47,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UAmplopPelanggan, URekapTagihanKolektor, UListPiutangBermasalah,
   URekapPenjualanPerPelanggan, UMonitoringTargetOmset, ULaporanHarianSisaNota,
   Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
-  ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan;
+  ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
+  UExportImportTargetPenjualan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -978,7 +979,12 @@ begin
         //FDataPengajuanPengeluaranKasBank.Panel5.Visible:=true;
     end;
   end; //Pengajuan pengeluaran kas
-
+  //Nanang
+  if vcall='exportimporttargetpenjualankares' then
+  begin
+    FExportImportTargetPenjualan.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FExportImportTargetPenjualan.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
   //Nanang
   if vcall='listpelanggankaresidenan' then
   begin

@@ -46,6 +46,7 @@ type
     procedure DBGridEh2Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure BhapusClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -285,6 +286,7 @@ begin
     ExecSQL;
   end;
     Edkd.Text:=Dm.Qtemp['dept_code'];
+    EdNo.Text:=Dm.Qtemp['dept_code'];
     no_dept:=Dm.Qtemp['dept_code'];
  //   EdkdChange(sender);
 //    RefreshMenu;
@@ -303,6 +305,11 @@ end;
 procedure TFNew_Hak_Akses.FormDestroy(Sender: TObject);
 begin
   realfnew_akses:=nil;
+end;
+
+procedure TFNew_Hak_Akses.FormShow(Sender: TObject);
+begin
+  QDetail.KeyFields := 'id';
 end;
 
 end.

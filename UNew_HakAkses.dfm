@@ -15,6 +15,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 13
   object Panel2: TPanel
     Left = 0
@@ -23,8 +24,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 445
-    ExplicitWidth = 540
+    ExplicitTop = 437
+    ExplicitWidth = 538
     object BBatal: TRzBitBtn
       Left = 468
       Top = 1
@@ -85,7 +86,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 464
+      ExplicitLeft = 462
     end
     object BSimpan: TRzBitBtn
       Left = 393
@@ -147,7 +148,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 389
+      ExplicitLeft = 387
     end
     object Bhapus: TRzBitBtn
       Left = 1
@@ -410,7 +411,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 5
-    ExplicitWidth = 540
+    ExplicitWidth = 538
     object Label1: TLabel
       Left = 32
       Top = 54

@@ -24,7 +24,6 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     DataSource = DSRencana
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
     TitleParams.MultiTitle = True
@@ -116,8 +115,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 924
-        Height = 98
+        Width = 0
+        Height = 0
         Align = alClient
         DynProps = <>
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
@@ -138,6 +137,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 955
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

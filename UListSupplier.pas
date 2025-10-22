@@ -59,6 +59,8 @@ type
     QBarang: TUniQuery;
     DBGridEh1: TDBGridEh;
     DsBarang: TDataSource;
+    dxBarManager1Bar2: TdxBar;
+    Cb_sbu: TdxBarCombo;
     procedure dxBarBaruClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
@@ -68,6 +70,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
+    procedure Cb_sbuChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,6 +78,7 @@ type
 
     Procedure Refresh;
     Procedure Autonumber;
+    Procedure load_sbu_code;
   end;
 
 function FListSupplier: TFListSupplier;
@@ -102,7 +106,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_Supplier where deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from T_Supplier where sbu_code='+QuotedStr(Cb_sbu.Text)+' and deleted_at is null order by created_at Desc ';
        open;
    end;
    QSupplier.Active:=False;
@@ -149,6 +153,9 @@ begin
         KodeHeaderPerkiraan_um:=QSupplier.FieldByName('header_code_um').AsString;
         edKodePerkiraan.Text:=QSupplier.FieldByName('account_code').AsString;
         edKodePerkiraan_um.Text:=QSupplier.FieldByName('account_code_um').AsString;
+        Ed_initial.Text:=QSupplier.FieldByName('supplier_initial').AsString;
+        up_npwp.Text:=QSupplier.FieldByName('up_npwp').AsString;
+        Cb_sbu.Text:=QSupplier.FieldByName('sbu_code').AsString;
       end;
       QBarang.First;
       while not QBarang.eof do
@@ -195,6 +202,7 @@ end;
 procedure TFListSupplier.FormShow(Sender: TObject);
 begin
   refresh;
+  load_sbu_code;
   Qsupplier.Close;
   Qsupplier.Open;
 end;
@@ -216,13 +224,24 @@ begin
     end;
 end;
 
+procedure TFListSupplier.Cb_sbuChange(Sender: TObject);
+begin
+    with QSupplier do
+    begin
+       close;
+       sql.Clear;
+       sql.Text:='select * from t_supplier where sbu_code='+QuotedStr(Cb_sbu.Text)+' and deleted_at is null order by supplier_code2 Desc ';
+       Open;
+    end;
+end;
+
 procedure TFListSupplier.dxBarBaruClick(Sender: TObject);
 begin
   with FNew_Supplier do
   begin
       Caption:='New Supplier';
       show;
-      Autonumber;
+      //Autonumber;
       Edkd.Enabled:=true;
       MemMaterial.EmptyTable;
       MemMaterial.Active:=false;
@@ -242,7 +261,7 @@ begin
         sql.Text:=' Update t_supplier set deleted_at=now(),deleted_by=:deleted_by '+
                   ' where supplier_code='+QuotedStr(DBGridSupplier.Fields[0].AsString);
         //parambyname('deleted_at').AsDateTime:=Now;
-        parambyname('deleted_by').AsString:='Admin';
+        parambyname('deleted_by').AsString:=Nm;
         Execute;
       end;
       dxbarRefreshClick(sender);
@@ -255,6 +274,24 @@ begin
    DBGridSupplier.StartLoadingStatus();
    DBGridSupplier.FinishLoadingStatus();
    Refresh;
+end;
+
+procedure TFListSupplier.load_sbu_code;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_serial<>0';
+    Open;
+  end;
+  cb_sbu.items.clear;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+     cb_sbu.Items.Add(dm.Qtemp['company_code']);
+     dm.Qtemp.Next;
+  end;
 end;
 
 initialization

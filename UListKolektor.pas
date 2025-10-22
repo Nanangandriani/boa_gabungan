@@ -83,7 +83,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataKolektor, UDataModule;
+uses UDataKolektor, UDataModule, UMainMenu, UHomeLogin;
 
 procedure TFListKolektor.ActBaruExecute(Sender: TObject);
 begin
@@ -96,7 +96,35 @@ end;
 
 procedure TFListKolektor.ActDelExecute(Sender: TObject);
 begin
-  ShowMessage('Delete');
+if MessageDlg('Apakah anda yakin ingin hapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "public"."t_collector"  SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(Nm)+'  '+
+                    ' WHERE code='+QuotedSTr(Qkolektor.FieldByName('code').AsString);
+          ExecSQL;
+        end;
+
+        MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
+        ActROExecute(sender);
+        Dm.Koneksi.Commit;
+        Refresh;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+  end;
 end;
 
 procedure TFListKolektor.ActROExecute(Sender: TObject);

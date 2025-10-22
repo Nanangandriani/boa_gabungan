@@ -59,6 +59,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -118,11 +119,11 @@ end;
 procedure TFHak_Akses.ActROExecute(Sender: TObject);
 begin
     DBGridAkses.StartLoadingStatus();
-    DBGridAkses.FinishLoadingStatus();
     QAkses.Close;
     MemAkses.close;
     QAkses.Open;
     MemAkses.Open;
+    DBGridAkses.FinishLoadingStatus();
 end;
 
 procedure TFHak_Akses.ActUpdateExecute(Sender: TObject);
@@ -163,6 +164,17 @@ procedure TFHak_Akses.FormDestroy(Sender: TObject);
 begin
   RealFHak_Akses:=nil;
 end;
+
+procedure TFHak_Akses.FormShow(Sender: TObject);
+begin
+FormatSettings.TimeSeparator := ':';
+FormatSettings.DecimalSeparator := '.';
+
+  //QAkses.UpdateObject := UpdateAkses;
+  QAkses.KeyFields := 'id';
+end;
+
+
 
 Initialization
   RegisterClasses([TFHak_Akses]);

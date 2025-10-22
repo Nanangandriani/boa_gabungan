@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, MemTableDataEh, Data.DB,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, Vcl.StdCtrls, RzButton, RzEdit,
-  Vcl.ComCtrls, RzDTP, Vcl.Mask, RzBtnEdt, Vcl.ExtCtrls, MemTableEh, Vcl.Buttons;
+  Vcl.ComCtrls, RzDTP, Vcl.Mask, RzBtnEdt, Vcl.ExtCtrls, MemTableEh, Vcl.Buttons,
+  RzCmboBx, MemDS, DBAccess, Uni;
 
 type
   TFDataPengeluaranKasBank = class(TForm)
@@ -123,6 +124,25 @@ type
     CbRencana: TComboBox;
     Label30: TLabel;
     Label29: TLabel;
+    tgl_tempo_cek: TDateTimePicker;
+    Label36: TLabel;
+    tgl_cek: TDateTimePicker;
+    Label32: TLabel;
+    Ed_nocek: TRzEdit;
+    Label35: TLabel;
+    Label31: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    BtnDeposito: TRzBitBtn;
+    Btn_daf_tp: TRzBitBtn;
+    Label45: TLabel;
+    Label46: TLabel;
+    CbGroup_Biaya: TRzComboBox;
+    Label40: TLabel;
+    Label37: TLabel;
+    DSTP: TDataSource;
+    QTP_Real: TUniQuery;
+    BEdit: TRzBitBtn;
     procedure edNamaJenisTransButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
@@ -149,13 +169,19 @@ type
       var Handled: Boolean);
     procedure Ed_id_modulChange(Sender: TObject);
     procedure dtTransChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnDepositoClick(Sender: TObject);
+    procedure CbGroup_BiayaChange(Sender: TObject);
+    procedure Btn_daf_tpClick(Sender: TObject);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;
   public
     { Public declarations }
     Status,KetemuCekPosisiDK : Integer;
-    akun_d, akun_k,kd_ak_supplier,vid_modul : String;
+    akun_d, akun_k,kd_ak_supplier,vid_modul,vkd_biaya : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5,nobk_tmp,no_bon : String;
     { Public declarations }
     procedure Clear;
@@ -174,9 +200,12 @@ type
     procedure InsertDetailAkun;
     procedure InsertDetailHutang;
     procedure refresh_form;
+    procedure load_group_biaya;
+    procedure InsertGroupBiaya;
   end;
 
 var
+//function
   FDataPengeluaranKasBank: TFDataPengeluaranKasBank;
 
 implementation
@@ -184,8 +213,19 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UCari_DaftarPerk, UMasterData, USearch_Supplier,
-  udafajuankeluarkasbank, UMy_Function, u_daf_keluar_kas_bank, UHomeLogin;
+  udafajuankeluarkasbank, UMy_Function, u_daf_keluar_kas_bank, UHomeLogin,
+  Utrx_deposito, Udaftar_TP;
 
+//var
+  //RealFDataPengeluaranKasBank: TFDataPengeluaranKasBank;
+
+{function FDataPengeluaranKasBank: TFDataPengeluaranKasBank;
+begin
+  if RealFDataPengeluaranKasBank<>nil then
+     FDataPengeluaranKasBank:=RealFDataPengeluaranKasBank
+     else
+     Application.CreateForm(TFDataPengeluaranKasBank,Result);
+end;}
 
 procedure TFDataPengeluaranKasBank.refresh_form;
 begin
@@ -361,6 +401,11 @@ begin
    begin
       InsertDetailHutang;
    end;
+
+   if FDaftar_TP.MemTP.RecordCount<>0 then
+   begin
+      InsertGroupBiaya;
+   end;
    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
    Close;
    Fdaf_pengeluaran_kas_bank.Refresh;
@@ -512,7 +557,7 @@ begin
             ' "time_lock","update_time","stat_lock","currency","kurs","bon_no",'+
             ' "post_status","created_at","created_by","updated_at","updated_by","deleted_at", '+
             ' "deleted_by","bank_norek","bank_name","cek_no","trans_type_code","trans_type_name", '+
-            ' "bank_number_account","bank_name_account","additional_code","module_id") '+
+            ' "bank_number_account","bank_name_account","additional_code","module_id",cheque_no,cheque_date,cheque_due_date) '+
             ' VALUES ( '+
             ' '+QuotedStr(edNoTrans.Text)+','+QuotedStr(Ed_voucher_ajuan.Text)+',NULL,'+QuotedStr(MemKeterangan.Text)+',Now(),'+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+QuotedStr(FloatToStr(edJumlah.value))+',NULL, NULL,NULL, '+
@@ -524,7 +569,7 @@ begin
             ' NULL,NULL,NULL, '+QuotedStr(edKodeMataUang.Text)+','+QuotedStr(FloatToStr(edKurs.value))+',NULL,'+
             ' 0,NOW(),'+QuotedStr(FHomeLogin.Eduser.Text)+',NULL, NULL, NULL, '+
             ' NULL,'+QuotedStr(edNoRek.Text)+','+QuotedStr(edNamaBank.Text)+',NULL,'+QuotedStr(code_Trans.Text)+','+QuotedStr(Cb_Jenis_Trans.Text)+', '+
-            ' NULL,NULL,'+QuotedStr(Ed_Additional.Text)+','+QuotedStr(Ed_id_modul.Text)+' );');
+            ' NULL,NULL,'+QuotedStr(Ed_Additional.Text)+','+QuotedStr(Ed_id_modul.Text)+','+QuotedStr(Ed_nocek.Text)+','+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_cek.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_tempo_cek.Date))+' );');
     ExecSQL;
   end;
 
@@ -538,6 +583,11 @@ begin
     InsertDetailHutang;
   end;
   //MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  if FDaftar_TP.MemTP.RecordCount<>0 then
+  begin
+     InsertGroupBiaya;
+  end;
+
   Clear;
   Close;
   Fdaf_pengeluaran_kas_bank.Refresh;
@@ -692,9 +742,9 @@ begin
     with Dm.Qtemp do
     begin
       close;
-      sql.Text:='SELECT * from t_settlement_data_source where status=''true'' ';
+      sql.Text:='SELECT * from t_source_plan where status=''true'' ';
       Open;
-      edKodeSumberPengeluaran.Text:=fieldbyname('code').AsString;
+      edKodeSumberPengeluaran.Text:=fieldbyname('source_code').AsString;
     end;
     Dm.Qtemp.First;
     Cb_debt_source.Items.Clear;
@@ -813,6 +863,34 @@ begin
     //end;
 end;
 
+procedure TFDataPengeluaranKasBank.BtnDepositoClick(Sender: TObject);
+begin
+   Ftrx_deposito.Show;
+end;
+
+procedure TFDataPengeluaranKasBank.Btn_daf_tpClick(Sender: TObject);
+begin
+   FDaftar_TP.show;
+   FDaftar_TP.DBGridTP_Ajuan.Visible:=false;
+   FDaftar_TP.DBGridTP_Real.Visible:=True;
+   {FMasterData.Caption:='Daftar Pelaku Biaya';
+   FMasterData.vcall:='pelaku_biaya';
+   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+   FMasterData.ShowModal;}
+end;
+
+procedure TFDataPengeluaranKasBank.CbGroup_BiayaChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;sql.Clear;
+     sql.Text:='SELECT * FROM t_cost_group WHERE name='+Quotedstr(CbGroup_Biaya.Text)+'';
+     open;
+     vkd_biaya:=fieldbyname('code').AsString;
+   end;
+   //showmessage(vkd_biaya);
+end;
+
 procedure TFDataPengeluaranKasBank.cbsumberdataSelect(Sender: TObject);
 begin
    if cbsumberdata.Text='KAS' then
@@ -918,6 +996,7 @@ begin
   Ed_voucher_ajuan.Clear;
   edKodeSumberPengeluaran.Clear;
   Cb_debt_source.Clear;
+  Ed_kepada.clear;
 end;
 
 procedure TFDataPengeluaranKasBank.code_transChange(Sender: TObject);
@@ -1229,6 +1308,22 @@ begin
 
 end;
 
+procedure TFDataPengeluaranKasBank.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   //Action:=CaFree;
+end;
+
+procedure TFDataPengeluaranKasBank.FormCreate(Sender: TObject);
+begin
+  //RealFDataPengeluaranKasBank:=self;
+end;
+
+procedure TFDataPengeluaranKasBank.FormDestroy(Sender: TObject);
+begin
+   //RealFDataPengeluaranKasBank:=Nil;
+end;
+
 procedure TFDataPengeluaranKasBank.FormShow(Sender: TObject);
 begin
    self.load_sumber_data;
@@ -1249,6 +1344,7 @@ begin
    MemDetailAkun.Open;
    MemDetailHutang.Close;
    MemDetailHutang.Open;
+   load_group_biaya;
 end;
 
 procedure TFDataPengeluaranKasBank.RefreshGridDetailAkun;
@@ -1393,6 +1489,75 @@ begin
    Fdafajuankeluarkasbank.vcall:='keluar_kas';
    Fdafajuankeluarkasbank.Show;
 
+end;
+
+procedure TFDataPengeluaranKasBank.InsertGroupBiaya;
+begin
+  with Dm.Qtemp do
+  begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from "t_cost_detail"  WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
+              ' Order By voucher_no desc');
+      open;
+  end;
+  if Dm.Qtemp.RecordCount>0 then
+  begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' DELETE FROM  "t_cost_detail" '+
+                  ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+        ExecSQL;
+      end;
+  end;
+
+  with FDaftar_TP do
+  begin
+      MemTP.First;
+      while not MemTP.Eof do
+      begin
+        with dm.Qtemp do
+        begin
+          Close;
+          sql.Clear;
+          sql.Text:='INSERT into t_cost_detail ("voucher_no","voucher_tmp","group_code","description",'+
+                    '"tp_code","tp_name","amount","username") '+
+                    'VALUES(:voucher_no,:voucher_tmp,:group_code,:description,:tp_code,:tp_name,'+
+                    ':amount,:username)';
+                    ParamByName('voucher_no').Value:=edNoTrans.Text;
+                    ParamByName('voucher_tmp').Value:=MemTp['voucher_tmp'];
+                    ParamByName('group_code').Value:=vkd_biaya;
+                    ParamByName('description').Value:=MemTp['description'];
+                    ParamByName('tp_code').Value:=MemTp['tp_code'];
+                    ParamByName('tp_name').Value:=MemTp['tp_name'];
+                    ParamByName('amount').Value:=MemTp['amount'];
+                    ParamByName('username').Value:=FHomeLogin.Eduser.Text;
+          ExecSQL;
+        end;
+        MemTp.Next;
+      end;
+  end;
+end;
+
+procedure TFDataPengeluaranKasBank.load_group_biaya;
+begin
+with Dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM t_cost_group ';
+      Open;
+    end;
+    Dm.Qtemp.First;
+    cbgroup_biaya.Items.Clear;
+    while not dm.Qtemp.Eof do
+    begin
+      cbgroup_biaya.Items.Add(Dm.Qtemp.FieldByName('name').AsString);
+      Dm.Qtemp.Next;
+    end;
 end;
 
 procedure TFDataPengeluaranKasBank. VCekBalance;

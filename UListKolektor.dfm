@@ -48,6 +48,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'code_kares'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -56,6 +57,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'name_kares'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Karesidenan'
         Width = 200
       end
@@ -65,6 +67,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'code_regency'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -73,6 +76,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'name_regency'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kabupaten'
         Width = 200
       end
@@ -82,6 +86,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'code'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode Kolektor'
         Width = 100
       end
@@ -91,6 +96,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Kolektor'
         Width = 200
       end
@@ -100,6 +106,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'nik_employee'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'NIK Karyawan'
         Width = 200
       end
@@ -109,6 +116,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'phone_number'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -117,6 +125,7 @@ object FListKolektor: TFListKolektor
         EditButtons = <>
         FieldName = 'address'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh

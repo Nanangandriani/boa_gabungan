@@ -59,8 +59,8 @@ object FCari_Menu: TFCari_Menu
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 339
-    ExplicitWidth = 572
+    ExplicitTop = 331
+    ExplicitWidth = 570
     object BBatal: TRzBitBtn
       Left = 500
       Top = 1
@@ -120,7 +120,7 @@ object FCari_Menu: TFCari_Menu
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 496
+      ExplicitLeft = 494
     end
     object BSimpan: TRzBitBtn
       Left = 425
@@ -182,7 +182,7 @@ object FCari_Menu: TFCari_Menu
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 421
+      ExplicitLeft = 419
     end
   end
   object QMenu: TUniQuery

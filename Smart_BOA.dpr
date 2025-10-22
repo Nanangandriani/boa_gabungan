@@ -284,9 +284,6 @@ uses
   UListTargetPenjualan in 'UListTargetPenjualan.pas' {FListTargetPenjualan},
   UNew_DataTargetPenjualan in 'UNew_DataTargetPenjualan.pas' {FNew_DataTargetPenjualan},
   UPenyesuaianFaktur in 'UPenyesuaianFaktur.pas' {FPenyesuaianFaktur},
-  U_rekap_ppn_masukan in 'U_rekap_ppn_masukan.pas' {Frekap_ppn_masukan},
-  U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang},
-  Ulap_Rekap_Hutang_Kredit in 'Ulap_Rekap_Hutang_Kredit.pas' {Flap_Rekap_Hutang_Kredit},
   UListPenjualanPromosi in 'UListPenjualanPromosi.pas' {FListPenjualanPromosi},
   UNew_DataPenjualanPromosi in 'UNew_DataPenjualanPromosi.pas' {FNew_DataPenjualanPromosi},
   UExportFaktur in 'UExportFaktur.pas' {FExportFaktur},
@@ -305,7 +302,17 @@ uses
   URekapSisa_PO in 'URekapSisa_PO.pas' {FRekapSisa_PO},
   URpt_BukuHarianPembelian in 'URpt_BukuHarianPembelian.pas' {FRpt_BukuHarianPembelian},
   URpt_Rekap_Pembelian in 'URpt_Rekap_Pembelian.pas' {FRptRekap_Pembelian},
-  UExportImportTargetPenjualan in 'UExportImportTargetPenjualan.pas' {FExportImportTargetPenjualan};
+  UExportImportTargetPenjualan in 'UExportImportTargetPenjualan.pas' {FExportImportTargetPenjualan},
+  U_cetak_sisa_htg in 'U_cetak_sisa_htg.pas' {F_cetak_sisa_htg},
+  U_cetak_rekap_hutang in 'U_cetak_rekap_hutang.pas' {F_cetak_rekap_hutang},
+  U_catatan_ppn_pph in 'U_catatan_ppn_pph.pas' {F_catatan_ppn_pph},
+  U_Kartu_Hutang_UM in 'U_Kartu_Hutang_UM.pas' {F_Kartu_Hutang_UM},
+  U_rekap_ppn_masukan in 'U_rekap_ppn_masukan.pas' {Frekap_ppn_masukan},
+  Ulap_Rekap_Hutang_Kredit in 'Ulap_Rekap_Hutang_Kredit.pas' {Flap_Rekap_Hutang_Kredit},
+  ULap_Rencana_Pelunasan_Hutang in 'ULap_Rencana_Pelunasan_Hutang.pas' {Flap_Rencana_Pelunasan_Hutang},
+  ULap_Rencana_Pelunasan_Non_Hutang in 'ULap_Rencana_Pelunasan_Non_Hutang.pas' {Flap_Rencana_Pelunasan_Non_Hutang},
+  URptRekap_Memorial in 'URptRekap_Memorial.pas' {FRekap_memorial},
+  Udaftar_TP in 'Udaftar_TP.pas' {FDaftar_TP};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -376,7 +383,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_PiutangBermasalah, FNew_PiutangBermasalah);
   Application.CreateForm(TFBrowseNotaPenjualan, FBrowseNotaPenjualan);
   Application.CreateForm(TFAmplopPelanggan, FAmplopPelanggan);
-  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
+//  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
+  Application.CreateForm(TF_cetak_sisa_htg, F_cetak_sisa_htg);
+  Application.CreateForm(TFDaftar_TP, FDaftar_TP);
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
@@ -512,7 +521,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDaftarKlasifikasi, FDaftarKlasifikasi);
   Application.CreateForm(TFSetMasterPelanggan, FSetMasterPelanggan);
   Application.CreateForm(TFSetMasterWilayah, FSetMasterWilayah);
-  Application.CreateForm(TFRencana_Lunas_Hutang, FRencana_Lunas_Hutang);
+//  Application.CreateForm(TFRencana_Lunas_Hutang, FRencana_Lunas_Hutang);
   Application.CreateForm(TFRencana_Pengajuan_Pelunasan_Hutang, FRencana_Pengajuan_Pelunasan_Hutang);
   Application.CreateForm(TFListRencanaLunasPiutang, FListRencanaLunasPiutang);
   Application.CreateForm(TFTerima_Material, FTerima_Material);

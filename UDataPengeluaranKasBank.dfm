@@ -2,7 +2,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   Left = 0
   Top = 0
   Caption = 'Data Pengeluaran Kas'
-  ClientHeight = 689
+  ClientHeight = 725
   ClientWidth = 1108
   Color = clGradientInactiveCaption
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +11,9 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -174,14 +177,14 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Caption = 'Dibayar Kepada'
     end
     object Label24: TLabel
-      Left = 135
+      Left = 133
       Top = 52
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label28: TLabel
-      Left = 135
+      Left = 133
       Top = 80
       Width = 3
       Height = 15
@@ -214,6 +217,34 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 61
       Height = 15
       Caption = 'Rencana Ke'
+    end
+    object Label45: TLabel
+      Left = 1031
+      Top = 241
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label46: TLabel
+      Left = 971
+      Top = 241
+      Width = 48
+      Height = 15
+      Caption = 'Daftar TP'
+    end
+    object Label40: TLabel
+      Left = 700
+      Top = 238
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label37: TLabel
+      Left = 587
+      Top = 238
+      Width = 64
+      Height = 15
+      Caption = 'Group Biaya'
     end
     object edNoTrans: TEdit
       Left = 147
@@ -490,15 +521,32 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Enabled = False
       TabOrder = 24
     end
+    object Btn_daf_tp: TRzBitBtn
+      Left = 1040
+      Top = 238
+      Width = 25
+      Height = 23
+      Caption = '...'
+      TabOrder = 25
+      OnClick = Btn_daf_tpClick
+    end
+    object CbGroup_Biaya: TRzComboBox
+      Left = 709
+      Top = 238
+      Width = 188
+      Height = 23
+      TabOrder = 26
+      OnChange = CbGroup_BiayaChange
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 657
+    Top = 693
     Width = 1108
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 648
+    ExplicitTop = 684
     ExplicitWidth = 1102
     object BBatal: TRzBitBtn
       Left = 1032
@@ -644,6 +692,130 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Visible = False
       OnClick = BitBtn1Click
     end
+    object BtnDeposito: TRzBitBtn
+      Left = 1
+      Top = 1
+      Width = 93
+      Height = 30
+      Align = alLeft
+      Caption = 'Deposito'
+      TabOrder = 4
+      OnClick = BtnDepositoClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000520B0000520B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8A3787878
+        7878787878787878E8E8E8E8818181818181818181818181E8E8E8E8A3D5D5D5
+        D5D5D5D5D5D5D578E8E8E8E881ACACACACACACACACACAC81E8E8E8E8A3D5D5D5
+        D5D5D5D5D5D5D578E8E8E8E881ACACACACACACACACACAC81E8E8E8E8A3D5D5D5
+        D5D5D5D5D5D5D578E8E8E8E881ACACACACACACACACACAC81E8E8E8E8A3D5D5D5
+        D5D5D5D5D5D5D578E8E8E8E881ACACACACACACACACACAC81E8E8E8E8A3D5D5D5
+        D5D5D5D5D5D5D578E8E8E8E881ACACACACACACACACACAC81E8E8E8E8A3D5D5D5
+        D5ABD5D5D5D5D578E8E8E8E881ACACACACACACACACACAC81E8E8E8E8A3D5D5D5
+        D556ABABD5D5D578E8E8E8E881ACACACAC56ACACACACAC81E8E8E8E8A3D5D5D5
+        D5AB0505ABD5D578E8E8E8E881ACACACACAC5656ACACAC81E8E8E8E8A3A3A3A3
+        A30505D705A3A3A3E8E8E8E881818181815656D756818181E8E8E8E8E8E8E8E8
+        E8E80505E8E8E8E8E8E8E8E8E8E8E8E8E8E85656E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+    end
+    object BEdit: TRzBitBtn
+      Left = 882
+      Top = 1
+      Height = 30
+      Align = alRight
+      Caption = 'Save'
+      TabOrder = 5
+      Visible = False
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000730E0000730E00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+        090909090909090909E8E8E881818181818181818181818181E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        1009E3E3E309101009E8E881ACAC81E3AC81E3E3E381ACAC81E8E809101009E3
+        E3E3E3E3E309101009E8E881ACAC81E3E3E3E3E3E381ACAC81E8E80910101009
+        090909090910101009E8E881ACACAC818181818181ACACAC81E8E80910101010
+        101010101010101009E8E881ACACACACACACACACACACACAC81E8E80910100909
+        090909090909101009E8E881ACAC8181818181818181ACAC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8091009D709
+        0909090909D7091009E8E881AC81D7818181818181D781AC81E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E809E309D709
+        0909090909D7090909E8E881E381D7818181818181D7818181E8E8091009D7D7
+        D7D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E80909090909
+        090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
+      ExplicitLeft = 876
+    end
   end
   object Panel5: TPanel
     Left = 0
@@ -755,35 +927,35 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       TabOrder = 1
       object Label1: TLabel
         Left = 147
-        Top = 59
+        Top = 56
         Width = 3
         Height = 15
         Caption = ':'
       end
       object Label2: TLabel
         Left = 34
-        Top = 59
+        Top = 57
         Width = 90
         Height = 15
         Caption = 'Nomor Rekening'
       end
       object Label6: TLabel
         Left = 34
-        Top = 33
+        Top = 31
         Width = 61
         Height = 15
         Caption = 'Nama Bank'
       end
       object Label7: TLabel
         Left = 147
-        Top = 33
+        Top = 31
         Width = 3
         Height = 15
         Caption = ':'
       end
       object lbJenisBayarr: TLabel
         Left = 455
-        Top = 59
+        Top = 57
         Width = 3
         Height = 15
         Caption = ':'
@@ -791,7 +963,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
       object lbSumberHutangn: TLabel
         Left = 455
-        Top = 30
+        Top = 28
         Width = 3
         Height = 15
         Caption = ':'
@@ -799,7 +971,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
       object lbJenisBayar: TLabel
         Left = 358
-        Top = 59
+        Top = 57
         Width = 94
         Height = 15
         Caption = 'Jenis Pembayaran'
@@ -807,15 +979,57 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
       object lbSumberHutang: TLabel
         Left = 358
-        Top = 30
+        Top = 28
         Width = 84
         Height = 15
         Caption = 'Sumber Hutang'
         Visible = False
       end
+      object Label36: TLabel
+        Left = 34
+        Top = 137
+        Width = 108
+        Height = 15
+        Caption = 'Tgl.Jatuh Tempo Cek'
+      end
+      object Label32: TLabel
+        Left = 34
+        Top = 110
+        Width = 84
+        Height = 15
+        Caption = 'Tanggal Cek/BG'
+      end
+      object Label35: TLabel
+        Left = 34
+        Top = 82
+        Width = 65
+        Height = 15
+        Caption = 'No. Cek /BG'
+      end
+      object Label31: TLabel
+        Left = 147
+        Top = 82
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label33: TLabel
+        Left = 147
+        Top = 110
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label34: TLabel
+        Left = 147
+        Top = 136
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
       object edNamaBank: TRzButtonEdit
         Left = 156
-        Top = 30
+        Top = 28
         Width = 169
         Height = 23
         Text = ''
@@ -825,8 +1039,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         OnButtonClick = edNamaBankButtonClick
       end
       object edNoRek: TEdit
-        Left = 157
-        Top = 56
+        Left = 156
+        Top = 54
         Width = 168
         Height = 23
         CharCase = ecUpperCase
@@ -835,7 +1049,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
       object edNMSumberHutang: TRzButtonEdit
         Left = 464
-        Top = 30
+        Top = 28
         Width = 103
         Height = 23
         Text = ''
@@ -846,7 +1060,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       end
       object edNMJenisBayar: TRzButtonEdit
         Left = 464
-        Top = 56
+        Top = 54
         Width = 103
         Height = 23
         Text = ''
@@ -876,13 +1090,39 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         TabOrder = 5
         Visible = False
       end
+      object tgl_tempo_cek: TDateTimePicker
+        Left = 157
+        Top = 133
+        Width = 109
+        Height = 23
+        Date = 45678.000000000000000000
+        Time = 0.547003877312818100
+        TabOrder = 6
+      end
+      object tgl_cek: TDateTimePicker
+        Left = 157
+        Top = 107
+        Width = 109
+        Height = 23
+        Date = 45678.000000000000000000
+        Time = 0.547003877312818100
+        TabOrder = 7
+      end
+      object Ed_nocek: TRzEdit
+        Left = 156
+        Top = 80
+        Width = 169
+        Height = 23
+        Text = ''
+        TabOrder = 8
+      end
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 425
     Width = 1108
-    Height = 232
+    Height = 268
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
@@ -890,20 +1130,16 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     TabIndex = 1
     TabOrder = 3
     ExplicitWidth = 1102
-    ExplicitHeight = 223
+    ExplicitHeight = 259
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Detail Akun'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
         Width = 1104
-        Height = 207
+        Height = 243
         Align = alClient
         DataSource = DSDetailAkun
         DynProps = <>
@@ -999,12 +1235,12 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Color = clGradientInactiveCaption
       Caption = 'Detail Hutang'
       ExplicitWidth = 1098
-      ExplicitHeight = 198
+      ExplicitHeight = 234
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
         Width = 1104
-        Height = 207
+        Height = 243
         Align = alClient
         DataSource = dsDetailHutang
         DynProps = <>
@@ -1057,6 +1293,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0'
             DynProps = <>
             EditButtons = <>
             FieldName = 'jum_hutang'
@@ -1082,15 +1319,11 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Color = clGradientInactiveCaption
       TabVisible = False
       Caption = 'TabSheet1'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
         Width = 1104
-        Height = 207
+        Height = 243
         Align = alClient
         DataSource = DSKKasBank
         DynProps = <>
@@ -1276,12 +1509,14 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         object no_faktur: TMTStringDataFieldEh
           FieldName = 'no_faktur'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object no_sj: TMTStringDataFieldEh
           FieldName = 'no_sj'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object no_tagihan: TMTStringDataFieldEh
           FieldName = 'no_tagihan'
@@ -1687,5 +1922,16 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     DataSet = MemKKasBank
     Left = 896
     Top = 528
+  end
+  object DSTP: TDataSource
+    Left = 992
+    Top = 184
+  end
+  object QTP_Real: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT * FROM t_cost_detail_submission')
+    Left = 944
+    Top = 184
   end
 end

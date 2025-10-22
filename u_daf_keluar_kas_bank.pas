@@ -144,6 +144,8 @@ type
     QDaf_Pengeluaran_Kas_Bankmodule_id: TIntegerField;
     QBukti_Keluar_det: TUniQuery;
     frxDBDBukti_Keluar_det: TfrxDBDataset;
+    QTP_Real: TUniQuery;
+    DSTP_Real: TDataSource;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
@@ -151,6 +153,9 @@ type
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -158,18 +163,32 @@ type
   end;
 
 var
+//function
   Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataPengeluaranKasBank, UDataModule,UMy_Function,UHomeLogin;
+uses UDataPengeluaranKasBank, UDataModule,UMy_Function,UHomeLogin, Udaftar_TP;
+
+//var
+  //RealFdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank;
+
+{function Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank;
+begin
+  if RealFdaf_pengeluaran_kas_bank <> nil then
+     Fdaf_pengeluaran_kas_bank:=RealFdaf_pengeluaran_kas_bank
+  else
+     Application.CreateForm(TFdaf_pengeluaran_kas_bank,Result);
+end;}
 
 
 procedure TFdaf_pengeluaran_kas_bank.ActBaruExecute(Sender: TObject);
 begin
    FDataPengeluaranKasBank.Show;
+   //FDataPengeluaranKasBank.BSave.Visible:=True;
+   //FDataPengeluaranKasBank.BEdit.Visible:=False;
 end;
 
 procedure TFdaf_pengeluaran_kas_bank.ActDelExecute(Sender: TObject);
@@ -223,30 +242,6 @@ end;
 
 procedure TFdaf_pengeluaran_kas_bank.ActUpdateExecute(Sender: TObject);
 begin
-      {with QDaf_Pengeluaran_Kas_Bank do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT a.* FROM t_cash_bank_expenditure a '+
-                  'LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
-                  'LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
-                  'LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
-                  'LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
-                  'GROUP BY a.voucher_no,a.voucher_tmp,a.subvoucher,a.remark,a.entry_date,a.trans_date, '+
-                  'a.periode1,a.periode2,a.amount,a.account_code,a.group_code,a.group_name,a.tp_code, '+
-                  'a.account_name,a.dk,a.perpetrator_id,a.debit,a.kredit,a.header_code,a.ref_no,a.posting, '+
-                  'a.customer_code,a.supplier_code,a.cash_type,a.job_no,a.company_code,a.trans_year, '+
-                  'a.trans_month,a.trans_day,a.order_no,a.giro_no,a.bank_giro_name,a.giro_due_date, '+
-                  'a.customer_name,a.supplier_name,a.to_,a.deposit,a.deposit_date,a.tgup, '+
-                  'a.voucher_code,a.to_getout,a.stat,a.time_lock,a.update_time,a.stat_lock, '+
-                  'a.currency,a.kurs,a.bon_no,a.post_status,a.created_at,a.created_by, '+
-                  'a.updated_at,a.updated_by,a.deleted_at,a.deleted_by,a.bank_norek,a.bank_name, '+
-                  'a.cek_no,a.trans_type_code,a.trans_type_name,a.bank_number_account,a.bank_name_account, '+
-                  'a.additional_code,a."id",a.module_id '+
-                  'where voucher_no='+Quotedstr(DBGridKasBank.Fields[0].Asstring)+' '+
-                  'ORDER BY entry_date,voucher_no,trans_date,order_no ASC';
-        open;
-      end;}
       with FDataPengeluaranKasBank do
       begin
         MemDetailAkun.EmptyTable;
@@ -267,13 +262,12 @@ begin
         dtTrans.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_date').asdatetime;
         dtperiode1.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('periode1').asdatetime;
         dtperiode2.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('periode2').asdatetime;
-        FDataPengeluaranKasBank.no_bon:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bon_no').AsString;
         no_bon:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bon_no').AsString;
         edUntukPengeluaran.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('to_getout').AsString;
         Ed_kepada.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('to_').AsString;
         MemKeterangan.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('remark').AsString;
         Ed_Additional.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('additional_code').AsString;
-        FDataPengeluaranKasBank.edJumlah.value:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('amount').Value;
+        edJumlah.value:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('amount').Value;
         edKode_supplier.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('supplier_code').AsString;
         edNama_Supplier.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('supplier_name').AsString;
         edKodeMataUang.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('currency').AsString;
@@ -282,12 +276,12 @@ begin
         edKodeSumberPengeluaran.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('ref_no').Asstring;
         ednamabank.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bank_name').AsString;
         edNoRek.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('bank_norek').AsString;
-        FDataPengeluaranKasBank.code_trans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_type_code').AsString;
+        code_trans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_type_code').AsString;
         Ed_id_modul.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('module_id').AsString;
         Edhari.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_day').AsString;
         Edbln.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_month').AsString;
         Edth.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_year').AsString;
-        Ed_voucher_ajuan.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_tmp').AsString;
+        //Ed_voucher_ajuan.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_tmp').AsString;
 
         //detail akun
         with QDetail_akun do
@@ -377,9 +371,42 @@ begin
           open;
           edNamaMataUang.text:=fieldbyname('currency_name').AsString;
         end;
+
+        //Detail Tp_Real
+        with QTP_Real do
+        begin
+          close;
+          sql.clear;
+          sql.add('SELECT * from ('+
+                  'SELECT * from "public"."t_cost_detail" a INNER JOIN t_cost_group b on a.group_code=b.code '+
+                  'WHERE voucher_no='+Quotedstr(DBGridKasBank.Fields[0].Asstring)+') a '+
+                  'Order By voucher_no desc');
+          open;
+          vkd_biaya:=fieldbyname('group_code').AsString;
+          FDataPengeluaranKasBank.CbGroup_Biaya.Text:=fieldbyname('name').AsString;
+          //showmessage(vkd_biaya);
+        end;
+        with FDataPengeluaranKasBank,FDaftar_TP do
+        begin
+          MemTP_Real.EmptyTable;
+          QTP_Real.First;
+          while not QTP_Real.Eof do
+          begin
+              MemTP_Real.Insert;
+              MemTP_Real['voucher_no']:=QTP_Real.fieldbyname('voucher_no').AsString;
+              MemTP_Real['tp_code']:=QTP_Real.fieldbyname('tp_code').AsString;
+              MemTP_Real['tp_name']:=QTP_Real.fieldbyname('tp_name').AsString;
+              MemTP_Real['description']:=QTP_Real.fieldbyname('description').AsString;
+              MemTP_Real['amount']:=QTP_Real.fieldbyname('amount').value;
+              MemTP_Real.post;
+              QTP_Real.Next;
+          end;
+        end;
+
         Fdaf_pengeluaran_kas_bank.Close;
       end;
-
+      //FDataPengeluaranKasBank.BSave.Visible:=False;
+      //FDataPengeluaranKasBank.BEdit.Visible:=true;
 end;
 
 procedure TFdaf_pengeluaran_kas_bank.dxBarLargeButton1Click(Sender: TObject);
@@ -440,8 +467,32 @@ begin
        open;
      end;
 
-
      cLocation := ExtractFilePath(Application.ExeName);
+
+     //ShowMessage(cLocation);
+     if QBukti_Keluar.FieldByName('module_id').AsString='6' then//kas
+     begin
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_kas_1'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+         SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         Report.ShowReport();
+     end;
+     if QBukti_Keluar.FieldByName('module_id').AsString='5' then//bank
+     begin
+        Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Cheque'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+         SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         Report.ShowReport();
+     end;
+
+     //Report.DesignReport();
+     //Report.ShowReport();
+
+
+
+     {cLocation := ExtractFilePath(Application.ExeName);
 
      //ShowMessage(cLocation);
      Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran'+'.fr3');
@@ -460,7 +511,7 @@ begin
      end;
 
      //Report.DesignReport();
-     Report.ShowReport();
+     Report.ShowReport();}
    end;
 end;
 
@@ -493,6 +544,22 @@ begin
    //Report.DesignReport();
    Report.ShowReport();
  end;
+end;
+
+procedure TFdaf_pengeluaran_kas_bank.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   //Action:=CaFree;
+end;
+
+procedure TFdaf_pengeluaran_kas_bank.FormCreate(Sender: TObject);
+begin
+   //RealFdaf_pengeluaran_kas_bank:=self;
+end;
+
+procedure TFdaf_pengeluaran_kas_bank.FormDestroy(Sender: TObject);
+begin
+   //RealFdaf_pengeluaran_kas_bank:=Nil;
 end;
 
 procedure TFdaf_pengeluaran_kas_bank.FormShow(Sender: TObject);

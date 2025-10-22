@@ -48,6 +48,16 @@ type
     edKodePerkiraan_um: TRzButtonEdit;
     Label13: TLabel;
     Label14: TLabel;
+    up_npwp: TEdit;
+    Label15: TLabel;
+    Label16: TLabel;
+    Ed_initial: TEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    Labelsbu: TLabel;
+    Lbltitik_koma: TLabel;
+    Cb_sbu: TComboBox;
+    Ed_serial: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -60,15 +70,19 @@ type
     procedure edKodePerkiraan_xButtonClick(Sender: TObject);
     procedure edKodePerkiraanButtonClick(Sender: TObject);
     procedure edKodePerkiraan_umButtonClick(Sender: TObject);
+    procedure Cb_sbuSelect(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     KodeHeaderPerkiraan,KodeHeaderPerkiraan_um :string;
+    status:integer;
     Procedure Clear;
     Procedure Autonumber;
     procedure Autocode_perkiraan;
     procedure Autocode_perkiraan_um;
+    procedure load_sbu_code;
+    procedure load_status;
   end;
 
 //var  FNew_Supplier: TFNew_Supplier;
@@ -79,7 +93,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UListSupplier, UMainMenu, UCari_Barang, UMasterData;
+uses UDataModule, UListSupplier, UMainMenu, UCari_Barang, UMasterData,
+  UHomeLogin;
 
 var
     RealFNew_Supplier: TFNew_Supplier;
@@ -187,6 +202,19 @@ begin
     edKodePerkiraan_um.Text := KodeHeaderPerkiraan_um+'.'+edno.Text;
 end;
 
+procedure TFNew_Supplier.Cb_sbuSelect(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_code='+QuotedStr(Cb_sbu.Text)+' ';
+     Open;
+   end;
+   ed_serial.Text:=dm.Qtemp.FieldByName('company_serial').AsString;
+   Autonumber;
+end;
+
 procedure TFNew_Supplier.Clear;
 begin
    Edno.Text:='';
@@ -198,6 +226,10 @@ begin
    edKodePerkiraan_um.Text:='';
    KodeHeaderPerkiraan:='';
    KodeHeaderPerkiraan_um:='';
+   Cb_sbu.Text:='';
+   Ed_initial.Text:='';
+   up_npwp.Text:='';
+   edkd.Text:='';
 end;
 
 Procedure TFNew_supplier.Autonumber;
@@ -221,8 +253,11 @@ begin
         code := '0' + code;
       end;
     nourut:=code;
-    Edno.Text:='SP'+nourut;
-    Edkd.Text:='SP'+nourut;
+    //Edno.Text:='SP'+nourut;
+    //Edkd.Text:='SP'+nourut;
+    Edno.Text:='SP'+(ed_serial.Text)+nourut;
+    Edkd.Text:='SP'+(ed_serial.Text)+nourut;
+
 end;
 
 procedure TFNew_Supplier.DBGridEh1Columns0EditButtons0Click(Sender: TObject;
@@ -331,13 +366,17 @@ begin
         close;
         sql.clear;
         sql.Text:='Update t_supplier set supplier_name='+QuotedStr(Ednm.Text)+ ' , Address='+QuotedStr(EdAlamat.Text)+' ,telp='+QuotedStr(Edtelp.Text)+''+
-                  ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by '+
+                  ' ,npwp='+QuotedStr(EdNPWP.Text)+',supplier_code2='+QuotedStr(Edkd.Text)+',updated_at=:updated_at,updated_by=:updated_by,up_npwp=:up_npwp,supplier_initial=:supplier_initial,sbu_code=:sbu_code '+
                   ' ,header_code='+quotedstr(KodeHeaderPerkiraan)+',account_code='+Quotedstr(edKodePerkiraan.Text)+''+
                   ' ,header_code_um='+quotedstr(KodeHeaderPerkiraan_um)+''+
                   ' ,account_code_um='+quotedstr(edKodePerkiraan_um.Text)+''+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
                   parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
-                  parambyname('updated_by').AsString:='Admin';
+                  //parambyname('updated_by').AsString:='Admin';
+                  parambyname('updated_by').AsString:=Nm;
+                  parambyname('up_npwp').AsString:=up_npwp.Text;
+                  parambyname('supplier_initial').AsString:=Ed_initial.Text;
+                  parambyname('sbu_code').AsString:=Cb_sbu.Text;
         ExecSQL;
       end;
       with dm.Qtemp do
@@ -420,9 +459,9 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,header_code,account_code,header_code_um,account_code_um,created_at,created_by)values'+
+        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,header_code,account_code,header_code_um,account_code_um,created_at,created_by,up_npwp,supplier_initial,sbu_code)values'+
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
-                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:header_code,:account_code,:header_code_um,:account_code_um,:created_at,:created_by )';
+                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:header_code,:account_code,:header_code_um,:account_code_um,:created_at,:created_by,:up_npwp,:supplier_initial,:sbu_code )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
                   //:created_at,:created_by';
                   parambyname('header_code').AsString:=KodeHeaderPerkiraan;
@@ -430,7 +469,11 @@ begin
                   parambyname('header_code_um').AsString:=KodeHeaderPerkiraan_um;
                   parambyname('account_code_um').AsString:=edKodePerkiraan_um.Text;
                   parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
-                  parambyname('created_by').AsString:='Admin';
+                  parambyname('created_by').AsString:=Nm;
+                  parambyname('up_npwp').AsString:=up_npwp.Text;
+                  parambyname('supplier_initial').AsString:=Ed_initial.Text;
+                  parambyname('sbu_code').AsString:=Cb_sbu.Text;
+
         ExecSQL;
       end;
 
@@ -489,9 +532,56 @@ procedure TFNew_Supplier.FormShow(Sender: TObject);
 begin
     Clear;
     //Edno.SetFocus;
+    load_status;
+    load_sbu_code;
     BSimpan.Visible:=True;
     BEdit.Visible:=False;
     PG_Supplier.ActivePage:=Tabsheet1;
+end;
+
+procedure TFNew_Supplier.load_sbu_code;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_serial<>0';
+    Open;
+  end;
+  cb_sbu.items.clear;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+     cb_sbu.Items.Add(dm.Qtemp['company_code']);
+     dm.Qtemp.Next;
+  end;
+end;
+
+procedure TFNew_Supplier.load_status;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT company_code,stat_office FROM t_company Where company_code='+Quotedstr(FHomeLogin.vKodePRSH)+'';
+    open;
+  end;
+  status:=dm.Qtemp.FieldByName('stat_office').AsInteger;
+  //ShowMessage(IntToStr(dm.Qtemp.FieldByName('stat_office').AsInteger));
+  if status=0 then
+  begin
+      Labelsbu.Visible:=true;
+      Lbltitik_koma.Visible:=true;
+      Cb_sbu.Visible:=true
+  end
+  else
+  if status=1  then
+  begin
+      Labelsbu.Visible:=false;
+      Lbltitik_koma.Visible:=false;
+      Cb_sbu.Visible:=false
+  end;
+
 end;
 
 end.

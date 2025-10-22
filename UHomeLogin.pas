@@ -229,7 +229,7 @@ begin
    else if (EdPass.Text<>'') and (Eduser.Text<>'') then
    begin
    //cek User
-   with dm.Qtemp do
+    with dm.Qtemp do
     begin
      close;
      sql.clear;
@@ -272,27 +272,78 @@ begin
 
 
    //Buat Variable Perusahaan
-   with dm.Qtemp do
-  begin
-   close;
-   sql.clear;
-   sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
-           ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
-           ' "tax_status", "currency" FROM "t_company" ');
-   open;
-  end;
-  if dm.Qtemp.RecordCount<>0 then
-  begin
-    with FHomeLogin do
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.clear;
+//      sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
+//             ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
+//             ' "tax_status", "currency" FROM "t_company" ');
+//      open;
+//    end;
+//    if dm.Qtemp.RecordCount<>0 then
+//    begin
+//      with FHomeLogin do
+//      begin
+//        vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
+//        vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
+//        vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
+//        vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
+//        vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+//        FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
+//      end;
+//    end;
+
+    //Rudi
+    with dm.Qtemp do
     begin
-      vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
-      vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
-      vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
-      vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
-      vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
-      FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
+     close;
+     sql.clear;
+     sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
+             ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
+             ' "tax_status", "currency" FROM "t_company" ');
+     open;
     end;
+
+    if dm.Qtemp.RecordCount<>0 then
+    begin
+      if dm.Qtemp.RecordCount=1 then
+      begin
+        with FHomeLogin do
+        begin
+          vKodePRSH:=dm.Qtemp.FieldByName('company_code').AsString;
+          vNamaPRSH:=dm.Qtemp.FieldByName('company_name').AsString;
+          vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
+          vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
+          vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+          FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
+        end;
+      end;
+      if dm.Qtemp.RecordCount>1 then
+      begin
+        with dm.Qtemp1 do
+        begin
+         close;
+         sql.clear;
+         sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
+                 ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
+                 ' "tax_status", "currency" FROM "t_company" where stat_office=0 limit 1 ');
+         open;
+        end;
+        with FHomeLogin do
+        begin
+          vKodePRSH:=dm.Qtemp1.FieldByName('company_code').AsString;
+          vNamaPRSH:=dm.Qtemp1.FieldByName('company_name').AsString;
+          vAlamatPRSH:=dm.Qtemp1.FieldByName('address').AsString;
+          vTelpPRSH:=dm.Qtemp1.FieldByName('telp').AsString;
+          vKotaPRSH:=dm.Qtemp1.FieldByName('city').AsString;
+          FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp1.FieldByName('company_name').AsString;
+        end;
+      end;
     end;
+
+
+
     with dm.Qtemp do
     begin
       close;

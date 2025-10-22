@@ -97,7 +97,7 @@ begin
     sql.Text:='SELECT * FROM t_user WHERE user_name='+QuotedStr(EdNama.Text);
     open;
   end;
-  if dm.Qtemp.RecordCount>0 then
+  if (dm.Qtemp.RecordCount>0) and (Status=0) then
   begin
     MessageDlg('Nama User Sudah Digunakan..!!',mtInformation,[mbRetry],0);
     Exit;
@@ -124,7 +124,7 @@ begin
                 ''+QuotedStr(EdNama.Text)+','+QuotedStr(Edfull_name.Text)+','+
                 ''+QuotedStr(EdPass.Text)+','+
                 ''+QuotedStr(kddept.Text)+','+
-                ''+QuotedStr(kdJab.Text)+',NOW(),'+QuotedStr(FHomeLogin.Eduser.Text)+' )';
+                ''+QuotedStr(kdJab.Text)+',NOW(),'+QuotedStr(Nm)+' )';
       ExecSQL;
     end;
   end;
@@ -140,7 +140,7 @@ begin
                 ' Password='+QuotedStr(EdPass.Text)+','+
                 ' dept_code='+QuotedStr(kddept.Text)+','+
                 ' position_code='+QuotedStr(kdjab.Text)+','+
-                ' updated_at=NOW(),updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                ' updated_at=NOW(),updated_by='+QuotedStr(Nm)+' '+
                 ' where code='+QuotedStr(EdNik.Text);
       ExecSQL;
     end;

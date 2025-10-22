@@ -136,6 +136,9 @@ type
     EdPaspor: TEdit;
     IdHTTP1: TIdHTTP;
     Memo1: TMemo;
+    edSBU: TEdit;
+    Label45: TLabel;
+    Label46: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -479,7 +482,7 @@ end;
 
 procedure TFNew_Pelanggan.Autocode;
 var
-  kode : String;
+  kode,CompanySerial : String;
   Urut : Integer;
 begin
   With DM.Qtemp2 do
@@ -489,6 +492,8 @@ begin
     Sql.Text := 'select * from t_customer  ';
     open;
   end;
+
+  CompanySerial:=SelectRow('SELECT company_serial FROM "public"."t_company" where company_code='+QuotedStr(UpperCase(edSBU.Text)));
 
   if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
   if Dm.Qtemp2.RecordCount > 0 then
@@ -532,9 +537,9 @@ begin
     kode := kode;
   end;
 
-  Edautocode.Text := 'PL'+kode;
-  Edkode.Text := 'PL'+kode;
-  Edkodeinitial.Text := 'PL'+kode;
+  Edautocode.Text := 'PL'+CompanySerial+kode;
+  Edkode.Text := 'PL'+CompanySerial+kode;
+  Edkodeinitial.Text := 'PL'+CompanySerial+kode;
 end;
 
 procedure TFNew_Pelanggan.Autocode_AkPiutang;
@@ -954,6 +959,7 @@ begin
         begin
           sql.add(' stat_pkp=false');
         end;
+
       sql.add(' Where customer_code='+QuotedStr(Edkode.Text)+'');
       ExecSQL;
     end;
@@ -964,7 +970,18 @@ begin
 end;
 
 procedure TFNew_Pelanggan.Save;
+var vsbu,vsbu2 : String;
 begin
+  vsbu:='';
+  if FHomeLogin.vKodePRSH='PST' then
+  begin
+    vsbu:=',sbu_code';
+    vsbu2:=','+QuotedStr(edSBU.Text)+'';
+  end else begin
+    vsbu:='';
+    vsbu2:='';
+  end;
+
   with dm.Qtemp do
   begin
     close;
@@ -977,7 +994,7 @@ begin
             ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
-            ' email,payment_term,created_at,created_by, stat_pkp ) '+
+            ' email,payment_term,created_at,created_by'+vsbu+', stat_pkp ) '+
             ' Values( '+
             ' '+QuotedStr(inttostr(vid_prospek))+', '+
             ' '+QuotedStr(Edkode.Text)+', '+
@@ -1013,7 +1030,7 @@ begin
             ' '+QuotedStr(edemail.Text)+', '+
             ' '+QuotedStr(Edtempo.Text)+', '+
             ' now(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+',');
+            ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu2+',');
       if cbpkp.Checked=true then
       begin
         sql.add(' true);');
@@ -1028,6 +1045,9 @@ begin
   UpdateStatusProspek;
   DeleteProspekTmp;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  if FHomeLogin.vKodePRSH='PST' then
+  FListPelanggan.cbSBU.Text:=edSBU.Text;
+
   Flistpelanggan.Refresh;
   Clear;
   Close;

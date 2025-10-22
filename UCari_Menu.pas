@@ -62,7 +62,15 @@ FNew_Hak_Akses.memdetail.active:=true;
             begin
               close;
               sql.Clear;
-              sql.Text:='insert into t_akses(rolenama,submenu,submenu_code,created_by,dept_code)values(''0'','+QuotedStr(qmenu['submenu'])+','+QuotedStr(qmenu['submenu_code'])+','+QuotedStr(nm)+','+QuotedStr(FNew_Hak_Akses.Edkd.Text)+')';
+              sql.Text:=' insert into t_akses '+
+                        ' (rolenama,submenu,submenu_code,created_by,akses_no,dept_code)'+
+                        ' values('+
+                        ' ''0'','+
+                        ' '+QuotedStr(qmenu['submenu'])+','+
+                        ' '+QuotedStr(qmenu['submenu_code'])+','+
+                        ' '+QuotedStr(nm)+','+
+                        ' '+QuotedStr(FNew_Hak_Akses.Edkd.Text)+','+
+                        ' '+QuotedStr(FNew_Hak_Akses.Edkd.Text)+')';
               Execute;                                                                                 {+QuotedStr(nm)+}
             end;
           end;

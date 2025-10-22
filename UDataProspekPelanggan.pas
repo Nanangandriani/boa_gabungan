@@ -13,7 +13,7 @@ uses
   System.Net.HttpClientComponent, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Comp.Client, uJSON,
-  Vcl.Samples.Gauges;
+  Vcl.Samples.Gauges, RzCmboBx, RzLabel;
 
 type
   TFDataProspekPelanggan = class(TForm)
@@ -41,15 +41,19 @@ type
     Edit1: TEdit;
     RzBitBtn1: TRzBitBtn;
     RzBitBtn2: TRzBitBtn;
+    cbSBU: TRzComboBox;
+    RzLabel1: TRzLabel;
     procedure btTampilkanClick(Sender: TObject);
     procedure btGetDataProspekClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGridCustomerDblClick(Sender: TObject);
     procedure EdkodewilayahButtonClick(Sender: TObject);
+    procedure cbSBUChange(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure RefreshSBU;
   end;
 
 var
@@ -63,60 +67,90 @@ implementation
 uses ulkJSON, UMy_Function, UDataModule, UMainMenu, UHomeLogin, UNew_Pelanggan,
   UMasterWilayah;
 
+procedure TFDataProspekPelanggan.RefreshSBU;
+begin
+  cbSBU.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select company_code,company_name from t_company where stat_office=1 order by company_name ASC';
+    ExecSQL;
+  end;
+  Dm.Qtemp.First;
+  while not Dm.Qtemp.Eof do
+  begin
+    cbSBU.Items.Add(Dm.Qtemp['company_code']);
+    Dm.Qtemp.Next;
+  end;
+end;
+
 procedure TFDataProspekPelanggan.btTampilkanClick(Sender: TObject);
 var
   max,min : Integer;
 begin
-  DBGridcustomer.StartLoadingStatus();
-  try
-    btGetDataProspekClick(Sender);
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' SELECT outlet_code, outlet_name, distribution_code, '''' as region, '+
-              ' address,idprospek FROM "t_customer_prospect_tmp" '+
-              ' where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+'');
-        if Length(Edkodewilayah.Text)<>0 then
-        begin
-          sql.add(' AND distribution_code='+QuotedStr(Edkodewilayah.Text)+' ');
-        end;
-      sql.add(' ORDER BY outlet_name Desc ');
-      open;
-    end;
+  if cbSBU.Text<>'' then
+  begin
 
-    MemMasterData.active:=false;
-    MemMasterData.active:=true;
-    MemMasterData.EmptyTable;
-
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      Showmessage('Maaf, Data Tidak Ditemukan..');
-    end;
-
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
-      max:= Dm.Qtemp.RecordCount;
-      progress.Progress:=0;
-      progress.MaxValue:= max;
-      Dm.Qtemp.first;
-      while not Dm.Qtemp.Eof do
+    DBGridcustomer.StartLoadingStatus();
+    try
+      btGetDataProspekClick(Sender);
+      with Dm.Qtemp do
       begin
-        MemMasterData.insert;
-        MemMasterData['kd_prospek']:=Dm.Qtemp.fieldbyname('outlet_code').value;
-        MemMasterData['nama_pelanggan']:=Dm.Qtemp.fieldbyname('outlet_name').value;
-        MemMasterData['kd_wilayah']:=Dm.Qtemp.fieldbyname('distribution_code').value;
-        MemMasterData['nama_wilayah']:=Dm.Qtemp.fieldbyname('region').value;
-        MemMasterData['alamat']:=Dm.Qtemp.fieldbyname('address').value;
-        MemMasterData['idprospek']:=Dm.Qtemp.fieldbyname('idprospek').value;
-        MemMasterData.post;
-        progress.Progress:= progress.Progress+1;
-        Dm.Qtemp.next;
+        close;
+        sql.clear;
+        sql.add(' SELECT outlet_code, outlet_name, distribution_code, '''' as region, '+
+                ' address,idprospek FROM "t_customer_prospect_tmp" '+
+                ' where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+'');
+          if Length(Edkodewilayah.Text)<>0 then
+          begin
+            sql.add(' AND distribution_code='+QuotedStr(Edkodewilayah.Text)+' ');
+          end;
+        sql.add(' ORDER BY outlet_name Desc ');
+        open;
       end;
+
+      MemMasterData.active:=false;
+      MemMasterData.active:=true;
+      MemMasterData.EmptyTable;
+
+      if  Dm.Qtemp.RecordCount=0 then
+      begin
+        Showmessage('Maaf, Data Tidak Ditemukan..');
+      end;
+
+      if  Dm.Qtemp.RecordCount<>0 then
+      begin
+        max:= Dm.Qtemp.RecordCount;
+        progress.Progress:=0;
+        progress.MaxValue:= max;
+        Dm.Qtemp.first;
+        while not Dm.Qtemp.Eof do
+        begin
+          MemMasterData.insert;
+          MemMasterData['kd_prospek']:=Dm.Qtemp.fieldbyname('outlet_code').value;
+          MemMasterData['nama_pelanggan']:=Dm.Qtemp.fieldbyname('outlet_name').value;
+          MemMasterData['kd_wilayah']:=Dm.Qtemp.fieldbyname('distribution_code').value;
+          MemMasterData['nama_wilayah']:=Dm.Qtemp.fieldbyname('region').value;
+          MemMasterData['alamat']:=Dm.Qtemp.fieldbyname('address').value;
+          MemMasterData['idprospek']:=Dm.Qtemp.fieldbyname('idprospek').value;
+          MemMasterData.post;
+          progress.Progress:= progress.Progress+1;
+          Dm.Qtemp.next;
+        end;
+      end;
+      finally
+      DBGridcustomer.FinishLoadingStatus();
     end;
-    finally
-    DBGridcustomer.FinishLoadingStatus();
+  end else
+  begin
+    MessageDlg('SBU Wajib Diisi..!!',mtInformation,[mbRetry],0);
   end;
+end;
+
+procedure TFDataProspekPelanggan.cbSBUChange(Sender: TObject);
+begin
+  MemMasterData.EmptyTable;
 end;
 
 procedure TFDataProspekPelanggan.DBGridCustomerDblClick(Sender: TObject);
@@ -142,6 +176,7 @@ begin
       FNew_Pelanggan.Edkode.Enabled:=true;
       FNew_Pelanggan.Autocode_AkPiutang;
       FNew_Pelanggan.Autocode_AkPiutangLain;
+      FNew_Pelanggan.edSBU.Text:=cbSBU.Text;
       with Dm.Qtemp do
       begin
          close;
@@ -272,6 +307,8 @@ end;
 procedure TFDataProspekPelanggan.FormShow(Sender: TObject);
 begin
   json := TMyJSON.Create(Self);
+  RefreshSBU;
+  MemMasterData.EmptyTable;
 end;
 
 procedure TFDataProspekPelanggan.btGetDataProspekClick(Sender: TObject);
@@ -305,7 +342,7 @@ begin
   BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlprospek''');
   key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapiprospek''');
   vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapiprospek''');
-  vBody:='?sbu_code='+FHomeLogin.vKodePRSH;
+  vBody:='?sbu_code='+cbSBU.Text;
   Vpath:='outlet/prospek';
   url:= BaseUrl+Vpath+vBody;
   try

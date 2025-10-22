@@ -2,7 +2,7 @@ object FNew_Supplier: TFNew_Supplier
   Left = 0
   Top = 0
   Caption = 'New Supplier'
-  ClientHeight = 523
+  ClientHeight = 554
   ClientWidth = 867
   Color = clGradientActiveCaption
   Font.Charset = DEFAULT_CHARSET
@@ -18,12 +18,12 @@ object FNew_Supplier: TFNew_Supplier
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
-    Top = 491
+    Top = 522
     Width = 867
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 482
+    ExplicitTop = 513
     ExplicitWidth = 861
     object BBatal: TRzBitBtn
       Left = 791
@@ -217,166 +217,238 @@ object FNew_Supplier: TFNew_Supplier
     Left = 0
     Top = 0
     Width = 867
-    Height = 201
+    Height = 280
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 861
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 30
-      Top = 19
+      Top = 20
       Width = 73
       Height = 15
       Caption = 'Kode Supplier'
     end
     object Label2: TLabel
       Left = 30
-      Top = 52
+      Top = 81
       Width = 78
       Height = 15
       Caption = 'Nama Supplier'
     end
     object Label3: TLabel
       Left = 30
-      Top = 84
+      Top = 113
       Width = 38
       Height = 15
       Caption = 'Alamat'
     end
     object Label4: TLabel
       Left = 30
-      Top = 114
+      Top = 143
       Width = 21
       Height = 15
       Caption = 'Telp'
     end
     object Label5: TLabel
       Left = 30
-      Top = 148
+      Top = 177
       Width = 34
       Height = 15
       Caption = 'NPWP'
     end
     object Label6: TLabel
       Left = 120
-      Top = 19
+      Top = 20
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label7: TLabel
       Left = 120
-      Top = 54
+      Top = 83
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label8: TLabel
       Left = 120
-      Top = 84
+      Top = 113
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label9: TLabel
       Left = 120
-      Top = 114
+      Top = 143
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 120
-      Top = 148
+      Top = 177
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label30: TLabel
       Left = 618
-      Top = 20
+      Top = 21
       Width = 3
       Height = 15
       Caption = ':'
       Visible = False
     end
     object Label29: TLabel
-      Left = 526
-      Top = 20
+      Left = 542
+      Top = 81
       Width = 79
       Height = 15
       Caption = 'Kode Perkiraan'
       Visible = False
     end
+    object Label15: TLabel
+      Left = 120
+      Top = 208
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label16: TLabel
+      Left = 30
+      Top = 208
+      Width = 52
+      Height = 15
+      Caption = 'UP NPWP'
+    end
+    object Label17: TLabel
+      Left = 120
+      Top = 53
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label18: TLabel
+      Left = 30
+      Top = 51
+      Width = 29
+      Height = 15
+      Caption = 'Initial'
+    end
+    object Labelsbu: TLabel
+      Left = 574
+      Top = 20
+      Width = 21
+      Height = 15
+      Caption = 'SBU'
+    end
+    object Lbltitik_koma: TLabel
+      Left = 619
+      Top = 20
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object Edno: TEdit
       Left = 279
-      Top = 18
+      Top = 19
       Width = 132
       Height = 23
-      TabOrder = 0
+      TabOrder = 8
       Visible = False
     end
     object EdNm: TEdit
       Left = 137
-      Top = 49
-      Width = 374
-      Height = 23
-      TabOrder = 1
-    end
-    object EdAlamat: TEdit
-      Left = 137
-      Top = 81
-      Width = 374
-      Height = 23
-      TabOrder = 2
-    end
-    object EdTelp: TEdit
-      Left = 137
-      Top = 113
+      Top = 78
       Width = 374
       Height = 23
       TabOrder = 3
     end
-    object EdNPWP: TEdit
+    object EdAlamat: TEdit
       Left = 137
-      Top = 145
+      Top = 110
       Width = 374
       Height = 23
       TabOrder = 4
     end
-    object Edkd: TEdit
+    object EdTelp: TEdit
       Left = 137
-      Top = 18
-      Width = 136
+      Top = 142
+      Width = 374
       Height = 23
       TabOrder = 5
     end
+    object EdNPWP: TEdit
+      Left = 137
+      Top = 174
+      Width = 374
+      Height = 23
+      TabOrder = 6
+    end
+    object Edkd: TEdit
+      Left = 137
+      Top = 19
+      Width = 136
+      Height = 23
+      TabOrder = 1
+    end
     object edKodePerkiraan_x: TRzButtonEdit
-      Left = 633
-      Top = 16
+      Left = 636
+      Top = 78
       Width = 136
       Height = 23
       Text = ''
-      TabOrder = 6
+      TabOrder = 9
       Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edKodePerkiraan_xButtonClick
     end
+    object up_npwp: TEdit
+      Left = 137
+      Top = 205
+      Width = 374
+      Height = 23
+      TabOrder = 7
+    end
+    object Ed_initial: TEdit
+      Left = 137
+      Top = 48
+      Width = 374
+      Height = 23
+      TabOrder = 2
+    end
+    object Cb_sbu: TComboBox
+      Left = 636
+      Top = 19
+      Width = 136
+      Height = 23
+      TabOrder = 0
+      OnSelect = Cb_sbuSelect
+    end
+    object Ed_serial: TEdit
+      Left = 778
+      Top = 19
+      Width = 34
+      Height = 23
+      TabOrder = 10
+      Visible = False
+    end
   end
   object PG_Supplier: TRzPageControl
     Left = 0
-    Top = 201
+    Top = 280
     Width = 867
-    Height = 290
+    Height = 242
     Hint = ''
     ActivePage = TabSheet2
     Align = alClient
     TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 861
-    ExplicitHeight = 281
+    ExplicitHeight = 233
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
       Color = clGradientActiveCaption
@@ -385,7 +457,7 @@ object FNew_Supplier: TFNew_Supplier
         Left = 0
         Top = 0
         Width = 863
-        Height = 265
+        Height = 217
         Align = alClient
         AutoFitColWidths = True
         DataSource = DsMaterial
@@ -465,17 +537,17 @@ object FNew_Supplier: TFNew_Supplier
       Color = clGradientActiveCaption
       Caption = 'Lain-lain'
       ExplicitWidth = 857
-      ExplicitHeight = 256
+      ExplicitHeight = 208
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
         Width = 863
-        Height = 265
+        Height = 217
         Align = alClient
         Color = 15987699
         TabOrder = 0
         ExplicitWidth = 857
-        ExplicitHeight = 256
+        ExplicitHeight = 208
         object Label11: TLabel
           Left = 177
           Top = 20
@@ -532,8 +604,8 @@ object FNew_Supplier: TFNew_Supplier
   object MemMaterial: TMemTableEh
     Active = True
     Params = <>
-    Left = 552
-    Top = 112
+    Left = 568
+    Top = 168
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kode: TMTStringDataFieldEh
@@ -579,6 +651,6 @@ object FNew_Supplier: TFNew_Supplier
   object DsMaterial: TDataSource
     DataSet = MemMaterial
     Left = 548
-    Top = 56
+    Top = 104
   end
 end

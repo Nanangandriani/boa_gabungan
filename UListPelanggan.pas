@@ -55,20 +55,22 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
-    QPelanggancustomer_code: TStringField;
-    QPelanggancustomer_name: TStringField;
-    QPelanggantelp: TStringField;
-    QPelangganemail: TStringField;
-    QPelangganaddress: TMemoField;
-    QPelangganpayment_term: TSmallintField;
     DBGridCustomer: TDBGridEh;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
-    QPelanggancustomer_name_pkp: TStringField;
     dxBarManager1Bar3: TdxBar;
     cbKaresidenan: TcxBarEditItem;
     cbKabupaten: TcxBarEditItem;
     dxBarLargeButton2: TdxBarLargeButton;
+    cxBarEditItem1: TcxBarEditItem;
+    cbSBU: TdxBarCombo;
+    QPelanggancustomer_code: TMemoField;
+    QPelanggancustomer_name: TMemoField;
+    QPelangganemail: TMemoField;
+    QPelangganaddress: TMemoField;
+    QPelanggantelp: TMemoField;
+    QPelangganpayment_term: TSmallintField;
+    QPelanggancustomer_name_pkp: TMemoField;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -90,6 +92,7 @@ type
     { Public declarations }
     strKaresidenanID,strKabupatenID :String;
     procedure Refresh;
+    procedure RefreshSBU;
   end;
 
   function FListPelanggan: TFListPelanggan;
@@ -102,7 +105,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Pelanggan, UDataModule, UMy_Function, UDataProspekPelanggan,
-  UDataBankGaransi, UMasterData;
+  UDataBankGaransi, UMasterData, UHomeLogin;
 
   var
   listpelanggan : TFListPelanggan;
@@ -115,8 +118,26 @@ begin
     Application.CreateForm(TFListPelanggan, Result);
 end;
 
+procedure TFListPelanggan.RefreshSBU;
+begin
+  cbSBU.Items.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select company_code,company_name from t_company where stat_office=1 order by company_name ASC';
+    ExecSQL;
+  end;
+  Dm.Qtemp.First;
+  while not Dm.Qtemp.Eof do
+  begin
+    cbSBU.Items.Add(Dm.Qtemp['company_code']);
+    Dm.Qtemp.Next;
+  end;
+end;
+
 procedure TFListPelanggan.Refresh;
-var strWhereKaresidenan,strWhereKabupaten: String;
+var strWhereKaresidenan,strWhereKabupaten, strWhereSBU: String;
 begin
   DBGridcustomer.StartLoadingStatus();
   try
@@ -127,6 +148,18 @@ begin
     begin
       strWhereKaresidenan:='';
     end;
+
+    if FHomeLogin.vKodePRSH='PST' then
+    begin
+      if cbSBU.Text<>'' then
+      begin
+        strWhereSBU:=' AND sbu_code='+QuotedStr(cbSBU.Text);
+      end else begin
+        strWhereSBU:='';
+      end;
+    end;
+
+
 
     if cbKabupaten.EditValue<>'' then
     begin
@@ -141,8 +174,8 @@ begin
       Close;
       SQL.Clear;
       SQL.Text:='select customer_code, customer_name, email, address, contact_person1 as telp, '+
-                'payment_term, customer_name_pkp from vcustomer '+
-                'where deleted_at is null'+strWhereKaresidenan+strWhereKabupaten+' order by created_at Desc';
+                'payment_term, customer_name_pkp from get_customer() '+
+                'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+' order by created_at Desc';
       Open;
     end;
   finally
@@ -284,6 +317,13 @@ begin
       edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
       edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
       edJenisUsaha.Text:=Dm.Qtemp.FieldByName('name_type_business').AsString;
+      if FHomeLogin.vKodePRSH='PST' then
+      begin
+        edSBU.Text:=Dm.Qtemp.FieldByName('sbu_code').AsString;
+      end else begin
+        edSBU.Text:=FHomeLogin.vKodePRSH;
+      end;
+
       if Dm.Qtemp.FieldByName('stat_pkp').AsBoolean=false then
       begin
         cbpkp.Checked:=false;
@@ -320,6 +360,16 @@ begin
   cbKabupaten.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
+
+  if FHomeLogin.vKodePRSH='PST' then
+  begin
+    cbSBU.Enabled:=True;
+    RefreshSBU;
+  end else begin
+    cbSBU.Text:=FHomeLogin.vNamaPRSH;
+    cbSBU.Enabled:=False;
+  end;
+
 //  Refresh;
 end;
 
@@ -338,6 +388,7 @@ begin
   strKaresidenanID:='';
   strKabupatenID:='';
 
+  if cbSBU.Text<>'' then
   Refresh;
 
 end;
@@ -374,7 +425,8 @@ end;
 
 procedure TFListPelanggan.dxBarLargeButton2Click(Sender: TObject);
 begin
-  Refresh;
+  if cbSBU.Text<>'' then
+  Refresh else MessageDlg('SBU Wajib Diisi..!!',mtInformation,[mbRetry],0);
 end;
 
 procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);

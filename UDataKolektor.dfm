@@ -1,6 +1,7 @@
 object FDataKolektor: TFDataKolektor
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Data Kolektor'
   ClientHeight = 279
   ClientWidth = 896
@@ -19,9 +20,8 @@ object FDataKolektor: TFDataKolektor
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -524
-    ExplicitTop = 410
-    ExplicitWidth = 1152
+    ExplicitTop = 246
+    ExplicitWidth = 892
     object BBatal: TRzBitBtn
       Left = 820
       Top = 1
@@ -82,7 +82,7 @@ object FDataKolektor: TFDataKolektor
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1076
+      ExplicitLeft = 816
     end
     object BSave: TRzBitBtn
       Left = 745
@@ -144,7 +144,7 @@ object FDataKolektor: TFDataKolektor
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1001
+      ExplicitLeft = 741
     end
   end
   object Panel1: TPanel
@@ -156,10 +156,8 @@ object FDataKolektor: TFDataKolektor
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = -2
-    ExplicitWidth = 1043
-    ExplicitHeight = 556
+    ExplicitWidth = 892
+    ExplicitHeight = 246
     object Label6: TLabel
       Left = 117
       Top = 49

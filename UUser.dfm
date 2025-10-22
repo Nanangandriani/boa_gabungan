@@ -710,7 +710,7 @@ object FUser: TFUser
       'inner join t_position c on a.position_code=c.position_code '
       'WHERE a.deleted_at is NULL'
       'ORDER BY a.created_at DESC')
-    Left = 464
+    Left = 448
     Top = 32
     object QUsercode: TStringField
       FieldName = 'code'

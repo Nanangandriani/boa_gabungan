@@ -262,7 +262,7 @@ object FNew_User: TFNew_User
     Top = 123
     Width = 177
     Height = 23
-    PasswordChar = '#'
+    PasswordChar = '*'
     TabOrder = 2
   end
   object EdNik: TEdit
@@ -270,7 +270,6 @@ object FNew_User: TFNew_User
     Top = 21
     Width = 121
     Height = 23
-    ReadOnly = True
     TabOrder = 6
   end
   object kddept: TEdit

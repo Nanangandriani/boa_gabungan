@@ -167,6 +167,125 @@ begin
   end;
 end;
 
+procedure TFMainMenu.AksesSub(Form: TForm; Akses, Sub: String);
+var
+  ActionName: string;
+begin
+  with dm.Qtemp1 do
+  begin
+      SQL.Clear;
+      SQL.Text := 'SELECT aa.* FROM t_akses aa '+
+      ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu AND bb.deleted_at IS NULL '+
+      ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
+      //' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+      ' WHERE aa.dept_code='+QuotedStr(dept_code)+' '+
+      ' AND aa.SubMenu='+QuotedStr(vCaptionButton);
+      //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
+      open;
+  end;
+
+  if dm.Qtemp1.RecordCount=0 then
+  begin
+    ShowMessage('Tidak Ditemukan Akses !!!');
+    Exit;
+  end;
+
+  if dm.Qtemp1.RecordCount<>0 then
+  begin
+  // --- Nonaktifkan semua action default dulu ---
+  for i := 0 to Form.ComponentCount - 1 do
+    if (Form.Components[i] is TAction) then
+      TAction(Form.Components[i]).Enabled := False;
+
+  // --- Aktifkan sesuai hak akses ---
+  for i := 0 to Form.ComponentCount - 1 do
+    if (Form.Components[i] is TAction) then
+    begin
+      ActionName := TAction(Form.Components[i]).Name;
+
+      if (dm.Qtemp1.FieldByName('RAdd').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActBaru') OR (ActionName = 'ActNew')  OR (ActionName = 'ActAdd')then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+
+      if (dm.Qtemp1.FieldByName('REdit').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActEdit') OR (ActionName = 'ActUpdate') then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+
+      if (dm.Qtemp1.FieldByName('RDelete').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActDelete') OR (ActionName = 'ActDel')then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+
+      if (dm.Qtemp1.FieldByName('RRefresh').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActRefresh') OR (ActionName = 'ActRO')then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+
+      if (dm.Qtemp1.FieldByName('RPrint').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActPrint')  then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+
+    end;
+  end;
+
+
+
+  {if dm.Qtemp1.FieldByName('RAdd').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActNew' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('REdit').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActEdit' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('RDelete').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActDelete' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('RRefresh').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActRefresh' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('RPrint').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActPrint' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;}
+end;
+
+
 
 function GetElementIdValue(WebBrowser: TWebBrowser;
   TagName, TagId, TagAttrib: string):string;
@@ -792,60 +911,6 @@ begin
     //AButtonPanel.ImageIndex:=1;
     AButtonPanel.OnClick := GetSubMenu;
     dm.Qtemp1.Next;
-  end;
-end;
-
-procedure TFMainMenu.AksesSub(Form: TForm; Akses, Sub: String);
-begin
-  with dm.Qtemp1 do
-  begin
-      SQL.Clear;
-      SQL.Text := 'SELECT aa.* FROM t_akses aa '+
-      ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu AND bb.deleted_at IS NULL '+
-      ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
-      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-      ' WHERE aa.dept_code='+QuotedStr(dept_code)+
-      ' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
-      open;
-  end;
-  if dm.Qtemp1.FieldByName('RAdd').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActNew' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('REdit').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActEdit' then
-    TAction(Form.Components[i]).Enabled:=true;
-       {for i:=0 to Form.ComponentCount-1 do
-       if (Form.Components[i] is TAction) then
-       if TAction(Form.Components[i]).Name='ActSaveNew' then
-       TAction(Form.Components[i]).Enabled:=true;}
-  end;
-  if dm.Qtemp1.FieldByName('RDelete').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActDelete' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('RRefresh').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActRefresh' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('RPrint').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActPrint' then
-    TAction(Form.Components[i]).Enabled:=true;
   end;
 end;
 
