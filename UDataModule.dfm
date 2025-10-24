@@ -6,13 +6,13 @@ object dm: Tdm
     AutoCommit = False
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_boa_real'
-    Username = 'postgres'
-    Server = '10.10.10.110'
+    Database = 'db_sb_hlj'
+    Username = 'Devel'
+    Server = '172.101.100.125'
     Connected = True
     Left = 157
     Top = 13
-    EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
+    EncryptedPassword = 'B7FFAFFFACFF9BFF9DFF9EFF9BFF92FF96FF91FFBFFFCDFFCFFFCDFFCAFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
     Left = 246

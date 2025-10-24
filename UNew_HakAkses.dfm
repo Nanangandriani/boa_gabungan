@@ -24,8 +24,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 437
-    ExplicitWidth = 538
+    ExplicitTop = 445
+    ExplicitWidth = 540
     object BBatal: TRzBitBtn
       Left = 468
       Top = 1
@@ -86,7 +86,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 462
+      ExplicitLeft = 464
     end
     object BSimpan: TRzBitBtn
       Left = 393
@@ -148,7 +148,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 387
+      ExplicitLeft = 389
     end
     object Bhapus: TRzBitBtn
       Left = 1
@@ -411,7 +411,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 5
-    ExplicitWidth = 538
+    ExplicitWidth = 540
     object Label1: TLabel
       Left = 32
       Top = 54
@@ -488,7 +488,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         'inner join t_dept c on a.dept_code=c.dept_code order by a.akses_' +
         'no Asc')
     Left = 464
-    Top = 120
+    Top = 80
   end
   object QMenu: TUniQuery
     Connection = dm.Koneksi
@@ -501,8 +501,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 464
-    Top = 32
+    Left = 472
+    Top = 8
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object idmenu: TMTStringDataFieldEh

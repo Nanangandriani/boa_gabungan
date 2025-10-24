@@ -524,8 +524,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     end
   end
   object ActMenu: TActionManager
-    Left = 1072
-    Top = 32
+    Left = 608
+    Top = 176
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -570,8 +570,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 1072
-    Top = 72
+    Left = 760
+    Top = 168
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -1209,13 +1209,13 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object DsAppKlasifikasi: TDataSource
     DataSet = MemAppKlasifikasi
-    Left = 97
-    Top = 64
+    Left = 25
+    Top = 184
   end
   object dsAppKlasifikasiDet: TDataSource
     DataSet = QAppKlasifikasiDet
-    Left = 176
-    Top = 80
+    Left = 160
+    Top = 168
   end
   object QAppKlasifikasiDet: TUniQuery
     Connection = dm.Koneksi
@@ -1243,8 +1243,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     MasterFields = 'id_master_klas'
     DetailFields = 'id_master'
     IndexFieldNames = 'id_master'
-    Left = 224
-    Top = 24
+    Left = 240
+    Top = 176
     ParamData = <
       item
         DataType = ftUnknown
@@ -1303,8 +1303,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object MemAppKlasifikasi: TMemTableEh
     Params = <>
-    Left = 96
-    Top = 8
+    Left = 416
+    Top = 96
     object MemAppKlasifikasiid_master: TStringField
       FieldName = 'id_master'
       Size = 100

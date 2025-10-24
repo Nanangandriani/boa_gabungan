@@ -92,7 +92,6 @@ type
     { Public declarations }
     strKaresidenanID,strKabupatenID :String;
     procedure Refresh;
-    procedure RefreshSBU;
   end;
 
   function FListPelanggan: TFListPelanggan;
@@ -116,24 +115,6 @@ begin
     FListPelanggan:= listpelanggan
   else
     Application.CreateForm(TFListPelanggan, Result);
-end;
-
-procedure TFListPelanggan.RefreshSBU;
-begin
-  cbSBU.Items.Clear;
-  with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select company_code,company_name from t_company where stat_office=1 order by company_name ASC';
-    ExecSQL;
-  end;
-  Dm.Qtemp.First;
-  while not Dm.Qtemp.Eof do
-  begin
-    cbSBU.Items.Add(Dm.Qtemp['company_code']);
-    Dm.Qtemp.Next;
-  end;
 end;
 
 procedure TFListPelanggan.Refresh;
@@ -317,7 +298,7 @@ begin
       edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;
       edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('code_type_business').AsString;
       edJenisUsaha.Text:=Dm.Qtemp.FieldByName('name_type_business').AsString;
-      if FHomeLogin.vKodePRSH='PST' then
+      if FHomeLogin.vStatOffice=0 then
       begin
         edSBU.Text:=Dm.Qtemp.FieldByName('sbu_code').AsString;
       end else begin
@@ -361,16 +342,14 @@ begin
   strKaresidenanID:='';
   strKabupatenID:='';
 
-  if FHomeLogin.vKodePRSH='PST' then
-  begin
-    cbSBU.Enabled:=True;
-    RefreshSBU;
-  end else begin
-    cbSBU.Text:=FHomeLogin.vNamaPRSH;
-    cbSBU.Enabled:=False;
-  end;
-
-//  Refresh;
+//  if FHomeLogin.vStatOffice=0 then
+//  begin
+//    cbSBU.Visible:=ivAlways;
+    FillSBUBarCombo(cbSBU);
+//  end else begin
+//    cbSBU.Text:=FHomeLogin.vKodePRSH;
+//    cbSBU.Visible:=ivNever;
+//  end;
 end;
 
 procedure TFListPelanggan.QPelangganaddressGetText(Sender: TField;

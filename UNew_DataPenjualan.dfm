@@ -251,10 +251,12 @@ object FNew_Penjualan: TFNew_Penjualan
       Top = 85
       Width = 60
       Height = 24
-      MaxValue = 0
+      MaxValue = 50
       MinValue = 0
       TabOrder = 2
       Value = 0
+      OnChange = spJatuhTempoChange
+      OnClick = spJatuhTempoClick
     end
     object edNamaSumber: TRzButtonEdit
       Left = 132

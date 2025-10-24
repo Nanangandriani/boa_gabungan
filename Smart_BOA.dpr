@@ -181,7 +181,6 @@ uses
   U_daftar_Nocek in 'U_daftar_Nocek.pas' {Fdaftar_nocek},
   U_keluarkasbank_ajuan in 'U_keluarkasbank_ajuan.pas' {FKeluarKasBank_Ajuan},
   U_Data_rencana_lunas_hutang_pengajuan in 'U_Data_rencana_lunas_hutang_pengajuan.pas' {FDataRencanaLunasHutangPengajuan},
-  u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
   URpt_Buku_Besar in 'URpt_Buku_Besar.pas' {FRpt_Buku_Besar},
   UBHPenjualan in 'UBHPenjualan.pas' {FBHPenjualan},
   UNew_JenisUsaha in 'UNew_JenisUsaha.pas' {FNew_Jenis_Usaha},
@@ -312,7 +311,8 @@ uses
   ULap_Rencana_Pelunasan_Hutang in 'ULap_Rencana_Pelunasan_Hutang.pas' {Flap_Rencana_Pelunasan_Hutang},
   ULap_Rencana_Pelunasan_Non_Hutang in 'ULap_Rencana_Pelunasan_Non_Hutang.pas' {Flap_Rencana_Pelunasan_Non_Hutang},
   URptRekap_Memorial in 'URptRekap_Memorial.pas' {FRekap_memorial},
-  Udaftar_TP in 'Udaftar_TP.pas' {FDaftar_TP};
+  Udaftar_TP in 'Udaftar_TP.pas' {FDaftar_TP},
+  u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -383,7 +383,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_PiutangBermasalah, FNew_PiutangBermasalah);
   Application.CreateForm(TFBrowseNotaPenjualan, FBrowseNotaPenjualan);
   Application.CreateForm(TFAmplopPelanggan, FAmplopPelanggan);
-//  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
+  Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
+  Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
+  //  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
   Application.CreateForm(TF_cetak_sisa_htg, F_cetak_sisa_htg);
   Application.CreateForm(TFDaftar_TP, FDaftar_TP);
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);

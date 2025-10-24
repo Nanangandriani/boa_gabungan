@@ -33,7 +33,7 @@ type
   TFMainMenu = class(TForm)
     RzStatusBar1: TRzStatusBar;
     RzVersionInfoStatus1: TRzVersionInfoStatus;
-    UserFullName: TRzProgressStatus;
+    Load: TRzProgressStatus;
     RzClockStatus1: TRzClockStatus;
     StatusUser: TRzGlyphStatus;
     ImageList1: TImageList;
@@ -175,11 +175,11 @@ begin
   begin
       SQL.Clear;
       SQL.Text := 'SELECT aa.* FROM t_akses aa '+
-      ' INNER JOIN t_menu_sub bb ON aa.SubMenu = bb.SubMenu AND bb.deleted_at IS NULL '+
+      ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
       ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
       //' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
       ' WHERE aa.dept_code='+QuotedStr(dept_code)+' '+
-      ' AND aa.SubMenu='+QuotedStr(vCaptionButton);
+      ' AND bb.SubMenu='+QuotedStr(vCaptionButton);
       //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
       open;
   end;
@@ -284,8 +284,6 @@ begin
     TAction(Form.Components[i]).Enabled:=true;
   end;}
 end;
-
-
 
 function GetElementIdValue(WebBrowser: TWebBrowser;
   TagName, TagId, TagAttrib: string):string;
@@ -729,7 +727,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
+    sql.Text:='select * from t_user where user_name='+QuotedStr(nm)+' AND deleted_at IS NULL';
     ExecSQL;
   end;
   dept_code:=dm.Qtemp['dept_code'];
@@ -737,11 +735,11 @@ begin
   begin
     SQL.Clear;
     SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
-    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code '+
-    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-    ' INNER JOIN t_menu e on bb.menu_code=e.menu_code '+
-    ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code '+
-    ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+' AND bb.deleted_at IS NULL '+
+    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
+    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.deleted_at IS NULL '+
+    ' INNER JOIN t_menu e on bb.menu_code=e.menu_code AND e.deleted_at IS NULL '+
+    ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code AND cc.deleted_at IS NULL '+
+    ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+' AND bb.deleted_at IS NULL '+
     ' group by e.created_at,e.id, e.menu'+
     ' Order by e.created_at asc';
     open;
@@ -771,8 +769,8 @@ begin
       SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
       ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL INNER JOIN t_menu b '+
       ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
-      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-      ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.deleted_at IS NULL '+
+      ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
       ' and cc.master_name='+QuotedStr(Menu)+
       ' Order by bb.created_at desc ';
       open;
@@ -873,7 +871,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_user where user_name='+QuotedStr(nm);
+    sql.Text:='select * from t_user where user_name='+QuotedStr(nm)+' AND deleted_at IS NULL';
     ExecSQL;
   end;
   dept_code:=dm.Qtemp['dept_code'];
@@ -887,11 +885,11 @@ begin
                ' WHERE dd.akses='+QuotedStr('Admin')+
                ' Order by cc.id DESC';}
     SQL.Text := 'SELECT DISTINCT cc.id, cc.master_name menu FROM t_akses aa '+
-               ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu '+
-               ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code '+
-               ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-               ' WHERE dd.dept_code='+QuotedStr(dept_code)+
-               ' Order by cc.created_at asc';
+               ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu AND bb.deleted_at IS NULL '+
+               ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code AND cc.deleted_at IS NULL '+
+               ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.deleted_at IS NULL '+
+               ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+
+               ' AND aa.deleted_at IS NULL Order by cc.created_at asc';
     open;
     First;
   end;

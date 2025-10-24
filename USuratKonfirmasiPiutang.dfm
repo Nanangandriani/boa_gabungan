@@ -158,6 +158,10 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
           UserWidth = 251
           Visible = True
           ItemName = 'edNamaPelanggan'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -560,6 +564,13 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
       Category = 0
       Hint = 'New Item'
       Visible = ivAlways
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU           '
+      Category = 0
+      Hint = 'SBU           '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object frxDBDBHAmplopPelanggan: TfrxDBDataset

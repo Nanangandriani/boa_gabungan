@@ -56,7 +56,8 @@ type
   private
     { Private declarations }
   public
-    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH, vPosition : string;
+    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH, vPosition  : string;
+    vStatOffice: Integer;
     procedure Clear;
     { Public declarations }
    // nm,loksbu,kdsbu,id_dept:string;
@@ -301,7 +302,7 @@ begin
      sql.clear;
      sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
              ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
-             ' "tax_status", "currency" FROM "t_company" ');
+             ' "tax_status", "currency", stat_office FROM "t_company" ');
      open;
     end;
 
@@ -316,6 +317,7 @@ begin
           vAlamatPRSH:=dm.Qtemp.FieldByName('address').AsString;
           vTelpPRSH:=dm.Qtemp.FieldByName('telp').AsString;
           vKotaPRSH:=dm.Qtemp.FieldByName('city').AsString;
+          vStatOffice:=dm.Qtemp.FieldByName('stat_office').AsInteger;
           FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
         end;
       end;
@@ -327,7 +329,7 @@ begin
          sql.clear;
          sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
                  ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
-                 ' "tax_status", "currency" FROM "t_company" where stat_office=0 limit 1 ');
+                 ' "tax_status", "currency", stat_office FROM "t_company" where stat_office=0 limit 1 ');
          open;
         end;
         with FHomeLogin do
@@ -337,12 +339,11 @@ begin
           vAlamatPRSH:=dm.Qtemp1.FieldByName('address').AsString;
           vTelpPRSH:=dm.Qtemp1.FieldByName('telp').AsString;
           vKotaPRSH:=dm.Qtemp1.FieldByName('city').AsString;
+          vStatOffice:=dm.Qtemp1.FieldByName('stat_office').AsInteger;
           FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp1.FieldByName('company_name').AsString;
         end;
       end;
     end;
-
-
 
     with dm.Qtemp do
     begin
@@ -369,12 +370,13 @@ begin
     if MessageDlg('Apakah anda mau update?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
       FMainMenu.UpdateVersi;
-    end else exit;
+    end;
   end else if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=1) then
   begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;
   end;
+
 //  Application.CreateForm(TFMainMenu, FMainMenu);
 //  CbSBU.Clear;
   Self.Hide;

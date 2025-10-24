@@ -42,6 +42,9 @@ type
     cbKategori: TRzComboBox;
     Label4: TLabel;
     Label5: TLabel;
+    LabelSBU: TLabel;
+    LabelSBU2: TLabel;
+    cbSBU: TRzComboBox;
     procedure edNamaPelangganButtonClick(Sender: TObject);
     procedure cbJenisBarangSelect(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
@@ -199,7 +202,7 @@ begin
     sql.Clear;
     sql.Text:='select a.group_id,a.group_name from t_item_group a '+
               'LEFT JOIN t_item_category b on b.category_id=a.category_id '+
-              'where b.category='+QuotedStr(cbKategori.Text)+' order by a.group_name asc';
+              'where a.istarget=True AND b.category='+QuotedStr(cbKategori.Text)+' order by a.group_name asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -397,7 +400,9 @@ begin
 end;
 
 procedure TFNew_DataTargetPenjualan.Save;
-var mm: Integer;
+var
+mm: Integer;
+strSBU : String;
 begin
   mm:=cbBulan.ItemIndex+1;
   with dm.Qtemp do
@@ -413,17 +418,24 @@ begin
   if dm.Qtemp.RecordCount=0 then
   begin
 
+    if FHomeLogin.vStatOffice=0 then
+    begin
+      strSBU:=cbSBU.Text;
+    end else begin
+      strSBU:=FHomeLogin.vKodePRSH;
+    end;
+
     with dm.Qtemp do
     begin
       close;
       sql.clear;
-      sql.text:=' Insert into t_customer_sales_target (customer_code, month, year, created_by, created_at) '+
+      sql.text:=' Insert into t_customer_sales_target (customer_code, month, year, created_by, created_at, sbu_code) '+
               ' VALUES ( '+
               ' '+QuotedStr(edKodePelanggan.Text)+', '+
               ' '+QuotedStr(IntToStr(mm))+', '+
               ' '+QuotedStr(edTahun.Text)+', '+
               ' '+QuotedStr(Nm)+', '+
-              ' NOW()  );';
+              ' NOW(), '+QuotedStr(strSBU)+'  );';
       ExecSQL;
     end;
     with dm.Qtemp do
@@ -517,6 +529,16 @@ begin
     cbKategori.Enabled:=False;
     cbKelompokBarang.Enabled:=False;
   end;
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    Panel1.Height:=225;
+    btAddDetail.Top:=182;
+  end else begin
+    Panel1.Height:=195;
+    btAddDetail.Top:=153;
+  end;
+
 end;
 
 Initialization

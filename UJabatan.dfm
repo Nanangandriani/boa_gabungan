@@ -39,6 +39,7 @@ object FJabatan: TFJabatan
         EditButtons = <>
         FieldName = 'position'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jabatan'
         Width = 150
       end>

@@ -115,6 +115,7 @@ type
     QDaftarPenerimaancode_kab: TStringField;
     QDaftarPenerimaanname_kab: TStringField;
     QDaftarPenerimaanket_faktur: TMemoField;
+    cbSBU: TdxBarCombo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

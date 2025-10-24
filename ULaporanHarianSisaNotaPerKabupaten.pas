@@ -98,6 +98,7 @@ type
     QLaporanHarianSisaNotaPerKabupaten: TUniQuery;
     Qreport: TUniQuery;
     cbKabupaten: TcxBarEditItem;
+    cbSBU: TdxBarCombo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -238,6 +239,7 @@ begin
   strKaresidenanID:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFLaporanHarianSisaNotaPerKabupaten.ReportGetValue(

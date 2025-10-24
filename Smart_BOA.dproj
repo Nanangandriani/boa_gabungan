@@ -98,8 +98,8 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
-        <VerInfo_MinorVer>6</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.6.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.6.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>8</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.8.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.8.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
@@ -801,9 +801,6 @@
         <DCCReference Include="U_Data_rencana_lunas_hutang_pengajuan.pas">
             <Form>FDataRencanaLunasHutangPengajuan</Form>
         </DCCReference>
-        <DCCReference Include="u_daf_keluar_kas_bank.pas">
-            <Form>Fdaf_pengeluaran_kas_bank</Form>
-        </DCCReference>
         <DCCReference Include="URpt_Buku_Besar.pas">
             <Form>FRpt_Buku_Besar</Form>
         </DCCReference>
@@ -1093,7 +1090,6 @@
         </DCCReference>
         <DCCReference Include="UStockOpnameNota.pas">
             <Form>FStockOpnameNota</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="URekapTagihanKolektor.pas">
             <Form>FRekapTagihanKolektor</Form>
@@ -1117,7 +1113,6 @@
         </DCCReference>
         <DCCReference Include="URekapSaldoPiutangPerKaresidenan.pas">
             <Form>FRekapSaldoPiutangPerKaresidenan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UListKoreksi.pas">
             <Form>FListKoreksi</Form>
@@ -1253,6 +1248,10 @@
         </DCCReference>
         <DCCReference Include="Udaftar_TP.pas">
             <Form>FDaftar_TP</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="u_daf_keluar_kas_bank.pas">
+            <Form>Fdaf_pengeluaran_kas_bank</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

@@ -147,12 +147,12 @@ end;
 
 procedure TFDept.ActROExecute(Sender: TObject);
 begin
-    DBGridDept.StartLoadingStatus();
-    DBGridDept.FinishLoadingStatus();
-    QDept.Close;
-    MemDept.Close;
-    QDept.Open;
-    MemDept.Open;
+  DBGridDept.StartLoadingStatus();
+  DBGridDept.FinishLoadingStatus();
+  QDept.Close;
+  MemDept.Close;
+  QDept.Open;
+  MemDept.Open;
 end;
 
 procedure TFDept.ActUpdateExecute(Sender: TObject);

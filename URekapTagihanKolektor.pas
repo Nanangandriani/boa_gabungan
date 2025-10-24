@@ -85,6 +85,7 @@ type
     frxDBDatasetRekapTagihanKolektor: TfrxDBDataset;
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarManager1Bar2: TdxBar;
+    cbSBU: TdxBarCombo;
     procedure edWilayahPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure edAreaPropertiesButtonClick(Sender: TObject;
@@ -262,6 +263,7 @@ procedure TFRekapTagihanKolektor.FormShow(Sender: TObject);
 begin
   QRekapTagihanKolektor.Close;
   dxBarLargeButton2Click(sender);
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFRekapTagihanKolektor.ReportGetValue(const VarName: string;

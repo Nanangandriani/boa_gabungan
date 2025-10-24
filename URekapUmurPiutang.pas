@@ -85,6 +85,7 @@ type
     DsRekapUmurPiutang: TDataSource;
     Report: TfrxReport;
     frxDBDatasetRekapUmurPiutang: TfrxDBDataset;
+    cbSBU: TdxBarCombo;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -160,6 +161,8 @@ begin
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
   QRekapUmurPiutang.Close;
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFRekapUmurPiutang.ReportGetValue(const VarName: string;

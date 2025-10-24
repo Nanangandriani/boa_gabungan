@@ -284,7 +284,7 @@ begin
   cbMenu.Enabled:=False;
   edNoTransaksi.Enabled:=False;
 //  Autonumber;
-  if (Status=0) then
+  if Status=0 then
   begin
     FKoreksi.Height:=294;
     BtnReject.Visible:=False;
@@ -305,12 +305,22 @@ begin
     tbl:= dm.Qtemp.FieldValues['table_trans'];
     field_no_trans:= dm.Qtemp.FieldValues['field_no_trans'];
 
-  end else begin
+  end else if Status=1 then begin
+    FKoreksi.Height:=394;
+    MemKetApprove.Visible:=True;
+    RzLabel6.Visible:=True;
+    BtnReject.Visible:=False;
+    BtnApprove.Visible:=True;
+    BSave.Visible:=False;
+    BBatal.Visible:=False;
+    memKet.Enabled:=False;
+    Detail;
+  end else if Status=2 then begin
     FKoreksi.Height:=394;
     MemKetApprove.Visible:=True;
     RzLabel6.Visible:=True;
     BtnReject.Visible:=True;
-    BtnApprove.Visible:=True;
+    BtnApprove.Visible:=False;
     BSave.Visible:=False;
     BBatal.Visible:=False;
     memKet.Enabled:=False;

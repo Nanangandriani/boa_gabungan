@@ -113,6 +113,7 @@ type
     Qreport: TUniQuery;
     dtTanggal: TdxBarDateCombo;
     MemTableEh1: TMemTableEh;
+    cbSBU: TdxBarCombo;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -352,6 +353,8 @@ begin
   Qreport.Close;
   QLaporanHarianSisaNota.Close;
   MemTableEh1.Active:=True;
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFLaporanHarianSisaNota.ReportGetValue(const VarName: string;

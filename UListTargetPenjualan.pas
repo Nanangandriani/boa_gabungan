@@ -84,6 +84,14 @@ type
     dxBarCombo2: TdxBarCombo;
     cbBulan: TdxBarCombo;
     edTahun: TdxBarSpinEdit;
+    QtargetPenjualanDetitem_name: TStringField;
+    QtargetPenjualanDetitem_code: TStringField;
+    QtargetPenjualanDetqty: TFloatField;
+    QtargetPenjualanDetvalue: TFloatField;
+    QtargetPenjualanDetid_customer_sales_target: TLargeintField;
+    QtargetPenjualanDetgroup_id: TIntegerField;
+    UniQuery1: TUniQuery;
+    cbSBU: TdxBarCombo;
     QTargetPenjualancustomer_code: TStringField;
     QTargetPenjualanmonth: TSmallintField;
     QTargetPenjualanyear: TSmallintField;
@@ -95,14 +103,8 @@ type
     QTargetPenjualanstatus: TBooleanField;
     QTargetPenjualandeleted_at: TDateTimeField;
     QTargetPenjualandeleted_by: TStringField;
+    QTargetPenjualansbu_code: TStringField;
     QTargetPenjualancustomer_name: TStringField;
-    QtargetPenjualanDetitem_name: TStringField;
-    QtargetPenjualanDetitem_code: TStringField;
-    QtargetPenjualanDetqty: TFloatField;
-    QtargetPenjualanDetvalue: TFloatField;
-    QtargetPenjualanDetid_customer_sales_target: TLargeintField;
-    QtargetPenjualanDetgroup_id: TIntegerField;
-    UniQuery1: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -125,7 +127,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_DataTargetPenjualan, UDataModule;
+uses UNew_DataTargetPenjualan, UDataModule, UMy_Function, UHomeLogin;
 
 procedure TFListTargetPenjualan.ActDelExecute(Sender: TObject);
 var
@@ -242,6 +244,7 @@ begin
 
   with FNew_DataTargetPenjualan do
   begin
+    FillSBUBarCombo2(cbSBU,LabelSBU,LabelSBU2);
     IdCustomerSalesTarget:=dm.Qtemp2.FieldByName('id_customer_sales_target').AsInteger;
     edKodePelanggan.Text:=dm.Qtemp2.FieldByName('customer_code').AsString;
     edNamaPelanggan.Text:=dm.Qtemp2.FieldByName('customer_name').AsString;
@@ -249,6 +252,7 @@ begin
     cbKelompokBarang.Text:=UniQuery1.FieldByName('group_name').AsString;
     edTahun.Value:= dm.Qtemp2.FieldByName('year').AsInteger;
     cbBulan.ItemIndex:= dm.Qtemp2.FieldByName('month').AsInteger-1;
+    cbSBU.Text:=UniQuery1.FieldByName('sbu_code').AsString;
   end;
   dm.Qtemp2.Close;
   FNew_DataTargetPenjualan.GetDetail;
@@ -269,11 +273,22 @@ end;
 procedure TFListTargetPenjualan.FormShow(Sender: TObject);
 begin
   ActROExecute(sender);
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFListTargetPenjualan.Refresh;
 var mm: Integer;
+strSBU : String;
 begin
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    strSBU:=cbSBU.Text;
+  end else
+  begin
+    strSBU:=FHomeLogin.vKodePRSH;
+  end;
+
+
   mm:=cbBulan.ItemIndex+1;
   DBGrid.StartLoadingStatus();
   try
@@ -283,7 +298,7 @@ begin
       Sql.Clear;
       Sql.Text:='SELECT a.*,b.customer_name FROM t_customer_sales_target a '+
                 'LEFT JOIN t_customer b on b.customer_code=a.customer_code '+
-                'WHERE a.year='+edTahun.Text+' AND a.month='+(IntToStr(mm))+' and a.status=true;';
+                'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND a.year='+edTahun.Text+' AND a.month='+(IntToStr(mm))+' and a.deleted_at is NULL;';
       Open;
     end;
     MemTargetPenjualan.Close;
@@ -301,6 +316,10 @@ procedure TFListTargetPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FNew_DataTargetPenjualan.Clear;
   Status:=0;
+  with FNew_DataTargetPenjualan do
+  begin
+    FillSBUBarCombo2(cbSBU,LabelSBU,LabelSBU2);
+  end;
   FNew_DataTargetPenjualan.ShowModal;
 end;
 

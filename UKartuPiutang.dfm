@@ -279,6 +279,10 @@ object FKartuPiutang: TFKartuPiutang
           UserWidth = 271
           Visible = True
           ItemName = 'edKabupaten'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -440,6 +444,13 @@ object FKartuPiutang: TFKartuPiutang
       Hint = 'Bulan'
       Visible = ivAlways
       PropertiesClassName = 'TcxLabelProperties'
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                '
+      Category = 0
+      Hint = 'SBU                '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object QKartuPiutang: TUniQuery

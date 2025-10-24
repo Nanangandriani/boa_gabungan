@@ -344,6 +344,10 @@ object FBHReturPenjualan: TFBHReturPenjualan
           UserWidth = 271
           Visible = True
           ItemName = 'edKabupaten'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -615,6 +619,13 @@ object FBHReturPenjualan: TFBHReturPenjualan
           Kind = bkEllipsis
         end>
       Properties.OnButtonClick = edKabupatenPropertiesButtonClick
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                '
+      Category = 0
+      Hint = 'SBU                '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object QBHReturPenjualan: TUniQuery

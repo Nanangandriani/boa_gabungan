@@ -49,7 +49,7 @@ object FMainMenu: TFMainMenu
       Field = vifProductVersion
       VersionInfo = RzVersionInfo1
     end
-    object UserFullName: TRzProgressStatus
+    object Load: TRzProgressStatus
       Left = 459
       Top = 0
       Width = 191

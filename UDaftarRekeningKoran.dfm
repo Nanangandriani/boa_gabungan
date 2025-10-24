@@ -25,7 +25,6 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1229
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -243,6 +242,10 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           UserWidth = 268
           Visible = True
           ItemName = 'edRekeningBank'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -521,6 +524,13 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
       Visible = ivAlways
       PropertiesClassName = 'TcxTextEditProperties'
     end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                '
+      Category = 0
+      Hint = 'SBU                '
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QDaftarRekeningKoran: TUniQuery
     Connection = dm.Koneksi
@@ -673,7 +683,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     Top = 72
   end
   object Report: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

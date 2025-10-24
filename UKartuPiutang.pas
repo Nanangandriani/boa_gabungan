@@ -116,6 +116,7 @@ type
     QCetakname_kab: TStringField;
     QCetakcode_karesidenan: TStringField;
     QCetakketerangan2: TMemoField;
+    cbSBU: TdxBarCombo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -259,75 +260,75 @@ begin
 
   DBGrid.StartLoadingStatus();
   try
-   with QKartuPiutang do //SaldoAwal
-   begin
-       close;
-       sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from ('+
-               ' select * from "public"."get_piutang_saldoawal"('+QuotedStr(formatdatetime('yyyy-mm-dd',bln_akhir))+')) a  '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-               ' where customer_code<>''0'' ');
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-         end;
-       sql.add(' ORDER BY customer_code, customer_name_pkp asc');
-       open;
-   end;
+  with QKartuPiutang do //SaldoAwal
+  begin
+    close;
+    sql.Clear;
+    sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from ('+
+           ' select * from "public"."get_piutang_saldoawal"('+QuotedStr(formatdatetime('yyyy-mm-dd',bln_akhir))+')) a  '+
+           ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+           ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+           ' ON "left"(code_region, 4)=b.code_kab '+
+           ' where customer_code<>''0'' ');
+     if edKaresidenan.EditValue<>'' then
+     begin
+      sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+     end;
+     if edKabupaten.EditValue<>'' then
+     begin
+      sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+     end;
+   sql.add(' ORDER BY customer_code, customer_name_pkp asc');
+   open;
+  end;
 
-    FKartuPiutang.MemMaster.active:=false;
-    FKartuPiutang.MemMaster.active:=true;
-    FKartuPiutang.MemMaster.EmptyTable;
+  FKartuPiutang.MemMaster.active:=false;
+  FKartuPiutang.MemMaster.active:=true;
+  FKartuPiutang.MemMaster.EmptyTable;
 
-    if  QKartuPiutang.RecordCount=0 then
-    begin
-      Showmessage('Maaf, Data Tidak Ditemukan..');
-    end;
+  if  QKartuPiutang.RecordCount=0 then
+  begin
+    Showmessage('Maaf, Data Tidak Ditemukan..');
+  end;
 
-    if  QKartuPiutang.RecordCount<>0 then
-    begin
+  if  QKartuPiutang.RecordCount<>0 then
+  begin
     QKartuPiutang.first;
     while not QKartuPiutang.Eof do
     begin
-     FKartuPiutang.MemMaster.insert;
-     FKartuPiutang.MemMaster['kode_pelanggan']:=QKartuPiutang.fieldbyname('customer_code').value;
-     FKartuPiutang.MemMaster['nama_pelanggan']:=QKartuPiutang.fieldbyname('customer_name_pkp').value;
-     FKartuPiutang.MemMaster['alamat']:=QKartuPiutang.fieldbyname('name_region').value;
-     FKartuPiutang.MemMaster['saldo_awal']:=QKartuPiutang.fieldbyname('total_receivables').value;
-     FKartuPiutang.MemMaster.post;
-     QKartuPiutang.next;
+      FKartuPiutang.MemMaster.insert;
+      FKartuPiutang.MemMaster['kode_pelanggan']:=QKartuPiutang.fieldbyname('customer_code').value;
+      FKartuPiutang.MemMaster['nama_pelanggan']:=QKartuPiutang.fieldbyname('customer_name_pkp').value;
+      FKartuPiutang.MemMaster['alamat']:=QKartuPiutang.fieldbyname('name_region').value;
+      FKartuPiutang.MemMaster['saldo_awal']:=QKartuPiutang.fieldbyname('total_receivables').value;
+      FKartuPiutang.MemMaster.post;
+      QKartuPiutang.next;
     end;
     FKartuPiutang.MemMaster.SortByFields('nama_pelanggan,alamat asc');
-    end;
+  end;
 
-   with QKartuPiutangTRX do //Transaksi Bulan Pilih
-   begin
-       close;
-       sql.Clear;
-       sql.add(' SELECT * FROM  '+
-               ' "public"."get_piutang_trx"'+
-               ' ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
-               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') a ');
-       open;
-   end;
+  with QKartuPiutangTRX do //Transaksi Bulan Pilih
+  begin
+     close;
+     sql.Clear;
+     sql.add(' SELECT * FROM  '+
+             ' "public"."get_piutang_trx"'+
+             ' ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
+             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') a ');
+     open;
+  end;
 
-    FKartuPiutang.MemMasterDetail.active:=false;
-    FKartuPiutang.MemMasterDetail.active:=true;
-    FKartuPiutang.MemMasterDetail.EmptyTable;
+  FKartuPiutang.MemMasterDetail.active:=false;
+  FKartuPiutang.MemMasterDetail.active:=true;
+  FKartuPiutang.MemMasterDetail.EmptyTable;
 
-    if  QKartuPiutangTRX.RecordCount=0 then
-    begin
-      Showmessage('Maaf, Data Tidak Ditemukan..');
-    end;
+  if  QKartuPiutangTRX.RecordCount=0 then
+  begin
+    Showmessage('Maaf, Data Tidak Ditemukan..');
+  end;
 
-    if  QKartuPiutangTRX.RecordCount<>0 then
-    begin
+  if  QKartuPiutangTRX.RecordCount<>0 then
+  begin
     QKartuPiutangTRX.first;
     while not QKartuPiutangTRX.Eof do
     begin
@@ -345,7 +346,7 @@ begin
      QKartuPiutangTRX.next;
     end;
     //FKartuPiutang.MemMasterDetail.SortByFields('nama_pelanggan, name_region asc');
-    end;
+  end;
 
   finally
   DBGrid.FinishLoadingStatus();
@@ -388,6 +389,7 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+  FillSBUBarCombo(cbSBU);
 end;
 
 

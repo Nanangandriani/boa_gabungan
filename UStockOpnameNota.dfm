@@ -18,11 +18,10 @@ object FStockOpnameNota: TFStockOpnameNota
     Left = 0
     Top = 0
     Width = 950
-    Height = 113
+    Height = 153
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 946
     object RzLabel1: TRzLabel
       Left = 16
       Top = 8
@@ -43,6 +42,13 @@ object FStockOpnameNota: TFStockOpnameNota
       Width = 19
       Height = 15
       Caption = 'S/D'
+    end
+    object RzLabel4: TRzLabel
+      Left = 16
+      Top = 68
+      Width = 21
+      Height = 15
+      Caption = 'SBU'
     end
     object edKaresidenan: TRzButtonEdit
       Left = 62
@@ -78,8 +84,8 @@ object FStockOpnameNota: TFStockOpnameNota
       OnChange = dtTanggal2Change
     end
     object btTampilkan: TRzBitBtn
-      Left = 292
-      Top = 18
+      Left = 300
+      Top = 14
       Width = 116
       Height = 30
       Align = alCustom
@@ -90,13 +96,13 @@ object FStockOpnameNota: TFStockOpnameNota
     end
     object RzGroupBox1: TRzGroupBox
       Left = 2
-      Top = 56
+      Top = 94
       Width = 946
-      Height = 55
+      Height = 57
       Align = alBottom
       Color = 15987699
       TabOrder = 4
-      ExplicitWidth = 942
+      ExplicitTop = 56
       object btCetakLaporanStokOpname: TRzBitBtn
         Left = 12
         Top = 18
@@ -131,12 +137,19 @@ object FStockOpnameNota: TFStockOpnameNota
         NumGlyphs = 2
       end
     end
+    object cbSBU: TRzComboBox
+      Left = 62
+      Top = 65
+      Width = 145
+      Height = 23
+      TabOrder = 5
+    end
   end
   object DBGridEh1: TDBGridEh
     Left = 0
-    Top = 113
+    Top = 153
     Width = 950
-    Height = 329
+    Height = 289
     Align = alClient
     DataSource = DSDetail
     DrawMemoText = True
@@ -3077,7 +3090,6 @@ object FStockOpnameNota: TFStockOpnameNota
       
         'LEFT JOIN  vstock_opname_nota_sum b on b.karesidenan=a.karesiden' +
         'an and date='#39'2025-09-22'#39)
-    Active = True
     Left = 624
     Top = 224
   end

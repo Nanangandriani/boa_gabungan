@@ -239,6 +239,10 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
         end
         item
           Visible = True
+          ItemName = 'cbSBU'
+        end
+        item
+          Visible = True
           ItemName = 'ActSearch'
         end
         item
@@ -254,7 +258,7 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
     object dxBarManager1Bar2: TdxBar
       Caption = 'Custom 1'
       CaptionButtons = <>
-      DockedLeft = 388
+      DockedLeft = 518
       DockedTop = 0
       FloatLeft = 791
       FloatTop = 2
@@ -1088,6 +1092,13 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
         1974455874536F667477617265007777772E696E6B73636170652E6F72679BEE
         3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton2Click
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU'
+      Category = 0
+      Hint = 'SBU'
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object QRekapTagihanKolektor: TUniQuery

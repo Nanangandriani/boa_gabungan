@@ -277,6 +277,12 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           ItemName = 'cbKaresidenan'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 94
+          Visible = True
+          ItemName = 'cbSBU'
+        end
+        item
           BeginGroup = True
           UserDefine = [udWidth]
           UserWidth = 78
@@ -1326,6 +1332,13 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           Default = True
           Kind = bkEllipsis
         end>
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU  '
+      Category = 0
+      Hint = 'SBU  '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsLaporanHarianSisaNotaPiutangPerOutlet: TDataSource

@@ -110,6 +110,7 @@ type
     QMonitoringTargetOmset: TUniQuery;
     Qreport: TUniQuery;
     cbVolume: TdxBarCombo;
+    cbSBU: TdxBarCombo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanChange(Sender: TObject);
@@ -141,7 +142,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMasterData, UMy_Function;
+uses UDataModule, UMasterData, UMy_Function, UHomeLogin;
 var
   monitoringtargetomset : TFMonitoringTargetOmset;
 
@@ -340,6 +341,8 @@ begin
   cbKelompok.EditValue:='';
   cbVolume.ItemIndex:=0;
   QMonitoringTargetOmset.Close;
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFMonitoringTargetOmset.ReportGetValue(const VarName: string;

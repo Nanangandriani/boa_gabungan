@@ -307,13 +307,20 @@ end;
 procedure TFDataProspekPelanggan.FormShow(Sender: TObject);
 begin
   json := TMyJSON.Create(Self);
-  RefreshSBU;
+
   MemMasterData.EmptyTable;
+  if FHomeLogin.vKodePRSH='PST' then
+  begin
+    RefreshSBU;
+    cbSBU.Visible:=True;
+  end else begin
+    cbSBU.Visible:=False;
+  end;
 end;
 
 procedure TFDataProspekPelanggan.btGetDataProspekClick(Sender: TObject);
 var
-  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  key,url,s,BaseUrl,Vpath,Vtoken,strsbu : string;
   vBody,vBody2  : string;
   jumdata : Real;
   xxx: Integer;
@@ -337,12 +344,19 @@ begin
     sql.Text:=' Delete from t_customer_prospect_tmp where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ';
     ExecSQL ;
   end;
+  if FHomeLogin.vKodePRSH='PST' then
+  begin
+    strsbu:=cbSBU.Text;
+  end else
+  begin
+    strsbu:=FHomeLogin.vKodePRSH;
+  end;
 
   //BaseUrl:=edBaseURL.Text;
   BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlprospek''');
   key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapiprospek''');
   vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapiprospek''');
-  vBody:='?sbu_code='+cbSBU.Text;
+  vBody:='?sbu_code='+strsbu;
   Vpath:='outlet/prospek';
   url:= BaseUrl+Vpath+vBody;
   try

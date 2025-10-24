@@ -54,7 +54,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
-    RowDetailPanel.Height = 150
+    RowDetailPanel.Height = 200
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True
@@ -202,7 +202,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
         Left = 0
         Top = 0
         Width = 785
-        Height = 148
+        Height = 182
         Align = alClient
         DataSource = DsKerjasama_det
         DynProps = <>
@@ -448,11 +448,11 @@ object FKontrakkerjasama: TFKontrakkerjasama
         end
         item
           Visible = True
-          ItemName = 'dxBarDelete'
+          ItemName = 'DxRefresh'
         end
         item
           Visible = True
-          ItemName = 'DxRefresh'
+          ItemName = 'dxBarDelete'
         end
         item
           BeginGroup = True

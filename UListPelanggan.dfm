@@ -828,7 +828,7 @@ object FListPelanggan: TFListPelanggan
       Caption = 'SBU            '
       Category = 0
       Hint = 'SBU            '
-      Visible = ivAlways
+      Visible = ivNever
       ItemIndex = -1
     end
   end

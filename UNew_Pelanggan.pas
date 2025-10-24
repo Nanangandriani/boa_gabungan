@@ -709,7 +709,7 @@ begin
             ' "account_name_bank", "status_bill", "initial_code", "code_account", '+
             ' "name_account", "code_account2", "name_account2" '+
             ' from "public"."t_master_trans_account" '+
-            ' where deleted_at is null and code_module=''1'' '+
+            ' where deleted_at is null and code_module=''1'' AND code_trans=''1.001'' '+
             ' order by code_module, account_number_bank, code_trans asc)xx ');
     open;
   end;
@@ -902,6 +902,17 @@ begin
     btJenisUsaha.Visible:=true;
     btKantorPusat.Visible:=true;
   end;
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    edSBU.Visible:=True;
+    Label45.Visible:=True;
+    Label46.Visible:=True;
+  end else begin
+    edSBU.Visible:=False;
+    Label45.Visible:=False;
+    Label46.Visible:=False;
+  end;
 end;
 
 procedure TFNew_Pelanggan.EdkodewilayahButtonClick(Sender: TObject);
@@ -970,16 +981,14 @@ begin
 end;
 
 procedure TFNew_Pelanggan.Save;
-var vsbu,vsbu2 : String;
+var vsbu : String;
 begin
   vsbu:='';
-  if FHomeLogin.vKodePRSH='PST' then
+  if FHomeLogin.vStatOffice=0 then
   begin
-    vsbu:=',sbu_code';
-    vsbu2:=','+QuotedStr(edSBU.Text)+'';
+    vsbu:=','+QuotedStr(edSBU.Text)+'';
   end else begin
-    vsbu:='';
-    vsbu2:='';
+    vsbu:=','+QuotedStr(FHomeLogin.vKodePRSH)+'';
   end;
 
   with dm.Qtemp do
@@ -994,7 +1003,7 @@ begin
             ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
-            ' email,payment_term,created_at,created_by'+vsbu+', stat_pkp ) '+
+            ' email,payment_term,created_at,created_by,sbu_code, stat_pkp ) '+
             ' Values( '+
             ' '+QuotedStr(inttostr(vid_prospek))+', '+
             ' '+QuotedStr(Edkode.Text)+', '+
@@ -1030,7 +1039,7 @@ begin
             ' '+QuotedStr(edemail.Text)+', '+
             ' '+QuotedStr(Edtempo.Text)+', '+
             ' now(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu2+',');
+            ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu+',');
       if cbpkp.Checked=true then
       begin
         sql.add(' true);');

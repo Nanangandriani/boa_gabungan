@@ -136,6 +136,8 @@ type
     procedure edTotSebelumPajakExit(Sender: TObject);
     procedure edTotPPNExit(Sender: TObject);
     procedure edTotBersihExit(Sender: TObject);
+    procedure spJatuhTempoChange(Sender: TObject);
+    procedure spJatuhTempoClick(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot : real;
@@ -577,6 +579,16 @@ procedure TFNew_Penjualan.SpeedButton1Click(Sender: TObject);
 begin
   edNama_Pelanggan.Text:='';
   edKode_Pelanggan.Text:='';
+end;
+
+procedure TFNew_Penjualan.spJatuhTempoChange(Sender: TObject);
+begin
+  if spJatuhTempo.Value<0 then spJatuhTempo.Value:=0;
+end;
+
+procedure TFNew_Penjualan.spJatuhTempoClick(Sender: TObject);
+begin
+  if spJatuhTempo.Value<0 then spJatuhTempo.Value:=0;
 end;
 
 procedure TFNew_Penjualan.InsertDetailJU;
@@ -1161,13 +1173,17 @@ begin
     RefreshGrid;
     edNomorFaktur.ReadOnly:=False;
     btAddDetail.Visible:=False;
-    btMasterSumber.Visible:=False;
     SpeedButton1.Visible:=False;
+    spJatuhTempo.Enabled:=False;
+    btMasterSumber.Visible:=False;
+    btAddDetail.Visible:=False;
   end else begin
-    SpeedButton1.Visible:=True;
-    btMasterSumber.Visible:=True;
     btAddDetail.Visible:=True;
+    SpeedButton1.Visible:=True;
+    btAddDetail.Visible:=True;
+    spJatuhTempo.Enabled:=True;
     edNomorFaktur.ReadOnly:=True;
+    btMasterSumber.Visible:=True;
     dtTanggal.Date:=NOW;
     edKode_Trans.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
     edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
@@ -1184,12 +1200,12 @@ begin
 
 
   //GetFakturPajak(IntToStr(Year));
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
-  begin
-    btMasterSumber.Visible:=false;
-  end else begin
-    btMasterSumber.Visible:=true;
-  end;
+//  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
+//  begin
+//    btMasterSumber.Visible:=false;
+//  end else begin
+//    btMasterSumber.Visible:=true;
+//  end;
   if (SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' ')= '1') AND (Status=0) then
   begin
     btHitungPotongan.Visible:=True;
@@ -1547,7 +1563,7 @@ begin
   if IntTotGroup>1 then FRincianPot_Penjualan.jenis_jual:='T002'
   else
   FRincianPot_Penjualan.jenis_jual:='T001';
-
+  FRincianPot_Penjualan.MemMasterData.EmptyTable;
   FRincianPot_Penjualan.HitungKlasifikasi;
   FRincianPot_Penjualan.ShowModal;
 end;

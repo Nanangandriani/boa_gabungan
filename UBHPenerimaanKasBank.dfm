@@ -270,6 +270,10 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           UserWidth = 271
           Visible = True
           ItemName = 'edKabupaten'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -606,6 +610,13 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
     end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                '
+      Category = 0
+      Hint = 'SBU                '
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QBHPenerimaanKasBank: TUniQuery
     Connection = dm.Koneksi
@@ -920,8 +931,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 159.118110240000000000
           Width = 98.267716540000000000
           Height = 18.897650000000000000
-          DataSet = FBHPenjualan.frxDBDBHPenj_det
-          DataSetName = 'frxDBDBHPenj_det'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -939,8 +948,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Width = 238.110236220000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
-          DataSet = FBHPenjualan.frxDBDBHPenj_det
-          DataSetName = 'frxDBDBHPenj_det'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -957,8 +964,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 507.590551180000000000
           Width = 164.787401570000000000
           Height = 18.897650000000000000
-          DataSet = FBHPenjualan.frxDBDBHPenj_det
-          DataSetName = 'frxDBDBHPenj_det'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -978,8 +983,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 60.472440940000000000
           Width = 91.464566930000000000
           Height = 18.897650000000000000
-          DataSet = FBHPenjualan.frxDBDBHPenj_det
-          DataSetName = 'frxDBDBHPenj_det'
           DisplayFormat.FormatStr = 'dd mmm yyyy'
           DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET

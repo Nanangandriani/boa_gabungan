@@ -114,6 +114,7 @@ type
     frxDBDRincianFaktur: TfrxDBDataset;
     dsRincianFaktur: TDataSource;
     dxBarLargeButton1: TdxBarLargeButton;
+    cbSBU: TdxBarCombo;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -138,7 +139,7 @@ function FRekapPenjualan: TFRekapPenjualan;
 implementation
 
 {$R *.dfm}
-uses UMasterWilayah, UMasterData, UMy_Function, UHomeLogin;
+uses UMasterWilayah, UMasterData, UMy_Function, UHomeLogin, UDataModule;
 var
   realfrekap : TFRekapPenjualan;
 // implementasi function
@@ -425,6 +426,8 @@ begin
   vkd_kab:='';
   QRekapPenjualan.Close;
   QCetak.Close;
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 initialization

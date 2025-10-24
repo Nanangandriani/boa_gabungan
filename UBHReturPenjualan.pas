@@ -118,6 +118,7 @@ type
     Report: TfrxReport;
     dsCetak: TDataSource;
     dsCetakdetail: TDataSource;
+    cbSBU: TdxBarCombo;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -146,7 +147,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function;
+uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, UDataModule;
 var
   realfbhpretur : TFBHReturPenjualan;
 // implementasi function
@@ -307,6 +308,8 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFBHReturPenjualan.QBHReturPenjualanakn_debet_lainGetText(

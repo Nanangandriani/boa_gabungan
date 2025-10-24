@@ -342,6 +342,10 @@ object FBHPenjualan: TFBHPenjualan
           UserWidth = 271
           Visible = True
           ItemName = 'edKabupaten'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -677,6 +681,13 @@ object FBHPenjualan: TFBHPenjualan
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                '
+      Category = 0
+      Hint = 'SBU                '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object QBHPenjualan: TUniQuery

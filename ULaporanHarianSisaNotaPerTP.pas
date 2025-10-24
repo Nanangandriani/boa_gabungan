@@ -112,6 +112,7 @@ type
     Qreport: TUniQuery;
     dxBarDateCombo1: TdxBarDateCombo;
     dtTanggal2: TdxBarDateCombo;
+    cbSBU: TdxBarCombo;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -219,6 +220,7 @@ begin
   dtTanggal2.Date:=NOW;
   Qreport.Close;
   QLaporanHarianSisaNotaPerTP.Close;
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFLaporanHarianSisaNotaPerTP.ReportGetValue(const VarName: string;

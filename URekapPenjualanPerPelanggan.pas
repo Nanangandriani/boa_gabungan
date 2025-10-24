@@ -113,6 +113,7 @@ type
     cbPaperSize: TdxBarCombo;
     dxBarLargeButton6: TdxBarLargeButton;
     Qreport: TUniQuery;
+    cbSBU: TdxBarCombo;
     procedure ActSearchClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -532,6 +533,8 @@ begin
   cbJenisUsaha.ItemIndex:=0;
   QRekapPenjualanperCustomer.Close;
   Qreport.Close;
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFRekapPenjualanPerPelanggan.ReportGetValue(const VarName: string;

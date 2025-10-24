@@ -265,6 +265,10 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           ItemName = 'cbKabupaten'
         end
         item
+          Visible = True
+          ItemName = 'cbSBU'
+        end
+        item
           BeginGroup = True
           UserDefine = [udWidth]
           UserWidth = 81
@@ -1316,6 +1320,13 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           Kind = bkEllipsis
         end>
       Properties.OnButtonClick = cbKabupatenPropertiesButtonClick
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                 '
+      Category = 0
+      Hint = 'SBU                 '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsLaporanHarianSisaNotaPerKabupaten: TDataSource

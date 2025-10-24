@@ -113,6 +113,7 @@ type
     QCetakRincianBarangname_item: TStringField;
     QCetakRincianBarangamount: TFloatField;
     QCetakRincianBarangname_unit: TStringField;
+    cbSBU: TdxBarCombo;
     procedure FormShow(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure QBHPenjualanakn_debet_lainGetText(Sender: TField;
@@ -442,6 +443,8 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFBHPenjualan.QBHPenjualanakn_debet_lainGetText(Sender: TField;

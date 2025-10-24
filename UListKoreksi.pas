@@ -62,10 +62,15 @@ type
     QKoreksi: TUniQuery;
     DsKoreksi: TDataSource;
     cbStatus: TdxBarCombo;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarLargeButton3: TdxBarLargeButton;
+    dxBarLargeButton4: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -83,6 +88,34 @@ implementation
 
 uses UDataModule, UMainMenu, UKoreksi;
 
+procedure TFListKoreksi.ActBaruExecute(Sender: TObject);
+begin
+  if QKoreksi.FieldValues['status']=0 then
+  begin
+    FKoreksi.Clear;
+    FKoreksi.kode_koreksi:=QKoreksi.FieldValues['code'];
+    FKoreksi.vcall:='';
+    FKoreksi.Status:=1;
+    FKoreksi.ShowModal;
+  end else begin
+    MessageDlg('Tidak dapat melakukan approval, status sudah '+QKoreksi.FieldValues['status_correction']+' ..!!',mtInformation,[mbRetry],0);
+  end;
+end;
+
+procedure TFListKoreksi.ActDelExecute(Sender: TObject);
+begin
+  if QKoreksi.FieldValues['status']=0 then
+  begin
+    FKoreksi.Clear;
+    FKoreksi.kode_koreksi:=QKoreksi.FieldValues['code'];
+    FKoreksi.vcall:='';
+    FKoreksi.Status:=2;
+    FKoreksi.ShowModal;
+  end else begin
+    MessageDlg('Tidak dapat melakukan approval, status sudah '+QKoreksi.FieldValues['status_correction']+' ..!!',mtInformation,[mbRetry],0);
+  end;
+end;
+
 procedure TFListKoreksi.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
@@ -90,33 +123,34 @@ begin
   month :=FormatDateTime('m', NOW());
   edTahun.Text:=(year);
 //  cbBulan.ItemIndex:=StrToInt(month)-1;
-  with dm.Qtemp do
-  begin
-    Close;
-    Sql.Clear;
-    Sql.Text:='select a.* from vcorrection_trans a left join t_menu_sub b on '+
-              'b.submenu_code=a.menu_trans  '+
-              'left join t_menu c on c.menu_code=b.menu_code '+
-              'where c.menu_code in (select menu_code from t_akses_correction_approve aa '+
-              'where is_active=TRUE and  position_code = (select position_code from t_user  '+
-              'where user_name='+QuotedStr(Nm)+'))';
-//    Sql.Text:='select b.isapprove_correct from t_user a left join t_position b on b.position_code=a.position_code '+
-//              'where a.user_name='+QuotedStr(Nm);
-    Open;
-  end;
-  if dm.Qtemp.RecordCount>0 then
+//  with dm.Qtemp do
+//  begin
+//    Close;
+//    Sql.Clear;
+//    Sql.Text:='select a.* from vcorrection_trans a left join t_menu_sub b on '+
+//              'b.submenu_code=a.menu_trans  '+
+//              'left join t_menu c on c.menu_code=b.menu_code '+
+//              'where c.menu_code in (select menu_code from t_akses_correction_approve aa '+
+//              'where is_active=TRUE and  position_code = (select position_code from t_user  '+
+//              'where user_name='+QuotedStr(Nm)+' AND deleted_at IS NULL))';
+//    Open;
+//  end;
+  if ActBaru.Enabled=True then
+//  if dm.Qtemp.RecordCount>0 then
   begin
     ApproveAkses:=True;
-  end else begin
-    ApproveAkses:=False;
-  end;
-
-  if ApproveAkses=True then
-  begin
     cbStatus.ItemIndex:= 1;
   end else begin
+    ApproveAkses:=False;
     cbStatus.ItemIndex:= 0;
   end;
+
+//  if ApproveAkses=True then
+//  begin
+//    cbStatus.ItemIndex:= 1;
+//  end else begin
+//    cbStatus.ItemIndex:= 0;
+//  end;
 
   Refresh;
 end;
@@ -162,11 +196,13 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select a.* from vcorrection_trans a left join t_menu_sub b on b.submenu_code=a.menu_trans  '+
-                'left join t_menu c on c.menu_code=b.menu_code '+
-                'where c.menu_code in (select menu_code from t_akses_correction_approve aa '+
-                'where is_active=TRUE and  position_code = (select position_code from t_user  '+
-                'where user_name='+QuotedStr(Nm)+')) AND EXTRACT(YEAR FROM a.created_at)='+edTahun.Text+strStatus;
+      sql.Text:='select * from vcorrection_trans where EXTRACT(YEAR FROM created_at)='+edTahun.Text+'  '+
+                strStatus;
+//      sql.Text:='select a.* from vcorrection_trans a left join t_menu_sub b on b.submenu_code=a.menu_trans  '+
+//                'left join t_menu c on c.menu_code=b.menu_code '+
+//                'where c.menu_code in (select menu_code from t_akses_correction_approve aa '+
+//                'where is_active=TRUE and  position_code = (select position_code from t_user  '+
+//                'where user_name='+QuotedStr(Nm)+')) AND EXTRACT(YEAR FROM a.created_at)='+edTahun.Text+strStatus;
 //      sql.Text:='select * from vcorrection_trans where EXTRACT(YEAR FROM created_at)='+edTahun.Text+strStatus;
       open;
     end;

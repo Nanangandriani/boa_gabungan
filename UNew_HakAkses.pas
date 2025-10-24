@@ -108,7 +108,7 @@ EdNm.Clear;
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_dept';
+    sql.Text:='select * from t_dept WHERE deleted_at IS NULL';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -282,7 +282,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_dept where dept='+QuotedStr(EdNm.Text);
+    sql.Text:='select * from t_dept where dept='+QuotedStr(EdNm.Text)+' AND deleted_at is NULL';
     ExecSQL;
   end;
     Edkd.Text:=Dm.Qtemp['dept_code'];

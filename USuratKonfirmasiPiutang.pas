@@ -73,6 +73,7 @@ type
     edNamaPelanggan: TcxBarEditItem;
     dxBarEdit4: TdxBarEdit;
     DataSource1: TDataSource;
+    cbSBU: TdxBarCombo;
     procedure FormShow(Sender: TObject);
     procedure btPreviewClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
@@ -209,6 +210,7 @@ begin
   end;
   StrNonOp:=dm.Qtemp.FieldValues['full_name'] ;
   QDetail.Close;
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFSuratKonfirmasiPiutang.ReportGetValue(const VarName: string;

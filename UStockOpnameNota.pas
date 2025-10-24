@@ -8,7 +8,7 @@ uses
   Vcl.Mask, RzEdit, RzBtnEdt, RzLabel, Vcl.ExtCtrls, RzPanel, RzButton,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
   Data.DB, MemDS, DBAccess, Uni, MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh,
-  DBGridEh, DataDriverEh, frxClass, frxDBSet;
+  DBGridEh, DataDriverEh, frxClass, frxDBSet, RzCmboBx;
 
 type
   TFStockOpnameNota = class(TForm)
@@ -32,6 +32,8 @@ type
     QReport: TUniQuery;
     ReportStokOpname: TfrxReport;
     frxDBDatasetStokOpname: TfrxDBDataset;
+    RzLabel4: TRzLabel;
+    cbSBU: TRzComboBox;
     procedure FormShow(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
@@ -51,6 +53,7 @@ type
   public
     { Public declarations }
     procedure SaveStockOpname;
+    procedure RefreshSBU;
   end;
 
   function FStockOpnameNota: TFStockOpnameNota;
@@ -75,6 +78,29 @@ begin
     Application.CreateForm(TFStockOpnameNota, Result);
 end;
 
+procedure TFStockOpnameNota.RefreshSBU;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'select company_code, company_name from t_company where stat_office=1 order by company_name ASC';
+    Open;
+  end;
+
+  if not Dm.Qtemp.IsEmpty then
+  begin
+    Dm.Qtemp.First;
+    while not Dm.Qtemp.Eof do
+    begin
+      cbSBU.Items.Add(Dm.Qtemp['company_code']);
+      Dm.Qtemp.Next;
+    end;
+  end;
+
+  if cbSBU.Items.Count > 0 then
+    cbSBU.ItemIndex := 0;
+end;
 
 procedure TFStockOpnameNota.SaveStockOpname;
 begin
@@ -301,6 +327,17 @@ begin
   dtTanggal2.Date:=NOW;
   MemDetail.Active:=True;
   MemDetail.EmptyTable;
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    RzPanel1.Height:=153;
+    RzLabel4.Visible:=True;
+    cbSBU.Visible:=True;
+    RefreshSBU;
+  end else begin
+    RzPanel1.Height:=113;
+    RzLabel4.Visible:=False;
+    cbSBU.Visible:=False;
+  end;
 end;
 
 procedure TFStockOpnameNota.ReportStokOpnameGetValue(const VarName: string;

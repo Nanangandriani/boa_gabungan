@@ -489,6 +489,10 @@ object FListTargetPenjualan: TFListTargetPenjualan
         end
         item
           Visible = True
+          ItemName = 'cbSBU'
+        end
+        item
+          Visible = True
           ItemName = 'ActSearch'
         end>
       OneOnRow = False
@@ -1072,15 +1076,21 @@ object FListTargetPenjualan: TFListTargetPenjualan
       Visible = ivAlways
       MaxValue = 5000.000000000000000000
     end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU   '
+      Category = 0
+      Hint = 'SBU   '
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QTargetPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT aa.*,bb.customer_name FROM t_customer_sales_target aa '
       'LEFT JOIN t_customer bb on bb.customer_code=aa.customer_code')
-    Active = True
-    Left = 460
-    Top = 136
+    Left = 476
+    Top = 40
     object QTargetPenjualancustomer_code: TStringField
       FieldName = 'customer_code'
       Size = 255
@@ -1118,6 +1128,10 @@ object FListTargetPenjualan: TFListTargetPenjualan
     object QTargetPenjualandeleted_by: TStringField
       FieldName = 'deleted_by'
       Size = 50
+    end
+    object QTargetPenjualansbu_code: TStringField
+      FieldName = 'sbu_code'
+      Size = 10
     end
     object QTargetPenjualancustomer_name: TStringField
       FieldName = 'customer_name'
@@ -1207,19 +1221,20 @@ object FListTargetPenjualan: TFListTargetPenjualan
     SQL.Strings = (
       
         'SELECT DISTINCT c.group_name,c.group_id,d.category,e.year,e.mont' +
-        'h,e.customer_code,e.id_customer_sales_target FROM t_customer_sal' +
-        'es_target_det a '
+        'h,e.customer_code,e.id_customer_sales_target,e.sbu_code FROM t_c' +
+        'ustomer_sales_target_det a '
       'LEFT JOIN t_item b on b.item_code=a.item_code'
       'LEFT JOIN t_item_group c on c.group_id=b.group_id'
       'LEFT JOIN t_item_category d on d.category_id=b.category_id'
       
         'LEFT JOIN t_customer_sales_target e on e.id_customer_sales_targe' +
-        't=a.id_customer_sales_target')
+        't=a.id_customer_sales_target'
+      'WHERE e.deleted_at IS NULL')
     MasterSource = DsTargetPenjualan
     MasterFields = 'year;month;customer_code'
     DetailFields = 'year;month;customer_code'
-    Left = 360
-    Top = 256
+    Left = 416
+    Top = 40
     ParamData = <
       item
         DataType = ftSmallint
@@ -1231,13 +1246,13 @@ object FListTargetPenjualan: TFListTargetPenjualan
         DataType = ftSmallint
         Name = 'month'
         ParamType = ptInput
-        Value = 7
+        Value = 10
       end
       item
         DataType = ftString
         Name = 'customer_code'
         ParamType = ptInput
-        Value = 'PL00010'
+        Value = 'PL03140'
       end>
   end
 end

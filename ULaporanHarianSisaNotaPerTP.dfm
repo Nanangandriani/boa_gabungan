@@ -270,6 +270,10 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           UserWidth = 82
           Visible = True
           ItemName = 'dtTanggal2'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -301,7 +305,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 289
+      DockedLeft = 419
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1465,6 +1469,13 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
       Hint = 'Tanggal Akhir'
       Visible = ivAlways
       ShowDayText = False
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU'
+      Category = 0
+      Hint = 'SBU'
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsLaporanHarianSisaNotaPerTP: TDataSource

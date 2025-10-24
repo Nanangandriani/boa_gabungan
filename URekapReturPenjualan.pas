@@ -109,6 +109,7 @@ type
     StringField14: TStringField;
     StringField15: TStringField;
     FloatField5: TFloatField;
+    cbSBU: TdxBarCombo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -293,6 +294,8 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+
+  FillSBUBarCombo(cbSBU);
 end;
 
 initialization

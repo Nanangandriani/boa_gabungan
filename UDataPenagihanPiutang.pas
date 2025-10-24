@@ -73,7 +73,6 @@ type
     procedure btTampilkanClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure BtnCetakDppClick(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure edKaresidenanButtonClick(Sender: TObject);
@@ -162,6 +161,7 @@ begin
      FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:=Dm.Qtemp.FieldByName('date_tempo_cheque').AsDateTime;
      FDataPenagihanPiutang.MemDetail['nilai_cek']:=Dm.Qtemp.FieldByName('cheque_amount1').AsFloat;
      FDataPenagihanPiutang.MemDetail['kontra_bon']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
+     FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
      FDataPenagihanPiutang.MemDetail.post;
      Dm.Qtemp.next;
     end;
@@ -249,6 +249,19 @@ begin
     ExecSQL;
   end;
 
+//ShowMessage(QuotedStr(MemDetail['nama_bank_cek']));
+//ShowMessage(QuotedStr(MemDetail['no_cek']));
+//ShowMessage(QuotedStr(FloatToStr(MemDetail['nilai_cek'])));
+//ShowMessage(QuotedStr(MemDetail['isdpp_prev']));
+//if not VarIsNull(MemDetail['tgl_resi']) then
+//ShowMessage(QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi'])))
+//else ShowMessage( 'Resi NULL, ');
+//if not VarIsNull(MemDetail['tgl_resi']) then
+//ShowMessage(QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek'])))
+//else ShowMessage( 'Tempo NULL, ');
+
+//ShowMessage(QuotedStr(MemDetail['tgl_resi']));
+
   MemDetail.First;
   while not MemDetail.Eof do
   begin
@@ -280,20 +293,34 @@ begin
                 ' '+QuotedStr(FloatToStr(MemDetail['resi']))+', '+
                 ' '+QuotedStr(FloatToStr(MemDetail['kontra_bon']))+', '+
                 ' '+QuotedStr(MemDetail['bank_resi'])+', ');
-                if ((MemDetail['tgl_resi']=null) OR (MemDetail['tgl_resi']=''))then
-                begin
-                  sql.add( ' null, ');
-                end  else
-                  sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
+                if not VarIsNull(MemDetail['tgl_resi']) then
+                sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ')
+                else sql.add( ' NULL, ');
+
+//                if (MemDetail['tgl_resi']=NULL) OR (MemDetail['tgl_resi']='')then
+//                begin
+//                  sql.add( ' NULL, ');
+//                end  else
+//                  sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
       sql.add(  ' '+QuotedStr(MemDetail['nama_bank_cek'])+', '+
                 ' '+QuotedStr(MemDetail['no_cek'])+', '+
                 ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', '+
                 ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', ');
-              if ((MemDetail['tgl_tempo_cek']=null) OR (MemDetail['tgl_tempo_cek']=''))then
-              begin
-                sql.add( ' null,'+QuotedStr(MemDetail['isdpp_prev'])+' );');
-              end  else
-                sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+','+QuotedStr(MemDetail['isdpp_prev'])+' );');
+
+                if not VarIsNull(MemDetail['tgl_tempo_cek']) then
+                sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+',')
+                else sql.add( ' NULL, ');
+
+                if not VarIsNull(MemDetail['isdpp_prev']) then
+                sql.add( ' '+QuotedStr(MemDetail['isdpp_prev'])+' );')
+                else sql.add( 'False );');
+
+
+//              if ((MemDetail['tgl_tempo_cek']=NULL) OR (MemDetail['tgl_tempo_cek']=''))then
+//              begin
+//                sql.add( ' NULL,'+QuotedStr(MemDetail['isdpp_prev'])+' );');
+//              end  else
+//                sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+','+QuotedStr(MemDetail['isdpp_prev'])+' );');
 
       ExecSQL;
     end;
@@ -433,6 +460,16 @@ begin
   MemDetail.EmptyTable;
   QdppSudahTagih.Close;
   Qdppbelumditagih.Close;
+
+  dtCetak.Enabled:=True;
+  dtTagih.Enabled:=True;
+  edKabupaten.Enabled:=True;
+  edKaresidenan.Enabled:=True;
+  edNamaKolektor.Enabled:=True;
+  btTampilkan.Enabled:=True;
+  DBGridDetail.Columns[1].EditButton.Enabled:=True;
+  DBGridDetail.Columns[2].EditButton.Enabled:=True;
+
   MemDetail.Close;
   MemDetail.Open;
 end;
@@ -490,20 +527,29 @@ end;
 
 procedure TFDataPenagihanPiutang.edNamaKolektorButtonClick(Sender: TObject);
 begin
-  if (MemDetail.RecordCount=0) AND (edKabupaten.Text<>'') then
+  if Status=0 then
   begin
-    FMasterData.Caption:='Master Data Kolektor';
-    FMasterData.vcall:='m_kolektor';
-    FMasterData.update_grid('code','name','concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency) ','"public"."t_collector"','WHERE	deleted_at IS NULL AND code_regency='+QuotedStr(strKabupatenID)+' ');
-    FMasterData.ShowModal;
-  end else begin
-    MessageDlg('Kabupaten wajib di isi dan Data harus kosong..!!',mtInformation,[mbRetry],0);
+    if (MemDetail.RecordCount=0) AND (edKabupaten.Text<>'') then
+    begin
+      FMasterData.Caption:='Master Data Kolektor';
+      FMasterData.vcall:='m_kolektor';
+      FMasterData.update_grid('code','name','concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency) ','"public"."t_collector"','WHERE	deleted_at IS NULL AND code_regency='+QuotedStr(strKabupatenID)+' ');
+      FMasterData.ShowModal;
+    end else begin
+      MessageDlg('Kabupaten wajib di isi dan Data harus kosong..!!',mtInformation,[mbRetry],0);
+    end;
+  end else
+  begin
+    if (edKabupaten.Text<>'') then
+    begin
+      FMasterData.Caption:='Master Data Kolektor';
+      FMasterData.vcall:='m_kolektor';
+      FMasterData.update_grid('code','name','concat(''Kares. '', name_kares, '', Kabupaten. '', name_regency) ','"public"."t_collector"','WHERE	deleted_at IS NULL AND code_regency='+QuotedStr(strKabupatenID)+' ');
+      FMasterData.ShowModal;
+    end else begin
+      MessageDlg('Kabupaten wajib di isi dan Data harus kosong..!!',mtInformation,[mbRetry],0);
+    end;
   end;
-end;
-
-procedure TFDataPenagihanPiutang.FormShow(Sender: TObject);
-begin
-  Clear;
 end;
 
 procedure TFDataPenagihanPiutang.RzBitBtn1Click(Sender: TObject);

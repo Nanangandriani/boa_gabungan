@@ -299,6 +299,10 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           UserWidth = 81
           Visible = True
           ItemName = 'dtTanggal'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -330,7 +334,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 411
+      DockedLeft = 428
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1498,6 +1502,13 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       Hint = 'Tanggal'
       Visible = ivAlways
       ShowDayText = False
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU      '
+      Category = 0
+      Hint = 'SBU      '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsRekapPenjualanperCustomer: TDataSource

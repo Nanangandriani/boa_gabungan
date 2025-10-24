@@ -86,6 +86,7 @@ type
     QDaftarRekeningKorankredit_bank: TFloatField;
     QDaftarRekeningKoransetoran: TFloatField;
     QDaftarRekeningKoransaldo_akhir: TFloatField;
+    cbSBU: TdxBarCombo;
     procedure btPreviewClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -319,6 +320,7 @@ begin
   edRekeningBank.EditValue := '';
   vNamaBank:='';
   vRekeningBank:='';
+  FillSBUBarCombo(cbSBU);
 end;
 
 initialization

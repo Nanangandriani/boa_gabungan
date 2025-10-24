@@ -273,6 +273,10 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           UserWidth = 90
           Visible = True
           ItemName = 'cbVolume'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -304,7 +308,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 681
+      DockedLeft = 690
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1466,6 +1470,13 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         'Qty'
         'Value')
       ItemIndex = 0
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU      '
+      Category = 0
+      Hint = 'SBU      '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsMonitoringTargetOmset: TDataSource

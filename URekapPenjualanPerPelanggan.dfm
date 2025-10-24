@@ -252,6 +252,10 @@ object FRekapPenjualanPerPelanggan: TFRekapPenjualanPerPelanggan
         item
           Visible = True
           ItemName = 'cbPaperSize'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -1447,6 +1451,13 @@ object FRekapPenjualanPerPelanggan: TFRekapPenjualanPerPelanggan
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
       OnClick = dxBarLargeButton6Click
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU             '
+      Category = 0
+      Hint = 'SBU             '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsRekapPenjualanperCustomer: TDataSource

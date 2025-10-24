@@ -18,7 +18,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     Left = 0
     Top = 0
     Width = 430
-    Height = 209
+    Height = 225
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
@@ -110,6 +110,20 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       Height = 15
       Caption = 'Kategori Barang'
     end
+    object LabelSBU: TLabel
+      Left = 20
+      Top = 154
+      Width = 21
+      Height = 15
+      Caption = 'SBU'
+    end
+    object LabelSBU2: TLabel
+      Left = 118
+      Top = 154
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object edNamaPelanggan: TRzButtonEdit
       Left = 132
       Top = 16
@@ -156,8 +170,8 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       OnChange = edTahunChange
     end
     object edKodePelanggan: TRzEdit
-      Left = 248
-      Top = 127
+      Left = 279
+      Top = 98
       Width = 121
       Height = 23
       Text = ''
@@ -175,7 +189,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     end
     object btAddDetail: TRzBitBtn
       Left = 20
-      Top = 153
+      Top = 182
       Width = 116
       Height = 30
       Align = alCustom
@@ -244,12 +258,23 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       TabOrder = 6
       OnChange = cbKategoriChange
     end
+    object cbSBU: TRzComboBox
+      Left = 132
+      Top = 153
+      Width = 133
+      Height = 23
+      TabOrder = 7
+      OnChange = cbBulanChange
+      OnExit = cbBulanExit
+      Items.Strings = (
+        '')
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 209
+    Top = 225
     Width = 430
-    Height = 277
+    Height = 261
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alClient
@@ -257,17 +282,17 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     TabIndex = 0
     TabOrder = 1
     ExplicitWidth = 426
-    ExplicitHeight = 276
+    ExplicitHeight = 260
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail'
       ExplicitWidth = 422
-      ExplicitHeight = 251
+      ExplicitHeight = 235
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 426
-        Height = 252
+        Height = 236
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh]
         AllowedSelections = []

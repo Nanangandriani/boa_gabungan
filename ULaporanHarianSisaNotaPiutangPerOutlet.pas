@@ -98,6 +98,7 @@ type
     frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet: TfrxDBDataset;
     QLaporanHarianSisaNotaPiutangPerOutlet: TUniQuery;
     Qreport: TUniQuery;
+    cbSBU: TdxBarCombo;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -205,6 +206,7 @@ begin
   dtTanggal2.Date:=NOW;
   Qreport.Close;
   QLaporanHarianSisaNotaPiutangPerOutlet.Close;
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFLaporanHarianSisaNotaPiutangPerOutlet.ReportGetValue(

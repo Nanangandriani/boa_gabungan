@@ -216,8 +216,8 @@ begin
       FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
       FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];
       FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
-      Dm.Qtemp.first;
-      while not Dm.Qtemp.Eof do
+      Dm.Qtemp2.first;
+      while not Dm.Qtemp2.Eof do
       begin
         FNew_Penjualan.MemDetail.active:=false;
         FNew_Penjualan.MemDetail.active:=true;
@@ -247,7 +247,7 @@ begin
         FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp2.FieldByName('group_id').AsString;
         FNew_Penjualan.MemDetail.post;
 //        FNew_Penjualan.HitungGrid;
-        Dm.Qtemp.next;
+        Dm.Qtemp2.next;
       end;
       FNew_Penjualan.HitungDetail;
     end;

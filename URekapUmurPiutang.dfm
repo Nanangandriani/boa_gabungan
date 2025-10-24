@@ -575,6 +575,10 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         item
           BeginGroup = True
           Visible = True
+          ItemName = 'cbSBU'
+        end
+        item
+          Visible = True
           ItemName = 'ActSearch'
         end>
       OneOnRow = False
@@ -586,7 +590,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     object dxBarManager1Bar2: TdxBar
       Caption = 'Custom 1'
       CaptionButtons = <>
-      DockedLeft = 231
+      DockedLeft = 361
       DockedTop = 0
       FloatLeft = 791
       FloatTop = 2
@@ -1412,6 +1416,13 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         323032352D30392D30345430373A30313A34372B30303A3030B8738419000000
         1974455874536F667477617265007777772E696E6B73636170652E6F72679BEE
         3C1A0000000049454E44AE426082}
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU'
+      Category = 0
+      Hint = 'SBU'
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object QRekapUmurPiutang: TUniQuery

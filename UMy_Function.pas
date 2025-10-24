@@ -1,8 +1,8 @@
-unit UMy_Function;
+﻿unit UMy_Function;
 
 interface
 
-Uses SysUtils, frxClass,uni;
+Uses SysUtils, frxClass,uni,dxBar, RzCmboBx, StdCtrls, DB;
   function convbulan(nobulan:Integer):string;
   function convbulanInd(nobulan:Integer):string;
   function GenerateNumber(startingNumber, digits: Integer): string;
@@ -18,6 +18,8 @@ Uses SysUtils, frxClass,uni;
   function LastDayOfMonth(Year, Month: Word): word; // 25-08-2025 cr ds
   function GetLocalIP:string;//NANANG
   procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
+  procedure FillSBUBarCombo(ABarCombo: TdxBarCombo);
+  procedure FillSBUBarCombo2(ACombo: TRzComboBox;ALabel: TLabel;A2Label: TLabel);
 
   var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation,statustr,status_akses:string;
       strday2:TDate;
@@ -30,6 +32,94 @@ uses UDataModule, UHomeLogin, WinSock;
 function RIGHT(S: string; j:Integer): string;
 begin
   RIGHT := Copy(s,(length(s)-(j-1)),j);
+end;
+
+//Nanang
+procedure FillSBUBarCombo(ABarCombo: TdxBarCombo);
+begin
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    ABarCombo.Visible:=ivAlways;
+    // ⭐️ CRITICAL: Check for nil before accessing properties
+    if not Assigned(ABarCombo) then
+      Exit;
+
+    // Clear the items
+    ABarCombo.Items.Clear;
+
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text := 'select company_code, company_name from t_company where stat_office=1 order by company_name ASC';
+      // Use Open() for SELECT statement
+      Open;
+    end;
+
+    // Fill the TdxBarCombo
+    if not Dm.Qtemp.IsEmpty then
+    begin
+      Dm.Qtemp.First;
+      while not Dm.Qtemp.Eof do
+      begin
+        ABarCombo.Items.Add(Dm.Qtemp['company_code']);
+        Dm.Qtemp.Next;
+      end;
+    end;
+
+    // Set ItemIndex if items exist
+    if ABarCombo.Items.Count > 0 then
+      ABarCombo.ItemIndex := 0;
+  end else begin
+    ABarCombo.Text:=FHomeLogin.vKodePRSH;
+    ABarCombo.Visible:=ivNever;
+  end;
+end;
+
+//Nanang
+procedure FillSBUBarCombo2(ACombo: TRzComboBox;ALabel: TLabel;A2Label: TLabel);
+begin
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    ACombo.Visible:=True;
+    ALabel.Visible:=True;
+    A2Label.Visible:=True;
+    // ⭐️ CRITICAL: Check for nil before accessing properties
+    if not Assigned(ACombo) then
+      Exit;
+
+    // Clear the items
+    ACombo.Clear;
+
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text := 'select company_code, company_name from t_company where stat_office=1 order by company_name ASC';
+      // Use Open() for SELECT statement
+      Open;
+    end;
+
+    // Fill the TdxBarCombo
+    if not Dm.Qtemp.IsEmpty then
+    begin
+      Dm.Qtemp.First;
+      while not Dm.Qtemp.Eof do
+      begin
+        ACombo.Items.Add(Dm.Qtemp['company_code']);
+        Dm.Qtemp.Next;
+      end;
+    end;
+
+    // Set ItemIndex if items exist
+    if ACombo.Items.Count > 0 then
+      ACombo.ItemIndex := 0;
+  end else begin
+    ACombo.Text:=FHomeLogin.vKodePRSH;
+    ACombo.Visible:=False;
+    ALabel.Visible:=False;
+    A2Label.Visible:=False;
+  end;
 end;
 
 //Nanang

@@ -32,8 +32,6 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -213
-    ExplicitWidth = 841
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -275,6 +273,10 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
           UserWidth = 78
           Visible = True
           ItemName = 'dtTanggal2'
+        end
+        item
+          Visible = True
+          ItemName = 'cbSBU'
         end>
       OneOnRow = False
       Row = 0
@@ -306,7 +308,7 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 171
+      DockedLeft = 192
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1312,6 +1314,13 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
           Default = True
           Kind = bkEllipsis
         end>
+    end
+    object cbSBU: TdxBarCombo
+      Caption = 'SBU                 '
+      Category = 0
+      Hint = 'SBU                 '
+      Visible = ivAlways
+      ItemIndex = -1
     end
   end
   object DsLaporanHarianSisaNotaPiutangPerOutlet: TDataSource

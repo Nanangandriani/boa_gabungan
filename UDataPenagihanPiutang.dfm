@@ -12,7 +12,6 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -286,7 +285,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object edKabupaten: TRzButtonEdit
       Left = 149
-      Top = 102
+      Top = 101
       Width = 268
       Height = 23
       Text = ''
@@ -437,6 +436,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       Align = alLeft
       Caption = 'Moving DPP'
       TabOrder = 2
+      Visible = False
       OnClick = RzBitBtn1Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -886,7 +886,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       ''
       '  ')
     OnGetValue = ReportGetValue
-    Left = 496
+    Left = 424
+    Top = 8
     Datasets = <
       item
         DataSet = frxDBDatasetDpp
@@ -3149,7 +3150,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     DataSet = QdppSudahTagih
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 544
+    Left = 504
+    Top = 8
   end
   object QdppSudahTagih: TUniQuery
     Connection = dm.Koneksi
@@ -3170,8 +3172,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         'WHERE "code_collector"='#39'COL.0001'#39' AND  "date_dpp"='#39'2024-09-18'#39' a' +
         'nd (a.receipt>0 or a.cheque_amount1>0)  Order By "date_dpp", "no' +
         '_invoice" desc')
-    Left = 592
-    Top = 88
+    Left = 568
+    Top = 64
   end
   object frxDBDatasetDPPBlmDitagih: TfrxDBDataset
     UserName = 'frxDBDatasetDPPBlmDitagih'
@@ -3197,7 +3199,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     DataSet = Qdppbelumditagih
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 632
+    Left = 608
     Top = 8
   end
   object Qdppbelumditagih: TUniQuery
@@ -3219,7 +3221,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         'WHERE "code_collector"='#39'COL.0001'#39' AND  "date_dpp"='#39'2024-09-18'#39' a' +
         'nd (a.receipt=0 and a.cheque_amount1=0)  Order By "date_dpp", "n' +
         'o_invoice" desc')
-    Left = 680
-    Top = 112
+    Left = 672
+    Top = 64
   end
 end
