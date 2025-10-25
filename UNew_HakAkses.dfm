@@ -24,8 +24,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 445
-    ExplicitWidth = 540
+    ExplicitTop = 437
+    ExplicitWidth = 538
     object BBatal: TRzBitBtn
       Left = 468
       Top = 1
@@ -86,7 +86,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 464
+      ExplicitLeft = 462
     end
     object BSimpan: TRzBitBtn
       Left = 393
@@ -148,7 +148,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 389
+      ExplicitLeft = 387
     end
     object Bhapus: TRzBitBtn
       Left = 1
@@ -411,17 +411,17 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 5
-    ExplicitWidth = 540
+    ExplicitWidth = 538
     object Label1: TLabel
       Left = 32
-      Top = 54
+      Top = 42
       Width = 59
       Height = 13
       Caption = 'Departemen'
     end
     object Label8: TLabel
       Left = 129
-      Top = 54
+      Top = 42
       Width = 4
       Height = 13
       Caption = ':'
@@ -440,18 +440,33 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
       Height = 13
       Caption = ':'
     end
+    object Label4: TLabel
+      Left = 32
+      Top = 66
+      Width = 39
+      Height = 13
+      Caption = 'Jabatan'
+    end
+    object Label5: TLabel
+      Left = 129
+      Top = 66
+      Width = 4
+      Height = 13
+      Caption = ':'
+    end
     object Edkd: TEdit
-      Left = 153
-      Top = 51
+      Left = 345
+      Top = 16
       Width = 80
       Height = 21
       TabOrder = 0
       Text = '0'
+      Visible = False
       OnChange = EdkdChange
     end
     object EdNm: TRzComboBox
-      Left = 248
-      Top = 51
+      Left = 153
+      Top = 39
       Width = 161
       Height = 21
       TabOrder = 1
@@ -466,6 +481,25 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 2
+    end
+    object EdJabatan: TRzComboBox
+      Left = 153
+      Top = 63
+      Width = 161
+      Height = 21
+      TabOrder = 3
+      OnChange = EdJabatanChange
+      OnSelect = EdNmSelect
+    end
+    object EdkdJabatan: TEdit
+      Left = 345
+      Top = 39
+      Width = 80
+      Height = 21
+      TabOrder = 4
+      Text = '0'
+      Visible = False
+      OnChange = EdkdJabatanChange
     end
   end
   object DsDetail: TDataSource
@@ -488,7 +522,7 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
         'inner join t_dept c on a.dept_code=c.dept_code order by a.akses_' +
         'no Asc')
     Left = 464
-    Top = 80
+    Top = 120
   end
   object QMenu: TUniQuery
     Connection = dm.Koneksi
@@ -501,8 +535,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 472
-    Top = 8
+    Left = 464
+    Top = 32
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object idmenu: TMTStringDataFieldEh

@@ -245,7 +245,7 @@ begin
     FNew_Penjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FNew_Penjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
     FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
-    FNew_Penjualan.Autonumber;
+//    FNew_Penjualan.Autonumber;
     FNew_Penjualan.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
     FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;

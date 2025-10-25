@@ -436,17 +436,29 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 978
+      ExplicitLeft = 976
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
-      Left = 712
-      Top = 4
+      Left = 503
+      Top = 6
       Width = 185
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 2
       TextHint = 'Autonumber'
       Visible = False
+    end
+    object BCorrection: TRzBitBtn
+      Left = 884
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 3
+      OnClick = BCorrectionClick
+      ExplicitLeft = 880
     end
   end
   object RzPageControl1: TRzPageControl

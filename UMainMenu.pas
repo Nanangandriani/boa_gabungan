@@ -93,7 +93,6 @@ type
     procedure dxBarLargeButtonUtilityClick(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
 
   private
     { Private declarations }
@@ -135,13 +134,13 @@ var
   MyTreeView : TRzTreeView;
   Doc: IHTMLDocument2;      // current HTML document
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
-  Nm,loksbu,kdsbu,dept_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl,NmFull:string;
+  Nm,loksbu,kdsbu,dept_code,jabatan_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl, NmFull:string;
   JSFn: string;
  // statustr:integer;
 implementation
 
 {$R *.dfm} {$R resource.RES}
-uses UDataModule, UHomeLogin, UMy_Function;
+uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi;
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
 var
@@ -165,124 +164,6 @@ begin
       doc := nil;
     end;
   end;
-end;
-
-procedure TFMainMenu.AksesSub(Form: TForm; Akses, Sub: String);
-var
-  ActionName: string;
-begin
-  with dm.Qtemp1 do
-  begin
-      SQL.Clear;
-      SQL.Text := 'SELECT aa.* FROM t_akses aa '+
-      ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
-      ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
-      //' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
-      ' WHERE aa.dept_code='+QuotedStr(dept_code)+' '+
-      ' AND bb.SubMenu='+QuotedStr(vCaptionButton);
-      //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
-      open;
-  end;
-
-  if dm.Qtemp1.RecordCount=0 then
-  begin
-    ShowMessage('Tidak Ditemukan Akses !!!');
-    Exit;
-  end;
-
-  if dm.Qtemp1.RecordCount<>0 then
-  begin
-  // --- Nonaktifkan semua action default dulu ---
-  for i := 0 to Form.ComponentCount - 1 do
-    if (Form.Components[i] is TAction) then
-      TAction(Form.Components[i]).Enabled := False;
-
-  // --- Aktifkan sesuai hak akses ---
-  for i := 0 to Form.ComponentCount - 1 do
-    if (Form.Components[i] is TAction) then
-    begin
-      ActionName := TAction(Form.Components[i]).Name;
-
-      if (dm.Qtemp1.FieldByName('RAdd').AsInteger = 1) then
-      begin
-        if (ActionName = 'ActBaru') OR (ActionName = 'ActNew')  OR (ActionName = 'ActAdd')then
-        begin
-          TAction(Form.Components[i]).Enabled := True;
-        end;
-      end;
-
-      if (dm.Qtemp1.FieldByName('REdit').AsInteger = 1) then
-      begin
-        if (ActionName = 'ActEdit') OR (ActionName = 'ActUpdate') then
-        begin
-          TAction(Form.Components[i]).Enabled := True;
-        end;
-      end;
-
-      if (dm.Qtemp1.FieldByName('RDelete').AsInteger = 1) then
-      begin
-        if (ActionName = 'ActDelete') OR (ActionName = 'ActDel')then
-        begin
-          TAction(Form.Components[i]).Enabled := True;
-        end;
-      end;
-
-      if (dm.Qtemp1.FieldByName('RRefresh').AsInteger = 1) then
-      begin
-        if (ActionName = 'ActRefresh') OR (ActionName = 'ActRO')then
-        begin
-          TAction(Form.Components[i]).Enabled := True;
-        end;
-      end;
-
-      if (dm.Qtemp1.FieldByName('RPrint').AsInteger = 1) then
-      begin
-        if (ActionName = 'ActPrint')  then
-        begin
-          TAction(Form.Components[i]).Enabled := True;
-        end;
-      end;
-
-    end;
-  end;
-
-
-
-  {if dm.Qtemp1.FieldByName('RAdd').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActNew' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('REdit').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActEdit' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('RDelete').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActDelete' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('RRefresh').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActRefresh' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;
-  if dm.Qtemp1.FieldByName('RPrint').AsInteger=2 then
-  begin
-    for i:=0 to Form.ComponentCount-1 do
-    if (Form.Components[i] is TAction) then
-    if TAction(Form.Components[i]).Name='ActPrint' then
-    TAction(Form.Components[i]).Enabled:=true;
-  end;}
 end;
 
 function GetElementIdValue(WebBrowser: TWebBrowser;
@@ -504,6 +385,11 @@ begin
   end;
   if dm.Qtemp.RecordCount=1 then
   begin
+    if vCaptionButton='Singkronisasi' then
+    begin
+      FSingkronisasi.Show;
+      Exit;
+    end else
     if vCaptionButton='Logout' then
     begin
 
@@ -731,16 +617,20 @@ begin
     ExecSQL;
   end;
   dept_code:=dm.Qtemp['dept_code'];
+  jabatan_code:=dm.Qtemp['position_code'];
   with dm.Qtemp1 do
   begin
     SQL.Clear;
     SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
     ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
-    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.deleted_at IS NULL '+
+    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.position_code=aa.position_code AND dd.deleted_at IS NULL '+
     ' INNER JOIN t_menu e on bb.menu_code=e.menu_code AND e.deleted_at IS NULL '+
     ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code AND cc.deleted_at IS NULL '+
-    ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' and cc.master_name='+QuotedStr(Menu)+' AND bb.deleted_at IS NULL '+
-    ' group by e.created_at,e.id, e.menu'+
+    ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' '+
+    ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
+    ' and cc.master_name='+QuotedStr(Menu)+' '+
+    ' and bb.deleted_at IS NULL '+
+    ' group by e.created_at,e.id, e.menu '+
     ' Order by e.created_at asc';
     open;
     First;
@@ -766,11 +656,15 @@ begin
     with dm.Qtemp2 do
     begin
       SQL.Clear;
-      SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu FROM t_akses aa  '+
-      ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL INNER JOIN t_menu b '+
-      ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
-      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.deleted_at IS NULL '+
-      ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+      SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu '+
+      ' FROM t_akses aa  '+
+      ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL '+
+      ' INNER JOIN t_menu b ON b.menu_code = bb.menu_code '+
+      ' INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
+      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code and dd.position_code=aa.position_code and dd.deleted_at IS NULL '+
+      ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' '+
+      ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+      ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
       ' and cc.master_name='+QuotedStr(Menu)+
       ' Order by bb.created_at desc ';
       open;
@@ -875,6 +769,7 @@ begin
     ExecSQL;
   end;
   dept_code:=dm.Qtemp['dept_code'];
+  jabatan_code:=dm.Qtemp['position_code'];
   with dm.Qtemp1 do
   begin
     SQL.Clear;
@@ -888,8 +783,10 @@ begin
                ' INNER JOIN t_menu bb ON aa.submenu = bb.submenu AND bb.deleted_at IS NULL '+
                ' INNER JOIN t_menu_master cc ON bb.master_code = cc.master_code AND cc.deleted_at IS NULL '+
                ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.deleted_at IS NULL '+
-               ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+
-               ' AND aa.deleted_at IS NULL Order by cc.created_at asc';
+               ' INNER JOIN t_position d on aa.position_code=d.position_code '+
+               ' WHERE dd.dept_code='+QuotedStr(dept_code)+
+               ' and d.position_code='+QuotedStr(jabatan_code)+' '+
+               ' Order by cc.created_at asc';
     open;
     First;
   end;
@@ -912,49 +809,131 @@ begin
   end;
 end;
 
+procedure TFMainMenu.AksesSub(Form: TForm; Akses, Sub: String);
+var
+  ActionName: string;
+begin
+  with dm.Qtemp1 do
+  begin
+      SQL.Clear;
+      SQL.Text := 'SELECT aa.* FROM t_akses aa '+
+      ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
+      ' INNER JOIN t_menu cc ON bb.menu_code = cc.menu_code '+
+      ' INNER JOIN t_position dd on aa.position_code=dd.position_code '+
+      //' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
+      ' WHERE aa.dept_code='+QuotedStr(dept_code)+' '+
+      ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
+      ' AND bb.SubMenu='+QuotedStr(vCaptionButton);
+      //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
+      open;
+  end;
+  if dm.Qtemp1.RecordCount=0 then
+  begin
+    ShowMessage('Tidak Ditemukan Akses !!!');
+    Exit;
+  end;
+  if dm.Qtemp1.RecordCount<>0 then
+  begin
+  // --- Nonaktifkan semua action default dulu ---
+  for i := 0 to Form.ComponentCount - 1 do
+    if (Form.Components[i] is TAction) then
+      TAction(Form.Components[i]).Enabled := False;
+  // --- Aktifkan sesuai hak akses ---
+  for i := 0 to Form.ComponentCount - 1 do
+    if (Form.Components[i] is TAction) then
+    begin
+      ActionName := TAction(Form.Components[i]).Name;
+      if (dm.Qtemp1.FieldByName('RAdd').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActBaru') OR (ActionName = 'ActNew')  OR (ActionName = 'ActAdd')  OR (ActionName = 'ActApp') then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+      if (dm.Qtemp1.FieldByName('REdit').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActEdit') OR (ActionName = 'ActUpdate') then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+      if (dm.Qtemp1.FieldByName('RDelete').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActDelete') OR (ActionName = 'ActDel') OR (ActionName = 'ActReject')then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+      if (dm.Qtemp1.FieldByName('RRefresh').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActRefresh') OR (ActionName = 'ActRO') OR (ActionName = 'ActRo')then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+      if (dm.Qtemp1.FieldByName('RPrint').AsInteger = 1) then
+      begin
+        if (ActionName = 'ActPrint')  then
+        begin
+          TAction(Form.Components[i]).Enabled := True;
+        end;
+      end;
+    end;
+  end;
+
+  {if dm.Qtemp1.FieldByName('RAdd').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActNew' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('REdit').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActEdit' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('RDelete').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActDelete' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('RRefresh').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActRefresh' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;
+  if dm.Qtemp1.FieldByName('RPrint').AsInteger=2 then
+  begin
+    for i:=0 to Form.ComponentCount-1 do
+    if (Form.Components[i] is TAction) then
+    if TAction(Form.Components[i]).Name='ActPrint' then
+    TAction(Form.Components[i]).Enabled:=true;
+  end;}
+end;
+
 procedure TFMainMenu.Exit1Click(Sender: TObject);
 begin
   Application.Terminate;
 end;
 
-procedure TFMainMenu.FormActivate(Sender: TObject);
-begin
-//Application.Restore;
-end;
-
 procedure TFMainMenu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Application.Terminate;
-//  FHomeLogin.Show;
-//  CloseAllTabsheets;
-//  ClearCategoryPanelGroup;
-//  FHomeLogin.Eduser.Text:='';
-//  FHomeLogin.EdPass.Text:='';
-//
-//  FHomeLogin.CbSBU.Properties.Items.Clear;
-//  DM.ABSDatabase1.Close;
-//  DM.ABSDatabase1.DatabaseFileName:=cLocation+'Conectdb'+ '.abs';
-//  DM.ABSDatabase1.Open;
-//  DM.ABSTable1.Close;
-//  DM.ABSTable1.Open;
-//  DM.ABSTable1.Filtered:=False;
-//
-//  DM.ABSTable1.First;
-//  while not DM.ABSTable1.Eof do
-//  begin
-//    FHomeLogin.CbSBU.Properties.Items.Add(DM.ABSTable1.FieldByName('nama_sbu').AsString);
-//    DM.ABSTable1.Next;
-//  end;
-//  CategoryPanelUtama.Panels.Clear;
-//
-//  with dm.Qtemp do
-//  begin
-//    close;
-//    sql.Clear;
-//    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
-//    ExecSQL;
-//  end;
-//  FHomeLogin.show;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
+    ExecSQL;
+  end;
+  //FHomeLogin.show;
 end;
 
 procedure TFMainMenu.FormResize(Sender: TObject);

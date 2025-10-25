@@ -88,8 +88,18 @@ end;
 procedure TFDataProspekPelanggan.btTampilkanClick(Sender: TObject);
 var
   max,min : Integer;
+  strSBU: String;
 begin
-  if cbSBU.Text<>'' then
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    strSBU:=cbSBU.Text;
+  end else
+  begin
+    strSBU:=FHomeLogin.vKodePRSH;
+  end;
+
+  if strSBU<>'' then
   begin
 
     DBGridcustomer.StartLoadingStatus();
@@ -313,8 +323,10 @@ begin
   begin
     RefreshSBU;
     cbSBU.Visible:=True;
+    RzLabel1.Visible:=True;
   end else begin
     cbSBU.Visible:=False;
+    RzLabel1.Visible:=False;
   end;
 end;
 
@@ -344,7 +356,7 @@ begin
     sql.Text:=' Delete from t_customer_prospect_tmp where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ';
     ExecSQL ;
   end;
-  if FHomeLogin.vKodePRSH='PST' then
+  if FHomeLogin.vStatOffice=0 then
   begin
     strsbu:=cbSBU.Text;
   end else

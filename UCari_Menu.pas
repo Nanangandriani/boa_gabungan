@@ -63,13 +63,14 @@ FNew_Hak_Akses.memdetail.active:=true;
               close;
               sql.Clear;
               sql.Text:=' insert into t_akses '+
-                        ' (rolenama,submenu,submenu_code,created_by,akses_no,dept_code)'+
+                        ' (rolenama,submenu,submenu_code,created_by,position_code,akses_no,dept_code)'+
                         ' values('+
                         ' ''0'','+
                         ' '+QuotedStr(qmenu['submenu'])+','+
                         ' '+QuotedStr(qmenu['submenu_code'])+','+
                         ' '+QuotedStr(nm)+','+
-                        ' '+QuotedStr(FNew_Hak_Akses.Edkd.Text)+','+
+                        ' '+QuotedStr(FNew_Hak_Akses.EdkdJabatan.Text)+','+
+                        ' '+QuotedStr(FNew_Hak_Akses.Edkd.Text+''+FNew_Hak_Akses.EdkdJabatan.Text)+','+
                         ' '+QuotedStr(FNew_Hak_Akses.Edkd.Text)+')';
               Execute;                                                                                 {+QuotedStr(nm)+}
             end;

@@ -163,7 +163,7 @@ type
     procedure SavePotongan;
     procedure HitungTotal;
     procedure CheckPembayaran;
-    procedure CheckJurnalPosting;
+//    procedure CheckJurnalPosting;
     procedure HitungDetail;
   end;
 
@@ -331,22 +331,22 @@ begin
   end;
 end;
 
-procedure TFNew_Penjualan.CheckJurnalPosting;
-begin
-  with dm.Qtemp do
-  begin
-    Close;
-    Sql.Clear;
-    Sql.Text:='SELECT * FROM t_general_ledger WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' AND approved_status=True';
-    Open;
-  end;
-
-  if dm.Qtemp.RecordCount>0 then
-  begin
-    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
-    iserror:=1;
-  end;
-end;
+//procedure TFNew_Penjualan.CheckJurnalPosting;
+//begin
+//  with dm.Qtemp do
+//  begin
+//    Close;
+//    Sql.Clear;
+//    Sql.Text:='SELECT * FROM t_general_ledger WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' AND approved_status=True';
+//    Open;
+//  end;
+//
+//  if dm.Qtemp.RecordCount>0 then
+//  begin
+//    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+//    iserror:=1;
+//  end;
+//end;
 
 procedure TFNew_Penjualan.HitungTotal;
 var totdpp,totnetto:real;
@@ -492,7 +492,11 @@ end;
 procedure TFNew_Penjualan.BCorrectionClick(Sender: TObject);
 begin
   CheckPembayaran;
-  CheckJurnalPosting;
+  if CheckJurnalPosting(edNomorTrans.Text)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
   if iserror=0 then
   begin
     FKoreksi.vcall:=SelectRow('select Upper(a.menu) menu from t_menu a '+
@@ -911,7 +915,6 @@ end;
 procedure TFNew_Penjualan.btHitungPotonganClick(Sender: TObject);
 var IntTotGroup,IntGroupID : Integer;
 begin
-
   if MemDetail.RecordCount=0 then
   begin
     ShowMessage('Pastikan Anda Sudah Membuat Detail Penjualan..!!!');

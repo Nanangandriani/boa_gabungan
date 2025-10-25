@@ -89,6 +89,8 @@ begin
   begin
     Ednm.Clear;
     Edkd.text:='0';
+    EdJabatan.Clear;
+    EdkdJabatan.text:='0';
     Autonumber;
     Show;
     Load;
@@ -138,14 +140,18 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a inner join t_menu_sub b on '+
-                  ' a.submenu_code=b.submenu_code inner join t_dept c on a.dept_code=c.dept_code '+
+        sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a '+
+                  ' inner join t_menu_sub b on a.submenu_code=b.submenu_code '+
+                  ' inner join t_dept c on a.dept_code=c.dept_code '+
+                  ' inner join t_position d on a.position_code=d.position_code '+
                   ' where a.akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString)+''+
                   ' order by a.akses_no Asc ';
       end;
       EdNo.Text:=MemAkses['akses_no'];
       Edkd.Text:=MemAkses['dept_code'];
       EdNm.Text:=MemAkses['dept'];
+      EdkdJabatan.Text:=MemAkses['position_code'];
+      EdJabatan.Text:=MemAkses['position'];
       EdNmSelect(sender);
     end;
 end;

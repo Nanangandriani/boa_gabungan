@@ -80,7 +80,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Dept, UDataModule;
+uses UNew_Dept, UDataModule, UMainMenu;
 
 var
   RealDept: TFDept;
@@ -136,7 +136,7 @@ begin
       sql.Text:=' Update t_dept set deleted_at=now(),deleted_by=:deleted_by '+
                 ' where dept_code='+QuotedStr(DBGridDept.Fields[0].AsString);
      // parambyname('deleted_at').AsDateTime:=Now;
-      parambyname('deleted_by').AsString:='Admin';
+      parambyname('deleted_by').AsString:=nm;
       Execute;
     end;
     //dxbarRefreshClick(sender);
@@ -147,12 +147,12 @@ end;
 
 procedure TFDept.ActROExecute(Sender: TObject);
 begin
-  DBGridDept.StartLoadingStatus();
-  DBGridDept.FinishLoadingStatus();
-  QDept.Close;
-  MemDept.Close;
-  QDept.Open;
-  MemDept.Open;
+    DBGridDept.StartLoadingStatus();
+    DBGridDept.FinishLoadingStatus();
+    QDept.Close;
+    MemDept.Close;
+    QDept.Open;
+    MemDept.Open;
 end;
 
 procedure TFDept.ActUpdateExecute(Sender: TObject);

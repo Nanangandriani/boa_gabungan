@@ -4582,7 +4582,8 @@ object FHomeLogin: TFHomeLogin
       Font.Style = []
       ParentFont = False
       PasswordChar = '*'
-      TabOrder = 1
+      TabOrder = 2
+      Text = '12345'
       TextHint = 'Password'
       OnKeyPress = EdPassKeyPress
     end
@@ -4602,7 +4603,8 @@ object FHomeLogin: TFHomeLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 1
+      Text = 'RIKY'
       TextHint = 'Username'
       OnKeyPress = EduserKeyPress
     end
@@ -4610,7 +4612,6 @@ object FHomeLogin: TFHomeLogin
       Left = 66
       Top = 95
       ParentFont = False
-      Properties.ReadOnly = False
       Style.BorderColor = clGradientActiveCaption
       Style.BorderStyle = ebsNone
       Style.Color = 16445656
@@ -4627,7 +4628,7 @@ object FHomeLogin: TFHomeLogin
       StyleDisabled.Color = clGradientActiveCaption
       StyleDisabled.TextColor = clGradientActiveCaption
       StyleDisabled.ButtonStyle = btsFlat
-      TabOrder = 2
+      TabOrder = 0
       OnClick = CbSBUClick
       Width = 265
     end

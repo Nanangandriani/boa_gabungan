@@ -140,8 +140,8 @@ object FListTargetPenjualan: TFListTargetPenjualan
       object DBGridKelompok: TDBGridEh
         Left = 0
         Top = 0
-        Width = 688
-        Height = 248
+        Width = 687
+        Height = 232
         Align = alClient
         DataSource = DataSource1
         DynProps = <>
@@ -183,7 +183,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
             Left = 0
             Top = 0
             Width = 612
-            Height = 198
+            Height = 186
             Align = alClient
             DataSource = DSTargetPenjualanDet
             DynProps = <>
@@ -1089,6 +1089,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
     SQL.Strings = (
       'SELECT aa.*,bb.customer_name FROM t_customer_sales_target aa '
       'LEFT JOIN t_customer bb on bb.customer_code=aa.customer_code')
+    Active = True
     Left = 476
     Top = 40
     object QTargetPenjualancustomer_code: TStringField

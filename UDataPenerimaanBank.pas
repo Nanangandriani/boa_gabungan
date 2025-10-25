@@ -96,6 +96,7 @@ type
     Label24: TLabel;
     cbTransaksi: TRzComboBox;
     MemDetailPiutangid_dpp: TStringField;
+    BCorrection: TRzBitBtn;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -117,14 +118,18 @@ type
     procedure cbTransaksiChange(Sender: TObject);
     procedure DBGridAkunColumns5EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
-    procedure edJumlahExit(Sender: TObject);
     procedure dtPeriode2Change(Sender: TObject);
     procedure dtPeriode1Change(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
+    procedure edJumlahExit(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
+    const
+    MAX_RETRIES = 3;
+    WAIT_TIME_MS = 1000; // 1 detik
     { Private declarations }
   public
-    Status,KetemuCekPosisiDK : Integer;
+    Status,KetemuCekPosisiDK,iserror,IntStatusKoreksi : Integer;
     akun_d, akun_k, kd_ak_pelanggan, vid_modul : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5 : String;
     strtgl, strbulan, strtahun: string;
@@ -144,6 +149,8 @@ type
     procedure HitungKurs;
     procedure CekPosisiDK;
     procedure UpdateDPP;
+    procedure Disable;
+    procedure Enable;
   end;
 
 var
@@ -155,7 +162,21 @@ implementation
 
 uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
-  UHomeLogin, UListPenerimaanBank, UMainMenu;
+  UHomeLogin, UListPenerimaanBank, UMainMenu, UKoreksi;
+
+procedure TFDataPenerimaanBank.Enable;
+begin
+  cbTransaksi.Enabled:=True;
+  cbJenisTransaksi.Enabled:=True;
+  dtTrans.Enabled:=True;
+end;
+
+procedure TFDataPenerimaanBank.Disable;
+begin
+  cbTransaksi.Enabled:=False;
+  cbJenisTransaksi.Enabled:=False;
+  dtTrans.Enabled:=False;
+end;
 
 procedure TFDataPenerimaanBank.UpdateDPP;
 var curCash,curReceipt,curChequeAmount1: Currency;
@@ -173,6 +194,7 @@ begin
 //    ShowMessage(MemDetailPiutang['id_dpp']) ;
     if edKodeJenisBayar.Text='1' then
     begin
+//      ShowMessage( MemDetailPiutang['jum_piutang']);
       curCash:= MemDetailPiutang['jum_piutang'];
     end else if edKodeJenisBayar.Text='2' then
     begin
@@ -184,7 +206,7 @@ begin
       curChequeAmount1:= MemDetailPiutang['jum_piutang'];
       strNamaBank:=QuotedStr(edNamaBank.Text);
     end;
-
+//    ShowMessage(MemDetailPiutang['id_dpp']);
     with dm.Qtemp3 do
     begin
       close;
@@ -420,7 +442,8 @@ begin
               ' additional_code='+QuotedStr(additional_code1)+','+
               ' trans_day='+QuotedStr(strtgl)+','+
               ' trans_month='+QuotedStr(strbulan)+','+
-              ' trans_year='+QuotedStr(strtahun)+' '+
+              ' trans_year='+QuotedStr(strtahun)+', '+
+              ' status_correction=0 '+
               ' Where voucher_no='+QuotedStr(edNoTrans.Text)+'');
       ExecSQL;
     end;
@@ -502,6 +525,7 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.InsertDetailPiutang;
+var strIdDPP :String;
 begin
   with Dm.Qtemp1 do
   begin
@@ -529,6 +553,9 @@ begin
   MemDetailPiutang.First;
   while not MemDetailPiutang.Eof do
   begin
+    strIdDPP:='NULL';
+    if edKodeSumberTagihan.Text='2' then strIdDPP:=QuotedStr(MemDetailPiutang['id_dpp']);
+    ShowMessage(strIdDPP);
     with dm.Qtemp do
     begin
     close;
@@ -536,7 +563,7 @@ begin
     sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
             ' "no_invoice", "no_invoice_tax", "code_cust", "name_cust", "trans_date", "date_invoice_tax", '+
             ' "code_type_trans", "name_type_trans", "account_number_bank", "account_name_bank", '+
-            ' "paid_amount", "description", "account_acc") '+
+            ' "paid_amount", "description", "account_acc",id_dpp) '+
             ' Values( '+
             ' '+QuotedStr(edNoTrans.Text)+', '+
             ' '+QuotedStr(MemDetailPiutang['no_tagihan'])+', '+
@@ -551,7 +578,7 @@ begin
             ' '+QuotedStr(edNamaBank.Text)+', '+
             ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
             ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
-            ' '+QuotedStr(kd_ak_pelanggan)+') ');
+            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+') ');
     ExecSQL;
     end;
     MemDetailPiutang.Next;
@@ -770,6 +797,26 @@ begin
   Close;
 end;
 
+
+
+procedure TFDataPenerimaanBank.BCorrectionClick(Sender: TObject);
+begin
+  iserror:=0;
+  if CheckJurnalPosting(edNoTrans.Text)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+  if iserror=0 then
+  begin
+     FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FListPenerimaanBank.Name)); //Mendapatkan nama Menu
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=edNoTrans.Text; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
@@ -815,6 +862,10 @@ begin
       else if edKodeMataUang.Text='' then
       begin
         MessageDlg('Data Mata Uang Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+        edKodeMataUang.SetFocus;
+      end else if edUntukPengiriman.Text='' then
+      begin
+        MessageDlg('Untuk Penerimaan Wajib Diisi..!!',mtInformation,[mbRetry],0);
         edKodeMataUang.SetFocus;
       end
       else if (vid_modul='3')and (Length(edNoRek.Text)=0) then
@@ -1221,6 +1272,21 @@ begin
     Panel5.Visible:=false;
     gbDataPiutang.Visible:=false;
     TabDetailFaktur.TabVisible:=false;
+  end;
+
+  if (Status=1) AND (IntStatusKoreksi=2) then
+  begin
+    BSave.Enabled:=True;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=False;
+  end else if Status=0 then
+  begin
+    BSave.Enabled:=True;
+    BCorrection.Visible:=False;
+  end else begin
+    BSave.Enabled:=False;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=True;
   end;
 end;
 

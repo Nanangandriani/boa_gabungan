@@ -165,8 +165,10 @@ begin
       sql.add('SELECT a.id,a.date_trans,a.date_dpp,a.no_invoice,a.no_invoice_tax,'+
               'a.code_cust,b.customer_name,a.paid_amount from t_dpp  a '+
               'LEFT JOIN t_customer b ON a.code_cust=b.customer_code '+
+              'LEFT JOIN  (SELECT no_invoice,SUM(kredit) bayar FROM t_selling_general '+
+              'WHERE deleted_at is NULL GROUP BY no_invoice) c ON c.no_invoice=a.no_invoice '+
               'WHERE (a.date_dpp BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih1))+' AND '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih2))+')');
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih2))+') AND a.deleted_at IS NULL ');
       if Length(edKode_Pelanggan.Text)<>0 then
       begin
         sql.add(' AND a.code_cust='+QuotedStr(kd_outlet)+' ');

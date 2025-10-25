@@ -184,7 +184,8 @@ begin
                   ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
                   ' and c.item_code=e.code_item '+
                   ' ');
-          sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' '+
+          sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' AND '+
+                  'a.id_master='+QuotedStr(get_uuid)+' '+
                   ' GROUP BY group_name, e."unit_price", a.amount '+
                   ' -- Baca qty dalam group kategori ');
           open;
@@ -203,6 +204,7 @@ begin
                   ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
                   ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
                   ' and c.item_code=e.code_item '+
+                  ' WHERE a.id_master='+QuotedStr(get_uuid)+' '+
                   ' GROUP BY a.code_item, e."unit_price", a.amount '+
                   ' -- Baca qty dalam group barang');
           open;

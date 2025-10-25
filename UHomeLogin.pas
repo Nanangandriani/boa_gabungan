@@ -52,15 +52,14 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure CbSBU3Change(Sender: TObject);
   private
     { Private declarations }
   public
-    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH, vPosition  : string;
-    vStatOffice: Integer;
-    procedure Clear;
+    vKodePRSH, vNamaPRSH, vAlamatPRSH, vTelpPRSH, vKotaPRSH, vPosition : string;
+    vStatOffice : Integer;
     { Public declarations }
    // nm,loksbu,kdsbu,id_dept:string;
+    procedure Clear;
   end;
 
 var
@@ -101,6 +100,7 @@ begin
   END;
 end;
 
+
 procedure TFHomeLogin.Clear;
 begin
   Eduser.Text:='';
@@ -131,30 +131,6 @@ begin
 //  end;
 end;
 
-procedure TFHomeLogin.CbSBU3Change(Sender: TObject);
-begin
-  with dm.abstable1 do
-  begin
-    Filtered:=false;
-    Filter:='Nama_Sbu='+QuotedStr(CbSBU.Text);
-    FilterOptions:=[];
-    Filtered:=true;
-  end;
-  TRY
-    DM.Koneksi.Connected:=False;
-    DM.Koneksi.Server:=dm.abstable1Ip_db.AsString;
-    DM.Koneksi.ProviderName:='PostgreSQL';
-    DM.Koneksi.Database:=dm.abstable1Db_Name.AsString;
-    DM.Koneksi.Password:=dm.abstable1Password.AsString;
-    DM.Koneksi.Username:=dm.abstable1User_db.AsString;
-    Dm.Koneksi.Port:=dm.abstable1Port_db.AsInteger;
-    DM.Koneksi.Connected:=True;
-    //Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
-  EXCEPT
-    showmessage('Tidak terkoneksi dengan server !');
-    exit;
-  END;
-end;
 
 procedure TFHomeLogin.CbSBUKeyPress(Sender: TObject; var Key: Char);
 begin
@@ -187,7 +163,7 @@ end;
 
 procedure TFHomeLogin.Image1Click(Sender: TObject);
 begin
-  Application.Terminate;
+   Application.Terminate;
 end;
 
 procedure TFHomeLogin.Image1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -205,7 +181,6 @@ begin
 //   image1.Picture.LoadFromFile('BCancel.png');
    Image1.Picture.LoadFromFile(cLocation +'Image/BCancel.png');
 end;
-
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
    //Cek User
@@ -236,11 +211,13 @@ begin
      sql.clear;
      sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
              ' "password", "role_id", "is_active", "last_login", "last_logout", '+
-             ' "signature", "position", "status", "created_at", "updated_at", '+
-             ' "deleted_at", "job_level_id", "created_by", "updated_by", '+
-             ' "deleted_by", "dept_code", "position_code", "ttd" '+
-             ' FROM "public"."t_user" '+
-             ' where "user_name"='+QuotedStr(Eduser.Text)+' and deleted_at IS NULL ');
+             ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
+             ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
+             ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
+             ' FROM "public"."t_user" aa '+
+             ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
+             ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
+             ' where "user_name"='+QuotedStr(Eduser.Text)+' and aa.deleted_at IS NULL ');
      open;
     end;
     if dm.Qtemp.RecordCount=0 then
@@ -248,19 +225,20 @@ begin
       ShowMessage('User Anda Tidak Terdaftar..!!!');
       Exit;
     end;
-
     with dm.Qtemp do
     begin
      close;
      sql.clear;
      sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
              ' "password", "role_id", "is_active", "last_login", "last_logout", '+
-             ' "signature", "position", "status", "created_at", "updated_at", '+
-             ' "deleted_at", "job_level_id", "created_by", "updated_by", '+
-             ' "deleted_by", "dept_code", "position_code", "ttd","access_status" '+
-             ' FROM "public"."t_user" '+
+             ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
+             ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
+             ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
+             ' FROM "public"."t_user" aa '+
+             ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
+             ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
              ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
-             ' and "password"='+QuotedStr(EdPass.Text)+'  and deleted_at IS NULL  ');
+             ' and "password"='+QuotedStr(EdPass.Text)+'  and aa.deleted_at IS NULL  ');
      open;
     end;
     if dm.Qtemp.RecordCount=0 then
@@ -268,9 +246,8 @@ begin
       ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');
       Exit;
     end;
-    status_akses:=dm.Qtemp['access_status'];
+    //status_akses:=dm.Qtemp['access_status'];
     NmFull:=dm.Qtemp.FieldByName('full_name').AsString;
-
 
    //Buat Variable Perusahaan
 //    with dm.Qtemp do
@@ -294,7 +271,6 @@ begin
 //        FMainMenu.StatusPerusahaan.Caption:=dm.Qtemp.FieldByName('company_name').AsString;
 //      end;
 //    end;
-
     //Rudi
     with dm.Qtemp do
     begin
@@ -305,7 +281,6 @@ begin
              ' "tax_status", "currency", stat_office FROM "t_company" ');
      open;
     end;
-
     if dm.Qtemp.RecordCount<>0 then
     begin
       if dm.Qtemp.RecordCount=1 then
@@ -344,7 +319,6 @@ begin
         end;
       end;
     end;
-
     with dm.Qtemp do
     begin
       close;
@@ -354,7 +328,6 @@ begin
     end;
     Nm:=Eduser.Text;
   end;
-
   with dm.Qtemp do
   begin
     close;
@@ -362,7 +335,6 @@ begin
     sql.Text:='SELECT * FROM app_versions ORDER BY release_date DESC LIMIT 1';
     open;
   end;
-
   if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=0) then
   begin
 //    ShowMessage('Aplikasi tidak update');
@@ -376,7 +348,6 @@ begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;
   end;
-
 //  Application.CreateForm(TFMainMenu, FMainMenu);
 //  CbSBU.Clear;
   Self.Hide;

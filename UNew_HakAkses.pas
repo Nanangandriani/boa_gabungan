@@ -33,6 +33,10 @@ type
     EdNm: TRzComboBox;
     EdNo: TEdit;
     Bhapus: TRzBitBtn;
+    Label4: TLabel;
+    Label5: TLabel;
+    EdJabatan: TRzComboBox;
+    EdkdJabatan: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BTambahClick(Sender: TObject);
@@ -47,6 +51,8 @@ type
       var Handled: Boolean);
     procedure BhapusClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure EdJabatanChange(Sender: TObject);
+    procedure EdkdJabatanChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,6 +66,7 @@ type
 function  FNew_Hak_Akses: TFNew_Hak_Akses;
 var
   no_dept:string;
+  no_jab:string;
   Status:integer;
 
 implementation
@@ -103,18 +110,36 @@ end;
 
 Procedure TFNew_Hak_Akses.Load;
 begin
+//DepartMent
 EdNm.Clear;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_dept WHERE deleted_at IS NULL';
+    sql.Text:='select * from t_dept where deleted_at is null';
     ExecSQL;
   end;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do
   begin
     EdNm.Items.Add(Dm.Qtemp['dept']);
+    Dm.Qtemp.Next;
+  end;
+
+
+//Jabatan
+EdJabatan.Clear;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select position from t_position where deleted_at is null';
+    ExecSQL;
+  end;
+  Dm.Qtemp.First;
+  while not Dm.Qtemp.Eof do
+  begin
+    EdJabatan.Items.Add(Dm.Qtemp['position']);
     Dm.Qtemp.Next;
   end;
 end;
@@ -127,8 +152,12 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * from t_menu_sub WHERE submenu_code  in (SELECT submenu_code  from t_menu_sub  EXCEPT SELECT submenu_code FROM t_akses '+
-                ' WHERE dept_code='+QuotedStr(Edkd.Text)+' ) order by submenu_code Asc';
+      sql.Text:=' SELECT * from t_menu_sub WHERE submenu_code  in '+
+                ' (SELECT submenu_code  from t_menu_sub  '+
+                ' EXCEPT SELECT submenu_code FROM t_akses '+
+                ' WHERE dept_code='+QuotedStr(Edkd.Text)+' '+
+                ' and position_code='+QuotedStr(EdkdJabatan.Text)+'  ) '+
+                ' order by submenu_code Asc';
       ExecSQL;
     end;
     QMenu.Close;
@@ -142,9 +171,12 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a inner join t_menu_sub b on '+
-              ' a.submenu_code=b.submenu_code inner join t_dept c on a.dept_code=c.dept_code '+
-              ' where a.dept_code='+QuotedStr(Edkd.Text)+''+
+    sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a '+
+              ' inner join t_menu_sub b on  a.submenu_code=b.submenu_code '+
+              ' inner join t_dept c on a.dept_code=c.dept_code '+
+              ' inner join t_position d on a.position_code=d.position_code '+
+              ' where a.dept_code='+QuotedStr(Edkd.Text)+' '+
+              ' and d.position_code='+QuotedStr(EdkdJabatan.Text)+' '+
               ' order by a.submenu_code Asc ';
     ExecSQL;
   end;
@@ -233,9 +265,9 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='insert into t_akses(no_akses,no_menu,baru,update,refresh,delete,status,iddept,'+
+    sql.Text:='insert into t_akses(no_akses,no_menu,baru,update,refresh,delete,status,iddept,position_code,'+
               ' serah,terima,id_menu,no_group)values('+QuotedStr(EdNo.Text)+','+QuotedStr(QMenu['no_menu'])+','+
-              ' ''0'',''0'',''0'',''0'',''1'','+QuotedStr(Edkd.Text)+',''0'',''0'','+''+
+              ' ''0'',''0'',''0'',''0'',''1'','+QuotedStr(Edkd.Text)+','+QuotedStr(EdkdJabatan.Text)+',''0'',''0'','+''+
               ' '+QuotedStr(Qmenu['id_menu'])+','+QuotedStr(qmenu['no_group'])+')';
     ExecSQL;
   end;
@@ -259,6 +291,20 @@ begin
   end;
 end;
 
+procedure TFNew_Hak_Akses.EdJabatanChange(Sender: TObject);
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_position where position='+QuotedStr(EdJabatan.Text);
+    ExecSQL;
+  end;
+    EdkdJabatan.Text:=Dm.Qtemp['position_code'];
+    EdNo.Text:=Edkd.Text+''+EdkdJabatan.Text;
+    no_jab:=Dm.Qtemp['position_code'];
+end;
+
 procedure TFNew_Hak_Akses.EdkdChange(Sender: TObject);
 begin
 {  with QDetail do
@@ -276,17 +322,22 @@ begin
     RefreshAkses;
 end;
 
+procedure TFNew_Hak_Akses.EdkdJabatanChange(Sender: TObject);
+begin
+    RefreshAkses;
+end;
+
 procedure TFNew_Hak_Akses.EdNmSelect(Sender: TObject);
 begin
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_dept where dept='+QuotedStr(EdNm.Text)+' AND deleted_at is NULL';
+    sql.Text:='select * from t_dept where dept='+QuotedStr(EdNm.Text);
     ExecSQL;
   end;
     Edkd.Text:=Dm.Qtemp['dept_code'];
-    EdNo.Text:=Dm.Qtemp['dept_code'];
+    EdNo.Text:=Edkd.Text+''+EdkdJabatan.Text;
     no_dept:=Dm.Qtemp['dept_code'];
  //   EdkdChange(sender);
 //    RefreshMenu;

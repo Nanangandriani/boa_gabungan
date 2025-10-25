@@ -98,8 +98,8 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
-        <VerInfo_MinorVer>8</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.8.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.8.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>9</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.9.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.9.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
@@ -1252,6 +1252,10 @@
         </DCCReference>
         <DCCReference Include="u_daf_keluar_kas_bank.pas">
             <Form>Fdaf_pengeluaran_kas_bank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Usingkronisasi.pas">
+            <Form>FSingkronisasi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

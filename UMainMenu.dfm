@@ -11,7 +11,6 @@ object FMainMenu: TFMainMenu
   Font.Style = []
   Position = poDefaultSizeOnly
   WindowState = wsMaximized
-  OnActivate = FormActivate
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
@@ -23,8 +22,8 @@ object FMainMenu: TFMainMenu
     Height = 463
     ResizeStyle = rsUpdate
     StyleName = 'Windows'
-    ExplicitLeft = 57
-    ExplicitTop = 132
+    ExplicitLeft = 160
+    ExplicitHeight = 482
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
@@ -52,14 +51,13 @@ object FMainMenu: TFMainMenu
     object Load: TRzProgressStatus
       Left = 459
       Top = 0
-      Width = 191
       Height = 19
       Align = alLeft
       ParentShowHint = False
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitLeft = 496
+      ExplicitLeft = 408
       ExplicitTop = 2
     end
     object RzClockStatus1: TRzClockStatus
@@ -86,8 +84,7 @@ object FMainMenu: TFMainMenu
       Height = 19
       Align = alLeft
       Caption = 'USER : '
-      ExplicitLeft = 187
-      ExplicitTop = 2
+      ExplicitLeft = 100
     end
     object StatusVersion: TRzStatusPane
       Left = 843
@@ -210,26 +207,25 @@ object FMainMenu: TFMainMenu
         ExplicitHeight = 458
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
-          Top = 1
+          Top = 249
           Width = 840
-          Height = 457
+          Height = 209
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
           ExplicitWidth = 836
-          ExplicitHeight = 456
+          ExplicitHeight = 208
         end
         object WebBrowser1: TWebBrowser
           Left = 1
           Top = 1
           Width = 840
-          Height = 457
-          Align = alClient
+          Height = 248
+          Align = alTop
           TabOrder = 1
           ExplicitWidth = 836
-          ExplicitHeight = 456
           ControlData = {
-            4C000000D15600003B2F00000000000000000000000000000000000000000000
+            4C000000D1560000A21900000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000

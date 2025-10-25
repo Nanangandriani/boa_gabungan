@@ -81,7 +81,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Jabatan, UDataModule;
+uses UNew_Jabatan, UDataModule, UMainMenu;
 
 procedure TFJabatan.refresh;
 begin
@@ -125,7 +125,7 @@ begin
       sql.Text:=' Update t_position set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                 ' where position_code='+QuotedStr(DBGridJab.Fields[0].AsString);
       parambyname('deleted_at').AsDateTime:=Now;
-      parambyname('deleted_by').AsString:='Admin';
+      parambyname('deleted_by').AsString:=nm;
       Execute;
     end;
     //dxbarRefreshClick(sender);

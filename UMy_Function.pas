@@ -20,6 +20,7 @@ Uses SysUtils, frxClass,uni,dxBar, RzCmboBx, StdCtrls, DB;
   procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
   procedure FillSBUBarCombo(ABarCombo: TdxBarCombo);
   procedure FillSBUBarCombo2(ACombo: TRzComboBox;ALabel: TLabel;A2Label: TLabel);
+  function CheckJurnalPosting(strTransNo: string): Integer;
 
   var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation,statustr,status_akses:string;
       strday2:TDate;
@@ -32,6 +33,22 @@ uses UDataModule, UHomeLogin, WinSock;
 function RIGHT(S: string; j:Integer): string;
 begin
   RIGHT := Copy(s,(length(s)-(j-1)),j);
+end;
+
+//Nanang
+function CheckJurnalPosting(strTransNo: string): Integer;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    // Note: The SQL is correct for string type trans_no
+    Sql.Text := 'SELECT * FROM t_general_ledger WHERE trans_no=' + QuotedStr(strTransNo) + ' AND approved_status=True';
+    Open;
+  end;
+
+  Result := dm.Qtemp.RecordCount;
+
 end;
 
 //Nanang
