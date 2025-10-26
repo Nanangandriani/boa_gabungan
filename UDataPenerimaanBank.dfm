@@ -436,8 +436,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 976
-      ExplicitTop = 3
+      ExplicitLeft = 978
     end
     object Edautocode: TEdit
       Left = 503
@@ -818,6 +817,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 23
         Text = ''
         TabOrder = 5
+        OnChange = edNMSumberTagihanChange
         AllowKeyEdit = False
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1

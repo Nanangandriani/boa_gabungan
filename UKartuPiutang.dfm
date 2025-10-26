@@ -78,8 +78,19 @@ object FKartuPiutang: TFKartuPiutang
         EditButtons = <>
         FieldName = 'nama_pelanggan'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
-        Width = 200
+        Width = 249
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nama_pkp'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama PKP'
+        Width = 248
       end
       item
         CellButtons = <>
@@ -87,6 +98,7 @@ object FKartuPiutang: TFKartuPiutang
         EditButtons = <>
         FieldName = 'alamat'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Alamat'
         Width = 421
       end
@@ -96,6 +108,7 @@ object FKartuPiutang: TFKartuPiutang
         EditButtons = <>
         FieldName = 'saldo_awal'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Saldo Awal'
         Width = 203
       end>
@@ -103,7 +116,7 @@ object FKartuPiutang: TFKartuPiutang
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 806
+        Width = 1104
         Height = 198
         Align = alClient
         DataSource = dsMasterDetail
@@ -136,6 +149,7 @@ object FKartuPiutang: TFKartuPiutang
             EditButtons = <>
             FieldName = 'trans_no'
             Footers = <>
+            Title.Caption = 'No Faktur Penjualan'
             Width = 100
           end
           item
@@ -144,6 +158,7 @@ object FKartuPiutang: TFKartuPiutang
             EditButtons = <>
             FieldName = 'tgltrans'
             Footers = <>
+            Title.Caption = 'Tanggal Transaksi'
             Width = 100
           end
           item
@@ -191,6 +206,7 @@ object FKartuPiutang: TFKartuPiutang
             EditButtons = <>
             FieldName = 'keterangan'
             Footers = <>
+            Title.Caption = 'Keterangan'
             Width = 200
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -457,8 +473,8 @@ object FKartuPiutang: TFKartuPiutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."get_piutang_saldoawal"('#39'2024-11-30'#39');')
-    Left = 1012
-    Top = 376
+    Left = 948
+    Top = 392
     object QKartuPiutangcustomer_code: TMemoField
       FieldName = 'customer_code'
       ReadOnly = True
@@ -493,6 +509,11 @@ object FKartuPiutang: TFKartuPiutang
       FieldName = 'total_receivables'
       ReadOnly = True
     end
+    object QKartuPiutangcustomer_name: TMemoField
+      FieldName = 'customer_name'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object DsKartuPiutang: TDataSource
     DataSet = QKartuPiutang
@@ -505,8 +526,8 @@ object FKartuPiutang: TFKartuPiutang
       
         'SELECT * FROM "public"."get_piutang_trx"('#39'2024-10-30'#39','#39'2024-11-3' +
         '0'#39');')
-    Left = 1012
-    Top = 488
+    Left = 964
+    Top = 480
     object QKartuPiutangTRXcustomer_code: TMemoField
       FieldName = 'customer_code'
       ReadOnly = True
@@ -558,6 +579,11 @@ object FKartuPiutang: TFKartuPiutang
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QKartuPiutangTRXketerangan2: TMemoField
+      FieldName = 'keterangan2'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object dsKartuPiutangTRX: TDataSource
     DataSet = QKartuPiutangTRX
@@ -584,8 +610,16 @@ object FKartuPiutang: TFKartuPiutang
     object MemMasterkode_pelanggan: TStringField
       FieldName = 'kode_pelanggan'
     end
+    object MemMasternama_pkp: TStringField
+      FieldName = 'nama_pkp'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
+        object nama_pkp: TMTStringDataFieldEh
+          FieldName = 'nama_pkp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
         object nama_pelanggan: TMTStringDataFieldEh
           FieldName = 'nama_pelanggan'
           StringDataType = fdtStringEh
@@ -670,6 +704,7 @@ object FKartuPiutang: TFKartuPiutang
     end
     object MemMasterDetailketerangan: TStringField
       FieldName = 'keterangan'
+      Size = 100
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -734,7 +769,8 @@ object FKartuPiutang: TFKartuPiutang
         object keterangan: TMTStringDataFieldEh
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh

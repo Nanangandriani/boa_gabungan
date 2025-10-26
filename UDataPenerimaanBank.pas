@@ -122,6 +122,7 @@ type
     procedure dtPeriode1Change(Sender: TObject);
     procedure BCorrectionClick(Sender: TObject);
     procedure edJumlahExit(Sender: TObject);
+    procedure edNMSumberTagihanChange(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     const
@@ -555,7 +556,7 @@ begin
   begin
     strIdDPP:='NULL';
     if edKodeSumberTagihan.Text='2' then strIdDPP:=QuotedStr(MemDetailPiutang['id_dpp']);
-    ShowMessage(strIdDPP);
+
     with dm.Qtemp do
     begin
     close;
@@ -642,8 +643,8 @@ begin
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
-  Close;
   FListPenerimaanBank.Refresh;
+  Close;
 end;
 
 procedure TFDataPenerimaanBank.Autonumber;
@@ -1262,6 +1263,11 @@ begin
     //Autocode;
     end;
   end;
+end;
+
+procedure TFDataPenerimaanBank.edNMSumberTagihanChange(Sender: TObject);
+begin
+  MemDetailPiutang.EmptyTable;
 end;
 
 procedure TFDataPenerimaanBank.FormShow(Sender: TObject);

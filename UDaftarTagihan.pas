@@ -316,11 +316,13 @@ begin
     begin
       close;
       sql.clear;
-      sql.add(' SELECT * from ('+
-              ' SELECT * '+
-              ' FROM "public"."vget_piutang") a '+
-              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
-              ' ORDER BY date_tempo desc');
+//      sql.add(' SELECT * from ('+
+//              ' SELECT * '+
+//              ' FROM "public"."vget_piutang") a '+
+//              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
+//              ' ORDER BY date_tempo desc');
+      sql.Text:='select  trans_date date_trans,trans_no no_trans,no_inv_tax,sisa_piutang total_receivables,date_tempo from get_piutang_invoice(NOW()::DATE) '+
+                'where code_cust='+QuotedStr(kd_outlet)+' AND sisa_piutang>0 ORDER BY date_tempo desc';
       open;
     end;
   end;
@@ -353,21 +355,23 @@ begin
       FDaftarTagihan.MemDetailPiutang.EmptyTable;
     end;
 
+
     if  Dm.Qtemp.RecordCount<>0 then
     begin
-    Dm.Qtemp.first;
-    while not Dm.Qtemp.Eof do
-    begin
-     FDaftarTagihan.MemDetailPiutang.insert;
-     FDaftarTagihan.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
-     FDaftarTagihan.MemDetailPiutang['tgl_tempo']:=Dm.Qtemp.FieldByName('date_tempo').AsDateTime;
-     FDaftarTagihan.MemDetailPiutang['no_tagihan']:=Dm.Qtemp.FieldByName('no_trans').AsString;
-     FDaftarTagihan.MemDetailPiutang['no_faktur']:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
-     FDaftarTagihan.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('total_receivables').AsFloat;
-     FDaftarTagihan.MemDetailPiutang['pilih']:=0;
-     FDaftarTagihan.MemDetailPiutang.post;
-     Dm.Qtemp.next;
-    end;
+
+      Dm.Qtemp.first;
+      while not Dm.Qtemp.Eof do
+      begin
+       FDaftarTagihan.MemDetailPiutang.insert;
+       FDaftarTagihan.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+       FDaftarTagihan.MemDetailPiutang['tgl_tempo']:=Dm.Qtemp.FieldByName('date_tempo').AsDateTime;
+       FDaftarTagihan.MemDetailPiutang['no_tagihan']:=Dm.Qtemp.FieldByName('no_trans').AsString;
+       FDaftarTagihan.MemDetailPiutang['no_faktur']:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
+       FDaftarTagihan.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('total_receivables').AsFloat;
+       FDaftarTagihan.MemDetailPiutang['pilih']:=0;
+       FDaftarTagihan.MemDetailPiutang.post;
+       Dm.Qtemp.next;
+      end;
     end;
 end;
 

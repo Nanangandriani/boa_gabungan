@@ -117,6 +117,9 @@ type
     QCetakcode_karesidenan: TStringField;
     QCetakketerangan2: TMemoField;
     cbSBU: TdxBarCombo;
+    MemMasternama_pkp: TStringField;
+    QKartuPiutangcustomer_name: TMemoField;
+    QKartuPiutangTRXketerangan2: TMemoField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -298,7 +301,8 @@ begin
     begin
       FKartuPiutang.MemMaster.insert;
       FKartuPiutang.MemMaster['kode_pelanggan']:=QKartuPiutang.fieldbyname('customer_code').value;
-      FKartuPiutang.MemMaster['nama_pelanggan']:=QKartuPiutang.fieldbyname('customer_name_pkp').value;
+      FKartuPiutang.MemMaster['nama_pelanggan']:=QKartuPiutang.fieldbyname('customer_name').value;
+      FKartuPiutang.MemMaster['nama_pkp']:=QKartuPiutang.fieldbyname('customer_name_pkp').value;
       FKartuPiutang.MemMaster['alamat']:=QKartuPiutang.fieldbyname('name_region').value;
       FKartuPiutang.MemMaster['saldo_awal']:=QKartuPiutang.fieldbyname('total_receivables').value;
       FKartuPiutang.MemMaster.post;
@@ -341,7 +345,7 @@ begin
      FKartuPiutang.MemMasterDetail['debet']:=QKartuPiutangTRX.fieldbyname('debet').value;
      FKartuPiutang.MemMasterDetail['kredit']:=QKartuPiutangTRX.fieldbyname('kredit').value;
      FKartuPiutang.MemMasterDetail['no_urut']:=QKartuPiutangTRX.fieldbyname('no_urut').value;
-     FKartuPiutang.MemMasterDetail['keterangan']:=QKartuPiutangTRX.fieldbyname('keterangan').value;
+     FKartuPiutang.MemMasterDetail['keterangan']:=QKartuPiutangTRX.fieldbyname('keterangan2').value;
      FKartuPiutang.MemMasterDetail.post;
      QKartuPiutangTRX.next;
     end;
