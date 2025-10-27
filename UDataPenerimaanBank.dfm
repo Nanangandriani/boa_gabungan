@@ -178,6 +178,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Width = 369
       Height = 23
       CharCase = ecUpperCase
+      Enabled = False
       TabOrder = 0
     end
     object edNamaJenisTrans: TRzButtonEdit

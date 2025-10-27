@@ -604,6 +604,9 @@ begin
   end else if vStatusTrans='targetpenjualan' then
   begin
     FMasterData.update_grid('item_code','item_name','unit','t_item a LEFT JOIN t_item_group b on b.group_id=a.group_id','WHERE b.group_name='+QuotedStr(FNew_DataTargetPenjualan.cbKelompokBarang.Text)+' AND	a.deleted_at IS NULL');
+  end else if vStatusTrans='returpenjualan' then
+  begin
+    FMasterData.update_grid('code_item','item_name','code_unit','t_selling_det a LEFT JOIN t_item b on  b.item_code=a.code_item','WHERE a.trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV)+' AND	a.deleted_at IS NULL');
   end else
   begin
     FMasterData.update_grid('item_code','item_name','unit','t_item a LEFT JOIN t_item_category b on b.category_id=a.category_id ','WHERE	a.deleted_at IS NULL AND b.type_id=1');

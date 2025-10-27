@@ -61,6 +61,7 @@ type
     Label1: TLabel;
     Label2: TLabel;
     btAddDetail: TRzBitBtn;
+    BCorrection: TRzBitBtn;
     procedure btMasterJenisReturClick(Sender: TObject);
     procedure edNamaJenisButtonClick(Sender: TObject);
     procedure edKode_PelangganButtonClick(Sender: TObject);
@@ -79,6 +80,7 @@ type
       var Handled: Boolean);
     procedure FormShow(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_grand : real;
@@ -86,7 +88,7 @@ type
     { Public declarations }
     strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV: string;
     Year, Month, Day: Word;
-    Status: Integer;
+    Status,iserror,IntStatusKoreksi: Integer;
     grand_tot_selling,grand_tot_returns: real;
     procedure Clear;
     procedure Autonumber;
@@ -107,7 +109,7 @@ implementation
 
 uses UListReturPenjualan, UMy_Function, USetMasterPenjulan, UMasterData,
   Ubrowse_pelanggan, UReturPenjualan_Sumber, UDataModule, UHomeLogin, UMainMenu,
-  UTambah_Barang;
+  UTambah_Barang, UKoreksi;
 
 procedure TFDataReturPenjualan.RefreshGrid;
 var
@@ -185,7 +187,7 @@ begin
             ' "trans_no", "trans_date", "code_cust", "name_cust", "account_code", "code_type_return", '+
             ' "name_type_return", "description", "order_no", "additional_code", '+
             ' "trans_day", "trans_month", "trans_year", "sub_total", "ppn_value", '+
-            ' "pph_value", "grand_tot",no_inv_tax,no_inv) '+
+            ' "pph_value", "grand_tot",no_inv_tax,no_inv,sbu_code) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -206,7 +208,9 @@ begin
 
             ' '+QuotedStr(FloatToStr(tot_ppn))+', '+
             ' '+QuotedStr(FloatToStr(tot_pph))+', '+
-            ' '+QuotedStr(FloatToStr(tot_grand))+', '+QuotedStr(edNoFaktur.Text)+','+QuotedStr(StrNoINV)+'  );');
+            ' '+QuotedStr(FloatToStr(tot_grand))+', '+
+            ' '+QuotedStr(edNoFaktur.Text)+','+
+            ' '+QuotedStr(StrNoINV)+','+QuotedStr(FHomeLogin.vKodePRSH)+'  );');
     ExecSQL;
   end;
   InsertDetailRet;
@@ -390,10 +394,26 @@ begin
   Close;
 end;
 
+procedure TFDataReturPenjualan.BCorrectionClick(Sender: TObject);
+begin
+  iserror:=0;
+  if CheckJurnalPosting(edNoTrans.Text)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+  if iserror=0 then
+  begin
+    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FListReturPenjualan.Name)); //Mendapatkan nama Menu
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=edNoTrans.Text; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
+end;
+
 procedure TFDataReturPenjualan.BSaveClick(Sender: TObject);
 begin
-
-
   DecodeDate(dtTanggal.Date, Year, Month, Day);
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
@@ -419,6 +439,8 @@ begin
   tot_pph:=ROUND(tot_pph);
   tot_grand:=ROUND(tot_grand);
 
+  grand_tot_selling:=StrToCurr(SelectRow('select sisa_piutang from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(StrNoINV)));
+  ShowMessage(FloatToStr(grand_tot_selling));
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
@@ -427,13 +449,9 @@ begin
     MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
     edKode_Pelanggan.SetFocus;
   end
-  else if edNoTrans.Text='' then
+  else if tot_grand>(grand_tot_selling) then
   begin
-    MessageDlg('Data Penjualan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    edNoTrans.SetFocus;
-  end else if tot_grand>(grand_tot_selling+grand_tot_returns) then
-  begin
-    MessageDlg('Nilai Retur lebih besar dari penjualan ..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Nilai Retur lebih besar dari Sisa Piutang ..!!',mtInformation,[mbRetry],0);
   end
   {else if edKodeJenis.Text='' then
   begin
@@ -638,6 +656,20 @@ end;
 procedure TFDataReturPenjualan.FormShow(Sender: TObject);
 begin
 //  FDataReturPenjualan.Autonumber;
+  if (Status=1) AND (IntStatusKoreksi=2) then
+  begin
+    BSave.Enabled:=True;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=False;
+  end else if Status=0 then
+  begin
+    BSave.Enabled:=True;
+    BCorrection.Visible:=False;
+  end else begin
+    BSave.Enabled:=False;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=True;
+  end;
 end;
 
 procedure TFDataReturPenjualan.Autonumber;

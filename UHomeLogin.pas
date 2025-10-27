@@ -75,8 +75,6 @@ uses UMainMenu, UDataModule, UMy_Function;
 
 procedure TFHomeLogin.CbSBUClick(Sender: TObject);
 begin
-
-
   with dm.abstable1 do
   begin
   Filtered:=false;

@@ -1,6 +1,8 @@
 object FListOrderTelemarketing: TFListOrderTelemarketing
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'List Order Telemarketing'
   ClientHeight = 509
   ClientWidth = 854
@@ -206,8 +208,8 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         end
       end
       object Memo1: TMemo
-        Left = 771
-        Top = -32
+        Left = 412
+        Top = -34
         Width = 369
         Height = 89
         Lines.Strings = (

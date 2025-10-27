@@ -1362,8 +1362,8 @@ begin
     vpanggil:='do_ppn';
     with QDaftar_Perk do
     begin
-      close;
-      sql.Clear;
+      Close;
+      Sql.Clear;
       SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
                 ' left join t_ak_header c on b.header_code=c.header_code'+

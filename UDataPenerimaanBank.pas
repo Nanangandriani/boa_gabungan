@@ -324,6 +324,17 @@ begin
     end;
   end;
 
+  if (vid_modul='3') AND (cbJenisTransaksi.Text='NON PIUTANG') then
+  begin
+    lbSumberTagihan.Visible:=False;
+    lbSumberTagihann.Visible:=False;
+    lbJenisBayar.Visible:=False;
+    lbJenisBayarr.Visible:=False;
+    edNMSumberTagihan.Visible:=False;
+    edNMJenisBayar.Visible:=False;
+  end;
+
+
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '0' then
   begin
     with FDataPenerimaanBank do
@@ -356,7 +367,7 @@ begin
   edKodeMataUang.Text:=SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('mata_uang')+' ');
   edNamaMataUang.Text:=SelectRow('select currency_name from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' ');
   edKurs.Value:=StrToFloat(SelectRow('select default_kurs from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' '));
-  end;
+end;
 
 procedure TFDataPenerimaanBank.HitungKurs;
 begin
@@ -797,8 +808,6 @@ begin
   Clear;
   Close;
 end;
-
-
 
 procedure TFDataPenerimaanBank.BCorrectionClick(Sender: TObject);
 begin

@@ -165,6 +165,7 @@ type
     procedure CheckPembayaran;
 //    procedure CheckJurnalPosting;
     procedure HitungDetail;
+    procedure SimpanPelanggan;
   end;
 
 var
@@ -221,6 +222,39 @@ begin
     sql.Text:=' UPDATE t_invoicetax_det'+
               ' SET status=true, code_trans='+QuotedStr(FNew_Penjualan.edKode_Trans.text)+' '+
               ' WHERE "no_invoice_tax"='+QuotedStr(FNew_Penjualan.vHasilGetFakturPajak)+';';
+    ExecSQL;
+  end;
+end;
+
+procedure TFNew_Penjualan.SimpanPelanggan;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='UPDATE t_selling_customer SET deleted_at=NULL where trans_no=(SELECT trans_no FROM t_selling WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' ORDER BY created_at DESC LIMIT 1 )' ;
+    ExecSQL;
+  end;
+
+  with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text := 'INSERT INTO t_selling_customer (' +
+                'trans_no, customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+                'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+                'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+                'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport' +
+                ') ' +
+                'SELECT '+QuotedStr(edNomorTrans.Text)+', ' +
+               'customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+               'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+               'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+               'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+               'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport ' +
+                'FROM t_customer ' +
+                'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
     ExecSQL;
   end;
 end;
@@ -1358,6 +1392,7 @@ begin
   end;
   InsertDetailJU;
   SavePotongan;
+  SimpanPelanggan;
   proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
@@ -1410,6 +1445,7 @@ begin
   end;
   InsertDetailJU;
   SavePotongan;
+  SimpanPelanggan;
   proses_stock;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
   Close;

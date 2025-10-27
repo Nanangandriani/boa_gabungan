@@ -793,10 +793,18 @@ object FBHPenjualan: TFBHPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT trans_no,no_inv_tax,trans_date,code_cust,name_cust from g' +
-        'et_selling(FALSE) '
-      'WHERE trans_date BETWEEN '#39'2025-10-06'#39' AND '#39'2025-10-06'#39
-      'order by created_at desc')
+        'SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.custom' +
+        'er_name_pkp  IS NULL THEN a.name_cust ELSE d.customer_name_pkp E' +
+        'ND AS name_cust, d.code_region,  d.name_region, grand_tot as tot' +
+        '_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn  FROM ' +
+        't_selling a  LEFT JOIN ( SELECT t_customer.customer_code, t_cust' +
+        'omer.customer_name_pkp,  t_customer.code_region, t_customer.name' +
+        '_region FROM t_customer) d ON a.code_cust::text = d.customer_cod' +
+        'e::text   LEFT JOIN (SELECT "code_province", "code" as code_kab,' +
+        ' "name" as name_kab,  "code_karesidenan"  from t_region_regency ' +
+        'WHERE deleted_at IS NULL)b   ON "left"(code_region, 4)=b.code_ka' +
+        'b  where trans_date between '#39'2025-10-26'#39'  and '#39'2025-10-26'#39' '
+      ' ORDER BY trans_date, trans_no')
     Left = 868
     Top = 32
     object QCetaktrans_no: TMemoField
@@ -2552,5 +2560,689 @@ object FBHPenjualan: TFBHPenjualan
     DataSet = QCetakdetailKredit
     Left = 1073
     Top = 288
+  end
+  object QCetak2: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.custom' +
+        'er_name_pkp  IS NULL THEN a.name_cust ELSE d.customer_name_pkp E' +
+        'ND AS name_cust, d.code_region,  d.name_region, grand_tot as tot' +
+        '_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn  FROM ' +
+        't_selling a  LEFT JOIN ( SELECT t_customer.customer_code, t_cust' +
+        'omer.customer_name_pkp,  t_customer.code_region, t_customer.name' +
+        '_region FROM t_customer) d ON a.code_cust::text = d.customer_cod' +
+        'e::text   LEFT JOIN (SELECT "code_province", "code" as code_kab,' +
+        ' "name" as name_kab,  "code_karesidenan"  from t_region_regency ' +
+        'WHERE deleted_at IS NULL)b   ON "left"(code_region, 4)=b.code_ka' +
+        'b  where trans_date between '#39'2025-10-01'#39'  and '#39'2025-10-26'#39' '
+      ' ORDER BY trans_date, trans_no')
+    Left = 456
+    Top = 208
+    object QCetak2trans_no: TStringField
+      FieldName = 'trans_no'
+      Size = 255
+    end
+    object QCetak2trans_date: TDateField
+      FieldName = 'trans_date'
+    end
+    object QCetak2code_cust: TStringField
+      FieldName = 'code_cust'
+      Size = 255
+    end
+    object QCetak2name_cust: TStringField
+      FieldName = 'name_cust'
+      ReadOnly = True
+      Size = 255
+    end
+    object QCetak2code_region: TStringField
+      FieldName = 'code_region'
+      ReadOnly = True
+      Size = 50
+    end
+    object QCetak2name_region: TStringField
+      FieldName = 'name_region'
+      ReadOnly = True
+      Size = 255
+    end
+    object QCetak2tot_piutang: TFloatField
+      FieldName = 'tot_piutang'
+    end
+    object QCetak2tot_pejualan: TFloatField
+      FieldName = 'tot_pejualan'
+    end
+    object QCetak2tot_ppn: TFloatField
+      FieldName = 'tot_ppn'
+    end
+  end
+  object QCetakRincianBarang2: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        ' SELECT a.trans_no,a.trans_date,a.code_cust,a.name_cust,a.amount' +
+        ',a.code_unit,a.jum_ak_deb,code_karesidenan,code_kab,name_kab fro' +
+        'm "public"."vbhpenjualan" a  '
+      
+        '                LEFT JOIN (SELECT "code_province", "code" as cod' +
+        'e_kab, "name" as name_kab, '
+      
+        '               "code_karesidenan"  from t_region_regency WHERE d' +
+        'eleted_at IS NULL)b  '
+      '               ON "left"(code_region, 4)=b.code_kab ')
+    MasterSource = DataSource1
+    MasterFields = 'trans_no'
+    DetailFields = 'trans_no'
+    Left = 520
+    Top = 288
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'trans_no'
+        ParamType = ptInput
+        Value = 'FP/001/13/X/2025/HLJ/0'
+      end>
+  end
+  object Report2: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PreviewOptions.ZoomMode = zmWholePage
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45673.924529294000000000
+    ReportOptions.LastChange = 45956.910922777780000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    OnGetValue = ReportGetValue
+    Left = 504
+    Top = 336
+    Datasets = <
+      item
+        DataSet = frxDBDataset2
+        DataSetName = 'frxDBDataset2'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 132.283550000000000000
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        object nama_pt: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 0.102350000000000000
+          Width = 748.346940000000000000
+          Height = 26.456710000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'nama_pt')
+          ParentFont = False
+        end
+        object periode: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 52.338590000000000000
+          Width = 748.346940000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'periode')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 22.015770000000000000
+          Width = 748.346940000000000000
+          Height = 37.795300000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -21
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rincian Penjualan Per Barang')
+          ParentFont = False
+        end
+        object wilayah: TfrxMemoView
+          AllowVectorExport = True
+          Left = 310.529444110000000000
+          Top = 75.590600000000000000
+          Width = 442.205010000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Wilayah :')
+          ParentFont = False
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 109.606299210000000000
+          Width = 149.982256230000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nomor')
+          ParentFont = False
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 162.519790000000000000
+          Top = 109.606299210000000000
+          Width = 97.068836230000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 264.008040000000000000
+          Top = 109.606299210000000000
+          Width = 199.116146230000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Keterangan')
+          ParentFont = False
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811380000000000000
+          Top = 109.606299210000000000
+          Width = 63.053066230000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Satuan')
+          ParentFont = False
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 619.842920000000000000
+          Top = 109.606299210000000000
+          Width = 131.084606230000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Penjualan')
+          ParentFont = False
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 468.661720000000000000
+          Top = 109.606299210000000000
+          Width = 78.171186230000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kuantitas')
+          ParentFont = False
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 253.228510000000000000
+        Width = 755.906000000000000000
+        DataSet = frxDBDataset2
+        DataSetName = 'frxDBDataset2'
+        RowCount = 0
+        Stretched = True
+        object frxDBDBHPenj_dettrans_no: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 7.559055120000000000
+          Width = 150.047244090000000000
+          Height = 18.897650000000000000
+          DataField = 'trans_no'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset2."trans_no"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenj_dettrans_date: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 162.519685040000000000
+          Width = 97.133858270000000000
+          Height = 18.897650000000000000
+          DataField = 'trans_date'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset2."trans_date"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenj_detname_cust: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 264.188976380000000000
+          Width = 199.181102360000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'name_cust'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset2."name_cust"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenj_detamount: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 468.661417320000000000
+          Width = 78.236220470000000000
+          Height = 18.897650000000000000
+          DataField = 'amount'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset2."amount"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenj_detcode_unit: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 551.811023620000000000
+          Width = 63.118110240000000000
+          Height = 18.897650000000000000
+          DataField = 'code_unit'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset2."code_unit"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenj_detjum_ak_deb: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 619.842519690000000000
+          Width = 131.149606300000000000
+          Height = 18.897650000000000000
+          DataField = 'jum_ak_deb'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset2."jum_ak_deb"]')
+          ParentFont = False
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 52.913420000000000000
+        Top = 374.173470000000000000
+        Width = 755.906000000000000000
+        object Memo1: TfrxMemoView
+          Align = baBottom
+          AllowVectorExport = True
+          Left = 438.047527000000000000
+          Top = 34.015770000000000000
+          Width = 313.700990000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Halaman [Page#] dari [TotalPages#]')
+        end
+        object Memo9: TfrxMemoView
+          Align = baBottom
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 34.015770000000000000
+          Width = 389.291590000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Tercetak Pada Tanggal [Date] [Time]')
+          ParentFont = False
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 7.559060000000000000
+          Width = 748.346940000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 6.897650000000000000
+          Width = 748.346940000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Smart Backoffice Automation System Report')
+          ParentFont = False
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897650000000000000
+        Top = 211.653680000000000000
+        Width = 755.906000000000000000
+        Condition = 'frxDBDataset2."name_item"'
+        object frxDBDBHPenj_detname_item: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'frxDBDBHPenj_det'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset2."name_item"]')
+          ParentFont = False
+        end
+      end
+      object GroupFooter1: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 294.803340000000000000
+        Width = 755.906000000000000000
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 619.842519685039000000
+          Width = 131.084606230000000000
+          Height = 1.133858267716540000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 16744448
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 468.661417322835000000
+          Width = 78.171186230000000000
+          Height = 1.133858270000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 16744448
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 468.661720000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset2."amount">,MasterData1)]')
+          ParentFont = False
+        end
+        object SysMemo2: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 619.842920000000000000
+          Width = 132.283550000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Color = clBlue
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset2."jum_ak_deb">,MasterData1)]')
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object frxDBDataset1: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'trans_no=trans_no'
+      'no_inv_tax=no_inv_tax'
+      'trans_date=trans_date'
+      'code_cust=code_cust'
+      'name_cust=name_cust')
+    DataSource = DataSource1
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 608
+    Top = 224
+  end
+  object frxDBDataset2: TfrxDBDataset
+    UserName = 'frxDBDataset2'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'trans_no=trans_no'
+      'trans_date=trans_date'
+      'code_cust=code_cust'
+      'name_cust=name_cust'
+      'code_region=code_region'
+      'name_region=name_region'
+      'code_item=code_item'
+      'name_item=name_item'
+      'amount=amount'
+      'code_unit=code_unit'
+      'name_unit=name_unit'
+      'akn_debet=akn_debet'
+      'nm_debit_deb=nm_debit_deb'
+      'jum_ak_deb=jum_ak_deb'
+      'akn_debet_lain=akn_debet_lain'
+      'nm_debit_lain=nm_debit_lain'
+      'jum_ak_deb_lain=jum_ak_deb_lain'
+      'akn_kredit=akn_kredit'
+      'nm_debit_kre=nm_debit_kre'
+      'jum_ak_kre=jum_ak_kre'
+      'ppn_ak_kre=ppn_ak_kre'
+      'akn_kre_lain=akn_kre_lain'
+      'nm_kre_lain=nm_kre_lain'
+      'jum_ak_kre_lain=jum_ak_kre_lain'
+      'code_karesidenan=code_karesidenan'
+      'code_kab=code_kab'
+      'name_kab=name_kab')
+    DataSource = DataSource2
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 608
+    Top = 328
+  end
+  object DataSource1: TDataSource
+    DataSet = QCetak2
+    Left = 401
+    Top = 216
+  end
+  object DataSource2: TDataSource
+    DataSet = QCetakRincianBarang2
+    Left = 417
+    Top = 320
   end
 end

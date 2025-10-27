@@ -1,6 +1,8 @@
 object FCari_DaftarPerk: TFCari_DaftarPerk
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Daftar Perkiraan'
   ClientHeight = 416
   ClientWidth = 639

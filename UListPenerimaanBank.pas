@@ -373,6 +373,16 @@ begin
           FDataPenerimaanBank.Panel5.Visible:=true;
       end;
 
+      if (vid_modul='3') AND (cbJenisTransaksi.Text='NON PIUTANG') then
+      begin
+        lbSumberTagihan.Visible:=False;
+        lbSumberTagihann.Visible:=False;
+        lbJenisBayar.Visible:=False;
+        lbJenisBayarr.Visible:=False;
+        edNMSumberTagihan.Visible:=False;
+        edNMJenisBayar.Visible:=False;
+      end;
+
 
       //detailakun
       with Dm.Qtemp1 do

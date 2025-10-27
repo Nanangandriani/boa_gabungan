@@ -123,8 +123,22 @@ procedure TFReturPenjualan_Sumber.DBGrid_SumberOrderDblClick(Sender: TObject);
 begin
   if vcall='getfaktur' then
   begin
-    FDataReturPenjualan.edNoFaktur.Text:=MemDetail['no_faktur'];
-    FDataReturPenjualan.StrNoINV:=MemDetail['no_trans'];
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select sisa_piutang from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(MemDetail['no_trans']);
+      Open;
+    end;
+
+    if dm.Qtemp.FieldValues['sisa_piutang']<=0 then
+    begin
+      MessageDlg('Sisa Piutang sudah 0',mtInformation,[mbRetry],0);
+    end else
+    begin
+      FDataReturPenjualan.edNoFaktur.Text:=MemDetail['no_faktur'];
+      FDataReturPenjualan.StrNoINV:=MemDetail['no_trans'];
+    end;
 //    FDataReturPenjualan.grand_tot_selling:=MemDetail['grand_tot'];
 //    FDataReturPenjualan.grand_tot_returns:=MemDetail['grand_tot_returns'];
   end;

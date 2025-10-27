@@ -1,6 +1,8 @@
 object FDataReturPenjualan: TFDataReturPenjualan
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Retur Penjualan'
   ClientHeight = 596
   ClientWidth = 1055
@@ -136,6 +138,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Top = 106
       Width = 357
       Height = 23
+      ReadOnly = True
       TabOrder = 1
     end
     object edNamaJenis: TRzButtonEdit
@@ -161,7 +164,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     object dtTanggal: TRzDateTimePicker
       Left = 132
       Top = 50
-      Width = 186
+      Width = 101
       Height = 23
       Date = 45405.000000000000000000
       Format = ''
@@ -174,6 +177,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Width = 250
       Height = 23
       CharCase = ecUpperCase
+      ReadOnly = True
       TabOrder = 5
     end
     object MemKeterangan: TMemo
@@ -325,6 +329,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             EditButtons = <
               item
                 Style = ebsEllipsisEh
+                Visible = False
                 OnClick = DBGridDetailColumns2EditButtons0Click
               end>
             FieldName = 'NM_ITEM'
@@ -627,7 +632,19 @@ object FDataReturPenjualan: TFDataReturPenjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 900
+      ExplicitTop = 233
+    end
+    object BCorrection: TRzBitBtn
+      Left = 806
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 2
+      OnClick = BCorrectionClick
+      ExplicitLeft = 737
+      ExplicitTop = 6
     end
   end
   object DSDetail: TDataSource

@@ -10,6 +10,7 @@ object dm: Tdm
     Username = 'Devel'
     Server = '172.101.100.125'
     Connected = True
+    OnError = KoneksiError
     Left = 157
     Top = 13
     EncryptedPassword = 'B7FFAFFFACFF9BFF9DFF9EFF9BFF92FF96FF91FFBFFFCDFFCFFFCDFFCAFF'

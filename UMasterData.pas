@@ -54,6 +54,11 @@ procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
   vid_modul: string;
 begin
+//  if vcall='perkiraan_supplier_return' then
+//  begin
+//    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
+//    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
+//  end;
   if vcall='kode_trans_export_faktur' then
   begin
     FExportFaktur.kode_jenis_transaksi:=MemMasterData['KD_MASTER'];

@@ -229,6 +229,7 @@ begin
     dtTanggal.Enabled:=True;
     edNamaSumber.ReadOnly:=False;
     edNoReff.ReadOnly:=False;
+//    edNomorFaktur.ReadOnly:=False;
   end;
 
   FNew_Penjualan.ShowModal;

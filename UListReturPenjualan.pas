@@ -182,7 +182,7 @@ end;
 procedure TFListReturPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FDataReturPenjualan.Clear;
-  FDataReturPenjualan.Autonumber;
+//  FDataReturPenjualan.Autonumber;
   FDataReturPenjualan.MemDetail.EmptyTable;
   FDataReturPenjualan.Status:=0;
   FDataReturPenjualan.edNoTrans.Enabled:=true;

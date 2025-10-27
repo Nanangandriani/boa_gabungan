@@ -12,7 +12,7 @@ uses
   FireDAC.Moni.RemoteClient, FireDAC.Moni.Custom, FireDAC.Moni.FlatFile,
   UniProvider, PostgreSQLUniProvider, DBAccess, Uni, MemDS, DASQLMonitor,
   UniSQLMonitor,Generics.Collections,TypInfo, frxClass, frxDBSet, ABSMain,
-  frxDesgn;
+  frxDesgn, Vcl.Dialogs, Vcl.Forms;
 
 type
   Tdm = class(TDataModule)
@@ -44,6 +44,7 @@ type
     ABSTable1User_db: TStringField;
     frxDesigner1: TfrxDesigner;
     procedure DataModuleCreate(Sender: TObject);
+    procedure KoneksiError(Sender: TObject; E: EDAError; var Fail: Boolean);
   private
     { Private declarations }
   public
@@ -75,6 +76,24 @@ end;
 procedure Tdm.DataModuleCreate(Sender: TObject);
 begin
   ///linktest1;
+end;
+
+procedure Tdm.KoneksiError(Sender: TObject; E: EDAError; var Fail: Boolean);
+begin
+  if Pos('forcibly closed', LowerCase(E.Message)) > 0 then
+  begin
+    Fail := True;
+    try
+      Koneksi.Disconnect;
+      Sleep(1000);
+      Koneksi.Connect;
+    except
+      on E2: Exception do
+      begin
+        ShowMessage('Koneksi anda terputus! ' + E.Message);
+      end;
+    end;
+  end;
 end;
 
 procedure tdm.linktest1;
