@@ -1,9 +1,11 @@
 object FSearch_Supplier: TFSearch_Supplier
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'List Supplier'
   ClientHeight = 315
-  ClientWidth = 380
+  ClientWidth = 482
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +21,7 @@ object FSearch_Supplier: TFSearch_Supplier
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 380
+    Width = 482
     Height = 283
     Align = alClient
     DataSource = DsSupplier
@@ -35,6 +37,7 @@ object FSearch_Supplier: TFSearch_Supplier
         FieldName = 'supplier_code'
         Footers = <>
         ReadOnly = True
+        Title.Alignment = taCenter
         Title.Caption = 'Kode Supplier'
         Width = 88
       end
@@ -45,8 +48,9 @@ object FSearch_Supplier: TFSearch_Supplier
         FieldName = 'supplier_name'
         Footers = <>
         ReadOnly = True
+        Title.Alignment = taCenter
         Title.Caption = 'Nama Supplier'
-        Width = 247
+        Width = 368
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -54,7 +58,7 @@ object FSearch_Supplier: TFSearch_Supplier
   object Panel1: TPanel
     Left = 0
     Top = 283
-    Width = 380
+    Width = 482
     Height = 32
     Align = alBottom
     TabOrder = 1
@@ -62,7 +66,7 @@ object FSearch_Supplier: TFSearch_Supplier
     ExplicitTop = 282
     ExplicitWidth = 376
     object BBatal: TRzBitBtn
-      Left = 304
+      Left = 406
       Top = 1
       Height = 30
       Align = alRight
@@ -123,7 +127,7 @@ object FSearch_Supplier: TFSearch_Supplier
       ExplicitLeft = 300
     end
     object BSimpan: TRzBitBtn
-      Left = 229
+      Left = 331
       Top = 1
       Height = 30
       Align = alRight

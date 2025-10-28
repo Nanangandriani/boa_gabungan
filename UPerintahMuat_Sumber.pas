@@ -283,7 +283,7 @@ begin
             'vehicles from "public"."t_delivery_order_load" a  '+
             'LEFT JOIN "public"."t_delivery_order_services" b ON a.notrans=b.notrans  )b '+
             'ON  a.notrans=b.notrans where deleted_at  is null) deo   where notrans not in '+
-            '(SELECT notrans from "public"."t_spm" a  where a.deleted_at  is null) ');
+            '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on b.notrans=a.notrans where b.deleted_at is null)  ');
     sql.add(' AND date_trans between '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal2.Date))+' ');

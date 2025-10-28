@@ -164,6 +164,7 @@ type
     IdHTTP1: TIdHTTP;
     MemoAPI: TMemo;
     edlokasiregencyid: TEdit;
+    BCorrection: TRzBitBtn;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -200,15 +201,22 @@ type
     procedure DBGridSumberPenjualanKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure BtnCekBiayaClick(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
+    procedure edNamaLokasiChange(Sender: TObject);
+    procedure edNamaKabupatenChange(Sender: TObject);
+    procedure spTotalTitikClick(Sender: TObject);
+    procedure edKodeJenisKendMuatanChange(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     sumber_do,IntAdaPerubahan: Integer;
     Grand_Tot: Real;
-    vFormSumber01,vFormSumber02, kd_kares: string;
-    strtgl, strbulan, strtahun: string;
-    IntStatusDO: Integer;
+    vFormSumber01,vFormSumber02, kd_kares, strtgl, strbulan, strtahun,
+    strLastKodeJenisKendMuatan,strLastNamaLokasi,
+    strLastNamaKabupaten,strLastTotalTitik : string;
+    IntStatusDO,IntStatusKoreksi: Integer;
+    StatusCekBiaya,StatusPerubahanBiaya: Boolean;
     Year, Month, Day: Word;
     procedure RefreshGridRincianBiaya;
     procedure HitungGrid;
@@ -242,7 +250,7 @@ implementation
 uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
   UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
-  UListPerbandinganBiayaDo, UMainMenu;
+  UListPerbandinganBiayaDo, UMainMenu, UKoreksi;
 
 procedure TFNewDeliveryOrder.InsertStatus;
 begin
@@ -334,109 +342,245 @@ begin
   end;
 end;
 
+//procedure TFNewDeliveryOrder.GetApiBiayaChakra;
+//var
+//  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+//  vBody,vBody2  : string;
+//  jumdata : Real;
+//  xxx: Integer;
+//  cnt,cnt2, IntTitikTambahan: Integer;
+//  iii,iiii: Integer;
+//  sss, row, row1, row2: String;
+//  res: String;
+//  date: TDate;
+//  max,min: Integer;
+//        //component
+//  gNet:TIdHTTP;
+//  //respon component
+//  httpresult: TIdHTTP ;
+//  resp: TMemoryStream;
+//begin
+//  try
+//  IntTitikTambahan:=StrToInt(spTotalTitik.Text)-1;
+//  //BaseUrl:=edBaseURL.Text;
+//  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
+//  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
+//  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapichakra''');
+////  vBody:='?type_id='+edKodeJenisKendMuatan.Text+
+////         '&regencie_from_id='+edlokasiregencyid.Text+
+////         '&regencie_to_id='+edKodeKabupaten.Text+'&point='+IntToStr(IntTitikTambahan);
+//  vBody:='?type_id='+edKodeJenisKendMuatan.Text+'&regencie_from_id='+edlokasiregencyid.Text+'&regencie_to_id='+edlokasiregencyid.Text+'&point='+spTotalTitik.Text+'';
+//  Vpath:='/api/get-tariff';
+//  url:= BaseUrl+Vpath+vBody;
+//  MemoAPI.Text:=url;
+//  try
+//  gNet :=  TIdHTTP.Create(nil);
+//  gNet.Request.Accept := 'application/json';
+//  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+//  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+//  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+//  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+//  res:=  gNet.get(url);
+//  jumdata:=1;
+//  MemoAPI.text := res;
+//  json.JSONText := MemoAPI.text;
+//  if json.StringTree['status']='false' then
+//  begin
+//    MessageDlg(json.StringTree['message']+'..!!',mtInformation,[mbRetry],0);
+//    Exit;
+//  end;
+//
+//  except
+//  on E: EIdHTTPProtocolException do
+//    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+//    begin
+//      jumdata:=0;
+////      gNet.free;
+////      resp.Free;
+//      Exit;
+//    end;
+//    on E: Exception do
+//    ShowMessage('A non-Indy related exception has been raised!');
+//    end;
+//    finally
+//      gNet.free;
+////      resp.Free;
+//  end;
+//
+//  //MOVE JSON
+////  json.JSONText := MemoAPI.text;
+//  cnt := json.TreeCount['data'];
+//
+//  if cnt = 0 then
+//  begin
+//    Showmessage('Data Tidak Ditemukan');
+//    exit;
+//  end;
+//
+//  MemDataBiaya.First;
+//  while not MemDataBiaya.Eof do
+//  begin
+//    MemDataBiaya.Edit;
+//    if MemDataBiaya['kd_biaya']='BTT' then
+//    begin
+//     MemDataBiaya['dpp']:=json.StringTree['data/additional_point'];
+//     MemDataBiaya['total']:=json.StringTree['data/additional_point'];
+//    end;
+//    if MemDataBiaya['kd_biaya']='BKM' then
+//    begin
+//      MemDataBiaya['dpp']:=json.StringTree['data/additional_km'];
+//      MemDataBiaya['total']:=json.StringTree['data/additional_km'];
+//    end;
+//    if MemDataBiaya['kd_biaya']='BANG' then
+//    begin
+//      MemDataBiaya['dpp']:=json.StringTree['data/transport_cost'];
+//      MemDataBiaya['total']:=json.StringTree['data/transport_cost'];
+//    end;
+//    if MemDataBiaya['kd_biaya']='BONGKAR' then
+//    begin
+//      MemDataBiaya['dpp']:=json.StringTree['data/unloading_fee'];
+//      MemDataBiaya['total']:=json.StringTree['data/unloading_fee'];
+//    end;
+//    MemDataBiaya.Post;
+//    MemDataBiaya.Next;
+//  end;
+//  StatusCekBiaya:=True;
+//
+//end;
+
 procedure TFNewDeliveryOrder.GetApiBiayaChakra;
 var
-  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
-  vBody,vBody2  : string;
-  jumdata : Real;
-  xxx: Integer;
-  cnt,cnt2, IntTitikTambahan: Integer;
-  iii,iiii: Integer;
-  sss, row, row1, row2: String;
-  res: String;
-  date: TDate;
-  max,min: Integer;
-        //component
-  gNet:TIdHTTP;
-  //respon component
-  httpresult: TIdHTTP ;
+  key, url, s, BaseUrl, Vpath, Vtoken, str: string;
+  vBody: string;
+  jumdata: Real;
+  IntTitikTambahan: Integer;
+  cnt: Integer;
+  res: string;
+  gNet: TIdHTTP;
   resp: TMemoryStream;
 begin
+  gNet := nil;
+  resp := nil;
+
   try
-  IntTitikTambahan:=StrToInt(spTotalTitik.Text)-1;
-  //BaseUrl:=edBaseURL.Text;
-  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
-  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
-  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapichakra''');
-//  vBody:='?type_id='+edKodeJenisKendMuatan.Text+
-//         '&regencie_from_id='+edlokasiregencyid.Text+
-//         '&regencie_to_id='+edKodeKabupaten.Text+'&point='+IntToStr(IntTitikTambahan);
-  vBody:='?type_id=CDE&regencie_from_id='+edlokasiregencyid.Text+'&regencie_to_id='+edlokasiregencyid.Text+'&point='+spTotalTitik.Text+'';
-  Vpath:='/api/get-tariff';
-  url:= BaseUrl+Vpath+vBody;
-  MemoAPI.Text:=url;
-  try
-  gNet :=  TIdHTTP.Create(nil);
-  gNet.Request.Accept := 'application/json';
-  gNet.Request.CustomHeaders.Values[key] := Vtoken;
-  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
-  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
-  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
-  res:=  gNet.get(url);
-  jumdata:=1;
-  MemoAPI.text := res;
-  json.JSONText := MemoAPI.text;
-  if json.StringTree['status']='false' then
-  begin
-    MessageDlg(json.StringTree['message']+'..!!',mtInformation,[mbRetry],0);
-    Exit;
+    // Hitung titik tambahan
+    IntTitikTambahan := StrToIntDef(spTotalTitik.Text, 1) - 1;
+
+    // Ambil konfigurasi parameter dari database
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlchakra''');
+    key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
+    Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
+
+    // Susun parameter API
+    vBody := '?type_id='+edKodeJenisKendMuatan.Text +
+             '&regencie_from_id=' + edlokasiregencyid.Text +
+             '&regencie_to_id=' + edKodeKabupaten.Text +
+             '&point=' + spTotalTitik.Text;
+
+    Vpath := '/api/get-tariff';
+    url := BaseUrl + Vpath + vBody;
+    MemoAPI.Text := url;
+//    Exit;
+    // Buat komponen HTTP dan memory stream
+    gNet := TIdHTTP.Create(nil);
+    resp := TMemoryStream.Create;
+
+    // Set konfigurasi HTTP
+    gNet.Request.Accept := 'application/json';
+    gNet.Request.CustomHeaders.Values[key] := Vtoken;
+    gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+
+    // Logging URL dan Token
+    UpdateLogErrorAPI(BaseUrl, Vpath, Vtoken, False, url);
+    UpdateLogErrorAPI(BaseUrl, Vpath, Vtoken, True, url);
+
+    // Panggil API
+    try
+      res := gNet.Get(url);
+    except
+      on E: EIdHTTPProtocolException do
+      begin
+        Application.MessageBox('Maaf, Data Tidak Ditemukan ...', 'Konfirmasi', MB_OK or MB_ICONWARNING);
+        Exit;
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Kesalahan koneksi API: ' + E.Message);
+        Exit;
+      end;
+    end;
+
+    // Simpan hasil response ke memo
+    MemoAPI.Text := res;
+
+    // Pastikan JSON sudah siap
+    if not Assigned(json) then
+      raise Exception.Create('Komponen JSON belum diinisialisasi.');
+
+    json.JSONText := MemoAPI.Text;
+
+    // Cek status response JSON
+    if json.StringTree['status'] = 'false' then
+    begin
+      MessageDlg(json.StringTree['message'] + '..!!', mtInformation, [mbOK], 0);
+      Exit;
+    end;
+
+    // Ambil jumlah data di JSON
+    cnt := json.TreeCount['data'];
+
+    if cnt = 0 then
+    begin
+      ShowMessage('Data Tidak Ditemukan');
+      Exit;
+    end;
+
+    // Update dataset biaya
+    MemDataBiaya.First;
+    while not MemDataBiaya.Eof do
+    begin
+      MemDataBiaya.Edit;
+
+      if MemDataBiaya['kd_biaya'] = 'BTT' then
+      begin
+        MemDataBiaya['dpp'] := json.StringTree['data/additional_point'];
+        MemDataBiaya['total'] := json.StringTree['data/additional_point'];
+      end;
+
+      if MemDataBiaya['kd_biaya'] = 'BKM' then
+      begin
+        MemDataBiaya['dpp'] := json.StringTree['data/additional_km'];
+        MemDataBiaya['total'] := json.StringTree['data/additional_km'];
+      end;
+
+      if MemDataBiaya['kd_biaya'] = 'BANG' then
+      begin
+        MemDataBiaya['dpp'] := json.StringTree['data/transport_cost'];
+        MemDataBiaya['total'] := json.StringTree['data/transport_cost'];
+      end;
+
+      if MemDataBiaya['kd_biaya'] = 'BONGKAR' then
+      begin
+        MemDataBiaya['dpp'] := json.StringTree['data/unloading_fee'];
+        MemDataBiaya['total'] := json.StringTree['data/unloading_fee'];
+      end;
+
+      MemDataBiaya.Post;
+      MemDataBiaya.Next;
+    end;
+
+    StatusCekBiaya := True;
+
+  finally
+    // Pastikan objek dibebaskan dengan aman
+    if Assigned(gNet) then
+      FreeAndNil(gNet);
+
+    if Assigned(resp) then
+      FreeAndNil(resp);
   end;
-
-  except
-  on E: EIdHTTPProtocolException do
-    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
-    begin
-      jumdata:=0;
-      gNet.free;
-      resp.Free;
-    end;
-    on E: Exception do
-    ShowMessage('A non-Indy related exception has been raised!');
-    end;
-    finally
-      gNet.free;
-      resp.Free;
-  end;
-
-  //MOVE JSON
-//  json.JSONText := MemoAPI.text;
-  cnt := json.TreeCount['data'];
-
-  if cnt = 0 then
-  begin
-    Showmessage('Data Tidak Ditemukan');
-    exit;
-  end;
-
-  MemDataBiaya.First;
-  while not MemDataBiaya.Eof do
-  begin
-    MemDataBiaya.Edit;
-    if MemDataBiaya['kd_biaya']='BTT' then
-    begin
-     MemDataBiaya['dpp']:=json.StringTree['data/additional_point'];
-     MemDataBiaya['total']:=json.StringTree['data/additional_point'];
-    end;
-    if MemDataBiaya['kd_biaya']='BKM' then
-    begin
-      MemDataBiaya['dpp']:=json.StringTree['data/additional_km'];
-      MemDataBiaya['total']:=json.StringTree['data/additional_km'];
-    end;
-    if MemDataBiaya['kd_biaya']='BANG' then
-    begin
-      MemDataBiaya['dpp']:=json.StringTree['data/transport_cost'];
-      MemDataBiaya['total']:=json.StringTree['data/transport_cost'];
-    end;
-    if MemDataBiaya['kd_biaya']='BONGKAR' then
-    begin
-      MemDataBiaya['dpp']:=json.StringTree['data/unloading_fee'];
-      MemDataBiaya['total']:=json.StringTree['data/unloading_fee'];
-    end;
-    MemDataBiaya.Post;
-    MemDataBiaya.Next;
-  end;
-
 end;
+
 
 procedure TFNewDeliveryOrder.GetApiBiayaKoreksiChakra;
 var
@@ -679,7 +823,7 @@ begin
             ' "starting_loc_name", "province_code", "province_name", "regency_code", '+
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
             //' "additional_code", '+
-            ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id) '+
+            ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id,sbu_code) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -700,7 +844,7 @@ begin
             //' '+QuotedStr('0')+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+');');
+            ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+','+QuotedStr(FHomeLogin.vKodePRSH)+');');
     ExecSQL;
   end;
   InsertDetailLoad;
@@ -711,6 +855,28 @@ begin
   Clear;
   Close;
   FListDeliveryOrder.Refresh;
+end;
+
+procedure TFNewDeliveryOrder.spTotalTitikClick(Sender: TObject);
+begin
+  if (Status=1) AND (IntStatusDO=3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+    end else begin
+      BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+  begin
+    StatusPerubahanBiaya:=True;
+  end else begin
+    StatusPerubahanBiaya:=False;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.Update;
@@ -1111,6 +1277,15 @@ begin
   btNextStepClick(Sender);
 end;
 
+procedure TFNewDeliveryOrder.BCorrectionClick(Sender: TObject);
+begin
+  FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FListDeliveryOrder.Name)); //Mendapatkan nama Menu
+  FKoreksi.Status:=0;
+  FKoreksi.vnotransaksi:=edKodeDOMuatan.Text; //Mendapatkan Nomor Transaksi
+  FKoreksi.ShowModal;
+end;
+
 procedure TFNewDeliveryOrder.btAddDetailClick(Sender: TObject);
 begin
   if (vFormSumber01='0') OR (vFormSumber01='')  then
@@ -1273,7 +1448,7 @@ begin
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
-
+//  ShowMessage(BoolToStr(StatusCekBiaya));
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
@@ -1296,6 +1471,9 @@ begin
     begin
       MessageDlg('Pastikan Detail Biaya Sudah Lengkap..!!',mtInformation,[mbRetry],0);
       edKodeDOMuatan.SetFocus;
+    end else if StatusCekBiaya=False then
+    begin
+      MessageDlg('Silahkan melakukan Cek Biaya..!!',mtInformation,[mbRetry],0);
     end
     else if Status = 0 then
     begin
@@ -1309,15 +1487,16 @@ begin
     end
     else if Status = 1 then
     begin
-      CekGetApiBiayaKoreksiChakra;
-      if IntAdaPerubahan=0 then
-      begin
+//      CekGetApiBiayaKoreksiChakra;
+//      if IntAdaPerubahan=0 then
+//      begin
+
         if application.MessageBox('Apa Anda Yakin Memperbarui Data Ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
         begin
           Update;
           Dm.Koneksi.Commit;
         end;
-      end;
+//      end;
     end;
     Except on E :Exception do
     begin
@@ -1440,6 +1619,28 @@ begin
   end;
 end;
 
+procedure TFNewDeliveryOrder.edKodeJenisKendMuatanChange(Sender: TObject);
+begin
+  if (Status=1) AND (IntStatusDO=3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+    end else begin
+      BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+  begin
+    StatusPerubahanBiaya:=True;
+  end else begin
+    StatusPerubahanBiaya:=False;
+  end;
+end;
+
 procedure TFNewDeliveryOrder.edKodeVendorMuatanButtonClick(Sender: TObject);
 begin
   if (vFormSumber01='0') OR (vFormSumber01='')  then
@@ -1519,6 +1720,28 @@ begin
   FMasterData.ShowModal;
 end;
 
+procedure TFNewDeliveryOrder.edNamaKabupatenChange(Sender: TObject);
+begin
+  if (Status=1) AND (IntStatusDO=3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+    end else begin
+      BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+  begin
+    StatusPerubahanBiaya:=True;
+  end else begin
+    StatusPerubahanBiaya:=False;
+  end;
+end;
+
 procedure TFNewDeliveryOrder.edNamaLokasiButtonClick(Sender: TObject);
 begin
 //  FMasterData.Caption:='Master Data Lokasi Awal';
@@ -1527,6 +1750,28 @@ begin
 //  FMasterData.ShowModal;
   FDataPool.Show;
   FDataPool.GetApiPool;
+end;
+
+procedure TFNewDeliveryOrder.edNamaLokasiChange(Sender: TObject);
+begin
+  if (Status=1) AND (IntStatusDO=3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+    end else begin
+      BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+  begin
+    StatusPerubahanBiaya:=True;
+  end else begin
+    StatusPerubahanBiaya:=False;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.edNamaProvinsiButtonClick(Sender: TObject);
@@ -1585,6 +1830,41 @@ begin
   end;
   json := TMyJSON.Create(Self);
 
+  if (Status = 0) or ((Status = 1) and (IntStatusKoreksi = 3)) then
+  StatusCekBiaya := False
+  else
+  StatusCekBiaya := True;
+
+  StatusPerubahanBiaya:=False;
+
+  if (Status=1) AND (IntStatusKoreksi=2) AND (IntStatusDO=5) then
+  begin
+    btSimpanSumberJual.Enabled:=True;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=False;
+  end else if (Status=1) AND (IntStatusKoreksi<>2) AND (IntStatusDO=5) then
+  begin
+    btSimpanSumberJual.Enabled:=False;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=True;
+  end else if (Status=0) OR (IntStatusDO<5) then
+  begin
+    btSimpanSumberJual.Enabled:=True;
+    BCorrection.Visible:=False;
+  end else begin
+    btSimpanSumberJual.Enabled:=False;
+    btSaveParameter.Enabled:=False;
+    BCorrection.Visible:=False;
+    BCorrection.Enabled:=False;
+  end;
+
+  if (Status=1) then
+  begin
+    strLastKodeJenisKendMuatan:=edKodeJenisKendMuatan.Text;
+    strLastNamaLokasi:= edNamaLokasi.Text;
+    strLastNamaKabupaten:= edNamaKabupaten.Text;
+    strLastTotalTitik:=spTotalTitik.Text;
+  end;
 
 end;
 

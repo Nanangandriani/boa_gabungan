@@ -262,6 +262,7 @@ begin
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
     strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+    IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
   end;
 
   //Detail

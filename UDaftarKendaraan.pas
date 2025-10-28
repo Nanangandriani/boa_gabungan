@@ -56,7 +56,7 @@ begin
     sql.Clear;
     sql.Text:='select DISTINCT vehicles,type_vehicles_code,type_vehicles_name,capacity '+
               'from t_delivery_order_services where notrans NOT IN '+
-              '(select a.notrans_do from t_spm_det a left join t_spm b on '+
+              '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on '+
               'b.notrans=a.notrans where b.deleted_at is null)';
     open;
   end;

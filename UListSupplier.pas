@@ -79,17 +79,18 @@ type
     Procedure Refresh;
     Procedure Autonumber;
     Procedure load_sbu_code;
+    Procedure load_status;
   end;
 
 function FListSupplier: TFListSupplier;
   //RealListSupplier: TFListSupplier;
-var  urut:integer;
+var  urut,status:integer;
 
 implementation
 
 {$R *.dfm}
 
-uses UNew_Supplier, UDataModule, UMainMenu;
+uses UNew_Supplier, UDataModule, UMainMenu, UHomeLogin, UMy_Function;
 var
   RealListSupplier: TFListSupplier;
 function FListSupplier: TFListSupplier;
@@ -202,7 +203,9 @@ end;
 procedure TFListSupplier.FormShow(Sender: TObject);
 begin
   refresh;
-  load_sbu_code;
+  //load_sbu_code;
+  FillSBUBarCombo(Cb_sbu);
+  //load_status;
   Qsupplier.Close;
   Qsupplier.Open;
 end;
@@ -293,6 +296,30 @@ begin
      dm.Qtemp.Next;
   end;
 end;
+
+procedure TFListSupplier.load_status;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT company_code,stat_office FROM t_company Where company_code='+Quotedstr(FHomeLogin.vKodePRSH)+'';
+    open;
+  end;
+  status:=dm.Qtemp.FieldByName('stat_office').AsInteger;
+  //ShowMessage(IntToStr(dm.Qtemp.FieldByName('stat_office').AsInteger));
+  if status=0 then
+  begin
+      Cb_sbu.Visible:=ivAlways;
+  end
+  else
+  if status=1  then
+  begin
+      Cb_sbu.Visible:=ivNever;
+  end;
+end;
+
+
 
 initialization
 RegisterClass(TFListSupplier);

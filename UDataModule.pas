@@ -91,6 +91,7 @@ begin
       on E2: Exception do
       begin
         ShowMessage('Koneksi anda terputus! ' + E.Message);
+        Exit;
       end;
     end;
   end;

@@ -467,6 +467,7 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
         'b.notrans  )b ON  a.notrans=b.notrans where deleted_at  is null)' +
         ' deo   where notrans not in (SELECT notrans from "public"."t_spm' +
         '" a  where a.deleted_at  is null) ')
+    Active = True
     Left = 352
     Top = 272
     object Qdodate_trans: TDateField

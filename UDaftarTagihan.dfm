@@ -1,6 +1,8 @@
 object FDaftarTagihan: TFDaftarTagihan
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Daftar Tagihan'
   ClientHeight = 492
   ClientWidth = 997
@@ -23,20 +25,18 @@ object FDaftarTagihan: TFDaftarTagihan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 0
-    ExplicitWidth = 995
-    ExplicitHeight = 452
+    ExplicitWidth = 993
+    ExplicitHeight = 459
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 991
-      ExplicitHeight = 427
+      ExplicitWidth = 989
+      ExplicitHeight = 434
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 997
-        Height = 436
+        Width = 993
+        Height = 435
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -111,10 +111,10 @@ object FDaftarTagihan: TFDaftarTagihan
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 452
-    ExplicitWidth = 995
+    ExplicitTop = 459
+    ExplicitWidth = 993
     object BBatal: TRzBitBtn
-      Left = 925
+      Left = 921
       Top = 1
       Height = 30
       Align = alRight
@@ -173,10 +173,10 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 919
+      ExplicitLeft = 917
     end
     object BSave: TRzBitBtn
-      Left = 850
+      Left = 846
       Top = 1
       Height = 30
       Align = alRight
@@ -235,7 +235,7 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 844
+      ExplicitLeft = 842
     end
   end
   object dsDetailPiutang: TDataSource

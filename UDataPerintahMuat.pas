@@ -51,6 +51,7 @@ type
     MemDetailnm_barang: TStringField;
     MemDetailjumlah: TFloatField;
     MemDetailsatuan: TStringField;
+    BCorrection: TRzBitBtn;
     procedure edNoKendMuatanButtonClick(Sender: TObject);
     procedure edNama_Vendor_KendButtonClick(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
@@ -60,6 +61,8 @@ type
       var Handled: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BBatalClick(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,7 +71,7 @@ type
     stat_proses : Boolean;
     strtgl, strbulan, strtahun, trans_id_link: string;
     Year, Month, Day: Word;
-    Status: Integer;
+    Status,IntStatusKoreksi: Integer;
     procedure Clear;
     procedure Autonumber;
     procedure Save;
@@ -88,7 +91,7 @@ implementation
 {$R *.dfm}
 
 uses USearch_Supplier, UPerintahMuat_Sumber, UDataModule, UHomeLogin,
-  UMy_Function, UListPerintahMuat, UDaftarKendaraan;
+  UMy_Function, UListPerintahMuat, UDaftarKendaraan, UKoreksi;
 
 procedure TFDataPerintahMuat.CheckJasaTransportDefault;
 begin
@@ -206,7 +209,7 @@ begin
             ' "notrans", "loading_date", "delivery_date", "code_vendor", '+
             ' "name_vendor", "number_of_vehicles", "description", "order_no", '+
             //' "additional_code", '+
-            ' "trans_day", "trans_month", "trans_year") '+
+            ' "trans_day", "trans_month", "trans_year",sbu_code) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -221,7 +224,8 @@ begin
             //' '+QuotedStr('0')+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+'  );');
+            ' '+QuotedStr(strtahun)+', '+
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+'  );');
     ExecSQL;
   end;
   InsertDetail;
@@ -319,6 +323,15 @@ begin
   Close;
 end;
 
+procedure TFDataPerintahMuat.BCorrectionClick(Sender: TObject);
+begin
+  FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FListPerintahMuat.Name)); //Mendapatkan nama Menu
+  FKoreksi.Status:=0;
+  FKoreksi.vnotransaksi:=edKodeMuat.Text; //Mendapatkan Nomor Transaksi
+  FKoreksi.ShowModal;
+end;
+
 procedure TFDataPerintahMuat.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
@@ -358,17 +371,12 @@ begin
     end
     else if edKode_Vendor_Kend.Text='' then
     begin
-      MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
-      edKode_Vendor_Kend.SetFocus;
-    end
-    else if edKode_Vendor_Kend.Text='' then
-    begin
-      MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+      MessageDlg('Data Jasa Transport Wajib Diisi..!!',mtInformation,[mbRetry],0);
       edKode_Vendor_Kend.SetFocus;
     end
     else if edNoKendMuatan.Text='' then
     begin
-      MessageDlg('Nomor Kendaraan Tidak Lengkap..!!',mtInformation,[mbRetry],0);
+      MessageDlg('Nomor Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
       edNoKendMuatan.SetFocus;
     end
     else if MemDetail.RecordCount=0 then
@@ -431,6 +439,10 @@ begin
   if edNama_Vendor_Kend.Text='' then
   begin
     MessageDlg('Jasa Transport Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else if edNoKendMuatan.Text='' then
+  begin
+    MessageDlg('Nomor Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edNoKendMuatan.SetFocus;
   end else
   begin
     FPerintahMuat_Sumber.Clear;
@@ -476,6 +488,24 @@ procedure TFDataPerintahMuat.FormClose(Sender: TObject;
 begin
   //Hapus stock booking jika batal simpan
   reset_stock;
+end;
+
+procedure TFDataPerintahMuat.FormShow(Sender: TObject);
+begin
+  if (Status=1) AND (IntStatusKoreksi=2) then
+  begin
+    BSave.Enabled:=True;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=False;
+  end else if Status=0 then
+  begin
+    BSave.Enabled:=True;
+    BCorrection.Visible:=False;
+  end else begin
+    BSave.Enabled:=False;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=True;
+  end;
 end;
 
 procedure TFDataPerintahMuat.Autonumber;

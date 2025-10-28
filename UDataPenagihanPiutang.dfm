@@ -99,7 +99,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       Width = 344
       Height = 23
       Text = ''
+      Color = clInfoBk
       TabOrder = 0
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaKolektorButtonClick
@@ -277,8 +279,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       Width = 186
       Height = 23
       Text = ''
+      Color = clInfoBk
       TabOrder = 8
       OnChange = edKaresidenanChange
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edKaresidenanButtonClick
@@ -289,7 +293,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       Width = 268
       Height = 23
       Text = ''
+      Color = clInfoBk
       TabOrder = 9
+      OnChange = edKabupatenChange
+      AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edKabupatenButtonClick

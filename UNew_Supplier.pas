@@ -58,6 +58,9 @@ type
     Lbltitik_koma: TLabel;
     Cb_sbu: TComboBox;
     Ed_serial: TEdit;
+    edKodePerkiraan_Ret: TRzButtonEdit;
+    Label19: TLabel;
+    Label20: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -71,16 +74,18 @@ type
     procedure edKodePerkiraanButtonClick(Sender: TObject);
     procedure edKodePerkiraan_umButtonClick(Sender: TObject);
     procedure Cb_sbuSelect(Sender: TObject);
+    procedure edKodePerkiraan_RetButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    KodeHeaderPerkiraan,KodeHeaderPerkiraan_um :string;
+    KodeHeaderPerkiraan,KodeHeaderPerkiraan_um,KodeHeaderPerkiraan_ret :string;
     status:integer;
     Procedure Clear;
     Procedure Autonumber;
     procedure Autocode_perkiraan;
     procedure Autocode_perkiraan_um;
+    procedure Autocode_perkiraan_ret;
     procedure load_sbu_code;
     procedure load_status;
   end;
@@ -202,6 +207,55 @@ begin
     edKodePerkiraan_um.Text := KodeHeaderPerkiraan_um+'.'+edno.Text;
 end;
 
+
+procedure TFNew_Supplier.Autocode_perkiraan_ret;
+var
+  kode : String;
+  Urut : Integer;
+begin
+    with dm.Qtemp1 do
+    begin
+      Close;
+      SQL.Clear;
+      Sql.Text :=' SELECT * FROM t_ak_account '+
+                 ' WHERE header_code='+Quotedstr(KodeHeaderPerkiraan_ret)+'  ';
+      open;
+    end;
+
+    if Dm.Qtemp1.RecordCount = 0 then urut := 1 else
+    if Dm.Qtemp1.RecordCount > 0 then
+    begin
+        with Dm.Qtemp1 do
+        begin
+          Close;
+          Sql.Clear;
+          Sql.Text :=' select count(header_code) as hasil '+
+                     ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPerkiraan_ret)+'  ';
+          Open;
+        end;
+        Urut := dm.Qtemp1.FieldByName('hasil').AsInteger + 1;
+    end;
+    edKodePerkiraan_ret.Clear;
+    kode := inttostr(urut);
+
+    if Length(kode)=1 then
+    begin
+      kode := '00'+kode;
+    end
+    else
+    if Length(kode)=2 then
+    begin
+      kode := '0'+kode;
+    end
+    else
+    if Length(kode)=3 then
+    begin
+      kode := kode;
+    end;
+    edKodePerkiraan_ret.Text := KodeHeaderPerkiraan_ret+'.'+edno.Text;
+end;
+
+
 procedure TFNew_Supplier.Cb_sbuSelect(Sender: TObject);
 begin
    with dm.Qtemp do
@@ -224,8 +278,10 @@ begin
    EdNPWP.Text:='';
    edKodePerkiraan.Text:='';
    edKodePerkiraan_um.Text:='';
+   edKodePerkiraan_ret.Text:='';
    KodeHeaderPerkiraan:='';
    KodeHeaderPerkiraan_um:='';
+   KodeHeaderPerkiraan_Ret:='';
    Cb_sbu.Text:='';
    Ed_initial.Text:='';
    up_npwp.Text:='';
@@ -288,6 +344,15 @@ begin
    FMasterData.vcall:='perkiraan_supplier';
    FMasterData.update_grid('code','account_name','header_name','(SELECT a.deleted_at,a.code,a.account_name,b.header_name FROM "t_ak_account" a inner join t_ak_header b on a.header_code=b.header_code) aa','WHERE	deleted_at IS NULL order by code ASC');
    FMasterData.Showmodal;
+end;
+
+procedure TFNew_Supplier.edKodePerkiraan_RetButtonClick(Sender: TObject);
+begin
+   FMasterData.DBGridCustomer.SearchPanel.SearchingText:='';
+   FMasterData.Caption:='Master Data Perkiraan';
+   FMasterData.vcall:='perkiraan_supplier_return';
+   FMasterData.update_grid('code','account_name','header_name','(SELECT  a.deleted_at,a.code,a.account_name,b.header_name FROM "t_ak_account" a inner join t_ak_header b on a.header_code=b.header_code) aa','WHERE	deleted_at IS NULL order by code ASC');
+   FMasterData.ShowModal;
 end;
 
 procedure TFNew_Supplier.edKodePerkiraan_umButtonClick(Sender: TObject);
@@ -356,10 +421,11 @@ begin
         sql.Text:='Select * from t_supplier where supplier_code='+QuotedStr(Edno.Text);
         ExecSQL;
       end;
-      if (dm.Qtemp['header_code']=null) and (dm.Qtemp['header_code_um']=null) then
+      if (dm.Qtemp['header_code']=null) and (dm.Qtemp['header_code_um']=null) and (dm.Qtemp['header_code2']=null) then
       begin
         Autocode_perkiraan;
         Autocode_perkiraan_um;
+        Autocode_perkiraan_ret;
       end;
       with dm.Qtemp do
       begin
@@ -370,6 +436,8 @@ begin
                   ' ,header_code='+quotedstr(KodeHeaderPerkiraan)+',account_code='+Quotedstr(edKodePerkiraan.Text)+''+
                   ' ,header_code_um='+quotedstr(KodeHeaderPerkiraan_um)+''+
                   ' ,account_code_um='+quotedstr(edKodePerkiraan_um.Text)+''+
+                  ' ,header_code2='+quotedstr(KodeHeaderPerkiraan_ret)+''+
+                  ' ,account_code2='+quotedstr(edKodePerkiraan_ret.Text)+''+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
                   parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   //parambyname('updated_by').AsString:='Admin';
@@ -455,19 +523,22 @@ begin
     begin
       Autocode_perkiraan;
       Autocode_perkiraan_um;
+      Autocode_perkiraan_ret;
       with dm.Qtemp do
       begin
         close;
         sql.clear;
-        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,header_code,account_code,header_code_um,account_code_um,created_at,created_by,up_npwp,supplier_initial,sbu_code)values'+
+        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,header_code,account_code,header_code_um,account_code_um,created_at,created_by,up_npwp,supplier_initial,sbu_code,header_code2,account_code2)values'+
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
-                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:header_code,:account_code,:header_code_um,:account_code_um,:created_at,:created_by,:up_npwp,:supplier_initial,:sbu_code )';
+                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:header_code,:account_code,:header_code_um,:account_code_um,:created_at,:created_by,:up_npwp,:supplier_initial,:sbu_code,:header_code2,:account_code2 )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
                   //:created_at,:created_by';
                   parambyname('header_code').AsString:=KodeHeaderPerkiraan;
                   parambyname('account_code').AsString:=edKodePerkiraan.Text;
                   parambyname('header_code_um').AsString:=KodeHeaderPerkiraan_um;
                   parambyname('account_code_um').AsString:=edKodePerkiraan_um.Text;
+                  parambyname('header_code2').AsString:=KodeHeaderPerkiraan_ret;
+                  parambyname('account_code2').AsString:=edKodePerkiraan_ret.Text;
                   parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   parambyname('created_by').AsString:=Nm;
                   parambyname('up_npwp').AsString:=up_npwp.Text;
@@ -559,7 +630,7 @@ end;
 
 procedure TFNew_Supplier.load_status;
 begin
-  with dm.Qtemp do
+  {with dm.Qtemp do
   begin
     close;
     sql.Clear;
@@ -580,7 +651,23 @@ begin
       Labelsbu.Visible:=false;
       Lbltitik_koma.Visible:=false;
       Cb_sbu.Visible:=false
+  end;}
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+      Labelsbu.Visible:=true;
+      Lbltitik_koma.Visible:=true;
+      Cb_sbu.Visible:=true
+  end
+  else
+  if FHomeLogin.vStatOffice=1  then
+  begin
+      Labelsbu.Visible:=false;
+      Lbltitik_koma.Visible:=false;
+      Cb_sbu.Visible:=false
   end;
+
+
 
 end;
 

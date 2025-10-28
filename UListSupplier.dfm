@@ -24,7 +24,13 @@ object FListSupplier: TFListSupplier
     Align = alClient
     DataSource = DsSupplier
     DynProps = <>
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    ParentFont = False
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 0
@@ -176,8 +182,8 @@ object FListSupplier: TFListSupplier
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -197,7 +203,7 @@ object FListSupplier: TFListSupplier
           Visible = True
           ItemName = 'Cb_sbu'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

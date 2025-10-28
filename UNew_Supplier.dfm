@@ -222,7 +222,7 @@ object FNew_Supplier: TFNew_Supplier
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = -6
+    ExplicitWidth = 861
     object Label1: TLabel
       Left = 30
       Top = 20
@@ -453,6 +453,8 @@ object FNew_Supplier: TFNew_Supplier
     object TabSheet1: TRzTabSheet
       Color = clGradientActiveCaption
       Caption = 'Barang'
+      ExplicitWidth = 857
+      ExplicitHeight = 208
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -536,8 +538,6 @@ object FNew_Supplier: TFNew_Supplier
     object TabSheet2: TRzTabSheet
       Color = clGradientActiveCaption
       Caption = 'Lain-lain'
-      ExplicitWidth = 857
-      ExplicitHeight = 208
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
@@ -546,8 +546,6 @@ object FNew_Supplier: TFNew_Supplier
         Align = alClient
         Color = 15987699
         TabOrder = 0
-        ExplicitWidth = 857
-        ExplicitHeight = 208
         object Label11: TLabel
           Left = 177
           Top = 20
@@ -576,6 +574,20 @@ object FNew_Supplier: TFNew_Supplier
           Height = 15
           Caption = 'Kode Perkiraan Uang Muka'
         end
+        object Label19: TLabel
+          Left = 177
+          Top = 82
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label20: TLabel
+          Left = 29
+          Top = 82
+          Width = 110
+          Height = 15
+          Caption = 'Kode Perkiraan Retur'
+        end
         object edKodePerkiraan: TRzButtonEdit
           Left = 186
           Top = 17
@@ -589,7 +601,7 @@ object FNew_Supplier: TFNew_Supplier
         end
         object edKodePerkiraan_um: TRzButtonEdit
           Left = 186
-          Top = 48
+          Top = 46
           Width = 136
           Height = 23
           Text = ''
@@ -597,6 +609,17 @@ object FNew_Supplier: TFNew_Supplier
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edKodePerkiraan_umButtonClick
+        end
+        object edKodePerkiraan_Ret: TRzButtonEdit
+          Left = 186
+          Top = 79
+          Width = 136
+          Height = 23
+          Text = ''
+          TabOrder = 2
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = edKodePerkiraan_RetButtonClick
         end
       end
     end

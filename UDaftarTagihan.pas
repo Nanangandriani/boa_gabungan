@@ -304,7 +304,7 @@ begin
       sql.add(' SELECT * from ('+
               ' SELECT * '+
               ' FROM "public"."vget_piutang") a '+
-              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
+              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' and no_inv_tax is not null and no_inv_tax<>'''' '+
               ' ORDER BY date_tempo desc');
       open;
     end;

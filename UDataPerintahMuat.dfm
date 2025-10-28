@@ -13,6 +13,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
   Font.Style = []
   Position = poDesktopCenter
   OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -390,6 +391,17 @@ object FDataPerintahMuat: TFDataPerintahMuat
       TabOrder = 2
       TextHint = 'Autonumber'
       Visible = False
+    end
+    object BCorrection: TRzBitBtn
+      Left = 978
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 3
+      OnClick = BCorrectionClick
+      ExplicitLeft = 715
     end
   end
   object RzPageControl1: TRzPageControl

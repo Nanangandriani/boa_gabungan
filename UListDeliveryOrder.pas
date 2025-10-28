@@ -229,6 +229,7 @@ begin
       edNamaJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
       edNamaJenisBiaya.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
       edNamaJenisDoc.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
+      edlokasiregencyid.Text:=Dm.Qtemp.FieldValues['starting_loc_regencie_id'];
       edKodeLokasi.Text:=Dm.Qtemp.FieldByName('starting_loc_code').AsString;
       edNamaLokasi.Text:=Dm.Qtemp.FieldByName('starting_loc_name').AsString;
       edKodeProvinsi.Text:=Dm.Qtemp.FieldByName('province_code').AsString;
@@ -244,6 +245,7 @@ begin
       strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
       vFormSumber01:=Dm.Qtemp.FieldByName('formsumbervendor').AsString;
       IntStatusDO:=Dm.Qtemp.FieldByName('status').AsInteger;
+      IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
     end;
 
   //biaya

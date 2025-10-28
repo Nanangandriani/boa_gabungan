@@ -78,6 +78,7 @@ type
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure edKabupatenButtonClick(Sender: TObject);
     procedure edKaresidenanChange(Sender: TObject);
+    procedure edKabupatenChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -328,8 +329,8 @@ begin
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
-  Close;
   FDataPenagihanPiutang.Refresh;
+  Close;
 end;
 
 procedure TFDataPenagihanPiutang.BBatalClick(Sender: TObject);
@@ -511,6 +512,12 @@ begin
   end;
 end;
 
+procedure TFDataPenagihanPiutang.edKabupatenChange(Sender: TObject);
+begin
+  edKodeKolektor.Text;
+  edNamaKolektor.Text;
+end;
+
 procedure TFDataPenagihanPiutang.edKaresidenanButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data TP';
@@ -523,6 +530,8 @@ procedure TFDataPenagihanPiutang.edKaresidenanChange(Sender: TObject);
 begin
   edKabupaten.Text:='';
   strKabupatenID:='';
+  edKodeKolektor.Text:='';
+  edNamaKolektor.Text:='';
 end;
 
 procedure TFDataPenagihanPiutang.edNamaKolektorButtonClick(Sender: TObject);

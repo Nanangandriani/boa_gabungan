@@ -31,6 +31,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
+      ExplicitWidth = 1342
+      ExplicitHeight = 548
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -54,6 +56,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -420,7 +423,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Height = 23
             CharCase = ecUpperCase
             TabOrder = 5
-            Visible = False
+            OnChange = edKodeJenisKendMuatanChange
           end
           object spKapasitas: TSpinEdit
             Left = 133
@@ -438,9 +441,12 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Width = 250
             Height = 23
             Text = ''
+            Color = clInfoBk
+            ReadOnly = True
             TabOrder = 4
             AltBtnNumGlyphs = 1
             ButtonNumGlyphs = 1
+            ButtonVisible = False
             OnButtonClick = edNamaJenisKendMuatanButtonClick
           end
           object edNomorPIB: TEdit
@@ -538,6 +544,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 32
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 516
+        ExplicitWidth = 1342
         object btNextStep: TRzBitBtn
           Left = 1270
           Top = 1
@@ -598,6 +606,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1266
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
@@ -691,8 +700,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object TabDataBiaya: TRzTabSheet
       Caption = 'Data Biaya'
       OnClick = TabDataBiayaClick
-      ExplicitWidth = 1342
-      ExplicitHeight = 548
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -702,7 +709,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1342
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -849,6 +855,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 23
           Text = ''
           TabOrder = 3
+          OnChange = edNamaLokasiChange
           AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
@@ -873,6 +880,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 23
           Text = ''
           TabOrder = 7
+          OnChange = edNamaKabupatenChange
           AllowKeyEdit = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
@@ -912,6 +920,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           MinValue = 0
           TabOrder = 9
           Value = 0
+          OnClick = spTotalTitikClick
         end
         object MemKeteranganBiaya: TMemo
           Left = 676
@@ -985,7 +994,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             0000000000000000000000000000000000000000000000000000}
         end
         object Memo1: TMemo
-          Left = 1312
+          Left = 1161
           Top = 12
           Width = 185
           Height = 89
@@ -1020,8 +1029,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 37
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 511
-        ExplicitWidth = 1342
         object btBatalSumberJual: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1082,7 +1089,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1266
         end
         object btSimpanSumberJual: TRzBitBtn
           Left = 1195
@@ -1144,7 +1150,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1191
         end
         object btBackStep: TRzBitBtn
           Left = 1
@@ -1206,6 +1211,18 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+        end
+        object BCorrection: TRzBitBtn
+          Left = 1097
+          Top = 1
+          Width = 98
+          Height = 35
+          Align = alRight
+          Caption = 'Submit Correction'
+          TabOrder = 3
+          OnClick = BCorrectionClick
+          ExplicitLeft = 715
+          ExplicitHeight = 30
         end
       end
       object DBGridSumberPenjualan: TDBGridEh
@@ -1704,8 +1721,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 384
-    Top = 264
+    Left = 448
+    Top = 208
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end

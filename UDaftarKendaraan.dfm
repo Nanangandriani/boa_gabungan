@@ -1,6 +1,7 @@
 object FDaftarKendaraan: TFDaftarKendaraan
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Daftar Kendaraan'
   ClientHeight = 519
@@ -33,6 +34,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         EditButtons = <>
         FieldName = 'code'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kode'
         Width = 150
       end
@@ -42,6 +44,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         EditButtons = <>
         FieldName = 'plate_number'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
       end
       item
@@ -50,6 +53,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         EditButtons = <>
         FieldName = 'type'
         Footers = <>
+        Title.Alignment = taCenter
         Visible = False
         Width = 100
       end
@@ -59,6 +63,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         EditButtons = <>
         FieldName = 'type_name'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Jenis Kendaraan'
       end
       item
@@ -67,6 +72,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         EditButtons = <>
         FieldName = 'capacity'
         Footers = <>
+        Title.Alignment = taCenter
         Title.Caption = 'Kapasitas'
         Width = 100
       end>
