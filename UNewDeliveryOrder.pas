@@ -206,6 +206,7 @@ type
     procedure edNamaKabupatenChange(Sender: TObject);
     procedure spTotalTitikClick(Sender: TObject);
     procedure edKodeJenisKendMuatanChange(Sender: TObject);
+    procedure spTotalTitikChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -216,7 +217,7 @@ type
     strLastKodeJenisKendMuatan,strLastNamaLokasi,
     strLastNamaKabupaten,strLastTotalTitik : string;
     IntStatusDO,IntStatusKoreksi: Integer;
-    StatusCekBiaya,StatusPerubahanBiaya: Boolean;
+    StatusCekBiaya,StatusPerubahanBiaya: Integer;
     Year, Month, Day: Word;
     procedure RefreshGridRincianBiaya;
     procedure HitungGrid;
@@ -459,24 +460,22 @@ var
   gNet: TIdHTTP;
   resp: TMemoryStream;
 begin
+//  ShowMessage('tes');
+
   gNet := nil;
   resp := nil;
-
   try
     // Hitung titik tambahan
     IntTitikTambahan := StrToIntDef(spTotalTitik.Text, 1) - 1;
-
     // Ambil konfigurasi parameter dari database
     BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlchakra''');
     key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
     Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
-
     // Susun parameter API
     vBody := '?type_id='+edKodeJenisKendMuatan.Text +
              '&regencie_from_id=' + edlokasiregencyid.Text +
              '&regencie_to_id=' + edKodeKabupaten.Text +
              '&point=' + spTotalTitik.Text;
-
     Vpath := '/api/get-tariff';
     url := BaseUrl + Vpath + vBody;
     MemoAPI.Text := url;
@@ -484,12 +483,10 @@ begin
     // Buat komponen HTTP dan memory stream
     gNet := TIdHTTP.Create(nil);
     resp := TMemoryStream.Create;
-
     // Set konfigurasi HTTP
     gNet.Request.Accept := 'application/json';
     gNet.Request.CustomHeaders.Values[key] := Vtoken;
     gNet.Request.ContentType := 'application/x-www-form-urlencoded';
-
     // Logging URL dan Token
     UpdateLogErrorAPI(BaseUrl, Vpath, Vtoken, False, url);
     UpdateLogErrorAPI(BaseUrl, Vpath, Vtoken, True, url);
@@ -509,73 +506,58 @@ begin
         Exit;
       end;
     end;
-
     // Simpan hasil response ke memo
     MemoAPI.Text := res;
-
     // Pastikan JSON sudah siap
     if not Assigned(json) then
       raise Exception.Create('Komponen JSON belum diinisialisasi.');
-
     json.JSONText := MemoAPI.Text;
-
     // Cek status response JSON
     if json.StringTree['status'] = 'false' then
     begin
       MessageDlg(json.StringTree['message'] + '..!!', mtInformation, [mbOK], 0);
       Exit;
     end;
-
     // Ambil jumlah data di JSON
     cnt := json.TreeCount['data'];
-
     if cnt = 0 then
     begin
       ShowMessage('Data Tidak Ditemukan');
       Exit;
     end;
-
     // Update dataset biaya
     MemDataBiaya.First;
     while not MemDataBiaya.Eof do
     begin
       MemDataBiaya.Edit;
-
       if MemDataBiaya['kd_biaya'] = 'BTT' then
       begin
         MemDataBiaya['dpp'] := json.StringTree['data/additional_point'];
         MemDataBiaya['total'] := json.StringTree['data/additional_point'];
       end;
-
       if MemDataBiaya['kd_biaya'] = 'BKM' then
       begin
         MemDataBiaya['dpp'] := json.StringTree['data/additional_km'];
         MemDataBiaya['total'] := json.StringTree['data/additional_km'];
       end;
-
       if MemDataBiaya['kd_biaya'] = 'BANG' then
       begin
         MemDataBiaya['dpp'] := json.StringTree['data/transport_cost'];
         MemDataBiaya['total'] := json.StringTree['data/transport_cost'];
       end;
-
       if MemDataBiaya['kd_biaya'] = 'BONGKAR' then
       begin
         MemDataBiaya['dpp'] := json.StringTree['data/unloading_fee'];
         MemDataBiaya['total'] := json.StringTree['data/unloading_fee'];
       end;
-
       MemDataBiaya.Post;
       MemDataBiaya.Next;
     end;
-
-    StatusCekBiaya := True;
-
+    StatusCekBiaya := 1;
   finally
     // Pastikan objek dibebaskan dengan aman
     if Assigned(gNet) then
       FreeAndNil(gNet);
-
     if Assigned(resp) then
       FreeAndNil(resp);
   end;
@@ -857,6 +839,31 @@ begin
   FListDeliveryOrder.Refresh;
 end;
 
+procedure TFNewDeliveryOrder.spTotalTitikChange(Sender: TObject);
+begin
+  if (Status=1) AND (IntStatusDO=3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+    end else begin
+      BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+  begin
+    StatusPerubahanBiaya:=1;
+    StatusCekBiaya:=0;
+  end else begin
+    StatusPerubahanBiaya:=0;
+    StatusCekBiaya:=1;
+  end;
+
+end;
+
 procedure TFNewDeliveryOrder.spTotalTitikClick(Sender: TObject);
 begin
   if (Status=1) AND (IntStatusDO=3) then
@@ -873,16 +880,26 @@ begin
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
-    StatusPerubahanBiaya:=True;
+    StatusPerubahanBiaya:=1;
+    StatusCekBiaya:=0;
   end else begin
-    StatusPerubahanBiaya:=False;
+    StatusPerubahanBiaya:=0;
+    StatusCekBiaya:=1;
   end;
+
 end;
 
 procedure TFNewDeliveryOrder.Update;
 var strStatus: String;
 begin
-  if FNewDeliveryOrder.IntStatusDO=2 then strStatus:=',status=3' else strStatus:='';
+
+  if (StatusPerubahanBiaya=1) then
+  begin
+   strStatus:=',status=1';
+  end else if (StatusCekBiaya=1) AND (IntStatusDO=3) then
+  begin
+   strStatus:=',status=4';
+  end else strStatus:='';
 
   with dm.Qtemp do
   begin
@@ -1142,6 +1159,9 @@ begin
   dtTerimaTagihan.Date:=NOW();
   edTotalBiaya.Clear;
 
+  StatusPerubahanBiaya:=0;
+  StatusCekBiaya:=1;
+
   with dm.Qtemp do
   begin
     close;
@@ -1344,27 +1364,32 @@ begin
   if edNamaLokasi.Text='' then
   begin
     MessageDlg('Lokasi awal wajib diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
   end else if edNamaKabupaten.Text='' then
   begin
     MessageDlg('Kabupaten Tujuan wajib diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
   end else if spTotalTitik.Text='' then
   begin
     MessageDlg('Jumlah titik wajib diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
   end
   else if edNamaJenisKendMuatan.Text='' then
   begin
     MessageDlg('Nama lokasi wajib diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
   end
-  else if (IntStatusDO=2) or (IntStatusDO=3) then
+  else if (IntStatusDO=3) then
   begin
+    FListPerbandinganBiayaDo.MemDataBiayaLast.Active:=False;
+    FListPerbandinganBiayaDo.MemDataBiayaCorrection.Active:=False;
+    FListPerbandinganBiayaDo.MemDataBiayaLast.Active:=True;
+    FListPerbandinganBiayaDo.MemDataBiayaCorrection.Active:=True;
+
+    FListPerbandinganBiayaDo.MemDataBiayaLast.EmptyTable;
+    FListPerbandinganBiayaDo.MemDataBiayaCorrection.EmptyTable;
     with FListPerbandinganBiayaDo do
     begin
-      MemDataBiayaLast.Active:=False;
-      MemDataBiayaLast.Active:=True;
-      MemDataBiayaCorrection.Active:=False;
-      MemDataBiayaCorrection.Active:=True;
-      MemDataBiayaLast.EmptyTable;
-      MemDataBiayaCorrection.EmptyTable;
       MemDataBiaya.First;
       while not MemDataBiaya.Eof do
       begin
@@ -1381,8 +1406,10 @@ begin
         MemDataBiaya.Next
       end;
     end;
+
     GetApiBiayaKoreksiChakra;
     FListPerbandinganBiayaDo.ShowModal;
+    ShowMessage(inttostr(IntStatusDO));
   end else
   begin
     GetApiBiayaChakra;
@@ -1443,12 +1470,14 @@ end;
 procedure TFNewDeliveryOrder.btSimpanSumberJualClick(Sender: TObject);
 var
   Year, Month, Day: Word;
+  strMessage:String;
 begin
+
   DecodeDate(dtTanggalMuatan.Date, Year, Month, Day);
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
-//  ShowMessage(BoolToStr(StatusCekBiaya));
+
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
@@ -1471,7 +1500,7 @@ begin
     begin
       MessageDlg('Pastikan Detail Biaya Sudah Lengkap..!!',mtInformation,[mbRetry],0);
       edKodeDOMuatan.SetFocus;
-    end else if StatusCekBiaya=False then
+    end else if (StatusCekBiaya=0) then
     begin
       MessageDlg('Silahkan melakukan Cek Biaya..!!',mtInformation,[mbRetry],0);
     end
@@ -1490,6 +1519,7 @@ begin
 //      CekGetApiBiayaKoreksiChakra;
 //      if IntAdaPerubahan=0 then
 //      begin
+//        if StatusPerubahanBiaya=True then strMessage:='Apa Anda Yakin Memperbarui Data Ini Status akan menjadi DO Dibuat ? '
 
         if application.MessageBox('Apa Anda Yakin Memperbarui Data Ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
         begin
@@ -1635,10 +1665,13 @@ begin
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
-    StatusPerubahanBiaya:=True;
+    StatusPerubahanBiaya:=1;
+    StatusCekBiaya:=0;
   end else begin
-    StatusPerubahanBiaya:=False;
+    StatusPerubahanBiaya:=0;
+    StatusCekBiaya:=1;
   end;
+
 end;
 
 procedure TFNewDeliveryOrder.edKodeVendorMuatanButtonClick(Sender: TObject);
@@ -1736,10 +1769,13 @@ begin
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
-    StatusPerubahanBiaya:=True;
+    StatusPerubahanBiaya:=1;
+    StatusCekBiaya:=0;
   end else begin
-    StatusPerubahanBiaya:=False;
+    StatusPerubahanBiaya:=0;
+    StatusCekBiaya:=1;
   end;
+
 end;
 
 procedure TFNewDeliveryOrder.edNamaLokasiButtonClick(Sender: TObject);
@@ -1768,9 +1804,11 @@ begin
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
-    StatusPerubahanBiaya:=True;
+    StatusPerubahanBiaya:=1;
+    StatusCekBiaya:=0;
   end else begin
-    StatusPerubahanBiaya:=False;
+    StatusPerubahanBiaya:=0;
+    StatusCekBiaya:=1;
   end;
 end;
 
@@ -1830,12 +1868,12 @@ begin
   end;
   json := TMyJSON.Create(Self);
 
-  if (Status = 0) or ((Status = 1) and (IntStatusKoreksi = 3)) then
-  StatusCekBiaya := False
+  if (Status = 0) or (IntStatusDO = 3) then
+  StatusCekBiaya := 0
   else
-  StatusCekBiaya := True;
+  StatusCekBiaya := 1;
 
-  StatusPerubahanBiaya:=False;
+  StatusPerubahanBiaya:=0;
 
   if (Status=1) AND (IntStatusKoreksi=2) AND (IntStatusDO=5) then
   begin
@@ -1856,14 +1894,6 @@ begin
     btSaveParameter.Enabled:=False;
     BCorrection.Visible:=False;
     BCorrection.Enabled:=False;
-  end;
-
-  if (Status=1) then
-  begin
-    strLastKodeJenisKendMuatan:=edKodeJenisKendMuatan.Text;
-    strLastNamaLokasi:= edNamaLokasi.Text;
-    strLastNamaKabupaten:= edNamaKabupaten.Text;
-    strLastTotalTitik:=spTotalTitik.Text;
   end;
 
 end;

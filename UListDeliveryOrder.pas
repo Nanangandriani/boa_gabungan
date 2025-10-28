@@ -202,6 +202,7 @@ end;
 procedure TFListDeliveryOrder.ActUpdateExecute(Sender: TObject);
 begin
    FNewDeliveryOrder.Clear;
+
    with Dm.Qtemp do
    begin
        close;
@@ -221,6 +222,10 @@ begin
   begin
     with FNewDeliveryOrder do
     begin
+      strLastNamaLokasi:= Dm.Qtemp.FieldByName('starting_loc_name').AsString;
+      strLastNamaKabupaten:= Dm.Qtemp.FieldByName('regency_name').AsString;
+      strLastTotalTitik:=Dm.Qtemp.FieldValues['number_of_points'];
+
       edKodeDOMuatan.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
       edKodeDOBiaya.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
       edKodeDODok.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
@@ -236,7 +241,7 @@ begin
       edNamaProvinsi.Text:=Dm.Qtemp.FieldByName('province_name').AsString;
       edKodeKabupaten.Text:=Dm.Qtemp.FieldByName('regency_code').AsString;
       edNamaKabupaten.Text:=Dm.Qtemp.FieldByName('regency_name').AsString;
-      spTotalTitik.Value:=Dm.Qtemp.FieldByName('number_of_points').Value;
+      spTotalTitik.Value:=Dm.Qtemp.FieldValues['number_of_points'];
       MemKeteranganBiaya.Text:=Dm.Qtemp.FieldByName('description').AsString;
       order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
       kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
@@ -260,6 +265,7 @@ begin
       FNewDeliveryOrder.btSaveParameter.Enabled:=False;
     end else if (FNewDeliveryOrder.IntStatusDO=3) then
     begin
+
       FNewDeliveryOrder.BtnCekBiaya.Visible:=true;
       FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya Perubahan';
       FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
@@ -371,6 +377,10 @@ begin
   begin
     with FNewDeliveryOrder do
     begin
+
+      strLastKodeJenisKendMuatan:=Dm.Qtemp1.fieldbyname('type_vehicles_code').value;
+
+
       edKodeVendorTransMuatan.Text:=Dm.Qtemp1.fieldbyname('vendor_code').value;
       edNamaVendorTransMuatan.Text:=Dm.Qtemp1.fieldbyname('vendor_name').value;
       edPICMuatan.Text:=Dm.Qtemp1.fieldbyname('pic').value;
@@ -399,8 +409,9 @@ begin
   FNewDeliveryOrder.edKodeDOBiaya.Enabled:=false;
   FNewDeliveryOrder.edKodeDODok.Enabled:=false;
   FNewDeliveryOrder.RzPageControl1.ActivePage:=FNewDeliveryOrder.TabDataMuatan;
-  FNewDeliveryOrder.Show;
   Status := 1;
+  FNewDeliveryOrder.ShowModal;
+
 end;
 
 procedure TFListDeliveryOrder.dxBarLargeButton1Click(Sender: TObject);

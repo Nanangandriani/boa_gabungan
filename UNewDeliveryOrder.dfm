@@ -20,10 +20,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1350
     Height = 574
     Hint = ''
-    ActivePage = TabDataMuatan
+    ActivePage = TabDataBiaya
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1346
@@ -423,6 +423,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Height = 23
             CharCase = ecUpperCase
             TabOrder = 5
+            Visible = False
             OnChange = edKodeJenisKendMuatanChange
           end
           object spKapasitas: TSpinEdit
@@ -606,7 +607,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1266
+          ExplicitLeft = 1271
+          ExplicitTop = 6
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
@@ -920,6 +922,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           MinValue = 0
           TabOrder = 9
           Value = 0
+          OnChange = spTotalTitikChange
           OnClick = spTotalTitikClick
         end
         object MemKeteranganBiaya: TMemo
@@ -1029,6 +1032,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 37
         Align = alBottom
         TabOrder = 1
+        ExplicitLeft = 28
+        ExplicitTop = 488
         object btBatalSumberJual: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1221,8 +1226,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = 'Submit Correction'
           TabOrder = 3
           OnClick = BCorrectionClick
-          ExplicitLeft = 715
-          ExplicitHeight = 30
         end
       end
       object DBGridSumberPenjualan: TDBGridEh

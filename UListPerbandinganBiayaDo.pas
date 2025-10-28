@@ -37,6 +37,7 @@ type
     DataSource2: TDataSource;
     btSetujui: TRzBitBtn;
     procedure btSetujuiClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     procedure SavePerubahan;
@@ -56,9 +57,45 @@ uses UNewDeliveryOrder;
 procedure TFListPerbandinganBiayaDo.btSetujuiClick(Sender: TObject);
 begin
   SavePerubahan;
-  FNewDeliveryOrder.StatusCekBiaya:=True;
+  FNewDeliveryOrder.StatusCekBiaya:=1;
   FNewDeliveryOrder.IntAdaPerubahan:=0;
   FListPerbandinganBiayaDo.Close;
+end;
+
+procedure TFListPerbandinganBiayaDo.FormShow(Sender: TObject);
+begin
+
+//    ShowMessage('tes');
+//    MemDataBiayaLast.Active:=False;
+//    MemDataBiayaCorrection.Active:=False;
+//    MemDataBiayaLast.Active:=True;
+//    MemDataBiayaCorrection.Active:=True;
+//
+//    MemDataBiayaLast.EmptyTable;
+//    MemDataBiayaCorrection.EmptyTable;
+
+//    ShowMessage('tes1');
+//
+//    ShowMessage('tes2');
+//    FNewDeliveryOrder.MemDataBiaya.First;
+//    while not FNewDeliveryOrder.MemDataBiaya.Eof do
+//    begin
+//      MemDataBiayaLast.Insert;
+//      MemDataBiayaLast['kd_biaya']:=FNewDeliveryOrder.MemDataBiaya['kd_biaya'];
+//      MemDataBiayaLast['nm_biaya']:=FNewDeliveryOrder.MemDataBiaya['nm_biaya'];
+//      MemDataBiayaLast['dpp']:=FNewDeliveryOrder.MemDataBiaya['dpp'];
+//      MemDataBiayaLast.Post;
+//
+//      MemDataBiayaCorrection.Insert;
+//      MemDataBiayaCorrection['kd_biaya']:=FNewDeliveryOrder.MemDataBiaya['kd_biaya'];
+//      MemDataBiayaCorrection['nm_biaya']:=FNewDeliveryOrder.MemDataBiaya['nm_biaya'];
+//      MemDataBiayaCorrection.Post;
+//      FNewDeliveryOrder.MemDataBiaya.Next
+//    end;
+//
+//    ShowMessage('tes3');
+//    FNewDeliveryOrder.GetApiBiayaKoreksiChakra;
+//    FListPerbandinganBiayaDo.ShowModal;
 end;
 
 procedure TFListPerbandinganBiayaDo.SavePerubahan;
