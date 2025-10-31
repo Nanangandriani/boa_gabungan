@@ -894,7 +894,7 @@ begin
     sql.add(' Insert into "public"."t_sales_order" ("created_at", "created_by", "notrans", '+
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
-            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",status,note) '+
+            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",status,note,sbu_code) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -913,7 +913,7 @@ begin
             ' '+Stradditional_code+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+'  );');
+            ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+','+QuotedStr(FHomeLogin.vKodePRSH)+'   );');
     ExecSQL;
   end;
   InsertDetailSO;

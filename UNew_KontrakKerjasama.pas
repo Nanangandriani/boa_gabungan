@@ -1007,6 +1007,15 @@ procedure TFNewKontrak_ks.EdNm_suppButtonClick(Sender: TObject);
 begin
     with FSearch_Supplier do
     begin
+      with QSupplier do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT a.*,b.type from t_supplier a '+
+                  'left JOIN t_item_type b on a.header_code=b.acc_code_pemb '+
+                  'where a.deleted_at is null and b.type='+QuotedStr(CbKategori.Text)+' order by a.supplier_code asc';
+        open;
+      end;
       Show;
       QSupplier.Close;
       QSupplier.Open;

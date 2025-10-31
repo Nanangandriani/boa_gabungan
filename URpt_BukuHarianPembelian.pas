@@ -68,6 +68,7 @@ type
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
     dxBarLargeButton2: TdxBarLargeButton;
+    CB_SBU: TdxBarCombo;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BBatalClick(Sender: TObject);
@@ -319,7 +320,7 @@ begin
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
     ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
-    ' where d.account_code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
+    ' where d.code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
     Execute;
   end;
 end;
@@ -389,7 +390,7 @@ begin
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
     ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
-    ' where d.account_code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
+    ' where d.code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
     Execute;
   end;
 end;

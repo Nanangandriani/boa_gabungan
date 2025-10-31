@@ -75,7 +75,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Gudang, UDataModule;
+uses UNew_Gudang, UDataModule, UMainMenu;
 
 procedure TFListGudang.refresh;
 begin
@@ -83,7 +83,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from t_wh where deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from t_wh where deleted_at is null order by order_no,created_at ASC ';
        open;
    end;
    QGudang.Active:=False;
@@ -104,7 +104,7 @@ begin
           sql.Text:=' Update t_wh set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                     ' where code='+QuotedStr(DBGridGudang.Fields[0].AsString);
           parambyname('deleted_at').AsDateTime:=Now;
-          parambyname('deleted_by').AsString:='Admin';
+          parambyname('deleted_by').AsString:=Nm;
           execsql;
         end;
         MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);

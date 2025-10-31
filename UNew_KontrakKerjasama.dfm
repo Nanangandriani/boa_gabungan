@@ -26,7 +26,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Color = clGradientActiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1020
+    ExplicitWidth = 1018
     object Label1: TLabel
       Left = 24
       Top = 86
@@ -366,8 +366,8 @@ object FNewKontrak_ks: TFNewKontrak_ks
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 568
-    ExplicitWidth = 1020
+    ExplicitTop = 560
+    ExplicitWidth = 1018
     object BBatal: TRzBitBtn
       Left = 948
       Top = 1
@@ -428,7 +428,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 944
+      ExplicitLeft = 942
     end
     object BSimpan: TRzBitBtn
       Left = 873
@@ -490,7 +490,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 869
+      ExplicitLeft = 867
     end
     object BEdit: TRzBitBtn
       Left = 798
@@ -553,7 +553,7 @@ object FNewKontrak_ks: TFNewKontrak_ks
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 794
+      ExplicitLeft = 792
     end
     object BitBtn1: TBitBtn
       Left = 671

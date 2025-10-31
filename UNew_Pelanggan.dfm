@@ -20,10 +20,10 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Width = 1276
     Height = 456
     Hint = ''
-    ActivePage = TabMasterPelanggan
+    ActivePage = TabDetailPelanggan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     ExplicitWidth = 1272
     ExplicitHeight = 455
@@ -837,8 +837,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object TabAkunPerkiraan: TRzTabSheet
       Caption = 'Akun Perkiraan'
-      ExplicitWidth = 1268
-      ExplicitHeight = 430
       object Panel5: TPanel
         Left = 1
         Top = 0
@@ -930,8 +928,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Height = 37
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 393
-        ExplicitWidth = 1268
         object RzBitBtn3: TRzBitBtn
           Left = 1
           Top = 1
@@ -1053,12 +1049,13 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1192
         end
       end
     end
     object TabPajak: TRzTabSheet
       Caption = 'Pajak'
+      ExplicitWidth = 1268
+      ExplicitHeight = 430
       object Panel2: TPanel
         Left = 0
         Top = 397
@@ -1066,6 +1063,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Height = 34
         Align = alBottom
         TabOrder = 0
+        ExplicitTop = 396
+        ExplicitWidth = 1268
         object BBatal: TRzBitBtn
           Left = 1196
           Top = 1
@@ -1126,6 +1125,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1192
         end
         object BSave: TRzBitBtn
           Left = 1121
@@ -1187,6 +1187,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1117
         end
         object BDataProspek: TRzBitBtn
           Left = 244
@@ -1396,6 +1397,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1268
+        ExplicitHeight = 396
         object Label37: TLabel
           Left = 130
           Top = 57

@@ -741,7 +741,7 @@ begin
       with Dm.Qtemp do
       begin
         close;
-        sql.Text:='SELECT * FROM t_item_type';
+        sql.Text:='SELECT DISTINCT type FROM t_item_type';
         ExecSQL;
       end;
       Dm.Qtemp.First;

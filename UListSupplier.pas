@@ -107,7 +107,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_Supplier where sbu_code='+QuotedStr(Cb_sbu.Text)+' and deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from T_Supplier where sbu_code='+QuotedStr(Cb_sbu.Text)+' and deleted_at is null order by created_at ASC ';
        open;
    end;
    QSupplier.Active:=False;

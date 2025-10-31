@@ -257,14 +257,14 @@ begin
       with QCetakdetailDebit do
       begin
         close;
-        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,db FROM "public"."VTrans_Journal"  where status_dk=''D'' AND db<>0';
+        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,db FROM "public"."VTrans_Journal"  where status_dk=''D'' ';
         open;
       end;
 
       with QCetakdetailKredit do
       begin
         close;
-        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd FROM "public"."VTrans_Journal"  where status_dk=''K'' AND kd<>0';
+        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd FROM "public"."VTrans_Journal"  where status_dk=''K'' ';
         open;
       end;
 
@@ -295,6 +295,9 @@ begin
       Report.ShowReport();
     //  end;
 
+//    if Report.Preview <> nil then
+//      Report.PreviewOptions.Zoom := 1.0;
+//    end;
     end;
   end;
 

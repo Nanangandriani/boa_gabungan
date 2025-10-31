@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, Vcl.Samples.Gauges, IdBaseComponent, IdComponent,
-  IdTCPConnection, IdTCPClient, IdHTTP, System.JSON, uJSON, IdGlobal, IdException, IdStack;
+  IdTCPConnection, IdTCPClient, IdHTTP, System.JSON, uJSON, IdGlobal, IdException, IdStack, IdSSLOpenSSL;
 
 type
   TFListOrderTelemarketing = class(TForm)
@@ -57,157 +57,262 @@ implementation
 uses ulkJSON, UMy_Function, UNew_SalesOrder, UMasterWilayah, UDataModule,
   UHomeLogin, UMasterData;
 
+//procedure TFListOrderTelemarketing.GetDetail;
+//var
+//  key,url,s,BaseUrl,Vpath,Vtoken,str,strUniName : string;
+//  vBody,vBody2  : string;
+//  jumdata : Real;
+//  xxx: Integer;
+//  cnt,cnt2: Integer;
+//  iii,iiii: Integer;
+//  sss, row, row1, row2: String;
+//  res: String;
+//  date: TDate;
+//  max,min: Integer;
+//        //component
+//  gNet:TIdHTTP;
+//  //respon component
+//  httpresult: TIdHTTP ;
+//  resp: TMemoryStream;
+//begin
+//  try
+//
+//  //BaseUrl:=edBaseURL.Text;
+//  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
+//  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
+//  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
+//  vBody:='?ticket_number='+MemMasterData['ticket_number'];
+////         '&order_date='+formatdatetime('yyyy-mm-dd',FNew_SalesOrder.dtTanggal_Pesan.date)+' ';
+////'&order_date=2024-12-02';
+//  Vpath:='/detail-order';
+//  url:= BaseUrl+Vpath+vBody;
+//  try
+//  gNet :=  TIdHTTP.Create(nil);
+//  gNet.Request.Accept := 'application/json';
+//  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+//  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+//  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+//  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+//  res:=  gNet.get(url);
+//  jumdata:=1;
+//  memo1.text := res;
+//  except
+// on E: EIdHTTPProtocolException do
+//
+// if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+// begin
+// jumdata:=0;
+// gNet.free;
+// resp.Free;
+// end;
+// on E: Exception do
+// ShowMessage('A non-Indy related exception has been raised!');
+// end;
+//  finally
+//    gNet.free;
+//    resp.Free;
+//  end;
+//
+//  //MOVE JSON
+//  json.JSONText := memo1.text;
+//  cnt := json.TreeCount['data'];
+//
+//  if cnt = 0 then
+//  begin
+//    Showmessage('Data Tidak Ditemukan');
+//    exit;
+//  end;
+//
+//  max:= cnt;
+//  progress.Progress:=0;
+//  progress.MaxValue:= max;
+//  FNew_SalesOrder.MemDetail.Active:=False;
+//  FNew_SalesOrder.MemDetail.Active:=True;
+//  FNew_SalesOrder.MemDetail.EmptyTable;
+//  xxx := 0;
+//  for iii := 0 to cnt - 1 do
+//  begin
+//    inc(xxx);
+//
+//    row1 := format('data/%d/', [iii]);
+//
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Text:='select unit_name from t_unit where unit_code='+QuotedStr(json.StringTree[row1 + 'unit']);
+//      open;
+//    end;
+//    strUniName:=dm.Qtemp.FieldByName('unit_name').AsString;
+//
+//    with dm.Qtemp2 do
+//    begin
+//      Close;
+//      Sql.Clear;
+//      Sql.Text:='SELECT a.group_id,b.group_name FROM t_item a '+
+//                'left join t_item_group b on b.group_id=a.group_id '+
+//                'where a.item_code='+QuotedStr(json.StringTree[row1 + 'product_code']);
+//      Open;
+//    end;
+//
+//    FNew_SalesOrder.MemDetail.insert;
+//    FNew_SalesOrder.MemDetail['KD_ITEM']:=json.StringTree[row1 + 'product_code'];
+//    FNew_SalesOrder.MemDetail['NM_ITEM']:=json.StringTree[row1 + 'product_name'];
+//    FNew_SalesOrder.MemDetail['JUMLAH']:=json.StringTree[row1 + 'qty'];
+//    FNew_SalesOrder.MemDetail['KD_SATUAN']:=json.StringTree[row1 + 'unit'];
+//    FNew_SalesOrder.MemDetail['NM_ SATUAN']:=strUniName;
+//    FNew_SalesOrder.MemDetail['CATEGORY_ID']:=dm.Qtemp2.FieldValues['group_id'];
+//    FNew_SalesOrder.MemDetail['CATEGORY_NAME']:=dm.Qtemp2.FieldValues['group_name'];
+////    FNew_SalesOrder.MemDetail.post;
+//    progress.Progress:= progress.Progress+1;
+//  end;
+//end;
+
 procedure TFListOrderTelemarketing.GetDetail;
 var
-  key,url,s,BaseUrl,Vpath,Vtoken,str,strUniName : string;
-  vBody,vBody2  : string;
-  jumdata : Real;
-  xxx: Integer;
-  cnt,cnt2: Integer;
-  iii,iiii: Integer;
-  sss, row, row1, row2: String;
-  res: String;
-  date: TDate;
-  max,min: Integer;
-        //component
-  gNet:TIdHTTP;
-  //respon component
-  httpresult: TIdHTTP ;
-  resp: TMemoryStream;
+  key, url, BaseUrl, Vpath, Vtoken, strUniName: string;
+  vBody: string;
+  cnt, iii, max, progressStep: Integer;
+  row1: string;
+  res: string;
+  gNet: TIdHTTP;
 begin
+  progressStep := 5; // update progress tiap 5 record
   try
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurltele''');
+    key     := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapitele''');
+    Vtoken  := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapitele''');
 
-  //BaseUrl:=edBaseURL.Text;
-  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
-  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
-  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
-  vBody:='?ticket_number='+MemMasterData['ticket_number'];
-//         '&order_date='+formatdatetime('yyyy-mm-dd',FNew_SalesOrder.dtTanggal_Pesan.date)+' ';
-//'&order_date=2024-12-02';
-  Vpath:='/detail-order';
-  url:= BaseUrl+Vpath+vBody;
-  try
-  gNet :=  TIdHTTP.Create(nil);
-  gNet.Request.Accept := 'application/json';
-  gNet.Request.CustomHeaders.Values[key] := Vtoken;
-  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
-  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
-  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
-  res:=  gNet.get(url);
-  jumdata:=1;
-  memo1.text := res;
+    vBody := '?ticket_number=' + MemMasterData['ticket_number'];
+    Vpath := '/detail-order';
+    url := BaseUrl + Vpath + vBody;
+
+    Memo1.Text := 'Mengambil data detail...';
+
+    // HTTP request
+    gNet := TIdHTTP.Create(nil);
+    try
+      gNet.Request.Accept := 'application/json';
+      gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      gNet.Request.UserAgent := 'Mozilla/5.0 (compatible; TelemarketingApp/1.0)';
+      gNet.ConnectTimeout := 5000;
+      gNet.ReadTimeout := 10000;
+
+      try
+        res := gNet.Get(url);
+        Memo1.Text := 'Data detail diterima';
+      except
+        on E: EIdHTTPProtocolException do
+        begin
+          ShowMessage('Data tidak ditemukan atau server mengembalikan error.');
+          Exit;
+        end;
+        on E: Exception do
+        begin
+          ShowMessage('Kesalahan saat mengambil data: ' + E.Message);
+          Exit;
+        end;
+      end;
+    finally
+      gNet.Free;
+    end;
+
+    // Parsing JSON
+    json.JSONText := res;
+    cnt := json.TreeCount['data'];
+    if cnt = 0 then
+    begin
+      ShowMessage('Data tidak ditemukan.');
+      Exit;
+    end;
+
+    max := cnt;
+    progress.Progress := 0;
+    progress.MaxValue := max;
+
+    // Reset memtable
+    FNew_SalesOrder.MemDetail.Active := False;
+    FNew_SalesOrder.MemDetail.Active := True;
+    FNew_SalesOrder.MemDetail.EmptyTable;
+
+    // Loop data
+    for iii := 0 to cnt - 1 do
+    begin
+      row1 := Format('data/%d/', [iii]);
+
+      // Ambil unit name
+      with dm.Qtemp do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text := 'SELECT unit_name FROM t_unit WHERE unit_code = ' +
+                    QuotedStr(json.StringTree[row1 + 'unit']);
+        Open;
+      end;
+      strUniName := dm.Qtemp.FieldByName('unit_name').AsString;
+
+      // Ambil group info
+      with dm.Qtemp2 do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text := 'SELECT a.group_id, b.group_name FROM t_item a ' +
+                    'LEFT JOIN t_item_group b ON b.group_id = a.group_id ' +
+                    'WHERE a.item_code = ' + QuotedStr(json.StringTree[row1 + 'product_code']);
+        Open;
+      end;
+
+      // Insert ke MemDetail
+      FNew_SalesOrder.MemDetail.Insert;
+      FNew_SalesOrder.MemDetail['KD_ITEM'] := json.StringTree[row1 + 'product_code'];
+      FNew_SalesOrder.MemDetail['NM_ITEM'] := json.StringTree[row1 + 'product_name'];
+      FNew_SalesOrder.MemDetail['JUMLAH'] := json.StringTree[row1 + 'qty'];
+      FNew_SalesOrder.MemDetail['KD_SATUAN'] := json.StringTree[row1 + 'unit'];
+      FNew_SalesOrder.MemDetail['NM_ SATUAN'] := strUniName;
+      FNew_SalesOrder.MemDetail['CATEGORY_ID'] := dm.Qtemp2.FieldByName('group_id').AsString;
+      FNew_SalesOrder.MemDetail['CATEGORY_NAME'] := dm.Qtemp2.FieldByName('group_name').AsString;
+
+      // Update progress tiap beberapa record
+      if (iii mod progressStep = 0) or (iii = cnt - 1) then
+      begin
+        progress.Progress := iii + 1;
+        Application.ProcessMessages;
+      end;
+    end;
+
+//    ShowMessage(Format('Detail order berhasil dimuat (%d record).', [cnt]));
   except
- on E: EIdHTTPProtocolException do
-
- if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
- begin
- jumdata:=0;
- gNet.free;
- resp.Free;
- end;
- on E: Exception do
- ShowMessage('A non-Indy related exception has been raised!');
- end;
-  finally
-    gNet.free;
-    resp.Free;
-  end;
-
-  //MOVE JSON
-  json.JSONText := memo1.text;
-  cnt := json.TreeCount['data'];
-
-  if cnt = 0 then
-  begin
-    Showmessage('Data Tidak Ditemukan');
-    exit;
-  end;
-
-  max:= cnt;
-  progress.Progress:=0;
-  progress.MaxValue:= max;
-  FNew_SalesOrder.MemDetail.Active:=False;
-  FNew_SalesOrder.MemDetail.Active:=True;
-  FNew_SalesOrder.MemDetail.EmptyTable;
-  xxx := 0;
-  for iii := 0 to cnt - 1 do
-  begin
-    inc(xxx);
-
-    row1 := format('data/%d/', [iii]);
-
-    with dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select unit_name from t_unit where unit_code='+QuotedStr(json.StringTree[row1 + 'unit']);
-      open;
-    end;
-    strUniName:=dm.Qtemp.FieldByName('unit_name').AsString;
-
-    with dm.Qtemp2 do
-    begin
-      Close;
-      Sql.Clear;
-      Sql.Text:='SELECT a.group_id,b.group_name FROM t_item a '+
-                'left join t_item_group b on b.group_id=a.group_id '+
-                'where a.item_code='+QuotedStr(json.StringTree[row1 + 'product_code']);
-      Open;
-    end;
-
-    FNew_SalesOrder.MemDetail.insert;
-    FNew_SalesOrder.MemDetail['KD_ITEM']:=json.StringTree[row1 + 'product_code'];
-    FNew_SalesOrder.MemDetail['NM_ITEM']:=json.StringTree[row1 + 'product_name'];
-    FNew_SalesOrder.MemDetail['JUMLAH']:=json.StringTree[row1 + 'qty'];
-    FNew_SalesOrder.MemDetail['KD_SATUAN']:=json.StringTree[row1 + 'unit'];
-    FNew_SalesOrder.MemDetail['NM_ SATUAN']:=strUniName;
-    FNew_SalesOrder.MemDetail['CATEGORY_ID']:=dm.Qtemp2.FieldValues['group_id'];
-    FNew_SalesOrder.MemDetail['CATEGORY_NAME']:=dm.Qtemp2.FieldValues['group_name'];
-//    FNew_SalesOrder.MemDetail.post;
-    progress.Progress:= progress.Progress+1;
+    on E: Exception do
+      ShowMessage('Kesalahan fatal: ' + E.Message);
   end;
 end;
+
 
 procedure TFListOrderTelemarketing.btGetDataProspekClick(Sender: TObject);
 var
   key, url, BaseUrl, Vpath, Vtoken, strKodeKaresidenan: string;
-  vBody, res: string;
-  gNet: TIdHTTP;
-  ss: TStringStream;
-  jumdata, cnt, iii, xxx, max: Integer;
+  vBody: string;
+  jumdata: Boolean;
+  cnt, iii, max, progressStep: Integer;
   row1: string;
-
-  procedure LogToFile(const Msg: string);
-  var
-    F: TextFile;
-  begin
-    AssignFile(F, 'api_log.txt');
-    if FileExists('api_log.txt') then
-      Append(F)
-    else
-      Rewrite(F);
-    Writeln(F, FormatDateTime('yyyy-mm-dd hh:nn:ss', Now) + ' - ' + Msg);
-    CloseFile(F);
-  end;
-
+  res: string;
+  gNet: TIdHTTP;
 begin
+  jumdata := False;
+  progressStep := 10; // update UI tiap 10 data
   try
-    // ==========================
-    // HAPUS DATA TEMPORARY USER
-    // ==========================
+    // Hapus data temporary
     with dm.Qtemp do
     begin
       Close;
       SQL.Clear;
-      SQL.Text :=
-        'DELETE FROM "public"."t_telemarketing_orders_tmp" ' +
-        'WHERE "created_by" = ' + QuotedStr(FHomeLogin.Eduser.Text);
+      SQL.Text := 'DELETE FROM "public"."t_telemarketing_orders_tmp" ' +
+                  'WHERE "created_by" = ' + QuotedStr(FHomeLogin.Eduser.Text);
       ExecSQL;
     end;
 
-    // ==========================
-    // SIAPKAN PARAMETER
-    // ==========================
+    // Siapkan parameter
     if Trim(EdKaresidenan.Text) <> '' then
       strKodeKaresidenan := '&residency=' + edKodeKaresidenan.Text
     else
@@ -225,146 +330,86 @@ begin
     url := BaseUrl + Vpath + vBody;
 
     edlink.Text := url;
-    Memo1.Text := url;
+    Memo1.Text := 'Mengambil data...';
 
-    // ==========================
-    // INISIALISASI HTTP CLIENT
-    // ==========================
+    // HTTP request
     gNet := TIdHTTP.Create(nil);
-    ss := TStringStream.Create('', TEncoding.UTF8);
     try
       gNet.Request.Accept := 'application/json';
       gNet.Request.ContentType := 'application/x-www-form-urlencoded';
       gNet.Request.CustomHeaders.Values[key] := Vtoken;
       gNet.Request.UserAgent := 'Mozilla/5.0 (compatible; TelemarketingApp/1.0)';
-      gNet.Request.Connection := 'keep-alive';
-      gNet.ConnectTimeout := 20000;
-      gNet.ReadTimeout := 20000;
+      gNet.ConnectTimeout := 5000;
+      gNet.ReadTimeout := 10000;
 
-      // ==========================
-      // EKSEKUSI REQUEST
-      // ==========================
       try
-        UpdateLogErrorAPI(BaseUrl, Vpath, Vtoken, False, url);
-        gNet.Get(url, ss);
-        res := ss.DataString;
-        UpdateLogErrorAPI(BaseUrl, Vpath, Vtoken, True, res);
-        Memo1.Text := res;
-        jumdata := 1;
+        res := gNet.Get(url);
+        jumdata := True;
+        Memo1.Text := 'Data berhasil diterima';
       except
-//        on E: EIdReadTimeout do
-//        begin
-//          ShowMessage('Timeout membaca data dari server.');
-//          LogToFile('Timeout: ' + E.Message);
-//          jumdata := 0;
-//        end;
-        on E: EIdConnClosedGracefully do
-        begin
-          ShowMessage('Koneksi ditutup oleh server.');
-          LogToFile('ConnClosed: ' + E.Message);
-          jumdata := 0;
-        end;
-        on E: EIdSocketError do
-        begin
-          ShowMessage('Kesalahan koneksi jaringan: ' + E.Message);
-          LogToFile('SocketError: ' + E.Message);
-          jumdata := 0;
-        end;
         on E: EIdHTTPProtocolException do
         begin
-          ShowMessage('Server mengembalikan error HTTP: ' + E.Message);
-          LogToFile('HTTP Error: ' + E.Message);
-          jumdata := 0;
+          ShowMessage('Data tidak ditemukan atau server mengembalikan error.');
+          Exit;
         end;
         on E: Exception do
         begin
-          if Pos('on data reading', LowerCase(E.Message)) > 0 then
-          begin
-            ShowMessage('Gagal membaca respon dari server. Coba ulangi lagi.');
-            LogToFile('Data reading error: ' + E.Message);
-          end
-          else
-          begin
-            ShowMessage('Kesalahan umum: ' + E.Message);
-            LogToFile('General Exception: ' + E.Message);
-          end;
-          jumdata := 0;
+          ShowMessage('Kesalahan saat mengambil data: ' + E.Message);
+          Exit;
         end;
       end;
-
-      // ==========================
-      // VALIDASI HASIL RESPON
-      // ==========================
-      if jumdata = 0 then
-        Exit;
-
-      if Trim(res) = '' then
-      begin
-        ShowMessage('Server tidak mengirim data (respon kosong).');
-        Exit;
-      end;
-
-      if Pos('<html', LowerCase(res)) > 0 then
-      begin
-        ShowMessage('Server mengirim HTML, bukan JSON. Cek URL API.');
-        Exit;
-      end;
-
-      // ==========================
-      // PARSING JSON KE DATABASE
-      // ==========================
-      json.JSONText := res;
-      cnt := json.TreeCount['data'];
-
-      if cnt = 0 then
-      begin
-        ShowMessage('Data Tidak Ditemukan');
-        Exit;
-      end;
-
-      max := cnt;
-      progress.Progress := 0;
-      progress.MaxValue := max;
-
-      xxx := 0;
-      for iii := 0 to cnt - 1 do
-      begin
-        Inc(xxx);
-        row1 := Format('data/%d/', [iii]);
-
-        with dm.Qtemp1 do
-        begin
-          Close;
-          SQL.Clear;
-          SQL.Text :=
-            'INSERT INTO "public"."t_telemarketing_orders_tmp" ' +
-            '("created_at", "created_by", "ticket_number", "order_date", "outlet_name", "status_name", "outlet_code") ' +
-            'VALUES (NOW(), ' +
-            QuotedStr(FHomeLogin.Eduser.Text) + ', ' +
-            QuotedStr(json.StringTree[row1 + 'ticket_number']) + ', ' +
-            QuotedStr(json.StringTree[row1 + 'order_date']) + ', ' +
-            QuotedStr(json.StringTree[row1 + 'outlet_name']) + ', ' +
-            QuotedStr(json.StringTree[row1 + 'status_name']) + ', ' +
-            QuotedStr(json.StringTree[row1 + 'outlet_code']) + ')';
-          ExecSQL;
-        end;
-
-        progress.Progress := progress.Progress + 1;
-      end;
-
-//      ShowMessage('Proses ambil data selesai (' + IntToStr(cnt) + ' record).');
-
     finally
-      ss.Free;
       gNet.Free;
     end;
 
+    if not jumdata then Exit;
+
+    // Parsing JSON
+    json.JSONText := res;
+    cnt := json.TreeCount['data'];
+    if cnt = 0 then
+    begin
+      ShowMessage('Data tidak ditemukan.');
+      Exit;
+    end;
+
+    max := cnt;
+    progress.Progress := 0;
+    progress.MaxValue := max;
+
+    // Insert data ke database
+    for iii := 0 to cnt - 1 do
+    begin
+      row1 := Format('data/%d/', [iii]);
+      with dm.Qtemp1 do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text := 'INSERT INTO "public"."t_telemarketing_orders_tmp" ' +
+                    '("created_at","created_by","ticket_number","order_date","outlet_name","status_name","outlet_code") ' +
+                    'VALUES (' +
+                    'NOW(), ' +
+                    QuotedStr(FHomeLogin.Eduser.Text) + ', ' +
+                    QuotedStr(json.StringTree[row1 + 'ticket_number']) + ', ' +
+                    QuotedStr(json.StringTree[row1 + 'order_date']) + ', ' +
+                    QuotedStr(json.StringTree[row1 + 'outlet_name']) + ', ' +
+                    QuotedStr(json.StringTree[row1 + 'status_name']) + ', ' +
+                    QuotedStr(json.StringTree[row1 + 'outlet_code']) + ')';
+        ExecSQL;
+      end;
+
+      // Update progress tiap beberapa data agar UI tetap responsive
+      if (iii mod progressStep = 0) or (iii = cnt - 1) then
+      begin
+        progress.Progress := iii + 1;
+        Application.ProcessMessages;
+      end;
+    end;
+
+//    ShowMessage(Format('Proses ambil data selesai (%d record).', [cnt]));
   except
     on E: Exception do
-    begin
       ShowMessage('Kesalahan fatal: ' + E.Message);
-      LogToFile('Fatal: ' + E.Message);
-    end;
   end;
 end;
 
@@ -441,10 +486,10 @@ end;
 //    gNet.free;
 //    resp.Free;
 //  end;
-////  ShowMessage('ok');
+//
 //  if jumdata=0 then
 //  begin
-//  //Showmessage('Data Terbaru Tidak Ditemukan');}
+//
 //  exit;
 //  end;
 //
@@ -466,18 +511,9 @@ end;
 //  for iii := 0 to cnt - 1 do
 //  begin
 //    inc(xxx);
-////    cnt2 := json.TreeCount['data/details'];
-////    ShowMessage(IntToStr(cnt2));
-////    for iiii := 0 to cnt2 - 1 do
-////    begin
-////      row2 := format('data/%d/', [iii])+format('details/%d/', [iii])+'product_code';
-////    end;
 //
-//    //cnt2 := json.TreeCount['data/details'];
 //    row1 := format('data/%d/', [iii]);
-////    row2 := format('data/details/%d/', [iii]);
-//    //ShowMessage(IntToStr(cnt2));
-////    ShowMessage(json.StringTree[row1 + 'product_code']);
+//
 //
 //    with dm.Qtemp1 do
 //    begin

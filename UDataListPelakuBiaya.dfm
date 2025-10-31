@@ -671,7 +671,7 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
     SQL.Strings = (
       'select a.*,b.name from "public"."t_cost_actors" a'
       'LEFT JOIN t_region_karesidenan b on a.karesidenan_code=b.code'
-      'where a.deleted_at is null order by created_at Desc'
+      'where a.deleted_at is null order by created_at ASC'
       ''
       ''
       '-- select * from "public"."t_cost_actors"'

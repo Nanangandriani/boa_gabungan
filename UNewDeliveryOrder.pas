@@ -233,6 +233,7 @@ type
     procedure InsertStatus;
     procedure GetApiBiayaKoreksiChakra;
     procedure CekGetApiBiayaKoreksiChakra;
+    procedure UpdateStatusDO(status: Integer);
   end;
 
 var
@@ -266,80 +267,195 @@ begin
   end;
 end;
 
+//procedure TFNewDeliveryOrder.UpdateStatusTele;
+//var
+//  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+//  vBody,vBody2  : string;
+//  jumdata : Real;
+//  xxx: Integer;
+//  cnt,cnt2: Integer;
+//  iii,iiii: Integer;
+//  sss, row, row1, row2: String;
+//  res: String;
+//  date: TDate;
+//  max,min: Integer;
+//        //component
+//  gNet:TIdHTTP;
+//  //respon component
+//  httpresult: TIdHTTP ;
+//  resp: TMemoryStream;
+//begin
+//  with dm.Qtemp do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:= 'select c.no_reference no_tiket from t_delivery_order_load a '+
+//               'left join t_selling b on b.trans_no=a.notrans_load and b.deleted_at is null '+
+//               'left JOIN t_sales_order c on c.notrans=b.no_reference and c.deleted_at is null '+
+//               'WHERE a.notrans='+QuotedStr(edKodeDOMuatan.Text)+' and c.no_reference is not null';
+//    open;
+//  end;
+//  if dm.Qtemp.RecordCount>0 then
+//  begin
+//    dm.Qtemp.First;
+//    while not dm.Qtemp.Eof do
+//    begin
+//    try
+//        //BaseUrl:=edBaseURL.Text;
+//    BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
+//    key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
+//    vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
+//    vBody:='?ticket_number='+dm.Qtemp.FieldByName('no_tiket').AsString+
+//           '&status=4';
+//    Vpath:='/update-order';
+//    url:= BaseUrl+Vpath+vBody;
+//    try
+//    gNet :=  TIdHTTP.Create(nil);
+//    gNet.Request.Accept := 'application/json';
+//    gNet.Request.CustomHeaders.Values[key] := Vtoken;
+//    gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+//    UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+//    UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+//    res:=  gNet.get(url);
+//    jumdata:=1;
+//    memo1.text := res;
+//    except
+//    on E: EIdHTTPProtocolException do
+//
+//    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+//    begin
+//      jumdata:=0;
+//      gNet.free;
+//      resp.Free;
+//    end;
+//
+//
+//   on E: Exception do
+//   ShowMessage('A non-Indy related exception has been raised!');
+//   end;
+//    finally
+//      gNet.free;
+//      resp.Free;
+//    end;
+//
+//    //MOVE JSON
+//    json.JSONText := memo1.text;
+//  end;
+//  end;
+//end;
+
 procedure TFNewDeliveryOrder.UpdateStatusTele;
 var
-  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
-  vBody,vBody2  : string;
-  jumdata : Real;
-  xxx: Integer;
-  cnt,cnt2: Integer;
-  iii,iiii: Integer;
-  sss, row, row1, row2: String;
-  res: String;
-  date: TDate;
-  max,min: Integer;
-        //component
-  gNet:TIdHTTP;
-  //respon component
-  httpresult: TIdHTTP ;
-  resp: TMemoryStream;
+  key, url, BaseUrl, Vpath, Vtoken, vBody, res: string;
+  gNet: TIdHTTP;
 begin
   with dm.Qtemp do
   begin
-    close;
-    sql.Clear;
-    sql.Text:= 'select c.no_reference no_tiket from t_delivery_order_load a '+
-               'left join t_selling b on b.trans_no=a.notrans_load and b.deleted_at is null '+
-               'left JOIN t_sales_order c on c.notrans=b.no_reference and c.deleted_at is null '+
-               'WHERE a.notrans='+QuotedStr(edKodeDOMuatan.Text)+' and c.no_reference is not null';
-    open;
+    Close;
+    SQL.Clear;
+    SQL.Text := 'select c.no_reference no_tiket from t_delivery_order_load a ' +
+                'left join t_selling b on b.trans_no=a.notrans_load and b.deleted_at is null ' +
+                'left JOIN t_sales_order c on c.notrans=b.no_reference and c.deleted_at is null ' +
+                'WHERE a.notrans=' + QuotedStr(edKodeDOMuatan.Text) + ' and c.no_reference is not null';
+    Open;
   end;
-  if dm.Qtemp.RecordCount>0 then
+  if dm.Qtemp.RecordCount > 0 then
   begin
+  //  Progress.MaxValue := dm.Qtemp.RecordCount;
+  //  Progress.Progress := 0;
     dm.Qtemp.First;
     while not dm.Qtemp.Eof do
     begin
-    try
-        //BaseUrl:=edBaseURL.Text;
-    BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
-    key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
-    vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
-    vBody:='?ticket_number='+dm.Qtemp.FieldByName('no_tiket').AsString+
-           '&status=4';
-    Vpath:='/update-order';
-    url:= BaseUrl+Vpath+vBody;
-    try
-    gNet :=  TIdHTTP.Create(nil);
-    gNet.Request.Accept := 'application/json';
-    gNet.Request.CustomHeaders.Values[key] := Vtoken;
-    gNet.Request.ContentType := 'application/x-www-form-urlencoded';
-    UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
-    UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
-    res:=  gNet.get(url);
-    jumdata:=1;
-    memo1.text := res;
-    except
-    on E: EIdHTTPProtocolException do
-
-    if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
-    begin
-      jumdata:=0;
-      gNet.free;
-      resp.Free;
+      Application.ProcessMessages; // Penting agar UI tidak freeze
+      try
+        BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurltele''');
+        key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
+        vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
+        vBody := '?ticket_number=' + dm.Qtemp.FieldByName('no_tiket').AsString +
+                 '&status=4';
+        Vpath := '/update-order';
+        url := BaseUrl + Vpath + vBody;
+        gNet := TIdHTTP.Create(nil);
+        try
+          gNet.Request.Accept := 'application/json';
+          gNet.Request.CustomHeaders.Values[key] := Vtoken;
+          gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+          res := gNet.Get(url);
+          memo1.Lines.Add(res); // Menampilkan hasil update
+        except
+          on E: EIdHTTPProtocolException do
+            memo1.Lines.Add('Data tidak ditemukan untuk tiket ' + dm.Qtemp.FieldByName('no_tiket').AsString + ': ' + E.Message);
+          on E: Exception do
+            memo1.Lines.Add('Kesalahan saat update tiket ' + dm.Qtemp.FieldByName('no_tiket').AsString + ': ' + E.Message);
+        end;
+      finally
+        gNet.Free;
+      end;
+  //    Inc(Progress.Progress);
+      dm.Qtemp.Next;
     end;
-
-
-   on E: Exception do
-   ShowMessage('A non-Indy related exception has been raised!');
-   end;
-    finally
-      gNet.free;
-      resp.Free;
-    end;
-
-    //MOVE JSON
-    json.JSONText := memo1.text;
   end;
+//  ShowMessage('Proses update status selesai.');
+end;
+
+procedure TFNewDeliveryOrder.UpdateStatusDO(status: Integer);
+var
+  key, url, BaseUrl, Vpath, Vtoken, res: string;
+  gNet: TIdHTTP;
+  jsonBody: TStringStream;
+  TotPPH,PPHPercent: Currency;
+begin
+  Application.ProcessMessages; // agar UI tetap responsif
+  try
+    with dm.Qtemp2 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='select SUM(pph_value) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
+                'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+' AND percent_pph<>0),0) percent_pph  from t_delivery_order_cost '+
+                'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+';';
+      Open;
+    end;
+
+    TotPPH:= dm.Qtemp2.FieldValues['pph_value'];
+    PPHPercent:= dm.Qtemp2.FieldValues['percent_pph'];
+
+    // Ambil konfigurasi API
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlchakra''');
+    key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
+    Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
+    Vpath := '/api/update-status';
+    url := BaseUrl + Vpath;
+    // Buat JSON body langsung dari edKodeDOMuatan dan parameter status
+    jsonBody := TStringStream.Create(
+      '{"notrans": "' + edKodeDOMuatan.Text + '",'+
+      ' "status": ' + IntToStr(status) + ','+
+      ' "percent_pph": ' + CurrToStr(PPHPercent) + ','+
+      ' "pph_value": ' + CurrToStr(TotPPH) + '}',
+      TEncoding.UTF8
+    );
+    Memo1.Text := jsonBody.DataString;
+
+    gNet := TIdHTTP.Create(nil);
+    try
+      gNet.Request.Accept := 'application/json';
+      gNet.Request.ContentType := 'application/json';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      // PUT request
+      res := gNet.Put(url, jsonBody);
+      memo1.Text:=res;
+//      ShowMessage('tes');
+//      Exit;
+      memo1.Lines.Add('Response: ' + res); // tampilkan hasil
+    except
+      on E: EIdHTTPProtocolException do
+        memo1.Lines.Add('Data tidak ditemukan: ' + E.Message);
+      on E: Exception do
+        memo1.Lines.Add('Kesalahan saat update: ' + E.Message);
+    end;
+  finally
+    jsonBody.Free;
+    gNet.Free;
   end;
 end;
 
@@ -852,6 +968,18 @@ begin
     end;
   end;
 
+  if (Status=1) AND (IntStatusDO>3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+      BtnCekBiaya.Visible:=True;
+    end else begin
+      BtnCekBiaya.Visible:=False;
+    end;
+  end;
+
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
@@ -874,6 +1002,18 @@ begin
       BtnCekBiaya.Caption:='Cek Biaya';
     end else begin
       BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (Status=1) AND (IntStatusDO>3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+      BtnCekBiaya.Visible:=True;
+    end else begin
+      BtnCekBiaya.Visible:=False;
     end;
   end;
 
@@ -923,13 +1063,23 @@ begin
             ' additional_code='+QuotedStr('0')+','+
             ' trans_day='+QuotedStr(strtgl)+','+
             ' trans_month='+QuotedStr(strbulan)+','+
-            ' trans_year='+QuotedStr(strtahun)+strStatus+' '+
+            ' trans_year='+QuotedStr(strtahun)+strStatus+', '+
+            ' status_correction=0 '+
             ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
     ExecSQL;
   end;
   InsertDetailLoad;
   InsertDetailCost;
   InsertDetailService;
+
+  if (StatusPerubahanBiaya=1) then
+  begin
+   UpdateStatusDO(1);
+  end else if (StatusCekBiaya=1) AND (IntStatusDO=3) then
+  begin
+   UpdateStatusDO(4);
+  end;
+
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
   Close;
 //  FListDeliveryOrder.Refresh;
@@ -1194,7 +1344,7 @@ begin
         end;
         if (MemDataBiaya['persen_ppn']<>0) and (MemDataBiaya['nama_ppn']<>'-') then
         begin
-          MemDataBiaya['ppn']:=Int(MemDataBiaya['dpp']*(MemDataBiaya['persen_ppn']/100));
+          MemDataBiaya['ppn']:=(MemDataBiaya['dpp']*(MemDataBiaya['persen_ppn']/100));
         end;
         //Validasi PPH
         if MemDataBiaya['persen_pph']=0 then
@@ -1203,7 +1353,7 @@ begin
         end;
         if (MemDataBiaya['persen_pph']<>0) and (MemDataBiaya['nama_pph']<>'-') then
         begin
-          MemDataBiaya['pph']:=Int(MemDataBiaya['dpp']*(MemDataBiaya['persen_pph']/100));
+          MemDataBiaya['pph']:=(MemDataBiaya['dpp']*(MemDataBiaya['persen_pph']/100));
         end;
         MemDataBiaya['total']:=MemDataBiaya['dpp']+MemDataBiaya['ppn']-MemDataBiaya['pph'];
         MemDataBiaya.Post;
@@ -1409,7 +1559,7 @@ begin
 
     GetApiBiayaKoreksiChakra;
     FListPerbandinganBiayaDo.ShowModal;
-    ShowMessage(inttostr(IntStatusDO));
+//    ShowMessage(inttostr(IntStatusDO));
   end else
   begin
     GetApiBiayaChakra;
@@ -1477,6 +1627,9 @@ begin
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
+
+  if not dm.Koneksi.Connected then
+  dm.Koneksi.Connected := True;
 
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
@@ -1662,6 +1815,18 @@ begin
     end;
   end;
 
+  if (Status=1) AND (IntStatusDO>3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+      BtnCekBiaya.Visible:=True;
+    end else begin
+      BtnCekBiaya.Visible:=False;
+    end;
+  end;
+
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
@@ -1766,6 +1931,18 @@ begin
     end;
   end;
 
+  if (Status=1) AND (IntStatusDO>3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+      BtnCekBiaya.Visible:=True;
+    end else begin
+      BtnCekBiaya.Visible:=False;
+    end;
+  end;
+
   if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
     OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
   begin
@@ -1798,6 +1975,18 @@ begin
       BtnCekBiaya.Caption:='Cek Biaya';
     end else begin
       BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+    end;
+  end;
+
+  if (Status=1) AND (IntStatusDO>3) then
+  begin
+    if (edNamaKabupaten.Text<>strLastNamaKabupaten) OR (edNamaLokasi.Text<>strLastNamaLokasi)
+    OR (spTotalTitik.Text<>strLastTotalTitik) OR (edKodeJenisKendMuatan.Text<>strLastKodeJenisKendMuatan) then
+    begin
+      BtnCekBiaya.Caption:='Cek Biaya';
+      BtnCekBiaya.Visible:=True;
+    end else begin
+      BtnCekBiaya.Visible:=False;
     end;
   end;
 
@@ -1875,6 +2064,8 @@ begin
 
   StatusPerubahanBiaya:=0;
 
+//  ShowMessage(inttostr(IntStatusKoreksi));
+
   if (Status=1) AND (IntStatusKoreksi=2) AND (IntStatusDO=5) then
   begin
     btSimpanSumberJual.Enabled:=True;
@@ -1896,6 +2087,34 @@ begin
     BCorrection.Enabled:=False;
   end;
 
+  if (IntStatusDO<5) then
+  begin
+    btSimpanSumberJual.Enabled:=True;
+    BCorrection.Visible:=False;
+    BCorrection.Enabled:=False;
+    btSaveParameter.Enabled:=False;
+  end;
+  if (IntStatusDO=5) AND (IntStatusKoreksi<>2) then
+  begin
+    btSimpanSumberJual.Enabled:=False;
+    BCorrection.Visible:=True;
+    BCorrection.Enabled:=True;
+    btSaveParameter.Enabled:=True;
+  end;
+  if (IntStatusDO=5) AND (IntStatusKoreksi=2) then
+  begin
+    btSimpanSumberJual.Enabled:=True;
+    BCorrection.Visible:=False;
+    BCorrection.Enabled:=False;
+    btSaveParameter.Enabled:=True;
+  end;
+  if (IntStatusDO>5) then
+  begin
+    btSimpanSumberJual.Enabled:=False;
+    BCorrection.Visible:=False;
+    BCorrection.Enabled:=False;
+    btSaveParameter.Enabled:=False;
+  end;
 end;
 
 Initialization

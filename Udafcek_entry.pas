@@ -181,6 +181,7 @@ end;
 
 procedure TFDaf_EntryCek.ActUpdateExecute(Sender: TObject);
 begin
+    status:=1;
     with qnocek do
     begin
         close;
@@ -188,7 +189,6 @@ begin
         sql.Text:=' select * from t_nocek where trans_no='+DBGridCek.Fields[0].Asstring;
         ExecSQL;
     end;
-    FImportnocek.cbcek.Text:=qnocek.FieldByName('cekbg').Asstring;
 
     with FImportnocek do
     begin
@@ -196,15 +196,16 @@ begin
       Status:=1;
       caption:='Update No Cek';
 
-      with qnocek_master do
+      with qnocek do
       begin
-          cbbank.Text:=qnocek_master.FieldByName('bank').AsString;
-          cbrek.Text:=qnocek_master.FieldByName('rek_no').AsString;
+          cbbank.ItemIndex := cbbank.Items.IndexOf(qnocek.FieldByName('bank').AsString);
+          cbrek.ItemIndex := cbrek.Items.IndexOf(qnocek.FieldByName('rek_no').AsString);
+          cbcek.ItemIndex := cbcek.Items.IndexOf(qnocek.FieldByName('cekbg').AsString);
+          //cbbank.Text:=qnocek_master.FieldByName('bank').AsString;
+          //cbrek.Text:=qnocek_master.FieldByName('rek_no').AsString;
           ed_trans_no.Text:=qnocek_master.FieldByName('trans_no').Value;
-
           ed_header.Text:=qnocek_master.FieldByName('header').Asstring;
       end;
-
     end;
 
     {with dm.Qtemp do

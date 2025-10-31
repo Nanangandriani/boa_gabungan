@@ -114,6 +114,7 @@ object FImportnocek: TFImportnocek
     ImeName = 'US'
     TabOrder = 0
     OnChange = cbbankChange
+    OnSelect = cbbankSelect
   end
   object cbcek: TComboBox
     Left = 69
@@ -252,7 +253,6 @@ object FImportnocek: TFImportnocek
     Width = 43
     Height = 23
     TabOrder = 13
-    Visible = False
   end
   object MyQuery2: TUniQuery
     Connection = dm.Koneksi
@@ -274,13 +274,15 @@ object FImportnocek: TFImportnocek
   object QMaster_Nocek: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_nocek_master')
+      
+        'select * from t_nocek_master where deleted_at isnull order by tr' +
+        'ans_no ASC')
     Left = 232
     Top = 48
   end
   object DSMaster_nocek: TDataSource
     DataSet = QMaster_Nocek
-    Left = 280
+    Left = 304
     Top = 72
   end
 end

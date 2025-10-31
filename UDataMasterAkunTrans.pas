@@ -179,6 +179,7 @@ type
     rgKlasifikasiIncludePPN: TRzRadioGroup;
     MemDetailPenjualantable_name: TStringField;
     MemDetailPenjualanfield_name: TStringField;
+    MemDetailPenjualannilai_name: TStringField;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -210,6 +211,7 @@ type
     procedure DBGridDetailJualColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure rgPotonganClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -662,10 +664,11 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT * from ('+
+    sql.add(' SELECT a.*,b.nilai_name from ('+
             ' SELECT "code_module", "code_trans", "code_account", "name_account", '+
-            ' "position", "account_number_bank",field_name,table_name '+
+            ' "position", "account_number_bank",code_param_trans '+
             ' FROM  "public"."t_master_trans_account_det") a '+
+            'LEFT JOIN t_param_trans b on b.code=a.code_param_trans '+
             ' WHERE code_trans='+QuotedStr(edKodeTransJual.Text)+''+
             ' Order By code_module, code_trans, position desc');
     open;
@@ -699,8 +702,9 @@ begin
         FDataMasterAkunTrans.MemDetailPenjualan['kd_akun']:=Dm.Qtemp2.FieldByName('code_account').AsString;
         FDataMasterAkunTrans.MemDetailPenjualan['nm_akun']:=Dm.Qtemp2.FieldByName('name_account').AsString;
         FDataMasterAkunTrans.MemDetailPenjualan['posisi']:=Dm.Qtemp2.FieldByName('position').AsString;
-        FDataMasterAkunTrans.MemDetailPenjualan['field_name']:=Dm.Qtemp2.FieldByName('field_name').AsString;
-        FDataMasterAkunTrans.MemDetailPenjualan['table_name']:=Dm.Qtemp2.FieldByName('table_name').AsString;
+        FDataMasterAkunTrans.MemDetailPenjualan['nilai_name']:=Dm.Qtemp2.FieldByName('nilai_name').AsString;
+//        FDataMasterAkunTrans.MemDetailPenjualan['field_name']:=Dm.Qtemp2.FieldByName('field_name').AsString;
+//        FDataMasterAkunTrans.MemDetailPenjualan['table_name']:=Dm.Qtemp2.FieldByName('table_name').AsString;
         FDataMasterAkunTrans.MemDetailPenjualan.post;
         Dm.Qtemp2.next;
       end;
@@ -1111,21 +1115,28 @@ begin
   MemDetailPenjualan.First;
   while not MemDetailPenjualan.Eof do
   begin
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT code FROM t_param_trans WHERE nilai_name='+QuotedStr(MemDetailPenjualan['nilai_name']);
+      open;
+    end;
+
     with dm.Qtemp do
     begin
     close;
     sql.clear;
     sql.Text:=' INSERT INTO "public"."t_master_trans_account_det" '+
               ' ("code_module", "code_trans", "code_account", "name_account", '+
-              ' "position",field_name,table_name) '+
+              ' "position",code_param_trans) '+
               ' Values( '+
               ' '+QuotedStr(edKodeModulJual.Text)+', '+
               ' '+QuotedStr(edKodeTransJual.Text)+', '+
               ' '+QuotedStr(MemDetailPenjualan['kd_akun'])+', '+
               ' '+QuotedStr(MemDetailPenjualan['nm_akun'])+', '+
               ' '+QuotedStr(MemDetailPenjualan['posisi'])+', '+
-              ' '+QuotedStr(MemDetailPenjualan['field_name'])+', '+
-              ' '+QuotedStr(MemDetailPenjualan['table_name'])+');';
+              ' '+QuotedStr(dm.Qtemp2.FieldValues['code'])+');';
     ExecSQL;
     end;
   MemDetailPenjualan.Next;
@@ -1821,6 +1832,30 @@ begin
   begin
     rgTagihanKas.Caption:='Ambil Data Hutang';
   end;
+end;
+
+procedure TFDataMasterAkunTrans.FormShow(Sender: TObject);
+begin
+  DBGridDetailJual.Columns[5].PickList.Clear;
+
+
+  with Dm.Qtemp do
+  begin
+    SQL.Text := 'SELECT nilai_name FROM t_param_trans WHERE menu=''PENJUALAN''';
+    Open;
+  end;
+
+  try
+    Dm.Qtemp.First;
+    while not Dm.Qtemp.Eof do
+    begin
+      DBGridDetailJual.Columns[5].PickList.Add(Dm.Qtemp.FieldValues['nilai_name']);
+      Dm.Qtemp.Next;
+    end;
+  finally
+    Dm.Qtemp.Close;
+  end;
+
 end;
 
 end.

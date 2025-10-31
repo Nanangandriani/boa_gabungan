@@ -537,7 +537,9 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.InsertDetailPiutang;
-var strIdDPP :String;
+var
+  strIdDPP,strDescription :String;
+  SisaPiutang,Bayar: Currency;
 begin
   with Dm.Qtemp1 do
   begin
@@ -552,14 +554,14 @@ begin
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
-  with dm.Qtemp do
-  begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_receivable" '+
-            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
-  ExecSQL;
-  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_receivable" '+
+                ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+      ExecSQL;
+    end;
   end;
 
   MemDetailPiutang.First;
@@ -568,6 +570,11 @@ begin
     strIdDPP:='NULL';
     if edKodeSumberTagihan.Text='2' then strIdDPP:=QuotedStr(MemDetailPiutang['id_dpp']);
 
+    SisaPiutang:=StrToFloat(Selectrow('select sisa_piutang from get_piutang_invoice('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+') WHERE trans_no='+QuotedStr(MemDetailPiutang['no_tagihan'])));
+
+    if SisaPiutang-MemDetailPiutang['jum_piutang']=0 then strDescription:='PELUNASAN' else strDescription:='Angsurang';
+
+
     with dm.Qtemp do
     begin
     close;
@@ -575,7 +582,7 @@ begin
     sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
             ' "no_invoice", "no_invoice_tax", "code_cust", "name_cust", "trans_date", "date_invoice_tax", '+
             ' "code_type_trans", "name_type_trans", "account_number_bank", "account_name_bank", '+
-            ' "paid_amount", "description", "account_acc",id_dpp) '+
+            ' "paid_amount", "description", "account_acc",id_dpp,description2) '+
             ' Values( '+
             ' '+QuotedStr(edNoTrans.Text)+', '+
             ' '+QuotedStr(MemDetailPiutang['no_tagihan'])+', '+
@@ -590,7 +597,7 @@ begin
             ' '+QuotedStr(edNamaBank.Text)+', '+
             ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
             ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
-            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+') ');
+            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+strDescription+') ');
     ExecSQL;
     end;
     MemDetailPiutang.Next;

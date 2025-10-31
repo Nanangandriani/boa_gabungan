@@ -482,7 +482,7 @@ end;
 
 procedure TFNew_Pelanggan.Autocode;
 var
-  kode,CompanySerial : String;
+  kode,CompanySerial,strKodeSBU : String;
   Urut : Integer;
 begin
   With DM.Qtemp2 do
@@ -537,9 +537,17 @@ begin
     kode := kode;
   end;
 
-  Edautocode.Text := 'PL'+CompanySerial+kode;
-  Edkode.Text := 'PL'+CompanySerial+kode;
-  Edkodeinitial.Text := 'PL'+CompanySerial+kode;
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    strKodeSBU:=SelectRow('select company_serial from t_company where company_code='+QuotedStr(edSBU.Text));
+  end else begin
+    strKodeSBU:=SelectRow('select company_serial from t_company where company_code='+QuotedStr(FHomeLogin.vKodePRSH));
+  end;
+
+  Edautocode.Text := 'PL'+strKodeSBU+CompanySerial+kode;
+  Edkode.Text := 'PL'+strKodeSBU+CompanySerial+kode;
+  Edkodeinitial.Text := 'PL'+strKodeSBU+CompanySerial+kode;
 end;
 
 procedure TFNew_Pelanggan.Autocode_AkPiutang;

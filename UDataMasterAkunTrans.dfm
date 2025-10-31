@@ -12,6 +12,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object RzPageControl2: TRzPageControl
     Left = 0
@@ -1075,6 +1076,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 Footers = <>
                 Title.Alignment = taCenter
                 Title.Caption = 'Nama Table'
+                Visible = False
               end
               item
                 CellButtons = <>
@@ -1084,6 +1086,25 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
                 Footers = <>
                 Title.Alignment = taCenter
                 Title.Caption = 'Nama Field'
+                Visible = False
+              end
+              item
+                ButtonStyle = cbsDropDown
+                CellButtons = <>
+                DropDownFormParams.PassParams = pspCustomValuesEh
+                DynProps = <>
+                EditButton.DropDownFormParams.PassParams = pspCustomValuesEh
+                EditButton.Visible = True
+                EditButtons = <>
+                FieldName = 'nilai_name'
+                Footers = <>
+                PickList.Strings = (
+                  'Aktif'
+                  'Non-Aktif'
+                  'Blokir')
+                Title.Alignment = taCenter
+                Title.Caption = 'Sumber Nilai'
+                Width = 171
               end>
             object RowDetailData: TRowDetailPanelControlEh
             end
@@ -1949,6 +1970,9 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     object MemDetailPenjualanfield_name: TStringField
       FieldName = 'field_name'
     end
+    object MemDetailPenjualannilai_name: TStringField
+      FieldName = 'nilai_name'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kd_akun: TMTStringDataFieldEh
@@ -1975,6 +1999,11 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         end
         object field_name: TMTStringDataFieldEh
           FieldName = 'field_name'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nilai_name: TMTStringDataFieldEh
+          FieldName = 'nilai_name'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end

@@ -150,6 +150,7 @@ object FDataProspekPelanggan: TFDataProspekPelanggan
         Lines.Strings = (
           'Memo1')
         TabOrder = 0
+        Visible = False
       end
     end
   end

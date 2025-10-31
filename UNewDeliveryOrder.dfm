@@ -31,8 +31,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
-      ExplicitWidth = 1342
-      ExplicitHeight = 548
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -56,7 +54,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -545,8 +542,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 32
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 516
-        ExplicitWidth = 1342
         object btNextStep: TRzBitBtn
           Left = 1270
           Top = 1
@@ -607,8 +602,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1271
-          ExplicitTop = 6
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
@@ -702,6 +695,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object TabDataBiaya: TRzTabSheet
       Caption = 'Data Biaya'
       OnClick = TabDataBiayaClick
+      ExplicitWidth = 1342
+      ExplicitHeight = 548
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -711,6 +706,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1342
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -997,9 +993,9 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             0000000000000000000000000000000000000000000000000000}
         end
         object Memo1: TMemo
-          Left = 1161
-          Top = 12
-          Width = 185
+          Left = 921
+          Top = 18
+          Width = 320
           Height = 89
           Lines.Strings = (
             'Memo1')
@@ -1032,8 +1028,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 37
         Align = alBottom
         TabOrder = 1
-        ExplicitLeft = 28
-        ExplicitTop = 488
+        ExplicitTop = 511
+        ExplicitWidth = 1342
         object btBatalSumberJual: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1094,6 +1090,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1266
         end
         object btSimpanSumberJual: TRzBitBtn
           Left = 1195
@@ -1155,6 +1152,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitTop = 113
         end
         object btBackStep: TRzBitBtn
           Left = 1
@@ -1226,6 +1224,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = 'Submit Correction'
           TabOrder = 3
           OnClick = BCorrectionClick
+          ExplicitLeft = 1093
         end
       end
       object DBGridSumberPenjualan: TDBGridEh
@@ -1238,6 +1237,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         DynProps = <>
         FooterRowCount = 1
         FooterParams.FillStyle = cfstGradientEh
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SearchPanel.Enabled = True
         SumList.Active = True
         TabOrder = 2
@@ -1326,6 +1326,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'ppn'
@@ -1375,6 +1376,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'pph'

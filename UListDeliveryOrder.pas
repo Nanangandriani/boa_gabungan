@@ -101,6 +101,9 @@ begin
   else strStatus:='';
 
   mm:=cbBulan.ItemIndex+1;
+
+  if not dm.Koneksi.Connected then
+  dm.Koneksi.Connected := True;
   DBGridList.StartLoadingStatus();
   try
    with QDeliveryOrder do
@@ -202,6 +205,8 @@ end;
 procedure TFListDeliveryOrder.ActUpdateExecute(Sender: TObject);
 begin
    FNewDeliveryOrder.Clear;
+   if not dm.Koneksi.Connected then
+   dm.Koneksi.Connected := True;
 
    with Dm.Qtemp do
    begin
@@ -257,29 +262,35 @@ begin
     if FNewDeliveryOrder.IntStatusDO >3 then FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false
     else FNewDeliveryOrder.btSimpanSumberJual.Enabled:=true;
 
-    if (FNewDeliveryOrder.IntStatusDO=1) or (FNewDeliveryOrder.IntStatusDO=2) then
+    if (FNewDeliveryOrder.IntStatusDO<3) then
     begin
       FNewDeliveryOrder.BtnCekBiaya.Visible:=true;
       FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya';
-      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
-      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
+//      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
+//      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
+    end else if (FNewDeliveryOrder.IntStatusDO>3) then
+    begin
+      FNewDeliveryOrder.BtnCekBiaya.Visible:=False;
+      FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya';
+//      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
+//      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
     end else if (FNewDeliveryOrder.IntStatusDO=3) then
     begin
-
       FNewDeliveryOrder.BtnCekBiaya.Visible:=true;
       FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya Perubahan';
-      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
-      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
-    end else if (FNewDeliveryOrder.IntStatusDO=4) or (FNewDeliveryOrder.IntStatusDO=5) then
-    begin
-      FNewDeliveryOrder.BtnCekBiaya.Visible:=false;
-      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false;
-      FNewDeliveryOrder.btSaveParameter.Enabled:=true;
-    end else begin
-      FNewDeliveryOrder.BtnCekBiaya.Visible:=false;
-      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false;
-      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
+//      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
+//      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
     end;
+//      else if (FNewDeliveryOrder.IntStatusDO=4) or (FNewDeliveryOrder.IntStatusDO=5) then
+//    begin
+//      FNewDeliveryOrder.BtnCekBiaya.Visible:=false;
+//      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false;
+//      FNewDeliveryOrder.btSaveParameter.Enabled:=true;
+//    end else begin
+//      FNewDeliveryOrder.BtnCekBiaya.Visible:=false;
+//      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false;
+//      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
+//    end;
 
     with Dm.Qtemp1 do
     begin

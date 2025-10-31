@@ -44,6 +44,8 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Align = alClient
     DataSource = DSnocek_master
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
@@ -56,7 +58,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
         EditButtons = <>
         FieldName = 'trans_no'
         Footers = <>
-        Title.Caption = 'No'
+        Title.Caption = 'No Trans'
         Width = 50
       end
       item

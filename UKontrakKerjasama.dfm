@@ -842,7 +842,6 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Top = 320
   end
   object Memkerjasama: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1
@@ -864,7 +863,6 @@ object FKontrakkerjasama: TFKontrakkerjasama
         'ier B on A.supplier_code=B.supplier_code order by id Desc'
       ''
       'select * from f_kontrakkerjasama('#39'2025-01-01'#39','#39'2025-02-20'#39')')
-    Active = True
     Left = 196
     Top = 264
   end

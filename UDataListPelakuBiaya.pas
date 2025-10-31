@@ -66,9 +66,9 @@ type
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
-    procedure ActDelExecute(Sender: TObject);
     procedure QPelakuBiayaaddressGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,7 +82,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPeLakuBiaya, UDataModule;
+uses UDataPeLakuBiaya, UDataModule, UMainMenu;
 
 procedure TFDataListPelakuBiaya.ActBaruExecute(Sender: TObject);
 begin
@@ -95,7 +95,20 @@ end;
 
 procedure TFDataListPelakuBiaya.ActDelExecute(Sender: TObject);
 begin
-  ShowMessage('Delete');
+   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridData.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+   begin
+      with dm.Qtemp do
+      begin
+        Close;
+        sql.Clear;
+        sql.Text:=' Update t_cost_actors set deleted_at=now(),deleted_by=:deleted_by '+
+                  ' where code='+QuotedStr(DBGridData.Fields[0].AsString);
+        //parambyname('deleted_at').AsDateTime:=Now;
+        parambyname('deleted_by').AsString:=Nm;
+        Execute;
+      end;
+      ActROExecute(sender);
+   end;
 end;
 
 procedure TFDataListPelakuBiaya.ActROExecute(Sender: TObject);

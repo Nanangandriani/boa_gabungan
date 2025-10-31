@@ -215,7 +215,6 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         Lines.Strings = (
           'Memo1')
         TabOrder = 2
-        Visible = False
       end
       object edKaresidenan: TRzButtonEdit
         Left = 133

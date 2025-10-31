@@ -4,8 +4,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Daftar Kendaraan'
-  ClientHeight = 519
-  ClientWidth = 700
+  ClientHeight = 518
+  ClientWidth = 696
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 89
-    Width = 700
-    Height = 430
+    Width = 696
+    Height = 429
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -82,14 +82,13 @@ object FDaftarKendaraan: TFDaftarKendaraan
   object Memo1: TMemo
     Left = 0
     Top = 0
-    Width = 700
+    Width = 696
     Height = 89
     Align = alTop
     Lines.Strings = (
       'Memo1')
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 696
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData

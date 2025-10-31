@@ -515,7 +515,8 @@ begin
      close;
      sql.clear;
      sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
-             ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'');
+             ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'  AND '+
+             '((status_dk = ''D'' AND db <> 0)OR (status_dk = ''K'' AND kd <> 0));');
      open;
     end;
 

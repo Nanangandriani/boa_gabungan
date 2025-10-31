@@ -332,143 +332,274 @@ end;
 
 procedure TFDataProspekPelanggan.btGetDataProspekClick(Sender: TObject);
 var
-  key,url,s,BaseUrl,Vpath,Vtoken,strsbu : string;
-  vBody,vBody2  : string;
-  jumdata : Real;
-  xxx: Integer;
-  cnt: Integer;
-  iii: Integer;
-  sss, row, row1, row2: String;
-  res: String;
-  date : TDate;
-  max,min : Integer;
-  //component
-  gNet          :TIdHTTP;
-  //respon component
-  httpresult    : TIdHTTP ;
-  resp: TMemoryStream;
+  key, url, BaseUrl, Vpath, Vtoken, strsbu: string;
+  vBody, res: string;
+  jumdata: Integer;
+  cnt, iii, xxx, max: Integer;
+  row1: string;
+  gNet: TIdHTTP;
 begin
   try
-  with dm.Qtemp do
-  begin
-    Close;
-    sql.Clear;
-    sql.Text:=' Delete from t_customer_prospect_tmp where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ';
-    ExecSQL ;
-  end;
-  if FHomeLogin.vStatOffice=0 then
-  begin
-    strsbu:=cbSBU.Text;
-  end else
-  begin
-    strsbu:=FHomeLogin.vKodePRSH;
-  end;
-
-  //BaseUrl:=edBaseURL.Text;
-  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlprospek''');
-  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapiprospek''');
-  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapiprospek''');
-  vBody:='?sbu_code='+strsbu;
-  Vpath:='outlet/prospek';
-  url:= BaseUrl+Vpath+vBody;
-  try
-  gNet :=  TIdHTTP.Create(nil);
-  gNet.Request.Accept := 'application/json';
-  gNet.Request.CustomHeaders.Values[key] := Vtoken;
-  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
-  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
-  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
-  res:=  gNet.get(url);
-  jumdata:=1;
-  memo1.text := res;
-  except
- on E: EIdHTTPProtocolException do
- if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
- begin
- jumdata:=0;
- gNet.free;
- resp.Free;
- //exit;
- end;
- on E: Exception do
- ShowMessage('A non-Indy related exception has been raised!');
- end;
-  finally
-    gNet.free;
-    resp.Free;
-  end;
-
-  if jumdata=0 then
-  begin
-  //Showmessage('Data Terbaru Tidak Ditemukan');}
-  exit;
-  end;
-
-  //MOVE JSON
-  json.JSONText := memo1.text;
-  cnt := json.TreeCount['data'];
-
-  if cnt = 0 then
-  begin
-  Showmessage('Data Tidak Ditemukan');
-  exit;
-  end;
-
-  max:= cnt;
-  progress.Progress:=0;
-  progress.MaxValue:= max;
-
-  xxx := 0;
-  for iii := 0 to cnt - 1 do
-  begin
-    inc(xxx);
-
-    row1 := format('data/%d/', [iii]);
-    //ShowMessage(json.StringTree[row1 + 'outlet_code']);
-    with dm.Qtemp1 do
+    // Hapus data sementara user
+    with dm.Qtemp do
     begin
-    Close;
-    sql.Clear;
-    sql.Text:=' insert into t_customer_prospect_tmp(code_details_address,created_by,outlet_code,idprospek,'+
-              ' distribution_code,outlet_name,'+
-              ' outlet_owner,no_npwp,no_telp,address,longitude,'+
-              ' latitude,no_ktp,group_outlet,no_hp,wilayah_code,wilayah_name,'+
-              'customer_group_code,customer_group_name,jenis_usaha_code,jenis_usaha_name,'+
-              'jenis_pelanggan_code,jenis_pelanggan_name,kategori_pelanggan_code,kategori_pelanggan_name) values ('+
-              ' '+QuotedStr(SelectRow('SELECT code from t_customer_details ORDER BY code asc limit 1'))+', '+
-              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'outlet_code'])+', '+ //kodedso
-              ' '+QuotedStr(json.StringTree[row1 + 'idProspek'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'kode_distribusi'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'outlet_name'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'outlet_pemilik'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'noNPWP'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'no_telp'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'outlet_alamat'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'outlet_longitude'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'outlet_latitude'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'noKTP'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'golongan'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'no_hp'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'wilayah_code'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'wilayah_name'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'customer_group_code'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'customer_group_name'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'jenis_usaha_code'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'jenis_usaha_name'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_code'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_name'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_code'])+', '+
-              ' '+QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_name'])+');';
-
-    ExecSQL ;
+      Close;
+      SQL.Clear;
+      SQL.Text := 'DELETE FROM t_customer_prospect_tmp WHERE created_by=' + QuotedStr(FHomeLogin.Eduser.Text);
+      ExecSQL;
     end;
-    progress.Progress:= progress.Progress+1;
-    //showmessage(json.StringTree[row1 + 'outlet_name']);
-    //memo1.text:='';
-    //memo1.text:=json.value[row1 + 'ORDER_DATE'];
+    // Tentukan SBU
+    if FHomeLogin.vStatOffice = 0 then
+      strsbu := cbSBU.Text
+    else
+      strsbu := FHomeLogin.vKodePRSH;
+    // Ambil parameter API
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlprospek''');
+    key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapiprospek''');
+    Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapiprospek''');
+    vBody := '?sbu_code=' + strsbu;
+    Vpath := 'outlet/prospek';
+    url := BaseUrl + Vpath + vBody;
+    gNet := TIdHTTP.Create(nil);
+    try
+      gNet.Request.Accept := 'application/json';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+      // Eksekusi request
+      try
+        res := gNet.Get(url);
+        jumdata := 1;
+      except
+        on E: EIdHTTPProtocolException do
+        begin
+          ShowMessage('Data tidak ditemukan: ' + E.Message);
+          jumdata := 0;
+        end;
+        on E: Exception do
+        begin
+          ShowMessage('Kesalahan saat mengambil data: ' + E.Message);
+          jumdata := 0;
+        end;
+      end;
+      if jumdata = 0 then
+        Exit;
+      if Trim(res) = '' then
+      begin
+        ShowMessage('Server mengirim respon kosong.');
+        Exit;
+      end;
+      if Pos('<html', LowerCase(res)) > 0 then
+      begin
+        ShowMessage('Server mengirim HTML, bukan JSON. Cek URL API.');
+        Exit;
+      end;
+      // Parsing JSON
+      json.JSONText := res;
+      cnt := json.TreeCount['data'];
+      if cnt = 0 then
+      begin
+        ShowMessage('Data Tidak Ditemukan');
+        Exit;
+      end;
+      max := cnt;
+      progress.Progress := 0;
+      progress.MaxValue := max;
+      xxx := 0;
+      for iii := 0 to cnt - 1 do
+      begin
+        Inc(xxx);
+        row1 := Format('data/%d/', [iii]);
+        with dm.Qtemp1 do
+        begin
+          Close;
+          SQL.Clear;
+          SQL.Text :=
+            'INSERT INTO t_customer_prospect_tmp (' +
+            'code_details_address, created_by, outlet_code, idprospek, ' +
+            'distribution_code, outlet_name, outlet_owner, no_npwp, no_telp, address, longitude, latitude, ' +
+            'no_ktp, group_outlet, no_hp, wilayah_code, wilayah_name, ' +
+            'customer_group_code, customer_group_name, jenis_usaha_code, jenis_usaha_name, ' +
+            'jenis_pelanggan_code, jenis_pelanggan_name, kategori_pelanggan_code, kategori_pelanggan_name) ' +
+            'VALUES (' +
+            QuotedStr(SelectRow('SELECT code FROM t_customer_details ORDER BY code ASC LIMIT 1')) + ', ' +
+            QuotedStr(FHomeLogin.Eduser.Text) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'outlet_code']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'idProspek']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'kode_distribusi']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'outlet_name']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'outlet_pemilik']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'noNPWP']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'no_telp']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'outlet_alamat']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'outlet_longitude']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'outlet_latitude']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'noKTP']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'golongan']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'no_hp']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'wilayah_code']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'wilayah_name']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'customer_group_code']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'customer_group_name']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'jenis_usaha_code']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'jenis_usaha_name']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_code']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_name']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_code']) + ', ' +
+            QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_name']) + ');';
+          ExecSQL;
+        end;
+        progress.Progress := progress.Progress + 1;
+      end;
+    finally
+      gNet.Free;
+    end;
+  except
+    on E: Exception do
+      ShowMessage('Kesalahan fatal: ' + E.Message);
   end;
 end;
+
+
+
+//procedure TFDataProspekPelanggan.btGetDataProspekClick(Sender: TObject);
+//var
+//  key,url,s,BaseUrl,Vpath,Vtoken,strsbu : string;
+//  vBody,vBody2  : string;
+//  jumdata : Real;
+//  xxx: Integer;
+//  cnt: Integer;
+//  iii: Integer;
+//  sss, row, row1, row2: String;
+//  res: String;
+//  date : TDate;
+//  max,min : Integer;
+//  //component
+//  gNet          :TIdHTTP;
+//  //respon component
+//  httpresult    : TIdHTTP ;
+//  resp: TMemoryStream;
+//begin
+//  try
+//  with dm.Qtemp do
+//  begin
+//    Close;
+//    sql.Clear;
+//    sql.Text:=' Delete from t_customer_prospect_tmp where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ';
+//    ExecSQL ;
+//  end;
+//  if FHomeLogin.vStatOffice=0 then
+//  begin
+//    strsbu:=cbSBU.Text;
+//  end else
+//  begin
+//    strsbu:=FHomeLogin.vKodePRSH;
+//  end;
+//
+//  //BaseUrl:=edBaseURL.Text;
+//  BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlprospek''');
+//  key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapiprospek''');
+//  vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapiprospek''');
+//  vBody:='?sbu_code='+strsbu;
+//  Vpath:='outlet/prospek';
+//  url:= BaseUrl+Vpath+vBody;
+//  try
+//  gNet :=  TIdHTTP.Create(nil);
+//  gNet.Request.Accept := 'application/json';
+//  gNet.Request.CustomHeaders.Values[key] := Vtoken;
+//  gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+//  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url);
+//  UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url);
+//  res:=  gNet.get(url);
+//  jumdata:=1;
+//  memo1.text := res;
+//  except
+// on E: EIdHTTPProtocolException do
+// if Application.MessageBox('Maaf, Data Tidak Ditemukan ...','confirm',MB_OK or mb_iconquestion)=id_yes then
+// begin
+// jumdata:=0;
+// gNet.free;
+// resp.Free;
+// //exit;
+// end;
+// on E: Exception do
+// ShowMessage('A non-Indy related exception has been raised!');
+// end;
+//  finally
+//    gNet.free;
+//    resp.Free;
+//  end;
+//
+//  if jumdata=0 then
+//  begin
+//  //Showmessage('Data Terbaru Tidak Ditemukan');}
+//  exit;
+//  end;
+//
+//  //MOVE JSON
+//  json.JSONText := memo1.text;
+//  cnt := json.TreeCount['data'];
+//
+//  if cnt = 0 then
+//  begin
+//  Showmessage('Data Tidak Ditemukan');
+//  exit;
+//  end;
+//
+//  max:= cnt;
+//  progress.Progress:=0;
+//  progress.MaxValue:= max;
+//
+//  xxx := 0;
+//  for iii := 0 to cnt - 1 do
+//  begin
+//    inc(xxx);
+//
+//    row1 := format('data/%d/', [iii]);
+//    //ShowMessage(json.StringTree[row1 + 'outlet_code']);
+//    with dm.Qtemp1 do
+//    begin
+//    Close;
+//    sql.Clear;
+//    sql.Text:=' insert into t_customer_prospect_tmp(code_details_address,created_by,outlet_code,idprospek,'+
+//              ' distribution_code,outlet_name,'+
+//              ' outlet_owner,no_npwp,no_telp,address,longitude,'+
+//              ' latitude,no_ktp,group_outlet,no_hp,wilayah_code,wilayah_name,'+
+//              'customer_group_code,customer_group_name,jenis_usaha_code,jenis_usaha_name,'+
+//              'jenis_pelanggan_code,jenis_pelanggan_name,kategori_pelanggan_code,kategori_pelanggan_name) values ('+
+//              ' '+QuotedStr(SelectRow('SELECT code from t_customer_details ORDER BY code asc limit 1'))+', '+
+//              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'outlet_code'])+', '+ //kodedso
+//              ' '+QuotedStr(json.StringTree[row1 + 'idProspek'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'kode_distribusi'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'outlet_name'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'outlet_pemilik'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'noNPWP'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'no_telp'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'outlet_alamat'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'outlet_longitude'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'outlet_latitude'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'noKTP'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'golongan'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'no_hp'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'wilayah_code'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'wilayah_name'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'customer_group_code'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'customer_group_name'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'jenis_usaha_code'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'jenis_usaha_name'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_code'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_name'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_code'])+', '+
+//              ' '+QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_name'])+');';
+//
+//    ExecSQL ;
+//    end;
+//    progress.Progress:= progress.Progress+1;
+//    //showmessage(json.StringTree[row1 + 'outlet_name']);
+//    //memo1.text:='';
+//    //memo1.text:=json.value[row1 + 'ORDER_DATE'];
+//  end;
+//end;
 
 
 end.

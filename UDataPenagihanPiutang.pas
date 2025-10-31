@@ -276,7 +276,7 @@ begin
                 ' "no_invoice_tax", "date_trans", "date_tempo", "paid_amount", "cash", '+
                 ' "receipt", "counter_bill", "bank_receipt", '+
                 ' "date_receipt", "name_bank_cheque", "no_cheque", '+
-                ' "cheque_amount1", "cheque_amount2", "date_tempo_cheque",isdpp_prev) '+
+                ' "cheque_amount1", "cheque_amount2", "date_tempo_cheque",isdpp_prev,sbu_code) '+
                 ' Values( '+
                 ' NOW(), '+
                 ' '+QuotedStr(Nm)+', '+
@@ -313,9 +313,8 @@ begin
                 else sql.add( ' NULL, ');
 
                 if not VarIsNull(MemDetail['isdpp_prev']) then
-                sql.add( ' '+QuotedStr(MemDetail['isdpp_prev'])+' );')
-                else sql.add( 'False );');
-
+                sql.add( ' '+QuotedStr(MemDetail['isdpp_prev'])+','+QuotedStr(FHomeLogin.vKodePRSH)+' );')
+                else sql.add( 'False,'+QuotedStr(FHomeLogin.vKodePRSH)+' );');
 
 //              if ((MemDetail['tgl_tempo_cek']=NULL) OR (MemDetail['tgl_tempo_cek']=''))then
 //              begin
