@@ -440,7 +440,7 @@ begin
   tot_grand:=ROUND(tot_grand);
 
   grand_tot_selling:=StrToCurr(SelectRow('select sisa_piutang from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(StrNoINV)));
-  ShowMessage(FloatToStr(grand_tot_selling));
+//  ShowMessage(FloatToStr(grand_tot_selling));
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try

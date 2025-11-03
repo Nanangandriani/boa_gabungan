@@ -59,6 +59,11 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+  //Nanang
+  if vcall='companycode_pelanggan' then
+  begin
+    FNew_Pelanggan.edCompanyCode.Text:=MemMasterData['KD_MASTER'];
+  end;
   if vcall='kode_trans_export_faktur' then
   begin
     FExportFaktur.kode_jenis_transaksi:=MemMasterData['KD_MASTER'];
@@ -425,6 +430,11 @@ begin
   begin
     FDataMasterAkunTrans.edAkunPiutangLainLain.Text:=MemMasterData['KD_MASTER'];
     FDataMasterAkunTrans.edNamaPiutangLain.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='set_ak_uang_muka_jual' then
+  begin
+    FDataMasterAkunTrans.edAkunUangMukaPenjualan.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='m_akuntrans_bank' then
   begin
@@ -829,6 +839,12 @@ begin
     FNew_Pelanggan.edAkunPiutangLainLain.Text:=MemMasterData['KD_MASTER'];
     FNew_Pelanggan.KodeHeaderPiutangLain:=MemMasterData['KD_MASTER'];
     FNew_Pelanggan.edNamaPiutangLain.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='ak_uang_muka_pel' then
+  begin
+    FNew_Pelanggan.edAkunUangMuka.Text:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.KodeHeaderUangMuka:=MemMasterData['KD_MASTER'];
+    FNew_Pelanggan.edNamaAkunUangMuka.Text:=MemMasterData['NM_MASTER'];
   end;
   if vcall='jenis_pel_pajak' then
   begin

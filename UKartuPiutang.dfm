@@ -850,11 +850,6 @@ object FKartuPiutang: TFKartuPiutang
       ReadOnly = True
       BlobType = ftMemo
     end
-    object QCetakketerangan: TMemoField
-      FieldName = 'keterangan'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
     object QCetakdebet: TFloatField
       FieldName = 'debet'
       ReadOnly = True
@@ -936,7 +931,7 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 45643.646060706020000000
+    ReportOptions.LastChange = 45962.406766493060000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -998,6 +993,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 388.937230000000000000
           Width = 86.929133860000000000
           Height = 18.897637800000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.##'
@@ -1018,6 +1014,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 482.443616090000000000
           Width = 86.929133860000000000
           Height = 18.897637800000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.##'
@@ -1038,6 +1035,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 4.559060000000000000
           Width = 60.472440940000000000
           Height = 18.897637800000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1055,6 +1053,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 69.590600000000000000
           Width = 86.929190000000000000
           Height = 18.897637800000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1072,6 +1071,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 161.299320000000000000
           Width = 219.212740000000000000
           Height = 26.456697800000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1087,6 +1087,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 578.268090000000000000
           Width = 86.929133860000000000
           Height = 18.897637800000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.##'
@@ -1513,10 +1514,10 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 69.590600000000000000
-          Top = 150.842610000000000000
+          Left = 70.460165220000000000
+          Top = 159.699752860000000000
           Width = 86.929190000000000000
-          Height = 37.795300000000000000
+          Height = 22.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1525,7 +1526,7 @@ object FKartuPiutang: TFKartuPiutang
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Nomor Faktur Penjualan')
+            'Nomor Nota')
           ParentFont = False
         end
         object Memo17: TfrxMemoView
@@ -1837,6 +1838,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 68.031540000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1846,6 +1848,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 160.299320000000000000
           Top = 143.622140000000000000
           Height = 600.944881890000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1855,6 +1858,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 385.819110000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1864,6 +1868,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 480.086890000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1873,6 +1878,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 573.677490000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1882,6 +1888,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 665.945270000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1891,6 +1898,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 733.417750000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1900,6 +1908,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 794.685530000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1909,6 +1918,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 876.276130000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1918,6 +1928,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 961.543910000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1927,6 +1938,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 1028.221090000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1936,6 +1948,7 @@ object FKartuPiutang: TFKartuPiutang
           Left = 1093.488870000000000000
           Top = 143.622140000000000000
           Height = 600.944881889764000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

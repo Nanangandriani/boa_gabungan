@@ -23,14 +23,6 @@ type
     TabPenjualan: TRzTabSheet;
     TabKas: TRzTabSheet;
     Panel3: TPanel;
-    Label30: TLabel;
-    Label36: TLabel;
-    edAkunPiutangLainLain: TRzButtonEdit;
-    edAkunPiutang: TRzButtonEdit;
-    edNamaPiutang: TEdit;
-    edNamaPiutangLain: TEdit;
-    Label35: TLabel;
-    Label29: TLabel;
     Panel5: TPanel;
     Panel8: TPanel;
     btClose_Beli: TRzBitBtn;
@@ -180,6 +172,19 @@ type
     MemDetailPenjualantable_name: TStringField;
     MemDetailPenjualanfield_name: TStringField;
     MemDetailPenjualannilai_name: TStringField;
+    TabSheet2: TRzTabSheet;
+    edNamaPiutang: TEdit;
+    edNamaPiutangLain: TEdit;
+    edAkunPiutangLainLain: TRzButtonEdit;
+    edAkunPiutang: TRzButtonEdit;
+    Label30: TLabel;
+    Label36: TLabel;
+    Label35: TLabel;
+    Label29: TLabel;
+    Label66: TLabel;
+    Label67: TLabel;
+    edAkunUangMukaPenjualan: TRzButtonEdit;
+    edNamaAkunUangMukaPenjualan: TEdit;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -212,6 +217,7 @@ type
       var Handled: Boolean);
     procedure rgPotonganClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure edAkunUangMukaPenjualanButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -654,7 +660,7 @@ begin
     sql.clear;
     sql.add(' SELECT * from ('+
             ' SELECT "code_trans", "code_account", "name_account", '+
-            ' "code_account2", "name_account2" FROM "public"."t_master_trans_account" ) a '+
+            ' "code_account2", "name_account2",code_account_uang_muka,name_account_uang_muka FROM "public"."t_master_trans_account" ) a '+
             ' WHERE "code_trans"='+QuotedStr(edKodeTransJual.Text)+''+
             ' Order By "code_trans" desc');
     open;
@@ -680,6 +686,8 @@ begin
     FDataMasterAkunTrans.edAkunPiutangLainLain.Clear;
     FDataMasterAkunTrans.edNamaPiutang.Clear;
     FDataMasterAkunTrans.edNamaPiutangLain.Clear;
+    FDataMasterAkunTrans.edAkunUangMukaPenjualan.Clear;
+    FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Clear;
   end;
 
   if  Dm.Qtemp.RecordCount<>0 then
@@ -688,6 +696,8 @@ begin
     FDataMasterAkunTrans.edNamaPiutang.Text:=Dm.Qtemp.FieldByName('name_account').AsString;
     FDataMasterAkunTrans.edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('code_account2').AsString;
     FDataMasterAkunTrans.edNamaPiutangLain.Text:=Dm.Qtemp.FieldByName('name_account2').AsString;
+    FDataMasterAkunTrans.edAkunUangMukaPenjualan.Text:=Dm.Qtemp.FieldByName('code_account_uang_muka').AsString;
+    FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Text:=Dm.Qtemp.FieldByName('name_account_uang_muka').AsString;;
   end;
   FDataMasterAkunTrans.MemDetailPenjualan.active:=false;
   FDataMasterAkunTrans.MemDetailPenjualan.active:=true;
@@ -1187,7 +1197,7 @@ begin
     sql.add(' Insert into "public"."t_master_trans_account" ("created_at", "created_by",  '+
             ' "status_bill", "code_module", "name_module", "code_trans", "name_trans", "description", '+
             ' "account_number_bank", "account_name_bank", "initial_code", '+
-            ' "code_account", "name_account", "code_account2", "name_account2") '+
+            ' "code_account", "name_account", "code_account2", "name_account2",code_account_uang_muka,name_account_uang_muka) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -1203,7 +1213,9 @@ begin
             ' '+QuotedStr(edAkunPiutang.Text)+', '+
             ' '+QuotedStr(edNamaPiutang.Text)+', '+
             ' '+QuotedStr(edAkunPiutangLainLain.Text)+', '+
-            ' '+QuotedStr(edNamaPiutangLain.Text)+' );');
+            ' '+QuotedStr(edNamaPiutangLain.Text)+', '+
+            ' '+QuotedStr(edAkunUangMukaPenjualan.Text)+', '+
+            ' '+QuotedStr(edNamaAkunUangMukaPenjualan.Text)+' );');
     ExecSQL;
   end;
   InsertDetailJual;
@@ -1321,6 +1333,8 @@ begin
               ' name_account='+QuotedStr(edNamaPiutang.Text)+','+
               ' code_account2='+QuotedStr(edAkunPiutangLainLain.Text)+','+
               ' name_account2='+QuotedStr(edNamaPiutangLain.Text)+','+
+              ' code_account_uang_muka='+QuotedStr(edAkunUangMukaPenjualan.Text)+','+
+              ' name_account_uang_muka='+QuotedStr(edNamaAkunUangMukaPenjualan.Text)+','+
               ' description='+QuotedStr(MemKeteranganJual.Text)+' '+
               ' Where code_module='+QuotedStr(edKodeModulJual.Text)+' '+
               ' AND code_trans='+QuotedStr(edKodeTransJual.Text)+' ');
@@ -1526,6 +1540,8 @@ begin
   edNamaPiutang.Clear;
   edAkunPiutangLainLain.Clear;
   edNamaPiutangLain.Clear;
+  edAkunUangMukaPenjualan.Clear;
+  edNamaAkunUangMukaPenjualan.Clear;
 
   rgPPH.ItemIndex:=0;
   rgPPN.ItemIndex:=0;
@@ -1756,6 +1772,26 @@ begin
                               ' where  d.id='+QuotedStr(edKodeModulBeli.Text)+'  '+
                               ' GROUP BY c.header_code,c.header_name,c.journal_name '+
                               ' ORDER BY c.header_code,c.header_name,c.journal_name asc)a','where header_code <>'''' ');
+      FMasterData.ShowModal;
+    end;
+end;
+
+procedure TFDataMasterAkunTrans.edAkunUangMukaPenjualanButtonClick(
+  Sender: TObject);
+begin
+    if Length(edKodeModulJual.Text)=0 then
+    begin
+      ShowMessage('Silakan Pilih Modul..!!');
+      exit;
+    end;
+
+    if Length(edKodeModulJual.Text)<>0 then
+    begin
+      FMasterData.Caption:='Master Data Perkiraan';
+      FMasterData.vcall:='set_ak_uang_muka_jual';
+      FMasterData.update_grid('code','account_name','NULL','(select aa.code,'+
+      'aa.account_name from t_ak_account aa LEFT JOIN t_ak_account_det bb ON bb.account_code=aa.code '+
+      'WHERE module_id='+QuotedStr(edKodeModulJual.Text)+' ORDER by aa.code)a','where code <>'''' ');
       FMasterData.ShowModal;
     end;
 end;

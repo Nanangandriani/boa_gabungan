@@ -139,6 +139,13 @@ type
     edSBU: TEdit;
     Label45: TLabel;
     Label46: TLabel;
+    Label47: TLabel;
+    Label48: TLabel;
+    edCompanyCode: TRzButtonEdit;
+    Label49: TLabel;
+    Label50: TLabel;
+    edAkunUangMuka: TRzButtonEdit;
+    edNamaAkunUangMuka: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -182,12 +189,16 @@ type
     procedure EdNitKuChange(Sender: TObject);
     procedure EdPasporChange(Sender: TObject);
     procedure EdnomorvaChange(Sender: TObject);
+    procedure edCompanyCodeButtonClick(Sender: TObject);
+    procedure edCompanyCodeChange(Sender: TObject);
+    procedure EdkodewilayahChange(Sender: TObject);
+    procedure edAkunUangMukaButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vid_prospek :Integer;
-    KodeHeaderPiutang,KodeHeaderPiutangLain :string;
+    KodeHeaderPiutang,KodeHeaderPiutangLain,KodeHeaderUangMuka :string;
     StatusErr:Boolean;
     procedure Clear;
     procedure Save;
@@ -195,11 +206,13 @@ type
     procedure Autocode;
     procedure Autocode_AkPiutang;
     procedure Autocode_AkPiutangLain;
+    procedure Autocode_AkUangMuka;
     procedure RefreshGrid;
     procedure InsertDetailAlamat;
     procedure CekTabMasterPelanggan;
     procedure UpdateStatusProspek;
     procedure DeleteProspekTmp;
+    procedure GetVA;
 //    procedure CekTabDetailPelanggan;
 //    procedure CekTabAkunPerkiraanPelanggan;
   end;
@@ -216,6 +229,31 @@ implementation
 uses UDataModule, UListPelanggan, UMainMenu, USetMasterPelanggan,
   UMasterWilayah, UDaftarKlasifikasi, UMasterData, UHomeLogin, UMy_Function,
   UDataProspekPelanggan;
+
+
+procedure TFNew_Pelanggan.GetVA;
+var Kode,PrefixVA :String;
+  Urut: Integer;
+begin
+
+  PrefixVA := edCompanyCode.Text + Edkodewilayah.Text;
+
+  with dm.Qtemp do
+  begin
+    Close;
+    sql.Clear;
+    // Gunakan parameter untuk keamanan dan kejelasan, meskipun QuotedStr sudah memadai untuk string sederhana
+    sql.Text := 'SELECT RIGHT(number_va, 5) AS no_urut FROM t_customer WHERE LEFT(number_va, 11) = '+QuotedStr(PrefixVA)+' ORDER BY no_urut DESC';
+    Open;
+  end;
+
+  if dm.Qtemp.RecordCount = 0 then
+    Urut := 1
+  else
+    Urut := dm.Qtemp.FieldByName('no_urut').AsInteger + 1;
+
+  Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text+kode;
+end;
 
 procedure TFNew_Pelanggan.DeleteProspekTmp;
 begin
@@ -608,6 +646,14 @@ begin
   edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode.Text;
 end;
 
+procedure TFNew_Pelanggan.Autocode_AkUangMuka;
+var
+  kode : String;
+  Urut : Integer;
+begin
+  edAkunPiutangLainLain.Text := KodeHeaderUangMuka+'.'+Edkode.Text;
+end;
+
 procedure TFNew_Pelanggan.Autocode_AkPiutangLain;
 var
   kode : String;
@@ -707,6 +753,7 @@ begin
   EdNitKu.Text:='0';
   EdPaspor.Text:='0';
   MemDetailPel.EmptyTable;
+  edCompanyCode.Text;
 
   with Dm.Qtemp do
   begin
@@ -715,7 +762,7 @@ begin
     sql.add(' SELECT * FROM (SELECT "code_module", "name_module", '+
             ' "code_trans", "name_trans", "description", "account_number_bank", '+
             ' "account_name_bank", "status_bill", "initial_code", "code_account", '+
-            ' "name_account", "code_account2", "name_account2" '+
+            ' "name_account", "code_account2", "name_account2",code_account_uang_muka,name_account_uang_muka '+
             ' from "public"."t_master_trans_account" '+
             ' where deleted_at is null and code_module=''1'' AND code_trans=''1.001'' '+
             ' order by code_module, account_number_bank, code_trans asc)xx ');
@@ -728,6 +775,9 @@ begin
   edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('code_account2').AsString;
   KodeHeaderPiutangLain:=Dm.Qtemp.FieldByName('code_account2').AsString;
   edNamaPiutangLain.Text:=Dm.Qtemp.FieldByName('name_account2').AsString;
+  KodeHeaderUangMuka:=Dm.Qtemp.FieldByName('code_account_uang_muka').AsString;
+  edAkunUangMuka.Text:=Dm.Qtemp.FieldByName('code_account_uang_muka').AsString;
+  edNamaAkunUangMuka.Text:=Dm.Qtemp.FieldByName('name_account_uang_muka').AsString;
 end;
 
 procedure TFNew_Pelanggan.EdemailKeyPress(Sender: TObject; var Key: Char);
@@ -800,6 +850,44 @@ begin
   FMasterData.vcall:='ak_piutang_lain_pel';
   FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edAkunUangMukaButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Perkiraan';
+  FMasterData.vcall:='ak_uang_muka_pel';
+  FMasterData.update_grid('header_code','header_name','journal_name','t_ak_header','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edCompanyCodeButtonClick(Sender: TObject);
+var vsbu: String;
+begin
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    vsbu:=QuotedStr(edSBU.Text);
+  end else begin
+    vsbu:=QuotedStr(FHomeLogin.vKodePRSH);
+  end;
+
+  FMasterData.Caption:='Master Data Bank';
+  FMasterData.vcall:='companycode_pelanggan';
+  FMasterData.update_grid('company_code','CONCAT(bank_name, '' ('',rekening_no,'')'')','NULL','t_bank','WHERE	deleted_at IS NULL AND sbu_code='+vsbu );
+  FMasterData.ShowModal;
+end;
+
+procedure TFNew_Pelanggan.edCompanyCodeChange(Sender: TObject);
+begin
+  if Status=0 then
+  begin
+    if (edCompanyCode.Text<>'') AND (Edkodewilayah.Text<>'') then
+    begin
+      GetVA;
+    end else begin
+      Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text;
+    end;
+  end;
 end;
 
 procedure TFNew_Pelanggan.EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -929,6 +1017,19 @@ begin
   FMasterWilayah.Showmodal;
 end;
 
+procedure TFNew_Pelanggan.EdkodewilayahChange(Sender: TObject);
+begin
+  if Status=0 then
+  begin
+    if (edCompanyCode.Text<>'') AND (Edkodewilayah.Text<>'') then
+    begin
+      GetVA;
+    end else begin
+      Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text;
+    end;
+  end;
+end;
+
 procedure TFNew_Pelanggan.Update;
 begin
     with dm.Qtemp do
@@ -968,6 +1069,9 @@ begin
               ' name_group='+QuotedStr(edGolonganPelanggan.Text)+','+
               ' email='+QuotedStr(edemail.Text)+', '+
               ' payment_term='+QuotedStr(Edtempo.Text)+', '+
+              ' header_code_uang_muka='+QuotedStr(KodeHeaderUangMuka)+', '+
+              ' account_code_uang_muka='+QuotedStr(edAkunUangMuka.Text)+', '+
+              ' company_code_bank='+QuotedStr(edCompanyCode.Text)+', '+
               ' updated_at=now(), '+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+', ');
         if cbpkp.Checked=true then
@@ -1011,7 +1115,7 @@ begin
             ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
-            ' email,payment_term,created_at,created_by,sbu_code, stat_pkp ) '+
+            ' email,payment_term,created_at,created_by,sbu_code,company_code_bank,header_code_uang_muka,account_code_uang_muka, stat_pkp ) '+
             ' Values( '+
             ' '+QuotedStr(inttostr(vid_prospek))+', '+
             ' '+QuotedStr(Edkode.Text)+', '+
@@ -1047,7 +1151,8 @@ begin
             ' '+QuotedStr(edemail.Text)+', '+
             ' '+QuotedStr(Edtempo.Text)+', '+
             ' now(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu+',');
+            ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu+','+QuotedStr(edCompanyCode.Text)+','+
+            ' '+QuotedStr(KodeHeaderUangMuka)+','+QuotedStr(edAkunUangMuka.Text)+',');
       if cbpkp.Checked=true then
       begin
         sql.add(' true);');
@@ -1131,6 +1236,10 @@ begin
   begin
     MessageDlg('Wilayah Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
+  end else if edCompanyCode.Text='' then
+  begin
+    MessageDlg('Company Code Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
   end else
   begin
     if not dm.Koneksi.InTransaction then
@@ -1143,6 +1252,7 @@ begin
         Autocode;
         Autocode_AkPiutang;
         Autocode_AkPiutangLain;
+        GetVA;
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -1150,6 +1260,9 @@ begin
     begin
       if application.MessageBox('Apa Anda Yakin Merubah Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
+        Autocode;
+        Autocode_AkPiutang;
+        Autocode_AkPiutangLain;
         Update;
         Dm.Koneksi.Commit;
       end;

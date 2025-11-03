@@ -237,9 +237,10 @@ begin
   begin
      close;
      sql.Clear;
-     sql.Text:=' select * from "public"."t_sales_returns" a '+
-               ' WHERE "trans_no"='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
-               ' AND deleted_at is null order by created_at Desc ';
+     sql.Text:=' select b.no_inv_tax,a.* from "public"."t_sales_returns" a '+
+                'LEFT JOIN get_selling(NULL) b on b.trans_no=a.no_inv '+
+               ' WHERE a.trans_no='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
+               ' AND a.deleted_at is null order by a.created_at Desc ';
      open;
   end;
   if Dm.Qtemp.RecordCount=0 then

@@ -633,7 +633,6 @@ object FRekapPenjualan: TFRekapPenjualan
     SQL.Strings = (
       'SELECT a.*,b.kabupaten,b.kecamatan from get_selling(False) a '
       'LEFT JOIN vcustomer b on b.customer_code=a.code_cust')
-    Active = True
     Left = 988
     Top = 328
   end
@@ -858,7 +857,7 @@ object FRekapPenjualan: TFRekapPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45939.486497905090000000
+    ReportOptions.LastChange = 45961.567585393520000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1029,9 +1028,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 102.015770000000000000
+          Left = 96.301484290000000000
           Top = 115.070807560000000000
-          Width = 124.985213520000000000
+          Width = 134.985213520000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1046,9 +1045,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 229.943345890000000000
+          Left = 234.943345890000000000
           Top = 115.070807560000000000
-          Width = 201.093367340000000000
+          Width = 196.093367340000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1080,18 +1079,18 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Line9: TfrxLineView
           AllowVectorExport = True
-          Left = 229.299320000000000000
+          Left = 233.299320000000000000
           Top = 97.133858270000000000
-          Height = 50.645669291338600000
+          Height = 50.645669290000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line10: TfrxLineView
           AllowVectorExport = True
-          Left = 99.795300000000000000
+          Left = 95.795300000000000000
           Top = 97.133858270000000000
-          Height = 50.645669291338600000
+          Height = 50.645669290000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1224,7 +1223,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 37.795300000000000000
           Top = 114.385900000000000000
-          Width = 60.733203520000000000
+          Width = 55.733203520000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1262,8 +1261,9 @@ object FRekapPenjualan: TFRekapPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 38.461966670000000000
-          Width = 60.472480000000000000
+          Width = 56.901051430000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
           DisplayFormat.FormatStr = 'dd mmm yy'
@@ -1282,9 +1282,10 @@ object FRekapPenjualan: TFRekapPenjualan
         object Memo18: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 101.666666670000000000
-          Width = 126.028035560000000000
+          Left = 96.666666670000000000
+          Width = 136.028035560000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'trans_no'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1303,9 +1304,10 @@ object FRekapPenjualan: TFRekapPenjualan
         object Memo19: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 230.555555560000000000
-          Width = 203.805813340000000000
+          Left = 234.126984130000000000
+          Width = 200.234384770000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'name_cust'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1327,6 +1329,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Left = 437.222222220000000000
           Width = 171.881694100000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'kabupaten'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1348,6 +1351,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Left = 613.222222220000000000
           Width = 120.120176490000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'kecamatan'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1369,6 +1373,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Left = 735.666666670000000000
           Width = 120.025325540000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'dpp'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1391,6 +1396,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Left = 858.888888890000000000
           Width = 102.315298440000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'ppn_value'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1411,8 +1417,9 @@ object FRekapPenjualan: TFRekapPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 965.119241200000000000
-          Width = 117.464349920000000000
+          Width = 117.772042230000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'grand_tot'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
@@ -1434,6 +1441,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Left = 1.001752220000000000
           Width = 30.236240000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1449,23 +1457,26 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 37.795275590000000000
           Height = 21.165354330708700000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line21: TfrxLineView
           AllowVectorExport = True
-          Left = 99.779527560000000000
+          Left = 95.779527560000000000
           Top = 0.428200000000000000
-          Height = 21.165354330708700000
+          Height = 21.165354330000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line22: TfrxLineView
           AllowVectorExport = True
-          Left = 229.039370078740200000
+          Left = 233.039370080000000000
           Height = 21.165354330000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1474,6 +1485,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 437.200000000000000000
           Height = 21.165354330708700000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1482,6 +1494,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 611.133858270000000000
           Height = 21.165354330708700000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1490,6 +1503,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 734.400000000000000000
           Height = 21.165354330708700000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1498,6 +1512,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 857.000000000000000000
           Height = 21.165354330708700000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1506,6 +1521,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 963.007874020000000000
           Height = 21.165354330708700000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1523,7 +1539,7 @@ object FRekapPenjualan: TFRekapPenjualan
         Width = 1084.725110000000000000
         object Shape1: TfrxShapeView
           AllowVectorExport = True
-          Left = 611.476829650000000000
+          Left = 611.149606299213000000
           Top = -0.732220000000000000
           Width = 473.381687040000000000
           Height = 31.748031500000000000
@@ -1541,7 +1557,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 613.624923330000000000
           Top = 2.713976670000000000
-          Width = 141.023810000000000000
+          Width = 118.254579230000000000
           Height = 20.409448820000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1664,7 +1680,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 966.409214100000000000
           Top = 3.096062220000000000
-          Width = 115.872223280000000000
+          Width = 117.102992510000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -1692,7 +1708,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 856.951219510000000000
           Top = -0.590532440000000000
-          Height = 30.992125980000000000
+          Height = 31.370078740157500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1701,7 +1717,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 963.763779530000000000
           Top = -0.590532440000000000
-          Height = 29.480314960000000000
+          Height = 31.370078740157500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

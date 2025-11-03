@@ -572,8 +572,8 @@ begin
 
     SisaPiutang:=StrToFloat(Selectrow('select sisa_piutang from get_piutang_invoice('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+') WHERE trans_no='+QuotedStr(MemDetailPiutang['no_tagihan'])));
 
-    if SisaPiutang-MemDetailPiutang['jum_piutang']=0 then strDescription:='PELUNASAN' else strDescription:='Angsurang';
-
+    if SisaPiutang-MemDetailPiutang['jum_piutang']=0 then strDescription:='Pelunasan'
+    else strDescription:='Angsurang';
 
     with dm.Qtemp do
     begin
@@ -597,7 +597,7 @@ begin
             ' '+QuotedStr(edNamaBank.Text)+', '+
             ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
             ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
-            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+strDescription+') ');
+            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+QuotedStr(strDescription)+') ');
     ExecSQL;
     end;
     MemDetailPiutang.Next;
@@ -1288,7 +1288,7 @@ end;
 
 procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
-  if FDataPenerimaanBank.Status = 0 then
+  if Status = 0 then
   begin
     //showmessage('Baru');
     Panel5.Visible:=false;
@@ -1305,10 +1305,12 @@ begin
   begin
     BSave.Enabled:=True;
     BCorrection.Visible:=False;
+    dtTrans.Enabled:=True;
   end else begin
     BSave.Enabled:=False;
     BCorrection.Visible:=True;
     BCorrection.Enabled:=True;
+    dtTrans.Enabled:=False;
   end;
 end;
 

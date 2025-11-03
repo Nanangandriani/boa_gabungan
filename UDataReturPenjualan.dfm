@@ -632,7 +632,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = 233
+      ExplicitLeft = 900
     end
     object BCorrection: TRzBitBtn
       Left = 806
@@ -643,8 +643,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Caption = 'Submit Correction'
       TabOrder = 2
       OnClick = BCorrectionClick
-      ExplicitLeft = 737
-      ExplicitTop = 6
+      ExplicitLeft = 802
     end
   end
   object DSDetail: TDataSource

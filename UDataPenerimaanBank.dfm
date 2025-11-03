@@ -18,13 +18,12 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Left = 0
     Top = 0
     Width = 1133
-    Height = 206
+    Height = 177
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1129
     object LabelPelanggan: TLabel
       Left = 10
       Top = 73
@@ -82,50 +81,53 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Caption = 'Keterangan'
     end
     object Label8: TLabel
-      Left = 10
-      Top = 126
+      Left = 250
+      Top = 98
       Width = 40
       Height = 15
       Caption = 'Periode'
+      Visible = False
     end
     object Label9: TLabel
-      Left = 120
-      Top = 126
+      Left = 296
+      Top = 98
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label10: TLabel
-      Left = 223
-      Top = 126
+      Left = 396
+      Top = 99
       Width = 17
       Height = 15
       Caption = 's/d'
+      Visible = False
     end
     object Label11: TLabel
       Left = 10
-      Top = 153
+      Top = 127
       Width = 58
       Height = 15
       Caption = 'Mata Uang'
     end
     object Label14: TLabel
       Left = 120
-      Top = 153
+      Top = 127
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label15: TLabel
       Left = 332
-      Top = 153
+      Top = 127
       Width = 23
       Height = 15
       Caption = 'Kurs'
     end
     object Label16: TLabel
       Left = 368
-      Top = 153
+      Top = 127
       Width = 3
       Height = 15
       Caption = ':'
@@ -146,14 +148,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label19: TLabel
       Left = 120
-      Top = 179
+      Top = 153
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label20: TLabel
       Left = 10
-      Top = 179
+      Top = 153
       Width = 38
       Height = 15
       Caption = 'Jumlah'
@@ -220,30 +222,32 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       TabOrder = 4
     end
     object dtPeriode1: TRzDateTimePicker
-      Left = 132
-      Top = 123
+      Left = 305
+      Top = 96
       Width = 85
       Height = 23
       Date = 45405.000000000000000000
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 5
+      Visible = False
       OnChange = dtPeriode1Change
     end
     object dtPeriode2: TRzDateTimePicker
-      Left = 246
-      Top = 123
+      Left = 419
+      Top = 96
       Width = 83
       Height = 23
       Date = 45405.000000000000000000
       Format = ''
       Time = 0.597438842589326700
       TabOrder = 6
+      Visible = False
       OnChange = dtPeriode2Change
     end
     object edNamaMataUang: TRzButtonEdit
       Left = 132
-      Top = 150
+      Top = 124
       Width = 186
       Height = 23
       Text = ''
@@ -254,7 +258,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edKodeMataUang: TEdit
       Left = 383
-      Top = 176
+      Top = 150
       Width = 119
       Height = 23
       TabOrder = 8
@@ -262,7 +266,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edKurs: TRzNumericEdit
       Left = 383
-      Top = 150
+      Top = 124
       Width = 93
       Height = 23
       TabOrder = 9
@@ -271,7 +275,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edJumlah: TRzNumericEdit
       Left = 132
-      Top = 176
+      Top = 150
       Width = 186
       Height = 23
       TabOrder = 10
@@ -463,25 +467,27 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 302
+    Top = 273
     Width = 1133
-    Height = 220
+    Height = 249
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
     TabIndex = 1
     TabOrder = 2
+    ExplicitTop = 302
     ExplicitWidth = 1129
     ExplicitHeight = 219
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitHeight = 195
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
         Width = 1129
-        Height = 195
+        Height = 224
         Align = alClient
         DataSource = DSDetailAkun
         DynProps = <>
@@ -575,7 +581,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Left = 0
         Top = 0
         Width = 1129
-        Height = 195
+        Height = 224
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -642,7 +648,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   end
   object Panel5: TPanel
     Left = 0
-    Top = 206
+    Top = 177
     Width = 1133
     Height = 96
     Align = alTop
@@ -650,6 +656,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
+    ExplicitTop = 206
     ExplicitWidth = 1129
     object gbDataPiutang: TGroupBox
       Left = 0
@@ -943,6 +950,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object MemDetailPiutangno_faktur: TStringField
       FieldName = 'no_faktur'
+      Size = 500
     end
     object MemDetailPiutangjum_piutang: TCurrencyField
       FieldName = 'jum_piutang'
@@ -968,7 +976,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         object no_faktur: TMTStringDataFieldEh
           FieldName = 'no_faktur'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 500
+          Size = 500
         end
         object no_tagihan: TMTStringDataFieldEh
           FieldName = 'no_tagihan'

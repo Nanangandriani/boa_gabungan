@@ -107,7 +107,6 @@ type
     QCetaktgltrans: TDateField;
     QCetaksaldo_awal: TFloatField;
     QCetakno_urut: TMemoField;
-    QCetakketerangan: TMemoField;
     QCetakdebet: TFloatField;
     QCetakkredit: TFloatField;
     QCetaksaldo: TFloatField;
@@ -202,8 +201,8 @@ begin
                ' *, ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY no_urut, '+
                ' tgltrans ASC) AS NUMERIC), 2) AS saldo '+
                ' FROM (SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, '+
-               ' saldo_awal, no_urut, keterangan, keterangan2, debet, kredit FROM '+
-               ' "public"."get_piutang_trx" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
+               ' saldo_awal, no_urut, keterangan2, debet, kredit FROM '+
+               ' "public"."get_piutang_trx2" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') '+
                ' ORDER BY customer_code, no_urut, tgltrans ASC) AS subquery '+
                ' ORDER BY customer_code, nomor) trx '+

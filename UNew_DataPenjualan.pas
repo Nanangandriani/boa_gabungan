@@ -232,7 +232,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='UPDATE t_selling_customer SET deleted_at=NULL where trans_no=(SELECT trans_no FROM t_selling WHERE trans_no='+QuotedStr(edNomorTrans.Text)+' ORDER BY created_at DESC LIMIT 1 )' ;
+    sql.Text:='UPDATE t_selling_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edNomorTrans.Text) ;
     ExecSQL;
   end;
 
@@ -1208,7 +1208,6 @@ begin
   if Status=1 then
   begin
     RefreshGrid;
-    edNomorFaktur.ReadOnly:=False;
     btAddDetail.Visible:=False;
     SpeedButton1.Visible:=False;
     spJatuhTempo.Enabled:=False;

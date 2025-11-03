@@ -311,7 +311,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "public"."t_selling" a '+
+       sql.Text:=' select * from get_selling(NULL) a '+
                  ' WHERE "trans_no"='+QuotedSTr(QPenjualan.FieldByName('trans_no').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
        open;
@@ -355,6 +355,12 @@ begin
     dtTanggal.Enabled:=False;
     edNamaSumber.ReadOnly:=True;
     edNoReff.ReadOnly:=True;
+
+    if (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>'') AND
+    (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>NULL) THEN edNomorFaktur.ReadOnly:=True
+    else edNomorFaktur.ReadOnly:=False;
+
+
   end;
   FNew_Penjualan.Status := 1;
   FNew_Penjualan.ShowModal;

@@ -293,6 +293,11 @@ begin
       edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
       edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
       KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code2').AsString;
+
+      KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code3').AsString;
+      edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
+      edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
+
       Edkodeinitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
       edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
       edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;

@@ -337,7 +337,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT * FROM app_versions ORDER BY release_date DESC LIMIT 1';
+    sql.Text:='SELECT * FROM app_versions ORDER BY id DESC LIMIT 1';
     open;
   end;
   if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=0) then

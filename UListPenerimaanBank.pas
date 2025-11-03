@@ -425,10 +425,11 @@ begin
       begin
         close;
         sql.clear;
-        sql.add(' SELECT * from ('+
+        sql.add(' SELECT b.no_inv_tax no_invoice_tax ,a.* from ('+
                 ' SELECT * from "public"."t_cash_bank_acceptance_receivable" '+
                 ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
-                ' Order By voucher_no desc');
+                ' LEFT JOIN get_selling(NULL) b ON b.trans_no=a.no_invoice '+
+                ' Order By a.voucher_no desc');
         open;
       end;
 
@@ -497,30 +498,30 @@ begin
  if QBukti_Terima.RecordCount<>0 then
  begin
    // Dapetin Grand Total
-   with dm.Qtemp do
-    begin
-     close;
-     sql.clear;
-     sql.add(' select * '+
-             ' from "public"."t_cash_bank_acceptance" a '+
-             ' where a.deleted_at is null and '+
-             ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
-     open;
-    end;
-    //
-    //Bikin Detail vbuktipenerimaan
-   with QBukti_Terima_det do
-    begin
-     close;
-     sql.clear;
-     sql.add(' SELECT aa.*,ket from "public"."vbuktipenerimaan" aa '+
-             ' LEFT JOIN (SELECT voucher_no , STRING_AGG("description", E'+QuotedStr(', \n')+') as ket '+
-             ' from "public"."vbuktipenerimaan" where "voucher_no"= '+
-             ' '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
-             ' ON aa."voucher_no"=bb."voucher_no" '+
-             ' where aa."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
-     open;
-    end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' select * '+
+           ' from "public"."t_cash_bank_acceptance" a '+
+           ' where a.deleted_at is null and '+
+           ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+    open;
+  end;
+  //
+  //Bikin Detail vbuktipenerimaan
+  with QBukti_Terima_det do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT aa.*,ket from "public"."vbuktipenerimaan" aa '+
+           ' LEFT JOIN (SELECT voucher_no , STRING_AGG("description", E'+QuotedStr(', \n')+') as ket '+
+           ' from "public"."vbuktipenerimaan" where "voucher_no"= '+
+           ' '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
+           ' ON aa."voucher_no"=bb."voucher_no" '+
+           ' where aa."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+    open;
+  end;
 
    cLocation := ExtractFilePath(Application.ExeName);
 
