@@ -24,6 +24,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1129
     object LabelPelanggan: TLabel
       Left = 10
       Top = 73
@@ -441,7 +442,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 978
+      ExplicitLeft = 976
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 503
@@ -476,13 +478,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     UseColoredTabs = True
     TabIndex = 1
     TabOrder = 2
-    ExplicitTop = 302
     ExplicitWidth = 1129
-    ExplicitHeight = 219
+    ExplicitHeight = 248
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitHeight = 195
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -576,7 +576,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
       ExplicitWidth = 1125
-      ExplicitHeight = 194
+      ExplicitHeight = 223
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -656,7 +656,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
-    ExplicitTop = 206
     ExplicitWidth = 1129
     object gbDataPiutang: TGroupBox
       Left = 0

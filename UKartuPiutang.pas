@@ -66,7 +66,6 @@ type
     QKartuPiutangTRXdebet: TFloatField;
     QKartuPiutangTRXkredit: TFloatField;
     QKartuPiutangTRXno_urut: TMemoField;
-    QKartuPiutangTRXketerangan: TMemoField;
     cxBarEditItem1: TcxBarEditItem;
     QKartuPiutangcustomer_code: TMemoField;
     QKartuPiutangcustomer_name_pkp: TMemoField;
@@ -196,10 +195,11 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT * from ( '+
+       sql.add(' SELECT *,  ROUND(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY nomor),2) AS saldo FROM (SELECT * from ( '+
                ' SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC) AS nomor,  '+
-               ' *, ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY no_urut, '+
-               ' tgltrans ASC) AS NUMERIC), 2) AS saldo '+
+               ' * '+
+//               , ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY no_urut, '+
+//               ' tgltrans ASC) AS NUMERIC), 2) AS saldo '+
                ' FROM (SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, '+
                ' saldo_awal, no_urut, keterangan2, debet, kredit FROM '+
                ' "public"."get_piutang_trx2" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
@@ -218,7 +218,7 @@ begin
          begin
           sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
          end;
-       sql.add(' ORDER BY customer_code asc');
+       sql.add(' ORDER BY customer_code asc,nomor asc) zz ');
        open;
    end;
 
@@ -315,7 +315,7 @@ begin
      close;
      sql.Clear;
      sql.add(' SELECT * FROM  '+
-             ' "public"."get_piutang_trx"'+
+             ' "public"."get_piutang_trx2"'+
              ' ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') a ');
      open;

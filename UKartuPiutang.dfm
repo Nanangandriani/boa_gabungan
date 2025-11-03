@@ -204,7 +204,7 @@ object FKartuPiutang: TFKartuPiutang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'keterangan'
+            FieldName = 'keterangan2'
             Footers = <>
             Title.Caption = 'Keterangan'
             Width = 200
@@ -524,8 +524,8 @@ object FKartuPiutang: TFKartuPiutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * FROM "public"."get_piutang_trx"('#39'2024-10-30'#39','#39'2024-11-3' +
-        '0'#39');')
+        'SELECT * FROM "public"."get_piutang_trx2"('#39'2024-10-30'#39','#39'2024-11-' +
+        '30'#39');')
     Left = 964
     Top = 480
     object QKartuPiutangTRXcustomer_code: TMemoField
@@ -571,11 +571,6 @@ object FKartuPiutang: TFKartuPiutang
     end
     object QKartuPiutangTRXno_urut: TMemoField
       FieldName = 'no_urut'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
-    object QKartuPiutangTRXketerangan: TMemoField
-      FieldName = 'keterangan'
       ReadOnly = True
       BlobType = ftMemo
     end
@@ -780,32 +775,22 @@ object FKartuPiutang: TFKartuPiutang
   object QCetak: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * from ('
-      'SELECT '
       
-        '    ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_ur' +
-        'ut, tgltrans ASC) AS nomor,'
-      '    *,'
-      
-        '    ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION ' +
-        'BY customer_code ORDER BY no_urut, tgltrans ASC) AS NUMERIC), 2)' +
-        ' AS saldo'
-      'FROM ('
-      '    SELECT '
-      
-        '        customer_code, customer_name_pkp, code_region, name_regi' +
-        'on, trans_no, tgltrans, saldo_awal, no_urut, keterangan, keteran' +
-        'gan2, debet, kredit'
-      '    FROM '
-      '        "public"."get_piutang_trx" ('#39'2024-11-01'#39', '#39'2024-11-30'#39') '
-      '    ORDER BY '
-      '        customer_code, no_urut, tgltrans ASC'
-      ') AS subquery'
-      'ORDER BY customer_code, nomor) trx'
-      
-        'LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as' +
-        ' name_kab,  "code_karesidenan"  from t_region_regency WHERE dele' +
-        'ted_at IS NULL)b   ON "left"(code_region, 4)=b.code_kab')
+        ' SELECT *,  ROUND(SUM(saldo_awal + debet - kredit) OVER (ORDER B' +
+        'Y nomor),2) AS saldo FROM (SELECT * from (  SELECT ROW_NUMBER() ' +
+        'OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC)' +
+        ' AS nomor,   *  FROM (SELECT customer_code, customer_name_pkp, c' +
+        'ode_region, name_region, trans_no, tgltrans,  saldo_awal, no_uru' +
+        't, keterangan2, debet, kredit FROM  "public"."get_piutang_trx2" ' +
+        '('#39'2025-11-01'#39', '#39'2025-11-30'#39')  ORDER BY customer_code, no_urut, t' +
+        'gltrans ASC) AS subquery  ORDER BY customer_code, nomor) trx  LE' +
+        'FT JOIN (SELECT "code_province", "code" as code_kab, "name" as n' +
+        'ame_kab,  "code_karesidenan"  from t_region_regency WHERE delete' +
+        'd_at IS NULL)b    ON "left"(code_region, 4)=b.code_kab  where cu' +
+        'stomer_code<> '#39'0'#39' '
+      ' AND code_karesidenan='#39'JKT'#39'  AND customer_code='#39'PL01287'#39
+      ' ORDER BY customer_code,nomor asc) zz')
+    Active = True
     Left = 844
     Top = 80
     object QCetaknomor: TLargeintField
@@ -901,7 +886,6 @@ object FKartuPiutang: TFKartuPiutang
       'tgltrans=tgltrans'
       'saldo_awal=saldo_awal'
       'no_urut=no_urut'
-      'keterangan=keterangan'
       'debet=debet'
       'kredit=kredit'
       'saldo=saldo'
@@ -931,7 +915,7 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 45962.406766493060000000
+    ReportOptions.LastChange = 45965.259056342590000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1054,6 +1038,7 @@ object FKartuPiutang: TFKartuPiutang
           Width = 86.929190000000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
+          DataField = 'trans_no'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1072,6 +1057,9 @@ object FKartuPiutang: TFKartuPiutang
           Width = 219.212740000000000000
           Height = 26.456697800000000000
           StretchMode = smMaxHeight
+          DataField = 'keterangan2'
+          DataSet = frxDBDKartuPiutang
+          DataSetName = 'frxDBDKartuPiutang'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1088,6 +1076,7 @@ object FKartuPiutang: TFKartuPiutang
           Width = 86.929133860000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
+          DataField = 'saldo'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.##'
