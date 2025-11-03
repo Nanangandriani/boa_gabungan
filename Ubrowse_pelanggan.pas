@@ -57,7 +57,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UNew_DataPenjualan, UDataPenerimaanBank, UDataRencanaLunasPiutang,
   UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
-  UBrowseNotaPenjualan, UNew_DataPenjualanPromosi;
+  UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere: String;
@@ -277,6 +277,13 @@ begin
     FNew_DataPenjualanPromosi.kd_kares:=MemMasterData['KD_KARES'];
     FNew_DataPenjualanPromosi.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
     FNew_DataPenjualanPromosi.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+  end;
+  if vcall='uang_muka_penjualan' then
+  begin
+    FNew_UangMukaPenjualan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FNew_UangMukaPenjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+    FNew_UangMukaPenjualan.edAkunUangMuka.Text:=SelectRow('SELECT account_code_uang_muka from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
+    FNew_UangMukaPenjualan.edNamaAkunUangMuka.Text:=SelectRow('SELECT b.account_name from t_customer  a LEFT JOIN t_ak_account_sub b  ON b.account_code2=a.account_code_uang_muka where a.customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
 
   Fbrowse_data_pelanggan.Close;

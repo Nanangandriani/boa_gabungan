@@ -259,6 +259,7 @@ begin
 
   if Dm.Qtemp.RecordCount<>0 then
   begin
+    FNew_Pelanggan.Clear;
     with FNew_Pelanggan do
     begin
       Edkode.Text:=Dm.Qtemp.FieldByName('customer_code').AsString;
@@ -293,11 +294,13 @@ begin
       edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
       edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
       KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code2').AsString;
-
-      KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code3').AsString;
-      edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('account_code2').AsString;
-      edNamaPiutangLain.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code2').AsString));
-
+      edCompanyCode.Text:=Dm.Qtemp.FieldByName('company_code_bank').AsString;
+      if dm.Qtemp.FieldValues['header_code_uang_muka']<>NULL then
+      begin
+        KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code_uang_muka').AsString;
+        edAkunUangMuka.Text:=Dm.Qtemp.FieldByName('account_code_uang_muka').AsString;
+        edNamaAkunUangMuka.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code_uang_muka').AsString));
+      end;
       Edkodeinitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
       edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;
       edNamaKantorPusat.Text:=Dm.Qtemp.FieldByName('name_head_office').AsString;

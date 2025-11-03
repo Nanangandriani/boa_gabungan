@@ -314,7 +314,9 @@ uses
   Udaftar_TP in 'Udaftar_TP.pas' {FDaftar_TP},
   u_daf_keluar_kas_bank in 'u_daf_keluar_kas_bank.pas' {Fdaf_pengeluaran_kas_bank},
   Usingkronisasi in 'Usingkronisasi.pas' {FSingkronisasi},
-  UListPerbandinganBiayaDo in 'UListPerbandinganBiayaDo.pas' {FListPerbandinganBiayaDo};
+  UListPerbandinganBiayaDo in 'UListPerbandinganBiayaDo.pas' {FListPerbandinganBiayaDo},
+  UNew_UangMukaPenjualan in 'UNew_UangMukaPenjualan.pas' {FNew_UangMukaPenjualan},
+  UListUangMukaPenjualan in 'UListUangMukaPenjualan.pas' {FListUangMukaPenjualan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -389,6 +391,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFdaf_pengeluaran_kas_bank, Fdaf_pengeluaran_kas_bank);
   Application.CreateForm(TFSingkronisasi, FSingkronisasi);
   Application.CreateForm(TFListPerbandinganBiayaDo, FListPerbandinganBiayaDo);
+  Application.CreateForm(TFNew_UangMukaPenjualan, FNew_UangMukaPenjualan);
+  Application.CreateForm(TFListUangMukaPenjualan, FListUangMukaPenjualan);
   //  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
   Application.CreateForm(TF_cetak_sisa_htg, F_cetak_sisa_htg);
   Application.CreateForm(TFDaftar_TP, FDaftar_TP);

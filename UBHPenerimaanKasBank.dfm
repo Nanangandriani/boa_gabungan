@@ -554,7 +554,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
       Caption = 'Daftar Penerimaan (Versi Accurate)'
       Category = 0
       Hint = 'Daftar Penerimaan (Versi Accurate)'
-      Visible = ivAlways
+      Visible = ivNever
       OnClick = dxBarLargeButton1Click
       HotGlyph.SourceDPI = 96
       HotGlyph.Data = {

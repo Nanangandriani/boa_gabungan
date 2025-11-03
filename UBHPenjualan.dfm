@@ -626,7 +626,7 @@ object FBHPenjualan: TFBHPenjualan
       Caption = 'Rincian Perbarang (Versi Accurate)'
       Category = 0
       Hint = 'Rincian Perbarang (Versi Accurate)'
-      Visible = ivAlways
+      Visible = ivNever
       OnClick = dxBarLargeButton1Click
       HotGlyph.SourceDPI = 96
       HotGlyph.Data = {

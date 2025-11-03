@@ -508,9 +508,9 @@ object FRekapPenjualan: TFRekapPenjualan
       Properties.OnButtonClick = edKabupatenPropertiesButtonClick
     end
     object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'Rincian Faktur (Versi Accurate)'
+      Caption = 'Rincian Faktur'
       Category = 0
-      Hint = 'Rincian Faktur (Versi Accurate)'
+      Hint = 'Rincian Faktur'
       Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
@@ -646,7 +646,6 @@ object FRekapPenjualan: TFRekapPenjualan
     SQL.Strings = (
       'SELECT a.*,b.kabupaten,b.kecamatan from get_selling(False) a '
       'LEFT JOIN vcustomer b on b.customer_code=a.code_cust')
-    Active = True
     Left = 908
     Top = 32
   end

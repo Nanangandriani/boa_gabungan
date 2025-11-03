@@ -238,7 +238,7 @@ begin
 
   PrefixVA := edCompanyCode.Text + Edkodewilayah.Text;
 
-  with dm.Qtemp do
+  with dm.Qtemp1 do
   begin
     Close;
     sql.Clear;
@@ -247,10 +247,10 @@ begin
     Open;
   end;
 
-  if dm.Qtemp.RecordCount = 0 then
+  if dm.Qtemp1.RecordCount = 0 then
     Urut := 1
   else
-    Urut := dm.Qtemp.FieldByName('no_urut').AsInteger + 1;
+    Urut := dm.Qtemp1.FieldByName('no_urut').AsInteger + 1;
 
   Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text+kode;
 end;
@@ -644,6 +644,7 @@ begin
 //  end;
 //  edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode;
   edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode.Text;
+  ShowMessage(KodeHeaderPiutang);
 end;
 
 procedure TFNew_Pelanggan.Autocode_AkUangMuka;
@@ -651,7 +652,7 @@ var
   kode : String;
   Urut : Integer;
 begin
-  edAkunPiutangLainLain.Text := KodeHeaderUangMuka+'.'+Edkode.Text;
+  edAkunUangMuka.Text := KodeHeaderUangMuka+'.'+Edkode.Text;
 end;
 
 procedure TFNew_Pelanggan.Autocode_AkPiutangLain;
@@ -755,7 +756,7 @@ begin
   MemDetailPel.EmptyTable;
   edCompanyCode.Text;
 
-  with Dm.Qtemp do
+  with Dm.Qtemp2 do
   begin
     close;
     sql.clear;
@@ -769,15 +770,20 @@ begin
     open;
   end;
 
-  edAkunPiutang.Text:=Dm.Qtemp.FieldByName('code_account').AsString;
-  KodeHeaderPiutang:=Dm.Qtemp.FieldByName('code_account').AsString;
-  edNamaPiutang.Text:=Dm.Qtemp.FieldByName('name_account').AsString;
-  edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('code_account2').AsString;
-  KodeHeaderPiutangLain:=Dm.Qtemp.FieldByName('code_account2').AsString;
-  edNamaPiutangLain.Text:=Dm.Qtemp.FieldByName('name_account2').AsString;
-  KodeHeaderUangMuka:=Dm.Qtemp.FieldByName('code_account_uang_muka').AsString;
-  edAkunUangMuka.Text:=Dm.Qtemp.FieldByName('code_account_uang_muka').AsString;
-  edNamaAkunUangMuka.Text:=Dm.Qtemp.FieldByName('name_account_uang_muka').AsString;
+  //Piutang
+  edAkunPiutang.Text:=Dm.Qtemp2.FieldByName('code_account').AsString;
+  KodeHeaderPiutang:=Dm.Qtemp2.FieldByName('code_account').AsString;
+  edNamaPiutang.Text:=Dm.Qtemp2.FieldByName('name_account').AsString;
+
+  //Akun Lain2
+  edAkunPiutangLainLain.Text:=Dm.Qtemp2.FieldByName('code_account2').AsString;
+  KodeHeaderPiutangLain:=Dm.Qtemp2.FieldByName('code_account2').AsString;
+  edNamaPiutangLain.Text:=Dm.Qtemp2.FieldByName('name_account2').AsString;
+
+//  Uang Muka
+//  KodeHeaderUangMuka:=Dm.Qtemp2.FieldByName('code_account_uang_muka').AsString;
+//  edAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('code_account_uang_muka').AsString;
+//  edNamaAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('name_account_uang_muka').AsString;
 end;
 
 procedure TFNew_Pelanggan.EdemailKeyPress(Sender: TObject; var Key: Char);
@@ -1250,8 +1256,9 @@ begin
       if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         Autocode;
-        Autocode_AkPiutang;
-        Autocode_AkPiutangLain;
+//        Autocode_AkPiutang;
+//        Autocode_AkPiutangLain;
+//        Autocode_AkUangMuka;
         GetVA;
         Save;
         Dm.Koneksi.Commit;
@@ -1260,9 +1267,10 @@ begin
     begin
       if application.MessageBox('Apa Anda Yakin Merubah Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
-        Autocode;
-        Autocode_AkPiutang;
-        Autocode_AkPiutangLain;
+//        Autocode;
+//        Autocode_AkPiutang;
+//        Autocode_AkPiutangLain;
+//        Autocode_AkUangMuka;
         Update;
         Dm.Koneksi.Commit;
       end;

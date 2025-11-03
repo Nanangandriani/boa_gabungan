@@ -1266,6 +1266,14 @@
             <Form>FListPerbandinganBiayaDo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="UNew_UangMukaPenjualan.pas">
+            <Form>FNew_UangMukaPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListUangMukaPenjualan.pas">
+            <Form>FListUangMukaPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
