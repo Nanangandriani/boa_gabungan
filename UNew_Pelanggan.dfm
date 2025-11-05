@@ -20,16 +20,18 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Width = 1276
     Height = 456
     Hint = ''
-    ActivePage = TabMasterPelanggan
+    ActivePage = TabPajak
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 0
     ExplicitWidth = 1272
     ExplicitHeight = 455
     FixedDimension = 21
     object TabMasterPelanggan: TRzTabSheet
       Caption = 'Master Pelanggan'
+      ExplicitWidth = 1268
+      ExplicitHeight = 430
       object Panel3: TPanel
         Left = 0
         Top = 399
@@ -37,6 +39,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Height = 32
         Align = alBottom
         TabOrder = 0
+        ExplicitTop = 398
+        ExplicitWidth = 1268
         object btNextStep: TRzBitBtn
           Left = 1196
           Top = 1
@@ -97,6 +101,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1192
         end
       end
       object Panel1: TPanel
@@ -108,9 +113,11 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1268
+        ExplicitHeight = 398
         object Label14: TLabel
           Left = 247
-          Top = 278
+          Top = 304
           Width = 22
           Height = 15
           Caption = 'Hari'
@@ -131,7 +138,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label10: TLabel
           Left = 49
-          Top = 278
+          Top = 304
           Width = 54
           Height = 15
           Caption = 'Jth Tempo'
@@ -180,35 +187,35 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label25: TLabel
           Left = 157
-          Top = 220
+          Top = 246
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label26: TLabel
           Left = 48
-          Top = 220
+          Top = 246
           Width = 103
           Height = 15
           Caption = 'Kategori Pelanggan'
         end
         object Label27: TLabel
           Left = 48
-          Top = 249
+          Top = 275
           Width = 52
           Height = 15
           Caption = 'Golongan'
         end
         object Label28: TLabel
           Left = 157
-          Top = 249
+          Top = 275
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btMasterTypePenjualan: TSpeedButton
           Left = 413
-          Top = 245
+          Top = 271
           Width = 23
           Height = 22
           Caption = '+'
@@ -216,21 +223,21 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label1: TLabel
           Left = 48
-          Top = 191
+          Top = 217
           Width = 84
           Height = 15
           Caption = 'Jenis Pelanggan'
         end
         object Label2: TLabel
           Left = 157
-          Top = 191
+          Top = 217
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btJenisPelanggan: TSpeedButton
           Left = 413
-          Top = 216
+          Top = 242
           Width = 23
           Height = 22
           Caption = '+'
@@ -238,7 +245,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object btMasterGolongan: TSpeedButton
           Left = 413
-          Top = 274
+          Top = 300
           Width = 23
           Height = 22
           Caption = '+'
@@ -246,14 +253,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label8: TLabel
           Left = 157
-          Top = 278
+          Top = 304
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btJenisUsaha: TSpeedButton
           Left = 413
-          Top = 185
+          Top = 211
           Width = 23
           Height = 22
           Caption = '+'
@@ -261,14 +268,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Label9: TLabel
           Left = 157
-          Top = 160
+          Top = 186
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label11: TLabel
           Left = 48
-          Top = 160
+          Top = 186
           Width = 60
           Height = 15
           Caption = 'Jenis Usaha'
@@ -315,6 +322,20 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Height = 15
           Caption = ':'
         end
+        object Label53: TLabel
+          Left = 48
+          Top = 159
+          Width = 75
+          Height = 15
+          Caption = 'VA Atas Nama'
+        end
+        object Label54: TLabel
+          Left = 157
+          Top = 159
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
         object Edemail: TEdit
           Left = 172
           Top = 99
@@ -325,7 +346,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object Edtempo: TEdit
           Left = 172
-          Top = 275
+          Top = 301
           Width = 69
           Height = 23
           NumbersOnly = True
@@ -370,7 +391,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edJenisPelanggan: TRzButtonEdit
           Left = 172
-          Top = 188
+          Top = 214
           Width = 240
           Height = 23
           Text = ''
@@ -382,7 +403,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edTypePenjualan: TRzButtonEdit
           Left = 172
-          Top = 217
+          Top = 243
           Width = 240
           Height = 23
           Text = ''
@@ -394,7 +415,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edGolonganPelanggan: TRzButtonEdit
           Left = 172
-          Top = 246
+          Top = 272
           Width = 240
           Height = 23
           Text = ''
@@ -406,7 +427,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edKode_jnispel: TEdit
           Left = 443
-          Top = 187
+          Top = 213
           Width = 100
           Height = 23
           CharCase = ecUpperCase
@@ -417,7 +438,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edKode_typejual: TEdit
           Left = 443
-          Top = 217
+          Top = 243
           Width = 100
           Height = 23
           ReadOnly = True
@@ -427,7 +448,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edKode_gol: TEdit
           Left = 443
-          Top = 246
+          Top = 272
           Width = 100
           Height = 23
           ReadOnly = True
@@ -437,7 +458,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edKode_JenisUsaha: TEdit
           Left = 443
-          Top = 156
+          Top = 182
           Width = 100
           Height = 23
           CharCase = ecUpperCase
@@ -448,7 +469,7 @@ object FNew_Pelanggan: TFNew_Pelanggan
         end
         object edJenisUsaha: TRzButtonEdit
           Left = 172
-          Top = 157
+          Top = 183
           Width = 240
           Height = 23
           Text = ''
@@ -497,6 +518,14 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Caption = 'Get VA'
           TabOrder = 17
           OnClick = btGetVAClick
+        end
+        object edVAatasNama: TEdit
+          Left = 172
+          Top = 156
+          Width = 333
+          Height = 23
+          TabOrder = 18
+          OnChange = EdnomorvaChange
         end
       end
     end
@@ -873,8 +902,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
     end
     object TabAkunPerkiraan: TRzTabSheet
       Caption = 'Akun Perkiraan'
-      ExplicitWidth = 1268
-      ExplicitHeight = 430
       object Panel5: TPanel
         Left = 1
         Top = 0
@@ -1049,8 +1076,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
         Height = 37
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 393
-        ExplicitWidth = 1268
         object RzBitBtn3: TRzBitBtn
           Left = 1
           Top = 1
@@ -1172,7 +1197,6 @@ object FNew_Pelanggan: TFNew_Pelanggan
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1192
         end
       end
     end

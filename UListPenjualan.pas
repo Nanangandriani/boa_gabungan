@@ -396,6 +396,8 @@ begin
   end;
 
 
+
+
   if QCetak.RecordCount=0 then
   begin
     showmessage('Tidak ada data yang bisa dicetak !');
@@ -409,8 +411,10 @@ begin
       begin
        close;
        sql.clear;
-       sql.add(' select * '+
+       sql.add(' select a.*,b.company_code_bank,b.number_va,b.va_name,c.bank_name '+
                ' from "public"."t_selling" a '+
+               ' LEFT JOIN t_customer b on b.customer_code=a.code_cust '+
+               ' LEFT JOIN t_bank c on c.company_code=b.company_code_bank '+
                ' where a.deleted_at is null and '+
                ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
        open;
@@ -423,6 +427,27 @@ begin
        sql.Text:='select * from get_user_signature(2) ';
        open;
       end;
+
+//      if (dm.Qtemp.FieldValues['company_code_bank']=NULL) OR
+//        (dm.Qtemp.FieldValues['company_code_bank']='') OR (dm.Qtemp.FieldValues['number_va']=NULL) OR
+//        (dm.Qtemp.FieldValues['number_va']='') OR (dm.Qtemp.FieldValues['va_name']=NULL) OR (dm.Qtemp.FieldValues['va_name']='') then
+//      begin
+//        TfrxMemoView(Report.FindObject('MemVA1')).Visible:=False;
+//        TfrxMemoView(Report.FindObject('MemVA2')).Visible:=False;
+//        TfrxMemoView(Report.FindObject('MemVA3')).Visible:=False;
+//        TfrxMemoView(Report.FindObject('MemVA4')).Visible:=False;
+//        TfrxMemoView(Report.FindObject('MemVA5')).Visible:=False;
+//        TfrxMemoView(Report.FindObject('MemVA6')).Visible:=False;
+//        TfrxMemoView(Report.FindObject('MemVA7')).Visible:=False;
+//      end else begin
+//        TfrxMemoView(Report.FindObject('MemVA1')).Visible:=True;
+//        TfrxMemoView(Report.FindObject('MemVA2')).Visible:=True;
+//        TfrxMemoView(Report.FindObject('MemVA3')).Visible:=True;
+//        TfrxMemoView(Report.FindObject('MemVA4')).Visible:=True;
+//        TfrxMemoView(Report.FindObject('MemVA5')).Visible:=True;
+//        TfrxMemoView(Report.FindObject('MemVA6')).Visible:=True;
+//        TfrxMemoView(Report.FindObject('MemVA7')).Visible:=True;
+//      end;
 
 
      cLocation := ExtractFilePath(Application.ExeName);
@@ -589,6 +614,25 @@ begin
     status_pakai_terbilang:= 2;
     Value := '(  '+terbilang(FloatToStr(QCetakSJ.FieldByName('amount').AsFloat))+'  )  '+ QCetakSJ.FieldByName('code_unit').Asstring;
   end;
+  if (dm.Qtemp.FieldValues['company_code_bank']=NULL) OR
+    (dm.Qtemp.FieldValues['company_code_bank']='') OR (dm.Qtemp.FieldValues['number_va']=NULL) OR
+    (dm.Qtemp.FieldValues['number_va']='') OR (dm.Qtemp.FieldValues['va_name']=NULL) OR (dm.Qtemp.FieldValues['va_name']='') then
+  begin
+    if CompareText(VarName, 'VANamaBank') = 0 then
+    Value := dm.Qtemp.FieldValues['bank_name'];
+    if CompareText(VarName, 'VANO') = 0 then
+    Value := dm.Qtemp.FieldValues['number_va'];
+    if CompareText(VarName, 'VAATASNAMA') = 0 then
+    Value := dm.Qtemp.FieldValues['va_name'];
+  end else begin
+    if CompareText(VarName, 'VANamaBank') = 0 then
+    Value := '';
+    if CompareText(VarName, 'VANO') = 0 then
+    Value := '';
+    if CompareText(VarName, 'VAATASNAMA') = 0 then
+    Value := '';
+  end;
+
   if CompareText(VarName, 'parSubTotal') = 0 then
   Value := dm.Qtemp.FieldValues['sub_total'];
   if CompareText(VarName, 'parPPN') = 0 then

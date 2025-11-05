@@ -1352,7 +1352,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 45946.431429780100000000
+    ReportOptions.LastChange = 45966.873221793980000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2542,15 +2542,16 @@ object FDataListPenjualan: TFDataListPenjualan
             '[SUM(<frxDBDPenjualan."tot_piece_value">,MasterData1)]')
           ParentFont = False
         end
-        object Memo39: TfrxMemoView
+        object MemVA1: TfrxMemoView
           AllowVectorExport = True
           Left = 7.368421060000000000
           Top = 175.786755270000000000
           Width = 228.462536320000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2558,15 +2559,16 @@ object FDataListPenjualan: TFDataListPenjualan
             'Mohon pembayaran ditransfer ke:')
           ParentFont = False
         end
-        object Memo40: TfrxMemoView
+        object MemVA2: TfrxMemoView
           AllowVectorExport = True
           Left = 7.368421050000000000
           Top = 195.839386840000000000
           Width = 75.830957380000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2574,15 +2576,16 @@ object FDataListPenjualan: TFDataListPenjualan
             'Nama Bank')
           ParentFont = False
         end
-        object Memo41: TfrxMemoView
+        object MemVA4: TfrxMemoView
           AllowVectorExport = True
           Left = 7.368421050000000000
           Top = 215.892018420000000000
           Width = 58.988852110000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2590,36 +2593,73 @@ object FDataListPenjualan: TFDataListPenjualan
             'Virtual')
           ParentFont = False
         end
-        object Memo42: TfrxMemoView
+        object MemVA6: TfrxMemoView
           AllowVectorExport = True
           Left = 7.368421050000000000
           Top = 234.839386840000000000
-          Width = 58.988852110000000000
+          Width = 71.620431060000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'Virtual')
+            'Atas Nama')
           ParentFont = False
         end
-        object Memo43: TfrxMemoView
+        object MemVA3: TfrxMemoView
           AllowVectorExport = True
           Left = 86.315789470000000000
           Top = 195.628860530000000000
-          Width = 217.936220540000000000
+          Width = 281.094115280000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            ': [Nama Bank]')
+            ': [VANamaBank]')
+          ParentFont = False
+        end
+        object MemVA5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 86.315789470000000000
+          Top = 215.786755260000000000
+          Width = 282.146746860000000000
+          Height = 18.897650000000000000
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ': [VANO]')
+          ParentFont = False
+        end
+        object MemVA7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 86.173228350000000000
+          Top = 234.708661420000000000
+          Width = 374.778325810000000000
+          Height = 18.897650000000000000
+          Visible = False
+          AutoWidth = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ': [VAATASNAMA]')
           ParentFont = False
         end
       end

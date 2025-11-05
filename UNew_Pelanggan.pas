@@ -152,6 +152,9 @@ type
     edNamaAkunRetur: TEdit;
     btGetAkunPerkiraan: TRzBitBtn;
     btGetVA: TRzBitBtn;
+    edVAatasNama: TEdit;
+    Label53: TLabel;
+    Label54: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -747,6 +750,7 @@ begin
   edNamaPiutangLain.Text:='';
   btGetAkunPerkiraan.Visible:=False;
   GetAkunPerkiraan;
+  edVAatasNama.Text:='';
 end;
 
 procedure TFNew_Pelanggan.GetAkunPerkiraan;
@@ -1132,6 +1136,7 @@ begin
               ' header_code_retur='+QuotedStr(KodeHeaderRetur)+', '+
               ' account_code_retur='+QuotedStr(edAkunRetur.Text)+', '+
               ' company_code_bank='+QuotedStr(edCompanyCode.Text)+', '+
+              ' va_name='+QuotedStr(edVAatasNama.Text)+', '+
               ' updated_at=now(), '+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+', ');
         if cbpkp.Checked=true then
@@ -1176,7 +1181,7 @@ begin
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
             ' email,payment_term,created_at,created_by,sbu_code,company_code_bank,header_code_uang_muka,'+
-            ' account_code_uang_muka,header_code_retur,account_code_retur, stat_pkp ) '+
+            ' account_code_uang_muka,header_code_retur,account_code_retur,va_name, stat_pkp ) '+
             ' Values( '+
             ' '+QuotedStr(inttostr(vid_prospek))+', '+
             ' '+QuotedStr(Edkode.Text)+', '+
@@ -1214,7 +1219,7 @@ begin
             ' now(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu+','+QuotedStr(edCompanyCode.Text)+','+
             ' '+QuotedStr(KodeHeaderUangMuka)+','+QuotedStr(edAkunUangMuka.Text)+','+
-            ' '+QuotedStr(KodeHeaderRetur)+','+QuotedStr(edAkunRetur.Text)+',');
+            ' '+QuotedStr(KodeHeaderRetur)+','+QuotedStr(edAkunRetur.Text)+','+QuotedStr(edVAatasNama.Text)+',');
       if cbpkp.Checked=true then
       begin
         sql.add(' true);');
@@ -1298,14 +1303,14 @@ begin
   begin
     MessageDlg('Wilayah Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
-  end else if edCompanyCode.Text='' then
-  begin
-    MessageDlg('Company Code Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    exit;
-  end else if Ednomorva.Text='' then
-  begin
-    MessageDlg('Nomor VA Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    exit;
+//  end else if edCompanyCode.Text='' then
+//  begin
+//    MessageDlg('Company Code Wajib Diisi..!!',mtInformation,[mbRetry],0);
+//    exit;
+//  end else if Ednomorva.Text='' then
+//  begin
+//    MessageDlg('Nomor VA Wajib Diisi..!!',mtInformation,[mbRetry],0);
+//    exit;
   end else
   begin
     if not dm.Koneksi.InTransaction then

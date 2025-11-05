@@ -289,6 +289,8 @@ begin
       if dm.Qtemp.FieldValues['idprospek']<>NULL then
       vid_prospek:=Dm.Qtemp.FieldByName('idprospek').AsInteger else vid_prospek:=0;
       edCompanyCode.Text:=Dm.Qtemp.FieldByName('company_code_bank').AsString;
+      if Dm.Qtemp.FieldByName('va_name').AsString<>NULL then
+      edVAatasNama.Text:=Dm.Qtemp.FieldByName('va_name').AsString;
 
       KodeHeaderPiutang:='';
       edAkunPiutang.Text:='';
