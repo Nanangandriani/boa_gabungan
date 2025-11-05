@@ -11,6 +11,7 @@ object FPerintahMuat_Sumber: TFPerintahMuat_Sumber
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   TextHeight = 15
   object Panel5: TPanel
     Left = 0

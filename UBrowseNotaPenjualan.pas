@@ -102,7 +102,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM t_selling WHERE deleted_at is NULL '+strWhereTgl+strWhereKodePelanggan;
+      sql.Text:='SELECT * FROM get_piutang_invoice((SELECT get_end_of_month((SELECT NOW())::DATE))) WHERE sisa_piutang>0 '+strWhereTgl+strKodePelanggan;
+//      sql.Text:='SELECT * FROM t_selling WHERE deleted_at is NULL '+strWhereTgl+strWhereKodePelanggan;
       open;
     end;
   finally

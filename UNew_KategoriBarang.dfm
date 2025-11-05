@@ -84,6 +84,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
     Height = 21
     CharCase = ecUpperCase
     TabOrder = 0
+    OnExit = EdKategoriExit
     OnKeyPress = EdKategoriKeyPress
   end
   object Edno: TEdit
@@ -133,8 +134,8 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
     Height = 35
     Align = alBottom
     TabOrder = 4
-    ExplicitTop = 148
-    ExplicitWidth = 544
+    ExplicitTop = 140
+    ExplicitWidth = 542
     object BBatal: TRzBitBtn
       Left = 472
       Top = 1
@@ -195,7 +196,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 468
+      ExplicitLeft = 466
     end
     object BSimpan: TRzBitBtn
       Left = 322
@@ -257,7 +258,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 318
+      ExplicitLeft = 316
     end
     object BRefresh: TRzBitBtn
       Left = 397
@@ -319,7 +320,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 393
+      ExplicitLeft = 391
     end
     object Btambah: TRzBitBtn
       Left = 247
@@ -381,7 +382,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 243
+      ExplicitLeft = 241
     end
   end
   object EdJenis: TComboBox
@@ -488,7 +489,7 @@ object FNew_KategoriBarang: TFNew_KategoriBarang
         'in t_item_type b on a.type_id=b."type_id" left join t_ak_account' +
         ' c on a.account_code=c.code '
       'where a.deleted_at isnull order by a.created_at ')
-    Left = 424
+    Left = 440
     Top = 8
   end
   object ActMenu: TActionManager

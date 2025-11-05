@@ -51,14 +51,18 @@ uses ulkJSON, UDataModule, UHomeLogin, UMy_Function, UNewDeliveryOrder,
 
 procedure TFDaftarKendaraan.GetDataVehicleDO;
 begin
+
+
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select DISTINCT vehicles,type_vehicles_code,type_vehicles_name,capacity '+
-              'from t_delivery_order_services where notrans NOT IN '+
+    sql.Text:='select DISTINCT a.vehicles,a.type_vehicles_code,a.type_vehicles_name,a.capacity '+
+              'from t_delivery_order_services a '+
+//              'LEFT JOIN t_delivery_order b on b.notrans=a.notrans and b.deleted_at IS NULL '+
+              'where a.notrans NOT IN '+
               '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on '+
-              'b.notrans=a.notrans where b.deleted_at is null)';
+              'b.notrans=a.notrans where b.deleted_at is null) AND a.vehicles<>'''' AND a.vehicles is NOT NULL ';
     open;
   end;
   MemMasterData.active:=false;
@@ -82,7 +86,7 @@ procedure TFDaftarKendaraan.DBGridDblClick(Sender: TObject);
 begin
   if vcall='delivery_order' then
   begin
-    FNewDeliveryOrder.edNoKendMuatan.Text:=MemMasterData['code'];
+//    FNewDeliveryOrder.edNoKendMuatan.Text:=MemMasterData['code'];
     FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type_name'];
     FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type'];
     FNewDeliveryOrder.spKapasitas.value:=MemMasterData['capacity'];
@@ -98,6 +102,15 @@ end;
 procedure TFDaftarKendaraan.FormShow(Sender: TObject);
 begin
   json := TMyJSON.Create(Self);
+  if vcall='perintah_muat' then
+  begin
+    DBGrid.Columns[0].Visible:=True;
+    DBGrid.Columns[1].Visible:=False;
+  end else
+  begin
+    DBGrid.Columns[0].Visible:=False;
+    DBGrid.Columns[1].Visible:=True;
+  end;
 end;
 
 procedure TFDaftarKendaraan.GetDataViaAPI2;
@@ -211,7 +224,7 @@ begin
               begin
                 MemMasterData.Insert;
                 MemMasterData['code']        := dataItem.GetValue('code').Value;
-                MemMasterData['plate_number']:= dataItem.GetValue('plate_number').Value;
+//                MemMasterData['plate_number']:= dataItem.GetValue('plate_number').Value;
                 MemMasterData['type']        := dataItem.GetValue('type').Value;
                 MemMasterData['type_name']   := dataItem.GetValue('type_name').Value;
                 MemMasterData['capacity']    := dataItem.GetValue('capacity').Value;

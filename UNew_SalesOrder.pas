@@ -333,12 +333,16 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select total_receivables from "public"."get_piutang_saldoawal"('+QuotedStr(FormatDateTime('yyyy-mm-dd',NOW()))+') '+
-    'where customer_code='+QuotedStr(edKode_Pelanggan.Text);
+    sql.Text:='SELECT a.code_cust, (SUM(debit)-SUM(kredit)) sisa_piutang  FROM get_selling(NULL) a '+
+              'LEFT JOIN t_selling_general b ON b.no_invoice=a.trans_no AND b.deleted_at IS NULL '+
+              'WHERE a.code_cust='+QuotedStr(edKode_Pelanggan.Text)+' '+
+              'GROUP  BY a.code_cust';
+//    sql.Text:='select total_receivables from "public"."get_piutang_saldoawal"('+QuotedStr(FormatDateTime('yyyy-mm-dd',NOW()))+') '+
+//    'where customer_code='+QuotedStr(edKode_Pelanggan.Text);
     open;
   end;
   if dm.Qtemp.RecordCount=0 then SisaPiutang:=0
-  else SisaPiutang:=dm.Qtemp.FieldValues['total_receivables'];
+  else SisaPiutang:=dm.Qtemp.FieldValues['sisa_piutang'];
 
   TotSaldoBankGaransi:=0;
   with dm.Qtemp do

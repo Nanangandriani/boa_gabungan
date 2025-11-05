@@ -69,7 +69,7 @@ type
     { Public declarations }
     tot_jumlah : real;
     stat_proses : Boolean;
-    strtgl, strbulan, strtahun, trans_id_link: string;
+    strtgl, strbulan, strtahun, trans_id_link, kd_kares: string;
     Year, Month, Day: Word;
     Status,IntStatusKoreksi: Integer;
     procedure Clear;
@@ -200,7 +200,13 @@ begin
 end;
 
 procedure TFDataPerintahMuat.Save;
+//var
+//  Stradditional_code: String;
 begin
+//  if (kd_kares='') OR (kd_kares='0') then
+//  Stradditional_code:='NULL'
+//  else Stradditional_code:=QuotedStr(kd_kares);
+
   with dm.Qtemp do
   begin
     close;
@@ -208,7 +214,7 @@ begin
     sql.add(' Insert into "public"."t_spm" ("created_at", "created_by", '+
             ' "notrans", "loading_date", "delivery_date", "code_vendor", '+
             ' "name_vendor", "number_of_vehicles", "description", "order_no", '+
-            //' "additional_code", '+
+//            ' "additional_code", '+
             ' "trans_day", "trans_month", "trans_year",sbu_code) '+
             ' VALUES ( '+
             ' NOW(), '+
@@ -221,7 +227,7 @@ begin
             ' '+QuotedStr(edNoKendMuatan.Text)+', '+
             ' '+QuotedStr(MemKeterangan.Text)+', '+
             ' '+QuotedStr(order_no)+', '+
-            //' '+QuotedStr('0')+', '+
+//            ' '+Stradditional_code+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+', '+
@@ -336,6 +342,7 @@ procedure TFDataPerintahMuat.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
 begin
+
   DecodeDate(dtMuat.Date, Year, Month, Day);
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
@@ -364,12 +371,7 @@ begin
     if not dm.Koneksi.InTransaction then
      dm.Koneksi.StartTransaction;
     try
-    if edKodeMuat.Text='' then
-    begin
-      MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-      edKodeMuat.SetFocus;
-    end
-    else if edKode_Vendor_Kend.Text='' then
+    if edKode_Vendor_Kend.Text='' then
     begin
       MessageDlg('Data Jasa Transport Wajib Diisi..!!',mtInformation,[mbRetry],0);
       edKode_Vendor_Kend.SetFocus;
@@ -431,6 +433,7 @@ begin
   MemDetail.active:=false;
   MemDetail.active:=true;
   MemDetail.EmptyTable;
+  kd_kares:='0';
 end;
 
 procedure TFDataPerintahMuat.DBGridDetailColumns0EditButtons0Click(
@@ -510,9 +513,22 @@ end;
 
 procedure TFDataPerintahMuat.Autonumber;
 begin
-   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPerintahMuat.Name)+'');
-   strday2:=dtMuat.Date;
-   edKodeMuat.Text:=getNourut(strday2,'public.t_spm','0');
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPerintahMuat.Name)+'');
+  strday2:=dtMuat.Date;
+//  with dm.Qtemp do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:='select a.id,b.additional_status from t_numb_type a inner join t_numb b on a.id=b.reset_type where numb_type='+QuotedStr(idmenu);
+//    open;
+//  end;
+//  if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
+  edKodeMuat.Text:=getNourut(strday2,'public.t_spm','');
+
+
+//   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPerintahMuat.Name)+'');
+//   strday2:=dtMuat.Date;
+//   edKodeMuat.Text:=getNourut(strday2,'public.t_spm','0');
 end;
 
 end.

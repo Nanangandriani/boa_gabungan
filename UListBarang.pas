@@ -114,6 +114,24 @@ procedure TFlistBarang.ActDelExecute(Sender: TObject);
 begin
   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridMaterial.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
   then begin
+
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:=' select * from t_item_stock '+
+                ' where item_code='+QuotedStr(DBGridMaterial.Fields[4].AsString)+' ';
+      Execute;
+    end;
+
+    if dm.Qtemp1.RecordCount<>0 then
+    begin
+      ShowMessage('Data Sudah Digunakan Maka Tidak Bisa Dihapus !!!');
+      Exit;
+    end;
+
+    if dm.Qtemp1.RecordCount=0 then
+    begin
     with dm.Qtemp do
     begin
       Close;
@@ -123,6 +141,8 @@ begin
     end;
     ActRoExecute(sender);
     ShowMessage('Data Berhasil di Hapus');
+    end;
+
   end;
 end;
 
@@ -205,6 +225,7 @@ begin
       Edkd_akunRt_Penj.Text:=MemMaterial.FieldByName('acc_rtpenj').value;
       EdNm_akunRt_Penj.Text:=MemMaterial.FieldByName('nm_rtpenj').value;
       KodeHeaderPerkiraan:=MemMaterial.FieldByName('header_code').value;
+      Cb_sbu.Text:=MemMaterial.FieldByName('sbu_code').value;
       if MemMaterial['lot_status']='false' then Ck_NoUrut.Checked:=false else Ck_NoUrut.Checked:=true;
     end;
   end;

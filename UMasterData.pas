@@ -436,6 +436,11 @@ begin
     FDataMasterAkunTrans.edAkunUangMukaPenjualan.Text:=MemMasterData['KD_MASTER'];
     FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Text:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='set_ak_trans_returjual' then
+  begin
+    FDataMasterAkunTrans.edAkunReturJual.Text:=MemMasterData['KD_MASTER'];
+    FDataMasterAkunTrans.edNamaAkunReturJual.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_akuntrans_bank' then
   begin
       FDataMasterAkunTrans.MemDetail.Edit;
@@ -456,6 +461,14 @@ begin
       FDataMasterAkunTrans.MemDetailKas['kd_akun']:=MemMasterData['KD_MASTER'];
       FDataMasterAkunTrans.MemDetailKas['nm_akun']:=MemMasterData['NM_MASTER'];
       FDataMasterAkunTrans.MemDetailKas.post;
+  end;
+
+  if vcall='m_akuntrans_retur_jual' then
+  begin
+      FDataMasterAkunTrans.MemDetailReturJual.Edit;
+      FDataMasterAkunTrans.MemDetailReturJual['kd_akun']:=MemMasterData['KD_MASTER'];
+      FDataMasterAkunTrans.MemDetailReturJual['nm_akun']:=MemMasterData['NM_MASTER'];
+      FDataMasterAkunTrans.MemDetailReturJual.post;
   end;
 
 

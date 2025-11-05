@@ -132,6 +132,7 @@ begin
       end;
       MemDataBiayaCorrection.Next;
     end;
+    edNoKendMuatan.Text:=strPlateNo;
   end;
 end;
 

@@ -91,7 +91,6 @@ object FListBank: TFListBank
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 826
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -655,10 +654,8 @@ object FListBank: TFListBank
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update'
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -693,7 +690,6 @@ object FListBank: TFListBank
         27E4CED560D7783C0B5F76B95C2493C9390E2FA4532972737371BADC749C3943
         30186A04DA2681D7FB0BF86B00AE57698FE6D4F6320000000049454E44AE4260
         82}
-      OnClick = dxBarUpdateClick
     end
     object dxBarRefresh: TdxBarButton
       Caption = 'Refresh'

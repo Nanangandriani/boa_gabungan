@@ -175,7 +175,7 @@ end;
 procedure TFListPerintahMuat.ActBaruExecute(Sender: TObject);
 begin
   FDataPerintahMuat.Clear;
-  FDataPerintahMuat.Autonumber;
+//  FDataPerintahMuat.Autonumber;
   FDataPerintahMuat.MemDetail.EmptyTable;
   FDataPerintahMuat.trans_id_link:=SelectRow('SELECT uuid_generate_v4()::VARCHAR AS uuid_as_varchar;');
   FDataPerintahMuat.Status:=0;

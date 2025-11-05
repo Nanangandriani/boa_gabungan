@@ -142,7 +142,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.add('select bank_code as kode_bank from t_bank order by bank_code asc');
+        sql.add('select bank_code as kode_bank from t_bank where deleted_at is null order by bank_code asc');
         open;
       end;
       Dm.Qtemp.First;

@@ -72,8 +72,8 @@ object FItem_Type: TFItem_Type
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 108
-    ExplicitWidth = 505
+    ExplicitTop = 100
+    ExplicitWidth = 503
     object BBatal: TRzBitBtn
       Left = 433
       Top = 1
@@ -134,7 +134,7 @@ object FItem_Type: TFItem_Type
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 429
+      ExplicitLeft = 427
     end
     object BSimpan: TRzBitBtn
       Left = 283
@@ -195,7 +195,7 @@ object FItem_Type: TFItem_Type
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 279
+      ExplicitLeft = 277
     end
     object BCari: TRzBitBtn
       Left = 358
@@ -257,7 +257,7 @@ object FItem_Type: TFItem_Type
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 354
+      ExplicitLeft = 352
     end
   end
   object EdType: TEdit
@@ -340,6 +340,6 @@ object FItem_Type: TFItem_Type
   object DsType: TDataSource
     DataSet = QType
     Left = 317
-    Top = 208
+    Top = 192
   end
 end

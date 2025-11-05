@@ -79,6 +79,9 @@ type
     Label8: TLabel;
     Ck_NoUrut: TCheckBox;
     Button1: TButton;
+    Labelsbu: TLabel;
+    Cb_sbu: TComboBox;
+    Ed_serial: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -103,6 +106,7 @@ type
     procedure ck_st_penjualanClick(Sender: TObject);
     procedure Ck_NoUrutClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Cb_sbuSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -123,7 +127,7 @@ implementation
 uses  umainmenu, UDataModule, UAkun_Perkiraan_TerimaMat, UKategori_Barang,
   UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk,
   UNew_Satuan, UKonversi_Barang, UNew_KonvBarang, UNew_KelompokBarang,
-  UMy_Function;
+  UMy_Function, UHomeLogin;
 
 var RealFNew_barang: TFNew_barang;
 function FNew_Barang: TFNew_Barang;
@@ -187,7 +191,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select type from t_item_type where deleted_at isnull';
+    sql.Text:=' select DISTINCT type from t_item_type '+
+              ' where deleted_at isnull ';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -358,6 +363,7 @@ begin
     FNew_KonvBarang.Edqty.Text:='1';
     caption:='New Konversi Barang';
     Status:=0;
+    PnlNew.Visible:=true;
   end;
 end;
 
@@ -417,8 +423,12 @@ begin
        begin
        close;
        sql.clear;
-       sql.Text:='insert into t_item(order_no,item_code,item_code2,item_name,category_id,unit,merk,account_code,created_by,description,group_id,sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code)'+
-       ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,:pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,:lot_status,:header_code)';
+       sql.Text:=' insert into t_item(order_no,item_code,item_code2,item_name,'+
+                 ' category_id,unit,merk,account_code,created_by,description,group_id, '+
+                 ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code)'+
+                 ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,'+
+                 ' :pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,'+
+                 ' :lot_status,:header_code,:sbu_code)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -437,6 +447,7 @@ begin
          ParamByName('discount_sell').Value:=eddisc_penj.Value;
          ParamByName('lot_status').Value:=st_nourut;
          ParamByName('header_code').Value:=KodeHeaderPerkiraan;
+         ParamByName('sbu_code').Value:=Cb_sbu.Text;
        ExecSQL;
        end;
          with dm.Qtemp do
@@ -464,7 +475,8 @@ begin
        sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_code2=:item_cd2,item_name=:item_name,'+
        ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
-       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,lot_status=:lot_status,header_code=:Header_code where "id"=:id';
+       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,'+
+       ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -484,6 +496,7 @@ begin
          ParamByName('discount_sell').Value:=eddisc_penj.Value;
          ParamByName('lot_status').Value:=st_nourut;
          ParamByName('header_code').Value:=KodeHeaderPerkiraan;
+         ParamByName('sbu_code').Value:=Cb_sbu.Text;
        ExecSQL;
        end;
         with dm.Qtemp do
@@ -589,6 +602,18 @@ begin
     Edno.Text:=no_urut;
     EdKd.Text:=kode + No_urut;
     Edkd_display.Text:=kode + No_urut;
+end;
+
+procedure TFNew_Barang.Cb_sbuSelect(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_code='+QuotedStr(Cb_sbu.Text)+' ';
+     Open;
+   end;
+   ed_serial.Text:=dm.Qtemp.FieldByName('company_serial').AsString;
 end;
 
 procedure TFNew_Barang.Ck_NoUrutClick(Sender: TObject);
@@ -702,6 +727,46 @@ procedure TFNew_Barang.FormShow(Sender: TObject);
 begin
   clear;
   Load;
+
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
+  begin
+    SpeedButton2.Visible:=false;
+    SpeedButton1.Visible:=false;
+    SpKelompok.Visible:=false;
+    Btn_Satuan.Visible:=false;
+  end else begin
+    SpeedButton2.Visible:=true;
+    SpeedButton1.Visible:=true;
+    SpKelompok.Visible:=true;
+    Btn_Satuan.Visible:=true;
+  end;
+
+
+  if FHomeLogin.vStatOffice=0 then
+  begin
+    Cb_sbu.Visible:=True;
+    Labelsbu.Visible:=True;
+  end else begin
+    Cb_sbu.Visible:=False;
+    Labelsbu.Visible:=False;
+  end;
+
+  // Load CB SBU
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_serial<>0';
+    Open;
+  end;
+  cb_sbu.items.clear;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+     cb_sbu.Items.Add(dm.Qtemp['company_code']);
+     dm.Qtemp.Next;
+  end;
+
 end;
 
 end.

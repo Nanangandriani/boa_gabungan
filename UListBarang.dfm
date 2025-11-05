@@ -584,6 +584,7 @@ object FlistBarang: TFlistBarang
     object dxBarLargeButton1: TdxBarLargeButton
       Action = ActPrint
       Category = 0
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -695,7 +696,7 @@ object FlistBarang: TFlistBarang
       ''
       'end.')
     Left = 448
-    Top = 120
+    Top = 112
     Datasets = <>
     Variables = <>
     Style = <>

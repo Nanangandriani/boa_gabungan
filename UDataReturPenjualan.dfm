@@ -5,7 +5,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
   BorderStyle = bsDialog
   Caption = 'Retur Penjualan'
   ClientHeight = 596
-  ClientWidth = 1055
+  ClientWidth = 967
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,13 @@ object FDataReturPenjualan: TFDataReturPenjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1055
+    Width = 967
     Height = 176
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1051
+    ExplicitWidth = 963
     ExplicitHeight = 175
     object Label39: TLabel
       Left = 20
@@ -265,7 +265,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 176
-    Width = 1055
+    Width = 967
     Height = 388
     Hint = ''
     ActivePage = TabSDetailPel
@@ -274,20 +274,19 @@ object FDataReturPenjualan: TFDataReturPenjualan
     TabIndex = 0
     TabOrder = 1
     ExplicitTop = 175
-    ExplicitWidth = 1051
+    ExplicitWidth = 963
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 1047
+      ExplicitWidth = 959
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1051
-        Height = 363
+        Width = 963
+        Height = 248
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
-        FooterRowCount = 1
         HorzScrollBar.ExtraPanel.Visible = True
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SearchPanel.Enabled = True
@@ -376,8 +375,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.Value = 'Total:'
             Footer.ValueType = fvtStaticText
             Footers = <>
-            Title.Caption = 'Harga Satuan'
-            Width = 100
+            Title.Caption = 'Harga Satuan DPP'
+            Width = 111
           end
           item
             CellButtons = <>
@@ -402,7 +401,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.ValueType = fvtSum
             Footers = <>
             ReadOnly = True
-            Title.Caption = 'Sub Total'
+            Title.Caption = 'Total DPP'
             Width = 120
           end
           item
@@ -434,7 +433,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footers = <>
             ReadOnly = True
             Title.Caption = 'PPN|Nilai'
-            Width = 92
+            Width = 118
           end
           item
             CellButtons = <>
@@ -494,9 +493,163 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footers = <>
             ReadOnly = True
             Title.Caption = 'Grand Total'
-            Width = 129
+            Width = 147
           end>
         object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+      object RzPanel1: TRzPanel
+        Left = 0
+        Top = 248
+        Width = 963
+        Height = 115
+        Align = alBottom
+        Color = 15987699
+        TabOrder = 1
+        ExplicitWidth = 959
+        object RzLabel2: TRzLabel
+          Left = 638
+          Top = 88
+          Width = 64
+          Height = 15
+          Caption = 'Grand Total'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object RzLabel3: TRzLabel
+          Left = 638
+          Top = 62
+          Width = 23
+          Height = 15
+          Caption = 'PPN'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object RzLabel5: TRzLabel
+          Left = 638
+          Top = 38
+          Width = 75
+          Height = 15
+          Caption = 'DPP Nilai Lain'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object RzLabel6: TRzLabel
+          Left = 638
+          Top = 11
+          Width = 23
+          Height = 15
+          Caption = 'DPP'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label17: TLabel
+          Left = 730
+          Top = 11
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label18: TLabel
+          Left = 730
+          Top = 38
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label21: TLabel
+          Left = 730
+          Top = 88
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label22: TLabel
+          Left = 730
+          Top = 62
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object edDPP: TRzNumericEdit
+          Left = 736
+          Top = 8
+          Width = 200
+          Height = 23
+          Color = clInfoBk
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 0
+          DisplayFormat = '0.00#,##'
+        end
+        object edDPPNilaiLain: TRzNumericEdit
+          Left = 736
+          Top = 33
+          Width = 200
+          Height = 23
+          Color = clInfoBk
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 1
+          DisplayFormat = '0.00#,##'
+        end
+        object edTotPPN: TRzNumericEdit
+          Left = 736
+          Top = 59
+          Width = 200
+          Height = 23
+          Color = clInfoBk
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 2
+          DisplayFormat = '0.00#,##'
+        end
+        object edGrandTot: TRzNumericEdit
+          Left = 736
+          Top = 85
+          Width = 200
+          Height = 23
+          Color = clInfoBk
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 3
+          DisplayFormat = '0.00#,##'
         end
       end
     end
@@ -504,14 +657,14 @@ object FDataReturPenjualan: TFDataReturPenjualan
   object Panel2: TPanel
     Left = 0
     Top = 564
-    Width = 1055
+    Width = 967
     Height = 32
     Align = alBottom
     TabOrder = 2
     ExplicitTop = 563
-    ExplicitWidth = 1051
+    ExplicitWidth = 963
     object BBatal: TRzBitBtn
-      Left = 979
+      Left = 891
       Top = 1
       Height = 30
       Align = alRight
@@ -570,10 +723,10 @@ object FDataReturPenjualan: TFDataReturPenjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 975
+      ExplicitLeft = 887
     end
     object BSave: TRzBitBtn
-      Left = 904
+      Left = 816
       Top = 1
       Height = 30
       Align = alRight
@@ -632,10 +785,11 @@ object FDataReturPenjualan: TFDataReturPenjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 900
+      ExplicitLeft = 810
+      ExplicitTop = 3
     end
     object BCorrection: TRzBitBtn
-      Left = 806
+      Left = 718
       Top = 1
       Width = 98
       Height = 30
@@ -643,7 +797,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Caption = 'Submit Correction'
       TabOrder = 2
       OnClick = BCorrectionClick
-      ExplicitLeft = 802
+      ExplicitLeft = 714
     end
   end
   object DSDetail: TDataSource

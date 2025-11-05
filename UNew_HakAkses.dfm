@@ -488,8 +488,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
       Width = 161
       Height = 21
       TabOrder = 3
-      OnChange = EdJabatanChange
-      OnSelect = EdNmSelect
+      OnChange = EdJabatanSelect
+      OnSelect = EdJabatanSelect
     end
     object EdkdJabatan: TEdit
       Left = 345
@@ -535,8 +535,8 @@ object FNew_Hak_Akses: TFNew_Hak_Akses
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 464
-    Top = 32
+    Left = 472
+    Top = 48
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object idmenu: TMTStringDataFieldEh

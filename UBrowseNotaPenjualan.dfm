@@ -4,7 +4,7 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
   BorderStyle = bsDialog
   Caption = 'Penjualan'
   ClientHeight = 343
-  ClientWidth = 905
+  ClientWidth = 1065
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,10 +17,11 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 73
-    Width = 905
+    Width = 1065
     Height = 270
     Align = alClient
     DataSource = DSselling
+    DrawMemoText = True
     DynProps = <>
     TabOrder = 0
     TitleParams.MultiTitle = True
@@ -75,10 +76,10 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'payment_term'
+        FieldName = 'date_tempo'
         Footers = <>
         Title.Caption = 'Jatuh Tempo'
-        Width = 45
+        Width = 67
       end
       item
         CellButtons = <>
@@ -142,10 +143,20 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
         DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'grand_tot'
+        FieldName = 'amount_receivable'
         Footers = <>
-        Title.Caption = 'Total'
+        Title.Caption = 'Total Piutang'
         Width = 130
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'sisa_piutang'
+        Footers = <>
+        Title.Caption = 'Sisa Piutang'
+        Width = 119
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -153,12 +164,12 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 905
+    Width = 1065
     Height = 73
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 909
+    ExplicitWidth = 901
     object RzLabel1: TRzLabel
       Left = 16
       Top = 40
@@ -282,7 +293,9 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
   object Qselling: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from t_selling')
+      
+        'SELECT * FROM get_piutang_invoice((SELECT get_end_of_month((SELE' +
+        'CT NOW())::DATE)))')
     Left = 416
     Top = 232
   end

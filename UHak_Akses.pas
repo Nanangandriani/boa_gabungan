@@ -91,7 +91,7 @@ begin
     Edkd.text:='0';
     EdJabatan.Clear;
     EdkdJabatan.text:='0';
-    Autonumber;
+    //Autonumber;
     Show;
     Load;
   //  RefreshMenu;

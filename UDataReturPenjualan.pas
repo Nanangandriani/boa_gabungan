@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, Vcl.StdCtrls,
   MemTableEh, RzButton, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs,
-  Vcl.ComCtrls, RzDTP, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.ComCtrls, RzDTP, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Buttons, Vcl.ExtCtrls,
+  RzLabel, RzPanel;
 
 type
   TFDataReturPenjualan = class(TForm)
@@ -62,6 +63,19 @@ type
     Label2: TLabel;
     btAddDetail: TRzBitBtn;
     BCorrection: TRzBitBtn;
+    RzPanel1: TRzPanel;
+    RzLabel2: TRzLabel;
+    RzLabel3: TRzLabel;
+    RzLabel5: TRzLabel;
+    RzLabel6: TRzLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    edDPP: TRzNumericEdit;
+    edDPPNilaiLain: TRzNumericEdit;
+    edTotPPN: TRzNumericEdit;
+    edGrandTot: TRzNumericEdit;
     procedure btMasterJenisReturClick(Sender: TObject);
     procedure edNamaJenisButtonClick(Sender: TObject);
     procedure edKode_PelangganButtonClick(Sender: TObject);
@@ -83,10 +97,10 @@ type
     procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
-  tot_dpp, tot_ppn, tot_pph, tot_grand : real;
+  tot_dpp, tot_ppn, tot_pph, tot_grand,tot_dpp_lain : real;
   public
     { Public declarations }
-    strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV: string;
+    strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV,StrTglFaktur: string;
     Year, Month, Day: Word;
     Status,iserror,IntStatusKoreksi: Integer;
     grand_tot_selling,grand_tot_returns: real;
@@ -109,7 +123,7 @@ implementation
 
 uses UListReturPenjualan, UMy_Function, USetMasterPenjulan, UMasterData,
   Ubrowse_pelanggan, UReturPenjualan_Sumber, UDataModule, UHomeLogin, UMainMenu,
-  UTambah_Barang, UKoreksi;
+  UTambah_Barang, UKoreksi, System.Math;
 
 procedure TFDataReturPenjualan.RefreshGrid;
 var
@@ -173,12 +187,12 @@ begin
 end;
 
 procedure TFDataReturPenjualan.Save;
-var Stradditional_code: String;
+var Stradditional_code,strKeterangan: String;
 begin
   if (kd_kares='') OR (kd_kares='0') then
     Stradditional_code:='NULL'
   else Stradditional_code:=QuotedStr(kd_kares);
-
+  strKeterangan:='Retur Penjualan Tgl Faktur. '+StrTglFaktur;
   with dm.Qtemp do
   begin
     close;
@@ -187,7 +201,7 @@ begin
             ' "trans_no", "trans_date", "code_cust", "name_cust", "account_code", "code_type_return", '+
             ' "name_type_return", "description", "order_no", "additional_code", '+
             ' "trans_day", "trans_month", "trans_year", "sub_total", "ppn_value", '+
-            ' "pph_value", "grand_tot",no_inv_tax,no_inv,sbu_code) '+
+            ' "pph_value", "grand_tot",no_inv_tax,no_inv,sbu_code,description2,dpp_nilai_lain) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -204,13 +218,13 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+', '+
-            ' '+QuotedStr(StringReplace(FloatToStr(tot_dpp),',','.',[]))+', '+
-
-            ' '+QuotedStr(FloatToStr(tot_ppn))+', '+
+            ' '+QuotedStr(FloatToStr(edDPP.Value))+', '+
+            ' '+QuotedStr(FloatToStr(edTotPPN.Value))+', '+
             ' '+QuotedStr(FloatToStr(tot_pph))+', '+
-            ' '+QuotedStr(FloatToStr(tot_grand))+', '+
+            ' '+QuotedStr(FloatToStr(edGrandTot.Value))+', '+
             ' '+QuotedStr(edNoFaktur.Text)+','+
-            ' '+QuotedStr(StrNoINV)+','+QuotedStr(FHomeLogin.vKodePRSH)+'  );');
+            ' '+QuotedStr(StrNoINV)+','+QuotedStr(FHomeLogin.vKodePRSH)+','+
+            ' '+QuotedStr(strKeterangan)+','+QuotedStr(FloatToStr(edDPPNilaiLain.Value))+'  );');
     ExecSQL;
   end;
   InsertDetailRet;
@@ -218,7 +232,6 @@ begin
   Clear;
   Close;
 //  FDataReturPenjualan.Refresh;
-
 end;
 
 procedure TFDataReturPenjualan.Update;
@@ -237,15 +250,17 @@ begin
             ' code_type_return='+QuotedStr(edKodeJenis.Text)+','+
             ' name_type_return='+QuotedStr(edNamaJenis.Text)+','+
             ' description='+QuotedStr(MemKeterangan.Text)+','+
-            ' sub_total='+QuotedStr(FloatToStr(ROUND(tot_dpp)))+', '+
-            ' ppn_value='+QuotedStr(FloatToStr(ROUND(tot_ppn)))+', '+
+            ' sub_total='+QuotedStr(FloatToStr(edDPP.Value))+', '+
+            ' ppn_value='+QuotedStr(FloatToStr(edTotPPN.Value))+', '+
             ' pph_value='+QuotedStr(FloatToStr(ROUND(tot_pph)))+', '+
-            ' grand_tot='+QuotedStr(FloatToStr(ROUND(tot_grand)))+', '+
+            ' dpp_nilai_lain='+QuotedStr(FloatToStr(edDPPNilaiLain.Value))+', '+
+            ' grand_tot='+QuotedStr(FloatToStr(edGrandTot.Value))+', '+
             ' order_no='+QuotedStr(order_no)+','+
             ' additional_code='+QuotedStr('0')+','+
             ' trans_day='+QuotedStr(strtgl)+','+
             ' trans_month='+QuotedStr(strbulan)+','+
-            ' trans_year='+QuotedStr(strtahun)+' '+
+            ' trans_year='+QuotedStr(strtahun)+', '+
+            ' status_correction=2 '+
             ' Where trans_no='+QuotedStr(edNoTrans.Text)+'');
     ExecSQL;
   end;
@@ -285,7 +300,8 @@ begin
                 ' '+QuotedStr(MemDetail['KD_ITEM'])+','+
                 ' '+QuotedStr(MemDetail['NM_ITEM'])+','+
                 ' '+QuotedStr(MemDetail['AKUN_PERK_ITEM'])+','+
-                ' '+QuotedStr(MemDetail['JUMLAH'])+','+
+                ' '+QuotedStr(StringReplace(MemDetail['JUMLAH'],',','.',[]))+','+
+//                ' '+QuotedStr(MemDetail['JUMLAH'])+','+
                 ' '+QuotedStr(MemDetail['KD_SATUAN'])+','+
                 ' '+QuotedStr(MemDetail['NM_SATUAN'])+','+
                 ' '+QuotedStr(StringReplace(MemDetail['HARGA_SATUAN'],',','.',[]))+','+
@@ -333,6 +349,7 @@ begin
 end;
 
 procedure TFDataReturPenjualan.HitungGrid;
+var ppn : real;
 begin
    try
       begin
@@ -384,6 +401,24 @@ begin
           MemDetail['GRAND_TOTAL']:=(MemDetail['SUB_TOTAL']+(MemDetail['PPN_NILAI'])-(MemDetail['PPH_NILAI']));
           MemDetail.Post;
         end;
+        ppn:=0;
+        tot_dpp:=0;
+        tot_ppn:=0;
+        tot_dpp_lain:=0;
+        MemDetail.First;
+        while not MemDetail.Eof do
+        begin
+          tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
+          MemDetail.Next;
+        end;
+        ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
+
+        edDPP.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_dpp), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+        tot_dpp_lain:=(tot_dpp*11/12);
+        edDPPNilaiLain.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_dpp_lain), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+        tot_ppn:=(tot_dpp*(ppn/100));
+        edTotPPN.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_ppn), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+        edGrandTot.Value:=edDPP.Value+edTotPPN.Value;
      end;
      Except;
    end;
@@ -414,6 +449,7 @@ end;
 
 procedure TFDataReturPenjualan.BSaveClick(Sender: TObject);
 begin
+  HitungGrid;
   DecodeDate(dtTanggal.Date, Year, Month, Day);
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
@@ -424,22 +460,22 @@ begin
   tot_pph:=0;
   tot_grand:=0;
 
-  MemDetail.First;
-  while not MemDetail.Eof do
-  begin
-    HitungGrid;
-      tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
-      tot_ppn:=tot_ppn+MemDetail['PPN_NILAI'];
-      tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
-      tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
-    MemDetail.Next;
-  end;
-  tot_dpp:=ROUND(tot_dpp);
-  tot_ppn:=ROUND(tot_ppn);
-  tot_pph:=ROUND(tot_pph);
-  tot_grand:=ROUND(tot_grand);
+//  MemDetail.First;
+//  while not MemDetail.Eof do
+//  begin
+//    HitungGrid;
+//      tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
+//      tot_ppn:=tot_ppn+MemDetail['PPN_NILAI'];
+//      tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
+//      tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
+//    MemDetail.Next;
+//  end;
+//  tot_dpp:=ROUND(tot_dpp);
+//  tot_ppn:=ROUND(tot_ppn);
+  tot_pph:=0;
+//  tot_grand:=ROUND(tot_grand);
 
-  grand_tot_selling:=StrToCurr(SelectRow('select sisa_piutang from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(StrNoINV)));
+  grand_tot_selling:=StrToCurr(SelectRow('select amount_receivable from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(StrNoINV)));
 //  ShowMessage(FloatToStr(grand_tot_selling));
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
@@ -451,7 +487,7 @@ begin
   end
   else if tot_grand>(grand_tot_selling) then
   begin
-    MessageDlg('Nilai Retur lebih besar dari Sisa Piutang ..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Nilai Retur lebih besar dari Piutang ..!!',mtInformation,[mbRetry],0);
   end
   {else if edKodeJenis.Text='' then
   begin
@@ -519,6 +555,12 @@ begin
   edKodeJenis.Clear;
   edNamaJenis.Clear;
   edNoFaktur.Clear;
+  StrTglFaktur:='';
+  StrNoINV:='';
+  edGrandTot.Value:=0;
+  edDPP.Value:=0;
+  edTotPPN.Value:=0;
+  edDPPNilaiLain.Value:=0;
   MemKeterangan.Clear;
   MemDetail.EmptyTable;
   MemDetail.active:=false;
@@ -603,7 +645,8 @@ end;
 
 procedure TFDataReturPenjualan.DBGridDetailMouseEnter(Sender: TObject);
 begin
-  HitungGrid;
+//  ShowMessage('mouseenter');
+//  HitungGrid;
 end;
 
 procedure TFDataReturPenjualan.edKode_PelangganButtonClick(Sender: TObject);

@@ -35,17 +35,18 @@ object FDaftarKendaraan: TFDaftarKendaraan
         FieldName = 'code'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'Kode'
-        Width = 150
+        Title.Caption = 'Kendaraan'
+        Width = 177
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'plate_number'
+        FieldName = 'type'
         Footers = <>
         Title.Alignment = taCenter
-        Visible = False
+        Title.Caption = 'Kode'
+        Width = 150
       end
       item
         CellButtons = <>
@@ -89,6 +90,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
       'Memo1')
     TabOrder = 1
     Visible = False
+    ExplicitWidth = 692
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData

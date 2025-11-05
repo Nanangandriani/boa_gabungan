@@ -123,6 +123,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
       Width = 185
       Height = 23
       CharCase = ecUpperCase
+      ReadOnly = True
       TabOrder = 0
     end
     object edNama_Vendor_Kend: TRzButtonEdit
@@ -401,7 +402,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
       Caption = 'Submit Correction'
       TabOrder = 3
       OnClick = BCorrectionClick
-      ExplicitLeft = 715
+      ExplicitLeft = 974
     end
   end
   object RzPageControl1: TRzPageControl

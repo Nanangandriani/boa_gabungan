@@ -185,6 +185,45 @@ type
     Label67: TLabel;
     edAkunUangMukaPenjualan: TRzButtonEdit;
     edNamaAkunUangMukaPenjualan: TEdit;
+    TabReturPenjualan: TRzTabSheet;
+    Panel11: TPanel;
+    Label68: TLabel;
+    Label69: TLabel;
+    Label70: TLabel;
+    Label71: TLabel;
+    Label72: TLabel;
+    Label73: TLabel;
+    Label74: TLabel;
+    Label75: TLabel;
+    Label76: TLabel;
+    Label77: TLabel;
+    edNamaModulReturJual: TRzButtonEdit;
+    edKodeModulReturJual: TEdit;
+    MemKeteranganReturJual: TMemo;
+    edNamaTransReturJual: TEdit;
+    edKodeTransReturJual: TEdit;
+    EdKodeInitialReturJual: TEdit;
+    RzPageControl6: TRzPageControl;
+    RzTabSheet5: TRzTabSheet;
+    Label92: TLabel;
+    Label95: TLabel;
+    edNamaAkunReturJual: TEdit;
+    edAkunReturJual: TRzButtonEdit;
+    RzPageControl7: TRzPageControl;
+    RzTabSheet6: TRzTabSheet;
+    DBGridDetailReturJual: TDBGridEh;
+    Panel14: TPanel;
+    RzBitBtn1: TRzBitBtn;
+    btSaveReturJual: TRzBitBtn;
+    Label79: TLabel;
+    DSDetailReturJual: TDataSource;
+    MemDetailReturJual: TMemTableEh;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    StringField9: TStringField;
+    StringField10: TStringField;
+    StringField11: TStringField;
+    StringField12: TStringField;
     procedure edNamaModulButtonClick(Sender: TObject);
     procedure DBGridDetailColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -218,6 +257,8 @@ type
     procedure rgPotonganClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edAkunUangMukaPenjualanButtonClick(Sender: TObject);
+    procedure edAkunReturJualButtonClick(Sender: TObject);
+    procedure btSaveReturJualClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -230,6 +271,8 @@ type
     procedure UpdateBeli;
     procedure SaveJual;
     procedure UpdateJual;
+    procedure SaveReturJual;
+    procedure UpdateReturJual;
     procedure Save;
     procedure Update;
     procedure InsertDetailBank;
@@ -242,8 +285,10 @@ type
     procedure RefreshGridKas;
     procedure UpdateParameterJual;
     procedure InsertDetailJual;
+    procedure RefreshReturPenjualan;
     procedure UpdateParameterJualPromosi;
     procedure InsertParameterJualPromosi;
+    procedure InsertDetailReturJual;
   end;
 
 var
@@ -254,7 +299,7 @@ implementation
 {$R *.dfm}
 
 uses UCari_DaftarPerk, UMasterData, UDataModule, UHomeLogin,
-  UListMasterAkunTrans;
+  UListMasterAkunTrans, UMainMenu;
 
 procedure TFDataMasterAkunTrans.UpdateParameterJual;
 begin
@@ -654,13 +699,13 @@ procedure TFDataMasterAkunTrans.RefreshPenjualan;
 var
 URUTAN_KE : Integer;
 begin
-  with Dm.Qtemp do
+  with Dm.Qtemp1 do
   begin
     close;
     sql.clear;
     sql.add(' SELECT * from ('+
             ' SELECT "code_trans", "code_account", "name_account", '+
-            ' "code_account2", "name_account2",code_account_uang_muka,name_account_uang_muka FROM "public"."t_master_trans_account" ) a '+
+            ' "code_account2", "name_account2",code_account3,name_account3 FROM "public"."t_master_trans_account" ) a '+
             ' WHERE "code_trans"='+QuotedStr(edKodeTransJual.Text)+''+
             ' Order By "code_trans" desc');
     open;
@@ -680,7 +725,7 @@ begin
     open;
   end;
 
-  if  Dm.Qtemp.RecordCount=0 then
+  if  Dm.Qtemp1.RecordCount=0 then
   begin
     FDataMasterAkunTrans.edAkunPiutang.Clear;
     FDataMasterAkunTrans.edAkunPiutangLainLain.Clear;
@@ -690,14 +735,14 @@ begin
     FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Clear;
   end;
 
-  if  Dm.Qtemp.RecordCount<>0 then
+  if  Dm.Qtemp1.RecordCount<>0 then
   begin
-    FDataMasterAkunTrans.edAkunPiutang.Text:=Dm.Qtemp.FieldByName('code_account').AsString;
-    FDataMasterAkunTrans.edNamaPiutang.Text:=Dm.Qtemp.FieldByName('name_account').AsString;
-    FDataMasterAkunTrans.edAkunPiutangLainLain.Text:=Dm.Qtemp.FieldByName('code_account2').AsString;
-    FDataMasterAkunTrans.edNamaPiutangLain.Text:=Dm.Qtemp.FieldByName('name_account2').AsString;
-    FDataMasterAkunTrans.edAkunUangMukaPenjualan.Text:=Dm.Qtemp.FieldByName('code_account_uang_muka').AsString;
-    FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Text:=Dm.Qtemp.FieldByName('name_account_uang_muka').AsString;;
+    FDataMasterAkunTrans.edAkunPiutang.Text:=Dm.Qtemp1.FieldByName('code_account').AsString;
+    FDataMasterAkunTrans.edNamaPiutang.Text:=Dm.Qtemp1.FieldByName('name_account').AsString;
+    FDataMasterAkunTrans.edAkunPiutangLainLain.Text:=Dm.Qtemp1.FieldByName('code_account2').AsString;
+    FDataMasterAkunTrans.edNamaPiutangLain.Text:=Dm.Qtemp1.FieldByName('name_account2').AsString;
+    FDataMasterAkunTrans.edAkunUangMukaPenjualan.Text:=Dm.Qtemp1.FieldByName('code_account3').AsString;
+    FDataMasterAkunTrans.edNamaAkunUangMukaPenjualan.Text:=Dm.Qtemp1.FieldByName('name_account3').AsString;;
   end;
   FDataMasterAkunTrans.MemDetailPenjualan.active:=false;
   FDataMasterAkunTrans.MemDetailPenjualan.active:=true;
@@ -716,6 +761,68 @@ begin
 //        FDataMasterAkunTrans.MemDetailPenjualan['field_name']:=Dm.Qtemp2.FieldByName('field_name').AsString;
 //        FDataMasterAkunTrans.MemDetailPenjualan['table_name']:=Dm.Qtemp2.FieldByName('table_name').AsString;
         FDataMasterAkunTrans.MemDetailPenjualan.post;
+        Dm.Qtemp2.next;
+      end;
+    end;
+end;
+
+procedure TFDataMasterAkunTrans.RefreshReturPenjualan;
+var
+URUTAN_KE : Integer;
+begin
+  with Dm.Qtemp1 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * from ('+
+            ' SELECT "code_trans", "code_account", "name_account" FROM "public"."t_master_trans_account" ) a '+
+            ' WHERE "code_trans"='+QuotedStr(edKodeTransReturJual.Text)+''+
+            ' Order By "code_trans" desc');
+    open;
+  end;
+
+  with Dm.Qtemp2 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT a.*,b.nilai_name from ('+
+            ' SELECT "code_module", "code_trans", "code_account", "name_account", '+
+            ' "position", "account_number_bank",code_param_trans '+
+            ' FROM  "public"."t_master_trans_account_det") a '+
+            'LEFT JOIN t_param_trans b on b.code=a.code_param_trans '+
+            ' WHERE code_trans='+QuotedStr(edKodeTransReturJual.Text)+''+
+            ' Order By code_module, code_trans, position desc');
+    open;
+  end;
+
+  if  Dm.Qtemp1.RecordCount=0 then
+  begin
+    FDataMasterAkunTrans.edAkunReturJual.Clear;
+    FDataMasterAkunTrans.edNamaAkunReturJual.Clear;
+  end;
+
+  if  Dm.Qtemp1.RecordCount<>0 then
+  begin
+    FDataMasterAkunTrans.edAkunReturJual.Text:=Dm.Qtemp1.FieldByName('code_account').AsString;
+    FDataMasterAkunTrans.edNamaAkunReturJual.Text:=Dm.Qtemp1.FieldByName('name_account').AsString;;
+  end;
+  FDataMasterAkunTrans.MemDetailReturJual.active:=false;
+  FDataMasterAkunTrans.MemDetailReturJual.active:=true;
+  FDataMasterAkunTrans.MemDetailReturJual.EmptyTable;
+
+  if  Dm.Qtemp2.RecordCount<>0 then
+    begin
+      Dm.Qtemp2.first;
+      while not Dm.Qtemp2.Eof do
+      begin
+        FDataMasterAkunTrans.MemDetailReturJual.insert;
+        FDataMasterAkunTrans.MemDetailReturJual['kd_akun']:=Dm.Qtemp2.FieldByName('code_account').AsString;
+        FDataMasterAkunTrans.MemDetailReturJual['nm_akun']:=Dm.Qtemp2.FieldByName('name_account').AsString;
+        FDataMasterAkunTrans.MemDetailReturJual['posisi']:=Dm.Qtemp2.FieldByName('position').AsString;
+        FDataMasterAkunTrans.MemDetailReturJual['nilai_name']:=Dm.Qtemp2.FieldByName('nilai_name').AsString;
+//        FDataMasterAkunTrans.MemDetailPenjualan['field_name']:=Dm.Qtemp2.FieldByName('field_name').AsString;
+//        FDataMasterAkunTrans.MemDetailPenjualan['table_name']:=Dm.Qtemp2.FieldByName('table_name').AsString;
+        FDataMasterAkunTrans.MemDetailReturJual.post;
         Dm.Qtemp2.next;
       end;
     end;
@@ -839,6 +946,25 @@ begin
       FMasterData.ShowModal;
 end;
 
+procedure TFDataMasterAkunTrans.edAkunReturJualButtonClick(Sender: TObject);
+begin
+  if Length(edKodeModulReturJual.Text)=0 then
+  begin
+    ShowMessage('Silakan Pilih Modul..!!');
+    exit;
+  end;
+
+  if Length(edKodeModulReturJual.Text)<>0 then
+  begin
+    FMasterData.Caption:='Master Data Perkiraan';
+    FMasterData.vcall:='set_ak_trans_returjual';
+    FMasterData.update_grid('code','account_name','NULL','(select aa.code,'+
+    'aa.account_name from t_ak_account aa LEFT JOIN t_ak_account_det bb ON bb.account_code=aa.code '+
+    'WHERE module_id='+QuotedStr(edKodeModulReturJual.Text)+' ORDER by aa.code)a','where code <>'''' ');
+    FMasterData.ShowModal;
+  end;
+end;
+
 procedure TFDataMasterAkunTrans.btClose_BeliClick(Sender: TObject);
 begin
   Clear;
@@ -855,6 +981,50 @@ procedure TFDataMasterAkunTrans.btClose_KasClick(Sender: TObject);
 begin
   Clear;
   Close;
+end;
+
+procedure TFDataMasterAkunTrans.btSaveReturJualClick(Sender: TObject);
+begin
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  if edKodeModulReturJual.Text='' then
+  begin
+    MessageDlg('Data Modul Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edKodeModulReturJual.SetFocus;
+  end
+  else if edKodeTransReturJual.Text='' then
+  begin
+    MessageDlg('Data Faktur Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edKodeTransReturJual.SetFocus;
+  end
+  else if FDataMasterAkunTrans.Status = 0 then
+  begin
+  id_modul:=edKodeModulReturJual.Text;
+  FDataMasterAkunTrans.Autocode;
+  //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+  if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeTransReturJual.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+  begin
+    SaveReturJual;
+    Dm.Koneksi.Commit;
+  end;
+  end
+  else if FDataMasterAkunTrans.Status = 1 then
+  begin
+  if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+  begin
+    UpdateReturJual;
+    Dm.Koneksi.Commit;
+  end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
 end;
 
 procedure TFDataMasterAkunTrans.btSave_BeliClick(Sender: TObject);
@@ -1129,7 +1299,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT code FROM t_param_trans WHERE nilai_name='+QuotedStr(MemDetailPenjualan['nilai_name']);
+      sql.Text:='SELECT code FROM t_param_trans WHERE nilai_name='+QuotedStr(MemDetailPenjualan['nilai_name'])+' AND menu=''PENJUALAN'' ';
       open;
     end;
 
@@ -1150,6 +1320,48 @@ begin
     ExecSQL;
     end;
   MemDetailPenjualan.Next;
+  end;
+end;
+
+procedure TFDataMasterAkunTrans.InsertDetailReturJual;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM  "public"."t_master_trans_account_det"  '+
+              ' WHERE code_trans='+QuotedStr(edKodeTransReturJual.Text)+' ';
+    ExecSQL;
+  end;
+
+  MemDetailReturJual.First;
+  while not MemDetailReturJual.Eof do
+  begin
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT code FROM t_param_trans WHERE nilai_name='+QuotedStr(MemDetailReturJual['nilai_name'])+'  AND menu=''RETUR PENJUALAN'' ';
+      open;
+    end;
+
+    with dm.Qtemp do
+    begin
+    close;
+    sql.clear;
+    sql.Text:=' INSERT INTO "public"."t_master_trans_account_det" '+
+              ' ("code_module", "code_trans", "code_account", "name_account", '+
+              ' "position",code_param_trans) '+
+              ' Values( '+
+              ' '+QuotedStr(edKodeModulReturJual.Text)+', '+
+              ' '+QuotedStr(edKodeTransReturJual.Text)+', '+
+              ' '+QuotedStr(MemDetailReturJual['kd_akun'])+', '+
+              ' '+QuotedStr(MemDetailReturJual['nm_akun'])+', '+
+              ' '+QuotedStr(MemDetailReturJual['posisi'])+', '+
+              ' '+QuotedStr(dm.Qtemp2.FieldValues['code'])+');';
+    ExecSQL;
+    end;
+  MemDetailReturJual.Next;
   end;
 end;
 
@@ -1197,10 +1409,10 @@ begin
     sql.add(' Insert into "public"."t_master_trans_account" ("created_at", "created_by",  '+
             ' "status_bill", "code_module", "name_module", "code_trans", "name_trans", "description", '+
             ' "account_number_bank", "account_name_bank", "initial_code", '+
-            ' "code_account", "name_account", "code_account2", "name_account2",code_account_uang_muka,name_account_uang_muka) '+
+            ' "code_account", "name_account", "code_account2", "name_account2",code_account3,name_account3) '+
             ' VALUES ( '+
             ' NOW(), '+
-            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+QuotedStr(Nm)+', '+
             ' '+IntToStr(0)+', '+
             ' '+QuotedStr(edKodeModulJual.Text)+', '+
             ' '+QuotedStr(edNamaModulJual.Text)+', '+
@@ -1219,6 +1431,39 @@ begin
     ExecSQL;
   end;
   InsertDetailJual;
+  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  Clear;
+  Close;
+  FListMasterAkunTrans.Refresh;
+end;
+
+procedure TFDataMasterAkunTrans.SaveReturJual;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' Insert into "public"."t_master_trans_account" ("created_at", "created_by",  '+
+            ' "status_bill", "code_module", "name_module", "code_trans", "name_trans", "description", '+
+            ' "account_number_bank", "account_name_bank", "initial_code", '+
+            ' "code_account", "name_account") '+
+            ' VALUES ( '+
+            ' NOW(), '+
+            ' '+QuotedStr(Nm)+', '+
+            ' '+IntToStr(0)+', '+
+            ' '+QuotedStr(edKodeModulReturJual.Text)+', '+
+            ' '+QuotedStr(edNamaModulReturJual.Text)+', '+
+            ' '+QuotedStr(edKodeTransReturJual.Text)+', '+
+            ' '+QuotedStr(edNamaTransReturJual.Text)+', '+
+            ' '+QuotedStr(MemKeteranganReturJual.Text)+', '+
+            ' '+QuotedStr('0')+', '+
+            ' '+QuotedStr('0')+', '+
+            ' '+QuotedStr(EdKodeInitialReturJual.Text)+', '+
+            ' '+QuotedStr(edAkunReturJual.Text)+', '+
+            ' '+QuotedStr(edNamaAkunReturJual.Text)+' );');
+    ExecSQL;
+  end;
+  InsertDetailReturJual;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -1322,7 +1567,7 @@ begin
       sql.clear;
       sql.add(' UPDATE "public"."t_master_trans_account" SET '+
               ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              ' updated_by='+QuotedStr(Nm)+','+
               ' status_bill='+IntToStr(0)+','+
               ' name_module='+QuotedStr(edNamaModulJual.Text)+','+
               ' name_trans='+QuotedStr(edNamaTransJual.Text)+','+
@@ -1333,14 +1578,42 @@ begin
               ' name_account='+QuotedStr(edNamaPiutang.Text)+','+
               ' code_account2='+QuotedStr(edAkunPiutangLainLain.Text)+','+
               ' name_account2='+QuotedStr(edNamaPiutangLain.Text)+','+
-              ' code_account_uang_muka='+QuotedStr(edAkunUangMukaPenjualan.Text)+','+
-              ' name_account_uang_muka='+QuotedStr(edNamaAkunUangMukaPenjualan.Text)+','+
+              ' code_account3='+QuotedStr(edAkunUangMukaPenjualan.Text)+','+
+              ' name_account3='+QuotedStr(edNamaAkunUangMukaPenjualan.Text)+','+
               ' description='+QuotedStr(MemKeteranganJual.Text)+' '+
               ' Where code_module='+QuotedStr(edKodeModulJual.Text)+' '+
               ' AND code_trans='+QuotedStr(edKodeTransJual.Text)+' ');
       ExecSQL;
     end;
     InsertDetailJual;
+    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+    Close;
+    FListMasterAkunTrans.Refresh;
+end;
+
+procedure TFDataMasterAkunTrans.UpdateReturJual;
+begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' UPDATE "public"."t_master_trans_account" SET '+
+              ' updated_at=NOW(),'+
+              ' updated_by='+QuotedStr(Nm)+','+
+              ' status_bill='+IntToStr(0)+','+
+              ' name_module='+QuotedStr(edNamaModulReturJual.Text)+','+
+              ' name_trans='+QuotedStr(edNamaTransReturJual.Text)+','+
+              ' account_number_bank='+QuotedStr('0')+','+
+              ' account_name_bank='+QuotedStr('0')+','+
+              ' initial_code='+QuotedStr(EdKodeInitialReturJual.Text)+','+
+              ' code_account='+QuotedStr(edAkunReturJual.Text)+','+
+              ' name_account='+QuotedStr(edNamaAkunReturJual.Text)+','+
+              ' description='+QuotedStr(MemKeteranganReturJual.Text)+' '+
+              ' Where code_module='+QuotedStr(edKodeModulReturJual.Text)+' '+
+              ' AND code_trans='+QuotedStr(edKodeTransReturJual.Text)+' ');
+      ExecSQL;
+    end;
+    InsertDetailReturJual;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Close;
     FListMasterAkunTrans.Refresh;
@@ -1656,24 +1929,24 @@ end;
 procedure TFDataMasterAkunTrans.DBGridEh2Columns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-    if Length(edKodeModul.Text)=0 then
+  if Length(edKodeModulReturJual.Text)=0 then
     begin
       ShowMessage('Silakan Pilih Modul..!!');
       exit;
     end;
 
-    if Length(edKodeModul.Text)<>0 then
+    if Length(edKodeModulReturJual.Text)<>0 then
     begin
       FMasterData.Caption:='Master Data Perkiraan';
-      FMasterData.vcall:='m_akuntrans_penjualaln';
-      FMasterData.update_grid('header_code','header_name','journal_name','(SELECT c.header_code ,c.header_name,c.journal_name '+
+      FMasterData.vcall:='m_akuntrans_retur_jual';
+      FMasterData.update_grid('account_code','account_name','journal_name','(SELECT a.account_code ,b.account_name,c.journal_name '+
                               ' FROM t_ak_account_det a '+
                               ' LEFT JOIN t_ak_account b on a.account_code=b.code '+
                               ' LEFT JOIN t_ak_header c on b.header_code=c.header_code '+
                               ' LEFT JOIN t_ak_module d on a.module_id=d.id '+
-                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+'  '+
-                              ' GROUP BY c.header_code,c.header_name,c.journal_name '+
-                              ' ORDER BY c.header_code,c.header_name,c.journal_name asc)a','where header_code <>'''' ');
+                              ' where  d.id='+QuotedStr(edKodeModulReturJual.Text)+'  '+
+                              ' GROUP BY a.account_code ,b.account_name,c.journal_name '+
+                              ' ORDER BY a.account_code ,b.account_name,c.journal_name asc)a','where account_code <>'''' ');
       FMasterData.ShowModal;
     end;
 end;
@@ -1714,16 +1987,26 @@ begin
     begin
       FMasterData.Caption:='Master Data Perkiraan';
       FMasterData.vcall:='set_ak_trans_jual';
-      FMasterData.update_grid('header_code','header_name','journal_name','(SELECT c.header_code ,c.header_name,c.journal_name '+
-                              ' FROM t_ak_account_det a '+
-                              ' LEFT JOIN t_ak_account b on a.account_code=b.code '+
-                              ' LEFT JOIN t_ak_header c on b.header_code=c.header_code '+
-                              ' LEFT JOIN t_ak_module d on a.module_id=d.id '+
-                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+'  '+
-                              ' GROUP BY c.header_code,c.header_name,c.journal_name '+
-                              ' ORDER BY c.header_code,c.header_name,c.journal_name asc)a','where header_code <>'''' ');
+      FMasterData.update_grid('code','account_name','NULL','(select aa.code,'+
+      'aa.account_name from t_ak_account aa LEFT JOIN t_ak_account_det bb ON bb.account_code=aa.code '+
+      'WHERE module_id='+QuotedStr(edKodeModulJual.Text)+' ORDER by aa.code)a','where code <>'''' ');
       FMasterData.ShowModal;
     end;
+
+//    if Length(edKodeModulJual.Text)<>0 then
+//    begin
+//      FMasterData.Caption:='Master Data Perkiraan';
+//      FMasterData.vcall:='set_ak_trans_jual';
+//      FMasterData.update_grid('header_code','header_name','journal_name','(SELECT c.header_code ,c.header_name,c.journal_name '+
+//                              ' FROM t_ak_account_det a '+
+//                              ' LEFT JOIN t_ak_account b on a.account_code=b.code '+
+//                              ' LEFT JOIN t_ak_header c on b.header_code=c.header_code '+
+//                              ' LEFT JOIN t_ak_module d on a.module_id=d.id '+
+//                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+'  '+
+//                              ' GROUP BY c.header_code,c.header_name,c.journal_name '+
+//                              ' ORDER BY c.header_code,c.header_name,c.journal_name asc)a','where header_code <>'''' ');
+//      FMasterData.ShowModal;
+//    end;
 end;
 
 procedure TFDataMasterAkunTrans.edAkunPiutangLainLainButtonClick(
@@ -1739,16 +2022,26 @@ begin
     begin
       FMasterData.Caption:='Master Data Perkiraan';
       FMasterData.vcall:='set_ak_lain_trans_jual';
-      FMasterData.update_grid('header_code','header_name','journal_name','(SELECT c.header_code ,c.header_name,c.journal_name '+
-                              ' FROM t_ak_account_det a '+
-                              ' LEFT JOIN t_ak_account b on a.account_code=b.code '+
-                              ' LEFT JOIN t_ak_header c on b.header_code=c.header_code '+
-                              ' LEFT JOIN t_ak_module d on a.module_id=d.id '+
-                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+'  '+
-                              ' GROUP BY c.header_code,c.header_name,c.journal_name '+
-                              ' ORDER BY c.header_code,c.header_name,c.journal_name asc)a','where header_code <>'''' ');
+      FMasterData.update_grid('code','account_name','NULL','(select aa.code,'+
+      'aa.account_name from t_ak_account aa LEFT JOIN t_ak_account_det bb ON bb.account_code=aa.code '+
+      'WHERE module_id='+QuotedStr(edKodeModulJual.Text)+' ORDER by aa.code)a','where code <>'''' ');
       FMasterData.ShowModal;
     end;
+
+//    if Length(edKodeModulJual.Text)<>0 then
+//    begin
+//      FMasterData.Caption:='Master Data Perkiraan';
+//      FMasterData.vcall:='set_ak_lain_trans_jual';
+//      FMasterData.update_grid('header_code','header_name','journal_name','(SELECT c.header_code ,c.header_name,c.journal_name '+
+//                              ' FROM t_ak_account_det a '+
+//                              ' LEFT JOIN t_ak_account b on a.account_code=b.code '+
+//                              ' LEFT JOIN t_ak_header c on b.header_code=c.header_code '+
+//                              ' LEFT JOIN t_ak_module d on a.module_id=d.id '+
+//                              ' where  d.id='+QuotedStr(edKodeModulJual.Text)+'  '+
+//                              ' GROUP BY c.header_code,c.header_name,c.journal_name '+
+//                              ' ORDER BY c.header_code,c.header_name,c.journal_name asc)a','where header_code <>'''' ');
+//      FMasterData.ShowModal;
+//    end;
 end;
 
 procedure TFDataMasterAkunTrans.edAkunUangMukaHutangButtonClick(
@@ -1872,24 +2165,48 @@ end;
 
 procedure TFDataMasterAkunTrans.FormShow(Sender: TObject);
 begin
-  DBGridDetailJual.Columns[5].PickList.Clear;
-
-
-  with Dm.Qtemp do
+  if TabPenjualan.TabVisible=True then
   begin
-    SQL.Text := 'SELECT nilai_name FROM t_param_trans WHERE menu=''PENJUALAN''';
-    Open;
+
+    DBGridDetailJual.Columns[5].PickList.Clear;
+
+    with Dm.Qtemp do
+    begin
+      SQL.Text := 'SELECT nilai_name FROM t_param_trans WHERE menu=''PENJUALAN''';
+      Open;
+    end;
+
+    try
+      Dm.Qtemp.First;
+      while not Dm.Qtemp.Eof do
+      begin
+        DBGridDetailJual.Columns[5].PickList.Add(Dm.Qtemp.FieldValues['nilai_name']);
+        Dm.Qtemp.Next;
+      end;
+    finally
+      Dm.Qtemp.Close;
+    end;
   end;
 
-  try
-    Dm.Qtemp.First;
-    while not Dm.Qtemp.Eof do
+  if TabReturPenjualan.TabVisible=True then
+  begin
+    DBGridDetailReturJual.Columns[5].PickList.Clear;
+    with Dm.Qtemp do
     begin
-      DBGridDetailJual.Columns[5].PickList.Add(Dm.Qtemp.FieldValues['nilai_name']);
-      Dm.Qtemp.Next;
+      SQL.Text := 'SELECT nilai_name FROM t_param_trans WHERE menu=''RETUR PENJUALAN''';
+      Open;
     end;
-  finally
-    Dm.Qtemp.Close;
+
+    try
+      Dm.Qtemp.First;
+      while not Dm.Qtemp.Eof do
+      begin
+        DBGridDetailReturJual.Columns[5].PickList.Add(Dm.Qtemp.FieldValues['nilai_name']);
+        Dm.Qtemp.Next;
+      end;
+    finally
+      Dm.Qtemp.Close;
+    end;
   end;
 
 end;

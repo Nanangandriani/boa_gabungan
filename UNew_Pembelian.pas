@@ -202,6 +202,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Edkd_akunChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1896,6 +1897,20 @@ begin
     end;
 end;
 
+procedure TFNew_Pembelian.Edkd_akunChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT a.type,a.acc_code_pemb,b.code,b.account_code2,b.account_name FROM t_item_type a '+
+               'INNER JOIN v_ak_account b on a.acc_code_pemb=b.code '+
+               'WHERE account_code2='+Quotedstr(Edkd_akun.Text);
+     Open;
+   end;
+   Edjenis.Text:=dm.Qtemp.FieldByName('type').AsString;
+end;
+
 procedure TFNew_Pembelian.EdNilai_ValasChange(Sender: TObject);
 begin
   if EdNilai_Valas.Text='' then EdNilai_Valas.text:='1' else
@@ -2361,7 +2376,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='SELECT "type"  from t_item_type ';
+       sql.Text:='SELECT Distinct "type"  from t_item_type ';
        open;
    end;
    edjenis.items.clear;

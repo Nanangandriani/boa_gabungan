@@ -16,13 +16,13 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 182
+    Top = 207
     Width = 634
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 181
-    ExplicitWidth = 630
+    ExplicitTop = 173
+    ExplicitWidth = 628
     object BTutup: TRzBitBtn
       Left = 558
       Top = 1
@@ -83,7 +83,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 554
+      ExplicitLeft = 552
     end
     object BSimpan: TRzBitBtn
       Left = 408
@@ -145,7 +145,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 404
+      ExplicitLeft = 402
     end
     object BCari: TRzBitBtn
       Left = 1
@@ -269,7 +269,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 329
+      ExplicitLeft = 327
     end
     object BRefresh: TRzBitBtn
       Left = 483
@@ -331,14 +331,14 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 479
+      ExplicitLeft = 477
     end
   end
   object DBGridEh7: TDBGridEh
     Left = 0
-    Top = 223
+    Top = 248
     Width = 634
-    Height = 322
+    Height = 297
     Align = alBottom
     DataSource = DsKelompok
     DynProps = <>
@@ -410,13 +410,12 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
     Left = 0
     Top = 0
     Width = 634
-    Height = 182
+    Height = 207
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 630
-    ExplicitHeight = 181
+    ExplicitHeight = 201
     object Label6: TLabel
       Left = 106
       Top = 17
@@ -494,6 +493,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 0
+      OnExit = EdKelompokExit
     end
     object Edno: TEdit
       Left = 207
@@ -559,6 +559,14 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
       ButtonNumGlyphs = 1
       OnButtonClick = EdNm_akunButtonClick
     end
+    object chAktifTarget: TCheckBox
+      Left = 128
+      Top = 174
+      Width = 97
+      Height = 17
+      Caption = 'Aktif Target'
+      TabOrder = 7
+    end
   end
   object QKelompok: TUniQuery
     Connection = dm.Koneksi
@@ -569,7 +577,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
         ' t_item_group c on a."category_id"=c.category_id inner join t_ak' +
         '_account d on c.account_code=d.code'
       'where a.deleted_at isnull order by a.created_at ')
-    Left = 408
+    Left = 416
     Top = 8
   end
   object DsKelompok: TDataSource

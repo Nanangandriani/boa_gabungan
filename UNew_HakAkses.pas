@@ -53,6 +53,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure EdJabatanChange(Sender: TObject);
     procedure EdkdJabatanChange(Sender: TObject);
+    procedure EdJabatanSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -293,6 +294,20 @@ end;
 
 procedure TFNew_Hak_Akses.EdJabatanChange(Sender: TObject);
 begin
+  {with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_position where position='+QuotedStr(EdJabatan.Text);
+    ExecSQL;
+  end;
+    EdkdJabatan.Text:=Dm.Qtemp['position_code'];
+    EdNo.Text:=Edkd.Text+''+EdkdJabatan.Text;
+    no_jab:=Dm.Qtemp['position_code'];}
+end;
+
+procedure TFNew_Hak_Akses.EdJabatanSelect(Sender: TObject);
+begin
   with dm.Qtemp do
   begin
     close;
@@ -337,7 +352,7 @@ begin
     ExecSQL;
   end;
     Edkd.Text:=Dm.Qtemp['dept_code'];
-    EdNo.Text:=Edkd.Text+''+EdkdJabatan.Text;
+    EdNo.Text:=Edkd.Text;
     no_dept:=Dm.Qtemp['dept_code'];
  //   EdkdChange(sender);
 //    RefreshMenu;

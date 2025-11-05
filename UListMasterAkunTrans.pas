@@ -198,6 +198,7 @@ begin
         TabPenjualan.TabVisible:=false;
         TabBank.TabVisible:=false;
         TabKas.TabVisible:=false;
+        TabReturPenjualan.TabVisible:=false;
         RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPembelian;
       end;
     end;
@@ -206,6 +207,12 @@ begin
     begin
       with FDataMasterAkunTrans do
       begin
+        edKodeModulJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModulJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTransJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTransJual.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        MemKeteranganJual.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitialJual.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
         rgPPH.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_pph_jual'' '));
         rgPPN.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_ppn_jual'' '));
         rgPotongan.ItemIndex:=StrToInt(SelectRow('select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual'' '));
@@ -219,21 +226,18 @@ begin
         edNamaPPNJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_jual'' ');
         edAkunPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_pph_jual'' ');
         edNamaPPHJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_pph_jual'' ');
-        edKodeModulJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
-        edNamaModulJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
-        edKodeTransJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
-        edNamaTransJual.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
-        MemKeteranganJual.Text:=Dm.Qtemp.FieldByName('description').AsString;
-        EdKodeInitialJual.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+
         edKodeModulJual.Enabled:=false;
         edNamaModulJual.Enabled:=false;
         edKodeTransJual.Enabled:=false;
         edNamaTransJual.Enabled:=false;
+        EdKodeInitialJual.Enabled:=false;
         RefreshPenjualan;
         TabPembelian.TabVisible:=false;
         TabPenjualan.TabVisible:=true;
         TabBank.TabVisible:=false;
         TabKas.TabVisible:=false;
+        TabReturPenjualan.TabVisible:=false;
         RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPenjualan;
       end;
     end;
@@ -268,15 +272,44 @@ begin
         edNamaModulJual.Enabled:=false;
         edKodeTransJual.Enabled:=false;
         edNamaTransJual.Enabled:=false;
+        EdKodeInitialJual.Enabled:=false;
         RefreshPenjualan;
         TabPembelian.TabVisible:=false;
         TabPenjualan.TabVisible:=true;
         TabBank.TabVisible:=false;
         TabKas.TabVisible:=false;
+        TabReturPenjualan.TabVisible:=false;
         RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabPenjualan;
       end;
     end;
+    //Retur Penjualan
+    if (QAkunTransaksi.FieldByName('code_module').AsString='1') AND(QAkunTransaksi.FieldByName('initial_code').AsString='RPJ') then
+    begin
+      with FDataMasterAkunTrans do
+      begin
 
+//        edAkunPPHJual.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_pajak_pph_jual'' ');
+//        edNamaPPHJual.Text:=SelectRow('select account_name from t_parameter a LEFT JOIN t_ak_account b ON a.value_parameter=b.code where key_parameter=''akun_pajak_pph_jual'' ');
+        edKodeModulReturJual.Text:=Dm.Qtemp.FieldByName('code_module').AsString;
+        edNamaModulReturJual.Text:=Dm.Qtemp.FieldByName('name_module').AsString;
+        edKodeTransReturJual.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
+        edNamaTransReturJual.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+        MemKeteranganReturJual.Text:=Dm.Qtemp.FieldByName('description').AsString;
+        EdKodeInitialReturJual.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
+        edKodeModulReturJual.Enabled:=false;
+        edNamaModulReturJual.Enabled:=false;
+        edKodeTransReturJual.Enabled:=false;
+        edNamaTransReturJual.Enabled:=false;
+        EdKodeInitialReturJual.Enabled:=false;
+        RefreshReturPenjualan;
+        TabPembelian.TabVisible:=false;
+        TabPenjualan.TabVisible:=false;
+        TabBank.TabVisible:=false;
+        TabKas.TabVisible:=false;
+        TabReturPenjualan.TabVisible:=true;
+        RzPageControl2.ActivePage:=FDataMasterAkunTrans.TabReturPenjualan;
+      end;
+    end;
     //Bank
     if (QAkunTransaksi.FieldByName('code_module').AsString='3') or (QAkunTransaksi.FieldByName('code_module').AsString='5') then
     begin
@@ -301,6 +334,7 @@ begin
         TabPenjualan.TabVisible:=false;
         TabBank.TabVisible:=true;
         TabKas.TabVisible:=false;
+        TabReturPenjualan.TabVisible:=false;
         RefreshGridBank;
         if edKodeModul.Text='3' then
         begin
@@ -334,6 +368,7 @@ begin
         TabPenjualan.TabVisible:=false;
         TabBank.TabVisible:=false;
         TabKas.TabVisible:=true;
+        TabReturPenjualan.TabVisible:=false;
         if edKodeModulKas.Text='4' then
         begin
           rgTagihanKas.Caption:='Ambil Data Piutang';

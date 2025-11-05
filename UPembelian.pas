@@ -185,11 +185,15 @@ end;
 
 procedure TFPembelian.ActUpdateExecute(Sender: TObject);
 begin
- if Memterima_material['purchase_type']='' then
- begin
+    if QTerimaDet.Active=false then
+       QTerimaDet.Active:=true;
+       QTerimaDet.Open;
+
+    if Memterima_material['purchase_type']='' then
+    begin
     ShowMessage('Maaf data kosong');
     Exit;
- end else
+    end else
 
     with FNew_Pembelian do
     begin

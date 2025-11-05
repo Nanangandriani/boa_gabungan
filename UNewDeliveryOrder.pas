@@ -69,7 +69,7 @@ type
     edNamaVendorTransMuatan: TEdit;
     edNamaKenek: TEdit;
     edNomorReffUtamaMuatan: TRzButtonEdit;
-    edNoKendMuatan: TRzButtonEdit;
+    edNamaJenisKendMuatan: TRzButtonEdit;
     edKodeJenisKendMuatan: TEdit;
     btMasterSumber: TSpeedButton;
     Label1: TLabel;
@@ -120,7 +120,7 @@ type
     Label60: TLabel;
     Label61: TLabel;
     edTotalBiaya: TRzNumericEdit;
-    edNamaJenisKendMuatan: TRzButtonEdit;
+    edNoKendMuatan: TRzButtonEdit;
     dsDataBiaya: TDataSource;
     MemDataBiaya: TMemTableEh;
     MemDataBiayakd_biaya: TStringField;
@@ -169,8 +169,8 @@ type
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
     procedure btMasterSumberClick(Sender: TObject);
-    procedure edNamaJenisKendMuatanButtonClick(Sender: TObject);
     procedure edNoKendMuatanButtonClick(Sender: TObject);
+    procedure edNamaJenisKendMuatanButtonClick(Sender: TObject);
     procedure edNamaLokasiButtonClick(Sender: TObject);
     procedure edNamaProvinsiButtonClick(Sender: TObject);
     procedure edNamaKabupatenButtonClick(Sender: TObject);
@@ -215,7 +215,7 @@ type
     Grand_Tot: Real;
     vFormSumber01,vFormSumber02, kd_kares, strtgl, strbulan, strtahun,
     strLastKodeJenisKendMuatan,strLastNamaLokasi,
-    strLastNamaKabupaten,strLastTotalTitik : string;
+    strLastNamaKabupaten,strLastTotalTitik,strPlateNo : string;
     IntStatusDO,IntStatusKoreksi: Integer;
     StatusCekBiaya,StatusPerubahanBiaya: Integer;
     Year, Month, Day: Word;
@@ -786,6 +786,7 @@ begin
         MemDataBiayaCorrection.Next;
       end;
     end;
+    strPlateNo:=json.StringTree[row1+'plate_number'];
   end;
 end;
 
@@ -1891,7 +1892,7 @@ begin
   FSearch_Supplier.ShowModal;
 end;
 
-procedure TFNewDeliveryOrder.edNamaJenisKendMuatanButtonClick(Sender: TObject);
+procedure TFNewDeliveryOrder.edNoKendMuatanButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Kendaraan';
   FMasterData.vcall:='do_jenis_kend';
@@ -2009,7 +2010,7 @@ begin
   FMasterData.ShowModal;
 end;
 
-procedure TFNewDeliveryOrder.edNoKendMuatanButtonClick(Sender: TObject);
+procedure TFNewDeliveryOrder.edNamaJenisKendMuatanButtonClick(Sender: TObject);
 begin
   FDaftarKendaraan.vcall:='delivery_order';
   FDaftarKendaraan.show;

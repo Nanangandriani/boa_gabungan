@@ -76,7 +76,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNewBank, UDataModule;
+uses UNewBank, UDataModule, UMainMenu;
 
 
 procedure TFListBank.Refresh;
@@ -85,7 +85,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from t_Bank where deleted_at is null order by created_at Desc ';
+       sql.Text:='select * from t_Bank where deleted_at is null order by created_at Asc ';
        open;
    end;
    QBank.Active:=False;
@@ -116,6 +116,13 @@ begin
       FNewBank.edkode_bank.Text:=FieldByName('bank_code').AsString;
       FNewBank.CBmata_uang.Text:=FieldByName('Currency').AsString;
       FNewBank.edid.Text:=FieldByName('id').AsString;
+      FNewBank.Ed_atas_nama.Text:=FieldByName('on_behalf_of').AsString;
+      FNewBank.EdSaldo.Text:=FieldByName('saldo').AsString;
+      FNewBank.Edkurs.Text:=FieldByName('exchange_rate').AsString;
+      FNewBank.Edkd_akun1.Text:=FieldByName('header_account_no').AsString;
+      FNewBank.Edkodeperkiraan.Text:=FieldByName('header_account_no').AsString;
+      FNewBank.Ed_VA_bank.Text:=FieldByName('company_code').AsString;
+      FNewBank.CB_SBU.Text:=FieldByName('sbu_code').AsString;
     end;
     Status:=1;
     FNewBank.edkode_bank.Enabled:=false;
@@ -146,7 +153,7 @@ begin
         sql.Text:=' Update t_bank set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                   ' where id='+QuotedStr(DBGridEh1.Fields[0].AsString);
         parambyname('deleted_at').AsDateTime:=Now;
-        parambyname('deleted_by').AsString:='Admin';
+        parambyname('deleted_by').AsString:=Nm;
         execsql;
       end;
       MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
@@ -160,6 +167,7 @@ begin
   FNewBank.edkode_bank.Enabled:=true;
   Status:=0;
   FNewBank.showmodal;
+  FNewBank.Autocode_perkiraan;
 end;
 
 initialization

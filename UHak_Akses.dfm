@@ -458,8 +458,8 @@ object FHak_Akses: TFHak_Akses
         'oin t_menu_sub b on a.submenu_code=b.submenu_code'
       
         'inner join t_dept c on a.dept_code=c.dept_code INNER JOIN t_posi' +
-        'tion d on a.position_code=d.position_code order by a.submenu_cod' +
-        'e Asc')
+        'tion d on a.position_code=d.position_code order by c.Dept,d."pos' +
+        'ition",a.submenu_code Asc')
     Left = 440
     Top = 24
   end
@@ -473,7 +473,7 @@ object FHak_Akses: TFHak_Akses
   object DsAkses: TDataSource
     DataSet = MemAkses
     Left = 544
-    Top = 32
+    Top = 24
   end
   object DsdAkses: TDataSetDriverEh
     ProviderDataSet = QAkses

@@ -740,6 +740,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 28
+      OnChange = Edkd_akunChange
     end
     object Edkd_akunum: TRzEdit
       Left = 830
@@ -1219,6 +1220,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'id_pengajuan_asset'
               Footers = <>
+              Width = 0
             end
             item
               CellButtons = <>
@@ -1226,6 +1228,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'id_detail_asset'
               Footers = <>
+              Width = 0
             end
             item
               CellButtons = <>
@@ -1233,6 +1236,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'no_pengajuan_asset'
               Footers = <>
+              Width = 0
             end
             item
               CellButtons = <>
@@ -1240,6 +1244,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'Spesifikasi_asset'
               Footers = <>
+              Width = 0
             end>
           object RowDetailData: TRowDetailPanelControlEh
           end

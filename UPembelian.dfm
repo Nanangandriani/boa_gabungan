@@ -26,7 +26,6 @@ object FPembelian: TFPembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 857
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -1546,7 +1545,6 @@ object FPembelian: TFPembelian
     MasterSource = Dsterima_material
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Active = True
     Left = 536
     Top = 16
     ParamData = <
@@ -1554,7 +1552,7 @@ object FPembelian: TFPembelian
         DataType = ftString
         Name = 'trans_no'
         ParamType = ptInput
-        Value = 'FPB/001/08/VIII/2025/HLJ'
+        Value = 'FPB/001/25/IX/2025/HLJ'
       end>
   end
   object DataSetDriverEh1: TDataSetDriverEh
@@ -1591,7 +1589,6 @@ object FPembelian: TFPembelian
       'left join t_ak_account d on a.account_um_code=d.code'
       'left join t_ref_item_receive e on a.ref_code=e.ref_code'
       'order by a.id desc')
-    Active = True
     Left = 320
     Top = 40
   end

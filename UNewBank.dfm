@@ -2,8 +2,8 @@ object FNewBank: TFNewBank
   Left = 0
   Top = 0
   Caption = 'Form New Bank'
-  ClientHeight = 212
-  ClientWidth = 440
+  ClientHeight = 307
+  ClientWidth = 495
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,17 +11,18 @@ object FNewBank: TFNewBank
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Label4: TLabel
     Left = 92
-    Top = 152
+    Top = 149
     Width = 3
     Height = 15
     Caption = ':'
   end
   object Label3: TLabel
     Left = 8
-    Top = 152
+    Top = 149
     Width = 58
     Height = 15
     Caption = 'Mata Uang'
@@ -96,6 +97,63 @@ object FNewBank: TFNewBank
     Height = 15
     Caption = 'Akun Perkiraan'
   end
+  object Label9: TLabel
+    Left = 8
+    Top = 207
+    Width = 29
+    Height = 15
+    Caption = 'Saldo'
+  end
+  object Label10: TLabel
+    Left = 92
+    Top = 207
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label11: TLabel
+    Left = 8
+    Top = 180
+    Width = 23
+    Height = 15
+    Caption = 'Kurs'
+  end
+  object Label12: TLabel
+    Left = 92
+    Top = 180
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object label_sbu2: TLabel
+    Left = 384
+    Top = 8
+    Width = 3
+    Height = 15
+    Caption = ':'
+    Visible = False
+  end
+  object Label_sbu: TLabel
+    Left = 356
+    Top = 8
+    Width = 21
+    Height = 15
+    Caption = 'SBU'
+  end
+  object Label13: TLabel
+    Left = 8
+    Top = 236
+    Width = 73
+    Height = 15
+    Caption = 'Kode VA Bank'
+  end
+  object Label18: TLabel
+    Left = 92
+    Top = 236
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
   object edkode_bank: TEdit
     Left = 103
     Top = 4
@@ -107,7 +165,7 @@ object FNewBank: TFNewBank
   end
   object CBmata_uang: TRzComboBox
     Left = 103
-    Top = 149
+    Top = 146
     Width = 234
     Height = 23
     TabOrder = 1
@@ -117,8 +175,8 @@ object FNewBank: TFNewBank
       'Dolar')
   end
   object edid: TEdit
-    Left = -32
-    Top = 262
+    Left = 0
+    Top = 318
     Width = 234
     Height = 23
     Enabled = False
@@ -126,15 +184,15 @@ object FNewBank: TFNewBank
   end
   object Panel2: TPanel
     Left = 0
-    Top = 180
-    Width = 440
+    Top = 275
+    Width = 495
     Height = 32
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 179
-    ExplicitWidth = 436
+    ExplicitTop = 266
+    ExplicitWidth = 489
     object BBatal: TRzBitBtn
-      Left = 364
+      Left = 419
       Top = 1
       Height = 30
       Align = alRight
@@ -193,10 +251,10 @@ object FNewBank: TFNewBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 360
+      ExplicitLeft = 413
     end
     object BSave: TRzBitBtn
-      Left = 279
+      Left = 334
       Top = 1
       Width = 85
       Height = 30
@@ -256,7 +314,7 @@ object FNewBank: TFNewBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 275
+      ExplicitLeft = 328
     end
   end
   object edno_rek: TEdit
@@ -277,19 +335,18 @@ object FNewBank: TFNewBank
     TabOrder = 5
     OnKeyPress = edbankKeyPress
   end
-  object Edit1: TEdit
+  object Ed_atas_nama: TEdit
     Left = 103
     Top = 88
     Width = 234
     Height = 23
-    NumbersOnly = True
     TabOrder = 6
     OnKeyPress = edno_rekKeyPress
   end
   object Ednm_akun1: TRzButtonEdit
     Left = 198
     Top = 117
-    Width = 234
+    Width = 219
     Height = 23
     Text = ''
     TabOrder = 7
@@ -304,5 +361,49 @@ object FNewBank: TFNewBank
     Height = 23
     Text = ''
     TabOrder = 8
+    OnChange = edkd_akun1Change
+  end
+  object EdSaldo: TRzNumericEdit
+    Left = 103
+    Top = 203
+    Width = 234
+    Height = 23
+    TabOrder = 9
+    OnKeyPress = EdSaldoKeyPress
+    DisplayFormat = ',0;(,0)'
+  end
+  object edKodePerkiraan: TRzEdit
+    Left = 342
+    Top = 88
+    Width = 90
+    Height = 23
+    Text = ''
+    TabOrder = 10
+    Visible = False
+  end
+  object EdKurs: TRzNumericEdit
+    Left = 103
+    Top = 175
+    Width = 122
+    Height = 23
+    TabOrder = 11
+    OnKeyPress = EdSaldoKeyPress
+    DisplayFormat = ',0;(,0)'
+  end
+  object Ed_VA_bank: TRzEdit
+    Left = 103
+    Top = 232
+    Width = 121
+    Height = 23
+    Text = ''
+    MaxLength = 5
+    TabOrder = 12
+  end
+  object CB_SBU: TRzComboBox
+    Left = 395
+    Top = 4
+    Width = 88
+    Height = 23
+    TabOrder = 13
   end
 end

@@ -38,6 +38,7 @@ type
     CbKategori: TComboBox;
     Edkd_akun: TRzEdit;
     EdNm_akun: TRzButtonEdit;
+    chAktifTarget: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure EdJenisSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -47,6 +48,7 @@ type
     procedure BtambahClick(Sender: TObject);
     procedure BRefreshClick(Sender: TObject);
     procedure DBGridEh7DblClick(Sender: TObject);
+    procedure EdKelompokExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +75,7 @@ begin
   Edkd_akun.Clear;
   EdNm_akun.Clear;
   Edkd.Clear;
+  chAktifTarget.Checked:=true;
 end;
 
 procedure TFNew_KelompokBarang.DBGridEh7DblClick(Sender: TObject);
@@ -86,6 +89,15 @@ begin
     Edkd_akun.Text:=QKelompok['account_code'];
     EdNm_akun.Text:=QKelompok['account_name'];
     edkelompok.Text:=QKelompok['group_name'];
+    if QKelompok['istarget']=true then
+    begin
+      chAktifTarget.Checked:=true;
+    end;
+    if QKelompok['istarget']=false then
+    begin
+      chAktifTarget.Checked:=false;
+    end;
+
     Edno.Text:=QKelompok['order_no'];
 end;
 
@@ -96,7 +108,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_item_type where deleted_at isnull order by created_by ';
+    sql.Text:=' select DISTINCT type from t_item_type '+
+              ' where deleted_at isnull ';
     open;
   end;
     dm.Qtemp.First;
@@ -128,14 +141,15 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_item_group(category_id,account_code,order_no,code,group_name,created_by)values'+
-                '(:ct,:kd_akun,:no,:code,:group,:pic)';
+      sql.Text:='insert into t_item_group(category_id,account_code,order_no,code,group_name,created_by,istarget)values'+
+                '(:ct,:kd_akun,:no,:code,:group,:pic,:istarget)';
                 ParamByName('ct').Value:=ct_id;
                 ParamByName('kd_akun').Value:=Edkd_akun.Text;
                 ParamByName('code').Value:=Edkd.Text;
                 ParamByName('no').Value:=Edno.Text;
                 ParamByName('group').Value:=EdKelompok.Text;
                 ParamByName('pic').Value:=nm;
+                ParamByName('istarget').Value:=chAktifTarget.Checked;
       ExecSQL;
     end;
   end;
@@ -146,7 +160,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='Update t_item_group set category_id=:ct,account_code=:kd_akun,order_no=:no,code=:code,'+
-                'group_name=:group,updated_by=:pic where group_id=:group_id';
+                'group_name=:group,updated_by=:pic,istarget=:istarget where group_id=:group_id';
                 ParamByName('ct').Value:=ct_id;
                 ParamByName('kd_akun').Value:=Edkd_akun.Text;
                 ParamByName('code').Value:=Edkd.Text;
@@ -154,6 +168,7 @@ begin
                 ParamByName('group').Value:=EdKelompok.Text;
                 ParamByName('pic').Value:=nm;
                 ParamByName('group_id').Value:=group_id;
+                ParamByName('istarget').Value:=chAktifTarget.Checked;
 
       ExecSQL;
     end;
@@ -199,6 +214,14 @@ begin
       cbKategori.Items.Add(dm.Qtemp['category']);
     dm.Qtemp.Next;
     end;
+end;
+
+procedure TFNew_KelompokBarang.EdKelompokExit(Sender: TObject);
+begin
+  if statustr='0' then
+  begin
+    Edno.Text:=SelectRow('SELECT buat_singkatan('+QuotedStr(EdKelompok.Text)+');');
+  end;
 end;
 
 procedure TFNew_KelompokBarang.EdNm_akunButtonClick(Sender: TObject);

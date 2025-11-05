@@ -301,8 +301,9 @@ begin
         end;
       end;
       FNew_Pelanggan.Edkode.Enabled:=false;
-      FNew_Pelanggan.ShowModal;
+      FNew_Pelanggan.btGetVA.Visible:=True;
       Status:=0;
+      FNew_Pelanggan.ShowModal;
       Close;
     end;
   end;

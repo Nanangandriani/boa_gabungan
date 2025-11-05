@@ -171,8 +171,11 @@ end;
 procedure TFListReturPenjualan.ReportGetValue(const VarName: string;
   var Value: Variant);
 begin
+
   if CompareText(VarName, 'parSubTotal') = 0 then
   Value := dm.Qtemp.FieldValues['sub_total'];
+  if CompareText(VarName, 'parDPPNilaiLain') = 0 then
+  Value := dm.Qtemp.FieldValues['dpp_nilai_lain'];
   if CompareText(VarName, 'parPPN') = 0 then
   Value := dm.Qtemp.FieldValues['ppn_value'];
   if CompareText(VarName, 'parGrandTotal') = 0 then
@@ -182,7 +185,8 @@ end;
 procedure TFListReturPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FDataReturPenjualan.Clear;
-//  FDataReturPenjualan.Autonumber;
+  FDataReturPenjualan.BCorrection.Visible:=False;
+  FDataReturPenjualan.bSave.Enabled:=True;
   FDataReturPenjualan.MemDetail.EmptyTable;
   FDataReturPenjualan.Status:=0;
   FDataReturPenjualan.edNoTrans.Enabled:=true;
@@ -266,12 +270,20 @@ begin
       strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
       strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
       strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
+      edDPP.Value:=dm.Qtemp.FieldValues['sub_total'];
+      edDPPNilaiLain.Value:=dm.Qtemp.FieldValues['dpp_nilai_lain'];
+      edTotPPN.Value:=dm.Qtemp.FieldValues['ppn_value'];
+      edGrandTot.Value:=dm.Qtemp.FieldValues['grand_tot'];
+      StrNoINV:=dm.Qtemp.FieldValues['no_inv'];
+      IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
     end;
   end;
+
   FDataReturPenjualan.edNoTrans.Enabled:=false;
   FDataReturPenjualan.RefreshGrid;
-  FDataReturPenjualan.Show;
   FDataReturPenjualan.Status := 1;
+  FDataReturPenjualan.Show;
+
 end;
 
 procedure TFListReturPenjualan.dxBarLargeButton1Click(Sender: TObject);

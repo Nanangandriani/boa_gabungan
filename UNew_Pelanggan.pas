@@ -146,6 +146,12 @@ type
     Label50: TLabel;
     edAkunUangMuka: TRzButtonEdit;
     edNamaAkunUangMuka: TEdit;
+    Label51: TLabel;
+    Label52: TLabel;
+    edAkunRetur: TRzButtonEdit;
+    edNamaAkunRetur: TEdit;
+    btGetAkunPerkiraan: TRzBitBtn;
+    btGetVA: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -190,15 +196,15 @@ type
     procedure EdPasporChange(Sender: TObject);
     procedure EdnomorvaChange(Sender: TObject);
     procedure edCompanyCodeButtonClick(Sender: TObject);
-    procedure edCompanyCodeChange(Sender: TObject);
-    procedure EdkodewilayahChange(Sender: TObject);
     procedure edAkunUangMukaButtonClick(Sender: TObject);
+    procedure btGetAkunPerkiraanClick(Sender: TObject);
+    procedure btGetVAClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vid_prospek :Integer;
-    KodeHeaderPiutang,KodeHeaderPiutangLain,KodeHeaderUangMuka :string;
+    KodeHeaderPiutang,KodeHeaderPiutangLain,KodeHeaderUangMuka,KodeHeaderRetur :string;
     StatusErr:Boolean;
     procedure Clear;
     procedure Save;
@@ -213,6 +219,7 @@ type
     procedure UpdateStatusProspek;
     procedure DeleteProspekTmp;
     procedure GetVA;
+    procedure GetAkunPerkiraan;
 //    procedure CekTabDetailPelanggan;
 //    procedure CekTabAkunPerkiraanPelanggan;
   end;
@@ -251,6 +258,29 @@ begin
     Urut := 1
   else
     Urut := dm.Qtemp1.FieldByName('no_urut').AsInteger + 1;
+
+  kode := inttostr(Urut);
+  //kode := Copy('00000'+kode, length('00000'+kode)-4, 5);
+
+  if Length(kode)=1 then
+  begin
+    kode := '000'+kode;
+  end
+  else
+  if Length(kode)=2 then
+  begin
+    kode := '00'+kode;
+  end
+  else
+  if Length(kode)=3 then
+  begin
+    kode := '0'+kode;
+  end
+  else
+  if Length(kode)=4 then
+  begin
+    kode := kode;
+  end;
 
   Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text+kode;
 end;
@@ -593,58 +623,10 @@ var
   kode : String;
   Urut : Integer;
 begin
-//  With DM.Qtemp2 do
-//  begin
-//    Close;
-//    SQL.Clear;
-//    Sql.Text :=' select * from t_ak_account '+
-//               ' where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
-//    open;
-//  end;
-//
-//  if Dm.Qtemp2.RecordCount = 0 then urut := 1 else
-//  if Dm.Qtemp2.RecordCount > 0 then
-//  begin
-//      With Dm.Qtemp do
-//      begin
-//        Close;
-//        Sql.Clear;
-//        Sql.Text :=' select count(header_code) as hasil '+
-//                   ' from  t_ak_account where header_code='+QuotedSTR(KodeHeaderPiutang)+'  ';
-//        Open;
-//      end;
-//      Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
-//  end;
-//  edAkunPiutang.Clear;
-//  kode := inttostr(urut);
-//
-//  if Length(kode)=1 then
-//  begin
-//    kode := '0000'+kode;
-//  end
-//  else
-//  if Length(kode)=2 then
-//  begin
-//    kode := '000'+kode;
-//  end
-//  else
-//  if Length(kode)=3 then
-//  begin
-//    kode := '00'+kode;
-//  end
-//  else
-//  if Length(kode)=4 then
-//  begin
-//    kode := '0'+kode;
-//  end
-//  else
-//  if Length(kode)=5 then
-//  begin
-//    kode := kode;
-//  end;
-//  edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode;
   edAkunPiutang.Text := KodeHeaderPiutang+'.'+edkode.Text;
-  ShowMessage(KodeHeaderPiutang);
+  edAkunPiutangLainLain.Text:= KodeHeaderPiutangLain+'.'+edkode.Text;
+  edAkunUangMuka.Text:= KodeHeaderUangMuka+'.'+edkode.Text;
+  edAkunRetur.Text:= KodeHeaderRetur+'.'+edkode.Text;
 end;
 
 procedure TFNew_Pelanggan.Autocode_AkUangMuka;
@@ -755,6 +737,33 @@ begin
   EdPaspor.Text:='0';
   MemDetailPel.EmptyTable;
   edCompanyCode.Text;
+  edAkunRetur.Text:='';
+  edNamaAkunRetur.Text:='';
+  edAkunUangMuka.Text:='';
+  edNamaAkunUangMuka.Text:='';
+  edAkunPiutang.Text:='';
+  edNamaPiutang.Text:='';
+  edAkunPiutangLainLain.Text:='';
+  edNamaPiutangLain.Text:='';
+  btGetAkunPerkiraan.Visible:=False;
+  GetAkunPerkiraan;
+end;
+
+procedure TFNew_Pelanggan.GetAkunPerkiraan;
+var InitialAkPiutang,InitialAkUM,InitialPot,InitialRet : String;
+begin
+  KodeHeaderPiutang:='';
+  edAkunPiutang.Text:='';
+  edNamaPiutang.Text:='';
+  KodeHeaderPiutangLain:='';
+  edAkunPiutangLainLain.Text:='';
+  edNamaPiutangLain.Text:='';
+  KodeHeaderPiutang:='';
+  edAkunUangMuka.Text:='';
+  edNamaAkunUangMuka.Text:='';
+  KodeHeaderRetur:='';
+  edAkunRetur.Text:='';
+  edNamaAkunRetur.Text:='';
 
   with Dm.Qtemp2 do
   begin
@@ -763,27 +772,94 @@ begin
     sql.add(' SELECT * FROM (SELECT "code_module", "name_module", '+
             ' "code_trans", "name_trans", "description", "account_number_bank", '+
             ' "account_name_bank", "status_bill", "initial_code", "code_account", '+
-            ' "name_account", "code_account2", "name_account2",code_account_uang_muka,name_account_uang_muka '+
+            ' "name_account", "code_account2", "name_account2",code_account3,name_account3 '+
             ' from "public"."t_master_trans_account" '+
             ' where deleted_at is null and code_module=''1'' AND code_trans=''1.001'' '+
             ' order by code_module, account_number_bank, code_trans asc)xx ');
     open;
   end;
 
-  //Piutang
-  edAkunPiutang.Text:=Dm.Qtemp2.FieldByName('code_account').AsString;
-  KodeHeaderPiutang:=Dm.Qtemp2.FieldByName('code_account').AsString;
-  edNamaPiutang.Text:=Dm.Qtemp2.FieldByName('name_account').AsString;
+  // Retur Penjualan
+  with Dm.Qtemp3 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * FROM (SELECT "code_module", "name_module", '+
+            ' "code_trans", "name_trans", "description", "account_number_bank", '+
+            ' "account_name_bank", "status_bill", "initial_code", "code_account", '+
+            ' "name_account" '+
+            ' from "public"."t_master_trans_account" '+
+            ' where deleted_at is null and code_module=''1'' AND code_trans=''1.003'' '+
+            ' order by code_module, account_number_bank, code_trans asc)xx ');
+    open;
+  end;
 
-  //Akun Lain2
-  edAkunPiutangLainLain.Text:=Dm.Qtemp2.FieldByName('code_account2').AsString;
-  KodeHeaderPiutangLain:=Dm.Qtemp2.FieldByName('code_account2').AsString;
-  edNamaPiutangLain.Text:=Dm.Qtemp2.FieldByName('name_account2').AsString;
+  if edkode.Text='' then
+  begin
+    //Piutang
+    if dm.Qtemp2.FieldByName('code_account').AsString<>NULL then
+    begin
+      edAkunPiutang.Text:=Dm.Qtemp2.FieldByName('code_account').AsString;
+      KodeHeaderPiutang:=Dm.Qtemp2.FieldByName('code_account').AsString;
+      edNamaPiutang.Text:=Dm.Qtemp2.FieldByName('name_account').AsString;
+    end;
 
-//  Uang Muka
-//  KodeHeaderUangMuka:=Dm.Qtemp2.FieldByName('code_account_uang_muka').AsString;
-//  edAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('code_account_uang_muka').AsString;
-//  edNamaAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('name_account_uang_muka').AsString;
+    //Akun Potongan
+    if dm.Qtemp2.FieldByName('code_account2').AsString<>NULL then
+    begin
+      edAkunPiutangLainLain.Text:=Dm.Qtemp2.FieldByName('code_account2').AsString;
+      KodeHeaderPiutangLain:=Dm.Qtemp2.FieldByName('code_account2').AsString;
+      edNamaPiutangLain.Text:=Dm.Qtemp2.FieldByName('name_account2').AsString;
+    end;
+
+    //  Uang Muka
+    if dm.Qtemp2.FieldByName('code_account3').AsString<>NULL then
+    begin
+      KodeHeaderUangMuka:=Dm.Qtemp2.FieldByName('code_account3').AsString;
+      edAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('code_account3').AsString;
+      edNamaAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('name_account3').AsString;
+    end;
+
+    //Retur
+    if dm.Qtemp3.FieldByName('code_account').AsString<>NULL then
+    begin
+      KodeHeaderRetur:=Dm.Qtemp3.FieldByName('code_account').AsString;
+      edAkunRetur.Text:=Dm.Qtemp3.FieldByName('code_account').AsString;
+      edNamaAkunRetur.Text:=Dm.Qtemp3.FieldByName('name_account').AsString;
+    end;
+  end else if edkode.Text<>'' then begin
+    //Piutang
+    if dm.Qtemp2.FieldByName('code_account').AsString<>NULL then
+    begin
+      edAkunPiutang.Text:=Dm.Qtemp2.FieldByName('code_account').AsString+'.'+edkode.Text;
+      KodeHeaderPiutang:=Dm.Qtemp2.FieldByName('code_account').AsString;
+      edNamaPiutang.Text:=SelectRow('select initials from t_ak_account where code='+QuotedStr(KodeHeaderPiutang)+' ')+'. '+Ednama.Text;
+    end;
+
+    //Akun Potongan
+    if dm.Qtemp2.FieldByName('code_account2').AsString<>NULL then
+    begin
+      edAkunPiutangLainLain.Text:=Dm.Qtemp2.FieldByName('code_account2').AsString+'.'+edkode.Text;
+      KodeHeaderPiutangLain:=Dm.Qtemp2.FieldByName('code_account2').AsString;
+      edNamaPiutangLain.Text:=SelectRow('select initials from t_ak_account where code='+QuotedStr(KodeHeaderPiutangLain)+' ')+'. '+Ednama.Text;
+    end;
+
+    //  Uang Muka
+    if dm.Qtemp2.FieldByName('code_account3').AsString<>NULL then
+    begin
+      KodeHeaderUangMuka:=Dm.Qtemp2.FieldByName('code_account3').AsString;
+      edAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('code_account3').AsString+'.'+edkode.Text;
+      edNamaAkunUangMuka.Text:=SelectRow('select initials from t_ak_account where code='+QuotedStr(KodeHeaderUangMuka)+' ')+'. '+Ednama.Text;
+    end;
+
+    //Retur
+    if dm.Qtemp3.FieldByName('code_account').AsString<>NULL then
+    begin
+      KodeHeaderRetur:=Dm.Qtemp3.FieldByName('code_account').AsString;
+      edAkunRetur.Text:=Dm.Qtemp3.FieldByName('code_account').AsString+'.'+edkode.Text;
+      edNamaAkunRetur.Text:=SelectRow('select initials from t_ak_account where code='+QuotedStr(KodeHeaderRetur)+' ')+'. '+Ednama.Text;
+    end;
+  end;
 end;
 
 procedure TFNew_Pelanggan.EdemailKeyPress(Sender: TObject; var Key: Char);
@@ -883,19 +959,6 @@ begin
   FMasterData.ShowModal;
 end;
 
-procedure TFNew_Pelanggan.edCompanyCodeChange(Sender: TObject);
-begin
-  if Status=0 then
-  begin
-    if (edCompanyCode.Text<>'') AND (Edkodewilayah.Text<>'') then
-    begin
-      GetVA;
-    end else begin
-      Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text;
-    end;
-  end;
-end;
-
 procedure TFNew_Pelanggan.EdkodeKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = chr(13) then
@@ -980,11 +1043,13 @@ end;
 procedure TFNew_Pelanggan.FormShow(Sender: TObject);
 begin
    //Clear;
-   RefreshGrid;
-   //Autocode;
+  if Status=1 then
+  begin
+    RefreshGrid;
+    btGetAkunPerkiraan.Visible:=True;
+    btGetVA.Visible:=False;
+  end;
 
-//   Autocode;
-//   Autocode_AkPiutang;
 
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
@@ -1021,19 +1086,6 @@ procedure TFNew_Pelanggan.EdkodewilayahButtonClick(Sender: TObject);
 begin
   FMasterWilayah.vcall:='m_pelanggan';
   FMasterWilayah.Showmodal;
-end;
-
-procedure TFNew_Pelanggan.EdkodewilayahChange(Sender: TObject);
-begin
-  if Status=0 then
-  begin
-    if (edCompanyCode.Text<>'') AND (Edkodewilayah.Text<>'') then
-    begin
-      GetVA;
-    end else begin
-      Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text;
-    end;
-  end;
 end;
 
 procedure TFNew_Pelanggan.Update;
@@ -1077,6 +1129,8 @@ begin
               ' payment_term='+QuotedStr(Edtempo.Text)+', '+
               ' header_code_uang_muka='+QuotedStr(KodeHeaderUangMuka)+', '+
               ' account_code_uang_muka='+QuotedStr(edAkunUangMuka.Text)+', '+
+              ' header_code_retur='+QuotedStr(KodeHeaderRetur)+', '+
+              ' account_code_retur='+QuotedStr(edAkunRetur.Text)+', '+
               ' company_code_bank='+QuotedStr(edCompanyCode.Text)+', '+
               ' updated_at=now(), '+
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+', ');
@@ -1121,7 +1175,8 @@ begin
             ' code_head_office, name_head_office, '+
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
-            ' email,payment_term,created_at,created_by,sbu_code,company_code_bank,header_code_uang_muka,account_code_uang_muka, stat_pkp ) '+
+            ' email,payment_term,created_at,created_by,sbu_code,company_code_bank,header_code_uang_muka,'+
+            ' account_code_uang_muka,header_code_retur,account_code_retur, stat_pkp ) '+
             ' Values( '+
             ' '+QuotedStr(inttostr(vid_prospek))+', '+
             ' '+QuotedStr(Edkode.Text)+', '+
@@ -1158,7 +1213,8 @@ begin
             ' '+QuotedStr(Edtempo.Text)+', '+
             ' now(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+vsbu+','+QuotedStr(edCompanyCode.Text)+','+
-            ' '+QuotedStr(KodeHeaderUangMuka)+','+QuotedStr(edAkunUangMuka.Text)+',');
+            ' '+QuotedStr(KodeHeaderUangMuka)+','+QuotedStr(edAkunUangMuka.Text)+','+
+            ' '+QuotedStr(KodeHeaderRetur)+','+QuotedStr(edAkunRetur.Text)+',');
       if cbpkp.Checked=true then
       begin
         sql.add(' true);');
@@ -1246,6 +1302,10 @@ begin
   begin
     MessageDlg('Company Code Wajib Diisi..!!',mtInformation,[mbRetry],0);
     exit;
+  end else if Ednomorva.Text='' then
+  begin
+    MessageDlg('Nomor VA Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    exit;
   end else
   begin
     if not dm.Koneksi.InTransaction then
@@ -1256,9 +1316,7 @@ begin
       if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         Autocode;
-//        Autocode_AkPiutang;
-//        Autocode_AkPiutangLain;
-//        Autocode_AkUangMuka;
+        Autocode_AkPiutang;
         GetVA;
         Save;
         Dm.Koneksi.Commit;
@@ -1268,9 +1326,7 @@ begin
       if application.MessageBox('Apa Anda Yakin Merubah Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
 //        Autocode;
-//        Autocode_AkPiutang;
-//        Autocode_AkPiutangLain;
-//        Autocode_AkUangMuka;
+        Autocode_AkPiutang;
         Update;
         Dm.Koneksi.Commit;
       end;
@@ -1285,13 +1341,29 @@ begin
     end;
 //    FMainMenu.TampilTabForm2;
   end;
-
-
 end;
 
 procedure TFNew_Pelanggan.btBackStepClick(Sender: TObject);
 begin
   FNew_Pelanggan.RzPageControl2.ActivePage:=FNew_Pelanggan.TabMasterPelanggan;
+end;
+
+procedure TFNew_Pelanggan.btGetAkunPerkiraanClick(Sender: TObject);
+begin
+  GetAkunPerkiraan;
+end;
+
+procedure TFNew_Pelanggan.btGetVAClick(Sender: TObject);
+begin
+  if Status=0 then
+  begin
+    if (edCompanyCode.Text<>'') AND (Edkodewilayah.Text<>'') then
+    begin
+      GetVA;
+    end else begin
+      MessageDlg('Company Code dan Wilayah Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end;
+  end;
 end;
 
 procedure TFNew_Pelanggan.btJenisPelangganClick(Sender: TObject);

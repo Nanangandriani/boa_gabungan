@@ -78,7 +78,6 @@ begin
   //Query baca tempdetail jual
   if FNew_Penjualan.edNomorTrans.Text<>'' then
   begin
-
     with query2 do
     begin
       close;
@@ -170,45 +169,89 @@ begin
           first;
         end;
 
-        with dm.Qtemp do
+        if FNew_Penjualan.edNomorTrans.Text<>'' then
         begin
-          close;
-          sql.clear;
-          sql.add(' select group_name, e."unit_price" as hjual,  '+
-                  ' sum(e."unit_price"*a.amount) as total_value, sum(a.amount) as total_qty '+
-                  ' from t_selling_temp a '+
-                  ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
-                  ' on a.cust_code=b.customer_code '+
-                  ' LEFT JOIN t_item c on a.code_item=c.item_code '+
-                  ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
-                  ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-                  ' and c.item_code=e.code_item '+
-                  ' ');
-          sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' AND '+
-                  'a.id_master='+QuotedStr(get_uuid)+' '+
-                  ' GROUP BY group_name, e."unit_price", a.amount '+
-                  ' -- Baca qty dalam group kategori ');
-          open;
-          first;
-        end;
+          with dm.Qtemp do
+          begin
+            close;
+            sql.clear;
+            sql.add(' select group_name, e."unit_price" as hjual,  '+
+                    ' sum(e."unit_price"*a.amount) as total_value, sum(a.amount) as total_qty '+
+                    ' from t_selling_temp a '+
+                    ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+                    ' on a.cust_code=b.customer_code '+
+                    ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                    ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                    ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                    ' and c.item_code=e.code_item '+
+                    ' ');
+            sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' AND '+
+                    'a.trans_no='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
+                    ' GROUP BY group_name, e."unit_price", a.amount '+
+                    ' -- Baca qty dalam group kategori ');
+            open;
+            first;
+          end;
 
-        with dm.Qtemp1 do
-        begin
-          close;
-          sql.clear;
-          sql.add(' select a.code_item, sum(e."unit_price"*a.amount) as value_per_item '+
-                  ' from t_selling_temp a '+
-                  ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
-                  ' on a.cust_code=b.customer_code '+
-                  ' LEFT JOIN t_item c on a.code_item=c.item_code '+
-                  ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
-                  ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-                  ' and c.item_code=e.code_item '+
-                  ' WHERE a.id_master='+QuotedStr(get_uuid)+' '+
-                  ' GROUP BY a.code_item, e."unit_price", a.amount '+
-                  ' -- Baca qty dalam group barang');
-          open;
-          first;
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.clear;
+            sql.add(' select a.code_item, sum(e."unit_price"*a.amount) as value_per_item '+
+                    ' from t_selling_temp a '+
+                    ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+                    ' on a.cust_code=b.customer_code '+
+                    ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                    ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                    ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                    ' and c.item_code=e.code_item '+
+                    'WHERE a.trans_no='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
+                    ' GROUP BY a.code_item, e."unit_price", a.amount '+
+                    ' -- Baca qty dalam group barang');
+            open;
+            first;
+          end;
+        end else begin
+          with dm.Qtemp do
+          begin
+            close;
+            sql.clear;
+            sql.add(' select group_name, e."unit_price" as hjual,  '+
+                    ' sum(e."unit_price"*a.amount) as total_value, sum(a.amount) as total_qty '+
+                    ' from t_selling_temp a '+
+                    ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+                    ' on a.cust_code=b.customer_code '+
+                    ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                    ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                    ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                    ' and c.item_code=e.code_item '+
+                    ' ');
+            sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' AND '+
+                    'a.id_master='+QuotedStr(get_uuid)+' '+
+                    ' GROUP BY group_name, e."unit_price", a.amount '+
+                    ' -- Baca qty dalam group kategori ');
+            open;
+            first;
+          end;
+
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.clear;
+            sql.add(' select a.code_item, sum(e."unit_price"*a.amount) as value_per_item '+
+                    ' from t_selling_temp a '+
+                    ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
+                    ' on a.cust_code=b.customer_code '+
+                    ' LEFT JOIN t_item c on a.code_item=c.item_code '+
+                    ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
+                    ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
+                    ' and c.item_code=e.code_item '+
+                    ' WHERE a.id_master='+QuotedStr(get_uuid)+' '+
+                    ' GROUP BY a.code_item, e."unit_price", a.amount '+
+                    ' -- Baca qty dalam group barang');
+            open;
+            first;
+          end;
         end;
 
         AmbilDataKlasifikasi; //Cek Data Klasifikasi Umum/Grouping
@@ -368,13 +411,16 @@ begin
 
       if Dm.Qtemp2.FieldByName('perhitungan').value= 'T001' then  //TOTAL VALUE
       begin
+
         batastTotalValue:=Dm.Qtemp.fieldbyname('total_value').value;
+        ShowMessage(IntToStr(batastTotalValue));
         sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batastTotalValue))+' and '+
                 ' d.limit2 >= '+QuotedSTR(IntToStr(batastTotalValue))+'  LIMIT 1 ');
       end;
 
       if Dm.Qtemp2.FieldByName('perhitungan').value= 'T002' then  //TOTAL QTY
       begin
+
         batasTotalQty:=Dm.Qtemp.fieldbyname('total_qty').value;
         sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batasTotalQty))+' and '+
                 ' d.limit2 >= '+QuotedSTR(IntToStr(batasTotalQty))+'  LIMIT 1 ');

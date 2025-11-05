@@ -75,6 +75,7 @@ type
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActAppExecute(Sender: TObject);
+    procedure EdKategoriExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,7 +92,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule,UNew_Barang, UMainMenu, UKategori_Barang, UCari_DaftarPerk;
+uses UDataModule,UNew_Barang, UMainMenu, UKategori_Barang, UCari_DaftarPerk,
+  UMy_Function;
 
 var RealFNew_KategoriBarang: TFNew_KategoriBarang;
 function FNew_KategoriBarang: TFNew_KategoriBarang;
@@ -117,7 +119,8 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_item_type where deleted_at isnull order by created_by ';
+    sql.Text:=' select DISTINCT type from t_item_type '+
+              ' where deleted_at isnull ';
     open;
   end;
     dm.Qtemp.First;
@@ -141,8 +144,8 @@ begin
                 ParamByName('ct').Value:=EdKategori.Text;
                 ParamByName('jn').Value:=id_type;
                 ParamByName('kd_akun').Value:=Edkd_akun.Text;
-                ParamByName('code').Value:=Edkd.Text;
                 ParamByName('no').Value:=Edno.Text;
+                ParamByName('code').Value:=Edkd.Text;
       ExecSQL;
     end;
   end;
@@ -212,8 +215,10 @@ begin
     EdJenis.Text:=Qkategori['type'];
     id_type:=Qkategori['type_id'];
     EdKategori.Text:=Qkategori['category'];
-    Edkd_akun.Text:=Qkategori['account_code'];
-    EdNm_akun.Text:=Qkategori['account_name'];
+//    Edkd_akun.Text:=Qkategori['account_code'];
+//    EdNm_akun.Text:=Qkategori['account_name'];
+    Edkd_akun.Text:='';
+    EdNm_akun.Text:='';
     EdKategori.Text:=Qkategori['category'];
     Edno.Text:=Qkategori['order_no'];
   end;
@@ -233,11 +238,19 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='select * from t_item_type where type='+QuotedStr(EdJenis.Text);
+  sql.Text:='select DISTINCT type, type_id from t_item_type where type='+QuotedStr(EdJenis.Text);
   ExecSQL;
 end;
 //  Edkd_akun1.Text:=Dm.Qtemp['akun_code'];
   id_type:=dm.Qtemp['type_id'];
+end;
+
+procedure TFNew_KategoriBarang.EdKategoriExit(Sender: TObject);
+begin
+  if statustr=0 then
+  begin
+    Edno.Text:=SelectRow('SELECT buat_singkatan('+QuotedStr(EdKategori.Text)+');');
+  end;
 end;
 
 procedure TFNew_KategoriBarang.EdKategoriKeyPress(Sender: TObject;

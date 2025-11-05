@@ -123,22 +123,23 @@ procedure TFReturPenjualan_Sumber.DBGrid_SumberOrderDblClick(Sender: TObject);
 begin
   if vcall='getfaktur' then
   begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select sisa_piutang from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(MemDetail['no_trans']);
-      Open;
-    end;
-
-    if dm.Qtemp.FieldValues['sisa_piutang']<=0 then
-    begin
-      MessageDlg('Sisa Piutang sudah 0',mtInformation,[mbRetry],0);
-    end else
-    begin
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Text:='select sisa_piutang from get_piutang_invoice(NOW()::date) where trans_no='+QuotedStr(MemDetail['no_trans']);
+//      Open;
+//    end;
+//
+//    if dm.Qtemp.FieldValues['sisa_piutang']<=0 then
+//    begin
+//      MessageDlg('Sisa Piutang sudah 0',mtInformation,[mbRetry],0);
+//    end else
+//    begin
       FDataReturPenjualan.edNoFaktur.Text:=MemDetail['no_faktur'];
       FDataReturPenjualan.StrNoINV:=MemDetail['no_trans'];
-    end;
+      FDataReturPenjualan.StrTglFaktur:=formatdatetime('yyyy-mm-dd',MemDetail['date_trans']) ;
+//    end;
 //    FDataReturPenjualan.grand_tot_selling:=MemDetail['grand_tot'];
 //    FDataReturPenjualan.grand_tot_returns:=MemDetail['grand_tot_returns'];
   end;
@@ -151,7 +152,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' select *,COALESCE((SELECT SUM(grand_tot) grand_tot FROM t_sales_returns where no_inv= aa.trans_no AND deleted_at is NULL group by no_inv),0) grand_tot_returns  from ('+
+    sql.add(' select DISTINCT *,COALESCE((SELECT SUM(grand_tot) grand_tot FROM t_sales_returns where no_inv= aa.trans_no AND deleted_at is NULL group by no_inv),0) grand_tot_returns  from ('+
             ' select trans_no, no_inv_tax, trans_date, code_cust, name_cust, code_source, '+
             ' name_source, no_reference,grand_tot from  get_selling(NULL) '+
             ' where deleted_at is null order by created_at Desc) aa ');

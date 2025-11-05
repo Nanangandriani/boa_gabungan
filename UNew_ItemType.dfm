@@ -23,7 +23,7 @@ object FNew_ItemType: TFNew_ItemType
     Height = 32
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 514
+    ExplicitWidth = 512
     object BBatal: TRzBitBtn
       Left = 442
       Top = 1
@@ -84,7 +84,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 438
+      ExplicitLeft = 436
     end
     object BSimpan: TRzBitBtn
       Left = 292
@@ -146,7 +146,7 @@ object FNew_ItemType: TFNew_ItemType
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 288
+      ExplicitLeft = 286
     end
     object BRefresh: TRzBitBtn
       Left = 367
@@ -208,7 +208,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 363
+      ExplicitLeft = 361
     end
     object Btambah: TRzBitBtn
       Left = 217
@@ -270,7 +270,7 @@ object FNew_ItemType: TFNew_ItemType
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 213
+      ExplicitLeft = 211
     end
   end
   object DBGridEh7: TDBGridEh
@@ -304,6 +304,15 @@ object FNew_ItemType: TFNew_ItemType
         Footers = <>
         Title.Caption = 'Jenis'
         Width = 215
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_name'
+        Footers = <>
+        Title.Caption = 'Nama Akun'
+        Width = 250
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -317,7 +326,7 @@ object FNew_ItemType: TFNew_ItemType
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 514
+    ExplicitWidth = 512
     object Label2: TLabel
       Left = 21
       Top = 25
@@ -377,6 +386,6 @@ object FNew_ItemType: TFNew_ItemType
   object DsType: TDataSource
     DataSet = QType
     Left = 317
-    Top = 208
+    Top = 192
   end
 end
