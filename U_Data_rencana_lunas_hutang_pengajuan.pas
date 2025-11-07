@@ -26,7 +26,6 @@ type
     TabSheet2: TRzTabSheet;
     TabSheet3: TRzTabSheet;
     DBGridEh1: TDBGridEh;
-    DBGridEh2: TDBGridEh;
     DBGridEh3: TDBGridEh;
     QdataRencana: TUniQuery;
     DSRenana: TDataSource;
@@ -64,10 +63,47 @@ type
     DSMemRencana: TDataSource;
     RzPanel3: TRzPanel;
     btn_proses: TRzBitBtn;
+    DSRencanaNonHutang: TDataSource;
+    QdataRencanaNonHutang: TUniQuery;
+    StringField1: TStringField;
+    LargeintField1: TLargeintField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    DateField1: TDateField;
+    StringField6: TStringField;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    DateField2: TDateField;
+    DateField3: TDateField;
+    DateField4: TDateField;
+    DateField5: TDateField;
+    DateField6: TDateField;
+    DateField7: TDateField;
+    FloatField1: TFloatField;
+    FloatField2: TFloatField;
+    SmallintField1: TSmallintField;
+    IntegerField1: TIntegerField;
+    StringField9: TStringField;
+    FloatField3: TFloatField;
+    FloatField4: TFloatField;
+    BooleanField1: TBooleanField;
+    StringField10: TStringField;
+    SmallintField2: TSmallintField;
+    StringField11: TStringField;
+    StringField12: TStringField;
+    StringField13: TStringField;
+    DBGridEh2: TDBGridEh;
+    RzPanel4: TRzPanel;
+    btn_proses2: TRzBitBtn;
     procedure FormShow(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure BCariClick(Sender: TObject);
     procedure btn_prosesClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -78,6 +114,7 @@ type
   end;
 
 var
+//function
   FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan;
 
 implementation
@@ -85,58 +122,126 @@ implementation
 {$R *.dfm}
 
 uses UDataKolektor, UDataModule, USearch_Supplier,
-  UDataPengajuanPengeluaranKasBank;
+  UDataPengajuanPengeluaranKasBank, UMainMenu;
+
+//var
+  //RealFDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan;
+
+{function FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan;
+begin
+  if RealFDataRencanaLunasHutangPengajuan <> nil then
+     FDataRencanaLunasHutangPengajuan:=RealFDataRencanaLunasHutangPengajuan
+  else
+     Application.CreateForm(TFDataRencanaLunasHutangPengajuan,Result);
+end;}
 
 procedure TFDataRencanaLunasHutangPengajuan.BCariClick(Sender: TObject);
 var query :string;
     URUTAN_KE : Integer;
 begin
     query:='SELECT a.*,b.supplier_name FROM t_paid_debt_det A '+
-           'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ';
+               'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ';
 
-    with dm.Qtemp do
+    if vcall='Pelunasan_Hutang' then
     begin
-       close;
-       sql.clear;
-       sql.add(query);
-       if (Length(cbsupp.Text)=0)   then
-         begin
-           sql.add('where a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
-           sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
-         end
-         else
-         begin
-           sql.add('where a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
-           sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
-         end;
-       open;
-    end;
-    MemDataRencana.active:=false;
-    MemDataRencana.active:=true;
-    MemDataRencana.EmptyTable;
+        with dm.Qtemp do
+        begin
+           close;
+           sql.clear;
+           sql.add(query);
+           if (Length(cbsupp.Text)=0)   then
+             begin
+               sql.add('where a.source_plan_id=1 and a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               //sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
+               sql.add('order by a.supplier_code,a.faktur_no');
+             end
+             else
+             begin
+               sql.add('where a.source_plan_id=1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               //sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
+               sql.add('order by a.supplier_code,a.faktur_no');
+             end;
+           open;
+        end;
+        MemDataRencana.active:=false;
+        MemDataRencana.active:=true;
+        MemDataRencana.EmptyTable;
 
-    if  Dm.Qtemp.RecordCount<>0 then
+        if  Dm.Qtemp.RecordCount<>0 then
+        begin
+          Dm.Qtemp.first;
+          while not Dm.Qtemp.Eof do
+          begin
+             MemDataRencana.insert;
+             MemDataRencana['supplier_code']:=Dm.Qtemp.FieldByName('supplier_code').AsString;
+             MemDataRencana['supplier_name']:=Dm.Qtemp.FieldByName('supplier_name').AsString;
+             MemDataRencana['sj_no']:=Dm.Qtemp.FieldByName('sj_no').AsString;
+             MemDataRencana['inv_no']:=Dm.Qtemp.FieldByName('inv_no').AsString;
+             MemDataRencana['faktur_no']:=Dm.Qtemp.FieldByName('faktur_no').AsString;
+             MemDataRencana['faktur_date']:=Dm.Qtemp.FieldByName('faktur_date').AsString;
+             MemDataRencana['paid_date']:=Dm.Qtemp.FieldByName('paid_date').AsString;
+             MemDataRencana['periode1']:=Dm.Qtemp.FieldByName('periode1').AsDateTime;
+             MemDataRencana['periode2']:=Dm.Qtemp.FieldByName('periode2').AsDateTime;
+             MemDataRencana['amount']:=Dm.Qtemp.FieldByName('amount').value;
+             MemDataRencana['source_id']:=Dm.Qtemp.FieldByName('source_plan_id').value;
+             MemDataRencana['plan_to']:=Dm.Qtemp.FieldByName('plan_to').AsString;
+             MemDataRencana['pilih']:=0;
+             MemDataRencana.post;
+             Dm.Qtemp.next;
+          end;
+        end;
+    end
+    else
+    if vcall='Pelunasan_Non_Hutang' then
     begin
-      Dm.Qtemp.first;
-      while not Dm.Qtemp.Eof do
-      begin
-         MemDataRencana.insert;
-         MemDataRencana['supplier_code']:=Dm.Qtemp.FieldByName('supplier_code').AsString;
-         MemDataRencana['supplier_name']:=Dm.Qtemp.FieldByName('supplier_name').AsString;
-         MemDataRencana['sj_no']:=Dm.Qtemp.FieldByName('sj_no').AsString;
-         MemDataRencana['inv_no']:=Dm.Qtemp.FieldByName('inv_no').AsString;
-         MemDataRencana['faktur_no']:=Dm.Qtemp.FieldByName('faktur_no').AsString;
-         MemDataRencana['faktur_date']:=Dm.Qtemp.FieldByName('faktur_date').AsString;
-         MemDataRencana['paid_date']:=Dm.Qtemp.FieldByName('paid_date').AsString;
-         MemDataRencana['periode1']:=Dm.Qtemp.FieldByName('periode1').AsDateTime;
-         MemDataRencana['periode2']:=Dm.Qtemp.FieldByName('periode2').AsDateTime;
-         MemDataRencana['amount']:=Dm.Qtemp.FieldByName('amount').value;
-         MemDataRencana['plan_to']:=Dm.Qtemp.FieldByName('plan_to').AsString;
-         MemDataRencana['pilih']:=0;
-         MemDataRencana.post;
-         Dm.Qtemp.next;
-      end;
+        with dm.Qtemp do
+        begin
+           close;
+           sql.clear;
+           sql.add(query);
+           if (Length(cbsupp.Text)=0)   then
+             begin
+               sql.add('where a.source_plan_id<>1 and a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               sql.add('order by a.supplier_code,a.faktur_no');
+             end
+             else
+             begin
+               sql.add('where a.source_plan_id<>1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               sql.add('order by a.supplier_code,a.faktur_no');
+             end;
+           open;
+        end;
+        MemDataRencana.active:=false;
+        MemDataRencana.active:=true;
+        MemDataRencana.EmptyTable;
+
+        if  Dm.Qtemp.RecordCount<>0 then
+        begin
+          Dm.Qtemp.first;
+          while not Dm.Qtemp.Eof do
+          begin
+             MemDataRencana.insert;
+             MemDataRencana['supplier_code']:=Dm.Qtemp.FieldByName('supplier_code').AsString;
+             MemDataRencana['supplier_name']:=Dm.Qtemp.FieldByName('supplier_name').AsString;
+             MemDataRencana['sj_no']:=Dm.Qtemp.FieldByName('sj_no').AsString;
+             MemDataRencana['inv_no']:=Dm.Qtemp.FieldByName('inv_no').AsString;
+             MemDataRencana['faktur_no']:=Dm.Qtemp.FieldByName('faktur_no').AsString;
+             //MemDataRencana['faktur_date']:=Dm.Qtemp.FieldByName('faktur_date').AsString;
+             //MemDataRencana['paid_date']:=Dm.Qtemp.FieldByName('paid_date').AsString;
+             MemDataRencana['periode1']:=Dm.Qtemp.FieldByName('periode1').AsDateTime;
+             MemDataRencana['periode2']:=Dm.Qtemp.FieldByName('periode2').AsDateTime;
+             MemDataRencana['amount']:=Dm.Qtemp.FieldByName('amount').value;
+             MemDataRencana['plan_to']:=Dm.Qtemp.FieldByName('plan_to').AsString;
+             MemDataRencana['source_id']:=Dm.Qtemp.FieldByName('source_plan_id').value;
+             MemDataRencana['pilih']:=0;
+             MemDataRencana.post;
+             Dm.Qtemp.next;
+          end;
+        end;
+
     end;
+
+
 
     {if  Dm.Qtemp.RecordCount=0 then
     begin
@@ -159,12 +264,37 @@ begin
     FSearch_Supplier.ShowModal;
 end;
 
+procedure TFDataRencanaLunasHutangPengajuan.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   //Action:=CaFree;
+end;
+
+procedure TFDataRencanaLunasHutangPengajuan.FormCreate(Sender: TObject);
+begin
+   //RealFDataRencanaLunasHutangPengajuan:=self;
+end;
+
+procedure TFDataRencanaLunasHutangPengajuan.FormDestroy(Sender: TObject);
+begin
+   //RealFDataRencanaLunasHutangPengajuan:=nil;
+end;
+
 procedure TFDataRencanaLunasHutangPengajuan.FormShow(Sender: TObject);
 begin
-   TabSheet2.TabVisible:=false;
-   TabSheet3.TabVisible:=false;
-   //if QdataRencana.Active=false then
-      //QdataRencana.Active:=true;
+   if vcall='Pelunasan_Hutang' then
+   begin
+      PGC1.ActivePage:=TabSheet1;
+      TabSheet2.TabVisible:=true;
+      TabSheet2.TabVisible:=false;
+   end
+   else
+   if vcall='Pelunasan_Non_Hutang' then
+   begin
+     PGC1.ActivePage:=TabSheet2;
+     TabSheet1.TabVisible:=false;
+     TabSheet2.TabVisible:=true;
+   end;
    dtmulai.Date:=Now;
    dtselesai.Date:=Now;
    BCariClick(sender);
@@ -176,6 +306,10 @@ var
 begin
    Status:=0;
    rec:=0;
+
+      if vcall='Pelunasan_Hutang' then
+      begin
+
       {if not dm.Koneksi.InTransaction then
              dm.Koneksi.StartTransaction;
       try}
@@ -234,8 +368,9 @@ begin
              FDataPengajuanPengeluaranKasBank.dtPeriode1.Date:=MemDataRencana['periode1'];
              FDataPengajuanPengeluaranKasBank.dtPeriode2.Date:=MemDataRencana['periode2'];
              FDataPengajuanPengeluaranKasBank.Ed_kepada.Text:=MemDataRencana['supplier_name'];
-             FDataPengajuanPengeluaranKasBank.Ed_nocek.Text:=MemDataRencana['cek_no'];
-             FDataPengajuanPengeluaranKasBank.tgl_cek.Date:=MemDataRencana['cek_date'];
+             FDataPengajuanPengeluaranKasBank.edKodeSumberPengeluaran.Text:=MemDataRencana['source_id'];
+             //FDataPengajuanPengeluaranKasBank.Ed_nocek.Text:=MemDataRencana['cek_no'];
+             //FDataPengajuanPengeluaranKasBank.tgl_cek.Date:=MemDataRencana['cek_date'];
            end;
       {end
       Except on E :Exception do
@@ -247,6 +382,110 @@ begin
         end;}
       end;
       Close;
+
+
+      end
+      else
+      if vcall='Pelunasan_Non_Hutang' then
+      begin
+         if MemDataRencana.RecordCount=0 then
+         begin
+            MessageDlg('Tidak Ada Data',mtInformation,[mbRetry],0);
+         end
+         else if Status = 0 then
+         begin
+           //cek ada yang di tandai tidak
+           MemDataRencana.First;
+           while not MemDataRencana.Eof do
+           begin
+             if MemDataRencana['pilih']=true then
+             begin
+              rec:=rec+1;
+             end;
+           MemDataRencana.Next;
+           end;
+
+           if rec=0 then
+           begin
+             ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
+             exit;
+           end;
+
+           //data di tandai kirm ke daftar rencana pelunasan
+           if rec>0 then
+           begin
+             FDataPengajuanPengeluaranKasBank.MemDetailHutang.active:=false;
+             FDataPengajuanPengeluaranKasBank.MemDetailHutang.active:=true;
+             FDataPengajuanPengeluaranKasBank.MemDetailHutang.EmptyTable;
+
+             MemDataRencana.First;
+             while not MemDataRencana.Eof do
+             begin
+               if MemDataRencana['pilih']=true then
+               begin
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang.insert;
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_tagihan']:=MemDataRencana['inv_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_sj']:=MemDataRencana['sj_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_faktur']:=MemDataRencana['faktur_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['tgl_faktur']:=MemDataRencana['faktur_date'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['jum_hutang']:=MemDataRencana['amount'];
+                    //FDataPengajuanPengeluaranKasBank.MemDetailHutang['keterangan']:='EX.'+formatdatetime('dd/mm/yyyy',MemDataRencana['faktur_date'].Date)+' No.Faktur : '+MemDataRencana['faktur_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang['keterangan']:='No.Faktur : '+MemDataRencana['faktur_no'];
+                    FDataPengajuanPengeluaranKasBank.MemDetailHutang.post;
+               end;
+               MemDataRencana.Next;
+             end;
+             FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=MemDataRencana['supplier_code'];
+             FDataPengajuanPengeluaranKasBank.ednama_supplier.Text:=MemDataRencana['supplier_name'];
+             FDataPengajuanPengeluaranKasBank.CbRencana.Text:=MemDataRencana['plan_to'];
+             FDataPengajuanPengeluaranKasBank.EdJumlah.Text:=MemDataRencana['amount'];
+             FDataPengajuanPengeluaranKasBank.dtPeriode1.Date:=MemDataRencana['periode1'];
+             FDataPengajuanPengeluaranKasBank.dtPeriode2.Date:=MemDataRencana['periode2'];
+             FDataPengajuanPengeluaranKasBank.Ed_kepada.Text:=MemDataRencana['supplier_name'];
+             FDataPengajuanPengeluaranKasBank.edKodeSumberPengeluaran.Text:=MemDataRencana['source_id'];
+             //FDataPengajuanPengeluaranKasBank.Ed_nocek.Text:=MemDataRencana['cek_no'];
+             //FDataPengajuanPengeluaranKasBank.tgl_cek.Date:=MemDataRencana['cek_date'];
+           end;
+      {end
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;}
+           if MemDataRencana['source_id']='2' then
+           with dm.QTemp do
+           begin
+              close;
+              sql.Clear;
+              sql.Text:='select concat(''PEMBAYARAN UANG MUKA '', array_to_string(ARRAY(SELECT concat '+
+                        '(d.item_name,'''',sum(d.qty),'' '',d.unit,'' '') || '' '' FROM '+
+                        '(select r.po_no,r.item_stock_code,f.item_name,r.qty,r.unit,r.detail_id from t_podetail r '+
+                        'left join (SELECT DISTINCT item_stock_code,item_name from t_item_stock) f '+
+                        'on r.item_stock_code=f.item_stock_code) d where d.po_no IN '+
+                        '(select voucher_no from t_payment_detail_submission where username='+QuotedStr(Nm)+') GROUP BY d.detail_id,d.item_name,d.unit), '', '') ) ket ';
+
+              open;
+           end;
+
+           with dm.QTemp1 do
+           begin
+              close;
+              sql.Clear;
+              sql.Text:='select  array_to_string(ARRAY(select DISTINCT b.account_name from t_po a '+
+                        'left join v_ak_account b on a.um_account_code=b.account_code2 where a.po_no in '+
+                        '(select voucher_no from t_payment_detail_submission where username='+QuotedStr(Nm)+')), '', '') nama_perkiraan';
+              open;
+           end;
+           FDataPengajuanPengeluaranKasBank.edUntukPengeluaran.Text:=dm.Qtemp1.FieldByName('nama_perkiraan').AsString;
+           FDataPengajuanPengeluaranKasBank.MemKeterangan.Text:=dm.Qtemp.FieldByName('ket').AsString;
+
+      end;
+      Close;
+      end;
+
+
 
 end;
 

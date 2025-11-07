@@ -169,7 +169,7 @@ type
   public
   { Public declarations }
     id_master, jenis_pelanggan : string ;
-    Status : Integer;
+    Status,StatusNonGroup : Integer;
     procedure Clear;
     procedure RefreshGrid;
     procedure RefreshGrid_Group;
@@ -562,46 +562,52 @@ begin
     open;
   end;
 
+  if (Dm.Qtemp3.RecordCount>0) AND (StatusNonGroup=0) then
+  begin
+    MessageDlg('Data Sudah Ada Silahkan Melakukan Pengajuan Koreksi ..!!',mtInformation,[mbRetry],0);
+  end else begin
 
-  if not dm.Koneksi.InTransaction then
-   dm.Koneksi.StartTransaction;
-  try
-    if (edkd_jenis_usaha.Text='') OR (edkd_jenis_usaha.Text='0') then
-    begin
-      MessageDlg('Jenis Usaha Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-      edkd_jenis_usaha.SetFocus;
-    end
-    else if (edkd_jenis_pel.Text='') OR (edkd_jenis_pel.Text='0') then
-    begin
-      MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-      edkd_jenis_pel.SetFocus;
-    end
-    else if (edkd_kategori.Text='') OR (edkd_kategori.Text='0') then
-    begin
-      MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
-      edkd_kategori.SetFocus;
-    end
-    else if Dm.Qtemp3.RecordCount=0 then
-    begin
-    if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-    begin
-      Save;
-      Dm.Koneksi.Commit;
-    end;
-    end
-    else if Dm.Qtemp3.RecordCount<>0 then
-    begin
-    if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-    begin
-      Update;
-      Dm.Koneksi.Commit;
-    end;
-  end;
-  Except on E :Exception do
-    begin
+
+    if not dm.Koneksi.InTransaction then
+     dm.Koneksi.StartTransaction;
+    try
+      if (edkd_jenis_usaha.Text='') OR (edkd_jenis_usaha.Text='0') then
       begin
-        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-        Dm.koneksi.Rollback ;
+        MessageDlg('Jenis Usaha Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edkd_jenis_usaha.SetFocus;
+      end
+      else if (edkd_jenis_pel.Text='') OR (edkd_jenis_pel.Text='0') then
+      begin
+        MessageDlg('Jenis Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edkd_jenis_pel.SetFocus;
+      end
+      else if (edkd_kategori.Text='') OR (edkd_kategori.Text='0') then
+      begin
+        MessageDlg('Kategori Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        edkd_kategori.SetFocus;
+      end
+      else if Dm.Qtemp3.RecordCount=0 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        Save;
+        Dm.Koneksi.Commit;
+      end;
+      end
+      else if Dm.Qtemp3.RecordCount<>0 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        Update;
+        Dm.Koneksi.Commit;
+      end;
+    end;
+    Except on E :Exception do
+      begin
+        begin
+          MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+          Dm.koneksi.Rollback ;
+        end;
       end;
     end;
   end;
@@ -848,6 +854,7 @@ begin
   MemGroup.Active:=Active;
   MemMaster.Active:=False;
   MemMaster.Active:=Active;
+  rgPajak.ItemIndex:=0;
   MemKlasifikasi.EmptyTable;
   MemGroup.EmptyTable;
   MemMaster.EmptyTable;

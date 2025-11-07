@@ -216,6 +216,7 @@ begin
   FDaftarKlasifikasi.BCorrection.Visible:=False;
   FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
   FDaftarKlasifikasi.Panel3.Enabled:=True;
+  FDaftarKlasifikasi.StatusNonGroup:=0;
   FDaftarKlasifikasi.ShowModal;
 end;
 
@@ -287,6 +288,7 @@ begin
   FDaftarKlasifikasi.RefreshGrid;
 
   FDaftarKlasifikasi.Panel3.Enabled:=False;
+  FDaftarKlasifikasi.StatusNonGroup:=1;
   FDaftarKlasifikasi.ShowModal;
 end;
 

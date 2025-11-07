@@ -98,14 +98,14 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Debug>true</VerInfo_Debug>
-        <VerInfo_MinorVer>15</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.15.0.5;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.15.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>16</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.16.0.6;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.16.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_Build>5</VerInfo_Build>
+        <VerInfo_Build>6</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1272,6 +1272,10 @@
         </DCCReference>
         <DCCReference Include="UListUangMukaPenjualan.pas">
             <Form>FListUangMukaPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UbrowseUangMukaPenjualan.pas">
+            <Form>FbrowseUangMukaPenjualan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

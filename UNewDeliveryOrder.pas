@@ -700,8 +700,8 @@ var
 begin
   try
 //  IntTitikTambahan:=StrToInt(spTotalTitik.Text)-1;
-//  notrans:=edKodeJenisKendMuatan.Text;
-  notrans:='DO/001/13/III/2025/HLJ';
+  notrans:=edKodeDOMuatan.Text;
+//  notrans:='DO/001/13/III/2025/HLJ';
   //BaseUrl:=edBaseURL.Text;
   BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
   key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');

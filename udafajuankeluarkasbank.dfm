@@ -645,6 +645,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 1034
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

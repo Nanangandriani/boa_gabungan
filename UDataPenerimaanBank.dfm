@@ -442,8 +442,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 976
-      ExplicitTop = 3
+      ExplicitLeft = 978
     end
     object Edautocode: TEdit
       Left = 503
@@ -473,16 +472,18 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1133
     Height = 249
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 1129
     ExplicitHeight = 248
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1125
+      ExplicitHeight = 223
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -505,9 +506,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
               item
                 OnClick = DBGridAkunColumns5EditButtons0Click
               end>
-            FieldName = 'kd_header_akun'
+            FieldName = 'kd_akun'
             Footers = <>
             Title.Caption = 'Kode Akun'
+            Width = 199
           end
           item
             CellButtons = <>
@@ -575,8 +577,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1125
-      ExplicitHeight = 223
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -658,7 +658,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     TabOrder = 3
     ExplicitWidth = 1129
     object gbDataPiutang: TGroupBox
-      Left = 0
+      Left = 501
       Top = 0
       Width = 501
       Height = 96
@@ -701,7 +701,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       end
     end
     object gbDataBank: TGroupBox
-      Left = 501
+      Left = 1002
       Top = 0
       Width = 612
       Height = 96
@@ -829,6 +829,95 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = edNMSumberTagihanButtonClick
+      end
+    end
+    object gbDataSumberPenerimaan: TGroupBox
+      Left = 0
+      Top = 0
+      Width = 501
+      Height = 96
+      Align = alLeft
+      Caption = 'Data Sumber Penerimaan'
+      TabOrder = 2
+      object Label25: TLabel
+        Left = 20
+        Top = 19
+        Width = 41
+        Height = 15
+        Caption = 'Sumber'
+      end
+      object Label26: TLabel
+        Left = 117
+        Top = 19
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label27: TLabel
+        Left = 20
+        Top = 43
+        Width = 67
+        Height = 15
+        Caption = 'No Referensi'
+      end
+      object Label28: TLabel
+        Left = 117
+        Top = 43
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label29: TLabel
+        Left = 20
+        Top = 70
+        Width = 91
+        Height = 15
+        Caption = 'Nama Pelanggan'
+      end
+      object Label30: TLabel
+        Left = 117
+        Top = 70
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object edNoRefSumberPenerimaan: TRzButtonEdit
+        Left = 130
+        Top = 40
+        Width = 199
+        Height = 23
+        Text = ''
+        TabOrder = 0
+        AllowKeyEdit = False
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edNoRefSumberPenerimaanButtonClick
+      end
+      object edNamaPelangganSumber: TEdit
+        Left = 130
+        Top = 67
+        Width = 354
+        Height = 23
+        ReadOnly = True
+        TabOrder = 1
+        OnChange = edNamaPelangganSumberChange
+      end
+      object cbSumberPenerimaan: TRzComboBox
+        Left = 130
+        Top = 14
+        Width = 260
+        Height = 23
+        TabOrder = 2
+        OnChange = cbSumberPenerimaanChange
+      end
+      object edKodePelangganSumber: TEdit
+        Left = 383
+        Top = 38
+        Width = 76
+        Height = 23
+        ReadOnly = True
+        TabOrder = 3
+        Visible = False
       end
     end
   end

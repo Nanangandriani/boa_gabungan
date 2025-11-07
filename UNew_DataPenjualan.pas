@@ -993,7 +993,7 @@ begin
       MemDetail.Next;
     end;
 
-//    ShowMessage('Total Group '+IntToStr(IntTotGroup));
+//  ShowMessage('Total Group '+IntToStr(IntTotGroup));
     if IntTotGroup>1 then FRincianPot_Penjualan.jenis_jual:='T002'
     else
     FRincianPot_Penjualan.jenis_jual:='T001';

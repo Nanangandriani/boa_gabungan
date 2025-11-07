@@ -539,8 +539,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 725
-      ExplicitTop = -2
+      ExplicitLeft = 715
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1

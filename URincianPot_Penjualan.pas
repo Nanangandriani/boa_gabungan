@@ -413,7 +413,7 @@ begin
       begin
 
         batastTotalValue:=Dm.Qtemp.fieldbyname('total_value').value;
-        ShowMessage(IntToStr(batastTotalValue));
+//        ShowMessage(IntToStr(batastTotalValue));
         sql.add(' and d.limit1 <= '+QuotedSTR(IntToStr(batastTotalValue))+' and '+
                 ' d.limit2 >= '+QuotedSTR(IntToStr(batastTotalValue))+'  LIMIT 1 ');
       end;

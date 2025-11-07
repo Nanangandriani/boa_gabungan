@@ -614,24 +614,24 @@ begin
     status_pakai_terbilang:= 2;
     Value := '(  '+terbilang(FloatToStr(QCetakSJ.FieldByName('amount').AsFloat))+'  )  '+ QCetakSJ.FieldByName('code_unit').Asstring;
   end;
-  if (dm.Qtemp.FieldValues['company_code_bank']=NULL) OR
-    (dm.Qtemp.FieldValues['company_code_bank']='') OR (dm.Qtemp.FieldValues['number_va']=NULL) OR
-    (dm.Qtemp.FieldValues['number_va']='') OR (dm.Qtemp.FieldValues['va_name']=NULL) OR (dm.Qtemp.FieldValues['va_name']='') then
-  begin
-    if CompareText(VarName, 'VANamaBank') = 0 then
-    Value := dm.Qtemp.FieldValues['bank_name'];
-    if CompareText(VarName, 'VANO') = 0 then
-    Value := dm.Qtemp.FieldValues['number_va'];
-    if CompareText(VarName, 'VAATASNAMA') = 0 then
-    Value := dm.Qtemp.FieldValues['va_name'];
-  end else begin
-    if CompareText(VarName, 'VANamaBank') = 0 then
-    Value := '';
-    if CompareText(VarName, 'VANO') = 0 then
-    Value := '';
-    if CompareText(VarName, 'VAATASNAMA') = 0 then
-    Value := '';
-  end;
+//  if (dm.Qtemp.FieldValues['company_code_bank']=NULL) OR
+//    (dm.Qtemp.FieldValues['company_code_bank']='') OR (dm.Qtemp.FieldValues['number_va']=NULL) OR
+//    (dm.Qtemp.FieldValues['number_va']='') OR (dm.Qtemp.FieldValues['va_name']=NULL) OR (dm.Qtemp.FieldValues['va_name']='') then
+//  begin
+//    if CompareText(VarName, 'VANamaBank') = 0 then
+//    Value := dm.Qtemp.FieldValues['bank_name'];
+//    if CompareText(VarName, 'VANO') = 0 then
+//    Value := dm.Qtemp.FieldValues['number_va'];
+//    if CompareText(VarName, 'VAATASNAMA') = 0 then
+//    Value := dm.Qtemp.FieldValues['va_name'];
+//  end else begin
+//    if CompareText(VarName, 'VANamaBank') = 0 then
+//    Value := '';
+//    if CompareText(VarName, 'VANO') = 0 then
+//    Value := '';
+//    if CompareText(VarName, 'VAATASNAMA') = 0 then
+//    Value := '';
+//  end;
 
   if CompareText(VarName, 'parSubTotal') = 0 then
   Value := dm.Qtemp.FieldValues['sub_total'];
