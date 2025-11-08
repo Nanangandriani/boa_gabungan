@@ -635,7 +635,7 @@ begin
     sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_receivable" ("voucher_no", '+
             ' "no_invoice", "no_invoice_tax", "code_cust", "name_cust", "trans_date", "date_invoice_tax", '+
             ' "code_type_trans", "name_type_trans", "account_number_bank", "account_name_bank", '+
-            ' "paid_amount", "description", "account_acc",id_dpp,description2) '+
+            ' "paid_amount", "description", "account_acc",id_dpp,ar_balance,description2) '+
             ' Values( '+
             ' '+QuotedStr(edNoTrans.Text)+', '+
             ' '+QuotedStr(MemDetailPiutang['no_tagihan'])+', '+
@@ -650,7 +650,9 @@ begin
             ' '+QuotedStr(edNamaBank.Text)+', '+
             ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
             ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
-            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+QuotedStr(strDescription)+') ');
+            ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+
+            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang_real']))+', '+
+            ' '+QuotedStr(strDescription)+') ');
     ExecSQL;
     end;
     MemDetailPiutang.Next;
@@ -692,14 +694,15 @@ begin
     close;
     sql.clear;
     sql.Text:=' INSERT INTO "public"."t_cash_bank_acceptance_down_payment" ("voucher_no", '+
-              ' "no_trans_down_payment", "code_cust", "paid_amount", "description", "trans_date") '+
+              ' "no_trans_down_payment", "code_cust", "paid_amount", "description", "trans_date",name_cust) '+
               ' Values( '+
               ' '+QuotedStr(edNoTrans.Text)+', '+
               ' '+QuotedStr(edNoRefSumberPenerimaan.Text)+', '+
               ' '+QuotedStr(edKodePelangganSumber.Text)+', '+
               ' '+QuotedStr(FloatToStr(edJumlah.Value))+', '+
               ' '+QuotedStr(strDescription)+', '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+') ';
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
+              ' '+QuotedStr(edNamaPelangganSumber.Text)+' ) ';
     ExecSQL;
   end;
 
@@ -811,7 +814,7 @@ begin
         FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').value;
         FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').value;
         FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp1.fieldbyname('paid_amount').value;
-        FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('paid_amount').value;
+        FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('ar_balance').value;
         FDataPenerimaanBank.MemDetailPiutang['keterangan']:=Dm.Qtemp1.fieldbyname('description').value;
         FDataPenerimaanBank.MemDetailPiutang.post;
        Dm.Qtemp1.next;
@@ -1324,18 +1327,21 @@ end;
 
 procedure TFDataPenerimaanBank.edJumlahExit(Sender: TObject);
 begin
-  RefreshGridDetailAkun;
+  if Status=0 then
+  begin
+    RefreshGridDetailAkun;
 
-  //Di CLear Agar di Arahkan User untuk pilih data ulang danmendapat akun terbaru
-  edNamaBank.Clear;
-  edNoRek.Clear;
-  edKode_Pelanggan.Clear;
-  edNama_Pelanggan.Clear;
-  edKodeSumberTagihan.Clear;
-  edNMSumberTagihan.Clear;
-  edKodeJenisBayar.Clear;
-  edNMJenisBayar.Clear;
-  MemDetailPiutang.EmptyTable;
+    //Di CLear Agar di Arahkan User untuk pilih data ulang danmendapat akun terbaru
+    edNamaBank.Clear;
+    edNoRek.Clear;
+    edKode_Pelanggan.Clear;
+    edNama_Pelanggan.Clear;
+    edKodeSumberTagihan.Clear;
+    edNMSumberTagihan.Clear;
+    edKodeJenisBayar.Clear;
+    edNMJenisBayar.Clear;
+    MemDetailPiutang.EmptyTable;
+  end;
 end;
 
 procedure TFDataPenerimaanBank.edKode_PelangganButtonClick(Sender: TObject);

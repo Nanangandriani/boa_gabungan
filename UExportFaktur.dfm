@@ -3,8 +3,8 @@ object FExportFaktur: TFExportFaktur
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Export Faktur'
-  ClientHeight = 262
-  ClientWidth = 515
+  ClientHeight = 530
+  ClientWidth = 971
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,13 @@ object FExportFaktur: TFExportFaktur
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 515
-    Height = 221
-    Align = alClient
+    Width = 971
+    Height = 137
+    Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 511
-    ExplicitHeight = 220
+    ExplicitTop = -6
+    ExplicitWidth = 777
     object RzLabel1: TRzLabel
       Left = 16
       Top = 16
@@ -53,29 +53,29 @@ object FExportFaktur: TFExportFaktur
       Caption = 'Cap Fasilitas'
     end
     object RzLabel5: TRzLabel
-      Left = 16
-      Top = 133
-      Width = 64
+      Left = 376
+      Top = 18
+      Width = 13
       Height = 15
-      Caption = 'Karesidenan'
+      Caption = 'TP'
     end
     object RzLabel6: TRzLabel
-      Left = 16
-      Top = 161
+      Left = 376
+      Top = 46
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
     object RzLabel7: TRzLabel
-      Left = 16
-      Top = 191
+      Left = 376
+      Top = 76
       Width = 34
       Height = 15
       Caption = 'Export'
     end
     object RzLabel8: TRzLabel
-      Left = 238
-      Top = 161
+      Left = 543
+      Top = 46
       Width = 19
       Height = 15
       Caption = 'S/D'
@@ -91,8 +91,8 @@ object FExportFaktur: TFExportFaktur
         'Jasa')
     end
     object cbExport: TRzComboBox
-      Left = 143
-      Top = 188
+      Left = 448
+      Top = 73
       Width = 208
       Height = 23
       TabOrder = 1
@@ -102,8 +102,8 @@ object FExportFaktur: TFExportFaktur
         'Validasi Faktru Pajak')
     end
     object dtTglDari: TRzDateTimePicker
-      Left = 143
-      Top = 159
+      Left = 448
+      Top = 44
       Width = 89
       Height = 23
       Date = 45894.000000000000000000
@@ -112,8 +112,8 @@ object FExportFaktur: TFExportFaktur
       TabOrder = 2
     end
     object dtTglSampai: TRzDateTimePicker
-      Left = 263
-      Top = 159
+      Left = 568
+      Top = 44
       Width = 89
       Height = 23
       Date = 45894.000000000000000000
@@ -122,9 +122,9 @@ object FExportFaktur: TFExportFaktur
       TabOrder = 3
     end
     object edKaresidenan: TRzButtonEdit
-      Left = 143
-      Top = 130
-      Width = 362
+      Left = 448
+      Top = 15
+      Width = 289
       Height = 23
       Text = ''
       TabOrder = 4
@@ -135,7 +135,7 @@ object FExportFaktur: TFExportFaktur
     object edJenisTransaksi: TRzButtonEdit
       Left = 143
       Top = 42
-      Width = 362
+      Width = 208
       Height = 23
       Text = ''
       TabOrder = 5
@@ -146,7 +146,7 @@ object FExportFaktur: TFExportFaktur
     object edKetTambahan: TRzButtonEdit
       Left = 143
       Top = 72
-      Width = 362
+      Width = 209
       Height = 23
       Text = ''
       TabOrder = 6
@@ -157,7 +157,7 @@ object FExportFaktur: TFExportFaktur
     object edCapFasilitas: TRzButtonEdit
       Left = 143
       Top = 101
-      Width = 362
+      Width = 208
       Height = 23
       Text = ''
       TabOrder = 7
@@ -165,11 +165,21 @@ object FExportFaktur: TFExportFaktur
       ButtonNumGlyphs = 1
       OnButtonClick = edCapFasilitasButtonClick
     end
+    object RzBitBtn1: TRzBitBtn
+      Left = 448
+      Top = 98
+      Width = 89
+      Height = 33
+      Caption = 'Lihat Data'
+      TabOrder = 8
+      OnClick = RzBitBtn1Click
+      NumGlyphs = 2
+    end
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 221
-    Width = 515
+    Top = 489
+    Width = 971
     Height = 41
     Align = alBottom
     Color = 15987699
@@ -177,7 +187,7 @@ object FExportFaktur: TFExportFaktur
     ExplicitTop = 220
     ExplicitWidth = 511
     object BBatal: TRzBitBtn
-      Left = 438
+      Left = 894
       Top = 2
       Height = 37
       Align = alRight
@@ -239,7 +249,7 @@ object FExportFaktur: TFExportFaktur
       ExplicitLeft = 434
     end
     object BSave: TRzBitBtn
-      Left = 363
+      Left = 819
       Top = 2
       Height = 37
       Align = alRight
@@ -298,7 +308,8 @@ object FExportFaktur: TFExportFaktur
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 359
+      ExplicitLeft = 619
+      ExplicitTop = 6
     end
     object pnfp: TPanel
       Left = 2
@@ -319,8 +330,213 @@ object FExportFaktur: TFExportFaktur
       end
     end
   end
+  object DBGridOrder: TDBGridEh
+    Left = 0
+    Top = 172
+    Width = 971
+    Height = 317
+    Align = alClient
+    DataSource = DSDetail
+    DrawMemoText = True
+    DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    EmptyDataInfo.Active = True
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    RowDetailPanel.Height = 170
+    TabOrder = 2
+    Columns = <
+      item
+        CellButtons = <>
+        Checkboxes = True
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pilih'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Pilih'
+        Width = 39
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_no'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'No Transaksi'
+        Width = 168
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_date'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tanggal'
+        Width = 80
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_cust'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Pelanggan'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'customer_name_pkp'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama PKP'
+        Width = 278
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'grand_tot'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Total Piutang'
+        Width = 124
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh2: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 0
+        Height = 0
+        Align = alClient
+        DynProps = <>
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'notrans'
+            Footers = <>
+            Title.Alignment = taCenter
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_item'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Kode Barang'
+            Width = 150
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_item'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Nama Barang'
+            Width = 250
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'amount'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Jumlah'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_unit'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Satuan'
+            Width = 100
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+  end
+  object RzPanel3: TRzPanel
+    Left = 0
+    Top = 137
+    Width = 971
+    Height = 35
+    Align = alTop
+    Color = 15987699
+    TabOrder = 3
+    object cbTandai: TRzCheckBox
+      Left = 16
+      Top = 6
+      Width = 85
+      Height = 19
+      Caption = 'Pilih Semua'
+      State = cbUnchecked
+      TabOrder = 0
+      OnClick = cbTandaiClick
+    end
+  end
   object SaveDialog1: TSaveDialog
-    Left = 32
-    Top = 176
+    Left = 176
+    Top = 304
+  end
+  object DSDetail: TDataSource
+    DataSet = Qdetail
+    Left = 384
+    Top = 272
+  end
+  object Qdetail: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select false as pilih,trans_no,trans_date,code_cust,name_cust,cu' +
+        'stomer_name_pkp,grand_tot from get_selling(NULL) ')
+    Left = 584
+    Top = 208
+    object Qdetailtrans_no: TMemoField
+      FieldName = 'trans_no'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object Qdetailtrans_date: TDateField
+      FieldName = 'trans_date'
+      ReadOnly = True
+    end
+    object Qdetailcode_cust: TMemoField
+      FieldName = 'code_cust'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object Qdetailname_cust: TMemoField
+      FieldName = 'name_cust'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object Qdetailcustomer_name_pkp: TMemoField
+      FieldName = 'customer_name_pkp'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object Qdetailgrand_tot: TFloatField
+      FieldName = 'grand_tot'
+      ReadOnly = True
+    end
+    object Qdetailpilih: TBooleanField
+      FieldName = 'pilih'
+    end
   end
 end

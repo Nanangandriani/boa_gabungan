@@ -259,6 +259,7 @@ begin
       end;
     end;
   end;
+  FNew_Penjualan.cbUangMuka.Checked:=False;
   Close;
 //  FTemplate_Temp.close;
 end;

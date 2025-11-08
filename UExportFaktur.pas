@@ -6,7 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.StdCtrls, Vcl.Mask,
   RzEdit, RzBtnEdt, Vcl.ComCtrls, RzDTP, RzCmboBx, RzLabel, Vcl.ExtCtrls,
-  RzPanel, Vcl.Samples.Gauges, XMLIntf, XmlDoc;
+  RzPanel, Vcl.Samples.Gauges, XMLIntf, XmlDoc, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
+  Data.DB, MemDS, DBAccess, Uni, RzRadChk;
 
 type
   TFExportFaktur = class(TForm)
@@ -33,6 +35,20 @@ type
     SaveDialog1: TSaveDialog;
     pnfp: TPanel;
     gauge1: TGauge;
+    RzBitBtn1: TRzBitBtn;
+    DSDetail: TDataSource;
+    Qdetail: TUniQuery;
+    DBGridOrder: TDBGridEh;
+    DBGridEh2: TDBGridEh;
+    Qdetailtrans_no: TMemoField;
+    Qdetailtrans_date: TDateField;
+    Qdetailcode_cust: TMemoField;
+    Qdetailname_cust: TMemoField;
+    Qdetailcustomer_name_pkp: TMemoField;
+    Qdetailgrand_tot: TFloatField;
+    Qdetailpilih: TBooleanField;
+    RzPanel3: TRzPanel;
+    cbTandai: TRzCheckBox;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -40,6 +56,8 @@ type
     procedure edCapFasilitasButtonClick(Sender: TObject);
     procedure edKetTambahanButtonClick(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure cbTandaiClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -289,226 +307,253 @@ procedure TFExportFaktur.ExportTaxInvoiceXML1;
 var
   XMLDoc: IXMLDocument;
   RootNode, InvoiceNode, GoodsNode, GoodServiceNode, GoodNode: IXMLNode;
-  TempFileName: string;
+  TempFileName,SQLText: string;
   SaveDialog: TSaveDialog;
   j: Integer;
+  SelectedTransNo: TStringList;
 begin
   // Query Master Data
   if UpperCase(cbBarangJasa.Text)='BARANG' then
   strKdBarangJasa:='A'
   else strKdBarangJasa:='B';
-
-  with dm.Qtemp do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.Text:='select a.trans_date tgl_faktur_xml,''Normal'' jenis_faktur'+
-                ',a.code_trans kode_trans_pajak,a.trans_no referensi,(select nitku from t_company) id_tku_penjual '+
-               //', case when b.npwp is NULL then 0 else b.npwp end npwp_nik_pembeli '+
-               ', case when b.npwp=''0'' then '''' else b.npwp end npwp_nik_pembeli '+
-               ', ''TIN'' jnis_id_pembeli,''IDN'' negara_pembeli'+
-               ', ''0'' nomor_dok_pembeli, name_cust nama_pembeli,c.address alamat_pembeli '+
-//               ',case when b.email=''-'' then ''0'' when b.email'''' then ''0'' when b.email is NULL then ''0'' else b.email end email,'+
-               ',case when b.email=''-'' then '''' else b.email end email,'+
-               'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli from t_selling a '+
-               'left join t_customer b on b.customer_code=a.code_cust '+
-               'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''001'' '+
-               'where a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
-               ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+' and '+
-               'a.deleted_at is NULL AND (TRIM(a.no_inv_tax)=''''  OR a.no_inv_tax is NULL ) ';
-    Open;
-  end;
-
-  if dm.Qtemp.RecordCount = 0 then
-  begin
-    MessageDlg('Tidak Ada Data Yang Dapat Diproses ..!!',mtInformation,[mbRetry],0);
-  end else
-  begin
-    pnfp.Visible:=true;
-    gauge1.Progress:=0;
-    gauge1.MinValue:=0;
-    gauge1.MaxValue:=dm.Qtemp.RecordCount;
-
-    // Buat SaveDialog
-    SaveDialog := TSaveDialog.Create(nil);
-    try
-    SaveDialog.Title := 'Save XML File';
-    SaveDialog.Filter := 'XML Files (*.xml)|*.xml';
-    SaveDialog.DefaultExt := 'xml';
-    SaveDialog.FileName := 'faktur_' +
-                           LowerCase(strKodeKaresidenan) + '_' +
-                           FormatDateTime('yyyy-mm-dd', dtTglDari.Date) + '.xml';
-
-    // Tampilkan dialog SaveDialog
-    if not SaveDialog.Execute then
+  SelectedTransNo := TStringList.Create;
+  try
+    Qdetail.First;
+    while not Qdetail.Eof do
     begin
-      ShowMessage('Proses dibatalkan.');
-      Exit;
+      if Qdetail.FieldByName('pilih').AsBoolean then
+      begin
+        SelectedTransNo.Add(QuotedStr(Qdetail.FieldByName('trans_no').AsString));
+      end;
+      Qdetail.Next;
     end;
 
-    // Dapatkan nama file
-    TempFileName := SaveDialog.FileName;
-
-    // Buat dokumen XML
-    XMLDoc := NewXMLDocument;
-    XMLDoc.Options := [doNodeAutoIndent];
-    XMLDoc.Encoding := 'utf-8';
-    XMLDoc.Version := '1.0';
-
-    // Tambahkan elemen root
-    RootNode := XMLDoc.AddChild('TaxInvoiceBulk');
-    RootNode.Attributes['xmlns:xsd'] := 'http://www.w3.org/2001/XMLSchema';
-    RootNode.Attributes['xmlns:xsi'] := 'http://www.w3.org/2001/XMLSchema-instance';
-    //RootNode.Attributes['xsi:noNamespaceSchemaLocation'] := 'TaxInvoice.xsd';
-
-    j := 0;
-    // Tambahkan elemen TIN
-    RootNode.AddChild('TIN').Text := SelectRow('SELECT LPAD(REPLACE(REPLACE(REPLACE(nitku, ''.'', ''''), ''-'', ''''), '' '', ''''), 16, ''0'') AS npwp FROM t_company');
-    // Tambahkan elemen ListOfTaxInvoice
-    InvoiceNode := RootNode.AddChild('ListOfTaxInvoice');
-      while not dm.Qtemp.Eof do
+    if SelectedTransNo.Count > 0 then
       begin
-        Inc(j);
-        // Tambahkan elemen TaxInvoice
-        GoodsNode := InvoiceNode.AddChild('TaxInvoice');
-        GoodsNode.AddChild('TaxInvoiceDate').Text := FormatDateTime('yyyy-mm-dd', dm.Qtemp.FieldByName('tgl_faktur_xml').AsDateTime);
-        GoodsNode.AddChild('TaxInvoiceOpt').Text := dm.Qtemp.FieldByName('jenis_faktur').Value;
-
-        if Length(dm.Qtemp.FieldByName('kode_trans_pajak').Value) = 0 then
-          GoodsNode.AddChild('TrxCode') // Biarkan kosong untuk menghasilkan <AddInfo />
-        else
-          GoodsNode.AddChild('TrxCode').Text := dm.Qtemp.FieldByName('kode_trans_pajak').Value;
-
-        if Length(edKetTambahan.Text) = 0 then
-          GoodsNode.AddChild('AddInfo') // Biarkan kosong untuk menghasilkan <AddInfo />
-        else
-          GoodsNode.AddChild('AddInfo').Text := edKetTambahan.Text;
-
-        GoodsNode.AddChild('CustomDoc');
-        //GoodsNode.AddChild('CustomDoc').Text := '';
-        GoodsNode.AddChild('CustomDocMonthYear');
-
-        if Length(dm.Qtemp.FieldByName('referensi').Value) = 0 then
-          GoodsNode.AddChild('RefDesc') // Biarkan kosong untuk menghasilkan <RefDesc />
-        else
-          GoodsNode.AddChild('RefDesc').Text := dm.Qtemp.FieldByName('referensi').Value;
-
-        if Length(strKodeCapFasilitas) = 0 then
-          GoodsNode.AddChild('FacilityStamp') // Biarkan kosong untuk menghasilkan <FacilityStamp />
-        else
-          GoodsNode.AddChild('FacilityStamp').Text := strKodeCapFasilitas;
-
-        if Length(dm.Qtemp.FieldByName('id_tku_penjual').Value) = 0 then
-          GoodsNode.AddChild('SellerIDTKU') // Biarkan kosong untuk menghasilkan <SellerIDTKU />
-        else
-          GoodsNode.AddChild('SellerIDTKU').Text := dm.Qtemp.FieldByName('id_tku_penjual').Value;
-
-        if Length(dm.Qtemp.FieldByName('npwp_nik_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerTin') // Biarkan kosong untuk menghasilkan <BuyerTin />
-        else
-          GoodsNode.AddChild('BuyerTin').Text := dm.Qtemp.FieldByName('npwp_nik_pembeli').Value;
-
-        if Length(dm.Qtemp.FieldByName('jnis_id_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerDocument') // Biarkan kosong untuk menghasilkan <BuyerDocument />
-        else
-          GoodsNode.AddChild('BuyerDocument').Text := dm.Qtemp.FieldByName('jnis_id_pembeli').Value;
-
-        if Length(dm.Qtemp.FieldByName('negara_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerCountry') // Biarkan kosong untuk menghasilkan <BuyerCountry />
-        else
-          GoodsNode.AddChild('BuyerCountry').Text := dm.Qtemp.FieldByName('negara_pembeli').Value;
-
-        if Length(dm.Qtemp.FieldByName('nomor_dok_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerDocumentNumber') // Biarkan kosong untuk menghasilkan <BuyerDocumentNumber />
-        else
-          GoodsNode.AddChild('BuyerDocumentNumber').Text := dm.Qtemp.FieldByName('nomor_dok_pembeli').Value;
-
-        if Length(dm.Qtemp.FieldByName('nama_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerName') // Biarkan kosong untuk menghasilkan <BuyerName />
-        else
-          GoodsNode.AddChild('BuyerName').Text := dm.Qtemp.FieldByName('nama_pembeli').Value;
-
-        if Length(dm.Qtemp.FieldByName('alamat_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerAdress') // Biarkan kosong untuk menghasilkan <BuyerAdress />
-        else
-          GoodsNode.AddChild('BuyerAdress').Text := dm.Qtemp.FieldByName('alamat_pembeli').Value;
-
-        if Length(dm.Qtemp.FieldByName('email').Value) = 0 then
-          GoodsNode.AddChild('BuyerEmail') // Biarkan kosong untuk menghasilkan <BuyerEmail />
-        else
-          GoodsNode.AddChild('BuyerEmail').Text := dm.Qtemp.FieldByName('email').Value;
-
-        if Length(dm.Qtemp.FieldByName('id_tku_pembeli').Value) = 0 then
-          GoodsNode.AddChild('BuyerIDTKU') // Biarkan kosong untuk menghasilkan <BuyerIDTKU />
-        else
-          GoodsNode.AddChild('BuyerIDTKU').Text := dm.Qtemp.FieldByName('id_tku_pembeli').Value;
-        // Tambahkan elemen ListOfGoodService / Detail
-        GoodServiceNode := GoodsNode.AddChild('ListOfGoodService');
-
-        with dm.Qtemp1 do //Baca detail
-        begin
-          close;
-          sql.clear;
-//          sql.Text:='select ''000000'' kode_brg, a.name_item nama_brg,b.kode_satuan_pajak kd_satuan_pajak,'+
-//                    ' a.sub_total/a.amount harga_satuan_coretax,a.amount jml_brg,a.tot_piece_value tot_pot,'+
-//                    ' a.sub_total dpp_coretax,a.dpp_lain_lain dpp_lain_coretax,a.ppn_percent_cortex tarif_ppn,'+
-//                    ' a.ppn_value_cortex ppn_coretax,''0'' tarif_PPnBM,''0'' PPnBM FROM t_selling_det a '+
-//                    'LEFT JOIN t_pajak_satuan_link b on b.kode_satuan=a.code_unit '+
-//                    'WHERE a.trans_no='+QuotedStr(dm.Qtemp.FieldValues['referensi']);
-          Sql.Text:='select * from get_selling_coretax_det('+QuotedStr(dm.Qtemp.FieldValues['referensi'])+')';
-          open;
-        end;
-        gauge1.Progress:=0;
-        gauge1.MinValue:=0;
-        gauge1.MaxValue:=dm.Qtemp1.RecordCount;
-        j:=0;
-        while not dm.Qtemp1.Eof do
-        begin
-          j:=j+1;
-          // Tambahkan elemen GoodService
-          GoodNode := GoodServiceNode.AddChild('GoodService');
-          GoodNode.AddChild('Opt').Text := strKdBarangJasa;
-          GoodNode.AddChild('Code').Text := dm.Qtemp1.FieldByName('kode_brg').AsString;
-          GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString;
-          GoodNode.AddChild('Unit').Text := dm.Qtemp1.FieldByName('kd_satuan_pajak').AsString;
-          GoodNode.AddChild('Price').Text := stringreplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
-          //FormatFloat('0.00', FMainMenu.qexec2.FieldByName('harga_satuan').Value);
-          GoodNode.AddChild('Qty').Text := dm.Qtemp1.FieldByName('jml_brg').Value;
-          GoodNode.AddChild('TotalDiscount').Text := dm.Qtemp1.FieldByName('tot_pot').Value;
-          GoodNode.AddChild('TaxBase').Text := stringreplace(dm.Qtemp1.FieldByName('dpp_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
-          //GoodNode.AddChild('TaxBase').Text := FMainMenu.qexec2.FieldByName('dpp').Value;
-          GoodNode.AddChild('OtherTaxBase').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
-          //GoodNode.AddChild('OtherTaxBase').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('dpp_lain').Value);
-          GoodNode.AddChild('VATRate').Text := dm.Qtemp1.FieldByName('tarif_ppn').Value;
-          GoodNode.AddChild('VAT').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('ppn_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
-          //GoodNode.AddChild('VAT').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('ppn').Value);
-          GoodNode.AddChild('STLGRate').Text := dm.Qtemp1.FieldByName('tarif_PPnBM').Value;
-          GoodNode.AddChild('STLG').Text := dm.Qtemp1.FieldByName('PPnBM').Value;
-          gauge1.Progress:=j;
-          dm.Qtemp1.Next;
-        end;
-
-
-        gauge1.Progress:=j;
-        dm.Qtemp.Next;
+        SQLText := SelectedTransNo.CommaText;
+      end else
+      begin
+        SQLText := '''-1''';
       end;
 
-      // Simpan dokumen ke file
-      XMLDoc.SaveToFile(TempFileName);
-
-      // Tampilkan pesan sukses
-      //ShowMessage('File XML berhasil dibuat: ' + TempFileName);
-      pnfp.Visible:=false;
-      ShowMessage('Proses Berhasil...');
-
-      except
-      on E: Exception do
-        ShowMessage('Terjadi kesalahan: ' + E.Message);
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text:='select DISTINCT a.trans_date tgl_faktur_xml,''Normal'' jenis_faktur'+
+                  ',a.code_trans kode_trans_pajak,a.trans_no referensi,(select nitku from t_company) id_tku_penjual '+
+                 //', case when b.npwp is NULL then 0 else b.npwp end npwp_nik_pembeli '+
+                 ', case when b.npwp=''0'' then '''' else b.npwp end npwp_nik_pembeli '+
+                 ', ''TIN'' jnis_id_pembeli,''IDN'' negara_pembeli'+
+                 ', ''0'' nomor_dok_pembeli, name_cust nama_pembeli,c.address alamat_pembeli '+
+  //               ',case when b.email=''-'' then ''0'' when b.email'''' then ''0'' when b.email is NULL then ''0'' else b.email end email,'+
+                 ',case when b.email=''-'' then '''' else b.email end email,'+
+                 'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli from t_selling a '+
+                 'left join t_customer b on b.customer_code=a.code_cust '+
+                 'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''001'' '+
+                 'where a.trans_no in ('+SQLText+')  ';
+      Open;
     end;
 
-  // Hapus SaveDialog
-  //finally
-    SaveDialog.Free;
+    if dm.Qtemp.RecordCount = 0 then
+    begin
+      MessageDlg('Tidak Ada Data Yang Dapat Diproses ..!!',mtInformation,[mbRetry],0);
+    end else
+    begin
+      gauge1.Visible:=True;
+      pnfp.Visible:=true;
+      gauge1.Progress:=0;
+      gauge1.MinValue:=0;
+      gauge1.MaxValue:=dm.Qtemp.RecordCount;
+
+      // Buat SaveDialog
+      SaveDialog := TSaveDialog.Create(nil);
+      try
+      SaveDialog.Title := 'Save XML File';
+      SaveDialog.Filter := 'XML Files (*.xml)|*.xml';
+      SaveDialog.DefaultExt := 'xml';
+      SaveDialog.FileName := 'faktur_' +
+                             LowerCase(strKodeKaresidenan) + '_' +
+                             FormatDateTime('yyyy-mm-dd', dtTglDari.Date) + '.xml';
+
+      // Tampilkan dialog SaveDialog
+      if not SaveDialog.Execute then
+      begin
+        ShowMessage('Proses dibatalkan.');
+        Exit;
+      end;
+
+      // Dapatkan nama file
+      TempFileName := SaveDialog.FileName;
+
+      // Buat dokumen XML
+      XMLDoc := NewXMLDocument;
+      XMLDoc.Options := [doNodeAutoIndent];
+      XMLDoc.Encoding := 'utf-8';
+      XMLDoc.Version := '1.0';
+
+      // Tambahkan elemen root
+      RootNode := XMLDoc.AddChild('TaxInvoiceBulk');
+      RootNode.Attributes['xmlns:xsd'] := 'http://www.w3.org/2001/XMLSchema';
+      RootNode.Attributes['xmlns:xsi'] := 'http://www.w3.org/2001/XMLSchema-instance';
+      //RootNode.Attributes['xsi:noNamespaceSchemaLocation'] := 'TaxInvoice.xsd';
+
+      j := 0;
+      // Tambahkan elemen TIN
+      RootNode.AddChild('TIN').Text := SelectRow('SELECT LPAD(REPLACE(REPLACE(REPLACE(nitku, ''.'', ''''), ''-'', ''''), '' '', ''''), 16, ''0'') AS npwp FROM t_company');
+      // Tambahkan elemen ListOfTaxInvoice
+      InvoiceNode := RootNode.AddChild('ListOfTaxInvoice');
+        while not dm.Qtemp.Eof do
+        begin
+          Inc(j);
+          // Tambahkan elemen TaxInvoice
+          GoodsNode := InvoiceNode.AddChild('TaxInvoice');
+          GoodsNode.AddChild('TaxInvoiceDate').Text := FormatDateTime('yyyy-mm-dd', dm.Qtemp.FieldByName('tgl_faktur_xml').AsDateTime);
+          GoodsNode.AddChild('TaxInvoiceOpt').Text := dm.Qtemp.FieldByName('jenis_faktur').Value;
+
+          if Length(dm.Qtemp.FieldByName('kode_trans_pajak').Value) = 0 then
+            GoodsNode.AddChild('TrxCode') // Biarkan kosong untuk menghasilkan <AddInfo />
+          else
+            GoodsNode.AddChild('TrxCode').Text := dm.Qtemp.FieldByName('kode_trans_pajak').Value;
+
+          if Length(edKetTambahan.Text) = 0 then
+            GoodsNode.AddChild('AddInfo') // Biarkan kosong untuk menghasilkan <AddInfo />
+          else
+            GoodsNode.AddChild('AddInfo').Text := edKetTambahan.Text;
+
+          GoodsNode.AddChild('CustomDoc');
+          //GoodsNode.AddChild('CustomDoc').Text := '';
+          GoodsNode.AddChild('CustomDocMonthYear');
+
+          if Length(dm.Qtemp.FieldByName('referensi').Value) = 0 then
+            GoodsNode.AddChild('RefDesc') // Biarkan kosong untuk menghasilkan <RefDesc />
+          else
+            GoodsNode.AddChild('RefDesc').Text := dm.Qtemp.FieldByName('referensi').Value;
+
+          if Length(strKodeCapFasilitas) = 0 then
+            GoodsNode.AddChild('FacilityStamp') // Biarkan kosong untuk menghasilkan <FacilityStamp />
+          else
+            GoodsNode.AddChild('FacilityStamp').Text := strKodeCapFasilitas;
+
+          if Length(dm.Qtemp.FieldByName('id_tku_penjual').Value) = 0 then
+            GoodsNode.AddChild('SellerIDTKU') // Biarkan kosong untuk menghasilkan <SellerIDTKU />
+          else
+            GoodsNode.AddChild('SellerIDTKU').Text := dm.Qtemp.FieldByName('id_tku_penjual').Value;
+
+          if Length(dm.Qtemp.FieldByName('npwp_nik_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerTin') // Biarkan kosong untuk menghasilkan <BuyerTin />
+          else
+            GoodsNode.AddChild('BuyerTin').Text := dm.Qtemp.FieldByName('npwp_nik_pembeli').Value;
+
+          if Length(dm.Qtemp.FieldByName('jnis_id_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerDocument') // Biarkan kosong untuk menghasilkan <BuyerDocument />
+          else
+            GoodsNode.AddChild('BuyerDocument').Text := dm.Qtemp.FieldByName('jnis_id_pembeli').Value;
+
+          if Length(dm.Qtemp.FieldByName('negara_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerCountry') // Biarkan kosong untuk menghasilkan <BuyerCountry />
+          else
+            GoodsNode.AddChild('BuyerCountry').Text := dm.Qtemp.FieldByName('negara_pembeli').Value;
+
+          if Length(dm.Qtemp.FieldByName('nomor_dok_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerDocumentNumber') // Biarkan kosong untuk menghasilkan <BuyerDocumentNumber />
+          else
+            GoodsNode.AddChild('BuyerDocumentNumber').Text := dm.Qtemp.FieldByName('nomor_dok_pembeli').Value;
+
+          if Length(dm.Qtemp.FieldByName('nama_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerName') // Biarkan kosong untuk menghasilkan <BuyerName />
+          else
+            GoodsNode.AddChild('BuyerName').Text := dm.Qtemp.FieldByName('nama_pembeli').Value;
+
+          if Length(dm.Qtemp.FieldByName('alamat_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerAdress') // Biarkan kosong untuk menghasilkan <BuyerAdress />
+          else
+            GoodsNode.AddChild('BuyerAdress').Text := dm.Qtemp.FieldByName('alamat_pembeli').Value;
+
+          if Length(dm.Qtemp.FieldByName('email').Value) = 0 then
+            GoodsNode.AddChild('BuyerEmail') // Biarkan kosong untuk menghasilkan <BuyerEmail />
+          else
+            GoodsNode.AddChild('BuyerEmail').Text := dm.Qtemp.FieldByName('email').Value;
+
+          if Length(dm.Qtemp.FieldByName('id_tku_pembeli').Value) = 0 then
+            GoodsNode.AddChild('BuyerIDTKU') // Biarkan kosong untuk menghasilkan <BuyerIDTKU />
+          else
+            GoodsNode.AddChild('BuyerIDTKU').Text := dm.Qtemp.FieldByName('id_tku_pembeli').Value;
+          // Tambahkan elemen ListOfGoodService / Detail
+          GoodServiceNode := GoodsNode.AddChild('ListOfGoodService');
+
+          with dm.Qtemp1 do //Baca detail
+          begin
+            close;
+            sql.clear;
+  //          sql.Text:='select ''000000'' kode_brg, a.name_item nama_brg,b.kode_satuan_pajak kd_satuan_pajak,'+
+  //                    ' a.sub_total/a.amount harga_satuan_coretax,a.amount jml_brg,a.tot_piece_value tot_pot,'+
+  //                    ' a.sub_total dpp_coretax,a.dpp_lain_lain dpp_lain_coretax,a.ppn_percent_cortex tarif_ppn,'+
+  //                    ' a.ppn_value_cortex ppn_coretax,''0'' tarif_PPnBM,''0'' PPnBM FROM t_selling_det a '+
+  //                    'LEFT JOIN t_pajak_satuan_link b on b.kode_satuan=a.code_unit '+
+  //                    'WHERE a.trans_no='+QuotedStr(dm.Qtemp.FieldValues['referensi']);
+            Sql.Text:='select * from get_selling_coretax_det('+QuotedStr(dm.Qtemp.FieldValues['referensi'])+')';
+            open;
+          end;
+          gauge1.Progress:=0;
+          gauge1.MinValue:=0;
+          gauge1.MaxValue:=dm.Qtemp1.RecordCount;
+          j:=0;
+          while not dm.Qtemp1.Eof do
+          begin
+            j:=j+1;
+            // Tambahkan elemen GoodService
+            GoodNode := GoodServiceNode.AddChild('GoodService');
+            GoodNode.AddChild('Opt').Text := strKdBarangJasa;
+            GoodNode.AddChild('Code').Text := dm.Qtemp1.FieldByName('kode_brg').AsString;
+            GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString;
+            GoodNode.AddChild('Unit').Text := dm.Qtemp1.FieldByName('kd_satuan_pajak').AsString;
+            GoodNode.AddChild('Price').Text := stringreplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            //FormatFloat('0.00', FMainMenu.qexec2.FieldByName('harga_satuan').Value);
+            GoodNode.AddChild('Qty').Text := dm.Qtemp1.FieldByName('jml_brg').Value;
+            GoodNode.AddChild('TotalDiscount').Text := dm.Qtemp1.FieldByName('tot_pot').Value;
+            GoodNode.AddChild('TaxBase').Text := stringreplace(dm.Qtemp1.FieldByName('dpp_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            //GoodNode.AddChild('TaxBase').Text := FMainMenu.qexec2.FieldByName('dpp').Value;
+            GoodNode.AddChild('OtherTaxBase').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            //GoodNode.AddChild('OtherTaxBase').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('dpp_lain').Value);
+            GoodNode.AddChild('VATRate').Text := dm.Qtemp1.FieldByName('tarif_ppn').Value;
+            GoodNode.AddChild('VAT').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('ppn_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            //GoodNode.AddChild('VAT').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('ppn').Value);
+            GoodNode.AddChild('STLGRate').Text := dm.Qtemp1.FieldByName('tarif_PPnBM').Value;
+            GoodNode.AddChild('STLG').Text := dm.Qtemp1.FieldByName('PPnBM').Value;
+            gauge1.Progress:=j;
+            dm.Qtemp1.Next;
+          end;
+
+
+          gauge1.Progress:=j;
+          dm.Qtemp.Next;
+        end;
+
+        // Simpan dokumen ke file
+        XMLDoc.SaveToFile(TempFileName);
+
+        // Tampilkan pesan sukses
+        //ShowMessage('File XML berhasil dibuat: ' + TempFileName);
+        pnfp.Visible:=false;
+        gauge1.Visible:=False;
+        ShowMessage('Proses Berhasil...');
+
+        except
+        on E: Exception do
+          begin
+            ShowMessage('Terjadi kesalahan: ' + E.Message);
+            gauge1.Visible:=False;
+          end;
+      end;
+
+    // Hapus SaveDialog
+    //finally
+      SaveDialog.Free;
+    end;
+  finally
+    SelectedTransNo.Free; // Ini yang menjamin objek dihapus dari memori
+    gauge1.Visible:=False;
   end;
 end;
 
@@ -517,13 +562,47 @@ begin
   Clear;
 end;
 
+procedure TFExportFaktur.RzBitBtn1Click(Sender: TObject);
+var strKares: String;
+begin
+  if edKaresidenan.Text='' then
+  begin
+    strKares:='';
+  end else begin
+    strKares:=' AND b.karesidenan='+QuotedStr(edKaresidenan.Text)
+  end;                                                             ;
+  with Qdetail do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select false as pilih,a.trans_no,a.trans_date,a.code_cust,a.name_cust,'+
+              'a.customer_name_pkp,a.grand_tot,b.karesidenan,b.code_karesidenan from get_selling(NULL) a '+
+              'LEFT JOIN get_customer() b ON b.customer_code=a.code_cust '+
+              'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
+              ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') ';
+    open;
+  end;
+  cbTandai.Checked:=False;
+end;
+
 procedure TFExportFaktur.CetakValidasiFaktur;
 begin
 
 end;
 
 procedure TFExportFaktur.BSaveClick(Sender: TObject);
+var rec: Integer;
 begin
+  Qdetail.First;
+  while not Qdetail.Eof do
+  begin
+    if Qdetailpilih.value=true then
+    begin
+      rec:=rec+1;
+    end;
+    Qdetail.next;
+  end;
+
   if cbBarangJasa.Text='' then
   begin
     MessageDlg('Barang/Jasa Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -533,6 +612,10 @@ begin
   end else if cbExport.Text='' then
   begin
     MessageDlg('Export Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else if rec=0 then
+  begin
+    MessageDlg('Tidak Ada Data Yang Di Tandai..!!',mtInformation,[mbRetry],0);
+    Exit;
   end else begin
     if cbExport.ItemIndex=0 then
     begin
@@ -550,6 +633,31 @@ begin
   end;
 end;
 
+procedure TFExportFaktur.cbTandaiClick(Sender: TObject);
+begin
+  if (Qdetail.RecordCount=0) AND (cbTandai.Checked=True) then
+  begin
+    cbTandai.Checked:=False;
+    MessageDlg('Tidak Ada Data Yang Mau Diceklis..!!',mtInformation,[mbRetry],0);
+  end else
+  if  Qdetail.RecordCount>0 then
+  begin
+    Qdetail.DisableControls;
+    try
+      Qdetail.First;
+      while not Qdetail.Eof do
+      begin
+        Qdetail.Edit;
+        Qdetailpilih.Value := cbTandai.Checked;
+        Qdetail.Post;
+        Qdetail.Next;
+      end;
+    finally
+      Qdetail.EnableControls;
+    end;
+  end;
+end;
+
 procedure TFExportFaktur.Clear;
 begin
   cbBarangJasa.ItemIndex:=0;
@@ -561,6 +669,9 @@ begin
   dtTglSampai.Date:=NOW();
   cbExport.ItemIndex:=0;
   kode_jenis_transaksi:='';
+  cbTandai.Checked:=False;
+  Qdetail.Close;
+  gauge1.Visible:=False;
 
   with dm.Qtemp do
   begin

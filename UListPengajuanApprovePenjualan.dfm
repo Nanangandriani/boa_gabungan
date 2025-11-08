@@ -1209,13 +1209,13 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object DsAppKlasifikasi: TDataSource
     DataSet = MemAppKlasifikasi
-    Left = 25
-    Top = 184
+    Left = 377
+    Top = 32
   end
   object dsAppKlasifikasiDet: TDataSource
     DataSet = QAppKlasifikasiDet
-    Left = 160
-    Top = 168
+    Left = 152
+    Top = 64
   end
   object QAppKlasifikasiDet: TUniQuery
     Connection = dm.Koneksi
@@ -1243,8 +1243,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     MasterFields = 'id_master_klas'
     DetailFields = 'id_master'
     IndexFieldNames = 'id_master'
-    Left = 240
-    Top = 176
+    Left = 232
+    Top = 40
     ParamData = <
       item
         DataType = ftUnknown
@@ -1573,8 +1573,8 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
   end
   object dsAppKlasifikasii: TDataSource
     DataSet = QAppKlasifikasi
-    Left = 272
-    Top = 72
+    Left = 320
+    Top = 96
   end
   object QSalesOrder: TUniQuery
     Connection = dm.Koneksi

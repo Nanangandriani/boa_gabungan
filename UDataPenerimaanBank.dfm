@@ -442,7 +442,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 978
+      ExplicitLeft = 988
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 503
@@ -472,10 +473,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1133
     Height = 249
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 1129
     ExplicitHeight = 248
@@ -627,10 +628,20 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
+            FieldName = 'jum_piutang_real'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Sisa Piutang'
+            Width = 151
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
             FieldName = 'jum_piutang'
             Footers = <>
-            Title.Caption = 'Jumlah Piutang'
-            Width = 200
+            Title.Caption = 'Jumlah Di Bayar'
+            Width = 153
           end
           item
             CellButtons = <>
@@ -639,7 +650,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             FieldName = 'keterangan'
             Footers = <>
             Title.Caption = 'Keterangan'
-            Width = 400
+            Width = 295
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end

@@ -327,6 +327,7 @@ end;
 
 procedure TFNew_SalesOrder.CekBankGaransi;
 var SisaPiutang,TotSaldoBankGaransi,TotNilaiSO,TotSisaPiutangNilaiSO,SisaSaldo:Currency;
+  IntCountBankGaransi: Integer;
 begin
   SisaPiutang:=0;
   with dm.Qtemp do
@@ -356,9 +357,15 @@ begin
               'GROUP BY customer_code;';
     open;
   end;
+
+  IntCountBankGaransi:=dm.Qtemp.RecordCount;
+
   if dm.Qtemp.RecordCount=0 then
   TotSaldoBankGaransi:=0
   else TotSaldoBankGaransi:=dm.Qtemp.FieldValues['tot_saldo'];
+
+
+
 
   TotNilaiSO:=0;
   MemDetail.First;
@@ -382,29 +389,37 @@ begin
     end;
     MemDetail.Next;
   end;
-//  ShowMessage(FloatToStr(TotNilaiSO));
 
   TotSisaPiutangNilaiSO:=SisaPiutang+TotNilaiSO;
   SisaSaldo:=TotSaldoBankGaransi-TotSisaPiutangNilaiSO;
 
-  if SisaSaldo<0 then
+  if (IntCountBankGaransi>0) then
   begin
-    if MessageDlg ('Order melebihi batas quota, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    if (SisaSaldo<1) then
     begin
-      if SisaPiutang>0 then
+      MessageDlg('Order melebihi batas quota..!!',mtInformation,[mbRetry],0);
+      islanjut:=0;
+      Exit;
+    end else
+    begin
+      islanjut:=1;
+    end;
+  end else if (IntCountBankGaransi=0) then
+  begin
+    if SisaPiutang>0 then
+    begin
+      if MessageDlg ('Pelanggan masih ada sisa piutang, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      begin
+        islanjut:=1;
+        iserror:=1;
+        StrKetLog:=StrKetLog+', Sales Order pelanggan '+edKode_Pelanggan.Text+' masih ada sisa piutang '+FormatCurr('#,###.00', SisaPiutang);
+      end else
       begin
         islanjut:=0;
-        MessageDlg('Order tidak bisa dilanjut, masih ada sisa piutang ..!!',mtInformation,[mbRetry],0);
-      end else begin
-
-        islanjut:=1;
-  //      MessageDlg('Order dari pelanggan tidak bisa diproses karena sudah melebihi batas quota nota ..!!',mtInformation,[mbRetry],0);
-        iserror:=1;
-        StrKetLog:=StrKetLog+', Sales Order pelanggan '+edKode_Pelanggan.Text+' melebihi batas quota nota ';
-        exit;
       end;
+
     end else begin
-      islanjut:=0;
+      islanjut:=1;
     end;
   end;
 end;

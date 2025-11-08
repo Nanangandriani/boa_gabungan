@@ -1004,7 +1004,7 @@ object FListPerintahMuat: TFListPerintahMuat
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.413693113400000000
-    ReportOptions.LastChange = 45545.451578981480000000
+    ReportOptions.LastChange = 45969.425172673610000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1145,6 +1145,23 @@ object FListPerintahMuat: TFListPerintahMuat
           Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBDPerintahMuat."notrans"]')
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1.904761900000000000
+          Top = 6.007111900000000000
+          Width = 715.980519520000000000
+          Height = 26.516697620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -17
+          Font.Name = 'Arial'
+          Font.Style = [fsBold, fsUnderline]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'SURAT PERINTAH MUAT')
+          ParentFont = False
         end
       end
       object MasterData1: TfrxMasterData

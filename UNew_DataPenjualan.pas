@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.ExtCtrls, DateUtils,
-  Vcl.Buttons, RzPanel, RzLabel;
+  Vcl.Buttons, RzPanel, RzLabel, RzRadChk, DataDriverEh, MemDS, DBAccess, Uni;
 
 type
   TFNew_Penjualan = class(TForm)
@@ -105,6 +105,16 @@ type
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
+    TabUangMuka: TRzTabSheet;
+    cbUangMuka: TRzCheckBox;
+    DBGridEh1: TDBGridEh;
+    DSUangMuka: TDataSource;
+    MemUangMuka: TMemTableEh;
+    MemUangMukano_trans_down_payment: TStringField;
+    MemUangMukatrans_date: TDateField;
+    MemUangMukasisa_uang_muka: TStringField;
+    MemUangMukauang_muka_dipakai: TStringField;
+    MemUangMukavoucher_no: TStringField;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -138,6 +148,10 @@ type
     procedure edTotBersihExit(Sender: TObject);
     procedure spJatuhTempoChange(Sender: TObject);
     procedure spJatuhTempoClick(Sender: TObject);
+    procedure cbUangMukaClick(Sender: TObject);
+    procedure DBGridDetailColumns2EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
+    procedure edNama_PelangganChange(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot : real;
@@ -183,7 +197,7 @@ uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
   Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan,
   UListPenjualan, UTemplate_Temp, UTambah_Barang, UListSalesOrder,
   UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang, UDaftarKontrak,
-  UKoreksi, UMainMenu;
+  UKoreksi, UMainMenu, UbrowseUangMukaDibayarkan;
 
 function GetFakturPajak(vtahun:string): string;
 begin
@@ -1039,6 +1053,8 @@ begin
   edTotSebelumPajak.Value:=0;
   edTotPPN.Value:=0;
   edTotBersih.Value:=0;
+  cbUangMuka.Checked:=False;
+//  TabUangMuka.Visible:=False;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -1078,6 +1094,13 @@ begin
   end;
 end;
 
+procedure TFNew_Penjualan.DBGridDetailColumns2EditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+begin
+  FbrowseUangMukaDibayarkan.vcall:='penjualan';
+  FbrowseUangMukaDibayarkan.ShowModal;
+end;
+
 procedure TFNew_Penjualan.DBGridDetailColumns3EditButtons0Click(Sender: TObject;
   var Handled: Boolean);
 begin
@@ -1085,7 +1108,7 @@ begin
   FListStockBarang.kd_barang_request:=MemDetail['KD_ITEM'];
   FListStockBarang.qty_request:=MemDetail['JUMLAH'];
   if FNew_Penjualan.Status = 0  then //kondisi baru
-  begin                           
+  begin
     FListStockBarang.Clear;
     FListStockBarang.RefreshGrid_Update;  
     FListStockBarang.btReset.Visible:=false;
@@ -1162,6 +1185,22 @@ begin
   Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
   Fbrowse_data_pelanggan.vcall:='penjualan';
   Fbrowse_data_pelanggan.ShowModal;
+end;
+
+procedure TFNew_Penjualan.edNama_PelangganChange(Sender: TObject);
+begin
+  if edNama_Pelanggan.Text<>'' then
+  begin
+    cbUangMuka.Checked:=False;
+    cbUangMuka.Visible:=True;
+  end else
+  begin
+    cbUangMuka.Checked:=False;
+    cbUangMuka.Visible:=False;
+  end;
+  MemUangMuka.Active:=False;
+  MemUangMuka.Active:=True;
+  MemUangMuka.EmptyTable;
 end;
 
 procedure TFNew_Penjualan.edTotBersihExit(Sender: TObject);
@@ -1604,6 +1643,11 @@ begin
   FRincianPot_Penjualan.MemMasterData.EmptyTable;
   FRincianPot_Penjualan.HitungKlasifikasi;
   FRincianPot_Penjualan.ShowModal;
+end;
+
+procedure TFNew_Penjualan.cbUangMukaClick(Sender: TObject);
+begin
+ 
 end;
 
 //Initialization

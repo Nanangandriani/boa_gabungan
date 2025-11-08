@@ -220,7 +220,6 @@ end;
 procedure TFListPenerimaanBank.ActUpdateExecute(Sender: TObject);
 var strPaymentCode:String;
 begin
-
   strPaymentCode:='';
   FDataPenerimaanBank.Clear;
   with Dm.Qtemp do
@@ -451,12 +450,34 @@ begin
           FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').AsString;
           FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
           FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
-          FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
+          FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('ar_balance').Value;
           FDataPenerimaanBank.MemDetailPiutang['keterangan']:=Dm.Qtemp1.fieldbyname('description').AsString;
           FDataPenerimaanBank.MemDetailPiutang.post;
           Dm.Qtemp1.Next;
         end;
       end;
+
+      with Dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='select a.* from t_cash_bank_acceptance_down_payment a where a.voucher_no='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString);
+        open;
+      end;
+
+      if dm.Qtemp1.RecordCount>0 then
+      begin
+        edJumlah.Enabled:=False;
+        gbDataSumberPenerimaan.Visible:=True;
+        edKodePelangganSumber.Text:=Dm.Qtemp1.FieldValues['code_cust'];
+        edNamaPelangganSumber.Text:=Dm.Qtemp1.FieldValues['name_cust'];
+        edNoRefSumberPenerimaan.Text:=Dm.Qtemp1.FieldValues['no_trans_down_payment'];;
+        cbSumberPenerimaan.Text:=SelectRow('select name from t_cash_bank_acceptance_source where code=''CB001'' ');
+      end else begin
+        gbDataSumberPenerimaan.Visible:=False;
+        edJumlah.Enabled:=True;
+      end;
+
 
     end;
   end;

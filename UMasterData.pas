@@ -59,6 +59,12 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+  //Mas Anto
+  if vcall='perkiraan_supplier_return' then
+  begin
+    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
+    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
+  end;
   //Nanang
   if vcall='companycode_pelanggan' then
   begin

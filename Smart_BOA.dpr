@@ -317,7 +317,8 @@ uses
   UListPerbandinganBiayaDo in 'UListPerbandinganBiayaDo.pas' {FListPerbandinganBiayaDo},
   UNew_UangMukaPenjualan in 'UNew_UangMukaPenjualan.pas' {FNew_UangMukaPenjualan},
   UListUangMukaPenjualan in 'UListUangMukaPenjualan.pas' {FListUangMukaPenjualan},
-  UbrowseUangMukaPenjualan in 'UbrowseUangMukaPenjualan.pas' {FbrowseUangMukaPenjualan};
+  UbrowseUangMukaPenjualan in 'UbrowseUangMukaPenjualan.pas' {FbrowseUangMukaPenjualan},
+  UbrowseUangMukaDibayarkan in 'UbrowseUangMukaDibayarkan.pas' {FbrowseUangMukaDibayarkan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -395,6 +396,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_UangMukaPenjualan, FNew_UangMukaPenjualan);
   Application.CreateForm(TFListUangMukaPenjualan, FListUangMukaPenjualan);
   Application.CreateForm(TFbrowseUangMukaPenjualan, FbrowseUangMukaPenjualan);
+  Application.CreateForm(TFbrowseUangMukaDibayarkan, FbrowseUangMukaDibayarkan);
   //  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
   Application.CreateForm(TF_cetak_sisa_htg, F_cetak_sisa_htg);
   Application.CreateForm(TFDaftar_TP, FDaftar_TP);

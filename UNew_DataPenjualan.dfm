@@ -233,6 +233,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 23
       Text = ''
       TabOrder = 0
+      OnChange = edNama_PelangganChange
       AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -407,6 +408,16 @@ object FNew_Penjualan: TFNew_Penjualan
       ReadOnly = True
       TabOrder = 12
     end
+    object cbUangMuka: TRzCheckBox
+      Left = 148
+      Top = 120
+      Width = 84
+      Height = 19
+      Caption = 'Uang Muka'
+      State = cbUnchecked
+      TabOrder = 13
+      OnClick = cbUangMukaClick
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -539,7 +550,8 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 715
+      ExplicitLeft = 713
+      ExplicitTop = 6
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -683,13 +695,16 @@ object FNew_Penjualan: TFNew_Penjualan
     Width = 870
     Height = 287
     Hint = ''
-    ActivePage = TabSDetailPel
+    ActivePage = TabUangMuka
     Align = alClient
+    BackgroundColor = clBtnFace
+    BoldCurrentTab = True
     UseColoredTabs = True
-    TabIndex = 0
+    ParentBackgroundColor = False
+    ParentColor = False
+    TabIndex = 1
     TabOrder = 2
-    ExplicitWidth = 866
-    ExplicitHeight = 286
+    ExplicitLeft = 1
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
@@ -706,7 +721,6 @@ object FNew_Penjualan: TFNew_Penjualan
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SearchPanel.Enabled = True
         SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
@@ -736,7 +750,10 @@ object FNew_Penjualan: TFNew_Penjualan
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <>
+            EditButtons = <
+              item
+                OnClick = DBGridDetailColumns2EditButtons0Click
+              end>
             FieldName = 'NM_ITEM'
             Footers = <>
             Title.Caption = 'Nama Item'
@@ -947,6 +964,81 @@ object FNew_Penjualan: TFNew_Penjualan
             Footers = <>
             Title.Caption = 'Total'
             Width = 135
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+    object TabUangMuka: TRzTabSheet
+      Caption = 'Uang Muka'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 866
+        Height = 262
+        Align = alClient
+        DataSource = DSUangMuka
+        DynProps = <>
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButton.Style = ebsPlusEh
+            EditButtons = <
+              item
+              end>
+            FieldName = 'voucher_no'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'No BK'
+            Width = 202
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_trans_down_payment'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'No Uang Muka'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_date'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Tanggal BK'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'sisa_uang_muka'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Sisa Uang Muka'
+            Width = 162
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'uang_muka_dipakai'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Jumlah'
+            Width = 129
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -1503,6 +1595,77 @@ object FNew_Penjualan: TFNew_Penjualan
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DSUangMuka: TDataSource
+    DataSet = MemUangMuka
+    Left = 424
+    Top = 320
+  end
+  object MemUangMuka: TMemTableEh
+    Active = True
+    Params = <>
+    Left = 504
+    Top = 296
+    object MemUangMukano_trans_down_payment: TStringField
+      FieldName = 'no_trans_down_payment'
+      Size = 255
+    end
+    object MemUangMukatrans_date: TDateField
+      FieldName = 'trans_date'
+    end
+    object MemUangMukasisa_uang_muka: TStringField
+      FieldName = 'sisa_uang_muka'
+      Size = 255
+    end
+    object MemUangMukauang_muka_dipakai: TStringField
+      FieldName = 'uang_muka_dipakai'
+      Size = 255
+    end
+    object MemUangMukavoucher_no: TStringField
+      FieldName = 'voucher_no'
+      Size = 100
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object no_trans_down_payment: TMTStringDataFieldEh
+          FieldName = 'no_trans_down_payment'
+          StringDataType = fdtStringEh
+          DisplayLabel = 'no_trans_down_payment'
+          DisplayWidth = 255
+          Size = 255
+          Transliterate = True
+        end
+        object trans_date: TMTDateTimeDataFieldEh
+          FieldName = 'trans_date'
+          DateTimeDataType = fdtDateEh
+          DisplayLabel = 'trans_date'
+          DisplayWidth = 10
+        end
+        object sisa_uang_muka: TMTStringDataFieldEh
+          FieldName = 'sisa_uang_muka'
+          StringDataType = fdtStringEh
+          DisplayLabel = 'sisa_uang_muka'
+          DisplayWidth = 255
+          Size = 255
+          Transliterate = True
+        end
+        object uang_muka_dipakai: TMTStringDataFieldEh
+          FieldName = 'uang_muka_dipakai'
+          StringDataType = fdtStringEh
+          DisplayLabel = 'uang_muka_dipakai'
+          DisplayWidth = 255
+          Size = 255
+        end
+        object voucher_no: TMTStringDataFieldEh
+          FieldName = 'voucher_no'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh
