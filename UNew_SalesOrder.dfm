@@ -608,7 +608,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 900
+      ExplicitLeft = 903
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 712
@@ -900,8 +901,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
   object MemCategori: TMemTableEh
     Active = True
     Params = <>
-    Left = 464
-    Top = 24
+    Left = 352
+    Top = 16
     object MemCategoricategory_id: TSmallintField
       FieldName = 'category_id'
     end

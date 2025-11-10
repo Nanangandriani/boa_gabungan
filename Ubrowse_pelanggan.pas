@@ -30,6 +30,7 @@ type
     Panel2: TPanel;
     Edautocode: TEdit;
     btTampilkan: TRzBitBtn;
+    MemMasterDataNM_PKP: TStringField;
     procedure FormShow(Sender: TObject);
     procedure RefreshGrid;
     procedure DBGridCustomerDblClick(Sender: TObject);
@@ -78,7 +79,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' select a.customer_code, customer_name, email, address, contact_person1 as telp, '+
+    sql.add(' select a.customer_code, customer_name,customer_name_pkp, email, address, contact_person1 as telp, '+
             ' code_region, name_region, payment_term, '+
             ' case when code_karesidenan is null then ''0'' else code_karesidenan end code_karesidenan  '+
             ' from t_customer a '+
@@ -116,6 +117,7 @@ begin
      //ShowMessage(Dm.Qtemp.fieldbyname('customer_name').value);
      Fbrowse_data_pelanggan.MemMasterData['KD_PELANGGAN']:=Dm.Qtemp.fieldbyname('customer_code').value;
      Fbrowse_data_pelanggan.MemMasterData['NM_PELANGGAN']:=Dm.Qtemp.fieldbyname('customer_name').value;
+     Fbrowse_data_pelanggan.MemMasterData['NM_PKP']:=Dm.Qtemp.fieldbyname('customer_name_pkp').value;
      Fbrowse_data_pelanggan.MemMasterData['KD_WILAYAH']:=Dm.Qtemp.fieldbyname('code_region').value;
      Fbrowse_data_pelanggan.MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
      Fbrowse_data_pelanggan.MemMasterData['ALAMAT']:=Dm.Qtemp.fieldbyname('address').value;

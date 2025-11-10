@@ -22,7 +22,7 @@ object FNew_Satuan: TFNew_Satuan
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 502
+    ExplicitWidth = 500
     object BBatal: TRzBitBtn
       Left = 430
       Top = 1
@@ -84,7 +84,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = -3
+      ExplicitLeft = 424
     end
     object BSimpan: TRzBitBtn
       Left = 205
@@ -147,7 +147,7 @@ object FNew_Satuan: TFNew_Satuan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 276
+      ExplicitLeft = 199
     end
     object BCari: TRzBitBtn
       Left = 1
@@ -272,7 +272,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 201
+      ExplicitLeft = 124
     end
     object BRefresh: TRzBitBtn
       Left = 280
@@ -334,8 +334,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 248
-      ExplicitTop = 6
+      ExplicitLeft = 274
     end
     object BDelete: TRzBitBtn
       Left = 355
@@ -397,8 +396,7 @@ object FNew_Satuan: TFNew_Satuan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 294
-      ExplicitTop = -3
+      ExplicitLeft = 349
     end
   end
   object PnlNew: TPanel
@@ -410,7 +408,7 @@ object FNew_Satuan: TFNew_Satuan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 502
+    ExplicitWidth = 500
     object Label6: TLabel
       Left = 106
       Top = 35
@@ -472,8 +470,8 @@ object FNew_Satuan: TFNew_Satuan
     Height = 367
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 502
-    ExplicitHeight = 366
+    ExplicitWidth = 500
+    ExplicitHeight = 358
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1
@@ -483,6 +481,7 @@ object FNew_Satuan: TFNew_Satuan
       DataSource = DsSatuan
       DynProps = <>
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+      SearchPanel.Enabled = True
       TabOrder = 0
       OnDblClick = DBGridEh1DblClick
       Columns = <
@@ -517,7 +516,7 @@ object FNew_Satuan: TFNew_Satuan
   end
   object DsSatuan: TDataSource
     DataSet = QSatuan
-    Left = 416
+    Left = 424
     Top = 24
   end
 end

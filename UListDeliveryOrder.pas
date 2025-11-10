@@ -26,7 +26,7 @@ uses
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBarExtItems, cxDropDownEdit,
-  cxBarEditItem;
+  cxBarEditItem, frxClass, frxDBSet;
 
 type
   TFListDeliveryOrder = class(TForm)
@@ -69,6 +69,10 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     cbStatus: TdxBarCombo;
     QDeliveryOrderstatus_name: TStringField;
+    dxBarManager1Bar3: TdxBar;
+    dxBarLargeButton2: TdxBarLargeButton;
+    frxReport1: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -432,6 +436,7 @@ end;
 
 procedure TFListDeliveryOrder.FormShow(Sender: TObject);
 begin
+  dxBarManager1Bar3.Visible:=False;
   ActROExecute(sender);
 end;
 

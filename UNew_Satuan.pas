@@ -182,6 +182,14 @@ begin
     FNew_Satuan.Close;
    end;
   end;
+  if jenis_tr='KonvBarang3' then
+  begin
+   with FNew_KonvBarang do
+   begin
+    EdKonversi3.text:=QSatuan['unit_code'];
+    FNew_Satuan.Close;
+   end;
+  end;
   if jenis_tr='BARU' then
   BEGIN
     Statustr:=1;

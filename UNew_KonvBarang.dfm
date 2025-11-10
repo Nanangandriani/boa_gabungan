@@ -3,8 +3,8 @@ object FNew_KonvBarang: TFNew_KonvBarang
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'New Konversi Barang'
-  ClientHeight = 413
-  ClientWidth = 540
+  ClientHeight = 510
+  ClientWidth = 827
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,15 +19,15 @@ object FNew_KonvBarang: TFNew_KonvBarang
   TextHeight = 13
   object PnlTombol: TPanel
     Left = 0
-    Top = 169
-    Width = 540
+    Top = 234
+    Width = 827
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 157
-    ExplicitWidth = 532
+    ExplicitTop = 214
+    ExplicitWidth = 817
     object BBatal: TRzBitBtn
-      Left = 464
+      Left = 751
       Top = 1
       Height = 30
       Align = alRight
@@ -86,10 +86,10 @@ object FNew_KonvBarang: TFNew_KonvBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 456
+      ExplicitLeft = 741
     end
     object BSimpan: TRzBitBtn
-      Left = 314
+      Left = 601
       Top = 1
       Height = 30
       Align = alRight
@@ -148,7 +148,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 306
+      ExplicitLeft = 591
     end
     object RzBitBtn1: TRzBitBtn
       Left = 1
@@ -214,7 +214,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 239
+      Left = 526
       Top = 1
       Height = 30
       Align = alRight
@@ -273,10 +273,10 @@ object FNew_KonvBarang: TFNew_KonvBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 231
+      ExplicitLeft = 516
     end
     object BRefresh: TRzBitBtn
-      Left = 389
+      Left = 676
       Top = 1
       Height = 30
       Align = alRight
@@ -335,49 +335,20 @@ object FNew_KonvBarang: TFNew_KonvBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 381
+      ExplicitLeft = 666
     end
   end
   object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 540
-    Height = 169
+    Width = 827
+    Height = 234
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    Visible = False
-    ExplicitWidth = 532
-    ExplicitHeight = 157
-    object Label11: TLabel
-      Left = 228
-      Top = 127
-      Width = 78
-      Height = 13
-      Caption = 'Satuan Konversi'
-    end
-    object Label10: TLabel
-      Left = 228
-      Top = 93
-      Width = 86
-      Height = 13
-      Caption = 'Kuantum Konversi'
-    end
-    object Label13: TLabel
-      Left = 331
-      Top = 93
-      Width = 4
-      Height = 13
-      Caption = ':'
-    end
-    object Label12: TLabel
-      Left = 331
-      Top = 125
-      Width = 4
-      Height = 13
-      Caption = ':'
-    end
+    ExplicitWidth = 817
+    ExplicitHeight = 214
     object Label6: TLabel
       Left = 98
       Top = 57
@@ -393,8 +364,8 @@ object FNew_KonvBarang: TFNew_KonvBarang
       Caption = ':'
     end
     object Label8: TLabel
-      Left = 99
-      Top = 127
+      Left = 283
+      Top = 93
       Width = 4
       Height = 13
       Caption = ':'
@@ -414,8 +385,8 @@ object FNew_KonvBarang: TFNew_KonvBarang
       Caption = 'Nama Barang'
     end
     object Label7: TLabel
-      Left = 25
-      Top = 127
+      Left = 209
+      Top = 93
       Width = 34
       Height = 13
       Caption = 'Satuan'
@@ -455,30 +426,20 @@ object FNew_KonvBarang: TFNew_KonvBarang
       OnChange = EdqtyChange
     end
     object Edsatuan: TEdit
-      Left = 121
-      Top = 124
+      Left = 305
+      Top = 90
       Width = 73
       Height = 21
       CharCase = ecUpperCase
       Enabled = False
       TabOrder = 2
     end
-    object EdqtyKon: TEdit
-      Left = 353
-      Top = 90
-      Width = 73
-      Height = 21
-      CharCase = ecUpperCase
-      TabOrder = 3
-      Text = '0'
-      OnChange = EdqtyKonChange
-    end
     object Edno: TEdit
       Left = 353
       Top = 19
       Width = 73
       Height = 21
-      TabOrder = 4
+      TabOrder = 3
       Visible = False
     end
     object Edcategory: TRzComboBox
@@ -487,7 +448,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
       Width = 226
       Height = 21
       CharCase = ecUpperCase
-      TabOrder = 5
+      TabOrder = 4
       OnSelect = EdcategorySelect
     end
     object EdNm: TRzButtonEdit
@@ -496,30 +457,135 @@ object FNew_KonvBarang: TFNew_KonvBarang
       Width = 228
       Height = 21
       Text = ''
-      TabOrder = 6
+      TabOrder = 5
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = EdNmButtonClick
     end
-    object EdKonversi: TRzButtonEdit
-      Left = 353
-      Top = 122
-      Width = 73
-      Height = 21
-      Text = ''
-      CharCase = ecUpperCase
-      ReadOnlyColorOnFocus = True
+    object GroupBox1: TGroupBox
+      Left = 24
+      Top = 128
+      Width = 263
+      Height = 89
+      Caption = 'Satuan Level 2'
+      TabOrder = 6
+      object Label10: TLabel
+        Left = 14
+        Top = 28
+        Width = 86
+        Height = 13
+        Caption = 'Kuantum Konversi'
+      end
+      object Label13: TLabel
+        Left = 117
+        Top = 28
+        Width = 4
+        Height = 13
+        Caption = ':'
+      end
+      object Label11: TLabel
+        Left = 14
+        Top = 55
+        Width = 78
+        Height = 13
+        Caption = 'Satuan Konversi'
+      end
+      object Label12: TLabel
+        Left = 117
+        Top = 55
+        Width = 4
+        Height = 13
+        Caption = ':'
+      end
+      object EdqtyKon: TEdit
+        Left = 147
+        Top = 25
+        Width = 73
+        Height = 21
+        CharCase = ecUpperCase
+        TabOrder = 0
+        Text = '0'
+        OnChange = EdqtyKonChange
+      end
+      object EdKonversi: TRzButtonEdit
+        Left = 147
+        Top = 52
+        Width = 73
+        Height = 21
+        Text = ''
+        CharCase = ecUpperCase
+        ReadOnlyColorOnFocus = True
+        TabOrder = 1
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = EdKonversiButtonClick
+      end
+    end
+    object GroupBox2: TGroupBox
+      Left = 293
+      Top = 128
+      Width = 263
+      Height = 89
+      Caption = 'Satuan Level 3'
       TabOrder = 7
-      AltBtnNumGlyphs = 1
-      ButtonNumGlyphs = 1
-      OnButtonClick = EdKonversiButtonClick
+      object Label3: TLabel
+        Left = 14
+        Top = 28
+        Width = 86
+        Height = 13
+        Caption = 'Kuantum Konversi'
+      end
+      object Label9: TLabel
+        Left = 117
+        Top = 28
+        Width = 4
+        Height = 13
+        Caption = ':'
+      end
+      object Label14: TLabel
+        Left = 14
+        Top = 55
+        Width = 78
+        Height = 13
+        Caption = 'Satuan Konversi'
+      end
+      object Label15: TLabel
+        Left = 117
+        Top = 55
+        Width = 4
+        Height = 13
+        Caption = ':'
+      end
+      object EdqtyKon3: TEdit
+        Left = 147
+        Top = 25
+        Width = 73
+        Height = 21
+        CharCase = ecUpperCase
+        TabOrder = 0
+        Text = '0'
+        OnChange = EdqtyKonChange
+      end
+      object EdKonversi3: TRzButtonEdit
+        Left = 147
+        Top = 52
+        Width = 73
+        Height = 21
+        Text = ''
+        CharCase = ecUpperCase
+        ReadOnlyColorOnFocus = True
+        TabOrder = 1
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = EdKonversi3ButtonClick
+      end
     end
   end
   object DBGridEh1: TDBGridEh
     Left = 0
-    Top = 201
-    Width = 540
-    Height = 212
+    Top = 266
+    Width = 827
+    Height = 244
     Align = alBottom
     DataSource = DsKonversiM
     DynProps = <>
@@ -531,6 +597,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 2
+    TitleParams.MultiTitle = True
     OnDblClick = DBGridEh1DblClick
     Columns = <
       item
@@ -568,7 +635,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
         EditButtons = <>
         FieldName = 'qty_conv'
         Footers = <>
-        Title.Caption = 'Kuantum Konversi'
+        Title.Caption = 'Level 2 | Kuantum Konversi'
         Width = 119
       end
       item
@@ -577,7 +644,26 @@ object FNew_KonvBarang: TFNew_KonvBarang
         EditButtons = <>
         FieldName = 'unit_conv'
         Footers = <>
-        Title.Caption = 'Konversi'
+        Title.Caption = 'Level 2 | Konversi'
+        Width = 88
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qty_conv3'
+        Footers = <>
+        Title.Caption = 'Level 3 | Kuantum Konversi'
+        Width = 119
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'unit_conv3'
+        Footers = <>
+        Title.Caption = 'Level 3 | Konversi'
         Width = 88
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -585,8 +671,8 @@ object FNew_KonvBarang: TFNew_KonvBarang
   end
   object DsKonversiM: TDataSource
     DataSet = QKonversiM
-    Left = 457
-    Top = 72
+    Left = 1
+    Top = 64
   end
   object QKonversiM: TUniQuery
     Connection = dm.Koneksi
@@ -597,7 +683,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
       #9'"a".item_code, '
       #9'b.qty_conv, '
       #9'b.unit_conv, '
-      #9'"c".group_name,b."id"'
+      #9'"c".group_name,b."id",b.qty_conv3,b.unit_conv3'
       ''
       'FROM'
       #9't_item AS "a"'
@@ -609,7 +695,7 @@ object FNew_KonvBarang: TFNew_KonvBarang
       #9't_item_group AS "c"'
       #9'ON '
       #9#9'"a".group_id = "c"."group_id"')
-    Left = 460
-    Top = 16
+    Left = 20
+    Top = 8
   end
 end

@@ -541,25 +541,25 @@ end;
 
 procedure TFDataListPenjualan.dxBarLargeButton5Click(Sender: TObject);
 begin
-   with QJurnal do
-    begin
-     close;
-     sql.clear;
-     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
-             ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'  AND '+
-             '((status_dk = ''D'' AND db <> 0)OR (status_dk = ''K'' AND kd <> 0));');
-     open;
-    end;
+  with QJurnal do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+           ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
+           'AND ((status_dk = ''D'' AND (db <> 0 OR account_code = ''1104.01'')) '+
+           'OR (status_dk = ''K'' AND kd <> 0));');
+    open;
+  end;
 
+  if QJurnal.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if QJurnal.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
-
- if QJurnal.RecordCount<>0 then
- begin
+  if QJurnal.RecordCount<>0 then
+  begin
     with dm.Qtemp3 do
     begin
       Close;

@@ -695,7 +695,7 @@ object FlistBarang: TFlistBarang
       'begin'
       ''
       'end.')
-    Left = 448
+    Left = 464
     Top = 112
     Datasets = <>
     Variables = <>

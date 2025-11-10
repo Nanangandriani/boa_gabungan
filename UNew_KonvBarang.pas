@@ -16,10 +16,6 @@ type
     BSimpan: TRzBitBtn;
     RzBitBtn1: TRzBitBtn;
     PnlNew: TPanel;
-    Label11: TLabel;
-    Label10: TLabel;
-    Label13: TLabel;
-    Label12: TLabel;
     Label6: TLabel;
     Label4: TLabel;
     Label8: TLabel;
@@ -31,16 +27,28 @@ type
     Edkd: TEdit;
     Edqty: TEdit;
     Edsatuan: TEdit;
-    EdqtyKon: TEdit;
     Edno: TEdit;
     Edcategory: TRzComboBox;
     EdNm: TRzButtonEdit;
-    EdKonversi: TRzButtonEdit;
     DBGridEh1: TDBGridEh;
     Btambah: TRzBitBtn;
     BRefresh: TRzBitBtn;
     DsKonversiM: TDataSource;
     QKonversiM: TUniQuery;
+    GroupBox1: TGroupBox;
+    Label10: TLabel;
+    Label13: TLabel;
+    EdqtyKon: TEdit;
+    Label11: TLabel;
+    Label12: TLabel;
+    EdKonversi: TRzButtonEdit;
+    GroupBox2: TGroupBox;
+    Label3: TLabel;
+    Label9: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    EdqtyKon3: TEdit;
+    EdKonversi3: TRzButtonEdit;
     procedure BBatalClick(Sender: TObject);
     procedure EdNmSelect(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -57,6 +65,7 @@ type
     procedure BtambahClick(Sender: TObject);
     procedure BRefreshClick(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure EdKonversi3ButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -125,6 +134,8 @@ begin
   FNew_KonvBarang.Edsatuan.Text:='';
   FNew_KonvBarang.EdqtyKon.Text:='0';
   FNew_KonvBarang.EdKonversi.Text:='';
+  FNew_KonvBarang.EdqtyKon3.Text:='0';
+  FNew_KonvBarang.EdKonversi3.Text:='';
   FNew_KonvBarang.Edno.Text:='';
 end;
 
@@ -137,8 +148,28 @@ begin
   Edsatuan.Text:=QKonversiM['unit'];
   EdqtyKon.Text:=QKonversiM['qty_conv'];
   EdKonversi.Text:=QKonversiM['unit_conv'];
+  EdqtyKon3.Text:=QKonversiM['qty_conv3'];
+  EdKonversi3.Text:=QKonversiM['unit_conv3'];
   Edcategory.Text:=QKonversiM['group_name'];
   DBGridEh1.Hide;
+end;
+
+procedure TFNew_KonvBarang.EdKonversi3ButtonClick(Sender: TObject);
+begin
+  with FNew_Satuan do
+  begin
+    show;
+    Caption:='Form List Satuan';
+    jenis_tr:='KonvBarang3';
+    PnlNew.Hide;
+  //  PnlAksi.Hide;
+    Pnllist.show;
+    QSatuan.Close;
+    QSatuan.Open;
+    BCari.Show;
+    BSimpan.hide;
+    BBatal.hide;
+  end;
 end;
 
 procedure TFNew_KonvBarang.EdKonversiButtonClick(Sender: TObject);
@@ -179,7 +210,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT	b.qty_unit,b.unit,"a".item_name,"a".item_code,b.qty_conv,b.unit_conv,"c".group_name,b."id" '+
+      sql.Text:='SELECT	b.qty_unit,b.unit,"a".item_name,"a".item_code,'+
+      ' b.qty_conv,b.unit_conv,"c".group_name,b."id",b.qty_conv3,b.unit_conv3 '+
       ' FROM t_item AS "a" INNER JOIN t_item_conversion AS b ON "a".item_code = b.item_code INNER JOIN '+
       '	t_item_group AS "c" ON "a".group_id = "c"."group_id" where a.item_code='+QuotedStr(kd_barang);
       Open;
@@ -225,8 +257,16 @@ begin
           begin
             close;
             sql.clear;
-            sql.Text:='insert into t_item_conversion(item_code,qty_unit,unit,qty_conv,unit_conv)'+
-                      'values('+QuotedStr(EdKd.Text)+','+QuotedStr(Edqty.Text)+','+QuotedStr(Edsatuan.Text)+','+QuotedStr(EdqtyKon.Text)+','+QuotedStr(EdKonversi.Text)+')';
+            sql.Text:=' insert into t_item_conversion(item_code,qty_unit,'+
+                      ' unit,qty_conv,unit_conv,qty_conv3,unit_conv3)'+
+                      ' values('+
+                      ' '+QuotedStr(EdKd.Text)+', '+
+                      ' '+QuotedStr(Edqty.Text)+', '+
+                      ' '+QuotedStr(Edsatuan.Text)+','+
+                      ' '+QuotedStr(EdqtyKon.Text)+', '+
+                      ' '+QuotedStr(EdKonversi.Text)+', '+
+                      ' '+QuotedStr(EdqtyKon3.Text)+', '+
+                      ' '+QuotedStr(EdKonversi3.Text)+')';
             ExecSQL;
           end;
       end;
@@ -236,8 +276,15 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:='Update t_item_conversion set item_code='+QuotedStr(EdKd.Text)+ ',qty_unit='+QuotedStr(Edqty.Text)+',unit='+QuotedStr(Edsatuan.Text)+''+
-                    ',qty_conv='+QuotedStr(EdqtyKon.Text)+',unit_conv='+QuotedStr(EdKonversi.Text)+' Where "id"='+QuotedStr(id);
+          sql.Text:=' Update t_item_conversion set '+
+                    ' qty_unit='+QuotedStr(Edqty.Text)+', '+
+                    ' unit='+QuotedStr(Edsatuan.Text)+', '+
+                    ' qty_conv='+QuotedStr(EdqtyKon.Text)+', '+
+                    ' unit_conv='+QuotedStr(EdKonversi.Text)+', '+
+                    ' qty_conv3='+QuotedStr(EdqtyKon3.Text)+', '+
+                    ' unit_conv3='+QuotedStr(EdKonversi3.Text)+'  '+
+                    ' Where item_code='+QuotedStr(EdKd.Text);
+                    //' Where "id"='+QuotedStr(id);
           ExecSQL;
         end;
       end;
@@ -256,8 +303,8 @@ end;
 
 procedure TFNew_KonvBarang.BtambahClick(Sender: TObject);
 begin
-  DBGridEh1.Visible:=false;
-  Pnlnew.Visible:=true;
+//  DBGridEh1.Visible:=false;
+//  Pnlnew.Visible:=true;
 //  Clear;
   caption:='New Konversi Barang';
   Status:=0;

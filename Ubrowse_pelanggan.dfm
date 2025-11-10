@@ -53,6 +53,16 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'NM_PKP'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama PKP'
+        Width = 259
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'KD_WILAYAH'
         Footers = <>
         Title.Alignment = taCenter
@@ -256,6 +266,10 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     object MemMasterDataKD_KARES: TStringField
       FieldName = 'KD_KARES'
     end
+    object MemMasterDataNM_PKP: TStringField
+      FieldName = 'NM_PKP'
+      Size = 250
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KD_PELANGGAN: TMTStringDataFieldEh
@@ -292,6 +306,12 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
           FieldName = 'KD_KARES'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object NM_PKP: TMTStringDataFieldEh
+          FieldName = 'NM_PKP'
+          StringDataType = fdtStringEh
+          DisplayWidth = 250
+          Size = 250
         end
       end
       object RecordsList: TRecordsListEh

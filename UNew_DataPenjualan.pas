@@ -107,14 +107,13 @@ type
     Label22: TLabel;
     TabUangMuka: TRzTabSheet;
     cbUangMuka: TRzCheckBox;
-    DBGridEh1: TDBGridEh;
     DSUangMuka: TDataSource;
     MemUangMuka: TMemTableEh;
-    MemUangMukano_trans_down_payment: TStringField;
-    MemUangMukatrans_date: TDateField;
-    MemUangMukasisa_uang_muka: TStringField;
-    MemUangMukauang_muka_dipakai: TStringField;
+    DBGridEh1: TDBGridEh;
     MemUangMukavoucher_no: TStringField;
+    MemUangMukano_trans_down_payment: TStringField;
+    MemUangMukasisa_uang_muka: TFloatField;
+    MemUangMukauang_muka_dipakai: TFloatField;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -152,9 +151,11 @@ type
     procedure DBGridDetailColumns2EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure edNama_PelangganChange(Sender: TObject);
+    procedure DBGridEh1Columns0EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     { Private declarations }
-  tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot : real;
+  tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot,tot_uang_muka,tot_dipotong_uang_muka : real;
   public
     { Public declarations }
     stat_menej_fee_jual, stat_proses : Boolean;
@@ -175,6 +176,7 @@ type
     procedure check_stock;
     procedure proses_stock;
     procedure SavePotongan;
+    procedure SaveUangMuka;
     procedure HitungTotal;
     procedure CheckPembayaran;
 //    procedure CheckJurnalPosting;
@@ -412,6 +414,40 @@ begin
 //  DBGridDetail.Columns[19].Footer.Value:=FloatToStr(ROUND(totnetto));
 //  DBGridDetail.Columns[9].Footer.DisplayFormat:='#,##0.##';
 //  DBGridDetail.Columns[19].Footer.DisplayFormat:='#,##0.##';
+end;
+
+procedure TFNew_Penjualan.SaveUangMuka;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='DELETE FROM t_selling_down_payment WHERE trans_no='+QuotedStr(edNomorTrans.Text);
+    ExecSQL;
+  end;
+
+  if MemUangMuka.RecordCount>0 then
+  begin
+    MemUangMuka.First;
+    while not MemUangMuka.Eof do
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' INSERT INTO "public"."t_selling_down_payment" ("trans_no", "trans_no_down_payment", "voucher_no", "paid_amount", '+
+                  ' "remaining_down_payment") '+
+                  ' Values( '+
+                  ' '+QuotedStr(edNomorTrans.Text)+', '+
+                  ' '+QuotedStr(MemUangMuka['no_trans_down_payment'])+', '+
+                   ' '+QuotedStr(MemUangMuka['voucher_no'])+', '+
+                  ' '+QuotedStr(MemUangMuka['uang_muka_dipakai'])+', '+
+                  ' '+QuotedStr(MemUangMuka['sisa_uang_muka'])+' );';
+        ExecSQL;
+      end;
+      MemUangMuka.Next;
+    end;
+  end;
 end;
 
 procedure TFNew_Penjualan.SavePotongan;
@@ -845,18 +881,18 @@ begin
 //    tot_menej_fee:=0;
 //    tot_grand:=0;
 //
-//    MemDetail.First;
-//    while not MemDetail.Eof do
-//    begin
-//      tot_jumlah:=tot_jumlah+MemDetail['JUMLAH'];
-//      tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
-//      tot_ppn:=tot_ppn+MemDetail['PPN_NILAI'];
-//      tot_pph:=tot_pph+MemDetail['PPH_NILAI'];
-//      tot_pot:=tot_pot+MemDetail['POTONGAN_NILAI'];
-//      tot_menej_fee:=tot_menej_fee+MemDetail['MENEJ_FEE_NILAI'];
-//      tot_grand:=tot_grand+MemDetail['GRAND_TOTAL'];
-//      MemDetail.Next;
-//    end;
+    tot_dipotong_uang_muka:=0;
+    tot_uang_muka:=0;
+    if cbUangMuka.Checked=True then
+    begin
+      MemUangMuka.First;
+      while not MemUangMuka.Eof do
+      begin
+        tot_uang_muka:=tot_uang_muka+MemUangMuka['uang_muka_dipakai'];
+        MemUangMuka.Next;
+      end;
+      tot_dipotong_uang_muka:=edTotBersih.Value-tot_uang_muka;
+    end;
 //    UpdateDataMenejFee; //refresh kalkulasi jika ada menajmenfee
 //
     //cek balancestock
@@ -1053,8 +1089,9 @@ begin
   edTotSebelumPajak.Value:=0;
   edTotPPN.Value:=0;
   edTotBersih.Value:=0;
-  cbUangMuka.Checked:=False;
-//  TabUangMuka.Visible:=False;
+  cbUangMuka.Visible:=False;
+  TabUangMuka.TabVisible:=False;
+  RzPageControl1.ActivePage := TabSDetailPel;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -1097,8 +1134,8 @@ end;
 procedure TFNew_Penjualan.DBGridDetailColumns2EditButtons0Click(Sender: TObject;
   var Handled: Boolean);
 begin
-  FbrowseUangMukaDibayarkan.vcall:='penjualan';
-  FbrowseUangMukaDibayarkan.ShowModal;
+//  FbrowseUangMukaDibayarkan.vcall:='penjualan';
+//  FbrowseUangMukaDibayarkan.ShowModal;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailColumns3EditButtons0Click(Sender: TObject;
@@ -1137,6 +1174,13 @@ end;
 procedure TFNew_Penjualan.DBGridDetailKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key =#27 then Close;
+end;
+
+procedure TFNew_Penjualan.DBGridEh1Columns0EditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+begin
+  FbrowseUangMukaDibayarkan.vcall:='penjualan';
+  FbrowseUangMukaDibayarkan.ShowModal;
 end;
 
 procedure TFNew_Penjualan.dtTanggalChange(Sender: TObject);
@@ -1198,6 +1242,7 @@ begin
     cbUangMuka.Checked:=False;
     cbUangMuka.Visible:=False;
   end;
+  RzPageControl1.ActivePage := TabSDetailPel;
   MemUangMuka.Active:=False;
   MemUangMuka.Active:=True;
   MemUangMuka.EmptyTable;
@@ -1353,13 +1398,14 @@ begin
             ' "no_inv_tax", "trans_no", "no_traveldoc", "trans_date", "code_cust", '+
             ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
-            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",pembulatan_value,tot_before_piece) '+
+            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",pembulatan_value,tot_before_piece,amount_down_payment,grand_tot_amount_down_payment) '+
             ' VALUES (  '+
             ' NOW(), :parcreated_by, :parcode_trans, '+
             ' :parno_inv_tax, :partrans_no, :parno_traveldoc, :partrans_date, :parcode_cust, '+
             ' :parname_cust, :paraccount_code, :parpayment_term, :parcode_source, :parname_source, :parno_reference, '+
             ' :parsub_total, :parppn_value, :parpph_value, :partot_piece_value, :partot_menj_fee, :pargrand_tot, '+
-            ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, :parpembulatan_value,:partot_before_piece)';
+            ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, '+
+            ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,:pargrand_tot_amount_down_payment)';
             parambyname('parcreated_by').Value:=Nm;
             parambyname('parcode_trans').Value:=edKode_Trans.Text;
             parambyname('parno_inv_tax').Value:=edNomorFaktur.Text;
@@ -1394,6 +1440,8 @@ begin
             parambyname('partrans_year').Value:=strtahun;
             parambyname('parpembulatan_value').Value:=edTotPembulatan.Value;
             parambyname('partot_before_piece').Value:=edTotSebelumPot.Value;
+            parambyname('paramount_down_payment').Value:=tot_uang_muka;
+            parambyname('pargrand_tot_amount_down_payment').Value:=tot_dipotong_uang_muka;
 
 //            ' NOW(), '+
 //            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -1431,6 +1479,7 @@ begin
   InsertDetailJU;
   SavePotongan;
   SimpanPelanggan;
+  SaveUangMuka;
   proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
@@ -1477,13 +1526,16 @@ begin
             ' trans_year='+QuotedStr(strtahun)+', '+
             ' status_correction=0 ,'+
             ' pembulatan_value='+QuotedStr(FloatToStr(edTotPembulatan.Value))+', '+
-            ' tot_before_piece='+QuotedStr(FloatToStr(edTotSebelumPot.Value))+' '+
+            ' tot_before_piece='+QuotedStr(FloatToStr(edTotSebelumPot.Value))+', '+
+            ' amount_down_payment='+QuotedStr(FloatToStr(tot_uang_muka))+', '+
+            ' grand_tot_amount_down_payment='+QuotedStr(FloatToStr(tot_dipotong_uang_muka))+' '+
             ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');
     ExecSQL;
   end;
   InsertDetailJU;
   SavePotongan;
   SimpanPelanggan;
+  SaveUangMuka;
   proses_stock;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
   Close;
@@ -1561,6 +1613,38 @@ begin
     end;
     HitungDetail;
   end;
+
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * FROM t_selling_down_payment WHERE trans_no='+QuotedStr(edNomorTrans.Text);
+    open;
+  end;
+
+  MemUangMuka.Active:=False;
+  MemUangMuka.Active:=True;
+  MemUangMuka.EmptyTable;
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    cbUangMuka.Checked:=True;
+    Dm.Qtemp2.first;
+    while not Dm.Qtemp2.Eof do
+    begin
+      MemUangMuka.insert;
+      MemUangMuka['voucher_no']:=Dm.Qtemp2.fieldbyname('voucher_no').value;
+      MemUangMuka['no_trans_down_payment']:=Dm.Qtemp2.fieldbyname('trans_no_down_payment').value;
+      MemUangMuka['sisa_uang_muka']:=Dm.Qtemp2.fieldbyname('remaining_down_payment').value;
+      MemUangMuka['uang_muka_dipakai']:=Dm.Qtemp2.fieldbyname('paid_amount').value;
+      MemUangMuka.post;
+      Dm.Qtemp2.next;
+    end;
+  end else
+  begin
+    cbUangMuka.Checked:=False;
+  end;
+
 end;
 
 procedure TFNew_Penjualan.bt_re_calculateClick(Sender: TObject);
@@ -1647,7 +1731,13 @@ end;
 
 procedure TFNew_Penjualan.cbUangMukaClick(Sender: TObject);
 begin
- 
+  if cbUangMuka.Checked=True then
+  begin
+    TabUangMuka.TabVisible:=True;
+  end else
+  begin
+    TabUangMuka.TabVisible:=False;
+  end;
 end;
 
 //Initialization

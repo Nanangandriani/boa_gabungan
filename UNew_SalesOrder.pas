@@ -262,7 +262,7 @@ begin
       begin
         Close;
         Sql.Clear;
-        Sql.Text:='SELECT * from "get_sales_order_total_unit"('+StrYear+', '+Strmonth+', '+QuotedStr(edKode_Pelanggan.Text)+', '+IntToStr(IntCategoryID)+');';
+        Sql.Text:='SELECT * from "get_sales_order_total_unit"('+StrYear+', '+Strmonth+', '+QuotedStr(edKode_Pelanggan.Text)+', '+IntToStr(IntCategoryID)+','+QuotedStr(edKodeOrder.Text)+');';
 
         Open;
       end;

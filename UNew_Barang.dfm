@@ -548,6 +548,8 @@ object FNew_Barang: TFNew_Barang
         Width = 553
         Height = 14
         Panels = <>
+        ExplicitTop = 287
+        ExplicitWidth = 547
       end
       object ck_st_penjualan: TCheckBox
         Left = 412
@@ -579,7 +581,7 @@ object FNew_Barang: TFNew_Barang
         Left = 278
         Top = 271
         Width = 92
-        Height = 23
+        Height = 21
         TabOrder = 16
         Visible = False
       end

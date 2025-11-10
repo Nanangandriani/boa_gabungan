@@ -358,12 +358,29 @@ begin
   //  Self.Autonumber;
     FNew_KonvBarang.Edcategory.Text:=FNew_Barang.Edcategory.Text;
     FNew_KonvBarang.Edkd.Text:=FNew_Barang.Edkd.Text;
+    FNew_KonvBarang.kd_barang:=FNew_Barang.Edkd.Text;
     FNew_KonvBarang.EdNm.Text:=FNew_Barang.EdNm.Text;
     FNew_KonvBarang.Edsatuan.Text:=FNew_Barang.EdSatuan.Text;
     FNew_KonvBarang.Edqty.Text:='1';
     caption:='New Konversi Barang';
-    Status:=0;
-    PnlNew.Visible:=true;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' Select * from t_item_conversion '+
+                ' where item_code='+QuotedStr(FNew_KonvBarang.Edkd.Text)+'';
+      ExecSQL;
+    end;
+
+    if dm.Qtemp.RecordCount=0 then
+    begin
+     Status:=0;
+    end;
+    if dm.Qtemp.RecordCount>0 then
+    begin
+     Status:=1;
+    end;
+//    PnlNew.Visible:=false;
   end;
 end;
 
