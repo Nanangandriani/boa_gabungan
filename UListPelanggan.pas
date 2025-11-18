@@ -246,9 +246,9 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select * from t_customer a '+
-             ' WHERE customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
-             ' AND deleted_at is null order by created_at Desc ';
+    sql.Text:=' select a.* from get_customer() a '+
+             ' WHERE a.customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
+             ' AND a.deleted_at is null order by a.created_at Desc ';
     open;
   end;
   if Dm.Qtemp.RecordCount=0 then

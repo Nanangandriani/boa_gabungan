@@ -138,6 +138,9 @@ begin
     FNew_SalesOrder.BSave.Enabled:=True;
     FNew_SalesOrder.Panel1.Enabled:=True;
     FNew_SalesOrder.DBGridDetail.Enabled:=True;
+    FNew_SalesOrder.cbKonversiMuatan.Checked:=False;
+    FNew_SalesOrder.DBGridDetail.Columns[10].Visible:=False;
+    FNew_SalesOrder.DBGridDetail.Columns[11].Visible:=False;
     FNew_SalesOrder.ShowModal;
   end;
 end;
@@ -261,6 +264,16 @@ begin
       strtgl:=Dm.Qtemp2.FieldByName('trans_day').AsString;
       strbulan:=Dm.Qtemp2.FieldByName('trans_month').AsString;
       strtahun:=Dm.Qtemp2.FieldByName('trans_year').AsString;
+      if Dm.Qtemp2.FieldValues['load_conversion']=True then
+      begin
+        FNew_SalesOrder.cbKonversiMuatan.Checked:=True;
+        FNew_SalesOrder.DBGridDetail.Columns[10].Visible:=True;
+        FNew_SalesOrder.DBGridDetail.Columns[11].Visible:=True;
+      end else begin
+        FNew_SalesOrder.cbKonversiMuatan.Checked:=False;
+        FNew_SalesOrder.DBGridDetail.Columns[10].Visible:=False;
+        FNew_SalesOrder.DBGridDetail.Columns[11].Visible:=False;
+      end;
     end;
   end;
   FNew_SalesOrder.edKodeOrder.Enabled:=false;

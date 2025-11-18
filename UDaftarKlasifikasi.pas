@@ -130,6 +130,7 @@ type
     btAddDetail: TRzBitBtn;
     rgPajakPel: TRzRadioGroup;
     BCorrection: TRzBitBtn;
+    BKlasifikasi: TRzBitBtn;
   procedure edKode_PelangganButtonClick(Sender: TObject);
   procedure ednm_jenis_pelButtonClick(Sender: TObject);
   procedure ednm_kategoriButtonClick(Sender: TObject);
@@ -164,6 +165,7 @@ type
     procedure rgGroupingChanging(Sender: TObject; NewIndex: Integer;
       var AllowChange: Boolean);
     procedure rgGroupingClick(Sender: TObject);
+    procedure BKlasifikasiClick(Sender: TObject);
   private
   { Private declarations }
   public
@@ -187,7 +189,7 @@ implementation
 {$R *.dfm}
 
 uses Ubrowse_pelanggan, UMasterData, UDataModule, UHomeLogin, UTambah_Barang,
-  UMy_Function, UKoreksi, UListKlasifikasi, UMainMenu;
+  UMy_Function, UKoreksi, UListKlasifikasi, UMainMenu, UbrowseKlasifikasi;
 //uses UDataModule, UHomeLogin;
 
 procedure TFDaftarKlasifikasi.SaveUpdateGroup;
@@ -905,6 +907,17 @@ begin
   FKoreksi.ShowModal;
 end;
 
+procedure TFDaftarKlasifikasi.BKlasifikasiClick(Sender: TObject);
+begin
+  if ednm_kategori.Text='' then
+  begin
+    MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    FbrowseKlasifikasi.ShowModal
+  end;
+end;
+
 procedure TFDaftarKlasifikasi.BRefreshClick(Sender: TObject);
 begin
   RefreshGrid_Group;
@@ -1009,10 +1022,18 @@ end;
 
 procedure TFDaftarKlasifikasi.ednm_kategoriButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data Kategori';
-  FMasterData.vcall:='kategori_klasifikasi';
-  FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By code Asc');
-  FMasterData.ShowModal;
+  MemKlasifikasi.Active:=False;
+  MemKlasifikasi.Active:=True;
+  if (MemKlasifikasi.RecordCount=0) then
+  begin
+    FMasterData.Caption:='Master Data Kategori';
+    FMasterData.vcall:='kategori_klasifikasi';
+    FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By code Asc');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Kategori Tidak Dapat Diubah, Daftar Klasifikasi Sudah Ada..!!',mtInformation,[mbRetry],0);
+  end;
+
 end;
 
 procedure TFDaftarKlasifikasi.ednm_kategoriChange(Sender: TObject);

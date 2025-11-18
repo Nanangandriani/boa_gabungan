@@ -191,7 +191,7 @@ begin
       close;
       sql.clear;
       sql.add(' select notrans, code_item, name_item, amount, code_unit, name_unit, '+
-              ' sell as selling_price,b.group_id from "public"."t_sales_order_det" a '+
+              ' sell as selling_price,b.group_id,a.gross_weight,a.tare_weight from "public"."t_sales_order_det" a '+
               ' LEFT JOIN (select * from "public"."t_item"  where  deleted_at is null '+
               ' order by created_at Desc) b ON a.code_item=b.item_code '+
               ' where a.notrans='+QuotedStr(MemMasterData['NO_REFF'])+' and '+
@@ -216,6 +216,8 @@ begin
       FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
       FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];
       FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
+
+
       Dm.Qtemp2.first;
       while not Dm.Qtemp2.Eof do
       begin
@@ -245,6 +247,8 @@ begin
         FNew_Penjualan.MemDetail['MENEJ_FEE_NILAI']:='0';
         FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp2.FieldByName('amount').AsFloat*Dm.Qtemp2.FieldByName('selling_price').AsFloat;
         FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp2.FieldByName('group_id').AsString;
+        FNew_Penjualan.MemDetail['BERAT_ISI']:=Dm.Qtemp2.FieldByName('gross_weight').AsString;
+        FNew_Penjualan.MemDetail['BERAT_KOSONG']:=Dm.Qtemp2.FieldByName('tare_weight').AsString;
         FNew_Penjualan.MemDetail.post;
 //        FNew_Penjualan.HitungGrid;
         Dm.Qtemp2.next;
@@ -272,6 +276,7 @@ end;
 
 procedure TFListSalesOrder.FormShow(Sender: TObject);
 begin
+  DBGridCustomer.SearchPanel.SearchingText:='';
   if Length(FNew_Penjualan.edNama_Pelanggan.Text)=0 then
   begin
     pnlFilter.Visible:=true;

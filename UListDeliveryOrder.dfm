@@ -49,7 +49,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Align = alClient
     DataSource = DsDeliveryOrder
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     EmptyDataInfo.Active = True
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -201,7 +203,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -237,7 +239,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -256,7 +258,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Visible = True
           ItemName = 'dxBarLargeButton2'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -865,6 +867,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton2Click
     end
   end
   object QDeliveryOrder: TUniQuery
@@ -910,7 +913,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Left = 857
     Top = 80
   end
-  object frxReport1: TfrxReport
+  object Report: TfrxReport
     Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
@@ -919,7 +922,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 45016.454756365700000000
+    ReportOptions.LastChange = 45975.473405625000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -947,11 +950,12 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Top = 232
     Datasets = <
       item
-        DataSetName = 'frxDBDDeliveryOrder'
-      end
-      item
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
+      end
+      item
+        DataSet = frxDBDataset2
+        DataSetName = 'frxDBDataset2'
       end>
     Variables = <>
     Style = <>
@@ -980,7 +984,8 @@ object FListDeliveryOrder: TFListDeliveryOrder
         Height = 18.897637800000000000
         Top = 241.889920000000000000
         Width = 755.906000000000000000
-        DataSetName = 'frxDBDDeliveryOrder'
+        DataSet = frxDBDataset1
+        DataSetName = 'frxDBDataset1'
         RowCount = 0
         Stretched = True
         object Line: TfrxMemoView
@@ -1005,8 +1010,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Left = 34.015770000000000000
           Width = 306.141930000000000000
           Height = 18.897650000000000000
-          DataField = 'nama_barang'
-          DataSetName = 'frxDBDDeliveryOrder'
+          DataField = 'item_name'
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1014,7 +1020,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."nama_barang"]')
+            '[frxDBDataset1."item_name"]')
           ParentFont = False
         end
         object frxDBDDeliveryOrderJUMLAH: TfrxMemoView
@@ -1022,8 +1028,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Left = 343.937230000000000000
           Width = 117.165430000000000000
           Height = 18.897650000000000000
-          DataField = 'JUMLAH'
-          DataSetName = 'frxDBDDeliveryOrder'
+          DataField = 'amount'
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1034,7 +1041,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."JUMLAH"]')
+            '[frxDBDataset1."amount"]')
           ParentFont = False
         end
         object frxDBDDeliveryOrdersatuan: TfrxMemoView
@@ -1042,8 +1049,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Left = 467.882190000000000000
           Width = 117.165354330000000000
           Height = 18.897650000000000000
-          DataField = 'satuan'
-          DataSetName = 'frxDBDDeliveryOrder'
+          DataField = 'unit'
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1051,7 +1059,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."satuan"]')
+            '[frxDBDataset1."unit"]')
           ParentFont = False
         end
         object Memo24: TfrxMemoView
@@ -1060,7 +1068,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Top = 0.220470000000000000
           Width = 162.519714330000000000
           Height = 18.897650000000000000
-          DataSetName = 'frxDBDDeliveryOrder'
+          DataField = 'keterangan'
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1068,9 +1078,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            
-              '[frxDBDDeliveryOrder."nopol"] / [<frxDBDDeliveryOrder."nama_supi' +
-              'r">]')
+            '[frxDBDataset1."keterangan"]')
           ParentFont = False
         end
       end
@@ -1131,7 +1139,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'PT.MITRA ABADI BAHARI')
+            '[frxDBDataset1."company_name"]')
           ParentFont = False
         end
         object Memo41: TfrxMemoView
@@ -1225,7 +1233,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDDeliveryOrder."JUMLAH">,MasterData1)]')
+            '[SUM(<frxDBDataset1."amount">,MasterData1)]')
           ParentFont = False
         end
       end
@@ -1239,7 +1247,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         Height = 200.692932910000000000
         Top = 18.897650000000000000
         Width = 755.906000000000000000
-        Condition = '<frxDBDDeliveryOrder."nodo">'
+        Condition = '<frxDBDataset1."notrans">'
         StartNewPage = True
         object Memo3: TfrxMemoView
           AllowVectorExport = True
@@ -1392,7 +1400,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'PT. RODA CHAKRA KENCANA')
+            '[frxDBDataset1."vendor_name"]')
           ParentFont = False
         end
         object Line5: TfrxLineView
@@ -1419,7 +1427,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'PT.MITRA ABADI BAHARI')
+            '[frxDBDataset1."company_name"]')
           ParentFont = False
         end
         object alamat_pt: TfrxMemoView
@@ -1437,7 +1445,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'Office: JL. MARTOLOYO NO. 92 RT.01 RW.07 MINTARAGEN TEGAL TIMUR,')
+            'Office: [frxDBDataset1."address_sbu"]')
           ParentFont = False
         end
         object Memo1: TfrxMemoView
@@ -1562,7 +1570,6 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Top = 117.165430000000000000
           Width = 211.653680000000000000
           Height = 18.897650000000000000
-          DataField = 'tanggal'
           DataSetName = 'frxDBDDeliveryOrder'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
           DisplayFormat.Kind = fkDateTime
@@ -1573,7 +1580,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."tanggal"]')
+            '[frxDBDataset1."date_trans"]')
           ParentFont = False
         end
         object frxDBDDeliveryOrdernodo: TfrxMemoView
@@ -1582,7 +1589,6 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Top = 139.842610000000000000
           Width = 211.653557950000000000
           Height = 18.897650000000000000
-          DataField = 'nodo'
           DataSetName = 'frxDBDDeliveryOrder'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1591,7 +1597,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."nodo"]')
+            '[frxDBDataset1."notrans"]')
           ParentFont = False
         end
         object Memo11: TfrxMemoView
@@ -1699,7 +1705,6 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Top = 102.047310000000000000
           Width = 211.653680000000000000
           Height = 18.897650000000000000
-          DataField = 'tanggal'
           DataSetName = 'frxDBDDeliveryOrder'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
           DisplayFormat.Kind = fkDateTime
@@ -1710,7 +1715,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."tanggal"]')
+            '[frxDBDataset1."date_trans"]')
           ParentFont = False
         end
         object frxDBDDeliveryOrdernasupmuat: TfrxMemoView
@@ -1727,7 +1732,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."lokasi_muat"]')
+            '[frxDBDataset1."pickup_location"]')
           ParentFont = False
         end
         object frxDBDDeliveryOrdergudang: TfrxMemoView
@@ -1744,26 +1749,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."lokasi_bongkar"]')
-          ParentFont = False
-        end
-        object kota_pt: TfrxMemoView
-          AllowVectorExport = True
-          Left = 468.661720000000000000
-          Top = 46.692950000000000000
-          Width = 282.861718550000000000
-          Height = 21.221429200000000000
-          Visible = False
-          DataSetName = 'frxDBDLPBKolektiff'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            'KOTA TEGAL')
+            '[frxDBDataset1."delivery_location"]')
           ParentFont = False
         end
         object telp_pt: TfrxMemoView
@@ -1782,7 +1768,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'Telp. (0283)321289')
+            'Telp. [frxDBDataset1."telp"]')
           ParentFont = False
         end
         object Line3: TfrxLineView
@@ -1835,9 +1821,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            
-              'JL.KH.EZ.MUTAQIEN NO. 37 RT 004, RW 002, GEMBOR, PERIUK TANGERAN' +
-              'G-INDONESIA')
+            '[frxDBDataset1."address"]')
           ParentFont = False
         end
       end
@@ -1862,8 +1846,8 @@ object FListDeliveryOrder: TFListDeliveryOrder
         Height = 22.677155590000000000
         Top = 241.889920000000000000
         Width = 755.906000000000000000
-        DataSet = frxDBDataset1
-        DataSetName = 'frxDBDataset1'
+        DataSet = frxDBDataset2
+        DataSetName = 'frxDBDataset2'
         RowCount = 0
         Stretched = True
         object Shape5: TfrxShapeView
@@ -1896,7 +1880,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Width = 359.055350000000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
-          DataSetName = 'frxDBDDeliveryOrder'
+          DataField = 'address'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1904,7 +1890,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrderLampiran."outlet_alamat"]')
+            '[frxDBDataset2."address"]')
           ParentFont = False
         end
         object Memo25: TfrxMemoView
@@ -1913,6 +1899,9 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Width = 334.110431500000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
+          DataField = 'name_vendor_load'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDataset2'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1920,7 +1909,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrderLampiran."outlet_name"]')
+            '[frxDBDataset2."name_vendor_load"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1955,7 +1944,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         Height = 200.692932910000000000
         Top = 18.897650000000000000
         Width = 755.906000000000000000
-        Condition = '<frxDBDDeliveryOrder."nodo">'
+        Condition = '<frxDBDataset1."notrans">'
         StartNewPage = True
         object Memo32: TfrxMemoView
           AllowVectorExport = True
@@ -2082,7 +2071,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'PT.MITRA ABADI BAHARI')
+            '[frxDBDataset1."company_name"]')
           ParentFont = False
         end
         object Memo39: TfrxMemoView
@@ -2100,7 +2089,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'Office: JL. MARTOLOYO NO. 92 RT.01 RW.07 MINTARAGEN TEGAL TIMUR,')
+            'Office: [frxDBDataset1."address_sbu"]')
           ParentFont = False
         end
         object Shape3: TfrxShapeView
@@ -2209,7 +2198,6 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Top = 117.165430000000000000
           Width = 211.653680000000000000
           Height = 18.897650000000000000
-          DataField = 'tanggal'
           DataSetName = 'frxDBDDeliveryOrder'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
           DisplayFormat.Kind = fkDateTime
@@ -2220,7 +2208,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."tanggal"]')
+            '[frxDBDataset1."date_trans"]')
           ParentFont = False
         end
         object Memo48: TfrxMemoView
@@ -2229,7 +2217,6 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Top = 139.842610000000000000
           Width = 211.653557950000000000
           Height = 18.897650000000000000
-          DataField = 'nodo'
           DataSetName = 'frxDBDDeliveryOrder'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2238,32 +2225,13 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDDeliveryOrder."nodo"]')
-          ParentFont = False
-        end
-        object Memo59: TfrxMemoView
-          AllowVectorExport = True
-          Left = 468.661720000000000000
-          Top = 58.031540000000000000
-          Width = 282.861718550000000000
-          Height = 21.221429200000000000
-          Visible = False
-          DataSetName = 'frxDBDLPBKolektiff'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            'Tangerang')
+            '[frxDBDataset1."notrans"]')
           ParentFont = False
         end
         object Memo60: TfrxMemoView
           AllowVectorExport = True
           Left = 468.661720000000000000
-          Top = 69.149660000000000000
+          Top = 68.149660000000000000
           Width = 282.861718550000000000
           Height = 21.221429200000000000
           Visible = False
@@ -2276,7 +2244,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'Telp. -')
+            'Telp. [frxDBDataset1."telp"]')
           ParentFont = False
         end
         object Line21: TfrxLineView
@@ -2301,7 +2269,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'PT. RODA CHAKRA KENCANA')
+            '[frxDBDataset1."vendor_name"]')
           ParentFont = False
         end
         object Memo28: TfrxMemoView
@@ -2319,9 +2287,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            
-              'JL.KH.EZ.MUTAQIEN NO. 37 RT 004, RW 002, GEMBOR, PERIUK TANGERAN' +
-              'G-INDONESIA')
+            '[frxDBDataset1."address"]')
           ParentFont = False
         end
       end
@@ -2330,9 +2296,69 @@ object FListDeliveryOrder: TFListDeliveryOrder
   object frxDBDataset1: TfrxDBDataset
     UserName = 'frxDBDataset1'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'notrans=notrans'
+      'date_trans=date_trans'
+      'vendor_code=vendor_code'
+      'vendor_name=vendor_name'
+      'address=address'
+      'pickup_location=pickup_location'
+      'delivery_location=delivery_location'
+      'company_name=company_name'
+      'address_sbu=address_sbu'
+      'telp=telp'
+      'keterangan=keterangan'
+      'vehicles=vehicles'
+      'item_name=item_name'
+      'amount=amount'
+      'unit=unit')
+    DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
     Left = 256
     Top = 232
+  end
+  object QCetak: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.addr' +
+        'ess,a.pickup_location,a.delivery_location,d.company_name,d.addre' +
+        'ss address_sbu,d.telp,case when COALESCE(vehicles,'#39#39')='#39#39' then dr' +
+        'iver_name else CONCAT(vehicles,'#39'/'#39',driver_name) end keterangan,v' +
+        'ehicles,dol.item_name,dol.amount,dol.unit from '
+      't_delivery_order_load dol LEFT JOIN '
+      't_delivery_order_services  a on a.notrans=dol.notrans'
+      'left join t_supplier b on b.supplier_code=a.vendor_code'
+      'left join t_delivery_order c on c.notrans=a.notrans'
+      'left join t_company d on d.company_code=c.sbu_code'
+      'WHERE a.notrans='#39'DO/001/01/X/2025/HLJ'#39)
+    Left = 120
+    Top = 232
+  end
+  object QCetak2: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select DISTINCT a.name_vendor_load,address from t_delivery_order' +
+        '_load a'
+      
+        'left join t_customer_address b on b.customer_code=a.code_vendor_' +
+        'load and code_details='#39'003'#39
+      'WHERE notrans='#39'DO/001/01/X/2025/HLJ'#39)
+    Left = 272
+    Top = 288
+  end
+  object frxDBDataset2: TfrxDBDataset
+    UserName = 'frxDBDataset2'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'name_vendor_load=name_vendor_load'
+      'address=address')
+    DataSet = QCetak2
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 344
+    Top = 272
   end
 end

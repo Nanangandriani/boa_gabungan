@@ -930,7 +930,6 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         'ales a '
       #9#9'LEFT JOIN get_customer() b on b.customer_code=a.customer_code'
       #9#9'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code')
-    Active = True
     Left = 508
     Top = 8
   end

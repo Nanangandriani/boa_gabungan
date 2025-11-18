@@ -13,6 +13,7 @@ object FMasterData: TFMasterData
   Font.Style = []
   Position = poDesktopCenter
   OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
   object DBGridCustomer: TDBGridEh
     Left = 0

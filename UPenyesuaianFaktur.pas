@@ -116,6 +116,7 @@ begin
     close;
     sql.clear;
     sql.Text:='Update t_selling set '+
+              'no_inv_tax='+QuotedStr(MemDetail['no_faktur_coretax'])+', '+
               'no_inv_tax_coretax='+QuotedStr(MemDetail['no_faktur_coretax'])+', '+
               'updated_at=NOW(), updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
               'Where trans_no='+QuotedStr(MemDetail['no_invoice_internal']);

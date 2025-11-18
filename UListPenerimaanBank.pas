@@ -1,4 +1,4 @@
-unit UListPenerimaanBank;
+﻿unit UListPenerimaanBank;
 
 interface
 
@@ -69,6 +69,18 @@ type
     QBukti_Terima: TUniQuery;
     frxDBDQBukti_Terima: TfrxDBDataset;
     Report: TfrxReport;
+    dxBarLargeButton2: TdxBarLargeButton;
+    frxDBDJurnal: TfrxDBDataset;
+    QJurnal: TUniQuery;
+    QBukti_Terima_det: TUniQuery;
+    frxDBDQBukti_Terima_det: TfrxDBDataset;
+    dsBukti_Terima: TDataSource;
+    dsBukti_Terima_det: TDataSource;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton3: TdxBarLargeButton;
+    cbTransaksi: TdxBarCombo;
     QBukti_Terimavoucher_no: TStringField;
     QBukti_Terimatrans_date: TDateField;
     QBukti_Terimacode_cust: TStringField;
@@ -78,34 +90,22 @@ type
     QBukti_Terimafor_acceptance: TStringField;
     QBukti_Terimadescription: TMemoField;
     QBukti_Terimamodule_id: TIntegerField;
-    QBukti_Terimacode_account_header: TStringField;
+    QBukti_Terimacode_account_header: TMemoField;
     QBukti_Terimaaccount_name: TStringField;
     QBukti_Terimapaid_amount: TFloatField;
     QBukti_Terimadesc_akun: TMemoField;
-    dxBarLargeButton2: TdxBarLargeButton;
-    frxDBDJurnal: TfrxDBDataset;
-    QJurnal: TUniQuery;
-    QBukti_Terima_det: TUniQuery;
-    frxDBDQBukti_Terima_det: TfrxDBDataset;
     QBukti_Terima_detvoucher_no: TStringField;
+    QBukti_Terima_detname_account: TStringField;
     QBukti_Terima_dettrans_date: TDateField;
     QBukti_Terima_detcode_cust: TStringField;
     QBukti_Terima_detname_cust: TStringField;
     QBukti_Terima_detaccount_number_bank: TStringField;
     QBukti_Terima_detaccount_name_bank: TStringField;
     QBukti_Terima_detcode_account_header: TStringField;
-    QBukti_Terima_detname_account: TStringField;
     QBukti_Terima_detpaid_amount: TFloatField;
     QBukti_Terima_detfor_acceptance: TStringField;
     QBukti_Terima_detdescription: TMemoField;
-    dsBukti_Terima: TDataSource;
-    dsBukti_Terima_det: TDataSource;
     QBukti_Terima_detket: TMemoField;
-    dxBarManager1Bar3: TdxBar;
-    cbBulan: TdxBarCombo;
-    edTahun: TdxBarSpinEdit;
-    dxBarLargeButton3: TdxBarLargeButton;
-    cbTransaksi: TdxBarCombo;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -489,32 +489,33 @@ end;
 
 procedure TFListPenerimaanBank.dxBarLargeButton1Click(Sender: TObject);
 begin
-   with QBukti_Terima do
-    begin
-     close;
-     sql.clear;
-     sql.add(' SELECT a.*, "code_account_header", "account_name", "paid_amount", "desc_akun" from ('+
-             ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
-             ' "account_name_bank", "for_acceptance", "description", "module_id" '+
-             ' from "public"."t_cash_bank_acceptance"  a  '+
-             ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
-             ' AND deleted_at is null) a '+
-             ' LEFT JOIN (SELECT  "voucher_no", "code_account", "name_account", "position", '+
-             ' "paid_amount", "description" as desc_akun, "code_account_header", "account_name" , '+
-             ' "amount_rate_results" from "public"."t_cash_bank_acceptance_det" aa '+
-             ' LEFT JOIN t_ak_account bb ON aa."code_account_header"=bb.code) b ON a."voucher_no"=b."voucher_no" '+
-             ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
-             ' and "position"=''K'' '+
-             ' order by position asc');
-     open;
-    end;
+  with QBukti_Terima do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT a.*, "code_account_header",b.name_account  "account_name", "paid_amount", "desc_akun" from ('+
+           ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
+           ' "account_name_bank", "for_acceptance", "description", "module_id" '+
+           ' from "public"."t_cash_bank_acceptance"  a  '+
+           ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+           ' AND deleted_at is null) a '+
+           ' LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  '+
+           '"paid_amount", "description" as desc_akun, COALESCE(bb.account_code,aa.code_account) code_account_header, '+
+           'bb.account_name ,  "amount_rate_results" from "public"."t_cash_bank_acceptance_det" aa  '+
+           'LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
+           'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON '+
+           'a."voucher_no"=b."voucher_no" '+
+           ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
+           ' and "position"=''K'' '+
+           ' order by position asc');
+    open;
+  end;
 
-
- if QBukti_Terima.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+  if QBukti_Terima.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
  if QBukti_Terima.RecordCount<>0 then
  begin
@@ -551,15 +552,18 @@ begin
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
    SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat)));
+
    if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
    begin
-    SetMemo(Report,'vkas','X');
+//    SetMemo(Report,'vkas','X');
+    SetMemo(Report, 'vkas', '✔');
     SetMemo(Report,'vbank','');
    end;
    if QBukti_Terima.FieldByName('module_id').AsString='3' then//bank
    begin
     SetMemo(Report,'vkas','');
-    SetMemo(Report,'vbank','X');
+    SetMemo(Report,'vbank','✔');
+
    end;
 
    //Report.DesignReport();
@@ -607,6 +611,7 @@ end;
 
 procedure TFListPenerimaanBank.FormShow(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   with dm.Qtemp3 do
   begin
     close;

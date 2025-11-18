@@ -88,6 +88,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure CariClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -108,7 +110,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_PO, UDataModule;
+uses UNew_PO, UDataModule,UMainMenu;
 // implementasi function
 function FPO: TFPO;
 begin
@@ -594,6 +596,29 @@ begin
   end;
 end;
 
+procedure TFPO.ActDelExecute(Sender: TObject);
+begin
+    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPO.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_po where po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      Execute;
+    end;
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_podetail where contract_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      Execute;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+    end;
+end;
+
 procedure TFPO.ActPrintExecute(Sender: TObject);
 begin
   PrintPodmlt;
@@ -756,6 +781,16 @@ begin
           FNew_PO.Totalpo;
       end;
 
+      with dm.Qtemp do
+      begin
+        Close;
+        sql.Clear;
+        sql.Text:='select * from t_ref_po a inner join t_po b on a.ref_name=b.po_type WHERE ref_name='+QuotedStr(FNew_PO.EdStatus.Text)+' and b.po_no='+QuotedStr(FNew_PO.EdNopo.Text)+' ';
+        ExecSQL;
+      end;
+      ref_code:=dm.Qtemp['ref_code'];
+      //showmessage(dm.Qtemp['ref_code']);
+
       with FNew_PO do
       begin
         if Edno_kontrak.Text<>'0' then
@@ -792,6 +827,32 @@ begin
        FNew_PO.CkUangmkClick(sender);
       finally
     end;
+end;
+
+procedure TFPO.CariClick(Sender: TObject);
+begin
+   DBGridPO.StartLoadingStatus();
+   with Qpo do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select 	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+               'END) AS status_app, (case WHEN a.status=''1'' THEN ''AKTIF'' WHEN a.status=''0'' THEN ''SELESAI'' '+
+               'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
+               'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
+               'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
+               'a.um_account_code,a.as_status,um_no '+
+               'from t_po A '+
+               'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
+               'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
+               'WHERE a.po_date between '+QuotedStr(formatdatetime('yyyy=mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy=mm-dd',DTP2.DateTime))+' ';//and a.pic='+Quotedstr(Nm)+' ';
+     open;
+   end;
+   Qpo.Close;
+   Qpo.Open;
+   mempo.Close;
+   mempo.Open;
+   DBGridPO.FinishLoadingStatus();
 end;
 
 procedure TFPO.clear;

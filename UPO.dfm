@@ -556,6 +556,7 @@ object FPO: TFPO
       Width = 70
       Caption = 'Cari'
       TabOrder = 2
+      OnClick = CariClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830E0000830E00000001000000000000000000003300
@@ -628,6 +629,7 @@ object FPO: TFPO
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -1178,9 +1180,8 @@ object FPO: TFPO
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarDelete: TdxBarButton
-      Caption = 'Delete  '
+      Action = ActDel
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -2707,7 +2708,7 @@ object FPO: TFPO
       'from t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'INNER JOIN t_wh c on a.wh_code=c.wh_code'
-      'order by A.id desc')
+      'order by A.po_date,A.id desc')
     Left = 320
     Top = 32
   end

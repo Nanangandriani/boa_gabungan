@@ -112,7 +112,7 @@ procedure TFLog.cxBarEditItem2PropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master User';
   FMasterData.vcall:='loguser';
-  FMasterData.update_grid('user_name','full_name',QuotedStr(''),'t_user','');
+  FMasterData.update_grid('user_name','full_name','dept',' t_user a left join t_dept b on b.dept_code=a.dept_code','');
   FMasterData.ShowModal;
 end;
 

@@ -208,13 +208,14 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         end
       end
       object Memo1: TMemo
-        Left = 412
-        Top = -34
+        Left = 307
+        Top = -54
         Width = 369
         Height = 89
         Lines.Strings = (
           'Memo1')
         TabOrder = 2
+        Visible = False
       end
       object edKaresidenan: TRzButtonEdit
         Left = 133

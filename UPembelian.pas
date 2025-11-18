@@ -351,6 +351,8 @@ end;
 procedure TFPembelian.FormShow(Sender: TObject);
 begin
   //DBGridterima1.IndicatorOptions:=[gioShowRowIndicatorEh,gioshowRecNoEh];
+  if QTerimaDet.Active=false then
+     QTerimaDet.Active:=true;
 end;
 
 function IntToRoman(Value : Longint):String;  // fungsi

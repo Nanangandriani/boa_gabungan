@@ -46,6 +46,8 @@ object FRekapPenjualan: TFRekapPenjualan
     DataSource = DsRekapPenjualan
     DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True

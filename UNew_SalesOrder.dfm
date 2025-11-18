@@ -221,6 +221,48 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Visible = False
       OnClick = SpeedButton1Click
     end
+    object Label15: TLabel
+      Left = 505
+      Top = 19
+      Width = 113
+      Height = 15
+      Caption = 'Kelompok Kendaraan'
+    end
+    object Label16: TLabel
+      Left = 623
+      Top = 19
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label17: TLabel
+      Left = 624
+      Top = 48
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label18: TLabel
+      Left = 505
+      Top = 48
+      Width = 83
+      Height = 15
+      Caption = 'Type Kendaraan'
+    end
+    object Label19: TLabel
+      Left = 505
+      Top = 77
+      Width = 108
+      Height = 15
+      Caption = 'Kapasitas Kendaraan'
+    end
+    object Label20: TLabel
+      Left = 624
+      Top = 77
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object edKodeOrder: TEdit
       Left = 132
       Top = 16
@@ -244,8 +286,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
       OnButtonClick = edNama_PelangganButtonClick
     end
     object edKode_Pelanggan: TEdit
-      Left = 530
-      Top = 123
+      Left = 589
+      Top = 197
       Width = 200
       Height = 23
       TabOrder = 2
@@ -264,8 +306,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
       OnButtonClick = edNama_SalesButtonClick
     end
     object edKode_Sales: TEdit
-      Left = 511
-      Top = 152
+      Left = 615
+      Top = 226
       Width = 200
       Height = 23
       TabOrder = 4
@@ -395,8 +437,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
       OnChange = dtTanggal_PesanChange
     end
     object Memo1: TMemo
-      Left = 761
-      Top = 88
+      Left = 335
+      Top = 182
       Width = 248
       Height = 89
       Lines.Strings = (
@@ -475,6 +517,57 @@ object FNew_SalesOrder: TFNew_SalesOrder
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+    end
+    object cbKonversiMuatan: TRzCheckBox
+      Left = 335
+      Top = 18
+      Width = 112
+      Height = 19
+      Caption = 'Konversi Muatan'
+      State = cbUnchecked
+      TabOrder = 15
+      OnClick = cbKonversiMuatanClick
+    end
+    object edKelompokBarang: TRzButtonEdit
+      Left = 638
+      Top = 16
+      Width = 185
+      Height = 23
+      Text = ''
+      TabOrder = 16
+      AllowKeyEdit = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edKelompokBarangButtonClick
+    end
+    object edTypeKendaraan: TEdit
+      Left = 638
+      Top = 45
+      Width = 185
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 17
+    end
+    object edKodeTypeKendaraan: TEdit
+      Left = 829
+      Top = 45
+      Width = 102
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 18
+      Visible = False
+    end
+    object edKapasitas: TRzNumericEdit
+      Left = 638
+      Top = 74
+      Width = 75
+      Height = 23
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 19
+      DisplayFormat = '#,###0'
     end
   end
   object Panel2: TPanel
@@ -608,8 +701,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 903
-      ExplicitTop = 3
+      ExplicitLeft = 900
     end
     object Edautocode: TEdit
       Left = 712
@@ -648,8 +740,10 @@ object FNew_SalesOrder: TFNew_SalesOrder
         DataSource = DSDetail
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SearchPanel.Enabled = True
         TabOrder = 0
+        TitleParams.MultiTitle = True
         Columns = <
           item
             CellButtons = <>
@@ -658,7 +752,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_ITEM'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Kode Barang'
             Width = 100
           end
@@ -669,7 +762,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_ITEM'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Nama Barang'
             Width = 250
           end
@@ -680,7 +772,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             EditButtons = <>
             FieldName = 'JUMLAH'
             Footers = <>
-            Title.Alignment = taCenter
             Title.Caption = 'Jumlah'
             Width = 100
           end
@@ -691,7 +782,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_ SATUAN'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Satuan'
             Width = 100
           end
@@ -702,7 +792,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_SUPPLIER'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Kode Supplier'
             Visible = False
             Width = 100
@@ -714,7 +803,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_SUPPLIER'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Nama Supplier'
             Visible = False
             Width = 250
@@ -726,7 +814,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_GUDANG'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Kode Gudang'
             Visible = False
             Width = 100
@@ -738,7 +825,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'NM_GUDANG'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Title.Caption = 'Nama Gudang'
             Visible = False
             Width = 250
@@ -759,9 +845,26 @@ object FNew_SalesOrder: TFNew_SalesOrder
             FieldName = 'KD_SATUAN'
             Footers = <>
             ReadOnly = True
-            Title.Alignment = taCenter
             Visible = False
             Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'BERAT_KOSONG'
+            Footers = <>
+            Title.Caption = 'Berat (KG)|Berat Kosong'
+            Width = 98
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'BERAT_ISI'
+            Footers = <>
+            Title.Caption = 'Berat (KG)|Berat Isi'
+            Width = 96
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -770,13 +873,14 @@ object FNew_SalesOrder: TFNew_SalesOrder
   end
   object DSDetail: TDataSource
     DataSet = MemDetail
-    Left = 64
-    Top = 472
+    Left = 328
+    Top = 360
   end
   object MemDetail: TMemTableEh
+    Active = True
     Params = <>
-    Left = 168
-    Top = 352
+    Left = 192
+    Top = 336
     object MemDetailKD_ITEM: TStringField
       FieldName = 'KD_ITEM'
       Size = 50
@@ -819,6 +923,14 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object MemDetailCATEGORY_NAME: TStringField
       FieldName = 'CATEGORY_NAME'
+    end
+    object MemDetailBERAT_ISI: TFloatField
+      FieldName = 'BERAT_ISI'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailBERAT_KOSONG: TFloatField
+      FieldName = 'BERAT_KOSONG'
+      DisplayFormat = '#,##0.##'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -893,6 +1005,22 @@ object FNew_SalesOrder: TFNew_SalesOrder
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
+        object BERAT_ISI: TMTNumericDataFieldEh
+          FieldName = 'BERAT_ISI'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object BERAT_KOSONG: TMTNumericDataFieldEh
+          FieldName = 'BERAT_KOSONG'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
       end
@@ -901,8 +1029,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
   object MemCategori: TMemTableEh
     Active = True
     Params = <>
-    Left = 352
-    Top = 16
+    Left = 496
+    Top = 224
     object MemCategoricategory_id: TSmallintField
       FieldName = 'category_id'
     end

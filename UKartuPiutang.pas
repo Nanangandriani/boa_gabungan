@@ -204,7 +204,7 @@ begin
                ' saldo_awal, no_urut, keterangan2, debet, kredit FROM '+
                ' "public"."get_piutang_trx2" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
                ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') '+
-               ' ORDER BY customer_code, no_urut, tgltrans ASC) AS subquery '+
+               ' ORDER BY customer_code, no_urut, created_at ASC) AS subquery '+
                ' ORDER BY customer_code, nomor) trx '+
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b   '+

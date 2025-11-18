@@ -69,21 +69,22 @@ type
     Report: TfrxReport;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton2: TdxBarLargeButton;
+    dxBarManager1Bar3: TdxBar;
+    cbBulan: TdxBarCombo;
+    edTahun: TdxBarSpinEdit;
+    dxBarLargeButton3: TdxBarLargeButton;
     QCetaknotrans: TStringField;
     QCetaknotrans_do: TStringField;
     QCetaknotrans_sale: TStringField;
     QCetakcust_vendor: TStringField;
     QCetakcust_name_vendor: TStringField;
     QCetakan_terima: TStringField;
+    QCetaknumber_of_vehicles: TStringField;
     QCetakcode_items: TStringField;
     QCetakname_item: TStringField;
     QCetakamount: TFloatField;
     QCetakunit: TStringField;
     QCetakbanyaknya: TMemoField;
-    dxBarManager1Bar3: TdxBar;
-    cbBulan: TdxBarCombo;
-    edTahun: TdxBarSpinEdit;
-    dxBarLargeButton3: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -317,12 +318,13 @@ begin
     begin
      close;
      sql.clear;
-     sql.add(' select "notrans", "notrans_do", "notrans_sale", a."code_cust" as cust_vendor, '+
-             ' a."name_cust" as cust_name_vendor, b."name_cust" as an_terima, "code_items", '+
+     sql.add(' select c.notrans, "notrans_do", "notrans_sale", a."code_cust" as cust_vendor, '+
+             ' a."name_cust" as cust_name_vendor, b."name_cust" as an_terima,c.number_of_vehicles, "code_items", '+
              ' "name_item", "amount", "unit", '+
-             ' concat("name_item",'' = '',CAST("amount" AS INTEGER),'' '',"unit") as banyaknya '+
+             ' concat("name_item",'' '',CAST("amount" AS INTEGER),'' '',"unit") as banyaknya '+
              ' from "public"."t_spm_det" a '+
              ' LEFT JOIN "public"."t_selling" b ON a."notrans_sale"=b."trans_no" '+
+             ' LEFT JOIN t_spm c on c.notrans=a.notrans '+
              ' WHERE a."notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
              ' order by a."notrans" Desc');
      open;

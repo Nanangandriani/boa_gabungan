@@ -189,6 +189,7 @@ object FNew_PiutangBermasalah: TFNew_PiutangBermasalah
     Height = 23
     Text = ''
     TabOrder = 1
+    AllowKeyEdit = False
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
     OnButtonClick = edPelangganButtonClick
@@ -200,6 +201,7 @@ object FNew_PiutangBermasalah: TFNew_PiutangBermasalah
     Height = 23
     Text = ''
     TabOrder = 2
+    AllowKeyEdit = False
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
     OnButtonClick = edNoNotaButtonClick

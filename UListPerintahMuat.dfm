@@ -46,7 +46,9 @@ object FListPerintahMuat: TFListPerintahMuat
     Align = alClient
     DataSource = DsListPerintahMuat
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     EmptyDataInfo.Active = True
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -902,12 +904,12 @@ object FListPerintahMuat: TFListPerintahMuat
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT'
-      #9'"notrans",'
+      #9'c.notrans,'
       #9'"notrans_do",'
       #9'"notrans_sale",'
       #9'A."code_cust" AS cust_vendor,'
       #9'A."name_cust" AS cust_name_vendor,'
-      #9'b."name_cust" AS an_terima,'
+      #9'b."name_cust" AS an_terima,c.number_of_vehicles,'
       #9'"code_items",'
       #9'"name_item",'
       #9'"amount",'
@@ -920,6 +922,7 @@ object FListPerintahMuat: TFListPerintahMuat
       
         #9'A LEFT JOIN "public"."t_selling" b ON A."notrans_sale" = b."tra' +
         'ns_no" '
+      'LEFT JOIN t_spm c on c.notrans=a.notrans '
       'WHERE'
       #9'A."notrans" = '#39'SPM/0001/13/VIII/2024'#39' '
       'ORDER BY'
@@ -928,6 +931,7 @@ object FListPerintahMuat: TFListPerintahMuat
     Top = 40
     object QCetaknotrans: TStringField
       FieldName = 'notrans'
+      ReadOnly = True
       Required = True
       Size = 100
     end
@@ -951,6 +955,11 @@ object FListPerintahMuat: TFListPerintahMuat
       FieldName = 'an_terima'
       ReadOnly = True
       Size = 255
+    end
+    object QCetaknumber_of_vehicles: TStringField
+      FieldName = 'number_of_vehicles'
+      ReadOnly = True
+      Size = 100
     end
     object QCetakcode_items: TStringField
       FieldName = 'code_items'
@@ -983,6 +992,7 @@ object FListPerintahMuat: TFListPerintahMuat
       'cust_vendor=cust_vendor'
       'cust_name_vendor=cust_name_vendor'
       'an_terima=an_terima'
+      'number_of_vehicles=number_of_vehicles'
       'code_items=code_items'
       'name_item=name_item'
       'amount=amount'
@@ -1004,7 +1014,7 @@ object FListPerintahMuat: TFListPerintahMuat
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.413693113400000000
-    ReportOptions.LastChange = 45969.425172673610000000
+    ReportOptions.LastChange = 45974.643237881940000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1042,13 +1052,13 @@ object FListPerintahMuat: TFListPerintahMuat
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 81.149660000000000000
+        Height = 76.142548100000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
         object Memo9: TfrxMemoView
           AllowVectorExport = True
           Left = 11.338590000000000000
-          Top = 7.559060000000000000
+          Top = 10.551948100000000000
           Width = 26.456710000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1063,8 +1073,8 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 11.338590000000000000
-          Top = 30.236240000000000000
+          Left = 12.338590000000000000
+          Top = 31.229128100000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1081,7 +1091,7 @@ object FListPerintahMuat: TFListPerintahMuat
           IndexTag = 1
           AllowVectorExport = True
           Left = 18.897650000000000000
-          Top = 52.913420000000000000
+          Top = 49.906308100000000000
           Width = 362.834880000000000000
           Height = 18.897650000000000000
           DataField = 'cust_name_vendor'
@@ -1100,7 +1110,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object kota_tanggal: TfrxMemoView
           AllowVectorExport = True
           Left = 491.338900000000000000
-          Top = 30.236240000000000000
+          Top = 33.229128100000000000
           Width = 219.212740000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1116,7 +1126,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line1: TfrxLineView
           AllowVectorExport = True
-          Top = 78.811070000000000000
+          Top = 73.803958100000000000
           Width = 718.110236220000000000
           Color = clBlack
           Frame.Style = fsDouble
@@ -1125,7 +1135,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line2: TfrxLineView
           AllowVectorExport = True
-          Top = 81.149660000000000000
+          Top = 76.142548100000000000
           Width = 718.110236220000000000
           Color = clBlack
           Frame.Style = fsDouble
@@ -1136,7 +1146,7 @@ object FListPerintahMuat: TFListPerintahMuat
           IndexTag = 1
           AllowVectorExport = True
           Left = 37.795300000000000000
-          Top = 7.559060000000000000
+          Top = 10.551948100000000000
           Width = 264.567100000000000000
           Height = 18.897650000000000000
           DataField = 'notrans'
@@ -1148,9 +1158,8 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 1.904761900000000000
-          Top = 6.007111900000000000
-          Width = 715.980519520000000000
+          Left = 4.904761900000000000
+          Width = 712.980519520000000000
           Height = 26.516697620000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1171,8 +1180,8 @@ object FListPerintahMuat: TFListPerintahMuat
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 275.905690000000000000
-        Top = 162.519790000000000000
+        Height = 302.094488190000000000
+        Top = 154.960730000000000000
         Width = 718.110700000000000000
         DataSet = frxDBDPerintahMuat
         DataSetName = 'frxDBDPerintahMuat'
@@ -1180,7 +1189,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line5: TfrxLineView
           AllowVectorExport = True
           Left = 355.275590550000000000
-          Height = 275.905690000000000000
+          Height = 303.118110236220500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1188,7 +1197,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line6: TfrxLineView
           AllowVectorExport = True
           Left = 359.055118110000000000
-          Height = 275.905511811024000000
+          Height = 303.118110236220500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1462,7 +1471,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line17: TfrxLineView
           AllowVectorExport = True
-          Top = 185.196970000000000000
+          Top = 181.196970000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1470,7 +1479,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line18: TfrxLineView
           AllowVectorExport = True
-          Top = 207.874150000000000000
+          Top = 201.874150000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1478,7 +1487,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line19: TfrxLineView
           AllowVectorExport = True
-          Top = 230.551330000000000000
+          Top = 221.551330000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1486,7 +1495,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line20: TfrxLineView
           AllowVectorExport = True
-          Top = 253.228510000000000000
+          Top = 242.228510000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1494,7 +1503,7 @@ object FListPerintahMuat: TFListPerintahMuat
         end
         object Line21: TfrxLineView
           AllowVectorExport = True
-          Top = 275.905690000000000000
+          Top = 261.905690000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1553,7 +1562,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line24: TfrxLineView
           AllowVectorExport = True
           Left = 359.055350000000000000
-          Top = 185.196970000000000000
+          Top = 181.196970000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1562,7 +1571,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line25: TfrxLineView
           AllowVectorExport = True
           Left = 359.055350000000000000
-          Top = 207.874150000000000000
+          Top = 202.874150000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1571,7 +1580,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line26: TfrxLineView
           AllowVectorExport = True
           Left = 359.055350000000000000
-          Top = 230.551330000000000000
+          Top = 221.551330000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1580,7 +1589,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line27: TfrxLineView
           AllowVectorExport = True
           Left = 359.055350000000000000
-          Top = 253.228510000000000000
+          Top = 242.228510000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1589,7 +1598,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line28: TfrxLineView
           AllowVectorExport = True
           Left = 359.055350000000000000
-          Top = 275.905690000000000000
+          Top = 260.905690000000000000
           Width = 355.275590550000000000
           Color = clBlack
           Frame.Typ = []
@@ -1634,6 +1643,7 @@ object FListPerintahMuat: TFListPerintahMuat
           Top = 30.236240000000000000
           Width = 162.519790000000000000
           Height = 18.897650000000000000
+          Visible = False
           DataField = 'name_item'
           DataSet = frxDBDPerintahMuat
           DataSetName = 'frxDBDPerintahMuat'
@@ -1655,19 +1665,68 @@ object FListPerintahMuat: TFListPerintahMuat
           Memo.UTF8W = (
             '[frxDBDPerintahMuat."an_terima"]')
         end
-        object frxDBDPerintahMuatbanyaknya: TfrxMemoView
+        object Memo28: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 166.299320000000000000
-          Width = 347.716760000000000000
+          Left = 92.000000000000000000
+          Top = 119.480210000000000000
+          Width = 260.567100000000000000
           Height = 18.897650000000000000
-          DataField = 'banyaknya'
+          DataField = 'number_of_vehicles'
           DataSet = frxDBDPerintahMuat
           DataSetName = 'frxDBDPerintahMuat'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDPerintahMuat."banyaknya"]')
+            '[frxDBDPerintahMuat."number_of_vehicles"]')
+          ParentFont = False
+        end
+        object Subreport1: TfrxSubreport
+          AllowVectorExport = True
+          Left = 95.000000000000000000
+          Top = 143.480210000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Page = Report.Page2
+        end
+        object Line31: TfrxLineView
+          AllowVectorExport = True
+          Left = -1.000000000000000000
+          Top = 282.039270000000000000
+          Width = 355.275590550000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line29: TfrxLineView
+          AllowVectorExport = True
+          Top = 302.039270000000000000
+          Width = 355.275590550000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line32: TfrxLineView
+          AllowVectorExport = True
+          Left = 360.000000000000000000
+          Top = 282.039270000000000000
+          Width = 355.275590550000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line30: TfrxLineView
+          AllowVectorExport = True
+          Left = 359.000000000000000000
+          Top = 302.094488190000000000
+          Width = 355.275590550000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -1678,7 +1737,7 @@ object FListPerintahMuat: TFListPerintahMuat
         FillGap.Right = 0
         Frame.Typ = []
         Height = 98.267780000000000000
-        Top = 498.897960000000000000
+        Top = 517.795610000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           AllowVectorExport = True
@@ -1830,6 +1889,46 @@ object FListPerintahMuat: TFListPerintahMuat
           Frame.Style = fsDouble
           Frame.Typ = []
           Diagonal = True
+        end
+      end
+    end
+    object Page2: TfrxReportPage
+      Orientation = poLandscape
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 148.000000000000000000
+      PaperSize = 11
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object MasterData2: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 20.000000000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        DataSet = frxDBDPerintahMuat
+        DataSetName = 'frxDBDPerintahMuat'
+        RowCount = 0
+        object Memo29: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 4.000000000000000000
+          Top = 1.102350000000000000
+          Width = 347.716760000000000000
+          Height = 18.897650000000000000
+          DataField = 'banyaknya'
+          DataSet = frxDBDPerintahMuat
+          DataSetName = 'frxDBDPerintahMuat'
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDPerintahMuat."banyaknya"]')
         end
       end
     end

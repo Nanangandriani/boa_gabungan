@@ -220,7 +220,7 @@ begin
          begin
            FNewDeliveryOrder.MemDataMuatan.active:=false;
            FNewDeliveryOrder.MemDataMuatan.active:=true;
-           FNewDeliveryOrder.MemDataMuatan.EmptyTable;
+//           FNewDeliveryOrder.MemDataMuatan.EmptyTable;
 
            MemDetail.First;
            while not MemDetail.Eof do

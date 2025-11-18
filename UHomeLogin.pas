@@ -90,15 +90,9 @@ begin
     DM.Koneksi.Password:=dm.abstable1Password.AsString;
     DM.Koneksi.Username:=dm.abstable1User_db.AsString;
     Dm.Koneksi.Port:=dm.abstable1Port_db.AsInteger;
-
-//    DM.Koneksi.SpecificOptions.Values['ConnectTimeout'] := '20';
-//    DM.Koneksi.SpecificOptions.Values['CommandTimeout'] := '30';
-//    DM.Koneksi.Options.LocalFailover := True;
-
+//    DM.Koneksi.SpecificOptions.Values['CommandTimeout'] := '120';
+//    DM.Koneksi.SpecificOptions.Values['LockTimeout'] := '120';
     DM.Koneksi.Connected:=True;
-
-
-    //Showmessage(dm.ABSTable1.FieldByName('Sbu_Code').AsString);
   EXCEPT
     showmessage('Tidak terkoneksi dengan server !');
     exit;

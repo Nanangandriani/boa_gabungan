@@ -318,7 +318,11 @@ uses
   UNew_UangMukaPenjualan in 'UNew_UangMukaPenjualan.pas' {FNew_UangMukaPenjualan},
   UListUangMukaPenjualan in 'UListUangMukaPenjualan.pas' {FListUangMukaPenjualan},
   UbrowseUangMukaPenjualan in 'UbrowseUangMukaPenjualan.pas' {FbrowseUangMukaPenjualan},
-  UbrowseUangMukaDibayarkan in 'UbrowseUangMukaDibayarkan.pas' {FbrowseUangMukaDibayarkan};
+  UbrowseUangMukaDibayarkan in 'UbrowseUangMukaDibayarkan.pas' {FbrowseUangMukaDibayarkan},
+  USettingPO in 'USettingPO.pas' {FSettingPO},
+  UbrowseKlasifikasi in 'UbrowseKlasifikasi.pas' {FbrowseKlasifikasi},
+  UPenyesuaianPenjualan in 'UPenyesuaianPenjualan.pas' {FPenyesuaianPenjualan},
+  UListKelompokKendaraan in 'UListKelompokKendaraan.pas' {FListKelompokKendaraan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -397,6 +401,11 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListUangMukaPenjualan, FListUangMukaPenjualan);
   Application.CreateForm(TFbrowseUangMukaPenjualan, FbrowseUangMukaPenjualan);
   Application.CreateForm(TFbrowseUangMukaDibayarkan, FbrowseUangMukaDibayarkan);
+  Application.CreateForm(TFSettingPO, FSettingPO);
+  Application.CreateForm(TFbrowseKlasifikasi, FbrowseKlasifikasi);
+  Application.CreateForm(TFPenyesuaianPenjualan, FPenyesuaianPenjualan);
+  Application.CreateForm(TFPenyesuaianPenjualan, FPenyesuaianPenjualan);
+  Application.CreateForm(TFListKelompokKendaraan, FListKelompokKendaraan);
   //  Application.CreateForm(TFExportImportTargetPenjualan, FExportImportTargetPenjualan);
   Application.CreateForm(TF_cetak_sisa_htg, F_cetak_sisa_htg);
   Application.CreateForm(TFDaftar_TP, FDaftar_TP);

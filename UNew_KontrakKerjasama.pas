@@ -259,10 +259,10 @@ begin
                 sql.clear;
                 sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                           ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,"specification",'+
-                          ' subtotal_rp,grandtotal,price2,pemb_ppn,pph,pph_rp,pemb_dpp)values(:parno_kontrak,'+
+                          ' subtotal_rp,grandtotal,price2,pemb_ppn,pph,pph_rp,pemb_dpp,item_code)values(:parno_kontrak,'+
                           ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
                           ' :parsisaqty,:parstatus,:parppn,:parppn_rp,:parSpesifikasi,'+
-                          ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:parpph,:parpph_rp,:parpemb_dpp)';
+                          ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:parpph,:parpph_rp,:parpemb_dpp,:paritem_code)';
                           ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                           ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                           ParamByName('parqty').Value:=MemMaterial['qty'];
@@ -283,6 +283,7 @@ begin
                           ParamByName('parpemb').Value:=MemMaterial['pemb_ppn'];
                           ParamByName('parpph').Value:=MemMaterial['pph'];
                           ParamByName('parpph_rp').Value:=MemMaterial['pph_rp'];
+                           ParamByName('paritem_code').Value:=MemMaterial['kd_material'];
                 ExecSQL;
               end;
               MemMaterial.Next;
@@ -401,9 +402,9 @@ begin
               sql.clear;
               sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                         ' total_price, totalpo, remaining_aqty, status,ppn,ppn_rp,"specification",'+
-                        ' subtotal_rp,grandtotal,pemb_ppn)values(:parno_kontrak,:parkd_material_stok,:parqty,'+
+                        ' subtotal_rp,grandtotal,pemb_ppn,item_code)values(:parno_kontrak,:parkd_material_stok,:parqty,'+
                         ' :parharga,:parsatuan,:partotal_harga,:partotalpo,:parsisaqty,:parstatus,'+
-                        ' :parppn,:parppn_rp,:parSpesifikasi,:parsubtotal_rp,:pargrandtotal,:parpemb)';
+                        ' :parppn,:parppn_rp,:parSpesifikasi,:parsubtotal_rp,:pargrandtotal,:parpemb,:paritem_code)';
                         ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                         ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                         ParamByName('parqty').Value:=MemMaterial['qty'];
@@ -420,6 +421,7 @@ begin
                         ParamByName('pargrandtotal').Value:=MemMaterial['grandtotal'];
                         ParamByName('parsubtotal_rp').Value:=MemMaterial['subtotal_rp'];
                         ParamByName('parpemb').Value:=MemMaterial['pemb_ppn_us'];
+                        ParamByName('paritem_code').Value:=MemMaterial['kd_material'];
               ExecSQL;
             end;
             MemMaterial.Next;
@@ -564,10 +566,10 @@ begin
             sql.clear;
             sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                       ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,"specification",'+
-                      ' subtotal_rp,grandtotal,price2,pemb_ppn,pph,pph_rp,pemb_dpp)values(:parno_kontrak,'+
+                      ' subtotal_rp,grandtotal,price2,pemb_ppn,pph,pph_rp,pemb_dpp,item_code)values(:parno_kontrak,'+
                       ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
                       ' :parsisaqty,:parstatus,:parppn,:parppn_rp,:parSpesifikasi,'+
-                      ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:parpph,:parpph_rp,:parpemb_dpp)';
+                      ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:parpph,:parpph_rp,:parpemb_dpp,:paritem_code)';
                       ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                       ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                       ParamByName('parqty').Value:=MemMaterial['qty'];
@@ -587,6 +589,7 @@ begin
                       ParamByName('parpemb').Value:=MemMaterial['pemb_ppn'];
                       ParamByName('parpph').Value:=MemMaterial['pph'];
                       ParamByName('parpph_rp').Value:=MemMaterial['pph_rp'];
+                      ParamByName('paritem_code').Value:=MemMaterial['kd_material'];
             ExecSQL;
           end;
         MemMaterial.Next;
@@ -713,10 +716,10 @@ begin
                 sql.clear;
                 sql.Text:='insert into t_coop_contract_det(contract_no,item_stock_code,qty,price,unit,'+
                           ' total_price, totalpo, remaining_qty, status,ppn,ppn_rp,"specification",'+
-                          ' subtotal_rp,grandtotal,price2,pemb_ppn)values(:parno_kontrak,'+
+                          ' subtotal_rp,grandtotal,price2,pemb_ppn,item_code)values(:parno_kontrak,'+
                           ' :parkd_material_stok,:parqty,:parharga,:parsatuan,:partotal_harga,:partotalpo,'+
                           ' :parsisaqty,:parstatus,:parppn,:parppn_rp,:parSpesifikasi,'+
-                          ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb)';
+                          ' :parsubtotal_rp,:pargrandtotal,:parharga2,:parpemb,:paritem_code)';
                           ParamByName('parno_kontrak').Value:=EdNo_kontrak.Text;
                           ParamByName('parkd_material_stok').Value:=MemMaterial['kd_material_supp'];
                           ParamByName('parqty').Value:=MemMaterial['qty'];
@@ -733,6 +736,8 @@ begin
                           ParamByName('parsubtotal_rp').Value:=MemMaterial['subtotal_rp'];
                           ParamByName('parharga2').Value:=MemMaterial['harga2'];
                           ParamByName('parpemb').Value:=MemMaterial['pemb_ppn_us'];
+                          ParamByName('paritem_code').Value:=MemMaterial['kd_material'];
+
                 ExecSQL;
               end;
             MemMaterial.Next;

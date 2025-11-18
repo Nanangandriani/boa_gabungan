@@ -247,7 +247,7 @@ object FPenyesuaianFaktur: TFPenyesuaianFaktur
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitTop = 121
+    ExplicitWidth = 767
     object cbTandai: TRzCheckBox
       Left = 16
       Top = 6

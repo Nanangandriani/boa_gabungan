@@ -79,6 +79,7 @@ type
     procedure edKabupatenButtonClick(Sender: TObject);
     procedure edKaresidenanChange(Sender: TObject);
     procedure edKabupatenChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -558,6 +559,12 @@ begin
       MessageDlg('Kabupaten wajib di isi dan Data harus kosong..!!',mtInformation,[mbRetry],0);
     end;
   end;
+end;
+
+procedure TFDataPenagihanPiutang.FormShow(Sender: TObject);
+begin
+//  if edKodeKolektor.Text<>'' then RefreshGrid;
+
 end;
 
 procedure TFDataPenagihanPiutang.RzBitBtn1Click(Sender: TObject);

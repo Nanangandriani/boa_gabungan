@@ -65,9 +65,14 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DBGridTerima: TDBGridEh;
     DBGridEh2: TDBGridEh;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
+    procedure dxBarDeleteClick(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -102,6 +107,54 @@ begin
       Caption:='New Terima Barang';
     end;
 end;
+
+procedure TFTerima_Material.ActDelExecute(Sender: TObject);
+begin
+   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_item_receive where receive_no='+QuotedStr(DBGridTerima.Fields[1].AsString);
+      Execute;
+    end;
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_item_receive_det where receive_no='+QuotedStr(DBGridTerima.Fields[1].AsString);
+      Execute;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+    end;
+end;
+
+procedure TFTerima_Material.ActPrintExecute(Sender: TObject);
+begin
+   with QReportLPB do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.receive_no,a.order_no,a.receive_date,a.po_no,a. created_by,a.remark,a.spb_no,a.sj_no,a.faktur_no, '+
+                'a.import_duty, a.faktur_date,a.due_date,a.supplier_code,a.account_code,a.purchase_type,a.debt_amount, '+
+                'a.payment_amount,a.debt_remaining,a.status,a.valas,a.valas_value, '+
+                'a.pib_no,	a.correction_status,a.plan_stat,a.approval_status,a.approval,a.sbu_code, a.trans_month,a.trans_year, '+
+                'C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp, e.pph_rp,e.ppn_pembulatan, '+
+                'e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value  from t_item_receive A '+
+                'Left join t_spb C on A.spb_no=C.spb_no '+
+                'inner join t_item_receive_det E on A.receive_no=E.receive_no '+
+                'inner join t_supplier D on A.supplier_code=D.supplier_code '+
+                'inner join t_item_stock F on E.item_stock_code=F. item_stock_code '+
+                'left JOIN t_user g on a.created_by=g.user_name '+
+                'where a.receive_no='+QuotedStr(DBGridTerima.Fields[1].AsString)+' order by e.id asc';
+      open;
+   end;
+   RptLPB.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\CetakPenerimaanBarangPPNgb.fr3');
+   RptLPB.ShowReport();
+end;
+
 
 procedure TFTerima_Material.ActRoExecute(Sender: TObject);
 begin
@@ -206,6 +259,11 @@ begin
           QTerimaDet.Next;
         end;
     end;
+end;
+
+procedure TFTerima_Material.dxBarDeleteClick(Sender: TObject);
+begin
+
 end;
 
 // Contoh RegisterClass

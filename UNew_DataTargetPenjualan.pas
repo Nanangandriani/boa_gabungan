@@ -223,27 +223,27 @@ begin
   if edNamaPelanggan.Text='' then
   begin
     MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    edNamaPelanggan.SetFocus;
+//    edNamaPelanggan.SetFocus;
   end
   else if cbKategori.Text='' then
   begin
     MessageDlg('Kategori Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    cbJenisBarang.SetFocus;
+//    cbJenisBarang.SetFocus;
   end
   else if cbKelompokBarang.Text='' then
   begin
     MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    cbKelompokBarang.SetFocus;
+//    cbKelompokBarang.SetFocus;
   end
   else if cbBulan.Text='' then
   begin
     MessageDlg('Bulan Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    cbBulan.SetFocus;
+//    cbBulan.SetFocus;
   end
   else if edTahun.Value=0 then
   begin
     MessageDlg('Tahun Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    edTahun.SetFocus;
+//    edTahun.SetFocus;
   end
   else
   begin

@@ -10,6 +10,7 @@ object dm: Tdm
     Username = 'Devel'
     Server = '172.101.100.125'
     Connected = True
+    LoginPrompt = False
     OnError = KoneksiError
     Left = 157
     Top = 13
@@ -115,8 +116,8 @@ object dm: Tdm
     MaxConnections = 500
     MultiUser = False
     SessionName = 'Default'
-    Left = 352
-    Top = 152
+    Left = 256
+    Top = 280
   end
   object ABSTable1: TABSTable
     CurrentVersion = '7.95 '
@@ -125,8 +126,8 @@ object dm: Tdm
     ReadOnly = False
     TableName = 't_konfigurasi'
     Exclusive = False
-    Left = 352
-    Top = 88
+    Left = 80
+    Top = 288
     object ABSTable1id: TAutoIncField
       FieldName = 'id'
     end

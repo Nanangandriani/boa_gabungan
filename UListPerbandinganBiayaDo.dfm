@@ -31,6 +31,7 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         EditButtons = <>
         FieldName = 'kd_biaya'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Biaya Sekarang|Kode Biaya'
         Width = 98
       end
@@ -40,6 +41,7 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         EditButtons = <>
         FieldName = 'nm_biaya'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Biaya Sekarang|Nama Biaya'
         Width = 157
       end
@@ -49,6 +51,7 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         EditButtons = <>
         FieldName = 'dpp'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Biaya Sekarang|DPP'
         Width = 121
       end>
@@ -72,6 +75,7 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         EditButtons = <>
         FieldName = 'kd_biaya'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Biaya Perubahan Chakra|Kode Biaya'
         Width = 99
       end
@@ -81,6 +85,7 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         EditButtons = <>
         FieldName = 'nm_biaya'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Biaya Perubahan Chakra|Nama Biaya'
         Width = 158
       end
@@ -90,6 +95,7 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         EditButtons = <>
         FieldName = 'dpp'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Biaya Perubahan Chakra|DPP'
         Width = 110
       end>

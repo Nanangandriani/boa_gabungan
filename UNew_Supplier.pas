@@ -319,7 +319,7 @@ end;
 procedure TFNew_Supplier.DBGridEh1Columns0EditButtons0Click(Sender: TObject;
   var Handled: Boolean);
 begin
- with FCari_Barang do
+  with FCari_Barang do
   begin
     show;
     status_tr:='Supplier';

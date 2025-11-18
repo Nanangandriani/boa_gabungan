@@ -122,6 +122,12 @@ type
     QCetakpiece_fourth: TFloatField;
     QCetakcustomer_name_pkp: TStringField;
     ReportJurnal: TfrxReport;
+    dxBarManager1Bar4: TdxBar;
+    dxBarLargeButton9: TdxBarLargeButton;
+    QCetakSJgross_weight: TFloatField;
+    QCetakSJtare_weight: TFloatField;
+    QCetakSJvehicles: TMemoField;
+    QCetakSJaddress2: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -134,6 +140,7 @@ type
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure dxBarLargeButton7Click(Sender: TObject);
     procedure dxBarLargeButton8Click(Sender: TObject);
+    procedure dxBarLargeButton9Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -150,7 +157,8 @@ implementation
 {$R *.dfm}
 
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
-  UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan;
+  UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan,
+  UPenyesuaianPenjualan;
 
 procedure TFDataListPenjualan.Refresh;
 var mm: Integer;
@@ -356,9 +364,10 @@ begin
     edNamaSumber.ReadOnly:=True;
     edNoReff.ReadOnly:=True;
 
-    if (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>'') AND
-    (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>NULL) THEN edNomorFaktur.ReadOnly:=True
-    else edNomorFaktur.ReadOnly:=False;
+//    if (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>'') AND
+//    (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>NULL) THEN edNomorFaktur.ReadOnly:=True
+//    else
+    edNomorFaktur.ReadOnly:=False;
 
 
   end;
@@ -389,9 +398,10 @@ begin
            ' LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item '+
            ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
            ' LEFT JOIN t_customer e on e.customer_code=a.code_cust '+
+           ' LEFT JOIN t_item f ON f.item_code=b.code_item '+
            ' where a.deleted_at is null and '+
            ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
-           ' order by b.created_at Desc');
+           ' order by f.group_id,b.code_item ASC');
     open;
   end;
 
@@ -411,12 +421,10 @@ begin
       begin
        close;
        sql.clear;
-       sql.add(' select a.*,b.company_code_bank,b.number_va,b.va_name,c.bank_name '+
-               ' from "public"."t_selling" a '+
-               ' LEFT JOIN t_customer b on b.customer_code=a.code_cust '+
-               ' LEFT JOIN t_bank c on c.company_code=b.company_code_bank '+
-               ' where a.deleted_at is null and '+
-               ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
+       sql.add('select a.*,COALESCE(b.company_code_bank,'''') company_code_bank,COALESCE(b.number_va,'''') number_va,COALESCE(b.va_name,'''') va_name,COALESCE(c.bank_name,'''') bank_name  from "public"."t_selling" a '+
+              'LEFT JOIN t_selling_customer b on b.trans_no=a.trans_no and b.deleted_at IS NULL '+
+              'LEFT JOIN t_bank c on c.company_code=b.company_code_bank  where a.deleted_at is null and '+
+              ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
        open;
       end;
 
@@ -463,6 +471,34 @@ begin
      //Report.DesignReport();
      //Report.ShowReport();
 
+    if (dm.Qtemp.FieldValues['company_code_bank']<>'') AND (dm.Qtemp.FieldValues['company_code_bank']<>'0') AND (dm.Qtemp.FieldValues['number_va']<>'')
+    AND (dm.Qtemp.FieldValues['va_name']<>'') AND (dm.Qtemp.FieldValues['va_name']<>'0') AND (dm.Qtemp.FieldValues['bank_name']<>'') then
+    begin
+      SetMemo(Report,'MemVA3',': '+dm.Qtemp.FieldValues['bank_name']);
+      SetMemo(Report,'MemVA5',': '+dm.Qtemp.FieldValues['company_code_bank']+'-'+dm.Qtemp.FieldValues['number_va']);
+      SetMemo(Report,'MemVA7',': '+dm.Qtemp.FieldValues['va_name']);
+
+      Report.FindObject('MemVA1').Visible := True;
+      Report.FindObject('MemVA2').Visible := True;
+      Report.FindObject('MemVA3').Visible := True;
+      Report.FindObject('MemVA4').Visible := True;
+      Report.FindObject('MemVA5').Visible := True;
+      Report.FindObject('MemVA6').Visible := True;
+      Report.FindObject('MemVA7').Visible := True;
+    end else begin
+      SetMemo(Report,'MemVA3','');
+      SetMemo(Report,'MemVA5','');
+      SetMemo(Report,'MemVA7','');
+      Report.FindObject('MemVA1').Visible := False;
+      Report.FindObject('MemVA2').Visible := False;
+      Report.FindObject('MemVA3').Visible := False;
+      Report.FindObject('MemVA4').Visible := False;
+      Report.FindObject('MemVA5').Visible := False;
+      Report.FindObject('MemVA6').Visible := False;
+      Report.FindObject('MemVA7').Visible := False;
+    end;
+
+
       with dm.Qtemp3 do
       begin
         Close;
@@ -487,23 +523,33 @@ begin
 end;
 
 procedure TFDataListPenjualan.dxBarLargeButton4Click(Sender: TObject);
+var tanggal,bulan,tahun,berat_isi,berat_kosong,code_unit,vehicles:String;
 begin
-   with QCetakSJ do
-    begin
-     close;
-     sql.clear;
-     sql.add(' select a."trans_no", "no_traveldoc", "trans_date", a."code_cust", '+
-             ' a."name_cust",  d."address", b."code_item", b."name_item",  b."amount", '+
-             ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket from "public"."t_selling" a  '+
-             ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
-//             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
-             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
-             ' where "code_details"=''001'') d on a.code_cust=d.customer_code  '+
-             ' where a.deleted_at is null and  '+
-             ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'  '+
-             ' order by b.created_at Desc');
-     open;
-    end;
+  with QCetakSJ do
+  begin
+    close;
+    sql.clear;
+    sql.add(' select a."trans_no", "no_traveldoc", "trans_date", a."code_cust", '+
+         ' a."name_cust",  d."address",e."address" AS address2, b."code_item", b."name_item",  b."amount", '+
+         ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket, '+
+         '(SELECT SUM(gross_weight) FROM t_selling_det WHERE trans_no=a.trans_no AND '+
+         'code_unit=b.code_unit)  gross_weight, (SELECT SUM(tare_weight) FROM t_selling_det '+
+         'WHERE trans_no=a.trans_no AND code_unit=b.code_unit) tare_weight, '+
+         'COALESCE((SELECT vehicles FROM t_delivery_order_services '+
+         'WHERE notrans=(SELECT DISTINCT notrans '+
+         'from t_delivery_order_load WHERE notrans_load=a.trans_no )),'''')::VARCHAR vehicles '+
+         ' from "public"."t_selling" a  '+
+         ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
+    //             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
+         ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
+         ' where "code_details"=''003'') d on a.code_cust=d.customer_code  '+
+          ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
+         ' where "code_details"=''002'') e on a.code_cust=e.customer_code  '+
+         ' where a.deleted_at is null and  '+
+         ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'  '+
+         ' order by b.created_at Desc');
+    open;
+  end;
 
 
   if QCetakSJ.RecordCount=0 then
@@ -514,25 +560,61 @@ begin
 
   if QCetakSJ.RecordCount<>0 then
   begin
+    tanggal:=FormatDateTime('dd',QCetakSJ.FieldValues['trans_date']);
+    bulan:=convbulanInd(strtoint(FormatDateTime('mm',QCetakSJ.FieldValues['trans_date'])));
+    tahun:=FormatDateTime('yyyy',QCetakSJ.FieldValues['trans_date']);
+  //  ShowMessage(QCetakSJ.FieldValues['gross_weight']);
+    berat_isi:=FormatFloat('#,##0.##', QCetakSJ.FieldValues['gross_weight']);
+    berat_kosong:=FormatFloat('#,##0.##', QCetakSJ.FieldValues['tare_weight']);
+    code_unit:=QCetakSJ.FieldValues['code_unit'];
+    vehicles:=QCetakSJ.FieldByName('vehicles').AsString;
+
     with dm.Qtemp3 do
-      begin
-        Close;
-        SQl.Clear;
-        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
-                  ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
-                  ' ''Cetak Surat Jalan Untuk Pelanggan '+
-                  QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
-                  QPenjualan.FieldByName('trans_no').AsString+' '', '+
-                  'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
-        ExecSQL;
-      end;
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
+                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                ' ''Cetak Surat Jalan Untuk Pelanggan '+
+                QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+      ExecSQL;
+    end;
     cLocation := ExtractFilePath(Application.ExeName);
 
     //ShowMessage(cLocation);
-    Report.LoadFromFile(cLocation +'report/rpt_suratjalan'+ '.fr3');
-    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+    Report.LoadFromFile(cLocation +'report/rpt_suratjalan2'+ '.fr3');
+    SetMemo(Report,'nama_pt','PT '+FHomeLogin.vKodePRSH);
+//    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
     SetMemo(Report,'alamat_pt',FHomeLogin.vAlamatPRSH);
+    SetMemo(Report,'tanggal',tanggal+' '+bulan+' '+tahun);
+
+    SetMemo(Report,'nopol',vehicles);
+    SetMemo(Report, 'labelberatkosong', 'Berat Kosong ('+code_unit+')');
+    SetMemo(Report, 'labelberatisi', 'Berat Isi ('+code_unit+')');
+    SetMemo(Report, 'beratkosong', berat_kosong);
+    SetMemo(Report, 'beratisi', berat_isi);
+
+    if berat_kosong = '0' then
+    begin
+      Report.FindObject('beratkosong').Visible := False;
+      Report.FindObject('labelberatkosong').Visible := False;
+      Report.FindObject('beratisi').Visible := False;
+      Report.FindObject('labelberatisi').Visible := False;
+      Report.FindObject('Memo25').Visible := False;
+      Report.FindObject('Memo26').Visible := False;
+    end
+    else
+    begin
+      Report.FindObject('beratkosong').Visible := True;
+      Report.FindObject('labelberatkosong').Visible := True;
+      Report.FindObject('beratisi').Visible := True;
+      Report.FindObject('labelberatisi').Visible := True;
+      Report.FindObject('Memo25').Visible := True;
+      Report.FindObject('Memo26').Visible := True;
+    end;
+
     //Report.DesignReport();
     Report.ShowReport();
   end;
@@ -601,6 +683,11 @@ begin
   FAmplopPelanggan.Show;
 end;
 
+procedure TFDataListPenjualan.dxBarLargeButton9Click(Sender: TObject);
+begin
+  FPenyesuaianPenjualan.ShowModal;
+end;
+
 procedure TFDataListPenjualan.FormShow(Sender: TObject);
 begin
   ActROExecute(sender);
@@ -635,6 +722,12 @@ begin
 
   if CompareText(VarName, 'parSubTotal') = 0 then
   Value := dm.Qtemp.FieldValues['sub_total'];
+  if CompareText(VarName, 'HargaJual') = 0 then
+  Value := dm.Qtemp.FieldValues['tot_before_piece'];
+  if CompareText(VarName, 'TotalSebelumPajak') = 0 then
+  Value := dm.Qtemp.FieldValues['sub_total'];
+  if CompareText(VarName, 'TotPotongan') = 0 then
+  Value := dm.Qtemp.FieldValues['tot_piece_value'];
   if CompareText(VarName, 'parPPN') = 0 then
   Value := dm.Qtemp.FieldValues['ppn_value'];
   if CompareText(VarName, 'parPembulatan') = 0 then

@@ -144,7 +144,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='SELECT "type"  from t_item_type ';
+       sql.Text:='SELECT DISTINCT "type"  from t_item_type ';
        open;
    end;
    edjenis.items.clear;
@@ -437,13 +437,13 @@ begin
                           ' trans_year,po_no,receive_no,qty_po,unit_po,qty_difference,qty_per_conversion,qty_conversion,'+
                           ' unit_conversion,subtotal,ppn,ppn_rp,pph,pph_rp,grandtotal,price,account_code,'+
                           ' trans_status,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no,'+
-                          ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                          ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                           '(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
                           ' :parTahun,:parnopo,:parno_terima,:parqtypo,:parsatuanpo,:parqtyselisih,:parqtyperkonversi,'+
                           ' :parqtykonversi,:parsatuankonversi,:parsubtotal,:parppn,:parppn_rp,:parpph,'+
                           ' :parpph_rp,:pargrandtotal,:parharga,:parkd_akun,:parstatustrans,'+
                           ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,'+
-                          ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                          ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
 
                     ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
                     ParamByName('parkd_stok').Value:=MemterimaDet['kd_stok'];
@@ -475,6 +475,7 @@ begin
                     ParamByName('parstatustrans').Value:=0;
                     ParamByName('parbea').Value:=0;
                     ParamByName('parnourut').Value:=MemterimaDet['nourut'];
+                    ParamByName('paritem_code').Value:=MemterimaDet['kd_material'];
                     ExecSQL;
                 MemterimaDet.Next;
               end;
@@ -626,14 +627,14 @@ begin
                           ' unit_conversion,subtotal,ppn,ppn_rp,pph,pph_rp,grandtotal,price,account_code,'+
                           //' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no)values(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
                           ' trans_status,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no,'+
-                          ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                          ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                           '(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
                           ' :parTahun,:parnopo,:parno_terima,:parqtypo,:parsatuanpo,:parqtyselisih,:parqtyperkonversi,'+
                           ' :parqtykonversi,:parsatuankonversi,:parsubtotal,:parppn,:parppn_rp,:parpph,'+
                           //' :parpph_rp,:pargrandtotal,:parharga,:parkd_akun,:parstatustrans,:parppn_pembulatan,'+
                           ' :parpph_rp,:pargrandtotal,:parharga,:parkd_akun,:parstatustrans,'+
                           ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,'+
-                          ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                          ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
 
                     ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
                     ParamByName('parkd_stok').Value:=MemterimaDet['kd_stok'];
@@ -675,6 +676,7 @@ begin
                     ParamByName('parstatustrans').Value:=0;
                     ParamByName('parbea').Value:=0;
                     ParamByName('parnourut').Value:=MemterimaDet['nourut'];
+                    ParamByName('paritem_code').Value:=MemterimaDet['kd_material'];
                     ExecSQL;
                 MemterimaDet.Next;
               end;

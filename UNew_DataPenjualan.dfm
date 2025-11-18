@@ -550,8 +550,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 713
-      ExplicitTop = -2
+      ExplicitLeft = 715
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -695,14 +694,14 @@ object FNew_Penjualan: TFNew_Penjualan
     Width = 870
     Height = 287
     Hint = ''
-    ActivePage = TabUangMuka
+    ActivePage = TabSDetailPel
     Align = alClient
     BackgroundColor = clBtnFace
     BoldCurrentTab = True
     UseColoredTabs = True
     ParentBackgroundColor = False
     ParentColor = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 866
     ExplicitHeight = 286
@@ -1296,8 +1295,8 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object DSDetail: TDataSource
     DataSet = MemDetail
-    Left = 16
-    Top = 433
+    Left = 32
+    Top = 265
   end
   object MemDetail: TMemTableEh
     Active = True
@@ -1305,7 +1304,7 @@ object FNew_Penjualan: TFNew_Penjualan
     Params = <>
     SortOrder = 'NM_ITEM'
     Left = 96
-    Top = 449
+    Top = 313
     object MemDetailNO_SUMBER: TStringField
       FieldName = 'NO_SUMBER'
     end
@@ -1403,6 +1402,12 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object MemDetailPPN_NILAI_CORTEX: TCurrencyField
       FieldName = 'PPN_NILAI_CORTEX'
+    end
+    object MemDetailBERAT_ISI: TFloatField
+      FieldName = 'BERAT_ISI'
+    end
+    object MemDetailBERAT_KOSONG: TFloatField
+      FieldName = 'BERAT_KOSONG'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -1607,6 +1612,22 @@ object FNew_Penjualan: TFNew_Penjualan
         object PPN_NILAI_CORTEX: TMTNumericDataFieldEh
           FieldName = 'PPN_NILAI_CORTEX'
           NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object BERAT_ISI: TMTNumericDataFieldEh
+          FieldName = 'BERAT_ISI'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object BERAT_KOSONG: TMTNumericDataFieldEh
+          FieldName = 'BERAT_KOSONG'
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False

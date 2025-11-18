@@ -47,7 +47,9 @@ object FListReturPenjualan: TFListReturPenjualan
     DataSource = DsReturJual
     DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     EmptyDataInfo.Active = True
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 170

@@ -496,7 +496,7 @@ begin
   end}
   else if Status = 0 then
   begin
-  FDataReturPenjualan.Autonumber;
+    FDataReturPenjualan.Autonumber;
   //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
     if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin

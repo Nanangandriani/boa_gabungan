@@ -23,7 +23,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     ExplicitWidth = 1020
     object Label1: TLabel
       Left = 24
-      Top = 124
+      Top = 204
       Width = 42
       Height = 15
       Caption = 'No. Ref.'
@@ -53,7 +53,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label8: TLabel
       Left = 120
-      Top = 124
+      Top = 204
       Width = 3
       Height = 15
       Caption = ':'
@@ -65,7 +65,6 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Width = 3
       Height = 15
       Caption = ':'
-      Visible = False
     end
     object Label11: TLabel
       Left = 120
@@ -83,20 +82,18 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Visible = False
     end
     object Label4: TLabel
-      Left = 24
-      Top = 154
+      Left = 25
+      Top = 127
       Width = 56
       Height = 15
       Caption = 'Surat Jalan'
-      Visible = False
     end
     object Label7: TLabel
-      Left = 120
-      Top = 154
+      Left = 121
+      Top = 127
       Width = 3
       Height = 15
       Caption = ':'
-      Visible = False
     end
     object Label13: TLabel
       Left = 483
@@ -199,10 +196,10 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Visible = False
     end
     object Label22: TLabel
-      Left = 24
-      Top = 154
+      Left = 25
+      Top = 153
       Width = 21
-      Height = 15
+      Height = 18
       Caption = 'SBU'
       Visible = False
     end
@@ -224,7 +221,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNoSPB: TRzComboBox
       Left = 138
-      Top = 122
+      Top = 202
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -266,12 +263,11 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdSJ: TEdit
       Left = 138
-      Top = 148
+      Top = 124
       Width = 226
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 4
-      Visible = False
     end
     object Edno_Faktur: TEdit
       Left = 597
@@ -1006,6 +1002,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           EditButtons = <>
           FieldName = 'id_pengajuan_asset'
           Footers = <>
+          Width = 0
         end
         item
           CellButtons = <>
@@ -1013,6 +1010,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           EditButtons = <>
           FieldName = 'no_pengajuan_asset'
           Footers = <>
+          Width = 0
         end
         item
           CellButtons = <>
@@ -1020,6 +1018,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           EditButtons = <>
           FieldName = 'id_detail_asset'
           Footers = <>
+          Width = 0
         end
         item
           CellButtons = <>
@@ -1027,6 +1026,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           EditButtons = <>
           FieldName = 'spesifikasi_asset'
           Footers = <>
+          Width = 0
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end

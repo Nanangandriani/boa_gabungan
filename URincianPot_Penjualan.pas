@@ -320,7 +320,7 @@ begin
   if Dm.Qtemp3.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping / Per Pelanggan
   begin
 
-
+    strWhereGroupIncludePPN:=' AND a.status_tax='+strStatusIncludePPN+' ';
     with Dm.Qtemp3 do
     begin
       close;

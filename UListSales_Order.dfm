@@ -44,6 +44,8 @@ object FSalesOrder: TFSalesOrder
     DataSource = DsSalesOrder
     DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 170
     SearchPanel.Enabled = True
@@ -123,7 +125,7 @@ object FSalesOrder: TFSalesOrder
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1165
+        Width = 1154
         Height = 168
         Align = alClient
         DataSource = DsDetail

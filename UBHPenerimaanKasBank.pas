@@ -167,13 +167,13 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
+       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+
-               ' LEFT JOIN (SELECT voucher_no, '+
-               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
-               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+//               ' LEFT JOIN (SELECT voucher_no, '+
+//               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
+//               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
                ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
@@ -214,13 +214,13 @@ begin
     begin
       SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
     end;
-  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
-  begin
-   Report.DesignReport();
-  end else
-  begin
+//  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
+//  begin
+//   Report.DesignReport();
+//  end else
+//  begin
     Report.ShowReport();
-  end;
+//  end;
 
  end;
 
@@ -234,13 +234,13 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
+       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+
-               ' LEFT JOIN (SELECT voucher_no, '+
-               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, '+QuotedStr(', ')+') AS ket_faktur '+
-               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+//               ' LEFT JOIN (SELECT voucher_no, '+
+//               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, '+QuotedStr(', ')+') AS ket_faktur '+
+//               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
                ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
@@ -360,6 +360,7 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankak_lain_kreGetText(

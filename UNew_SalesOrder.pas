@@ -9,7 +9,7 @@ uses
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, MemTableEh, Vcl.StdCtrls, RzButton,
   Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Samples.Spin,
   Vcl.ComCtrls, RzDTP, IdBaseComponent, IdComponent, IdTCPConnection,
-  IdTCPClient, IdHTTP;
+  IdTCPClient, IdHTTP, RzRadChk;
 
 type
   TFNew_SalesOrder = class(TForm)
@@ -72,6 +72,19 @@ type
     Edit1: TEdit;
     SpeedButton1: TSpeedButton;
     BTambahTargetPenjualan: TRzBitBtn;
+    cbKonversiMuatan: TRzCheckBox;
+    MemDetailBERAT_ISI: TFloatField;
+    MemDetailBERAT_KOSONG: TFloatField;
+    Label15: TLabel;
+    Label16: TLabel;
+    edKelompokBarang: TRzButtonEdit;
+    edTypeKendaraan: TEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    edKodeTypeKendaraan: TEdit;
+    edKapasitas: TRzNumericEdit;
     procedure BBatalClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edNama_PelangganButtonClick(Sender: TObject);
@@ -88,6 +101,8 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure edNama_PelangganChange(Sender: TObject);
     procedure BTambahTargetPenjualanClick(Sender: TObject);
+    procedure cbKonversiMuatanClick(Sender: TObject);
+    procedure edKelompokBarangButtonClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -124,7 +139,7 @@ implementation
 uses UTambah_Barang, UMasterData, Ubrowse_pelanggan, UMasterSales, UMy_Function,
   UDataModule, UTemplate_Temp, UListOrderTelemarketing, UListKontrakJasa,
   UHomeLogin, UListSales_Order, USetMasterPenjulan, USetMasterPelanggan,
-  UMainMenu, UNew_DataTargetPenjualan;
+  UMainMenu, UNew_DataTargetPenjualan, UDaftarKendaraan;
 //uses UDataModule, UMy_Function;
 
 procedure TFNew_SalesOrder.UpdateStatusTele;
@@ -435,7 +450,9 @@ begin
     sql.add(' SELECT a.*,b.group_id,c.group_name from ('+
             ' SELECT "notrans", "code_item", '+
             ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
-            ' "name_wh", "code_supp", "name_supp", "source" FROM  "public"."t_sales_order_det" '+
+            ' "name_wh", "code_supp", "name_supp", "source" '+
+            ',gross_weight,tare_weight '+
+            ' FROM  "public"."t_sales_order_det" '+
             ' WHERE deleted_at IS NULL ) a '+
             ' LEFT JOIN t_item b on b.item_code=a.code_item '+
             ' LEFT JOIN t_item_group c on c.group_id=b.group_id '+
@@ -472,6 +489,20 @@ begin
      FNew_SalesOrder.MemDetail['NM_SUPPLIER']:=Dm.Qtemp.fieldbyname('name_supp').value;
      FNew_SalesOrder.MemDetail['CATEGORY_ID']:=Dm.Qtemp.fieldbyname('group_id').value;
      FNew_SalesOrder.MemDetail['CATEGORY_NAME']:=Dm.Qtemp.fieldbyname('group_name').value;
+     if Dm.Qtemp.fieldbyname('gross_weight').value<>NULL then
+     begin
+       FNew_SalesOrder.MemDetail['BERAT_ISI']:=Dm.Qtemp.fieldbyname('gross_weight').value;
+     end else begin
+       FNew_SalesOrder.MemDetail['BERAT_ISI']:=0;
+     end;
+
+     if Dm.Qtemp.fieldbyname('tare_weight').value<>NULL then
+     begin
+       FNew_SalesOrder.MemDetail['BERAT_KOSONG']:=Dm.Qtemp.fieldbyname('tare_weight').value;
+     end else begin
+       FNew_SalesOrder.MemDetail['BERAT_KOSONG']:=0;
+     end;
+
      FNew_SalesOrder.MemDetail.post;
      Dm.Qtemp.next;
     end;
@@ -489,24 +520,24 @@ var strSatuanName:String;
 begin
   with dm.Qtemp do
   begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_sales_order_det" '+
-            ' WHERE "notrans"='+QuotedStr(edKodeOrder.Text)+';';
-  ExecSQL;
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM  "public"."t_sales_order_det" '+
+              ' WHERE "notrans"='+QuotedStr(edKodeOrder.Text)+';';
+    ExecSQL;
   end;
 
   MemDetail.First;
   while not MemDetail.Eof do
   begin
-//    Memo1.Text:=MemDetail['JUMLAH'];
-//    +' '+MemDetail['NM_ SATUAN']+' '+MemDetail['KD_GUDANG'];
-      with dm.Qtemp do
-      begin
+    with dm.Qtemp do
+    begin
       close;
       sql.clear;
       sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
-                ' "name_item","amount", "code_unit", "name_unit", "source" ) '+
+                ' "name_item","amount", "code_unit", "name_unit", '+
+                ' gross_weight,tare_weight, '+
+                ' source ) '+
                 ' Values( '+
                 ' '+QuotedStr(edKodeOrder.Text)+', '+
                 ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
@@ -514,34 +545,14 @@ begin
                 ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
                 ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
                 ' '+QuotedStr(MemDetail['NM_ SATUAN'])+', '+
-//                ' '+QuotedStr(MemDetail['KD_GUDANG'])+', '+
-//                ' '+QuotedStr(MemDetail['NM_GUDANG'])+', '+
-//                ' '+QuotedStr(MemDetail['KD_SUPPLIER'])+', '+
-//                ' '+QuotedStr(MemDetail['NM_SUPPLIER'])+', '+
+                ' COALESCE(' + VarToStrDef(MemDetail['BERAT_ISI'], '0') + ',0), '+
+                ' COALESCE(' + VarToStrDef(MemDetail['BERAT_KOSONG'], '0') + ',0), '+
                 ' '+QuotedStr(edKodeSumber.Text)+' );';
 
       ExecSQL;
-//      sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
-//                ' "name_item", "amount", "code_unit", "name_unit", "code_wh", '+
-//                ' "name_wh", "code_supp", "name_supp", "source" ) '+
-//                ' Values( '+
-//                ' '+QuotedStr(edKodeOrder.Text)+', '+
-//                ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
-//                ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
-//                ' '+MemDetail['JUMLAH']+', '+
-//                ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
-//                ' '+QuotedStr(MemDetail['NM_ SATUAN'])+', '+
-//                ' '+QuotedStr(MemDetail['KD_GUDANG'])+', '+
-//                ' '+QuotedStr(MemDetail['NM_GUDANG'])+', '+
-//                ' '+QuotedStr(MemDetail['KD_SUPPLIER'])+', '+
-//                ' '+QuotedStr(MemDetail['NM_SUPPLIER'])+', '+
-//                ' '+QuotedStr(edKodeSumber.Text)+' );';
-//
-//      ExecSQL;
     end;
   MemDetail.Next;
   end;
-
 end;
 
 
@@ -551,7 +562,9 @@ begin
 end;
 
 procedure TFNew_SalesOrder.BSaveClick(Sender: TObject);
+var valKonversi: Integer;
 begin
+  valKonversi:=0;
   iserror:=0;
   islanjut:=1;
   DecodeDate(dtTanggal_Pesan.Date, Year, Month, Day);
@@ -561,6 +574,21 @@ begin
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
+    if cbKonversiMuatan.Checked=True then
+    begin
+       MemDetail.First;
+      while not MemDetail.Eof do
+      begin
+        if (MemDetail['BERAT_ISI']=0)
+        or (MemDetail['BERAT_ISI']='') OR (MemDetail['BERAT_ISI']=null) or (MemDetail['BERAT_KOSONG']=0)
+        or (MemDetail['BERAT_KOSONG']='') OR (MemDetail['BERAT_KOSONG']=null) then
+        valKonversi:=1;
+
+        MemDetail.Next;
+      end;
+    end;
+
+
     if edKode_Pelanggan.Text='' then
     begin
       MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -584,6 +612,12 @@ begin
       //MessageDlg('Nama Kabupaten Wajib Diisi..!!',mtInformation,[mbRetry],0);
       edNoReff.Text:='-';
       exit;
+    end else if valKonversi=1 then
+    begin
+      MessageDlg('Berat Kosong Dan Isi Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
+    end  else if edKelompokBarang.Text='' then
+    begin
+      MessageDlg('Kelompok Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
     else if Status = 0 then
     begin
@@ -715,6 +749,29 @@ begin
   FSetMasterPenjulan.ShowModal;
 end;
 
+procedure TFNew_SalesOrder.cbKonversiMuatanClick(Sender: TObject);
+begin
+
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    MemDetail.Edit;
+    MemDetail['BERAT_KOSONG']:=0;
+    MemDetail['BERAT_ISI']:=0;
+    MemDetail.Post;
+    MemDetail.Next;
+  end;
+
+  if cbKonversiMuatan.Checked=True then
+  begin
+    DBGridDetail.Columns[10].Visible:=True;
+    DBGridDetail.Columns[11].Visible:=True;
+  end else begin
+    DBGridDetail.Columns[10].Visible:=False;
+    DBGridDetail.Columns[11].Visible:=False;
+  end;
+end;
+
 procedure TFNew_SalesOrder.Clear;
 begin
   edKodeOrder.Clear;
@@ -726,12 +783,19 @@ begin
   edNama_Sales.Clear;
   edKodeSumber.Clear;
   edNamaSumber.Clear;
+  edKelompokBarang.Clear;
+  edTypeKendaraan.Clear;
+  edKodeTypeKendaraan.Clear;
+  edKapasitas.Value:=0;
   spJatuhTempo.Value:=0;
   edNoReff.Text:='-';
   vFormSumber:='0';
   kd_kares:='0';
   MemDetail.EmptyTable;
   edNoReff.ReadOnly:=True;
+  cbKonversiMuatan.Checked:=False;
+  btMasterSales.Visible:=false;
+  btMasterSumber.Visible:=false;
 end;
 
 procedure TFNew_SalesOrder.dtTanggal_KirimCloseUp(Sender: TObject);
@@ -749,7 +813,14 @@ begin
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
   strtahun:=inttostr(Year);
-//   FNew_SalesOrder.Autonumber;
+//  FNew_SalesOrder.Autonumber;
+end;
+
+procedure TFNew_SalesOrder.edKelompokBarangButtonClick(Sender: TObject);
+begin
+  FDaftarKendaraan.vcall:='sales_order';
+  FDaftarKendaraan.GetDataViaAPI;
+  FDaftarKendaraan.show;
 end;
 
 procedure TFNew_SalesOrder.edNamaSumberButtonClick(Sender: TObject);
@@ -800,14 +871,16 @@ begin
     begin
       Close;
       Sql.Clear;
-      SQl.Text:='SELECT karesidenan FROM vcustomer WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
+      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan FROM vcustomer WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
       Open;
     end;
-    if dm.Qtemp.FieldValues['karesidenan']=NULL then
+    if dm.Qtemp.FieldValues['karesidenan']='' then
     begin
       edNama_Pelanggan.Text:='';
       edKode_Pelanggan.Text:='';
       MessageDlg('Wilayah Pelanggan tersebut belum di setting Karesidenan..!!',mtInformation,[mbRetry],0);
+    end else begin
+      kd_kares:=dm.Qtemp.FieldValues['code_karesidenan'];
     end;
   end;
 end;
@@ -863,12 +936,15 @@ end;
 procedure TFNew_SalesOrder.Save;
 var
   Stradditional_code,StrStatus,StrNote,
-  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak : String;
+  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak,strKonversiMuatan : String;
 begin
 
   if (kd_kares='') OR (kd_kares='0') then
     Stradditional_code:='NULL'
   else Stradditional_code:=QuotedStr(kd_kares);
+
+  if cbKonversiMuatan.Checked=True then strKonversiMuatan:='True' else strKonversiMuatan:='False';
+
 
 //  ShowMessage(kd_kares);
 
@@ -913,7 +989,8 @@ begin
     sql.add(' Insert into "public"."t_sales_order" ("created_at", "created_by", "notrans", '+
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
-            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",status,note,sbu_code) '+
+            ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
+            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -932,7 +1009,10 @@ begin
             ' '+Stradditional_code+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+','+QuotedStr(FHomeLogin.vKodePRSH)+'   );');
+            ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+','+
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+strKonversiMuatan+','+
+            ' '+QuotedStr(edKelompokBarang.Text)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
+            ' '+QuotedStr(edTypeKendaraan.Text)+','+QuotedStr(FloatToStr(edKapasitas.value))+' );');
     ExecSQL;
   end;
   InsertDetailSO;
@@ -956,11 +1036,13 @@ end;
 procedure TFNew_SalesOrder.Update;
 var
   Stradditional_code,StrStatus,StrNote,
-  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak : String;
+  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak,strKonversiMuatan : String;
 begin
   if Copy(StrKetLog, 1, 1)=',' then
   Strketerangan:=QuotedStr(Copy(StrKetLog,2))
   else Strketerangan:=QuotedStr(StrKetLog);
+
+  if cbKonversiMuatan.Checked=True then strKonversiMuatan:='True' else strKonversiMuatan:='False';
 
   if (iserror=1) AND (islanjut=1) then
   begin
@@ -1004,7 +1086,12 @@ begin
                 ' code_source='+QuotedStr(edKodeSumber.Text)+','+
                 ' name_source='+QuotedStr(edNamaSumber.Text)+','+
                 ' status='+StrStatus+','+
-                ' note='+StrNote+' '+
+                ' note='+StrNote+', '+
+                ' load_conversion='+strKonversiMuatan+', '+
+                ' vehicle_group_id='+QuotedStr(edKelompokBarang.Text)+','+
+                ' type_vehicles_code='+QuotedStr(edKodeTypeKendaraan.Text)+','+
+                ' type_vehicles_name='+QuotedStr(edTypeKendaraan.Text)+','+
+                ' capacity='+QuotedStr(FloatToStr(edKapasitas.value))+' '+
     //            ' order_no='+QuotedStr(order_no)+','+
     //            ' additional_code='+QuotedStr(kd_kares)+','+
     //            ' trans_day='+QuotedStr(strtgl)+','+
@@ -1038,7 +1125,8 @@ begin
               ' code_source='+QuotedStr(edKodeSumber.Text)+','+
               ' name_source='+QuotedStr(edNamaSumber.Text)+','+
               ' status='+StrStatus+','+
-              ' note='+StrNote+' '+
+              ' note='+StrNote+', '+
+              ' load_conversion='+strKonversiMuatan+' '+
   //            ' order_no='+QuotedStr(order_no)+','+
   //            ' additional_code='+QuotedStr(kd_kares)+','+
   //            ' trans_day='+QuotedStr(strtgl)+','+

@@ -3,7 +3,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Delivery Order'
-  ClientHeight = 574
+  ClientHeight = 640
   ClientWidth = 1350
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Left = 0
     Top = 0
     Width = 1350
-    Height = 574
+    Height = 640
     Hint = ''
     ActivePage = TabDataMuatan
     Align = alClient
@@ -27,12 +27,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1346
-    ExplicitHeight = 573
+    ExplicitHeight = 639
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
-      ExplicitWidth = 1342
-      ExplicitHeight = 548
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -51,12 +49,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 0
         Width = 1346
-        Height = 345
+        Height = 377
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -108,6 +105,34 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Visible = False
           OnClick = btMasterSumberClick
         end
+        object Label50: TLabel
+          Left = 20
+          Top = 107
+          Width = 64
+          Height = 15
+          Caption = 'Lokasi Muat'
+        end
+        object Label51: TLabel
+          Left = 117
+          Top = 107
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
+        object Label52: TLabel
+          Left = 20
+          Top = 136
+          Width = 80
+          Height = 15
+          Caption = 'Lokasi Bongkar'
+        end
+        object Label53: TLabel
+          Left = 117
+          Top = 136
+          Width = 3
+          Height = 15
+          Caption = ':'
+        end
         object edKodeDOMuatan: TEdit
           Left = 132
           Top = 16
@@ -148,8 +173,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Visible = False
         end
         object RzGroupBox1: TRzGroupBox
-          Left = 903
-          Top = 87
+          Left = 895
+          Top = 142
           Width = 525
           Height = 230
           Caption = 'Data Pelanggan'
@@ -219,6 +244,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Height = 23
             Text = ''
             TabOrder = 0
+            AllowKeyEdit = False
             AltBtnNumGlyphs = 1
             ButtonNumGlyphs = 1
             OnButtonClick = edKodeVendorMuatanButtonClick
@@ -253,21 +279,22 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Height = 23
             Text = ''
             TabOrder = 4
+            AllowKeyEdit = False
             AltBtnNumGlyphs = 1
             ButtonNumGlyphs = 1
             OnButtonClick = edNomorReffUtamaMuatanButtonClick
           end
         end
         object RzGroupBox2: TRzGroupBox
-          Left = 28
-          Top = 99
+          Left = 20
+          Top = 162
           Width = 869
           Height = 206
           Caption = 'Data Penyedia Jasa Transport'
           Color = 15987699
           TabOrder = 5
           object Label32: TLabel
-            Left = 27
+            Left = 8
             Top = 29
             Width = 32
             Height = 15
@@ -281,14 +308,14 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Caption = ':'
           end
           object Label34: TLabel
-            Left = 126
+            Left = 124
             Top = 87
             Width = 3
             Height = 15
             Caption = ':'
           end
           object Label35: TLabel
-            Left = 29
+            Left = 8
             Top = 87
             Width = 18
             Height = 15
@@ -302,7 +329,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Caption = ':'
           end
           object Label37: TLabel
-            Left = 29
+            Left = 8
             Top = 145
             Width = 56
             Height = 15
@@ -316,7 +343,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Caption = ':'
           end
           object Label41: TLabel
-            Left = 29
+            Left = 8
             Top = 116
             Width = 84
             Height = 15
@@ -337,7 +364,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Caption = ':'
           end
           object Label56: TLabel
-            Left = 29
+            Left = 8
             Top = 176
             Width = 49
             Height = 15
@@ -378,20 +405,35 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Height = 15
             Caption = 'Sopir'
           end
+          object Label64: TLabel
+            Left = 8
+            Top = 58
+            Width = 113
+            Height = 15
+            Caption = 'Kelompok Kendaraan'
+          end
+          object Label65: TLabel
+            Left = 124
+            Top = 58
+            Width = 3
+            Height = 15
+            Caption = ':'
+          end
           object edKodeVendorTransMuatan: TRzButtonEdit
             Left = 133
             Top = 26
-            Width = 164
+            Width = 132
             Height = 23
             Text = ''
             TabOrder = 0
+            AllowKeyEdit = False
             AltBtnNumGlyphs = 1
             ButtonNumGlyphs = 1
             OnButtonClick = edKodeVendorTransMuatanButtonClick
           end
           object edNamaVendorTransMuatan: TEdit
-            Left = 133
-            Top = 55
+            Left = 271
+            Top = 26
             Width = 323
             Height = 23
             TabOrder = 1
@@ -404,17 +446,18 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             CharCase = ecUpperCase
             TabOrder = 8
           end
-          object edNamaJenisKendMuatan: TRzButtonEdit
+          object edKelompokKendaraan: TRzButtonEdit
             Left = 133
-            Top = 113
+            Top = 55
             Width = 250
             Height = 23
             Text = ''
             CharCase = ecUpperCase
             TabOrder = 3
+            AllowKeyEdit = False
             AltBtnNumGlyphs = 1
             ButtonNumGlyphs = 1
-            OnButtonClick = edNamaJenisKendMuatanButtonClick
+            OnButtonClick = edKelompokKendaraanButtonClick
           end
           object edKodeJenisKendMuatan: TEdit
             Left = 389
@@ -474,15 +517,26 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             CharCase = ecUpperCase
             TabOrder = 2
           end
+          object edNamaJenisKendMuatan: TRzEdit
+            Left = 133
+            Top = 113
+            Width = 250
+            Height = 23
+            Text = ''
+            Color = clInfoBk
+            ReadOnly = True
+            TabOrder = 10
+          end
         end
         object btAddDetail: TRzBitBtn
           Left = 20
-          Top = 309
+          Top = 377
           Width = 116
           Height = 30
           Align = alCustom
           Caption = 'Ambil Data'
           TabOrder = 6
+          Visible = False
           OnClick = btAddDetailClick
           Glyph.Data = {
             36060000424D3606000000000000360400002800000020000000100000000100
@@ -537,16 +591,32 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
         end
+        object edLokasiMuat: TRzEdit
+          Left = 132
+          Top = 104
+          Width = 493
+          Height = 23
+          Text = ''
+          CharCase = ecUpperCase
+          TabOrder = 7
+        end
+        object edLokasiBongkar: TRzEdit
+          Left = 132
+          Top = 133
+          Width = 493
+          Height = 23
+          Text = ''
+          CharCase = ecUpperCase
+          TabOrder = 8
+        end
       end
       object Panel2: TPanel
         Left = 0
-        Top = 517
+        Top = 583
         Width = 1346
         Height = 32
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 516
-        ExplicitWidth = 1342
         object btNextStep: TRzBitBtn
           Left = 1270
           Top = 1
@@ -607,14 +677,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1266
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
-        Top = 345
+        Top = 377
         Width = 1346
-        Height = 172
+        Height = 206
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>
@@ -701,6 +770,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     object TabDataBiaya: TRzTabSheet
       Caption = 'Data Biaya'
       OnClick = TabDataBiayaClick
+      ExplicitWidth = 1342
+      ExplicitHeight = 614
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -710,6 +781,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1342
         object Label1: TLabel
           Left = 125
           Top = 86
@@ -1026,11 +1098,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       end
       object Panel1: TPanel
         Left = 0
-        Top = 512
+        Top = 578
         Width = 1346
         Height = 37
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 577
+        ExplicitWidth = 1342
         object btBatalSumberJual: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1091,6 +1165,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1266
         end
         object btSimpanSumberJual: TRzBitBtn
           Left = 1195
@@ -1152,6 +1227,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1191
         end
         object btBackStep: TRzBitBtn
           Left = 1
@@ -1223,13 +1299,14 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = 'Submit Correction'
           TabOrder = 3
           OnClick = BCorrectionClick
+          ExplicitLeft = 1093
         end
       end
       object DBGridSumberPenjualan: TDBGridEh
         Left = 0
         Top = 241
         Width = 1346
-        Height = 271
+        Height = 337
         Align = alClient
         DataSource = dsDataBiaya
         DynProps = <>
@@ -1286,6 +1363,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Footer.Font.Style = [fsBold]
             Footer.ValueType = fvtSum
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'BIAYA | DPP'
             Width = 100
           end
@@ -1440,7 +1518,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       Caption = 'Dokumen Pendukung'
       object Panel3: TPanel
         Left = 0
-        Top = 517
+        Top = 583
         Width = 1346
         Height = 32
         Align = alBottom
@@ -1572,7 +1650,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 0
         Width = 1346
-        Height = 517
+        Height = 583
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
@@ -1724,8 +1802,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 568
-    Top = 152
+    Left = 736
+    Top = 144
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end
@@ -1886,7 +1964,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object MemDataMuatan: TMemTableEh
     Params = <>
-    Left = 640
+    Left = 584
+    Top = 264
     object MemDataMuatannotrans: TStringField
       FieldName = 'notrans'
       Size = 100

@@ -217,6 +217,7 @@ begin
   FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
   FDaftarKlasifikasi.Panel3.Enabled:=True;
   FDaftarKlasifikasi.StatusNonGroup:=0;
+  FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=False;
   FDaftarKlasifikasi.ShowModal;
 end;
 
@@ -286,7 +287,7 @@ begin
 		rgPromo.ItemIndex:=QMasterKlasifikasi.FieldByName('status_promo').AsInteger;
   end;
   FDaftarKlasifikasi.RefreshGrid;
-
+  FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=True;
   FDaftarKlasifikasi.Panel3.Enabled:=False;
   FDaftarKlasifikasi.StatusNonGroup:=1;
   FDaftarKlasifikasi.ShowModal;

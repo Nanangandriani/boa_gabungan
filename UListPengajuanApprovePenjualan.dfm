@@ -49,6 +49,10 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
     object TabForm: TRzTabSheet
       Color = 15987699
       Caption = 'Klasifikasi Penjualan'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PanelParent: TPanel
         Left = 0
         Top = 0

@@ -76,6 +76,7 @@ begin
     begin
       FDataPerintahMuat.edKode_Vendor_Kend.Text:=QSupplier['supplier_code'];
       FDataPerintahMuat.edNama_Vendor_Kend.Text:=QSupplier['supplier_name'];
+      FDataPerintahMuat.edNoKendMuatan.Text:='';
     end;
     if vcall='delivery_order' then
     begin

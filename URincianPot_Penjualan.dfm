@@ -3,8 +3,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Rincian Potongan'
-  ClientHeight = 441
-  ClientWidth = 1250
+  ClientHeight = 440
+  ClientWidth = 1246
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,12 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1250
+    Width = 1246
     Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1246
     object Label39: TLabel
       Left = 14
       Top = 28
@@ -100,8 +99,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 81
-    Width = 1250
-    Height = 328
+    Width = 1246
+    Height = 327
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -272,13 +271,11 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 409
-    Width = 1250
+    Top = 408
+    Width = 1246
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 408
-    ExplicitWidth = 1246
     object BBatal: TRzBitBtn
       Left = 1174
       Top = 1

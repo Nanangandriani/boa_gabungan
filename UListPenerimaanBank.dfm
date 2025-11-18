@@ -47,6 +47,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
     Align = alClient
     DataSource = DsPenerimaanBank
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 1
     Columns = <
@@ -995,52 +997,29 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object QBukti_Terima: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT A'
-      #9'.*,'
-      #9'"code_account_header",'
-      #9'"account_name",'
-      #9'"paid_amount",'
-      #9'"desc_akun" '
-      'FROM'
-      #9'('
-      #9'SELECT'
-      #9#9'"voucher_no",'
-      #9#9'"trans_date",'
-      #9#9'"code_cust",'
-      #9#9'"name_cust",'
-      #9#9'"account_number_bank",'
-      #9#9'"account_name_bank",'
-      #9#9'"for_acceptance",'
-      #9#9'"description",'
-      '                "module_id" '
-      #9'FROM'
-      #9#9'"public"."t_cash_bank_acceptance" A '
-      #9'WHERE'
-      #9#9'"voucher_no" = '#39'0002/BM18/XI/2024'#39' '
-      #9#9'AND deleted_at IS NULL '
-      #9')'
-      #9'A LEFT JOIN ('
-      #9'SELECT'
-      #9#9'"voucher_no",'
-      #9#9'"code_account",'
-      #9#9'"name_account",'
-      #9#9'"position",'
-      #9#9'"paid_amount",'
-      #9#9'"description" AS desc_akun,'
-      #9#9'"code_account_header",'
-      #9#9'"account_name",'
-      #9#9'"amount_rate_results" '
-      #9'FROM'
-      #9#9'"public"."t_cash_bank_acceptance_det" aa'
       
-        #9#9'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.cod' +
-        'e '
-      #9') b ON A."voucher_no" = b."voucher_no" '
-      'WHERE'
-      #9'A."voucher_no" = '#39'0002/BM18/XI/2024'#39' '
-      #9'AND "position" = '#39'K'#39)
-    Left = 772
-    Top = 48
+        'SELECT a.*, "code_account_header", b.name_account "account_name"' +
+        ', "paid_amount", "desc_akun" from ( select "voucher_no", "trans_' +
+        'date", "code_cust", "name_cust", "account_number_bank",  "accoun' +
+        't_name_bank", "for_acceptance", "description", "module_id"  from' +
+        ' "public"."t_cash_bank_acceptance"  a   WHERE "voucher_no"='#39'BM/0' +
+        '01/03/X/2025/HLJ'#39'  AND deleted_at is null) a  LEFT JOIN '
+      ''
+      
+        '(SELECT  "voucher_no", "code_account", aa.name_account, "positio' +
+        'n",  "paid_amount", "description" as desc_akun, COALESCE(bb.acco' +
+        'unt_code,aa.code_account) code_account_header, bb.account_name ,' +
+        '  "amount_rate_results" from "public"."t_cash_bank_acceptance_de' +
+        't" aa  LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."cod' +
+        'e_account"'
+      'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account"'
+      ') b ON a."voucher_no"=b."voucher_no"  '
+      ''
+      
+        'where  a."voucher_no"='#39'BM/001/03/X/2025/HLJ'#39'   and "position"='#39'K' +
+        #39'  order by position asc')
+    Left = 492
+    Top = 160
     object QBukti_Terimavoucher_no: TStringField
       FieldName = 'voucher_no'
       ReadOnly = True
@@ -1084,15 +1063,15 @@ object FListPenerimaanBank: TFListPenerimaanBank
       FieldName = 'module_id'
       ReadOnly = True
     end
-    object QBukti_Terimacode_account_header: TStringField
+    object QBukti_Terimacode_account_header: TMemoField
       FieldName = 'code_account_header'
       ReadOnly = True
-      Size = 255
+      BlobType = ftMemo
     end
     object QBukti_Terimaaccount_name: TStringField
       FieldName = 'account_name'
       ReadOnly = True
-      Size = 100
+      Size = 255
     end
     object QBukti_Terimapaid_amount: TFloatField
       FieldName = 'paid_amount'
@@ -1124,8 +1103,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
     DataSet = QBukti_Terima
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 896
-    Top = 48
+    Left = 272
+    Top = 216
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1137,15 +1116,47 @@ object FListPenerimaanBank: TFListPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45650.380683900460000000
+    ReportOptions.LastChange = 45978.359617256950000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
+      
+        'procedure frxDBDQBukti_Terimavoucher_noOnBeforePrint(Sender: Tfr' +
+        'xComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure GroupHeader1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure GroupHeader1OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      '                                    '
+      'end;'
+      ''
+      'procedure AccountNameOnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      '  '
+      'end;'
+      ''
+      'procedure AccountNameOnAfterData(Sender: TfrxComponent);'
+      'begin'
+      '    AccountName.Text:=UpperCase(AccountName.Text);  '
+      'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 1184
-    Top = 152
+    Left = 400
+    Top = 192
     Datasets = <
       item
         DataSet = frxDBDQBukti_Terima
@@ -1472,6 +1483,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           Frame.Typ = []
           HAlign = haCenter
           ParentFont = False
+          VAlign = vaBottom
         end
         object vkas: TfrxMemoView
           AllowVectorExport = True
@@ -1769,12 +1781,19 @@ object FListPenerimaanBank: TFListPenerimaanBank
         Height = 18.897637800000000000
         Top = 260.787570000000000000
         Width = 755.906000000000000000
-        Condition = 'frxDBDQBukti_Terima."voucher_no"'
-        object frxDBDQBukti_Terimavoucher_no: TfrxMemoView
+        OnAfterPrint = 'GroupHeader1OnAfterPrint'
+        OnBeforePrint = 'GroupHeader1OnBeforePrint'
+        Condition = 'frxDBDQBukti_Terima."account_name"'
+        Stretched = True
+        object AccountName: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
           Width = 173.858380000000000000
           Height = 18.897650000000000000
+          OnAfterData = 'AccountNameOnAfterData'
+          OnAfterPrint = 'AccountNameOnAfterPrint'
+          OnBeforePrint = 'frxDBDQBukti_Terimavoucher_noOnBeforePrint'
+          StretchMode = smMaxHeight
           DataSet = frxDBDQBukti_Terima
           DataSetName = 'frxDBDQBukti_Terima'
           Font.Charset = DEFAULT_CHARSET
@@ -1793,6 +1812,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           Left = 173.858380000000000000
           Width = 90.708720000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'code_account_header'
           DataSet = frxDBDQBukti_Terima
           DataSetName = 'frxDBDQBukti_Terima'
@@ -1825,6 +1845,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         Top = 302.362400000000000000
         Visible = False
         Width = 755.906000000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDQBukti_Terima
         DataSetName = 'frxDBDQBukti_Terima'
         RowCount = 0
@@ -1885,6 +1906,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           Width = 340.157700000000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
+          DataField = 'description'
           DataSet = frxDBDQBukti_Terima_det
           DataSetName = 'frxDBDQBukti_Terima_det'
           Font.Charset = DEFAULT_CHARSET
@@ -1903,6 +1925,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           Left = 608.503949210000000000
           Width = 143.622140000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'paid_amount'
           DataSet = frxDBDQBukti_Terima_det
           DataSetName = 'frxDBDQBukti_Terima_det'
@@ -1951,16 +1974,19 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object QBukti_Terima_det: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT aa.*,ket from "public"."vbuktipenerimaan" aa'
       
-        'LEFT JOIN (SELECT voucher_no , STRING_AGG("description", E'#39',\n'#39')' +
-        ' as ket from "public"."vbuktipenerimaan" where "voucher_no"='#39'000' +
-        '2/BM23/XII/2024'#39' GROUP BY voucher_no) bb ON aa."voucher_no"=bb."' +
-        'voucher_no"  '
-      'where ( aa."voucher_no"='#39'0002/BM23/XII/2024'#39') ')
+        'SELECT aa.voucher_no,aa.name_account,aa.trans_date,aa.code_cust,' +
+        'aa.name_cust,aa.account_number_bank,aa.account_name_bank,aa.code' +
+        '_account_header,aa.paid_amount,aa.for_acceptance,aa.description,' +
+        'ket from "public"."vbuktipenerimaan" aa  LEFT JOIN (SELECT vouch' +
+        'er_no , STRING_AGG("description", E'#39', \n'#39') as ket  from "public"' +
+        '."vbuktipenerimaan" where "voucher_no"=  '#39'BM/001/03/X/2025/HLJ'#39' ' +
+        'GROUP BY voucher_no) bb  ON aa."voucher_no"=bb."voucher_no"  whe' +
+        're (aa."voucher_no"='#39'BM/001/03/X/2025/HLJ'#39') AND aa.voucher_no = ' +
+        ':voucher_no ')
     MasterSource = dsBukti_Terima
-    MasterFields = 'voucher_no'
-    DetailFields = 'aa.voucher_no'
+    MasterFields = 'account_name'
+    DetailFields = 'name_account'
     Left = 772
     Top = 104
     ParamData = <
@@ -1968,11 +1994,21 @@ object FListPenerimaanBank: TFListPenerimaanBank
         DataType = ftString
         Name = 'voucher_no'
         ParamType = ptInput
-        Value = '0002/BM18/XI/2024'
+        Value = 'BM/001/03/X/2025/HLJ'
+      end
+      item
+        DataType = ftString
+        Name = 'account_name'
+        ParamType = ptInput
+        Value = 'Pendapatan lain - lain'
       end>
     object QBukti_Terima_detvoucher_no: TStringField
       FieldName = 'voucher_no'
       Size = 100
+    end
+    object QBukti_Terima_detname_account: TStringField
+      FieldName = 'name_account'
+      Size = 255
     end
     object QBukti_Terima_dettrans_date: TDateField
       FieldName = 'trans_date'
@@ -1997,10 +2033,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
       FieldName = 'code_account_header'
       Size = 255
     end
-    object QBukti_Terima_detname_account: TStringField
-      FieldName = 'name_account'
-      Size = 255
-    end
     object QBukti_Terima_detpaid_amount: TFloatField
       FieldName = 'paid_amount'
     end
@@ -2023,13 +2055,13 @@ object FListPenerimaanBank: TFListPenerimaanBank
     CloseDataSource = False
     FieldAliases.Strings = (
       'voucher_no=voucher_no'
+      'name_account=name_account'
       'trans_date=trans_date'
       'code_cust=code_cust'
       'name_cust=name_cust'
       'account_number_bank=account_number_bank'
       'account_name_bank=account_name_bank'
       'code_account_header=code_account_header'
-      'name_account=name_account'
       'paid_amount=paid_amount'
       'for_acceptance=for_acceptance'
       'description=description'

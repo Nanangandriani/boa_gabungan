@@ -71,14 +71,18 @@ type
     QDeliveryOrderstatus_name: TStringField;
     dxBarManager1Bar3: TdxBar;
     dxBarLargeButton2: TdxBarLargeButton;
-    frxReport1: TfrxReport;
+    Report: TfrxReport;
     frxDBDataset1: TfrxDBDataset;
+    QCetak: TUniQuery;
+    QCetak2: TUniQuery;
+    frxDBDataset2: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
     procedure GetStatus;
@@ -260,6 +264,7 @@ begin
       vFormSumber01:=Dm.Qtemp.FieldByName('formsumbervendor').AsString;
       IntStatusDO:=Dm.Qtemp.FieldByName('status').AsInteger;
       IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
     end;
 
   //biaya
@@ -406,7 +411,14 @@ begin
       edNamaSupir.Text:=Dm.Qtemp1.fieldbyname('driver_name').value;
       edNamaKenek.Text:=Dm.Qtemp1.fieldbyname('helper_name').value;
       edNomorPIB.Text:=Dm.Qtemp1.fieldbyname('number_pib').value;
-      edNomorTagihanVendor.Text:=Dm.Qtemp1.fieldbyname('no_invoice').value;
+      if Dm.Qtemp1.fieldbyname('no_invoice').value<>NULL then
+      edNomorTagihanVendor.Text:=Dm.Qtemp1.fieldbyname('no_invoice').value else  edNomorTagihanVendor.Text:='';
+      if Dm.Qtemp1.fieldbyname('pickup_location').value<>NULL then
+      edLokasiMuat.Text:=Dm.Qtemp1.fieldbyname('pickup_location').value else edLokasiMuat.Text:='';
+      if Dm.Qtemp1.fieldbyname('delivery_location').value<>NULL then
+      edLokasiBongkar.Text:=Dm.Qtemp1.fieldbyname('delivery_location').value else edLokasiBongkar.Text:='';
+      if Dm.Qtemp1.fieldbyname('vehicle_group_id').value<>NULL then
+      edKelompokKendaraan.Text:=Dm.Qtemp1.FieldValues['vehicle_group_id'];
       if (Dm.Qtemp1.FieldValues['date_invoice']=NULL) AND (Dm.Qtemp1.FieldValues['date_invoice']='') then
       begin
         dtTerimaTagihan.Date:=NOW();
@@ -426,7 +438,6 @@ begin
   FNewDeliveryOrder.RzPageControl1.ActivePage:=FNewDeliveryOrder.TabDataMuatan;
   Status := 1;
   FNewDeliveryOrder.ShowModal;
-
 end;
 
 procedure TFListDeliveryOrder.dxBarLargeButton1Click(Sender: TObject);
@@ -434,9 +445,52 @@ begin
   Refresh;
 end;
 
+procedure TFListDeliveryOrder.dxBarLargeButton2Click(Sender: TObject);
+begin
+  if QDeliveryOrder.FieldValues['notrans']<>'' then
+  begin
+
+    with QCetak do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
+                'coalesce(a.pickup_location,'''') pickup_location,coalesce(a.delivery_location) delivery_location, d.company_name,d.address address_sbu,d.telp,'+
+                'case when COALESCE(vehicles,'''')='''' then driver_name else CONCAT(vehicles,''/'',driver_name) end keterangan,'+
+                'vehicles,dol.item_name,dol.amount,dol.unit from '+
+                't_delivery_order_load dol LEFT JOIN '+
+                't_delivery_order_services  a on a.notrans=dol.notrans '+
+                'left join t_supplier b on b.supplier_code=a.vendor_code '+
+                'left join t_delivery_order c on c.notrans=a.notrans '+
+                'left join t_company d on d.company_code=c.sbu_code '+
+                'WHERE a.notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans']);
+      open;
+    end;
+
+    with QCetak2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select DISTINCT a.name_vendor_load,address from t_delivery_order_load a '+
+                'left join t_customer_address b on b.customer_code=a.code_vendor_load '+
+                'and code_details=''003'' '+
+                'WHERE notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans']);
+      open;
+    end;
+
+    if (QCetak.RecordCount>0) AND (QCetak2.RecordCount>0) then
+    begin
+      cLocation := ExtractFilePath(Application.ExeName);
+      Report.LoadFromFile(cLocation +'report/rpt_DeliveryOrder'+ '.fr3');
+      Report.ShowReport();
+    end;
+  end;
+
+end;
+
 procedure TFListDeliveryOrder.FormShow(Sender: TObject);
 begin
-  dxBarManager1Bar3.Visible:=False;
+//  dxBarManager1Bar3.Visible:=False;
   ActROExecute(sender);
 end;
 

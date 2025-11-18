@@ -282,7 +282,7 @@ object FNew_Pembelian: TFNew_Pembelian
       ExplicitLeft = 810
     end
     object Button1: TButton
-      Left = 741
+      Left = 643
       Top = 1
       Width = 75
       Height = 30
@@ -292,6 +292,17 @@ object FNew_Pembelian: TFNew_Pembelian
       Visible = False
       OnClick = Button1Click
       ExplicitLeft = 735
+    end
+    object BCorrection: TRzBitBtn
+      Left = 718
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 5
+      OnClick = BCorrectionClick
+      ExplicitLeft = 713
     end
   end
   object Panel2: TPanel
@@ -2484,7 +2495,7 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object DSTerima_barang: TDataSource
     DataSet = MemTerima_barang
-    Left = 243
+    Left = 283
     Top = 297
   end
   object MemTerima_barang: TMemTableEh
@@ -2495,7 +2506,7 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object DataSetDriverTerima_Barang: TDataSetDriverEh
     ProviderDataSet = Qterima_barang
-    Left = 251
+    Left = 275
     Top = 353
   end
   object QPot_pemb: TUniQuery

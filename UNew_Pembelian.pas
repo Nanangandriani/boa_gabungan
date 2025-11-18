@@ -167,6 +167,7 @@ type
     MemterimaDetno_pengajuan_asset: TStringField;
     MemterimaDetid_detail_asset: TStringField;
     MemterimaDetSpesifikasi_asset: TStringField;
+    BCorrection: TRzBitBtn;
     procedure Button1Click(Sender: TObject);
     procedure EdjenisSelect(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -203,10 +204,12 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Edkd_akunChange(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    trans_no: string;
     Procedure clear;
     Procedure SimpanStok;
     Procedure Edit;
@@ -225,7 +228,7 @@ type
 function
   FNew_Pembelian: TFNew_Pembelian;
 var
-   thn,bln,status_pos,kd_akppn,kd_akpph,kd_akbea,Nofk,nopo,nourut,jenis_pembelian,kd_urut,tgl,statustr:String;
+   thn,bln,status_pos,kd_akppn,kd_akpph,kd_ak_pemb,kd_akbea,Nofk,nopo,nourut,jenis_pembelian,kd_urut,tgl:String;
    status,status_sj,status_fk,status_inv,stts:Integer;
    jmlh_hutang,sisa_hutang,jmlh_bayar,ppn_rp,grandtotal:real;
    Dtdate:tdatetime;
@@ -236,7 +239,7 @@ implementation
 
 uses UDataModule, UMainMenu, UMy_Function, USearch_TerimaBarang,
   UAkun_Perkiraan_TerimaMat, UPembelian,USupp_Pembelian, UCari_UM,
-  USearch_Supplier;
+  USearch_Supplier, UKoreksi;
 
 var
   realfnew_pemb : TFNew_Pembelian;
@@ -289,6 +292,15 @@ begin
   FPembelian.ActRoExecute(sender);
 end;
 
+procedure TFNew_Pembelian.BCorrectionClick(Sender: TObject);
+begin
+   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FPembelian.Name)); //Mendapatkan nama Menu
+   FKoreksi.Status:=0;
+   FKoreksi.vnotransaksi:=trans_no; //Mendapatkan Nomor Transaksi
+   FKoreksi.ShowModal;
+end;
+
 procedure TFNew_Pembelian.AutonumberCome;
 begin
 
@@ -296,6 +308,13 @@ end;
 
 procedure TFNew_Pembelian.BEditClick(Sender: TObject);
 begin
+    if Edno_Faktur.Text=''  then
+    begin
+      MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      Edno_Faktur.SetFocus;
+      Exit;
+    end;
+
     MemterimaDet.First;
     while not MemterimaDet.Eof do
     begin
@@ -462,6 +481,12 @@ end;
 
 procedure TFNew_Pembelian.BSimpanClick(Sender: TObject);
 begin
+    if Edno_Faktur.Text=''  then
+    begin
+      MessageDlg('No Faktur Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      Edno_Faktur.SetFocus;
+      Exit;
+    end;
                                                                                                                                                                                if EdNilai_um.Value<>edum.Value then
       begin
         MessageDlg('Maaf Uang Muka Belum Lunas',MtWarning,[MbOk],0);
@@ -565,6 +590,14 @@ begin
               end;
               kd_akppn:=DM.QTemp2['account_code'];
            end;
+           with dm.Qtemp do
+           begin
+                Close;
+                sql.Clear;
+                sql.Text:='select account_code from t_master_account where code=''3''';
+                Open;
+           end;
+           kd_ak_pemb:=DM.QTemp['account_code'];
 
            if edjenis.Text='AKTIVA' then
            begin
@@ -582,11 +615,11 @@ begin
                   sql.Text:=' insert into t_purchase_invoice(trans_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                             ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                             ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                            ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no,ref_code)values(:parno_terima,'+
+                            ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no,ref_code,ppn_account,pph_account,account_pemb)values(:parno_terima,'+
                             ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                             ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
                             ' :parsisa_hutang,:parppn_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                            ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,:parorder_no,:parref_no,:ref_code)';
+                            ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,:parorder_no,:parref_no,:ref_code,:ppn_account,:pph_account,:account_pemb)';
                             ParamByName('parno_terima').Value:=EdNo.Text;
                             //ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                             ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtfaktur.Date);
@@ -623,6 +656,9 @@ begin
                             ParamByName('parorder_no').Value:=Edurut.text;
                             ParamByName('parref_no').Value:=Cb_Ref.text;
                             ParamByName('ref_code').Value:=Edkd_sumber.text;
+                            ParamByName('ppn_account').Value:=kd_akppn;
+                            ParamByName('pph_account').Value:=MemterimaDet['kd_akunpph'];;
+                            ParamByName('account_pemb').Value:=kd_ak_pemb;
                   ExecSQL;
               end;
               MemterimaDet.First;
@@ -637,13 +673,13 @@ begin
                                 ' unit_conversion,subtotal,ppn,ppn_rp,pph,pph_rp,grandtotal,price,account_code,'+
                                 ' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,'+
                                 ' order_no,trans_no,ppn_account,'+
-                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,account_pemb)values'+
                       '(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
                                 ' :parTahun,:parnopo,:parno_terima,:parqtypo,:parsatuanpo,:parqtyselisih,:parqtyperkonversi,'+
                                 ' :parqtykonversi,:parsatuankonversi,:parsubtotal,:parppn,:parppn_rp,:parpph,'+
                                 ' :parpph_rp,:pargrandtotal,:parharga,:parkd_akun,:parstatustrans,:parppn_pembulatan,'+
                                 ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,:partrans_no,:ppn_ak,'+
-                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:account_pemb)';
 
                                 ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
                                 //ParamByName('parkd_material_stok').Value:=MemterimaDet['kd_material'];
@@ -686,6 +722,7 @@ begin
             ParamByName('no_pengajuan_asset').Value:=MemterimaDet['no_pengajuan_asset'];
             ParamByName('id_detail_asset').Value:=MemterimaDet['id_detail_asset'];
             ParamByName('spesifikasi_asset').Value:=MemterimaDet['spesifikasi_asset'];
+                                ParamByName('account_pemb').Value:=kd_ak_pemb;
                       ExecSQL;
                       MemterimaDet.Next;
                 end;
@@ -800,12 +837,12 @@ begin
                 sql.Clear;
                 sql.Text:=' insert into t_purchase_invoice(trans_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                           ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
-                          ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                          ' sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,order_no,ref_no,ref_code)values(:parno_terima,'+
+                          ' debt_remaining,ppn_rp,pph_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
+                          ' sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,order_no,ref_no,ref_code,ppn_account,pph_account,account_pemb)values(:parno_terima,'+
                           ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                           ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
-                          ' :parsisa_hutang,:parppn_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                          ' :parthn,:parbea,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parorder_no,:parref_no,:ref_code)';
+                          ' :parsisa_hutang,:parppn_rp,:parpph_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
+                          ' :parthn,:parbea,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parorder_no,:parref_no,:ref_code,:ppn_account,:pph_account,:account_pemb)';
                           ParamByName('parno_terima').Value:=EdNo.Text;
                           //ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                           ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtfaktur.Date);
@@ -822,6 +859,7 @@ begin
                           ParamByName('parjmlh_bayar').Value:=0;
                           ParamByName('parsisa_hutang').Value:=EdSisaHutang.Value;
                           ParamByName('parppn_rp').Value:=DBGridDetailpo.Columns[18].Footer.SumValue+DBGridDetailpo.Columns[19].Footer.SumValue;
+                          ParamByName('parppn_rp').Value:=DBGridDetailpo.Columns[21].Footer.SumValue;
                           ParamByName('parpic').Value:=Nm;
                           ParamByName('parstatus').Value:='Created';
                           ParamByName('parvalas').Value:=EdValas.Text;
@@ -840,6 +878,9 @@ begin
                           ParamByName('parorder_no').Value:=order_no;
                           ParamByName('parref_no').Value:=Cb_Ref.text;
                           ParamByName('ref_code').Value:=Edkd_sumber.text;
+                          ParamByName('ppn_account').Value:=kd_akppn;
+                          ParamByName('pph_account').Value:=MemterimaDet['kd_akunpph'];;
+                          ParamByName('account_pemb').Value:=kd_ak_pemb;
                 ExecSQL;
               end;
               MemterimaDet.First;
@@ -852,11 +893,11 @@ begin
                     sql.Text:=' insert into t_purchase_invoice_det(item_stock_code,stock_code,qty,unit,wh_code,'+
                               ' trans_year,po_no,receive_no,qty_po,unit_po,qty_difference,qty_per_conversion,qty_conversion,'+
                               ' unit_conversion,subtotal,ppn,ppn_rp,pph,pph_rp,grandtotal,price,account_code,'+
-                              ' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no,trans_no,ppn_account)values(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
+                              ' trans_status,ppn_pembulatan,account_pph_code,duty_account_code,import_duty,subtotalrp,order_no,trans_no,ppn_account,account_pemb)values(:parkd_material_stok,:parkd_stok,:parqty,:parsatuan,:pargudang,'+
                               ' :parTahun,:parnopo,:parno_terima,:parqtypo,:parsatuanpo,:parqtyselisih,:parqtyperkonversi,'+
                               ' :parqtykonversi,:parsatuankonversi,:parsubtotal,:parppn,:parppn_rp,:parpph,'+
                               ' :parpph_rp,:pargrandtotal,:parharga,:parkd_akun,:parstatustrans,:parppn_pembulatan,'+
-                              ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,:partrans_no,:ppn_ak)';
+                              ' :parkd_akpph,:parkd_akbea,:parbea,:parsubtotalrp,:parnourut,:partrans_no,:ppn_ak,:account_pemb)';
                               ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
                               //ParamByName('parkd_material_stok').Value:=MemterimaDet['kd_material'];
                               ParamByName('parkd_stok').Value:=MemterimaDet['kd_stok'];
@@ -897,6 +938,7 @@ begin
 
                               ParamByName('parnourut').Value:=MemterimaDet['nourut'];
                               ParamByName('ppn_ak').Value:=kd_akppn;
+                              ParamByName('account_pemb').Value:=kd_ak_pemb;
                     ExecSQL;
                     MemterimaDet.Next;
                  end;
@@ -1449,13 +1491,14 @@ end;
 procedure TFNew_Pembelian.DBGridDetailpoColumns22EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-
     with  FAkun_Perkiraan_TerimaMat do
     begin
       Show;
       statustr:='pphpemb';
       if QAkun.Active=false then QAkun.Active:=True;
     end;
+    //statustr := 'pphpemb';
+    //FAkun_Perkiraan_TerimaMat.Show;
 end;
 
 procedure TFNew_Pembelian.DBGridDetailpoColumns24EditButtons0Click(

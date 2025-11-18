@@ -4,8 +4,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Daftar Kendaraan'
-  ClientHeight = 518
-  ClientWidth = 696
+  ClientHeight = 517
+  ClientWidth = 692
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 89
-    Width = 696
-    Height = 429
+    Width = 692
+    Height = 428
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -35,7 +35,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         FieldName = 'code'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'Kendaraan'
+        Title.Caption = 'Kelompok Kendaraan'
         Width = 177
       end
       item
@@ -83,14 +83,14 @@ object FDaftarKendaraan: TFDaftarKendaraan
   object Memo1: TMemo
     Left = 0
     Top = 0
-    Width = 696
+    Width = 692
     Height = 89
     Align = alTop
     Lines.Strings = (
       'Memo1')
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 692
+    ExplicitWidth = 688
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData
@@ -173,8 +173,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
     Request.Ranges.Units = 'bytes'
     Request.Ranges = <>
     HTTPOptions = [hoForceEncodeParams]
-    Left = 32
-    Top = 120
+    Left = 248
+    Top = 344
   end
   object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
     MaxLineAction = maException
@@ -183,8 +183,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 32
-    Top = 176
+    Left = 64
+    Top = 304
   end
   object NetHTTPClient1: TNetHTTPClient
     UserAgent = 'Embarcadero URI Client/1.0'

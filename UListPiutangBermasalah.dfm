@@ -49,7 +49,9 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
     DataSource = DsPenjualan
     DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     EmptyDataInfo.Active = True
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 1
     Columns = <

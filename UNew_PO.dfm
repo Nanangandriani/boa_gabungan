@@ -1566,7 +1566,7 @@ object FNew_PO: TFNew_PO
           EditButtons = <>
           FieldName = 'id_pengajuan_asset'
           Footers = <>
-          Width = 108
+          Width = 0
         end
         item
           CellButtons = <>
@@ -1574,7 +1574,7 @@ object FNew_PO: TFNew_PO
           EditButtons = <>
           FieldName = 'no_pengajuan_asset'
           Footers = <>
-          Width = 88
+          Width = 0
         end
         item
           CellButtons = <>
@@ -1582,6 +1582,7 @@ object FNew_PO: TFNew_PO
           EditButtons = <>
           FieldName = 'id_detail_asset'
           Footers = <>
+          Width = 0
         end
         item
           CellButtons = <>
@@ -1589,6 +1590,7 @@ object FNew_PO: TFNew_PO
           EditButtons = <>
           FieldName = 'spesifikasi_asset'
           Footers = <>
+          Width = 0
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end

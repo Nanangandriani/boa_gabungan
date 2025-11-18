@@ -790,7 +790,6 @@ object FKartuPiutang: TFKartuPiutang
         'stomer_code<> '#39'0'#39' '
       ' AND code_karesidenan='#39'JKT'#39'  AND customer_code='#39'PL01287'#39
       ' ORDER BY customer_code,nomor asc) zz')
-    Active = True
     Left = 844
     Top = 80
     object QCetaknomor: TLargeintField

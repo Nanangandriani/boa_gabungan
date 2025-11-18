@@ -785,8 +785,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 810
-      ExplicitTop = 3
+      ExplicitLeft = 812
     end
     object BCorrection: TRzBitBtn
       Left = 718

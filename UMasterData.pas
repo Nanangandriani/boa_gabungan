@@ -18,6 +18,7 @@ type
     DBGridCustomer: TDBGridEh;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBGridCustomerDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -646,6 +647,8 @@ begin
   begin
     FNewDeliveryOrder.edKodeProvinsi.Text:=MemMasterData['KD_MASTER'];
     FNewDeliveryOrder.edNamaProvinsi.Text:=MemMasterData['NM_MASTER'];
+    FNewDeliveryOrder.edKodeKabupaten.Text:='';
+    FNewDeliveryOrder.edNamaKabupaten.Text:='';
   end;
   if vcall='do_lokasi_awal_kab' then
   begin
@@ -1194,6 +1197,11 @@ end;
 procedure TFMasterData.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   MemMasterData.EmptyTable;
+end;
+
+procedure TFMasterData.FormShow(Sender: TObject);
+begin
+  DBGridCustomer.SearchPanel.SearchingText:='';
 end;
 
 procedure TFMasterData.update_grid(fld_kd,fld_name,fld_ket,tbl_name,vwhere:string);

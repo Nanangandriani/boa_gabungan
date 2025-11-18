@@ -174,15 +174,15 @@ end;
 procedure TFListPenagihanPiutang.ActUpdateExecute(Sender: TObject);
 begin
   FDataPenagihanPiutang.Clear;
+//  ShowMessage(QListPenagihanPiutang.FieldByName('code_collector').AsString);
   FDataPenagihanPiutang.dtTagih.Date:=QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime;
   FDataPenagihanPiutang.dtCetak.Date:=QListPenagihanPiutang.FieldByName('date_print').AsDateTime;
-  FDataPenagihanPiutang.edKodeKolektor.Text:=QListPenagihanPiutang.FieldByName('code_collector').AsString;
-  FDataPenagihanPiutang.edNamaKolektor.Text:=QListPenagihanPiutang.FieldByName('name_collector').AsString;
   FDataPenagihanPiutang.edKaresidenan.Text:=QListPenagihanPiutang.FieldByName('name_karesidenan').AsString;
   FDataPenagihanPiutang.edKdWilayah.Text:=QListPenagihanPiutang.FieldByName('code_regency').AsString;
   FDataPenagihanPiutang.edKabupaten.Text:=QListPenagihanPiutang.FieldByName('name_regency').AsString;
   FDataPenagihanPiutang.strKabupatenID:=QListPenagihanPiutang.FieldByName('code_regency').AsString;
-
+   FDataPenagihanPiutang.edKodeKolektor.Text:=QListPenagihanPiutang.FieldByName('code_collector').AsString;
+  FDataPenagihanPiutang.edNamaKolektor.Text:=QListPenagihanPiutang.FieldByName('name_collector').AsString;
   FDataPenagihanPiutang.dtCetak.Enabled:=False;
   FDataPenagihanPiutang.dtTagih.Enabled:=False;
   FDataPenagihanPiutang.edKabupaten.Enabled:=False;

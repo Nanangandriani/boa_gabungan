@@ -142,6 +142,7 @@ end;
 
 procedure TFListUangMukaPenjualan.ActUpdateExecute(Sender: TObject);
 begin
+
   FNew_UangMukaPenjualan.Clear;
   Status:=1;
   with FNew_UangMukaPenjualan do
@@ -155,6 +156,25 @@ begin
     edJumlah.value:=QUangMukaPenjualan.FieldValues['grand_tot'];
     kd_kares:='0';
   end;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_cash_bank_acceptance_down_payment '+
+              'where no_trans_down_payment='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans']);
+    Open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Uang Muka Sudah Dibayarkan..!!',mtInformation,[mbRetry],0);
+    FNew_UangMukaPenjualan.BSave.Enabled:=False;
+  end else begin
+    FNew_UangMukaPenjualan.BSave.Enabled:=True;
+  end;
+
+
   FNew_UangMukaPenjualan.ShowModal;
 end;
 
@@ -200,6 +220,7 @@ procedure TFListUangMukaPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FNew_UangMukaPenjualan.Clear;
   Status:=0;
+  FNew_UangMukaPenjualan.BSave.Enabled:=True;
   FNew_UangMukaPenjualan.ShowModal;
 end;
 

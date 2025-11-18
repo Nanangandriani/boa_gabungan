@@ -479,9 +479,14 @@ end;
 procedure TFDataPerintahMuat.edNoKendMuatanButtonClick(Sender: TObject);
 begin
   //ShowMessage('Master Kendaraan Ready Dimana ??');
-  FDaftarKendaraan.vcall:='perintah_muat';
-  FDaftarKendaraan.GetDataVehicleDO;
-  FDaftarKendaraan.show;
+  if edNama_Vendor_Kend.Text<>'' then
+  begin
+    FDaftarKendaraan.vcall:='perintah_muat';
+    FDaftarKendaraan.GetDataVehicleDO;
+    FDaftarKendaraan.show;
+  end else begin
+    MessageDlg('Jasa Transport Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
 
 //  FDaftarKendaraan.GetDataViaAPI;
 end;

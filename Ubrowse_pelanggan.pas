@@ -58,7 +58,8 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UNew_DataPenjualan, UDataPenerimaanBank, UDataRencanaLunasPiutang,
   UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
-  UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan;
+  UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan,
+  UPenyesuaianPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere: String;
@@ -156,6 +157,12 @@ begin
      FDataPenagihanPiutang.MemDetail['nilai_cek']:='0';
      FDataPenagihanPiutang.MemDetail['kontra_bon']:='0';
      FDataPenagihanPiutang.MemDetail.post;
+  end;
+  //Nanang
+  if vcall='penyesuaian_penjualan' then
+  begin
+    FPenyesuaianPenjualan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FPenyesuaianPenjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
   end;
   if vcall='rencana_lunas_piutang' then
   begin
@@ -325,6 +332,7 @@ begin
   end else begin
     pnlfilter.Visible:=true;
   end;
+  DBGridCustomer.SearchPanel.SearchingText:='';
 end;
 
 

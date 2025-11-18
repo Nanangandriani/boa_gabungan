@@ -197,7 +197,8 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier, UListItempo,
-  UMainMenu,UMy_Function, UPengajuanAsset, UDetailPengajuanAsset;
+  UMainMenu,UMy_Function, UPengajuanAsset, UDetailPengajuanAsset, USettingPO,
+  UListSupplier;
 
 var
   realFNew_PO: TFNew_PO;
@@ -302,7 +303,7 @@ begin
       with Dm.Qtemp do
       begin
         close;
-        sql.Text:='SELECT * FROM t_item_type';
+        sql.Text:='SELECT DISTINCT type FROM t_item_type';
         ExecSQL;
       end;
       Dm.Qtemp.First;
@@ -906,6 +907,7 @@ begin
       cb_gudang.SetFocus;
       Exit;
     end;
+
   if ref_code='KK' then
   begin
     Self.Loaditem
@@ -1621,12 +1623,12 @@ begin
           ' valas_value,order_no, remarks,"type",transportation_type,division_code,status,due_date, '+
           ' "Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status,delivery2_date, '+
           ' wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,  '+
-          ' um_status,um_value,um_account_code,um_no,id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset) '+
+          ' um_status,um_value,um_account_code,um_no,created_at,created_by,id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset) '+
           ' values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,:parjenispo,'+
           ' :parvalas,:parnilai_valas,:parorder_no,:parKeterangan,:parjenis,:parjenisangkutan,:parkd_divisi,'+
           ' :parstatus,:parjatuh_tempo,:parSubtotal,:parGrandtotal,:parPPn_Rp,:parPPh_Rp,:partgl_dlv,'+
           ' :ParStatus_approval,:partgl_dlv2,:pargudang,:parkd_sbu,:parpic,:parnopo2,:partgl,:parbulan,'+
-          ' :partahun,:parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no)';
+          ' :partahun,:parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no,:created_at,:created_by)';
           ParamByName('parnopo').Value:=EdNopo.Text;
           ParamByName('parno_kontrak').Value:=Edno_kontrak.Text;
           ParamByName('partgl_po').Value:=FormatDateTime('yyy-mm-dd',DtPO.Date);
@@ -1664,6 +1666,8 @@ begin
           ParamByName('parn_um').Value:=EdUM.Value;
           ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
           ParamByName('parum_no').Value:=NoTransUM.Text;
+          parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+          parambyname('created_by').AsString:=Nm;
           ExecSQL;
       end;
       MemItempo.First;
@@ -1675,12 +1679,12 @@ begin
             sql.Clear;
             sql.Text:='insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
             ' qty_sent,total_payment,remaining_payment,remaining_qty,"subtotal",ppn,ppn_rp,pph,pph_rp,'+
-            ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp'+
-            ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+            ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp, '+
+            ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
             ' (:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,:pargudang,:parconv_currency,'+
             ' :parqtyterkirim,:partotalbayar,:parsisabayar,:parsisaqty,:parsubtotal,:parppn,:parppn_rp,'+
             ' :parpph,:parpph_rp,:pargrandtotal,:parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,'+
-            ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+            ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
             ParamByName('parnopo').Value:=EdNopo.Text;
             ParamByName('parkd_materialstok').Value:=MemItempo['Kd_Material_stok'];
             ParamByName('parqty').Value:=MemItempo['qty'];
@@ -1708,6 +1712,7 @@ begin
             ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
             ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
             ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+            ParamByName('paritem_code').Value:=MemItempo['kd_material'];
             ExecSQL;
           end;
           MemItempo.Next;
@@ -1724,11 +1729,11 @@ begin
                   ' valas,valas_value,order_no,remarks,"type",transportation_type,division_code,status, '+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status, '+
                   ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year, '+
-                  ' as_status,trans_category,um_status,um_value,um_account_code,um_no)values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,:parjenispo, '+
+                  ' as_status,trans_category,um_status,um_value,um_account_code,um_no,created_at,created_by)values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,:parjenispo, '+
                   ' :parvalas,:parnilai_valas,:parno_urut,:parKeterangan,:parjenis,:parjenisangkutan,:parkd_divisi,:parstatus, '+
                   ' :parjatuh_tempo,:parSubtotal,:parGrandtotal,:parPPn_Rp,:parPPh_Rp,:partgl_dlv,:ParStatus_approval, '+
                   ' :partgl_dlv2,:pargudang,:parkd_sbu,:parpic,:parnopo2,:parhari,:parbulan,:partahun, '+
-                  ' :parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no)';
+                  ' :parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no,:created_at,:created_by)';
                   ParamByName('parnopo').Value:=EdNopo.Text;
                   ParamByName('parno_kontrak').Value:=Edno_kontrak.Text;
                   ParamByName('partgl_po').Value:=FormatDateTime('yyy-mm-dd',DtPO.Date);
@@ -1766,6 +1771,8 @@ begin
                   ParamByName('parn_um').Value:=EdUM.Value;
                   ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
                   ParamByName('parum_no').Value:=NoTransUM.Text;
+                  parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+                  parambyname('created_by').AsString:=Nm;
         ExecSQL;
 
       end;
@@ -1778,13 +1785,13 @@ begin
             sql.Clear;
             sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
-                      ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp'+
-                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                      ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp,'+
+                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                       ' (:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                       ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
-                      ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp' +
-                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                      ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,' +
+                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
                       ParamByName('parnopo').Value:=EdNopo.Text;
                       ParamByName('parkd_materialstok').Value:=MemItempo['kd_material_stok'];
                       ParamByName('parqty').Value:=MemItempo['qty'];
@@ -1812,6 +1819,7 @@ begin
                       ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                       ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                       ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                      ParamByName('paritem_code').Value:=MemItempo['kd_material'];
             ExecSQL;
           end;
           MemItempo.Next;
@@ -1860,12 +1868,12 @@ begin
         sql.Text:=' insert into t_po(po_no,contract_no,po_date,supplier_code,pph23,ppn,po_type,'+
                   ' valas,valas_value,order_no, remarks,type,transportation_type,division_code,status,'+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,approval_status,'+
-                  ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,um_status,um_value,um_account_code,um_no) '+
+                  ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year,as_status,trans_category,um_status,um_value,um_account_code,um_no,created_at,created_by) '+
                   ' values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,'+
                   ' :parjenispo,:parvalas,:parnilai_valas,:parorder_no,:parKeterangan,:parjenis,'+
                   ' :parjenisangkutan,:parkd_divisi,:parstatus,:parjatuh_tempo,:parSubtotal,'+
                   ' :parGrandtotal,:parPPn_Rp,:parPPh_Rp,:partgl_dlv,:ParStatus_approval,:partgl_dlv2,'+
-                  ' :pargudang,:parkd_sbu,:parpic,:parnopo2,:partgl,:parbulan,:partahun,:parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no)';
+                  ' :pargudang,:parkd_sbu,:parpic,:parnopo2,:partgl,:parbulan,:partahun,:parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no,:created_at,:created_by)';
                   ParamByName('parnopo').Value:=EdNopo.Text;
                   ParamByName('parno_kontrak').Value:=Edno_kontrak.Text;
                   ParamByName('partgl_po').Value:=FormatDateTime('yyy-mm-dd',DtPO.Date);
@@ -1904,6 +1912,9 @@ begin
                   ParamByName('parn_um').Value:=EdUM.Value;
                   ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
                   ParamByName('parum_no').Value:=NoTransUM.Text;
+                  parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+                  parambyname('created_by').AsString:=Nm;
+          ExecSQL;
         ExecSQL;
       end;
       MemItempo.First;
@@ -1916,12 +1927,12 @@ begin
             sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp,'+
-                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                       ' (:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                       ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
                       ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,'+
-                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
                       ParamByName('parnopo').Value:=EdNopo.Text;
                       ParamByName('parkd_materialstok').Value:=MemItempo['kd_material_stok'];
                       ParamByName('parqty').Value:=MemItempo['qty'];
@@ -1949,6 +1960,7 @@ begin
                       ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                       ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                       ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                      ParamByName('paritem_code').Value:=MemItempo['kd_material'];
             ExecSQL;
           end;
           MemItempo.Next;
@@ -1965,11 +1977,11 @@ begin
                   ' valas,valas_value,order_no,remarks,type,transportation_type,division_code,status, '+
                   ' due_date,"Subtotal","Grandtotal","PPn_Rp","PPh_Rp",delivery_date,"approval_status", '+
                   ' delivery2_date,wh_code,sbu_code,pic,po2_no,trans_day,trans_month,trans_year, '+
-                  ' as_status,trans_category,um_status,um_value,um_account_code,um_no)values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,:parjenispo, '+
+                  ' as_status,trans_category,um_status,um_value,um_account_code,um_no,created_at,created_by)values(:parnopo,:parno_kontrak,:partgl_po,:parkd_supplier,:parpph23,:parppn,:parjenispo, '+
                   ' :parvalas,:parnilai_valas,:parno_urut,:parKeterangan,:parjenis,:parjenisangkutan,:parkd_divisi,:parstatus, '+
                   ' :parjatuh_tempo,:parSubtotal,:parGrandtotal,:parPPn_Rp,:parPPh_Rp,:partgl_dlv,:ParStatus_approval, '+
                   ' :partgl_dlv2,:pargudang,:parkd_sbu,:parpic,:parnopo2,:parhari,:parbulan,:partahun, '+
-                  ' :parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no)';
+                  ' :parstatus_as,:parkt,:parstatus_um,:parn_um,:parkd_akunum,:parum_no,:created_at,:created_by)';
                   ParamByName('parnopo').Value:=EdNopo.Text;
                   ParamByName('parno_kontrak').Value:=Edno_kontrak.Text;
                   ParamByName('partgl_po').Value:=FormatDateTime('yyy-mm-dd',DtPO.Date);
@@ -2008,6 +2020,8 @@ begin
                   ParamByName('parn_um').Value:=EdUM.Value;
                   ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
                   ParamByName('parum_no').Value:=NoTransUM.Text;
+                  parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+                  parambyname('created_by').AsString:=Nm;
         ExecSQL;
 
       end;
@@ -2021,12 +2035,12 @@ begin
             sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp,'+
-                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                       ' (:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                       ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
                       ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,'+
-                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
                       ParamByName('parnopo').Value:=EdNopo.Text;
                       ParamByName('parkd_materialstok').Value:=MemItempo['kd_material_stok'];
                       ParamByName('parqty').Value:=MemItempo['qty'];
@@ -2054,6 +2068,7 @@ begin
                       ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                       ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                       ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                      ParamByName('paritem_code').Value:=MemItempo['kd_material'];
             ExecSQL;
           end;
           MemItempo.Next;
@@ -2104,12 +2119,12 @@ begin
             sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp,'+
-                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                      ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                       '(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                       ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
                       ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,' +
-                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                      ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
                       ParamByName('parnopo').Value:=EdNopo.Text;
                       ParamByName('parkd_materialstok').Value:=MemItempo['Kd_Material_stok'];
                       ParamByName('parqty').Value:=MemItempo['qty'];
@@ -2137,6 +2152,8 @@ begin
                       ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                       ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                       ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                      ParamByName('paritem_code').Value:=MemItempo['kd_material'];
+
             ExecSQL;
          end;
          MemItempo.Next;
@@ -2155,12 +2172,12 @@ begin
           sql.Text:=' insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                     ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                     ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp,'+
-                    ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                    ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                     '(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                     ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                     ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
                     ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,' +
-                    ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                    ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
                     ParamByName('parnopo').Value:=EdNopo.Text;
                     ParamByName('parkd_materialstok').Value:=MemItempo['kd_material_stok'];
                     ParamByName('parqty').Value:=MemItempo['qty'];
@@ -2188,6 +2205,7 @@ begin
                     ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                     ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                     ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                    ParamByName('paritem_code').Value:=MemItempo['kd_material'];
           ExecSQL;
         end;
         MemItempo.Next;
@@ -2339,12 +2357,12 @@ begin
             sql.Text:='insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp,'+
-                    ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                    ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                     '(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                       ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
                       ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,' +
-                    ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                    ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:paritem_code)';
                       ParamByName('parnopo').Value:=EdNopo.Text;
                       ParamByName('parkd_materialstok').Value:=MemItempo['kd_material_stok'];
                       ParamByName('parqty').Value:=MemItempo['qty'];
@@ -2372,6 +2390,8 @@ begin
                       ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                       ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                       ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                      ParamByName('paritem_code').Value:=MemItempo['kd_material'];
+
             ExecSQL;
          end;
          MemItempo.Next;
@@ -2390,12 +2410,12 @@ begin
             sql.Text:='insert into t_podetail(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
                       ' qty_sent,total_payment,remaining_payment,remaining_qty,subtotal,ppn,ppn_rp,pph,pph_rp,'+
                       ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,pemb_dpp,'+
-                    ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset)values'+
+                    ' id_pengajuan_asset,no_pengajuan_asset,id_detail_asset,spesifikasi_asset,item_code)values'+
                     '(:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,'+
                       ' :pargudang,:parconv_currency,:parqtyterkirim,:partotalbayar,:parsisabayar,'+
                       ' :parsisaqty,:parsubtotal,:parppn,:parppn_rp,:parpph,:parpph_rp,:pargrandtotal,'+
                       ' :parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,' +
-                    ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset)';
+                    ' :id_pengajuan_asset,:no_pengajuan_asset,:id_detail_asset,:spesifikasi_asset,:item_code)';
                       ParamByName('parnopo').Value:=EdNopo.Text;
                       ParamByName('parkd_materialstok').Value:=MemItempo['kd_material_stok'];
                       ParamByName('parqty').Value:=MemItempo['qty'];
@@ -2423,6 +2443,7 @@ begin
                       ParamByName('no_pengajuan_asset').Value:=MemItempo['no_pengajuan_asset'];
                       ParamByName('id_detail_asset').Value:=MemItempo['id_detail_asset'];
                       ParamByName('spesifikasi_asset').Value:=MemItempo['spesifikasi_asset'];
+                      ParamByName('item_code').Value:=MemItempo['kd_material'];
             ExecSQL;
          end;
          MemItempo.Next;
@@ -2661,7 +2682,28 @@ begin
 end;
 
 procedure TFNew_PO.BSimpanClick(Sender: TObject);
+var
+  WajibNPWP: Boolean;
+  NilaiPO: Double;
+  NPWP_Supplier: string;
 begin
+      // ambil nilai setting
+    WajibNPWP := (FSettingPO.GetSetting('WAJIB_NPWP') = '1');
+
+    // ambil total PO
+    NilaiPO :=DBGridDetail.Columns[19].Footer.sumvalue;; // sesuaikan dengan variabel Anda
+
+    // ambil data NPWP supplier
+    with FListSupplier.Qsupplier do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_supplier where supplier_code='+QuotedStr(EdKd_supp.Text)+' ';
+      open;
+    end;
+    NPWP_Supplier :=FListSupplier.Qsupplier.FieldByName('npwp').AsString;   // sesuaikan datasource supplier Anda
+
+
     if EdStatus.Text='' then
     begin
       MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
@@ -2708,6 +2750,19 @@ begin
     end;
     MemItempo.Next;
     end;
+
+       // =========== VALIDASI ===========
+    if (WajibNPWP) and (NPWP_Supplier='') then
+    begin
+      if (NilaiPO > 1000000) and (Trim(NPWP_Supplier) = '') then
+      begin
+        ShowMessage('Supplier wajib mengisi NPWP karena nilai PO melebihi Rp 1.000.000');
+        Exit;
+      end;
+    end;
+   if (WajibNPWP) and (NPWP_Supplier<>'') then
+   begin
+
     if messageDlg ('Anda Yakin Disimpan Kontrak No.'+EdNo_kontrak.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
       if not dm.koneksi.InTransaction then
@@ -2737,6 +2792,7 @@ begin
     end;
     //Autonumber;
     //simpan;
+   end;
 end;
 
 procedure TFNew_PO.Button2Click(Sender: TObject);

@@ -46,6 +46,8 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
     DataSource = DsListPenagihanPiutang
     DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -196,8 +198,8 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
           Visible = True
           ItemName = 'dxBarDelete'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -228,7 +230,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
           Visible = True
           ItemName = 'dxBarLargeButton1'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

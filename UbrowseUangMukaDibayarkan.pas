@@ -63,23 +63,44 @@ begin
 end;
 
 procedure TFbrowseUangMukaDibayarkan.DBGridOrderDblClick(Sender: TObject);
+var isValidasi: Integer;
 begin
+  isValidasi:=0 ;
   with FNew_Penjualan do
   begin
-    MemUangMuka.insert;
-    MemUangMuka['no_trans_down_payment']:=Qdetail.FieldByName('no_trans_down_payment').AsString;
-//    MemUangMuka['trans_date']:=Qdetail.FieldByName('trans_date').AsString;
-    MemUangMuka['voucher_no']:=Qdetail.FieldByName('voucher_no').AsString;
-    MemUangMuka['sisa_uang_muka']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
-    MemUangMuka['uang_muka_dipakai']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
-    MemUangMuka.Post;
+
+    MemUangMuka.First;
+    while not MemUangMuka.Eof do
+    begin
+      if MemUangMuka['voucher_no']=Qdetail.FieldByName('voucher_no').AsString then
+      begin
+        isValidasi:=1;
+      end;
+
+      MemUangMuka.Next;
+    end;
+
+    if isValidasi=0 then
+    begin
+
+      MemUangMuka.insert;
+      MemUangMuka['no_trans_down_payment']:=Qdetail.FieldByName('no_trans_down_payment').AsString;
+  //    MemUangMuka['trans_date']:=Qdetail.FieldByName('trans_date').AsString;
+      MemUangMuka['voucher_no']:=Qdetail.FieldByName('voucher_no').AsString;
+      MemUangMuka['sisa_uang_muka']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
+      MemUangMuka['uang_muka_dipakai']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
+      MemUangMuka.Post;
+    end else
+    begin
+      MessageDlg('Uang Muka Sudah Ada Di Order..!!',mtInformation,[mbRetry],0);
+    end;
   end;
   Close;
 end;
 
 procedure TFbrowseUangMukaDibayarkan.FormShow(Sender: TObject);
 begin
-  Refresh;
+//  Refresh;
 end;
 
 end.

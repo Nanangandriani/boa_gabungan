@@ -36,6 +36,7 @@ type
     procedure GetDataViaAPI;
     procedure GetDataViaAPI2;
     procedure GetDataVehicleDO;
+    procedure GetDataKelompok;
   end;
 
 var
@@ -47,12 +48,40 @@ implementation
 {$R *.dfm}
 
 uses ulkJSON, UDataModule, UHomeLogin, UMy_Function, UNewDeliveryOrder,
-  UDataPerintahMuat;
+  UDataPerintahMuat, UNew_SalesOrder, UMainMenu;
+
+procedure TFDaftarKendaraan.GetDataKelompok;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT DISTINCT vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity '+
+              'FROM t_sales_order a '+
+              'WHERE vehicle_group_id IS NOT NULL AND '+
+              'vehicle_group_id NOT IN (SELECT vehicle_group_id FROM t_delivery_order_load '+
+              'WHERE vehicle_group_id IS NOT NULL ) ;';
+    open;
+  end;
+  MemMasterData.active:=false;
+  MemMasterData.active:=true;
+  MemMasterData.EmptyTable;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+    MemMasterData.insert;
+    MemMasterData['code']:=dm.Qtemp.FieldValues['vehicle_group_id'];
+    MemMasterData['plate_number']:='';
+    MemMasterData['type']:=dm.Qtemp.FieldValues['type_vehicles_code'];;
+    MemMasterData['type_name']:=dm.Qtemp.FieldValues['type_vehicles_name'];;
+    MemMasterData['capacity']:=dm.Qtemp.FieldValues['capacity'];;
+    MemMasterData.post;
+    dm.Qtemp.Next;
+  end;
+end;
 
 procedure TFDaftarKendaraan.GetDataVehicleDO;
 begin
-
-
   with dm.Qtemp do
   begin
     close;
@@ -62,7 +91,8 @@ begin
 //              'LEFT JOIN t_delivery_order b on b.notrans=a.notrans and b.deleted_at IS NULL '+
               'where a.notrans NOT IN '+
               '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on '+
-              'b.notrans=a.notrans where b.deleted_at is null) AND a.vehicles<>'''' AND a.vehicles is NOT NULL ';
+              'b.notrans=a.notrans where b.deleted_at is null) '+
+              'AND a.vendor_code='+QuotedStr(FDataPerintahMuat.edKode_Vendor_Kend.Text)+'  AND a.vehicles<>'''' AND a.vehicles is NOT NULL ';
     open;
   end;
   MemMasterData.active:=false;
@@ -95,6 +125,14 @@ begin
   begin
     FDataPerintahMuat.edNoKendMuatan.Text:=MemMasterData['code'];
   end;
+  if vcall='sales_order' then
+  begin
+    FNew_SalesOrder.edKelompokBarang.Text:=MemMasterData['code'];
+    FNew_SalesOrder.edTypeKendaraan.Text:=MemMasterData['type_name'];
+    FNew_SalesOrder.edKodeTypeKendaraan.Text:=MemMasterData['type'];
+    FNew_SalesOrder.edKapasitas.Text :=MemMasterData['capacity'];
+//    FNew_SalesOrder.edKapasitas.DisplayFormat:='#,###';
+  end;
   FDaftarKendaraan.Close;
   FDaftarKendaraan.MemMasterData.EmptyTable;
 end;
@@ -108,9 +146,10 @@ begin
     DBGrid.Columns[1].Visible:=False;
   end else
   begin
-    DBGrid.Columns[0].Visible:=False;
+    DBGrid.Columns[0].Visible:=True;
     DBGrid.Columns[1].Visible:=True;
   end;
+  DBGrid.SearchPanel.SearchingText:='';
 end;
 
 procedure TFDaftarKendaraan.GetDataViaAPI2;
@@ -150,7 +189,8 @@ begin
       key     := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
       vtoken  := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
 
-      Vpath := '/api/get-vehicle';
+      Vpath := '/api/get-vehicle?sbu_code='+FHomeLogin.vKodePRSH;
+//      Vpath := '/api/get-vehicle';
       url := BaseUrl + Vpath;
 
       // Setup HTTP client
@@ -184,6 +224,7 @@ begin
             Exit;
           end;
 
+
           // JSON root object
           if jsonValue is TJSONObject then
           begin
@@ -215,6 +256,7 @@ begin
             DBGrid.StartLoadingStatus;
           end;
 
+
           // Loop data array
           for i := 0 to jsonArray.Count - 1 do
           begin
@@ -233,7 +275,6 @@ begin
             end;
           end;
 
-
           DBGrid.FinishLoadingStatus;
 
 
@@ -244,11 +285,13 @@ begin
       finally
         gNet.Free;
         ssl.Free;
+
       end;
 
     except
       on E: Exception do
         begin
+
           ShowMessage('Terjadi kesalahan: ' + E.Message);
         end;
     end;

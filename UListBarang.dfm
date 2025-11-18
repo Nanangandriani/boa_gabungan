@@ -176,12 +176,26 @@ object FlistBarang: TFlistBarang
     SQL.Strings = (
       
         'SELECT'#9'"a".category,"c"."type",b.*,d.account_name,e.group_id,e.g' +
-        'roup_name,f.* FROM '
+        'roup_name,'
+      '  COALESCE(f.acc_persd, '#39#39')     AS acc_persd,'
+      '  COALESCE(f.account_name, '#39#39')  AS account_name,'
+      '  COALESCE(f.acc_pemb, '#39#39')      AS acc_pemb,'
+      '  COALESCE(f.nm_pemb, '#39#39')       AS nm_pemb,'
+      '  COALESCE(f.acc_penj, '#39#39')      AS acc_penj,'
+      '  COALESCE(f.nm_penj, '#39#39')       AS nm_penj,'
+      '  COALESCE(f.acc_rtpemb, '#39#39')    AS acc_rtpemb,'
+      '  COALESCE(f.nm_rtpemb, '#39#39')     AS nm_rtpemb,'
+      '  COALESCE(f.acc_potpemb, '#39#39')   AS acc_potpemb,'
+      '  COALESCE(f.nm_potpemb, '#39#39')    AS nm_potpemb,'
+      '  COALESCE(f.acc_rtpenj, '#39#39')    AS acc_rtpenj,'
+      '  COALESCE(f.nm_rtpenj, '#39#39')     AS nm_rtpenj,'
+      '  COALESCE(f.item_code, '#39#39')     AS item_code'
+      ' FROM '
       't_item_category AS "a"'#9
       'left JOIN t_item AS b ON "a"."category_id" = b.category_id'#9
       'INNER JOIN t_item_type AS "c" ON "a".type_id = "c"."type_id"'
       'INNER JOIN t_item_group AS "e" ON "b".group_id = "e"."group_id"'
-      'LEFT JOIN t_ak_account d ON b.account_code=d.code'
+      'LEFT JOIN t_ak_account d ON b.header_code=d.code'
       
         'LEFT JOIN (SELECT'#9'acc_persd, b.account_name ,acc_pemb, c.account' +
         '_name as nm_pemb, acc_penj, d.account_name as nm_penj, acc_rtpem' +
@@ -696,7 +710,7 @@ object FlistBarang: TFlistBarang
       ''
       'end.')
     Left = 464
-    Top = 112
+    Top = 104
     Datasets = <>
     Variables = <>
     Style = <>

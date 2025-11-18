@@ -69,7 +69,7 @@ type
     edNamaVendorTransMuatan: TEdit;
     edNamaKenek: TEdit;
     edNomorReffUtamaMuatan: TRzButtonEdit;
-    edNamaJenisKendMuatan: TRzButtonEdit;
+    edKelompokKendaraan: TRzButtonEdit;
     edKodeJenisKendMuatan: TEdit;
     btMasterSumber: TSpeedButton;
     Label1: TLabel;
@@ -165,12 +165,21 @@ type
     MemoAPI: TMemo;
     edlokasiregencyid: TEdit;
     BCorrection: TRzBitBtn;
+    edLokasiMuat: TRzEdit;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    edLokasiBongkar: TRzEdit;
+    edNamaJenisKendMuatan: TRzEdit;
+    Label64: TLabel;
+    Label65: TLabel;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
     procedure btMasterSumberClick(Sender: TObject);
     procedure edNoKendMuatanButtonClick(Sender: TObject);
-    procedure edNamaJenisKendMuatanButtonClick(Sender: TObject);
+    procedure edKelompokKendaraanButtonClick(Sender: TObject);
     procedure edNamaLokasiButtonClick(Sender: TObject);
     procedure edNamaProvinsiButtonClick(Sender: TObject);
     procedure edNamaKabupatenButtonClick(Sender: TObject);
@@ -252,7 +261,7 @@ implementation
 uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
   UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
-  UListPerbandinganBiayaDo, UMainMenu, UKoreksi;
+  UListPerbandinganBiayaDo, UMainMenu, UKoreksi, UListKelompokKendaraan;
 
 procedure TFNewDeliveryOrder.InsertStatus;
 begin
@@ -922,7 +931,8 @@ begin
             ' "starting_loc_name", "province_code", "province_name", "regency_code", '+
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
             //' "additional_code", '+
-            ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id,sbu_code) '+
+            ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id,'+
+            'sbu_code) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -943,7 +953,8 @@ begin
             //' '+QuotedStr('0')+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+','+QuotedStr(FHomeLogin.vKodePRSH)+');');
+            ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+','+
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+');');
     ExecSQL;
   end;
   InsertDetailLoad;
@@ -1216,18 +1227,18 @@ begin
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
-  with dm.Qtemp do
-  begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_delivery_order_services" '+
-            ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
-  ExecSQL;
-  end;
-  end;
-
     with dm.Qtemp do
     begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_delivery_order_services" '+
+                ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
+      ExecSQL;
+    end;
+  end;
+
+  with dm.Qtemp do
+  begin
     close;
     sql.clear;
     sql.Text:=' INSERT INTO "public"."t_delivery_order_services" ("notrans", '+
@@ -1235,7 +1246,7 @@ begin
               ' "type_vehicles_code", "type_vehicles_name", "capacity", '+
               ' "driver_name", "helper_name", "number_pib", "no_invoice",'+
               //'  "date_invoice", '+
-              ' "total_cost") '+
+              ' "total_cost",pickup_location,delivery_location,vehicle_group_id) '+
               ' Values( '+
               ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
               ' '+QuotedStr(edKodeVendorTransMuatan.Text)+', '+
@@ -1250,10 +1261,11 @@ begin
               ' '+QuotedStr(edNomorPIB.Text)+', '+
               ' '+QuotedStr('0')+', '+
               //' '+QuotedStr('0')+', '+
-              ' '+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' );';
+              ' '+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+','+
+              ' '+QuotedStr(edLokasiMuat.Text)+','+QuotedStr(edLokasiBongkar.Text)+','+QuotedStr(edKelompokKendaraan.Text)+');';
               //' '+QuotedStr(VarToStr(DBGridSumberPenjualan.Columns[5].Footer.Value))+' );';
     ExecSQL;
-    end;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.Autonumber;
@@ -1288,6 +1300,9 @@ begin
   edNamaSupir.Clear;
   edNamaKenek.Clear;
   edNomorPIB.Clear;
+  edLokasiMuat.Clear;
+  edLokasiBongkar.Clear;
+  edKelompokKendaraan.Clear;
 
   //Biaya
   edKodeDOBiaya.Clear;
@@ -1312,6 +1327,8 @@ begin
 
   StatusPerubahanBiaya:=0;
   StatusCekBiaya:=1;
+
+
 
   with dm.Qtemp do
   begin
@@ -1621,7 +1638,7 @@ end;
 procedure TFNewDeliveryOrder.btSimpanSumberJualClick(Sender: TObject);
 var
   Year, Month, Day: Word;
-  strMessage:String;
+  strMessage,strMessageBox:String;
 begin
 
   DecodeDate(dtTanggalMuatan.Date, Year, Month, Day);
@@ -1644,6 +1661,12 @@ begin
     begin
       MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
       edKodeVendorTransMuatan.SetFocus;
+    end  else if (edLokasiMuat.Text='') then
+    begin
+      MessageDlg('Lokasi Muat Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end else if (edLokasiBongkar.Text='') then
+    begin
+      MessageDlg('Lokasi Bongkar Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
     else if MemDataMuatan.RecordCount=0 then
     begin
@@ -1657,6 +1680,9 @@ begin
     end else if (StatusCekBiaya=0) then
     begin
       MessageDlg('Silahkan melakukan Cek Biaya..!!',mtInformation,[mbRetry],0);
+    end else if (edKelompokKendaraan.Text='') then
+    begin
+      MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
     else if Status = 0 then
     begin
@@ -1674,8 +1700,13 @@ begin
 //      if IntAdaPerubahan=0 then
 //      begin
 //        if StatusPerubahanBiaya=True then strMessage:='Apa Anda Yakin Memperbarui Data Ini Status akan menjadi DO Dibuat ? '
-
-        if application.MessageBox('Apa Anda Yakin Memperbarui Data Ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+        if (StatusPerubahanBiaya=1) then
+        begin
+          strMessageBox:='Ada Perubahan Biaya, Status Akan Menjadi DO Di Buat, Apa Anda Yakin Memperbarui Data Ini ?';
+        end else begin
+          strMessageBox:='Apa Anda Yakin Memperbarui Data Ini ?';
+        end;
+        if application.MessageBox(PChar(strMessageBox),'confirm',mb_yesno or mb_iconquestion)=id_yes then
         begin
           Update;
           Dm.Koneksi.Commit;
@@ -1962,8 +1993,8 @@ begin
 //  FMasterData.vcall:='do_lokasi_awal';
 //  FMasterData.update_grid('code','name','address','"public"."t_starting_location"','WHERE	deleted_at IS NULL ORDER BY code DESC');
 //  FMasterData.ShowModal;
-  FDataPool.Show;
   FDataPool.GetApiPool;
+  FDataPool.Show;
 end;
 
 procedure TFNewDeliveryOrder.edNamaLokasiChange(Sender: TObject);
@@ -2010,11 +2041,15 @@ begin
   FMasterData.ShowModal;
 end;
 
-procedure TFNewDeliveryOrder.edNamaJenisKendMuatanButtonClick(Sender: TObject);
+procedure TFNewDeliveryOrder.edKelompokKendaraanButtonClick(Sender: TObject);
 begin
-  FDaftarKendaraan.vcall:='delivery_order';
-  FDaftarKendaraan.show;
-  FDaftarKendaraan.GetDataViaAPI;
+  if edNamaJenisMuatan.Text<>'' then
+  begin
+    FListKelompokKendaraan.Refresh;
+    FListKelompokKendaraan.show;
+  end else begin
+    ShowMessage('Jenis Muatan Wajib Diisi..!');
+  end;
 end;
 
 procedure TFNewDeliveryOrder.edNomorReffUtamaMuatanButtonClick(Sender: TObject);

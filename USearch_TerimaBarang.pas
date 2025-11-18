@@ -32,7 +32,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure DBGridEh2DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -228,18 +227,13 @@ begin
                       MemterimaDet['qtypo']:=QMaterial['qty'];
                       MemterimaDet['qty']:=QMaterial['qty'];
                       MemterimaDet['wh_code']:=QMaterial['wh_code'];
-                      memterimadet['id_pengajuan_asset']:=QMaterial['id_pengajuan_asset'];
-                      memterimadet['no_pengajuan_asset']:=QMaterial['no_pengajuan_asset'];
-                      memterimadet['id_detail_asset']:=QMaterial['id_detail_asset'];
-                      memterimadet['spesifikasi_asset']:=QMaterial['spesifikasi_asset'];
-                      memterimadet.post;
+                      MemterimaDet.Post;
                     end;
                end;
             end;
          end;
        end;
-       //close;
-      // ShowMessage('test 1');
+       close;
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
@@ -258,7 +252,7 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
                           ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
                 ExecSQL;
              end;
@@ -280,7 +274,7 @@ begin
              MemterimaDet.Next;
           end;
        end;
-       //ShowMessage('test 2');
+
        //////////
        if dbgrideh2.Visible=true then
        begin
@@ -322,18 +316,13 @@ begin
                       MemterimaDet['qtypo']:=QMaterial2['qty'];
                       MemterimaDet['qty']:=QMaterial2['qty'];
                       MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                      memterimadet['id_pengajuan_asset']:=QMaterial2['id_pengajuan_asset'];
-                      memterimadet['no_pengajuan_asset']:=QMaterial2['no_pengajuan_asset'];
-                      memterimadet['id_detail_asset']:=QMaterial2['id_detail_asset'];
-                      memterimadet['spesifikasi_asset']:=QMaterial2['spesifikasi_asset'];
                       MemterimaDet.Post;
                     end;
                end;
             end;
          end;
        end;
-      // ShowMessage('test 1');
-      // close;
+       close;
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
@@ -352,7 +341,7 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
                           ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
                 ExecSQL;
              end;
@@ -364,7 +353,6 @@ begin
                 //MemterimaDet['kd_stok']:=MemterimaDet['kd_material'];
                 MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code'];
                 MemterimaDet.Post;
-              //  ShowMessage('test 2');
              end
              else
              Autonumberlot;
@@ -375,7 +363,7 @@ begin
              MemterimaDet.Next;
           end;
        end;
-      // ShowMessage('test 3');
+
     end;
     if jenis_pembelian='AKTIVA' then
     begin
@@ -419,16 +407,12 @@ begin
                   MemterimaDet['qtypo']:=QMaterial['qty'];
                   MemterimaDet['qty']:=QMaterial['qty'];
                   MemterimaDet['wh_code']:=QMaterial['wh_code'];
-                  memterimadet['id_pengajuan_asset']:=QMaterial['id_pengajuan_asset'];
-                  memterimadet['no_pengajuan_asset']:=QMaterial['no_pengajuan_asset'];
-                  memterimadet['id_detail_asset']:=QMaterial['id_detail_asset'];
-                  memterimadet['spesifikasi_asset']:=QMaterial['spesifikasi_asset'];
                   MemterimaDet.Post;
                end;
             end;
           end;
        end;
-      // Close;
+       Close;
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
@@ -447,7 +431,7 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
                           ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
                 ExecSQL;
              end;
@@ -507,16 +491,12 @@ begin
                   MemterimaDet['qtypo']:=QMaterial2['qty'];
                   MemterimaDet['qty']:=QMaterial2['qty'];
                   MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                      memterimadet['id_pengajuan_asset']:=QMaterial2['id_pengajuan_asset'];
-                      memterimadet['no_pengajuan_asset']:=QMaterial2['no_pengajuan_asset'];
-                      memterimadet['id_detail_asset']:=QMaterial2['id_detail_asset'];
-                      memterimadet['spesifikasi_asset']:=QMaterial2['spesifikasi_asset'];
                   MemterimaDet.Post;
                end;
             end;
           end;
        end;
-      // Close;
+       Close;
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
@@ -535,7 +515,7 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
                           ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
                 ExecSQL;
              end;
@@ -553,6 +533,7 @@ begin
           end;
        end;
      end;
+
     end;
     with dm.Qtemp do
     begin
@@ -561,7 +542,7 @@ begin
       sql.Text:=' SELECT a.*,b.account_name FROM t_item_category a '+
                 ' INNER JOIN t_ak_account b on a.account_code=b.code '+
                 ' INNER JOIN t_item c on a.category_id=c.category_id '+
-                ' INNER JOIN t_item_stock d on c.item_code=d.item_code '+
+                ' INNER JOIN warehouse.t_item_stock d on c.item_code=d.item_code '+
                 ' where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
       ExecSQL
     end;
@@ -596,11 +577,7 @@ begin
                     ' ORDER BY a.no_trans DESC';
           open;
         end;
-        if QUM.RecordCount > 0 then
-        begin
         EdJum_UM.Value:=DBGrid_UM.Columns[2].Footer.sumvalue;
-        end else
-        EdJum_UM.Value:=0;
       end;
     end;
     if Fnew_pembelian.Cb_Sumber.Text='Penerimaan Barang' then
@@ -622,15 +599,10 @@ begin
                     ' ORDER BY a.no_trans DESC';
           open;
         end;
-        if QUM.RecordCount > 0 then
-        begin
-        EdJum_UM.Value:=DBGrid_UM.Columns[2].Footer.sumvalue;
-        end else
-        EdJum_um.Value:=0;
+        EdJum_UM.text:=DBGrid_UM.Columns[2].Footer.sumvalue;
       end;
     end;
     FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
-    close;
 end;
 
 procedure TFSearch_TerimaBarang.BSelectAllClick(Sender: TObject);
@@ -693,7 +665,7 @@ begin
       with FNew_Pembelian do
       begin
          show;
-         MemterimaDet.Insert;
+         MemterimaDet.Edit;
          MemterimaDet['nm_material']:=QMaterial['item_name'];
          MemterimaDet['item_stock_code']:=QMaterial['item_stock_code'];
          MemterimaDet['kd_material']:=QMaterial['item_code'];
@@ -722,17 +694,15 @@ begin
          MemterimaDet['qtypo']:=QMaterial['qty'];
          MemterimaDet['qty']:=QMaterial['qty'];
          MemterimaDet['wh_code']:=QMaterial['wh_code'];
-         memterimadet['id_pengajuan_asset']:=QMaterial['id_pengajuan_asset'];
-         memterimadet['no_pengajuan_asset']:=QMaterial['no_pengajuan_asset'];
-         memterimadet['id_detail_asset']:=QMaterial['id_detail_asset'];
-         memterimadet['spesifikasi_asset']:=QMaterial['spesifikasi_asset'];
          MemterimaDet.Post;
       end;
+
+
       with Dm.Qtemp do
       begin
        close;
        sql.Clear;
-       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
                  ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial['item_stock_code']);
        ExecSQL;
       end;
@@ -754,7 +724,7 @@ begin
       with FNew_Pembelian do
       begin
          show;
-         MemterimaDet.Insert;
+         MemterimaDet.Edit;
          MemterimaDet['nm_material']:=QMaterial['item_name'];
          MemterimaDet['item_stock_code']:=QMaterial['item_stock_code'];
          MemterimaDet['kd_material']:=QMaterial['item_code'];
@@ -783,17 +753,13 @@ begin
          MemterimaDet['qtypo']:=QMaterial['qty'];
          MemterimaDet['qty']:=QMaterial['qty'];
          MemterimaDet['wh_code']:=QMaterial['wh_code'];
-         memterimadet['id_pengajuan_asset']:=QMaterial['id_pengajuan_asset'];
-         memterimadet['no_pengajuan_asset']:=QMaterial['no_pengajuan_asset'];
-         memterimadet['id_detail_asset']:=QMaterial['id_detail_asset'];
-         memterimadet['spesifikasi_asset']:=QMaterial['spesifikasi_asset'];
          MemterimaDet.Post;
       end;
       with Dm.Qtemp do
       begin
        close;
        sql.Clear;
-       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
                  ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial['item_stock_code']);
        ExecSQL;
       end;
@@ -814,140 +780,7 @@ begin
  }    end;
    end;
    FNew_Pembelian.DBGridDetailpoColEnter(sender);
-   FNew_Pembelian.EdJum_hutang.Value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
-   FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
-   Close;
-end;
-
-procedure TFSearch_TerimaBarang.DBGridEh2DblClick(Sender: TObject);
-begin
-  if jenis_pembelian<>'AKTIVA' then
-   begin
-      with FNew_Pembelian do
-      begin
-         show;
-         MemterimaDet.Insert;
-         MemterimaDet['nm_material']:=QMaterial2['item_name'];
-         MemterimaDet['item_stock_code']:=QMaterial2['item_stock_code'];
-         MemterimaDet['kd_material']:=QMaterial2['item_code'];
-         MemterimaDet['no_material']:=QMaterial2['order_no'];
-         MemterimaDet['Gudang']:=QMaterial2['wh_name'];
-         MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-         MemterimaDet['Satuanpo']:=QMaterial2['unit'];
-         MemterimaDet['Satuan']:=QMaterial2['unit'];
-         MemterimaDet['ppn']:=QMaterial2['ppn'];
-         MemterimaDet['pph']:=QMaterial2['pph'];
-         MemterimaDet['harga']:=QMaterial2['price'];
-         MemterimaDet['Tahun']:=DTth.Text;
-         MemterimaDet['nopo']:=QMaterial2['po_no'];
-         MemterimaDet['kd_akun']:=QMaterial2['account_code'];
-         MemterimaDet['ppn_rp_pembulatan']:=0;
-         MemterimaDet['bea_masuk']:=0;
-         MemterimaDet['subtotalrp']:=0;
-         MemterimaDet['grandtotal']:=0;
-         MemterimaDet['pph_rp']:=0;
-         MemterimaDet['ppn_rp']:=0;
-         MemterimaDet['pemb_dpp']:=0;
-         Edjatuhtempo.Text:=QMaterial2['due_date'];
-         EdValas.Text:=QMaterial2['valas'];
-         EdNilai_Valas.Text:=QMaterial2['valas_value'];
-         Edjenispo.Text:=QMaterial2['type'];
-         MemterimaDet['qtypo']:=QMaterial2['qty'];
-         MemterimaDet['qty']:=QMaterial2['qty'];
-         MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                      memterimadet['id_pengajuan_asset']:=QMaterial2['id_pengajuan_asset'];
-                      memterimadet['no_pengajuan_asset']:=QMaterial2['no_pengajuan_asset'];
-                      memterimadet['id_detail_asset']:=QMaterial2['id_detail_asset'];
-                      memterimadet['spesifikasi_asset']:=QMaterial2['spesifikasi_asset'];
-         MemterimaDet.Post;
-      end;
-      with Dm.Qtemp do
-      begin
-       close;
-       sql.Clear;
-       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
-                 ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial2['item_stock_code']);
-       ExecSQL;
-      end;
-      lotstatus:=Dm.Qtemp['lot_status'];
-      if lotstatus=false then
-      begin
-        FNew_Pembelian.MemterimaDet.Edit;
-        FNew_Pembelian.MemterimaDet['kd_stok']:=Dm.Qtemp['item_stock_code'];
-        FNew_Pembelian.MemterimaDet.Post;
-      end
-      else
-      begin
-        Autonumberlot;
-      end;
-   end;
-
-   if jenis_pembelian='AKTIVA' then
-   begin
-      with FNew_Pembelian do
-      begin
-         show;
-         MemterimaDet.Insert;
-         MemterimaDet['nm_material']:=QMaterial2['item_name'];
-         MemterimaDet['item_stock_code']:=QMaterial2['item_stock_code'];
-         MemterimaDet['kd_material']:=QMaterial2['item_code'];
-         MemterimaDet['no_material']:=QMaterial2['order_no'];
-         MemterimaDet['Gudang']:=QMaterial2['wh_name'];
-         MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-         MemterimaDet['Satuanpo']:=QMaterial2['unit'];
-         MemterimaDet['Satuan']:=QMaterial2['unit'];
-         MemterimaDet['ppn']:=QMaterial2['ppn'];
-         MemterimaDet['pph']:=QMaterial2['pph'];
-         MemterimaDet['harga']:=QMaterial2['price'];
-         MemterimaDet['Tahun']:=DTth.Text;
-         MemterimaDet['nopo']:=QMaterial2['po_no'];
-         MemterimaDet['kd_akun']:=QMaterial2['account_code'];
-         MemterimaDet['ppn_rp_pembulatan']:=0;
-         MemterimaDet['bea_masuk']:=0;
-         MemterimaDet['subtotalrp']:=0;
-         MemterimaDet['grandtotal']:=0;
-         MemterimaDet['pph_rp']:=0;
-         MemterimaDet['ppn_rp']:=0;
-         MemterimaDet['pemb_dpp']:=0;
-         Edjatuhtempo.Text:=QMaterial2['due_date'];
-         EdValas.Text:=QMaterial2['valas'];
-         EdNilai_Valas.Text:=QMaterial2['valas_value'];
-         Edjenispo.Text:=QMaterial2['type'];
-         MemterimaDet['qtypo']:=QMaterial2['qty'];
-         MemterimaDet['qty']:=QMaterial2['qty'];
-         MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                      memterimadet['id_pengajuan_asset']:=QMaterial2['id_pengajuan_asset'];
-                      memterimadet['no_pengajuan_asset']:=QMaterial2['no_pengajuan_asset'];
-                      memterimadet['id_detail_asset']:=QMaterial2['id_detail_asset'];
-                      memterimadet['spesifikasi_asset']:=QMaterial2['spesifikasi_asset'];
-         MemterimaDet.Post;
-      end;
-      with Dm.Qtemp do
-      begin
-       close;
-       sql.Clear;
-       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
-                 ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial2['item_stock_code']);
-       ExecSQL;
-      end;
-      lotstatus:=Dm.Qtemp['lot_status'];
-      if lotstatus=false then
-      begin
-        FNew_Pembelian.MemterimaDet.Edit;
-        FNew_Pembelian.MemterimaDet['kd_stok']:=Dm.Qtemp['item_stock_code'];
-        FNew_Pembelian.MemterimaDet.Post;
-      end
-      else
-      begin
-        Autonumberlot;
-{        FNew_Pembelian.DBGridDetailpoColEnter(sender);
-        FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
-        FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
-        Close;
- }    end;
-   end;
-   FNew_Pembelian.DBGridDetailpoColEnter(sender);
-   FNew_Pembelian.EdJum_hutang.Value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+   FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
    FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
    Close;
 end;
