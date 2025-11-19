@@ -627,6 +627,8 @@ begin
    begin
        strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where (additional_code isnull or additional_code=''0'') and cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
+
+
       if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') then
    begin
        strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
@@ -719,6 +721,7 @@ begin
      sql.Text:='select a.id,b.additional_status from t_numb_type a inner join t_numb b on a.id=b.reset_type where numb_type='+QuotedStr(idmenu);
      open;
    end;
+
    if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']='0') then
    begin
        strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  (additional_code isnull or additional_code=''0'') AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
@@ -735,22 +738,97 @@ begin
    begin
        strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+'  where (additional_code isnull or additional_code=''0'') and cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
-      if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') then
+
+
+   if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4<>'0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND additional_code4='+ quotedstr(kode4)+' AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
    end;
-   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') then
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4<>'0')then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND additional_code4='+ quotedstr(kode4)+' AND cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
-   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0')then
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4<>'0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND additional_code4='+ quotedstr(kode4)+' AND cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
-   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0')then
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4<>'0') then
    begin
-       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND additional_code4='+ quotedstr(kode4)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
    end;
+
+
+   if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+   end;
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+
+   if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND additional_code2='+ quotedstr(kode2)+' AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+   end;
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0') and (kode2<>'0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' and additional_code2='+ quotedstr(kode2)+' AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_year as integer)='+quotedstr(strtahun)+'  AND deleted_at is NULL';
+   end;
+
+   if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+   end;
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3='0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') AND (additional_code3 isnull or additional_code3=''0'') AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+
+
+   if (dm.Qtemp['id']='1') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename +' where additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') AND additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND deleted_at is NULL';//where trans_month='+ quotedstr(strbulan)+' AND trans_year='+quotedstr(strtahun);
+   end;
+   if (dm.Qtemp['id']='2') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where  additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') AND additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_day as integer)='+ quotedstr(strday)+' and cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='3') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') and additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_month as integer)='+ quotedstr(strbulan)+' AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+   if (dm.Qtemp['id']='4') and (dm.Qtemp['additional_status']<>'0') and (kode2='0') and (kode3<>'0') and (kode4='0') then
+   begin
+       strbukti:='Select cast(max(order_no) as integer) urut from '+Tablename+' where additional_code='+ quotedstr(kode)+' AND (additional_code2 isnull or additional_code2=''0'') and additional_code3='+ quotedstr(kode3)+' AND (additional_code4 isnull or additional_code4=''0'') AND cast(trans_year as integer)='+quotedstr(strtahun)+' AND deleted_at is NULL';
+   end;
+
+
+
     Vthn:=FormatDateTime('yyyy',strday2);
     Vbln:=FormatDateTime('mm',strday2);
     Vtgl:=FormatDateTime('dd',strday2);
@@ -777,23 +855,23 @@ begin
        // hasil Penggabungan format penomeran sesuai setting berdasarkan akses modulnya masing2
        with dm.Qtemp do
        begin
-            close;
-            sql.Clear;
-            sql.text:='SELECT a.*,b.description,b.note,c.digit_counter,reset_type, '+
-                      'case when b.id=1 then(SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''yyyy'') tahun) '+
-                      'when b.id=2 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''yy'') tahun) '+
-                      'when b.id=3 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''mm'') bulan) '+
-                      'when b.id=4 then (SELECT trim(TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''RM'')) bulan) '+
-                      'when b.id=5 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''dd'') hari)  '+
-                      'when b.id=6 then '+Quotedstr(GenerateNumber(nourut,(dm.Qtemp2['digit_counter'])))+' '+
-                      'when b.id=8 then '+Quotedstr(kode)+' else a.param_name end param, '+
-                      'c.trans_type,d.note as reset FROM t_numb_det a '+
-                      'left join t_numb_component b on a.id_param=b.id '+
-                      'inner join t_numb c on a.trans_no=c.trans_no    '+
-                      'left join t_numb_type d on c.reset_type=d.id    '+
-                      'where c.numb_type='+QuotedStr(idmenu)+'     '+
-                      'ORDER BY a.trans_no,a.urutan';
-            Open;
+          close;
+          sql.Clear;
+          sql.text:='SELECT a.*,b.description,b.note,c.digit_counter,reset_type, '+
+                    'case when b.id=1 then(SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''yyyy'') tahun) '+
+                    'when b.id=2 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''yy'') tahun) '+
+                    'when b.id=3 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''mm'') bulan) '+
+                    'when b.id=4 then (SELECT trim(TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''RM'')) bulan) '+
+                    'when b.id=5 then (SELECT TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',strday2))+' :: DATE, ''dd'') hari)  '+
+                    'when b.id=6 then '+Quotedstr(GenerateNumber(nourut,(dm.Qtemp2['digit_counter'])))+' '+
+                    'when b.id=8 then '+Quotedstr(kode)+' else a.param_name end param, '+
+                    'c.trans_type,d.note as reset FROM t_numb_det a '+
+                    'left join t_numb_component b on a.id_param=b.id '+
+                    'inner join t_numb c on a.trans_no=c.trans_no    '+
+                    'left join t_numb_type d on c.reset_type=d.id    '+
+                    'where c.numb_type='+QuotedStr(idmenu)+'     '+
+                    'ORDER BY a.trans_no,a.urutan';
+          Open;
        end;
        order_no:=GenerateNumber(nourut,(dm.Qtemp2['digit_counter']));
        notif:='';

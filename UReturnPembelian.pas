@@ -26,7 +26,7 @@ uses
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses,
   MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, frxClass, MemDS, DBAccess,
-  Uni, frxDBSet;
+  Uni, frxDBSet,Xml.xmldom,Xml.XMLIntf,Xml.XmlDoc,ComObj;
 
 type
   TFReturnPembelian = class(TForm)
@@ -70,12 +70,40 @@ type
     MemReturn: TMemTableEh;
     DsReturnPembelian: TDataSource;
     QReturnPembelian: TUniQuery;
+    dxBarManager1Bar3: TdxBar;
+    dxBarSubItem1: TdxBarSubItem;
+    dxBarButton8: TdxBarButton;
+    dxBarButton9: TdxBarButton;
+    DSXML: TDataSource;
+    Qxml: TUniQuery;
+    DSxls: TDataSource;
+    Qxls: TUniQuery;
+    SaveDialog1: TSaveDialog;
+    dxBarLargeButton2: TdxBarLargeButton;
+    QReturnPembeliantrans_day: TSmallintField;
+    QReturnPembeliantrans_month: TSmallintField;
+    QReturnPembeliantrans_year: TSmallintField;
+    QReturnPembeliansupplier_code: TStringField;
+    QReturnPembelianvalas: TStringField;
+    QReturnPembelianvalas_value: TFloatField;
+    QReturnPembelianreceive_no: TStringField;
+    QReturnPembeliansupplier_name: TStringField;
+    QReturnPembelianreturn_no: TStringField;
+    QReturnPembelianreturn_date: TDateField;
+    QReturnPembelianfaktur_no: TStringField;
+    QReturnPembelianprice: TFloatField;
+    QReturnPembeliantotal_price: TFloatField;
+    QReturnPembelianppn: TFloatField;
+    QReturnPembelianppnrp: TFloatField;
     procedure ActBaruExecute(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
+    procedure dxBarButton8Click(Sender: TObject);
+    procedure dxBarButton9Click(Sender: TObject);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -90,7 +118,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_ReturnPembelian, UDataModule;
+uses UNew_ReturnPembelian, UDataModule, UMainMenu, UMy_Function;
 
 procedure TFReturnPembelian.ActBaruExecute(Sender: TObject);
 begin
@@ -102,6 +130,34 @@ begin
       Caption:='New Retur Pembelian';
       status:=0;
     end;
+end;
+
+procedure TFReturnPembelian.ActPrintExecute(Sender: TObject);
+begin
+   dm.refreshPerusahaan;
+   with FMainMenu.QJurnal do
+   begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(MemReturn.FieldByName('return_no').AsString)+'');
+     open;
+   end;
+   if FMainMenu.QJurnal.RecordCount=0 then
+   begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+   end;
+
+   if FMainMenu.QJurnal.RecordCount<>0 then
+   begin
+     cLocation := ExtractFilePath(Application.ExeName);
+     //ShowMessage(cLocation);
+     FMainMenu.Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+     //SetMemo(FMainMenu.Report,'nama_pt',FHomeLogin.vNamaPRSH);
+     //Report.DesignReport();
+     FMainMenu.Report.ShowReport();
+   end;
 end;
 
 procedure TFReturnPembelian.ActRoExecute(Sender: TObject);
@@ -150,11 +206,128 @@ begin
         MemDetail['satuan']:=QDetail['unit'];
         MemDetail['totalharga']:=QDetail['total_price'];
         MemDetail['qty']:=QDetail['qty'];
+        MemDetail['item_code']:=QDetail['code_item'];
+        MemDetail['wh_code']:=QDetail['code_wh'];
         MemDetail.Post;
         QDetail.Next;
       end;
     end;
     FNew_returnPemb.DBGridEh3ColEnter(sender);
+end;
+
+procedure TFReturnPembelian.dxBarButton8Click(Sender: TObject);
+var
+  XMLDoc: IXMLDocument;
+  RootNode, RecordNode: IXMLNode;
+begin
+  if not SaveDialog1.Execute then
+    Exit;
+
+  // Inisialisasi XML Document
+  XMLDoc := NewXMLDocument;
+  XMLDoc.Encoding := 'UTF-8';
+  XMLDoc.Options := [doNodeAutoIndent];
+  RootNode := XMLDoc.AddChild('PurchaseReturns');
+
+  with Qxml do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'SELECT DISTINCT a.return_no, a.faktur_no, a.supplier_code, a.receive_no, ' +
+                'b.po_no, b.item_stock_code, c.item_name, b.qty, b.unit, b.price, b.total_price, b.ppn_rp ' +
+                'FROM t_purchase_return a ' +
+                'INNER JOIN t_purchase_return_det b ON a.return_no = b.return_no ' +
+                'INNER JOIN t_item_stock c ON b.item_stock_code = c.item_stock_code ' +
+                'WHERE a.return_no = ' + QuotedStr(DBGridReturnPemb.Fields[3].AsString);
+    Open;
+
+    while not Eof do
+    begin
+      RecordNode := RootNode.AddChild('Return');
+
+      RecordNode.AddChild('ReturnNo').Text := FieldByName('return_no').AsString;
+      RecordNode.AddChild('FakturNo').Text := FieldByName('faktur_no').AsString;
+      RecordNode.AddChild('SupplierCode').Text := FieldByName('supplier_code').AsString;
+      RecordNode.AddChild('ReceiveNo').Text := FieldByName('receive_no').AsString;
+      RecordNode.AddChild('PONo').Text := FieldByName('po_no').AsString;
+      RecordNode.AddChild('ItemStockCode').Text := FieldByName('item_stock_code').AsString;
+      RecordNode.AddChild('ItemName').Text := FieldByName('item_name').AsString;
+      RecordNode.AddChild('Qty').Text := FieldByName('qty').AsString;
+      RecordNode.AddChild('Unit').Text := FieldByName('unit').AsString;
+      RecordNode.AddChild('Price').Text := FieldByName('price').AsString;
+      RecordNode.AddChild('TotalPrice').Text := FieldByName('total_price').AsString;
+      RecordNode.AddChild('PPNRp').Text := FieldByName('ppn_rp').AsString;
+
+      Next;
+    end;
+  end;
+
+  // Simpan ke file XML
+  XMLDoc.SaveToFile(SaveDialog1.FileName);
+  ShowMessage('Data berhasil disimpan ke XML: ' + SaveDialog1.FileName);
+end;
+
+procedure TFReturnPembelian.dxBarButton9Click(Sender: TObject);
+var
+  ExcelApp, Workbook, Worksheet: OleVariant;
+  Row, Col: Integer;
+begin
+  // Jalankan query PostgreSQL via UniQuery
+   with Qxls do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT DISTINCT a.return_no,a.faktur_no,a.supplier_code,a.receive_no,b.po_no,b.item_stock_code,c.item_name,b.qty,b.unit,b.price,b.total_price,b.ppn_rp '+
+               'FROM t_purchase_return a '+
+               'INNER JOIN t_purchase_return_det b on a.return_no=b.return_no '+
+               'INNER JOIN t_item_stock c on b.item_stock_code=c.item_stock_code '+
+               'where a.return_no='+Quotedstr(DBGridReturnPemb.Fields[3].asstring)+' ';
+     open;
+   end;
+
+   if Qxls.IsEmpty then
+   begin
+    ShowMessage('Tidak ada data untuk diekspor.');
+    Exit;
+   end;
+
+   // Pilih file via SaveDialog
+   SaveDialog1.Filter := 'Excel Files (*.xlsx)|*.xlsx';
+   SaveDialog1.DefaultExt := 'xlsx';
+   SaveDialog1.FileName := 'Retur_Pembelian.xlsx';
+
+   if not SaveDialog1.Execute then
+      Exit; // batal
+
+   // Buat object Excel
+   ExcelApp := CreateOleObject('Excel.Application');
+   ExcelApp.Visible := False;
+
+   Workbook := ExcelApp.Workbooks.Add;
+   Worksheet := Workbook.Worksheets[1];
+
+   // Header
+   for Col := 0 to Qxls.Fields.Count - 1 do
+   Worksheet.Cells[1, Col + 1] := Qxls.Fields[Col].FieldName;
+
+   // Data
+   Row := 2;
+   Qxls.First;
+   while not Qxls.Eof do
+   begin
+      for Col := 0 to Qxls.Fields.Count - 1 do
+        Worksheet.Cells[Row, Col + 1] := Qxls.Fields[Col].AsString;
+      Inc(Row);
+      Qxls.Next;
+   end;
+
+   // Simpan ke file dari SaveDialog
+   Workbook.SaveAs(SaveDialog1.FileName, 51); // 51 = format XLSX
+
+   Workbook.Close(False);
+   ExcelApp.Quit;
+
+   ShowMessage('Export selesai ke: ' + SaveDialog1.FileName);
 end;
 
 procedure TFReturnPembelian.dxBarLargeButton1Click(Sender: TObject);

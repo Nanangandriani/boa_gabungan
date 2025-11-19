@@ -189,9 +189,9 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 3
   end
   object DBGridEh3: TDBGridEh
-    Left = 9
+    Left = 8
     Top = 140
-    Width = 900
+    Width = 882
     Height = 226
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -278,6 +278,22 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         Footers = <>
         Title.Caption = 'Total Harga'
         Width = 176
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'item_code'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_code'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -289,8 +305,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Height = 36
     Align = alBottom
     TabOrder = 5
-    ExplicitTop = 451
-    ExplicitWidth = 929
+    ExplicitTop = 443
+    ExplicitWidth = 927
     object BBatal: TRzBitBtn
       Left = 857
       Top = 1
@@ -351,7 +367,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 853
+      ExplicitLeft = 851
     end
     object BSimpan: TRzBitBtn
       Left = 782
@@ -413,7 +429,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 778
+      ExplicitLeft = 776
     end
     object RzBitBtn1: TRzBitBtn
       Left = 700
@@ -623,6 +639,16 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 100
+        end
+        object item_code: TMTStringDataFieldEh
+          FieldName = 'item_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object wh_code: TMTStringDataFieldEh
+          FieldName = 'wh_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

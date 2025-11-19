@@ -321,10 +321,10 @@ begin
     edKodeJenisTrans.Text:=Dm.Qtemp1.FieldByName('code_trans').AsString;
     edNamaJenisTrans.Text:=Dm.Qtemp1.FieldByName('name_trans').AsString;
     additional_code1:=SelectRow('select initial_code from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString));
-    additional_code2:='0';
-    additional_code3:='0';
-    additional_code4:='0';
-    additional_code5:='0';
+    additional_code2:='';
+    additional_code3:='';
+    additional_code4:='';
+    additional_code5:='';
   end;
   vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ');
   if vid_modul='3' then // Bank
@@ -414,7 +414,7 @@ begin
 
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
   RefreshGridDetailAkun;
-  FDataPenerimaanBank.Autonumber;
+//  FDataPenerimaanBank.Autonumber;
   vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
   edKodeMataUang.Text:=SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('mata_uang')+' ');
   edNamaMataUang.Text:=SelectRow('select currency_name from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' ');
@@ -713,7 +713,16 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.Save;
+var Stradditional_code2,Stradditional_code3:String;
 begin
+  if (kd_kares='') OR (kd_kares='0') then
+    Stradditional_code2:='NULL'
+  else Stradditional_code2:=QuotedStr(kd_kares);
+
+  if (additional_code3='') OR (additional_code3='0') then
+  Stradditional_code3:='NULL'
+  else Stradditional_code3:=QuotedStr(additional_code3);
+
   with dm.Qtemp do
   begin
     close;
@@ -723,7 +732,7 @@ begin
             ' "name_type_trans", "account_number_bank", "account_name_bank", "code_currency", '+
             ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
             ' "code_cust", "name_cust", "payment_code", "payment_name", "bill_code", "bill_name", "module_id", '+
-            ' "additional_code", '+
+            ' "additional_code",additional_code2,additional_code3, '+
             ' "order_no", "trans_day", "trans_month", "trans_year") '+
             ' VALUES ( '+
             ' NOW(), '+
@@ -750,6 +759,8 @@ begin
             ' '+QuotedStr(edNMJenisBayar.Text)+', '+
             ' '+QuotedStr(vid_modul)+', '+
             ' '+QuotedStr(additional_code1)+', '+
+            ' '+Stradditional_code2+', '+
+            ' '+Stradditional_code3+', '+
             ' '+QuotedStr(order_no)+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
@@ -781,21 +792,36 @@ end;
 
 procedure TFDataPenerimaanBank.Autonumber;
 begin
- idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
- strday2:=dtTrans.Date;
- additional_code2:='';
- if cbJenisTransaksi.Text='PIUTANG' then
- begin
-  additional_code2:=kd_kares;
- end;
- additional_code3:='';
- if vid_modul='3' then
- begin
-  additional_code3:=SelectRow('select bank_code from t_bank where rekening_no='+QuotedStr(edNoRek.Text)+' ');
- end;
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
+  strday2:=dtTrans.Date;
+  additional_code2:='';
+  if cbJenisTransaksi.Text='PIUTANG' then
+  begin
+    additional_code2:=kd_kares;
+  end;
+  additional_code3:='';
+  if vid_modul='3' then
+  begin
+    additional_code3:=SelectRow('select bank_code from t_bank where rekening_no='+QuotedStr(edNoRek.Text)+' ');
+  end;
 
+  if (additional_code1<>'') AND (additional_code2<>'') AND (additional_code3<>'')  then
+  begin
+    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,additional_code2,additional_code3,'0')+'/'+additional_code2+'/'+additional_code3;
+  end;
+  if (additional_code1<>'') AND (additional_code2<>'') AND (additional_code3='')  then
+  begin
+    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,additional_code2,'0','0')+'/'+additional_code2;
+  end;
+  if (additional_code1<>'') AND (additional_code2='') AND (additional_code3='')  then
+  begin
+    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,'0','0','0');
+  end;
+  if (additional_code1<>'') AND (additional_code2='') AND (additional_code3<>'')  then
+  begin
+    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,'0',additional_code3,'0')+'/'+additional_code3;
+  end;
 
- edNoTrans.Text:=getNourut(strday2,'public.t_cash_bank_acceptance',additional_code1);
 end;
 
 procedure TFDataPenerimaanBank.RefreshGridDetailPiutang;
@@ -1009,10 +1035,10 @@ begin
       begin
         MessageDlg('Pastikan Jenis Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
       end
-      else if edNoTrans.Text='' then
-      begin
-        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-      end
+//      else if edNoTrans.Text='' then
+//      begin
+//        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+//      end
       else if edKodeMataUang.Text='' then
       begin
         MessageDlg('Data Mata Uang Tidak Lengkap..!!',mtInformation,[mbRetry],0);

@@ -183,7 +183,7 @@ begin
   begin
     FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FDataPenerimaanBank.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
-    FDataPenerimaanBank.edUntukPengiriman.Text:=MemMasterData['NM_PELANGGAN'];
+//    FDataPenerimaanBank.edUntukPengiriman.Text:=MemMasterData['NM_PELANGGAN'];
 
     //Ganti Akun Header bank Menjadi Akun Piutang Pelanggan
     with FDataPenerimaanBank do

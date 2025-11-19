@@ -11,6 +11,7 @@ object FDataKasKecil: TFDataKasKecil
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -429,22 +430,22 @@ object FDataKasKecil: TFDataKasKecil
       ButtonNumGlyphs = 1
     end
   end
-  object RzPageControl1: TRzPageControl
+  object PGC: TRzPageControl
     Left = 0
     Top = 217
     Width = 1237
     Height = 242
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
+    TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 215
+    ExplicitWidth = 1231
+    ExplicitHeight = 233
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1227
-      ExplicitHeight = 208
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -547,10 +548,8 @@ object FDataKasKecil: TFDataKasKecil
     object TabDetailFaktur: TRzTabSheet
       TabVisible = False
       Caption = 'Detail Hutang'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 1227
+      ExplicitHeight = 208
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -563,6 +562,7 @@ object FDataKasKecil: TFDataKasKecil
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        Visible = False
         Columns = <
           item
             CellButtons = <>

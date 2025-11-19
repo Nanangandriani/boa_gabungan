@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
 
 type
   TFListKasKecil = class(TForm)
@@ -66,10 +66,16 @@ type
     QKasKecilamount: TFloatField;
     QKasKecildescription: TStringField;
     DsKasKecil: TDataSource;
+    UniQuery1: TUniQuery;
+    frxReport1: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
+    QRKasKecil: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure ActPrintExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -123,6 +129,26 @@ begin
         end;
       end;
   end;
+end;
+
+procedure TFListKasKecil.ActPrintExecute(Sender: TObject);
+begin
+    with QRKasKecil do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM '+
+                '(SELECT a.* ,b.code_account,b.name_account,b."position",b.paid_amount,b.description,b.code_account_header,b.code_group_cost,b.name_group_cost FROM t_petty_cash a INNER JOIN t_petty_cash_det b on a.voucher_no=b.voucher_no )a '+
+                'where a.position=''D'' and a.voucher_no='+QuotedStr(DBGrid.Fields[0].AsString)+' ';
+      open;
+    end;
+    cLocation := ExtractFilePath(Application.ExeName);
+    frxReport1.LoadFromFile(cLocation +'report/Bukti_Kas_Kecil'+'.fr3');
+    SetMemo(frxReport1,'nama_pt','PT. ' +FHomeLogin.vKodePRSH);
+    SetMemo(frxReport1,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+    //SetMemo(frxReport1,'memo_terbilang',UraikanAngka(floattostr(QRKasKecil.FieldByName('paid_amount').AsFloat)));
+    SetMemo(frxReport1,'memo_terbilang1',UraikanAngka(FormatFloat('0.##',(QRKasKecil.FieldByName('paid_amount').AsFloat))));
+    frxReport1.ShowReport();
 end;
 
 procedure TFListKasKecil.ActROExecute(Sender: TObject);
@@ -242,6 +268,26 @@ begin
   FDataKasKecil.edNoTrans.Enabled:=false;
   FDataKasKecil.Status := 1;
   FDataKasKecil.Show;
+end;
+
+procedure TFListKasKecil.dxBarLargeButton1Click(Sender: TObject);
+begin
+    with QRKasKecil do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM '+
+                '(SELECT a.* ,b.code_account,b.name_account,b."position",b.paid_amount,b.description,b.code_account_header,b.code_group_cost,b.name_group_cost FROM t_petty_cash a INNER JOIN t_petty_cash_det b on a.voucher_no=b.voucher_no )a '+
+                ' WHERE a.position=''D'' and a.voucher_no='+QuotedStr(DBGrid.Fields[0].AsString)+'';
+
+      open;
+    end;
+    cLocation := ExtractFilePath(Application.ExeName);
+    frxReport1.LoadFromFile(cLocation +'report/Bukti_Kas_Kecil'+'.fr3');
+    SetMemo(frxReport1,'nama_pt',FHomeLogin.vKodePRSH);
+    SetMemo(frxReport1,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+    SetMemo(frxReport1,'memo_terbilang',UraikanAngka(floattostr(QRKasKecil.FieldByName('paid_amount').AsFloat)));
+    frxReport1.ShowReport();
 end;
 
 Initialization

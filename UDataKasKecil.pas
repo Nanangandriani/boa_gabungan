@@ -36,7 +36,7 @@ type
     MemDetailAkunkd_group_biaya: TStringField;
     MemDetailAkunnm_group_biaya: TStringField;
     DSDetailAkun: TDataSource;
-    RzPageControl1: TRzPageControl;
+    PGC: TRzPageControl;
     TabDetailAkun: TRzTabSheet;
     DBGridAkun: TDBGridEh;
     Panel2: TPanel;
@@ -97,6 +97,7 @@ type
     procedure BtnAmbil_DataClick(Sender: TObject);
     procedure edKodeMataUangChange(Sender: TObject);
     procedure edKode_supplierChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -631,6 +632,7 @@ begin
     GbHutang.Visible:=true;
     edNamaKepada.ButtonVisible:=false;
     TabDetailFaktur.TabVisible:=true;
+    dbgridTagihan.Visible:=true;
   end;
 end;
 
@@ -726,6 +728,19 @@ begin
 
   //Buat Freesh data grid sesuai bon
 
+end;
+
+procedure TFDataKasKecil.FormShow(Sender: TObject);
+begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM t_petty_cash_source where code=''KC001'' and deleted_at is null';
+      open;
+      edNamaSumberKas.Text:=fieldbyname('code').AsString;
+      edNamaSumberKas.Text:=fieldbyname('name').AsString;
+    end;
 end;
 
 end.

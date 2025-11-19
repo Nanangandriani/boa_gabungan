@@ -478,7 +478,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDataKelompokBiaya, FDataKelompokBiaya);
   Application.CreateForm(TFDataKasKecil, FDataKasKecil);
   Application.CreateForm(TFDataKasBon, FDataKasBon);
-  Application.CreateForm(TFListKasKecil, FListKasKecil);
+//  Application.CreateForm(TFListKasKecil, FListKasKecil);
   Application.CreateForm(TFListKasBon, FListKasBon);
   Application.CreateForm(TFListOrderTelemarketing, FListOrderTelemarketing);
   Application.CreateForm(TFMasterWilayahAdministratif, FMasterWilayahAdministratif);

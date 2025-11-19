@@ -80,7 +80,7 @@ type
 var
  FNew_ReturnPemb: TFNew_ReturnPemb;
  status:integer;
- kdstok,thn,bln,tgl,nourut,jenis_tr:string;
+ kdstok,thn,bln,tgl,nourut,jenis_tr,akunHut,AkunRetur,AkunPpn:string;
  subtotal,ppn_rp,grandtotal:real;
 
 {Function FNew_ReturnPemb: TFNew_ReturnPemb;
@@ -179,8 +179,8 @@ begin
               close;
               sql.Clear;
               sql.Text:=' insert into t_purchase_return(return_no,return_date,faktur_no,price,total_price,'+
-                        ' ppn, supplier_code,receive_no,valas,valas_value,trans_year,trans_month,trans_day,order_no,ppn_rp,pic)values(:parno,:partgl,:parnofk,:parharga,:partotal,'+
-                        ' :parppn,:parkdsp,:parnotr,:parvls,:parnvls,:parthn,:parbln,:partglno,:parnourut,:parppnrp,:parpic)';
+                        ' ppn, supplier_code,receive_no,valas,valas_value,trans_year,trans_month,trans_day,order_no,ppn_rp,pic,account_code,account_code2,account_ppn)values(:parno,:partgl,:parnofk,:parharga,:partotal,'+
+                        ' :parppn,:parkdsp,:parnotr,:parvls,:parnvls,:parthn,:parbln,:partglno,:parnourut,:parppnrp,:parpic,:account_code,:account_code2,:account_ppn)';
                         ParamByName('parno').Value:=Edno.Text;
                         ParamByName('partgl').Value:= FormatDateTime('yyy-mm-dd',DtReturn.Date);
                         ParamByName('parnofk').Value:=EdNoFaktur.Text;
@@ -198,6 +198,9 @@ begin
                         ParamByName('partglno').AsString:=tgl;
                         ParamByName('parppnrp').value:=Edppnrp.Value;
                         ParamByName('parpic').Value:=Nm;
+                        ParamByName('account_code').Value:=akunHut;
+                        ParamByName('account_code2').Value:=AkunRetur;
+                        ParamByName('account_ppn').Value:=Akunppn;
               ExecSQL;
             end;
             MemDetail.First;
@@ -208,8 +211,8 @@ begin
                   Close;
                   sql.Clear;
                   sql.Text:='	insert into t_purchase_return_det(return_no,faktur_no,po_no,item_stock_code,'+
-                            ' qty,unit,stock_code,price,total_price,receive_no)values(:parno,:parnofk,:parnopo, '+
-                            ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr)';
+                            ' qty,unit,stock_code,price,total_price,receive_no,account_code,account_ppn,code_item,code_wh)values(:parno,:parnofk,:parnopo, '+
+                            ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr,:account_code,:account_ppn,:item_code,:wh_code)';
                             ParamByName('parno').Value:=Edno.Text;
                             ParamByName('parnofk').Value:=MemDetail['nofaktur'];
                             ParamByName('parnopo').value:=MemDetail['nopo'];
@@ -220,6 +223,10 @@ begin
                             ParamByName('parharga').Value:=MemDetail['harga'];
                             ParamByName('partotal').Value:=MemDetail['totalharga'];
                             ParamByName('parnotr').Value:=MemDetail['no_terima'];
+                            ParamByName('account_code').Value:=AkunRetur;
+                            ParamByName('account_ppn').Value:=Akunppn;
+                            ParamByName('item_code').Value:=MemDetail['item_code'];
+                            ParamByName('wh_code').Value:=MemDetail['wh_code'];
                   ExecSQL;
                 end;
                 MemDetail.Next;
@@ -237,7 +244,7 @@ begin
             sql.Clear;
             sql.Text:='Update t_purchase_return set return_date=:partgl,faktur_no=:parnofk,price=:parharga,'+
                       ' total_price=:partotal,ppn=:parppn,supplier_code=:parkdsp,valas=:parvls,valas_value=:parnvls,'+
-                      ' receive_no=:parnotr,ppn_rp=:parppnrp,pic_update=:parpic where return_no=:parno';
+                      ' receive_no=:parnotr,ppn_rp=:parppnrp,pic_update=:parpic,account_code=:account_code,account_code2=:account_code2,account_ppn=:account_ppn where return_no=:parno';
                       ParamByName('parno').Value:=Edno.Text;
                       ParamByName('partgl').Value:= FormatDateTime('yyy-mm-dd',DtReturn.Date);
                       ParamByName('parnofk').Value:=EdNoFaktur.Text;
@@ -250,6 +257,11 @@ begin
                       ParamByName('parnvls').Value:=ednilai_vls.Value;
                       ParamByName('parppnrp').Value:=Edppnrp.Value;
                       ParamByName('parpic').Value:=Nm;
+                      ParamByName('account_code').Value:=akunHut;
+                      ParamByName('account_code2').Value:=AkunRetur;
+                      ParamByName('account_ppn').Value:=Akunppn;
+
+
             ExecSQL;
           end;
           with dm.Qtemp do
@@ -267,8 +279,8 @@ begin
                 Close;
                 sql.Clear;
                 sql.Text:='	insert into t_purchase_return_det(return_no,faktur_no,po_no, item_stock_code,'+
-                          ' qty,unit,stock_code,price,total_price,receive_no)values(:parno,:parnofk,:parnopo, '+
-                          ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr)';
+                          ' qty,unit,stock_code,price,total_price,receive_no,account_code,account_ppn,code_item,code_wh)values(:parno,:parnofk,:parnopo, '+
+                          ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr,:account_code,:account_ppn,:item_code,:wh_code)';
                           ParamByName('parno').Value:=Edno.Text;
                           ParamByName('parnofk').Value:=MemDetail['nofaktur'];
                           ParamByName('parnopo').value:=MemDetail['nopo'];
@@ -279,6 +291,11 @@ begin
                           ParamByName('parharga').Value:=MemDetail['harga'];
                           ParamByName('partotal').Value:=MemDetail['totalharga'];
                           ParamByName('parnotr').Value:=MemDetail['no_terima'];
+                          ParamByName('account_code').Value:=AkunRetur;
+                          ParamByName('account_ppn').Value:=Akunppn;
+                          ParamByName('item_code').Value:=MemDetail['item_code'];
+                          ParamByName('wh_code').Value:=MemDetail['wh_code'];
+
                 ExecSQL;
               end;
               MemDetail.Next;
@@ -390,6 +407,24 @@ end;
 
 procedure TFNew_ReturnPemb.Ednm_suppChange(Sender: TObject);
 begin
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='select account_code from t_master_account where code=''1''';
+      Open;
+    end;
+    AkunPpn:=DM.QTemp1['account_code'];
+
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_supplier where supplier_code='+QuotedStr(Edkd_supp.Text);
+      Execute;
+    end;
+    AkunRetur:=dm.Qtemp2.FieldByName('header_code2').AsString;
+
     with dm.Qtemp do
     begin
       close;
@@ -397,6 +432,7 @@ begin
       sql.Text:='select * from t_purchase_invoice where supplier_code='+QuotedStr(Edkd_supp.Text);
       Execute;
     end;
+
     edno_terima.Items.Clear;
     Dm.Qtemp.First;
     while not Dm.Qtemp.Eof do
@@ -424,11 +460,18 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_purchase_invoice where trans_no='+QuotedStr(edno_terima.Text);
+      //sql.Text:='select * from t_purchase_invoice where trans_no='+QuotedStr(edno_terima.Text);
+      sql.Text:='select a.*,b.account_code2 as account_return from t_purchase_invoice a '+
+                'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code where trans_no='+QuotedStr(edno_terima.Text);
       Execute;
     end;
       EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];
       DtFaktur.text:=Dm.Qtemp['faktur_date'];
+      edvls.text:=Dm.Qtemp['valas'];
+      AkunHut:=Dm.Qtemp['account_code'];
+      AkunRetur:=Dm.Qtemp['account_return'];
+      //showmessage(AkunHut);
+      //showmessage(AkunRetur);
 end;
 
 procedure TFNew_ReturnPemb.edppnChange(Sender: TObject);
