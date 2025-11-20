@@ -86,12 +86,14 @@ type
     Report: TfrxReport;
     frxDBDatasetRekapUmurPiutang: TfrxDBDataset;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton3: TdxBarLargeButton;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure ActSearchClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
     procedure Refresh;
@@ -143,6 +145,13 @@ begin
   cLocation := ExtractFilePath(Application.ExeName);
   Report.LoadFromFile(cLocation +'report/rpt_umurpiutang'+ '.fr3');
   Report.ShowReport();
+end;
+
+procedure TFRekapUmurPiutang.dxBarLargeButton3Click(Sender: TObject);
+begin
+  dtTanggal1.Date:=NOW;
+  dtTanggal2.Date:=NOW;
+//  QRekapUmurPiutang.Close;
 end;
 
 procedure TFRekapUmurPiutang.FormCreate(Sender: TObject);

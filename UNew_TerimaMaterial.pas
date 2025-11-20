@@ -765,12 +765,13 @@ begin
         SQL.Clear;
         SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty,'+
         ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no,c.supplier_code,e.account_code,c.due_date,c.valas,'+
-        ' c.valas_value,f.wh_code,c."type",b.pemb_dpp,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,'+
+        ' c.valas_value,f.wh_code,c."type",b.pemb_dpp,c.approval_status,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,'+
         ' b.spesifikasi_asset from t_item_stock a inner join t_podetail b '+
         ' on a.item_stock_code=b.item_stock_code inner join t_po c on b.po_no=c.po_no inner join t_item e on a.item_code=e.item_code inner join t_wh f on c.wh_code=f.wh_code '+
-        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and b.remaining_qty > 0'+
+        //' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and b.remaining_qty > 0'+
+        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and c.approval_status=1 and b.remaining_qty > 0'+
         ' GROUP BY a.item_stock_code,a.item_code,b.item_name,a.order_no,b.price,b.remaining_qty,b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no,c.supplier_code,e.account_code,'+
-        ' c.due_date,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp'+
+        ' c.due_date,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,c.approval_status '+
         ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset';
         ExecSQL;
       end;

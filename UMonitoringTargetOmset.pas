@@ -111,6 +111,7 @@ type
     Qreport: TUniQuery;
     cbVolume: TdxBarCombo;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton7: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanChange(Sender: TObject);
@@ -127,6 +128,7 @@ type
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -316,6 +318,21 @@ begin
     end;
   end;
 
+end;
+
+procedure TFMonitoringTargetOmset.dxBarLargeButton7Click(Sender: TObject);
+var month,year:String;
+begin
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun1.Text:=(year);
+  cbBulan1.ItemIndex:=StrToInt(month)-1;
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  cbKecamatan.EditValue:='';
+  cbKelompok.EditValue:='';
+  cbVolume.ItemIndex:=0;
+//  QMonitoringTargetOmset.Close;
 end;
 
 procedure TFMonitoringTargetOmset.FormCreate(Sender: TObject);

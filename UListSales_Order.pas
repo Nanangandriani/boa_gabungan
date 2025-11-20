@@ -256,6 +256,7 @@ begin
       edKodeSumber.Text:=Dm.Qtemp2.FieldByName('code_source').AsString;
       edNamaSumber.Text:=Dm.Qtemp2.FieldByName('name_source').AsString;
       spJatuhTempo.Text:=Dm.Qtemp2.FieldByName('payment_term').AsString;
+      edPOOrder.Text:=Dm.Qtemp2.FieldByName('po_order').AsString;
       edNoReff.Text:=Dm.Qtemp2.FieldByName('no_reference').AsString;
       vFormSumber:=SelectRow('SELECT form_target from t_order_source where code='+QuotedStr(Dm.Qtemp2.FieldByName('code_source').AsString)+' ');
       Edautocode.Text:=Dm.Qtemp2.FieldByName('notrans').AsString;
@@ -264,6 +265,16 @@ begin
       strtgl:=Dm.Qtemp2.FieldByName('trans_day').AsString;
       strbulan:=Dm.Qtemp2.FieldByName('trans_month').AsString;
       strtahun:=Dm.Qtemp2.FieldByName('trans_year').AsString;
+
+      if Dm.Qtemp2.FieldByName('vehicles').AsString<>NULL then
+      begin
+        edKelompokKendaraan.Text:=Dm.Qtemp2.FieldByName('vehicle_group_id').AsString;
+        edKodeTypeKendaraan.Text:=Dm.Qtemp2.FieldByName('type_vehicles_code').AsString;
+        edTypeKendaraan.Text:=Dm.Qtemp2.FieldByName('type_vehicles_name').AsString;
+        edKendaraan.Text:=Dm.Qtemp2.FieldByName('vehicles').AsString;
+        edKapasitas.Value:=Dm.Qtemp2.FieldByName('capacity').Value;
+      end;
+
       if Dm.Qtemp2.FieldValues['load_conversion']=True then
       begin
         FNew_SalesOrder.cbKonversiMuatan.Checked:=True;

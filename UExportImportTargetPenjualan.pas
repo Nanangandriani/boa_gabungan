@@ -364,7 +364,7 @@ procedure TFExportImportTargetPenjualan.BExportClick(Sender: TObject);
 var
   cell:array[1..100]of string;
   i,j,k,m : Integer;
-  strJenisUsaha: String;
+  strJenisUsaha,strJenisUsaha2: String;
 begin
 
   if edKaresidenan.Text='' then
@@ -405,8 +405,10 @@ begin
       if cbJenisUsaha.Text<>'SEMUA' then
       begin
         strJenisUsaha:='AND b.code_type_business='+QuotedStr(SelectRow('SELECT code  from t_customer_type_business  WHERE name='+QuotedStr(cbJenisUsaha.Text)+' AND	deleted_at IS NULL'));
+        strJenisUsaha2:='AND e.code_type_business='+QuotedStr(SelectRow('SELECT code  from t_customer_type_business  WHERE name='+QuotedStr(cbJenisUsaha.Text)+' AND	deleted_at IS NULL'));
       end else begin
         strJenisUsaha:='';
+        strJenisUsaha2:='';
       end;
 
       cell[1]:='D';cell[11]:='N'; cell[21]:='X';cell[31]:='AH';
@@ -525,6 +527,7 @@ begin
                       'LEFT JOIN t_item b on b.item_code=a.code_item '+
                       'LEFT JOIN t_selling c on c.trans_no=a.trans_no '+
                       'LEFT JOIN t_item_group d on d.group_id=b.group_id '+
+                      'LEFT JOIN get_customer() e on e.customer_code=c.code_cust '+
                       'WHERE   ( '+
                       '( '+
                       'EXTRACT(YEAR FROM c.trans_date) = '+edTahunSumberPenjualan.Text+' '+
@@ -535,7 +538,7 @@ begin
                       'EXTRACT(YEAR FROM c.trans_date) = '+edTahun.Text+'  '+
                       'AND EXTRACT(MONTH FROM c.trans_date) <= '+IntToStr(cbBulan.ItemIndex+1)+' '+
                       ') '+
-                      ') AND d.istarget=True '+strJenisUsaha+';';
+                      ') AND d.istarget=True '+strJenisUsaha2+';';
             Open;
           end;
 

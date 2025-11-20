@@ -87,6 +87,7 @@ type
     QDaftarRekeningKoransetoran: TFloatField;
     QDaftarRekeningKoransaldo_akhir: TFloatField;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure btPreviewClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -94,6 +95,7 @@ type
     procedure edNamaBankPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -291,6 +293,16 @@ begin
   DBGrid.FinishLoadingStatus();
   end;
   end;
+end;
+
+procedure TFDaftarRekeningKoran.dxBarLargeButton1Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edNamaBank.EditValue := '';
+  edRekeningBank.EditValue := '';
+  vNamaBank:='';
+  vRekeningBank:='';
 end;
 
 procedure TFDaftarRekeningKoran.edNamaBankPropertiesButtonClick(Sender: TObject;

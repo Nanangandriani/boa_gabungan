@@ -116,6 +116,9 @@ type
     MemUangMukauang_muka_dipakai: TFloatField;
     MemDetailBERAT_ISI: TFloatField;
     MemDetailBERAT_KOSONG: TFloatField;
+    Label23: TLabel;
+    Label24: TLabel;
+    edPOOrder: TEdit;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -1082,6 +1085,7 @@ begin
   edNomorFaktur.Clear;
   edNomorTrans.Clear;
   edSuratJalanTrans.Clear;
+  edPOOrder.Clear;
   edNomorFaktur.Clear;
   dtTanggal.Date:=Now();
   edKode_Pelanggan.Clear;
@@ -1089,6 +1093,7 @@ begin
   spJatuhTempo.Value:=0;
   edKodeSumber.Clear;
   edNamaSumber.Clear;
+  edPOOrder.ReadOnly:=True;
   edNoReff.Text:='-';
   vFormSumber:='0';
   kd_kares:='0';
@@ -1117,7 +1122,7 @@ end;
 
 procedure TFNew_Penjualan.DBGridDetailColExit(Sender: TObject);
 begin
-  HitungGrid;
+//  HitungGrid;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailColumns11EditButtons0Click(
@@ -1217,8 +1222,10 @@ begin
   if edNamaSumber.Text='SALES ORDER' then
   begin
     DBGridDetail.ReadOnly:=True;
+    edPOOrder.ReadOnly:=True;
   end else begin
     DBGridDetail.ReadOnly:=False;
+    edPOOrder.ReadOnly:=False;
   end;
 end;
 
@@ -1409,14 +1416,14 @@ begin
             ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",pembulatan_value,'+
-            'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,load_conversion) '+
+            'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,load_conversion,po_order) '+
             ' VALUES (  '+
             ' NOW(), :parcreated_by, :parcode_trans, '+
             ' :parno_inv_tax, :partrans_no, :parno_traveldoc, :partrans_date, :parcode_cust, '+
             ' :parname_cust, :paraccount_code, :parpayment_term, :parcode_source, :parname_source, :parno_reference, '+
             ' :parsub_total, :parppn_value, :parpph_value, :partot_piece_value, :partot_menj_fee, :pargrand_tot, '+
             ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, '+
-            ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,:pargrand_tot_amount_down_payment,:parload_conversion)';
+            ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,:pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order)';
             parambyname('parcreated_by').Value:=Nm;
             parambyname('parcode_trans').Value:=edKode_Trans.Text;
             parambyname('parno_inv_tax').Value:=edNomorFaktur.Text;
@@ -1454,7 +1461,8 @@ begin
             parambyname('paramount_down_payment').Value:=tot_uang_muka;
             parambyname('pargrand_tot_amount_down_payment').Value:=tot_dipotong_uang_muka;
             parambyname('parload_conversion').Value:=SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' ');
-//            ' NOW(), '+
+            parambyname('parpo_order').Value:=edPOOrder.Text;
+            //            ' NOW(), '+
 //            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
 //            ' '+QuotedStr(edKode_Trans.Text)+', '+
 //            ' '+QuotedStr(edNomorFaktur.Text)+', '+
@@ -1539,6 +1547,7 @@ begin
             ' pembulatan_value='+QuotedStr(FloatToStr(edTotPembulatan.Value))+', '+
             ' tot_before_piece='+QuotedStr(FloatToStr(edTotSebelumPot.Value))+', '+
             ' amount_down_payment='+QuotedStr(FloatToStr(tot_uang_muka))+', '+
+            ' po_order='+QuotedStr(edPOOrder.Text)+','+
             ' grand_tot_amount_down_payment='+QuotedStr(FloatToStr(tot_dipotong_uang_muka))+', '+
             ' load_conversion='+QuotedStr(SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' '))+' '+
             ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');

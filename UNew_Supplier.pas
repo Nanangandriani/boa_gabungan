@@ -61,6 +61,10 @@ type
     edKodePerkiraan_Ret: TRzButtonEdit;
     Label19: TLabel;
     Label20: TLabel;
+    Ed_tempo: TEdit;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
@@ -438,6 +442,7 @@ begin
                   ' ,account_code_um='+quotedstr(edKodePerkiraan_um.Text)+''+
                   ' ,header_code2='+quotedstr(KodeHeaderPerkiraan_ret)+''+
                   ' ,account_code2='+quotedstr(edKodePerkiraan_ret.Text)+''+
+                  ' ,tempo='+quotedstr(ed_tempo.Text)+''+
                   ' Where supplier_code='+QuotedStr(Edno.Text);
                   parambyname('updated_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
                   //parambyname('updated_by').AsString:='Admin';
@@ -528,9 +533,9 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,header_code,account_code,header_code_um,account_code_um,created_at,created_by,up_npwp,supplier_initial,sbu_code,header_code2,account_code2)values'+
+        sql.Text:='Insert into t_supplier(supplier_code,supplier_code2,supplier_name,address,Telp, npwp,header_code,account_code,header_code_um,account_code_um,created_at,created_by,up_npwp,supplier_initial,sbu_code,header_code2,account_code2,tempo)values'+
                   '('+QuotedStr(Edno.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(EdNm.Text)+','+QuotedStr(EdAlamat.Text)+','+
-                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:header_code,:account_code,:header_code_um,:account_code_um,:created_at,:created_by,:up_npwp,:supplier_initial,:sbu_code,:header_code2,:account_code2 )';
+                  ''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',:header_code,:account_code,:header_code_um,:account_code_um,:created_at,:created_by,:up_npwp,:supplier_initial,:sbu_code,:header_code2,:account_code2,:tempo )';
                   //''+QuotedStr(EdTelp.Text)+','+QuotedStr(EdNPWP.Text)+',now(),''Admin'' )';
                   //:created_at,:created_by';
                   parambyname('header_code').AsString:=KodeHeaderPerkiraan;
@@ -544,7 +549,7 @@ begin
                   parambyname('up_npwp').AsString:=up_npwp.Text;
                   parambyname('supplier_initial').AsString:=Ed_initial.Text;
                   parambyname('sbu_code').AsString:=Cb_sbu.Text;
-
+                  parambyname('tempo').Value:=ed_tempo.Text;
         ExecSQL;
       end;
 

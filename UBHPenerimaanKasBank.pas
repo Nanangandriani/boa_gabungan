@@ -116,6 +116,7 @@ type
     QDaftarPenerimaanname_kab: TStringField;
     QDaftarPenerimaanket_faktur: TMemoField;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -134,6 +135,7 @@ type
       var Text: string; DisplayText: Boolean);
     procedure btPreviewClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -322,6 +324,16 @@ begin
 
  end;
 
+end;
+
+procedure TFBHPenerimaanKasBank.dxBarLargeButton2Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue := '';
+  edKabupaten.EditValue := '';
+  vkd_kares:='';
+  vkd_kab:='';
 end;
 
 procedure TFBHPenerimaanKasBank.edKabupatenPropertiesButtonClick(

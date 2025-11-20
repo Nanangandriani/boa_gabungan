@@ -830,6 +830,11 @@ begin
     FSetMasterWilayah.edKDArea_setkares.Text:=MemMasterData['KD_MASTER'];
     FSetMasterWilayah.edArea_setkares.Text:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='set_areatp' then
+  begin
+    FSetMasterWilayah.edKDArea_setTP.Text:=MemMasterData['KD_MASTER'];
+    FSetMasterWilayah.edArea_setTP.Text:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='m_wilayah' then
   begin
     FMasterWilayah.edKode_wil.Text:=MemMasterData['KD_MASTER'];

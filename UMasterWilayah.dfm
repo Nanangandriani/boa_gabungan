@@ -61,9 +61,9 @@ object FMasterWilayah: TFMasterWilayah
   object Label1: TLabel
     Left = 20
     Top = 78
-    Width = 88
+    Width = 64
     Height = 15
-    Caption = 'Karesidenan / TP'
+    Caption = 'Karesidenan'
   end
   object Label3: TLabel
     Left = 117

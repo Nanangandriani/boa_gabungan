@@ -44,9 +44,14 @@ object FBHPenjualan: TFBHPenjualan
     Height = 476
     Align = alClient
     DataSource = DsBHPenjualan
+    DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+    RowDetailPanel.Active = True
+    RowDetailPanel.Height = 200
     SearchPanel.Enabled = True
-    TabOrder = 1
+    TabOrder = 5
     TitleParams.MultiTitle = True
     Columns = <
       item
@@ -55,8 +60,8 @@ object FBHPenjualan: TFBHPenjualan
         EditButtons = <>
         FieldName = 'trans_no'
         Footers = <>
-        Title.Caption = 'No. Transaksi'
-        Width = 150
+        Title.Caption = 'Nomor Transaksi'
+        Width = 177
       end
       item
         CellButtons = <>
@@ -65,6 +70,7 @@ object FBHPenjualan: TFBHPenjualan
         FieldName = 'trans_date'
         Footers = <>
         Title.Caption = 'Tanggal'
+        Width = 75
       end
       item
         CellButtons = <>
@@ -81,22 +87,13 @@ object FBHPenjualan: TFBHPenjualan
         FieldName = 'name_cust'
         Footers = <>
         Title.Caption = 'Nama Pelanggan'
-        Width = 150
+        Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_region'
-        Footers = <>
-        Title.Caption = 'Wilayah'
-        Width = 250
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code_item'
+        FieldName = 'code_region'
         Footers = <>
         Visible = False
       end
@@ -104,9 +101,28 @@ object FBHPenjualan: TFBHPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'name_item'
+        FieldName = 'kabupaten'
         Footers = <>
-        Title.Caption = 'Nama Barang'
+        Title.Caption = 'Kabupaten'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kecamatan'
+        Footers = <>
+        Title.Caption = 'Kecamatan'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'dpp'
+        Footers = <>
+        Title.Caption = 'Nilai | DPP'
         Width = 150
       end
       item
@@ -114,149 +130,86 @@ object FBHPenjualan: TFBHPenjualan
         DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'amount'
+        FieldName = 'ppn_value'
         Footers = <>
-        Title.Caption = 'Qty'
-        Width = 75
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'code_unit'
-        Footers = <>
-        Title.Caption = 'Satuan'
-        Width = 75
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'name_unit'
-        Footers = <>
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'akn_debet'
-        Footers = <>
-        Title.Caption = 'Debit | Piutang | No. Perk'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_debit_deb'
-        Footers = <>
-        Title.Caption = 'Debit | Piutang | Nama Akun'
-        Width = 150
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'jum_ak_deb'
-        Footers = <>
-        Title.Caption = 'Debit | Piutang | Jumlah'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'akn_debet_lain'
-        Footers = <>
-        Title.Caption = 'Debit | Lain-Lain | No. Perk'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_debit_lain'
-        Footers = <>
-        Title.Caption = 'Debit | Lain-Lain | Nama Akun'
-        Width = 150
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'jum_ak_deb_lain'
-        Footers = <>
-        Title.Caption = 'Debit | Lain-Lain | Jumlah'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'akn_kredit'
-        Footers = <>
-        Title.Caption = 'Kredit | Persediaan | No. Perk'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_debit_kre'
-        Footers = <>
-        Title.Caption = 'Kredit | Persediaan | Nama Perkiraan'
-        Width = 150
+        Title.Caption = 'Nilai | PPn'
+        Width = 116
       end
       item
         CellButtons = <>
         DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jum_ak_kre'
+        FieldName = 'grand_tot'
         Footers = <>
-        Title.Caption = 'Kredit | Persediaan | Jumlah'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ppn_ak_kre'
-        Footers = <>
-        Title.Caption = 'Kredit | Persediaan | Nilai PPn'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'akn_kre_lain'
-        Footers = <>
-        Title.Caption = 'Kredit | Lain-Lain | No. Perk'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'nm_kre_lain'
-        Footers = <>
-        Title.Caption = 'Kredit | Lain-Lain | Nama Perkiraan'
+        Title.Caption = 'Nilai | Netto'
         Width = 150
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'jum_ak_kre_lain'
-        Footers = <>
-        Title.Caption = 'Kredit | Lain-Lain | Jumlah'
-        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1161
+        Height = 198
+        Align = alClient
+        DataSource = DSDetailBarang
+        DynProps = <>
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_item'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Kode Barang'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_item'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Nama Barang'
+            Width = 210
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#.###'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'amount'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Qty'
+            Width = 114
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_unit'
+            Footers = <>
+            Title.Alignment = taCenter
+            Title.Caption = 'Satuan'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_unit'
+            Footers = <>
+            Title.Alignment = taCenter
+            Visible = False
+            Width = 100
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
   object ActMenu: TActionManager
@@ -346,6 +299,10 @@ object FBHPenjualan: TFBHPenjualan
         item
           Visible = True
           ItemName = 'cbSBU'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = False
       Row = 0
@@ -356,7 +313,7 @@ object FBHPenjualan: TFBHPenjualan
     object dxBarManager1Bar2: TdxBar
       Caption = 'Laporan'
       CaptionButtons = <>
-      DockedLeft = 575
+      DockedLeft = 618
       DockedTop = 0
       FloatLeft = 852
       FloatTop = 2
@@ -689,105 +646,75 @@ object FBHPenjualan: TFBHPenjualan
       Visible = ivAlways
       ItemIndex = -1
     end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Clear'
+      Category = 0
+      Hint = 'Clear'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F4000000206348524D00007A26000080840000FA00000080E8000075300000EA
+        6000003A98000017709CBA513C00000006624B474400FF00FF00FFA0BDA79300
+        0000097048597300000EC400000EC401952B0E1B0000000774494D4507E90B14
+        01140E9DE08156000004464944415458C3B5965D681C5514C77FE7EEEC4736D9
+        369A18AD989A362912D434A03E593096A212D42252B12AB460A4205804416CEA
+        93A2F649D00745F0494512022A522D286812C156B482426C4822491389D96C94
+        A4DD7CEECC1C1F6666B3BB49369B6E3C30CCDCB9E7F2FFDD73CFBDF7887ED746
+        C9A64012582ED15FFC079063BDEBBA58C04D40758EC4769900CB081328F6464E
+        16700EB8799BC53D006501971328DF140368DD66E17C536E2DD66DFE5771CFDC
+        629DD69602AF05EF524C9062FE163B708050C9008B40784B11C8148F402DEF00
+        CF03B192006C60A9E4D9F722F4168B80013A8133C0CA96E6B5B9F5213C87CBE5
+        625960F08E95B7FC67BB20FA3074A08C6003D18D1D2DFFBD02BCE97F9F022265
+        CEBC03D7178F831CE8DD3802B227DB194094B31CFD081DC008B6405C8B8A4370
+        0E34E441BCE14314CDDE4DC52B1CE440DFA68324F85005C6DA826604388DB71C
+        AB9B4E8129D6DB059EB8328C0D7C7A232C1B1048CF2AE939C518701C884485DA
+        EFBBD602781047602C1534A33EC42B5988F5017E40781618E642027EAF5A8DAE
+        9048CF6A343DA72B56982B99155C31A02E5811A1AEB72B1FA008C4CB40741D80
+        20ECC3B8C087BB0012C043C02340737A4E2BAFCEEA023028C25911BE765DAEDC
+        B04BF837A56B010074E008C4B31031A00B385C0090426847F9854406DEDE0DD0
+        E2E7D08341D4AEFA4BE05B06F856844E557EABAE31EB5F46727B0FD815417309
+        985EC76D0125892110DF0F7C0C3C9C9B37923FC530D0AECA2722B4CEFEE36E7C
+        1BCABE73B9CD8DFC0C4315003BF1764E4BB6C77501F54E6155BF9DB53B543963
+        0C35E55FC71351FCF53EB43ACF304ED33EB42A81380EBA238136374124EF163B
+        A8CA93E50108CAEB0D06384C70AABA2E4E63134B2FBEC4F233C7701BF7E29C78
+        1AFBF449F4B6C6DC48845579CABA4669CF2C551E9DB90E685E8512CC7412337E
+        19FBEE7B58A9DF83C62A918121E4EFE9C2A4B8B3BC0818054B2B80CA5C0049A5
+        887CF119329F466B6A203D4FA8FB4B48A60A0112E501B8020E4B78658A67AA68
+        753599430FA09555909E87AA4ADCF683707DB57FE4666DA11C00C116C3A5CA59
+        602417C0BDA51E7B7F2BA1C14B44DE7D1F1918C2BDAB056DA807370F60B09C1C
+        4803CB3C9EB2198B7D85B7FF0511CCD828B10FDE2334318E3394243438097B77
+        23C3A360B24BE08AD073AD114821BCC6BD3A453202F03970DE8B8B208B8B58BF
+        5E446666502B842467901F2FC2FC626E0E5C40F868EB00420A38C912DD9C17D8
+        698377529E02C6B27EC67830E0CD3A6472AFBE71113AD565B2548060E834315E
+        E07EBA88FB7FA6B2C5533F701CF82977A0AE2D487F16E1B8E3D017B2564BB2CD
+        EC0F6008E155FEA2272832E5BE5E4FE4E8D1C0AF0F780C78022F271A4588E3DD
+        277F8A7016A15B5D26C3110F4E8AA9EA685BF01907AA112683123BA7942B8408
+        AC02A1363DABF1F49C2E8A30E3382C18037606A231A8EBEF2E19207F3D0AC437
+        04C9A98844201C151C5BA9EBEBCEBAFC0798C4968610769BD500000025744558
+        74646174653A63726561746500323032352D31312D32305430313A31393A3132
+        2B30303A30309A9486D30000002574455874646174653A6D6F64696679003230
+        32352D31312D32305430313A31393A31322B30303A3030EBC93E6F0000002874
+        455874646174653A74696D657374616D7000323032352D31312D32305430313A
+        32303A31332B30303A30307F5C59CF0000001974455874536F66747761726500
+        7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
+      OnClick = dxBarLargeButton2Click
+    end
   end
   object QBHPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT * from "public"."vbhpenjualan"')
-    Left = 788
-    Top = 240
-    object QBHPenjualantrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 255
-    end
-    object QBHPenjualantrans_date: TDateField
-      FieldName = 'trans_date'
-    end
-    object QBHPenjualancode_cust: TStringField
-      FieldName = 'code_cust'
-      Size = 255
-    end
-    object QBHPenjualanname_cust: TStringField
-      FieldName = 'name_cust'
-      Size = 255
-    end
-    object QBHPenjualanname_region: TStringField
-      FieldName = 'name_region'
-      Size = 255
-    end
-    object QBHPenjualancode_item: TStringField
-      FieldName = 'code_item'
-      Size = 100
-    end
-    object QBHPenjualanname_item: TStringField
-      FieldName = 'name_item'
-      Size = 255
-    end
-    object QBHPenjualanamount: TFloatField
-      FieldName = 'amount'
-    end
-    object QBHPenjualancode_unit: TStringField
-      FieldName = 'code_unit'
-      Size = 100
-    end
-    object QBHPenjualanname_unit: TStringField
-      FieldName = 'name_unit'
-      Size = 255
-    end
-    object QBHPenjualanakn_debet: TStringField
-      FieldName = 'akn_debet'
-      Size = 50
-    end
-    object QBHPenjualannm_debit_deb: TStringField
-      FieldName = 'nm_debit_deb'
-      Size = 100
-    end
-    object QBHPenjualanjum_ak_deb: TFloatField
-      FieldName = 'jum_ak_deb'
-    end
-    object QBHPenjualanakn_debet_lain: TMemoField
-      FieldName = 'akn_debet_lain'
-      OnGetText = QBHPenjualanakn_debet_lainGetText
-      BlobType = ftMemo
-    end
-    object QBHPenjualannm_debit_lain: TMemoField
-      FieldName = 'nm_debit_lain'
-      OnGetText = QBHPenjualannm_debit_lainGetText
-      BlobType = ftMemo
-    end
-    object QBHPenjualanjum_ak_deb_lain: TIntegerField
-      FieldName = 'jum_ak_deb_lain'
-    end
-    object QBHPenjualanakn_kredit: TStringField
-      FieldName = 'akn_kredit'
-      Size = 50
-    end
-    object QBHPenjualannm_debit_kre: TStringField
-      FieldName = 'nm_debit_kre'
-      Size = 100
-    end
-    object QBHPenjualanjum_ak_kre: TFloatField
-      FieldName = 'jum_ak_kre'
-    end
-    object QBHPenjualanppn_ak_kre: TFloatField
-      FieldName = 'ppn_ak_kre'
-    end
-    object QBHPenjualanakn_kre_lain: TStringField
-      FieldName = 'akn_kre_lain'
-      Size = 50
-    end
-    object QBHPenjualannm_kre_lain: TStringField
-      FieldName = 'nm_kre_lain'
-      Size = 100
-    end
-    object QBHPenjualanjum_ak_kre_lain: TFloatField
-      FieldName = 'jum_ak_kre_lain'
-    end
+      
+        'SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_sellin' +
+        'g(False) a '
+      'LEFT JOIN vcustomer b on b.customer_code=a.code_cust')
+    Left = 220
+    Top = 360
   end
   object DsBHPenjualan: TDataSource
     DataSet = QBHPenjualan
-    Left = 777
-    Top = 160
+    Left = 121
+    Top = 352
   end
   object QCetak: TUniQuery
     Connection = dm.Koneksi
@@ -853,11 +780,10 @@ object FBHPenjualan: TFBHPenjualan
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
     PreviewOptions.Zoom = 1.000000000000000000
-    PreviewOptions.ZoomMode = zmWholePage
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 45971.595517858800000000
+    ReportOptions.LastChange = 45980.662652314820000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1476,7 +1402,7 @@ object FBHPenjualan: TFBHPenjualan
           AllowVectorExport = True
           Left = 1.111111110000000000
           Top = 1.111111110000000000
-          Width = 718.110236220000000000
+          Width = 1084.724409448819000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1628,20 +1554,20 @@ object FBHPenjualan: TFBHPenjualan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 145.590563390000000000
+        Height = 97.590563390000000000
         Top = 317.480520000000000000
         Width = 1084.725110000000000000
         object Shape4: TfrxShapeView
           Align = baClient
           AllowVectorExport = True
           Width = 1084.725110000000000000
-          Height = 145.590563390000000000
+          Height = 97.590563390000000000
           Frame.Typ = []
         end
         object Line27: TfrxLineView
           AllowVectorExport = True
           Left = 859.464566930000000000
-          Height = 97.511811023622050000
+          Height = 97.511811023622000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = [ftLeft]
@@ -1649,7 +1575,7 @@ object FBHPenjualan: TFBHPenjualan
         object Line28: TfrxLineView
           AllowVectorExport = True
           Left = 637.606299210000000000
-          Height = 97.511811023622050000
+          Height = 97.511811023622000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = [ftLeft]
@@ -1863,6 +1789,7 @@ object FBHPenjualan: TFBHPenjualan
           Left = 637.333333330000000000
           Top = 97.186146670000000000
           Width = 445.984540000000000000
+          Visible = False
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2600,8 +2527,8 @@ object FBHPenjualan: TFBHPenjualan
     MasterSource = dsCetak
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 868
-    Top = 184
+    Left = 764
+    Top = 296
     ParamData = <
       item
         DataType = ftMemo
@@ -2641,8 +2568,8 @@ object FBHPenjualan: TFBHPenjualan
     DataSet = QCetakdetailDebit
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 968
-    Top = 168
+    Left = 896
+    Top = 208
   end
   object dsCetak: TDataSource
     DataSet = QCetak
@@ -2790,8 +2717,8 @@ object FBHPenjualan: TFBHPenjualan
         'WHERE deleted_at IS NULL)b   ON "left"(code_region, 4)=b.code_ka' +
         'b  where trans_date between '#39'2025-10-01'#39'  and '#39'2025-10-26'#39' '
       ' ORDER BY trans_date, trans_no')
-    Left = 456
-    Top = 208
+    Left = 616
+    Top = 376
     object QCetak2trans_no: TStringField
       FieldName = 'trans_no'
       Size = 255
@@ -2845,8 +2772,8 @@ object FBHPenjualan: TFBHPenjualan
     MasterSource = DataSource1
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 520
-    Top = 288
+    Left = 352
+    Top = 376
     ParamData = <
       item
         DataType = ftString
@@ -2861,7 +2788,6 @@ object FBHPenjualan: TFBHPenjualan
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
     PreviewOptions.Zoom = 1.000000000000000000
-    PreviewOptions.ZoomMode = zmWholePage
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45673.924529294000000000
@@ -3303,6 +3229,7 @@ object FBHPenjualan: TFBHPenjualan
           Left = 7.559060000000000000
           Width = 400.630180000000000000
           Height = 18.897650000000000000
+          DataSet = FRekapPenjualan.frxDBDBHPenj_det
           DataSetName = 'frxDBDBHPenj_det'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3408,8 +3335,8 @@ object FBHPenjualan: TFBHPenjualan
     DataSource = DataSource1
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 608
-    Top = 224
+    Left = 656
+    Top = 304
   end
   object frxDBDataset2: TfrxDBDataset
     UserName = 'frxDBDataset2'
@@ -3450,12 +3377,36 @@ object FBHPenjualan: TFBHPenjualan
   end
   object DataSource1: TDataSource
     DataSet = QCetak2
-    Left = 401
-    Top = 216
+    Left = 393
+    Top = 408
   end
   object DataSource2: TDataSource
     DataSet = QCetakRincianBarang2
     Left = 417
     Top = 320
+  end
+  object QDetailBarang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select trans_no,code_item,name_item,amount,code_unit,name_unit f' +
+        'rom t_selling_det')
+    MasterSource = DsBHPenjualan
+    MasterFields = 'trans_no'
+    DetailFields = 'trans_no'
+    Left = 52
+    Top = 399
+    ParamData = <
+      item
+        DataType = ftMemo
+        Name = 'trans_no'
+        ParamType = ptInput
+        Value = 'FP/002/02/X/2025/HLJ/BGR'
+      end>
+  end
+  object DSDetailBarang: TDataSource
+    DataSet = QDetailBarang
+    Left = 76
+    Top = 319
   end
 end

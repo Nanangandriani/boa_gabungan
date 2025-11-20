@@ -114,6 +114,7 @@ type
     dxBarLargeButton6: TdxBarLargeButton;
     Qreport: TUniQuery;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton7: TdxBarLargeButton;
     procedure ActSearchClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -133,6 +134,7 @@ type
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton6Click(Sender: TObject);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -480,6 +482,22 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TFRekapPenjualanPerPelanggan.dxBarLargeButton7Click(Sender: TObject);
+var month,year:String;
+begin
+  year :=FormatDateTime('yyyy', NOW());
+  month :=FormatDateTime('m', NOW());
+  edTahun1.Text:=(year);
+  edTahun2.Text:=(year);
+  cbBulan1.ItemIndex:=StrToInt(month)-1;
+  cbBulan2.ItemIndex:=StrToInt(month)-1;
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  cbKecamatan.EditValue:='';
+  cbKelompok.EditValue:='';
+  cbJenisUsaha.ItemIndex:=0;
 end;
 
 procedure TFRekapPenjualanPerPelanggan.edJenisPelangganPropertiesButtonClick(

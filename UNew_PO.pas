@@ -1092,6 +1092,14 @@ end;
 
 procedure TFNew_PO.EdKd_suppChange(Sender: TObject);
 begin
+  with dm.Qtemp do
+  begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT tempo FROM t_supplier WHERE supplier_code='+QuotedStr(Edkd_supp.Text)+' ';
+     open;
+     Edjatuh_tempo.Text:=fieldbyname('tempo').AsString;
+  end;
   if ref_code<>'DO' then
   begin
     load_um;

@@ -36,6 +36,7 @@ type
     MemMasterDataNO_REFF: TStringField;
     MemMasterDataPAYMENT_TERM: TSmallintField;
     MemMasterDataKD_KARES: TStringField;
+    MemMasterDataPO_ORDER: TStringField;
     procedure btTampilkanClick(Sender: TObject);
     procedure btGetDataProspekClick(Sender: TObject);
     procedure DBGridCustomerDblClick(Sender: TObject);
@@ -170,6 +171,9 @@ begin
           MemMasterData['NO_REFF']:=Dm.Qtemp.fieldbyname('notrans').value;
           MemMasterData['PAYMENT_TERM']:=Dm.Qtemp.fieldbyname('payment_term').value;
           MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname('code_karesidenan').value;
+          if Dm.Qtemp.fieldbyname('po_order').value<>NULL then
+          MemMasterData['PO_ORDER']:=Dm.Qtemp.fieldbyname('po_order').value else MemMasterData['PO_ORDER']:='';
+
           MemMasterData.post;
           progress.Progress:= progress.Progress+1;
           Dm.Qtemp.next;
@@ -216,7 +220,7 @@ begin
       FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
       FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];
       FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
-
+      FNew_Penjualan.edPOOrder.Text:=MemMasterData['PO_ORDER'];
 
       Dm.Qtemp2.first;
       while not Dm.Qtemp2.Eof do

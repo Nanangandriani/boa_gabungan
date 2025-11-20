@@ -127,10 +127,11 @@ begin
   end;
   if vcall='sales_order' then
   begin
-    FNew_SalesOrder.edKelompokBarang.Text:=MemMasterData['code'];
+    FNew_SalesOrder.edKelompokKendaraan.Text:=MemMasterData['code'];
     FNew_SalesOrder.edTypeKendaraan.Text:=MemMasterData['type_name'];
     FNew_SalesOrder.edKodeTypeKendaraan.Text:=MemMasterData['type'];
     FNew_SalesOrder.edKapasitas.Text :=MemMasterData['capacity'];
+    FNew_SalesOrder.edKendaraan.Text :=MemMasterData['plate_number'];
 //    FNew_SalesOrder.edKapasitas.DisplayFormat:='#,###';
   end;
   FDaftarKendaraan.Close;
@@ -266,7 +267,7 @@ begin
               begin
                 MemMasterData.Insert;
                 MemMasterData['code']        := dataItem.GetValue('code').Value;
-//                MemMasterData['plate_number']:= dataItem.GetValue('plate_number').Value;
+                MemMasterData['plate_number']:= dataItem.GetValue('plate_number').Value;
                 MemMasterData['type']        := dataItem.GetValue('type').Value;
                 MemMasterData['type_name']   := dataItem.GetValue('type_name').Value;
                 MemMasterData['capacity']    := dataItem.GetValue('capacity').Value;

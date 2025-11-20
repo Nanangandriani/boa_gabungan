@@ -107,7 +107,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select * from T_Supplier where sbu_code='+QuotedStr(Cb_sbu.Text)+' and deleted_at is null order by created_at ASC ';
+       sql.Text:='select * from T_Supplier where sbu_code='+QuotedStr(Cb_sbu.Text)+' and deleted_at is null order by supplier_code ';
        open;
    end;
    QSupplier.Active:=False;
@@ -154,9 +154,12 @@ begin
         KodeHeaderPerkiraan_um:=QSupplier.FieldByName('header_code_um').AsString;
         edKodePerkiraan.Text:=QSupplier.FieldByName('account_code').AsString;
         edKodePerkiraan_um.Text:=QSupplier.FieldByName('account_code_um').AsString;
+        KodeHeaderPerkiraan_ret:=QSupplier.FieldByName('header_code2').AsString;
+        edKodePerkiraan_ret.Text:=QSupplier.FieldByName('account_code2').AsString;
         Ed_initial.Text:=QSupplier.FieldByName('supplier_initial').AsString;
         up_npwp.Text:=QSupplier.FieldByName('up_npwp').AsString;
         Cb_sbu.Text:=QSupplier.FieldByName('sbu_code').AsString;
+        Ed_tempo.Text:=QSupplier.FieldByName('tempo').AsString;
       end;
       QBarang.First;
       while not QBarang.eof do

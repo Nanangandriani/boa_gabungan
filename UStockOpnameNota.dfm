@@ -22,6 +22,7 @@ object FStockOpnameNota: TFStockOpnameNota
     Align = alTop
     Color = 15987699
     TabOrder = 0
+    ExplicitWidth = 946
     object RzLabel1: TRzLabel
       Left = 16
       Top = 8
@@ -102,7 +103,7 @@ object FStockOpnameNota: TFStockOpnameNota
       Align = alBottom
       Color = 15987699
       TabOrder = 4
-      ExplicitTop = 56
+      ExplicitWidth = 942
       object btCetakLaporanStokOpname: TRzBitBtn
         Left = 12
         Top = 18
@@ -143,6 +144,17 @@ object FStockOpnameNota: TFStockOpnameNota
       Width = 145
       Height = 23
       TabOrder = 5
+    end
+    object RzBitBtn1: TRzBitBtn
+      Left = 300
+      Top = 58
+      Width = 116
+      Height = 30
+      Align = alCustom
+      Caption = 'Clear'
+      TabOrder = 6
+      OnClick = RzBitBtn1Click
+      NumGlyphs = 2
     end
   end
   object DBGridEh1: TDBGridEh

@@ -113,6 +113,7 @@ type
     dxBarDateCombo1: TdxBarDateCombo;
     dtTanggal2: TdxBarDateCombo;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton7: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -121,6 +122,7 @@ type
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -201,6 +203,15 @@ begin
       Open;
     end;
   end;
+end;
+
+procedure TFLaporanHarianSisaNotaPerTP.dxBarLargeButton7Click(Sender: TObject);
+begin
+  cbKaresidenan.EditValue:='';
+  dtTanggal1.Date:=NOW;
+  dtTanggal2.Date:=NOW;
+//  Qreport.Close;
+//  QLaporanHarianSisaNotaPerTP.Close;
 end;
 
 procedure TFLaporanHarianSisaNotaPerTP.FormCreate(Sender: TObject);

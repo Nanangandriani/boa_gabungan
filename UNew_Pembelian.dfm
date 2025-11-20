@@ -291,7 +291,7 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 4
       Visible = False
       OnClick = Button1Click
-      ExplicitLeft = 735
+      ExplicitLeft = 637
     end
     object BCorrection: TRzBitBtn
       Left = 718
@@ -302,7 +302,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Submit Correction'
       TabOrder = 5
       OnClick = BCorrectionClick
-      ExplicitLeft = 713
+      ExplicitLeft = 712
     end
   end
   object Panel2: TPanel
@@ -448,6 +448,20 @@ object FNew_Pembelian: TFNew_Pembelian
       Height = 15
       Caption = 'No.Ref'
     end
+    object Label30: TLabel
+      Left = 703
+      Top = 72
+      Width = 22
+      Height = 15
+      Caption = 'Hari'
+    end
+    object Label31: TLabel
+      Left = 763
+      Top = 72
+      Width = 88
+      Height = 15
+      Caption = 'Tgl. Jatuh Tempo'
+    end
     object EdNoSPB: TRzComboBox
       Left = 174
       Top = 256
@@ -510,9 +524,10 @@ object FNew_Pembelian: TFNew_Pembelian
     object Edjatuhtempo: TEdit
       Left = 641
       Top = 70
-      Width = 121
+      Width = 56
       Height = 23
       TabOrder = 7
+      OnChange = EdjatuhtempoChange
     end
     object Edkd_supp: TRzEdit
       Left = 175
@@ -523,6 +538,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 8
+      OnChange = Edkd_suppChange
     end
     object EdNm_supp: TRzButtonEdit
       Left = 234
@@ -671,6 +687,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Height = 23
       EditType = etDate
       TabOrder = 19
+      OnChange = dtfaktur2Change
     end
     object Edurut: TEdit
       Left = 792
@@ -762,6 +779,14 @@ object FNew_Pembelian: TFNew_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 29
+    end
+    object tgl_jatuhtempo: TRzDateTimeEdit
+      Left = 872
+      Top = 70
+      Width = 107
+      Height = 23
+      EditType = etDate
+      TabOrder = 30
     end
   end
   object RzPanel1: TRzPanel
@@ -875,9 +900,9 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 1113
       Height = 245
       Hint = ''
-      ActivePage = TabBarang2
+      ActivePage = Tab_Pot_Pemb
       Align = alClient
-      TabIndex = 0
+      TabIndex = 2
       TabOrder = 6
       ExplicitWidth = 1107
       ExplicitHeight = 236
@@ -885,8 +910,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
-        ExplicitWidth = 1103
-        ExplicitHeight = 211
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -1457,6 +1480,8 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Pot_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Pot. Pembelian'
+        ExplicitWidth = 1103
+        ExplicitHeight = 211
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0

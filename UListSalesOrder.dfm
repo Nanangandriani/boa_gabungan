@@ -331,6 +331,11 @@ object FListSalesOrder: TFListSalesOrder
     end
     object MemMasterDataKD_KARES: TStringField
       FieldName = 'KD_KARES'
+      Size = 100
+    end
+    object MemMasterDataPO_ORDER: TStringField
+      FieldName = 'PO_ORDER'
+      Size = 100
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -376,6 +381,12 @@ object FListSalesOrder: TFListSalesOrder
           FieldName = 'KD_KARES'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object PO_ORDER: TMTStringDataFieldEh
+          FieldName = 'PO_ORDER'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh

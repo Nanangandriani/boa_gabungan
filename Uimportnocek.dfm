@@ -253,6 +253,7 @@ object FImportnocek: TFImportnocek
     Width = 43
     Height = 23
     TabOrder = 13
+    Visible = False
   end
   object MyQuery2: TUniQuery
     Connection = dm.Koneksi

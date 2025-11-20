@@ -351,6 +351,27 @@ object FNew_Supplier: TFNew_Supplier
       Height = 15
       Caption = ':'
     end
+    object Label21: TLabel
+      Left = 120
+      Top = 238
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label22: TLabel
+      Left = 30
+      Top = 238
+      Width = 67
+      Height = 15
+      Caption = 'Jatuh Tempo'
+    end
+    object Label23: TLabel
+      Left = 218
+      Top = 238
+      Width = 22
+      Height = 15
+      Caption = 'Hari'
+    end
     object Edno: TEdit
       Left = 279
       Top = 19
@@ -435,6 +456,14 @@ object FNew_Supplier: TFNew_Supplier
       Height = 23
       TabOrder = 10
       Visible = False
+    end
+    object Ed_tempo: TEdit
+      Left = 137
+      Top = 235
+      Width = 72
+      Height = 23
+      NumbersOnly = True
+      TabOrder = 11
     end
   end
   object PG_Supplier: TRzPageControl

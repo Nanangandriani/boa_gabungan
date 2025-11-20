@@ -99,11 +99,13 @@ type
     QLaporanHarianSisaNotaPiutangPerKares: TUniQuery;
     Qreport: TUniQuery;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton7: TdxBarLargeButton;
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -166,6 +168,15 @@ begin
     sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE)';
     Open;
   end;
+end;
+
+procedure TFRekapSaldoPiutangPerKaresidenan.dxBarLargeButton7Click(
+  Sender: TObject);
+begin
+//  Qreport.Close;
+//  QLaporanHarianSisaNotaPiutangPerKares.Close;
+  dtTanggal1.Date:=NOW;
+  dtTanggal2.Date:=NOW;
 end;
 
 procedure TFRekapSaldoPiutangPerKaresidenan.FormCreate(Sender: TObject);

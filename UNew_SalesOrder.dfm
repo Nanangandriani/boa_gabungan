@@ -3,7 +3,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Data Sales Order'
-  ClientHeight = 513
+  ClientHeight = 569
   ClientWidth = 1055
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,13 +18,13 @@ object FNew_SalesOrder: TFNew_SalesOrder
     Left = 0
     Top = 0
     Width = 1055
-    Height = 277
+    Height = 309
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 1051
-    ExplicitHeight = 276
+    ExplicitHeight = 308
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -33,7 +33,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = 'No. Transaksi'
     end
     object Label3: TLabel
-      Left = 118
+      Left = 117
       Top = 19
       Width = 3
       Height = 15
@@ -124,7 +124,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = 'Tanggal Kirim'
     end
     object Label11: TLabel
-      Left = 118
+      Left = 117
       Top = 72
       Width = 3
       Height = 15
@@ -138,7 +138,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = 'Tanggal Pesan'
     end
     object Label13: TLabel
-      Left = 118
+      Left = 117
       Top = 45
       Width = 3
       Height = 15
@@ -263,6 +263,36 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Height = 15
       Caption = ':'
     end
+    object Label21: TLabel
+      Left = 20
+      Top = 237
+      Width = 49
+      Height = 15
+      Caption = 'PO Order'
+    end
+    object Label22: TLabel
+      Left = 117
+      Top = 237
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object LabelKendaraan: TLabel
+      Left = 505
+      Top = 106
+      Width = 56
+      Height = 15
+      Caption = 'Kendaraan'
+      Visible = False
+    end
+    object Label24: TLabel
+      Left = 624
+      Top = 106
+      Width = 3
+      Height = 15
+      Caption = ':'
+      Visible = False
+    end
     object edKodeOrder: TEdit
       Left = 132
       Top = 16
@@ -287,7 +317,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edKode_Pelanggan: TEdit
       Left = 589
-      Top = 197
+      Top = 226
       Width = 200
       Height = 23
       TabOrder = 2
@@ -307,7 +337,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edKode_Sales: TEdit
       Left = 615
-      Top = 226
+      Top = 255
       Width = 200
       Height = 23
       TabOrder = 4
@@ -365,7 +395,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object btAddDetail: TRzBitBtn
       Left = 21
-      Top = 241
+      Top = 270
       Width = 116
       Height = 30
       Align = alCustom
@@ -438,7 +468,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object Memo1: TMemo
       Left = 335
-      Top = 182
+      Top = 211
       Width = 248
       Height = 89
       Lines.Strings = (
@@ -457,7 +487,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object BTambahTargetPenjualan: TRzBitBtn
       Left = 143
-      Top = 241
+      Top = 270
       Width = 116
       Height = 30
       Align = alCustom
@@ -528,7 +558,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       TabOrder = 15
       OnClick = cbKonversiMuatanClick
     end
-    object edKelompokBarang: TRzButtonEdit
+    object edKelompokKendaraan: TRzButtonEdit
       Left = 638
       Top = 16
       Width = 185
@@ -538,7 +568,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
-      OnButtonClick = edKelompokBarangButtonClick
+      OnButtonClick = edKelompokKendaraanButtonClick
     end
     object edTypeKendaraan: TEdit
       Left = 638
@@ -569,15 +599,33 @@ object FNew_SalesOrder: TFNew_SalesOrder
       TabOrder = 19
       DisplayFormat = '#,###0'
     end
+    object edPOOrder: TEdit
+      Left = 132
+      Top = 234
+      Width = 151
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 20
+    end
+    object edKendaraan: TEdit
+      Left = 638
+      Top = 103
+      Width = 185
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 21
+      Visible = False
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 481
+    Top = 537
     Width = 1055
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 480
+    ExplicitTop = 536
     ExplicitWidth = 1051
     object BBatal: TRzBitBtn
       Left = 979
@@ -716,16 +764,16 @@ object FNew_SalesOrder: TFNew_SalesOrder
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 277
+    Top = 309
     Width = 1055
-    Height = 204
+    Height = 228
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitTop = 276
+    ExplicitTop = 308
     ExplicitWidth = 1051
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
@@ -735,7 +783,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         Left = 0
         Top = 0
         Width = 1051
-        Height = 179
+        Height = 203
         Align = alClient
         DataSource = DSDetail
         DynProps = <>

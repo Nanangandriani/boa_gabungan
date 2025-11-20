@@ -62,7 +62,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UPenyesuaianPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
-var strWhere: String;
+var strWhere,strKares: String;
 begin
   if vcall='daftar_klasifikasi' then
   begin
@@ -72,6 +72,10 @@ begin
   end else if vcall='dpp' then
   begin
     strWhere:=' and getkares.code='+QuotedStr(FDataPenagihanPiutang.strKabupatenID) ;
+  end else if (vcall='sumber_order') AND (FNew_SalesOrder.edKodeOrder.Text<>'') then
+  begin
+    strKares:= SelectRow('SELECT code_karesidenan FROM get_customer() where customer_code='+QuotedStr(FNew_SalesOrder.edKode_Pelanggan.Text)+'');
+    strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
   end else begin
     strWhere:='';
   end;
@@ -332,6 +336,13 @@ begin
   end else begin
     pnlfilter.Visible:=true;
   end;
+
+  if (vcall='sumber_order') AND (FNew_SalesOrder.edKodeOrder.Text<>'') then
+  begin
+    pnlFilter.Visible:=false;
+    RefreshGrid;
+  end;
+
   DBGridCustomer.SearchPanel.SearchingText:='';
 end;
 

@@ -19,14 +19,14 @@ object FNew_Penjualan: TFNew_Penjualan
     Left = 0
     Top = 0
     Width = 870
-    Height = 147
+    Height = 179
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 866
     object LabelPelanggan: TLabel
-      Left = 18
+      Left = 19
       Top = 7
       Width = 93
       Height = 15
@@ -61,7 +61,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = ':'
     end
     object Label5: TLabel
-      Left = 526
+      Left = 529
       Top = 88
       Width = 67
       Height = 15
@@ -89,7 +89,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = ':'
     end
     object Label10: TLabel
-      Left = 20
+      Left = 19
       Top = 87
       Width = 41
       Height = 15
@@ -110,14 +110,14 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = ':'
     end
     object Label12: TLabel
-      Left = 526
+      Left = 530
       Top = 6
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label1: TLabel
-      Left = 527
+      Left = 530
       Top = 33
       Width = 78
       Height = 15
@@ -138,7 +138,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = ':'
     end
     object Label16: TLabel
-      Left = 525
+      Left = 530
       Top = 116
       Width = 43
       Height = 15
@@ -160,7 +160,7 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = ':'
     end
     object Label7: TLabel
-      Left = 527
+      Left = 530
       Top = 61
       Width = 55
       Height = 15
@@ -226,6 +226,20 @@ object FNew_Penjualan: TFNew_Penjualan
         0000000000000000000000000000000000000000000000000000}
       OnClick = SpeedButton1Click
     end
+    object Label23: TLabel
+      Left = 19
+      Top = 116
+      Width = 47
+      Height = 15
+      Caption = 'Po Order'
+    end
+    object Label24: TLabel
+      Left = 116
+      Top = 116
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
       Top = 58
@@ -240,8 +254,8 @@ object FNew_Penjualan: TFNew_Penjualan
       OnButtonClick = edNama_PelangganButtonClick
     end
     object edKode_Pelanggan: TEdit
-      Left = 303
-      Top = 113
+      Left = 382
+      Top = 150
       Width = 200
       Height = 23
       TabOrder = 1
@@ -293,7 +307,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object btAddDetail: TRzBitBtn
       Left = 20
-      Top = 113
+      Top = 145
       Width = 116
       Height = 30
       Align = alCustom
@@ -410,13 +424,22 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object cbUangMuka: TRzCheckBox
       Left = 148
-      Top = 120
+      Top = 152
       Width = 84
       Height = 19
       Caption = 'Uang Muka'
       State = cbUnchecked
       TabOrder = 13
       OnClick = cbUangMukaClick
+    end
+    object edPOOrder: TEdit
+      Left = 132
+      Top = 113
+      Width = 230
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 14
     end
   end
   object Panel2: TPanel
@@ -690,9 +713,9 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 147
+    Top = 179
     Width = 870
-    Height = 287
+    Height = 255
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alClient
@@ -704,17 +727,17 @@ object FNew_Penjualan: TFNew_Penjualan
     TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 866
-    ExplicitHeight = 286
+    ExplicitHeight = 254
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 862
-      ExplicitHeight = 261
+      ExplicitHeight = 229
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 866
-        Height = 262
+        Height = 230
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSDetail
@@ -763,6 +786,7 @@ object FNew_Penjualan: TFNew_Penjualan
           item
             AlwaysShowEditButton = True
             CellButtons = <>
+            DisplayFormat = '#.###'
             DynProps = <>
             EditButtons = <
               item
@@ -976,7 +1000,7 @@ object FNew_Penjualan: TFNew_Penjualan
         Left = 0
         Top = 0
         Width = 866
-        Height = 262
+        Height = 230
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSUangMuka

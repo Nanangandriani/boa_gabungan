@@ -205,7 +205,7 @@ begin
   strKaresidenanID:='';
   dtTanggal1.Date:=NOW();
   dtTanggal2.Date:=NOW();
-  QRekapTagihanKolektor.Close;
+//  QRekapTagihanKolektor.Close;
 end;
 
 procedure TFRekapTagihanKolektor.edAreaChange(Sender: TObject);

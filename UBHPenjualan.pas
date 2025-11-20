@@ -33,7 +33,6 @@ type
   TFBHPenjualan = class(TForm)
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
-    DBGrid: TDBGridEh;
     ActMenu: TActionManager;
     ActBaru: TAction;
     ActUpdate: TAction;
@@ -55,29 +54,6 @@ type
     edKaresidenan: TcxBarEditItem;
     btPreview: TdxBarLargeButton;
     btSearch: TdxBarLargeButton;
-    QBHPenjualantrans_no: TStringField;
-    QBHPenjualantrans_date: TDateField;
-    QBHPenjualancode_cust: TStringField;
-    QBHPenjualanname_cust: TStringField;
-    QBHPenjualanname_region: TStringField;
-    QBHPenjualancode_item: TStringField;
-    QBHPenjualanname_item: TStringField;
-    QBHPenjualanamount: TFloatField;
-    QBHPenjualancode_unit: TStringField;
-    QBHPenjualanname_unit: TStringField;
-    QBHPenjualanakn_debet: TStringField;
-    QBHPenjualannm_debit_deb: TStringField;
-    QBHPenjualanjum_ak_deb: TFloatField;
-    QBHPenjualanakn_debet_lain: TMemoField;
-    QBHPenjualannm_debit_lain: TMemoField;
-    QBHPenjualanjum_ak_deb_lain: TIntegerField;
-    QBHPenjualanakn_kredit: TStringField;
-    QBHPenjualannm_debit_kre: TStringField;
-    QBHPenjualanjum_ak_kre: TFloatField;
-    QBHPenjualanppn_ak_kre: TFloatField;
-    QBHPenjualanakn_kre_lain: TStringField;
-    QBHPenjualannm_kre_lain: TStringField;
-    QBHPenjualanjum_ak_kre_lain: TFloatField;
     edKabupaten: TcxBarEditItem;
     QCetak: TUniQuery;
     frxDBDBHPenjualan: TfrxDBDataset;
@@ -130,6 +106,11 @@ type
     QCetak2tot_ppn: TFloatField;
     DataSource1: TDataSource;
     DataSource2: TDataSource;
+    DBGrid: TDBGridEh;
+    DBGridEh1: TDBGridEh;
+    QDetailBarang: TUniQuery;
+    DSDetailBarang: TDataSource;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure QBHPenjualanakn_debet_lainGetText(Sender: TField;
@@ -145,6 +126,7 @@ type
     procedure btPreviewClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -213,7 +195,7 @@ begin
             'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
             'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
             ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND b.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
-            ''+strKab+'order by a.created_at desc';
+            ''+strKab+'order by a.trans_date,trans_no asc';
 
       Open;
     end;
@@ -273,7 +255,7 @@ begin
        //ShowMessage(cLocation);
 //       Report.LoadFromFile(cLocation +'report/rpt_bh_penjualan'+ '.fr3');
       Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualan2'+ '.fr3');
-//       SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+      SetMemo(Report,'kodeprsh',FHomeLogin.vKodePRSH);
 //       SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
 //        if edKaresidenan.EditValue='' then
 //        begin
@@ -304,37 +286,38 @@ begin
 end;
 
 procedure TFBHPenjualan.btSearchClick(Sender: TObject);
+var strKaresidenan,strKabupaten :String;
 begin
-  if edKaresidenan.EditValue='' then
+  strKaresidenan:='';
+  strKabupaten:='';
+  if edKaresidenan.EditValue<>'' then
   begin
-    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
-  end else begin
-    DBGrid.StartLoadingStatus();
-    try
-     with QBHPenjualan do
-     begin
-         close;
-         sql.Clear;
-         sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhpenjualan" a  '+
-                 ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-                 ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-                 ' ON "left"(code_region, 4)=b.code_kab '+
-                 ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-                 ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-           if edKaresidenan.EditValue<>'' then
-           begin
-            sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-           end;
-           if edKabupaten.EditValue<>'' then
-           begin
-            sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-           end;
-         sql.add(' ORDER BY trans_date, trans_no');
-         open;
-     end;
-    finally
-    DBGrid.FinishLoadingStatus();
-    end;
+    strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+  end;
+  if edKabupaten.EditValue<>'' then
+  begin
+    strKabupaten:=' AND kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+  end;
+
+
+  DBGrid.StartLoadingStatus();
+  try
+   with QBHPenjualan do
+   begin
+       close;
+       sql.Clear;
+       SQL.Text:='SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_selling(False) a '+
+                 'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
+                 'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
+       open;
+   end;
+
+   QDetailBarang.Close;
+   QDetailBarang.Open;
+
+  finally
+  DBGrid.FinishLoadingStatus();
   end;
 end;
 
@@ -426,6 +409,16 @@ begin
   end;
 end;
 
+procedure TFBHPenjualan.dxBarLargeButton2Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue := '';
+  edKabupaten.EditValue := '';
+  vkd_kares:='';
+  vkd_kab:='';
+end;
+
 procedure TFBHPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
@@ -469,13 +462,13 @@ end;
 procedure TFBHPenjualan.QBHPenjualanakn_debet_lainGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenjualanakn_debet_lain.asstring,100);
+//  Text:=copy(QBHPenjualanakn_debet_lain.asstring,100);
 end;
 
 procedure TFBHPenjualan.QBHPenjualannm_debit_lainGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenjualannm_debit_lain.asstring,100);
+//  Text:=copy(QBHPenjualannm_debit_lain.asstring,100);
 end;
 
 procedure TFBHPenjualan.ReportGetValue(const VarName: string;

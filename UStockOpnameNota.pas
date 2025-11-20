@@ -34,6 +34,7 @@ type
     frxDBDatasetStokOpname: TfrxDBDataset;
     RzLabel4: TRzLabel;
     cbSBU: TRzComboBox;
+    RzBitBtn1: TRzBitBtn;
     procedure FormShow(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
@@ -48,6 +49,7 @@ type
     procedure btCetakLaporanStokOpnameClick(Sender: TObject);
     procedure dtTanggal2Change(Sender: TObject);
     procedure dtTanggal1Change(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -364,6 +366,13 @@ begin
   Value := FormatDateTime('dd-mm-yyyy',dtTanggal1.Date);
   if CompareText(VarName, 'TANGGAL1_TANGGAL2') = 0 then
   Value := FormatDateTime('dd-mm-yyyy',dtTanggal1.Date)+' s/d '+FormatDateTime('dd-mm-yyyy',dtTanggal2.Date);
+end;
+
+procedure TFStockOpnameNota.RzBitBtn1Click(Sender: TObject);
+begin
+  edKaresidenan.Text:='';
+  dtTanggal1.Date:=NOW;
+  dtTanggal2.Date:=NOW;
 end;
 
 procedure TFStockOpnameNota.ReportSaldoNotaLHSNGetValue(const VarName: string;

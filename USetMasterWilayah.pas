@@ -174,6 +174,36 @@ type
     QKaresidenancode_region_kares: TStringField;
     QKaresidenanname_region_kares: TStringField;
     QKaresidenandescription: TMemoField;
+    TabSheet1: TRzTabSheet;
+    QTP: TUniQuery;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    StringField4: TStringField;
+    MemoField1: TMemoField;
+    dsTP: TDataSource;
+    Panel7: TPanel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label55: TLabel;
+    Label56: TLabel;
+    Label57: TLabel;
+    edKode_setTP: TEdit;
+    edNama_setTP: TEdit;
+    edKet_setTP: TEdit;
+    cbstatus_setTP: TCheckBox;
+    edArea_setTP: TRzButtonEdit;
+    edKDArea_setTP: TEdit;
+    Panel8: TPanel;
+    RzBitBtn2: TRzBitBtn;
+    RzBitBtn3: TRzBitBtn;
+    btRefresh_setTP: TRzBitBtn;
+    RzBitBtn5: TRzBitBtn;
+    RzBitBtn6: TRzBitBtn;
+    DBGrid_setTP: TDBGridEh;
     procedure edArea_setkaresButtonClick(Sender: TObject);
     procedure edWilayah_setprovButtonClick(Sender: TObject);
     procedure edArea_setprovButtonClick(Sender: TObject);
@@ -217,6 +247,11 @@ type
     procedure QKaresidenandescriptionGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
     procedure RzBitBtn1Click(Sender: TObject);
+    procedure edArea_setTPButtonClick(Sender: TObject);
+    procedure RzBitBtn5Click(Sender: TObject);
+    procedure btRefresh_setTPClick(Sender: TObject);
+    procedure RzBitBtn3Click(Sender: TObject);
+    procedure DBGrid_setTPDblClick(Sender: TObject);
   private
     { Private declarations }
     procedure Clear;
@@ -337,6 +372,17 @@ begin
   end;
 end;
 
+procedure TFSetMasterWilayah.btRefresh_setTPClick(Sender: TObject);
+begin
+  DBGrid_setTP.StartLoadingStatus();
+  try
+    QTP.Close;
+    QTP.Open;
+  finally
+  DBGrid_setTP.FinishLoadingStatus();
+  end;
+end;
+
 procedure TFSetMasterWilayah.btRefresh_setwilayahClick(Sender: TObject);
 begin
   DBGrid_setwilayah.StartLoadingStatus();
@@ -450,6 +496,13 @@ begin
   edNama_setkares.Text:='';
   edKet_setkares.Text:='';
   cbstatus_setkares.Checked:=True;
+  //TP
+  edArea_setTP.Text:='';
+  edKDArea_setTP.Text:='';
+  edKode_setTP.Text:='';
+  edNama_setTP.Text:='';
+  edKet_setTP.Text:='';
+  cbstatus_setTP.Checked:=True;
   //Provinsi
   edWilayah_setprov.Text:='';
   edKDWilayah_setprov.Text:='';
@@ -510,6 +563,16 @@ end;
 procedure TFSetMasterWilayah.DBGrid_setprovDblClick(Sender: TObject);
 begin
   status:=1;
+end;
+
+procedure TFSetMasterWilayah.DBGrid_setTPDblClick(Sender: TObject);
+begin
+  status:=1;
+  edKDArea_setTP.Text:=QKaresidenancode_areas.AsString;
+  edArea_setTP.Text:=QKaresidenanname_areas.AsString;
+  edKode_setTP.Text:=QKaresidenancode_region_kares.AsString;
+  edNama_setTP.Text:=QKaresidenanname_region_kares.AsString;
+  edKet_setTP.Text:=QKaresidenandescription.AsString;
 end;
 
 procedure TFSetMasterWilayah.DBGrid_setwilayahDblClick(Sender: TObject);
@@ -601,6 +664,106 @@ begin
     MemMasterData.EmptyTable;
   end;
   FMasterWilayahAdministratif.show;
+end;
+
+procedure TFSetMasterWilayah.RzBitBtn3Click(Sender: TObject);
+begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if edArea_setTP.Text='' then
+      begin
+        MessageDlg('Kode Area Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      end
+      else if edKode_setTP.Text='' then
+      begin
+        MessageDlg('Kode Karesidenan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      end
+      else if edNama_setTP.Text='' then
+      begin
+        MessageDlg('Nama Karesidenan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      end
+      else if Status = 0 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' INSERT INTO "t_region_tp" ("code", "name", "description", "code_areas",'+
+                    ' "created_by" ) '+
+                    ' Values( '+
+                    ' '+QuotedStr(edKode_setTP.Text)+', '+
+                    ' '+QuotedStr(edNama_setTP.Text)+', '+
+                    ' '+QuotedStr(edKet_setTP.Text)+', '+
+                    ' '+QuotedStr(edKDArea_setTP.Text)+', '+
+                    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
+          ExecSQL;
+        end;
+        MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end
+      else if Status = 1 then
+      begin
+      if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_region_tp" SET '+
+                    ' "name"='+QuotedStr(edNama_setTP.Text)+', '+
+                    ' "code_areas"='+QuotedStr(edKDArea_setTP.Text)+', '+
+                    ' "description"='+QuotedStr(edKet_setTP.Text)+', '+
+                    ' "updated_at"=now(), '+
+                    ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                    ' WHERE "code"='+QuotedStr(edKode_setTP.Text)+';';
+          ExecSQL;
+        end;
+
+        if cbstatus_setwilayah.Checked=false then
+        begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "t_region_karesidenan" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                    ' WHERE "code"='+QuotedStr(edKode_setTP.Text)+';';
+          ExecSQL;
+        end;
+        end;
+        MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+      btRefresh_setTPClick(Sender);
+end;
+
+procedure TFSetMasterWilayah.RzBitBtn5Click(Sender: TObject);
+begin
+  status:=0;
+  btRefresh_setkaresClick(Sender);
+  Clear;
+end;
+
+procedure TFSetMasterWilayah.edArea_setTPButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Provinsi';
+  FMasterData.vcall:='set_areatp';
+  FMasterData.update_grid('code','name','description','t_region_areas','WHERE	deleted_at IS NULL ');
+  FMasterData.ShowModal;
 end;
 
 procedure TFSetMasterWilayah.edProv_setkabButtonClick(Sender: TObject);

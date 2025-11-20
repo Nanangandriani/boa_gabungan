@@ -812,12 +812,12 @@ object FNew_PO: TFNew_PO
     end
     object EdPPn: TEdit
       Left = 997
-      Top = 76
+      Top = 0
       Width = 36
       Height = 23
       Alignment = taRightJustify
       TabOrder = 0
-      Text = '10'
+      Text = '11'
       Visible = False
     end
     object EdPPh23: TEdit
@@ -827,7 +827,7 @@ object FNew_PO: TFNew_PO
       Height = 23
       Alignment = taRightJustify
       TabOrder = 1
-      Text = '10'
+      Text = '0'
       Visible = False
       OnChange = EdPPh23Change
     end
@@ -843,7 +843,7 @@ object FNew_PO: TFNew_PO
     end
     object Edpph: TRzEdit
       Left = 1065
-      Top = 45
+      Top = 0
       Width = 104
       Height = 23
       Text = '0'

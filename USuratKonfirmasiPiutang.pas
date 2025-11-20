@@ -74,6 +74,7 @@ type
     dxBarEdit4: TdxBarEdit;
     DataSource1: TDataSource;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure btPreviewClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
@@ -83,6 +84,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -169,6 +171,23 @@ begin
        MessageDlg(edNamaPelanggan.EditValue+' tidak memiliki piutang ..!!',mtInformation,[mbRetry],0);
     end;
   end;
+end;
+
+procedure TFSuratKonfirmasiPiutang.dxBarLargeButton2Click(Sender: TObject);
+begin
+  dtPerTanggal.Date:=NOW();
+  dtTanggalSurat.Date:=NOW();
+  edNamaPelanggan.EditValue:='';
+  StrSKPKodePelanggan:='';
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.full_name from t_user  a left join t_position b on b.position_code=a.position_code where b.level=2';
+    open;
+  end;
+  StrNonOp:=dm.Qtemp.FieldValues['full_name'] ;
+//  QDetail.Close;
 end;
 
 procedure TFSuratKonfirmasiPiutang.edNamaPelangganPropertiesButtonClick(

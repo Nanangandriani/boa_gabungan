@@ -249,11 +249,28 @@ begin
   begin
     close;
     sql.Clear;
+    sql.Text:='SELECT * FROM t_cash_bank';
+    open;
+  end;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='';
+    open;
+  end;
+
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
     sql.Text:=' select * from "public"."t_selling"   '+
              ' where no_reference='+QuotedStr(QPenjualan.FieldByName('notrans').AsString)+' '+
              ' AND deleted_at is null order by created_at Desc ';
     open;
   end;
+
   if dm.Qtemp.RecordCount<>0 then
   begin
     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Tagihan...!!!');
@@ -343,6 +360,7 @@ begin
     edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
     edKodeSumber.Text:=Dm.Qtemp.FieldByName('code_source').AsString;
     edNamaSumber.Text:=Dm.Qtemp.FieldByName('name_source').AsString;
+    edPOOrder.Text:=Dm.Qtemp.FieldByName('po_order').AsString;
     spJatuhTempo.Text:=Dm.Qtemp.FieldByName('payment_term').AsString;
     edNoReff.Text:=Dm.Qtemp.FieldByName('no_reference').AsString;
     vFormSumber:=SelectRow('SELECT form_target from t_selling_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_source').AsString)+' ');
@@ -364,6 +382,10 @@ begin
     edNamaSumber.ReadOnly:=True;
     edNoReff.ReadOnly:=True;
 
+    if Dm.Qtemp.FieldByName('code_source').AsString='SEL002' then
+    edPOOrder.ReadOnly:=True else edPOOrder.ReadOnly:=False;
+
+
 //    if (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>'') AND
 //    (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>NULL) THEN edNomorFaktur.ReadOnly:=True
 //    else
@@ -382,7 +404,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' select a."trans_no", "no_inv_tax", "trans_date", a."code_cust", a."name_cust", '+
+    sql.add(' select a."trans_no", "no_inv_tax", "trans_date",a.po_order, a."code_cust", a."name_cust", '+
            ' d."address",COALESCE(e.no_npwp,'''') no_npwp, b."code_item", b."name_item", '+
            ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
            ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
@@ -457,7 +479,7 @@ begin
 //        TfrxMemoView(Report.FindObject('MemVA7')).Visible:=True;
 //      end;
 
-
+//     ShowMessage(QCetak.FieldValues['po_order']);
      cLocation := ExtractFilePath(Application.ExeName);
 
      //ShowMessage(cLocation);
@@ -467,6 +489,24 @@ begin
      SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
      SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
      SetMemo(Report,'signature_name',dm.Qtemp2.FieldValues['full_name']);
+     SetMemo(Report,'memTanggal',FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
+     if dm.Qtemp.FieldValues['po_order']<>NULL then
+     begin
+      SetMemo(Report,'memPO',dm.Qtemp.FieldValues['po_order']);
+      Report.FindObject('memPO').Visible := True;
+      Report.FindObject('memo51').Visible := True;
+      Report.FindObject('memo52').Visible := True;
+      Report.FindObject('Line25').Visible:=True;
+      Report.FindObject('Line26').Visible:=True;
+      Report.FindObject('Line27').Visible:=True;
+     end else begin
+      Report.FindObject('memPO').Visible := False;
+      Report.FindObject('memo51').Visible := False;
+      Report.FindObject('memo52').Visible := False;
+      Report.FindObject('Line25').Visible:=False;
+      Report.FindObject('Line26').Visible:=False;
+      Report.FindObject('Line27').Visible:=False;
+     end;
      SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
      //Report.DesignReport();
      //Report.ShowReport();

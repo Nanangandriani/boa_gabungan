@@ -150,7 +150,8 @@ begin
       sql.Clear;
       sql.Text:=' Update t_nocek_master set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                 ' where trans_no='+QuotedStr(DBGridCek.Fields[0].AsString);
-      parambyname('deleted_at').AsDateTime:=Now();
+      //parambyname('deleted_at').AsDateTime:=Now();
+      parambyname('deleted_at').Value:=NowISO;
       parambyname('deleted_by').AsString:=FHomeLogin.EdUser.Text;
       Execute;
     end;
@@ -160,7 +161,8 @@ begin
       sql.Clear;
       sql.Text:=' Update t_nocek set deleted_at=:deleted_at,deleted_by=:deleted_by '+
                 ' where trans_no='+QuotedStr(DBGridCek.Fields[0].AsString);
-      parambyname('deleted_at').AsDateTime:=Now();
+      //parambyname('deleted_at').AsDateTime:=Now();
+      parambyname('deleted_at').Value:=NowISO;
       parambyname('deleted_by').AsString:=FHomeLogin.EdUser.Text;
       Execute;
     end;

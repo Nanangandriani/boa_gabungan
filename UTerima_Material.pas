@@ -26,7 +26,8 @@ uses
   dxCore, dxRibbonSkins, dxRibbonCustomizationForm, dxRibbon, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses, frxClass,
-  frxDBSet, DataDriverEh, MemTableEh, MemDS, DBAccess, Uni;
+  frxDBSet, DataDriverEh, MemTableEh, MemDS, DBAccess, Uni, RzButton,
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, RzPanel;
 
 type
   TFTerima_Material = class(TForm)
@@ -67,12 +68,19 @@ type
     DBGridEh2: TDBGridEh;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    DTP1: TDateTimePicker;
+    DTP2: TDateTimePicker;
+    Cari: TRzBitBtn;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure dxBarDeleteClick(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
+    procedure CariClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -259,6 +267,29 @@ begin
           QTerimaDet.Next;
         end;
     end;
+end;
+
+procedure TFTerima_Material.CariClick(Sender: TObject);
+begin
+   DBGridTerima.StartLoadingStatus();
+   with Qterima_material do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select (case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' END) AS status_app,a.*, b.supplier_name, '+
+               'c.account_name, d.account_name as nm_perk,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from t_item_receive a '+
+               'Left join t_supplier b on a.supplier_code=b.supplier_code '+
+               'left join t_ak_account c on a.account_code=c.code '+
+               'left join t_ak_account d on a.account_um_code=d.code '+
+               'WHERE a.receive_date between '+QuotedStr(formatdatetime('yyyy=mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy=mm-dd',DTP2.DateTime))+' '+//and a.pic='+Quotedstr(Nm)+' ';
+               'order by a.receive_date desc ';
+     open;
+   end;
+   Qterima_material.Close;
+   Qterima_material.Open;
+   Qterima_material.Close;
+   Qterima_material.Open;
+   DBGridTerima.FinishLoadingStatus();
 end;
 
 procedure TFTerima_Material.dxBarDeleteClick(Sender: TObject);

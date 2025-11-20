@@ -110,6 +110,7 @@ type
     StringField15: TStringField;
     FloatField5: TFloatField;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -119,6 +120,7 @@ type
       AButtonIndex: Integer);
     procedure btSearchClick(Sender: TObject);
     procedure btPreviewClick(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -256,6 +258,16 @@ begin
   finally
   DBGrid.FinishLoadingStatus();
   end;
+end;
+
+procedure TFRekapReturPenjualan.dxBarLargeButton1Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue := '';
+  edKabupaten.EditValue := '';
+  vkd_kares:='';
+  vkd_kab:='';
 end;
 
 procedure TFRekapReturPenjualan.edKabupatenPropertiesButtonClick(

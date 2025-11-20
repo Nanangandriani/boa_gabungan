@@ -119,6 +119,7 @@ type
     dsCetak: TDataSource;
     dsCetakdetail: TDataSource;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -132,6 +133,7 @@ type
     procedure QBHReturPenjualannm_debit_lainGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
     procedure btPreviewClick(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -270,6 +272,16 @@ begin
   finally
   DBGrid.FinishLoadingStatus();
   end;
+end;
+
+procedure TFBHReturPenjualan.dxBarLargeButton1Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue := '';
+  edKabupaten.EditValue := '';
+  vkd_kares:='';
+  vkd_kab:='';
 end;
 
 procedure TFBHReturPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;

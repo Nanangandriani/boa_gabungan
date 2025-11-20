@@ -114,6 +114,7 @@ type
     dtTanggal: TdxBarDateCombo;
     MemTableEh1: TMemTableEh;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton7: TdxBarLargeButton;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -128,6 +129,7 @@ type
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -329,6 +331,20 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TFLaporanHarianSisaNota.dxBarLargeButton7Click(Sender: TObject);
+begin
+  strKaresidenanID:='';
+  strKabupatenID:='';
+  strKecamatanID:='';
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  cbKecamatan.EditValue:='';
+  dtTanggal.Date:=NOW;
+//  Qreport.Close;
+//  QLaporanHarianSisaNota.Close;
+//  MemTableEh1.Active:=True;
 end;
 
 procedure TFLaporanHarianSisaNota.FormCreate(Sender: TObject);

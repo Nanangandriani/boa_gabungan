@@ -26,7 +26,8 @@ uses
   DBGridEhToolCtrls, DynVarsEh, dxBar, EhLibVCL, GridsEh, DBAxisGridsEh,
   DBGridEh, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, MemDS,
-  DBAccess, Uni, frxClass, frxDBSet;
+  DBAccess, Uni, frxClass, frxDBSet, RzButton, Vcl.ComCtrls, Vcl.StdCtrls,
+  Vcl.ExtCtrls, RzPanel;
 
 type
   TFPembelian = class(TForm)
@@ -69,6 +70,12 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     dxBarLargeButton2: TdxBarLargeButton;
     DBGridOrder: TDBGridEh;
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    DTP1: TDateTimePicker;
+    DTP2: TDateTimePicker;
+    Cari: TRzBitBtn;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);

@@ -99,6 +99,7 @@ type
     Qreport: TUniQuery;
     cbKabupaten: TcxBarEditItem;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton7: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -110,6 +111,7 @@ type
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
+    procedure dxBarLargeButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -220,6 +222,16 @@ begin
       Open;
     end;
   end;
+end;
+
+procedure TFLaporanHarianSisaNotaPerKabupaten.dxBarLargeButton7Click(
+  Sender: TObject);
+begin
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  strKaresidenanID:='';
+  dtTanggal1.Date:=NOW;
+  dtTanggal2.Date:=NOW;
 end;
 
 procedure TFLaporanHarianSisaNotaPerKabupaten.FormCreate(Sender: TObject);

@@ -115,6 +115,7 @@ type
     dsRincianFaktur: TDataSource;
     dxBarLargeButton1: TdxBarLargeButton;
     cbSBU: TdxBarCombo;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -125,6 +126,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btPreviewClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -171,7 +173,8 @@ begin
        sql.Clear;
        SQL.Text:='SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_selling(False) a '+
                  'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
-                 'WHERE 1=1 '+strKaresidenan+strKabupaten;
+                 'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten +'Order by a.trans_date,a.trans_no ASC' ;
 //       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
 //               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
 //               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+
@@ -276,7 +279,8 @@ begin
        sql.Clear;
        SQL.Text:='SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_selling(False) a '+
                  'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
-                 'WHERE 1=1 '+strKaresidenan+strKabupaten;
+                 'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
 //       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vrekap_penjualan" a  '+
 //               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
 //               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
@@ -386,6 +390,18 @@ begin
 
  end;
 
+end;
+
+procedure TFRekapPenjualan.dxBarLargeButton2Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue := '';
+  edKabupaten.EditValue := '';
+  vkd_kares:='';
+  vkd_kab:='';
+  QRekapPenjualan.Close;
+  QCetak.Close;
 end;
 
 procedure TFRekapPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;

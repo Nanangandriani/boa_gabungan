@@ -118,6 +118,7 @@ type
     MemMasternama_pkp: TStringField;
     QKartuPiutangcustomer_name: TMemoField;
     QKartuPiutangTRXketerangan2: TMemoField;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -131,6 +132,7 @@ type
     procedure QKartuPiutangcustomer_name_pkpGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
     procedure btPreviewClick(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -354,6 +356,16 @@ begin
   finally
   DBGrid.FinishLoadingStatus();
   end;
+end;
+
+procedure TFKartuPiutang.dxBarLargeButton1Click(Sender: TObject);
+begin
+  spTahun.EditValue := YearOf(Now);
+  cbBulan.ItemIndex:= MonthOf(Now);
+  edKaresidenan.EditValue := '';
+  edKabupaten.EditValue := '';
+  vkd_kares:='';
+  vkd_kab:='';
 end;
 
 procedure TFKartuPiutang.edKabupatenPropertiesButtonClick(Sender: TObject;

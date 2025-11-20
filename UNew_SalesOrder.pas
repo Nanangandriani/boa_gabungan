@@ -77,7 +77,7 @@ type
     MemDetailBERAT_KOSONG: TFloatField;
     Label15: TLabel;
     Label16: TLabel;
-    edKelompokBarang: TRzButtonEdit;
+    edKelompokKendaraan: TRzButtonEdit;
     edTypeKendaraan: TEdit;
     Label17: TLabel;
     Label18: TLabel;
@@ -85,6 +85,12 @@ type
     Label20: TLabel;
     edKodeTypeKendaraan: TEdit;
     edKapasitas: TRzNumericEdit;
+    Label21: TLabel;
+    Label22: TLabel;
+    edPOOrder: TEdit;
+    LabelKendaraan: TLabel;
+    Label24: TLabel;
+    edKendaraan: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edNama_PelangganButtonClick(Sender: TObject);
@@ -102,7 +108,7 @@ type
     procedure edNama_PelangganChange(Sender: TObject);
     procedure BTambahTargetPenjualanClick(Sender: TObject);
     procedure cbKonversiMuatanClick(Sender: TObject);
-    procedure edKelompokBarangButtonClick(Sender: TObject);
+    procedure edKelompokKendaraanButtonClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -615,7 +621,7 @@ begin
     end else if valKonversi=1 then
     begin
       MessageDlg('Berat Kosong Dan Isi Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
-    end  else if edKelompokBarang.Text='' then
+    end  else if edKelompokKendaraan.Text='' then
     begin
       MessageDlg('Kelompok Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
@@ -783,7 +789,8 @@ begin
   edNama_Sales.Clear;
   edKodeSumber.Clear;
   edNamaSumber.Clear;
-  edKelompokBarang.Clear;
+  edPOOrder.Clear;
+  edKelompokKendaraan.Clear;
   edTypeKendaraan.Clear;
   edKodeTypeKendaraan.Clear;
   edKapasitas.Value:=0;
@@ -816,7 +823,7 @@ begin
 //  FNew_SalesOrder.Autonumber;
 end;
 
-procedure TFNew_SalesOrder.edKelompokBarangButtonClick(Sender: TObject);
+procedure TFNew_SalesOrder.edKelompokKendaraanButtonClick(Sender: TObject);
 begin
   FDaftarKendaraan.vcall:='sales_order';
   FDaftarKendaraan.GetDataViaAPI;
@@ -990,7 +997,7 @@ begin
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
-            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity) '+
+            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity,po_order,vehicles) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -1011,8 +1018,9 @@ begin
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+','+
             ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+strKonversiMuatan+','+
-            ' '+QuotedStr(edKelompokBarang.Text)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
-            ' '+QuotedStr(edTypeKendaraan.Text)+','+QuotedStr(FloatToStr(edKapasitas.value))+' );');
+            ' '+QuotedStr(edKelompokKendaraan.Text)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
+            ' '+QuotedStr(edTypeKendaraan.Text)+','+
+            ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+QuotedStr(edKendaraan.Text)+' );');
     ExecSQL;
   end;
   InsertDetailSO;
@@ -1088,9 +1096,11 @@ begin
                 ' status='+StrStatus+','+
                 ' note='+StrNote+', '+
                 ' load_conversion='+strKonversiMuatan+', '+
-                ' vehicle_group_id='+QuotedStr(edKelompokBarang.Text)+','+
+                ' vehicle_group_id='+QuotedStr(edKelompokKendaraan.Text)+','+
                 ' type_vehicles_code='+QuotedStr(edKodeTypeKendaraan.Text)+','+
                 ' type_vehicles_name='+QuotedStr(edTypeKendaraan.Text)+','+
+                ' vehicles='+QuotedStr(edKendaraan.Text)+','+
+                ' po_order='+QuotedStr(edPOOrder.Text)+','+
                 ' capacity='+QuotedStr(FloatToStr(edKapasitas.value))+' '+
     //            ' order_no='+QuotedStr(order_no)+','+
     //            ' additional_code='+QuotedStr(kd_kares)+','+
@@ -1126,7 +1136,13 @@ begin
               ' name_source='+QuotedStr(edNamaSumber.Text)+','+
               ' status='+StrStatus+','+
               ' note='+StrNote+', '+
-              ' load_conversion='+strKonversiMuatan+' '+
+              ' load_conversion='+strKonversiMuatan+', '+
+              ' vehicle_group_id='+QuotedStr(edKelompokKendaraan.Text)+','+
+              ' type_vehicles_code='+QuotedStr(edKodeTypeKendaraan.Text)+','+
+              ' type_vehicles_name='+QuotedStr(edTypeKendaraan.Text)+','+
+              ' vehicles='+QuotedStr(edKendaraan.Text)+','+
+              ' po_order='+QuotedStr(edPOOrder.Text)+','+
+              ' capacity='+QuotedStr(FloatToStr(edKapasitas.value))+' '+
   //            ' order_no='+QuotedStr(order_no)+','+
   //            ' additional_code='+QuotedStr(kd_kares)+','+
   //            ' trans_day='+QuotedStr(strtgl)+','+

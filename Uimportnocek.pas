@@ -39,6 +39,7 @@ type
     procedure cbbankChange(Sender: TObject);
     procedure BProsesClick(Sender: TObject);
     procedure cbbankSelect(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -46,10 +47,13 @@ type
     status:integer;
     procedure clear;
     procedure update;
+
   end;
 
 var
   FImportnocek: TFImportnocek;
+
+function NowISO: string;
 
 implementation
 
@@ -110,7 +114,9 @@ begin
         Params.ParamByName('trans').Value:=trans_no;
         Params.ParamByName('bnk').Value:=cbbank.Text;;
         Params.ParamByName('nrk').Value:=cbrek.Text;
-        Params.parambyname('created_at').AsDateTime:=Now;
+        //Params.parambyname('created_at').AsDateTime:=Now;
+        //Params.parambyname('created_at').Value:=FormatDateTime('yyyy-mm-dd hh:nn:ss',Now);
+        Params.parambyname('created_at').Value:=NowISO;
         Params.parambyname('created_by').AsString:=Nm;
         Params.ParamByName('parheader').Value:=Ed_header.Text;
         Execute;
@@ -169,7 +175,9 @@ begin
               Params.ParamByName('nrk').Value:=cbrek.Text;
               Params.ParamByName('ckb').Value:=cbcek.Text;
               Params.ParamByName('stat').Value:='N';
-              Params.parambyname('created_at').AsDateTime:=Now;
+              //Params.parambyname('created_at').AsDateTime:=Now;
+              //Params.parambyname('created_at').Value:=FormatDateTime('yyyy-mm-dd hh:nn:ss',Now);
+              Params.parambyname('created_at').Value:=NowISO;
               Params.parambyname('created_by').AsString:=Nm;
               Params.parambyname('trans_no').Value:=trans_no;
               Execute;
@@ -409,5 +417,17 @@ begin
   cbrek.Text:='';
   Ed_header.Text:='';
 end;
+
+
+function NowISO: string;
+var
+  F: TFormatSettings;
+begin
+  F := TFormatSettings.Create;
+  F.TimeSeparator := ':';
+  F.DateSeparator := '-';
+  Result := FormatDateTime('yyyy-mm-dd hh:nn:ss', Now, F);
+end;
+
 
 end.
