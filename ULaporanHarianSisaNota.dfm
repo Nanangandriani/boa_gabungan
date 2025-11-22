@@ -1583,12 +1583,13 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 45978.399778368050000000
+    ReportOptions.LastChange = 45981.413144837960000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
         'var no,CountSisaNotaAwal,CountNotaPenjualan,CountPelunasan  : In' +
         't;'
+      '    TotPelunasan : Currency;              '
       ''
       'procedure Memo33OnBeforePrint(Sender: TfrxComponent);'
       'var PreviousValue:String;'
@@ -1745,15 +1746,42 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'procedure Memo55OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '//   if (<frxDBDatasetLapHarianSisaNota."trans_date_bayar"> <> '#39 +
-        #39') then CountPelunasan:=CountPelunasan+1;'
+        ' Memo55.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunasan' +
+        ');;    '
       'end;'
       ''
+      'procedure Memo56OnBeforePrint(Sender: TfrxComponent);'
       'begin'
+      '  Memo56.Text := IntToStr(CountPelunasan)+'#39' Lembar'#39';      '
+      'end;'
+      ''
+      'procedure Memo40OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  if (<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) OR (<f' +
+        'rxDBDatasetLapHarianSisaNota."amount_returns"> > 0) OR (<frxDBDa' +
+        'tasetLapHarianSisaNota."amount_jurnal_memorial"> > 0) then Count' +
+        'Pelunasan:=CountPelunasan+1;  '
+      'end;'
+      ''
+      'procedure Memo41OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  TotPelunasan:=<frxDBDatasetLapHarianSisaNota."amount_bayar">+<' +
+        'frxDBDatasetLapHarianSisaNota."amount_returns">+<frxDBDatasetLap' +
+        'HarianSisaNota."amount_jurnal_memorial">;                       ' +
+        '    '
+      'end;'
+      ''
+      
+        'begin                                                           ' +
+        '                                                                ' +
+        '                               '
       '  no:=1;'
       '  CountSisaNotaAwal:= 0; //'
       '  CountNotaPenjualan:=0;'
       '  CountPelunasan:=0;'
+      '  TotPelunasan:=0;                '
       'end.')
     OnGetValue = ReportGetValue
     Left = 480
@@ -1942,7 +1970,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo39: TfrxMemoView
           AllowVectorExport = True
           Left = 645.813648300000000000
-          Width = 108.472440944881900000
+          Width = 109.606299212598400000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataField = 'amount_penjualan'
@@ -1967,6 +1995,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Left = 756.333333330000000000
           Width = 59.338582680000000000
           Height = 22.230983330000000000
+          OnAfterPrint = 'Memo40OnAfterPrint'
           OnBeforePrint = 'Memo40OnBeforePrint'
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNota
@@ -1985,6 +2014,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Left = 815.166666660000000000
           Width = 108.850393700000000000
           Height = 22.230983330000000000
+          OnAfterPrint = 'Memo41OnAfterPrint'
           OnBeforePrint = 'Memo41OnBeforePrint'
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNota
@@ -2834,20 +2864,23 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 756.250000000000000000
+          Left = 815.073529410000000000
           Top = -0.039580000000000000
-          Width = 167.338582680000000000
+          Width = 108.515053270000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo55OnBeforePrint'
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNota
           DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2900,7 +2933,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Top = -0.079160000000000000
+          Top = -0.079160000000000010
           Width = 257.087270330000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
@@ -2915,6 +2948,24 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           HAlign = haCenter
           Memo.UTF8W = (
             'TOTAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo56: TfrxMemoView
+          AllowVectorExport = True
+          Left = 756.283464570000000000
+          Width = 59.338582680000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo56OnBeforePrint'
+          StretchMode = smMaxHeight
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2940,6 +2991,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'trans_date_returns=trans_date_returns'
       'amount_bayar=amount_bayar'
       'trans_date_bayar=trans_date_bayar'
+      'trans_date_jurnal_memorial=trans_date_jurnal_memorial'
+      'amount_jurnal_memorial=amount_jurnal_memorial'
       'amount_saldo_nota=amount_saldo_nota'
       'no_nota_saldo_nota=no_nota_saldo_nota'
       'tgl_nota_saldo_nota=tgl_nota_saldo_nota')
@@ -2958,6 +3011,10 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
   end
   object Qreport: TUniQuery
     Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT * FROM get_lhsn('#39'2025-10-03'#39',NULL,'#39'TANGERANG'#39','#39'KOTA TANGE' +
+        'RANG'#39','#39'Karawaci'#39')')
     Left = 600
     Top = 240
   end

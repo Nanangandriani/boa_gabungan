@@ -46,6 +46,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     DataSource = DsBHPenerimaanKasBank
     DrawMemoText = True
     DynProps = <>
+    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True
@@ -148,43 +149,58 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         Footers = <>
         Title.Caption = 'Perkiraan Yang Di Kredit | Piutang'
         Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ak_lain_kre'
-        Footers = <>
-        Title.Caption = 'Perkiraan Yang Di Kredit | Lain - Lain | Kode Akun'
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ak_nm_lain_kre'
-        Footers = <>
-        Title.Caption = 'Perkiraan Yang Di Kredit | Lain - Lain | Nama Akun'
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'jum_lain_kre'
-        Footers = <>
-        Title.Caption = 'Perkiraan Yang Di Kredit | Lain - Lain | Jumlah'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ket_faktur'
-        Footers = <>
-        Title.Caption = 'Keterangan'
-        Width = 300
       end>
     object RowDetailData: TRowDetailPanelControlEh
+      object DBGridEh1: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1082
+        Height = 118
+        Align = alClient
+        DataSource = DSPenerimaanKasBankDetail
+        DynProps = <>
+        TabOrder = 0
+        TitleParams.MultiTitle = True
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'voucher_no'
+            Footers = <>
+            Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_account'
+            Footers = <>
+            Title.Caption = 'Perkiraan Yang Di Kredit Lain-Lain | Kode Akun'
+            Width = 140
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_account'
+            Footers = <>
+            Title.Caption = 'Perkiraan Yang Di Kredit Lain-Lain | Nama Akun'
+            Width = 260
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.##'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'paid_amount'
+            Footers = <>
+            Title.Caption = 'Perkiraan Yang Di Kredit Lain-Lain | Jumlah'
+            Width = 139
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
     end
   end
   object ActMenu: TActionManager
@@ -680,97 +696,23 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "p' +
-        'ublic"."vbhpenerimaan_kas_bank" a   LEFT JOIN (SELECT "code_prov' +
-        'ince", "code" as code_kab, "name" as name_kab,  "code_karesidena' +
-        'n"  from t_region_regency WHERE deleted_at IS NULL)b   ON "left"' +
-        '(code_region, 4)=b.code_kab  '
-      
-        'LEFT JOIN (SELECT voucher_no, STRING_AGG('#39' No. Faktur '#39' || no_in' +
-        'voice_tax || '#39' Tgl.'#39' || date_invoice_tax, '#39', '#39') AS ket_faktur'
-      
-        'from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON' +
-        ' a.voucher_no=cc.voucher_no '
-      'where trans_date between '#39'2024-12-18'#39'  and '#39'2024-12-18'#39' '
-      ' ORDER BY trans_date, voucher_no')
-    Left = 948
-    Top = 344
-    object QBHPenerimaanKasBankvoucher_no: TStringField
-      FieldName = 'voucher_no'
-      Size = 100
-    end
-    object QBHPenerimaanKasBanktrans_date: TDateField
-      FieldName = 'trans_date'
-    end
-    object QBHPenerimaanKasBankmodule_id: TIntegerField
-      FieldName = 'module_id'
-    end
-    object QBHPenerimaanKasBankcode_cust: TStringField
-      FieldName = 'code_cust'
-      Size = 100
-    end
-    object QBHPenerimaanKasBankname_cust: TStringField
-      FieldName = 'name_cust'
-      Size = 255
-    end
-    object QBHPenerimaanKasBankcode_region: TStringField
-      FieldName = 'code_region'
-      Size = 50
-    end
-    object QBHPenerimaanKasBankfor_acceptance: TStringField
-      FieldName = 'for_acceptance'
-      Size = 255
-    end
-    object QBHPenerimaanKasBankdescription: TMemoField
-      FieldName = 'description'
-      OnGetText = QBHPenerimaanKasBankdescriptionGetText
-      BlobType = ftMemo
-    end
-    object QBHPenerimaanKasBankjum_kas: TFloatField
-      FieldName = 'jum_kas'
-      DisplayFormat = '#,##0.##'
-      EditFormat = '#,##0.##'
-    end
-    object QBHPenerimaanKasBankaccount_name_bank: TStringField
-      FieldName = 'account_name_bank'
-      Size = 255
-    end
-    object QBHPenerimaanKasBankaccount_number_bank: TStringField
-      FieldName = 'account_number_bank'
-      Size = 100
-    end
-    object QBHPenerimaanKasBankjum_bank: TFloatField
-      FieldName = 'jum_bank'
-      DisplayFormat = '#,##0.##'
-      EditFormat = '#,##0.##'
-    end
-    object QBHPenerimaanKasBankjum_piutang: TFloatField
-      DisplayLabel = 'jum_bank'
-      FieldName = 'jum_piutang'
-      DisplayFormat = '#,##0.##'
-      EditFormat = '#,##0.##'
-    end
-    object QBHPenerimaanKasBankak_lain_kre: TMemoField
-      FieldName = 'ak_lain_kre'
-      OnGetText = QBHPenerimaanKasBankak_lain_kreGetText
-      BlobType = ftMemo
-    end
-    object QBHPenerimaanKasBankak_nm_lain_kre: TMemoField
-      FieldName = 'ak_nm_lain_kre'
-      OnGetText = QBHPenerimaanKasBankak_nm_lain_kreGetText
-      BlobType = ftMemo
-    end
-    object QBHPenerimaanKasBankjum_lain_kre: TIntegerField
-      FieldName = 'jum_lain_kre'
-      DisplayFormat = '#,##0.##'
-      EditFormat = '#,##0.##'
-    end
-    object QBHPenerimaanKasBankket_faktur: TMemoField
-      FieldName = 'ket_faktur'
-      ReadOnly = True
-      OnGetText = QBHPenerimaanKasBankket_fakturGetText
-      BlobType = ftMemo
-    end
+        'SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_ka' +
+        'bupaten,cust.kabupaten FROM ( SELECT a.voucher_no,a.trans_date,a' +
+        '.module_id,a.code_cust, a.name_cust,a.for_acceptance,a.descripti' +
+        'on,a.account_name_bank,a.account_number_bank, CASE WHEN a.module' +
+        '_id = '#39'4'#39' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas,' +
+        ' CASE WHEN a.module_id = '#39'3'#39' THEN COALESCE(b.paid_amount, 0) ELS' +
+        'E 0 END AS jum_bank, COALESCE(c.paid_amount, 0) AS jum_piutang F' +
+        'ROM t_cash_bank_acceptance a INNER JOIN t_cash_bank_acceptance_d' +
+        'et b ON b.voucher_no = a.voucher_no AND b.position = '#39'D'#39' INNER J' +
+        'OIN t_cash_bank_acceptance_receivable c ON c.voucher_no = a.vouc' +
+        'her_no ) AS zz LEFT JOIN get_customer() AS cust ON cust.customer' +
+        '_code = zz.code_cust WHERE zz.trans_date BETWEEN '#39'2025-10-01'#39' AN' +
+        'D '#39'2025-10-04'#39' '
+      ' ORDER BY zz.trans_date, zz.voucher_no')
+    Active = True
+    Left = 932
+    Top = 296
   end
   object DsBHPenerimaanKasBank: TDataSource
     DataSet = QBHPenerimaanKasBank
@@ -788,23 +730,26 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
     PreviewOptions.Zoom = 1.000000000000000000
-    PreviewOptions.ZoomMode = zmWholePage
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45644.650452060200000000
+    ReportOptions.LastChange = 45981.694740486110000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'begin'
       ''
       'end.')
-    Left = 992
-    Top = 32
+    Left = 632
+    Top = 120
     Datasets = <
       item
         DataSet = frxDBDBHPenerimaan
         DataSetName = 'frxDBDBHPenerimaan'
+      end
+      item
+        DataSet = frxDBDHKredit
+        DataSetName = 'frxDBDHKredit'
       end>
     Variables = <
       item
@@ -1258,17 +1203,17 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Line13: TfrxLineView
           AllowVectorExport = True
-          Left = 442.205010000000000000
+          Left = 341.205010000000000000
           Top = 119.165430000000000000
-          Width = 642.520100000000000000
+          Width = 745.322834645669300000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line14: TfrxLineView
           AllowVectorExport = True
           Left = 442.205010000000000000
-          Top = 94.488250000000000000
-          Height = 79.370007950000000000
+          Top = 119.488250000000000000
+          Height = 52.913385830000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1342,347 +1287,12 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 18.897637800000000000
-        Top = 298.582870000000000000
+        Top = 294.803340000000000000
         Width = 1084.725110000000000000
         DataSet = frxDBDBHPenerimaan
         DataSetName = 'frxDBDBHPenerimaan'
         RowCount = 0
         Stretched = True
-        object Shape2: TfrxShapeView
-          Align = baClient
-          AllowVectorExport = True
-          Width = 1084.725110000000000000
-          Height = 18.897637800000000000
-          Frame.Typ = []
-        end
-        object SysMemo1: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 1.779530000000000000
-          Width = 34.015770000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[LINE#]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaantrans_date: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 41.574830000000000000
-          Width = 56.692950000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."trans_date"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanvoucher_no: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 102.047310000000000000
-          Width = 105.826840000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'voucher_no'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."voucher_no"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_kas: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 340.157700000000000000
-          Width = 102.047310000000000000
-          Height = 18.897650000000000000
-          DataField = 'jum_kas'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_kas"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanaccount_name_bank: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 446.984540000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'account_name_bank'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."account_name_bank"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanaccount_number_bank: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 531.913730000000000000
-          Width = 86.929190000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'account_number_bank'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."account_number_bank"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_bank: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 621.622450000000000000
-          Width = 86.929190000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_bank"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_piutang: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 718.110700000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_piutang"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanak_lain_kre: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 820.158010000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'ak_lain_kre'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."ak_lain_kre"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanak_nm_lain_kre: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 907.087200000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'ak_nm_lain_kre'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."ak_nm_lain_kre"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanjum_lain_kre: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 997.795920000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."jum_lain_kre"]')
-          ParentFont = False
-        end
-        object frxDBDBHPenerimaanket_faktur: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 215.433210000000000000
-          Width = 120.944960000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'ket_faktur'
-          DataSet = frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBHPenerimaan."ket_faktur"]')
-          ParentFont = False
-        end
-        object Line23: TfrxLineView
-          AllowVectorExport = True
-          Left = 340.157700000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line22: TfrxLineView
-          AllowVectorExport = True
-          Left = 211.653680000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line24: TfrxLineView
-          AllowVectorExport = True
-          Left = 100.913385830000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line25: TfrxLineView
-          AllowVectorExport = True
-          Left = 37.795300000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line26: TfrxLineView
-          AllowVectorExport = True
-          Left = 442.205010000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line27: TfrxLineView
-          AllowVectorExport = True
-          Left = 529.134200000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line28: TfrxLineView
-          AllowVectorExport = True
-          Left = 618.708661420000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line29: TfrxLineView
-          AllowVectorExport = True
-          Left = 710.551181100000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line30: TfrxLineView
-          AllowVectorExport = True
-          Left = 812.598950000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line31: TfrxLineView
-          AllowVectorExport = True
-          Left = 899.528140000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line32: TfrxLineView
-          AllowVectorExport = True
-          Left = 990.236860000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
@@ -1691,7 +1301,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Top = 430.866420000000000000
+        Top = 408.189240000000000000
         Width = 1084.725110000000000000
         object Line8: TfrxLineView
           AllowVectorExport = True
@@ -1709,7 +1319,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Right = 0
         Frame.Typ = []
         Height = 30.236220470000000000
-        Top = 377.953000000000000000
+        Top = 355.275820000000000000
         Width = 1084.725110000000000000
         object Shape1: TfrxShapeView
           Align = baClient
@@ -1871,8 +1481,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenerimaan."jum_lain_kre">,MasterData1)]')
           ParentFont = False
         end
       end
@@ -1883,10 +1491,411 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 20.037093510000000000
         Top = 253.228510000000000000
         Width = 1084.725110000000000000
         Condition = 'frxDBDBHPenerimaan."voucher_no"'
+        Stretched = True
+        object Line41: TfrxLineView
+          AllowVectorExport = True
+          Width = 1084.724409450000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 1.779530000000000000
+          Width = 34.015770000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[LINE#]')
+          ParentFont = False
+        end
+        object frxDBDBHPenerimaantrans_date: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 41.574830000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."trans_date"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenerimaanvoucher_no: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 102.047310000000000000
+          Width = 105.826840000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'voucher_no'
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."voucher_no"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenerimaanket_faktur: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 215.433210000000000000
+          Width = 120.944960000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."description"]')
+          ParentFont = False
+        end
+        object Line22: TfrxLineView
+          AllowVectorExport = True
+          Left = 211.653680000000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line24: TfrxLineView
+          AllowVectorExport = True
+          Left = 100.913385830000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line25: TfrxLineView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line23: TfrxLineView
+          AllowVectorExport = True
+          Left = 340.157700000000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object frxDBDBHPenerimaanjum_piutang: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 711.051876470000000000
+          Top = 0.574830000000000000
+          Width = 101.547073530000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."jum_piutang"]')
+          ParentFont = False
+        end
+        object Line29: TfrxLineView
+          AllowVectorExport = True
+          Left = 710.551181100000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line30: TfrxLineView
+          AllowVectorExport = True
+          Left = 812.598950000000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Subreport2: TfrxSubreport
+          AllowVectorExport = True
+          Left = 814.117647060000000000
+          Top = -0.287333530000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Page = Report.Page4
+        end
+        object frxDBDBHPenerimaanjum_kas: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 345.411764700000000000
+          Top = -0.287333530000000000
+          Width = 98.517898240000000000
+          Height = 18.897650000000000000
+          DataField = 'jum_kas'
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."jum_kas"]')
+          ParentFont = False
+        end
+        object Line26: TfrxLineView
+          AllowVectorExport = True
+          Left = 442.205010000000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object frxDBDBHPenerimaanaccount_name_bank: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 446.984540000000000000
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'account_name_bank'
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."account_name_bank"]')
+          ParentFont = False
+        end
+        object Line27: TfrxLineView
+          AllowVectorExport = True
+          Left = 529.134200000000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object frxDBDBHPenerimaanjum_bank: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 621.622450000000000000
+          Width = 86.929190000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."jum_bank"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenerimaanaccount_number_bank: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 531.913730000000000000
+          Width = 86.929190000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'account_number_bank'
+          DataSet = frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBHPenerimaan."account_number_bank"]')
+          ParentFont = False
+        end
+        object Line28: TfrxLineView
+          AllowVectorExport = True
+          Left = 618.708661420000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line42: TfrxLineView
+          AllowVectorExport = True
+          Left = 991.047244090000000000
+          Top = 0.889137060000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line43: TfrxLineView
+          AllowVectorExport = True
+          Left = 899.527559055118100000
+          Top = 0.889137060000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line44: TfrxLineView
+          AllowVectorExport = True
+          Left = 812.941176470000000000
+          Top = 0.889137060000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+      end
+    end
+    object Page4: TfrxReportPage
+      Orientation = poLandscape
+      PaperWidth = 297.000000000000000000
+      PaperHeight = 210.000000000000000000
+      PaperSize = 9
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object MasterData4: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 18.897650000000000000
+        Width = 1084.725110000000000000
+        DataSet = frxDBDHKredit
+        DataSetName = 'frxDBDHKredit'
+        RowCount = 0
+        object frxDBDBHPenerimaanak_lain_kre: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Top = -0.074120590000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'code_account'
+          DataSet = frxDBDHKredit
+          DataSetName = 'frxDBDHKredit'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDHKredit."code_account"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenerimaanak_nm_lain_kre: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 86.929190000000000000
+          Top = -0.074120590000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'name_account'
+          DataSet = frxDBDHKredit
+          DataSetName = 'frxDBDHKredit'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDHKredit."name_account"]')
+          ParentFont = False
+        end
+        object frxDBDBHPenerimaanjum_lain_kre: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 173.755557060000000000
+          Top = -0.074120590000000000
+          Width = 85.252482940000000000
+          Height = 18.897650000000000000
+          DataField = 'paid_amount'
+          DataSet = frxDBDHKredit
+          DataSetName = 'frxDBDHKredit'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDHKredit."paid_amount"]')
+          ParentFont = False
+        end
+        object Line31: TfrxLineView
+          AllowVectorExport = True
+          Left = 85.370130000000000000
+          Top = -0.074120590000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line32: TfrxLineView
+          AllowVectorExport = True
+          Left = 176.125984251968500000
+          Top = -0.074120590000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
       end
     end
   end
@@ -1899,118 +1908,142 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
       'module_id=module_id'
       'code_cust=code_cust'
       'name_cust=name_cust'
-      'code_region=code_region'
       'for_acceptance=for_acceptance'
       'description=description'
-      'jum_kas=jum_kas'
       'account_name_bank=account_name_bank'
       'account_number_bank=account_number_bank'
+      'jum_kas=jum_kas'
       'jum_bank=jum_bank'
       'jum_piutang=jum_piutang'
-      'ak_lain_kre=ak_lain_kre'
-      'ak_nm_lain_kre=ak_nm_lain_kre'
-      'jum_lain_kre=jum_lain_kre'
       'code_karesidenan=code_karesidenan'
-      'code_kab=code_kab'
-      'name_kab=name_kab'
-      'ket_faktur=ket_faktur')
+      'karesidenan=karesidenan'
+      'code_kabupaten=code_kabupaten'
+      'kabupaten=kabupaten')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 944
-    Top = 72
+    Left = 624
+    Top = 208
   end
   object QCetak: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      #9'SELECT'
+      '    zz.*,'
       
-        'SELECT a.*,code_karesidenan,code_kab,name_kab,ket_faktur from "p' +
-        'ublic"."vbhpenerimaan_kas_bank" a   LEFT JOIN (SELECT "code_prov' +
-        'ince", "code" as code_kab, "name" as name_kab,  "code_karesidena' +
-        'n"  from t_region_regency WHERE deleted_at IS NULL)b   ON "left"' +
-        '(code_region, 4)=b.code_kab  LEFT JOIN (SELECT voucher_no,  STRI' +
-        'NG_AGG( '#39' No. Faktur '#39' || no_invoice_tax || '#39' Tgl. '#39' || date_inv' +
-        'oice_tax, '#39', '#39') AS ket_faktur  from t_cash_bank_acceptance_recei' +
-        'vable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no  wher' +
-        'e trans_date between '#39'2024-12-18'#39'  and '#39'2024-12-18'#39' '
-      ' ORDER BY trans_date, voucher_no')
-    Left = 860
-    Top = 72
+        '    cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,' +
+        'cust.kabupaten'
+      'FROM'
+      '    ('
+      ''
+      '        SELECT'
+      '            a.voucher_no,'
+      '            a.trans_date,'
+      '            a.module_id,'
+      '            a.code_cust,'
+      '            a.name_cust,'
+      '            a.for_acceptance,'
+      '            a.description,'
+      '            a.account_name_bank,'
+      '            a.account_number_bank,'
+      
+        '            CASE WHEN a.module_id = '#39'4'#39' THEN COALESCE(b.paid_amo' +
+        'unt, 0) ELSE 0 END AS jum_kas,'
+      
+        '            CASE WHEN a.module_id = '#39'3'#39' THEN COALESCE(b.paid_amo' +
+        'unt, 0) ELSE 0 END AS jum_bank,'
+      '            COALESCE(c.paid_amount, 0) AS jum_piutang'
+      
+        '            -- REMOVED: cust.code_karesidenan, cust.karesidenan,' +
+        ' cust.code_kabupaten, cust.kabupaten'
+      '        FROM'
+      '            t_cash_bank_acceptance a'
+      '        INNER JOIN'
+      
+        '            t_cash_bank_acceptance_det b ON b.voucher_no = a.vou' +
+        'cher_no AND b.position = '#39'D'#39
+      '        INNER JOIN'
+      
+        '            t_cash_bank_acceptance_receivable c ON c.voucher_no ' +
+        '= a.voucher_no'
+      '    ) AS zz '
+      'LEFT JOIN'
+      '    get_customer() AS cust ON cust.customer_code = zz.code_cust;'
+      #9#9#9#9#9)
+    Left = 540
+    Top = 208
     object QCetakvoucher_no: TStringField
       FieldName = 'voucher_no'
+      ReadOnly = True
       Size = 100
     end
     object QCetaktrans_date: TDateField
       FieldName = 'trans_date'
+      ReadOnly = True
     end
     object QCetakmodule_id: TIntegerField
       FieldName = 'module_id'
+      ReadOnly = True
     end
     object QCetakcode_cust: TStringField
       FieldName = 'code_cust'
+      ReadOnly = True
       Size = 100
     end
     object QCetakname_cust: TStringField
       FieldName = 'name_cust'
+      ReadOnly = True
       Size = 255
-    end
-    object QCetakcode_region: TStringField
-      FieldName = 'code_region'
-      Size = 50
     end
     object QCetakfor_acceptance: TStringField
       FieldName = 'for_acceptance'
+      ReadOnly = True
       Size = 255
     end
     object QCetakdescription: TMemoField
       FieldName = 'description'
+      ReadOnly = True
       BlobType = ftMemo
-    end
-    object QCetakjum_kas: TFloatField
-      FieldName = 'jum_kas'
     end
     object QCetakaccount_name_bank: TStringField
       FieldName = 'account_name_bank'
+      ReadOnly = True
       Size = 255
     end
     object QCetakaccount_number_bank: TStringField
       FieldName = 'account_number_bank'
+      ReadOnly = True
       Size = 100
+    end
+    object QCetakjum_kas: TFloatField
+      FieldName = 'jum_kas'
+      ReadOnly = True
     end
     object QCetakjum_bank: TFloatField
       FieldName = 'jum_bank'
+      ReadOnly = True
     end
     object QCetakjum_piutang: TFloatField
       FieldName = 'jum_piutang'
+      ReadOnly = True
     end
-    object QCetakak_lain_kre: TMemoField
-      FieldName = 'ak_lain_kre'
-      BlobType = ftMemo
-    end
-    object QCetakak_nm_lain_kre: TMemoField
-      FieldName = 'ak_nm_lain_kre'
-      BlobType = ftMemo
-    end
-    object QCetakjum_lain_kre: TIntegerField
-      FieldName = 'jum_lain_kre'
-    end
-    object QCetakcode_karesidenan: TStringField
+    object QCetakcode_karesidenan: TMemoField
       FieldName = 'code_karesidenan'
       ReadOnly = True
-      Size = 255
+      BlobType = ftMemo
     end
-    object QCetakcode_kab: TStringField
-      FieldName = 'code_kab'
+    object QCetakkaresidenan: TMemoField
+      FieldName = 'karesidenan'
       ReadOnly = True
-      Size = 255
+      BlobType = ftMemo
     end
-    object QCetakname_kab: TStringField
-      FieldName = 'name_kab'
+    object QCetakcode_kabupaten: TMemoField
+      FieldName = 'code_kabupaten'
       ReadOnly = True
-      Size = 255
+      BlobType = ftMemo
     end
-    object QCetakket_faktur: TMemoField
-      FieldName = 'ket_faktur'
+    object QCetakkabupaten: TMemoField
+      FieldName = 'kabupaten'
       ReadOnly = True
       BlobType = ftMemo
     end
@@ -2030,8 +2063,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         'cher_no  where trans_date between '#39'2024-12-18'#39'  and '#39'2024-12-18'#39 +
         ' '
       ' ORDER BY trans_date, voucher_no')
-    Left = 860
-    Top = 120
+    Left = 364
+    Top = 192
     object QDaftarPenerimaanvoucher_no: TStringField
       FieldName = 'voucher_no'
       Size = 100
@@ -2122,7 +2155,83 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
   end
   object dsDaftarPenerimaan: TDataSource
     DataSet = QDaftarPenerimaan
-    Left = 1041
-    Top = 120
+    Left = 425
+    Top = 128
+  end
+  object QCetakKredit: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select voucher_no,code_account,name_account,paid_amount from t_c' +
+        'ash_bank_acceptance_det where position='#39'K'#39' AND  code_account_hea' +
+        'der<>'#39'1104.01'#39)
+    MasterSource = dsCetak
+    MasterFields = 'voucher_no'
+    DetailFields = 'voucher_no'
+    Left = 676
+    Top = 296
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'voucher_no'
+        ParamType = ptInput
+        Value = 'BM/001/20/XI/2025/HLJ/JKT/MDI'
+      end>
+    object QCetakKreditvoucher_no: TStringField
+      FieldName = 'voucher_no'
+      Required = True
+      Size = 100
+    end
+    object QCetakKreditcode_account: TStringField
+      FieldName = 'code_account'
+      Size = 100
+    end
+    object QCetakKreditname_account: TStringField
+      FieldName = 'name_account'
+      Size = 255
+    end
+    object QCetakKreditpaid_amount: TFloatField
+      FieldName = 'paid_amount'
+    end
+  end
+  object frxDBDHKredit: TfrxDBDataset
+    UserName = 'frxDBDHKredit'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'voucher_no=voucher_no'
+      'code_account=code_account'
+      'name_account=name_account'
+      'paid_amount=paid_amount')
+    DataSet = QCetakKredit
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 776
+    Top = 288
+  end
+  object QBHPenerimaanKasBankDetail: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select voucher_no,code_account,name_account,paid_amount from t_c' +
+        'ash_bank_acceptance_det where (position='#39'K'#39' AND  code_account_he' +
+        'ader<>'#39'1104.01'#39')')
+    MasterSource = dsDaftarPenerimaan
+    MasterFields = 'voucher_no'
+    DetailFields = 'voucher_no'
+    Active = True
+    Left = 382
+    Top = 288
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'voucher_no'
+        ParamType = ptInput
+        Value = nil
+      end>
+  end
+  object DSPenerimaanKasBankDetail: TDataSource
+    DataSet = QBHPenerimaanKasBankDetail
+    Left = 473
+    Top = 272
   end
 end

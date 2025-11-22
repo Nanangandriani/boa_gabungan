@@ -71,6 +71,9 @@ type
     QPelanggantelp: TMemoField;
     QPelangganpayment_term: TSmallintField;
     QPelanggancustomer_name_pkp: TMemoField;
+    dxBarLargeButton3: TdxBarLargeButton;
+    QPelanggankabupaten: TMemoField;
+    QPelanggankaresidenan: TMemoField;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -86,6 +89,7 @@ type
     procedure cxBarEditItem2PropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -155,7 +159,7 @@ begin
       Close;
       SQL.Clear;
       SQL.Text:='select customer_code, customer_name, email, address, contact_person1 as telp, '+
-                'payment_term, customer_name_pkp from get_customer() '+
+                'payment_term, customer_name_pkp,kabupaten,karesidenan from get_customer() '+
                 'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+' order by created_at Desc';
       Open;
     end;
@@ -442,6 +446,14 @@ procedure TFListPelanggan.dxBarLargeButton2Click(Sender: TObject);
 begin
   if cbSBU.Text<>'' then
   Refresh else MessageDlg('SBU Wajib Diisi..!!',mtInformation,[mbRetry],0);
+end;
+
+procedure TFListPelanggan.dxBarLargeButton3Click(Sender: TObject);
+begin
+  cbKaresidenan.EditValue:='';
+  cbKabupaten.EditValue:='';
+  strKaresidenanID:='';
+  strKabupatenID:='';
 end;
 
 procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);

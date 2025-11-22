@@ -85,6 +85,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure CariClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -132,7 +133,7 @@ begin
     ' a.faktur_date,a.due_date,a.supplier_code,a.account_code,a.purchase_type,a.debt_amount, '+
     ' a.payment_amount,a.debt_remaining,a.status,a.valas,a.valas_value,a.updated_at,a.updated_by, '+
     ' a.pib_no,	a.correction_status,a.plan_stat,a.approval_status,a.approval,a.sbu_code, a.trans_month, '+
-    ' a.trans_year,C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,'+
+    ' a.trans_year,a.tgl_jatuh_tempo,C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,'+
     ' e.pph_rp,e.ppn_pembulatan,e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value '+
     ' from t_purchase_invoice A Left join t_spb C on A.spb_no=C.spb_no '+
     ' inner join t_purchase_invoice_det E on A.trans_no=E.trans_no '+
@@ -312,6 +313,30 @@ begin
     FNew_Pembelian.Cb_RefSelect(sender);
 end;
 
+procedure TFPembelian.CariClick(Sender: TObject);
+begin
+   DBGridTerima1.StartLoadingStatus();
+   with Qterima_material do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:='select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''REJECT'' END) AS status_app,a.*, b.supplier_name, '+
+                 'c.account_name, d.account_name as nm_perk,to_char(trans_date,''dd'') tgl,to_char(trans_date,''mm'') bln,e.ref_name from '+
+                 't_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                 'left join t_ak_account c on a.account_code=c.code '+
+                 'left join t_ak_account d on a.account_um_code=d.code '+
+                 'left join t_ref_item_receive e on a.ref_code=e.ref_code '+
+                 'where a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+                 'order by a.id desc ';
+       open;
+   end;
+   Qterima_material.Close;
+   Qterima_material.Open;
+   Memterima_material.Close;
+   Memterima_material.Open;
+   DBGridTerima1.FinishLoadingStatus();
+end;
+
 procedure TFPembelian.dxBarLargeButton2Click(Sender: TObject);
 begin
   dm.refreshPerusahaan;
@@ -358,6 +383,8 @@ end;
 procedure TFPembelian.FormShow(Sender: TObject);
 begin
   //DBGridterima1.IndicatorOptions:=[gioShowRowIndicatorEh,gioshowRecNoEh];
+  DTP1.Date:=Now;
+  DTP2.Date:=Now;
   if QTerimaDet.Active=false then
      QTerimaDet.Active:=true;
 end;

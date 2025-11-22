@@ -260,7 +260,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+strKaresidenan+')';
+      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+','+strKaresidenan+')';
       open;
     end;
     if  Dm.Qtemp.RecordCount<>0 then

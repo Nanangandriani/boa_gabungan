@@ -257,7 +257,7 @@ begin
 //                'WHERE year='+edTahun1.Text+' AND month='+IntToStr(cbBulan1.ItemIndex+1)+' AND '+
 //                'group_name='+QuotedStr(cbKelompok.EditValue)+strKaresidenan
 //                +strKabupaten+strKecamatan;
-      sql.Text:='SELECT * FROM get_monitoring_target_omset'+
+      sql.Text:='SELECT '+strVolume+'* FROM get_monitoring_target_omset'+
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
                 ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
                 +','+QuotedStr(cbKabupaten.EditValue)+')';

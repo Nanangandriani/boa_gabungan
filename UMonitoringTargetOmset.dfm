@@ -1551,15 +1551,13 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 45912.570329976850000000
+    ReportOptions.LastChange = 45982.634339386580000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'procedure Memo15OnBeforePrint(Sender: TfrxComponent);'
-      
-        'var PreviousValue:String;                                       ' +
-        '          '
-      'begin              '
+      'var PreviousValue:String;'
+      'begin'
       
         '  if (<frxDBDatasetRekapMonitoringTargetOmset."karesidenan"> = P' +
         'reviousValue) then'
@@ -1572,16 +1570,12 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
       
         '    PreviousValue :=<frxDBDatasetRekapMonitoringTargetOmset."kar' +
         'esidenan">;'
-      '  end;                               '
+      '  end;'
       'end;'
       ''
-      
-        'procedure Memo24OnBeforePrint(Sender: TfrxComponent);           ' +
-        '                                      '
-      
-        'var PreviousValue:String;                                       ' +
-        '          '
-      'begin              '
+      'procedure Memo24OnBeforePrint(Sender: TfrxComponent);'
+      'var PreviousValue:String;'
+      'begin'
       
         '  if (<frxDBDatasetRekapMonitoringTargetOmset."kabupaten"> = Pre' +
         'viousValue) then'
@@ -1594,20 +1588,16 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
       
         '    PreviousValue :=<frxDBDatasetRekapMonitoringTargetOmset."kab' +
         'upaten">;'
-      '  end;  '
+      '  end;'
       'end;'
       ''
-      
-        'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);      ' +
-        '                                           '
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       'end;'
       ''
       'procedure Memo17OnBeforePrint(Sender: TfrxComponent);'
-      
-        'var PreviousValue:String;                                       ' +
-        '          '
-      'begin              '
+      'var PreviousValue:String;'
+      'begin'
       
         '  if (<frxDBDatasetRekapMonitoringTargetOmset."kecamatan"> = Pre' +
         'viousValue) then'
@@ -1665,6 +1655,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Line1: TfrxLineView
           AllowVectorExport = True
           Width = 1306.204724410000000000
+          Visible = False
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1726,7 +1717,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Top = 453.543600000000000000
+        Top = 480.000310000000000000
         Visible = False
         Width = 1306.205568000000000000
       end
@@ -1823,7 +1814,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           AllowVectorExport = True
           Left = 172.724490000000000000
           Top = 62.984251970000000000
-          Height = 46.110236220472440000
+          Height = 46.110236220000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2029,7 +2020,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           AllowVectorExport = True
           Left = 1178.654300000000000000
           Top = 40.118120000000000000
-          Height = 68.787401574803150000
+          Height = 68.787401574803100000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2045,7 +2036,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           AllowVectorExport = True
           Left = 811.340446670000000000
           Top = 83.149660000000000000
-          Width = 368.125984251968500000
+          Width = 368.125984251969000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2113,6 +2104,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
+        Height = 25.465215010000000000
         Top = 430.866420000000000000
         Width = 1306.205568000000000000
         object Line11: TfrxLineView
@@ -2120,6 +2112,142 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Width = 1306.204724410000000000
           Color = clBlack
           Frame.Typ = [ftTop]
+        end
+        object Memo51: TfrxMemoView
+          AllowVectorExport = True
+          Top = 0.898285880000000000
+          Width = 811.204917390000000000
+          Height = 24.566929130000000000
+          StretchMode = smMaxHeight
+          DataSet = FLaporanHarianSisaNota.frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'TOTAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 810.764705880000000000
+          Top = 0.755905510000000000
+          Width = 114.141732280000000000
+          Height = 24.566929130000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDatasetRekapMonitoringTargetOmset
+          DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
+          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetRekapMonitoringTargetOmset."target_qty">,Maste' +
+              'rData1)]')
+          ParentFont = False
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 924.606299210000000000
+          Top = 0.898285880000000000
+          Width = 113.385826770000000000
+          Height = 24.566929130000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDatasetRekapMonitoringTargetOmset
+          DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
+          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetRekapMonitoringTargetOmset."realisasi_qty">,Ma' +
+              'sterData1)]')
+          ParentFont = False
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1075.275590550000000000
+          Top = 0.898285880000000000
+          Width = 103.974062070000000000
+          Height = 24.566929130000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDatasetRekapMonitoringTargetOmset
+          DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
+          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetRekapMonitoringTargetOmset."selisih_qty">,Mast' +
+              'erData1)]')
+          ParentFont = False
+        end
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1178.834645670000000000
+          Top = 0.755905510000000000
+          Width = 127.748031500000000000
+          Height = 24.566929130000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDatasetRekapMonitoringTargetOmset
+          DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
+          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1037.858267720000000000
+          Top = 0.898285880000000000
+          Width = 38.091709120000000000
+          Height = 24.566929130000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDatasetRekapMonitoringTargetOmset
+          DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
+          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[AVG(<frxDBDatasetRekapMonitoringTargetOmset."persen_qty">,Maste' +
+              'rData1)]')
+          ParentFont = False
         end
       end
       object MasterData1: TfrxMasterData
@@ -2129,7 +2257,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 19.068014470000000000
+        Height = 19.730971140000000000
         Top = 351.496290000000000000
         Width = 1306.205568000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
@@ -2141,11 +2269,14 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo15: TfrxMemoView
           AllowVectorExport = True
           Left = 1.666666670000000000
-          Top = 0.006803329999999996
+          Top = 0.669760000000000000
           Width = 167.821583340000000000
           Height = 18.897650000000000000
           OnBeforePrint = 'Memo15OnBeforePrint'
           StretchMode = smMaxHeight
+          DataField = 'karesidenan'
+          DataSet = frxDBDatasetRekapMonitoringTargetOmset
+          DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -2160,7 +2291,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo17: TfrxMemoView
           AllowVectorExport = True
           Left = 353.333333340000000000
-          Top = 0.006803329999999996
+          Top = 0.669760000000000000
           Width = 193.670603680000000000
           Height = 18.897650000000000000
           OnBeforePrint = 'Memo17OnBeforePrint'
@@ -2182,7 +2313,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo18: TfrxMemoView
           AllowVectorExport = True
           Left = 540.913385830000000000
-          Top = 0.006803329999999996
+          Top = 0.669760000000000000
           Width = 273.637795280000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2202,6 +2333,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Left = 811.333333330000000000
+          Top = 0.662956670000000000
           Width = 113.385826770000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2224,7 +2356,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo20: TfrxMemoView
           AllowVectorExport = True
           Left = 925.500000000000000000
-          Top = 0.006803329999999996
+          Top = 0.669760000000000000
           Width = 111.988250010000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2247,6 +2379,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Line13: TfrxLineView
           AllowVectorExport = True
           Left = 172.724409450000000000
+          Top = 0.662956670000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2255,8 +2388,8 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Line14: TfrxLineView
           AllowVectorExport = True
-          Left = 353.385826771653500000
-          Top = 0.170376670000000000
+          Left = 353.385826771654000000
+          Top = 0.833333340000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2266,6 +2399,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo21: TfrxMemoView
           AllowVectorExport = True
           Left = 1038.000000000000000000
+          Top = 0.662956670000000000
           Width = 37.821583340000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2288,6 +2422,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo22: TfrxMemoView
           AllowVectorExport = True
           Left = 1075.166666670000000000
+          Top = 0.662956670000000000
           Width = 102.821583330000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2310,6 +2445,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 1178.834645670000000000
+          Top = 0.662956670000000000
           Width = 126.154916670000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2327,7 +2463,6 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo24: TfrxMemoView
           AllowVectorExport = True
           Left = 174.999999990000000000
-          Top = -0.662956670000000000
           Width = 169.488250010000000000
           Height = 18.897650000000000000
           OnBeforePrint = 'Memo24OnBeforePrint'
@@ -2360,8 +2495,8 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         Stretched = True
         object Line15: TfrxLineView
           AllowVectorExport = True
-          Left = 0.833333330000000000
-          Width = 1306.204724410000000000
+          Left = 172.724409450000000000
+          Width = 1134.614173230000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2381,7 +2516,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Line18: TfrxLineView
           AllowVectorExport = True
           Left = 353.833333330000000000
-          Width = 226.015748031496000000
+          Width = 226.015748030000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

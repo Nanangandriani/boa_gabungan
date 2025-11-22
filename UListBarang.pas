@@ -226,6 +226,8 @@ begin
       EdNm_akunRt_Penj.Text:=MemMaterial.FieldByName('nm_rtpenj').value;
       KodeHeaderPerkiraan:=MemMaterial.FieldByName('header_code').value;
       Cb_sbu.Text:=MemMaterial.FieldByName('sbu_code').value;
+      edKdBrgCoretax.Text:=MemMaterial.FieldByName('item_code_coretax').value;
+      edNmBrgCoretax.Text:=MemMaterial.FieldByName('item_name_coretax').value;
       if MemMaterial['lot_status']='false' then Ck_NoUrut.Checked:=false else Ck_NoUrut.Checked:=true;
     end;
   end;

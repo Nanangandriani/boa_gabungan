@@ -77,10 +77,10 @@ type
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
-    procedure dxBarDeleteClick(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
     procedure CariClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -281,20 +281,21 @@ begin
                'Left join t_supplier b on a.supplier_code=b.supplier_code '+
                'left join t_ak_account c on a.account_code=c.code '+
                'left join t_ak_account d on a.account_um_code=d.code '+
-               'WHERE a.receive_date between '+QuotedStr(formatdatetime('yyyy=mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy=mm-dd',DTP2.DateTime))+' '+//and a.pic='+Quotedstr(Nm)+' ';
+               'WHERE a.receive_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+//and a.pic='+Quotedstr(Nm)+' ';
                'order by a.receive_date desc ';
      open;
    end;
    Qterima_material.Close;
    Qterima_material.Open;
-   Qterima_material.Close;
-   Qterima_material.Open;
+   Memterima_material.Close;
+   Memterima_material.Open;
    DBGridTerima.FinishLoadingStatus();
 end;
 
-procedure TFTerima_Material.dxBarDeleteClick(Sender: TObject);
+procedure TFTerima_Material.FormShow(Sender: TObject);
 begin
-
+   DTP1.Date:=Now;
+   DTP2.Date:=Now;
 end;
 
 // Contoh RegisterClass

@@ -553,7 +553,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       TabOrder = 4
       Text = 'KAS KECIL'
     end
-    object txtkdacckredit: TEdit
+    object txtkdacckredit2: TEdit
       Left = 21
       Top = 22
       Width = 70
@@ -629,6 +629,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
+    Active = True
     Left = 704
     Top = 80
     object QPerusahaancompany_code: TStringField
@@ -718,12 +719,12 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44224.360934872700000000
-    ReportOptions.LastChange = 45649.467423819440000000
+    ReportOptions.LastChange = 45982.653419108800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '                 '
+      ''
       'end;'
       ''
       'procedure Page1OnAfterPrint(Sender: TfrxComponent);'
@@ -738,7 +739,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       ''
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '     '
+      ''
       'end;'
       ''
       'begin'
@@ -770,7 +771,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
-      Frame.Typ = []
+      Frame.Typ = [ftTop]
       MirrorMode = []
       OnAfterPrint = 'Page1OnAfterPrint'
       OnBeforePrint = 'Page1OnBeforePrint'
@@ -781,14 +782,14 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 129.637795280000000000
+        Height = 129.637795270000000000
         Top = 18.897650000000000000
         Width = 1171.654300000000000000
         object Memo6: TfrxMemoView
           AllowVectorExport = True
           Top = 64.251968500000000000
-          Width = 101.393700790000000000
-          Height = 64.251968500000000000
+          Width = 107.338582680000000000
+          Height = 64.918635170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -803,10 +804,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 178.771653540000000000
-          Top = 64.251968500000000000
-          Width = 148.157480310000000000
-          Height = 64.251968500000000000
+          Left = 217.322834650000000000
+          Top = 63.585301830000000000
+          Width = 196.913385830000000000
+          Height = 65.007874015748000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -821,7 +822,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 327.456697800000000000
+          Left = 414.123364470000000000
           Top = 64.251968500000000000
           Width = 203.015762680000000000
           Height = 22.505764100000000000
@@ -839,10 +840,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
-          Top = 88.149606300000000000
-          Width = 102.047244090000000000
-          Height = 39.755925040000000000
+          Left = 515.527559060000000000
+          Top = 86.482939630000000000
+          Width = 102.047244094488000000
+          Height = 41.755925040000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -857,9 +858,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 632.399792310000000000
+          Left = 721.733125640000000000
           Top = 64.316261580000000000
-          Width = 537.952782760000000000
+          Width = 448.619449430000000000
           Height = 23.874015750000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -878,7 +879,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           Left = 809.566929130000000000
           Top = 88.267716540000000000
           Width = 90.330708660000000000
-          Height = 39.480314960000000000
+          Height = 39.685039370078700000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -887,7 +888,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Admin & Umum')
+            'Administrasi & Umum')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -911,10 +912,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object frxDBDataset1produk1: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
-          Top = 88.434381580000000000
-          Width = 101.047244090000000000
-          Height = 40.133848500000000000
+          Left = 413.858267716535000000
+          Top = 88.101048250000000000
+          Width = 102.425196850000000000
+          Height = 41.574803150000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
@@ -931,10 +932,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 979.653543307087000000
+          Left = 980.320209980000000000
           Top = 108.267716540000000000
           Width = 95.622047240000000000
-          Height = 19.480314960000000000
+          Height = 20.031496062992100000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -952,7 +953,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           Left = 1074.716535430000000000
           Top = 108.267716540000000000
           Width = 95.803149610000000000
-          Height = 19.480314960000000000
+          Height = 20.031496062992100000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1009,10 +1010,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
+          Left = 619.464566929134000000
           Top = 64.251968500000000000
-          Width = 102.047244090000000000
-          Height = 65.385826770000000000
+          Width = 102.047244094488000000
+          Height = 65.007874020000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1027,9 +1028,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 633.299212600000000000
-          Top = 88.267780000000000000
-          Width = 86.937007870000000000
+          Left = 721.889763779528000000
+          Top = 88.934446670000000000
+          Width = 86.929133858267700000
           Height = 39.685039370000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1043,31 +1044,12 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo35: TfrxMemoView
-          AllowVectorExport = True
-          Left = 719.992125980000000000
-          Top = 88.267780000000000000
-          Width = 90.330708660000000000
-          Height = 39.480314960000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'Over Head '
-            'Pabrik')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
           Left = 899.527559060000000000
           Top = 108.267716540000000000
           Width = 79.921259840000000000
-          Height = 19.480314960000000000
+          Height = 20.146981630000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1137,10 +1119,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo80: TfrxMemoView
           AllowVectorExport = True
-          Left = 100.913385830000000000
+          Left = 108.094488190000000000
           Top = 64.251968500000000000
-          Width = 78.393700790000000000
-          Height = 64.251968500000000000
+          Width = 109.228346460000000000
+          Height = 65.007874015748000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1171,7 +1153,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         Stretched = True
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Width = 101.393700790000000000
+          Width = 107.338582677165000000
           Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataField = 'actors_name'
@@ -1191,9 +1173,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo40: TfrxMemoView
           AllowVectorExport = True
-          Left = 429.220472440000000000
-          Width = 102.047244090000000000
-          Height = 30.236220472440900000
+          Left = 515.527559060000000000
+          Width = 102.047244094488000000
+          Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataField = 'jumkredit'
           DataSet = frxDBDataset1
@@ -1237,9 +1219,10 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
-          Width = 100.913385830000000000
-          Height = 30.236220472440900000
+          Left = 413.858267716535000000
+          Top = 0.666666670000000000
+          Width = 102.425196850000000000
+          Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1259,8 +1242,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716540000000000
-          Width = 102.047244090000000000
+          Left = 617.464566930000000000
+          Top = -0.666666670000000000
+          Width = 104.047244090000000000
           Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataField = 'saldo'
@@ -1319,8 +1303,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 633.448818900000000000
-          Width = 86.929133860000000000
+          Left = 721.889763779528000000
+          Width = 86.929133858267700000
           Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset1
@@ -1336,29 +1320,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset1."penjualan"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo50: TfrxMemoView
-          AllowVectorExport = True
-          Left = 720.000000000000000000
-          Width = 89.952755910000000000
-          Height = 30.236220470000000000
-          StretchMode = smMaxHeight
-          DataField = 'bop'
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftTop]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDataset1."bop"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1381,9 +1342,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object qrmemoket: TfrxMemoView
           AllowVectorExport = True
-          Left = 101.913385830000000000
-          Width = 77.157480310000000000
-          Height = 30.236220472440900000
+          Left = 108.094488188976000000
+          Width = 109.228346456693000000
+          Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataField = 'voucher_no'
           DataSet = frxDBDataset1
@@ -1401,9 +1362,9 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo81: TfrxMemoView
           AllowVectorExport = True
-          Left = 178.771653540000000000
-          Width = 148.157480310000000000
-          Height = 30.236220472440900000
+          Left = 217.322834645669000000
+          Width = 196.913385826772000000
+          Height = 30.236220470000000000
           StretchMode = smMaxHeight
           DataField = 'description'
           DataSet = frxDBDataset1
@@ -1605,7 +1566,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         object Memo58: TfrxMemoView
           AllowVectorExport = True
           Left = 81.637795280000000000
-          Width = 245.157480310000000000
+          Width = 332.490813640000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1621,8 +1582,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo59: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
-          Width = 102.047244090000000000
+          Left = 515.527559060000000000
+          Width = 102.047244094488000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1657,8 +1618,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo61: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
-          Width = 100.913385830000000000
+          Left = 413.858267716535000000
+          Width = 102.425196850000000000
           Height = 30.236220470000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1678,8 +1639,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716535433000000
-          Width = 102.047244094488000000
+          Left = 617.464566930000000000
+          Width = 104.047244090000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1725,7 +1686,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo65: TfrxMemoView
           AllowVectorExport = True
-          Left = 633.448818897638000000
+          Left = 721.889763779528000000
           Width = 86.929133858267700000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1735,23 +1696,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo66: TfrxMemoView
-          AllowVectorExport = True
-          Left = 720.000000000000000000
-          Width = 89.952755910000000000
-          Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftTop, ftBottom]
-          HAlign = haRight
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1801,7 +1745,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         object Memo68: TfrxMemoView
           AllowVectorExport = True
           Left = 81.637795280000000000
-          Width = 245.157480310000000000
+          Width = 332.490813640000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1817,8 +1761,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo69: TfrxMemoView
           AllowVectorExport = True
-          Left = 428.220472440000000000
-          Width = 102.047244090000000000
+          Left = 515.527559060000000000
+          Width = 102.047244094488000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1855,8 +1799,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo71: TfrxMemoView
           AllowVectorExport = True
-          Left = 326.551181100000000000
-          Width = 100.913385830000000000
+          Left = 413.858267716535000000
+          Width = 102.425196850000000000
           Height = 30.236220470000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -1881,8 +1825,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo72: TfrxMemoView
           AllowVectorExport = True
-          Left = 530.267716535433000000
-          Width = 102.047244094488000000
+          Left = 617.464566930000000000
+          Width = 104.047244090000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1928,8 +1872,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo75: TfrxMemoView
           AllowVectorExport = True
-          Left = 633.448818900000000000
-          Width = 86.929133860000000000
+          Left = 721.889763779528000000
+          Width = 86.929133858267700000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1942,25 +1886,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDataset1."penjualan">,MasterData1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo76: TfrxMemoView
-          AllowVectorExport = True
-          Left = 720.000000000000000000
-          Width = 89.952755910000000000
-          Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftTop]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."bop">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2145,6 +2070,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         '.sa,zzz.debit,zzz.kredit ORDER BY nomor ASC'
       ''
       '')
+    Active = True
     Left = 560
     Top = 32
   end
@@ -2192,7 +2118,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           UserDefine = [udWidth]
           UserWidth = 102
           Visible = True
-          ItemName = 'txtkdacckredit1'
+          ItemName = 'txtkdacckredit'
         end
         item
           Visible = True
@@ -3086,7 +3012,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         1123E688292D0237A018A3A6983557A3CF440D98F0D5232AA447C42806C48CF1
         B8F198F83F1812900DC3DC08450000000049454E44AE426082}
     end
-    object txtkdacckredit1: TdxBarEdit
+    object txtkdacckredit: TdxBarEdit
       Caption = 'Account Yang Dikredit :'
       Category = 0
       Hint = 'Account Yang Dikredit :'

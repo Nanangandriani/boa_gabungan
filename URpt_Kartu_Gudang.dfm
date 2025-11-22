@@ -2,8 +2,8 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
   Left = 0
   Top = 0
   Caption = 'Form Laporan Kartu Gudang'
-  ClientHeight = 422
-  ClientWidth = 708
+  ClientHeight = 454
+  ClientWidth = 1092
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -127,16 +127,16 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
   end
   object Panel1: TPanel
     Left = 0
-    Top = 381
-    Width = 708
+    Top = 413
+    Width = 1092
     Height = 41
     Align = alBottom
     TabOrder = 3
     OnClick = Panel1Click
-    ExplicitTop = 380
-    ExplicitWidth = 704
+    ExplicitTop = 372
+    ExplicitWidth = 702
     object BBatal: TRzBitBtn
-      Left = 632
+      Left = 1016
       Top = 1
       Height = 39
       Align = alRight
@@ -195,10 +195,10 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 628
+      ExplicitLeft = 626
     end
     object BPrint: TRzBitBtn
-      Left = 553
+      Left = 937
       Top = 1
       Width = 79
       Height = 39
@@ -259,10 +259,10 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 549
+      ExplicitLeft = 547
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 474
+      Left = 858
       Top = 1
       Width = 79
       Height = 39
@@ -322,7 +322,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 470
+      ExplicitLeft = 468
     end
   end
   object EdKd_supp: TEdit
@@ -375,7 +375,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 708
+    Width = 1092
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -383,6 +383,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     Contexts = <>
     TabOrder = 8
     TabStop = False
+    ExplicitWidth = 708
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -393,102 +394,52 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Index = 0
     end
   end
-  object CbBulan2: TComboBox
-    Left = 85
-    Top = 71
-    Width = 113
-    Height = 21
-    TabOrder = 9
-    OnSelect = CbBulan2Select
-    Items.Strings = (
-      ''
-      'Januari'
-      'Februari'
-      'Maret'
-      'April'
-      'Mei'
-      'Juni'
-      'Juli'
-      'Agustus'
-      'September'
-      'Oktober'
-      'November'
-      'Desember')
-  end
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 708
-    Height = 254
+    Width = 1092
+    Height = 286
     Align = alClient
     DataSource = DsKartu_Gudang
     DynProps = <>
-    TabOrder = 10
+    TabOrder = 9
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        EndEllipsis = True
-        FieldName = 'trans_date'
+        FieldName = 'kd_barang'
         Footers = <>
-        Title.Caption = 'Tanggal'
-        Width = 75
+        Title.Caption = 'Kode Barang'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'stock_code'
+        FieldName = 'item_name'
         Footers = <>
-        Title.Caption = 'Kode Stok'
-        Width = 200
+        Title.Caption = 'Nama Barang'
+        Width = 300
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'in'
+        FieldName = 'saldo_awal_periode'
         Footers = <>
-        Title.Caption = 'Terima '
+        Title.Caption = 'Saldo Awal Periode'
         Width = 100
+        WordWrap = True
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'out'
+        FieldName = 'satuan'
         Footers = <>
-        Title.Caption = 'Keluar'
+        Title.Caption = 'Satuan'
         Width = 100
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sa_end'
-        Footers = <>
-        Title.Caption = 'Sisa'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        Footers = <>
-        Title.Caption = 'Paraf'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        Footers = <>
-        Title.Caption = 'Ket.'
-        Width = 128
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -1207,28 +1158,42 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        '-- select * from (SELECT'#9'sum(b.masuk) ms, sum(b.keluar) kl,min(s' +
-        'tokakhir) sa,b.kd_stok,b.satuan, b.tgl_trans, b.kd_material_stok' +
-        ', b.kd_material FROM t_material_stok AS "a" INNER JOIN t_trans_m' +
-        'aterial AS b ON  a.kd_material_stok = b.kd_material_stok LEFT JO' +
-        'IN t_supplier AS "c" ON  a.kd_supplier = c.kd_supplier INNER JOI' +
-        'N t_material_stok_det AS d ON  b.kd_material_stok = d.kd_materia' +
-        'l_stok and d.kd_stok=b.kd_stok  where a.nm_material='#39'TEPUNG ONGG' +
-        'OK'#39' and  d.gudang='#39'GUDANG TEPUNG A1'#39' and a.kd_supplier='#39'MO'#39' and ' +
-        'to_char(b.tgl_trans, '#39'mm-yyyy'#39')='#39'04-2022'#39' GROUP BY b.kd_stok,b.s' +
-        'atuan, b.tgl_trans, b.kd_material_stok, b.kd_material order by b' +
-        '.kd_stok,b.tgl_trans asc) a'
-      ''
+        'SELECT m.kd_barang, i.item_name, COALESCE(m.saldo_awal ,0) + COA' +
+        'LESCE(SUM(t.jum_trans_in - jum_trans_out), 0) AS saldo_awal_peri' +
+        'ode, satuan  FROM  (SELECT kd_barang,  saldo_awal_lev1 AS  saldo' +
+        '_awal,  satuan_lev1 AS  satuan from tbl_transaksi_stock_sa where' +
+        ' kd_gudang = '#39'GD-BD01'#39')  m    LEFT JOIN ( SELECT item_code, SUM(' +
+        'level1_qty_in) AS   jum_trans_in,  SUM(level1_qty_out) AS jum_tr' +
+        'ans_out  from tbl_transaksi_stock  WHERE type IN ('#39'IN'#39','#39'OUT'#39') an' +
+        'd tgltrans BETWEEN '#39'2025-06-30'#39'::date AND ('#39'2025-11-19'#39'::date - ' +
+        'INTERVAL '#39'1 day'#39')AND kd_gudang = '#39'GD-BD01'#39' GROUP BY item_code OR' +
+        'DER BY item_code) t  ON m.kd_barang = t.item_code '
+      'LEFT JOIN t_item i ON m.kd_barang= i.item_code'
       
-        'select b.item_code,b.item_name,a.unit,a.wh_code,to_char(a.trans_' +
-        'date, '#39'FMMonth'#39'),A.trans_date,a.stock_code,sa_first,"in","out",s' +
-        'a_end,trans_code from t_trans_item A INNER JOIN t_item_stock b o' +
-        'n a.item_stock_code=b.item_stock_code where a.item_stock_code='#39'O' +
-        'NL00001SP0137'#39)
+        ' GROUP BY m.kd_barang,i.item_name,m.saldo_awal,satuan ORDER BY m' +
+        '.kd_barang')
     MasterFields = 'kd_stok'
     DetailFields = 'kd_stok'
     Left = 8
     Top = 304
+    object QKartu_Gudangkd_barang: TStringField
+      FieldName = 'kd_barang'
+      ReadOnly = True
+      Size = 50
+    end
+    object QKartu_Gudangitem_name: TStringField
+      FieldName = 'item_name'
+      Size = 255
+    end
+    object QKartu_Gudangsaldo_awal_periode: TFloatField
+      FieldName = 'saldo_awal_periode'
+      ReadOnly = True
+    end
+    object QKartu_Gudangsatuan: TStringField
+      FieldName = 'satuan'
+      ReadOnly = True
+      Size = 50
+    end
   end
   object DsKartu_Gudang: TDataSource
     DataSet = QKartu_Gudang
@@ -1346,7 +1311,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 524
+    Left = 548
     Top = 160
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -1361,33 +1326,39 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       ItemLinks = <
         item
           UserDefine = [udWidth]
-          UserWidth = 112
+          UserWidth = 204
           Visible = True
-          ItemName = 'cxkd_barang'
+          ItemName = 'CbGudang2'
         end
         item
           UserDefine = [udWidth]
-          UserWidth = 77
+          UserWidth = 204
           Visible = True
-          ItemName = 'cxBarEditItem1'
+          ItemName = 'cxkategori_barang'
         end
         item
-          BeginGroup = True
           UserDefine = [udWidth]
-          UserWidth = 180
+          UserWidth = 204
           Visible = True
           ItemName = 'cxnm_barang'
         end
         item
           UserDefine = [udWidth]
-          UserWidth = 135
+          UserWidth = 192
           Visible = True
-          ItemName = 'SpTahun'
+          ItemName = 'tgl_awal'
         end
         item
-          BeginGroup = True
+          UserDefine = [udWidth]
+          UserWidth = 192
           Visible = True
-          ItemName = 'CbGudang2'
+          ItemName = 'tgl_akhir'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 192
+          Visible = True
+          ItemName = 'cbLevelSatuan'
         end
         item
           BeginGroup = True
@@ -1411,7 +1382,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
+        00000000000074120000741200000000000000000000FFFFFFFFF6E3BBFFEEC7
         74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
         58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
         67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
@@ -1471,7 +1442,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -1525,7 +1496,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D660700000000000036000000280000001700000014000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
@@ -1593,7 +1564,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1685,7 +1656,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1883,8 +1854,11 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Properties.MinValue = 2000.000000000000000000
     end
     object cxnm_barang: TcxBarEditItem
+      Caption = 'Nama Barang      '
       Category = 0
+      Hint = 'Nama Barang      '
       Visible = ivAlways
+      OnChange = cxnm_barangChange
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
         item
@@ -1902,11 +1876,75 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Properties.ReadOnly = True
     end
     object CbGudang2: TcxBarEditItem
-      Caption = 'Gudang'
+      Caption = 'Gudang                '
       Category = 0
-      Hint = 'Gudang'
+      Hint = 'Gudang                '
+      Visible = ivAlways
+      OnChange = CbGudang2Change
+      PropertiesClassName = 'TcxComboBoxProperties'
+    end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxBarEdit1: TdxBarEdit
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+    end
+    object cxkategori_barang: TcxBarEditItem
+      Caption = 'Kategori Barang  '
+      Category = 0
+      Hint = 'Kategori'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cxkategori_barangPropertiesButtonClick
+    end
+    object tgl_awal: TcxBarEditItem
+      Caption = 'Periode Awal   '
+      Category = 0
+      Hint = 'Periode Awal   '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxBarSubItem2: TdxBarSubItem
+      Caption = 'New SubItem'
+      Category = 0
+      Visible = ivAlways
+      ItemLinks = <>
+    end
+    object tgl_akhir: TcxBarEditItem
+      Caption = 'Periode  Akhir  '
+      Category = 0
+      Hint = 'Periode  Akhir  '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object cbLevelSatuan: TcxBarEditItem
+      Caption = 'Level Satuan    '
+      Category = 0
+      Hint = 'Level Satuan    '
       Visible = ivAlways
       PropertiesClassName = 'TcxComboBoxProperties'
+      Properties.Items.Strings = (
+        'SATUAN TERBESAR'
+        'SATUAN TERKECIL')
+    end
+    object cxBarEditItem3: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxLabelProperties'
     end
   end
 end

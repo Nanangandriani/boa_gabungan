@@ -26,7 +26,6 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1086
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -47,7 +46,6 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-    RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     TabOrder = 1
     TitleParams.MultiTitle = True
@@ -81,6 +79,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'debit'
@@ -90,6 +89,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kredit'
@@ -101,8 +101,8 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 684
-        Height = 118
+        Width = 0
+        Height = 0
         Align = alClient
         DynProps = <>
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
@@ -116,6 +116,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
+    Active = True
     Left = 936
     Top = 32
   end
@@ -959,6 +960,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
       Enabled = False
       Hint = '                         '
       Visible = ivAlways
+      OnChange = ed_code_suppChange
     end
   end
   object ActMenu: TActionManager
@@ -1013,159 +1015,405 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,'#39#39 +
-        'ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from'
+        'SELECT  nomor,(case WHEN code='#39'2101.01'#39' and urutan=0 then ket1 e' +
+        'lse ket end)'#9'ket, kodesup,nasup,address,telp,noinv,tanggal,uruta' +
+        'n,nilai_kredit,nilai_debit, trans_no,faktur_no,item_stock_code,i' +
+        'tem_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_cod' +
+        'e,account_code,account_name,account_code2,status_dk FROM '
+      ''
       
-        '(SELECT gg.*,hh.receive_no,hh.faktur_no,hh.item_stock_code,hh.it' +
-        'em_name,hh.unit,hh.tot_qty FROM  '
-      '(select kodesup ::text,nasup ::text,noinv,tanggal,urutan, '
+        '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,uruta' +
+        'n,nilai_kredit,nilai_debit,trans_no,faktur_no,item_stock_code,it' +
+        'em_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,account_code,cod' +
+        'e,header_code,account_name,account_code2,status_dk FROM '
+      ''
       
-        'round(cast((nilai_kredit-nilai_um)as numeric),2) as nilai_kredit' +
-        ','
-      'round(cast((nilai_debit)as numeric),2) nilai_debit  from '
+        '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,uruta' +
+        'n,nilai_kredit,nilai_debit,trans_no,faktur_no,item_stock_code,it' +
+        'em_name,unit,tot_qty,account_code,sa,debit,kredit,code,header_co' +
+        'de,account_name,account_code2,status_dk,saldo,concat(item_name,'#39 +
+        ' '#39',tot_qty,'#39' '#39','#39' '#39',unit) as ket1 FROM '
       
-        '(select zz.*,(case when um_beli.nilai_um is null then 0 else um_' +
-        'beli.nilai_um end)nilai_um from '
-      '(select kodesup,nasup,noinv,tanggal,urutan,'
-      'sum(nilai_kredit) as nilai_kredit'
-      ',sum(nilai_debit)as nilai_debit  from '
+        '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,uruta' +
+        'n,nilai_kredit,nilai_debit,zz.trans_no,faktur_no,item_stock_code' +
+        ',item_name,unit,tot_qty,sa,debit,kredit,account_code,round(cast(' +
+        'sum(sa+kredit-debit) over (ORDER BY nomor asc ) as numeric),2) s' +
+        'aldo,v.code,v.header_code,v.account_name,v.account_code2,v.statu' +
+        's_dk FROM'
+      ''
       
-        '(select a.supplier_code as kodesup,a.supplier_name as nasup,inv.' +
-        'noinv,inv.tanggal,inv.keterangan,inv.urutan, '
+        '(select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,'#39 +
+        #39'ket,jj.*,x.account_code,0 sa,nilai_debit debit,nilai_kredit kre' +
+        'dit from '
+      ''
       
-        '(case when kredit.nilai_kredit is null then 0 else kredit.nilai_' +
-        'kredit end)nilai_kredit,'
+        '(SELECT gg.*,hh.trans_no,hh.faktur_no,hh.item_stock_code,hh.item' +
+        '_name,hh.unit,hh.tot_qty FROM '
       
-        '(case when inv.nilai is null then 0 else inv.nilai end)nilai_deb' +
-        'it,'
+        '(select kodesup ::text,nasup ::text,address,telp,noinv,tanggal,u' +
+        'rutan, round(cast((nilai_kredit-nilai_um)as numeric),2) as nilai' +
+        '_kredit, round(cast((nilai_debit)as numeric),2) nilai_debit  fro' +
+        'm (select zz.*,(case when um_beli.nilai_um is null then 0 else u' +
+        'm_beli.nilai_um end)nilai_um from (select kodesup,nasup,address,' +
+        'telp,noinv,tanggal,urutan, sum(nilai_kredit) as nilai_kredit ,su' +
+        'm(nilai_debit)as nilai_debit  from (select a.supplier_code as ko' +
+        'desup,a.supplier_name as nasup,a.address,a.telp,inv.noinv,inv.ta' +
+        'nggal,inv.keterangan,inv.urutan, (case when kredit.nilai_kredit ' +
+        'is null then 0 else kredit.nilai_kredit end)nilai_kredit, (case ' +
+        'when inv.nilai is null then 0 else inv.nilai end)nilai_debit, (c' +
+        'ase when kredit.nilai_pot is null then 0 else kredit.nilai_pot e' +
+        'nd)nilai_pot from (select * from t_supplier where supplier_code=' +
+        #39'SP0137'#39')a left join (select x.* from (select distinct a.trans_n' +
+        'o as noinv,b.po_no,a.supplier_code as kodesup,a.trans_date as ta' +
+        'nggal,b.kode,b.kode as keterangan,nilai,urutan,account_code from' +
+        ' (select * from t_purchase_invoice where account_code='#39'2101.01.S' +
+        'P0137'#39' and trans_date  between '#39'2025-02-05'#39' and '#39'2025-03-06'#39'  an' +
+        'd debt_remaining <>0 )a left join (select trans_no,po_no,stock_c' +
+        'ode as kode,unit as jumlah,grandtotal * 0 as nilai, 0 as urutan ' +
+        'from t_purchase_invoice_det )b on a.trans_no=b.trans_no union al' +
+        'l select bb.receive_no as noinv,'#39#39' as nopo,bb.supplier_code as k' +
+        'odesup,bb.discount_date as tanggal, bb.stock_code as kode, '#39'POTO' +
+        'NGAN PEMBELIAN'#39'  as ket, (case when bb.ppnrp is null then bb.pri' +
+        'ce_rp else bb.price_rp+bb.ppnrp end) as nilai,1 as urutan,dd.acc' +
+        'ount_code from t_purchase_discount bb left join t_purchase_invoi' +
+        'ce dd on bb.receive_no=dd.trans_no  where bb.supplier_code='#39'SP01' +
+        '37'#39' and bb.discount_date between '#39'2025-02-05'#39' and '#39'2025-03-06'#39' a' +
+        'nd dd.account_code='#39'2101.01.SP0137'#39' union all select noinv,nopo,' +
+        'kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance from (s' +
+        'elect noinv,'#39#39' as nopo,kodesup,tanggal,'#39#39' as kode,'#39#39' as keterang' +
+        'an,nilai,4 as urutan,(case when z.saldo is null then 0 else z.sa' +
+        'ldo end)nilai_kredit,acc_balance from (select noinv,kodesup,tang' +
+        'gal,sum(nilai)as nilai,acc_balance from (select distinct voucher' +
+        '_no as noinv,'#39#39' as nopo,supplier_code as kodesup,trans_date as t' +
+        'anggal,bank_number_account as kode,description as keterangan,sum' +
+        '(paid_amount) as nilai,4 as urutan,account_acc as acc_balance fr' +
+        'om t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b o' +
+        'n a.account_acc= b.account_code2 where trans_date between '#39'2025-' +
+        '02-05'#39' and '#39'2025-03-06'#39' and account_acc='#39'2101.01.SP0137'#39' GROUP B' +
+        'Y noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  group by ' +
+        'noinv,kodesup,tanggal,acc_balance)y left join (select voucher,su' +
+        'm(saldo)as saldo from t_credit_trx_real group by voucher )z on y' +
+        '.noinv=z.voucher)xx left join (select no_voucher,sum(paid_amount' +
+        ') jumlah from t_cash_bank_expenditure_det where position='#39'K'#39' and' +
+        ' code_account<>'#39'1101.01'#39' GROUP BY no_voucher) kas on kas.no_vouc' +
+        'her=xx.noinv union all select a.return_no as noinv,'#39#39' as nopo,b.' +
+        'supplier_code as kodesup,b.return_date as tanggal,a.stock_code a' +
+        's kode,concat(a.stock_code,'#39' '#39' ,qty,'#39' '#39' ,unit)as keterangan, (ca' +
+        'se when b.valas='#39'USD'#39'then a.total_price*b.valas_value else b.pri' +
+        'ce+b.ppn_rp end)nilai,5 as urutan,c.account_code  from t_purchas' +
+        'e_return_det a,t_purchase_return b,  t_purchase_invoice c where ' +
+        'a.return_no=b.return_no and b.receive_no=c.trans_no and c.accoun' +
+        't_code='#39'2101.01.SP0137'#39' union all select a.bk_no as noinv,'#39#39' as ' +
+        'nopo,'#39#39' as kodesup,b.trans_date as tanggal,a.account_code as kod' +
+        'e,a.remark,a.pay as nilai,a.urutan,a.account_code from (select v' +
+        'oucher_no ,bk_no ,account_code,remark,pay,6 as urutan from t_pay' +
+        'ment_detail_real where source_id=3 and account_code='#39'2101.01.SP0' +
+        '137'#39' )a left join (select distinct no_voucher,trans_date from t_' +
+        'cash_bank_expenditure_det where trans_date between '#39'2025-02-05'#39' ' +
+        'and '#39'2025-03-06'#39' )b on a.bk_no=b.no_voucher )x  )inv on a.suppli' +
+        'er_code=inv.kodesup left join(select a.trans_no as noinv,a.suppl' +
+        'ier_code as kodesup,b.kode,(case when a.valas='#39'USD'#39' then b.nilai' +
+        '1 else b.nilai2 end)nilai_kredit,c.nilai as nilai_pot from (sele' +
+        'ct * from t_purchase_invoice where trans_date  between '#39'2025-02-' +
+        '05'#39' and '#39'2025-03-06'#39' )a left join (select trans_no,stock_code as' +
+        ' kode,qty,unit as jumlah,sum(subtotalrp)as nilai1,SUM ( grandtot' +
+        'al ) AS nilai2 from t_purchase_invoice_det group by trans_no,sto' +
+        'ck_code,qty,unit)b on a.trans_no=b.trans_no left join (select DI' +
+        'STINCT receive_no,sum(price_rp) as nilai from t_purchase_discoun' +
+        't where supplier_code='#39'SP0137'#39' GROUP BY receive_no )c on a.trans' +
+        '_no=c.receive_no )kredit  on inv.noinv=kredit.noinv and inv.urut' +
+        'an<>5 )xxx  group by kodesup,nasup,address,telp,noinv,tanggal,ur' +
+        'utan order by kodesup,nasup,address,telp,noinv,tanggal,urutan)zz' +
+        ' left join(select a.*,(case when b.nilai_um is null then 0 else ' +
+        'b.nilai_um end)nilai_um from (select distinct a.trans_no,a.po_no' +
+        ',b.supplier_code from t_purchase_invoice_det a,t_purchase_invoic' +
+        'e b where a.trans_no=b.trans_no and b.trans_no between '#39'2025-02-' +
+        '05'#39' and '#39'2025-03-06'#39' and b.supplier_code='#39'SP0137'#39')a left join (s' +
+        'elect supplier_code,po_no,sum(um_value)as nilai_um from t_po whe' +
+        're um_status=true and po_date<='#39'2025-03-06'#39' and  supplier_code='#39 +
+        'SP0137'#39' group  by po_no,supplier_code order by po_no,supplier_co' +
+        'de)b on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_b' +
+        'eli on zz.noinv=um_beli.trans_no)ttt where (nilai_kredit-nilai_u' +
+        'm>0) or (nilai_debit>0) and tanggal between '#39'2025-02-05'#39' and '#39'20' +
+        '25-03-06'#39' order by tanggal,urutan,nasup,noinv )gg left JOIN (sel' +
+        'ect c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit,' +
+        'sum(a.qty)as tot_qty from (select * from t_purchase_invoice_det)' +
+        'a left join t_item_stock b on a.item_stock_code=b.item_stock_cod' +
+        'e left join t_purchase_invoice c on a.trans_no=c.trans_no group ' +
+        'by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit o' +
+        'rder by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.t' +
+        'rans_no)jj '
+      ''
       
-        '(case when kredit.nilai_pot is null then 0 else kredit.nilai_pot' +
-        ' end)nilai_pot from   '
-      '(select * from t_supplier where supplier_code='#39'NC'#39')a  '
-      'left join (select x.* from   '
+        'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invo' +
+        'ice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_' +
+        'no)x ON jj.noinv=x.trans_no) zz LEFT JOIN v_ak_account v ON zz.a' +
+        'ccount_code=v.account_code2)kk)kkk)LLL'
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
       
-        '(select distinct a.receive_no as noinv,b.po_no,a.supplier_code a' +
-        's kodesup,a.receive_date as tanggal,b.kode,b.kode as keterangan,' +
-        'nilai,urutan,account_code from  '
+        '/* select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor' +
+        ','#39#39'ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from '
       
-        '(select * from t_item_receive where account_code='#39'2110'#39' and rece' +
-        'ive_date  between '#39'2024-10-01'#39' and '#39'2024-12-26'#39' and debt_remaini' +
-        'ng <>0 )a  '
+        '(SELECT gg.*,hh.trans_no,hh.faktur_no,hh.item_stock_code,hh.item' +
+        '_name,hh.unit,hh.tot_qty FROM '
       
-        'left join (select receive_no,po_no,stock_code as kode,unit as ju' +
-        'mlah,grandtotal * 0 as nilai, 0 as urutan from t_item_receive_de' +
-        't )b on a.receive_no=b.receive_no  '
-      'union all  '
+        '(select kodesup ::text,nasup ::text,address,telp,noinv,tanggal,u' +
+        'rutan, round(cast((nilai_kredit-nilai_um)as numeric),2) as nilai' +
+        '_kredit, round(cast((nilai_debit)as numeric),2) nilai_debit  fro' +
+        'm (select zz.*,(case when um_beli.nilai_um is null then 0 else u' +
+        'm_beli.nilai_um end)nilai_um from (select kodesup,nasup,address,' +
+        'telp,noinv,tanggal,urutan, sum(nilai_kredit) as nilai_kredit ,su' +
+        'm(nilai_debit)as nilai_debit  from (select a.supplier_code as ko' +
+        'desup,a.supplier_name as nasup,a.address,a.telp,inv.noinv,inv.ta' +
+        'nggal,inv.keterangan,inv.urutan, (case when kredit.nilai_kredit ' +
+        'is null then 0 else kredit.nilai_kredit end)nilai_kredit, (case ' +
+        'when inv.nilai is null then 0 else inv.nilai end)nilai_debit, (c' +
+        'ase when kredit.nilai_pot is null then 0 else kredit.nilai_pot e' +
+        'nd)nilai_pot from (select * from t_supplier where supplier_code=' +
+        #39'SP0137'#39')a left join '
+      '(select x.* from '
+      
+        '(select distinct a.trans_no as noinv,b.po_no,a.supplier_code as ' +
+        'kodesup,a.trans_date as tanggal,b.kode,b.kode as keterangan,nila' +
+        'i,urutan,account_code from (select * from t_purchase_invoice whe' +
+        're account_code='#39'2101.01.SP0137'#39' and trans_date  between '#39'2025-0' +
+        '8-08'#39' and '#39'2025-08-08'#39'  and debt_remaining <>0 )a left join (sel' +
+        'ect trans_no,po_no,stock_code as kode,unit as jumlah,grandtotal ' +
+        '* 0 as nilai, 0 as urutan from t_purchase_invoice_det )b on a.tr' +
+        'ans_no=b.trans_no '
+      'union all '
+      '/*Potongan Pembelian*/'
       
         'select bb.receive_no as noinv,'#39#39' as nopo,bb.supplier_code as kod' +
         'esup,bb.discount_date as tanggal, bb.stock_code as kode, '#39'POTONG' +
         'AN PEMBELIAN'#39'  as ket, (case when bb.ppnrp is null then bb.price' +
         '_rp else bb.price_rp+bb.ppnrp end) as nilai,1 as urutan,dd.accou' +
-        'nt_code from t_purchase_discount bb  '
-      
-        'left join t_item_receive dd on bb.receive_no=dd.receive_no  wher' +
-        'e bb.supplier_code='#39'NC'#39' and bb.discount_date between '#39'2024-10-01' +
-        #39' and '#39'2024-12-26'#39' and dd.account_code='#39'2110'#39
-      'union all  '
+        'nt_code from t_purchase_discount bb left join t_purchase_invoice' +
+        ' dd on bb.receive_no=dd.trans_no  where bb.supplier_code='#39'SP0137' +
+        #39' and bb.discount_date between '#39'2025-08-08'#39' and '#39'2025-08-08'#39' and' +
+        ' dd.account_code='#39'2101.01.SP0137'#39' '
+      'union all '
       
         'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,a' +
-        'cc_balance from  '
-      
-        '(select noinv,'#39#39' as nopo,kodesup,tanggal,'#39#39' as kode,'#39#39' as ketera' +
-        'ngan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.' +
-        'saldo end)nilai_kredit,acc_balance from  '
-      
-        '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance fro' +
-        'm '
-      
-        '(select distinct voucher_no as noinv,'#39#39' as nopo,supplier_code as' +
-        ' kodesup,trans_date as tanggal,bank_number_account as kode,descr' +
-        'iption as keterangan,sum(paid_amount) as nilai,4 as urutan,accou' +
-        'nt_acc as acc_balance from t_cash_bank_expenditure_payable a '
-      
-        'INNER JOIN t_ak_account b on a.account_acc= b.code where trans_d' +
-        'ate between '#39'2024-10-01'#39' and '#39'2024-12-26'#39' and account_acc='#39'2110'#39 +
-        ' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  g' +
-        'roup by noinv,kodesup,tanggal,acc_balance)y  '
-      
-        'left join (select voucher,sum(saldo)as saldo from t_credit_trx_r' +
-        'eal group by voucher )z on y.noinv=z.voucher)xx  '
+        'cc_balance from (select noinv,'#39#39' as nopo,kodesup,tanggal,'#39#39' as k' +
+        'ode,'#39#39' as keterangan,nilai,4 as urutan,(case when z.saldo is nul' +
+        'l then 0 else z.saldo end)nilai_kredit,acc_balance from (select ' +
+        'noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance from (selec' +
+        't distinct voucher_no as noinv,'#39#39' as nopo,supplier_code as kodes' +
+        'up,trans_date as tanggal,bank_number_account as kode,description' +
+        ' as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc' +
+        ' as acc_balance from t_cash_bank_expenditure_payable a INNER JOI' +
+        'N v_ak_account b on a.account_acc= b.account_code2 where trans_d' +
+        'ate between '#39'2025-08-08'#39' and '#39'2025-08-08'#39' and account_acc='#39'2101.' +
+        '01.SP0137'#39' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_ba' +
+        'lance)x  group by noinv,kodesup,tanggal,acc_balance)y left join ' +
+        '(select voucher,sum(saldo)as saldo from t_credit_trx_real group ' +
+        'by voucher )z on y.noinv=z.voucher)xx '
       
         'left join (select no_voucher,sum(paid_amount) jumlah from t_cash' +
-        '_bank_expenditure_det where position='#39'K'#39' and code_account<>'#39'1111' +
-        #39' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv    '
-      'union all  '
+        '_bank_expenditure_det where position='#39'K'#39' and code_account<>'#39'1101' +
+        '.01'#39' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv '
+      'union all '
+      '/*retur Pembelian*/'
       
         'select a.return_no as noinv,'#39#39' as nopo,b.supplier_code as kodesu' +
         'p,b.return_date as tanggal,a.stock_code as kode,concat(a.stock_c' +
         'ode,'#39' '#39' ,qty,'#39' '#39' ,unit)as keterangan, (case when b.valas='#39'USD'#39'th' +
         'en a.total_price*b.valas_value else b.price+b.ppn_rp end)nilai,5' +
         ' as urutan,c.account_code  from t_purchase_return_det a,t_purcha' +
-        'se_return b, t_item_receive c where a.return_no=b.return_no and ' +
-        'b.receive_no=c.receive_no and c.account_code='#39'2110'#39' '
-      'union all  '
+        'se_return b,  t_purchase_invoice c where a.return_no=b.return_no' +
+        ' and b.receive_no=c.trans_no and c.account_code='#39'2101.01.SP0137'#39 +
+        ' '
+      'union all '
       
         'select a.bk_no as noinv,'#39#39' as nopo,'#39#39' as kodesup,b.trans_date as' +
         ' tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan' +
-        ',a.account_code from '
-      
-        '(select voucher_no ,bk_no ,account_code,remark,pay,6 as urutan f' +
-        'rom t_payment_detail_real where source_id=3 and account_code='#39'21' +
-        '10'#39' )a  '
+        ',a.account_code from (select voucher_no ,bk_no ,account_code,rem' +
+        'ark,pay,6 as urutan from t_payment_detail_real where source_id=3' +
+        ' and account_code='#39'2101.01.SP0137'#39' )a '
       
         'left join (select distinct no_voucher,trans_date from t_cash_ban' +
-        'k_expenditure_det where trans_date between '#39'2024-10-01'#39' and '#39'202' +
-        '4-12-26'#39' )b on a.bk_no=b.no_voucher )x  )inv on a.supplier_code=' +
-        'inv.kodesup'
+        'k_expenditure_det where trans_date between '#39'2025-08-08'#39' and '#39'202' +
+        '5-08-08'#39' )b on a.bk_no=b.no_voucher )x  )inv on a.supplier_code=' +
+        'inv.kodesup '
       
-        'left join(select a.receive_no as noinv,a.supplier_code as kodesu' +
-        'p,b.kode,(case when a.valas='#39'USD'#39' then b.nilai1 else b.nilai2 en' +
-        'd)nilai_kredit,c.nilai as nilai_pot from '
+        'left join(select a.trans_no as noinv,a.supplier_code as kodesup,' +
+        'b.kode,(case when a.valas='#39'USD'#39' then b.nilai1 else b.nilai2 end)' +
+        'nilai_kredit,c.nilai as nilai_pot from (select * from t_purchase' +
+        '_invoice where trans_date  between '#39'2025-08-08'#39' and '#39'2025-08-08'#39 +
+        ' )a '
       
-        '(select * from t_item_receive where receive_date  between '#39'2024-' +
-        '10-01'#39' and '#39'2024-12-26'#39' )a  '
-      
-        'left join (select receive_no,stock_code as kode,qty,unit as juml' +
-        'ah,sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_' +
-        'item_receive_det group by receive_no,stock_code,qty,unit)b on a.' +
-        'receive_no=b.receive_no  '
+        'left join (select trans_no,stock_code as kode,qty,unit as jumlah' +
+        ',sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_pu' +
+        'rchase_invoice_det group by trans_no,stock_code,qty,unit)b on a.' +
+        'trans_no=b.trans_no '
       
         'left join (select DISTINCT receive_no,sum(price_rp) as nilai fro' +
-        'm t_purchase_discount where supplier_code='#39'NC'#39' GROUP BY receive_' +
-        'no )c on a.receive_no=c.receive_no )kredit  on inv.noinv=kredit.' +
-        'noinv and inv.kode=kredit.kode and inv.urutan<>5'
+        'm t_purchase_discount where supplier_code='#39'SP0137'#39' GROUP BY rece' +
+        'ive_no )c on a.trans_no=c.receive_no )kredit  on inv.noinv=kredi' +
+        't.noinv and inv.kode=kredit.kode and inv.urutan<>5 )xxx  '
       
-        ')xxx  group by kodesup,nasup,noinv,tanggal,urutan order by kodes' +
-        'up,nasup,noinv,tanggal,urutan)zz'
-      '  '
+        'group by kodesup,nasup,address,telp,noinv,tanggal,urutan order b' +
+        'y kodesup,nasup,address,telp,noinv,tanggal,urutan)zz '
       
         'left join(select a.*,(case when b.nilai_um is null then 0 else b' +
-        '.nilai_um end)nilai_um from  '
-      
-        '(select distinct a.receive_no,a.po_no,b.supplier_code from t_ite' +
-        'm_receive_det a,t_item_receive b where a.receive_no=b.receive_no' +
-        ' and b.receive_date between '#39'2024-10-01'#39' and '#39'2024-12-26'#39' and b.' +
-        'supplier_code='#39'NC'#39')a  '
-      
-        'left join (select supplier_code,po_no,sum(um_value)as nilai_um f' +
-        'rom t_po where um_status=true and po_date<='#39'2024-12-26'#39' and  sup' +
-        'plier_code='#39'NC'#39' group  by po_no,supplier_code order by po_no,sup' +
-        'plier_code)b on a.po_no=b.po_no and a.supplier_code=b.supplier_c' +
-        'ode)um_beli on zz.noinv=um_beli.receive_no)ttt  where (nilai_kre' +
-        'dit-nilai_um>0) or (nilai_debit>0) and tanggal between '#39'2024-10-' +
-        '01'#39' and '#39'2024-12-26'#39' order by tanggal,urutan,nasup,noinv )gg '
-      
-        'left JOIN (select c.receive_no,c.faktur_no,b.item_stock_code,b.i' +
-        'tem_name,a.unit,sum(a.qty)as tot_qty from '
-      '(select * from t_item_receive_det)a  '
-      'left join t_item_stock b on a.item_stock_code=b.item_stock_code '
-      
-        'left join t_item_receive c on a.receive_no=c.receive_no group by' +
-        ' c.receive_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit o' +
-        'rder by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.r' +
-        'eceive_no)jj ')
+        '.nilai_um end)nilai_um from (select distinct a.trans_no,a.po_no,' +
+        'b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice' +
+        ' b where a.trans_no=b.trans_no and b.trans_no between '#39'2025-08-0' +
+        '8'#39' and '#39'2025-08-08'#39' and b.supplier_code='#39'SP0137'#39')a left join (se' +
+        'lect supplier_code,po_no,sum(um_value)as nilai_um from t_po wher' +
+        'e um_status=true and po_date<='#39'2025-08-08'#39' and  supplier_code='#39'S' +
+        'P0137'#39' group  by po_no,supplier_code order by po_no,supplier_cod' +
+        'e)b on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_be' +
+        'li on zz.noinv=um_beli.trans_no)ttt where (nilai_kredit-nilai_um' +
+        '>0) or (nilai_debit>0) and tanggal between '#39'2025-08-08'#39' and '#39'202' +
+        '5-08-08'#39' order by tanggal,urutan,nasup,noinv )gg left JOIN (sele' +
+        'ct c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit,s' +
+        'um(a.qty)as tot_qty from (select * from t_purchase_invoice_det)a' +
+        ' left join t_item_stock b on a.item_stock_code=b.item_stock_code' +
+        ' left join t_purchase_invoice c on a.trans_no=c.trans_no group b' +
+        'y c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit or' +
+        'der by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.tr' +
+        'ans_no)jj '
+      ' */')
     Left = 304
     Top = 160
+    object QKartuHutangnomor: TLargeintField
+      FieldName = 'nomor'
+      ReadOnly = True
+    end
+    object QKartuHutangket: TMemoField
+      FieldName = 'ket'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuHutangkodesup: TMemoField
+      FieldName = 'kodesup'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuHutangnasup: TMemoField
+      FieldName = 'nasup'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuHutangaddress: TStringField
+      FieldName = 'address'
+      ReadOnly = True
+      Size = 200
+    end
+    object QKartuHutangtelp: TStringField
+      FieldName = 'telp'
+      ReadOnly = True
+      FixedChar = True
+    end
+    object QKartuHutangnoinv: TMemoField
+      FieldName = 'noinv'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuHutangtanggal: TDateField
+      FieldName = 'tanggal'
+      ReadOnly = True
+    end
+    object QKartuHutangurutan: TIntegerField
+      FieldName = 'urutan'
+      ReadOnly = True
+    end
+    object QKartuHutangnilai_kredit: TFloatField
+      FieldName = 'nilai_kredit'
+      ReadOnly = True
+    end
+    object QKartuHutangnilai_debit: TFloatField
+      FieldName = 'nilai_debit'
+      ReadOnly = True
+    end
+    object QKartuHutangtrans_no: TStringField
+      FieldName = 'trans_no'
+      ReadOnly = True
+      Required = True
+      Size = 50
+    end
+    object QKartuHutangfaktur_no: TStringField
+      FieldName = 'faktur_no'
+      ReadOnly = True
+      Size = 50
+    end
+    object QKartuHutangitem_stock_code: TStringField
+      FieldName = 'item_stock_code'
+      ReadOnly = True
+    end
+    object QKartuHutangitem_name: TStringField
+      FieldName = 'item_name'
+      ReadOnly = True
+      Size = 100
+    end
+    object QKartuHutangunit: TStringField
+      FieldName = 'unit'
+      ReadOnly = True
+      Size = 10
+    end
+    object QKartuHutangtot_qty: TFloatField
+      FieldName = 'tot_qty'
+      ReadOnly = True
+    end
+    object QKartuHutangsa: TIntegerField
+      FieldName = 'sa'
+      ReadOnly = True
+    end
+    object QKartuHutangdebit: TFloatField
+      FieldName = 'debit'
+      ReadOnly = True
+    end
+    object QKartuHutangkredit: TFloatField
+      FieldName = 'kredit'
+      ReadOnly = True
+    end
+    object QKartuHutangsaldo: TFloatField
+      FieldName = 'saldo'
+      ReadOnly = True
+    end
+    object QKartuHutangket1: TMemoField
+      FieldName = 'ket1'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuHutangcode: TStringField
+      FieldName = 'code'
+      ReadOnly = True
+      Size = 50
+    end
+    object QKartuHutangheader_code: TStringField
+      FieldName = 'header_code'
+      ReadOnly = True
+      Size = 50
+    end
+    object QKartuHutangaccount_code: TStringField
+      FieldName = 'account_code'
+      ReadOnly = True
+      Size = 50
+    end
+    object QKartuHutangaccount_name: TStringField
+      FieldName = 'account_name'
+      ReadOnly = True
+      Size = 255
+    end
+    object QKartuHutangaccount_code2: TStringField
+      FieldName = 'account_code2'
+      ReadOnly = True
+      Size = 50
+    end
+    object QKartuHutangstatus_dk: TStringField
+      FieldName = 'status_dk'
+      ReadOnly = True
+      Size = 2
+    end
   end
   object QTgl_hutang: TUniQuery
     Connection = dm.Koneksi
@@ -1194,7 +1442,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
       'urutan=urutan'
       'nilai_kredit=nilai_kredit'
       'nilai_debit=nilai_debit'
-      'receive_no=receive_no'
+      'trans_no=trans_no'
       'faktur_no=faktur_no'
       'item_stock_code=item_stock_code'
       'item_name=item_name'
@@ -1214,285 +1462,365 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT *, round(cast(sum(sa+kredit-debit) over (ORDER BY nomor a' +
-        'sc ) as numeric),2) saldo from '
+        'SELECT  nomor,(case WHEN code='#39'2101.01'#39' then ket1 else ket end)'#9 +
+        'ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit' +
+        ',nilai_debit, trans_no,faktur_no,item_stock_code,item_name,unit,' +
+        'tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code' +
+        ' FROM'
       
-        '(select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,'#39 +
-        #39'ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from'
+        '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,uruta' +
+        'n,nilai_kredit,nilai_debit,zz.trans_no,faktur_no,item_stock_code' +
+        ',item_name,'#9'unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_' +
+        'code,account_code FROM'
       
-        '(SELECT gg.*,hh.receive_no,hh.faktur_no,hh.item_stock_code,hh.it' +
-        'em_name,hh.unit,hh.tot_qty FROM  '
+        '(SELECT aaa.*,concat(item_name,'#39' '#39',to_char(tot_qty,'#39'FM999G999G99' +
+        '0'#39'),'#39' '#39',unit) as ket1,x.account_code FROM'
+      
+        '(SELECT *, round(cast(sum(sa+kredit-debit) over (ORDER BY nomor ' +
+        'asc ) as numeric),2) saldo from (select  "row_number"() over (OR' +
+        'DER BY tanggal,urutan)+1 nomor,'#39#39'ket,* ,0 sa,nilai_debit debit,n' +
+        'ilai_kredit kredit from '
+      ''
+      
+        '(SELECT gg.*,hh.trans_no,hh.faktur_no,hh.item_stock_code,hh.item' +
+        '_name,hh.unit,hh.tot_qty FROM '
       
         '(select kodesup ::text,nasup ::text,address,telp,noinv,tanggal,u' +
         'rutan, '
       
         'round(cast((nilai_kredit-nilai_um)as numeric),2) as nilai_kredit' +
-        ','
+        ', '
       'round(cast((nilai_debit)as numeric),2) nilai_debit  from '
       
         '(select zz.*,(case when um_beli.nilai_um is null then 0 else um_' +
         'beli.nilai_um end)nilai_um from '
-      '(select kodesup,nasup,address,telp,noinv,tanggal,urutan,'
-      'sum(nilai_kredit) as nilai_kredit'
-      ',sum(nilai_debit)as nilai_debit  from '
+      
+        '(select kodesup,nasup,address,telp,noinv,tanggal,urutan, sum(nil' +
+        'ai_kredit) as nilai_kredit ,sum(nilai_debit)as nilai_debit  from' +
+        ' '
+      ''
       
         '(select a.supplier_code as kodesup,a.supplier_name as nasup,a.ad' +
         'dress,a.telp,inv.noinv,inv.tanggal,inv.keterangan,inv.urutan, '
       
         '(case when kredit.nilai_kredit is null then 0 else kredit.nilai_' +
-        'kredit end)nilai_kredit,'
+        'kredit end)nilai_kredit, '
       
         '(case when inv.nilai is null then 0 else inv.nilai end)nilai_deb' +
-        'it,'
+        'it, '
       
         '(case when kredit.nilai_pot is null then 0 else kredit.nilai_pot' +
-        ' end)nilai_pot from   '
-      '(select * from t_supplier where supplier_code='#39'NC'#39')a  '
-      'left join (select x.* from   '
+        ' end)nilai_pot from (select * from t_supplier where supplier_cod' +
+        'e='#39'SP0137'#39')a left join '
+      '(select x.* from '
       
-        '(select distinct a.receive_no as noinv,b.po_no,a.supplier_code a' +
-        's kodesup,a.receive_date as tanggal,b.kode,b.kode as keterangan,' +
-        'nilai,urutan,account_code from  '
+        '(select distinct a.trans_no as noinv,b.po_no,a.supplier_code as ' +
+        'kodesup,a.trans_date as tanggal,b.kode,b.kode as keterangan,nila' +
+        'i,urutan,account_code from '
       
-        '(select * from t_item_receive where account_code='#39'2110'#39' and rece' +
-        'ive_date  between '#39'2024-10-01'#39' and '#39'2024-12-26'#39' and debt_remaini' +
-        'ng <>0 )a  '
-      
-        'left join (select receive_no,po_no,stock_code as kode,unit as ju' +
-        'mlah,grandtotal * 0 as nilai, 0 as urutan from t_item_receive_de' +
-        't )b on a.receive_no=b.receive_no  '
-      'union all  '
+        '(select * from t_purchase_invoice where account_code='#39'2101.01.SP' +
+        '0137'#39' and trans_date  between '#39'2025-02-05'#39' and '#39'2025-03-06'#39'  and' +
+        ' debt_remaining <>0 )a left join (select trans_no,po_no,stock_co' +
+        'de as kode,unit as jumlah,grandtotal * 0 as nilai, 0 as urutan f' +
+        'rom t_purchase_invoice_det )b on a.trans_no=b.trans_no '
+      'union all '
       
         'select bb.receive_no as noinv,'#39#39' as nopo,bb.supplier_code as kod' +
         'esup,bb.discount_date as tanggal, bb.stock_code as kode, '#39'POTONG' +
         'AN PEMBELIAN'#39'  as ket, (case when bb.ppnrp is null then bb.price' +
         '_rp else bb.price_rp+bb.ppnrp end) as nilai,1 as urutan,dd.accou' +
-        'nt_code from t_purchase_discount bb  '
-      
-        'left join t_item_receive dd on bb.receive_no=dd.receive_no  wher' +
-        'e bb.supplier_code='#39'NC'#39' and bb.discount_date between '#39'2024-10-01' +
-        #39' and '#39'2024-12-26'#39' and dd.account_code='#39'2110'#39
-      'union all  '
+        'nt_code from t_purchase_discount bb left join t_purchase_invoice' +
+        ' dd on bb.receive_no=dd.trans_no  where bb.supplier_code='#39'SP0137' +
+        #39' and bb.discount_date between '#39'2025-02-05'#39' and '#39'2025-03-06'#39' and' +
+        ' dd.account_code='#39'2101.01.SP0137'#39' '
+      'union all '
       
         'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,a' +
-        'cc_balance from  '
-      
-        '(select noinv,'#39#39' as nopo,kodesup,tanggal,'#39#39' as kode,'#39#39' as ketera' +
-        'ngan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.' +
-        'saldo end)nilai_kredit,acc_balance from  '
-      
-        '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance fro' +
-        'm '
-      
-        '(select distinct voucher_no as noinv,'#39#39' as nopo,supplier_code as' +
-        ' kodesup,trans_date as tanggal,bank_number_account as kode,descr' +
-        'iption as keterangan,sum(paid_amount) as nilai,4 as urutan,accou' +
-        'nt_acc as acc_balance from t_cash_bank_expenditure_payable a '
-      
-        'INNER JOIN t_ak_account b on a.account_acc= b.code where trans_d' +
-        'ate between '#39'2024-10-01'#39' and '#39'2024-12-26'#39' and account_acc='#39'2110'#39 +
-        ' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  g' +
-        'roup by noinv,kodesup,tanggal,acc_balance)y  '
-      
-        'left join (select voucher,sum(saldo)as saldo from t_credit_trx_r' +
-        'eal group by voucher )z on y.noinv=z.voucher)xx  '
-      
-        'left join (select no_voucher,sum(paid_amount) jumlah from t_cash' +
-        '_bank_expenditure_det where position='#39'K'#39' and code_account<>'#39'1111' +
-        #39' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv    '
-      'union all  '
+        'cc_balance from (select noinv,'#39#39' as nopo,kodesup,tanggal,'#39#39' as k' +
+        'ode,'#39#39' as keterangan,nilai,4 as urutan,(case when z.saldo is nul' +
+        'l then 0 else z.saldo end)nilai_kredit,acc_balance from (select ' +
+        'noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance from (selec' +
+        't distinct voucher_no as noinv,'#39#39' as nopo,supplier_code as kodes' +
+        'up,trans_date as tanggal,bank_number_account as kode,description' +
+        ' as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc' +
+        ' as acc_balance from t_cash_bank_expenditure_payable a INNER JOI' +
+        'N v_ak_account b on a.account_acc= b.account_code2 where trans_d' +
+        'ate between '#39'2025-02-05'#39' and '#39'2025-03-06'#39' and account_acc='#39'2101.' +
+        '01.SP0137'#39' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_ba' +
+        'lance)x  group by noinv,kodesup,tanggal,acc_balance)y left join ' +
+        '(select voucher,sum(saldo)as saldo from t_credit_trx_real group ' +
+        'by voucher )z on y.noinv=z.voucher)xx left join (select no_vouch' +
+        'er,sum(paid_amount) jumlah from t_cash_bank_expenditure_det wher' +
+        'e position='#39'K'#39' and code_account<>'#39'1101.01'#39' GROUP BY no_voucher) ' +
+        'kas on kas.no_voucher=xx.noinv -- KK/001/06/III/2025/HLJ'
+      'union all '
       
         'select a.return_no as noinv,'#39#39' as nopo,b.supplier_code as kodesu' +
         'p,b.return_date as tanggal,a.stock_code as kode,concat(a.stock_c' +
         'ode,'#39' '#39' ,qty,'#39' '#39' ,unit)as keterangan, (case when b.valas='#39'USD'#39'th' +
         'en a.total_price*b.valas_value else b.price+b.ppn_rp end)nilai,5' +
         ' as urutan,c.account_code  from t_purchase_return_det a,t_purcha' +
-        'se_return b, t_item_receive c where a.return_no=b.return_no and ' +
-        'b.receive_no=c.receive_no and c.account_code='#39'2110'#39' '
-      'union all  '
+        'se_return b,  t_purchase_invoice c where a.return_no=b.return_no' +
+        ' and b.receive_no=c.trans_no and c.account_code='#39'2101.01.SP0137'#39 +
+        ' '
+      'union all '
       
         'select a.bk_no as noinv,'#39#39' as nopo,'#39#39' as kodesup,b.trans_date as' +
         ' tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan' +
-        ',a.account_code from '
+        ',a.account_code from (select voucher_no ,bk_no ,account_code,rem' +
+        'ark,pay,6 as urutan from t_payment_detail_real where source_id=3' +
+        ' and account_code='#39'2101.01.SP0137'#39' )a left join (select distinct' +
+        ' no_voucher,trans_date from t_cash_bank_expenditure_det where tr' +
+        'ans_date between '#39'2025-02-05'#39' and '#39'2025-03-06'#39' )b on a.bk_no=b.n' +
+        'o_voucher )x  )inv '
+      'on a.supplier_code=inv.kodesup '
+      'left join'
       
-        '(select voucher_no ,bk_no ,account_code,remark,pay,6 as urutan f' +
-        'rom t_payment_detail_real where source_id=3 and account_code='#39'21' +
-        '10'#39' )a  '
+        '(select a.trans_no as noinv,a.supplier_code as kodesup,b.kode,(c' +
+        'ase when a.valas='#39'USD'#39' then b.nilai1 else b.nilai2 end)nilai_kre' +
+        'dit,c.nilai as nilai_pot from '
       
-        'left join (select distinct no_voucher,trans_date from t_cash_ban' +
-        'k_expenditure_det where trans_date between '#39'2024-10-01'#39' and '#39'202' +
-        '4-12-26'#39' )b on a.bk_no=b.no_voucher )x  )inv on a.supplier_code=' +
-        'inv.kodesup'
-      
-        'left join(select a.receive_no as noinv,a.supplier_code as kodesu' +
-        'p,b.kode,(case when a.valas='#39'USD'#39' then b.nilai1 else b.nilai2 en' +
-        'd)nilai_kredit,c.nilai as nilai_pot from '
-      
-        '(select * from t_item_receive where receive_date  between '#39'2024-' +
-        '10-01'#39' and '#39'2024-12-26'#39' )a  '
-      
-        'left join (select receive_no,stock_code as kode,qty,unit as juml' +
-        'ah,sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_' +
-        'item_receive_det group by receive_no,stock_code,qty,unit)b on a.' +
-        'receive_no=b.receive_no  '
-      
-        'left join (select DISTINCT receive_no,sum(price_rp) as nilai fro' +
-        'm t_purchase_discount where supplier_code='#39'NC'#39' GROUP BY receive_' +
-        'no )c on a.receive_no=c.receive_no )kredit  on inv.noinv=kredit.' +
-        'noinv and inv.kode=kredit.kode and inv.urutan<>5'
-      
-        ')xxx  group by kodesup,nasup,address,telp,noinv,tanggal,urutan o' +
-        'rder by kodesup,nasup,address,telp,noinv,tanggal,urutan)zz'
-      '  '
-      
-        'left join(select a.*,(case when b.nilai_um is null then 0 else b' +
-        '.nilai_um end)nilai_um from  '
-      
-        '(select distinct a.receive_no,a.po_no,b.supplier_code from t_ite' +
-        'm_receive_det a,t_item_receive b where a.receive_no=b.receive_no' +
-        ' and b.receive_date between '#39'2024-10-01'#39' and '#39'2024-12-26'#39' and b.' +
-        'supplier_code='#39'NC'#39')a  '
-      
-        'left join (select supplier_code,po_no,sum(um_value)as nilai_um f' +
-        'rom t_po where um_status=true and po_date<='#39'2024-12-26'#39' and  sup' +
-        'plier_code='#39'NC'#39' group  by po_no,supplier_code order by po_no,sup' +
-        'plier_code)b on a.po_no=b.po_no and a.supplier_code=b.supplier_c' +
-        'ode)um_beli on zz.noinv=um_beli.receive_no)ttt  where (nilai_kre' +
-        'dit-nilai_um>0) or (nilai_debit>0) and tanggal between '#39'2024-10-' +
-        '01'#39' and '#39'2024-12-26'#39' order by tanggal,urutan,nasup,noinv )gg '
-      
-        'left JOIN (select c.receive_no,c.faktur_no,b.item_stock_code,b.i' +
-        'tem_name,a.unit,sum(a.qty)as tot_qty from '
-      '(select * from t_item_receive_det)a  '
-      'left join t_item_stock b on a.item_stock_code=b.item_stock_code '
-      
-        'left join t_item_receive c on a.receive_no=c.receive_no group by' +
-        ' c.receive_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit o' +
-        'rder by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.r' +
-        'eceive_no)jj '
+        '(select * from t_purchase_invoice where trans_date  between '#39'202' +
+        '5-02-05'#39' and '#39'2025-03-06'#39' )a left join (select trans_no,stock_co' +
+        'de as kode,qty,unit as jumlah,sum(subtotalrp)as nilai1,SUM ( gra' +
+        'ndtotal ) AS nilai2 from t_purchase_invoice_det group by trans_n' +
+        'o,stock_code,qty,unit)b on a.trans_no=b.trans_no left join (sele' +
+        'ct DISTINCT receive_no,sum(price_rp) as nilai from t_purchase_di' +
+        'scount where supplier_code='#39'SP0137'#39' GROUP BY receive_no )c on a.' +
+        'trans_no=c.receive_no )kredit  on inv.noinv=kredit.noinv '
+      '--and inv.kode=kredit.kode '
+      'and inv.urutan<>5 )xxx'
       ''
-      'UNION ALL  '
+      
+        ' group by kodesup,nasup,address,telp,noinv,tanggal,urutan order ' +
+        'by kodesup,nasup,address,telp,noinv,tanggal,urutan)zz '
+      
+        ' left join(select a.*,(case when b.nilai_um is null then 0 else ' +
+        'b.nilai_um end)nilai_um from (select distinct a.trans_no,a.po_no' +
+        ',b.supplier_code from t_purchase_invoice_det a,t_purchase_invoic' +
+        'e b where a.trans_no=b.trans_no and b.trans_no between '#39'2025-02-' +
+        '05'#39' and '#39'2025-03-06'#39' and b.supplier_code='#39'SP0137'#39')a left join (s' +
+        'elect supplier_code,po_no,sum(um_value)as nilai_um from t_po whe' +
+        're um_status=true and po_date<='#39'2025-03-06'#39' and  supplier_code='#39 +
+        'SP0137'#39' group  by po_no,supplier_code order by po_no,supplier_co' +
+        'de)b on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_b' +
+        'eli on zz.noinv=um_beli.trans_no)ttt where (nilai_kredit-nilai_u' +
+        'm>0) or (nilai_debit>0) and tanggal between '#39'2025-02-05'#39' and '#39'20' +
+        '25-03-06'#39' order by tanggal,urutan,nasup,noinv )gg '
+      
+        ' left JOIN (select c.trans_no,c.faktur_no,b.item_stock_code,b.it' +
+        'em_name,a.unit,sum(a.qty)as tot_qty from (select * from t_purcha' +
+        'se_invoice_det)a left join t_item_stock b on a.item_stock_code=b' +
+        '.item_stock_code left join t_purchase_invoice c on a.trans_no=c.' +
+        'trans_no group by c.trans_no,c.faktur_no,b.item_stock_code,b.ite' +
+        'm_name,a.unit order by b.item_stock_code,b.item_name,a.unit)hh o' +
+        'n gg.noinv=hh.trans_no)jj '
+      ''
+      'UNION ALL '
       
         'select 1 as nomor,'#39'Saldo Awal'#39' ket,kodesup,'#39'Saldo Awal'#39' nasup,'#39#39 +
-        ' address,'#39#39' telp,'#39#39' noinv,null tanggal, 0 urutan, 0 nilai_kredit' +
-        ',0 nilai_debit,'#39#39' no_terima,'#39#39' nofaktur,'#39#39' kd_material_stok,'#39#39' n' +
-        'm_material,'#39#39' satuan,0 tot_qty,saldo_awal as sa,0 debit,0 kredit' +
-        ' FROM  '
-      
-        '(SELECT kodesup,'#39'Saldo Awal'#39' as nasup,sum(yyy.saldo_awal_tahun+y' +
-        'yy.kredit-yyy.debit-yyy.debit_retur-yyy.nilai_pot) saldo_awal,0 ' +
-        'debit,0 kredit from '
-      ''
+        ' address,'#39#39' telp,'#39#39' noinv, null tanggal, 0 urutan, 0 nilai_kredi' +
+        't,0 nilai_debit,'#39#39' no_terima,'#39#39' nofaktur,'#39#39' kd_material_stok,'#39#39' ' +
+        'nm_material,'#39#39' satuan,0 tot_qty,saldo_awal as sa,0 debit,0 kredi' +
+        't FROM (SELECT kodesup,'#39'Saldo Awal'#39' as nasup,sum(yyy.saldo_awal_' +
+        'tahun+yyy.kredit-yyy.debit-yyy.debit_retur-yyy.nilai_pot) saldo_' +
+        'awal,0 debit,0 kredit from '
       
         '(/*yyy*/select a.supplier_code as kodesup,case when saldo_awal.i' +
         'nitial_balance is null then 0 else saldo_awal.initial_balance en' +
         'd saldo_awal_tahun,round(cast(case when x.nilai is null then 0 e' +
-        'lse x.nilai end as numeric),2)kredit,'
-      
-        'round(cast(case when y.nilai is null then 0 else y.nilai end as ' +
-        'numeric),2)debit, '
-      
-        'round(cast(case when z.nilai is null then 0 else z.nilai end as ' +
-        'numeric),2)debit_retur, '
-      
-        'round(cast(case when xx.nilai_pot is null then 0 else xx.nilai_p' +
-        'ot end as numeric),2)nilai_pot from  '
-      '( select * from t_supplier where supplier_code='#39'NC'#39')a '
-      
-        'left join (select kodesup,sum(nilai)-sum(nilai_um) as nilai from' +
-        '  '
-      
-        '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um' +
-        ' end)nilai_um from  '
-      
-        '(select a.supplier_code as kodesup,b.po_no,(case when a.valas='#39'U' +
-        'SD'#39' then sum(nilai1) else sum(nilai2) end)nilai from '
-      
-        '(select * from t_item_receive where account_code='#39'2110'#39' and rece' +
-        'ive_date between '#39'2022-01-01'#39' and '#39'2024-09-30'#39' and supplier_code' +
-        '='#39'NC'#39' and debt_remaining<>0)a  '
-      
-        'left join (select receive_no,po_no,stock_code as kode,qty,unit a' +
-        's jumlah,subtotalrp as nilai1,grandtotal as nilai2, 0 as urutan ' +
-        'from t_item_receive_det )b on a.receive_no=b.receive_no group by' +
-        ' kodesup,b.po_no,a.valas)a  '
-      
-        'left join(select po_no,supplier_code,sum(um_value)as nilai_um fr' +
-        'om t_po where um_status=true and po_date<'#39'2024-10-01'#39' and suppli' +
-        'er_code='#39'NC'#39' group by po_no,supplier_code order by po_no,supplie' +
-        'r_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x  gro' +
-        'up by kodesup)x on a.supplier_code=x.kodesup  '
-      
-        'left join(select supplier_code as kodesup,sum(bayar)as nilai fro' +
-        'm'
-      
-        '(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo ' +
-        'is null then 0 else b.saldo end)nilai_kredit from (select vouche' +
-        'r_no,supplier_code,sum(paid_amount)as bayar from t_cash_bank_exp' +
-        'enditure_payable'
-      
-        'where supplier_code='#39'NC'#39' and account_acc='#39'2110'#39' and  trans_date ' +
-        'between '#39'2022-01-01'#39' and '#39'2024-09-30'#39' group by voucher_no,suppli' +
-        'er_code order by voucher_no,supplier_code)a '#9
-      
-        'left join (select voucher,sum(saldo)as saldo from t_credit_trx_r' +
-        'eal where account_code<>'#39'2142'#39' group by voucher order by voucher' +
-        ')b '#9'on a.voucher_no=b.voucher)x  group by supplier_code order by' +
-        ' supplier_code)y on a.supplier_code=y.kodesup  '
-      
-        'left join(select b.supplier_code as kodesup,(case when b.valas='#39 +
-        'USD'#39' then sum(a.total_price*b.valas_value) else sum(b.price+b.pp' +
-        'n_rp) end)nilai from t_purchase_return_det a,t_purchase_return b' +
-        ' '
-      
-        'left join t_item_receive dd on b.receive_no=dd.receive_no where ' +
-        'a.return_no=b.return_no and return_date between '#39'2022-01-01'#39' and' +
-        ' '#39'2024-09-30'#39' and dd.account_code='#39'2110'#39' group by b.supplier_cod' +
-        'e,b.valas order by b.supplier_code)z  on a.supplier_code=z.kodes' +
-        'up /*Pot pembelian*/ '
+        'lse x.nilai end as numeric),2)kredit, round(cast(case when y.nil' +
+        'ai is null then 0 else y.nilai end as numeric),2)debit, round(ca' +
+        'st(case when z.nilai is null then 0 else z.nilai end as numeric)' +
+        ',2)debit_retur, round(cast(case when xx.nilai_pot is null then 0' +
+        ' else xx.nilai_pot end as numeric),2)nilai_pot from ( select * f' +
+        'rom t_supplier where supplier_code='#39'SP0137'#39')a left join (select ' +
+        'kodesup,sum(nilai)-sum(nilai_um) as nilai from (select a.*,(case' +
+        ' when b.nilai_um is null then 0 else b.nilai_um end)nilai_um fro' +
+        'm (select a.supplier_code as kodesup,b.po_no,(case when a.valas=' +
+        #39'USD'#39' then sum(nilai1) else sum(nilai2) end)nilai from (select *' +
+        ' from t_purchase_invoice where account_code='#39'2101.01.SP0137'#39' and' +
+        ' trans_date between '#39'2024-01-01'#39' and '#39'2025-03-05'#39' and supplier_c' +
+        'ode='#39'SP0137'#39' and debt_remaining<>0)a left join (select trans_no,' +
+        'po_no,stock_code as kode,qty,unit as jumlah,subtotalrp as nilai1' +
+        ',grandtotal as nilai2, 0 as urutan from t_purchase_invoice_det )' +
+        'b on a.trans_no=b.trans_no group by kodesup,b.po_no,a.valas)a le' +
+        'ft join(select po_no,supplier_code,sum(um_value)as nilai_um from' +
+        ' t_po where um_status=true and po_date<'#39'2025-03-06'#39' and supplier' +
+        '_code='#39'SP0137'#39' group by po_no,supplier_code order by po_no,suppl' +
+        'ier_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x  g' +
+        'roup by kodesup)x on a.supplier_code=x.kodesup left join(select ' +
+        'supplier_code as kodesup,sum(bayar)as nilai from (select a.vouch' +
+        'er_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 ' +
+        'else b.saldo end)nilai_kredit from (select voucher_no,supplier_c' +
+        'ode,sum(paid_amount)as bayar from t_cash_bank_expenditure_payabl' +
+        'e where supplier_code='#39'SP0137'#39' and account_acc='#39'2101.01.SP0137'#39' ' +
+        'and  trans_date between '#39'2024-01-01'#39' and '#39'2025-03-05'#39' group by v' +
+        'oucher_no,supplier_code order by voucher_no,supplier_code)a left' +
+        ' join (select voucher,sum(saldo)as saldo from t_credit_trx_real ' +
+        'where account_code<>'#39'2142'#39' group by voucher order by voucher)b '#9 +
+        'on a.voucher_no=b.voucher)x  group by supplier_code order by sup' +
+        'plier_code)y on a.supplier_code=y.kodesup left join(select b.sup' +
+        'plier_code as kodesup,(case when b.valas='#39'USD'#39' then sum(a.total_' +
+        'price*b.valas_value) else sum(b.price+b.ppn_rp) end)nilai from t' +
+        '_purchase_return_det a,t_purchase_return b left join t_purchase_' +
+        'invoice dd on b.receive_no=dd.trans_no where a.return_no=b.retur' +
+        'n_no and return_date between '#39'2024-01-01'#39' and '#39'2025-03-05'#39' and d' +
+        'd.account_code='#39'2101.01.SP0137'#39' group by b.supplier_code,b.valas' +
+        ' order by b.supplier_code)z  on a.supplier_code=z.kodesup '
+      '/*Pot pembelian*/ '
       
         'left join(select dd.supplier_code,sum(bb.hargapot)as nilai_pot f' +
-        'rom '
-      
-        '(select receive_no,discount_date ,(price_rp+(case when ppnrp isn' +
-        'ull then 0 else ppnrp end)) hargapot from  t_purchase_discount) ' +
-        'bb '
-      
-        'left join t_item_receive dd on bb.receive_no=dd.receive_no where' +
-        ' discount_date between '#39'2022-01-01'#39' and '#39'2024-09-30'#39' and dd.acco' +
-        'unt_code='#39'2110'#39' group by dd.supplier_code order by supplier_code' +
-        ')xx on a.supplier_code=xx.supplier_code'
-      'left join (select kodesup,sum(nilai)as nilai from'
-      
-        '(select a.bk_no as noinv,'#39#39' as kodesup, b.trans_date as tanggal,' +
-        'a.account_code as kode,a.remark,a.pay as nilai,a.urutan from '
-      
-        '(select voucher_no,bk_no ,account_code,remark,pay,4 as urutan fr' +
-        'om t_payment_detail_real where source_id=3 and account_code='#39'211' +
-        '0'#39' )a  '
-      
-        'left join (select distinct no_voucher,trans_date from t_cash_ban' +
-        'k_expenditure_det where trans_date between '#39'2022-01-01'#39' and '#39'202' +
-        '4-09-30'#39') b on a.bk_no=b.no_voucher'
-      
-        ')x group by kodesup)debit_do on a.supplier_code=debit_do.kodesup' +
-        ' '
-      
-        'left join (select * from t_initial_balance_debt where debt_type=' +
-        #39'2110'#39' and "year" = (select to_char(debt_date, '#39'YYYY'#39') from t_tm' +
-        'psyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supp' +
-        'lier_code where a.supplier_code='#39'NC'#39
-      '/*yyy*/)yyy GROUP BY kodesup,saldo_awal_tahun,kredit,debit,'
-      
+        'rom (select receive_no,discount_date ,(price_rp+(case when ppnrp' +
+        ' isnull then 0 else ppnrp end)) hargapot from  t_purchase_discou' +
+        'nt) bb left join t_purchase_invoice dd on bb.receive_no=dd.trans' +
+        '_no where discount_date between '#39'2024-01-01'#39' and '#39'2025-03-05'#39' an' +
+        'd dd.account_code='#39'2101.01'#39' group by dd.supplier_code order by s' +
+        'upplier_code)xx on a.supplier_code=xx.supplier_code left join (s' +
+        'elect kodesup,sum(nilai)as nilai from (select a.bk_no as noinv,'#39 +
+        #39' as kodesup, b.trans_date as tanggal,a.account_code as kode,a.r' +
+        'emark,a.pay as nilai,a.urutan from (select voucher_no,bk_no ,acc' +
+        'ount_code,remark,pay,4 as urutan from t_payment_detail_real wher' +
+        'e source_id=3 and account_code='#39'2101.01'#39' )a left join (select di' +
+        'stinct no_voucher,trans_date from t_cash_bank_expenditure_det wh' +
+        'ere trans_date between '#39'2024-01-01'#39' and '#39'2025-03-05'#39') b on a.bk_' +
+        'no=b.no_voucher )x group by kodesup)debit_do on a.supplier_code=' +
+        'debit_do.kodesup left join (select * from t_initial_balance_debt' +
+        ' where debt_type='#39'2101.01.SP0137'#39' and "year" = (select to_char(d' +
+        'ebt_date, '#39'YYYY'#39') from t_tmpsyst)::INTEGER ) saldo_awal on saldo' +
+        '_awal.supplier_code= a.supplier_code where a.supplier_code='#39'SP01' +
+        '37'#39' /*yyy*/)yyy GROUP BY kodesup,saldo_awal_tahun,kredit,debit, ' +
         'debit_retur,nilai_pot)kk group by kk.kodesup,kk.saldo_awal)zzz  ' +
         'group by zzz.nomor,zzz.kodesup,zzz.nasup,zzz.address,zzz.telp,zz' +
-        'z.noinv,zzz.tanggal,zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit,' +
-        'zzz.receive_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,z' +
-        'zz.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket  ORDER B' +
-        'Y nomor ASC')
+        'z.noinv,zzz.tanggal, zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit' +
+        ',zzz.trans_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,zz' +
+        'z.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket  ORDER BY' +
+        ' nomor ASC)aaa'
+      
+        'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invo' +
+        'ice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_' +
+        'no)x '
+      'ON aaa.noinv=x.trans_no) zz'
+      'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)gg'
+      'ORDER BY nomor ASC')
     Active = True
     Left = 920
     Top = 144
+    object QCetaknomor: TLargeintField
+      FieldName = 'nomor'
+      ReadOnly = True
+    end
+    object QCetakket: TMemoField
+      FieldName = 'ket'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakkodesup: TMemoField
+      FieldName = 'kodesup'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetaknasup: TMemoField
+      FieldName = 'nasup'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakaddress: TMemoField
+      FieldName = 'address'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetaktelp: TMemoField
+      FieldName = 'telp'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetaknoinv: TMemoField
+      FieldName = 'noinv'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetaktanggal: TDateField
+      FieldName = 'tanggal'
+      ReadOnly = True
+    end
+    object QCetakurutan: TIntegerField
+      FieldName = 'urutan'
+      ReadOnly = True
+    end
+    object QCetaknilai_kredit: TFloatField
+      FieldName = 'nilai_kredit'
+      ReadOnly = True
+    end
+    object QCetaknilai_debit: TFloatField
+      FieldName = 'nilai_debit'
+      ReadOnly = True
+    end
+    object QCetaktrans_no: TMemoField
+      FieldName = 'trans_no'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakfaktur_no: TMemoField
+      FieldName = 'faktur_no'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakitem_stock_code: TMemoField
+      FieldName = 'item_stock_code'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakitem_name: TMemoField
+      FieldName = 'item_name'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakunit: TMemoField
+      FieldName = 'unit'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetaktot_qty: TFloatField
+      FieldName = 'tot_qty'
+      ReadOnly = True
+    end
+    object QCetaksa: TFloatField
+      FieldName = 'sa'
+      ReadOnly = True
+    end
+    object QCetakdebit: TFloatField
+      FieldName = 'debit'
+      ReadOnly = True
+    end
+    object QCetakkredit: TFloatField
+      FieldName = 'kredit'
+      ReadOnly = True
+    end
+    object QCetaksaldo: TFloatField
+      FieldName = 'saldo'
+      ReadOnly = True
+    end
+    object QCetakket1: TMemoField
+      FieldName = 'ket1'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakcode: TStringField
+      FieldName = 'code'
+      ReadOnly = True
+      Size = 50
+    end
+    object QCetakheader_code: TStringField
+      FieldName = 'header_code'
+      ReadOnly = True
+      Size = 50
+    end
+    object QCetakaccount_code: TStringField
+      FieldName = 'account_code'
+      ReadOnly = True
+      Size = 50
+    end
   end
   object frxReport1: TfrxReport
     Version = '2022.1.3'
@@ -1503,14 +1831,850 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44125.442920347200000000
-    ReportOptions.LastChange = 45663.099827870370000000
+    ReportOptions.LastChange = 45890.619108414400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      
+        'procedure frxDBDataset1deskripsiOnBeforePrint(Sender: TfrxCompon' +
+        'ent);'
+      'begin'
+      
+        '   {if <FrxDBDataset_Trans."urutan">=5 and <FrxDBDataset_Trans."' +
+        'noinv"><>'#39#39' then'
+      '   begin'
+      '      memo_ket.Lines.Clear;'
+      '      memo_ket.Lines.add('#39'RETUR PEMBELIAN'#39');'
+      '   end;}          '
+      'end;'
+      ''
+      'procedure frxDBDataset1dayOnBeforePrint(Sender: TfrxComponent);'
+      'var'
+      '  Tanggal: Variant;    '
+      'begin'
+      '  // Ambil nilai dari field'
+      '  Tanggal := <FrxDBDataset_Trans."tanggal">;'
+      ''
+      '  // Periksa jika nilai adalah nol (tanggal 31/12/1899)'
+      '  if (Tanggal = 0)or (Tanggal ='#39'31/12/1899'#39') then'
+      '  begin'
+      '    frxDBDataset1day.Text := '#39#39';'
+      '  end'
+      '  else'
+      '  begin'
+      '    // Jika tidak kosong, format tanggalnya'
+      
+        '    frxDBDataset1day.Text := FormatDateTime('#39'dd/mm/yyyy'#39', Tangga' +
+        'l);'
+      '  end;              '
+      'end;'
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure Memo_KetOnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
       'begin'
       ''
       'end.')
     Left = 888
     Top = 112
+    Datasets = <
+      item
+        DataSet = frxDBDataset4
+        DataSetName = 'frxDBDataset4'
+      end
+      item
+        DataSet = frxDBDataset1
+        DataSetName = 'frxDBDataset_trans'
+      end
+      item
+        DataSet = frxDBDataset2
+        DataSetName = 'frxDBDatasetSupp'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 330.000000000000000000
+      PaperSize = 10000
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      MirrorMode = []
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 248.966207620000000000
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        object Memo102: TfrxMemoView
+          AllowVectorExport = True
+          Left = 16.677180000000000000
+          Top = 63.102350000000000000
+          Width = 249.189136670000000000
+          Height = 14.398209520000000000
+          DataField = 'company_name'
+          DataSet = frxDBDataset4
+          DataSetName = 'frxDBDataset4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDataset4."company_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo103: TfrxMemoView
+          AllowVectorExport = True
+          Left = 16.779530000000000000
+          Top = 76.220470000000000000
+          Width = 273.543496670000000000
+          Height = 37.413979520000000000
+          DataField = 'address'
+          DataSet = frxDBDataset4
+          DataSetName = 'frxDBDataset4'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haBlock
+          Memo.UTF8W = (
+            '[frxDBDataset4."address"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Page: TfrxMemoView
+          AllowVectorExport = True
+          Left = 656.000000000000000000
+          Top = 97.543290000000000000
+          Width = 88.842610000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Lembar ke')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 305.000000000000000000
+          Top = 32.102350000000000000
+          Width = 194.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'KARTU HUTANG')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 17.179977620000000000
+          Top = 185.135009050000000000
+          Width = 108.346526670000000000
+          Height = 14.398209520000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'NO. TELEPON')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 130.565877620000000000
+          Top = 183.575949050000000000
+          Width = 21.597314290000000000
+          Height = 18.357717140000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 16.000000000000000000
+          Top = 158.898769050000000000
+          Width = 85.669346670000000000
+          Height = 14.398209520000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'ALAMAT')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 149.463527620000000000
+          Top = 157.678299050000000000
+          Width = 376.756340000000000000
+          Height = 30.236240000000000000
+          DataField = 'address'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDatasetSupp'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDatasetSupp."address"]')
+          ParentFont = False
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 129.786347620000000000
+          Top = 154.898769050000000000
+          Width = 21.597314290000000000
+          Height = 18.357717140000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset2pelanggan: TfrxMemoView
+          AllowVectorExport = True
+          Left = 149.463437310000000000
+          Top = 131.221589050000000000
+          Width = 375.630180000000000000
+          Height = 18.897650000000000000
+          DataField = 'supplier_name'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDatasetSupp'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDatasetSupp."supplier_name"]')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 16.046114470000000000
+          Top = 129.701902380000000000
+          Width = 112.306034290000000000
+          Height = 17.997761900000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'NAMA')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 130.204803330000000000
+          Top = 128.701902380000000000
+          Width = 21.597314290000000000
+          Height = 18.357717140000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 561.058001430000000000
+          Top = 127.102350000000000000
+          Width = 97.187914290000000000
+          Height = 25.196866670000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'NO HUTANG')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 676.243677620000000000
+          Top = 129.442059050000000000
+          Width = 21.597314290000000000
+          Height = 18.357717140000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 676.243677620000000000
+          Top = 158.678299050000000000
+          Width = 21.597314290000000000
+          Height = 18.357717140000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 560.857777620000000000
+          Top = 157.457829050000000000
+          Width = 127.424154290000000000
+          Height = 25.196866670000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'JANGKA DEBET')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 58.960629920000000000
+          Top = 208.629921259843000000
+          Width = 120.566929130000000000
+          Height = 40.440944881889800000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nomor Faktur')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          AllowVectorExport = True
+          Left = 179.149606300000000000
+          Top = 208.629921259843000000
+          Width = 264.188976380000000000
+          Height = 40.440944881889800000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Keterangan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo17: TfrxMemoView
+          AllowVectorExport = True
+          Left = 442.960629920000000000
+          Top = 208.629921259843000000
+          Width = 110.362204720000000000
+          Height = 40.440944881889800000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Debet')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 553.322834650000000000
+          Top = 208.629921259843000000
+          Width = 97.889763780000000000
+          Height = 40.440944881889800000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kredit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 650.456692910000000000
+          Top = 208.629921259843000000
+          Width = 105.070866140000000000
+          Height = 40.440944881889800000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo48: TfrxMemoView
+          AllowVectorExport = True
+          Left = 149.000000000000000000
+          Top = 183.102350000000000000
+          Width = 179.630180000000000000
+          Height = 18.897650000000000000
+          DataField = 'telp'
+          DataSet = frxDBDataset2
+          DataSetName = 'frxDBDatasetSupp'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDatasetSupp."telp"]')
+          ParentFont = False
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Top = 208.629921259843000000
+          Width = 59.338582680000000000
+          Height = 40.440944881889800000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1.000000000000000000
+          Top = 126.102350000000000000
+          Width = 756.488250000000000000
+          Height = 90.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftTop]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 23.811023620000000000
+        Top = 476.220780000000000000
+        Visible = False
+        Width = 755.906000000000000000
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1.000000000000000000
+          Top = -1.000000000000000000
+          Width = 442.488250000000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 442.960629920000000000
+          Width = 110.362204720000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 553.322834650000000000
+          Width = 97.889763780000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 650.456692910000000000
+          Width = 105.070866140000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 40.440944880000000000
+        Top = 328.819110000000000000
+        Width = 755.906000000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
+        DataSet = frxDBDataset1
+        DataSetName = 'frxDBDataset_trans'
+        RowCount = 0
+        object frxDBDataset1no_faktur_pajak: TfrxMemoView
+          AllowVectorExport = True
+          Left = 58.960629920000000000
+          Width = 120.566929130000000000
+          Height = 40.440944880000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            ' [frxDBDataset_trans."faktur_no"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1piutang_dagang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 442.960629920000000000
+          Width = 110.362204720000000000
+          Height = 40.440944880000000000
+          DataField = 'nilai_debit'
+          DisplayFormat.FormatStr = '# ###,### ,###.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset_trans."nilai_debit"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 553.322834645669000000
+          Width = 97.889763779527600000
+          Height = 40.440944880000000000
+          DisplayFormat.FormatStr = '# ###,### ,###.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset_trans."kredit"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDataset1day: TfrxMemoView
+          AllowVectorExport = True
+          Width = 59.338582680000000000
+          Height = 40.440944880000000000
+          OnBeforePrint = 'frxDBDataset1dayOnBeforePrint'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDataset_trans."tanggal"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo43: TfrxMemoView
+          AllowVectorExport = True
+          Left = 650.456692913386000000
+          Width = 105.070866140000000000
+          Height = 40.440944880000000000
+          DisplayFormat.FormatStr = '# ###,### ,###.##'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDataset_trans."saldo"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo_Ket: TfrxMemoView
+          AllowVectorExport = True
+          Left = 179.149606300000000000
+          Width = 264.188976380000000000
+          Height = 40.440944880000000000
+          OnBeforePrint = 'Memo_KetOnBeforePrint'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            ' [frxDBDataset_trans."ket"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object ReportSummary1: TfrxReportSummary
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 23.811023620000000000
+        Top = 430.866420000000000000
+        Width = 755.906000000000000000
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1.000000000000000000
+          Width = 442.488250000000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 442.960629920000000000
+          Width = 110.362204720000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 553.322834650000000000
+          Width = 97.889763780000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Left = 650.456692910000000000
+          Width = 105.070866140000000000
+          Height = 23.811023620000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object Qsupp: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_supplier where deleted_at is null')
+    Active = True
+    Left = 968
+    Top = 88
+  end
+  object DSsupp: TDataSource
+    DataSet = Qsupp
+    Left = 1016
+    Top = 88
+  end
+  object frxDBDataset2: TfrxDBDataset
+    UserName = 'frxDBDatasetSupp'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'supplier_code=supplier_code'
+      'supplier_name=supplier_name'
+      'address=address'
+      'telp=telp'
+      'supplier1_name=supplier1_name'
+      'npwp=npwp'
+      'contact_person=contact_person'
+      'pph=pph'
+      'id=id'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'supplier_code2=supplier_code2'
+      'header_code=header_code'
+      'account_code=account_code'
+      'header_code_um=header_code_um'
+      'account_code_um=account_code_um'
+      'status_id=status_id')
+    DataSet = Qsupp
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 1056
+    Top = 88
+  end
+  object frxReport2: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44125.442920347200000000
+    ReportOptions.LastChange = 45734.465250763900000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 1008
+    Top = 336
     Datasets = <
       item
         DataSet = frxDBDataset4
@@ -1551,6 +2715,8 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
         Height = 52.913420000000000000
         Top = 325.039580000000000000
         Width = 1171.654300000000000000
+        DataSet = frxDBDataset1
+        DataSetName = 'frxDBDataset_trans'
         RowCount = 0
         object frxDBDataset1no_faktur_pajak: TfrxMemoView
           AllowVectorExport = True
@@ -2650,49 +3816,5 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
         end
       end
     end
-  end
-  object Qsupp: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'select * from t_supplier where deleted_at is null')
-    Active = True
-    Left = 968
-    Top = 88
-  end
-  object DSsupp: TDataSource
-    DataSet = Qsupp
-    Left = 1016
-    Top = 88
-  end
-  object frxDBDataset2: TfrxDBDataset
-    UserName = 'frxDBDatasetSupp'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'supplier_code=supplier_code'
-      'supplier_name=supplier_name'
-      'address=address'
-      'telp=telp'
-      'supplier1_name=supplier1_name'
-      'npwp=npwp'
-      'contact_person=contact_person'
-      'pph=pph'
-      'id=id'
-      'created_at=created_at'
-      'created_by=created_by'
-      'updated_at=updated_at'
-      'updated_by=updated_by'
-      'deleted_at=deleted_at'
-      'deleted_by=deleted_by'
-      'supplier_code2=supplier_code2'
-      'header_code=header_code'
-      'account_code=account_code'
-      'header_code_um=header_code_um'
-      'account_code_um=account_code_um'
-      'status_id=status_id')
-    DataSet = Qsupp
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 1056
-    Top = 88
   end
 end

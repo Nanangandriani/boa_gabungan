@@ -373,7 +373,9 @@ object FNew_PO: TFNew_PO
       Height = 23
       Text = '0'
       CharCase = ecUpperCase
+      Color = clInfoBk
       DisabledColor = clInfoBk
+      ReadOnly = True
       TabOrder = 11
       OnChange = Edjatuh_tempoChange
       OnKeyPress = Edjatuh_tempoKeyPress

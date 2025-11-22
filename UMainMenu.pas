@@ -536,7 +536,9 @@ begin
 end;
 
 procedure TFMainMenu.CreateSubMenu(Role,Menu:String);
+var TotalHeightNeeded: Integer;
 begin
+  TotalHeightNeeded := 0;
    {with dm.Qtemp1 do
    begin
        SQL.Clear;
@@ -650,7 +652,7 @@ begin
     ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
     ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
     //ACategoryPanel.Collapsed:=True;
-    ACategoryPanel.Width:=260;
+    ACategoryPanel.Width:=260; //awal260
     //ACategoryPanel.Width:=CategoryPanelUtama.Width;
 
     with dm.Qtemp2 do
@@ -674,12 +676,15 @@ begin
     begin
       //Create Button Dalam Category Panel
       AButtonPanel:= TRzButton.Create(ACategoryPanel);
+
+      AButtonPanel.Height := 34; // Tinggi tombol diatur ke 30px
+      TotalHeightNeeded := TotalHeightNeeded + AButtonPanel.Height;
       //AButtonPanel:= TButton.Create(ACategoryPanel);
       AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
       AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
       AButtonPanel.Parent := ACategoryPanel;
       AButtonPanel.Align := alTop;
-      AButtonPanel.Width:=260;
+      AButtonPanel.Width:=230; //awal260
       //AButtonPanel.Width:=ACategoryPanel.Width;
       //AButtonPanel.Width:=Rzsplitter1.Width-2;
       ACategoryPanel.Color:=clSkyBlue;
@@ -696,6 +701,7 @@ begin
         //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
       //  ACategoryPanel.Height:=40+30*dm.Qtemp2.RecordCount;
         ACategoryPanel.Height:=30+(AButtonPanel.Height*dm.Qtemp2.RecordCount);
+//        ACategoryPanel.Height:=TotalHeightNeeded;
       end;
       dm.Qtemp2.Next;
     end;

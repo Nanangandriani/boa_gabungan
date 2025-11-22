@@ -335,9 +335,9 @@ object FKartuPiutang: TFKartuPiutang
       WholeRow = False
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP'
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP'
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -972,14 +972,35 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 45965.259056342590000000
+    ReportOptions.LastChange = 45981.583504699080000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
+      
+        'procedure frxDBDKartuPiutangtanggalOnBeforePrint(Sender: TfrxCom' +
+        'ponent);'
+      'begin'
+      '//  if (<ffrxDBDKartuPiutang."tgltrans"> = NULL) then'
+      '//  begin'
+      
+        '//    frxDBDKartuPiutangtanggal.Text:='#39#39';                       ' +
+        '             '
+      '  //end else begin'
+      
+        '  //  frxDBDKartuPiutangtanggal.Text:=<ffrxDBDKartuPiutang."tglt' +
+        'rans");            '
+      '//  end;              '
+      'end;'
+      ''
+      'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      '                  '
+      'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 1032
+    Left = 864
     Top = 40
     Datasets = <
       item
@@ -1024,6 +1045,7 @@ object FKartuPiutang: TFKartuPiutang
         Height = 22.677167800000000000
         Top = 328.819110000000000000
         Width = 1182.992890000000000000
+        OnAfterPrint = 'MasterData1OnAfterPrint'
         OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDKartuPiutang
         DataSetName = 'frxDBDKartuPiutang'
@@ -1076,7 +1098,9 @@ object FKartuPiutang: TFKartuPiutang
           Left = 4.559060000000000000
           Width = 60.472440940000000000
           Height = 18.897637800000000000
+          OnBeforePrint = 'frxDBDKartuPiutangtanggalOnBeforePrint'
           StretchMode = smMaxHeight
+          DataField = 'tgltrans'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           Font.Charset = DEFAULT_CHARSET

@@ -70,7 +70,7 @@ object FCari_Barang: TFCari_Barang
     SQL.Strings = (
       'select * from t_item order by item_code asc')
     Left = 216
-    Top = 128
+    Top = 136
   end
   object DsBarang: TDataSource
     DataSet = QBarang

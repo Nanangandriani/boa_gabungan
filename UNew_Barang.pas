@@ -82,6 +82,9 @@ type
     Labelsbu: TLabel;
     Cb_sbu: TComboBox;
     Ed_serial: TEdit;
+    Label10: TLabel;
+    edKdBrgCoretax: TRzButtonEdit;
+    edNmBrgCoretax: TEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -107,6 +110,7 @@ type
     procedure Ck_NoUrutClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Cb_sbuSelect(Sender: TObject);
+    procedure edKdBrgCoretaxButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -127,7 +131,7 @@ implementation
 uses  umainmenu, UDataModule, UAkun_Perkiraan_TerimaMat, UKategori_Barang,
   UListBarang, UNew_KategoriBarang, UItem_Type, UNew_ItemType, UCari_DaftarPerk,
   UNew_Satuan, UKonversi_Barang, UNew_KonvBarang, UNew_KelompokBarang,
-  UMy_Function, UHomeLogin;
+  UMy_Function, UHomeLogin, UMasterData;
 
 var RealFNew_barang: TFNew_barang;
 function FNew_Barang: TFNew_Barang;
@@ -422,6 +426,12 @@ begin
     EdSatuan.SetFocus;
     Exit;
   end;
+  if edKdBrgCoretax.Text='' then
+  begin
+    MessageDlg('Kode Barang Coretax Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    edKdBrgCoretax.SetFocus;
+    Exit;
+  end;
    Autocode_perkiraan;
    with dm.Qtemp do
   begin
@@ -442,10 +452,11 @@ begin
        sql.clear;
        sql.Text:=' insert into t_item(order_no,item_code,item_code2,item_name,'+
                  ' category_id,unit,merk,account_code,created_by,description,group_id, '+
-                 ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code)'+
+                 ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code, '+
+                 ' item_code_coretax, item_name_coretax)'+
                  ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,'+
                  ' :pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,'+
-                 ' :lot_status,:header_code,:sbu_code)';
+                 ' :lot_status,:header_code,:sbu_code,:item_code_coretax,:item_name_coretax)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -465,6 +476,8 @@ begin
          ParamByName('lot_status').Value:=st_nourut;
          ParamByName('header_code').Value:=KodeHeaderPerkiraan;
          ParamByName('sbu_code').Value:=Cb_sbu.Text;
+         ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
+         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
        ExecSQL;
        end;
          with dm.Qtemp do
@@ -493,7 +506,8 @@ begin
        ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
        ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
        ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,'+
-       ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code where "id"=:id';
+       ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code, '+
+       ' item_code_coretax=:item_code_coretax, item_name_coretax=:item_name_coretax where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -514,6 +528,8 @@ begin
          ParamByName('lot_status').Value:=st_nourut;
          ParamByName('header_code').Value:=KodeHeaderPerkiraan;
          ParamByName('sbu_code').Value:=Cb_sbu.Text;
+         ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
+         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
        ExecSQL;
        end;
         with dm.Qtemp do
@@ -687,6 +703,14 @@ begin
     EdCategory.Items.Add(Dm.Qtemp['category']);
     Dm.Qtemp.Next;
   end;
+end;
+
+procedure TFNew_Barang.edKdBrgCoretaxButtonClick(Sender: TObject);
+begin
+    FMasterData.Caption:='Master Barang Coretax';
+    FMasterData.vcall:='brg_coretax';
+    FMasterData.update_grid('CONCAT("Section","Chapter","Group") ','"Bahasa"','"Bahasa"','t_pajak_m_barang','order by CONCAT("Section","Chapter","Group")  desc');
+    FMasterData.ShowModal;
 end;
 
 procedure TFNew_Barang.EdNm_akunButtonClick(Sender: TObject);

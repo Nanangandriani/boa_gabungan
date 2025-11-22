@@ -472,9 +472,9 @@ object FNew_Supplier: TFNew_Supplier
     Width = 867
     Height = 242
     Hint = ''
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 861
     ExplicitHeight = 233

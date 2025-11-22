@@ -3,8 +3,8 @@ object FNew_Barang: TFNew_Barang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form New Barang'
-  ClientHeight = 374
-  ClientWidth = 557
+  ClientHeight = 400
+  ClientWidth = 558
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,15 +19,15 @@ object FNew_Barang: TFNew_Barang
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 333
-    Width = 557
+    Top = 359
+    Width = 558
     Height = 41
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 324
     ExplicitWidth = 551
     object BBatal: TRzBitBtn
-      Left = 481
+      Left = 482
       Top = 1
       Height = 39
       Align = alRight
@@ -89,7 +89,7 @@ object FNew_Barang: TFNew_Barang
       ExplicitLeft = 475
     end
     object BSimpan: TRzBitBtn
-      Left = 406
+      Left = 407
       Top = 1
       Height = 39
       Align = alRight
@@ -274,7 +274,7 @@ object FNew_Barang: TFNew_Barang
       NumGlyphs = 2
     end
     object Button1: TButton
-      Left = 287
+      Left = 255
       Top = 6
       Width = 75
       Height = 25
@@ -287,8 +287,8 @@ object FNew_Barang: TFNew_Barang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 557
-    Height = 333
+    Width = 558
+    Height = 359
     Hint = ''
     ActivePage = TabSheet1
     Align = alClient
@@ -301,8 +301,7 @@ object FNew_Barang: TFNew_Barang
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Umum'
-      ExplicitWidth = 547
-      ExplicitHeight = 301
+      ExplicitHeight = 364
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -428,6 +427,13 @@ object FNew_Barang: TFNew_Barang
         Height = 13
         Caption = 'SBU'
       end
+      object Label10: TLabel
+        Left = 32
+        Top = 303
+        Width = 76
+        Height = 13
+        Caption = 'Barang Coretax'
+      end
       object EdDesk: TEdit
         Left = 136
         Top = 180
@@ -544,12 +550,11 @@ object FNew_Barang: TFNew_Barang
       end
       object StatusBar1: TStatusBar
         Left = 0
-        Top = 296
-        Width = 553
-        Height = 14
+        Top = 331
+        Width = 554
+        Height = 5
         Panels = <>
-        ExplicitTop = 287
-        ExplicitWidth = 547
+        ExplicitTop = 344
       end
       object ck_st_penjualan: TCheckBox
         Left = 412
@@ -585,10 +590,33 @@ object FNew_Barang: TFNew_Barang
         TabOrder = 16
         Visible = False
       end
+      object edKdBrgCoretax: TRzButtonEdit
+        Left = 136
+        Top = 300
+        Width = 97
+        Height = 21
+        Text = ''
+        CharCase = ecUpperCase
+        ReadOnlyColorOnFocus = True
+        TabOrder = 17
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edKdBrgCoretaxButtonClick
+      end
+      object edNmBrgCoretax: TEdit
+        Left = 239
+        Top = 300
+        Width = 237
+        Height = 21
+        CharCase = ecUpperCase
+        TabOrder = 18
+      end
     end
     object TabSheet2: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
+      ExplicitWidth = 553
+      ExplicitHeight = 310
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
@@ -669,6 +697,8 @@ object FNew_Barang: TFNew_Barang
     object TabSheet3: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Akun'
+      ExplicitWidth = 553
+      ExplicitHeight = 310
       object Label19: TLabel
         Left = 27
         Top = 28

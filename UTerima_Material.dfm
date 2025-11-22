@@ -10,6 +10,7 @@ object FTerima_Material: TFTerima_Material
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -422,8 +423,7 @@ object FTerima_Material: TFTerima_Material
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitLeft = -189
-    ExplicitWidth = 1002
+    ExplicitWidth = 807
     object Label1: TLabel
       Left = 20
       Top = 12

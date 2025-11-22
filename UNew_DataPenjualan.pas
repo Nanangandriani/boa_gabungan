@@ -701,6 +701,32 @@ begin
   MemDetail.First;
   while not MemDetail.Eof do
   begin
+//    ShowMessage(edNomorTrans.Text);
+//    ShowMessage(MemDetail['KD_ITEM']);
+//    ShowMessage(MemDetail['NM_ITEM']);
+//    ShowMessage(MemDetail['AKUN_PERK_ITEM']);
+//    ShowMessage(MemDetail['JUMLAH']);
+//    ShowMessage(MemDetail['KD_SATUAN']);
+//    ShowMessage(MemDetail['NM_SATUAN']);
+//    ShowMessage(edNoReff.Text);
+//    ShowMessage(MemDetail['HARGA_SATUAN']);
+//    ShowMessage(MemDetail['SUB_TOTAL']);
+//    ShowMessage(MemDetail['PPN_PERSEN']);
+//    ShowMessage(MemDetail['PPN_AKUN']);
+//    ShowMessage(MemDetail['PPN_NILAI']);
+//    ShowMessage(MemDetail['NAMA_PPH']);
+//    ShowMessage(MemDetail['PPH_PERSEN']);
+//    ShowMessage(MemDetail['PPH_NILAI']);
+//    ShowMessage(MemDetail['POTONGAN_NILAI']);
+//    ShowMessage(MemDetail['POTONGAN_PERSEN']);
+//    ShowMessage(MemDetail['MENEJ_FEE_PERSEN']);
+//    ShowMessage(MemDetail['MENEJ_FEE_NILAI']);
+//    ShowMessage(MemDetail['GRAND_TOTAL']);
+//    ShowMessage(MemDetail['SUB_TOTAL']*11/12);
+//    ShowMessage(FloatToStr((MemDetail['SUB_TOTAL'] * 11 / 12) * (ppncortex / 100)));
+//    ShowMessage(FloatToStr(ppncortex));
+//    ShowMessage(MemDetail['BERAT_ISI']);
+//    ShowMessage(MemDetail['BERAT_KOSONG']);
     with dm.Qtemp do
     begin
       close;

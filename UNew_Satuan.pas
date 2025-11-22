@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, Data.DB, MemDS,
-  DBAccess, Uni, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+  DBAccess, Uni, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Vcl.Mask, RzEdit,
+  RzBtnEdt;
 
 type
   TFNew_Satuan = class(TForm)
@@ -29,6 +30,10 @@ type
     BRefresh: TRzBitBtn;
     Edit1: TEdit;
     BDelete: TRzBitBtn;
+    Label1: TLabel;
+    Label3: TLabel;
+    edNmSatCoretax: TEdit;
+    edKdSatCoretax: TRzButtonEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -40,6 +45,7 @@ type
     procedure BRefreshClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure BDeleteClick(Sender: TObject);
+    procedure edKdSatCoretaxButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,7 +60,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Barang, UNew_KonvBarang, UMainMenu, UMy_Function;
+uses UDataModule, UNew_Barang, UNew_KonvBarang, UMainMenu, UMy_Function,
+  UMasterData;
 var
   RealFNew_Satuan: TFNew_Satuan;
 // implementasi function
@@ -71,6 +78,8 @@ begin
   PnlNew.Visible:=false;
   Edkd.Clear;
   EdDesk.Clear;
+  edKdSatCoretax.Clear;
+  edNmSatCoretax.Clear;
 //  close;
 end;
 
@@ -81,6 +90,8 @@ begin
   Statustr:=1;
   Edkd.Text:=QSatuan['unit_code'];
   Eddesk.Text:=QSatuan['unit_name'];
+  edKdSatCoretax.Text:=QSatuan['unit_code_coretax'];
+  edNmSatCoretax.Text:=QSatuan['unit_name_coretax'];
   BCari.Hide;
   BBatal.Show;
   BSimpan.Show;
@@ -107,9 +118,12 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='Insert into t_unit(unit_code,unit_name)values(:code,:desk)';
+        sql.Text:=' Insert into t_unit(unit_code,unit_name,unit_code_coretax,unit_name_coretax) '+
+                  ' values(:code,:desk,:unit_code_coretax,:unit_name_coretax)';
                   ParamByName('code').Value:=Edkd.Text;
                   ParamByName('desk').value:=EdDesk.Text;
+                  ParamByName('unit_code_coretax').value:=edKdSatCoretax.Text;
+                  ParamByName('unit_name_coretax').value:=edNmSatCoretax.Text;
                   Execute;
       end;
     end;
@@ -119,9 +133,12 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='update t_unit set unit_name=:desk where unit_code=:code';
+        sql.Text:=' update t_unit set unit_name=:desk, unit_code_coretax=:unit_code_coretax, unit_name_coretax=:unit_name_coretax '+
+                  ' where unit_code=:code';
                   ParamByName('code').Value:=Edkd.Text;
                   ParamByName('desk').value:=EdDesk.Text;
+                  ParamByName('unit_code_coretax').value:=edKdSatCoretax.Text;
+                  ParamByName('unit_name_coretax').value:=edNmSatCoretax.Text;
                   ExecSQL;
       end;
     end;
@@ -138,6 +155,8 @@ begin
   statustr:=0;
   Edkd.Clear;
   EdDesk.Clear;
+  edKdSatCoretax.Clear;
+  edNmSatCoretax.Clear;
   Edkd.SetFocus;
   BBatal.Visible:=true;
   BSimpan.Visible:=true;
@@ -195,10 +214,20 @@ begin
     Statustr:=1;
     Edkd.Text:=QSatuan['unit_code'];
     Eddesk.Text:=QSatuan['unit_name'];
+    edKdSatCoretax.Text:=QSatuan['unit_code_coretax'];
+    edNmSatCoretax.Text:=QSatuan['unit_name_coretax'];
    // BCari.Hide;
     BBatal.Show;
     BSimpan.Show;
   END;
+end;
+
+procedure TFNew_Satuan.edKdSatCoretaxButtonClick(Sender: TObject);
+begin
+    FMasterData.Caption:='Master Satuan Coretax';
+    FMasterData.vcall:='satuan_coretax';
+    FMasterData.update_grid('code ','name','name','t_unit_tax','order by code desc');
+    FMasterData.ShowModal;
 end;
 
 procedure TFNew_Satuan.FormClose(Sender: TObject; var Action: TCloseAction);

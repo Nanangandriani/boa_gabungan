@@ -290,34 +290,40 @@ var strKaresidenan,strKabupaten :String;
 begin
   strKaresidenan:='';
   strKabupaten:='';
-  if edKaresidenan.EditValue<>'' then
+  if edKaresidenan.EditValue='' then
   begin
-    strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
-  end;
-  if edKabupaten.EditValue<>'' then
+    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else
   begin
-    strKabupaten:=' AND kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
-  end;
+    if edKaresidenan.EditValue<>'' then
+    begin
+      strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+    end;
+    if edKabupaten.EditValue<>'' then
+    begin
+      strKabupaten:=' AND kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+    end;
 
 
-  DBGrid.StartLoadingStatus();
-  try
-   with QBHPenjualan do
-   begin
-       close;
-       sql.Clear;
-       SQL.Text:='SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_selling(False) a '+
-                 'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
-                 'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
-       open;
-   end;
+    DBGrid.StartLoadingStatus();
+    try
+     with QBHPenjualan do
+     begin
+         close;
+         sql.Clear;
+         SQL.Text:='SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_selling(False) a '+
+                   'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
+                   'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                   ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
+         open;
+     end;
 
-   QDetailBarang.Close;
-   QDetailBarang.Open;
+     QDetailBarang.Close;
+     QDetailBarang.Open;
 
-  finally
-  DBGrid.FinishLoadingStatus();
+    finally
+    DBGrid.FinishLoadingStatus();
+    end;
   end;
 end;
 

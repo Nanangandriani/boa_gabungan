@@ -93,13 +93,13 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Status Approval'
-        Width = 70
+        Width = 100
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'receive_date'
+        FieldName = 'trans_date'
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Tanggal'
@@ -112,7 +112,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'No. SP'
-        Width = 120
+        Width = 0
       end
       item
         CellButtons = <>
@@ -122,7 +122,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Surat Jalan'
-        Width = 80
+        Width = 100
       end
       item
         CellButtons = <>
@@ -132,7 +132,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Nama Supplier'
-        Width = 160
+        Width = 200
       end
       item
         CellButtons = <>
@@ -151,7 +151,7 @@ object FPembelian: TFPembelian
         FieldName = 'faktur_date'
         Footers = <>
         Title.Caption = 'Tanggal Terima Dokumen'
-        Width = 65
+        Width = 80
       end
       item
         CellButtons = <>
@@ -161,7 +161,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Keterangan'
-        Width = 80
+        Width = 100
       end
       item
         CellButtons = <>
@@ -171,7 +171,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Akun Perkiraan|Kode'
-        Width = 60
+        Width = 80
       end
       item
         CellButtons = <>
@@ -302,6 +302,15 @@ object FPembelian: TFPembelian
         Footers = <>
         Title.Caption = 'Tanggal'
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'tgl_jatuh_tempo'
+        Footers = <>
+        Title.Caption = 'Tanggal Jatuh Tempo'
+        Width = 80
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh3: TDBGridEh
@@ -630,7 +639,7 @@ object FPembelian: TFPembelian
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 996
+    ExplicitWidth = 1000
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -650,7 +659,7 @@ object FPembelian: TFPembelian
       Top = 10
       Width = 81
       Height = 23
-      Date = 45224.000000000000000000
+      Date = 45982.000000000000000000
       Time = 0.399360370371141500
       TabOrder = 0
     end
@@ -659,7 +668,7 @@ object FPembelian: TFPembelian
       Top = 10
       Width = 81
       Height = 23
-      Date = 45224.000000000000000000
+      Date = 45982.000000000000000000
       Time = 0.399360370371141500
       TabOrder = 1
     end
@@ -669,6 +678,7 @@ object FPembelian: TFPembelian
       Width = 70
       Caption = 'Cari'
       TabOrder = 2
+      OnClick = CariClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830E0000830E00000001000000000000000000003300
@@ -1446,7 +1456,7 @@ object FPembelian: TFPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 45981.104286284720000000
+    ReportOptions.LastChange = 45981.104286284700000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2553,7 +2563,7 @@ object FPembelian: TFPembelian
         object Memo34: TfrxMemoView
           AllowVectorExport = True
           Left = 516.666666670000000000
-          Top = 61.769016670000000000
+          Top = 63.769016670000000000
           Width = 274.156257670000000000
           Height = 21.221429200000000000
           DataSetName = 'frxDBDLPBKolektiff'
@@ -2735,7 +2745,6 @@ object FPembelian: TFPembelian
     Top = 24
   end
   object Memterima_material: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     DataDriver = DataSetDriverEh1
@@ -2758,7 +2767,6 @@ object FPembelian: TFPembelian
       'left join t_ak_account d on a.account_um_code=d.code'
       'left join t_ref_item_receive e on a.ref_code=e.ref_code'
       'order by a.id desc')
-    Active = True
     Left = 320
     Top = 40
   end

@@ -2603,6 +2603,12 @@ begin
         EdNo.SetFocus;
         Exit;
       end;}
+       if CbKategori.Text='' then
+      begin
+        MessageDlg('Kategory PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+        CbKategori.SetFocus;
+        Exit;
+      end;
       if EdStatus.Text='' then
       begin
         MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
@@ -2711,6 +2717,12 @@ begin
     end;
     NPWP_Supplier :=FListSupplier.Qsupplier.FieldByName('npwp').AsString;   // sesuaikan datasource supplier Anda
 
+    if CbKategori.Text='' then
+    begin
+      MessageDlg('Kategory PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      CbKategori.SetFocus;
+      Exit;
+    end;
 
     if EdStatus.Text='' then
     begin

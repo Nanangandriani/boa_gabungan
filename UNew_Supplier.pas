@@ -414,6 +414,13 @@ begin
       Edtelp.SetFocus;
       Exit;
     end;
+     if Ed_tempo.Text='' then
+    begin
+      MessageDlg('Lama Jatuh Tempo Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ed_tempo.SetFocus;
+      Exit;
+    end;
+
     if not dm.koneksi.InTransaction then
     dm.koneksi.StartTransaction;
     try
@@ -520,6 +527,12 @@ begin
     begin
       MessageDlg('Telepon Supplier Tidak boleh Kosong ',MtWarning,[MbOk],0);
       Edtelp.SetFocus;
+      Exit;
+    end;
+    if Ed_tempo.Text='' then
+    begin
+      MessageDlg('Lama Jatuh Tempo Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Ed_tempo.SetFocus;
       Exit;
     end;
     if not dm.koneksi.InTransaction then

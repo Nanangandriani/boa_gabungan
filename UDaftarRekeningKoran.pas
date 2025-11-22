@@ -134,8 +134,8 @@ begin
 
   if Length(edNamaBank.EditValue)<>0 then
   begin
-   with QCetak do
-   begin
+    with QCetak do
+    begin
        close;
        sql.Clear;
        sql.add(' select *, round(cast(sum(saldo_awal+setoran-kredit_bank) over (ORDER BY nomor asc ) as '+
@@ -163,9 +163,9 @@ begin
                // debit
                ' LEFT JOIN (SELECT a."voucher_no", jum_debet, name_cust as catatan from '+
                ' "public"."t_cash_bank_acceptance"  a '+
-               ' LEFT JOIN (SELECT "voucher_no", "code_account" as kd_akun, sum("paid_amount") as jum_debet '+
-               ' from "t_cash_bank_acceptance_det" where "position"=''D'' GROUP BY "voucher_no", '+
-               ' "code_account")  b ON a."voucher_no"=b."voucher_no" '+
+               ' LEFT JOIN (SELECT "voucher_no",  sum("paid_amount") as jum_debet '+
+               ' from "t_cash_bank_acceptance_det" where "position"=''D'' GROUP BY "voucher_no" '+
+               ' )  b ON a."voucher_no"=b."voucher_no" '+
                ' WHERE "module_id"=''3'' and "account_number_bank"='+QuotedStr(vRekeningBank)+' and '+
                ' a."trans_date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' '+
@@ -190,7 +190,7 @@ begin
                ' "public"."get_bank_saldoakhir"('+QuotedStr(vRekeningBank)+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue-1))+'))x)xx '+
                ' ORDER BY nomor ASC ');
        open;
-   end;
+    end;
   end;
 
  if QCetak.RecordCount=0 then
@@ -261,9 +261,9 @@ begin
                // debit
                ' LEFT JOIN (SELECT a."voucher_no", jum_debet, name_cust as catatan from '+
                ' "public"."t_cash_bank_acceptance"  a '+
-               ' LEFT JOIN (SELECT "voucher_no", "code_account" as kd_akun, sum("paid_amount") as jum_debet '+
-               ' from "t_cash_bank_acceptance_det" where "position"=''D'' GROUP BY "voucher_no", '+
-               ' "code_account")  b ON a."voucher_no"=b."voucher_no" '+
+               ' LEFT JOIN (SELECT "voucher_no",sum("paid_amount") as jum_debet '+
+               ' from "t_cash_bank_acceptance_det" where "position"=''D'' GROUP BY "voucher_no" '+
+               ' )  b ON a."voucher_no"=b."voucher_no" '+
                ' WHERE "module_id"=''3'' and "account_number_bank"='+QuotedStr(vRekeningBank)+' and '+
                ' a."trans_date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' '+

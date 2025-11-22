@@ -3,7 +3,7 @@ object FNew_Satuan: TFNew_Satuan
   Top = 0
   Caption = 'Form New Satuan'
   ClientHeight = 529
-  ClientWidth = 506
+  ClientWidth = 596
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,13 @@ object FNew_Satuan: TFNew_Satuan
   object PnlAksi: TPanel
     Left = 0
     Top = 121
-    Width = 506
+    Width = 596
     Height = 41
     Align = alTop
     TabOrder = 0
     ExplicitWidth = 500
     object BBatal: TRzBitBtn
-      Left = 430
+      Left = 520
       Top = 1
       Height = 39
       Align = alRight
@@ -87,7 +87,7 @@ object FNew_Satuan: TFNew_Satuan
       ExplicitLeft = 424
     end
     object BSimpan: TRzBitBtn
-      Left = 205
+      Left = 295
       Top = 1
       Height = 39
       Align = alRight
@@ -213,7 +213,7 @@ object FNew_Satuan: TFNew_Satuan
       NumGlyphs = 2
     end
     object Btambah: TRzBitBtn
-      Left = 130
+      Left = 220
       Top = 1
       Height = 39
       Align = alRight
@@ -275,7 +275,7 @@ object FNew_Satuan: TFNew_Satuan
       ExplicitLeft = 124
     end
     object BRefresh: TRzBitBtn
-      Left = 280
+      Left = 370
       Top = 1
       Height = 39
       Align = alRight
@@ -337,7 +337,7 @@ object FNew_Satuan: TFNew_Satuan
       ExplicitLeft = 274
     end
     object BDelete: TRzBitBtn
-      Left = 355
+      Left = 445
       Top = 1
       Height = 39
       Align = alRight
@@ -402,7 +402,7 @@ object FNew_Satuan: TFNew_Satuan
   object PnlNew: TPanel
     Left = 0
     Top = 0
-    Width = 506
+    Width = 596
     Height = 121
     Align = alTop
     Color = clGradientInactiveCaption
@@ -411,35 +411,49 @@ object FNew_Satuan: TFNew_Satuan
     ExplicitWidth = 500
     object Label6: TLabel
       Left = 106
-      Top = 35
+      Top = 19
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
       Left = 106
-      Top = 76
+      Top = 48
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label2: TLabel
       Left = 24
-      Top = 76
+      Top = 48
       Width = 47
       Height = 15
       Caption = 'Deskripsi'
     end
     object Label5: TLabel
       Left = 24
-      Top = 35
+      Top = 19
       Width = 27
       Height = 15
       Caption = 'Kode'
     end
+    object Label1: TLabel
+      Left = 24
+      Top = 77
+      Width = 79
+      Height = 15
+      Caption = 'Satuan Coretax'
+    end
+    object Label3: TLabel
+      Left = 106
+      Top = 77
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object EdDesk: TEdit
       Left = 128
-      Top = 73
+      Top = 45
       Width = 297
       Height = 23
       CharCase = ecUpperCase
@@ -447,7 +461,7 @@ object FNew_Satuan: TFNew_Satuan
     end
     object Edkd: TEdit
       Left = 128
-      Top = 32
+      Top = 16
       Width = 73
       Height = 23
       CharCase = ecUpperCase
@@ -455,18 +469,40 @@ object FNew_Satuan: TFNew_Satuan
       TextHint = 'M'
     end
     object Edit1: TEdit
-      Left = 248
+      Left = 496
       Top = 32
       Width = 121
       Height = 23
       TabOrder = 2
       Text = 'Edit1'
+      Visible = False
+    end
+    object edNmSatCoretax: TEdit
+      Left = 231
+      Top = 74
+      Width = 237
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 3
+    end
+    object edKdSatCoretax: TRzButtonEdit
+      Left = 128
+      Top = 74
+      Width = 97
+      Height = 23
+      Text = ''
+      CharCase = ecUpperCase
+      ReadOnlyColorOnFocus = True
+      TabOrder = 4
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edKdSatCoretaxButtonClick
     end
   end
   object Pnllist: TPanel
     Left = 0
     Top = 162
-    Width = 506
+    Width = 596
     Height = 367
     Align = alClient
     TabOrder = 2
@@ -475,7 +511,7 @@ object FNew_Satuan: TFNew_Satuan
     object DBGridEh1: TDBGridEh
       Left = 1
       Top = 1
-      Width = 504
+      Width = 594
       Height = 365
       Align = alClient
       DataSource = DsSatuan
@@ -483,6 +519,7 @@ object FNew_Satuan: TFNew_Satuan
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
       SearchPanel.Enabled = True
       TabOrder = 0
+      TitleParams.MultiTitle = True
       OnDblClick = DBGridEh1DblClick
       Columns = <
         item
@@ -501,7 +538,25 @@ object FNew_Satuan: TFNew_Satuan
           FieldName = 'unit_name'
           Footers = <>
           Title.Caption = 'Deskripsi'
-          Width = 294
+          Width = 150
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'unit_code_coretax'
+          Footers = <>
+          Title.Caption = 'Coretax | Kode'
+          Width = 123
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'unit_name_coretax'
+          Footers = <>
+          Title.Caption = 'Coretax | Deskripsi'
+          Width = 150
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
@@ -516,7 +571,7 @@ object FNew_Satuan: TFNew_Satuan
   end
   object DsSatuan: TDataSource
     DataSet = QSatuan
-    Left = 424
-    Top = 24
+    Left = 416
+    Top = 32
   end
 end

@@ -45,7 +45,7 @@ type
     Label5: TLabel;
     Button11: TButton;
     txtnmacckredit: TEdit;
-    txtkdacckredit: TEdit;
+    txtkdacckredit2: TEdit;
     Label1: TLabel;
     dxBevel1: TdxBevel;
     Label3: TLabel;
@@ -94,7 +94,7 @@ type
     BtnClear: TdxBarLargeButton;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
-    txtkdacckredit1: TdxBarEdit;
+    txtkdacckredit: TdxBarEdit;
     dxBarEdit3: TdxBarEdit;
     dxBarEdit2: TdxBarEdit;
     dxBarEdit4: TdxBarEdit;
@@ -179,9 +179,9 @@ begin
             '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
             'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
             'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
-            'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account=''1112''  order by trans_date,voucher_no)a '+
-            'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account=''1112'' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
-            'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account=''1112'' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
+            'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+            'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
+            'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
             'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
             'where (a."position"=''D'') and '+
             '(a.code_account=b.code)and (b.type_id=2)group by voucher_no order by voucher_no)b on a.voucher_no=b.voucher_no '+
@@ -197,18 +197,18 @@ begin
             ',0 jum_debit,0 jum_kredit,0 penjualan,0 adm,0 bop,0 urutan,0 sa,0 debit,0 kredit '+
             'FROM '+
             '(select yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit,sum(yy.balance+xx.jum_debit-xx.jum_kredit) as saldo_awal from '+
-            '(select code as kodesp,balance from t_ak_account where  code=''1112'')yy '+
+            '(select code as kodesp,balance from t_ak_account where  code='+QuotedStr(txtkdacckredit.Text)+')yy '+
             'left join '+
             '(select x.kodesp,(case when a.jum_debit is null then 0 else a.jum_debit end)jum_debit ,(case when b.jum_kredit is null then 0 else b.jum_kredit end)jum_kredit from '+
-            '(select code as kodesp from t_ak_account where code='+QuotedStr(txtkdacckredit1.Text)+')x '+
+            '(select code as kodesp from t_ak_account where code='+QuotedStr(txtkdacckredit.Text)+')x '+
             'left join '+
             '(select r.code_account,(case when sum(r.paid_amount)is null then 0 else sum(r.paid_amount) end)jum_debit  from t_petty_cash_det r '+
             'INNER JOIN t_petty_cash s on r.voucher_no=s.voucher_no '+
-            'where (s.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and  r.code_account='+QuotedStr(txtkdacckredit1.Text)+' and "position"=''D'' '+
+            'where (s.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and  r.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''D'' '+
             'group by code_account order by code_account)a on a.code_account=x.kodesp '+
             'left join (select j.code_account,(case when sum(j.paid_amount)is null then 0 else sum(j.paid_amount) end)jum_kredit from t_petty_cash_det j '+
             'INNER JOIN t_petty_cash k on j.voucher_no=k.voucher_no '+
-            'where (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit1.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
+            'where (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
             'GROUP BY  yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit)yyy '+
             ')zzz '+
             'GROUP BY zzz.nomor, zzz.trans_date,zzz.voucher_no, zzz.description,zzz.actors_name,zzz.order_no,zzz.actors_code,zzz.code,zzz.jumdebit,zzz.jumkredit,zzz.penjualan,zzz.adm,zzz.bop,zzz.urutan,zzz.sa,zzz.debit,zzz.kredit ORDER BY nomor ASC ';
@@ -220,7 +220,7 @@ begin
       sql.Add(query);
       open;
     end;
-    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Buku_Harian_Kas_Kecil.fr3');
+    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Buku_Harian_Kas_Kecil_Rev_1.fr3');
     Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
     frxreport1.showreport;
 
@@ -249,9 +249,9 @@ begin
                 '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
                 'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
                 'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
-                'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account=''1112''  order by trans_date,voucher_no)a '+
-                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account=''1112'' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
-                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account=''1112'' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
+                'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
+                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
                 'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
                 'where (a."position"=''D'') and '+
                 '(a.code_account=b.code)and (b.type_id=2)group by voucher_no order by voucher_no)b on a.voucher_no=b.voucher_no '+
@@ -341,7 +341,7 @@ begin
             ',0 jum_debit,0 jum_kredit,0 penjualan,0 adm,0 bop,0 urutan,0 sa,0 debit,0 kredit '+
             'FROM '+
             '(select yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit,sum(yy.balance+xx.jum_debit-xx.jum_kredit) as saldo_awal from '+
-            '(select code as kodesp,balance from t_ak_account where  code=''1112'')yy '+
+            '(select code as kodesp,balance from t_ak_account where  code='+QuotedStr(txtkdacckredit.Text)+')yy '+
             'left join '+
             '(select x.kodesp,(case when a.jum_debit is null then 0 else a.jum_debit end)jum_debit ,(case when b.jum_kredit is null then 0 else b.jum_kredit end)jum_kredit from '+
             '(select code as kodesp from t_ak_account where code='+QuotedStr(txtkdacckredit.Text)+')x '+

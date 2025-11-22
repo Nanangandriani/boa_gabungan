@@ -145,10 +145,14 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
       FloatClientHeight = 123
       ItemLinks = <
         item
+          UserDefine = [udWidth]
+          UserWidth = 81
           Visible = True
           ItemName = 'dtPerTanggal'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 80
           Visible = True
           ItemName = 'dtTanggalSurat'
         end
@@ -176,7 +180,7 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
     object dxBarManager1Bar2: TdxBar
       Caption = 'Laporan'
       CaptionButtons = <>
-      DockedLeft = 558
+      DockedLeft = 538
       DockedTop = 0
       FloatLeft = 852
       FloatTop = 2
@@ -512,12 +516,14 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
       Category = 0
       Hint = 'Per Tanggal   '
       Visible = ivAlways
+      ShowDayText = False
     end
     object dtTanggalSurat: TdxBarDateCombo
       Caption = 'Tanggal Surat'
       Category = 0
       Hint = 'Tanggal Surat'
       Visible = ivAlways
+      ShowDayText = False
     end
     object cxBarEditItem3: TcxBarEditItem
       Caption = 'New Item'

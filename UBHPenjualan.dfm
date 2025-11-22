@@ -51,7 +51,7 @@ object FBHPenjualan: TFBHPenjualan
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 200
     SearchPanel.Enabled = True
-    TabOrder = 5
+    TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <
       item
@@ -708,8 +708,8 @@ object FBHPenjualan: TFBHPenjualan
         'SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_sellin' +
         'g(False) a '
       'LEFT JOIN vcustomer b on b.customer_code=a.code_cust')
-    Left = 220
-    Top = 360
+    Left = 188
+    Top = 312
   end
   object DsBHPenjualan: TDataSource
     DataSet = QBHPenjualan
@@ -783,7 +783,7 @@ object FBHPenjualan: TFBHPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 45980.662652314820000000
+    ReportOptions.LastChange = 45981.501295567130000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1374,15 +1374,6 @@ object FBHPenjualan: TFBHPenjualan
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
-        object Line29: TfrxLineView
-          AllowVectorExport = True
-          Left = 1084.945091810000000000
-          Top = -18.897650000000000000
-          Height = 1122.519685040000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -1402,7 +1393,7 @@ object FBHPenjualan: TFBHPenjualan
           AllowVectorExport = True
           Left = 1.111111110000000000
           Top = 1.111111110000000000
-          Width = 1084.724409448819000000
+          Width = 1084.724409448820000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1712,7 +1703,7 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             
               '[SUM(IIF(Copy(Trim(<frxDBDBHPenj_Kredit."account_code">),1,7)='#39'4' +
-              '101.01'#39',<frxDBDBHPenj_Kredit."kd">,0), MasterData5)]]')
+              '101.01'#39',<frxDBDBHPenj_Kredit."kd">,0), MasterData5)]')
           ParentFont = False
           VAlign = vaCenter
         end

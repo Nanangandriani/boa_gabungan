@@ -750,7 +750,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45653.606659965280000000
+    ReportOptions.LastChange = 45982.433277546300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1409,8 +1409,9 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Left = 41.574830000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
-          DataSetName = 'frxDBDBHPenerimaan'
+          DataField = 'trans_date'
+          DataSet = frxDBDDaftarRekeningKoran
+          DataSetName = 'frxDBDDaftarRekeningKoran'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1648,7 +1649,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         end
         object Line28: TfrxLineView
           AllowVectorExport = True
-          Left = 564.661417322834600000
+          Left = 564.661417322835000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -1656,7 +1657,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         end
         object Line29: TfrxLineView
           AllowVectorExport = True
-          Left = 657.637795275590600000
+          Left = 657.637795275591000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -1664,7 +1665,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         end
         object Line30: TfrxLineView
           AllowVectorExport = True
-          Left = 761.574803149606300000
+          Left = 761.574803149606000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack

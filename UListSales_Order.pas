@@ -117,19 +117,19 @@ end;
 
 procedure TFSalesOrder.ActBaruExecute(Sender: TObject);
 begin
-  with dm.Qtemp do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='SELECT * FROM t_sales_order where deleted_at is NULL and status=0';
-    open;
-  end;
-
-  if dm.Qtemp.RecordCount>0 then
-  begin
-    MessageDlg('Masih ada Sales Order yang diajukan, silahkan Disetujui/Ditolak terlebih dahulu..!!',mtInformation,[mbRetry],0);
-  end else
-  begin
+//  with dm.Qtemp do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:='SELECT * FROM t_sales_order where deleted_at is NULL and status=0';
+//    open;
+//  end;
+//
+//  if dm.Qtemp.RecordCount>0 then
+//  begin
+//    MessageDlg('Masih ada Sales Order yang diajukan, silahkan Disetujui/Ditolak terlebih dahulu..!!',mtInformation,[mbRetry],0);
+//  end else
+//  begin
     FNew_SalesOrder.Clear;
     //FNew_SalesOrder.Autonumber;
     FNew_SalesOrder.MemDetail.EmptyTable;
@@ -142,7 +142,7 @@ begin
     FNew_SalesOrder.DBGridDetail.Columns[10].Visible:=False;
     FNew_SalesOrder.DBGridDetail.Columns[11].Visible:=False;
     FNew_SalesOrder.ShowModal;
-  end;
+//  end;
 end;
 
 procedure TFSalesOrder.ActDelExecute(Sender: TObject);

@@ -69,11 +69,22 @@ type
     DxRefresh: TdxBarLargeButton;
     cxBarEditItem1: TcxBarEditItem;
     SpTahun: TcxBarEditItem;
-    CbBulan2: TComboBox;
     cxnm_barang: TcxBarEditItem;
     cxkd_barang: TcxBarEditItem;
     CbGudang2: TcxBarEditItem;
     DBGridEh1: TDBGridEh;
+    cxBarEditItem2: TcxBarEditItem;
+    dxBarEdit1: TdxBarEdit;
+    cxkategori_barang: TcxBarEditItem;
+    tgl_awal: TcxBarEditItem;
+    dxBarSubItem2: TdxBarSubItem;
+    tgl_akhir: TcxBarEditItem;
+    cbLevelSatuan: TcxBarEditItem;
+    cxBarEditItem3: TcxBarEditItem;
+    QKartu_Gudangkd_barang: TStringField;
+    QKartu_Gudangitem_name: TStringField;
+    QKartu_Gudangsaldo_awal_periode: TFloatField;
+    QKartu_Gudangsatuan: TStringField;
     procedure FormShow(Sender: TObject);
     procedure CbBulanChange(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
@@ -91,9 +102,15 @@ type
       AButtonIndex: Integer);
     procedure DxRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure cxkategori_barangPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure cxnm_barangChange(Sender: TObject);
+    procedure CbGudang2Change(Sender: TObject);
   private
     { Private declarations }
   public
+      vgroup_id, kd_gudang : string;
+      tgl_stock_wh :TDate;
     { Public declarations }
       NamaBulan : array [1..12] of string;
       procedure Load;
@@ -106,7 +123,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu, UCari_Barang;
+uses UDataModule, UMainMenu, UCari_Barang, UMasterData;
 
 //uses , USearch_Supplier_SPB, USearchMaterial, umainmenu;
 var
@@ -182,6 +199,7 @@ begin
   Dm.Qtemp.Next;
   end;
   end;
+
 end;
 
 procedure TFRpt_Kartu_Gudang.Panel1Click(Sender: TObject);
@@ -380,6 +398,20 @@ end;
 thn:=tgl+'-'+EdTahun.Text;
 end;
 
+procedure TFRpt_Kartu_Gudang.CbGudang2Change(Sender: TObject);
+begin
+  with Dm.Qtemp do
+  begin
+    close;
+    sql.Text:=' select wh_code from t_wh  '+
+              ' where wh_name='+QuotedStr(CbGudang2.EditValue)+' '+
+              ' order by wh_name asc';
+    ExecSQL;
+  end;
+
+  kd_gudang:=Dm.Qtemp.FieldByName('wh_code').Value;
+end;
+
 procedure TFRpt_Kartu_Gudang.cxBarEditItem2PropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
@@ -391,13 +423,36 @@ begin
     begin
     Close;
     sql.clear;
-    SQL.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
-              ' a INNER JOIN t_item_category b on a.category_id=b.category_id '+
-              //' where b.category='+QuotedStr(Edcategory.Text)+''+
-              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
-              ' order by b.category,a.order_no Asc';
+    SQL.Add(' select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
+              ' a INNER JOIN t_item_category b on a.category_id=b.category_id ');
+
+      if Length(vgroup_id)<>0 then
+      begin
+        SQL.Add(' where a.category_id='+vgroup_id+'');
+      end;
+
+    SQL.Add(' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
+            ' order by b.category,a.order_no Asc');
       execute;
     end;
+  end;
+end;
+
+procedure TFRpt_Kartu_Gudang.cxkategori_barangPropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+    FMasterData.Caption:='Master Data Kategori';
+    FMasterData.vcall:='kartu_gudang';
+    FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By code Asc');
+    FMasterData.ShowModal;
+end;
+
+procedure TFRpt_Kartu_Gudang.cxnm_barangChange(Sender: TObject);
+begin
+  if Length(cxnm_barang.EditValue)=0 then
+  begin
+    cxnm_barang.EditValue := Null;
+    cxkd_barang.EditValue := Null;
   end;
 end;
 
@@ -405,13 +460,14 @@ procedure TFRpt_Kartu_Gudang.dxBarLargeButton1Click(Sender: TObject);
 begin
    with QKartu_Gudang do
   begin
-    close;
+    {close;
     sql.Clear;
     sql.Text:='select b.item_code,b.item_name,a.unit,a.wh_code,to_char(a.trans_date,''FMMonth''),'+
     ' A.trans_date,a.stock_code,sa_first,"in","out",sa_end,trans_code from t_trans_item A INNER JOIN'+
     ' t_item_stock b on a.item_stock_code=b.item_stock_code'+
-    ' where b.item_code='+QuotedStr(cxkd_barang.EditValue)+' AND A.wh_code='+QuotedStr(CbGudang2.EditValue)+'and DATE_PART(''MONTH'',a.trans_date) ='+QuotedStr(inttostr(CbBulan2.itemindex));
-    Execute;
+    ' where b.item_code='+QuotedStr(cxkd_barang.EditValue)+' '+
+    ' AND A.wh_code='+QuotedStr(CbGudang2.EditValue)+'and DATE_PART(''MONTH'',a.trans_date) ='+QuotedStr(inttostr(CbBulan2.itemindex));
+    Execute;}
   end;
   QKartu_Gudang.Open;
   RptKartu_Gudang.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Kartu_Gudang.Fr3');
@@ -420,19 +476,90 @@ begin
 end;
 
 procedure TFRpt_Kartu_Gudang.DxRefreshClick(Sender: TObject);
+var
+  vleveljumlah_in, vleveljumlah_out, vleveljumlah_sa,
+  vtransjumlah_in, vtransjumlah_out, vsatuan, vsatuan_trans: string;
 begin
+ if VarIsNull(CbGudang2.EditValue) or VarIsEmpty(CbGudang2.EditValue) then
+  begin
+    ShowMessage('Silakan Pilih Gudang...');
+    exit;
+  end;
+
+ if VarIsNull(cxkategori_barang.EditValue) or VarIsEmpty(cxkategori_barang.EditValue) then
+  begin
+    ShowMessage('Silakan Pilih Kategori...');
+    exit;
+  end;
+
+  if VarIsNull(cbLevelSatuan.EditValue) or VarIsEmpty(cbLevelSatuan.EditValue) then
+  begin
+    ShowMessage('Silakan Pilih Level Satuan...');
+    exit;
+  end;
+
+  IF cbLevelSatuan.EditValue='SATUAN TERBESAR' then //Terbesar
+  begin
+    vleveljumlah_in :=' SUM(level1_qty_in) AS ';
+		vleveljumlah_out:=' SUM(level1_qty_out) AS';
+		vleveljumlah_sa :=' saldo_awal_lev1 AS ';
+    vtransjumlah_in :=' t.level1_qty_in AS';
+    vtransjumlah_out:=' t.level1_qty_out AS';
+    vsatuan         :=' satuan_lev1 AS ';
+    vsatuan_trans   :=' level1_satuan AS ';
+  end;
+  IF cbLevelSatuan.EditValue='SATUAN TERKECIL' then //Terkecil
+  begin
+    vleveljumlah_in :=' case when SUM(level3_qty_in)=0 then SUM(level2_qty_in) else SUM(level3_qty_in) END  ';
+		vleveljumlah_out:=' case when SUM(level3_qty_out)=0 then SUM(level2_qty_out) else SUM(level3_qty_out) END    ';
+		vleveljumlah_sa :=' case when saldo_awal_lev3=0 then saldo_awal_lev2 else saldo_awal_lev3 END  ';
+    vtransjumlah_in :=' CASE WHEN t.level3_qty_in = 0 THEN t.level2_qty_in ELSE t.level3_qty_in END ';
+    vtransjumlah_out:=' CASE WHEN t.level3_qty_out = 0 THEN t.level2_qty_out ELSE t.level3_qty_out END ';
+    vsatuan         :=' case when satuan_lev3 ='''' THEN satuan_lev2 ELSE satuan_lev3 END ';
+    vsatuan_trans   :=' case when level3_satuan ='''' THEN level2_satuan ELSE level3_satuan END  ';
+  end;
+
+
   QKartu_Gudang.Close;
    with QKartu_Gudang do
   begin
     close;
     sql.Clear;
+    sql.Add(' SELECT m.kd_barang, i.item_name, COALESCE(m.saldo_awal ,0) + '+
+            ' COALESCE(SUM(t.jum_trans_in - jum_trans_out), 0) AS saldo_awal_periode, '+
+            ' satuan  FROM  (SELECT kd_barang,  '+vleveljumlah_sa+' saldo_awal,  '+
+            ' '+vsatuan+' satuan from tbl_transaksi_stock_sa where kd_gudang = '+QuotedStr(kd_gudang)+')  m '+
+            ' LEFT JOIN ( SELECT item_code, '+vleveljumlah_in+' jum_trans_in,  '+
+            ' '+vleveljumlah_out+' jum_trans_out  from tbl_transaksi_stock  WHERE type '+
+            ' IN (''IN'',''OUT'') and tgltrans '+
+            ' BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date AND ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date - INTERVAL ''1 day'') '+
+            ' AND kd_gudang = '+QuotedStr(kd_gudang)+' GROUP BY item_code ORDER BY item_code) t  '+
+            ' ON m.kd_barang = t.item_code '+
+            ' LEFT JOIN t_item i ON m.kd_barang= i.item_code '+
+            ' where i.category_id='+vgroup_id+' ');
+
+
+      if VarIsNull(cxnm_barang.EditValue) or VarIsEmpty(cxnm_barang.EditValue) then
+      begin
+        sql.Add(' ');
+      end else
+        sql.Add(' AND m.kd_barang='+QuotedStr(cxkd_barang.EditValue)+'');
+
+    sql.Add(' GROUP BY m.kd_barang,i.item_name,m.saldo_awal,satuan ORDER BY m.kd_barang');
+    Execute;
+  end;
+  QKartu_Gudang.Open;
+
+
+    {close;
+    sql.Clear;
     sql.Text:='select b.item_code,b.item_name,a.unit,a.wh_code,to_char(a.trans_date,''FMMonth''),'+
     ' A.trans_date,a.stock_code,sa_first,"in","out",sa_end,trans_code from t_trans_item A INNER JOIN'+
     ' t_item_stock b on a.item_stock_code=b.item_stock_code'+
-   ' where b.item_code='+QuotedStr(cxkd_barang.EditValue)+' AND A.wh_code='+QuotedStr(CbGudang2.EditValue)+'and DATE_PART(''MONTH'',a.trans_date) ='+QuotedStr(inttostr(CbBulan2.itemindex));
-     Execute;
-  end;
-  QKartu_Gudang.Open;
+    ' where b.item_code='+QuotedStr(cxkd_barang.EditValue)+' '+
+    ' AND A.wh_code='+QuotedStr(CbGudang2.EditValue)+'and DATE_PART(''MONTH'',a.trans_date) ='+QuotedStr(inttostr(CbBulan2.itemindex));
+     Execute; }
+
 {  RptKartu_Gudang.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Kartu_Gudang.Fr3');
   SetMemo(RptKartu_Gudang,'MBln',':  '+CbBulan.Text+' '+EdTahun.Text);
   RptKartu_Gudang.ShowReport();
@@ -461,11 +588,16 @@ begin
     begin
     Close;
     sql.clear;
-    SQL.Text:='select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
-              ' a INNER JOIN t_item_category b on a.category_id=b.category_id '+
-              //' where b.category='+QuotedStr(Edcategory.Text)+''+
-              ' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
-              ' order by b.category,a.order_no Asc';
+    SQL.Add(' select a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit from t_item '+
+              ' a INNER JOIN t_item_category b on a.category_id=b.category_id ');
+
+      if Length(vgroup_id)<>0 then
+      begin
+        SQL.Add(' where a.category_id='+vgroup_id+'');
+      end;
+
+    SQL.Add(' Group by a.item_code,a.item_name,b.category,a.order_no,a.merk,a.unit '+
+            ' order by b.category,a.order_no Asc');
       execute;
     end;
   end;
@@ -529,6 +661,29 @@ CbBulan.Text:=NamaBulan[strtoInt(bln)];
 EdTahun.Text:=FormatDateTime('yyyy',Now);
 CbBulanChange(sender);
 Load;
+
+// Pastikan jenis editor adalah DateEdit
+tgl_awal.PropertiesClassName := 'TcxDateEditProperties';
+tgl_akhir.PropertiesClassName := 'TcxDateEditProperties';
+
+// Set format tanggal
+(tgl_awal.Properties as TcxDateEditProperties).DisplayFormat := 'dd/MM/yyyy';
+(tgl_akhir.Properties as TcxDateEditProperties).DisplayFormat := 'dd/MM/yyyy';
+
+// Isi nilai default
+tgl_awal.EditValue := Date;
+tgl_akhir.EditValue := Date;
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Add('select * from t_tmpsyst');
+    open;
+  end;
+  tgl_stock_wh:=dm.Qtemp.FieldByName('stock_wh_date').asdatetime;
+
+cbLevelSatuan.Index:=0;
 end;
 
 initialization

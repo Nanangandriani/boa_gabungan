@@ -146,8 +146,8 @@ object FStockOpnameNota: TFStockOpnameNota
       TabOrder = 5
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 300
-      Top = 58
+      Left = 422
+      Top = 14
       Width = 116
       Height = 30
       Align = alCustom

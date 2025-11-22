@@ -258,6 +258,7 @@ begin
   dm.Koneksi.StartTransaction;
   try
     notrans:=QSalesOrdernotrans.Value+'-REV';
+//    notrans:=QSalesOrdernotrans.Value+'-REV';
     with dm.Qtemp do
     begin
       close;

@@ -55,47 +55,10 @@ type
     edKabupaten: TcxBarEditItem;
     QBHPenerimaanKasBank: TUniQuery;
     DsBHPenerimaanKasBank: TDataSource;
-    QBHPenerimaanKasBankvoucher_no: TStringField;
-    QBHPenerimaanKasBanktrans_date: TDateField;
-    QBHPenerimaanKasBankmodule_id: TIntegerField;
-    QBHPenerimaanKasBankcode_cust: TStringField;
-    QBHPenerimaanKasBankname_cust: TStringField;
-    QBHPenerimaanKasBankcode_region: TStringField;
-    QBHPenerimaanKasBankfor_acceptance: TStringField;
-    QBHPenerimaanKasBankdescription: TMemoField;
-    QBHPenerimaanKasBankjum_kas: TFloatField;
-    QBHPenerimaanKasBankaccount_name_bank: TStringField;
-    QBHPenerimaanKasBankaccount_number_bank: TStringField;
-    QBHPenerimaanKasBankjum_bank: TFloatField;
-    QBHPenerimaanKasBankjum_piutang: TFloatField;
-    QBHPenerimaanKasBankak_lain_kre: TMemoField;
-    QBHPenerimaanKasBankak_nm_lain_kre: TMemoField;
-    QBHPenerimaanKasBankjum_lain_kre: TIntegerField;
-    QBHPenerimaanKasBankket_faktur: TMemoField;
     dsCetak: TDataSource;
     Report: TfrxReport;
     frxDBDBHPenerimaan: TfrxDBDataset;
     QCetak: TUniQuery;
-    QCetakvoucher_no: TStringField;
-    QCetaktrans_date: TDateField;
-    QCetakmodule_id: TIntegerField;
-    QCetakcode_cust: TStringField;
-    QCetakname_cust: TStringField;
-    QCetakcode_region: TStringField;
-    QCetakfor_acceptance: TStringField;
-    QCetakdescription: TMemoField;
-    QCetakjum_kas: TFloatField;
-    QCetakaccount_name_bank: TStringField;
-    QCetakaccount_number_bank: TStringField;
-    QCetakjum_bank: TFloatField;
-    QCetakjum_piutang: TFloatField;
-    QCetakak_lain_kre: TMemoField;
-    QCetakak_nm_lain_kre: TMemoField;
-    QCetakjum_lain_kre: TIntegerField;
-    QCetakcode_karesidenan: TStringField;
-    QCetakcode_kab: TStringField;
-    QCetakname_kab: TStringField;
-    QCetakket_faktur: TMemoField;
     dxBarLargeButton1: TdxBarLargeButton;
     QDaftarPenerimaan: TUniQuery;
     frxDBDDaftarPenerimaan: TfrxDBDataset;
@@ -117,6 +80,31 @@ type
     QDaftarPenerimaanket_faktur: TMemoField;
     cbSBU: TdxBarCombo;
     dxBarLargeButton2: TdxBarLargeButton;
+    QCetakKredit: TUniQuery;
+    frxDBDHKredit: TfrxDBDataset;
+    QCetakvoucher_no: TStringField;
+    QCetaktrans_date: TDateField;
+    QCetakmodule_id: TIntegerField;
+    QCetakcode_cust: TStringField;
+    QCetakname_cust: TStringField;
+    QCetakfor_acceptance: TStringField;
+    QCetakdescription: TMemoField;
+    QCetakaccount_name_bank: TStringField;
+    QCetakaccount_number_bank: TStringField;
+    QCetakjum_kas: TFloatField;
+    QCetakjum_bank: TFloatField;
+    QCetakjum_piutang: TFloatField;
+    QCetakcode_karesidenan: TMemoField;
+    QCetakkaresidenan: TMemoField;
+    QCetakcode_kabupaten: TMemoField;
+    QCetakkabupaten: TMemoField;
+    QCetakKreditvoucher_no: TStringField;
+    QCetakKreditcode_account: TStringField;
+    QCetakKreditname_account: TStringField;
+    QCetakKreditpaid_amount: TFloatField;
+    DBGridEh1: TDBGridEh;
+    QBHPenerimaanKasBankDetail: TUniQuery;
+    DSPenerimaanKasBankDetail: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -151,7 +139,8 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, UHomeSreen;
+uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, UHomeSreen,
+  UDataModule;
 var
   realfbhp : TFBHPenerimaanKasBank;
 // implementasi function
@@ -169,24 +158,62 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-//               ' LEFT JOIN (SELECT voucher_no, '+
-//               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
-//               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
-               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan,cust.code_kabupaten,cust.kabupaten '+
+              'FROM ( '+
+              'SELECT a.voucher_no,a.trans_date,a.module_id,a.code_cust,a.name_cust, '+
+              'a.for_acceptance, a.description,a.account_name_bank,a.account_number_bank, '+
+              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
+              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
+              'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
+              'FROM t_cash_bank_acceptance a INNER JOIN '+
+              '(SELECT voucher_no, position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det GROUP BY voucher_no, position) b '+
+              'ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+              'INNER JOIN '+
+              't_cash_bank_acceptance_receivable c '+
+              'ON c.voucher_no = a.voucher_no '+
+              'GROUP BY a.voucher_no, a.trans_date, a.module_id, a.code_cust, '+
+              'a.name_cust, a.for_acceptance,a.description, '+
+              'a.account_name_bank,a.account_number_bank,b.paid_amount, a.module_id ) AS zz '+
+              'LEFT JOIN '+
+              'get_customer() AS cust ON cust.customer_code = zz.code_cust '+
+              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+
+//       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
+//              'FROM '+
+//              '( '+
+//              'SELECT '+
+//              'a.voucher_no,a.trans_date,a.module_id,a.code_cust, '+
+//              'a.name_cust,a.for_acceptance,a.description,a.account_name_bank,a.account_number_bank, '+
+//              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
+//              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
+//              'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
+//              'FROM '+
+//              't_cash_bank_acceptance a '+
+//              'INNER JOIN '+
+//              '(SELECT voucher_no,position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det group by voucher_no,position) b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+//              'INNER JOIN '+
+//              't_cash_bank_acceptance_receivable c ON c.voucher_no = a.voucher_no '+
+//              ') AS zz '+
+//              'LEFT JOIN get_customer() AS cust ON cust.customer_code = zz.code_cust '+
+//              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+//       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
+//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+//               ' ON "left"(code_region, 4)=b.code_kab '+
+////               ' LEFT JOIN (SELECT voucher_no, '+
+////               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
+////               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
          begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+          sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
          end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND cust.karesidenan='+QuotedStr(vkd_kab)+' ');
          end;
-       sql.add(' ORDER BY trans_date, voucher_no');
+       sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
        open;
    end;
 
@@ -198,10 +225,13 @@ begin
 
  if QCetak.RecordCount<>0 then
  begin
+   QCetakKredit.Close;
+   QCetakKredit.Open;
+
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank'+ '.fr3');
+   Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank2'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
     if edKaresidenan.EditValue='' then
@@ -236,26 +266,53 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-//               ' LEFT JOIN (SELECT voucher_no, '+
-//               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, '+QuotedStr(', ')+') AS ket_faktur '+
-//               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
-               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+      sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
+              'FROM '+
+              '( '+
+              'SELECT '+
+              'a.voucher_no,a.trans_date,a.module_id,a.code_cust, '+
+              'a.name_cust,a.for_acceptance,a.description,a.account_name_bank,a.account_number_bank, '+
+              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
+              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
+              'COALESCE(c.paid_amount, 0) AS jum_piutang '+
+              'FROM '+
+              't_cash_bank_acceptance a '+
+              'INNER JOIN '+
+              't_cash_bank_acceptance_det b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+              'INNER JOIN '+
+              't_cash_bank_acceptance_receivable c ON c.voucher_no = a.voucher_no '+
+              ') AS zz '+
+              'LEFT JOIN get_customer() AS cust ON cust.customer_code = zz.code_cust '+
+              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+//       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
+//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+//               ' ON "left"(code_region, 4)=b.code_kab '+
+////               ' LEFT JOIN (SELECT voucher_no, '+
+////               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
+////               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
          begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+          sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
          end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND cust.karesidenan='+QuotedStr(vkd_kab)+' ');
          end;
-       sql.add(' ORDER BY trans_date, voucher_no');
+          sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
        open;
    end;
+
+   if QBHPenerimaanKasBank.RecordCount>0 then
+   begin
+     QBHPenerimaanKasBankDetail.Close;
+     QBHPenerimaanKasBankDetail.Open;
+   end else begin
+      showmessage('Tidak ada data !');
+   end;
+
   finally
   DBGrid.FinishLoadingStatus();
   end;
@@ -378,25 +435,25 @@ end;
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankak_lain_kreGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankak_lain_kre.asstring,1,255);
+//  Text:=copy(QBHPenerimaanKasBankak_lain_kre.asstring,1,255);
 end;
 
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankak_nm_lain_kreGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankak_nm_lain_kre.asstring,1,255);
+//  Text:=copy(QBHPenerimaanKasBankak_nm_lain_kre.asstring,1,255);
 end;
 
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankdescriptionGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankdescription.asstring,1,255);
+//  Text:=copy(QBHPenerimaanKasBankdescription.asstring,1,255);
 end;
 
 procedure TFBHPenerimaanKasBank.QBHPenerimaanKasBankket_fakturGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
-  Text:=copy(QBHPenerimaanKasBankket_faktur.asstring,1,255);
+//  Text:=copy(QBHPenerimaanKasBankket_faktur.asstring,1,255);
 end;
 
 initialization

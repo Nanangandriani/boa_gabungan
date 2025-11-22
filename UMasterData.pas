@@ -49,7 +49,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   URekapPenjualanPerPelanggan, UMonitoringTargetOmset, ULaporanHarianSisaNota,
   Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
   ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
-  UExportImportTargetPenjualan;
+  UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -60,6 +60,22 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+  //rudy
+  if vcall='satuan_coretax' then
+  begin
+    FNew_Satuan.edKdSatCoretax.Text:=MemMasterData['KD_MASTER'];
+    FNew_Satuan.edNmSatCoretax.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='brg_coretax' then
+  begin
+    FNew_Barang.edKdBrgCoretax.Text:=MemMasterData['KD_MASTER'];
+    FNew_Barang.edNmBrgCoretax.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='kartu_gudang' then
+  begin
+    FRpt_Kartu_Gudang.vgroup_id:=MemMasterData['KD_MASTER'];
+    FRpt_Kartu_Gudang.cxkategori_barang.EditValue:=MemMasterData['NM_MASTER'];
+  end;
   //Mas Anto
   if vcall='perkiraan_supplier_return' then
   begin
