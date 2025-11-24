@@ -158,7 +158,7 @@ begin
        sql.Text:= 'select * from "public"."t_sales_returns"   '+
                   'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
                   'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
-                  'deleted_at is null order by created_at Desc ';
+                  'deleted_at is null order by trans_date DESC, trans_no DESC';
        open;
    end;
    Qdetail.Close;

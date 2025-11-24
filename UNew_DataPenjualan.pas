@@ -119,6 +119,7 @@ type
     Label23: TLabel;
     Label24: TLabel;
     edPOOrder: TEdit;
+    LabelNotaBatal: TRzLabel;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -167,7 +168,7 @@ type
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
     strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,Str: string;
     Year, Month, Day: Word;
-    status,StatusCekKasifikasi,IntStatusKoreksi,iserror: integer;
+    status,StatusCekKasifikasi,IntStatusKoreksi,iserror,isCancel: integer;
     procedure Clear;
     procedure Save;
     procedure SimpanTempDetail;
@@ -932,15 +933,14 @@ begin
 //    UpdateDataMenejFee; //refresh kalkulasi jika ada menajmenfee
 //
     //cek balancestock
-//    check_stock;
-//    if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
-//    begin
-//      ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
-//      //ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
-//      stat_proses:=false;
-//      Exit;
-//    end;
-    //
+  //    check_stock;
+  //    if tot_jumlah<>dm.Qtemp1.FieldByName('total_stock').Value then
+  //    begin
+  //      ShowMessage('Maaf, Stock Barang Dengan Jumlah(Qty) Penjualan Tidak Balance !!!');
+  //      //ShowMessage(FloatToStr(tot_jumlah)+'ASA'+FloatToStr(dm.Qtemp1.FieldByName('total_stock').Value));
+  //      stat_proses:=false;
+  //      Exit;
+  //    end;
 
     //MessageDlg('Buatkan Validasi Cek Piutang Dengan Berbagai Jenis(Dengan SP)..!!',mtInformation,[MBOK],0);
     if stat_proses=true then
@@ -1404,20 +1404,34 @@ begin
 
   reset_stock;
 
-  if (Status=1) AND (IntStatusKoreksi=2) then
+  if isCancel = 1 then
   begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=False;
-  end else if Status=0 then
+    BSave.Enabled := False;
+    BCorrection.Visible := False;
+    BCorrection.Enabled := False;
+    LabelNotaBatal.Visible:=True;
+    Exit;
+  end;
+
+  if (Status = 1) and (IntStatusKoreksi = 2) AND (isCancel=0) then
   begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=False;
-  end else if (Status=1) AND (IntStatusKoreksi<>2) then
+    BSave.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+    LabelNotaBatal.Visible:=False;
+  end
+  else if Status = 0 then
   begin
-    BSave.Enabled:=False;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=True;
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+    LabelNotaBatal.Visible:=False;
+  end
+  else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (isCancel=0) then
+  begin
+    BSave.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+    LabelNotaBatal.Visible:=False
   end;
 
   edNomorTrans.ReadOnly:=True;
@@ -1605,7 +1619,7 @@ begin
             'FROM  public.t_selling_det  a left join t_selling_piece b on b.trans_no=a.trans_no '+
             'AND b.code_item=a.code_item '+
             'LEFT JOIN t_item c on c.item_code=a.code_item '+
-            'WHERE a.deleted_at IS NULL ) aa  '+
+            ') aa  '+
             'WHERE aa.trans_no='+QuotedStr(edNomorTrans.Text)+' Order By aa.trans_no, aa.code_item desc;');
 
     open;

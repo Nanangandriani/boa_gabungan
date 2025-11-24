@@ -208,7 +208,7 @@ begin
 		            'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '+
                 'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code '+
                 'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
-                'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' and a.deleted_at is NULL ORDER BY a.created_at DESC;';
+                'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' and a.deleted_at is NULL ORDER BY a.trans_date DESC, a.no_trans DESC;';
       Open;
     end;
   finally

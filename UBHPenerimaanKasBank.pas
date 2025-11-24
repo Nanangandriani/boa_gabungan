@@ -105,6 +105,12 @@ type
     DBGridEh1: TDBGridEh;
     QBHPenerimaanKasBankDetail: TUniQuery;
     DSPenerimaanKasBankDetail: TDataSource;
+    QCetakDebit: TUniQuery;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    FloatField1: TFloatField;
+    frxDBDHDebit: TfrxDBDataset;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

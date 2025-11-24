@@ -25,7 +25,8 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   Data.DB, MemDS, DBAccess, Uni, dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBarExtItems;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBarExtItems, cxMemo,
+  cxBarEditItem;
 
 type
   TFSalesOrder = class(TForm)
@@ -64,6 +65,14 @@ type
     Qdetail: TUniQuery;
     DsDetail: TDataSource;
     dxBarCombo1: TdxBarCombo;
+    dxBarButton8: TdxBarButton;
+    dxBarSpinEdit1: TdxBarSpinEdit;
+    dxBarFontNameCombo1: TdxBarFontNameCombo;
+    dxBarButton9: TdxBarButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarLargeButton3: TdxBarLargeButton;
+    cxBarEditItem1: TcxBarEditItem;
+    dxBarButton10: TdxBarButton;
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);
@@ -72,6 +81,11 @@ type
     procedure ActDelExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure DBGridOrderDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumnEh; State: TGridDrawState);
+    procedure DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -100,11 +114,11 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add('SELECT * FROM get_sales_order(1) '+
+       sql.add('SELECT * FROM get_sales_order() '+
                'where EXTRACT(YEAR FROM order_date)='+edTahun.Text+' AND '+
                'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' ');
 //       sql.add( vBatas_Data );
-       sql.add(' order by created_at Desc ');
+       sql.add(' order by order_date Desc,notrans Desc ');
        open;
    end;
    Qdetail.Close;
@@ -218,7 +232,7 @@ begin
   begin
        close;
        sql.Clear;
-       sql.Text:= 'SELECT * FROM get_sales_order(3)'+
+       sql.Text:= 'SELECT * FROM get_sales_order()'+
                   'WHERE notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString);
        open;
   end;
@@ -226,8 +240,11 @@ begin
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
     exit;
-  end;
-
+  end else if Dm.Qtemp2.FieldValues['status']=99 then
+  begin
+    ShowMessage('Data Sudah Di Tolak...!!!');
+    exit;
+  end else
   if Dm.Qtemp2.RecordCount<>0 then
   begin
 
@@ -290,6 +307,58 @@ begin
   FNew_SalesOrder.edKodeOrder.Enabled:=false;
   FNew_SalesOrder.Show;
   Status := 1;
+end;
+
+procedure TFSalesOrder.DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+  AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+  var Params: TColCellParamsEh; var Processed: Boolean);
+var
+strStatus: Integer;
+begin
+strStatus := Column.Field.DataSet.FieldByName('status').AsInteger;
+
+ if (QSalesOrder.RecordCount<>0) then
+ begin
+    if (strStatus=99) then
+    begin
+//      Params.Font.Style := [fsBold];
+      Params.Font.Color := clRed;
+//      Params.Background := $004080FF;
+    end;
+ end;
+
+end;
+
+procedure TFSalesOrder.DBGridOrderDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumnEh;
+  State: TGridDrawState);
+//var
+//  StatusValue: Integer;
+begin
+//  if gdSelected in State then
+//    Exit;
+//  if not (gdSelected in State) and (Column.Field.FieldName = 'status') then
+//  begin
+//    if not Column.Field.IsNull then
+//    begin
+//      StatusValue := Column.Field.AsInteger;
+//
+//      if StatusValue = 99 then
+//      begin
+//        DBGridOrder.Canvas.Font.Color := clRed;
+//        // DBGridEh1.Canvas.Brush.Color := clYellow;
+//      end
+//      else
+//      begin
+//
+//        DBGridOrder.Canvas.Font.Color := clWindowText;
+//        DBGridOrder.Canvas.Brush.Color := clWindow;
+//      end;
+//
+//
+//      DBGridOrder.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+//    end;
+//  end;
 end;
 
 procedure TFSalesOrder.dxBarLargeButton1Click(Sender: TObject);

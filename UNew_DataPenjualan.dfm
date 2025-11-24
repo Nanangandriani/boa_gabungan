@@ -240,6 +240,19 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 15
       Caption = ':'
     end
+    object LabelNotaBatal: TRzLabel
+      Left = 376
+      Top = 148
+      Width = 128
+      Height = 30
+      Caption = 'NOTA BATAL'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -21
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
       Top = 58
@@ -254,8 +267,8 @@ object FNew_Penjualan: TFNew_Penjualan
       OnButtonClick = edNama_PelangganButtonClick
     end
     object edKode_Pelanggan: TEdit
-      Left = 382
-      Top = 150
+      Left = 324
+      Top = 85
       Width = 200
       Height = 23
       TabOrder = 1
@@ -573,8 +586,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 713
-      ExplicitTop = -2
+      ExplicitLeft = 715
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1

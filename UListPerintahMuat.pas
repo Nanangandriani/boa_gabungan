@@ -124,7 +124,7 @@ begin
        sql.Clear;
        sql.Text:='select * from "public"."t_spm" '+
                  'where deleted_at is null and EXTRACT(YEAR FROM loading_date)='+edTahun.Text+' AND '+
-                 'EXTRACT(MONTH FROM loading_date)='+(IntToStr(mm))+' order by created_at Desc ';
+                 'EXTRACT(MONTH FROM loading_date)='+(IntToStr(mm))+' order by loading_date Desc, notrans Desc ';
        open;
    end;
   finally

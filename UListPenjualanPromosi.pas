@@ -173,7 +173,7 @@ begin
        sql.Clear;
        sql.Text:='select * from get_selling(TRUE) '+
               'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
-              'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' ORDER BY created_at DESC';
+              'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' ORDER BY trans_date DESC, trans_no DESC';
        open;
    end;
   finally

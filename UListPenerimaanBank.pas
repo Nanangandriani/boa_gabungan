@@ -154,7 +154,7 @@ begin
                   'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
                   'where EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
                   'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' AND '+
-                  'a.deleted_at is null'+ strTransaksi+' order by a.created_at Desc ';
+                  'a.deleted_at is null'+ strTransaksi+' order by a.trans_date Desc, a.voucher_no Desc ';
        open;
    end;
   finally

@@ -1116,7 +1116,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45978.359617256950000000
+    ReportOptions.LastChange = 45985.551501921300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1139,17 +1139,17 @@ object FListPenerimaanBank: TFListPenerimaanBank
       ''
       'procedure GroupHeader1OnAfterPrint(Sender: TfrxComponent);'
       'begin'
-      '                                    '
+      ''
       'end;'
       ''
       'procedure AccountNameOnAfterPrint(Sender: TfrxComponent);'
       'begin'
-      '  '
+      ''
       'end;'
       ''
       'procedure AccountNameOnAfterData(Sender: TfrxComponent);'
       'begin'
-      '    AccountName.Text:=UpperCase(AccountName.Text);  '
+      '    AccountName.Text:=UpperCase(AccountName.Text);'
       'end;'
       ''
       'begin'
@@ -1226,12 +1226,12 @@ object FListPenerimaanBank: TFListPenerimaanBank
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Top = 10.354360000000000000
+          Top = 20.798804440000000000
           Width = 755.906000000000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -1546,9 +1546,10 @@ object FListPenerimaanBank: TFListPenerimaanBank
           Top = 5.000000000000000000
           Width = 268.346630000000000000
           Height = 18.897650000000000000
+          AutoWidth = True
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -16
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []

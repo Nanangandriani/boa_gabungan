@@ -67,6 +67,7 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ActBaruExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -90,6 +91,18 @@ begin
     FPenomoran:= realFPenomoran
   else
     Application.CreateForm(TFPenomoran, Result);
+end;
+
+procedure TFPenomoran.ActBaruExecute(Sender: TObject);
+begin
+  FNew_Penomoran.Show;
+  with  FNew_Penomoran.qnumb_det_tmp do
+  begin
+    close;
+    sql.clear;
+    sql.add('delete from t_numb_det_tmp');
+    execute;
+  end;
 end;
 
 procedure TFPenomoran.ActRoExecute(Sender: TObject);

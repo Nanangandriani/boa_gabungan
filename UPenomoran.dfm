@@ -574,7 +574,7 @@ object FPenomoran: TFPenomoran
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeButton1Click
+      OnClick = ActBaruExecute
     end
     object dxBarButton8: TdxBarButton
       Caption = 'Update'
@@ -761,6 +761,7 @@ object FPenomoran: TFPenomoran
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
+      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '

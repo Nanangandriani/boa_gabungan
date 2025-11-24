@@ -22,8 +22,7 @@ object FExportFaktur: TFExportFaktur
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = -6
-    ExplicitWidth = 777
+    ExplicitWidth = 967
     object RzLabel1: TRzLabel
       Left = 16
       Top = 16
@@ -184,8 +183,8 @@ object FExportFaktur: TFExportFaktur
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 220
-    ExplicitWidth = 511
+    ExplicitTop = 488
+    ExplicitWidth = 967
     object BBatal: TRzBitBtn
       Left = 894
       Top = 2
@@ -246,7 +245,7 @@ object FExportFaktur: TFExportFaktur
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 434
+      ExplicitLeft = 890
     end
     object BSave: TRzBitBtn
       Left = 819
@@ -308,8 +307,7 @@ object FExportFaktur: TFExportFaktur
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 619
-      ExplicitTop = 6
+      ExplicitLeft = 815
     end
     object pnfp: TPanel
       Left = 2
@@ -479,6 +477,7 @@ object FExportFaktur: TFExportFaktur
     Align = alTop
     Color = 15987699
     TabOrder = 3
+    ExplicitWidth = 967
     object cbTandai: TRzCheckBox
       Left = 16
       Top = 6

@@ -126,7 +126,7 @@ begin
                  '(date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+') GROUP BY "date_dpp", "date_print", '+
                  '"code_collector", "name_collector", b."wilayah",b.code_regency,'+
                  'b.name_regency,b.code_karesidenan,b.name_karesidenan  '+
-                 'ORDER BY "date_dpp", "date_print", "code_collector", "name_collector", b."wilayah" Desc ';
+                 'ORDER BY "date_dpp" Desc, "date_print", "code_collector", "name_collector", b."wilayah" Desc ';
        open;
    end;
   finally

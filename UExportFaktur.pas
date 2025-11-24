@@ -345,12 +345,12 @@ begin
                  //', case when b.npwp is NULL then 0 else b.npwp end npwp_nik_pembeli '+
                  ', case when b.npwp=''0'' then '''' else b.npwp end npwp_nik_pembeli '+
                  ', ''TIN'' jnis_id_pembeli,''IDN'' negara_pembeli'+
-                 ', ''0'' nomor_dok_pembeli, name_cust nama_pembeli,c.address alamat_pembeli '+
+                 ', ''0'' nomor_dok_pembeli, b.customer_name_pkp nama_pembeli,c.address alamat_pembeli '+
   //               ',case when b.email=''-'' then ''0'' when b.email'''' then ''0'' when b.email is NULL then ''0'' else b.email end email,'+
                  ',case when b.email=''-'' then '''' else b.email end email,'+
                  'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli from t_selling a '+
-                 'left join t_customer b on b.customer_code=a.code_cust '+
-                 'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''001'' '+
+                 'left join t_selling_customer b on b.customer_code=a.code_cust AND deleted_at IS NULL '+
+                 'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''002'' '+
                  'where a.trans_no in ('+SQLText+')  ';
       Open;
     end;

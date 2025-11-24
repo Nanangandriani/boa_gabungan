@@ -1021,8 +1021,8 @@ object FListPerintahMuat: TFListPerintahMuat
       'begin'
       ''
       'end.')
-    Left = 456
-    Top = 40
+    Left = 416
+    Top = 136
     Datasets = <
       item
         DataSet = frxDBDPerintahMuat

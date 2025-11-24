@@ -122,7 +122,7 @@ begin
                   'LEFT JOIN t_delivery_order_status b on b.kode=a.status '+
                   'WHERE EXTRACT(YEAR FROM a.date_trans)='+edTahun.Text+' AND '+
                   'EXTRACT(MONTH FROM a.date_trans)='+(IntToStr(mm))+' AND '+
-                  'a.deleted_at is null'+strStatus+' ORDER BY a.created_at Desc ';
+                  'a.deleted_at is null'+strStatus+' ORDER BY a.date_trans Desc, a.notrans DESC ';
        open;
    end;
   finally

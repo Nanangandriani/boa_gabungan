@@ -222,7 +222,7 @@ begin
   if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
 //  ShowMessage(kd_kares);
    //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
-  edKodeOrder.Text:=getNourut(strday2,'public.t_sales_order',kd_kares);
+  edKodeOrder.Text:=GetNourutNoDelete(strday2,'public.t_sales_order',kd_kares);
    //EdNo.Text:=Order_no;
 end;
 
