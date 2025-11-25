@@ -72,6 +72,7 @@ type
     cbSBU: TdxBarCombo;
     QUangMukaPenjualan: TUniQuery;
     DsUangMukaPenjualan: TDataSource;
+    cxBarEditItem4: TcxBarEditItem;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ActROExecute(Sender: TObject);

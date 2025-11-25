@@ -26,7 +26,7 @@ uses
   Data.DB, MemDS, DBAccess, Uni, dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBarExtItems, cxMemo,
-  cxBarEditItem;
+  cxBarEditItem, cxButtonEdit;
 
 type
   TFSalesOrder = class(TForm)
@@ -73,6 +73,8 @@ type
     dxBarLargeButton3: TdxBarLargeButton;
     cxBarEditItem1: TcxBarEditItem;
     dxBarButton10: TdxBarButton;
+    cxBarEditItem2: TcxBarEditItem;
+    cxBarEditItem3: TcxBarEditItem;
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);

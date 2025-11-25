@@ -64,6 +64,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares: String;
 begin
+  strKares:='';
   if vcall='daftar_klasifikasi' then
   begin
     strWhere:=' and a.code_type_business='+QuotedStr(FDaftarKlasifikasi.edkd_jenis_usaha.Text)+' AND '+
@@ -78,6 +79,7 @@ begin
     strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
   end else begin
     strWhere:='';
+    strKares:='';
   end;
 
   with Dm.Qtemp do
@@ -89,9 +91,9 @@ begin
             ' case when code_karesidenan is null then ''0'' else code_karesidenan end code_karesidenan  '+
             ' from t_customer a '+
             ' LEFT JOIN (select customer_code, address, contact_person1 '+
-              ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
+            ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
             ' LEFT JOIN (SELECT code, name, code_karesidenan from t_region_regency) getkares '+
-              ' ON "left"(a.code_region,4)=getkares.code '+
+            ' ON "left"(a.code_region,4)=getkares.code '+
             ' where deleted_at is null '+strWhere);
     if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
     begin
@@ -187,7 +189,7 @@ begin
   begin
     FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     FDataPenerimaanBank.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
-//    FDataPenerimaanBank.edUntukPengiriman.Text:=MemMasterData['NM_PELANGGAN'];
+    FDataPenerimaanBank.edNamaPKP.Text:=MemMasterData['NM_PKP'];
 
     //Ganti Akun Header bank Menjadi Akun Piutang Pelanggan
     with FDataPenerimaanBank do

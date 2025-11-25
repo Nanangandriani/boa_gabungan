@@ -699,7 +699,6 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
         'upplier_code,b.supplier_name,a.no_trans,b.header_code_um,c.accou' +
         'nt_name'
       'order by a.no_trans DESC')
-    Active = True
     Left = 360
     Top = 32
   end

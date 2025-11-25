@@ -21,13 +21,14 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
     Width = 766
     Height = 51
     Align = alTop
+    Color = 15987699
     TabOrder = 0
-    ExplicitTop = -6
+    ExplicitWidth = 762
     object RzLabel1: TRzLabel
       Left = 45
       Top = 14
-      Width = 45
-      Height = 20
+      Width = 41
+      Height = 15
       Caption = 'Tanggal'
     end
     object RzLabel3: TRzLabel
@@ -159,7 +160,6 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
     SQL.Strings = (
       'SELECT a.*,b.customer_name FROM t_down_payment_sales a'
       'LEFT JOIN get_customer() b on b.customer_code=a.customer_code')
-    Active = True
     Left = 448
     Top = 176
   end

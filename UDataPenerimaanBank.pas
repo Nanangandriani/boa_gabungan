@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls, RzCmboBx;
+  Vcl.ExtCtrls, RzCmboBx, frxClass;
 
 type
   TFDataPenerimaanBank = class(TForm)
@@ -108,6 +108,10 @@ type
     Label29: TLabel;
     Label30: TLabel;
     edKodePelangganSumber: TEdit;
+    frxReport1: TfrxReport;
+    edNamaPKP: TEdit;
+    Label31: TLabel;
+    Label32: TLabel;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -138,6 +142,12 @@ type
     procedure edNamaPelangganSumberChange(Sender: TObject);
     procedure cbSumberPenerimaanChange(Sender: TObject);
     procedure edKode_PelangganChange(Sender: TObject);
+    procedure DBGridTagihanCellClick(Column: TColumnEh);
+    procedure DBGridTagihanColEnter(Sender: TObject);
+    procedure DBGridTagihanColExit(Sender: TObject);
+    procedure DBGridTagihanCellMouseClick(Grid: TCustomGridEh; Cell: TGridCoord;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
+      var Processed: Boolean);
   private
     vtotal_debit, vtotal_kredit,vpiutang_kredit, vtotal_piutang : real;
     const
@@ -169,6 +179,8 @@ type
     procedure Enable;
     procedure RefreshSumberPenerimaan;
     procedure InsertDetailUangMuka;
+    procedure SimpanPelanggan;
+    procedure GetKeterangan;
   end;
 
 var
@@ -182,6 +194,29 @@ uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UDaftarRencanaLunasPiutang, UCari_DaftarPerk, UDaftarPenagihanPiutang,
   UHomeLogin, UListPenerimaanBank, UMainMenu, UKoreksi,
   UbrowseUangMukaPenjualan;
+
+procedure TFDataPenerimaanBank.GetKeterangan;
+var ket: String;
+begin
+  ket:='';
+  if MemDetailPiutang.RecordCount>0 then
+  begin
+    MemKeterangan.Text:='';
+    MemDetailPiutang.First;
+    while not MemDetailPiutang.Eof do
+    begin
+      if MemDetailPiutang['jum_piutang_real']=MemDetailPiutang['jum_piutang'] then
+      begin
+        ket:=ket+'PELUNASAN PIUTANG '+edNamaPKP.Text+' ('+MemDetailPiutang['no_tagihan']+' Tgl.'+FormatDateTime('dd-mm-yyyy',MemDetailPiutang['tgl_faktur'])+')' + SLineBreak + '';
+      end else if MemDetailPiutang['jum_piutang_real']<>MemDetailPiutang['jum_piutang'] then
+      begin
+        ket:=ket+'ANGSURAN '+edNamaPKP.Text+' ('+MemDetailPiutang['no_tagihan']+' Tgl.'+FormatDateTime('dd-mm-yyyy',MemDetailPiutang['tgl_faktur'])+')' + SLineBreak + '';
+      end;
+      MemDetailPiutang.Next;
+    end;
+    MemKeterangan.Text:=ket;
+  end;
+end;
 
 procedure TFDataPenerimaanBank.RefreshSumberPenerimaan;
 begin
@@ -519,6 +554,7 @@ begin
     if MemDetailPiutang.RecordCount<>0 then
     begin
       InsertDetailPiutang;
+      SimpanPelanggan;
       if edKodeSumberTagihan.Text='2' then
       UpdateDPP;
     end;
@@ -577,14 +613,17 @@ begin
             if MemDetailAkun['debit']<>0 then
             begin
               sql.Add(' '+QuotedStr('D')+', ');
-              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['debit']))+', ');
+//              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['debit']))+', ');
+              sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['debit'],',','.',[]))+',');
             end;
             if MemDetailAkun['kredit']<>0 then
             begin
               sql.Add(' '+QuotedStr('K')+', ');
-              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['kredit']))+', ');
+//              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['kredit']))+', ');
+              sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['kredit'],',','.',[]))+',');
             end;
-    sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['jumlah_hasil_kurs']))+', '+
+//    sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['jumlah_hasil_kurs']))+', '+
+    sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['jumlah_hasil_kurs'],',','.',[]))+', '+
             ' '+QuotedStr(MemDetailAkun['keterangan'])+', '+
             ' '+QuotedStr(MemDetailAkun['kd_header_akun'])+'  );');
     ExecSQL;
@@ -652,7 +691,8 @@ begin
             ' '+QuotedStr(edNamaJenisTrans.Text)+', '+
             ' '+QuotedStr(edNoRek.Text)+', '+
             ' '+QuotedStr(edNamaBank.Text)+', '+
-            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
+//            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang']))+', '+
+            ' '+QuotedStr(StringReplace(MemDetailPiutang['jum_piutang'],',','.',[]))+','+
             ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
             ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+
             ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang_real']))+', '+
@@ -775,8 +815,9 @@ begin
   if MemDetailPiutang.RecordCount<>0 then
   begin
     InsertDetailPiutang;
+    SimpanPelanggan;
     if edKodeSumberTagihan.Text='2' then
-    UpdateDPP;
+    UpdateDPP;                                       ;
   end;
   if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
   begin
@@ -1095,6 +1136,39 @@ begin
     end;
 end;
 
+procedure TFDataPenerimaanBank.SimpanPelanggan;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='UPDATE t_cash_bank_acceptance_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edNoTrans.Text) ;
+    ExecSQL;
+  end;
+
+  with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text := 'INSERT INTO t_cash_bank_acceptance_customer (' +
+                'trans_no, customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+                'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+                'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+                'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                ') ' +
+                'SELECT '+QuotedStr(edNoTrans.Text)+', ' +
+               'customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+               'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+               'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+               'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+               'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                'FROM t_customer ' +
+                'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
+    ExecSQL;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.cbJenisTransaksiChange(Sender: TObject);
 begin
   RefreshForm;
@@ -1210,6 +1284,7 @@ begin
   MemDetailAkun.EmptyTable;
   MemDetailPiutang.EmptyTable;
   edNoTrans.Clear;
+  edNamaPKP.Clear;
   dtTrans.date:=now();
   dtPeriode1.date:=now();
   dtPeriode2.date:=now();
@@ -1298,6 +1373,28 @@ begin
       Execute;
     end;
   end;
+end;
+
+procedure TFDataPenerimaanBank.DBGridTagihanCellClick(Column: TColumnEh);
+begin
+  GetKeterangan;
+end;
+
+procedure TFDataPenerimaanBank.DBGridTagihanCellMouseClick(Grid: TCustomGridEh;
+  Cell: TGridCoord; Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
+  var Processed: Boolean);
+begin
+  GetKeterangan;
+end;
+
+procedure TFDataPenerimaanBank.DBGridTagihanColEnter(Sender: TObject);
+begin
+  GetKeterangan;
+end;
+
+procedure TFDataPenerimaanBank.DBGridTagihanColExit(Sender: TObject);
+begin
+  GetKeterangan;
 end;
 
 procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(

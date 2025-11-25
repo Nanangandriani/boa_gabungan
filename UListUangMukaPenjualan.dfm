@@ -920,6 +920,12 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
       Visible = ivAlways
       ItemIndex = -1
     end
+    object cxBarEditItem4: TcxBarEditItem
+      Caption = 'TP'
+      Category = 0
+      Hint = 'TP'
+      Visible = ivAlways
+    end
   end
   object QUangMukaPenjualan: TUniQuery
     Connection = dm.Koneksi
@@ -930,8 +936,8 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         'ales a '
       #9#9'LEFT JOIN get_customer() b on b.customer_code=a.customer_code'
       #9#9'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code')
-    Left = 508
-    Top = 8
+    Left = 548
+    Top = 112
   end
   object DsUangMukaPenjualan: TDataSource
     DataSet = QUangMukaPenjualan

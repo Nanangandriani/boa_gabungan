@@ -757,8 +757,8 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
       'begin'
       ''
       'end.')
-    Left = 992
-    Top = 32
+    Left = 800
+    Top = 136
     Datasets = <
       item
         DataSet = frxDBDDaftarRekeningKoran

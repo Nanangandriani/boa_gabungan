@@ -580,15 +580,31 @@ begin
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
+//    if cbKonversiMuatan.Checked=True then
+//    begin
+//       MemDetail.First;
+//      while not MemDetail.Eof do
+//      begin
+//        if (MemDetail['BERAT_ISI']=0)
+//        or (MemDetail['BERAT_ISI']='') OR (MemDetail['BERAT_ISI']=null) or (MemDetail['BERAT_KOSONG']=0)
+//        or (MemDetail['BERAT_KOSONG']='') OR (MemDetail['BERAT_KOSONG']=null) then
+//        valKonversi:=1;
+//
+//        MemDetail.Next;
+//      end;
+//    end;
     if cbKonversiMuatan.Checked=True then
     begin
-       MemDetail.First;
+      MemDetail.First;
       while not MemDetail.Eof do
       begin
-        if (MemDetail['BERAT_ISI']=0)
-        or (MemDetail['BERAT_ISI']='') OR (MemDetail['BERAT_ISI']=null) or (MemDetail['BERAT_KOSONG']=0)
-        or (MemDetail['BERAT_KOSONG']='') OR (MemDetail['BERAT_KOSONG']=null) then
-        valKonversi:=1;
+        if (MemDetail.FieldByName('BERAT_ISI').IsNull) or
+           (MemDetail.FieldByName('BERAT_ISI').AsFloat = 0) or
+           (MemDetail.FieldByName('BERAT_KOSONG').IsNull) or
+           (MemDetail.FieldByName('BERAT_KOSONG').AsFloat = 0) then
+        begin
+            valKonversi := 1;
+        end;
 
         MemDetail.Next;
       end;

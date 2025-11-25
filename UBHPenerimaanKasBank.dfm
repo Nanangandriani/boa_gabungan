@@ -454,9 +454,9 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP                   '
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP                   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -732,15 +732,15 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45985.663528020840000000
+    ReportOptions.LastChange = 45986.348420682870000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'begin'
       ''
       'end.')
-    Left = 632
-    Top = 120
+    Left = 568
+    Top = 168
     Datasets = <
       item
         DataSet = frxDBDBHPenerimaan
@@ -2188,7 +2188,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Left12: TfrxLineView
           AllowVectorExport = True
-          Top = -0.008761110000000001
+          Top = -0.008761110000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2223,8 +2223,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo37: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 1.111111110000000000
-          Top = 0.008761109999999999
+          Left = 0.111111110000000000
+          Top = 0.008761110000000000
           Width = 62.703463340000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -2244,9 +2244,9 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo38: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 64.040301110000000000
-          Top = 0.008761109999999999
-          Width = 70.481241110000000000
+          Left = 63.040301110000000000
+          Top = 0.008761110000000000
+          Width = 81.592352220000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataField = 'name_account'
@@ -2265,8 +2265,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo39: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 134.533334840000000000
-          Top = 0.008761109999999999
+          Left = 145.533334840000000000
+          Top = 0.008761110000000000
           Width = 64.141371820000000000
           Height = 18.897650000000000000
           DataField = 'paid_amount'
@@ -2287,8 +2287,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Line64: TfrxLineView
           AllowVectorExport = True
-          Left = 63.851268590000000000
-          Top = 0.008761109999999999
+          Left = 61.984251968503900000
+          Top = 0.008761110000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2296,8 +2296,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Line65: TfrxLineView
           AllowVectorExport = True
-          Left = 135.104111980000000000
-          Top = 0.008761109999999999
+          Left = 144.377952760000000000
+          Top = 0.008761110000000001
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2305,7 +2305,75 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Line66: TfrxLineView
           AllowVectorExport = True
-          Left = 1.111111110000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line67: TfrxLineView
+          AllowVectorExport = True
+          Left = 209.385826770000000000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line68: TfrxLineView
+          AllowVectorExport = True
+          Left = 297.070866141732300000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line69: TfrxLineView
+          AllowVectorExport = True
+          Left = 360.566929133858300000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line70: TfrxLineView
+          AllowVectorExport = True
+          Left = 430.866141730000000000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Left01: TfrxLineView
+          AllowVectorExport = True
+          Left = -556.346456692913400000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Left02: TfrxLineView
+          AllowVectorExport = True
+          Left = -507.968503937007900000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Left03: TfrxLineView
+          AllowVectorExport = True
+          Left = -415.748031496063000000
+          Top = -0.008761110000000001
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Left04: TfrxLineView
+          AllowVectorExport = True
+          Left = -340.157480314960600000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -2478,8 +2546,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         'cher_no  where trans_date between '#39'2024-12-18'#39'  and '#39'2024-12-18'#39 +
         ' '
       ' ORDER BY trans_date, voucher_no')
-    Left = 364
-    Top = 192
+    Left = 188
+    Top = 208
     object QDaftarPenerimaanvoucher_no: TStringField
       FieldName = 'voucher_no'
       Size = 100
@@ -2633,7 +2701,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     MasterSource = dsDaftarPenerimaan
     MasterFields = 'voucher_no'
     DetailFields = 'voucher_no'
-    Active = True
     Left = 206
     Top = 312
     ParamData = <
@@ -2661,7 +2728,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     MasterSource = dsCetak
     MasterFields = 'voucher_no'
     DetailFields = 'voucher_no'
-    Active = True
     Left = 852
     Top = 272
     ParamData = <

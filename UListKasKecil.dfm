@@ -1645,7 +1645,6 @@ object FListKasKecil: TFListKasKecil
         'mount,b.description,b.code_account_header,b.code_group_cost,b.na' +
         'me_group_cost FROM t_petty_cash a INNER JOIN t_petty_cash_det b ' +
         'on a.voucher_no=b.voucher_no )a')
-    Active = True
     Left = 560
     Top = 30
   end

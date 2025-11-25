@@ -203,7 +203,6 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
       
         '    vehicle_group_id NOT IN (SELECT vehicle_group_id FROM t_deli' +
         'very_order_load WHERE vehicle_group_id IS NOT NULL ) ;')
-    Active = True
     Left = 504
     Top = 264
   end
@@ -227,7 +226,6 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
     MasterSource = DsKendaraan
     MasterFields = 'vehicle_group_id'
     DetailFields = 'vehicle_group_id'
-    Active = True
     Left = 478
     Top = 335
     ParamData = <
@@ -235,7 +233,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
         DataType = ftString
         Name = 'vehicle_group_id'
         ParamType = ptInput
-        Value = 'J4DMO9-CDE-7000'
+        Value = nil
       end>
   end
 end

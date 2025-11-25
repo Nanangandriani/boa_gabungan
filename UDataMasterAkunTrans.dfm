@@ -20,10 +20,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Width = 823
     Height = 654
     Hint = ''
-    ActivePage = TabPenjualan
+    ActivePage = TabPembelian
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 819
     ExplicitHeight = 653
@@ -527,6 +527,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           object TabSetPPn: TRzTabSheet
             Color = clGradientInactiveCaption
             Caption = 'Seting PPn'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object Label59: TLabel
               Left = 125
               Top = 115
@@ -666,6 +670,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           object TabSheet1: TRzTabSheet
             Color = clGradientInactiveCaption
             Caption = 'Setting PPh'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object Panel10: TPanel
               Left = 0
               Top = 0

@@ -2503,13 +2503,12 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         'ot_hutang+h1+h2+h3+tot_rcn >0 )kkkk GROUP BY supplier_code,princ' +
         'iple_name,tot_hutang,h1,h2,h3,tot_rcn'
       '')
-    Active = True
     Left = 704
     Top = 320
     object QCetakSisaHutangprinciple_code: TStringField
       FieldName = 'principle_code'
       ReadOnly = True
-      Size = 6
+      Size = 10
     end
     object QCetakSisaHutangprinciple_name: TStringField
       FieldName = 'principle_name'
@@ -3957,7 +3956,6 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 936
     Top = 32
   end

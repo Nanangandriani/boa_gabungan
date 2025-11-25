@@ -128,6 +128,7 @@ begin
           end;
         end;
       end;
+      FDataPenerimaanBank.GetKeterangan;
       Close;
 end;
 

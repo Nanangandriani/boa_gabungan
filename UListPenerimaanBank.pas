@@ -226,9 +226,10 @@ begin
   begin
      close;
      sql.Clear;
-     sql.Text:=' select * from "public"."t_cash_bank_acceptance"  a '+
-               ' WHERE "voucher_no"='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
-               ' AND deleted_at is null order by created_at Desc ';
+     sql.Text:='select a.*,b.customer_name,b.customer_name_pkp from "public"."t_cash_bank_acceptance"  a  '+
+               'left join t_cash_bank_acceptance_customer b on b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
+               ' WHERE a.voucher_no='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+               ' AND a.deleted_at is null order by a.created_at Desc ';
      open;
   end;
   if Dm.Qtemp.RecordCount=0 then
@@ -282,7 +283,8 @@ begin
       cbJenisTransaksi.ItemIndex:=Dm.Qtemp1.FieldByName('status_bill').AsInteger+1;
 
       edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
-      edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('name_cust').AsString;
+      edNama_Pelanggan.Text:=Dm.Qtemp.FieldByName('customer_name').AsString;
+      edNamaPKP.Text:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
       edNoRek.Text:=Dm.Qtemp.FieldByName('account_number_bank').AsString;
       edNamaBank.Text:=Dm.Qtemp.FieldByName('account_name_bank').AsString;
       edKodeMataUang.Text:=Dm.Qtemp.FieldByName('code_currency').AsString;
@@ -461,7 +463,8 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='select a.* from t_cash_bank_acceptance_down_payment a where a.voucher_no='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString);
+        sql.Text:='select a.* from t_cash_bank_acceptance_down_payment a '+
+                  'where a.voucher_no='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString);
         open;
       end;
 

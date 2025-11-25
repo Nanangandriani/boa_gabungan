@@ -590,6 +590,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnCellClick = DBGridTagihanCellClick
+        OnCellMouseClick = DBGridTagihanCellMouseClick
+        OnColEnter = DBGridTagihanColEnter
+        OnColExit = DBGridTagihanColExit
         Columns = <
           item
             CellButtons = <>
@@ -690,10 +694,24 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Height = 15
         Caption = ':'
       end
+      object Label31: TLabel
+        Left = 20
+        Top = 59
+        Width = 56
+        Height = 15
+        Caption = 'Nama PKP'
+      end
+      object Label32: TLabel
+        Left = 117
+        Top = 59
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
       object edKode_Pelanggan: TRzButtonEdit
         Left = 130
         Top = 27
-        Width = 199
+        Width = 119
         Height = 23
         Text = ''
         TabOrder = 0
@@ -704,12 +722,20 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         OnButtonClick = edKode_PelangganButtonClick
       end
       object edNama_Pelanggan: TEdit
-        Left = 130
-        Top = 53
-        Width = 354
+        Left = 255
+        Top = 27
+        Width = 229
         Height = 23
         ReadOnly = True
         TabOrder = 1
+      end
+      object edNamaPKP: TEdit
+        Left = 130
+        Top = 56
+        Width = 354
+        Height = 23
+        ReadOnly = True
+        TabOrder = 2
       end
     end
     object gbDataBank: TGroupBox
@@ -1118,5 +1144,26 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object frxReport1: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45986.376779618050000000
+    ReportOptions.LastChange = 45986.376779618050000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 32
+    Top = 384
+    Datasets = <>
+    Variables = <>
+    Style = <>
   end
 end

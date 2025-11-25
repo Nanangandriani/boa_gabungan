@@ -264,7 +264,7 @@ begin
         FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('trans_no').AsString;
         FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
         FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
-        FDataReturPenjualan.MemDetail['JUMLAH']:= 1;
+        FDataReturPenjualan.MemDetail['JUMLAH']:= edJumlah.Text;
         FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=Dm.Qtemp.FieldByName('amount').AsFloat;
         FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
         FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;

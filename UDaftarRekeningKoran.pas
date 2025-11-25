@@ -163,8 +163,9 @@ begin
                // debit
                ' LEFT JOIN (SELECT a."voucher_no", jum_debet, name_cust as catatan from '+
                ' "public"."t_cash_bank_acceptance"  a '+
-               ' LEFT JOIN (SELECT "voucher_no",  sum("paid_amount") as jum_debet '+
-               ' from "t_cash_bank_acceptance_det" where "position"=''D'' GROUP BY "voucher_no" '+
+               ' LEFT JOIN (SELECT cashbank.voucher_no, cashbank.code_account kd_akun, sum(cashbank.paid_amount) as jum_debet  from t_cash_bank_acceptance_det cashbank '+
+               'left join t_bank bank on bank.account_no=cashbank.code_account '+
+               'where cashbank.position=''D'' AND bank.rekening_no is NOT NULL  GROUP BY cashbank.voucher_no,cashbank.code_account    '+
                ' )  b ON a."voucher_no"=b."voucher_no" '+
                ' WHERE "module_id"=''3'' and "account_number_bank"='+QuotedStr(vRekeningBank)+' and '+
                ' a."trans_date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
@@ -261,8 +262,9 @@ begin
                // debit
                ' LEFT JOIN (SELECT a."voucher_no", jum_debet, name_cust as catatan from '+
                ' "public"."t_cash_bank_acceptance"  a '+
-               ' LEFT JOIN (SELECT "voucher_no",sum("paid_amount") as jum_debet '+
-               ' from "t_cash_bank_acceptance_det" where "position"=''D'' GROUP BY "voucher_no" '+
+               ' LEFT JOIN (SELECT cashbank.voucher_no, cashbank.code_account kd_akun, sum(cashbank.paid_amount) as jum_debet  from t_cash_bank_acceptance_det cashbank '+
+               'left join t_bank bank on bank.account_no=cashbank.code_account '+
+               'where cashbank.position=''D'' AND bank.rekening_no is NOT NULL  GROUP BY cashbank.voucher_no,cashbank.code_account    '+
                ' )  b ON a."voucher_no"=b."voucher_no" '+
                ' WHERE "module_id"=''3'' and "account_number_bank"='+QuotedStr(vRekeningBank)+' and '+
                ' a."trans_date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+

@@ -639,7 +639,7 @@ object FPembelian: TFPembelian
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1000
+    ExplicitWidth = 1002
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -2686,7 +2686,6 @@ object FPembelian: TFPembelian
         '             E.item_stock_code=F. item_stock_code left JOIN t_us' +
         'er g on a.created_by=g.user_name '
       'order by e.id asc')
-    Active = True
     Left = 638
     Top = 82
   end
@@ -2723,7 +2722,6 @@ object FPembelian: TFPembelian
     MasterSource = Dsterima_material
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Active = True
     Left = 536
     Top = 16
     ParamData = <

@@ -9,7 +9,6 @@ object dm: Tdm
     Database = 'db_sb_hlj'
     Username = 'Devel'
     Server = '172.101.100.125'
-    Connected = True
     LoginPrompt = False
     OnError = KoneksiError
     Left = 157

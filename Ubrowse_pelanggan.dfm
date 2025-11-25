@@ -3,8 +3,8 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Browse Data Pelanggan'
-  ClientHeight = 562
-  ClientWidth = 1110
+  ClientHeight = 561
+  ClientWidth = 1106
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 129
-    Width = 1110
-    Height = 433
+    Width = 1106
+    Height = 432
     Align = alClient
     DataSource = dsMasterData
     DrawMemoText = True
@@ -96,13 +96,12 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
   object pnlFilter: TPanel
     Left = 0
     Top = 0
-    Width = 1110
+    Width = 1106
     Height = 129
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 1106
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -156,11 +155,10 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     object Panel2: TPanel
       Left = 1
       Top = 96
-      Width = 1108
+      Width = 1104
       Height = 32
       Align = alBottom
       TabOrder = 2
-      ExplicitWidth = 1104
       object Edautocode: TEdit
         Left = 712
         Top = 4

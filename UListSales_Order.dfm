@@ -1004,6 +1004,24 @@ object FSalesOrder: TFSalesOrder
         74646174653A74696D657374616D7000323032352D31312D32325430323A3139
         3A32332B30303A3030AE4E5A4A0000000049454E44AE426082}
     end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+    end
+    object cxBarEditItem3: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+    end
   end
   object QSalesOrder: TUniQuery
     Connection = dm.Koneksi
