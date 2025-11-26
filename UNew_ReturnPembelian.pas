@@ -75,6 +75,7 @@ type
     procedure Autonumber;
     Procedure Totalretur;
     procedure clear;
+
   end;
 
 var

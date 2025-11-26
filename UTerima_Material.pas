@@ -117,8 +117,42 @@ begin
 end;
 
 procedure TFTerima_Material.ActDelExecute(Sender: TObject);
+var
+  OldNo, NewNo: string;
 begin
-   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    OldNo := DBGridTerima.Fields[0].AsString;
+    NewNo := OldNo + '-DEL';
+
+    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      //sql.Text:='Delete From t_po where po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      sql.Text:='Update t_item_receive set receive_no=:new_no,deleted_at=now(),deleted_by=:deleted_by where receive_no=:old_no';
+
+      ParamByName('new_no').AsString := NewNo;
+      parambyname('deleted_by').AsString:=Nm;
+      ParamByName('old_no').AsString := OldNo;
+      Execute;
+    end;
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      //sql.Text:='Delete From t_podetail where contract_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      sql.Text:='Update t_item_receive_det set receive_no=:new_no where receive_no=:old_no ';
+      ParamByName('new_no').AsString := NewNo;
+      ParamByName('old_no').AsString := OldNo;
+      Execute;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+    end;
+
+    //delete permanen//
+    {if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
     with dm.Qtemp do
     begin
@@ -136,7 +170,7 @@ begin
     end;
     ActROExecute(sender);
     ShowMessage('Data Berhasil di Hapus');
-    end;
+    end;}
 end;
 
 procedure TFTerima_Material.ActPrintExecute(Sender: TObject);
@@ -175,7 +209,7 @@ begin
     close;
     sql.Clear;
     sql.Text:='select A.*, b.supplier_name,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from t_item_receive a Left join t_supplier b '+
-              ' on a.supplier_code=b.supplier_code order by a.receive_no Desc ';
+              ' on a.supplier_code=b.supplier_code order by a.receive_date  Desc ';
     ExecSQL;
   end;
   end else
@@ -187,7 +221,7 @@ begin
     sql.Clear;
     sql.Text:='select A.*, b.supplier_name,to_char(receive_date,''dd'') tgl,to_char(receive_date,''mm'') bln from t_item_receive a Left join t_supplier b '+
               ' on a.supplier_code=b.supplier_code  where a.sbu_code='+QuotedStr(kdsbu)+''+
-              ' order by a.receive_no Desc ';
+              ' order by a.receive_date  Desc ';
     ExecSQL;
   end;
   end;

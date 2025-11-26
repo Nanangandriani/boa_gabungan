@@ -359,7 +359,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFSetDeliveryOrder, FSetDeliveryOrder);
   Application.CreateForm(TFListPerintahMuat, FListPerintahMuat);
   Application.CreateForm(TFListSalesOrder, FListSalesOrder);
-  Application.CreateForm(TFSalesOrder, FSalesOrder);
+//  Application.CreateForm(TFSalesOrder, FSalesOrder);
   Application.CreateForm(TFNew_SalesOrder, FNew_SalesOrder);
   Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);
   Application.CreateForm(TFbrowse_faktur_pajak, Fbrowse_faktur_pajak);
@@ -412,7 +412,7 @@ while FHomeSreen.Timer1.Enabled do
   //  Application.CreateForm(TFTambah_Barang, FTambah_Barang);
   Application.CreateForm(TFTemplate_Temp, FTemplate_Temp);
   Application.CreateForm(TFReturPenjualan_Sumber, FReturPenjualan_Sumber);
-  Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);
+//  Application.CreateForm(TFDataListPenjualan, FDataListPenjualan);
   Application.CreateForm(TFListTujualAwal, FListTujualAwal);
   Application.CreateForm(TFNew_TujuanAwal, FNew_TujuanAwal);
   Application.CreateForm(TFItem_MasterFormula, FItem_MasterFormula);

@@ -26,7 +26,7 @@ uses
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
-  frxRich;
+  frxRich, cxBarEditItem, cxCalendar, cxButtonEdit;
 
 type
   TFDataListPenjualan = class(TForm)
@@ -129,6 +129,13 @@ type
     QCetakSJvehicles: TMemoField;
     QCetakSJaddress2: TMemoField;
     QCetakdeleted_at: TDateTimeField;
+    dxBarDateCombo1: TdxBarDateCombo;
+    cxBarEditItem1: TcxBarEditItem;
+    dxBarDateCombo2: TdxBarDateCombo;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    dxBarLargeButton10: TdxBarLargeButton;
+    edKaresidenan: TcxBarEditItem;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -145,16 +152,23 @@ type
     procedure DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure dxBarLargeButton10Click(Sender: TObject);
+    procedure cxBarEditItem2PropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    vkd_kares: String;
     procedure reset_stock;
     procedure Refresh;
   end;
 
-var
-  FDataListPenjualan: TFDataListPenjualan;
+//var
+//  FDataListPenjualan: TFDataListPenjualan;
+function FDataListPenjualan: TFDataListPenjualan;
 
 implementation
 
@@ -162,22 +176,41 @@ implementation
 
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
   UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan,
-  UPenyesuaianPenjualan;
+  UPenyesuaianPenjualan, UMasterData;
+
+var
+  realfdatalistpenjualan : TFDataListPenjualan;
+// implementasi function
+function FDataListPenjualan: TFDataListPenjualan;
+begin
+  if realfdatalistpenjualan <> nil then
+    FDataListPenjualan:= realfdatalistpenjualan
+  else
+    Application.CreateForm(TFDataListPenjualan, Result);
+end;
 
 procedure TFDataListPenjualan.Refresh;
 var mm: Integer;
+strKaresidenan:String;
 begin
-  mm:=cbBulan.ItemIndex+1;
+  strKaresidenan:='';
+  if edKaresidenan.EditValue<>'' then
+  begin
+    strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+  end;
+//  mm:=cbBulan.ItemIndex+1;
   DBGridOrder.StartLoadingStatus();
   try
     with QPenjualan do
     begin
        close;
        sql.Clear;
-       sql.Text:='select * from t_selling '+
-                 'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
-                 'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
-                 'is_promosi<>True order by trans_date Desc,trans_no Desc ';
+       sql.Text:='select * from get_selling(False) '+
+                 'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' '+
+//                 'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
+//                 'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+'  '+
+                 'order by trans_date Desc,trans_no Desc ';
        open;
     end;
   finally
@@ -309,10 +342,10 @@ end;
 procedure TFDataListPenjualan.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
+//  year :=FormatDateTime('yyyy', NOW());
+//  month :=FormatDateTime('m', NOW());
+//  edTahun.Text:=(year);
+//  cbBulan.ItemIndex:=StrToInt(month)-1;
   Refresh;
 end;
 
@@ -391,6 +424,15 @@ begin
 
 end;
 
+procedure TFDataListPenjualan.cxBarEditItem2PropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='listpenjualan_kares';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
 procedure TFDataListPenjualan.DBGridOrderAdvDrawDataCell(
   Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
   const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
@@ -408,6 +450,14 @@ begin
   if F = nil then Exit;
   if not F.IsNull then
     Params.Font.Color := clRed;
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton10Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue:='';
+  vkd_kares:='';
 end;
 
 procedure TFDataListPenjualan.dxBarLargeButton3Click(Sender: TObject);
@@ -766,8 +816,22 @@ begin
   FPenyesuaianPenjualan.ShowModal;
 end;
 
+procedure TFDataListPenjualan.FormCreate(Sender: TObject);
+begin
+  realfdatalistpenjualan:=self;
+end;
+
+procedure TFDataListPenjualan.FormDestroy(Sender: TObject);
+begin
+  realfdatalistpenjualan:=nil;
+end;
+
 procedure TFDataListPenjualan.FormShow(Sender: TObject);
 begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue:='';
+  vkd_kares:='';
   ActROExecute(sender);
 end;
 

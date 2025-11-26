@@ -19,7 +19,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
     Top = 0
     Width = 1081
     Height = 558
-    ActivePage = TabMasterKlasifikasi
+    ActivePage = TabDaftarKlasifikasiPelanggan
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 1077

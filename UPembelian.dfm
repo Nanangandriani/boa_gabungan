@@ -103,6 +103,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Tanggal'
+        Width = 80
       end
       item
         CellButtons = <>
@@ -142,7 +143,7 @@ object FPembelian: TFPembelian
         Footers = <>
         ReadOnly = True
         Title.Caption = 'No. Faktur'
-        Width = 90
+        Width = 100
       end
       item
         CellButtons = <>
@@ -569,8 +570,12 @@ object FPembelian: TFPembelian
         Align = alClient
         DataSource = DsTerimaDet
         DynProps = <>
+        FooterRowCount = 1
+        RowDetailPanel.Height = 150
         SearchPanel.Enabled = True
+        SumList.Active = True
         TabOrder = 1
+        TitleParams.MultiTitle = True
         Columns = <
           item
             CellButtons = <>
@@ -579,52 +584,133 @@ object FPembelian: TFPembelian
             FieldName = 'trans_no'
             Footers = <>
             Title.Caption = 'No Transaksi'
-            Width = 200
+            Width = 0
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'trans_date'
+            FieldName = 'item_code'
             Footers = <>
-            Title.Caption = 'Tanggal'
+            Title.Caption = 'Kode Barang'
             Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'name_source'
+            FieldName = 'item_name'
             Footers = <>
-            Title.Caption = 'Sumber'
+            Title.Caption = 'Nama Barang'
             Width = 150
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'name_cust'
+            FieldName = 'unit'
             Footers = <>
-            Title.Caption = 'Pelanggan'
-            Width = 200
+            Title.Caption = 'Terima|Satuan'
+            Width = 100
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'no_reference'
+            FieldName = 'qty'
             Footers = <>
-            Title.Caption = 'No Reference'
-            Width = 200
+            Title.Caption = 'Terima|Kuantum'
+            Width = 100
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.00'
             DynProps = <>
             EditButtons = <>
-            FieldName = 'payment_term'
+            FieldName = 'price'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'price'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
             Footers = <>
-            Title.Caption = 'Jatuh Tempo (Hari)'
-            Width = 150
+            Title.Caption = 'Harga Beli|Satuan'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'grandtotal'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'grandtotal'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Harga Beli|Jumlah'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'subtotalrp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'subtotalrp'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'Harga Beli|DPP'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ppn_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'ppn_rp'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'PPN'
+            Width = 100
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'pph_rp'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'pph_rp'
+            Footer.Font.Charset = DEFAULT_CHARSET
+            Footer.Font.Color = clWindowText
+            Footer.Font.Height = -12
+            Footer.Font.Name = 'Segoe UI'
+            Footer.Font.Style = [fsBold]
+            Footer.ValueType = fvtSum
+            Footers = <>
+            Title.Caption = 'PPH'
+            Width = 100
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -639,7 +725,7 @@ object FPembelian: TFPembelian
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1002
+    ExplicitWidth = 1000
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -2686,6 +2772,7 @@ object FPembelian: TFPembelian
         '             E.item_stock_code=F. item_stock_code left JOIN t_us' +
         'er g on a.created_by=g.user_name '
       'order by e.id asc')
+    Active = True
     Left = 638
     Top = 82
   end

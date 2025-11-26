@@ -26,7 +26,7 @@ uses
   Data.DB, MemDS, DBAccess, Uni, dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBarExtItems, cxMemo,
-  cxBarEditItem, cxButtonEdit;
+  cxBarEditItem, cxButtonEdit, cxCalendar;
 
 type
   TFSalesOrder = class(TForm)
@@ -75,6 +75,10 @@ type
     dxBarButton10: TdxBarButton;
     cxBarEditItem2: TcxBarEditItem;
     cxBarEditItem3: TcxBarEditItem;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    edKaresidenan: TcxBarEditItem;
+    dxBarLargeButton4: TdxBarLargeButton;
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);
@@ -88,26 +92,50 @@ type
     procedure DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure edKaresidenanPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    vkd_kares:String;
     procedure Refresh;
   end;
 
-var
-  FSalesOrder: TFSalesOrder;
+//var
+//  FSalesOrder: TFSalesOrder;
+function FSalesOrder: TFSalesOrder;
 
 implementation
 
 {$R *.dfm}
 
-uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin;
+uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin, UMasterData;
+
+var
+  realfdatalistsalesorder : TFSalesOrder;
+// implementasi function
+function FSalesOrder: TFSalesOrder;
+begin
+  if realfdatalistsalesorder <> nil then
+    FSalesOrder:= realfdatalistsalesorder
+  else
+    Application.CreateForm(TFSalesOrder, Result);
+end;
 
 procedure TFSalesOrder.Refresh;
 var mm: Integer;
+strKaresidenan:String;
 begin
   mm:=cbBulan.ItemIndex+1;
+  strKaresidenan:='';
+  if edKaresidenan.EditValue<>'' then
+  begin
+    strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+  end;
 
   DBGridOrder.StartLoadingStatus();
   try
@@ -116,11 +144,13 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add('SELECT * FROM get_sales_order() '+
-               'where EXTRACT(YEAR FROM order_date)='+edTahun.Text+' AND '+
-               'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' ');
+       sql.Text:='SELECT * FROM get_sales_order() '+
+                 'WHERE (order_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' '+
+//               'where EXTRACT(YEAR FROM order_date)='+edTahun.Text+' AND '+
+//               'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' ');
 //       sql.add( vBatas_Data );
-       sql.add(' order by order_date Desc,notrans Desc ');
+                  'order by order_date Desc,notrans Desc ';
        open;
    end;
    Qdetail.Close;
@@ -220,10 +250,10 @@ end;
 procedure TFSalesOrder.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
+//  year :=FormatDateTime('yyyy', NOW());
+//  month :=FormatDateTime('m', NOW());
+//  edTahun.Text:=(year);
+//  cbBulan.ItemIndex:=StrToInt(month)-1;
   Refresh;
 end;
 
@@ -368,6 +398,14 @@ begin
   Refresh;
 end;
 
+procedure TFSalesOrder.dxBarLargeButton4Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue:='';
+  vkd_kares:='';
+end;
+
 procedure TFSalesOrder.dxBarLargeNewClick(Sender: TObject);
 begin
   FNew_SalesOrder.ShowModal;
@@ -386,8 +424,31 @@ begin
   end;
 end;
 
+procedure TFSalesOrder.edKaresidenanPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='listsalesorder_kares';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFSalesOrder.FormCreate(Sender: TObject);
+begin
+  realfdatalistsalesorder:=self;
+end;
+
+procedure TFSalesOrder.FormDestroy(Sender: TObject);
+begin
+  realfdatalistsalesorder:=nil;
+end;
+
 procedure TFSalesOrder.FormShow(Sender: TObject);
 begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue:='';
+  vkd_kares:='';
   ActROExecute(sender);
 end;
 

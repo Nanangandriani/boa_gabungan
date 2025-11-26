@@ -695,7 +695,8 @@ begin
             ' '+QuotedStr(StringReplace(MemDetailPiutang['jum_piutang'],',','.',[]))+','+
             ' '+QuotedStr(MemDetailPiutang['keterangan'])+', '+
             ' '+QuotedStr(kd_ak_pelanggan)+','+strIdDPP+','+
-            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang_real']))+', '+
+            ' '+QuotedStr(StringReplace(MemDetailPiutang['jum_piutang_real'],',','.',[]))+','+
+//            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang_real']))+', '+
             ' '+QuotedStr(strDescription)+') ');
     ExecSQL;
     end;

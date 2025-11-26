@@ -116,6 +116,7 @@ type
     Edheader: TEdit;
     Button2: TButton;
     RzBitBtn2: TRzBitBtn;
+    RzBitBtn3: TRzBitBtn;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -153,6 +154,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure RzBitBtn2Click(Sender: TObject);
     procedure EdjenispoSelect(Sender: TObject);
+    procedure RzBitBtn3Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -446,6 +448,11 @@ begin
   FPengajuanAsset.Show;
 end;
 
+procedure TFNew_PO.RzBitBtn3Click(Sender: TObject);
+begin
+   Autonumber;
+end;
+
 Procedure TFNew_PO.Hitungdet;
 begin
     try
@@ -539,7 +546,15 @@ end;
 
 procedure TFNew_PO.Autonumber;
 begin
-  idmenu:='M11002';
+  with dm.Qtemp do
+  begin
+      close;
+      sql.clear;
+      sql.Text:='Select * from t_menu_sub where link=''FPO'' ';
+      ExecSQL;
+  end;
+  idmenu:=dm.Qtemp['submenu_code'];
+  //idmenu:='M11002';
   strday2:=Dtpo.Date;
   //Nopo.Text:=getNourutBlnPrshthn_kode(strday2,'t_po','');
   EdNopo.Text:=getNourutBlnPrshthn_kode(strday2,'t_po',Cb_code.text);
@@ -767,7 +782,8 @@ begin
       close;
       sql.Clear;
       sql.Text:=' select a.item_code,a.supplier_code, a.item_stock_code,a.order_no, '+
-                '	a.qty,a.unit, a.merk,a.item_name,	f.qty_conv, '+
+                //'	a.qty,a.unit, a.merk,a.item_name,	f.qty_conv, '+
+                '	a.qty,f.itemproduct_satuan as unit, a.merk,a.item_name,0 as	qty_conv, '+    //add 24-11-2025
                 //' f.unit_conv,b.supplier_name , c.item_name,e.type '+
                 ' b.supplier_name , c.item_name,e.type,CAST(0 AS NUMERIC) price,CAST(0 AS NUMERIC) total_price '+
                 ' ,CAST(0 AS NUMERIC) remaining_qty from t_item_stock A  '+
@@ -775,10 +791,13 @@ begin
                 ' inner join t_item C on A.item_code=C.item_code  '+
                 ' INNER JOIN t_item_category d on c.category_id=d.category_id '+
                 ' INNER JOIN t_item_type e on d.type_id=e.type_id '+
-                ' left join t_item_conversion f on c.item_code=f.item_code '+
-                ' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+'and e.type<>''PRODUKSI'''+
+                //' left join t_item_conversion f on c.item_code=f.item_code '+
+                ' LEFT JOIN  vcari_konversi f on c.item_code=f.itemproduct_code '+  //add 24-11-2025
+                //' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+'and e.type<>''PRODUKSI'''+
+                ' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+' and f.itemproduct_satuan <>'''' '+   //add 24-11-2025
                 ' group by a.item_code,a.supplier_code, a.item_stock_code,a.order_no, '+
-                '	a.qty,a.unit,a.merk,a.item_name,f.qty_conv, '+
+                //'	a.qty,a.unit,a.merk,a.item_name,f.qty_conv, '+
+                '	a.qty,f.itemproduct_satuan,a.merk,a.item_name, '+  //add 24-11-2025
                 //' f.unit_conv,b.supplier_name, c.item_name,e.type';
                 ' b.supplier_name, c.item_name,e.type';
       ExecSQL;
@@ -1674,7 +1693,7 @@ begin
           ParamByName('parn_um').Value:=EdUM.Value;
           ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
           ParamByName('parum_no').Value:=NoTransUM.Text;
-          parambyname('created_at').AsString:=Formatdatetime('yyy-mm-dd',Now());
+          parambyname('created_at').AsString:=Formatdatetime('yyyy-mm-dd hh:nn:ss',Now());
           parambyname('created_by').AsString:=Nm;
           ExecSQL;
       end;

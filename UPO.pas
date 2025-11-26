@@ -597,21 +597,34 @@ begin
 end;
 
 procedure TFPO.ActDelExecute(Sender: TObject);
+var
+  OldNo, NewNo: string;
 begin
+    OldNo := DBGridPO.Fields[0].AsString;
+    NewNo := OldNo + '-DEL';
+
     if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPO.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
     with dm.Qtemp do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Delete From t_po where po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      //sql.Text:='Delete From t_po where po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      sql.Text:='Update t_po set po_no=:new_no,deleted_at=now(),deleted_by=:deleted_by where po_no=:old_no';
+
+      ParamByName('new_no').AsString := NewNo;
+      parambyname('deleted_by').AsString:=Nm;
+      ParamByName('old_no').AsString := OldNo;
       Execute;
     end;
     with dm.Qtemp1 do
     begin
       Close;
       sql.Clear;
-      sql.Text:='Delete From t_podetail where contract_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      //sql.Text:='Delete From t_podetail where contract_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      sql.Text:='Update t_podetail set po_no=:new_no where po_no=:old_no ';
+      ParamByName('new_no').AsString := NewNo;
+      ParamByName('old_no').AsString := OldNo;
       Execute;
     end;
     ActROExecute(sender);
@@ -688,6 +701,7 @@ begin
           FNew_PO.Edkd_akun.Text:=Mempo.FieldByName('um_account_code').AsString;
           CkUangmk.Checked:=Mempo.FieldByName('um_status').AsBoolean;
           ckAs.Checked:=Mempo.FieldByName('as_status').AsBoolean;
+
         end;
         EdCurrChange(sender);
 
@@ -845,7 +859,7 @@ begin
                'from t_po A '+
                'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
                'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
-               'WHERE a.po_date between '+QuotedStr(formatdatetime('yyyy=mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy=mm-dd',DTP2.DateTime))+' ';//and a.pic='+Quotedstr(Nm)+' ';
+               'WHERE a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' Order by a.po_date,A.po_no ASC ';//and a.pic='+Quotedstr(Nm)+' ';
      open;
    end;
    Qpo.Close;

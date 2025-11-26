@@ -3,7 +3,7 @@ object FNew_PO: TFNew_PO
   Top = 49
   Caption = 'Form New Purchase Order'
   ClientHeight = 679
-  ClientWidth = 1206
+  ClientWidth = 1208
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FNew_PO: TFNew_PO
   object pninput: TPanel
     Left = 0
     Top = 0
-    Width = 1206
+    Width = 1208
     Height = 243
     Align = alTop
     Color = clGradientInactiveCaption
@@ -713,7 +713,7 @@ object FNew_PO: TFNew_PO
   object Panel2: TPanel
     Left = 0
     Top = 508
-    Width = 1206
+    Width = 1208
     Height = 139
     Align = alTop
     TabOrder = 1
@@ -885,14 +885,14 @@ object FNew_PO: TFNew_PO
   object Panel1: TPanel
     Left = 0
     Top = 647
-    Width = 1206
+    Width = 1208
     Height = 32
     Align = alClient
     TabOrder = 2
     ExplicitWidth = 1200
     ExplicitHeight = 23
     object BBatal: TRzBitBtn
-      Left = 1130
+      Left = 1132
       Top = 1
       Height = 30
       Align = alRight
@@ -955,7 +955,7 @@ object FNew_PO: TFNew_PO
       ExplicitHeight = 21
     end
     object BSimpan: TRzBitBtn
-      Left = 1055
+      Left = 1057
       Top = 1
       Height = 30
       Align = alRight
@@ -1015,11 +1015,11 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1049
-      ExplicitHeight = 21
+      ExplicitLeft = 1063
+      ExplicitTop = -3
     end
     object BEdit: TRzBitBtn
-      Left = 980
+      Left = 982
       Top = 1
       Height = 30
       Align = alRight
@@ -1145,11 +1145,19 @@ object FNew_PO: TFNew_PO
       NumGlyphs = 2
       ExplicitHeight = 21
     end
+    object RzBitBtn3: TRzBitBtn
+      Left = 856
+      Top = 6
+      Caption = 'RzBitBtn3'
+      TabOrder = 4
+      Visible = False
+      OnClick = RzBitBtn3Click
+    end
   end
   object Panel3: TPanel
     Left = 0
     Top = 243
-    Width = 1206
+    Width = 1208
     Height = 265
     Align = alTop
     TabOrder = 3
@@ -1157,7 +1165,7 @@ object FNew_PO: TFNew_PO
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1
-      Width = 1204
+      Width = 1206
       Height = 263
       Align = alClient
       DataSource = DsItempo

@@ -127,6 +127,7 @@ type
     procedure UpdateStatusTele;
     procedure CekTargetSales;
     procedure CekBankGaransi;
+    procedure SimpanPelanggan;
   end;
 
 var
@@ -147,6 +148,39 @@ uses UTambah_Barang, UMasterData, Ubrowse_pelanggan, UMasterSales, UMy_Function,
   UHomeLogin, UListSales_Order, USetMasterPenjulan, USetMasterPelanggan,
   UMainMenu, UNew_DataTargetPenjualan, UDaftarKendaraan;
 //uses UDataModule, UMy_Function;
+
+procedure TFNew_SalesOrder.SimpanPelanggan;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='UPDATE t_selling_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edKodeOrder.Text) ;
+    ExecSQL;
+  end;
+
+  with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text := 'INSERT INTO t_selling_customer (' +
+                'trans_no, customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+                'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+                'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+                'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                ') ' +
+                'SELECT '+QuotedStr(edKodeOrder.Text)+', ' +
+               'customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+               'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+               'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+               'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+               'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                'FROM t_customer ' +
+                'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
+    ExecSQL;
+  end;
+end;
 
 procedure TFNew_SalesOrder.UpdateStatusTele;
 var
@@ -568,9 +602,11 @@ begin
 end;
 
 procedure TFNew_SalesOrder.BSaveClick(Sender: TObject);
-var valKonversi: Integer;
+var valKonversi,isBalanceBerat: Integer;
+  Conversi: Real;
 begin
   valKonversi:=0;
+  isBalanceBerat:=0;
   iserror:=0;
   islanjut:=1;
   DecodeDate(dtTanggal_Pesan.Date, Year, Month, Day);
@@ -605,7 +641,26 @@ begin
         begin
             valKonversi := 1;
         end;
+        with dm.Qtemp1 do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='	select qty_conv from t_item_conversion where item_code='+QuotedStr(MemDetail['KD_ITEM'])+' AND unit_conv='+QuotedStr(MemDetail['KD_SATUAN']);
+          open;
+        end;
 
+        if dm.Qtemp1.RecordCount=0 then
+        begin
+          if (valKonversi=0) AND (MemDetail['JUMLAH']<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
+          begin
+            isBalanceBerat:=1;
+          end;
+        end else begin
+          if (valKonversi=0) AND ((MemDetail['JUMLAH']*dm.Qtemp1.FieldValues['qty_conv'])<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
+          begin
+            isBalanceBerat:=1;
+          end;
+        end;
         MemDetail.Next;
       end;
     end;
@@ -637,7 +692,10 @@ begin
     end else if valKonversi=1 then
     begin
       MessageDlg('Berat Kosong Dan Isi Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
-    end  else if edKelompokKendaraan.Text='' then
+    end else if isBalanceBerat=1 then
+    begin
+      MessageDlg('Muatan Tidak Balance..!!',mtInformation,[mbRetry],0);
+    end   else if edKelompokKendaraan.Text='' then
     begin
       MessageDlg('Kelompok Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
@@ -1040,6 +1098,7 @@ begin
     ExecSQL;
   end;
   InsertDetailSO;
+  SimpanPelanggan;
   if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
   begin
     UpdateStatusTele;
@@ -1127,6 +1186,7 @@ begin
         ExecSQL;
       end;
       InsertDetailSO;
+      SimpanPelanggan;
       MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
       Close;
       FMainMenu.TampilTabForm2;

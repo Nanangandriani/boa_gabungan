@@ -414,7 +414,7 @@ end;
 
 procedure TFlistitempo.DBGridMaterialDblClick(Sender: TObject);
 begin
-  with FNew_PO.Memitempo do
+  {with FNew_PO.Memitempo do
   begin
     FNew_PO.MemItempo.Insert;
     FNew_PO.MemItempo['kd_material_stok']:=QMaterial_stok['item_stock_code'];
@@ -474,7 +474,7 @@ begin
                 execute;
               end;
             end;
-  close;
+  close;}
 end;
 
 procedure TFlistitempo.FormClose(Sender: TObject; var Action: TCloseAction);

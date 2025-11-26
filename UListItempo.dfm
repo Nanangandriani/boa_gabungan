@@ -25,6 +25,7 @@ object Flistitempo: TFlistitempo
     Height = 193
     Align = alTop
     DataSource = DsMaterial_stok
+    DrawMemoText = True
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRowselCheckboxesEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
@@ -110,8 +111,8 @@ object Flistitempo: TFlistitempo
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 285
-    ExplicitWidth = 579
+    ExplicitTop = 277
+    ExplicitWidth = 577
     object BBatal: TRzBitBtn
       Left = 507
       Top = 1
@@ -172,7 +173,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 503
+      ExplicitLeft = 501
     end
     object BEdit: TRzBitBtn
       Left = 432
@@ -234,7 +235,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 428
+      ExplicitLeft = 426
     end
     object Bedit2: TRzBitBtn
       Left = 357
@@ -297,7 +298,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 353
+      ExplicitLeft = 351
     end
     object BEdit3: TRzBitBtn
       Left = 282
@@ -360,7 +361,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 278
+      ExplicitLeft = 276
     end
     object BEdit4: TRzBitBtn
       Left = 207
@@ -423,30 +424,57 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 203
+      ExplicitLeft = 201
     end
   end
   object QMaterial_stok: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.to' +
-        'tal_price,'
+        ' SELECT a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.t' +
+        'otal_price,'
       
-        'a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp' +
-        ',a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal' +
-        ' '
-      'FROM t_coop_contract_det AS "a"'
+        ' a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_r' +
+        'p,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtota' +
+        'l '
+      ' FROM t_coop_contract_det AS "a"'
       
-        'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
-        '_code'
+        ' INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stoc' +
+        'k_code'
       
-        'GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a.' +
-        'total_price,'
+        ' GROUP BY a.contract_no,a.item_stock_code,a.qty,a.price,a.unit,a' +
+        '.total_price,'
       
-        'a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_rp' +
-        ',a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtotal'
-      'ORDER BY item_stock_code DESC')
+        ' a.remaining_qty,a.totalpo,b.item_code,b.item_name,a.ppn,a.ppn_r' +
+        'p,a.pemb_ppn,a.pemb_dpp,a.pph,a.pph_rp,a.subtotal_rp,a.grandtota' +
+        'l'
+      ' ORDER BY item_stock_code DESC'
+      ''
+      ''
+      
+        '/* select a.item_code,a.supplier_code, a.item_stock_code,a.order' +
+        '_no, '#9'a.qty,f.itemproduct_satuan as unit, a.merk,a.item_name,'#9'0 ' +
+        'as qty_conv,  b.supplier_name , c.item_name,e.type,CAST(0 AS NUM' +
+        'ERIC) price,CAST(0 AS NUMERIC) total_price  ,CAST(0 AS NUMERIC) ' +
+        'remaining_qty from '
+      't_item_stock A   '
+      'left join t_supplier B on A.supplier_code=B.supplier_code   '
+      'inner join t_item C on A.item_code=C.item_code   '
+      'INNER JOIN t_item_category d on c.category_id=d.category_id  '
+      'INNER JOIN t_item_type e on d.type_id=e.type_id  '
+      '-- left join t_item_conversion f on c.item_code=f.item_code '
+      'LEFT JOIN  vcari_konversi f on c.item_code=f.itemproduct_code'
+      
+        'where A.supplier_code='#39'SP10293'#39' and f.itemproduct_satuan <>'#39#39' --' +
+        'and e.type<>'#39'PRODUKSI'#39' '
+      
+        'group by a.item_code,a.supplier_code, a.item_stock_code,a.order_' +
+        'no, '#9'a.qty,'
+      '--a.unit,'
+      'f.itemproduct_satuan,'
+      'a.merk,a.item_name,'
+      '--f.qty_conv,  '
+      'b.supplier_name, c.item_name,e.type */')
     Left = 228
     Top = 77
   end

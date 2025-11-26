@@ -56,6 +56,7 @@ object FTerima_Material: TFTerima_Material
     DrawMemoText = True
     DynProps = <>
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 200
     SearchPanel.Enabled = True

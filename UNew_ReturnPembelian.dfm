@@ -28,7 +28,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Top = 85
     Width = 42
     Height = 15
-    Caption = 'No. LPB'
+    Caption = 'No. FPB'
   end
   object Label17: TLabel
     Left = 712
@@ -164,7 +164,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Top = 380
     Width = 39
     Height = 23
-    Text = '10'
+    Text = '11'
     TabOrder = 1
     OnChange = edppnChange
   end
@@ -191,7 +191,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object DBGridEh3: TDBGridEh
     Left = 8
     Top = 140
-    Width = 882
+    Width = 905
     Height = 226
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -215,7 +215,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
           end>
         FieldName = 'no_terima'
         Footers = <>
-        Title.Caption = 'No. LPB'
+        Title.Caption = 'No. FPB'
         Width = 100
       end
       item
@@ -290,9 +290,21 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
       item
         CellButtons = <>
         DynProps = <>
-        EditButtons = <>
+        EditButtons = <
+          item
+          end>
         FieldName = 'wh_code'
         Footers = <>
+        Title.Caption = 'Kd Gudang'
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'wh_name'
+        Footers = <>
+        Title.Caption = 'Gudang'
         Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -647,6 +659,11 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         end
         object wh_code: TMTStringDataFieldEh
           FieldName = 'wh_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object wh_name: TMTStringDataFieldEh
+          FieldName = 'wh_name'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end

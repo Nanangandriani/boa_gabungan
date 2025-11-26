@@ -66,6 +66,7 @@ object FPO: TFPO
     SearchPanel.Enabled = True
     SearchPanel.CaseSensitive = True
     SearchPanel.FilterOnTyping = True
+    SortLocal = True
     STFilter.Location = stflInTitleFilterEh
     STFilter.Visible = True
     TabOrder = 1
@@ -2708,7 +2709,7 @@ object FPO: TFPO
       'from t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'INNER JOIN t_wh c on a.wh_code=c.wh_code'
-      'order by A.po_date,A.id desc')
+      'order by A.po_date,A.po_no ASC')
     Left = 320
     Top = 32
   end
