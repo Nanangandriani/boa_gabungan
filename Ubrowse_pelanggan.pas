@@ -316,6 +316,9 @@ procedure TFbrowse_data_pelanggan.FormShow(Sender: TObject);
 begin
   Edkodewilayah.Text:='';
   Ednamawilayah.Text:='';
+  MemMasterData.Active:=False;
+  MemMasterData.Active:=True;
+  MemMasterData.EmptyTable;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '0' then
   begin
     pnlFilter.Visible:=false;
@@ -348,9 +351,7 @@ begin
     RefreshGrid;
   end;
 
-  MemMasterData.Active:=False;
-  MemMasterData.Active:=True;
-  MemMasterData.EmptyTable;
+
 
   DBGridCustomer.SearchPanel.SearchingText:='';
 end;

@@ -189,7 +189,7 @@ object FPO: TFPO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'approval_status'
+        FieldName = 'status_app'
         Footers = <>
         Title.Caption = 'Status Approval'
         Width = 100
@@ -1362,7 +1362,7 @@ object FPO: TFPO
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 45939.635216261600000000
+    ReportOptions.LastChange = 45988.058564722200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1931,9 +1931,7 @@ object FPO: TFPO
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            
-              'Syarat Pembayaran : [SUM(<Dbrpt."delivery2_date">-<Dbrpt."po_dat' +
-              'e">,MasterData1)/COUNT(MasterData1)] Hari')
+            'Syarat Pembayaran : [Dbrpt."due_date"] Hari')
           ParentFont = False
         end
         object SysMemo7: TfrxSysMemoView
@@ -2330,7 +2328,7 @@ object FPO: TFPO
         object Memo38: TfrxMemoView
           AllowVectorExport = True
           Left = 514.015748030000000000
-          Top = 127.149660000000000000
+          Top = 125.149660000000000000
           Width = 241.082188550000000000
           Height = 21.221429200000000000
           DataSetName = 'frxDBDLPBKolektiff'
@@ -2341,8 +2339,13 @@ object FPO: TFPO
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'Masa Berlaku : [Dbrpt."delivery2_date"]')
+            'Masa Berlaku : [Dbrpt."jatuhtempo_po"]')
           ParentFont = False
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
@@ -2555,7 +2558,9 @@ object FPO: TFPO
       'account_pph_code=account_pph_code'
       'account_ppn_code=account_ppn_code'
       'um_value=um_value'
-      'pemb_ppn=pemb_ppn')
+      'pemb_ppn=pemb_ppn'
+      'due_date=due_date'
+      'jatuhtempo_po=jatuhtempo_po')
     DataSet = QRptPO
     BCDToCurrency = False
     DataSetOptions = []
@@ -2593,6 +2598,7 @@ object FPO: TFPO
         ',d.delivery2_date,d.po2_no,sumtotal ,c.category_id ,j.user_name,' +
         'a.account_pph_code,a.account_ppn_code,d.um_value,a.pemb_ppn'
       '--,c."type"'
+      ',d.due_date,(d.po_date+d.due_date) as jatuhtempo_po'
       'FROM t_podetail AS "a" '
       
         'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
@@ -2622,7 +2628,9 @@ object FPO: TFPO
         'marks,d.delivery2_date,d.po2_no,sumtotal,c.category_id ,j.user_n' +
         'ame,a.account_pph_code,a.account_ppn_code'
       ' ,d.um_value,a.pemb_ppn--,c."type"'
+      ',d.due_date'
       'order by a.po_no desc')
+    Active = True
     Left = 504
     Top = 32
   end

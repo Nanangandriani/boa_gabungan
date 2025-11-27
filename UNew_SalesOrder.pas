@@ -1046,19 +1046,15 @@ begin
 //  end;
   LOriginalName := FSalesOrder.Name;
   LBaseName := LOriginalName;
-
   LLastUnderscorePos := LastDelimiter('_', LBaseName);
-
   if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
   begin
     LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
-
     if TryStrToInt(LSuffix, LDummyInt) then
     begin
       LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
     end;
   end;
-
   with dm.Qtemp do
   begin
     close;

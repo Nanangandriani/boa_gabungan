@@ -20,12 +20,11 @@ object FNew_PO: TFNew_PO
     Left = 0
     Top = 0
     Width = 1208
-    Height = 243
+    Height = 257
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1200
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -34,15 +33,15 @@ object FNew_PO: TFNew_PO
       Caption = 'No. Ref'
     end
     object qty: TLabel
-      Left = 564
-      Top = 68
+      Left = 563
+      Top = 275
       Width = 104
       Height = 15
       Caption = 'Periode Pengiriman'
     end
     object Label3: TLabel
-      Left = 714
-      Top = 68
+      Left = 713
+      Top = 275
       Width = 3
       Height = 15
       Caption = ':'
@@ -90,15 +89,15 @@ object FNew_PO: TFNew_PO
       Caption = 'Currency'
     end
     object Label16: TLabel
-      Left = 564
-      Top = 98
+      Left = 563
+      Top = 305
       Width = 80
       Height = 15
       Caption = 'Jenis Angkutan'
     end
     object Label17: TLabel
-      Left = 714
-      Top = 98
+      Left = 713
+      Top = 305
       Width = 3
       Height = 15
       Caption = ':'
@@ -126,21 +125,21 @@ object FNew_PO: TFNew_PO
     end
     object Label20: TLabel
       Left = 564
-      Top = 127
+      Top = 71
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label27: TLabel
       Left = 714
-      Top = 127
+      Top = 71
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label28: TLabel
       Left = 856
-      Top = 127
+      Top = 71
       Width = 22
       Height = 15
       Caption = 'Hari'
@@ -174,8 +173,8 @@ object FNew_PO: TFNew_PO
       Caption = ':'
     end
     object Label33: TLabel
-      Left = 856
-      Top = 68
+      Left = 855
+      Top = 275
       Width = 17
       Height = 15
       Caption = 's/d'
@@ -212,7 +211,7 @@ object FNew_PO: TFNew_PO
     end
     object Label38: TLabel
       Left = 660
-      Top = 185
+      Top = 130
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
@@ -220,7 +219,7 @@ object FNew_PO: TFNew_PO
     end
     object Label39: TLabel
       Left = 714
-      Top = 157
+      Top = 101
       Width = 3
       Height = 15
       Caption = ':'
@@ -343,8 +342,8 @@ object FNew_PO: TFNew_PO
         '')
     end
     object EdJenisAngkut: TRzComboBox
-      Left = 729
-      Top = 95
+      Left = 728
+      Top = 302
       Width = 164
       Height = 23
       CharCase = ecUpperCase
@@ -368,7 +367,7 @@ object FNew_PO: TFNew_PO
     end
     object Edjatuh_tempo: TRzEdit
       Left = 729
-      Top = 124
+      Top = 68
       Width = 121
       Height = 23
       Text = '0'
@@ -393,8 +392,8 @@ object FNew_PO: TFNew_PO
       OnButtonClick = EdNm_suppButtonClick
     end
     object DtDelivery: TRzDateTimeEdit
-      Left = 729
-      Top = 65
+      Left = 728
+      Top = 272
       Width = 121
       Height = 23
       EditType = etDate
@@ -463,8 +462,8 @@ object FNew_PO: TFNew_PO
       NumGlyphs = 2
     end
     object DtDelivery2: TRzDateTimeEdit
-      Left = 878
-      Top = 65
+      Left = 877
+      Top = 272
       Width = 121
       Height = 23
       EditType = etDate
@@ -507,7 +506,7 @@ object FNew_PO: TFNew_PO
     end
     object Edbln: TEdit
       Left = 968
-      Top = 124
+      Top = 68
       Width = 58
       Height = 23
       TabOrder = 20
@@ -515,7 +514,7 @@ object FNew_PO: TFNew_PO
     end
     object Edth: TEdit
       Left = 1032
-      Top = 124
+      Top = 68
       Width = 58
       Height = 23
       TabOrder = 21
@@ -523,7 +522,7 @@ object FNew_PO: TFNew_PO
     end
     object Edhari: TEdit
       Left = 903
-      Top = 124
+      Top = 68
       Width = 58
       Height = 23
       TabOrder = 22
@@ -573,7 +572,7 @@ object FNew_PO: TFNew_PO
     end
     object CkUangmk: TCheckBox
       Left = 564
-      Top = 157
+      Top = 101
       Width = 97
       Height = 17
       Caption = 'Uang Muka'
@@ -582,7 +581,7 @@ object FNew_PO: TFNew_PO
     end
     object Ednm_akun: TRzButtonEdit
       Left = 805
-      Top = 182
+      Top = 127
       Width = 285
       Height = 23
       Text = ''
@@ -607,7 +606,7 @@ object FNew_PO: TFNew_PO
     end
     object EdUM: TRzNumericEdit
       Left = 899
-      Top = 153
+      Top = 97
       Width = 191
       Height = 23
       Enabled = False
@@ -617,7 +616,7 @@ object FNew_PO: TFNew_PO
     end
     object NoTransUM: TRzComboBox
       Left = 729
-      Top = 154
+      Top = 98
       Width = 164
       Height = 23
       TabOrder = 31
@@ -693,7 +692,7 @@ object FNew_PO: TFNew_PO
     end
     object Edheader: TEdit
       Left = 729
-      Top = 182
+      Top = 127
       Width = 74
       Height = 23
       TabOrder = 40
@@ -712,11 +711,12 @@ object FNew_PO: TFNew_PO
   end
   object Panel2: TPanel
     Left = 0
-    Top = 508
+    Top = 522
     Width = 1208
     Height = 139
     Align = alTop
     TabOrder = 1
+    ExplicitTop = 508
     ExplicitWidth = 1200
     object Label7: TLabel
       Left = 832
@@ -884,17 +884,18 @@ object FNew_PO: TFNew_PO
   end
   object Panel1: TPanel
     Left = 0
-    Top = 647
+    Top = 661
     Width = 1208
-    Height = 32
+    Height = 18
     Align = alClient
     TabOrder = 2
+    ExplicitTop = 647
     ExplicitWidth = 1200
     ExplicitHeight = 23
     object BBatal: TRzBitBtn
       Left = 1132
       Top = 1
-      Height = 30
+      Height = 16
       Align = alRight
       Caption = 'Close'
       TabOrder = 0
@@ -957,7 +958,7 @@ object FNew_PO: TFNew_PO
     object BSimpan: TRzBitBtn
       Left = 1057
       Top = 1
-      Height = 30
+      Height = 16
       Align = alRight
       Caption = 'Save'
       TabOrder = 1
@@ -1017,11 +1018,12 @@ object FNew_PO: TFNew_PO
       NumGlyphs = 2
       ExplicitLeft = 1063
       ExplicitTop = -3
+      ExplicitHeight = 30
     end
     object BEdit: TRzBitBtn
       Left = 982
       Top = 1
-      Height = 30
+      Height = 16
       Align = alRight
       Caption = 'Save'
       TabOrder = 2
@@ -1086,7 +1088,7 @@ object FNew_PO: TFNew_PO
       Left = 1
       Top = 1
       Width = 131
-      Height = 30
+      Height = 16
       Align = alLeft
       Caption = 'Monitoring Asset'
       TabOrder = 3
@@ -1156,11 +1158,12 @@ object FNew_PO: TFNew_PO
   end
   object Panel3: TPanel
     Left = 0
-    Top = 243
+    Top = 257
     Width = 1208
     Height = 265
     Align = alTop
     TabOrder = 3
+    ExplicitTop = 243
     ExplicitWidth = 1200
     object DBGridDetail: TDBGridEh
       Left = 1

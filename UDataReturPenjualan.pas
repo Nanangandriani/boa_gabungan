@@ -112,6 +112,7 @@ type
     procedure InsertDetailRet;
     procedure RefreshGrid;
     procedure UpdateDPP;
+    procedure SimpanPelanggan;
   end;
 
 var
@@ -124,6 +125,39 @@ implementation
 uses UListReturPenjualan, UMy_Function, USetMasterPenjulan, UMasterData,
   Ubrowse_pelanggan, UReturPenjualan_Sumber, UDataModule, UHomeLogin, UMainMenu,
   UTambah_Barang, UKoreksi, System.Math;
+
+procedure TFDataReturPenjualan.SimpanPelanggan;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='UPDATE t_sales_returns_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edNoTrans.Text) ;
+    ExecSQL;
+  end;
+
+  with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text := 'INSERT INTO t_sales_returns_customer (' +
+                'trans_no, customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+                'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+                'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+                'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                ') ' +
+                'SELECT '+QuotedStr(edNoTrans.Text)+', ' +
+               'customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+               'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+               'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+               'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+               'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                'FROM t_customer ' +
+                'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
+    ExecSQL;
+  end;
+end;
 
 procedure TFDataReturPenjualan.RefreshGrid;
 var
@@ -228,6 +262,7 @@ begin
     ExecSQL;
   end;
   InsertDetailRet;
+  SimpanPelanggan;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
@@ -265,6 +300,7 @@ begin
     ExecSQL;
   end;
   InsertDetailRet;
+  SimpanPelanggan;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
