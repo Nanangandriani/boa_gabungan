@@ -772,7 +772,8 @@ begin
         ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' and c.approval_status=1 and b.remaining_qty > 0'+
         ' GROUP BY a.item_stock_code,a.item_code,b.item_name,a.order_no,b.price,b.remaining_qty,b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no,c.supplier_code,e.account_code,'+
         ' c.due_date,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,c.approval_status '+
-        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset';
+        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset '+
+        'ORDER BY b.po_no Desc';
         ExecSQL;
       end;
    end
@@ -795,7 +796,8 @@ begin
               ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,d.qty,'+
               ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code, d.spb_no,e.account_code, c.due_date '+
               ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,c.id_pengajuan_asset '+
-              ',c.no_pengajuan_asset,c.id_detail_asset,c.spesifikasi_asset';
+              ',c.no_pengajuan_asset,c.id_detail_asset,c.spesifikasi_asset '+
+              ' ORDER BY b.po_no Desc';
     ExecSQL;
    end;
    FSearch_Matterima.Show;
@@ -912,6 +914,7 @@ begin
         Dm.Qtemp.Next;
        end;
        EdNoSPB.Enabled:=false;
+
 end;
 
 procedure TFNew_TerimaMaterial.Load;

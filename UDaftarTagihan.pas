@@ -253,7 +253,7 @@ begin
            begin
             rec:=rec+1;
            end;
-         MemDetailPiutang.Next;
+           MemDetailPiutang.Next;
          end;
 
          if rec=0 then

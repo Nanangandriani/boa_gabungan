@@ -26,6 +26,7 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     EmptyDataInfo.Active = True
     ReadOnly = True
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 0
     OnDblClick = DBGridCustomerDblClick
     Columns = <

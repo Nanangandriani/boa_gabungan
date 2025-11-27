@@ -114,7 +114,7 @@ type
 
   public
     { Public declarations }
-    vFormSumber, vFormSumber1, kd_kares: string;
+    vFormSumber, vFormSumber1, kd_kares,kd_kab: string;
     strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
     Strversi, Stripuser,Strketerangan,Stralasan: string;
     Year, Month, Day: Word;
@@ -602,8 +602,8 @@ begin
 end;
 
 procedure TFNew_SalesOrder.BSaveClick(Sender: TObject);
-var valKonversi,isBalanceBerat: Integer;
-  Conversi: Real;
+var valKonversi,isBalanceBerat,LevelKG,LevelSatuan: Integer;
+  Conversi,Qty: Real;
 begin
   valKonversi:=0;
   isBalanceBerat:=0;
@@ -631,7 +631,7 @@ begin
 //    end;
     if cbKonversiMuatan.Checked=True then
     begin
-      MemDetail.First;
+            MemDetail.First;
       while not MemDetail.Eof do
       begin
         if (MemDetail.FieldByName('BERAT_ISI').IsNull) or
@@ -641,26 +641,61 @@ begin
         begin
             valKonversi := 1;
         end;
-        with dm.Qtemp1 do
+
+//        with dm.Qtemp do
+//        begin
+//          close;
+//          sql.Clear;
+//          sql.Text:='select * from get_unit('+QuotedStr(MemDetail['KD_ITEM'])+')  WHERE unit_code=''KG'' ';
+//          Open;
+//        end;
+//
+//        LevelKG:=dm.Qtemp.FieldValues['unit_level'];
+//
+        with dm.Qtemp do
         begin
           close;
           sql.Clear;
-          sql.Text:='	select qty_conv from t_item_conversion where item_code='+QuotedStr(MemDetail['KD_ITEM'])+' AND unit_conv='+QuotedStr(MemDetail['KD_SATUAN']);
-          open;
+          sql.Text:='select * from get_unit('+QuotedStr(MemDetail['KD_ITEM'])+')  WHERE unit_code='+QuotedStr(MemDetail['KD_SATUAN']);
+          Open;
         end;
 
-        if dm.Qtemp1.RecordCount=0 then
+        LevelSatuan:=dm.Qtemp.FieldValues['unit_level'];
+
+
+
+        if LevelSatuan=2 then
         begin
-          if (valKonversi=0) AND (MemDetail['JUMLAH']<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
-          begin
-            isBalanceBerat:=1;
-          end;
+          Qty:=MemDetail['JUMLAH'];
         end else begin
-          if (valKonversi=0) AND ((MemDetail['JUMLAH']*dm.Qtemp1.FieldValues['qty_conv'])<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:='select qty_conv from t_item_conversion where item_code='+QuotedStr(MemDetail['KD_ITEM'])+' AND unit='+QuotedStr(MemDetail['KD_SATUAN']);
+            open;
+          end;
+          Qty:=MemDetail['JUMLAH']*dm.Qtemp1.FieldValues['qty_conv'];
+        end;
+
+//        ShowMessage('QTY '+FloattoStr(Qty));
+//        ShowMessage('BERAT BERSIH '+FloattoStr((MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])));
+//        ShowMessage('valKonversi '+IntToStr(valKonversi));
+
+//        if dm.Qtemp1.RecordCount=0 then
+//        begin
+          if (valKonversi=0) AND (Qty<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
           begin
             isBalanceBerat:=1;
           end;
-        end;
+//        end;
+//        ShowMessage('isBalanceBerat '+IntToStr(isBalanceBerat));
+//        else begin
+//          if (valKonversi=0) AND ((MemDetail['JUMLAH']*dm.Qtemp1.FieldValues['qty_conv'])<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
+//          begin
+//            isBalanceBerat:=1;
+//          end;
+//        end;
         MemDetail.Next;
       end;
     end;
@@ -860,7 +895,7 @@ begin
   edKode_Pelanggan.Clear;
   edNama_Pelanggan.Clear;
   edKode_Sales.Clear;
-  edNama_Sales.Clear;
+  edNama_Sales.Text:=NmFull;
   edKodeSumber.Clear;
   edNamaSumber.Clear;
   edPOOrder.Clear;
@@ -952,7 +987,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan FROM vcustomer WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
+      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan,COALESCE(code_kabupaten,'''') code_kabupaten, COALESCE(kabupaten,'''') kabupaten FROM get_customer() WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
       Open;
     end;
     if dm.Qtemp.FieldValues['karesidenan']='' then
@@ -962,20 +997,34 @@ begin
       MessageDlg('Wilayah Pelanggan tersebut belum di setting Karesidenan..!!',mtInformation,[mbRetry],0);
     end else begin
       kd_kares:=dm.Qtemp.FieldValues['code_karesidenan'];
+      kd_kab:=dm.Qtemp.FieldValues['code_kabupaten'];
     end;
+    edKode_Sales.Text:=Nm;
+    edNama_Sales.Text:=NmFull;
   end;
 end;
 
 procedure TFNew_SalesOrder.edNama_SalesButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data Sales';
-  FMasterData.vcall:='m_sales';
-  FMasterData.update_grid('code','name','name_region','t_sales','WHERE	deleted_at IS NULL ORDER BY code desc');
-  FMasterData.ShowModal;
+  if edKode_Pelanggan.Text<>'' then
+  begin
+    FMasterData.Caption:='Master Data Sales';
+    FMasterData.vcall:='m_sales';
+    FMasterData.update_grid('code','name','name_region','t_sales','WHERE code_region='+QuotedStr(kd_kab)+' AND	deleted_at IS NULL ORDER BY code desc');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
   //FMasterSales.Showmodal;
 end;
 
 procedure TFNew_SalesOrder.FormShow(Sender: TObject);
+var
+  LOriginalName: string;
+  LBaseName: string;
+  LLastUnderscorePos: Integer;
+  LSuffix: string;
+  LDummyInt: Integer;
 begin
   //Clear;
 //  Autonumber;
@@ -988,11 +1037,33 @@ begin
     btMasterSales.Visible:=true;
     btMasterSumber.Visible:=true;
   end;
+//  with dm.Qtemp do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:='select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name);
+//    open;
+//  end;
+  LOriginalName := FSalesOrder.Name;
+  LBaseName := LOriginalName;
+
+  LLastUnderscorePos := LastDelimiter('_', LBaseName);
+
+  if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+  begin
+    LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+
+    if TryStrToInt(LSuffix, LDummyInt) then
+    begin
+      LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+    end;
+  end;
+
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name);
+    sql.Text := 'select submenu_code from t_menu_sub where link=' + QuotedStr(LBaseName);
     open;
   end;
   Strsubmenu_code:=QuotedStr(dm.Qtemp.FieldValues['submenu_code']);

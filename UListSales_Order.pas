@@ -79,6 +79,7 @@ type
     dtAkhir: TcxBarEditItem;
     edKaresidenan: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
+    dxBarManager1Bar3: TdxBar;
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);

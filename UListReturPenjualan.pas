@@ -25,7 +25,8 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
+  cxCalendar, cxButtonEdit, cxBarEditItem;
 
 type
   TFListReturPenjualan = class(TForm)
@@ -117,6 +118,10 @@ type
     DBGridEh1: TDBGridEh;
     DSdetail: TDataSource;
     Qdetail: TUniQuery;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    edKaresidenan: TcxBarEditItem;
+    dxBarLargeButton4: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -128,36 +133,66 @@ type
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure edKaresidenanPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    vkd_kares:String;
+
     procedure Refresh;
   end;
 
-var
-  FListReturPenjualan: TFListReturPenjualan;
-  Status: Integer;
+//var
+//  FListReturPenjualan: TFListReturPenjualan;
+
+
+function FListReturPenjualan: TFListReturPenjualan;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function, UMainMenu;
+uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function, UMainMenu,
+  UMasterData;
+
+var
+  realfdatalistreturpenjualan : TFListReturPenjualan;
+  Status: Integer;
+// implementasi function
+function FListReturPenjualan: TFListReturPenjualan;
+begin
+  if realfdatalistreturpenjualan <> nil then
+    FListReturPenjualan:= realfdatalistreturpenjualan
+  else
+    Application.CreateForm(TFListReturPenjualan, Result);
+end;
 
 procedure TFListReturPenjualan.Refresh;
 var mm: Integer;
+strKaresidenan:String;
 begin
-  mm:=cbBulan.ItemIndex+1;
+//  mm:=cbBulan.ItemIndex+1;
+  strKaresidenan:='';
+//  if edKaresidenan.EditValue<>'' then
+//  begin
+//    strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+//  end;
   DBGridList.StartLoadingStatus();
   try
    with QReturJual do
    begin
        close;
        sql.Clear;
-       sql.Text:= 'select * from "public"."t_sales_returns"   '+
-                  'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
-                  'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
+       sql.Text:= 'select * from "public"."t_sales_returns" '+
+//                  'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
+//                  'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
+                  'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' AND '+
                   'deleted_at is null order by trans_date DESC, trans_no DESC';
        open;
    end;
@@ -227,10 +262,10 @@ end;
 procedure TFListReturPenjualan.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
+//  year :=FormatDateTime('yyyy', NOW());
+//  month :=FormatDateTime('m', NOW());
+//  edTahun.Text:=(year);
+//  cbBulan.ItemIndex:=StrToInt(month)-1;
   Refresh;
 end;
 
@@ -407,8 +442,39 @@ begin
   Refresh;
 end;
 
+procedure TFListReturPenjualan.dxBarLargeButton4Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue:='';
+  vkd_kares:='';
+end;
+
+procedure TFListReturPenjualan.edKaresidenanPropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='listreturpenjualan_kares';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFListReturPenjualan.FormCreate(Sender: TObject);
+begin
+  realfdatalistreturpenjualan:=self;
+end;
+
+procedure TFListReturPenjualan.FormDestroy(Sender: TObject);
+begin
+  realfdatalistreturpenjualan:=nil;
+end;
+
 procedure TFListReturPenjualan.FormShow(Sender: TObject);
 begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  edKaresidenan.EditValue:='';
+  vkd_kares:='';
   ActROExecute(sender);
 end;
 

@@ -50,7 +50,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
   ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
   UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang,
-  UListPenjualan, UListSales_Order;
+  UListPenjualan, UListSales_Order, UListReturPenjualan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -199,6 +199,13 @@ begin
   begin
     FDataListPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
     FDataListPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+//    FRekapPenjualan.vkd_kab:='';
+//    FRekapPenjualan.edKabupaten.EditValue:='';
+  end;
+  if vcall='listreturpenjualan_kares' then
+  begin
+    FListReturPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
+    FListReturPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
 //    FRekapPenjualan.vkd_kab:='';
 //    FRekapPenjualan.edKabupaten.EditValue:='';
   end;
@@ -807,6 +814,7 @@ begin
     FTambah_Barang.edKodeSatuan.Text:=MemMasterData['KD_MASTER'];
     FTambah_Barang.edSatuan.Text:=MemMasterData['NM_MASTER'];
   end;
+
   if vcall='m_sales' then
   begin
     FNew_SalesOrder.edKode_Sales.Text:=MemMasterData['KD_MASTER'];

@@ -47,6 +47,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Width = 1118
     Height = 420
     Align = alClient
+    AllowedOperations = []
     DataSource = DsDeliveryOrder
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
@@ -54,6 +55,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <

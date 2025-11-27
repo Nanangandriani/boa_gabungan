@@ -44,6 +44,7 @@ object FListPerintahMuat: TFListPerintahMuat
     Width = 954
     Height = 425
     Align = alClient
+    AllowedOperations = []
     DataSource = DsListPerintahMuat
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
@@ -51,6 +52,7 @@ object FListPerintahMuat: TFListPerintahMuat
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <

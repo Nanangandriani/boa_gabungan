@@ -379,7 +379,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListPengajuanApprovePenjualan, FListPengajuanApprovePenjualan);
   Application.CreateForm(TFDataPerintahMuat, FDataPerintahMuat);
   Application.CreateForm(TFDelivery_Order_Sumber, FDelivery_Order_Sumber);
-  Application.CreateForm(TFListReturPenjualan, FListReturPenjualan);
+//  Application.CreateForm(TFListReturPenjualan, FListReturPenjualan);
   Application.CreateForm(TFDataReturPenjualan, FDataReturPenjualan);
   Application.CreateForm(TFListTargetPenjualan, FListTargetPenjualan);
   Application.CreateForm(TFNew_DataTargetPenjualan, FNew_DataTargetPenjualan);

@@ -289,7 +289,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SearchPanel.Enabled = True
         SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True

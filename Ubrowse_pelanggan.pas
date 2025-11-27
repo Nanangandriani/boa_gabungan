@@ -65,6 +65,7 @@ procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares: String;
 begin
   strKares:='';
+  strWhere:='';
   if vcall='daftar_klasifikasi' then
   begin
     strWhere:=' and a.code_type_business='+QuotedStr(FDaftarKlasifikasi.edkd_jenis_usaha.Text)+' AND '+
@@ -251,8 +252,8 @@ begin
     FNew_SalesOrder.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
     FNew_SalesOrder.kd_kares:=MemMasterData['KD_KARES'];
     FNew_SalesOrder.spJatuhTempo.Text:=SelectRow('SELECT payment_term from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
-    FNew_SalesOrder.edNama_Sales.Text:=SelectRow('SELECT name from t_sales  WHERE	code_region='+QuotedStr(MemMasterData['KD_WILAYAH'])+' AND deleted_at IS NULL ORDER BY code desc LIMIT 1');
-    FNew_SalesOrder.edKode_Sales.Text:=SelectRow('SELECT code from t_sales  WHERE	code_region='+QuotedStr(MemMasterData['KD_WILAYAH'])+' AND deleted_at IS NULL ORDER BY code desc LIMIT 1');
+//    FNew_SalesOrder.edNama_Sales.Text:=NmFull;
+//    FNew_SalesOrder.edKode_Sales.Text:=Nm;
 //    FNew_SalesOrder.Autonumber;
   end;
   if vcall='penjualan' then
@@ -346,6 +347,10 @@ begin
     pnlFilter.Visible:=false;
     RefreshGrid;
   end;
+
+  MemMasterData.Active:=False;
+  MemMasterData.Active:=True;
+  MemMasterData.EmptyTable;
 
   DBGridCustomer.SearchPanel.SearchingText:='';
 end;

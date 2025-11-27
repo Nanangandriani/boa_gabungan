@@ -114,7 +114,7 @@ object FTerima_Material: TFTerima_Material
         FieldName = 'supplier_name'
         Footers = <>
         Title.Caption = 'Nama Supplier'
-        Width = 150
+        Width = 200
       end
       item
         CellButtons = <>
@@ -160,6 +160,7 @@ object FTerima_Material: TFTerima_Material
         FieldName = 'status'
         Footers = <>
         Title.Caption = 'Status'
+        Visible = False
         Width = 100
       end
       item

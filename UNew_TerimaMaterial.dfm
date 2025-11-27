@@ -199,7 +199,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Left = 25
       Top = 153
       Width = 21
-      Height = 18
+      Height = 15
       Caption = 'SBU'
       Visible = False
     end
@@ -817,6 +817,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
           EditButtons = <>
           FieldName = 'qtypo'
           Footers = <>
+          ReadOnly = True
           Title.Caption = 'PO|Kuantum'
           Width = 80
         end

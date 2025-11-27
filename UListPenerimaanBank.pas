@@ -25,7 +25,8 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
+  cxCalendar, cxBarEditItem;
 
 type
   TFListPenerimaanBank = class(TForm)
@@ -106,6 +107,9 @@ type
     QBukti_Terima_detfor_acceptance: TStringField;
     QBukti_Terima_detdescription: TMemoField;
     QBukti_Terima_detket: TMemoField;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    dxBarLargeButton4: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -116,6 +120,7 @@ type
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -152,8 +157,10 @@ begin
        sql.Clear;
        sql.Text:= 'select a.* from "public"."t_cash_bank_acceptance" a  '+
                   'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
-                  'where EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
-                  'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' AND '+
+                  'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND '+
+//                  'where EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
+//                  'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' AND '+
                   'a.deleted_at is null'+ strTransaksi+' order by a.trans_date Desc, a.voucher_no Desc ';
        open;
    end;
@@ -209,11 +216,11 @@ end;
 procedure TFListPenerimaanBank.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
-  cbTransaksi.ItemIndex:=0;
+//  year :=FormatDateTime('yyyy', NOW());
+//  month :=FormatDateTime('m', NOW());
+//  edTahun.Text:=(year);
+//  cbBulan.ItemIndex:=StrToInt(month)-1;
+//  cbTransaksi.ItemIndex:=0;
   Refresh;
 end;
 
@@ -612,8 +619,17 @@ begin
   Refresh;
 end;
 
+procedure TFListPenerimaanBank.dxBarLargeButton4Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  cbTransaksi.ItemIndex:=0;
+end;
+
 procedure TFListPenerimaanBank.FormShow(Sender: TObject);
 begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
   DBGridOrder.SearchPanel.SearchingText:='';
   with dm.Qtemp3 do
   begin
@@ -631,6 +647,7 @@ begin
    cbTransaksi.Items.add(dm.Qtemp3.fieldbyname('module_name').asstring);
    dm.Qtemp3.next;
   end;
+  cbTransaksi.ItemIndex:=0;
   ActROExecute(sender);
 end;
 

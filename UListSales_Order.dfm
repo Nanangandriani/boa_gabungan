@@ -43,6 +43,7 @@ object FSalesOrder: TFSalesOrder
     Width = 1202
     Height = 344
     Align = alClient
+    AllowedOperations = []
     DataSource = DsSalesOrder
     DrawMemoText = True
     DynProps = <>
@@ -51,6 +52,7 @@ object FSalesOrder: TFSalesOrder
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 170
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     OnAdvDrawDataCell = DBGridOrderAdvDrawDataCell
     OnDrawColumnCell = DBGridOrderDrawColumnCell
@@ -61,6 +63,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'notrans'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'No Transaksi'
         Width = 200
@@ -71,6 +74,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'order_date'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Tanggal Order'
         Width = 100
@@ -81,6 +85,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'name_source'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Sumber'
         Width = 150
@@ -91,6 +96,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Pelanggan'
         Width = 200
@@ -101,6 +107,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'name_sales'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Nama Sales'
         Width = 200
@@ -111,6 +118,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'no_reference'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'No Reference'
         Width = 200
@@ -121,6 +129,7 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'payment_term'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Jatuh Tempo (Hari)'
         Width = 150
@@ -278,7 +287,7 @@ object FSalesOrder: TFSalesOrder
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -316,6 +325,24 @@ object FSalesOrder: TFSalesOrder
           ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar3: TdxBar
+      Caption = 'Custom 1'
+      CaptionButtons = <>
+      DockedDockingStyle = dsNone
+      DockedLeft = 465
+      DockedTop = 0
+      DockingStyle = dsNone
+      FloatLeft = 1136
+      FloatTop = 2
+      FloatClientWidth = 51
+      FloatClientHeight = 24
+      ItemLinks = <>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True

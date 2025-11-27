@@ -245,6 +245,7 @@ object FListSalesOrder: TFListSalesOrder
     DynProps = <>
     ReadOnly = True
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     OnDblClick = DBGridCustomerDblClick
     Columns = <

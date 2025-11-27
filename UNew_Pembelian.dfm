@@ -312,7 +312,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 217
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1111
+    ExplicitLeft = 23
+    ExplicitTop = 18
     object Label1: TLabel
       Left = 27
       Top = 256
@@ -322,14 +323,14 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label3: TLabel
       Left = 28
-      Top = 187
+      Top = 159
       Width = 49
       Height = 15
       Caption = 'No. Trans'
     end
     object Label5: TLabel
       Left = 528
-      Top = 131
+      Top = 104
       Width = 60
       Height = 15
       Caption = 'Keterangan'
@@ -343,28 +344,28 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label4: TLabel
       Left = 528
-      Top = 43
+      Top = 16
       Width = 56
       Height = 15
       Caption = 'Surat Jalan'
     end
     object Label13: TLabel
       Left = 28
-      Top = 129
+      Top = 101
       Width = 55
       Height = 15
       Caption = 'No. Faktur'
     end
     object Label9: TLabel
       Left = 528
-      Top = 101
+      Top = 74
       Width = 108
       Height = 15
       Caption = 'Tgl.Terima Dokumen'
     end
     object Label15: TLabel
       Left = 528
-      Top = 72
+      Top = 45
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
@@ -378,7 +379,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label21: TLabel
       Left = 394
-      Top = 187
+      Top = 159
       Width = 84
       Height = 15
       Caption = 'Jenis Pembelian'
@@ -392,10 +393,11 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label25: TLabel
       Left = 528
-      Top = 16
+      Top = 189
       Width = 39
       Height = 15
       Caption = 'No. PIB'
+      Visible = False
     end
     object Label27: TLabel
       Left = 883
@@ -422,7 +424,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label7: TLabel
       Left = 27
-      Top = 158
+      Top = 130
       Width = 54
       Height = 15
       Caption = 'Tgl. Faktur'
@@ -436,28 +438,29 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label14: TLabel
       Left = 28
-      Top = 101
+      Top = 73
       Width = 48
       Height = 15
       Caption = 'Currency'
     end
     object Label16: TLabel
       Left = 28
-      Top = 72
+      Top = 196
       Width = 36
       Height = 15
       Caption = 'No.Ref'
+      Visible = False
     end
     object Label30: TLabel
       Left = 703
-      Top = 72
+      Top = 45
       Width = 22
       Height = 15
       Caption = 'Hari'
     end
     object Label31: TLabel
       Left = 763
-      Top = 72
+      Top = 45
       Width = 88
       Height = 15
       Caption = 'Tgl. Jatuh Tempo'
@@ -472,7 +475,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdNo: TEdit
       Left = 175
-      Top = 184
+      Top = 156
       Width = 210
       Height = 23
       Color = clInfoBk
@@ -491,7 +494,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdKet: TMemo
       Left = 641
-      Top = 128
+      Top = 101
       Width = 339
       Height = 50
       CharCase = ecUpperCase
@@ -499,7 +502,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdSJ: TEdit
       Left = 641
-      Top = 42
+      Top = 15
       Width = 232
       Height = 23
       CharCase = ecUpperCase
@@ -507,7 +510,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edno_Faktur: TEdit
       Left = 175
-      Top = 127
+      Top = 99
       Width = 168
       Height = 23
       CharCase = ecUpperCase
@@ -515,7 +518,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object DtFaktur: TRzDateTimeEdit
       Left = 641
-      Top = 98
+      Top = 71
       Width = 121
       Height = 23
       EditType = etDate
@@ -523,7 +526,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edjatuhtempo: TEdit
       Left = 641
-      Top = 70
+      Top = 43
       Width = 56
       Height = 23
       TabOrder = 7
@@ -553,7 +556,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edjenis: TRzComboBox
       Left = 494
-      Top = 184
+      Top = 156
       Width = 210
       Height = 23
       CharCase = ecUpperCase
@@ -576,13 +579,14 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdPIB: TEdit
       Left = 641
-      Top = 15
+      Top = 188
       Width = 232
       Height = 23
       Alignment = taRightJustify
       CharCase = ecUpperCase
       TabOrder = 12
       Text = '0'
+      Visible = False
     end
     object GBDok: TGroupBox
       Left = 891
@@ -636,8 +640,8 @@ object FNew_Pembelian: TFNew_Pembelian
       DisplayFormat = '#,##'
     end
     object EdNilai_Valas: TRzNumericEdit
-      Left = 287
-      Top = 99
+      Left = 288
+      Top = 71
       Width = 93
       Height = 23
       TabOrder = 15
@@ -645,8 +649,8 @@ object FNew_Pembelian: TFNew_Pembelian
       DisplayFormat = ',0;(,0)'
     end
     object Edjenispo: TRzComboBox
-      Left = 387
-      Top = 71
+      Left = 391
+      Top = 187
       Width = 89
       Height = 23
       CharCase = ecUpperCase
@@ -654,6 +658,7 @@ object FNew_Pembelian: TFNew_Pembelian
       ReadOnly = True
       TabOrder = 16
       Text = 'LOKAL'
+      Visible = False
       OnChange = EdjenispoChange
       Items.Strings = (
         'IMPORT'
@@ -682,7 +687,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object dtfaktur2: TRzDateTimeEdit
       Left = 175
-      Top = 155
+      Top = 127
       Width = 107
       Height = 23
       EditType = etDate
@@ -731,7 +736,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdCurr: TRzComboBox
       Left = 175
-      Top = 99
+      Top = 71
       Width = 107
       Height = 23
       TabOrder = 25
@@ -739,13 +744,15 @@ object FNew_Pembelian: TFNew_Pembelian
       OnChange = EdCurrChange
     end
     object Cb_Ref: TRzComboBox
-      Left = 175
-      Top = 71
+      Left = 177
+      Top = 187
       Width = 206
       Height = 23
-      Color = clInfoBk
+      Enabled = False
+      FocusColor = clInfoBk
       ReadOnly = True
       TabOrder = 26
+      Visible = False
       OnSelect = Cb_RefSelect
       Items.Strings = (
         '')
@@ -761,7 +768,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edkd_akun: TRzEdit
       Left = 713
-      Top = 184
+      Top = 156
       Width = 101
       Height = 23
       Text = ''
@@ -772,7 +779,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edkd_akunum: TRzEdit
       Left = 830
-      Top = 184
+      Top = 156
       Width = 101
       Height = 23
       Text = ''
@@ -782,7 +789,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object tgl_jatuhtempo: TRzDateTimeEdit
       Left = 872
-      Top = 70
+      Top = 43
       Width = 107
       Height = 23
       EditType = etDate
@@ -900,9 +907,9 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 1113
       Height = 245
       Hint = ''
-      ActivePage = Tab_Pot_Pemb
+      ActivePage = TabBarang2
       Align = alClient
-      TabIndex = 2
+      TabIndex = 0
       TabOrder = 6
       ExplicitWidth = 1107
       ExplicitHeight = 236
@@ -910,6 +917,8 @@ object FNew_Pembelian: TFNew_Pembelian
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
+        ExplicitWidth = 1103
+        ExplicitHeight = 211
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -1069,7 +1078,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##0.0000'
+              DisplayFormat = '#,##0.00'
               DynProps = <>
               EditButtons = <>
               FieldName = 'subtotal'
@@ -1480,8 +1489,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_Pot_Pemb: TRzTabSheet
         Color = 15987699
         Caption = 'Pot. Pembelian'
-        ExplicitWidth = 1103
-        ExplicitHeight = 211
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0

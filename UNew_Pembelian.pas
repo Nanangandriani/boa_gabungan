@@ -1349,7 +1349,7 @@ begin
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then b.pph else 0 end pph,b.po_no,'+
                         ' c.supplier_code,case when d.spb_no ISNULL then '''' else d.spb_no end spb_no,e.account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
-                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset  '+
+                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,c.receive_date  '+
                         ' from t_item_stock a inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code inner join t_item_receive C on b.receive_no=c.receive_no '+
                         ' left join t_spb_det d on d.spb_no=c.spb_no and b.item_stock_code=d.item_stock_code '+
                         ' left join t_po h on b.po_no=h.po_no inner join t_item e on a.item_code=e.item_code '+
@@ -1359,7 +1359,8 @@ begin
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,'+
                         'b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,'+
                         'c.due_date,c.valas,c.valas_value,h."type"'+
-                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset';
+                        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,c.receive_date '+
+                        'Order By c.receive_date Desc';
                         ExecSQL;
            end;
            QMaterial2.open;
@@ -1742,6 +1743,157 @@ end;
 
 procedure TFNew_Pembelian.Edit;
 begin
+  if Edno_Faktur.Text = '' then
+  begin
+    MessageDlg('No Faktur Tidak Boleh Kosong', mtWarning, [mbOk], 0);
+    Exit;
+  end;
+
+  if MessageDlg('Anda yakin ingin UPDATE data pembelian No. ' + EdNo.Text + ' ?',
+      mtConfirmation, [mbYes, mbNo], 0) <> mrYes then Exit;
+
+  if not dm.koneksi.InTransaction then
+    dm.koneksi.StartTransaction;
+
+  try
+    // ============================================================
+    // 1. UPDATE HEADER t_purchase_invoice
+    // ============================================================
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text :=
+        'UPDATE t_purchase_invoice SET '+
+        'trans_date = :ptgl, '+
+        'remark = :pket, '+
+        'sj_no = :psj, '+
+        'faktur_no = :pfaktur, '+
+        'supplier_code = :psupp, '+
+        'faktur_date = :ptglfak, '+
+        'due_date = :pjatuh, '+
+        'purchase_type = :pjenis, '+
+        'debt_amount = :phutang, '+
+        'debt_remaining = :psisa, '+
+        'ppn_rp = :pppn, '+
+        'pph_rp = :ppph, '+
+        'valas = :pvalas, '+
+        'valas_value = :pvalas_value, '+
+        'account_code = :pakun, '+
+        'import_duty = :pbea, '+
+        'pib_no = :ppib, '+
+        'po_type = :pjenispo, '+
+        'account_um_code = :pakunum, '+
+        'um_value = :pum, '+
+        'ref_no = :prefno, '+
+        'ref_code = :prefcode, '+
+        'tgl_jatuh_tempo = :ptgl_jt '+
+        'WHERE trans_no = :pno';
+
+      ParamByName('pno').Value          := EdNo.Text;
+      ParamByName('ptgl').Value         := FormatDateTime('yyyy-mm-dd', DtFaktur.Date);
+      ParamByName('pket').Value         := EdKet.Text;
+      ParamByName('psj').Value          := EdSJ.Text;
+      ParamByName('pfaktur').Value      := Edno_Faktur.Text;
+      ParamByName('psupp').Value        := Edkd_supp.Text;
+      ParamByName('ptglfak').Value      := FormatDateTime('yyyy-mm-dd', DtFaktur.Date);
+      ParamByName('pjatuh').Value       := Edjatuhtempo.Text;
+      ParamByName('pjenis').Value       := Edjenis.Text;
+      ParamByName('phutang').Value      := DBGridDetailpo.Columns[25].Footer.SumValue;
+      ParamByName('psisa').Value        := EdSisaHutang.Value;
+      ParamByName('pppn').Value         := DBGridDetailpo.Columns[18].Footer.SumValue;
+      ParamByName('ppph').Value         := DBGridDetailpo.Columns[21].Footer.SumValue;
+      ParamByName('pvalas').Value       := EdValas.Text;
+      ParamByName('pvalas_value').Value := EdNilai_Valas.Value;
+      ParamByName('pakun').Value        := Edkd_akun.Text;
+      ParamByName('pbea').Value         := DBGridDetailpo.Columns[23].Footer.SumValue;
+      ParamByName('ppib').Value         := EdPIB.Text;
+      ParamByName('pjenispo').Value     := Edjenispo.Text;
+      ParamByName('pakunum').Value      := Edkd_akunum.Text;
+      ParamByName('pum').Value          := EdNilai_um.Value;
+      ParamByName('prefno').Value       := Cb_Ref.Text;
+      ParamByName('prefcode').Value     := Edkd_sumber.Text;
+      ParamByName('ptgl_jt').Value      := FormatDateTime('yyyy-mm-dd', tgl_jatuhtempo.Date);
+
+      ExecSQL;
+    end;
+
+    // ============================================================
+    // 2. DELETE DETAIL LAMA t_purchase_invoice_det
+    // ============================================================
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text :=
+        'DELETE FROM t_purchase_invoice_det WHERE trans_no = :pno';
+      ParamByName('pno').Value := EdNo.Text;
+      ExecSQL;
+    end;
+
+    // ============================================================
+    // 3. INSERT DETAIL BARU DARI MemterimaDet
+    // ============================================================
+    MemterimaDet.First;
+    while not MemterimaDet.EOF do
+    begin
+      with dm.Qtemp2 do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text :=
+          'INSERT INTO t_purchase_invoice_det('+
+          'item_stock_code, stock_code, qty, unit, wh_code, trans_year, '+
+          'po_no, receive_no, qty_po, unit_po, qty_difference, subtotal, '+
+          'ppn, ppn_rp, pph, pph_rp, grandtotal, price, account_code, '+
+          'order_no, trans_no) '+
+          'VALUES(:item, :stok, :qty, :unit, :wh, :thn, :po, :rcv, :qpo, :upo, '+
+          ':selisih, :subtotal, :ppn, :ppn_rp, :pph, :pph_rp, :grand, :price, '+
+          ':akun, :urut, :transno)';
+
+        ParamByName('item').Value      := MemterimaDet['item_stock_code'];
+        ParamByName('stok').Value      := MemterimaDet['kd_stok'];
+        ParamByName('qty').Value       := MemterimaDet['qty'];
+        ParamByName('unit').Value      := MemterimaDet['satuan'];
+        ParamByName('wh').Value        := MemterimaDet['wh_code'];
+        ParamByName('thn').Value       := MemterimaDet['tahun'];
+        ParamByName('po').Value        := MemterimaDet['nopo'];
+        ParamByName('rcv').Value       := EdNo.Text;
+        ParamByName('qpo').Value       := MemterimaDet['qtypo'];
+        ParamByName('upo').Value       := MemterimaDet['satuanpo'];
+        ParamByName('selisih').Value   := MemterimaDet['qtyselisih'];
+        ParamByName('subtotal').Value  := MemterimaDet['subtotal'];
+        ParamByName('ppn').Value       := MemterimaDet['ppn'];
+        ParamByName('ppn_rp').Value    := MemterimaDet['ppn_rp'];
+        ParamByName('pph').Value       := MemterimaDet['pph'];
+        ParamByName('pph_rp').Value    := MemterimaDet['pph_rp'];
+        ParamByName('grand').Value     := MemterimaDet['grandtotal'];
+        ParamByName('price').Value     := MemterimaDet['harga'];
+        ParamByName('akun').Value      := MemterimaDet['kd_akun'];
+        ParamByName('urut').Value      := MemterimaDet['nourut'];
+        ParamByName('transno').Value   := EdNo.Text;
+
+        ExecSQL;
+      end;
+
+      MemterimaDet.Next;
+    end;
+
+    dm.koneksi.Commit;
+
+    MessageDlg('UPDATE DATA BERHASIL!', mtInformation, [mbOK], 0);
+    Close;
+
+  except
+    on E: Exception do
+    begin
+      dm.koneksi.Rollback;
+      MessageDlg('Gagal Update: ' + E.Message, mtError, [mbOk], 0);
+    end;
+  end;
+
+
+
     showmessage('x');
     {if MemterimaDet['ppn_rp']<>0 then
     begin
@@ -2122,6 +2274,10 @@ begin
    EdJum_ReturPemb.Value:=0;
    EdJum_totalhut.Value:=0;
 
+   if Edjenispo.Text='LOKAL' then
+   EdPIB.Enabled:=false
+   else
+   EdPIB.Enabled:=true;
 end;
 
 procedure TFNew_Pembelian.Posting;

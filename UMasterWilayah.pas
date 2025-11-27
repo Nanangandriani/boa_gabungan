@@ -198,8 +198,15 @@ begin
   if vcall='m_sales' then
   begin
     FMasterSales.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
-    FMasterSales.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+    FMasterSales.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN'];
+    //FMasterSales.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
   end;
+
+//  if vcall='m_sales' then
+//  begin
+//    FMasterSales.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
+//    FMasterSales.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+//  end;
 //  if vcall='m_telemarketing' then
 //  begin
 //    FListOrderTelemarketing.Edkodewilaya.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];

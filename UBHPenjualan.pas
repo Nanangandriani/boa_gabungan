@@ -163,7 +163,7 @@ begin
   end else begin
     strKab:='';
     if edKabupaten.EditValue<>'' then
-    strKab:=' AND b.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+    strKab:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
 
     with QCetak do
     begin
@@ -192,9 +192,9 @@ begin
 //       sql.add(' ORDER BY trans_date, trans_no');
 //       open;
       Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
-            'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
+//            'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
             'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND b.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
+            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
             ''+strKab+'order by a.trans_date,trans_no asc';
 
       Open;
@@ -297,11 +297,11 @@ begin
   begin
     if edKaresidenan.EditValue<>'' then
     begin
-      strKaresidenan:=' AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+      strKaresidenan:=' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
     end;
     if edKabupaten.EditValue<>'' then
     begin
-      strKabupaten:=' AND kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+      strKabupaten:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
     end;
 
 
@@ -311,9 +311,9 @@ begin
      begin
          close;
          sql.Clear;
-         SQL.Text:='SELECT a.*,b.karesidenan,b.kabupaten,b.kecamatan from get_selling(False) a '+
-                   'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
-                   'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+         SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
+//                   'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
+                   'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                    ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
          open;
      end;

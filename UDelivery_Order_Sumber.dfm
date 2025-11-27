@@ -252,6 +252,7 @@ object FDelivery_Order_Sumber: TFDelivery_Order_Sumber
     DataSource = dsDetail
     DynProps = <>
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     Columns = <
       item

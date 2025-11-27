@@ -26,7 +26,6 @@ object FDataListPenjualan: TFDataListPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 828
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -51,6 +50,7 @@ object FDataListPenjualan: TFDataListPenjualan
     Width = 974
     Height = 391
     Align = alClient
+    AllowedOperations = []
     DataSource = DsPenjualan
     DrawMemoText = True
     DynProps = <>
@@ -58,6 +58,7 @@ object FDataListPenjualan: TFDataListPenjualan
     EmptyDataInfo.Active = True
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     OnAdvDrawDataCell = DBGridOrderAdvDrawDataCell
     Columns = <
@@ -67,6 +68,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'trans_no'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'No Transaksi'
         Width = 200
@@ -77,6 +79,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'trans_date'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Tanggal'
         Width = 100
@@ -87,6 +90,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'name_source'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Sumber'
         Width = 150
@@ -97,6 +101,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Pelanggan'
         Width = 200
@@ -107,6 +112,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'customer_name_pkp'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Nama PKP'
         Width = 224
@@ -117,6 +123,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'no_reference'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'No Reference'
         Width = 200
@@ -127,6 +134,7 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'payment_term'
         Footers = <>
+        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Jatuh Tempo (Hari)'
         Width = 150
@@ -1388,8 +1396,8 @@ object FDataListPenjualan: TFDataListPenjualan
         'select * from get_selling(False) where EXTRACT(YEAR FROM trans_d' +
         'ate)=2025 AND EXTRACT(MONTH FROM trans_date)=9 AND deleted_at is' +
         ' null order by created_at Desc')
-    Left = 492
-    Top = 288
+    Left = 356
+    Top = 208
   end
   object DsPenjualan: TDataSource
     DataSet = QPenjualan
