@@ -32,7 +32,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'code'
+        FieldName = 'sort_number'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Kelompok Kendaraan'
@@ -94,12 +94,13 @@ object FDaftarKendaraan: TFDaftarKendaraan
   end
   object dsMasterData: TDataSource
     DataSet = MemMasterData
-    Left = 384
-    Top = 256
+    Left = 400
+    Top = 272
   end
   object MemMasterData: TMemTableEh
     Active = True
     Params = <>
+    SortOrder = 'sort_number ASC'
     Left = 488
     Top = 256
     object MemMasterDatacode: TStringField
@@ -121,6 +122,10 @@ object FDaftarKendaraan: TFDaftarKendaraan
       FieldName = 'capacity'
       DisplayFormat = '#,##0.##'
       EditFormat = '#,##0.##'
+    end
+    object MemMasterDatasort_number: TStringField
+      FieldName = 'sort_number'
+      Size = 100
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -155,6 +160,12 @@ object FDaftarKendaraan: TFDaftarKendaraan
           currency = False
           Precision = 15
         end
+        object sort_number: TMTStringDataFieldEh
+          FieldName = 'sort_number'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
       end
       object RecordsList: TRecordsListEh
       end
@@ -173,8 +184,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
     Request.Ranges.Units = 'bytes'
     Request.Ranges = <>
     HTTPOptions = [hoForceEncodeParams]
-    Left = 248
-    Top = 344
+    Left = 176
+    Top = 264
   end
   object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
     MaxLineAction = maException
@@ -183,8 +194,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 64
-    Top = 304
+    Left = 56
+    Top = 288
   end
   object NetHTTPClient1: TNetHTTPClient
     UserAgent = 'Embarcadero URI Client/1.0'

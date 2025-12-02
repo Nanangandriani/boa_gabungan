@@ -750,14 +750,41 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45982.433277546300000000
+    ReportOptions.LastChange = 45989.616688541670000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      '  var'
+      '  CurrentLine: Integer;'
+      'begin'
+      '  // 1. Ambil nilai baris saat ini ([LINE#]) dan kurangi 1'
+      '  // Line adalah variabel sistem FastReport yang dimulai dari 1'
+      '  CurrentLine := <LINE#> - 1;'
+      ''
+      
+        '  // 2. Cek kondisi: Jika nilai baris setelah dikurangi 1 adalah' +
+        ' 0'
+      '  if CurrentLine = 0 then'
+      '  begin'
+      '    // Sembunyikan komponen SysMemo1'
+      '    SysMemo1.Visible := False;'
+      
+        '    SysMemo1.Text:=IntToStr(CurrentLine);                       ' +
+        '                       '
+      '  end'
+      '  else'
+      '  begin'
+      '    // Pastikan SysMemo1 terlihat pada baris-baris berikutnya'
+      '    SysMemo1.Visible := True;'
+      '    SysMemo1.Text:=IntToStr(CurrentLine);        '
+      '  end;  '
+      'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 800
+    Left = 560
     Top = 136
     Datasets = <
       item
@@ -1376,6 +1403,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         Height = 18.897637800000000000
         Top = 253.228510000000000000
         Width = 1084.725110000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDDaftarRekeningKoran
         DataSetName = 'frxDBDDaftarRekeningKoran'
         RowCount = 0

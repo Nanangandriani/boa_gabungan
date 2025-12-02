@@ -139,7 +139,7 @@ procedure TFlist_jurnal_memorial.ActBaruExecute(Sender: TObject);
 begin
   FNewJurnal_memo.Clear;
   Status:=0;
-  FNewJurnal_memo.ShowModal;
+  FNewJurnal_memo.Show;
 end;
 
 procedure TFlist_jurnal_memorial.ActDelExecute(Sender: TObject);
@@ -243,7 +243,7 @@ begin
       Close;
       Sql.Clear;
       Sql.Text:='select a.*,b.account_name from t_memorial_journal_detail a  '+
-      ' left join t_ak_account b on a.account_code=b.code '+
+      ' left join t_ak_account_sub b on a.account_code2=b.code '+
       ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id asc';
       Open;
     end;

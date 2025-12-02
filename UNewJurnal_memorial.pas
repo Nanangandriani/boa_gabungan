@@ -80,7 +80,7 @@ type
   end;
 
 Function  FNewJurnal_memo: TFNewJurnal_memo;
-var  Status,jenismemo,Urut,bulan1 :Integer;
+var  Status,jenismemo,Urut,bulan1,status_sumber:Integer;
 
 implementation
 
@@ -205,8 +205,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,faktur_no,rounding_status,post_status,trans_month,trans_year,notes_id,created_by,order_no,trans_day) '+
-      'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,:parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic,:order_no,:hr)';
+      sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,faktur_no,rounding_status,post_status,trans_month,trans_year,notes_id,created_by,order_no,trans_day,other_source) '+
+      'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,:parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic,:order_no,:hr,:os)';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
       parambyname('partgl').Value:= FormatDateTime('yyyy-mm-dd',DTtgl.date);
       parambyname('parketerangan').Value:=Memket.Text;
@@ -305,15 +305,15 @@ begin
   end
   else
   begin
-//    with Dm.Qtemp do
-//    begin
-//      close;
-//      sql.Clear;
-//      sql.Add('Delete From t_memorial_journal_detail');
-//      sql.Add('where memo_no=:parno_bukti_memo');
-//      ParamByName('parno_bukti_memo').Value := edno_bukti_memorial.Text;
-//      execsql;
-//    end;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Add('Delete From t_memorial_journal_detail');
+      sql.Add('where memo_no=:parno_bukti_memo');
+      ParamByName('parno_bukti_memo').Value := edno_bukti_memorial.Text;
+      execsql;
+    end;
 
     with Dm.Qtemp2 do
     begin
@@ -432,7 +432,7 @@ begin
   begin
     Close;
     Sql.Clear;
-    Sql.Text:=' SELECT a.account_code,b.account_name,c.header_name,case when db ISNULL then 0 else db end db, '+
+    {Sql.Text:=' SELECT a.account_code,b.account_name,c.header_name,case when db ISNULL then 0 else db end db, '+
     ' case when kr ISNULL then 0 else kr end kr FROM t_ak_account_det a left join t_ak_account b on a.account_code=b.code '+
     ' left join t_ak_header c on b.header_code=c.header_code '+
     ' left join (select cast(''2144'' as VARCHAR) kd_akun,ppn_in_amount db,0 kr from '+
@@ -443,110 +443,29 @@ begin
     ' from t_sa_persediaan a INNER JOIN t_sa_persediaan_det b on a.trans_no=b.trans_no inner join '+
     ' (select a.item_code,b.account_code akun from t_item a INNER JOIN t_ak_account_sub b on a.account_code=b.account_code2) c '+
     ' on b.item_code=c.item_code WHERE periode2='+QuotedStr(FormatDateTime('yyy-mm-dd',DTtgl.date))+''+
-    ' GROUP BY periode,periode2,a.category,akun)x)d on d.kd_akun=b.code where a.module_id=''7''';
+    ' GROUP BY periode,periode2,a.category,akun)x)d on d.kd_akun=b.code where a.module_id=''7''';     }
+    sql.Text:='select aas.account_code2 account_code,aas.account_name,aa.account_name header_name,aas.id,'''' keperluan'+
+    ' from t_ak_account_sub aas INNER JOIN t_ak_account aa on aas.account_code=aa.code '+
+    ' order by aas.account_code2';
     Open;
   end;
-  Fbrowse_akun_kredit.ShowModal;
+  Fbrowse_akun_kredit.Show;
   //update ds 11-02-2025}
 end;
 
 procedure TFNewJurnal_memo.RzBitBtn3Click(Sender: TObject);
 begin
-if jenismemo=1 then
-begin
- // off ds 11-02-2025 Fbrowse_daftar_penerimaan_pemb_piutang.ShowModal;
-end;
-  if jenismemo=2 then
-  begin
     WITH FCari_SumberMemorial DO
     BEGIN
       Show;
-      Edit1.Text:='DO PEMBELIAN';
       WITH QSumber_memo DO
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where ket='+QuotedStr(Edit1.Text);
+        sql.Text:='select * from "V_Sumbermemorial" where notr='+inttostr(CbJenis.ItemIndex);
         Open
       end;
     END;
-  end;
-  if jenismemo=3 then
-  begin
-    WITH FCari_SumberMemorial DO
-    BEGIN
-      Show;
-      Edit1.Text:='DO PENJUALAN';
-      WITH QSumber_memo DO
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where ket='+QuotedStr(Edit1.Text);
-        Open
-      end;
-    END;
-  end;
-  if jenismemo=4 then
-  begin
-    WITH FCari_SumberMemorial DO
-    BEGIN
-      Show;
-      Edit1.Text:='PENJUALAN PROMOSI';
-      WITH QSumber_memo DO
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where ket='+QuotedStr(Edit1.Text);
-        Open
-      end;
-    END;
-  end;
-
-  if jenismemo=5 then
-  begin
-    WITH FCari_SumberMemorial DO
-    BEGIN
-      Show;
-      Edit1.Text:='POT PEMBELIAN';
-      WITH QSumber_memo DO
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where ket='+QuotedStr(Edit1.Text);
-        Open
-      end;
-    END;
-  end;
-  if jenismemo=6 then
-  begin
-    WITH FCari_SumberMemorial DO
-    BEGIN
-      Show;
-      Edit1.Text:='RETUR PEMBELIAN';
-      WITH QSumber_memo DO
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where ket='+QuotedStr(Edit1.Text);
-        Open
-      end;
-    END;
-  end;
-    if jenismemo=7 then
-  begin
-    WITH FCari_SumberMemorial DO
-    BEGIN
-      Show;
-      Edit1.Text:='PENYUSUTAN ASSET';
-      WITH QSumber_memo DO
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where ket='+QuotedStr(Edit1.Text);
-        Open
-      end;
-    END;
-  end;
 end;
 
 procedure TFNewJurnal_memo.BSaveClick(Sender: TObject);
@@ -640,7 +559,7 @@ begin
   edno_bk_pembulatan.Text:='';
   edno_faktur_pembulatan.Text:='';
   MemTableEh1.EmptyTable;
-  if CbJenis.Text='Penyusutan Asset' then
+  if CbJenis.ItemIndex=7 then
   begin
     CbHarta.Enabled:=true;
     CbHarta.Clear;
@@ -666,11 +585,13 @@ begin
   begin
     Panel_pembulatan.Visible:=true;
     CbJenis.Enabled:=true;
+    status_sumber:=1;
   end
   else
   begin
     Panel_pembulatan.Visible:=false;
     cbjenis.Enabled:=false;
+    status_sumber:=0;
   end;
 end;
 

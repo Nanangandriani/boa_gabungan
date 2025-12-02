@@ -247,6 +247,7 @@ begin
     end;
     //status_akses:=dm.Qtemp['access_status'];
     NmFull:=dm.Qtemp.FieldByName('full_name').AsString;
+    FMainMenu.StatusUser.Caption:=dm.Qtemp.FieldByName('full_name').AsString;
 
    //Buat Variable Perusahaan
 //    with dm.Qtemp do
@@ -280,6 +281,7 @@ begin
              ' "tax_status", "currency", stat_office FROM "t_company" ');
      open;
     end;
+//    FMainMenu := TFMainMenu.Create(Application);
     if dm.Qtemp.RecordCount<>0 then
     begin
       if dm.Qtemp.RecordCount=1 then
@@ -349,9 +351,11 @@ begin
   end;
 //  Application.CreateForm(TFMainMenu, FMainMenu);
 //  CbSBU.Clear;
-  Self.Hide;
-  FMainMenu.Show;
-  Application.Run;
+
+  FMainMenu.EnableMenu;
+  Self.Close;
+//  FMainMenu.Show;
+//  Application.Run;
 end;
 
 procedure TFHomeLogin.ImgTransaksiDragDrop(Sender, Source: TObject; X,

@@ -51,6 +51,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
     Width = 741
     Height = 326
     Align = alClient
+    AllowedOperations = []
     DataSource = DsTargetPenjualan
     DynProps = <>
     EmptyDataInfo.Active = True
@@ -67,6 +68,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         EditButtons = <>
         FieldName = 'customer_name'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Pelanggan'
         Width = 450
       end
@@ -76,6 +78,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         EditButtons = <>
         FieldName = 'month'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Bulan'
         Width = 100
       end
@@ -85,6 +88,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         EditButtons = <>
         FieldName = 'year'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Tahun'
         Width = 156
       end
@@ -143,6 +147,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         Width = 688
         Height = 248
         Align = alClient
+        AllowedOperations = []
         DataSource = DataSource1
         DynProps = <>
         EmptyDataInfo.Text = '#,###;(#,#0.00);#,#0'
@@ -158,6 +163,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
             EditButtons = <>
             FieldName = 'group_name'
             Footers = <>
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'Kelompok'
             Width = 632
@@ -185,6 +191,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
             Width = 612
             Height = 198
             Align = alClient
+            AllowedOperations = []
             DataSource = DSTargetPenjualanDet
             DynProps = <>
             TabOrder = 0
@@ -206,6 +213,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
                 EditButtons = <>
                 FieldName = 'qty'
                 Footers = <>
+                ReadOnly = True
                 Title.Alignment = taCenter
                 Title.Caption = 'Qty'
                 Width = 161
@@ -217,6 +225,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
                 EditButtons = <>
                 FieldName = 'value'
                 Footers = <>
+                ReadOnly = True
                 Title.Alignment = taCenter
                 Title.Caption = 'Value'
                 Width = 150

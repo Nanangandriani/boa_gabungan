@@ -26,7 +26,7 @@ uses
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBarExtItems, cxDropDownEdit,
-  cxBarEditItem, frxClass, frxDBSet;
+  cxBarEditItem, frxClass, frxDBSet, cxCalendar;
 
 type
   TFListDeliveryOrder = class(TForm)
@@ -76,6 +76,9 @@ type
     QCetak: TUniQuery;
     QCetak2: TUniQuery;
     frxDBDataset2: TfrxDBDataset;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    dxBarLargeButton3: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -83,6 +86,7 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
     procedure GetStatus;
@@ -120,8 +124,10 @@ begin
        sql.Clear;
        sql.Text:= 'SELECT a.*,b.status_name from t_delivery_order a '+
                   'LEFT JOIN t_delivery_order_status b on b.kode=a.status '+
-                  'WHERE EXTRACT(YEAR FROM a.date_trans)='+edTahun.Text+' AND '+
-                  'EXTRACT(MONTH FROM a.date_trans)='+(IntToStr(mm))+' AND '+
+                  'WHERE (a.date_trans BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND  '+
+//                  'WHERE EXTRACT(YEAR FROM a.date_trans)='+edTahun.Text+' AND '+
+//                  'EXTRACT(MONTH FROM a.date_trans)='+(IntToStr(mm))+' AND '+
                   'a.deleted_at is null'+strStatus+' ORDER BY a.date_trans Desc, a.notrans DESC ';
        open;
    end;
@@ -202,11 +208,11 @@ end;
 procedure TFListDeliveryOrder.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
-  GetStatus;
+//  year :=FormatDateTime('yyyy', NOW());
+//  month :=FormatDateTime('m', NOW());
+//  edTahun.Text:=(year);
+//  cbBulan.ItemIndex:=StrToInt(month)-1;
+//  GetStatus;
   Refresh;
 end;
 
@@ -488,9 +494,19 @@ begin
 
 end;
 
+procedure TFListDeliveryOrder.dxBarLargeButton3Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  cbStatus.ItemIndex:=0;
+end;
+
 procedure TFListDeliveryOrder.FormShow(Sender: TObject);
 begin
 //  dxBarManager1Bar3.Visible:=False;
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  GetStatus;
   ActROExecute(sender);
 end;
 

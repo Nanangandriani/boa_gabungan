@@ -11,6 +11,9 @@ object FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
   object DBGridEh1: TDBGridEh

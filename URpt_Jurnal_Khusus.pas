@@ -205,7 +205,7 @@ begin
    end;
    if QRpt_Jurnal_Khusus.RecordCount=0 then
    begin
-     ShowMessage('Maaf Data Kosong');
+     ShowMessage('Maaf Data Tidka ditemukan');
    end;
 end;
 

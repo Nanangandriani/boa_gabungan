@@ -114,6 +114,8 @@ type
     procedure Getsubmenutree(Sender: TObject);
     procedure CloseAllTabsheets;
     procedure UpdateVersi;
+    procedure DisableMenu;
+    procedure EnableMenu;
   end;
 
 var
@@ -185,6 +187,32 @@ begin
      Tag:=Tags.item(I, EmptyParam) as IHTMLElement;
      if Tag.id=TagId then Result := Tag.getAttribute(TagAttrib, 0);
    end;
+end;
+
+procedure TFMainMenu.DisableMenu;
+begin
+  dxBarLargeButtonFile.Enabled:=False;
+  dxBarLargeButtonPengaturan.Enabled:=False;
+  dxBarLargeButtonDataMaster.Enabled:=False;
+  dxBarLargeButtonTransaksi.Enabled:=False;
+  dxBarLargeButtonLaporan.Enabled:=False;
+  dxBarLargeButtonApproval.Enabled:=False;
+  dxBarLargeButtonUtility.Enabled:=False;
+  dxBarLargeButton2.Enabled:=False;
+  StatusPerusahaan.Caption:='';
+  StatusUser.Caption:='';
+end;
+
+procedure TFMainMenu.EnableMenu;
+begin
+  dxBarLargeButtonFile.Enabled:=True;
+  dxBarLargeButtonPengaturan.Enabled:=True;
+  dxBarLargeButtonDataMaster.Enabled:=True;
+  dxBarLargeButtonTransaksi.Enabled:=True;
+  dxBarLargeButtonLaporan.Enabled:=True;
+  dxBarLargeButtonApproval.Enabled:=True;
+  dxBarLargeButtonUtility.Enabled:=True;
+  dxBarLargeButton2.Enabled:=True;
 end;
 
 procedure TFMainMenu.UpdateVersi;
@@ -392,18 +420,17 @@ begin
     end else
     if vCaptionButton='Logout' then
     begin
-
-
       CloseAllTabsheets;
       ClearCategoryPanelGroup;
       FHomeLogin.Eduser.Text:='';
       FHomeLogin.EdPass.Text:='';
-
-
+      StatusPerusahaan.Caption:='';
+      StatusUser.Caption:='';
       CategoryPanelUtama.Panels.Clear;
 //      PageControl1.ActivePage:=TabForm;
 
-      Self.Hide;
+//      Self.Hide;
+      DisableMenu;
 //      Application.CreateForm(TFHomeLogin, FHomeLogin);
       FHomeLogin.Show;
       FHomeLogin.CbSBU.Properties.Items.Clear;
@@ -958,9 +985,9 @@ end;
 
 procedure TFMainMenu.FormShow(Sender: TObject);
 begin
-  StatusPerusahaan.Caption:=FHomeLogin.vNamaPRSH;
-  StatusUser.Caption:=NmFull;
-  FHomeLogin.Hide;
+//  StatusPerusahaan.Caption:=FHomeLogin.vNamaPRSH;
+//  StatusUser.Caption:=NmFull;
+//  FHomeLogin.Hide;
   //CreateMenu('admin');
   // webbrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');
   //Edgebrowser1.Navigate('https://app.powerbi.com/view?r=eyJrIjoiN2NlNzIyNDgtNzY2Zi00ZjZkLTk0NDgtYjc4NjlmMzcxMmU2IiwidCI6ImFhZjhkYzU3LTBiMzEtNDViNS04ODY2LWNhYWQ5Yjc0YmY3NiIsImMiOjEwfQ%3D%3D');

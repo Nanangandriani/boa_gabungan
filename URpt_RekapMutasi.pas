@@ -78,7 +78,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule;
+uses UDataModule, UHomeLogin;
 var
   RealFRpt_RekapMutasi: TFRpt_RekapMutasi;
 
@@ -198,15 +198,29 @@ begin
       BEGIN
         Close;
         SQL.Clear;
-        SQL.Text:='select account_code,account_name,notr,sum(db) db,sum(kd) kd,sum(dbpb) dbpb,sum(kdpb) kdpb,sum(dbpj)dbpj,sum(kdpj) kdpj,sum(dbbop) dbbop,sum(kdbop) kdbop,'+
-        ' sum(dbadm) dbadm,sum(kdadm) kdadm,sum(dbkk) dbkk,sum(kdkk) kdkk,sum(dbtk) dbtk,sum(kdtk) kdtk from '+
-        ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
-        ' GROUP BY account_code,account_name,notr';
+        SQL.Text:='select aa.code account_code,aa.account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,'+
+             ' case when sum(kd)>0 then sum(kd) else 0 end kd,          '+
+             ' case when sum(dbpb)>0 then sum(dbpb) else 0 end dbpb,    '+
+             ' case when sum(kdpb)>0 then sum(kdpb) else 0 end kdpb,    '+
+             ' case when sum(dbpj)>0 then sum(dbpj) else 0 end dbpj,    '+
+             ' case when sum(kdpj)>0 then sum(kdpj) else 0 end kdpj,    '+
+             ' case when sum(dbbop)>0 then sum(dbbop) else 0 end dbbop, '+
+             ' case when sum(kdbop)>0 then sum(kdbop) else 0 end kdbop, '+
+             ' case when sum(dbadm)>0 then sum(dbadm) else 0 end dbadm, '+
+             ' case when sum(kdadm)>0 then sum(kdadm) else 0 end kdadm, '+
+             ' case when sum(dbkk)>0 then sum(dbkk) else 0 end dbkk,    '+
+             ' case when sum(kdkk)>0 then sum(kdkk) else 0 end kdkk,    '+
+             ' case when sum(dbtk)>0 then sum(dbtk) else 0 end dbtk,    '+
+             ' case when sum(kdtk)>0 then sum(kdtk) else 0 end kdtk   '+
+             ' from  t_ak_account aa left join '+
+             ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
+             ' on aa.code=a.account_code GROUP BY aa.code,aa.account_name,notr';
         Execute;
       END;
         QRekap_Mutasi.Open;
         Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_rekapmutasi.fr3');
         Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Periode  : '+(FormatDateTime('dd mmmm yyy',DtMulai.EditValue))+' - '+(FormatDateTime('dd MMMM yyy',DtSelesai.EditValue));
+        Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH;
         Rpt.ShowReport();
 end;
 
@@ -230,10 +244,23 @@ tgl_selesai:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
   BEGIN
     Close;
     SQL.Clear;
-    SQL.Text:='select account_code,account_name,notr,sum(db) db,sum(kd) kd,sum(dbpb) dbpb,sum(kdpb) kdpb,sum(dbpj)dbpj,sum(kdpj) kdpj,sum(dbbop) dbbop,sum(kdbop) kdbop,'+
-    ' sum(dbadm) dbadm,sum(kdadm) kdadm,sum(dbkk) dbkk,sum(kdkk) kdkk,sum(dbtk) dbtk,sum(kdtk) kdtk from '+
-    ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
-    ' GROUP BY account_code,account_name,notr';
+    SQL.Text:='select aa.code account_code,aa.account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,'+
+     ' case when sum(kd)>0 then sum(kd) else 0 end kd,          '+
+     ' case when sum(dbpb)>0 then sum(dbpb) else 0 end dbpb,    '+
+     ' case when sum(kdpb)>0 then sum(kdpb) else 0 end kdpb,    '+
+     ' case when sum(dbpj)>0 then sum(dbpj) else 0 end dbpj,    '+
+     ' case when sum(kdpj)>0 then sum(kdpj) else 0 end kdpj,    '+
+     ' case when sum(dbbop)>0 then sum(dbbop) else 0 end dbbop, '+
+     ' case when sum(kdbop)>0 then sum(kdbop) else 0 end kdbop, '+
+     ' case when sum(dbadm)>0 then sum(dbadm) else 0 end dbadm, '+
+     ' case when sum(kdadm)>0 then sum(kdadm) else 0 end kdadm, '+
+     ' case when sum(dbkk)>0 then sum(dbkk) else 0 end dbkk,    '+
+     ' case when sum(kdkk)>0 then sum(kdkk) else 0 end kdkk,    '+
+     ' case when sum(dbtk)>0 then sum(dbtk) else 0 end dbtk,    '+
+     ' case when sum(kdtk)>0 then sum(kdtk) else 0 end kdtk   '+
+     ' from  t_ak_account aa left join '+
+     ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
+     ' on aa.code=a.account_code GROUP BY aa.code,aa.account_name,notr';
     Execute;
   END;
   QRekap_Mutasi.Open;

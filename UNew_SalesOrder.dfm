@@ -392,6 +392,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Time = 0.597438842589326700
       TabOrder = 9
       OnCloseUp = dtTanggal_KirimCloseUp
+      OnChange = dtTanggal_KirimChange
     end
     object btAddDetail: TRzBitBtn
       Left = 21
@@ -749,7 +750,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 900
+      ExplicitTop = 161
     end
     object Edautocode: TEdit
       Left = 712
@@ -789,7 +790,6 @@ object FNew_SalesOrder: TFNew_SalesOrder
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <

@@ -21,17 +21,15 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 896
     Height = 441
     Hint = ''
-    ActivePage = TabPembelian
+    ActivePage = TabPenjualan
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
-    ExplicitWidth = 892
-    ExplicitHeight = 440
+    ExplicitWidth = 890
+    ExplicitHeight = 432
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
-      ExplicitWidth = 888
-      ExplicitHeight = 415
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 105
@@ -123,7 +121,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           object DBGridEh3: TDBGridEh
             Left = 0
             Top = 0
-            Width = 851
+            Width = 855
             Height = 118
             Align = alClient
             DataSource = Ds_DetailPembelian
@@ -191,11 +189,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 888
         object Label1: TLabel
           Left = 40
           Top = 27
-          Width = 44
+          Width = 45
           Height = 15
           Caption = 'Tanggal '
         end
@@ -229,7 +226,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
-          ExplicitWidth = 886
           object BTampil_Pemb: TRzBitBtn
             Left = 518
             Top = 1
@@ -291,7 +287,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 514
           end
           object BSelect_Pemb: TRzBitBtn
             Left = 612
@@ -354,7 +349,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 608
           end
           object BApp_Pemb: TRzBitBtn
             Left = 710
@@ -417,7 +411,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 706
           end
           object BPrint_Pemb: TRzBitBtn
             Left = 795
@@ -480,13 +473,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 791
           end
         end
       end
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
+      ExplicitWidth = 886
+      ExplicitHeight = 407
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 106
@@ -634,10 +628,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 886
         object Label3: TLabel
           Left = 27
           Top = 30
-          Width = 44
+          Width = 45
           Height = 15
           Caption = 'Tanggal '
         end
@@ -708,6 +703,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 4
+          ExplicitWidth = 884
           object BTampil_Penj: TRzBitBtn
             Left = 518
             Top = 1
@@ -769,6 +765,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 512
           end
           object Bselect_Penj: TRzBitBtn
             Left = 612
@@ -831,6 +828,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 606
           end
           object BApp_Penj: TRzBitBtn
             Left = 710
@@ -893,6 +891,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 704
           end
           object BPrint_Penj: TRzBitBtn
             Left = 795
@@ -955,6 +954,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 789
           end
         end
       end
@@ -973,7 +973,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         object Label7: TLabel
           Left = 40
           Top = 56
-          Width = 44
+          Width = 45
           Height = 15
           Caption = 'Tanggal '
         end
@@ -987,7 +987,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         object Label9: TLabel
           Left = 40
           Top = 19
-          Width = 47
+          Width = 48
           Height = 15
           Caption = 'Transaksi'
         end
@@ -1770,11 +1770,15 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     SQL.Strings = (
       
         'SELECT a.Trans_no,a.trans_date,a.account_code,b.account_name,a.s' +
-        'tatus_dk,sum(db) db,sum(kd) kd FROM (select trans_no,trans_date,' +
-        'account_code,amount,status_dk,case when status_dk ='#39'D'#39'then amoun' +
-        't else '#39'0'#39' end db,case when status_dk ='#39'K'#39'then amount else '#39'0'#39' e' +
-        'nd kd  from t_general_ledger) A INNER JOIN t_ak_account b on a.a' +
-        'ccount_code=b.code where a.account_code is not null '
+        'tatus_dk,sum(db) db,sum(kd) kd FROM '
+      
+        '(select trans_no,trans_date,account_code,amount,status_dk,case w' +
+        'hen status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,'
+      
+        'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd  from t_gene' +
+        'ral_ledger) A INNER JOIN t_ak_account b on LEFT(a.account_code,7' +
+        ')=b.code '
+      'where a.account_code is not null '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
         '.status_dk order by status_dk asc')
@@ -1867,10 +1871,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       
         'SELECT a.Trans_no,a.trans_date,a.account_code,b.account_name,a.s' +
         'tatus_dk,sum(db) db,sum(kd) kd FROM (select trans_no,trans_date,' +
-        'account_code,amount,status_dk,case when status_dk ='#39'D'#39'then amoun' +
-        't else '#39'0'#39' end db,case when status_dk ='#39'K'#39'then amount else '#39'0'#39' e' +
-        'nd kd  from t_general_ledger) A INNER JOIN t_ak_account b on a.a' +
-        'ccount_code=b.code where a.account_code is not null '
+        'account_code,amount,status_dk,'
+      
+        'case when status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,case when st' +
+        'atus_dk ='#39'K'#39'then amount else '#39'0'#39' end kd  from t_general_ledger) ' +
+        'A'
+      
+        ' INNER JOIN t_ak_account b on LEFT(a.account_code,7)=b.code wher' +
+        'e a.account_code is not null '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
         '.status_dk order by status_dk asc')
@@ -1884,7 +1892,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         DataType = ftString
         Name = 'trans_no'
         ParamType = ptInput
-        Value = 'RCV/0001/04/XI/24'
+        Value = nil
       end>
   end
 end

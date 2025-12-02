@@ -30,13 +30,9 @@ uses
 
 type
   TFRekap_memorial = class(TForm)
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BPrint: TRzBitBtn;
     DbRpt_Memorial: TfrxDBDataset;
     Rpt: TfrxReport;
     QRpt_Memorial: TUniQuery;
-    BPrint2: TRzBitBtn;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
     DBGridEh1: TDBGridEh;
@@ -50,9 +46,7 @@ type
     Ds_memorial: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
-    procedure BPrintClick(Sender: TObject);
     procedure RptGetValue(const VarName: string; var Value: Variant);
-    procedure BPrint2Click(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -89,42 +83,6 @@ begin
   close;
 end;
 
-procedure TFRekap_memorial.BPrint2Click(Sender: TObject);
-var tgl,tgl2:string;
-begin
-{with QRpt_Memorial2 do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='SELECT dense_rank() OVER (ORDER BY id_ket) AS nomor,tgl,no_bk,no_faktur,status_pembulatan,status_post,'+
-   ' bln,thn,id_ket,akun_kredit,debit,kredit,nama_perkiraan,tgl2,bulan,keterangan,ket,nm_ket,kode_header '+
-   ' FROM (select * from "V_BukuMemorial2" ) x where tgl='+QuotedStr(edth.Text+'-'+bln)+' ORDER BY id_ket asc,debit desc';
-  open;
-end;     }
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BukuMemorial2.Fr3');
-//  Tfrxmemoview(Rpt.FindObject('MPeriod')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',DtMulai.Date)+' - '+FormatDateTime('dd MMMM yyy',DtSelesai.Date);
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
-  Tfrxmemoview(Rpt.FindObject('Mthn')).Memo.Text:=''+spTahun.EditValue;
-  Rpt.ShowReport();
-end;
-
-procedure TFRekap_memorial.BPrintClick(Sender: TObject);
-var tgl,tgl2 :string;
-begin
-with QRpt_Memorial do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select * from "V_BukuMemorial" where to_char(trans_date,''yyyy-mm'')='+QuotedStr(spTahun.EditValue+'-'+bln)+' ORDER BY id asc,debit desc';
-  open;
-end;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BukuMemorial.Fr3');
-//  Tfrxmemoview(Rpt.FindObject('MPeriod')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',DtMulai.Date)+' - '+FormatDateTime('dd MMMM yyy',DtSelesai.Date);
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
-  Tfrxmemoview(Rpt.FindObject('Mthn')).Memo.Text:=''+spTahun.EditValue;
-  Rpt.ShowReport();
-end;
-
 procedure TFRekap_memorial.cbbulanSelect(Sender: TObject);
 begin
 case cbbulan.Itemindex of
@@ -153,6 +111,10 @@ begin
   sql.Text:='select * from "V_BukuMemorial" where to_char(trans_date,''yyyy-mm'')='+QuotedStr(spTahun.EditValue+'-'+bln)+' ORDER BY id asc,debit desc';
   open;
 end;
+if QRpt_Memorial.RecordCount=0 then
+begin
+  ShowMessage('Maaf Data tidak ditemukan');
+end else
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BukuMemorial.Fr3');
 //  Tfrxmemoview(Rpt.FindObject('MPeriod')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',DtMulai.Date)+' - '+FormatDateTime('dd MMMM yyy',DtSelesai.Date);
   Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
@@ -170,6 +132,10 @@ begin
   sql.Text:='select * from "V_BukuMemorial" where to_char(trans_date,''yyyy-mm'')='+QuotedStr(spTahun.EditValue+'-'+bln)+' ORDER BY id asc,debit desc';
   open;
 end;
+if QRpt_Memorial.RecordCount=0 then
+begin
+  ShowMessage('Maaf Data tidak ditemukan');
+end else
 //GridEh1.FinishLoadingStatus();
 end;
 

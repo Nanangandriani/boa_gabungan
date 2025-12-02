@@ -152,13 +152,13 @@ object FRpt_Neraca: TFRpt_Neraca
   end
   object Panel1: TPanel
     Left = 0
-    Top = 309
+    Top = 368
     Width = 667
-    Height = 129
+    Height = 70
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 300
+    ExplicitTop = 359
     ExplicitWidth = 661
     object Label16: TLabel
       Left = 35
@@ -291,11 +291,175 @@ object FRpt_Neraca: TFRpt_Neraca
     Left = 0
     Top = 127
     Width = 667
-    Height = 182
+    Height = 241
+    Align = alClient
+    DataSource = DSNeracathn
+    DynProps = <>
+    TabOrder = 4
+    Visible = False
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_name'
+        Footers = <>
+        Title.Caption = 'Nama Perkiraan'
+        Width = 235
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jan'
+        Footers = <>
+        Title.Caption = 'Januari'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'Feb'
+        Footers = <>
+        Title.Caption = 'Februari'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'mar'
+        Footers = <>
+        Title.Caption = 'Maret'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'apr'
+        Footers = <>
+        Title.Caption = 'April'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'mei'
+        Footers = <>
+        Title.Caption = 'Mei'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'juni'
+        Footers = <>
+        Title.Caption = 'Juni'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'juli'
+        Footers = <>
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'ags'
+        Footers = <>
+        Title.Caption = 'Agustus'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'sep'
+        Footers = <>
+        Title.Caption = 'September'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'okt'
+        Footers = <>
+        Title.Caption = 'Oktober'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nov'
+        Footers = <>
+        Title.Caption = 'November'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'des'
+        Footers = <>
+        Title.Caption = 'Desember'
+        Width = 150
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object CbBulan2: TComboBox
+    Left = 52
+    Top = 41
+    Width = 113
+    Height = 21
+    TabOrder = 5
+    OnSelect = cbbulan2Select
+    Items.Strings = (
+      ''
+      'Januari'
+      'Februari'
+      'Maret'
+      'April'
+      'Mei'
+      'Juni'
+      'Juli'
+      'Agustus'
+      'September'
+      'Oktober'
+      'November'
+      'Desember')
+  end
+  object DBGridEh2: TDBGridEh
+    Left = 0
+    Top = 127
+    Width = 667
+    Height = 241
     Align = alClient
     DataSource = DSNeraca
     DynProps = <>
-    TabOrder = 4
+    TabOrder = 6
     Columns = <
       item
         CellButtons = <>
@@ -319,27 +483,6 @@ object FRpt_Neraca: TFRpt_Neraca
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
-  object CbBulan2: TComboBox
-    Left = 247
-    Top = 39
-    Width = 113
-    Height = 21
-    TabOrder = 5
-    OnSelect = cbbulan2Select
-    Items.Strings = (
-      'Januari'
-      'Februari'
-      'Maret'
-      'April'
-      'Mei'
-      'Juni'
-      'Juli'
-      'Agustus'
-      'September'
-      'Oktober'
-      'November'
-      'Desember')
-  end
   object Rpt: TfrxReport
     Version = '2022.1.3'
     DotMatrixReport = False
@@ -348,8 +491,8 @@ object FRpt_Neraca: TFRpt_Neraca
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45737.883086967590000000
-    ReportOptions.LastChange = 45737.883086967590000000
+    ReportOptions.CreateDate = 44873.702720590300000000
+    ReportOptions.LastChange = 45737.881905289400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -358,7 +501,15 @@ object FRpt_Neraca: TFRpt_Neraca
       'end.')
     Left = 598
     Top = 16
-    Datasets = <>
+    Datasets = <
+      item
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
+      end
+      item
+        DataSet = DbRpt_Neraca
+        DataSetName = 'DbRpt_Neraca'
+      end>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -366,13 +517,13 @@ object FRpt_Neraca: TFRpt_Neraca
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
+      PaperWidth = 215.900000000000000000
+      PaperHeight = 355.600000000000000000
+      PaperSize = 5
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
       Frame.Typ = []
       MirrorMode = []
       object ReportTitle1: TfrxReportTitle
@@ -382,41 +533,444 @@ object FRpt_Neraca: TFRpt_Neraca
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 81.944957560000000000
         Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
+        Width = 740.409927000000000000
+        object Mpt: TfrxMemoView
           AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
+          Top = 5.897667090000000000
+          Width = 104.535084020000000000
+          Height = 45.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -32
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
           Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            ' [DBPerusahaan."company_code"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Width = 737.007874020000000000
+          Height = 30.236220470000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NERACA')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Mbln: TfrxMemoView
+          AllowVectorExport = True
+          Top = 31.236225360000000000
+          Width = 737.007874020000000000
+          Height = 20.787401570000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'BULAN JANUARI 2022')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Top = 51.708737090000000000
+          Width = 98.267780000000000000
+          Height = 30.236220470000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NO PERKIRAAN')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Top = 51.708737090000000000
+          Width = 419.527830000000000000
+          Height = 30.236220470000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NAMA PERKIRAAN')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 517.795610000000000000
+          Top = 51.708737090000000000
+          Width = 219.212740000000000000
+          Height = 30.236220470000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'TOTAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 162.519790000000000000
+        Width = 740.409927000000000000
+        Condition = 'DbRpt_Neraca."type"'
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Width = 98.267716540000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Width = 419.527559060000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[DbRpt_Neraca."type"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 517.795275590000000000
+          Width = 219.212598430000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object GroupFooter1: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 332.598640000000000000
+        Width = 740.409927000000000000
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Width = 98.267780000000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Width = 419.527830000000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'TOTAL [DbRpt_Neraca."type"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 517.795610000000000000
+          Width = 219.212740000000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clNavy
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[Page#]')
+            '[SUM(<DbRpt_Neraca."total">,MasterData3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object MasterData3: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 17.007874020000000000
+        Top = 245.669450000000000000
+        Width = 740.409927000000000000
+        DataSet = DbRpt_Neraca
+        DataSetName = 'DbRpt_Neraca'
+        RowCount = 0
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Width = 98.267716540000000000
+          Height = 17.007874020000000000
+          DataField = 'kd_akun'
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[DbRpt_Neraca."kd_akun"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Width = 419.527559060000000000
+          Height = 17.007874020000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '       [DbRpt_Neraca."account_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 517.795275590000000000
+          Width = 219.212598430000000000
+          Height = 17.007874015748000000
+          DataField = 'total'
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRpt_Neraca."total"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object GroupHeader2: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 204.094620000000000000
+        Width = 740.409927000000000000
+        Condition = 'DbRpt_Neraca."type_balance"'
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Width = 98.267716540000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Width = 419.527559060000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '   [DbRpt_Neraca."type_balance"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo37: TfrxMemoView
+          AllowVectorExport = True
+          Left = 517.795275590000000000
+          Width = 219.212598430000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object GroupFooter2: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677165360000000000
+        Top = 287.244280000000000000
+        Width = 740.409927000000000000
+        object Memo38: TfrxMemoView
+          AllowVectorExport = True
+          Top = 3.779527559055120000
+          Width = 98.267716540000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo39: TfrxMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Top = 3.779527560000000000
+          Width = 419.527559060000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '   TOTAL[DbRpt_Neraca."type_balance"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo40: TfrxMemoView
+          AllowVectorExport = True
+          Left = 517.795275590000000000
+          Top = 3.779527560000000000
+          Width = 219.212598430000000000
+          Height = 18.897637800000000000
+          DataSet = DbRpt_Neraca
+          DataSetName = 'DbRpt_Neraca'
+          DisplayFormat.FormatStr = '#,###0.00;(#,#0.00);#,#'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbRpt_Neraca."total">,MasterData3)]')
+          ParentFont = False
+          VAlign = vaCenter
         end
       end
     end
@@ -520,15 +1074,6 @@ object FRpt_Neraca: TFRpt_Neraca
   object frxDBDataset1: TfrxDBDataset
     UserName = 'DbRpt_Neraca'
     CloseDataSource = False
-    FieldAliases.Strings = (
-      'jenis=jenis'
-      'jenis_nr=jenis_nr'
-      'kode_header=kode_header'
-      'bulan=bulan'
-      'tahun=tahun'
-      'kode=kode'
-      'nama_perkiraan=nama_perkiraan'
-      'total=total')
     DataSet = UniQuery1
     BCDToCurrency = False
     DataSetOptions = []
@@ -538,85 +1083,13 @@ object FRpt_Neraca: TFRpt_Neraca
   object QRpt_Neracathn: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        'select kode,jenis,jenis_nr,kode_header,tahun,nama_perkiraan,sum(' +
-        'spt)spt,sum(jan)jan,sum(feb)feb,sum(mar)mar,sum(apr)apr,sum(mei)' +
-        'mei,sum(jun)jun,sum(jul)jul, sum(ags)ags,sum(sep)sep,sum(okt)okt' +
-        ',sum(nov)nov,sum(des)des from (select kode,jenis,jenis_nr,kode_h' +
-        'eader,tahun,nama_perkiraan,case when bulan='#39'01'#39'  then total end ' +
-        'jan,case when bulan='#39'02'#39' then total end feb,case when bulan='#39'03'#39 +
-        ' then total end mar,case when bulan='#39'04'#39' then total end apr, cas' +
-        'e when bulan='#39'05'#39' then total end mei,case when bulan='#39'06'#39' then t' +
-        'otal end jun, case when bulan='#39'07'#39' then total end jul,case when ' +
-        'bulan='#39'08'#39' then total end ags,case when bulan='#39'09'#39' then total en' +
-        'd sep,case when bulan='#39'10'#39' then total end okt,case when bulan='#39'1' +
-        '1'#39' then total end nov, case when bulan='#39'12'#39' then total end des,c' +
-        'ase when bulan='#39'SPT'#39' then total end spt from (select jenis,jenis' +
-        '_nr,kode_header,bulan,tahun,kode,nama_perkiraan,sum(total) total' +
-        ' from (    select jenis,jenis_nr,kode_header,bulan,xx.tahun,xx.k' +
-        'd_akun kode,nama_perkiraan,case when (db-kr) isnull  then 0 else' +
-        ' (db-kr) end total from   (select x.kode_header,x2.bulan,x2.tahu' +
-        'n,x.kode kd_akun,x.nama_perkiraan,b.jenis,b.jenis_nr,sum(x2.kred' +
-        'it)kr,sum(x2.debit)db from t_daftar_perkiraan x  INNER JOIN t_je' +
-        'nis_neraca b on x.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln ' +
-        'bulan,a.thn tahun from t_neraca_lajur1_det b INNER JOIN  (select' +
-        ' thn,bln,max(notrans) notrans from t_neraca_lajur1 GROUP BY thn,' +
-        'bln ORDER BY bln,thn) a on a.notrans=b.notrans WHERE  a.thn='#39'202' +
-        '3'#39' union /*SPT Tahun Lalu*/  select b.*,'#39'SPT'#39' bulan,'#39'2023'#39' tahun' +
-        ' from t_neraca_lajur1_det b INNER JOIN (select thn,bln,notrans,p' +
-        'eriode1,periode2  from t_neraca_lajur1 WHERE thn<'#39'2023'#39' ORDER BY' +
-        ' periode2 desc limit 1)a on a.notrans=b.notrans)x2 on x2.kd_akun' +
-        '=x.kode WHERE  x.status_neraca='#39'1'#39' and  posisi_dk='#39'D'#39' GROUP BY x' +
-        '.kode_header,x2.bulan,x2.tahun,x.kode,x.nama_perkiraan,b.jenis,b' +
-        '.jenis_nr)xx UNION  select jenis,jenis_nr,kode_header,bulan,tahu' +
-        'n,kode,nama_perkiraan,case when jenis_nr='#39'AKM. PENYUSUTAN'#39' then ' +
-        '-(case when (kr-db) isnull then 0 else (kr-db) end) else (case w' +
-        'hen (kr-db) isnull then 0 else (kr-db) end) end total from (sele' +
-        'ct kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr,su' +
-        'm(kredit)kr,sum(debit)db from (select x.kode_header,x2.bulan,x2.' +
-        'tahun,x.kode,x.nama_perkiraan,b.jenis,b.jenis_nr,x2.kredit,x2.de' +
-        'bit from  t_daftar_perkiraan x INNER JOIN t_jenis_neraca b on  x' +
-        '.id_jenis_nr=b."id" LEFT JOIN(select b.*,a.bln bulan,a.thn tahun' +
-        ' from t_neraca_lajur1_det b INNER JOIN (select thn,bln,max(notra' +
-        'ns) notrans from t_neraca_lajur1  GROUP BY thn,bln ORDER BY bln,' +
-        'thn) a on a.notrans=b.notrans WHERE a.thn='#39'2023'#39' union /*SPT Tah' +
-        'un Lalu*/  select b.*,'#39'SPT'#39' bulan,'#39'2023'#39' tahun from t_neraca_laj' +
-        'ur1_det b INNER JOIN (select thn,bln,notrans,periode1,periode2  ' +
-        'from t_neraca_lajur1 WHERE thn<'#39'2023'#39' ORDER BY periode2 desc lim' +
-        'it 1)a on a.notrans=b.notrans)x2 on x2.kd_akun=x.kode WHERE x.st' +
-        'atus_neraca='#39'1'#39' and posisi_dk='#39'K'#39' AND X.st_nr='#39'1'#39') xxx GROUP BY ' +
-        'kode_header,bulan,tahun,kode,nama_perkiraan,jenis,jenis_nr)x4 OR' +
-        'DER BY jenis,kode asc) xxx GROUP BY jenis,jenis_nr,kode_header,b' +
-        'ulan,tahun,kode,nama_perkiraan) y) yy GROUP BY kode,jenis,jenis_' +
-        'nr,kode_header,tahun,nama_perkiraan ORDER BY jenis,kode asc'
-      ''
-      '-- 0 row(s) affected.')
+      '')
     Left = 137
     Top = 127
   end
   object dbRpt_neracathn: TfrxDBDataset
     UserName = 'dbRpt_neracathn'
     CloseDataSource = False
-    FieldAliases.Strings = (
-      'kode=kode'
-      'jenis=jenis'
-      'jenis_nr=jenis_nr'
-      'kode_header=kode_header'
-      'tahun=tahun'
-      'nama_perkiraan=nama_perkiraan'
-      'spt=spt'
-      'jan=jan'
-      'feb=feb'
-      'mar=mar'
-      'apr=apr'
-      'mei=mei'
-      'jun=jun'
-      'jul=jul'
-      'ags=ags'
-      'sep=sep'
-      'okt=okt'
-      'nov=nov'
-      'des=des')
     DataSet = QRpt_Neracathn
     BCDToCurrency = False
     DataSetOptions = []
@@ -681,8 +1154,8 @@ object FRpt_Neraca: TFRpt_Neraca
       
         'INNER JOIN t_category_pos_neraca y ON x6.st_posnr=y."id" ORDER B' +
         'Y st_posnr,kode asc')
-    Left = 65529
-    Top = 7
+    Left = 481
+    Top = 223
   end
   object DbRpt_PosNeraca: TfrxDBDataset
     UserName = 'DbRpt_PosNeraca'
@@ -703,8 +1176,8 @@ object FRpt_Neraca: TFRpt_Neraca
     DataSet = QRpt_PosNeraca
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 65529
-    Top = 57
+    Left = 593
+    Top = 257
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -734,15 +1207,6 @@ object FRpt_Neraca: TFRpt_Neraca
       FloatClientHeight = 130
       ItemLinks = <
         item
-          Visible = True
-          ItemName = 'DtMulai'
-        end
-        item
-          Visible = True
-          ItemName = 'DtSelesai'
-        end
-        item
-          BeginGroup = True
           UserDefine = [udWidth]
           UserWidth = 77
           Visible = True
@@ -1231,20 +1695,6 @@ object FRpt_Neraca: TFRpt_Neraca
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
       OnClick = DxRefreshClick
     end
-    object DtMulai: TcxBarEditItem
-      Caption = 'Tanggal Awal   '
-      Category = 0
-      Hint = 'Tanggal Awal   '
-      Visible = ivAlways
-      PropertiesClassName = 'TcxDateEditProperties'
-    end
-    object DtSelesai: TcxBarEditItem
-      Caption = 'Tanggal Akhir  '
-      Category = 0
-      Hint = 'Tanggal Akhir  '
-      Visible = ivAlways
-      PropertiesClassName = 'TcxDateEditProperties'
-    end
     object cxBarEditItem1: TcxBarEditItem
       Caption = 'Bulan'
       Category = 0
@@ -1266,5 +1716,10 @@ object FRpt_Neraca: TFRpt_Neraca
     DataSet = QRpt_Neraca
     Left = 408
     Top = 56
+  end
+  object DSNeracathn: TDataSource
+    DataSet = QRpt_Neracathn
+    Left = 144
+    Top = 192
   end
 end

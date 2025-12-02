@@ -25,32 +25,24 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCheckComboBox, cxMaskEdit, dxBar, cxBarEditItem,
-  cxClasses, dxRibbon;
+  cxClasses, dxRibbon, cxSpinEdit, cxLabel, DBGridEhGrouping, ToolCtrlsEh,
+  DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
 
 type
   TFRpt_by = class(TForm)
-    Panel2: TPanel;
-    BBatal: TRzBitBtn;
-    BPrint: TRzBitBtn;
     QRpt_By: TUniQuery;
     DbRpt_By: TfrxDBDataset;
     Rpt: TfrxReport;
     DbRpt_by2: TfrxDBDataset;
     QRpt_By2: TUniQuery;
-    Dbrpt_by3: TfrxDBDataset;
-    QRpt_By3: TUniQuery;
+    Dbrpt_thn: TfrxDBDataset;
+    QRpt_thn: TUniQuery;
     QRpt_By4: TUniQuery;
     Dbrpt_by4: TfrxDBDataset;
     Dbrpt_by5: TfrxDBDataset;
     QRpt_By5: TUniQuery;
-    Panel1: TPanel;
-    Lbbulan: TLabel;
-    Label15: TLabel;
-    cbbulan: TComboBox;
-    edth: TSpinEdit;
     DbRpt_by1: TfrxDBDataset;
     QRpt_by1: TUniQuery;
-    RzBitBtn1: TRzBitBtn;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
     dxBarManager1: TdxBarManager;
@@ -62,7 +54,10 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     DxRefresh: TdxBarLargeButton;
     cxBarEditItem1: TcxBarEditItem;
-    cxBarEditItem2: TcxBarEditItem;
+    DBGridBy: TDBGridEh;
+    cbbulan: TComboBox;
+    DsRpt_By: TDataSource;
+    sptahun: TcxBarEditItem;
     procedure BPrintClick(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
@@ -71,6 +66,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -86,7 +82,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMainmenu;
+uses UMainmenu, UHomeLogin;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
 RealFRpt_by: TFRpt_by;
@@ -105,55 +101,36 @@ end;
 
 procedure TFRpt_by.BPrintClick(Sender: TObject);
 begin
-with QRpt_By do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in WHERE bulan='+QuotedStr(bln)+' and tahun='+QuotedStr(edth.Text)+')x2'+
-  ' on x2.kd_akun=x.kode WHERE x.kode_header=''5400'' and kelompok_akun=''2'' and x.kode<>''5400'' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan ORDER BY kd_akun';
-  Open;
-end;
-with QRpt_By2 do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in WHERE bulan='+QuotedStr(bln)+' and tahun='+QuotedStr(edth.Text)+')x2'+
-  ' on x2.kd_akun=x.kode WHERE x.kode=''5300'' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan ORDER BY kd_akun';
-  Open;
-end;
-with QRpt_By3 do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in WHERE bulan='+QuotedStr(bln)+' and tahun='+QuotedStr(edth.Text)+')x2'+
-  ' on x2.kd_akun=x.kode WHERE x.kode_header=''5500'' and x.kode<>''5500'' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan ORDER BY kd_akun';
-  Open;
-end;
-with QRpt_By4 do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in WHERE bulan='+QuotedStr(bln)+' and tahun='+QuotedStr(edth.Text)+')x2'+
-  ' on x2.kd_akun=x.kode WHERE x.kode_header=''5600'' and x.kode<>''5600'' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan ORDER BY kd_akun';
-  Open;
-end;
-with QRpt_By5 do
-begin
-  close;
-  sql.Clear;
-  sql.Text:='select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN(select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in WHERE bulan='+QuotedStr(bln)+' and tahun='+QuotedStr(edth.Text)+')x2'+
-  ' on x2.kd_akun=x.kode WHERE x.kode_header=''6200'' and x.kode<>''6200'' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan ORDER BY kd_akun';
-  Open;
-end;
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_by.fr3');
-  Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan.Text+' '+edth.Text);
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
-  Rpt.ShowReport();
+  if cbbulan.Text='' then
+  begin
+    with QRpt_thn do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text:='SELECT * FROM "vbiaya_year" where trans_year='+QuotedStr(sptahun.EditValue);
+      Open;
+    end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_bythn.fr3');
+    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Tahun  '+sptahun.EditValue);
+    Tfrxmemoview(Rpt.FindObject('Mspt')).Memo.Text:=('SPT Tahun  '+QuotedStr(IntToStr(sptahun.EditValue-1)));
+    Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
+    Rpt.ShowReport();
+  end;
+  if cbbulan.Text<>'' then
+  begin
+    with QRpt_by do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text:='SELECT * FROM "vbiaya_month" where trans_year='+QuotedStr(sptahun.EditValue)+''+
+      ' and trans_month='+QuotedStr(IntToStr(cbbulan.ItemIndex));
+      Open;
+    end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_bybln.fr3');
+    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan.Text+' '+sptahun.EditValue);
+    Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
+    Rpt.ShowReport();
+  end;
 end;
 
 procedure TFRpt_by.cbbulanSelect(Sender: TObject);
@@ -174,6 +151,31 @@ case cbbulan.Itemindex of
 end;
 end;
 
+procedure TFRpt_by.DxRefreshClick(Sender: TObject);
+begin
+  if cbbulan.Text='' then
+  begin
+    with QRpt_thn do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text:='SELECT * FROM "vbiaya_year" where trans_year='+QuotedStr(sptahun.EditValue);
+      Open;
+    end;
+  end;
+  if cbbulan.Text<>'' then
+  begin
+    with QRpt_by do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text:='SELECT * FROM "vbiaya_month" where trans_year='+QuotedStr(sptahun.EditValue)+''+
+      ' and trans_month='+QuotedStr(IntToStr(cbbulan.ItemIndex));
+      Open;
+    end;
+  end;
+end;
+
 procedure TFRpt_by.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:=caFree;
@@ -191,12 +193,12 @@ end;
 
 procedure TFRpt_by.FormShow(Sender: TObject);
 begin
-  edth.Text:=FormatDateTime('yyyy',now());
+  sptahun.EditValue:=FormatDateTime('yyyy',now());
 end;
 
 procedure TFRpt_by.RzBitBtn1Click(Sender: TObject);
 begin
-if status_by=1 then
+{if status_by=1 then
 begin
   with QRpt_By do
   begin
@@ -273,71 +275,6 @@ begin
   ' a.notrans=b.notrans )x2 on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" GROUP BY x.kode_header,'+
   ' x2.kd_akun,x.nama_perkiraan,x3."id",x3.jenis_by )x GROUP BY id,tahun,bulan)x2 on x1.id=x2.id and x1.tahun=x2.tahun '+
   ' and x1.bulan=x2.bulan) y) yy GROUP BY kode,jenis_by,kode_header,tahun, nama_perkiraan,"id" ORDER BY "id",kode asc';
-{  SQL.Text:='select kode,"id",jenis_by,kode_header,tahun,nama_perkiraan,case when sum(spt)ISNULL then 0 else sum(spt) end spt,'+
-  ' case when sum(jan) ISNULL then 0 else sum(jan) end jan,case when sum(feb) isnull then 0 else sum(feb) end feb,case when'+
-  ' sum(mar) ISNULL then 0 else sum(mar) end mar,case when sum(apr) isnull then 0 else sum(apr) end apr,case when sum(mei) '+
-  ' isnull then 0 else sum(mei) end mei,case when sum(jun)ISNULL then 0 else sum(jun) end jun,case when sum(jul) isnull   '+
-  ' then 0 else sum(jul) end jul,case when sum(ags) ISNULL then 0 else sum(ags) end ags,case when sum(sep) isnull then 0  '+
-  ' else sum(sep) end sep,case when sum(okt) ISNULL then 0 else sum(okt) end okt,case when sum(nov) ISNULL then 0 else    '+
-  ' sum(nov) end nov,case when sum(des) isnull then 0 else sum(des) end des from (select kode,"id",jenis_by,kode_header,tahun, '+
-  ' nama_perkiraan,case when bulan=''01'' then total end jan,case when bulan=''02'' then total end feb,case when bulan=''03''  '+
-  ' then total end mar,case when bulan=''04'' then total end apr, case when bulan=''05'' then total end mei,case when '+
-  ' bulan=''06'' then total end jun, case when bulan=''07'' then total end jul,case when bulan=''08'' then total end ags,'+
-  ' case when bulan=''09'' then total end sep,case when bulan=''10'' then total end okt,case when bulan=''11'' then total '+
-  ' end nov,case when bulan=''12'' then total end des,case when bulan=''SPT'' then total end spt from (select *,db2,(db/db2)* 100 as persentase  from'+
-  ' (select jenis_by,kode_header,bulan,tahun,kode,nama_perkiraan,sum(db) total,"id" from (/*Biaya tahun berjalan*/ select x.kode_header,x2.bulan,'+
-  ' x2.tahun,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN (select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in '+
-  ' WHERE tahun='+QuotedStr(edth.Text)+')x2 on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" '+
-  ' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,x3."id",x3.jenis_by '+
-  ' union /*SPT Tahun Lalu*/    '+
-  ' select x.kode_header,''SPT'' bulan,'+QuotedStr(edth.Text)+' tahun,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by,'+
-  ' sum(x2.kredit2) kr,sum(x2.debit2) db from t_daftar_perkiraan x LEFT JOIN (select * from t_neraca_lajur1_det b INNER JOIN '+
-  ' (select * from t_neraca_lajur1 WHERE thn<'+QuotedStr(edth.Text)+' order by periode1 desc limit 1) a on a.notrans=b.notrans )x2  '+
-  ' on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" GROUP BY x.kode_header,x2.kd_akun,x.nama_perkiraan,'+
-  ' x3."id",x3.jenis_by   ORDER BY "id",kode asc  '+
-  ' ) xxx GROUP BY jenis_by,kode_header,bulan,tahun,kode,nama_perkiraan,"id")y'+
-  ' inner join  '+
-  '(SELECT case when sum(db) > 0 then sum(db) else 1 end  db2,id,tahun,bulan from (select jenis_by,kode_header,bulan,tahun,'+
-  ' kode,nama_perkiraan,sum(db) total,"id" from (/*Biaya tahun berjalan*/ select x.kode_header,x2.bulan,'+
-  ' x2.tahun,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN (select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in '+
-  ' WHERE tahun='+QuotedStr(edth.Text)+')x2 on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" '+
-  ' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,x3."id",x3.jenis_by '+
-  ' union /*SPT Tahun Lalu*/    '+
-  ' select x.kode_header,''SPT'' bulan,'+QuotedStr(edth.Text)+' tahun,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by,'+
-  ' sum(x2.kredit2) kr,sum(x2.debit2) db from t_daftar_perkiraan x LEFT JOIN (select * from t_neraca_lajur1_det b INNER JOIN '+
-  ' (select * from t_neraca_lajur1 WHERE thn<'+QuotedStr(edth.Text)+' order by periode1 desc limit 1) a on a.notrans=b.notrans )x2  '+
-  ' on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" GROUP BY x.kode_header,x2.kd_akun,x.nama_perkiraan,'+
-  ' x3."id",x3.jenis_by ORDER BY "id",kode asc ) xxx GROUP BY jenis_by,kode_header,bulan,tahun,kode,nama_perkiraan,"id")y2)y2'+
-  ' on x1.id=x2.id and x1.tahun=x2.tahun and x1.bulan=x2.bulan'+
-  ' )y3) yy GROUP BY kode,jenis_by,kode_header,tahun,'+
-  ' nama_perkiraan,"id" ORDER BY "id",kode asc';      }
-{  SQL.Text:='select kode,"id",jenis_by,kode_header,tahun,nama_perkiraan,case when sum(spt)ISNULL then 0 else sum(spt) end spt,'+
-  ' case when sum(jan) ISNULL then 0 else sum(jan) end jan,case when sum(feb) isnull then 0 else sum(feb) end feb,case when'+
-  ' sum(mar) ISNULL then 0 else sum(mar) end mar,case when sum(apr) isnull then 0 else sum(apr) end apr,case when sum(mei) '+
-  ' isnull then 0 else sum(mei) end mei,case when sum(jun)ISNULL then 0 else sum(jun) end jun,case when sum(jul) isnull   '+
-  ' then 0 else sum(jul) end jul,case when sum(ags) ISNULL then 0 else sum(ags) end ags,case when sum(sep) isnull then 0  '+
-  ' else sum(sep) end sep,case when sum(okt) ISNULL then 0 else sum(okt) end okt,case when sum(nov) ISNULL then 0 else    '+
-  ' sum(nov) end nov,case when sum(des) isnull then 0 else sum(des) end des from (select kode,"id",jenis_by,kode_header,tahun, '+
-  ' nama_perkiraan,case when bulan=''01'' then total end jan,case when bulan=''02'' then total end feb,case when bulan=''03''  '+
-  ' then total end mar,case when bulan=''04'' then total end apr, case when bulan=''05'' then total end mei,case when '+
-  ' bulan=''06'' then total end jun, case when bulan=''07'' then total end jul,case when bulan=''08'' then total end ags,'+
-  ' case when bulan=''09'' then total end sep,case when bulan=''10'' then total end okt,case when bulan=''11'' then total '+
-  ' end nov,case when bulan=''12'' then total end des,case when bulan=''SPT'' then total end spt from (select jenis_by,'+
-  ' kode_header,bulan,tahun,kode,nama_perkiraan,sum(db) total,"id" from (/*Biaya tahun berjalan*/ select x.kode_header,x2.bulan,'+
-  ' x2.tahun,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by,sum(x2.kredit)kr,sum(x2.debit)db from t_daftar_perkiraan x '+
-  ' LEFT JOIN (select * from t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in '+
-  ' WHERE tahun='+QuotedStr(edth.Text)+')x2 on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" '+
-  ' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkiraan,x3."id",x3.jenis_by '+
-  ' union /*SPT Tahun Lalu*/    '+
-  ' select x.kode_header,''SPT'' bulan,'+QuotedStr(edth.Text)+' tahun,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by,'+
-  ' sum(x2.kredit2) kr,sum(x2.debit2) db from t_daftar_perkiraan x LEFT JOIN (select * from t_neraca_lajur1_det b INNER JOIN '+
-  ' (select * from t_neraca_lajur1 WHERE thn<'+QuotedStr(edth.Text)+' order by periode1 desc limit 1) a on a.notrans=b.notrans )x2  '+
-  ' on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 on x.st_by=x3."id" GROUP BY x.kode_header,x2.kd_akun,x.nama_perkiraan,'+
-  ' x3."id",x3.jenis_by   ORDER BY "id",kode asc  '+
-  ' ) xxx GROUP BY jenis_by,kode_header,bulan,tahun,kode,nama_perkiraan,"id") y) yy GROUP BY kode,jenis_by,kode_header,tahun,'+
-  ' nama_perkiraan,"id" ORDER BY "id",kode asc';   }
   open;
 end;
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_bythn.fr3');
@@ -346,7 +283,11 @@ end;
 //  Tfrxmemoview(Rpt.FindObject('MAlamat')).Memo.Text:=(''+alamat+''+alamat2);
   Tfrxmemoview(Rpt.FindObject('Mspt')).Memo.Text:=UpperCase('SPT TH '+inttostr(strtoint(edth.Text)-1));
   Rpt.ShowReport();
+end;              }
 end;
-end;
+
+
+initialization
+RegisterClass(TFRpt_by);
 
 end.

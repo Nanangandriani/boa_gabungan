@@ -347,8 +347,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
     DataSet = QRpt_Jurnal_Khusus
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 568
-    Top = 40
+    Left = 672
+    Top = 96
   end
   object Rpt: TfrxReport
     Version = '2022.1.3'
@@ -445,8 +445,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
         't_name,c.module_name,a.module_id  '
       ',status_dk  order by a.trans_no,status_dk ASC')
     DetailFields = 'no_trans'
-    Left = 631
-    Top = 68
+    Left = 791
+    Top = 124
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -462,8 +462,8 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 492
-    Top = 16
+    Left = 548
+    Top = 40
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -992,7 +992,7 @@ object FRpt_Jurnal_Khusus: TFRpt_Jurnal_Khusus
   end
   object DsJurnal_Khusus: TDataSource
     DataSet = QRpt_Jurnal_Khusus
-    Left = 632
-    Top = 16
+    Left = 776
+    Top = 40
   end
 end

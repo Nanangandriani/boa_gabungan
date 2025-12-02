@@ -35,6 +35,9 @@ object FListPenerimaanBank: TFListPenerimaanBank
         item
           Caption = 'Filter'
           ToolbarName = 'dxBarManager1Bar3'
+        end
+        item
+          ToolbarName = 'dxBarManager1Bar4'
         end>
       Index = 0
     end
@@ -222,7 +225,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -246,7 +249,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -284,6 +287,27 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'dxBarLargeButton3'
         end>
       OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManager1Bar4: TdxBar
+      Caption = 'Laporan Kolektif'
+      CaptionButtons = <>
+      DockedDockingStyle = dsTop
+      DockedLeft = 601
+      DockedTop = 0
+      FloatLeft = 1203
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton5'
+        end>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -1024,6 +1048,66 @@ object FListPenerimaanBank: TFListPenerimaanBank
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton4Click
     end
+    object dxBarLargeButton5: TdxBarLargeButton
+      Caption = 'Cetak Bukti Penerimaan'
+      Category = 0
+      Hint = 'Cetak Bukti Penerimaan'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton5Click
+    end
   end
   object QPenerimaanBank: TUniQuery
     Connection = dm.Koneksi
@@ -1181,7 +1265,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     DataSet = QBukti_Terima
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 664
+    Left = 240
     Top = 184
   end
   object Report: TfrxReport
@@ -1194,7 +1278,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45985.551501921300000000
+    ReportOptions.LastChange = 45989.440599849530000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1233,8 +1317,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'begin'
       ''
       'end.')
-    Left = 592
-    Top = 176
+    Left = 440
+    Top = 136
     Datasets = <
       item
         DataSet = frxDBDQBukti_Terima
@@ -1672,7 +1756,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         FillGap.Right = 0
         Frame.Typ = []
         Height = 128.047310000000000000
-        Top = 389.291590000000000000
+        Top = 434.645950000000000000
         Width = 755.906000000000000000
         object terbilang: TfrxMemoView
           AllowVectorExport = True
@@ -1858,7 +1942,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 260.787570000000000000
+        Top = 306.141930000000000000
         Width = 755.906000000000000000
         OnAfterPrint = 'GroupHeader1OnAfterPrint'
         OnBeforePrint = 'GroupHeader1OnBeforePrint'
@@ -1921,7 +2005,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         FillGap.Right = 0
         Frame.Typ = []
         Height = 3.779530000000000000
-        Top = 302.362400000000000000
+        Top = 347.716760000000000000
         Visible = False
         Width = 755.906000000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
@@ -1949,8 +2033,20 @@ object FListPenerimaanBank: TFListPenerimaanBank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Top = 328.819110000000000000
+        Top = 374.173470000000000000
         Width = 755.906000000000000000
+      end
+      object GroupHeader2: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 260.787570000000000000
+        Width = 755.906000000000000000
+        Condition = 'frxDBDQBukti_Terima."voucher_no"'
       end
     end
     object Page2: TfrxReportPage
@@ -2056,25 +2152,25 @@ object FListPenerimaanBank: TFListPenerimaanBank
       
         'SELECT aa.voucher_no,aa.name_account,aa.trans_date,aa.code_cust,' +
         'aa.name_cust,aa.account_number_bank,aa.account_name_bank,aa.code' +
-        '_account_header,aa.paid_amount,aa.for_acceptance,aa.description,' +
-        'ket from "public"."vbuktipenerimaan" aa  LEFT JOIN (SELECT vouch' +
-        'er_no , STRING_AGG("description", E'#39', \n'#39') as ket  from "public"' +
-        '."vbuktipenerimaan" where "voucher_no"=  '#39'BM/001/03/X/2025/HLJ'#39' ' +
-        'GROUP BY voucher_no) bb  ON aa."voucher_no"=bb."voucher_no"  whe' +
-        're (aa."voucher_no"='#39'BM/001/03/X/2025/HLJ'#39') AND aa.voucher_no = ' +
-        ':voucher_no ')
+        '_account_header,'
+      
+        'aa.paid_amount,aa.for_acceptance,aa.description,ket from "public' +
+        '"."vbuktipenerimaan" aa  LEFT JOIN '
+      
+        '(SELECT voucher_no , STRING_AGG("description", E'#39', \n'#39') as ket  ' +
+        'from "public"."vbuktipenerimaan" '
+      
+        'where "voucher_no"=  '#39'BM/001/03/X/2025/HLJ'#39' GROUP BY voucher_no)' +
+        ' bb  ON aa."voucher_no"=bb."voucher_no"  '
+      'where (aa."voucher_no"='#39'BM/001/03/X/2025/HLJ'#39') '
+      '')
     MasterSource = dsBukti_Terima
     MasterFields = 'account_name'
     DetailFields = 'name_account'
-    Left = 772
-    Top = 104
+    Active = True
+    Left = 484
+    Top = 216
     ParamData = <
-      item
-        DataType = ftString
-        Name = 'voucher_no'
-        ParamType = ptInput
-        Value = 'BM/001/03/X/2025/HLJ'
-      end
       item
         DataType = ftString
         Name = 'account_name'
@@ -2158,7 +2254,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
   end
   object dsBukti_Terima_det: TDataSource
     DataSet = QBukti_Terima_det
-    Left = 665
-    Top = 104
+    Left = 673
+    Top = 232
   end
 end

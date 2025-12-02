@@ -43,7 +43,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.notrans,COALESCE(b.trans_no,'''') trans_no,a.order_date,a.code_cust,a.name_cust,'+
-                'a.vehicle_group_id,c.code_item,c.name_item,c.amount ,c.code_unit from t_sales_order a '+
+                'a.vehicle_group_sort_number,a.vehicle_group_id,c.code_item,c.name_item,c.amount ,c.code_unit from t_sales_order a '+
                 'LEFT JOIN t_selling b on b.no_reference=a.notrans AND b.deleted_at is NULL '+
                 'LEFT JOIN t_sales_order_det c on c.notrans=a.notrans '+
                 'WHERE a.deleted_at is NULL AND a.vehicle_group_id='+QuotedStr(QKendaraan.FieldValues['vehicle_group_id']);
@@ -62,8 +62,8 @@ begin
     begin
       with FNewDeliveryOrder do
       begin
-
-        edKelompokKendaraan.Text:=QKendaraan.FieldValues['vehicle_group_id'];
+        strVehicleGroupId:=QKendaraan.FieldValues['vehicle_group_id'];
+        edKelompokKendaraan.Text:=QKendaraan.FieldValues['vehicle_group_sort_number'];
         edNamaJenisKendMuatan.Text:=QKendaraan.FieldValues['type_vehicles_name'];
         edKodeJenisKendMuatan.Text:=QKendaraan.FieldValues['type_vehicles_code'];
         spKapasitas.value:=QKendaraan.FieldValues['capacity'];
@@ -102,11 +102,11 @@ begin
   begin
     Close;
     SQL.Clear;
-    SQL.Text:='SELECT DISTINCT vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity '+
+    SQL.Text:='SELECT DISTINCT vehicle_group_id,vehicle_group_sort_number,type_vehicles_code,type_vehicles_name,capacity '+
               'FROM t_sales_order a '+
-              'WHERE vehicle_group_id IS NOT NULL AND '+
+              'WHERE sent_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',FNewDeliveryOrder.dtTanggalMuatan.Date))+' AND vehicle_group_id IS NOT NULL AND '+
               'vehicle_group_id NOT IN (SELECT vehicle_group_id FROM t_delivery_order_services '+
-              'WHERE vehicle_group_id IS NOT NULL ) ;';
+              'WHERE vehicle_group_id IS NOT NULL ) Order By vehicle_group_sort_number ASC;';
     Open;
   end;
   QDetail.Close;

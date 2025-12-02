@@ -23,7 +23,8 @@ object FCari_SumberMemorial: TFCari_SumberMemorial
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 1031
+    Visible = False
+    ExplicitWidth = 1017
     object RzLabel1: TRzLabel
       Left = 16
       Top = 14
@@ -149,7 +150,7 @@ object FCari_SumberMemorial: TFCari_SumberMemorial
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'notrans'
+        FieldName = 'trans_no'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'No Trans'
@@ -159,7 +160,7 @@ object FCari_SumberMemorial: TFCari_SumberMemorial
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nofaktur'
+        FieldName = 'faktur_no'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'No Faktur / Nota'
@@ -169,10 +170,10 @@ object FCari_SumberMemorial: TFCari_SumberMemorial
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nm_supplier'
+        FieldName = 'ket'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'Supplier'
+        Title.Caption = 'Supplier/Pelanggan'
         Width = 167
       end
       item
@@ -217,14 +218,6 @@ object FCari_SumberMemorial: TFCari_SumberMemorial
         Title.Alignment = taCenter
         Title.Caption = 'Jumlah'
         Width = 111
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'ket'
-        Footers = <>
-        Width = 136
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end

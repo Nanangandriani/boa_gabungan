@@ -62,6 +62,8 @@ type
     CbBulan: TComboBox;
     DataSetDriverEh1: TDataSetDriverEh;
     dxBarLargeButton2: TdxBarLargeButton;
+    dxBarLargeButton3: TdxBarLargeButton;
+    dxBarLargeButton4: TdxBarLargeButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -71,6 +73,7 @@ type
     procedure DxRefreshClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,12 +84,13 @@ type
 //var
 Function  FRpt_NeracaLajur: TFRpt_NeracaLajur;
 var  EditNo,yr,Status,bln,thn,periode1,periode2,prd1,prd2: string;
+dd,mm,yy:word;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainmenu;
+uses UDataModule, UMainmenu, UHomeLogin, UDataKelompokBiaya;
 
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
@@ -145,261 +149,247 @@ begin
 end;
 
 procedure TFRpt_NeracaLajur.BPrintClick(Sender: TObject);
-var
-row: integer; number:real;
-periode1,periode2,subquery,subquery2,th,prd1,prd2:string;
+var q:TUniQuery;
+  subquery,subquery2,subquery3:string;
 begin
-{ if cbbulan.Text= '' then
-    begin
-      MessageDlg('Bulan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      cbbulan.SetFocus;
-      Exit;
-    end;
-    if spTahun.EditValue= null then
-    begin
-      MessageDlg('Tahun Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      spTahun.SetFocus;
-      Exit;
-    end;
-  periode1:=FormatDateTime('yyy-mm-dd',DtMulai.EditValue);
-  periode2:=FormatDateTime('yyy-mm-dd',spTahun.EditValue);
-  prd1:=formatdatetime('yyyy-mm',DtMulai.EditValue);
-//  prd2:=formatdatetime('yyyy-mm',DtSelesai.EditValue);
-  if prd1<prd2 then
-  begin
-      MessageDlg('Periode Tidak boleh Kosong lebih dari 1 bulan',MtWarning,[MbOk],0);
-  //    spsaSelesai.SetFocus;
-      Exit;
-  end;
-//  number:=DtSelesai.editvalue-DtMulai.editvalue;
- subquery:='select kelompok_akun,kd_akun, case when notr = 0 then concat('''',nama_perkiraan) else nama_perkiraan end nama_perkiraan,debit,kredit,db,kd,dbpy,kdpy,dbnr,kdnr,dbnr2,kdnr2,dbnr3,kdnr3,dblr,kdlr,notr from '+
-  '/*Tambahan baru di atas*/'+
- '(select xxx.*,case when yy.kode_header is null then 0 else 1 end notr,yy.kode_header from ('+
- ' select * ,case when (kelompok_akun=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,case when (kelompok_akun=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,case when (kelompok_akun=2 and dbnr2 >0) then dbnr2 else 0 end dblr, case when (kelompok_akun=2 '+
- ' and kdnr2>0) then kdnr2 else 0 end kdlr from (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from(select *,case when '+
- ' debit-kredit+db-kd>0 then debit-kredit+db-kd else 0 end dbnr,case when kredit-debit+kd-db > 0 then kredit-debit+kd-db else 0 end kdnr from (select kelompok_akun,kd_akun,nama_perkiraan,case when debit ISNULL then 0 else debit end debit,case when kredit '+
- ' ISNULL then 0 else kredit end kredit,case when db isnull then 0 else db end db,case when kd ISNULL then 0 else kd end kd,case when dbpy isnull then 0 else dbpy end dbpy,case when kdpy ISNULL then 0 else kdpy end kdpy FROM /* HEADER */ '+
- ' (SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit ISNULL then 0 else aa.debit end debit,case when aa.kredit>0 then aa.kredit else null end kredit,case when  b.db>0 then b.db else null end db, case when b.kd>0 then b.kd else null '+
- ' end kd,case when c.db>0 then c.db else null end dbpy,case when c.kd>0 then c.kd else null end kdpy FROM (SELECT c.kode kd_akun,c.kode_header,c.nama_perkiraan, c.kelompok_akun,d.debit,d.kredit from (SELECT DISTINCT kode,kode_header,nama_perkiraan,'+
- ' status_neraca,kelompok_akun from t_daftar_perkiraan WHERE status_neraca=''1'' and kode=kode_header)c INNER JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+' order by periode2 desc limit 1)a '+
- ' INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d on c.kode=d.kd_akun GROUP BY c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit,c.kelompok_akun ORDER BY c.kode ASC) AA '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd,b.kode_header from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode_header=aa.kd_akun and c.jenis_tr <>''MEMORIAL'''+
- ' and (tgl_in>='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') and (kode_header<>''5400'' and kode_header<>''5500'') GROUP BY b.kode_header) b on 1=1'+
- ' LEFT JOIN LATERAL (select sum(a.debit) db,sum(a.kredit) kd,b.kode_header from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c  on a.no_in=c.no_in where  b.kode_header=aa.kd_akun and c.jenis_tr=''MEMORIAL'''+
- ' and (tgl_in >='+QuotedStr(periode1)+' and tgl_in <='+QuotedStr(periode2)+')and (kode_header<>''5400'' and kode_header<>''5500'') GROUP BY b.kode_header) c on 1=1 '+
- ' /* detail <>ihtisar */ '+
- ' UNION SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit>0 then aa.debit else NULL end debit,case when aa.kredit is NULL then 0 else aa.kredit end kredit,case when b.db is NULL then 0 else b.db end db,case when b.kd is null then 0'+
- ' else b.kd end kd,case when c.db is null then 0 else  c.db end dbpy,case when c.kd is null then 0 else c.kd end kdpy from (SELECT c.kode kd_akun,c.kode_header,c.kelompok_akun,c.nama_perkiraan,d.debit,d.kredit from (SELECT DISTINCT kelompok_akun,kode,'+
- ' kode_header,nama_perkiraan,status_neraca from t_daftar_perkiraan WHERE status_neraca=''1'' and kode<>kode_header and kode_header<>''5400'')c inner JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+''+
- ' order by periode2 desc limit 1) a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d  on c.kode=d.kd_akun GROUP BY c.kelompok_akun,c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit ORDER BY  c.kode ASC)AA '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and  c.jenis_tr<>''MEMORIAL'''+
- ' and (tgl_in >='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') GROUP BY b.kode)b on 1=1 '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join  t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and b.kode<>''1112.01'' and '+
- ' c.jenis_tr=''MEMORIAL'' and (tgl_in>='+QuotedStr(periode1)+' and tgl_in <='+QuotedStr(periode2)+') GROUP BY b.kode)c on 1=1 order by kd_akun ASC)xx)xx2)xx3 '+
- ' union select kelompok_akun,kd_akun,nama_perkiraan,debit,kredit,db,kd,dbpy,kdpy,dbnr,kdnr,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 '+
- ' end kdnr2 from (/*bop pecah dari total*/select kelompok_akun,kd_akun,nama_perkiraan,debit,kredit,db,kd,case when (kdnr+kdpy)>0 then (kdnr+kdpy) when dbpy>0 then dbpy else 0 end dbpy,case when (dbnr+dbpy)>0 then (dbnr+dbpy) when kdpy>0 then kdpy '+
- ' else 0 end kdpy,dbnr,kdnr,'+
- ' 0 dbnr2,0 kdnr2 from (select *,case when debit-kredit+db-kd>0 then debit-kredit+db-kd else 0 end dbnr,case when kredit-debit+kd-db > 0 then kredit-debit+kd-db else 0 end kdnr from (select kelompok_akun,kd_akun,nama_perkiraan,case when debit ISNULL '+
- ' then 0 else debit end debit,case when kredit ISNULL then 0 else kredit end kredit,case when db isnull then 0 else db end db, case when kd ISNULL then 0 else kd end kd,case when dbpy isnull then 0 else dbpy end dbpy,case when kdpy ISNULL then 0 else'+
- ' kdpy end kdpy from(SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit>0 then aa.debit else NULL end debit,case when aa.kredit>0 then aa.kredit else null end kredit,case when b.db>0 then b.db else null end db,case when b.kd>0 then'+
- ' b.kd else null end kd, case when c.db>0 then c.db else null end dbpy,case when c.kd>0 then c.kd else null end kdpy from (SELECT c.kode kd_akun,c.kode_header,c.kelompok_akun,c.nama_perkiraan,d.debit,d.kredit from (SELECT DISTINCT kelompok_akun,kode,'+
- ' kode_header, nama_perkiraan,status_neraca from t_daftar_perkiraan WHERE status_neraca=''1'')c INNER JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+''+
- ' order by periode2 desc limit 1) a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d  on c.kode=d.kd_akun GROUP BY c.kelompok_akun,c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit ORDER BY  c.kode ASC)AA '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and  c.jenis_tr<>''MEMORIAL'' and '+
- ' (tgl_in >='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') GROUP BY b.kode)b on 1=1 '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join  t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and b.kode<>''1112.01'' and '+
- ' c.jenis_tr=''MEMORIAL'' and (tgl_in>='+QuotedStr(periode1)+' and tgl_in <='+QuotedStr(periode2)+') GROUP BY b.kode)c on 1=1 order by kd_akun ASC)xx)xx2)xx3)xx31)xx4 order by kd_akun)XXX'+
- ' /*Tambahan baru di atas*/'+
- ' left JOIN t_header_perkiraan yy on xxx.kd_akun=yy.kode_header) w';
- subquery2:='select kelompok_akun,kd_akun, case when notr = 0 then concat('''',nama_perkiraan) else nama_perkiraan end nama_perkiraan,debit,kredit,db,kd,dbpy,kdpy,dbnr,kdnr,dbnr2,kdnr2,dbnr3,kdnr3,dblr,kdlr,notr from '+
-  '/*Tambahan baru di atas*/'+
- '(select xxx.*,case when yy.kode_header is null then 0 else 1 end notr,yy.kode_header from ('+
- ' select * ,case when (kelompok_akun=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,case when (kelompok_akun=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,case when (kelompok_akun=2 and dbnr2 >0) then dbnr2 else 0 end dblr, case when (kelompok_akun=2 '+
- ' and kdnr2>0) then kdnr2 else 0 end kdlr from (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from(select *,case when '+
- ' debit-kredit+db-kd>0 then debit-kredit+db-kd else 0 end dbnr,case when kredit-debit+kd-db > 0 then kredit-debit+kd-db else 0 end kdnr from (select kelompok_akun,kd_akun,nama_perkiraan,case when debit ISNULL then 0 else debit end debit,case when kredit '+
- ' ISNULL then 0 else kredit end kredit,case when db isnull then 0 else db end db,case when kd ISNULL then 0 else kd end kd,case when dbpy isnull then 0 else dbpy end dbpy,case when kdpy ISNULL then 0 else kdpy end kdpy FROM /* HEADER */ '+
- ' (SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit ISNULL then 0 else aa.debit end debit,case when aa.kredit>0 then aa.kredit else null end kredit,case when  b.db>0 then b.db else null end db, case when b.kd>0 then b.kd else null '+
- ' end kd,case when c.db>0 then c.db else null end dbpy,case when c.kd>0 then c.kd else null end kdpy FROM (SELECT c.kode kd_akun,c.kode_header,c.nama_perkiraan, c.kelompok_akun,d.debit,d.kredit from (SELECT DISTINCT kode,kode_header,nama_perkiraan,'+
- ' status_neraca,kelompok_akun from t_daftar_perkiraan WHERE status_neraca=''1'' and kode=kode_header)c INNER JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+' order by periode2 desc limit 1)a '+
- ' INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d on c.kode=d.kd_akun GROUP BY c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit,c.kelompok_akun ORDER BY c.kode ASC) AA '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd,b.kode_header from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode_header=aa.kd_akun and c.jenis_tr <>''MEMORIAL'''+
- ' and (tgl_in>='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') and (kode_header<>''5400'' and kode_header<>''5500'') GROUP BY b.kode_header) b on 1=1'+
- ' LEFT JOIN LATERAL (select sum(a.debit) db,sum(a.kredit) kd,b.kode_header from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c  on a.no_in=c.no_in where  b.kode_header=aa.kd_akun and c.jenis_tr=''MEMORIAL'''+
- ' and (tgl_in >='+QuotedStr(periode1)+' and tgl_in <='+QuotedStr(periode2)+')and (kode_header<>''5400'' and kode_header<>''5500'') GROUP BY b.kode_header) c on 1=1 '+
- ' /* detail <>ihtisar */ '+
- ' UNION SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit>0 then aa.debit else NULL end debit,case when aa.kredit is NULL then 0 else aa.kredit end kredit,case when b.db is NULL then 0 else b.db end db,case when b.kd is null then 0'+
- ' else b.kd end kd,case when c.db is null then 0 else  c.db end dbpy,case when c.kd is null then 0 else c.kd end kdpy from (SELECT c.kode kd_akun,c.kode_header,c.kelompok_akun,c.nama_perkiraan,d.debit,d.kredit from (SELECT DISTINCT kelompok_akun,kode,'+
- ' kode_header,nama_perkiraan,status_neraca from t_daftar_perkiraan WHERE status_neraca=''1'' and kode<>kode_header and kode_header<>''5400'')c inner JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+''+
- ' order by periode2 desc limit 1) a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d  on c.kode=d.kd_akun GROUP BY c.kelompok_akun,c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit ORDER BY  c.kode ASC)AA '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and  c.jenis_tr<>''MEMORIAL'''+
- ' and (tgl_in >='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') GROUP BY b.kode)b on 1=1 '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join  t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and b.kode<>''1112.01'' and '+
- ' c.jenis_tr=''MEMORIAL'' and (tgl_in>='+QuotedStr(periode1)+' and tgl_in <='+QuotedStr(periode2)+') GROUP BY b.kode)c on 1=1 order by kd_akun ASC)xx)xx2)xx3 '+
- ' union select kelompok_akun,kd_akun,nama_perkiraan,debit,kredit,db,kd,dbpy,kdpy,dbnr,kdnr,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 '+
- ' end kdnr2 from (/*bop detail*/select kelompok_akun,kd_akun,nama_perkiraan,debit,kredit,db,kd,dbpy,kdpy,dbnr,kdnr,'+
- ' 0 dbnr2,0 kdnr2 from (select *,case when debit-kredit+db-kd>0 then debit-kredit+db-kd else 0 end dbnr,case when kredit-debit+kd-db > 0 then kredit-debit+kd-db else 0 end kdnr from (select kelompok_akun,kd_akun,nama_perkiraan,case when debit ISNULL '+
- ' then 0 else debit end debit,case when kredit ISNULL then 0 else kredit end kredit,case when db isnull then 0 else db end db, case when kd ISNULL then 0 else kd end kd,case when dbpy isnull then 0 else dbpy end dbpy,case when kdpy ISNULL then 0 else'+
- ' kdpy end kdpy from(SELECT aa.kelompok_akun,aa.kd_akun,aa.nama_perkiraan,case when aa.debit>0 then aa.debit else NULL end debit,case when aa.kredit>0 then aa.kredit else null end kredit,case when b.db>0 then b.db else null end db,case when b.kd>0 then'+
- ' b.kd else null end kd, case when c.db>0 then c.db else null end dbpy,case when c.kd>0 then c.kd else null end kdpy from (SELECT c.kode kd_akun,c.kode_header,c.kelompok_akun,c.nama_perkiraan,d.debit,d.kredit from (SELECT DISTINCT kelompok_akun,kode,'+
- ' kode_header, nama_perkiraan,status_neraca from t_daftar_perkiraan WHERE status_neraca=''1'' and kode<>kode_header and kode_header=''5400'')c INNER JOIN (select a.*,b.debit,b.kredit,kd_akun from (select * from t_neraca_lajur1 WHERE periode2<'+QuotedStr(periode1)+''+
- ' order by periode2 desc limit 1) a INNER JOIN t_neraca_lajur1_det b on a.notrans=b.notrans)d  on c.kode=d.kd_akun GROUP BY c.kelompok_akun,c.kode,c.kode_header,c.nama_perkiraan,d.debit,d.kredit ORDER BY  c.kode ASC)AA '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and  c.jenis_tr<>''MEMORIAL'' and '+
- ' (tgl_in >='+QuotedStr(periode1)+' and tgl_in<='+QuotedStr(periode2)+') GROUP BY b.kode)b on 1=1 '+
- ' LEFT JOIN LATERAL(select sum(a.debit) db,sum(a.kredit) kd, b.kode from t_item_neraca_det a inner join  t_daftar_perkiraan b on a.kd_akun=b.kode INNER JOIN t_item_neraca c on a.no_in=c.no_in where b.kode=aa.kd_akun and b.kode<>''1112.01'' and '+
- ' c.jenis_tr=''MEMORIAL'' and (tgl_in>='+QuotedStr(periode1)+' and tgl_in <='+QuotedStr(periode2)+') GROUP BY b.kode)c on 1=1 order by kd_akun ASC)xx)xx2)xx3)xx31)xx4 order by kd_akun)XXX'+
- ' /*Tambahan baru di atas*/'+
- ' left JOIN t_header_perkiraan yy on xxx.kd_akun=yy.kode_header) w';
- th:=FormatDateTime('yyyy',dtmulai.editvalue);
-  ProgressBar1.Visible:=true;     }
+  mm:=cbBulan.ItemIndex;
+  yy:=spTahun.EditValue;
   QNeraca_lajur.Close;
-  QNeraca_lajur.Open;
- { if th <='2022' then
+//  MemNeraca_lajur.Active:=false;
+ DBGridEh1.StartLoadingStatus();
+// MemNeraca_lajur.Active:=true;
+  with dm.Qtemp do
   begin
-    with QNeraca_lajur do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:=subquery;
+    close;
+    sql.Clear;
+    sql.Text:='select trans_year,trans_month from t_ak_account_balance  where trans_year='+QuotedStr(spTahun.EditValue)+' '+
+    ' and trans_month <'+QuotedStr(inttostr(cbBulan.ItemIndex))+' GROUP BY trans_year,trans_month order by trans_month desc limit 1';
     Open;
-    end;
   end;
-  if th > '2022' then
-  begin
-    with QNeraca_lajur do
+    if dm.Qtemp.RecordCount=0 then
     begin
-      close;
-      sql.Clear;
-      sql.Text:=subquery2;
-    Open;
-    end;
-  end;
-  if number < 8 then
-  begin
-  // neraca lajur
-    with dm.Qtemp2 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select * from t_neraca_lajur1 where periode1='+QuotedStr(periode1)+' and periode2='+QuotedStr(periode2);
-      ExecSQL;
-    end;
-    if DM.QTemp2.RecordCount>0 then
-    begin
-      EditNo:=dm.qtemp2['notrans'];
-      with dm.Qtemp do
+ {    with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' delete from t_ak_account_balance where trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+      with dm.Qtemp2 do
       begin
         close;
         sql.Clear;
-        sql.Text:='Update t_neraca_lajur1 set tgl_update=:tgl_up,pic=:pic where notrans=:notrans' ;//periode1=:periode1 and periode2=:periode2';
-                  ParamByName('tgl_up').AsDate:=now();
-                  ParamByName('notrans').AsString:=EditNo;
-                 // ParamByName('periode1').AsString:=periode1;
-                 // ParamByName('periode2').AsString:=periode2;
-                  ParamByName('pic').AsString:=nm;
-        ExecSQL;
+        sql.Text:='select trans_year,trans_month from t_ak_account_balance  where trans_year='+QuotedStr(inttostr(strtoint(spTahun.EditValue)-1))+' '+
+        ' and trans_month <=''12'' GROUP BY trans_year,trans_month order by trans_month desc limit 1';
+        Open;
       end;
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='delete from t_neraca_lajur1_det where notrans='+QuotedStr(editno);//periode1='+QuotedStr(periode1)+' and periode2='+QuotedStr(periode2);
-        ExecSQL;
-      end;
-    end;
-    if DM.QTemp2.RecordCount=0 then
-    begin
-      Autonumber;
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='insert into t_neraca_lajur1(tgl_update,periode1,periode2,tgl_input,thn,bln,pic,notrans)'+
-                  ' values(:tgl_up,:periode1,:periode2,:tgl_in,:thn,:bln,:pic,:notrans)';
-                  ParamByName('tgl_up').AsDate:=now();
-                  ParamByName('tgl_in').AsDate:=now();
-                  ParamByName('periode1').AsString:=periode1;
-                  ParamByName('periode2').AsString:=periode2;
-                  ParamByName('thn').AsString:=FormatDateTime('yyy',DtMulai.editvalue);
-                  ParamByName('bln').AsString:=FormatDateTime('mm',DtMulai.editvalue);
-                  ParamByName('pic').AsString:=nm;
-                  ParamByName('notrans').AsString:=EditNo;
-        ExecSQL;
-      end;
-    end;
-    QNeraca_lajur.First;
-    row:=0;
-    ProgressBar1.Min := 0;
-    ProgressBar1.Max := QNeraca_lajur.RecordCount;
-    while not QNeraca_lajur.eof do
-      begin
-      with dm.qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.text:='INSERT INTO t_neraca_lajur1_det(notrans,kd_akun,debit,kredit,periode1,periode2,thn,debit2,kredit2)VALUES'+
-          '(:notrans,:kd_akun,:db_nr,:kr_nr,:periode1,:periode2,:thn,:debit2,:kredit2)';
-          ParamByName('kd_akun').AsString:=QNeraca_lajur['kd_akun'];
-          ParamByName('db_nr').AsString:=QNeraca_lajur['dbnr3'];
-          ParamByName('kr_nr').AsString:=QNeraca_lajur['kdnr3'];
-          ParamByName('periode1').AsString:=FormatDateTime('yyy-mm-dd',DtMulai.editvalue);
-     //   ParamByName('periode2').AsString:=FormatDateTime('yyy-mm-dd',DtSelesai.editvalue);
-     //   ParamByName('thn').AsString:=FormatDateTime('yyy',DtSelesai.editvalue);
-          ParamByName('notrans').AsString:=EditNo;
-          ParamByName('debit2').AsString:=QNeraca_lajur['dblr'];
-          ParamByName('kredit2').AsString:=QNeraca_lajur['kdlr'];
-          ExecSQL;
-        end;
-        ProgressBar1.Position:=row;
-        QNeraca_lajur.Next;
-        row:=row+10;
-      end;
-      if th < '2023' then
-      begin
-        with dm.Qtemp2 do
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into t_ak_account_balance(account_code,balance,trans_year,trans_month) '+
+                      ' select account_code2,0,'+QuotedStr(spTahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+' from t_ak_account_sub';
+            Execute;
+          end;
+        with dm.Qtemp3 do
         begin
           close;
           sql.Clear;
-          sql.Text:='select  sum(kdlr)-sum(dblr) saldo from ('+subquery+') xx WHERE kelompok_akun=''2''';
-          Execute;
+          sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+          ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+          ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
+          ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+          ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+          ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+          ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+          ' )x  where dbend>0 or kdend>0 ';
+          open;
         end;
-      end;
-      if th >='2023' then
+        dm.Qtemp3.First;
+        while not dm.Qtemp3.eof do
+        begin
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
+              ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
+              ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+          dm.Qtemp3.Next;
+        end;       }
+        subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit'+
+            ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
+            ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+            ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+            ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+            ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+            ' )x GROUP BY account_code,account_name,trans_year,trans_month';
+        subquery2:='select * ,case when (balance_status=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,'+
+              ' case when (balance_status=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,'+
+              ' case when (balance_status=2 and dbnr2 >0) then dbnr2 else 0 end dblr, '+
+              ' case when (balance_status=2  and kdnr2>0) then kdnr2 else 0 end kdlr,0 notr from '+
+              ' (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,'+
+              ' case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from'+
+              ' (select balance_status,account_code,account_name,posisi_dk,trans_year,trans_month,debit,kredit,db,kd,dbpy,kdpy, '+
+              ' case when posisi_dk=''D'' then debit-kredit+db-kd else 0 end dbnr, case when posisi_dk=''K'' then kredit-debit+kd-db '+
+              ' else 0 end kdnr from (select aa.posisi_dk,aa.balance_status,sa.*,case when mts.db>0 then mts.db else 0 end db,'+
+              ' case when mts.kd>0 then mts.kd else 0 end kd,case when bm.debit>0 then bm.debit else 0 end dbpy,'+
+              ' case when bm.kredit>0 then bm.kredit else 0 end kdpy'+
+              ' from  ('+subquery+') sa left join '+
+              ' (select account_code,account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,case when sum(kd)>0 then sum(kd) else 0 end kd'+
+              ' from  (select * from "VRekap_Mutasi" where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') a  GROUP BY account_code,account_name,notr) mts '+
+              ' on sa.account_code=mts.account_code'+
+              ' left join (select account_code,sum(debit) debit,sum(kredit) kredit from "V_BukuMemorial" '+
+              ' where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+''+
+              ' group by account_code) bm on sa.account_code=bm.account_code '+
+              ' inner join t_ak_account aa on sa.account_code=aa.code where trans_year <> 0 and trans_month <> 0 )'+
+              ' nr)nr2)nr3 order by account_code asc';
+      with QNeraca_lajur do
+         begin
+           Close;
+           sql.Clear;
+              sql.Text:=subquery2;
+           open;
+         end;
+    end;
+      if dm.Qtemp.RecordCount<>0 then
       begin
-        with dm.Qtemp2 do
+       { with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' delete from t_ak_account_balance where trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+       with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into t_ak_account_balance(account_code,balance,trans_year,trans_month) '+
+                      ' select account_code2,0,'+QuotedStr(spTahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+' from t_ak_account_sub';
+            Execute;
+          end;
+        with dm.Qtemp3 do
         begin
           close;
           sql.Clear;
-          sql.Text:='select  sum(kdlr)-sum(dblr) saldo from ('+subquery2+') xx WHERE kelompok_akun=''2''';
-          Execute;
+          sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+          ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+          ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+          ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+          ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+          ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+          ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+          ' )x  where dbend>0 or kdend>0 ';
+          open;
         end;
+        dm.Qtemp3.First;
+        while not dm.Qtemp3.eof do
+        begin
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
+              ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
+              ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+          dm.Qtemp3.Next;
+        end;           }
+        subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit,sum(trdb) trdb,sum(trkd) trkd,sum(dbend) dbend,sum(kdend) kdend'+
+            ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+            ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+            ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+            ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+            ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+            ' )x GROUP BY account_code,account_name,trans_year,trans_month ';
+        subquery2:='select * ,case when (balance_status=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,'+
+              ' case when (balance_status=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,'+
+              ' case when (balance_status=2 and dbnr2 >0) then dbnr2 else 0 end dblr, '+
+              ' case when (balance_status=2  and kdnr2>0) then kdnr2 else 0 end kdlr,0 notr from '+
+              ' (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,'+
+              ' case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from'+
+              ' (select balance_status,account_code,account_name,posisi_dk,trans_year,trans_month,debit,kredit,db,kd,dbpy,kdpy, '+
+              ' case when posisi_dk=''D'' then debit-kredit+db-kd else 0 end dbnr, case when posisi_dk=''K'' then kredit-debit+kd-db '+
+              ' else 0 end kdnr from (select aa.posisi_dk,aa.balance_status,sa.*,case when mts.db>0 then mts.db else 0 end db,'+
+              ' case when mts.kd>0 then mts.kd else 0 end kd,case when bm.debit>0 then bm.debit else 0 end dbpy,'+
+              ' case when bm.kredit>0 then bm.kredit else 0 end kdpy'+
+              ' from  ('+subquery+') sa left join '+
+              ' (select account_code,account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,case when sum(kd)>0 then sum(kd) else 0 end kd'+
+              ' from  (select * from "VRekap_Mutasi" where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') a  GROUP BY account_code,account_name,notr) mts '+
+              ' on sa.account_code=mts.account_code'+
+              ' left join (select account_code,sum(debit) debit,sum(kredit) kredit from "V_BukuMemorial" '+
+              ' where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+''+
+              ' group by account_code) bm on sa.account_code=bm.account_code '+
+              ' inner join t_ak_account aa on sa.account_code=aa.code where trans_year <> 0 and trans_month <> 0 )'+
+              ' nr)nr2)nr3 order by account_code asc';
+      with QNeraca_lajur do
+         begin
+           Close;
+           sql.Clear;
+              sql.Text:=subquery2;
+           open;
+         end;
+      end;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select sum(kdlr)-sum(dblr) saldo from ('+subquery2+') xx WHERE balance_status=''2''';
+        open;
+      end;
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select account_code from t_ak_account_master  WHERE master_id=''5''';
+        open;
+      end;
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select balance from t_ak_account_balance WHERE account_code='+QuotedStr(dm.Qtemp1['account_code'])+''+
+        ' and trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+        Open;
       end;
       with dm.Qtemp3 do
       begin
         close;
         sql.Clear;
-        sql.Text:='select kredit-debit kredit from t_neraca_lajur1_det where periode1='+QuotedStr(periode1)+' and periode2='+QuotedStr(periode2)+' and kd_akun=''3004''';
+        sql.Text:='update t_ak_account_balance set balance=:balance WHERE account_code='+QuotedStr(dm.Qtemp1['account_code'])+''+
+          ' and trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+          ParamByName('balance').Value:=dm.QTemp['saldo']+DM.QTemp2['balance'];
         ExecSQL;
       end;
-          with dm.qtemp do
-            begin
-              close;
-              sql.clear;
-              sql.text:='update t_neraca_lajur1_det set debit=:db_nr,kredit=:kr_nr,thn=:thn where kd_akun=:kd_akun and notrans=:notrans' ;//periode1=:periode1 and periode2=:periode2';
-              ParamByName('kd_akun').AsString:='3004';
-              ParamByName('db_nr').AsString:='0';
-              ParamByName('kr_nr').AsString:=dm.QTemp2['saldo']+DM.QTemp3['kredit'];
-              ParamByName('notrans').AsString:=EditNo;
-            // ParamByName('periode1').AsString:=FormatDateTime('yyy-mm-dd',DtMulai.editvalue);
-            // ParamByName('periode2').AsString:=FormatDateTime('yyy-mm-dd',DtSelesai.editvalue);
-            // ParamByName('thn').AsString:=FormatDateTime('yyy',DtSelesai.editvalue);
-              ExecSQL;
-            end;
-  end;       }
-  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_neracalajur.fr3');
-  Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+FormatDateTime('dd MMMM yyy',DtMulai.editvalue)+' - '+FormatDateTime('dd MMMM yyy',sptahun.editvalue);
- // GProses.Progress:=row+100;
-  Rpt.ShowReport();
-  //ProgressBar1.Visible:=false;
+      DBGridEh1.FinishLoadingStatus();
+   //   QNeraca_lajur.Open;
+      //MemNeraca_lajur.Active:=true;
+      Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_neracalajur.fr3');
+      TfrxMemoView(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+cbBulan.Text+' - '+QuotedStr(sptahun.editvalue);
+      Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH;
+   // GProses.Progress:=row+100;
+      Rpt.ShowReport();
+    //ProgressBar1.Visible:=false;
 end;
 
 procedure TFRpt_NeracaLajur.dxBarLargeButton2Click(Sender: TObject);
@@ -478,6 +468,213 @@ begin
  // Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+FormatDateTime('dd MMMM yyy',DtMulai.editvalue)+' - '+FormatDateTime('dd MMMM yyy',sptahun.editvalue);
   //GProses.Progress:=row+100;
   Rpt.ShowReport();
+end;
+
+procedure TFRpt_NeracaLajur.dxBarLargeButton4Click(Sender: TObject);
+var q:TUniQuery;
+  subquery,subquery2,subquery3:string;
+begin
+  mm:=cbBulan.ItemIndex;
+  yy:=spTahun.EditValue;
+  QNeraca_lajur.Close;
+  MemNeraca_lajur.Active:=false;
+ DBGridEh1.StartLoadingStatus();
+// MemNeraca_lajur.Active:=true;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select trans_year,trans_month from t_ak_account_balance  where trans_year='+QuotedStr(spTahun.EditValue)+' '+
+    ' and trans_month <'+QuotedStr(inttostr(cbBulan.ItemIndex))+' GROUP BY trans_year,trans_month order by trans_month desc limit 1';
+    Open;
+  end;
+    if dm.Qtemp.RecordCount=0 then
+    begin
+     with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' delete from t_ak_account_balance where trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select trans_year,trans_month from t_ak_account_balance  where trans_year='+QuotedStr(inttostr(strtoint(spTahun.EditValue)-1))+' '+
+        ' and trans_month <=''12'' GROUP BY trans_year,trans_month order by trans_month desc limit 1';
+        Open;
+      end;
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into t_ak_account_balance(account_code,balance,trans_year,trans_month) '+
+                      ' select account_code2,0,'+QuotedStr(spTahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+' from t_ak_account_sub';
+            Execute;
+          end;
+        with dm.Qtemp3 do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+          ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+          ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
+          ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+          ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+          ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+          ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+          ' )x  where dbend>0 or kdend>0 ';
+          open;
+        end;
+        dm.Qtemp3.First;
+        while not dm.Qtemp3.eof do
+        begin
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
+              ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
+              ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+          dm.Qtemp3.Next;
+        end;
+        subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit'+
+            ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
+            ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+            ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+            ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+            ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+            ' )x GROUP BY account_code,account_name,trans_year,trans_month';
+        subquery2:='select * ,case when (balance_status=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,'+
+              ' case when (balance_status=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,'+
+              ' case when (balance_status=2 and dbnr2 >0) then dbnr2 else 0 end dblr, '+
+              ' case when (balance_status=2  and kdnr2>0) then kdnr2 else 0 end kdlr,0 notr from '+
+              ' (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,'+
+              ' case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from'+
+              ' (select balance_status,account_code,account_name,posisi_dk,trans_year,trans_month,debit,kredit,db,kd,dbpy,kdpy, '+
+              ' case when posisi_dk=''D'' then debit-kredit+db-kd else 0 end dbnr, case when posisi_dk=''K'' then kredit-debit+kd-db '+
+              ' else 0 end kdnr from (select aa.posisi_dk,aa.balance_status,sa.*,case when mts.db>0 then mts.db else 0 end db,'+
+              ' case when mts.kd>0 then mts.kd else 0 end kd,case when bm.debit>0 then bm.debit else 0 end dbpy,'+
+              ' case when bm.kredit>0 then bm.kredit else 0 end kdpy'+
+              ' from  ('+subquery+') sa left join '+
+              ' (select account_code,account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,case when sum(kd)>0 then sum(kd) else 0 end kd'+
+              ' from  (select * from "VRekap_Mutasi" where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') a  GROUP BY account_code,account_name,notr) mts '+
+              ' on sa.account_code=mts.account_code'+
+              ' left join (select account_code,sum(debit) debit,sum(kredit) kredit from "V_BukuMemorial" '+
+              ' where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+''+
+              ' group by account_code) bm on sa.account_code=bm.account_code '+
+              ' inner join t_ak_account aa on sa.account_code=aa.code where trans_year <> 0 and trans_month <> 0 )'+
+              ' nr)nr2)nr3 order by account_code asc';
+      with QNeraca_lajur do
+         begin
+           Close;
+           sql.Clear;
+              sql.Text:=subquery2;
+           open;
+         end;
+    end;
+      if dm.Qtemp.RecordCount<>0 then
+      begin
+        with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' delete from t_ak_account_balance where trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+       with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:=' insert into t_ak_account_balance(account_code,balance,trans_year,trans_month) '+
+                      ' select account_code2,0,'+QuotedStr(spTahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+' from t_ak_account_sub';
+            Execute;
+          end;
+        with dm.Qtemp3 do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+          ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+          ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+          ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+          ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+          ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+          ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+          ' )x  where dbend>0 or kdend>0 ';
+          open;
+        end;
+        dm.Qtemp3.First;
+        while not dm.Qtemp3.eof do
+        begin
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.Clear;
+              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
+              ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
+              ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            Execute;
+          end;
+          dm.Qtemp3.Next;
+        end;
+        subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit,sum(trdb) trdb,sum(trkd) trkd,sum(dbend) dbend,sum(kdend) kdend'+
+            ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+            ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+            ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+            ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+            ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+            ' )x GROUP BY account_code,account_name,trans_year,trans_month ';
+        subquery2:= 'select * ,case when (balance_status=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,'+
+              ' case when (balance_status=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,'+
+              ' case when (balance_status=2 and dbnr2 >0) then dbnr2 else 0 end dblr, '+
+              ' case when (balance_status=2  and kdnr2>0) then kdnr2 else 0 end kdlr,0 notr from '+
+              ' (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,'+
+              ' case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from'+
+              ' (select balance_status,account_code,account_name,posisi_dk,trans_year,trans_month,debit,kredit,db,kd,dbpy,kdpy, '+
+              ' case when posisi_dk=''D'' then debit-kredit+db-kd else 0 end dbnr, case when posisi_dk=''K'' then kredit-debit+kd-db '+
+              ' else 0 end kdnr from (select aa.posisi_dk,aa.balance_status,sa.*,case when mts.db>0 then mts.db else 0 end db,'+
+              ' case when mts.kd>0 then mts.kd else 0 end kd,case when bm.debit>0 then bm.debit else 0 end dbpy,'+
+              ' case when bm.kredit>0 then bm.kredit else 0 end kdpy'+
+              ' from  ('+subquery+') sa left join '+
+              ' (select account_code,account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,case when sum(kd)>0 then sum(kd) else 0 end kd'+
+              ' from  (select * from "VRekap_Mutasi" where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') a  GROUP BY account_code,account_name,notr) mts '+
+              ' on sa.account_code=mts.account_code'+
+              ' left join (select account_code,sum(debit) debit,sum(kredit) kredit from "V_BukuMemorial" '+
+              ' where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+''+
+              ' group by account_code) bm on sa.account_code=bm.account_code '+
+              ' inner join t_ak_account aa on sa.account_code=aa.code where trans_year <> 0 and trans_month <> 0)'+
+              ' nr)nr2)nr3 order by account_code asc';
+        with QNeraca_lajur do
+           begin
+             Close;
+             sql.Clear;
+              sql.Text:=subquery2;
+              open;
+           end;
+      end;
+      DBGridEh1.FinishLoadingStatus();
+      QNeraca_lajur.Open;
+      MemNeraca_lajur.Active:=true;
 end;
 
 procedure TFRpt_NeracaLajur.DxRefreshClick(Sender: TObject);

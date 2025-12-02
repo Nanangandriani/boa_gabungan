@@ -219,6 +219,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.00'
             DynProps = <>
             EditButtons = <>
             FieldName = 'jum_piutang'
@@ -444,10 +445,9 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         end
         object jum_piutang: TMTNumericDataFieldEh
           FieldName = 'jum_piutang'
-          NumericDataType = fdtCurrencyEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
-          DisplayFormat = '#,##0.00'
           currency = False
           Precision = 15
         end

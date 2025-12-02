@@ -41,13 +41,6 @@ type
     ActClose: TAction;
     dxBarManager1: TdxBarManager;
     dxBarManager1Bar1: TdxBar;
-    dxBarButton2: TdxBarButton;
-    dxBarButton1: TdxBarButton;
-    dxBarButton3: TdxBarButton;
-    dxBarButton4: TdxBarButton;
-    dxBarButton5: TdxBarButton;
-    dxBarButton6: TdxBarButton;
-    dxBarButton7: TdxBarButton;
     dxBarLargeNew: TdxBarLargeButton;
     dxBarUpdate: TdxBarButton;
     dxBarRefresh: TdxBarButton;
@@ -58,28 +51,17 @@ type
     QSalesOrder: TUniQuery;
     DsSalesOrder: TDataSource;
     dxBarManager1Bar2: TdxBar;
-    cbBulan: TdxBarCombo;
     edTahun: TdxBarSpinEdit;
     dxBarLargeButton1: TdxBarLargeButton;
     DBGridEh1: TDBGridEh;
     Qdetail: TUniQuery;
     DsDetail: TDataSource;
-    dxBarCombo1: TdxBarCombo;
-    dxBarButton8: TdxBarButton;
     dxBarSpinEdit1: TdxBarSpinEdit;
     dxBarFontNameCombo1: TdxBarFontNameCombo;
-    dxBarButton9: TdxBarButton;
-    dxBarLargeButton2: TdxBarLargeButton;
-    dxBarLargeButton3: TdxBarLargeButton;
-    cxBarEditItem1: TcxBarEditItem;
-    dxBarButton10: TdxBarButton;
-    cxBarEditItem2: TcxBarEditItem;
-    cxBarEditItem3: TcxBarEditItem;
     dtAwal: TcxBarEditItem;
     dtAkhir: TcxBarEditItem;
     edKaresidenan: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
-    dxBarManager1Bar3: TdxBar;
     procedure dxBarRefreshClick(Sender: TObject);
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);
@@ -131,7 +113,7 @@ procedure TFSalesOrder.Refresh;
 var mm: Integer;
 strKaresidenan:String;
 begin
-  mm:=cbBulan.ItemIndex+1;
+//  mm:=cbBulan.ItemIndex+1;
   strKaresidenan:='';
   if edKaresidenan.EditValue<>'' then
   begin

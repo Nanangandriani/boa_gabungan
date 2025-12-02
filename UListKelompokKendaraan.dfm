@@ -24,6 +24,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
     EmptyDataInfo.Active = True
     RowDetailPanel.Active = True
     RowDetailPanel.Height = 180
+    SearchPanel.Enabled = True
     TabOrder = 0
     OnDblClick = DBGridDblClick
     Columns = <
@@ -31,7 +32,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'vehicle_group_id'
+        FieldName = 'vehicle_group_sort_number'
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Kelompok Kendaraan'
@@ -193,6 +194,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT DISTINCT '
+      '    vehicle_group_sort_number,'
       '    vehicle_group_id,'
       '    type_vehicles_code,'
       '    type_vehicles_name,'

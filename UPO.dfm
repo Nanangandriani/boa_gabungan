@@ -1390,12 +1390,12 @@ object FPO: TFPO
     Top = 82
     Datasets = <
       item
-        DataSet = dm.DBPerusahaan
-        DataSetName = 'DBPerusahaan'
-      end
-      item
         DataSet = Dbrpt
         DataSetName = 'Dbrpt'
+      end
+      item
+        DataSet = dm.DBPerusahaan
+        DataSetName = 'DBPerusahaan'
       end>
     Variables = <>
     Style = <>

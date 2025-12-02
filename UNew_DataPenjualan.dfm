@@ -787,10 +787,7 @@ object FNew_Penjualan: TFNew_Penjualan
             CellButtons = <>
             DynProps = <>
             EditButton.Enabled = False
-            EditButtons = <
-              item
-                OnClick = DBGridDetailColumns2EditButtons0Click
-              end>
+            EditButtons = <>
             FieldName = 'NM_ITEM'
             Footers = <>
             Title.Caption = 'Nama Item'

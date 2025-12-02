@@ -59,7 +59,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
   UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan,
-  UPenyesuaianPenjualan;
+  UPenyesuaianPenjualan, UKartuPiutang;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares: String;
@@ -78,6 +78,9 @@ begin
   begin
     strKares:= SelectRow('SELECT code_karesidenan FROM get_customer() where customer_code='+QuotedStr(FNew_SalesOrder.edKode_Pelanggan.Text)+'');
     strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
+  end else if vcall='kartupiutang' then
+  begin
+    strWhere:=' and code_region='+QuotedStr(FKartuPiutang.strKodePelanggan);
   end else begin
     strWhere:='';
     strKares:='';
@@ -166,6 +169,11 @@ begin
      FDataPenagihanPiutang.MemDetail.post;
   end;
   //Nanang
+  if vcall='kartupiutang' then
+  begin
+    FKartuPiutang.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FKartuPiutang.edNama_Pelanggan.EditValue:=MemMasterData['NM_PELANGGAN'];
+  end;
   if vcall='penyesuaian_penjualan' then
   begin
     FPenyesuaianPenjualan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
@@ -337,7 +345,7 @@ begin
     GBType2.Visible:=true;
   end;
 
-  if (vcall='daftar_klasifikasi') OR (vcall='dpp') then
+  if (vcall='daftar_klasifikasi') OR (vcall='dpp') OR (vcall='kartupiutang') then
   begin
     pnlfilter.Visible:=false;
     RefreshGrid;

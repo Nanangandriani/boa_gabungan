@@ -25,7 +25,8 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
+  cxCalendar, cxBarEditItem;
 
 type
   TFListPerintahMuat = class(TForm)
@@ -85,6 +86,10 @@ type
     QCetakamount: TFloatField;
     QCetakunit: TStringField;
     QCetakbanyaknya: TMemoField;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    dxBarLargeButton4: TdxBarLargeButton;
+    dxBarLargeButton5: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -94,6 +99,8 @@ type
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton5Click(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -123,8 +130,11 @@ begin
        close;
        sql.Clear;
        sql.Text:='select * from "public"."t_spm" '+
-                 'where deleted_at is null and EXTRACT(YEAR FROM loading_date)='+edTahun.Text+' AND '+
-                 'EXTRACT(MONTH FROM loading_date)='+(IntToStr(mm))+' order by loading_date Desc, notrans Desc ';
+//                 'where EXTRACT(YEAR FROM loading_date)='+edTahun.Text+' AND '+
+//                 'EXTRACT(MONTH FROM loading_date)='+(IntToStr(mm))+' '+
+                  'WHERE (loading_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND  '+
+                 'deleted_at is null order by loading_date Desc, notrans Desc ';
        open;
    end;
   finally
@@ -223,10 +233,10 @@ end;
 procedure TFListPerintahMuat.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
+//  year :=FormatDateTime('yyyy', NOW());
+//  month :=FormatDateTime('m', NOW());
+//  edTahun.Text:=(year);
+//  cbBulan.ItemIndex:=StrToInt(month)-1;
   Refresh;
 end;
 
@@ -352,11 +362,24 @@ end;
 
 procedure TFListPerintahMuat.dxBarLargeButton3Click(Sender: TObject);
 begin
+//  Refresh;
+end;
+
+procedure TFListPerintahMuat.dxBarLargeButton4Click(Sender: TObject);
+begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+end;
+
+procedure TFListPerintahMuat.dxBarLargeButton5Click(Sender: TObject);
+begin
   Refresh;
 end;
 
 procedure TFListPerintahMuat.FormShow(Sender: TObject);
 begin
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
   ActROExecute(sender);
 end;
 

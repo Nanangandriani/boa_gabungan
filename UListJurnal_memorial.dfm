@@ -1063,8 +1063,8 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
         'select a.*,b.account_name nama_akun from t_memorial_journal_deta' +
         'il a'
       
-        'left join t_ak_account b on a.account_code=b.code order by a.id ' +
-        'asc')
+        'left join t_ak_account_sub b on a.account_code=b.account_code2 o' +
+        'rder by a.id asc')
     MasterSource = DsJurnal
     MasterFields = 'memo_no'
     DetailFields = 'memo_no'

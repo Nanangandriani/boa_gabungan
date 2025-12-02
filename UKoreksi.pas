@@ -86,7 +86,7 @@ begin
                 'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
     ExecSQL;
   end;
-  MessageDlg('Data Berhasil di Setuji..!!',mtInformation,[MBOK],0);
+  MessageDlg('Data Berhasil di Setujui..!!',mtInformation,[MBOK],0);
   FMainMenu.TampilTabForm2;
   Close;
 end;

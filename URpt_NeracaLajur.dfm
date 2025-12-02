@@ -2,8 +2,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   Left = 0
   Top = 0
   Caption = 'Neraca Lajur'
-  ClientHeight = 394
-  ClientWidth = 775
+  ClientHeight = 601
+  ClientWidth = 920
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -73,16 +73,16 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   end
   object Panel1: TPanel
     Left = 0
-    Top = 353
-    Width = 775
+    Top = 560
+    Width = 920
     Height = 41
     Align = alBottom
     TabOrder = 2
     Visible = False
-    ExplicitTop = 352
-    ExplicitWidth = 771
+    ExplicitTop = 551
+    ExplicitWidth = 914
     object BBatal: TRzBitBtn
-      Left = 699
+      Left = 844
       Top = 1
       Height = 39
       Align = alRight
@@ -141,10 +141,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 695
+      ExplicitLeft = 838
     end
     object BPrint: TRzBitBtn
-      Left = 620
+      Left = 765
       Top = 1
       Width = 79
       Height = 39
@@ -204,7 +204,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 616
+      ExplicitLeft = 759
     end
   end
   object ProgressBar1: TProgressBar
@@ -218,7 +218,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 775
+    Width = 920
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -239,8 +239,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 775
-    Height = 226
+    Width = 920
+    Height = 433
     Align = alClient
     DataSource = DsNeraca_lajur
     DrawMemoText = True
@@ -254,7 +254,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_akun'
+        FieldName = 'account_code'
         Footers = <>
         Title.Caption = 'No. Perkiraan'
         Width = 80
@@ -263,7 +263,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'nama_perkiraan'
+        FieldName = 'account_name'
         Footers = <>
         Title.Caption = 'Nama Perkiraan'
         Width = 158
@@ -464,6 +464,25 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   object DbNeraca_lajur: TfrxDBDataset
     UserName = 'DbNeraca_lajur'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'kelompok_akun=kelompok_akun'
+      'account_code=account_code'
+      'notr=notr'
+      'account_name=account_name'
+      'debit=debit'
+      'kredit=kredit'
+      'db=db'
+      'kd=kd'
+      'dbpy=dbpy'
+      'kdpy=kdpy'
+      'dbnr=dbnr'
+      'kdnr=kdnr'
+      'dbnr2=dbnr2'
+      'kdnr2=kdnr2'
+      'dbnr3=dbnr3'
+      'kdnr3=kdnr3'
+      'dblr=dblr'
+      'kdlr=kdlr')
     DataSet = QNeraca_lajur
     BCDToCurrency = False
     DataSetOptions = []
@@ -474,91 +493,92 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT w.kelompok_akun ,w.kd_akun,w.notr,CASE'#9'WHEN w.notr = 0 TH' +
-        'En concat ('#39#39',w.nama_perkiraan ) ELSE w. nama_perkiraan END nama' +
-        '_perkiraan,SUM ( w.debit ) debit,SUM ( w.kredit ) kredit,SUM ( w' +
-        '.db ) db,SUM ( w.kd ) kd,SUM ( w.dbpy ) dbpy, SUM ( w.kdpy ) kdp' +
-        'y,SUM ( w.dbnr ) dbnr,SUM ( w.kdnr ) kdnr,SUM ( w.dbnr2 ) dbnr2,' +
-        'SUM ( w.kdnr2 ) kdnr2,SUM ( w.dbnr3 ) dbnr3,SUM ( w.kdnr3 ) kdnr' +
-        '3,SUM ( w.dblr ) dblr,SUM ( w.kdlr ) kdlr  FROM /*Tambahan baru ' +
-        'di atas*/   (SELECT xxx.*,CASE'#9'WHEN yy.header_code IS NULL THEN'#9 +
-        '0 ELSE 1 END notr,yy.header_code FROM (SELECT'#9'* ,CASE'#9'WHEN ( xx4' +
-        '.kelompok_akun = 1 AND  xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 EN' +
-        'D dbnr3,CASE'#9'WHEN ( xx4.kelompok_akun = 1 AND xx4.kdnr2 > 0 ) TH' +
-        'EN'#9'xx4.kdnr2 ELSE 0  END kdnr3, CASE WHEN (xx4.kelompok_akun = 2' +
-        ' AND xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dblr,CASE'#9'WHEN ( ' +
-        'xx4.kelompok_akun = 2 AND xx4.kdnr2 > 0 ) THEN xx4. kdnr2 ELSE 0' +
-        '  END kdlr FROM (SELECT'#9'*,CASE'#9'WHEN ( xx3.dbnr-xx3.kdnr ) + (  x' +
-        'x3.dbpy-xx3.kdpy ) > 0 THEN'#9'(xx3.dbnr- xx3.kdnr) + (xx3.dbpy-xx3' +
-        '.kdpy ) ELSE 0 END dbnr2, CASE'#9'WHEN (xx3.kdnr -xx3.dbnr ) + (xx3' +
-        '.kdpy-xx3.dbpy ) > 0 THEN'#9'(  xx3.kdnr -  xx3.dbnr ) + (  xx3.kdp' +
-        'y -  xx3.dbpy ) ELSE 0 END kdnr2 FROM  (SELECT'#9'*,CASE'#9'WHEN xx2.d' +
-        'ebit - xx2.kredit + xx2.db - xx2.kd > 0 THEN'#9'xx2.debit - xx2.kre' +
-        'dit + xx2.db - xx2.kd ELSE 0 END dbnr, CASE'#9'WHEN xx2.kredit - xx' +
-        '2.debit + xx2.kd - xx2.db > 0 THEN'#9'xx2.kredit - xx2.debit + xx2.' +
-        'kd - xx2.db ELSE 0 END kdnr FROM'#9' (SELECT'#9'xx.kelompok_akun,xx.kd' +
-        '_akun,xx.nama_perkiraan,CASE WHEN xx.debit > 0 THEN'#9'xx.debit ELS' +
-        'E 0 END debit,CASE WHEN xx.kredit > 0 THEN'#9'xx. kredit ELSE 0 END' +
-        ' kredit,CASE'#9'WHEN xx.db > 0 THEN'#9'0 ELSE xx.db END db,CASE'#9'WHEN x' +
-        'x.kd > 0 THEN'#9'0 ELSE xx.kd '#9'END kd,CASE WHEN xx.dbpy > 0 THEN 0 ' +
-        'ELSE xx.dbpy '#9'END dbpy,CASE WHEN xx.kdpy > 0 THEN'#9'0 ELSE xx.kdpy' +
-        ' END kdpy FROM '#9'/* HEADER */  (SELECT'#9'aa.balance_status kelompok' +
-        '_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE WHEN aa.deb' +
-        'it > 0 THEN aa.debit ELSE NULL END debit,CASE WHEN aa.kredit IS ' +
-        'NULL THEN 0 ELSE aa.kredit END kredit, CASE'#9'WHEN b.db IS NULL TH' +
-        'EN 0 ELSE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 ELSE b.kd '#9'E' +
-        'ND kd,CASE WHEN C.db IS NULL THEN'#9'0 ELSE C.db '#9'END dbpy,CASE'#9'WHE' +
-        'N C.kd IS NULL THEN'#9'0 ELSE C.kd '#9'END kdpy FROM'#9'(SELECT C.code kd' +
-        '_akun,C.header_code,C.balance_status,C.account_name,SUM (c.db ) ' +
-        'debit,'#9'SUM (C.kd ) kredit FROM  '#9'(SELECT DISTINCT A.code,A.heade' +
-        'r_code,A.account_name,A.balance_status,b.db,b.kd FROM'#9't_ak_accou' +
-        'nt'#9'A INNER JOIN "VSearch_Item_Neraca" b ON A.code = b.account_co' +
-        'de WHERE  /*balance_status='#39'1'#39' and*/ code = header_code AND head' +
-        'er_code <> '#39'5400'#39' ) C  GROUP BY C.code,C.header_code,C.balance_s' +
-        'tatus,C.account_name ORDER BY'#9'C.code ASC) AA LEFT JOIN LATERAL (' +
-        'SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM(amount) ELSE 0 END db,' +
-        'CASE WHEN status_dk = '#39'K'#39' THEN'#9'SUM(amount)ELSE 0 END kd,b.code F' +
-        'ROM'#9't_general_ledger_real'#9'A  INNER JOIN t_ak_account b ON A.acco' +
-        'unt_code = b.code WHERE'#9'b.code = aa.kd_akun AND A.module_id <> 7' +
-        ' AND (to_char( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( to_char( tra' +
-        'ns_date, '#39'mm'#39' ) = '#39'3'#39') GROUP BY b.code,A.status_dk) b ON 1 = 1  ' +
-        #9'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM ( ' +
-        'amount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN'#9'SUM (amoun' +
-        't) ELSE 0 '#9'END kd,'#9'b.code FROM'#9't_general_ledger_real'#9'A INNER JOI' +
-        'N t_ak_account b ON A.account_code = b.code WHERE'#9'b.code = aa.kd' +
-        '_akun AND b.code <> '#39'1112.01'#39' '#9'AND A.module_id = 7 '#9'AND  ( to_ch' +
-        'ar( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( to_char( trans_date, '#39'm' +
-        'm'#39' ) = '#39'3'#39')   GROUP BY'#9'b.code,A.status_dk '#9') C ON 1 = 1 ORDER BY' +
-        #9'kd_akun ASC ) xx ) xx2) xx3   UNION  SELECT'#9'xx31.kelompok_akun,' +
-        'xx31.kd_akun,xx31.nama_perkiraan,xx31.debit,xx31.kredit,xx31.db,' +
-        'xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,xx31.kdnr, CASE'#9'WHEN ( xx3' +
-        '1.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx31.kdpy ) > 0 THEN'#9'( xx31' +
-        '.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx31.kdpy ) ELSE 0 END dbnr2' +
-        ', CASE'#9'WHEN ( xx31.dbnr - xx31.dbnr ) + ( xx31.kdpy - xx31.dbpy ' +
-        ') > 0 THEN'#9'( xx31.kdnr - xx31.dbnr ) + ( xx31.kdpy - xx31.dbpy )' +
-        ' ELSE 0 END kdnr2 FROM'#9' (/*bop detail*/ SELECT'#9'xx3.kelompok_akun' +
-        ',xx3.kd_akun,xx3.nama_perkiraan,xx3.debit,xx3.kredit,xx3.db,xx3.' +
-        'kd,xx3.dbpy,xx3.kdpy,xx3.dbnr,xx3.kdnr,0 dbnr2,0 kdnr2 FROM   (S' +
-        'ELECT'#9'*,CASE'#9'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0 T' +
-        'HEN'#9'xx2.debit - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr, CA' +
-        'SE'#9'WHEN xx2.kredit -xx2.debit + xx2.kd - xx2.db > 0 THEN xx2.kre' +
-        'dit - xx2.debit + xx2.kd - xx2.db ELSE 0 END kdnr FROM '#9'(SELECT'#9 +
-        'xx.kelompok_akun,xx.kd_akun,xx.nama_perkiraan,CASE'#9'WHEN xx.debit' +
-        ' > 0 THEN xx.debit ELSE 0 END debit,CASE'#9'WHEN xx.kredit >0 THEN'#9 +
-        'xx.debit ELSE 0 END kredit, CASE'#9'WHEN xx.db >0 THEN xx.db ELSE 0' +
-        ' END db,CASE'#9'WHEN xx.kd >0 THEN xx.kd  ELSE 0 END kd,CASE'#9'WHEN x' +
-        'x.dbpy>0  THEN xx.dbpy ELSE 0'#9'END dbpy,CASE'#9'WHEN xx.kdpy >0 THEN' +
-        #9'xx.kdpy ELSE 0'#9'END kdpy FROM (SELECT'#9'aa.balance_status kelompok' +
-        '_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE'#9'WHEN aa.deb' +
-        'it > 0 THEN'#9'aa.debit ELSE NULL END debit,CASE'#9'WHEN aa.kredit IS ' +
-        'NULL THEN'#9'0 ELSE aa.kredit END kredit, CASE'#9'WHEN b.db IS NULL TH' +
-        'EN 0 ELSE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 ELSE b.kd EN' +
-        'D kd,CASE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy,CASE WHEN ' +
-        'C.kd IS NULL THEN 0 ELSE C.kd END kdpy FROM '#9'(SELECT C.code kd_a' +
-        'kun,C.header_code,C.balance_status,C.account_name,d.debit,d.kred' +
-        'it FROM  (SELECT DISTINCT code, header_code, account_name, balan' +
-        'ce_status FROM t_ak_account A WHERE balance_status = '#39'1'#39' ) C  IN' +
-        'NER JOIN (SELECT'#9'trans_year,A.periode1,A.periode2,trans_month'
+        'SELECT w.kelompok_akun ,w.kd_akun account_code,w.notr,CASE'#9'WHEN ' +
+        'w.notr = 0 THEn concat ('#39#39',w.nama_perkiraan ) ELSE w. nama_perki' +
+        'raan END account_name,SUM ( w.debit ) debit,SUM ( w.kredit ) kre' +
+        'dit,SUM ( w.db ) db,SUM ( w.kd ) kd,SUM ( w.dbpy ) dbpy, SUM ( w' +
+        '.kdpy ) kdpy,SUM ( w.dbnr ) dbnr,SUM ( w.kdnr ) kdnr,SUM ( w.dbn' +
+        'r2 ) dbnr2,SUM ( w.kdnr2 ) kdnr2,SUM ( w.dbnr3 ) dbnr3,SUM ( w.k' +
+        'dnr3 ) kdnr3,SUM ( w.dblr ) dblr,SUM ( w.kdlr ) kdlr  FROM /*Tam' +
+        'bahan baru di atas*/   (SELECT xxx.*,CASE'#9'WHEN yy.header_code IS' +
+        ' NULL THEN'#9'0 ELSE 1 END notr,yy.header_code FROM (SELECT'#9'* ,CASE' +
+        #9'WHEN ( xx4.kelompok_akun = 1 AND  xx4.dbnr2 > 0 ) THEN xx4.dbnr' +
+        '2 ELSE 0 END dbnr3,CASE'#9'WHEN ( xx4.kelompok_akun = 1 AND xx4.kdn' +
+        'r2 > 0 ) THEN'#9'xx4.kdnr2 ELSE 0  END kdnr3, CASE WHEN (xx4.kelomp' +
+        'ok_akun = 2 AND xx4.dbnr2 > 0 ) THEN xx4.dbnr2 ELSE 0 END dblr,C' +
+        'ASE'#9'WHEN ( xx4.kelompok_akun = 2 AND xx4.kdnr2 > 0 ) THEN xx4. k' +
+        'dnr2 ELSE 0  END kdlr FROM (SELECT'#9'*,CASE'#9'WHEN ( xx3.dbnr-xx3.kd' +
+        'nr ) + (  xx3.dbpy-xx3.kdpy ) > 0 THEN'#9'(xx3.dbnr- xx3.kdnr) + (x' +
+        'x3.dbpy-xx3.kdpy ) ELSE 0 END dbnr2, CASE'#9'WHEN (xx3.kdnr -xx3.db' +
+        'nr ) + (xx3.kdpy-xx3.dbpy ) > 0 THEN'#9'(  xx3.kdnr -  xx3.dbnr ) +' +
+        ' (  xx3.kdpy -  xx3.dbpy ) ELSE 0 END kdnr2 FROM  (SELECT'#9'*,CASE' +
+        #9'WHEN xx2.debit - xx2.kredit + xx2.db - xx2.kd > 0 THEN'#9'xx2.debi' +
+        't - xx2.kredit + xx2.db - xx2.kd ELSE 0 END dbnr, CASE'#9'WHEN xx2.' +
+        'kredit - xx2.debit + xx2.kd - xx2.db > 0 THEN'#9'xx2.kredit - xx2.d' +
+        'ebit + xx2.kd - xx2.db ELSE 0 END kdnr FROM'#9' (SELECT'#9'xx.kelompok' +
+        '_akun,xx.kd_akun,xx.nama_perkiraan,CASE WHEN xx.debit > 0 THEN'#9'x' +
+        'x.debit ELSE 0 END debit,CASE WHEN xx.kredit > 0 THEN'#9'xx. kredit' +
+        ' ELSE 0 END kredit,CASE'#9'WHEN xx.db > 0 THEN'#9'0 ELSE xx.db END db,' +
+        'CASE'#9'WHEN xx.kd > 0 THEN'#9'0 ELSE xx.kd '#9'END kd,CASE WHEN xx.dbpy ' +
+        '> 0 THEN 0 ELSE xx.dbpy '#9'END dbpy,CASE WHEN xx.kdpy > 0 THEN'#9'0 E' +
+        'LSE xx.kdpy END kdpy FROM '#9'/* HEADER */  (SELECT'#9'aa.balance_stat' +
+        'us kelompok_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE ' +
+        'WHEN aa.debit > 0 THEN aa.debit ELSE NULL END debit,CASE WHEN aa' +
+        '.kredit IS NULL THEN 0 ELSE aa.kredit END kredit, CASE'#9'WHEN b.db' +
+        ' IS NULL THEN 0 ELSE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 E' +
+        'LSE b.kd '#9'END kd,CASE WHEN C.db IS NULL THEN'#9'0 ELSE C.db '#9'END db' +
+        'py,CASE'#9'WHEN C.kd IS NULL THEN'#9'0 ELSE C.kd '#9'END kdpy FROM'#9'(SELEC' +
+        'T C.code kd_akun,C.header_code,C.balance_status,C.account_name,S' +
+        'UM (c.db ) debit,'#9'SUM (C.kd ) kredit FROM  '#9'(SELECT DISTINCT A.c' +
+        'ode,A.header_code,A.account_name,A.balance_status,b.db,b.kd FROM' +
+        #9't_ak_account'#9'A INNER JOIN "VSearch_Item_Neraca" b ON A.code = b' +
+        '.account_code WHERE  /*balance_status='#39'1'#39' and*/ code = header_co' +
+        'de AND header_code <> '#39'5400'#39' ) C  GROUP BY C.code,C.header_code,' +
+        'C.balance_status,C.account_name ORDER BY'#9'C.code ASC) AA LEFT JOI' +
+        'N LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' THEN SUM(amount) ELS' +
+        'E 0 END db,CASE WHEN status_dk = '#39'K'#39' THEN'#9'SUM(amount)ELSE 0 END ' +
+        'kd,b.code FROM'#9't_general_ledger_real'#9'A  INNER JOIN t_ak_account ' +
+        'b ON A.account_code = b.code WHERE'#9'b.code = aa.kd_akun AND A.mod' +
+        'ule_id <> 7 AND (to_char( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( t' +
+        'o_char( trans_date, '#39'mm'#39' ) = '#39'3'#39') GROUP BY b.code,A.status_dk) b' +
+        ' ON 1 = 1  '#9'LEFT JOIN LATERAL (SELECT CASE WHEN status_dk = '#39'D'#39' ' +
+        'THEN SUM ( amount ) ELSE 0 END db,CASE'#9'WHEN status_dk = '#39'K'#39' THEN' +
+        #9'SUM (amount) ELSE 0 '#9'END kd,'#9'b.code FROM'#9't_general_ledger_real'#9 +
+        'A INNER JOIN t_ak_account b ON A.account_code = b.code WHERE'#9'b.c' +
+        'ode = aa.kd_akun AND b.code <> '#39'1112.01'#39' '#9'AND A.module_id = 7 '#9'A' +
+        'ND  ( to_char( trans_date, '#39'yyyy'#39' ) = '#39'2025'#39') AND ( to_char( tra' +
+        'ns_date, '#39'mm'#39' ) = '#39'3'#39')   GROUP BY'#9'b.code,A.status_dk '#9') C ON 1 =' +
+        ' 1 ORDER BY'#9'kd_akun ASC ) xx ) xx2) xx3   UNION  SELECT'#9'xx31.kel' +
+        'ompok_akun,xx31.kd_akun,xx31.nama_perkiraan,xx31.debit,xx31.kred' +
+        'it,xx31.db,xx31.kd,xx31.dbpy,xx31.kdpy,xx31.dbnr,xx31.kdnr, CASE' +
+        #9'WHEN ( xx31.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx31.kdpy ) > 0 ' +
+        'THEN'#9'( xx31.dbnr - xx31.kdnr ) + ( xx31.dbpy - xx31.kdpy ) ELSE ' +
+        '0 END dbnr2, CASE'#9'WHEN ( xx31.dbnr - xx31.dbnr ) + ( xx31.kdpy -' +
+        ' xx31.dbpy ) > 0 THEN'#9'( xx31.kdnr - xx31.dbnr ) + ( xx31.kdpy - ' +
+        'xx31.dbpy ) ELSE 0 END kdnr2 FROM'#9' (/*bop detail*/ SELECT'#9'xx3.ke' +
+        'lompok_akun,xx3.kd_akun,xx3.nama_perkiraan,xx3.debit,xx3.kredit,' +
+        'xx3.db,xx3.kd,xx3.dbpy,xx3.kdpy,xx3.dbnr,xx3.kdnr,0 dbnr2,0 kdnr' +
+        '2 FROM   (SELECT'#9'*,CASE'#9'WHEN xx2.debit - xx2.kredit + xx2.db - x' +
+        'x2.kd > 0 THEN'#9'xx2.debit - xx2.kredit + xx2.db - xx2.kd ELSE 0 E' +
+        'ND dbnr, CASE'#9'WHEN xx2.kredit -xx2.debit + xx2.kd - xx2.db > 0 T' +
+        'HEN xx2.kredit - xx2.debit + xx2.kd - xx2.db ELSE 0 END kdnr FRO' +
+        'M '#9'(SELECT'#9'xx.kelompok_akun,xx.kd_akun,xx.nama_perkiraan,CASE'#9'WH' +
+        'EN xx.debit > 0 THEN xx.debit ELSE 0 END debit,CASE'#9'WHEN xx.kred' +
+        'it >0 THEN'#9'xx.debit ELSE 0 END kredit, CASE'#9'WHEN xx.db >0 THEN x' +
+        'x.db ELSE 0 END db,CASE'#9'WHEN xx.kd >0 THEN xx.kd  ELSE 0 END kd,' +
+        'CASE'#9'WHEN xx.dbpy>0  THEN xx.dbpy ELSE 0'#9'END dbpy,CASE'#9'WHEN xx.k' +
+        'dpy >0 THEN'#9'xx.kdpy ELSE 0'#9'END kdpy FROM (SELECT'#9'aa.balance_stat' +
+        'us kelompok_akun,aa.kd_akun,aa.account_name nama_perkiraan,CASE'#9 +
+        'WHEN aa.debit > 0 THEN'#9'aa.debit ELSE NULL END debit,CASE'#9'WHEN aa' +
+        '.kredit IS NULL THEN'#9'0 ELSE aa.kredit END kredit, CASE'#9'WHEN b.db' +
+        ' IS NULL THEN 0 ELSE b.db END db,CASE'#9'WHEN b.kd IS NULL THEN 0 E' +
+        'LSE b.kd END kd,CASE WHEN C.db IS NULL THEN 0 ELSE C.db END dbpy' +
+        ',CASE WHEN C.kd IS NULL THEN 0 ELSE C.kd END kdpy FROM '#9'(SELECT ' +
+        'C.code kd_akun,C.header_code,C.balance_status,C.account_name,d.d' +
+        'ebit,d.kredit FROM  (SELECT DISTINCT code, header_code, account_' +
+        'name, balance_status FROM t_ak_account A WHERE balance_status = ' +
+        #39'1'#39' ) C  INNER JOIN (SELECT'#9'trans_year,A.periode1,A.periode2,tra' +
+        'ns_month'
       
         ',A.trans_no,b.debit,b.kredit,'#9#9'account_code FROM'#9'(SELECT trans_y' +
         'ear, periode1, periode2, trans_month, trans_no FROM t_neraca_laj' +
@@ -598,8 +618,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   object MemNeraca_lajur: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
-    Left = 355
-    Top = 12
+    Left = 563
+    Top = 180
   end
   object Rpt: TfrxReport
     Version = '2022.1.3'
@@ -609,18 +629,36 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45626.994151979170000000
-    ReportOptions.LastChange = 45626.994151979170000000
+    ReportOptions.CreateDate = 44708.624305300900000000
+    ReportOptions.LastChange = 45966.946209432870000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  if <DbNeraca_lajur."notr"> = 1 then'
+      '  begin'
+      '    memo30.left:=35;'
+      '    memo30.Width:=139;'
+      '  end else'
+      '  if <DbNeraca_lajur."notr"> = 0 then'
+      '  begin'
+      '    memo30.left:=50;'
+      '    memo30.Width:=124;'
+      '  end;'
+      'end;'
       ''
       'begin'
       ''
       'end.')
     OnGetValue = RptGetValue
-    Left = 352
-    Top = 72
-    Datasets = <>
+    Left = 488
+    Top = 176
+    Datasets = <
+      item
+        DataSet = DbNeraca_lajur
+        DataSetName = 'DbNeraca_lajur'
+      end>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -628,14 +666,15 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
+      Orientation = poLandscape
+      PaperWidth = 330.000000000000000000
+      PaperHeight = 210.000000000000000000
+      PaperSize = 256
+      LeftMargin = 3.000000000000000000
+      RightMargin = 3.000000000000000000
+      TopMargin = 3.000000000000000000
+      BottomMargin = 3.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
@@ -644,9 +683,482 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        Height = 86.929143620000000000
+        ParentFont = False
         Top = 18.897650000000000000
-        Width = 718.110700000000000000
+        Visible = False
+        Width = 1224.567720000000000000
+        object Mpt2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 1.889763780000000000
+          Width = 1209.448818900000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'PT MENARA LAUT BERSATU')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 18.897637800000000000
+          Width = 1209.448818900000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NERACA LAJUR')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Mtgl2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 37.795275590000000000
+          Width = 1209.448818900000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'PERIODE : ')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Top = 56.314960630000000000
+          Width = 45.354330710000000000
+          Height = 30.614173230000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Perk.')
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 45.732283460000000000
+          Top = 56.314960630000000000
+          Width = 120.944881890000000000
+          Height = 30.614173230000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nama Perkiraan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 166.299212600000000000
+          Top = 56.314960630000000000
+          Width = 158.740157480000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo Awal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 166.299212600000000000
+          Top = 71.811023620000000000
+          Width = 79.370078740000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 245.669291340000000000
+          Top = 71.811023620000000000
+          Width = 79.370078740000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.039370080000000000
+          Top = 56.314960629921300000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Mutasi Total')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.039370080000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 400.629921260000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220472440000000000
+          Top = 56.314960629921300000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Neraca Saldo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220472440000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811023620000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401574800000000000
+          Top = 56.314960629921300000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Penyesuaian')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401574800000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 702.992125980000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Top = 56.314960629921300000
+          Width = 143.622042360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Neraca Saldo Penyesuaian')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Top = 71.811023620000000000
+          Width = 71.811023620000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 850.393700790000000000
+          Top = 71.811023620000000000
+          Width = 71.811023620000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.385826770000000000
+          Top = 56.314960629921300000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Neraca')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.385826770000000000
+          Top = 71.811023620000000000
+          Width = 73.700787400000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.086614170000000000
+          Top = 71.811023620000000000
+          Width = 77.480314960000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.204724410000000000
+          Top = 56.314960629921300000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Laba/ Rugi')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo17: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.204724410000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.795275590000000000
+          Top = 71.811023620000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -655,46 +1167,1582 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
+        Height = 18.897650000000000000
+        Top = 268.346630000000000000
+        Width = 1224.567720000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
+        DataSet = DbNeraca_lajur
+        DataSetName = 'DbNeraca_lajur'
         RowCount = 0
         Stretched = True
-        object Memo2: TfrxMemoView
+        object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 50.000000000000000000
-          Top = 0.952690000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
+          Width = 34.015748031496100000
+          Height = 18.897637800000000000
           StretchMode = smMaxHeight
+          DataField = 'account_code'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -17
+          Font.Color = clBlack
+          Font.Height = -7
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."account_code"]')
           ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 249.448821340000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kredit"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.039370080000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."db"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo34: TfrxMemoView
+          AllowVectorExport = True
+          Left = 400.629921260000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kd"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo36: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811023620000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'kdnr'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kdnr"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo42: TfrxMemoView
+          AllowVectorExport = True
+          Left = 850.393700790000000000
+          Width = 71.811023620000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'kdnr2'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kdnr2"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo43: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.385826770000000000
+          Width = 73.700787400000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'dbnr3'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."dbnr3"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo47: TfrxMemoView
+          AllowVectorExport = True
+          Left = 173.858272600000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."debit"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo48: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220472440000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."dbnr"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo50: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401574800000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."dbpy"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo51: TfrxMemoView
+          AllowVectorExport = True
+          Left = 702.992125980000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kdpy"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.086614170000000000
+          Width = 77.480314960000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'kdnr3'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kdnr3"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.204724410000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'dblr'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."dblr"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.795275590000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."kdlr"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo58: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.583180000000000000
+          Width = 71.811023620000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataField = 'dbnr2'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."dbnr2"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo92: TfrxMemoView
+          AllowVectorExport = True
+          Left = 34.015770000000000000
+          Width = 139.842519690000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Highlight.ApplyFont = False
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -13
+          Highlight.Font.Name = 'Arial'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<DbNeraca_lajur."notr"> = 1'
+          Highlight.FillType = ftBrush
+          Highlight.Fill.BackColor = 10027007
+          Highlight.Frame.Typ = []
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 34.015748030000000000
+          Width = 139.842519690000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'account_name'
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Highlight.ApplyFont = False
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -13
+          Highlight.Font.Name = 'Arial'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<DbNeraca_lajur."notr"> = 1'
+          Highlight.FillType = ftBrush
+          Highlight.Fill.BackColor = clWhite
+          Highlight.Frame.Typ = []
+          Memo.UTF8W = (
+            '[DbNeraca_lajur."account_name"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
       end
-      object PageFooter1: TfrxPageFooter
+      object ReportSummary1: TfrxReportSummary
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
+        Height = 18.897637800000000000
+        Top = 427.086890000000000000
+        Visible = False
+        Width = 1224.567720000000000000
+        object Memo90: TfrxMemoView
           AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
+          Left = 922.205320000000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<DbNeraca_lajur."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur.' +
+              '"dblr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo91: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.796466770000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '-')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo88: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.387017950000000000
+          Width = 73.700787400000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '-')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo89: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.087805350000000000
+          Width = 77.480314960000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<DbNeraca_lajur."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur.' +
+              '"dblr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+              FormatStr = '#,##0.00'
+              Kind = fkNumeric
+            end
+            item
+            end>
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 79.748041260000000000
+        Top = 128.504020000000000000
+        Width = 1224.567720000000000000
+        object Mpt: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Width = 1209.448818900000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'PT MENARA LAUT BERSATU')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo60: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 15.118120000000000000
+          Width = 1209.448818900000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NERACA LAJUR')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Mtgl: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 30.236240000000000000
+          Width = 1209.448818900000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'PERIODE : ')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo62: TfrxMemoView
+          AllowVectorExport = True
+          Top = 49.133858270000000000
+          Width = 34.015748031496100000
+          Height = 30.614173230000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Perk.')
+          ParentFont = False
+        end
+        object Memo63: TfrxMemoView
+          AllowVectorExport = True
+          Left = 34.015748030000000000
+          Top = 49.133858270000000000
+          Width = 139.842519685039000000
+          Height = 30.614173230000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nama Perkiraan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo64: TfrxMemoView
+          AllowVectorExport = True
+          Left = 173.858272600000000000
+          Top = 49.133858270000000000
+          Width = 151.181097480000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo Awal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo65: TfrxMemoView
+          AllowVectorExport = True
+          Left = 173.858272600000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo66: TfrxMemoView
+          AllowVectorExport = True
+          Left = 249.448821340000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo67: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.039370080000000000
+          Top = 49.133858267716500000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Mutasi Total')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo68: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.039370080000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo69: TfrxMemoView
+          AllowVectorExport = True
+          Left = 400.629921260000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo70: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220472440000000000
+          Top = 49.133858267716500000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Neraca Saldo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo71: TfrxMemoView
+          AllowVectorExport = True
+          Top = 49.133890000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo72: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811023620000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo73: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401574800000000000
+          Top = 49.133858267716500000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Penyesuaian')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo74: TfrxMemoView
+          AllowVectorExport = True
+          Top = 49.133890000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo75: TfrxMemoView
+          AllowVectorExport = True
+          Left = 702.992125980000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo76: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Top = 49.133858267716500000
+          Width = 143.622042360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Neraca Saldo Penyesuaian')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo77: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Top = 64.629921260000000000
+          Width = 71.811023620000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo78: TfrxMemoView
+          AllowVectorExport = True
+          Left = 850.393700790000000000
+          Top = 64.629921260000000000
+          Width = 71.811023620000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo79: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.385826770000000000
+          Top = 49.133858267716500000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Neraca')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo80: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.385826770000000000
+          Top = 64.629921260000000000
+          Width = 73.700787400000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo81: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.086614170000000000
+          Top = 64.669323070000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo82: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.204724410000000000
+          Top = 49.133858267716500000
+          Width = 151.181102360000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Laba/ Rugi')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo83: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.204724410000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo84: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.795275590000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo85: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220780000000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo86: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401980000000000000
+          Top = 64.629921260000000000
+          Width = 75.590551180000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'D')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo87: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.086614170000000000
+          Top = 64.629921260000000000
+          Width = 77.480314960000000000
+          Height = 15.118110240000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'K')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 1054.488870000000000000
+          Top = 7.559060000000000000
+          Width = 154.960730000000000000
           Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[Page#]')
+            'Hal [PAGE#] Dari [TOTALPAGES#]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object Footer1: TfrxFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 56.692937800000000000
+        Top = 309.921460000000000000
+        Width = 1224.567720000000000000
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Width = 34.015748031496100000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo35: TfrxMemoView
+          AllowVectorExport = True
+          Left = 34.015748030000000000
+          Width = 139.842519685039000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo37: TfrxMemoView
+          AllowVectorExport = True
+          Left = 249.448821340000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kredit">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo38: TfrxMemoView
+          AllowVectorExport = True
+          Left = 325.039370080000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."db">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo39: TfrxMemoView
+          AllowVectorExport = True
+          Left = 400.629921260000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kd">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo40: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811023620000000000
+          Width = 75.590551180000000000
+          Height = 18.897637795275600000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kdnr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo44: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Width = 71.811023620000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."dbnr2">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo45: TfrxMemoView
+          AllowVectorExport = True
+          Left = 850.393700790000000000
+          Width = 71.811023620000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kdnr2">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo46: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.385826770000000000
+          Width = 73.700787400000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."dbnr3">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo49: TfrxMemoView
+          AllowVectorExport = True
+          Left = 173.858272600000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."debit">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo52: TfrxMemoView
+          AllowVectorExport = True
+          Left = 476.220472440000000000
+          Width = 75.590551180000000000
+          Height = 18.897637795275600000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."dbnr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo53: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401574800000000000
+          Width = 75.590551180000000000
+          Height = 18.897637795275600000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."dbpy">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo54: TfrxMemoView
+          AllowVectorExport = True
+          Left = 702.992125980000000000
+          Width = 75.590551180000000000
+          Height = 18.897637795275600000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kdpy">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Mkdnr3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.086614170000000000
+          Width = 77.480314960000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kdnr3">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo56: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.204724410000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."dblr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo57: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.795275590000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kdlr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo96: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.205320000000000000
+          Top = 18.897650000000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<DbNeraca_lajur."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur.' +
+              '"dblr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo97: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.796466770000000000
+          Top = 18.897650000000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '-')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo98: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.387017950000000000
+          Top = 18.897650000000000000
+          Width = 73.700787400000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '-')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Mkdnr4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.087805350000000000
+          Top = 18.897650000000000000
+          Width = 77.480314960000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<DbNeraca_lajur."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur.' +
+              '"dblr">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo100: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.205320000000000000
+          Top = 37.795300000000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<DbNeraca_lajur."dblr">,MasterData1,3)+(SUM(<DbNeraca_lajur' +
+              '."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur."dblr">,MasterData1,' +
+              '3))]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo101: TfrxMemoView
+          AllowVectorExport = True
+          Left = 997.796466770000000000
+          Top = 37.795300000000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<DbNeraca_lajur."dblr">,MasterData1,3)+(SUM(<DbNeraca_lajur' +
+              '."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur."dblr">,MasterData1,' +
+              '3))]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo102: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1073.387017950000000000
+          Top = 37.795300000000000000
+          Width = 73.700787400000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."dbnr3">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo103: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1147.087805350000000000
+          Top = 37.795300000000000000
+          Width = 77.480314960000000000
+          Height = 18.897637800000000000
+          DataSet = DbNeraca_lajur
+          DataSetName = 'DbNeraca_lajur'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -7
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<DbNeraca_lajur."kdnr3">,MasterData1,3)+'
+            
+              '(SUM(<DbNeraca_lajur."kdlr">,MasterData1,3)-SUM(<DbNeraca_lajur.' +
+              '"dblr">,MasterData1,3))]')
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+              FormatStr = '#,##0.00'
+              Kind = fkNumeric
+            end
+            item
+            end>
         end
       end
     end
@@ -745,6 +2793,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         end
         item
           Visible = True
+          ItemName = 'dxBarLargeButton4'
+        end
+        item
+          Visible = True
           ItemName = 'dxBarLargeButton1'
         end
         item
@@ -764,7 +2816,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
+        00000000000074120000741200000000000000000000FFFFFFFFF6E3BBFFEEC7
         74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
         58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
         67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
@@ -824,7 +2876,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -878,7 +2930,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D660700000000000036000000280000001700000014000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
@@ -946,7 +2998,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1038,7 +3090,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1133,7 +3185,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Caption = 'Print'
       Category = 0
       Hint = 'Print'
-      Visible = ivNever
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1193,7 +3245,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Caption = 'Cari'
       Category = 0
       Hint = 'Cari'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
@@ -1237,7 +3289,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Caption = 'Print'
       Category = 0
       Hint = 'Print'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1292,6 +3344,67 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
       OnClick = dxBarLargeButton2Click
+    end
+    object dxBarLargeButton3: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton4: TdxBarLargeButton
+      Caption = 'Cari'
+      Category = 0
+      Hint = 'Cari'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D227574
+        662D38223F3E0D0A3C212D2D2047656E657261746F723A2041646F626520496C
+        6C7573747261746F722032302E312E302C20535647204578706F727420506C75
+        672D496E202E205356472056657273696F6E3A20362E3030204275696C642030
+        2920202D2D3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078220D0A092076696577426F783D223020302033322033322220
+        7374796C653D22656E61626C652D6261636B67726F756E643A6E657720302030
+        2033322033323B2220786D6C3A73706163653D227072657365727665223E0D0A
+        3C7374796C6520747970653D22746578742F637373223E0D0A092E426C61636B
+        7B66696C6C3A233732373237323B7D0D0A092E426C75657B66696C6C3A233131
+        373744373B7D0D0A3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A093C7061746820636C6173733D22426C61636B2220643D224D
+        31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C3133
+        2C31377A222F3E0D0A093C673E0D0A09093C673E0D0A0909093C706174682063
+        6C6173733D22426C75652220643D224D32302C34632D342E342C302D382C332E
+        362D382C3873332E362C382C382C3873382D332E362C382D385332342E342C34
+        2C32302C347A204D32302C3138632D332E332C302D362D322E372D362D367332
+        2E372D362C362D3673362C322E372C362C360D0A090909095332332E332C3138
+        2C32302C31387A222F3E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F673E0D
+        0A3C2F7376673E0D0A}
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxBarLargeButton4Click
     end
   end
   object DsNeraca_lajur: TDataSource

@@ -109,6 +109,7 @@ type
     procedure BTambahTargetPenjualanClick(Sender: TObject);
     procedure cbKonversiMuatanClick(Sender: TObject);
     procedure edKelompokKendaraanButtonClick(Sender: TObject);
+    procedure dtTanggal_KirimChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -116,7 +117,7 @@ type
     { Public declarations }
     vFormSumber, vFormSumber1, kd_kares,kd_kab: string;
     strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
-    Strversi, Stripuser,Strketerangan,Stralasan: string;
+    Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId: string;
     Year, Month, Day: Word;
     procedure Clear;
     procedure Save;
@@ -243,8 +244,26 @@ begin
 end;
 
 procedure TFNew_SalesOrder.Autonumber;
+var
+  LOriginalName: string;
+  LBaseName: string;
+  LLastUnderscorePos: Integer;
+  LSuffix: string;
+  LDummyInt: Integer;
 begin
-  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FSalesOrder.Name)+'');
+  LOriginalName := FSalesOrder.Name;
+  LBaseName := LOriginalName;
+  LLastUnderscorePos := LastDelimiter('_', LBaseName);
+  if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+  begin
+    LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+    if TryStrToInt(LSuffix, LDummyInt) then
+    begin
+      LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+    end;
+  end;
+
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
   strday2:=dtTanggal_Pesan.Date;
   with dm.Qtemp do
   begin
@@ -631,7 +650,7 @@ begin
 //    end;
     if cbKonversiMuatan.Checked=True then
     begin
-            MemDetail.First;
+      MemDetail.First;
       while not MemDetail.Eof do
       begin
         if (MemDetail.FieldByName('BERAT_ISI').IsNull) or
@@ -730,7 +749,7 @@ begin
     end else if isBalanceBerat=1 then
     begin
       MessageDlg('Muatan Tidak Balance..!!',mtInformation,[mbRetry],0);
-    end   else if edKelompokKendaraan.Text='' then
+    end else if edKelompokKendaraan.Text='' then
     begin
       MessageDlg('Kelompok Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
@@ -889,6 +908,7 @@ end;
 
 procedure TFNew_SalesOrder.Clear;
 begin
+  strVehicleGroupId:='';
   edKodeOrder.Clear;
   dtTanggal_Kirim.Date:=Now();
   dtTanggal_Pesan.Date:=Now();
@@ -912,6 +932,15 @@ begin
   cbKonversiMuatan.Checked:=False;
   btMasterSales.Visible:=false;
   btMasterSumber.Visible:=false;
+end;
+
+procedure TFNew_SalesOrder.dtTanggal_KirimChange(Sender: TObject);
+begin
+  edKelompokKendaraan.Clear;
+  strVehicleGroupId:='';
+  edTypeKendaraan.Clear;
+  edKapasitas.Value:=0;
+  edKendaraan.Clear;
 end;
 
 procedure TFNew_SalesOrder.dtTanggal_KirimCloseUp(Sender: TObject);
@@ -1138,7 +1167,7 @@ begin
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
-            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity,po_order,vehicles) '+
+            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -1159,9 +1188,9 @@ begin
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+','+StrStatus+','+StrNote+','+
             ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+strKonversiMuatan+','+
-            ' '+QuotedStr(edKelompokKendaraan.Text)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
+            ' '+QuotedStr(strVehicleGroupId)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
             ' '+QuotedStr(edTypeKendaraan.Text)+','+
-            ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+QuotedStr(edKendaraan.Text)+' );');
+            ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+' );');
     ExecSQL;
   end;
   InsertDetailSO;
@@ -1238,7 +1267,8 @@ begin
                 ' status='+StrStatus+','+
                 ' note='+StrNote+', '+
                 ' load_conversion='+strKonversiMuatan+', '+
-                ' vehicle_group_id='+QuotedStr(edKelompokKendaraan.Text)+','+
+                ' vehicle_group_id='+QuotedStr(strVehicleGroupId)+','+
+                ' vehicle_group_sort_number='+QuotedStr(edKelompokKendaraan.Text)+','+
                 ' type_vehicles_code='+QuotedStr(edKodeTypeKendaraan.Text)+','+
                 ' type_vehicles_name='+QuotedStr(edTypeKendaraan.Text)+','+
                 ' vehicles='+QuotedStr(edKendaraan.Text)+','+

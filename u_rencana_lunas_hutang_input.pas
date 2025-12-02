@@ -404,7 +404,7 @@ begin
    //if MemRencana['source_id']=2 then
    vcall:='Uang_Muka_Pembelian';
    begin
-     showmessage('x');
+     //showmessage('x');
      if application.MessageBox('Data rencana pelunasan hutang akan disimpan?','confirm',mb_yesno or mb_iconquestion)=id_yes then
      begin
         //if not dm.Koneksi.InTransaction then
@@ -462,7 +462,7 @@ begin
             //end;
          //end;
      end;
-     showmessage('y');
+     //showmessage('y');
    end;
 
 end;

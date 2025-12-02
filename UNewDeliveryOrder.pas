@@ -165,15 +165,17 @@ type
     MemoAPI: TMemo;
     edlokasiregencyid: TEdit;
     BCorrection: TRzBitBtn;
-    edLokasiMuat: TRzEdit;
     Label50: TLabel;
     Label51: TLabel;
     Label52: TLabel;
     Label53: TLabel;
-    edLokasiBongkar: TRzEdit;
     edNamaJenisKendMuatan: TRzEdit;
     Label64: TLabel;
     Label65: TLabel;
+    btMasterLokasiMuat: TSpeedButton;
+    btMasterLokasiBongkar: TSpeedButton;
+    edLokasiMuat: TRzButtonEdit;
+    edLokasiBongkar: TRzButtonEdit;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -216,6 +218,10 @@ type
     procedure spTotalTitikClick(Sender: TObject);
     procedure edKodeJenisKendMuatanChange(Sender: TObject);
     procedure spTotalTitikChange(Sender: TObject);
+    procedure btMasterLokasiMuatClick(Sender: TObject);
+    procedure edLokasiMuatButtonClick(Sender: TObject);
+    procedure edLokasiBongkarButtonClick(Sender: TObject);
+    procedure btMasterLokasiBongkarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -224,7 +230,7 @@ type
     Grand_Tot: Real;
     vFormSumber01,vFormSumber02, kd_kares, strtgl, strbulan, strtahun,
     strLastKodeJenisKendMuatan,strLastNamaLokasi,
-    strLastNamaKabupaten,strLastTotalTitik,strPlateNo : string;
+    strLastNamaKabupaten,strLastTotalTitik,strPlateNo,kodelokasimuat,kodelokasibongkar,strVehicleGroupId : string;
     IntStatusDO,IntStatusKoreksi: Integer;
     StatusCekBiaya,StatusPerubahanBiaya: Integer;
     Year, Month, Day: Word;
@@ -261,7 +267,8 @@ implementation
 uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
   UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
-  UListPerbandinganBiayaDo, UMainMenu, UKoreksi, UListKelompokKendaraan;
+  UListPerbandinganBiayaDo, UMainMenu, UKoreksi, UListKelompokKendaraan,
+  ULokasiMuat, ULokasiBongkar;
 
 procedure TFNewDeliveryOrder.InsertStatus;
 begin
@@ -1269,12 +1276,28 @@ begin
 end;
 
 procedure TFNewDeliveryOrder.Autonumber;
+var LOriginalName: string;
+    LBaseName: string;
+    LLastUnderscorePos: Integer;
+    LSuffix: string;
+    LDummyInt: Integer;
 begin
-   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListDeliveryOrder.Name)+'');
-   strday2:=dtTanggalMuatan.Date;
-   edKodeDOMuatan.Text:=getNourut(strday2,'public.t_delivery_order','0');
-   edKodeDOBiaya.Text:=getNourut(strday2,'public.t_delivery_order','0');
-   edKodeDODok.Text:=getNourut(strday2,'public.t_delivery_order','0');
+  LOriginalName := FListDeliveryOrder.Name;
+  LBaseName := LOriginalName;
+  LLastUnderscorePos := LastDelimiter('_', LBaseName);
+  if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+  begin
+    LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+    if TryStrToInt(LSuffix, LDummyInt) then
+    begin
+      LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+    end;
+  end;
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
+  strday2:=dtTanggalMuatan.Date;
+  edKodeDOMuatan.Text:=getNourut(strday2,'public.t_delivery_order','0');
+  edKodeDOBiaya.Text:=getNourut(strday2,'public.t_delivery_order','0');
+  edKodeDODok.Text:=getNourut(strday2,'public.t_delivery_order','0');
 end;
 
 
@@ -1282,7 +1305,7 @@ procedure TFNewDeliveryOrder.Clear;
 begin
   MemDataBiaya.EmptyTable;
   MemDataMuatan.EmptyTable;
-
+  strVehicleGroupId:='';
   //Muatan
   edKodeDOMuatan.Clear;
   dtTanggalMuatan.Date:=NOW();
@@ -1301,6 +1324,8 @@ begin
   edNamaKenek.Clear;
   edNomorPIB.Clear;
   edLokasiMuat.Clear;
+  kodelokasimuat:='';
+  kodelokasibongkar:='';
   edLokasiBongkar.Clear;
   edKelompokKendaraan.Clear;
 
@@ -1517,9 +1542,19 @@ begin
   FNewDeliveryOrder.dtTerimaTagihan.Date:=dtTanggalMuatan.Date;
 end;
 
+procedure TFNewDeliveryOrder.btMasterLokasiBongkarClick(Sender: TObject);
+begin
+  FLokasiBongkar.Show;
+end;
+
+procedure TFNewDeliveryOrder.btMasterLokasiMuatClick(Sender: TObject);
+begin
+  FLokasiMuat.Show;
+end;
+
 procedure TFNewDeliveryOrder.btMasterSumberClick(Sender: TObject);
 begin
-  vFormSumber01:='0';
+   vFormSumber01:='0';
   vFormSumber02:='0';
   FMasterData.Caption:='Master Data';
   FMasterData.vcall:='do_master_jenis';
@@ -1828,10 +1863,17 @@ end;
 
 procedure TFNewDeliveryOrder.dtTanggalMuatanChange(Sender: TObject);
 begin
-  if Status=0 then
-  begin
-    Autonumber;
-  end;
+//  if Status=0 then
+//  begin
+//    Autonumber;
+//  end;
+  edKelompokKendaraan.Text:='';
+  edNamaJenisKendMuatan.Text:='';
+  edKodeJenisKendMuatan.Text:='';
+  edNoKendMuatan.Text:='';
+  strVehicleGroupId:='';
+  spKapasitas.Value:=0;
+  MemDataMuatan.EmptyTable;
 end;
 
 procedure TFNewDeliveryOrder.edKodeJenisKendMuatanChange(Sender: TObject);
@@ -1921,6 +1963,22 @@ begin
   FSearch_Supplier.QSupplier.Close;
   FSearch_Supplier.QSupplier.Open;
   FSearch_Supplier.ShowModal;
+end;
+
+procedure TFNewDeliveryOrder.edLokasiBongkarButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data';
+  FMasterData.vcall:='do_lokasi_bongkar';
+  FMasterData.update_grid('id','name','NULL','t_location_unloading','WHERE	deleted_at IS NULL ORDER BY name ASC');
+  FMasterData.Show;
+end;
+
+procedure TFNewDeliveryOrder.edLokasiMuatButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data';
+  FMasterData.vcall:='do_lokasi_muat';
+  FMasterData.update_grid('id','name','NULL','t_location_loading','WHERE	deleted_at IS NULL ORDER BY name ASC');
+  FMasterData.Show;
 end;
 
 procedure TFNewDeliveryOrder.edNoKendMuatanButtonClick(Sender: TObject);

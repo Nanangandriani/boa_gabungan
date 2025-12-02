@@ -833,8 +833,24 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.Autonumber;
+var LOriginalName: string;
+    LBaseName: string;
+    LLastUnderscorePos: Integer;
+    LSuffix: string;
+    LDummyInt: Integer;
 begin
-  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListPenerimaanBank.Name)+'');
+  LOriginalName := FListPenerimaanBank.Name;
+  LBaseName := LOriginalName;
+  LLastUnderscorePos := LastDelimiter('_', LBaseName);
+  if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+  begin
+    LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+    if TryStrToInt(LSuffix, LDummyInt) then
+    begin
+      LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+    end;
+  end;
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
   strday2:=dtTrans.Date;
   additional_code2:='';
   if cbJenisTransaksi.Text='PIUTANG' then
@@ -1463,7 +1479,7 @@ end;
 
 procedure TFDataPenerimaanBank.dtTransChange(Sender: TObject);
 begin
-  FDataPenerimaanBank.Autonumber;
+//  FDataPenerimaanBank.Autonumber;
   dtPeriode1.Date:=dtTrans.Date;
   dtPeriode2.Date:=dtTrans.Date;
 end;

@@ -40,7 +40,7 @@ object FKartuPiutang: TFKartuPiutang
   object cbBulan: TRzComboBox
     Left = 57
     Top = 39
-    Width = 180
+    Width = 112
     Height = 23
     TabOrder = 1
     Items.Strings = (
@@ -279,22 +279,34 @@ object FKartuPiutang: TFKartuPiutang
         end
         item
           UserDefine = [udWidth]
-          UserWidth = 179
+          UserWidth = 110
           Visible = True
           ItemName = 'spTahun'
         end
         item
           BeginGroup = True
           UserDefine = [udWidth]
-          UserWidth = 269
+          UserWidth = 209
           Visible = True
           ItemName = 'edKaresidenan'
         end
         item
           UserDefine = [udWidth]
-          UserWidth = 271
+          UserWidth = 209
+          Visible = True
+          ItemName = 'edTP'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 210
           Visible = True
           ItemName = 'edKabupaten'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 269
+          Visible = True
+          ItemName = 'edNama_Pelanggan'
         end
         item
           Visible = True
@@ -313,7 +325,7 @@ object FKartuPiutang: TFKartuPiutang
     object dxBarManager1Bar2: TdxBar
       Caption = 'Laporan'
       CaptionButtons = <>
-      DockedLeft = 643
+      DockedLeft = 862
       DockedTop = 0
       FloatLeft = 852
       FloatTop = 2
@@ -335,9 +347,9 @@ object FKartuPiutang: TFKartuPiutang
       WholeRow = False
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'TP                   '
+      Caption = 'Karesidenan  '
       Category = 0
-      Hint = 'TP                   '
+      Hint = 'Karesidenan  '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -525,6 +537,50 @@ object FKartuPiutang: TFKartuPiutang
         32303A31332B30303A30307F5C59CF0000001974455874536F66747761726500
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton1Click
+    end
+    object edNama_Pelanggan: TcxBarEditItem
+      Caption = 'Pelanggan     '
+      Category = 0
+      Hint = 'Pelanggan     '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = edPelangganPropertiesButtonClick
+    end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxRadioGroupProperties'
+      Properties.Items = <>
+      InternalEditValue = ''
+    end
+    object dxBarMRUListItem1: TdxBarMRUListItem
+      Caption = 'New Item'
+      Category = 0
+      Visible = ivAlways
+      Items.Strings = (
+        'TP'
+        'Kabupaten')
+    end
+    object edTP: TcxBarEditItem
+      Caption = 'TP                   '
+      Category = 0
+      Enabled = False
+      Hint = 'TP                   '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = edTPPropertiesButtonClick
     end
   end
   object QKartuPiutang: TUniQuery
@@ -848,8 +904,8 @@ object FKartuPiutang: TFKartuPiutang
         'stomer_code<> '#39'0'#39' '
       ' AND code_karesidenan='#39'JKT'#39'  AND customer_code='#39'PL01287'#39
       ' ORDER BY customer_code,nomor asc) zz')
-    Left = 844
-    Top = 80
+    Left = 804
+    Top = 128
     object QCetaknomor: TLargeintField
       FieldName = 'nomor'
       ReadOnly = True
@@ -972,7 +1028,7 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 45981.583504699080000000
+    ReportOptions.LastChange = 45992.397717893520000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -982,26 +1038,24 @@ object FKartuPiutang: TFKartuPiutang
       'begin'
       '//  if (<ffrxDBDKartuPiutang."tgltrans"> = NULL) then'
       '//  begin'
-      
-        '//    frxDBDKartuPiutangtanggal.Text:='#39#39';                       ' +
-        '             '
+      '//    frxDBDKartuPiutangtanggal.Text:='#39#39';'
       '  //end else begin'
       
         '  //  frxDBDKartuPiutangtanggal.Text:=<ffrxDBDKartuPiutang."tglt' +
-        'rans");            '
-      '//  end;              '
+        'rans");'
+      '//  end;'
       'end;'
       ''
       'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
       'begin'
-      '                  '
+      ''
       'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 864
-    Top = 40
+    Left = 744
+    Top = 128
     Datasets = <
       item
         DataSet = frxDBDKartuPiutang
@@ -1053,13 +1107,13 @@ object FKartuPiutang: TFKartuPiutang
         Stretched = True
         object frxDBDKartuPiutangdebit: TfrxMemoView
           AllowVectorExport = True
-          Left = 388.937230000000000000
-          Width = 86.929133860000000000
+          Left = 416.603896680000000000
+          Width = 112.484689400000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
-          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1074,13 +1128,13 @@ object FKartuPiutang: TFKartuPiutang
         end
         object frxDBDKartuPiutangkredit: TfrxMemoView
           AllowVectorExport = True
-          Left = 482.443616090000000000
-          Width = 86.929133860000000000
+          Left = 532.332504980000000000
+          Width = 107.087864020000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
-          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1095,14 +1149,15 @@ object FKartuPiutang: TFKartuPiutang
         end
         object frxDBDKartuPiutangtanggal: TfrxMemoView
           AllowVectorExport = True
-          Left = 4.559060000000000000
-          Width = 60.472440940000000000
+          Left = 0.559060000000000000
+          Width = 59.716535433070870000
           Height = 18.897637800000000000
           OnBeforePrint = 'frxDBDKartuPiutangtanggalOnBeforePrint'
           StretchMode = smMaxHeight
           DataField = 'tgltrans'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
+          DisplayFormat.FormatStr = '%2.n'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1115,13 +1170,14 @@ object FKartuPiutang: TFKartuPiutang
         end
         object frxDBDKartuPiutangnofakturpajak: TfrxMemoView
           AllowVectorExport = True
-          Left = 69.590600000000000000
-          Width = 86.929190000000000000
+          Left = 61.590600000000000000
+          Width = 141.504542700000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           DataField = 'trans_no'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
+          DisplayFormat.FormatStr = '%2.n'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1134,13 +1190,14 @@ object FKartuPiutang: TFKartuPiutang
         end
         object lbketerangan: TfrxMemoView
           AllowVectorExport = True
-          Left = 161.299320000000000000
-          Width = 219.212740000000000000
+          Left = 206.299320000000000000
+          Width = 207.784168570000000000
           Height = 26.456697800000000000
           StretchMode = smMaxHeight
           DataField = 'keterangan2'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
+          DisplayFormat.FormatStr = '%2.n'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1153,14 +1210,14 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 578.268090000000000000
-          Width = 86.929133860000000000
+          Left = 641.125232850000000000
+          Width = 112.960879900000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           DataField = 'saldo'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
-          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1194,15 +1251,15 @@ object FKartuPiutang: TFKartuPiutang
         end
         object totalsaldokhir1: TfrxMemoView
           AllowVectorExport = True
-          Left = 575.795275590000000000
+          Left = 642.938132730000000000
           Top = 3.779527560000000000
-          Width = 86.929133860000000000
+          Width = 110.897387830000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1216,15 +1273,15 @@ object FKartuPiutang: TFKartuPiutang
         end
         object totalkredit1: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 483.259842520000000000
+          Left = 530.926509190000000000
           Top = 3.779527560000000000
-          Width = 86.929133860000000000
+          Width = 109.310086230000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1235,7 +1292,7 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 226.771800000000000000
+          Left = 259.771800000000000000
           Top = 3.779527560000000000
           Width = 147.401670000000000000
           Height = 18.897650000000000000
@@ -1282,15 +1339,15 @@ object FKartuPiutang: TFKartuPiutang
         end
         object totaldebit1: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 387.259783940000000000
+          Left = 416.831212520000000000
           Top = 3.779527560000000000
-          Width = 86.929133860000000000
+          Width = 113.119610040000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '#,###,###,###0.##'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1567,7 +1624,7 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 4.559060000000000000
+          Left = 1.559060000000000000
           Top = 158.960730000000000000
           Width = 60.472480000000000000
           Height = 22.677180000000000000
@@ -1584,9 +1641,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 70.460165220000000000
+          Left = 64.460165220000000000
           Top = 159.699752860000000000
-          Width = 86.929190000000000000
+          Width = 137.698420770000000000
           Height = 22.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1601,9 +1658,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 162.504020000000000000
+          Left = 210.504020000000000000
           Top = 158.960730000000000000
-          Width = 222.992270000000000000
+          Width = 198.706555710000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1618,9 +1675,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 389.929133860000000000
+          Left = 419.929133860000000000
           Top = 158.960730000000000000
-          Width = 86.929133860000000000
+          Width = 106.929133860000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1635,9 +1692,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 483.480314960000000000
+          Left = 534.480314960000000000
           Top = 158.960730000000000000
-          Width = 86.929133860000000000
+          Width = 104.071991000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1652,9 +1709,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 575.787401570000000000
+          Left = 642.930258710000000000
           Top = 158.960730000000000000
-          Width = 86.929133860000000000
+          Width = 111.532308470000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1687,7 +1744,7 @@ object FKartuPiutang: TFKartuPiutang
           AllowVectorExport = True
           Left = 158.740260000000000000
           Top = 53.913420000000000000
-          Width = 408.189240000000000000
+          Width = 482.035393850000000000
           Height = 18.897650000000000000
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
@@ -1705,7 +1762,7 @@ object FKartuPiutang: TFKartuPiutang
           AllowVectorExport = True
           Left = 158.740260000000000000
           Top = 81.590600000000000000
-          Width = 408.189240000000000000
+          Width = 482.035393850000000000
           Height = 18.897650000000000000
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
@@ -1723,7 +1780,7 @@ object FKartuPiutang: TFKartuPiutang
           AllowVectorExport = True
           Left = 158.740260000000000000
           Top = 113.267780000000000000
-          Width = 408.189240000000000000
+          Width = 482.035393850000000000
           Height = 18.897650000000000000
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
@@ -1782,9 +1839,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 665.488560000000000000
+          Left = 753.915910430000000000
           Top = 152.519790000000000000
-          Width = 63.759027820000000000
+          Width = 54.870138930000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1800,9 +1857,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 732.638220000000000000
+          Left = 814.022835380000000000
           Top = 158.519790000000000000
-          Width = 59.979497820000000000
+          Width = 34.814662660000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1817,9 +1874,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 794.008350000000000000
+          Left = 853.239119230000000000
           Top = 154.519790000000000000
-          Width = 78.877147820000000000
+          Width = 69.646378590000000000
           Height = 34.015770000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1835,7 +1892,7 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 877.158010000000000000
+          Left = 927.158010000000000000
           Top = 155.519790000000000000
           Width = 82.656677820000000000
           Height = 34.015770000000000000
@@ -1853,9 +1910,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 962.528140000000000000
+          Left = 1008.670997150000000000
           Top = 161.299320000000000000
-          Width = 64.252010000000000000
+          Width = 47.109152850000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1870,9 +1927,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 1027.457330000000000000
+          Left = 1056.457330000000000000
           Top = 154.299320000000000000
-          Width = 64.252010000000000000
+          Width = 55.021240770000000000
           Height = 34.015770000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1888,9 +1945,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 1091.693570000000000000
+          Left = 1111.693570000000000000
           Top = 161.299320000000000000
-          Width = 90.708720000000000000
+          Width = 70.708720000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1905,9 +1962,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line4: TfrxLineView
           AllowVectorExport = True
-          Left = 68.031540000000000000
+          Left = 60.031540000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1915,7 +1972,7 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line5: TfrxLineView
           AllowVectorExport = True
-          Left = 160.299320000000000000
+          Left = 205.299320000000000000
           Top = 143.622140000000000000
           Height = 600.944881890000000000
           StretchMode = smMaxHeight
@@ -1925,9 +1982,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line6: TfrxLineView
           AllowVectorExport = True
-          Left = 385.819110000000000000
+          Left = 415.819110000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1935,9 +1992,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line7: TfrxLineView
           AllowVectorExport = True
-          Left = 480.086890000000000000
+          Left = 531.086890000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1945,9 +2002,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line8: TfrxLineView
           AllowVectorExport = True
-          Left = 573.677490000000000000
+          Left = 641.677490000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1955,9 +2012,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line9: TfrxLineView
           AllowVectorExport = True
-          Left = 665.945270000000000000
+          Left = 755.945270000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1965,9 +2022,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line10: TfrxLineView
           AllowVectorExport = True
-          Left = 733.417750000000000000
+          Left = 810.417750000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1975,9 +2032,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line11: TfrxLineView
           AllowVectorExport = True
-          Left = 794.685530000000000000
+          Left = 851.685530000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1985,9 +2042,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line12: TfrxLineView
           AllowVectorExport = True
-          Left = 876.276130000000000000
+          Left = 926.276130000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1995,9 +2052,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line13: TfrxLineView
           AllowVectorExport = True
-          Left = 961.543910000000000000
+          Left = 1010.543910000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -2005,9 +2062,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line14: TfrxLineView
           AllowVectorExport = True
-          Left = 1028.221090000000000000
+          Left = 1057.221090000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -2015,9 +2072,9 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Line15: TfrxLineView
           AllowVectorExport = True
-          Left = 1093.488870000000000000
+          Left = 1112.488870000000000000
           Top = 143.622140000000000000
-          Height = 600.944881889764000000
+          Height = 600.944881890000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []

@@ -316,7 +316,8 @@ begin
     ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
     ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
-    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
     ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
@@ -340,7 +341,8 @@ begin
     ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
     ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
-    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
     ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
@@ -348,7 +350,7 @@ begin
     Execute;
   end;
 end;
-    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian.Fr3');
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian_DK.Fr3');
   // Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptBukuHarianPembelianProduksi.Fr3');
     SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
   //  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));

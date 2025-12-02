@@ -35,6 +35,7 @@ type
     RzLabel4: TRzLabel;
     cbSBU: TRzComboBox;
     RzBitBtn1: TRzBitBtn;
+    RzLabel5: TRzLabel;
     procedure FormShow(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
@@ -50,6 +51,8 @@ type
     procedure dtTanggal2Change(Sender: TObject);
     procedure dtTanggal1Change(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
+    procedure DBGridEh1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -290,6 +293,40 @@ begin
 
         Dm.Qtemp.next;
       end;
+    end;
+  end;
+end;
+
+procedure TFStockOpnameNota.DBGridEh1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  TargetFieldName: String;
+begin
+  if Key = VK_F2 then
+  begin
+    case DBGridEh1.SelectedIndex of
+      7: TargetFieldName := 'nota_fisik';
+      8: TargetFieldName := 'dpp_nota';
+      9: TargetFieldName := 'kontra_bon';
+      10: TargetFieldName := 'bg_mundur';
+      11: TargetFieldName := 'transfer';
+      12: TargetFieldName := 'retur';
+      13: TargetFieldName := 'nota_masalah';
+      14: TargetFieldName := 'nota_belum_kembali';
+      15: TargetFieldName := 'nota_bangkrut';
+    else
+      Exit;
+    end;
+    if MemDetail.Active then
+    begin
+      if not (MemDetail.State in [dsEdit, dsInsert]) then
+        MemDetail.Edit;
+      if MemDetail.FieldByName('amount_nota_awal') <> nil then
+      begin
+        MemDetail.FieldByName(TargetFieldName).AsCurrency :=
+          MemDetail.FieldByName('amount_nota_awal').AsCurrency;
+      end;
+      Key := 0;
     end;
   end;
 end;

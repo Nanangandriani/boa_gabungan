@@ -110,6 +110,8 @@ type
     dtAwal: TcxBarEditItem;
     dtAkhir: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
+    dxBarManager1Bar4: TdxBar;
+    dxBarLargeButton5: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -121,6 +123,7 @@ type
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure dxBarLargeButton5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -136,7 +139,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin;
+uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin,
+  UCetakKolektifPenerimaanBank;
 
 procedure TFListPenerimaanBank.Refresh;
 var mm: Integer;
@@ -624,6 +628,11 @@ begin
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   cbTransaksi.ItemIndex:=0;
+end;
+
+procedure TFListPenerimaanBank.dxBarLargeButton5Click(Sender: TObject);
+begin
+  FCetakKolektifPenerimaanBank.ShowModal;
 end;
 
 procedure TFListPenerimaanBank.FormShow(Sender: TObject);

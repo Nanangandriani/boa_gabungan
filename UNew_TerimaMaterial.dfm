@@ -23,7 +23,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     ExplicitWidth = 1020
     object Label1: TLabel
       Left = 24
-      Top = 204
+      Top = 207
       Width = 42
       Height = 15
       Caption = 'No. Ref.'
@@ -31,7 +31,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label3: TLabel
       Left = 24
-      Top = 99
+      Top = 102
       Width = 57
       Height = 15
       Caption = 'No. Terima'
@@ -46,14 +46,14 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label6: TLabel
       Left = 24
-      Top = 71
+      Top = 74
       Width = 79
       Height = 15
       Caption = 'Tanggal Terima'
     end
     object Label8: TLabel
       Left = 120
-      Top = 204
+      Top = 207
       Width = 3
       Height = 15
       Caption = ':'
@@ -61,14 +61,14 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label10: TLabel
       Left = 120
-      Top = 99
+      Top = 102
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label11: TLabel
       Left = 120
-      Top = 71
+      Top = 74
       Width = 3
       Height = 15
       Caption = ':'
@@ -83,14 +83,14 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label4: TLabel
       Left = 25
-      Top = 127
+      Top = 130
       Width = 56
       Height = 15
       Caption = 'Surat Jalan'
     end
     object Label7: TLabel
       Left = 121
-      Top = 127
+      Top = 130
       Width = 3
       Height = 15
       Caption = ':'
@@ -173,7 +173,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label23: TLabel
       Left = 24
-      Top = 176
+      Top = 179
       Width = 26
       Height = 15
       Caption = 'Valas'
@@ -181,7 +181,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label24: TLabel
       Left = 120
-      Top = 176
+      Top = 179
       Width = 3
       Height = 15
       Caption = ':'
@@ -197,7 +197,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label22: TLabel
       Left = 25
-      Top = 153
+      Top = 156
       Width = 21
       Height = 15
       Caption = 'SBU'
@@ -221,7 +221,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNoSPB: TRzComboBox
       Left = 138
-      Top = 202
+      Top = 205
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -233,7 +233,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNo: TEdit
       Left = 138
-      Top = 97
+      Top = 100
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -243,7 +243,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Dtterima: TRzDateTimeEdit
       Left = 138
-      Top = 69
+      Top = 72
       Width = 121
       Height = 23
       EditType = etDate
@@ -263,7 +263,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdSJ: TEdit
       Left = 138
-      Top = 124
+      Top = 127
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -335,7 +335,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdValas: TRzEdit
       Left = 138
-      Top = 173
+      Top = 176
       Width = 64
       Height = 23
       Text = '0'
@@ -345,7 +345,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNilai_Valas: TRzEdit
       Left = 207
-      Top = 173
+      Top = 176
       Width = 139
       Height = 23
       Text = '0'
@@ -380,7 +380,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Edjenispo: TRzComboBox
       Left = 265
-      Top = 69
+      Top = 72
       Width = 99
       Height = 23
       CharCase = ecUpperCase
@@ -394,7 +394,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Edsbu: TComboBox
       Left = 138
-      Top = 148
+      Top = 151
       Width = 73
       Height = 23
       TabOrder = 16

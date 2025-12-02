@@ -136,6 +136,8 @@ type
     dtAkhir: TcxBarEditItem;
     dxBarLargeButton10: TdxBarLargeButton;
     edKaresidenan: TcxBarEditItem;
+    dxBarLargeButton11: TdxBarLargeButton;
+    ReportValidasi: TfrxReport;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);

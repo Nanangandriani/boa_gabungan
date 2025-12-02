@@ -104,6 +104,13 @@ object FStockOpnameNota: TFStockOpnameNota
       Color = 15987699
       TabOrder = 4
       ExplicitWidth = 942
+      object RzLabel5: TRzLabel
+        Left = 560
+        Top = 25
+        Width = 164
+        Height = 15
+        Caption = 'Tekan F2 :  Copy Data Sisa Nota'
+      end
       object btCetakLaporanStokOpname: TRzBitBtn
         Left = 12
         Top = 18
@@ -173,6 +180,7 @@ object FStockOpnameNota: TFStockOpnameNota
     SearchPanel.FilterEnabled = False
     TabOrder = 1
     TitleParams.MultiTitle = True
+    OnKeyDown = DBGridEh1KeyDown
     Columns = <
       item
         CellButtons = <>

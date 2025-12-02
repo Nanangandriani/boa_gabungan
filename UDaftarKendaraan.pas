@@ -26,6 +26,7 @@ type
     Memo1: TMemo;
     NetHTTPClient1: TNetHTTPClient;
     MemMasterDatacapacity: TFloatField;
+    MemMasterDatasort_number: TStringField;
     procedure FormShow(Sender: TObject);
     procedure DBGridDblClick(Sender: TObject);
   private
@@ -127,15 +128,31 @@ begin
   end;
   if vcall='sales_order' then
   begin
-    FNew_SalesOrder.edKelompokKendaraan.Text:=MemMasterData['code'];
-    FNew_SalesOrder.edTypeKendaraan.Text:=MemMasterData['type_name'];
-    FNew_SalesOrder.edKodeTypeKendaraan.Text:=MemMasterData['type'];
-    FNew_SalesOrder.edKapasitas.Text :=MemMasterData['capacity'];
-    FNew_SalesOrder.edKendaraan.Text :=MemMasterData['plate_number'];
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select DISTINCT sent_date from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL';
+      open;
+    end;
+
+    if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])<>FormatDateTime('dd-mm-yyyy',FNew_SalesOrder.dtTanggal_Kirim.Date)) then
+    begin
+      MessageDlg('Kelompok Kendaraan sudah ada Order dengan Pengiriman Tanggal '+FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])+' ..!!',mtInformation,[mbRetry],0);
+    end else begin
+
+      FNew_SalesOrder.strVehicleGroupId:=MemMasterData['code'];
+      FNew_SalesOrder.edKelompokKendaraan.Text :=MemMasterData['sort_number'];
+      FNew_SalesOrder.edTypeKendaraan.Text:=MemMasterData['type_name'];
+      FNew_SalesOrder.edKodeTypeKendaraan.Text:=MemMasterData['type'];
+      FNew_SalesOrder.edKapasitas.Text :=MemMasterData['capacity'];
+      FNew_SalesOrder.edKendaraan.Text :=MemMasterData['plate_number'];
+      FDaftarKendaraan.Close;
+      FDaftarKendaraan.MemMasterData.EmptyTable;
+    end;
 //    FNew_SalesOrder.edKapasitas.DisplayFormat:='#,###';
   end;
-  FDaftarKendaraan.Close;
-  FDaftarKendaraan.MemMasterData.EmptyTable;
+
 end;
 
 procedure TFDaftarKendaraan.FormShow(Sender: TObject);
@@ -267,6 +284,7 @@ begin
               begin
                 MemMasterData.Insert;
                 MemMasterData['code']        := dataItem.GetValue('code').Value;
+                MemMasterData['sort_number']        := dataItem.GetValue('sort_number').Value;
                 MemMasterData['plate_number']:= dataItem.GetValue('plate_number').Value;
                 MemMasterData['type']        := dataItem.GetValue('type').Value;
                 MemMasterData['type_name']   := dataItem.GetValue('type_name').Value;

@@ -1148,6 +1148,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1098
+      ExplicitHeight = 162
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -1181,10 +1183,12 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             EditButtons = <
               item
                 Style = ebsPlusEh
+                Visible = False
                 OnClick = DBGridAkunColumns0EditButtons0Click
               end>
             FieldName = 'kd_akun'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Kode Akun Detail'
             Width = 100
           end
@@ -1238,8 +1242,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
-      ExplicitWidth = 1098
-      ExplicitHeight = 162
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

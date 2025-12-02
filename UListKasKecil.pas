@@ -25,7 +25,8 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, RzButton,
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, RzPanel;
 
 type
   TFListKasKecil = class(TForm)
@@ -70,12 +71,19 @@ type
     frxReport1: TfrxReport;
     frxDBDataset1: TfrxDBDataset;
     QRKasKecil: TUniQuery;
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    DTP1: TDateTimePicker;
+    DTP2: TDateTimePicker;
+    Cari: TRzBitBtn;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
+    procedure CariClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -268,6 +276,23 @@ begin
   FDataKasKecil.edNoTrans.Enabled:=false;
   FDataKasKecil.Status := 1;
   FDataKasKecil.Show;
+end;
+
+procedure TFListKasKecil.CariClick(Sender: TObject);
+begin
+  DBGrid.StartLoadingStatus();
+  try
+   with QKasKecil do
+   begin
+       close;
+       sql.Clear;
+       sql.Text:=' select * from "public"."t_petty_cash"   '+
+                 ' where deleted_at is null and trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' order by trans_date Desc ';
+       open;
+   end;
+  finally
+  DBGrid.FinishLoadingStatus();
+  end;
 end;
 
 procedure TFListKasKecil.dxBarLargeButton1Click(Sender: TObject);

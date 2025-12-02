@@ -2,8 +2,8 @@ object FRpt_by: TFRpt_by
   Left = 0
   Top = 0
   Caption = 'LAPORAN BY'
-  ClientHeight = 394
-  ClientWidth = 680
+  ClientHeight = 630
+  ClientWidth = 984
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,270 +16,18 @@ object FRpt_by: TFRpt_by
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
-  object Panel2: TPanel
-    Left = 0
-    Top = 362
-    Width = 680
-    Height = 32
-    Align = alBottom
-    TabOrder = 0
-    ExplicitTop = 119
-    ExplicitWidth = 356
-    object BBatal: TRzBitBtn
-      Left = 604
-      Top = 1
-      Height = 30
-      Align = alRight
-      Caption = 'Batal'
-      TabOrder = 0
-      OnClick = BBatalClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000630B0000630B00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8B46C6C6CE8
-        E8E8E8E8B46C6C6CE8E8E8E2DFDFDFE8E8E8E8E8E2DFDFDFE8E8E8B49090906C
-        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8E8B4909090
-        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8E8E8B49090
-        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8E8E8B490
-        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8E8E8B4
-        9090906CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8B490
-        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8B49090
-        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8B4909090
-        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8B49090906C
-        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8B4B4B4B4E8
-        E8E8E8E8B4B4B4B4E8E8E8E2E2E2E2E8E8E8E8E8E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 280
-    end
-    object BPrint: TRzBitBtn
-      Left = 529
-      Top = 1
-      Height = 30
-      Align = alRight
-      Caption = 'Print'
-      TabOrder = 1
-      Visible = False
-      OnClick = BPrintClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
-        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
-        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
-        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
-        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
-        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
-        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
-        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
-        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
-        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
-        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
-        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
-        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
-        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 205
-    end
-    object RzBitBtn1: TRzBitBtn
-      Left = 454
-      Top = 1
-      Height = 30
-      Align = alRight
-      Caption = 'Print'
-      TabOrder = 2
-      OnClick = RzBitBtn1Click
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
-        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
-        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
-        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
-        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
-        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
-        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
-        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
-        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
-        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
-        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
-        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
-        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
-        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 130
-    end
-  end
-  object Panel1: TPanel
-    Left = 0
-    Top = 241
-    Width = 680
-    Height = 121
-    Align = alBottom
-    TabOrder = 1
-    ExplicitTop = 0
-    ExplicitWidth = 356
-    object Lbbulan: TLabel
-      Left = 35
-      Top = 26
-      Width = 26
-      Height = 13
-      Caption = 'Bulan'
-    end
-    object Label15: TLabel
-      Left = 35
-      Top = 62
-      Width = 30
-      Height = 13
-      Caption = 'Tahun'
-    end
-    object cbbulan: TComboBox
-      Left = 125
-      Top = 23
-      Width = 150
-      Height = 21
-      TabOrder = 0
-      OnSelect = cbbulanSelect
-      Items.Strings = (
-        'Januari'
-        'Februari'
-        'Maret'
-        'April'
-        'Mei'
-        'Juni'
-        'Juli'
-        'Agustus'
-        'September'
-        'Oktober'
-        'November'
-        'Desember')
-    end
-    object edth: TSpinEdit
-      Left = 125
-      Top = 59
-      Width = 150
-      Height = 22
-      MaxValue = 3000
-      MinValue = 2000
-      TabOrder = 1
-      Value = 2022
-    end
-  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 680
+    Width = 984
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 2
+    TabOrder = 0
     TabStop = False
-    ExplicitWidth = 667
+    ExplicitWidth = 680
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -290,108 +38,110 @@ object FRpt_by: TFRpt_by
       Index = 0
     end
   end
+  object DBGridBy: TDBGridEh
+    Left = 0
+    Top = 127
+    Width = 984
+    Height = 503
+    Align = alClient
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_3_balance'
+      end>
+    DataSource = DsRpt_By
+    DynProps = <>
+    TabOrder = 5
+    TitleParams.MultiTitle = True
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id'
+        Footers = <>
+        Title.Caption = 'No.'
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'type_by'
+        Footers = <>
+        Visible = False
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_name'
+        Footers = <>
+        Title.Caption = 'Nama Perkiraan'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##,0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'balance'
+        Footers = <>
+        Title.Caption = 'Jumlah|Rp'
+        Width = 170
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'persentase'
+        Footers = <>
+        Title.Caption = 'Jumlah|%'
+        Width = 70
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
+  object cbbulan: TComboBox
+    Left = 46
+    Top = 39
+    Width = 140
+    Height = 21
+    TabOrder = 6
+    OnSelect = cbbulanSelect
+    Items.Strings = (
+      ''
+      'Januari'
+      'Februari'
+      'Maret'
+      'April'
+      'Mei'
+      'Juni'
+      'Juli'
+      'Agustus'
+      'September'
+      'Oktober'
+      'November'
+      'Desember')
+  end
   object QRpt_By: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        '-- select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perk' +
-        'iraan,x3."id",x3.jenis_by,sum(x2.kredit) kr,sum(x2.debit) db fro' +
-        'm t_daftar_perkiraan x  LEFT JOIN (select * from t_item_neraca_d' +
-        'et b INNER JOIN t_item_neraca a on a.no_in=b.no_in WHERE bulan='#39 +
-        '01'#39' and tahun='#39'2022'#39')x2 on x2.kd_akun=x.kode INNER JOIN t_jenis_' +
-        'by x3 on x.st_by=x3."id" GROUP BY x.kode_header,x2.bulan,x2.tahu' +
-        'n,x2.kd_akun,x.nama_perkiraan,x3."id",x3.jenis_byORDER BY x3."id' +
-        '",kd_akun asc'
-      ''
-      
-        'select kode,"id",jenis_by,kode_header,tahun,nama_perkiraan,case ' +
-        'when sum(spt)ISNULL then 0 else sum(spt) end spt, case when sum(' +
-        'jan) ISNULL then 0 else sum(jan) end jan,case when sum(feb) isnu' +
-        'll then 0 else sum(feb) end feb,case when sum(mar) ISNULL then 0' +
-        ' else sum(mar) end mar,case when sum(apr) isnull then 0 else sum' +
-        '(apr) end apr,case when sum(mei)  isnull then 0 else sum(mei) en' +
-        'd mei,case when sum(jun)ISNULL then 0 else sum(jun) end jun,case' +
-        ' when sum(jul) isnull    then 0 else sum(jul) end jul,case when ' +
-        'sum(ags) ISNULL then 0 else sum(ags) end ags,case when sum(sep) ' +
-        'isnull then 0   else sum(sep) end sep,case when sum(okt) ISNULL ' +
-        'then 0 else sum(okt) end okt,case when sum(nov) ISNULL then 0 el' +
-        'se     sum(nov) end nov,case when sum(des) isnull then 0 else su' +
-        'm(des) end des,case when sum(spt)ISNULL then 0 else sum(spt2) en' +
-        'd spt2, case when sum(jan2) ISNULL then 0 else sum(jan2) end jan' +
-        '2,case when sum(feb2) isnull then 0 else sum(feb2) end feb2,case' +
-        ' when sum(mar2) ISNULL then 0 else sum(mar2) end mar2,case when ' +
-        'sum(apr2) isnull then 0 else sum(apr2) end apr2,case when sum(me' +
-        'i2)  isnull then 0 else sum(mei2) end mei2,case when sum(jun2)IS' +
-        'NULL then 0 else sum(jun2) end jun2,case when sum(jul2) isnull  ' +
-        '  then 0 else sum(jul2) end jul2,case when sum(ags2) ISNULL then' +
-        ' 0 else sum(ags2) end ags2,case when sum(sep2) isnull then 0   e' +
-        'lse sum(sep2) end sep2,case when sum(okt2) ISNULL then 0 else su' +
-        'm(okt2) end okt2,case when sum(nov2) ISNULL then 0 else     sum(' +
-        'nov2) end nov2,case when sum(des2) isnull then 0 else sum(des2) ' +
-        'end des2 from (select kode,"id",jenis_by,kode_header,tahun,  nam' +
-        'a_perkiraan,case when bulan='#39'01'#39' then total end jan,case when bu' +
-        'lan='#39'02'#39' then total end feb,case when bulan='#39'03'#39'   then total en' +
-        'd mar,case when bulan='#39'04'#39' then total end apr, case when bulan='#39 +
-        '05'#39' then total end mei,case when  bulan='#39'06'#39' then total end jun,' +
-        ' case when bulan='#39'07'#39' then total end jul,case when bulan='#39'08'#39' th' +
-        'en total end ags, case when bulan='#39'09'#39' then total end sep,case w' +
-        'hen bulan='#39'10'#39' then total end okt,case when bulan='#39'11'#39' then tota' +
-        'l  end nov,case when bulan='#39'12'#39' then total end des,case when bul' +
-        'an='#39'SPT'#39' then total end spt'
-      
-        ',case when bulan='#39'01'#39' then persen end jan2,case when bulan='#39'02'#39' ' +
-        'then persen end feb2,case when bulan='#39'03'#39' then persen end mar2,c' +
-        'ase when bulan='#39'04'#39' then persen end apr2, case when bulan='#39'05'#39' t' +
-        'hen persen end mei2,case when  bulan='#39'06'#39' then persen end jun2, ' +
-        'case when bulan='#39'07'#39' then persen end jul2,case when bulan='#39'08'#39' t' +
-        'hen persen end ags2, case when bulan='#39'09'#39' then persen end sep2,c' +
-        'ase when bulan='#39'10'#39' then persen end okt2,case when bulan='#39'11'#39' th' +
-        'en persen  end nov2,case when bulan='#39'12'#39' then persen end des2,ca' +
-        'se when bulan='#39'SPT'#39' then persen end spt2 from (select x1.*,x1.db' +
-        ' total, db2,(db/db2)* 100  persen '
-      
-        'from (select x.kode_header,x2.bulan, x2.tahun,x2.kd_akun kode,x.' +
-        'nama_perkiraan,x3."id",x3.jenis_by,sum(x2.kredit)kr,sum(x2.debit' +
-        ')db from t_daftar_perkiraan x  LEFT JOIN (select * from t_item_n' +
-        'eraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no_in  WHERE' +
-        ' tahun='#39'2023'#39')x2 on x2.kd_akun=x.kode INNER JOIN t_jenis_by x3 o' +
-        'n x.st_by=x3."id"  GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.k' +
-        'd_akun,x.nama_perkiraan,x3."id",x3.jenis_by  union /*SPT Tahun L' +
-        'alu*/     select x.kode_header,'#39'SPT'#39' bulan,'#39'2023'#39' tahun,x2.kd_ak' +
-        'un kode,x.nama_perkiraan,x3."id",x3.jenis_by, sum(x2.kredit2) kr' +
-        ',sum(x2.debit2) db from t_daftar_perkiraan x LEFT JOIN (select *' +
-        ' from t_neraca_lajur1_det b INNER JOIN  (select * from t_neraca_' +
-        'lajur1 WHERE thn<'#39'2023'#39' order by periode1 desc limit 1) a on a.n' +
-        'otrans=b.notrans )x2   on x2.kd_akun=x.kode INNER JOIN t_jenis_b' +
-        'y x3 on x.st_by=x3."id" GROUP BY x.kode_header,x2.kd_akun,x.nama' +
-        '_perkiraan, x3."id",x3.jenis_by )x1  --ORDER BY "id",kode asc  '
-      'INNER JOIN'
-      
-        '(SELECT case when sum(db) > 0 then sum(db) else 1 end  db2,id,ta' +
-        'hun,bulan from (select x.kode_header,x2.bulan, x2.tahun,x2.kd_ak' +
-        'un kode,x.nama_perkiraan,x3."id",x3.jenis_by,sum(x2.kredit)kr,su' +
-        'm(x2.debit)db from t_daftar_perkiraan x  LEFT JOIN (select * fro' +
-        'm t_item_neraca_det b INNER JOIN t_item_neraca a on a.no_in=b.no' +
-        '_in  WHERE tahun='#39'2023'#39')x2 on x2.kd_akun=x.kode INNER JOIN t_jen' +
-        'is_by x3 on x.st_by=x3."id"  GROUP BY x.kode_header,x2.bulan,x2.' +
-        'tahun,x2.kd_akun,x.nama_perkiraan,x3."id",x3.jenis_by  union /*S' +
-        'PT Tahun Lalu*/     select x.kode_header,'#39'SPT'#39' bulan,'#39'2023'#39' tahu' +
-        'n,x2.kd_akun kode,x.nama_perkiraan,x3."id",x3.jenis_by, sum(x2.k' +
-        'redit2) kr,sum(x2.debit2) db from t_daftar_perkiraan x LEFT JOIN' +
-        ' (select * from t_neraca_lajur1_det b INNER JOIN  (select * from' +
-        ' t_neraca_lajur1 WHERE thn<'#39'2023'#39' order by periode1 desc limit 1' +
-        ') a on a.notrans=b.notrans )x2   on x2.kd_akun=x.kode INNER JOIN' +
-        ' t_jenis_by x3 on x.st_by=x3."id" GROUP BY x.kode_header,x2.kd_a' +
-        'kun,x.nama_perkiraan, x3."id",x3.jenis_by )x GROUP BY id,tahun,b' +
-        'ulan)x2 on x1.id=x2.id and x1.tahun=x2.tahun and x1.bulan=x2.bul' +
-        'an) y) yy GROUP BY kode,jenis_by,kode_header,tahun, nama_perkira' +
-        'an,"id" ORDER BY "id",kode asc')
+      'SELECT * FROM "vbiaya_month"')
     Left = 422
     Top = 136
   end
   object DbRpt_By: TfrxDBDataset
     UserName = 'DbRpt_By'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'account_code=account_code'
+      'account_name=account_name'
+      'type_by=type_by'
+      'trans_year=trans_year'
+      'persentase=persentase'
+      'balance=balance')
     DataSet = QRpt_By
     BCDToCurrency = False
     DataSetOptions = []
@@ -399,7 +149,7 @@ object FRpt_by: TFRpt_by
     Top = 193
   end
   object Rpt: TfrxReport
-    Version = '2022.2.7'
+    Version = '2022.1.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -407,7 +157,7 @@ object FRpt_by: TFRpt_by
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44692.656638194400000000
-    ReportOptions.LastChange = 45161.681820752300000000
+    ReportOptions.LastChange = 45963.052233368100000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -415,7 +165,7 @@ object FRpt_by: TFRpt_by
       ''
       'end.')
     Left = 494
-    Top = 128
+    Top = 136
     Datasets = <
       item
         DataSet = DbRpt_By
@@ -435,7 +185,6 @@ object FRpt_by: TFRpt_by
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
-      BackPictureStretched = False
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
       object ReportTitle1: TfrxReportTitle
@@ -624,7 +373,7 @@ object FRpt_by: TFRpt_by
         RowCount = 0
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Width = 427.086614173228000000
+          Width = 427.086614170000000000
           Height = 17.007874020000000000
           DataSet = DbRpt_By
           DataSetName = 'DbRpt_By'
@@ -635,7 +384,7 @@ object FRpt_by: TFRpt_by
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '   [DbRpt_By."nama_perkiraan"]')
+            '    [DbRpt_By."account_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -644,6 +393,7 @@ object FRpt_by: TFRpt_by
           Left = 427.086614170000000000
           Width = 188.976377952756000000
           Height = 17.007874020000000000
+          DataField = 'balance'
           DataSet = DbRpt_By
           DataSetName = 'DbRpt_By'
           DisplayFormat.FormatStr = '%2.2n'
@@ -656,15 +406,18 @@ object FRpt_by: TFRpt_by
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[DbRpt_By."db"]')
+            '[DbRpt_By."balance"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
           Left = 616.063001890000000000
-          Width = 122.834645669291000000
+          Width = 122.834645670000000000
           Height = 17.007874020000000000
+          DataField = 'persentase'
+          DataSet = DbRpt_By
+          DataSetName = 'DbRpt_By'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -690,7 +443,7 @@ object FRpt_by: TFRpt_by
         Height = 32.125994020000000000
         Top = 177.637910000000000000
         Width = 740.409927000000000000
-        Condition = 'DbRpt_By."jenis_by"'
+        Condition = 'DbRpt_By."type_by"'
         object Memo53: TfrxMemoView
           AllowVectorExport = True
           Width = 427.086614173228000000
@@ -755,7 +508,7 @@ object FRpt_by: TFRpt_by
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[DbRpt_By."jenis_by"]')
+            '[DbRpt_By."type_by"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -809,7 +562,7 @@ object FRpt_by: TFRpt_by
         Width = 740.409927000000000000
         object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Width = 427.086614173228000000
+          Width = 427.086614170000000000
           Height = 17.007874020000000000
           DataSet = DbRpt_By
           DataSetName = 'DbRpt_By'
@@ -820,14 +573,14 @@ object FRpt_by: TFRpt_by
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
-            'TOTAL [DbRpt_By."jenis_by"]')
+            'TOTAL [DbRpt_By."type_by"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo57: TfrxMemoView
           AllowVectorExport = True
           Left = 427.086614170000000000
-          Width = 188.976377952756000000
+          Width = 188.976377950000000000
           Height = 17.007874020000000000
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -839,7 +592,7 @@ object FRpt_by: TFRpt_by
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<DbRpt_By."db">,MasterData1)]')
+            '[SUM(<DbRpt_By."balance">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -896,41 +649,53 @@ object FRpt_by: TFRpt_by
     Left = 366
     Top = 55
   end
-  object Dbrpt_by3: TfrxDBDataset
+  object Dbrpt_thn: TfrxDBDataset
     UserName = 'Dbrpt_by3'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'kode_header=kode_header'
-      'bulan=bulan'
-      'tahun=tahun'
-      'kd_akun=kd_akun'
-      'nama_perkiraan=nama_perkiraan'
-      'kr=kr'
-      'db=db')
-    DataSet = QRpt_By3
+      'account_code=account_code'
+      'account_name=account_name'
+      'type_by=type_by'
+      'trans_year=trans_year'
+      'spt=spt'
+      'jan=jan'
+      'feb=feb'
+      'mar=mar'
+      'apr=apr'
+      'mei=mei'
+      'jun=jun'
+      'jul=jul'
+      'ags=ags'
+      'sep=sep'
+      'okt=okt'
+      'nov=nov'
+      'des=des'
+      'sptp=sptp'
+      'janp=janp'
+      'febp=febp'
+      'marp=marp'
+      'aprp=aprp'
+      'meip=meip'
+      'junp=junp'
+      'julp=julp'
+      'agsp=agsp'
+      'sepp=sepp'
+      'oktp=oktp'
+      'novp=novp'
+      'desp=desp')
+    DataSet = QRpt_thn
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 310
-    Top = 113
+    Left = 566
+    Top = 313
   end
-  object QRpt_By3: TUniQuery
+  object QRpt_thn: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        'select x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_perkira' +
-        'an,sum(x2.kredit) kr,sum(x2.debit) db from t_daftar_perkiraan x ' +
-        ' '
-      
-        'LEFT JOIN (select * from t_item_neraca_det b INNER JOIN t_item_n' +
-        'eraca a on a.no_in=b.no_in WHERE bulan='#39'01'#39' and tahun='#39'2022'#39' )x2' +
-        ' '
-      
-        'on x2.kd_akun=x.kode WHERE x.kode_header='#39'5500'#39' and x.kode<>'#39'550' +
-        '0'#39' GROUP BY x.kode_header,x2.bulan,x2.tahun,x2.kd_akun,x.nama_pe' +
-        'rkiraan'
-      'ORDER BY kd_akun')
-    Left = 366
-    Top = 111
+      'select * from "vbiaya_year"')
+    Active = True
+    Left = 622
+    Top = 311
   end
   object QRpt_By4: TUniQuery
     Connection = dm.Koneksi
@@ -1073,7 +838,7 @@ object FRpt_by: TFRpt_by
         end
         item
           Visible = True
-          ItemName = 'cxBarEditItem2'
+          ItemName = 'sptahun'
         end
         item
           BeginGroup = True
@@ -1097,7 +862,7 @@ object FRpt_by: TFRpt_by
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
+        00000000000074120000741200000000000000000000FFFFFFFFF6E3BBFFEEC7
         74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
         58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
         67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
@@ -1157,7 +922,7 @@ object FRpt_by: TFRpt_by
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -1211,7 +976,7 @@ object FRpt_by: TFRpt_by
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D660700000000000036000000280000001700000014000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
@@ -1279,7 +1044,7 @@ object FRpt_by: TFRpt_by
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1371,7 +1136,7 @@ object FRpt_by: TFRpt_by
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1550,21 +1315,29 @@ object FRpt_by: TFRpt_by
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object cxBarEditItem1: TcxBarEditItem
-      Caption = 'New Item'
+      Caption = 'Bulan    '
       Category = 0
-      Hint = 'New Item'
+      Hint = 'Bulan    '
       Visible = ivAlways
-      PropertiesClassName = 'TcxCheckComboBoxProperties'
-      Properties.Items = <>
+      PropertiesClassName = 'TcxLabelProperties'
     end
-    object cxBarEditItem2: TcxBarEditItem
-      Caption = 'New Item'
+    object sptahun: TcxBarEditItem
+      Caption = 'Tahun'
       Category = 0
-      Hint = 'New Item'
+      Hint = 'Tahun'
       Visible = ivAlways
-      PropertiesClassName = 'TcxMaskEditProperties'
+      Width = 140
+      PropertiesClassName = 'TcxSpinEditProperties'
+      Properties.MaxValue = 9999.000000000000000000
+      Properties.MinValue = 2000.000000000000000000
     end
+  end
+  object DsRpt_By: TDataSource
+    DataSet = QRpt_By
+    Left = 432
+    Top = 272
   end
 end

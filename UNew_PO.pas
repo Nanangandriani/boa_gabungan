@@ -783,7 +783,7 @@ begin
       sql.Clear;
       sql.Text:=' select a.item_code,a.supplier_code, a.item_stock_code,a.order_no, '+
                 //'	a.qty,a.unit, a.merk,a.item_name,	f.qty_conv, '+
-                '	a.qty,f.itemproduct_satuan as unit, a.merk,a.item_name,0 as	qty_conv, '+    //add 24-11-2025
+                '	a.qty,case when f.itemproduct_satuan is null then  c.unit else f.itemproduct_satuan end unit, a.merk,a.item_name,0 as	qty_conv, '+    //add 24-11-2025
                 //' f.unit_conv,b.supplier_name , c.item_name,e.type '+
                 ' b.supplier_name , c.item_name,e.type,CAST(0 AS NUMERIC) price,CAST(0 AS NUMERIC) total_price '+
                 ' ,CAST(0 AS NUMERIC) remaining_qty from t_item_stock A  '+
@@ -792,14 +792,14 @@ begin
                 ' INNER JOIN t_item_category d on c.category_id=d.category_id '+
                 ' INNER JOIN t_item_type e on d.type_id=e.type_id '+
                 //' left join t_item_conversion f on c.item_code=f.item_code '+
-                ' LEFT JOIN  vcari_konversi f on c.item_code=f.itemproduct_code '+  //add 24-11-2025
+                ' LEFT JOIN  (select * from vcari_konversi WHERE itemproduct_satuan <>'''') f on c.item_code=f.itemproduct_code '+  //add 24-11-2025
                 //' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+'and e.type<>''PRODUKSI'''+
-                ' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+' and f.itemproduct_satuan <>'''' '+   //add 24-11-2025
+                ' where A.supplier_code='+QuotedStr(EdKd_supp.Text)+'  '+   //add 24-11-2025
                 ' group by a.item_code,a.supplier_code, a.item_stock_code,a.order_no, '+
                 //'	a.qty,a.unit,a.merk,a.item_name,f.qty_conv, '+
                 '	a.qty,f.itemproduct_satuan,a.merk,a.item_name, '+  //add 24-11-2025
                 //' f.unit_conv,b.supplier_name, c.item_name,e.type';
-                ' b.supplier_name, c.item_name,e.type';
+                ' b.supplier_name, c.item_name,e.type,c.unit';
       ExecSQL;
     end;
     Flistitempo.QMaterial_stok.Open;

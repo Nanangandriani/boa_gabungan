@@ -28,7 +28,7 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, cxSpinEdit, cxDropDownEdit, DateUtils,
   cxDBLookupComboBox, cxCheckComboBox, cxEdit, Vcl.StdCtrls, RzCmboBx, cxLabel,
-  MemTableDataEh, MemTableEh, frxClass, frxDBSet;
+  MemTableDataEh, MemTableEh, frxClass, frxDBSet, cxRadioGroup, dxBarExtItems;
 
 type
   TFKartuPiutang = class(TForm)
@@ -119,6 +119,10 @@ type
     QKartuPiutangcustomer_name: TMemoField;
     QKartuPiutangTRXketerangan2: TMemoField;
     dxBarLargeButton1: TdxBarLargeButton;
+    edNama_Pelanggan: TcxBarEditItem;
+    cxBarEditItem2: TcxBarEditItem;
+    dxBarMRUListItem1: TdxBarMRUListItem;
+    edTP: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -133,11 +137,14 @@ type
       var Text: string; DisplayText: Boolean);
     procedure btPreviewClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure edPelangganPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure edTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    vkd_kares, vkd_kab : String ;
+    vkd_kares,vkd_tp, vkd_kab,strKodePelanggan : String ;
   end;
 
 function FKartuPiutang: TFKartuPiutang;
@@ -148,7 +155,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function;
+uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, Ubrowse_pelanggan;
 var
   realfpiutang : TFKartuPiutang;
 // implementasi function
@@ -193,56 +200,81 @@ begin
   else
   bln_akhir:=EncodeDate(yy,mm-1,LastDayOfMonth(yy,mm-1));
 
-   with QCetak do
-   begin
-       close;
-       sql.Clear;
-       sql.add(' SELECT *,  ROUND(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY nomor),2) AS saldo FROM (SELECT * from ( '+
-               ' SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC) AS nomor,  '+
-               ' * '+
-//               , ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY no_urut, '+
-//               ' tgltrans ASC) AS NUMERIC), 2) AS saldo '+
-               ' FROM (SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, '+
-               ' saldo_awal, no_urut, keterangan2, debet, kredit FROM '+
-               ' "public"."get_piutang_trx2" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
-               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') '+
-               ' ORDER BY customer_code, no_urut, created_at ASC) AS subquery '+
-               ' ORDER BY customer_code, nomor) trx '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b   '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-               ' where customer_code<> ''0'' ');
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-         end;
-       sql.add(' ORDER BY customer_code asc,nomor asc) zz ');
-       open;
-   end;
+  with QCetak do
+  begin
+     close;
+     sql.Clear;
+  //       sql.add(' SELECT *,  ROUND(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY nomor),2) AS saldo FROM (SELECT * from ( '+
+  //               ' SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC) AS nomor,  '+
+  //               ' * '+
+  ////               , ROUND(CAST(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY no_urut, '+
+  ////               ' tgltrans ASC) AS NUMERIC), 2) AS saldo '+
+  //               ' FROM (SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, '+
+  //               ' saldo_awal, no_urut, keterangan2, debet, kredit FROM '+
+  //               ' "public"."get_piutang_trx2" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
+  //               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') '+
+  //               ' ORDER BY customer_code, no_urut, created_at ASC) AS subquery '+
+  //               ' ORDER BY customer_code, nomor) trx '+
+  //               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+  //               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b   '+
+  //               ' ON "left"(code_region, 4)=b.code_kab '+
+  //               ' where customer_code<> ''0'' ');
+    sql.Add('WITH RankedData AS (  '+
+            'SELECT *, ROUND(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY nomor), 2) AS saldo '+
+            'FROM (SELECT trx.*,b."code_province", b.code_kab,b.name_kab, b."code_karesidenan" '+
+            'FROM ( '+
+            'SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC) AS nomor,sq.* '+
+            'FROM ( '+
+            'SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, '+
+            'COALESCE(saldo_awal,0) saldo_awal, no_urut, keterangan2, debet, kredit '+
+            'FROM "public"."get_piutang_trx2" ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
+             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') '+
+            'ORDER BY customer_code, no_urut, created_at ASC '+
+            ') AS sq '+
+            ') trx '+
+            'LEFT JOIN ( '+
+            'SELECT "code_province", "code" AS code_kab, "name" AS name_kab, "code_karesidenan" '+
+            'FROM t_region_regency '+
+            'WHERE deleted_at IS NULL '+
+            ') b ON "left"(trx.code_region, 4) = b.code_kab '+
+            'WHERE customer_code <> ''0'' ');
 
- if QCetak.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+    if edKaresidenan.EditValue<>'' then
+    begin
+      sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+    end;
+    if edKabupaten.EditValue<>'' then
+    begin
+      sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+    end;
+    if edNama_Pelanggan.EditValue<>'' then
+    begin
+      sql.add(' AND customer_code='+QuotedStr(strKodePelanggan)+' ');
+    end;
 
- if QCetak.RecordCount<>0 then
- begin
-   cLocation := ExtractFilePath(Application.ExeName);
+    sql.add(' ORDER BY customer_code asc,nomor asc) zz ),');
+    sql.Add('FilteredCustomerCount AS (SELECT *,COUNT(*) OVER (PARTITION BY customer_code) AS TotalRows, '+
+            'CASE WHEN (COUNT(*) OVER (PARTITION BY customer_code) = 1) AND '+
+            '(MAX(CASE WHEN nomor = 1 THEN saldo_awal ELSE NULL END) OVER (PARTITION BY customer_code) = 0) '+
+            'THEN 0 ELSE 1 END AS KeepCustomer FROM RankedData) '+
+            'SELECT * FROM FilteredCustomerCount WHERE KeepCustomer = 1 ORDER BY customer_code ASC, nomor ASC;');
+     open;
+  end;
 
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_kartupiutang'+ '.fr3');
-   SetMemo(Report,'nama_PT',FHomeLogin.vKodePRSH);
-   SetMemo(Report,'periode',cbBulan.Text+'-'+FloatToStr(spTahun.EditValue));
-   //Report.DesignReport();
-   //ShowMessage('A');
-   Report.ShowReport();
- end;
+  if QCetak.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
+  if QCetak.RecordCount<>0 then
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/rpt_kartupiutang'+ '.fr3');
+    SetMemo(Report,'nama_PT',FHomeLogin.vKodePRSH);
+    SetMemo(Report,'periode',cbBulan.Text+'-'+FloatToStr(spTahun.EditValue));
+    Report.ShowReport();
+  end;
 end;
 
 procedure TFKartuPiutang.btSearchClick(Sender: TObject);
@@ -364,17 +396,25 @@ begin
   cbBulan.ItemIndex:= MonthOf(Now);
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edNama_Pelanggan.EditValue:='';
   vkd_kares:='';
+  vkd_tp:='';
+  edTP.EditValue:='';
   vkd_kab:='';
 end;
 
 procedure TFKartuPiutang.edKabupatenPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
-  FMasterData.Caption:='Master Data Kabupaten';
-  FMasterData.vcall:='kartupiutang_kab';
-  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
-  FMasterData.ShowModal;
+  if edKaresidenan.EditValue<>'' then
+  begin
+    FMasterData.Caption:='Master Data Kabupaten';
+    FMasterData.vcall:='kartupiutang_kab';
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Karesidenan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
 end;
 
 procedure TFKartuPiutang.edKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -383,6 +423,28 @@ begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='kartupiutang_kares';
   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFKartuPiutang.edPelangganPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  if edKabupaten.EditValue<>'' then
+  begin
+    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+    Fbrowse_data_pelanggan.vcall:='kartupiutang';
+    Fbrowse_data_pelanggan.ShowModal;
+  end else begin
+    MessageDlg('Kabupaten Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
+end;
+
+procedure TFKartuPiutang.edTPPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='kartupiutang_tp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 
@@ -402,7 +464,10 @@ begin
   cbBulan.ItemIndex:= MonthOf(Now);
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edNama_Pelanggan.EditValue:='';
   vkd_kares:='';
+  vkd_tp:='';
+  edTP.EditValue:='';
   vkd_kab:='';
   FillSBUBarCombo(cbSBU);
 end;

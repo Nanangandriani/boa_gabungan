@@ -8,7 +8,7 @@ uses
   RzEdit, RzBtnEdt, Vcl.ComCtrls, RzDTP, RzCmboBx, RzLabel, Vcl.ExtCtrls,
   RzPanel, Vcl.Samples.Gauges, XMLIntf, XmlDoc, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Data.DB, MemDS, DBAccess, Uni, RzRadChk;
+  Data.DB, MemDS, DBAccess, Uni, RzRadChk, frxClass, frxDBSet;
 
 type
   TFExportFaktur = class(TForm)
@@ -49,6 +49,12 @@ type
     Qdetailpilih: TBooleanField;
     RzPanel3: TRzPanel;
     cbTandai: TRzCheckBox;
+    Report: TfrxReport;
+    frxDBDatasetValidasiFaktur: TfrxDBDataset;
+    QReport: TUniQuery;
+    QReportDetail: TUniQuery;
+    DSReport: TDataSource;
+    frxDBDatasetValidasiFakturDet: TfrxDBDataset;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -58,6 +64,8 @@ type
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure cbTandaiClick(Sender: TObject);
+    procedure dtTglDariChange(Sender: TObject);
+    procedure dtTglSampaiChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,7 +85,8 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterData, UDataModule, UMy_Function, UPajakCapFasilitas_KetTambahan, System.Math;
+uses UMasterData, UDataModule, UMy_Function, UPajakCapFasilitas_KetTambahan, System.Math,
+  UHomeLogin;
 
 procedure TFExportFaktur.ExportTaxInvoiceExcel;
 var
@@ -349,7 +358,7 @@ begin
   //               ',case when b.email=''-'' then ''0'' when b.email'''' then ''0'' when b.email is NULL then ''0'' else b.email end email,'+
                  ',case when b.email=''-'' then '''' else b.email end email,'+
                  'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli from t_selling a '+
-                 'left join t_selling_customer b on b.customer_code=a.code_cust AND deleted_at IS NULL '+
+                 'left join t_selling_customer b on b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
                  'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''002'' '+
                  'where a.trans_no in ('+SQLText+')  ';
       Open;
@@ -565,24 +574,73 @@ end;
 procedure TFExportFaktur.RzBitBtn1Click(Sender: TObject);
 var strKares: String;
 begin
-  if edKaresidenan.Text='' then
+  if cbExport.ItemIndex=0 then
   begin
-    strKares:='';
-  end else begin
-    strKares:=' AND b.karesidenan='+QuotedStr(edKaresidenan.Text)
-  end;                                                             ;
-  with Qdetail do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select false as pilih,a.trans_no,a.trans_date,a.code_cust,a.name_cust,'+
-              'a.customer_name_pkp,a.grand_tot,b.karesidenan,b.code_karesidenan from get_selling(NULL) a '+
-              'LEFT JOIN get_customer() b ON b.customer_code=a.code_cust '+
-              'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
-              ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') ';
-    open;
+    if edKaresidenan.Text='' then
+    begin
+      strKares:='';
+    end else begin
+      strKares:=' AND b.karesidenan='+QuotedStr(edKaresidenan.Text)
+    end;                                                             ;
+    with Qdetail do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select false as pilih,a.trans_no,a.trans_date,a.code_cust,a.name_cust,'+
+                'a.customer_name_pkp,a.grand_tot,b.karesidenan,b.code_karesidenan from get_selling(NULL) a '+
+                'LEFT JOIN get_customer() b ON b.customer_code=a.code_cust '+
+                'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
+                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') ';
+      open;
+    end;
+    cbTandai.Checked:=False;
+  end else if cbExport.ItemIndex=1 then begin
+    if edKaresidenan.Text='' then
+    begin
+      strKares:='';
+    end else begin
+      strKares:=' AND karesidenan='+QuotedStr(edKaresidenan.Text)
+    end;
+    with QReport do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='select trans_no,no_inv_tax,customer_name_pkp,trans_date,coalesce(no_npwp,no_nik)no_npwp from get_selling(NULL) '+
+                'WHERE trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
+                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' ';
+      Open;
+    end;
+
+//    with QReportDetail do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Text:='select a.code_item,a.name_item,a.amount,a.name_unit,a.unit_price,a.sub_total,a.ppn_percent,a.ppn_value from t_selling_det a '+
+//                'LEFT JOIN get_selling(NULL) b on b.trans_no=a.trans_no '+
+//                'WHERE b.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
+//                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares;
+//      Open;
+//    end;
+
+    if QReport.RecordCount<>0 then
+    begin
+      QReportDetail.Close;
+      QReportDetail.Open;
+
+      cLocation := ExtractFilePath(Application.ExeName);
+      Report.LoadFromFile(cLocation +'report/rpt_validasifaktur'+ '.fr3');
+      if edKaresidenan.Text<>'' then
+      begin
+        SetMemo(Report,'karesidenan',edKaresidenan.Text);
+      end else begin
+        SetMemo(Report,'karesidenan','');
+      end;
+      SetMemo(Report,'periode',formatdatetime('dd mmmm yyyy',dtTglDari.Date)+' s/d '+formatdatetime('dd mmmm yyyy',dtTglSampai.Date));
+      Report.ShowReport();
+    end else begin
+      ShowMessage('TIdak Ada Data..!');
+    end;
   end;
-  cbTandai.Checked:=False;
 end;
 
 procedure TFExportFaktur.CetakValidasiFaktur;
@@ -617,18 +675,19 @@ begin
     MessageDlg('Tidak Ada Data Yang Di Tandai..!!',mtInformation,[mbRetry],0);
     Exit;
   end else begin
+
     if cbExport.ItemIndex=0 then
-    begin
-      ExportTaxInvoiceExcel;
-    end;
-    if cbExport.ItemIndex=1 then
     begin
     //ExportTaxInvoiceXML;
       ExportTaxInvoiceXML1;
     end;
-    if cbExport.ItemIndex=2 then
+    if cbExport.ItemIndex=1 then
     begin
       CetakValidasiFaktur;
+    end;
+    if cbExport.ItemIndex=2 then
+    begin
+      ExportTaxInvoiceExcel;
     end;
   end;
 end;
@@ -682,8 +741,18 @@ begin
   end;
   kode_jenis_transaksi:=dm.Qtemp.FieldValues['code'];
   edJenisTransaksi.Text:=dm.Qtemp.FieldValues['name'];
-  cbExport.ItemIndex:=1;
-  cbExport.Enabled:=False;
+  cbExport.ItemIndex:=0;
+//  cbExport.Enabled:=False;
+end;
+
+procedure TFExportFaktur.dtTglDariChange(Sender: TObject);
+begin
+  if dtTglDari.Date>dtTglSampai.Date then dtTglSampai.Date:=dtTglDari.Date;
+end;
+
+procedure TFExportFaktur.dtTglSampaiChange(Sender: TObject);
+begin
+  if dtTglSampai.Date<dtTglDari.Date then dtTglDari.Date:=dtTglSampai.Date;
 end;
 
 procedure TFExportFaktur.edCapFasilitasButtonClick(Sender: TObject);

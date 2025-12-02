@@ -545,7 +545,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdNm_supp: TRzButtonEdit
       Left = 234
-      Top = 15
+      Top = 14
       Width = 242
       Height = 23
       Text = ''

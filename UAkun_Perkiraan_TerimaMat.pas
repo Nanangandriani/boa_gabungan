@@ -15,13 +15,15 @@ type
     DsAkun: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-
-var
+function
   FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat;
 implementation
 
@@ -29,6 +31,17 @@ implementation
 
 uses UNew_Pembelian, UMy_Function, URpt_BukuHarianPembelian,
   u_rencana_lunas_hutang_input, URpt_Buku_Besar;
+
+var
+  RealFAkun_Perkiraan_TerimaMat : TFAkun_Perkiraan_TerimaMat;
+
+Function FAkun_Perkiraan_TerimaMat: TFAkun_Perkiraan_TerimaMat;
+begin
+  if RealFAkun_Perkiraan_TerimaMat <> nil then
+    FAkun_Perkiraan_TerimaMat:= RealFAkun_Perkiraan_TerimaMat
+  else
+    Application.CreateForm(TFAkun_Perkiraan_TerimaMat, Result);
+end;
 
 procedure TFAkun_Perkiraan_TerimaMat.DBGridEh1DblClick(Sender: TObject);
 begin
@@ -41,6 +54,7 @@ begin
          Memrencana.Post;
 
     end;
+    ShowMessage(statustr);
     if statustr='pphpemb' then
     begin
       with FNew_Pembelian do
@@ -81,6 +95,22 @@ begin
       end;
     end;
   Close;
+end;
+
+procedure TFAkun_Perkiraan_TerimaMat.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  ACTION:=cafree;
+end;
+
+procedure TFAkun_Perkiraan_TerimaMat.FormCreate(Sender: TObject);
+begin
+  RealFAkun_Perkiraan_TerimaMat:=Self;
+end;
+
+procedure TFAkun_Perkiraan_TerimaMat.FormDestroy(Sender: TObject);
+begin
+  RealFAkun_Perkiraan_TerimaMat:=nil;
 end;
 
 procedure TFAkun_Perkiraan_TerimaMat.FormShow(Sender: TObject);

@@ -23,7 +23,7 @@ object FPenyesuaianPenjualan: TFPenyesuaianPenjualan
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 1058
+    ExplicitWidth = 1097
     object Label38: TLabel
       Left = 109
       Top = 8
@@ -251,7 +251,6 @@ object FPenyesuaianPenjualan: TFPenyesuaianPenjualan
     Top = 280
   end
   object MemDetail: TMemTableEh
-    Active = True
     Params = <>
     Left = 472
     Top = 240
@@ -275,6 +274,10 @@ object FPenyesuaianPenjualan: TFPenyesuaianPenjualan
     object MemDetailname_item: TStringField
       FieldName = 'name_item'
       Size = 255
+    end
+    object MemDetailcode_unit: TStringField
+      FieldName = 'code_unit'
+      Size = 100
     end
     object MemDetailamount: TFloatField
       FieldName = 'amount'
@@ -373,6 +376,12 @@ object FPenyesuaianPenjualan: TFPenyesuaianPenjualan
         object pilih: TMTBooleanDataFieldEh
           FieldName = 'pilih'
           DisplayWidth = 20
+        end
+        object code_unit: TMTStringDataFieldEh
+          FieldName = 'code_unit'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh

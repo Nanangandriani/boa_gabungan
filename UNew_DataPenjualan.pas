@@ -358,8 +358,11 @@ try
       edTotPot.Value:=(tot_pot);
       edTotPembulatan.Value:=(tot_dpp-(tot_harga_sblm_pot-tot_pot));
       edTotSebelumPajak.Value:=(tot_dpp);
-      edTotPPN.Value:=(ROUND(tot_dpp*(ppn/100)));
-      edTotBersih.Value:=(tot_dpp+(ROUND(tot_dpp*(ppn/100))));
+      tot_ppn:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',(tot_dpp*(ppn/100))), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+      edTotPPN.Value:=tot_ppn;
+
+
+      edTotBersih.Value:=(tot_dpp+(tot_ppn));
     end;
     Except;
   end;
@@ -852,8 +855,25 @@ end;
 
 procedure TFNew_Penjualan.Autonumber;
 var strSuratJalanNo,strKodeAwalInvoice :String;
+    LOriginalName: string;
+    LBaseName: string;
+    LLastUnderscorePos: Integer;
+    LSuffix: string;
+    LDummyInt: Integer;
 begin
-  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FDataListPenjualan.Name)+'');
+  LOriginalName := FDataListPenjualan.Name;
+  LBaseName := LOriginalName;
+  LLastUnderscorePos := LastDelimiter('_', LBaseName);
+  if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+  begin
+    LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+    if TryStrToInt(LSuffix, LDummyInt) then
+    begin
+      LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+    end;
+  end;
+
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
   strday2:=dtTanggal.Date;
   with dm.Qtemp do
   begin

@@ -162,9 +162,11 @@ begin
          ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
          ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+''+
          ' UNION  /*Transaksi*/'+
-         '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
+         ' SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
          ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+')xx'+
-         '  JOIN t_ak_account yy ON xx.account_code::text = yy.code::text) b on  a.header_code=b.header_code ORDER BY b.header_code,b.created_at ASC ';//where account_code='+QuotedStr(Edakun.EditValue);
+         ' JOIN t_ak_account yy ON xx.account_code::text = yy.code::text) b on  a.header_code=b.header_code '+
+         ' Where account_code='+QuotedStr(EdAkun.EditValue)+''+
+         ' ORDER BY b.header_code,b.created_at ASC ';//where account_code='+QuotedStr(Edakun.EditValue);
          Open;
       end;
       QRpt_Buku_Besar.Open;
@@ -427,19 +429,21 @@ begin
      end;
     if dm.Qtemp.RecordCount<>0 then
     begin
-    showmessage('test');
+    //showmessage('test');
         with QRpt_Buku_Besar do
         begin
           close;
           sql.Clear;
-         sql.Text:='SELECT xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.modul,xx.code account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.created_at,'''' bln,'+
+         sql.Text:='SELECT xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.modul,xx.account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.created_at,'''' bln,'+
          ' CASE WHEN yy.posisi_dk::text = ''D''::text THEN sum(xx.sa::numeric + xx.db - xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul)'+
          ' ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul) '+
-         ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,trans_no,modul,code,account_code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
+         ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,'+
+         ' trans_no,modul,code account_code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
          ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
          ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+''+
+         ' group by module_id, ket, trans_no,modul,code,account_name '+
          ' UNION  /*Transaksi*/'+
-         '  SELECT	module_id,ket,trans_date,trans_no,modul,'''',account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
+         '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
          ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+')xx'+
          '  JOIN t_ak_account yy ON xx.account_code::text = yy.code::text  where account_code='+QuotedStr(Edakun.editvalue);
          Open;
@@ -447,7 +451,7 @@ begin
     end;
         if dm.Qtemp.RecordCount=0 then
     begin
-    showmessage('test 2');
+    //showmessage('test 2');
         with QRpt_Buku_Besar do
         begin
           close;
@@ -513,17 +517,19 @@ begin
      end;
     if dm.Qtemp.RecordCount<>0 then
     begin
-    showmessage('test');
+    //showmessage('test');
         with QRpt_Buku_Besar do
         begin
           close;
           sql.Clear;
-         sql.Text:='SELECT xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.modul,xx.code account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.created_at,'''' bln,'+
+         sql.Text:='SELECT xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.modul,xx.account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.created_at,'''' bln,'+
          ' CASE WHEN yy.posisi_dk::text = ''D''::text THEN sum(xx.sa::numeric + xx.db - xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul)'+
          ' ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul) '+
-         ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,trans_no,modul,code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
+         ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,'+
+         ' trans_no,modul,code account_code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
          ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
          ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+''+
+         ' group by module_id, ket, trans_no,modul,code,account_name '+
          ' UNION  /*Transaksi*/'+
          '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
          ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+')xx'+
@@ -533,7 +539,7 @@ begin
     end;
         if dm.Qtemp.RecordCount=0 then
     begin
-    showmessage('test 2');
+    //showmessage('test 2');
         with QRpt_Buku_Besar do
         begin
           close;

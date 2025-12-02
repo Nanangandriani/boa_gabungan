@@ -50,7 +50,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
   ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
   UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang,
-  UListPenjualan, UListSales_Order, UListReturPenjualan;
+  UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -61,6 +61,41 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+//Nanang
+
+//Antok
+  if vcall='cash_bank_pelaku_biaya_ajuan' then //14-08-2025
+  begin
+    FDaftar_TP.MemTP.Edit;
+    FDaftar_TP.MemTP['tp_code']:=MemMasterData['KD_MASTER'];
+    FDaftar_TP.MemTP['tp_name']:=MemMasterData['NM_MASTER'];
+    FDaftar_TP.MemTP.Post;
+  end;
+   //Antok
+  if vcall='cash_bank_pelaku_biaya' then //18-08-2025
+  begin
+    FDaftar_TP.MemTP_Real.Edit;
+    FDaftar_TP.MemTP_Real['tp_code']:=MemMasterData['KD_MASTER'];
+    FDaftar_TP.MemTP_Real['tp_name']:=MemMasterData['NM_MASTER'];
+    FDaftar_TP.MemTP_Real.Post;
+  end;
+  if vcall='perkiraan_bank' then //10-09-2025
+  begin
+    FNewBank.edkd_akun1.Text:=MemMasterData['KD_MASTER'];
+    FNewBank.Ednm_akun1.Text:=MemMasterData['NM_MASTER'];
+  end;
+//  Nanang
+  if vcall='do_lokasi_muat' then
+  begin
+    FNewDeliveryOrder.kodelokasimuat:=MemMasterData['KD_MASTER'];
+    FNewDeliveryOrder.edLokasiMuat.Text:=MemMasterData['NM_MASTER'];
+  end;
+//  Nanang
+  if vcall='do_lokasi_bongkar' then
+  begin
+    FNewDeliveryOrder.kodelokasibongkar:=MemMasterData['KD_MASTER'];
+    FNewDeliveryOrder.edLokasiBongkar.Text:=MemMasterData['NM_MASTER'];
+  end;
   //rudy
   if vcall='satuan_coretax' then
   begin
@@ -128,12 +163,29 @@ begin
     FKartuPiutang.vkd_kares:=MemMasterData['KD_MASTER'];
     FKartuPiutang.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
     FKartuPiutang.vkd_kab:='';
+    FKartuPiutang.vkd_tp:='';
+    FKartuPiutang.edTP.EditValue:='';
     FKartuPiutang.edKabupaten.EditValue:='';
+    FKartuPiutang.strKodePelanggan:='';
+    FKartuPiutang.edNama_Pelanggan.EditValue:='';
+  end;
+  if vcall='kartupiutang_tp' then
+  begin
+    FKartuPiutang.vkd_tp:=MemMasterData['KD_MASTER'];
+    FKartuPiutang.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    FKartuPiutang.vkd_kares:='';
+    FKartuPiutang.edKaresidenan.EditValue:='';
+    FKartuPiutang.vkd_kab:='';
+    FKartuPiutang.edKabupaten.EditValue:='';
+    FKartuPiutang.strKodePelanggan:='';
+    FKartuPiutang.edNama_Pelanggan.EditValue:='';
   end;
   if vcall='kartupiutang_kab' then
   begin
     FKartuPiutang.vkd_kab:=MemMasterData['KD_MASTER'];
     FKartuPiutang.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+    FKartuPiutang.strKodePelanggan:='';
+    FKartuPiutang.edNama_Pelanggan.EditValue:='';
   end;
   if vcall='bhpenerimaankas_bank_kab' then
   begin
@@ -1246,6 +1298,16 @@ end;
 procedure TFMasterData.FormShow(Sender: TObject);
 begin
   DBGridCustomer.SearchPanel.SearchingText:='';
+  //Nanang
+  if (FMasterData.vcall='do_lokasi_muat') OR (FMasterData.vcall='do_lokasi_bongkar') then
+  begin
+    DBGridCustomer.Columns[0].Visible:=False;
+    DBGridCustomer.Columns[2].Visible:=False;
+  end else begin
+    DBGridCustomer.Columns[0].Visible:=True;
+    DBGridCustomer.Columns[2].Visible:=True;
+  end;
+
 end;
 
 procedure TFMasterData.update_grid(fld_kd,fld_name,fld_ket,tbl_name,vwhere:string);

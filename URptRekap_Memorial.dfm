@@ -16,203 +16,6 @@ object FRekap_memorial: TFRekap_memorial
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 13
-  object Panel2: TPanel
-    Left = 0
-    Top = 511
-    Width = 882
-    Height = 32
-    Align = alBottom
-    TabOrder = 0
-    ExplicitTop = 108
-    ExplicitWidth = 339
-    object BBatal: TRzBitBtn
-      Left = 806
-      Top = 1
-      Height = 30
-      Align = alRight
-      Caption = 'Batal'
-      TabOrder = 0
-      OnClick = BBatalClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000630B0000630B00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8B46C6C6CE8
-        E8E8E8E8B46C6C6CE8E8E8E2DFDFDFE8E8E8E8E8E2DFDFDFE8E8E8B49090906C
-        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8E8B4909090
-        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8E8E8B49090
-        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8E8E8B490
-        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8E8E8B4
-        9090906CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8B490
-        909090906CE8E8E8E8E8E8E8E8E8E28181818181DFE8E8E8E8E8E8E8E8B49090
-        906C9090906CE8E8E8E8E8E8E8E2818181DF818181DFE8E8E8E8E8E8B4909090
-        6CE8B49090906CE8E8E8E8E8E2818181DFE8E2818181DFE8E8E8E8B49090906C
-        E8E8E8B49090906CE8E8E8E2818181DFE8E8E8E2818181DFE8E8E8B4B4B4B4E8
-        E8E8E8E8B4B4B4B4E8E8E8E2E2E2E2E8E8E8E8E8E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 263
-    end
-    object BPrint: TRzBitBtn
-      Left = 731
-      Top = 1
-      Height = 30
-      Align = alRight
-      Caption = 'Print'
-      TabOrder = 1
-      Visible = False
-      OnClick = BPrintClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
-        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
-        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
-        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
-        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
-        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
-        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
-        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
-        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
-        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
-        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
-        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
-        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
-        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 188
-    end
-    object BPrint2: TRzBitBtn
-      Left = 656
-      Top = 1
-      Height = 30
-      Align = alRight
-      Caption = 'Print'
-      TabOrder = 2
-      OnClick = BPrint2Click
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000730E0000730E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
-        09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
-        89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
-        5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
-        8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
-        181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
-        D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
-        8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
-        5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
-        D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
-        E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
-        D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
-        E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
-        D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
-        5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-      ExplicitLeft = 113
-    end
-  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
@@ -222,11 +25,8 @@ object FRekap_memorial: TFRekap_memorial
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 1
+    TabOrder = 0
     TabStop = False
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 775
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -241,14 +41,14 @@ object FRekap_memorial: TFRekap_memorial
     Left = 0
     Top = 127
     Width = 882
-    Height = 384
+    Height = 416
     Align = alClient
     DataSource = Ds_memorial
     DrawMemoText = True
     DynProps = <>
     FooterRowCount = 1
     SumList.Active = True
-    TabOrder = 2
+    TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <
       item
@@ -321,7 +121,7 @@ object FRekap_memorial: TFRekap_memorial
     Top = 39
     Width = 146
     Height = 21
-    TabOrder = 3
+    TabOrder = 2
     OnSelect = cbbulanSelect
     Items.Strings = (
       'Januari'
@@ -376,35 +176,21 @@ object FRekap_memorial: TFRekap_memorial
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44284.400902222200000000
-    ReportOptions.LastChange = 45914.014292685200000000
+    ReportOptions.LastChange = 45955.227325312500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo11OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       'IF <DbRpt_Memorial."debit"> < 0 THEN'
       'BEGIN'
-      '  memo11.left:=80;'
-      '  memo11.width:=228;'
+      '  memo11.left:=90;'
+      '  memo37.text:='#39#39';'
       'END;'
       'IF <DbRpt_Memorial."debit"> > 0 THEN'
       'BEGIN'
-      '  memo11.left:=70;'
-      '  memo11.width:=225;'
+      '  memo11.left:=75;'
+      '  memo11.width:=230;'
       'END;'
-      'end;'
-      ''
-      'procedure Memo32OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      '   IF <DbRpt_Memorial."debit"> >0 THEN'
-      '    BEGIN'
-      '      memo30.text:=<DbRpt_Memorial."memo_no">;'
-      '      memo37.text:=<DbRpt_Memorial."trans_date">;'
-      '    END;'
-      '    IF <DbRpt_Memorial."debit"> =0 THEN'
-      '    BEGIN'
-      '      memo30.text:='#39#39';'
-      '      memo37.text:='#39#39';'
-      '    end;  '
       'end;'
       ''
       'begin'
@@ -417,10 +203,6 @@ object FRekap_memorial: TFRekap_memorial
       item
         DataSet = DbRpt_Memorial
         DataSetName = 'DbRpt_Memorial'
-      end
-      item
-        DataSet = dm.DBPerusahaan
-        DataSetName = 'DBPerusahaan'
       end>
     Variables = <>
     Style = <>
@@ -432,12 +214,175 @@ object FRekap_memorial: TFRekap_memorial
       PaperWidth = 215.900000000000000000
       PaperHeight = 279.400000000000000000
       PaperSize = 1
-      LeftMargin = 5.000000000000000000
-      RightMargin = 5.000000000000000000
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 245.669450000000000000
+        Width = 740.409927000000000000
+        DataSet = DbRpt_Memorial
+        DataSetName = 'DbRpt_Memorial'
+        RowCount = 0
+        Stretched = True
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 94.488201180000000000
+          Width = 215.433063540000000000
+          Height = 18.897637800000000000
+          OnBeforePrint = 'Memo11OnBeforePrint'
+          StretchMode = smMaxHeight
+          DataField = 'account_name'
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."account_name"]')
+          ParentFont = False
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 302.362229130000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'memo_no'
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."memo_no"]')
+          ParentFont = False
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 377.952731500000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."account_code"]')
+          ParentFont = False
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 453.543263150000000000
+          Width = 143.622047240000000000
+          Height = 18.897637795275600000
+          StretchMode = smMaxHeight
+          DataField = 'debit'
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."debit"]')
+          ParentFont = False
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 597.055113230000000000
+          Width = 143.622047240000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataField = 'kredit'
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."kredit"]')
+          ParentFont = False
+        end
+        object Memo39: TfrxMemoView
+          AllowVectorExport = True
+          Left = 75.590600000000000000
+          Width = 18.897503540000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          ParentFont = False
+        end
+        object Memo37: TfrxMemoView
+          AllowVectorExport = True
+          Width = 75.590575590000000000
+          Height = 18.897637800000000000
+          OnBeforePrint = 'Memo37OnBeforePrint'
+          StretchMode = smMaxHeight
+          DataField = 'trans_date'
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clWhite
+          Highlight.Font.Height = -13
+          Highlight.Font.Name = 'Arial'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<DbRpt_Memorial."debit"> = 0'
+          Highlight.FillType = ftBrush
+          Highlight.Fill.Style = bsClear
+          Highlight.Frame.Typ = []
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."trans_date"]')
+          ParentFont = False
+        end
+      end
       object ReportSummary1: TfrxReportSummary
         FillType = ftBrush
         FillGap.Top = 0
@@ -446,26 +391,13 @@ object FRekap_memorial: TFRekap_memorial
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 340.157700000000000000
-        Width = 778.205227000000000000
-        object Memo15: TfrxMemoView
-          AllowVectorExport = True
-          Width = 68.031496062992100000
-          Height = 18.897637800000000000
-          DataSetName = 'DBBuku_Besar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          ParentFont = False
-        end
+        Top = 366.614410000000000000
+        Width = 740.409927000000000000
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 68.031496060000000000
-          Width = 226.771653543307000000
-          Height = 18.897637800000000000
+          Left = 75.590551180000000000
+          Width = 226.771653540000000000
+          Height = 18.897637795275600000
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -477,9 +409,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 294.803169130000000000
-          Width = 120.944881889764000000
-          Height = 18.897637800000000000
+          Left = 302.362229130000000000
+          Width = 75.590551180000000000
+          Height = 18.897637795275600000
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -492,9 +424,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 415.748031500000000000
-          Width = 75.590551180000000000
-          Height = 18.897637800000000000
+          Left = 377.952731500000000000
+          Width = 75.590551181102400000
+          Height = 18.897637795275600000
           DataSetName = 'DBBuku_Besar'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -509,9 +441,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 491.338563150000000000
-          Width = 143.622047240000000000
-          Height = 18.897637800000000000
+          Left = 453.543263150000000000
+          Width = 143.622047244094000000
+          Height = 18.897637795275600000
           DataSetName = 'DBBuku_Besar'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -528,10 +460,10 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 634.850413230000000000
+          Left = 597.055113230000000000
           Width = 143.622047240000000000
-          Height = 18.897637800000000000
-          DataSetName = 'DbRpt_Memorial2'
+          Height = 18.897637795275600000
+          DataSetName = 'DBBuku_Besar'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -545,6 +477,22 @@ object FRekap_memorial: TFRekap_memorial
             '[SUM(<DbRpt_Memorial."kredit">,MasterData1,3)]')
           ParentFont = False
         end
+        object Memo47: TfrxMemoView
+          AllowVectorExport = True
+          Width = 75.590575590000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = DbRpt_Memorial
+          DataSetName = 'DbRpt_Memorial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+        end
       end
       object PageHeader1: TfrxPageHeader
         FillType = ftBrush
@@ -553,14 +501,14 @@ object FRekap_memorial: TFRekap_memorial
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 98.267716530000000000
+        Height = 120.944881890000000000
         Top = 18.897650000000000000
-        Width = 778.205227000000000000
+        Width = 740.409927000000000000
         object Memo3: TfrxMemoView
           AllowVectorExport = True
           Top = 64.251968500000000000
-          Width = 68.031496062992100000
-          Height = 34.015748030000000000
+          Width = 75.590551180000000000
+          Height = 34.015748031496100000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -575,10 +523,10 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 68.031496060000000000
+          Left = 75.590551180000000000
           Top = 64.251968500000000000
-          Width = 226.771653543307000000
-          Height = 34.015748030000000000
+          Width = 226.771653540000000000
+          Height = 34.015748031496100000
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -594,9 +542,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 294.803169130000000000
+          Left = 302.362229130000000000
           Top = 64.251968500000000000
-          Width = 120.944881889764000000
+          Width = 75.590551180000000000
           Height = 34.015748030000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -612,10 +560,10 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 634.850413230000000000
+          Left = 597.055113230000000000
           Top = 64.251968500000000000
           Width = 143.622047240000000000
-          Height = 34.015748030000000000
+          Height = 34.015748031496100000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -630,10 +578,10 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 415.748031500000000000
+          Left = 377.952731500000000000
           Top = 64.251968500000000000
           Width = 75.590551180000000000
-          Height = 34.015748030000000000
+          Height = 34.015748031496100000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -648,10 +596,10 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 491.338563150000000000
+          Left = 453.543263150000000000
           Top = 64.251968500000000000
           Width = 143.622047240000000000
-          Height = 34.015748030000000000
+          Height = 34.015748031496100000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -722,12 +670,11 @@ object FRekap_memorial: TFRekap_memorial
           Width = 738.897637800000000000
           Height = 17.000000000000000000
           Visible = False
-          DataSetName = 'DbRpt_Memorial2'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
-          Font.Style = [fsUnderline]
+          Font.Style = [fsBold, fsUnderline]
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
@@ -752,21 +699,106 @@ object FRekap_memorial: TFRekap_memorial
           ParentFont = False
           VAlign = vaCenter
         end
-      end
-      object GroupHeader1: TfrxGroupHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677165350000000000
-        Top = 177.637910000000000000
-        Visible = False
-        Width = 778.205227000000000000
-        Condition = 'DbRpt_Memorial."memo_no"'
-        object Memo21: TfrxMemoView
+        object Mthn: TfrxMemoView
           AllowVectorExport = True
+          Top = 98.267716535433100000
+          Width = 37.795275590000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 75.590551180000000000
+          Top = 98.267716535433100000
+          Width = 226.771653540000000000
+          Height = 22.677165350000000000
+          DataSetName = 'DBBuku_Besar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 302.362229130000000000
+          Top = 98.267716540000000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 597.055113230000000000
+          Top = 98.267716535433100000
+          Width = 143.622047240000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Left = 377.952731500000000000
+          Top = 98.267716535433100000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo34: TfrxMemoView
+          AllowVectorExport = True
+          Left = 453.543263150000000000
+          Top = 98.267716535433100000
+          Width = 143.622047240000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo38: TfrxMemoView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Top = 98.267716540000000000
           Width = 37.795275590000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
@@ -777,13 +809,31 @@ object FRekap_memorial: TFRekap_memorial
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[vbulan]')
           ParentFont = False
+          VAlign = vaCenter
         end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677165350000000000
+        Top = 200.315090000000000000
+        Visible = False
+        Width = 740.409927000000000000
+        Condition = 'DbRpt_Memorial."memo_no"'
+        Stretched = True
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 68.031496060000000000
-          Width = 226.771653543307000000
+          Left = 75.590551180000000000
+          Width = 226.771653540000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
@@ -794,14 +844,12 @@ object FRekap_memorial: TFRekap_memorial
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
-          Memo.UTF8W = (
-            '[DbRpt_Memorial."memo_no"]')
           ParentFont = False
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 294.803169130000000000
-          Width = 120.944881889764000000
+          Left = 302.362229130000000000
+          Width = 75.590551180000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
@@ -813,12 +861,14 @@ object FRekap_memorial: TFRekap_memorial
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
+          Memo.UTF8W = (
+            '[DbRpt_Memorial."memo_no"]')
           ParentFont = False
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 415.748031500000000000
-          Width = 75.590551180000000000
+          Left = 377.952731500000000000
+          Width = 75.590551181102400000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
@@ -836,8 +886,8 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 491.338563150000000000
-          Width = 143.622047240000000000
+          Left = 453.543263150000000000
+          Width = 143.622047244094000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
@@ -855,7 +905,7 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 634.850413230000000000
+          Left = 597.055113230000000000
           Width = 143.622047240000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
@@ -874,8 +924,7 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
-          Left = 37.795300000000000000
-          Width = 30.236215590000000000
+          Width = 75.590575590000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
@@ -897,29 +946,14 @@ object FRekap_memorial: TFRekap_memorial
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 15.118110240000000000
-        Top = 264.567100000000000000
-        Width = 778.205227000000000000
-        object Memo40: TfrxMemoView
-          AllowVectorExport = True
-          Width = 68.031496062992100000
-          Height = 15.118110240000000000
-          StretchMode = smMaxHeight
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          ParentFont = False
-        end
+        Height = 18.897637800000000000
+        Top = 287.244280000000000000
+        Width = 740.409927000000000000
         object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 68.031496060000000000
-          Width = 226.771653543307000000
-          Height = 15.118110240000000000
+          Left = 75.590551180000000000
+          Width = 226.771653540000000000
+          Height = 18.897637795275600000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
           DataSetName = 'DbRpt_Memorial'
@@ -933,9 +967,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 294.803169130000000000
-          Width = 120.944881889764000000
-          Height = 15.118110240000000000
+          Left = 302.362229130000000000
+          Width = 75.590551180000000000
+          Height = 18.897637795275600000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
           DataSetName = 'DbRpt_Memorial'
@@ -950,9 +984,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo43: TfrxMemoView
           AllowVectorExport = True
-          Left = 415.748031500000000000
+          Left = 377.952731500000000000
           Width = 75.590551180000000000
-          Height = 15.118110240000000000
+          Height = 18.897637795275600000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
           DataSetName = 'DbRpt_Memorial'
@@ -969,9 +1003,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 491.338563150000000000
+          Left = 453.543263150000000000
           Width = 143.622047240000000000
-          Height = 15.118110240000000000
+          Height = 18.897637795275600000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
           DataSetName = 'DbRpt_Memorial'
@@ -988,9 +1022,9 @@ object FRekap_memorial: TFRekap_memorial
         end
         object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 634.850413230000000000
+          Left = 597.055113230000000000
           Width = 143.622047240000000000
-          Height = 15.118110240000000000
+          Height = 18.897637795275600000
           StretchMode = smMaxHeight
           DataSet = DbRpt_Memorial
           DataSetName = 'DbRpt_Memorial'
@@ -1005,47 +1039,11 @@ object FRekap_memorial: TFRekap_memorial
           HAlign = haRight
           ParentFont = False
         end
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 18.897640240000000000
-        Top = 222.992270000000000000
-        Width = 778.205227000000000000
-        DataSet = DbRpt_Memorial
-        DataSetName = 'DbRpt_Memorial'
-        RowCount = 0
-        Stretched = True
-        object Memo11: TfrxMemoView
+        object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 86.929141180000000000
-          Width = 207.874015748031000000
+          Width = 75.590575590000000000
           Height = 18.897637800000000000
-          OnBeforePrint = 'Memo11OnBeforePrint'
-          StretchMode = smActualHeight
-          DataField = 'account_name'
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          Memo.UTF8W = (
-            '[DbRpt_Memorial."account_name"]')
-          ParentFont = False
-        end
-        object Memo37: TfrxMemoView
-          AllowVectorExport = True
-          Width = 68.031496060000000000
-          Height = 18.897640240000000000
           StretchMode = smMaxHeight
-          DataField = 'trans_date'
           DataSet = DbRpt_Memorial
           DataSetName = 'DbRpt_Memorial'
           Font.Charset = DEFAULT_CHARSET
@@ -1054,108 +1052,7 @@ object FRekap_memorial: TFRekap_memorial
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftBottom]
-          Memo.UTF8W = (
-            '[DbRpt_Memorial."trans_date"]')
-          ParentFont = False
-        end
-        object Memo30: TfrxMemoView
-          AllowVectorExport = True
-          Left = 294.803340000000000000
-          Width = 120.944881889764000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          DataField = 'memo_no'
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[DbRpt_Memorial."memo_no"]')
-          ParentFont = False
-        end
-        object Memo31: TfrxMemoView
-          AllowVectorExport = True
-          Left = 415.748300000000000000
-          Width = 75.590551180000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
-          ParentFont = False
-        end
-        object Memo32: TfrxMemoView
-          AllowVectorExport = True
-          Left = 491.338831650000000000
-          Width = 143.622047240000000000
-          Height = 18.897637800000000000
-          OnBeforePrint = 'Memo32OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataField = 'debit'
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[DbRpt_Memorial."debit"]')
-          ParentFont = False
-        end
-        object Memo33: TfrxMemoView
-          AllowVectorExport = True
-          Left = 634.850681730000000000
-          Width = 143.622047240000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          DataField = 'kredit'
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[DbRpt_Memorial."kredit"]')
-          ParentFont = False
-        end
-        object Memo12: TfrxMemoView
-          AllowVectorExport = True
-          Left = 68.031496062992100000
-          Width = 18.897503540000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          DataSet = DbRpt_Memorial
-          DataSetName = 'DbRpt_Memorial'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
           ParentFont = False
         end
       end

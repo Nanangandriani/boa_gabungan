@@ -1099,9 +1099,9 @@ object FRpt_Buku_Besar: TFRpt_Buku_Besar
       OnClick = BPrint_RincianClick
     end
     object BRingkasan: TdxBarLargeButton
-      Caption = 'Ringkisan Buku Besar'
+      Caption = 'Ringkasan Buku Besar'
       Category = 0
-      Hint = 'Ringkisan Buku Besar'
+      Hint = 'Ringkasan Buku Besar'
       Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {

@@ -41,7 +41,7 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew
   UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
   UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
   UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian,ULap_Kartu_Hutang,
-  UNew_Pembelian;
+  UNew_Pembelian, U_Kartu_Hutang_UM, ULap_Rencana_Pelunasan_Hutang;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -88,6 +88,8 @@ begin
       FNewDeliveryOrder.edKodeVendorTransMuatan.Text:=QSupplier['supplier_code'];
       FNewDeliveryOrder.edNamaVendorTransMuatan.Text:=QSupplier['supplier_name'];
     end;
+
+
     if vcall='keluar_kas_bank_ajuan' then
     begin
       FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=QSupplier['supplier_code'];
@@ -103,7 +105,8 @@ begin
           begin
             MemDetailAkun.Edit;
             MemDetailAkun['kd_akun']:=SelectRow('SELECT account_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
-            MemDetailAkun['nm_akun']:=('SELECT account_name from t_ak_account a LEFT JOIN t_supplier b ON a.code=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
+            //MemDetailAkun['nm_akun']:=('SELECT account_name from t_ak_account a LEFT JOIN t_supplier b ON a.code=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
+            MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from v_ak_account a LEFT JOIN t_supplier b ON a.account_code2=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text)+' ');
             kd_ak_supplier:=MemDetailAkun['kd_akun'];
             MemDetailAkun.post;
           end;
@@ -144,6 +147,16 @@ begin
       FLap_Kartu_Hutang.ed_code_supp.EditValue:=QSupplier['supplier_code'];
       FLap_Kartu_Hutang.Ed_supplier.EditValue:=QSupplier['supplier_name'];
     end;
+    if vcall='Lap_Rencana_Pelunasan_Hutang' then
+    begin
+      Flap_Rencana_Pelunasan_Hutang.code_supp.EditValue:=QSupplier['supplier_code'];
+      Flap_Rencana_Pelunasan_Hutang.supp_name.Text:=QSupplier['supplier_name'];
+    end;
+    if vcall='Lap_Kartu_Hutang_UM' then
+    begin
+      F_Kartu_Hutang_UM.ed_code_supp.EditValue:=QSupplier['supplier_code'];
+      F_Kartu_Hutang_UM.Ed_supplier.EditValue:=QSupplier['supplier_name'];
+      end;
     if vcall='delivery_order_reimburst' then
     begin
        FNewDeliveryOrder.MemDataBiaya.insert;

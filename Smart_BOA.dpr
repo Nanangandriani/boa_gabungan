@@ -322,7 +322,10 @@ uses
   USettingPO in 'USettingPO.pas' {FSettingPO},
   UbrowseKlasifikasi in 'UbrowseKlasifikasi.pas' {FbrowseKlasifikasi},
   UPenyesuaianPenjualan in 'UPenyesuaianPenjualan.pas' {FPenyesuaianPenjualan},
-  UListKelompokKendaraan in 'UListKelompokKendaraan.pas' {FListKelompokKendaraan};
+  UListKelompokKendaraan in 'UListKelompokKendaraan.pas' {FListKelompokKendaraan},
+  ULokasiMuat in 'ULokasiMuat.pas' {FLokasiMuat},
+  ULokasiBongkar in 'ULokasiBongkar.pas' {FLokasiBongkar},
+  UCetakKolektifPenerimaanBank in 'UCetakKolektifPenerimaanBank.pas' {FCetakKolektifPenerimaanBank};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -341,8 +344,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.ProcessMessages;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TFHomeLogin, FHomeLogin);
   Application.CreateForm(TFMainMenu, FMainMenu);
+  Application.CreateForm(TFHomeLogin, FHomeLogin);
   Application.CreateForm(TFHomeSreen, FHomeSreen);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFUser, FUser);
@@ -359,7 +362,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFSetDeliveryOrder, FSetDeliveryOrder);
   Application.CreateForm(TFListPerintahMuat, FListPerintahMuat);
   Application.CreateForm(TFListSalesOrder, FListSalesOrder);
-//  Application.CreateForm(TFSalesOrder, FSalesOrder);
+  Application.CreateForm(TFLokasiMuat, FLokasiMuat);
+  Application.CreateForm(TFLokasiBongkar, FLokasiBongkar);
+  Application.CreateForm(TFCetakKolektifPenerimaanBank, FCetakKolektifPenerimaanBank);
+  //  Application.CreateForm(TFSalesOrder, FSalesOrder);
   Application.CreateForm(TFNew_SalesOrder, FNew_SalesOrder);
   Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);
   Application.CreateForm(TFbrowse_faktur_pajak, Fbrowse_faktur_pajak);
@@ -440,7 +446,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNew_Gudang, FNew_Gudang);
   Application.CreateForm(TFListBank, FListBank);
   Application.CreateForm(TFNewBank, FNewBank);
-  Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
+//  Application.CreateForm(TFAkun_Perkiraan_TerimaMat, FAkun_Perkiraan_TerimaMat);
   Application.CreateForm(TFNew_Additional, FNew_Additional);
   Application.CreateForm(TFNew_Kategori_Gudang, FNew_Kategori_Gudang);
   Application.CreateForm(TFImportnocek, FImportnocek);
@@ -557,5 +563,8 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListKontrakTagihan, FListKontrakTagihan);
   FHomeSreen.Hide;
   FHomeSreen.Free;
+  FMainMenu.DisableMenu;
+  FHomeLogin.Show;
+//  FMainMenu.Hide;
   Application.Run;
 end.

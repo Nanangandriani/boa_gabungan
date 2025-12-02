@@ -488,7 +488,7 @@ begin
                   ' a.conv_currency,a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp, '+
                   ' a.subtotal,a.status,a.grandtotal,sum(a.qty)as qtysum, sum(a.subtotal)as subtotalsum,d.po_date,'+
                   ' d.delivery_date, E.supplier_name,e.address,d.valas,d.remarks,d.delivery2_date,d.po2_no,sumtotal, '+
-                  ' c.category_id ,i.wh_name,a.account_pph_code,a.account_ppn_code,d.um_value,a.pemb_ppn'+
+                  ' c.category_id ,i.wh_name,a.account_pph_code,a.account_ppn_code,d.um_value,a.pemb_ppn,d.due_date,(d.po_date+d.due_date) as jatuhtempo_po'+
                   ' FROM t_podetail AS "a" '+
                   ' INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock_code '+
                   ' INNER JOIN t_item AS "c" ON b.item_code = c.item_code  '+
@@ -503,8 +503,9 @@ begin
                   ' a.wh_code,d.type,a.conv_currency,a.qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph, '+
                   ' a.pph_rp,a.subtotal,a.status,a.grandtotal,d.po_date,d.delivery_date, e.supplier_name,e.address,d.valas,'+
                   ' d.remarks,d.delivery2_date,i.wh_name,d.po2_no,sumtotal,c.category_id,g.user_name,d.trans_category '+
-                  ' ,a.account_pph_code,a.account_ppn_code,d.um_value,a.pemb_ppn'+
-                  ' Order By a.detail_id asc ';
+                  ' ,a.account_pph_code,a.account_ppn_code,d.um_value,a.pemb_ppn,d.due_date'+
+                  //' Order By a.detail_id asc ';
+                  ' Order By a.po_no desc ';
         ExecSQL;
       end;
       QRptPO.Open;

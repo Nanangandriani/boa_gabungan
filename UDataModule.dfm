@@ -9,6 +9,7 @@ object dm: Tdm
     Database = 'db_sb_hlj'
     Username = 'Devel'
     Server = '172.101.100.125'
+    Connected = True
     LoginPrompt = False
     OnError = KoneksiError
     Left = 157
@@ -115,7 +116,7 @@ object dm: Tdm
     MaxConnections = 500
     MultiUser = False
     SessionName = 'Default'
-    Left = 256
+    Left = 168
     Top = 280
   end
   object ABSTable1: TABSTable

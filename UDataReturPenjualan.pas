@@ -752,8 +752,25 @@ begin
 end;
 
 procedure TFDataReturPenjualan.Autonumber;
+var LOriginalName: string;
+    LBaseName: string;
+    LLastUnderscorePos: Integer;
+    LSuffix: string;
+    LDummyInt: Integer;
 begin
-  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(FListReturPenjualan.Name)+'');
+  LOriginalName := FListReturPenjualan.Name;
+  LBaseName := LOriginalName;
+  LLastUnderscorePos := LastDelimiter('_', LBaseName);
+  if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+  begin
+    LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+    if TryStrToInt(LSuffix, LDummyInt) then
+    begin
+      LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+    end;
+  end;
+
+  idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
   strday2:=dtTanggal.Date;
   with dm.Qtemp do
   begin
