@@ -127,7 +127,7 @@ implementation
 {$R *.dfm}
 
 uses UMasterData, UCari_DaftarPerk, UDataModule, UMy_Function, UListKasKecil,
-  UHomeLogin,udafajuankeluarkasbank;
+  UHomeLogin,udafajuankeluarkasbank,UMainMenu;
 
 
 procedure TFDataKasKecil.InsertDetailHutang;
@@ -205,7 +205,8 @@ begin
               ' "order_no", "trans_day", "trans_month", "trans_year") '+
               ' VALUES ( '+
               ' NOW(), '+
-              ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              //' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+              ' :created_by, '+
               ' '+QuotedStr(edNoTrans.Text)+', '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
               ' '+QuotedStr(edKodeKepada.Text)+', '+
@@ -222,6 +223,8 @@ begin
               ' '+QuotedStr(strtgl)+', '+
               ' '+QuotedStr(strbulan)+', '+
               ' '+QuotedStr(strtahun)+'  );');
+
+              parambyname('created_by').AsString:=Nm;
       ExecSQL;
     end;
 

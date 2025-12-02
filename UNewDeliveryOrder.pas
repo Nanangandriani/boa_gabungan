@@ -1253,7 +1253,7 @@ begin
               ' "type_vehicles_code", "type_vehicles_name", "capacity", '+
               ' "driver_name", "helper_name", "number_pib", "no_invoice",'+
               //'  "date_invoice", '+
-              ' "total_cost",pickup_location,delivery_location,vehicle_group_id) '+
+              ' "total_cost",pickup_location,delivery_location,vehicle_group_id,vehicle_group_sort_number) '+
               ' Values( '+
               ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
               ' '+QuotedStr(edKodeVendorTransMuatan.Text)+', '+
@@ -1269,7 +1269,7 @@ begin
               ' '+QuotedStr('0')+', '+
               //' '+QuotedStr('0')+', '+
               ' '+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+','+
-              ' '+QuotedStr(edLokasiMuat.Text)+','+QuotedStr(edLokasiBongkar.Text)+','+QuotedStr(edKelompokKendaraan.Text)+');';
+              ' '+QuotedStr(edLokasiMuat.Text)+','+QuotedStr(edLokasiBongkar.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+QuotedStr(strVehicleGroupId)+');';
               //' '+QuotedStr(VarToStr(DBGridSumberPenjualan.Columns[5].Footer.Value))+' );';
     ExecSQL;
   end;
@@ -1328,6 +1328,7 @@ begin
   kodelokasibongkar:='';
   edLokasiBongkar.Clear;
   edKelompokKendaraan.Clear;
+  strVehicleGroupId:='';
 
   //Biaya
   edKodeDOBiaya.Clear;

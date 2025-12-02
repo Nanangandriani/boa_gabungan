@@ -364,7 +364,8 @@ begin
              FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=MemDataRencana['supplier_code'];
              FDataPengajuanPengeluaranKasBank.ednama_supplier.Text:=MemDataRencana['supplier_name'];
              FDataPengajuanPengeluaranKasBank.CbRencana.Text:=MemDataRencana['plan_to'];
-             FDataPengajuanPengeluaranKasBank.EdJumlah.Text:=MemDataRencana['amount'];
+             //FDataPengajuanPengeluaranKasBank.EdJumlah.Text:=MemDataRencana['amount'];
+             FDataPengajuanPengeluaranKasBank.EdJumlah.Text:=FDataPengajuanPengeluaranKasBank.DBGridTagihan.Columns[4].Footer.sumvalue; //02-12-2025
              FDataPengajuanPengeluaranKasBank.dtPeriode1.Date:=MemDataRencana['periode1'];
              FDataPengajuanPengeluaranKasBank.dtPeriode2.Date:=MemDataRencana['periode2'];
              FDataPengajuanPengeluaranKasBank.Ed_kepada.Text:=MemDataRencana['supplier_name'];

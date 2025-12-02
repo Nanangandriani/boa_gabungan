@@ -713,11 +713,9 @@ object FNew_PO: TFNew_PO
     Left = 0
     Top = 522
     Width = 1208
-    Height = 139
+    Height = 122
     Align = alTop
     TabOrder = 1
-    ExplicitTop = 508
-    ExplicitWidth = 1200
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -884,9 +882,9 @@ object FNew_PO: TFNew_PO
   end
   object Panel1: TPanel
     Left = 0
-    Top = 661
+    Top = 644
     Width = 1208
-    Height = 18
+    Height = 35
     Align = alClient
     TabOrder = 2
     ExplicitTop = 647
@@ -895,7 +893,7 @@ object FNew_PO: TFNew_PO
     object BBatal: TRzBitBtn
       Left = 1132
       Top = 1
-      Height = 16
+      Height = 33
       Align = alRight
       Caption = 'Close'
       TabOrder = 0
@@ -958,7 +956,7 @@ object FNew_PO: TFNew_PO
     object BSimpan: TRzBitBtn
       Left = 1057
       Top = 1
-      Height = 16
+      Height = 33
       Align = alRight
       Caption = 'Save'
       TabOrder = 1
@@ -1023,7 +1021,7 @@ object FNew_PO: TFNew_PO
     object BEdit: TRzBitBtn
       Left = 982
       Top = 1
-      Height = 16
+      Height = 33
       Align = alRight
       Caption = 'Save'
       TabOrder = 2
@@ -1088,7 +1086,7 @@ object FNew_PO: TFNew_PO
       Left = 1
       Top = 1
       Width = 131
-      Height = 16
+      Height = 33
       Align = alLeft
       Caption = 'Monitoring Asset'
       TabOrder = 3

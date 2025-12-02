@@ -110,7 +110,7 @@ type
     dtAwal: TcxBarEditItem;
     dtAkhir: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
-    dxBarManager1Bar4: TdxBar;
+    LaporanKolektif: TdxBar;
     dxBarLargeButton5: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);

@@ -37,7 +37,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ToolbarName = 'dxBarManager1Bar3'
         end
         item
-          ToolbarName = 'dxBarManager1Bar4'
+          ToolbarName = 'LaporanKolektif'
         end>
       Index = 0
     end
@@ -225,7 +225,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -249,7 +249,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -287,15 +287,14 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'dxBarLargeButton3'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
     end
-    object dxBarManager1Bar4: TdxBar
+    object LaporanKolektif: TdxBar
       Caption = 'Laporan Kolektif'
       CaptionButtons = <>
-      DockedDockingStyle = dsTop
       DockedLeft = 601
       DockedTop = 0
       FloatLeft = 1203
@@ -307,10 +306,10 @@ object FListPenerimaanBank: TFListPenerimaanBank
           Visible = True
           ItemName = 'dxBarLargeButton5'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
-      Visible = True
+      Visible = False
       WholeRow = False
     end
     object dxBarButton2: TdxBarButton

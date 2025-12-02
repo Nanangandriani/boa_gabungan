@@ -423,8 +423,11 @@ begin
       edLokasiMuat.Text:=Dm.Qtemp1.fieldbyname('pickup_location').value else edLokasiMuat.Text:='';
       if Dm.Qtemp1.fieldbyname('delivery_location').value<>NULL then
       edLokasiBongkar.Text:=Dm.Qtemp1.fieldbyname('delivery_location').value else edLokasiBongkar.Text:='';
+      if Dm.Qtemp1.fieldbyname('vehicle_group_sort_number').value<>NULL then
+      edKelompokKendaraan.Text:=Dm.Qtemp1.FieldValues['vehicle_group_sort_number'];
       if Dm.Qtemp1.fieldbyname('vehicle_group_id').value<>NULL then
-      edKelompokKendaraan.Text:=Dm.Qtemp1.FieldValues['vehicle_group_id'];
+      strVehicleGroupId:=Dm.Qtemp1.FieldValues['vehicle_group_id'];
+
       if (Dm.Qtemp1.FieldValues['date_invoice']=NULL) AND (Dm.Qtemp1.FieldValues['date_invoice']='') then
       begin
         dtTerimaTagihan.Date:=NOW();
