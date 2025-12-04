@@ -1138,13 +1138,12 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 196
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 3
-    ExplicitWidth = 1102
-    ExplicitHeight = 187
+    ExplicitTop = 425
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
@@ -1250,8 +1249,10 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Align = alClient
         DataSource = dsDetailHutang
         DynProps = <>
+        FooterRowCount = 1
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
+        SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
@@ -1302,6 +1303,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             DynProps = <>
             EditButtons = <>
             FieldName = 'jum_hutang'
+            Footer.FieldName = 'jum_hutang'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Jumlah Hutang'
             Width = 150
@@ -1484,6 +1487,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
           AutoIncrement = False
           DisplayWidth = 20
           DisplayFormat = '#,##0.00'
+          EditFormat = '#,##0.00'
           currency = False
           Precision = 15
         end
@@ -1492,6 +1496,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.00'
           EditFormat = '#,##0.00'
           currency = False
           Precision = 15

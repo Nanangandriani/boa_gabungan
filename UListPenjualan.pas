@@ -572,7 +572,7 @@ begin
      SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
      SetMemo(Report,'signature_name',dm.Qtemp2.FieldValues['full_name']);
      SetMemo(Report,'memTanggal',FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
-     if dm.Qtemp.FieldValues['po_order']<>NULL then
+     if (dm.Qtemp.FieldValues['po_order']<>NULL) OR (dm.Qtemp.FieldValues['po_order']<>'') then
      begin
       SetMemo(Report,'memPO',dm.Qtemp.FieldValues['po_order']);
       Report.FindObject('memPO').Visible := True;

@@ -259,7 +259,6 @@ uses
   ULap_Buku_Harian_Kas_Kecil in 'ULap_Buku_Harian_Kas_Kecil.pas' {FLap_Buku_Harian_Kas_Kecil},
   USearch_MaterialRetur in 'USearch_MaterialRetur.pas' {FSearch_MaterialRetur},
   URpt_Kartu_Gudang in 'URpt_Kartu_Gudang.pas' {FRpt_Kartu_Gudang},
-  URpt_Lr in 'URpt_Lr.pas' {FRpt_Lr},
   browse_akun_kredit in 'browse_akun_kredit.pas' {Fbrowse_akun_kredit},
   UPengajuanAsset in 'UPengajuanAsset.pas' {FPengajuanAsset},
   UDetailPengajuanAsset in 'UDetailPengajuanAsset.pas' {FDetailPengajuanAsset},
@@ -325,7 +324,11 @@ uses
   UListKelompokKendaraan in 'UListKelompokKendaraan.pas' {FListKelompokKendaraan},
   ULokasiMuat in 'ULokasiMuat.pas' {FLokasiMuat},
   ULokasiBongkar in 'ULokasiBongkar.pas' {FLokasiBongkar},
-  UCetakKolektifPenerimaanBank in 'UCetakKolektifPenerimaanBank.pas' {FCetakKolektifPenerimaanBank};
+  UCetakKolektifPenerimaanBank in 'UCetakKolektifPenerimaanBank.pas' {FCetakKolektifPenerimaanBank},
+  URincianUmurPiutang in 'URincianUmurPiutang.pas' {FRincianUmurPiutang},
+  URpt_Lr in 'URpt_Lr.pas' {FRpt_Lr},
+  URpt_Rekap_Persendiaan in 'URpt_Rekap_Persendiaan.pas' {FRpt_Rekap_Persediaan},
+  URpt_by in 'URpt_by.pas' {FRpt_by};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -365,6 +368,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFLokasiMuat, FLokasiMuat);
   Application.CreateForm(TFLokasiBongkar, FLokasiBongkar);
   Application.CreateForm(TFCetakKolektifPenerimaanBank, FCetakKolektifPenerimaanBank);
+  //  Application.CreateForm(TFRincianUmurPiutang, FRincianUmurPiutang);
   //  Application.CreateForm(TFSalesOrder, FSalesOrder);
   Application.CreateForm(TFNew_SalesOrder, FNew_SalesOrder);
   Application.CreateForm(TFbrowse_data_pelanggan, Fbrowse_data_pelanggan);

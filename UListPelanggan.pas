@@ -331,7 +331,7 @@ begin
       begin
         KodeHeaderRetur:=Dm.Qtemp.FieldByName('header_code_retur').AsString;
         edAkunRetur.Text:=Dm.Qtemp.FieldByName('account_code_retur').AsString;
-        edNamaAkunRetur.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code_uang_muka').AsString));
+        edNamaAkunRetur.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code_retur').AsString));
       end;
       Edkodeinitial.Text:=Dm.Qtemp.FieldByName('initial_code').AsString;
       edKodeKantorPusat.Text:=Dm.Qtemp.FieldByName('code_head_office').AsString;

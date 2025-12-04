@@ -1550,7 +1550,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 45982.620409490740000000
+    ReportOptions.LastChange = 45994.423505000000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1562,7 +1562,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     Top = 240
     Datasets = <
       item
-        DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+        DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+        DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
       end>
     Variables = <>
     Style = <>
@@ -1589,10 +1590,11 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677165350000000000
-        Top = 272.126160000000000000
+        Top = 245.669450000000000000
         Width = 740.409927000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
-        DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+        DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+        DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
         RowCount = 0
         Stretched = True
         object Memo32: TfrxMemoView
@@ -1601,7 +1603,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo32OnBeforePrint'
           StretchMode = smMaxHeight
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1616,31 +1619,33 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         object Memo33: TfrxMemoView
           AllowVectorExport = True
           Left = 30.435695540000000000
-          Width = 172.275436160000000000
+          Width = 174.236220470000000000
           Height = 22.230983330000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
           OnBeforePrint = 'Memo33OnBeforePrint'
           StretchMode = smMaxHeight
-          DataField = 'kecamatan'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataField = 'kabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft]
+          Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDatasetLapHarianSisaNotaPerKabupaten."kecamatan"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."kabupaten"]')
           ParentFont = False
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
           Left = 203.629921260000000000
-          Width = 33.745870000000000000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataField = 'jumlah_nota_awal'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1651,17 +1656,18 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_awal"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_awal"]')
           ParentFont = False
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.833333340000000000
-          Width = 92.078431370000000000
+          Left = 243.833333340000000000
+          Width = 96.000000000000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataField = 'jumlah_amount_nota_awal'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1672,20 +1678,19 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            
-              '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_nota_a' +
-              'wal"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_nota_awal"]')
           ParentFont = False
         end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
-          Left = 332.297900270000000000
-          Width = 32.961556270000000000
+          Left = 339.297900270000000000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo36OnBeforePrint'
           StretchMode = smMaxHeight
           DataField = 'jumlah_nota_penjualan'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1696,20 +1701,19 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            
-              '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_penjuala' +
-              'n"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_penjualan"]')
           ParentFont = False
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
-          Left = 366.666666670000000000
+          Left = 380.666666670000000000
           Top = -0.341373330000000000
-          Width = 91.728886830000000000
+          Width = 94.866141730000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataField = 'jumlah_amount_penjualan'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1720,21 +1724,20 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            
-              '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_penjua' +
-              'lan"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_penjualan"]')
           ParentFont = False
         end
         object Memo38: TfrxMemoView
           AllowVectorExport = True
-          Left = 460.666666670000000000
+          Left = 474.666666670000000000
           Top = -0.341373330000000000
-          Width = 39.236066080000000000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo36OnBeforePrint'
           StretchMode = smMaxHeight
           DataField = 'jumlah_nota_bayar'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1745,18 +1748,19 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_bayar"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_bayar"]')
           ParentFont = False
         end
         object Memo39: TfrxMemoView
           AllowVectorExport = True
-          Left = 502.833333330000000000
+          Left = 513.833333330000000000
           Top = -0.174706670000000000
-          Width = 103.493592710000000000
+          Width = 94.866141730000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataField = 'jumlah_amount_bayar'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1767,21 +1771,20 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            
-              '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_bayar"' +
-              ']')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_bayar"]')
           ParentFont = False
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
           Left = 608.333333330000000000
           Top = -0.341373330000000000
-          Width = 39.236066080000000000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo36OnBeforePrint'
           StretchMode = smMaxHeight
           DataField = 'jumlah_nota_saldo_nota'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1792,9 +1795,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            
-              '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_saldo_no' +
-              'ta"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_saldo_nota"]')
           ParentFont = False
         end
         object Memo50: TfrxMemoView
@@ -1805,7 +1806,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataField = 'jumlah_amount_saldo_nota'
-          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerKabupaten'
+          DataSet = frxDBDatasetLapHarianSisaNotaPerTp
+          DataSetName = 'frxDBDatasetLapHarianSisaNotaPerTp'
           DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1816,9 +1818,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            
-              '[frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_saldo_' +
-              'nota"]')
+            '[frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_saldo_nota"]')
           ParentFont = False
         end
       end
@@ -1829,13 +1829,13 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 25.030121180000000000
-        Top = 355.275820000000000000
+        Height = 29.230983330000000000
+        Top = 328.819110000000000000
         Width = 740.409927000000000000
-        object Memo57: TfrxMemoView
+        object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Left = 30.588235290000000000
-          Top = 2.000000000000000000
+          Left = 34.000000000000000000
+          Top = 6.000000000000000000
           Width = 174.236220470000000000
           Height = 22.230983330000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
@@ -1853,11 +1853,11 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
             'TOTAL')
           ParentFont = False
         end
-        object Memo58: TfrxMemoView
+        object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 201.588235290000000000
-          Top = 2.047244090000000000
-          Width = 35.314497450000000000
+          Left = 205.000000000000000000
+          Top = 6.047244094488190000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNotaPerTp
@@ -1873,15 +1873,24 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haCenter
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_awa' +
-              'l">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_awal">,Mas' +
+              'terData1)]')
           ParentFont = False
         end
-        object Memo59: TfrxMemoView
+        object Line18: TfrxLineView
           AllowVectorExport = True
-          Left = 240.588235290000000000
-          Top = 2.047244090000000000
-          Width = 89.294117650000000000
+          Top = 1.819110000000000000
+          Width = 740.031496062992000000
+          Height = 0.409448820000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo57: TfrxMemoView
+          AllowVectorExport = True
+          Left = 246.000000000000000000
+          Top = 6.047244094488190000
+          Width = 94.000000000000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNotaPerTp
@@ -1897,15 +1906,15 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_n' +
-              'ota_awal">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_nota_awa' +
+              'l">,MasterData1)]')
           ParentFont = False
         end
-        object Memo60: TfrxMemoView
+        object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 333.588235290000000000
-          Top = 2.047244090000000000
-          Width = 29.432144510000000000
+          Left = 340.000000000000000000
+          Top = 6.047244094488190000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNotaPerTp
@@ -1921,14 +1930,14 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haCenter
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_pen' +
-              'jualan">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_penjualan"' +
+              '>,MasterData1)]')
           ParentFont = False
         end
-        object Memo61: TfrxMemoView
+        object Memo58: TfrxMemoView
           AllowVectorExport = True
-          Left = 365.588235290000000000
-          Top = 2.047244090000000000
+          Left = 382.000000000000000000
+          Top = 6.047244094488190000
           Width = 93.000000000000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
@@ -1945,15 +1954,15 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_p' +
-              'enjualan">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_penjuala' +
+              'n">,MasterData1)]')
           ParentFont = False
         end
-        object Memo62: TfrxMemoView
+        object Memo59: TfrxMemoView
           AllowVectorExport = True
-          Left = 464.588235290000000000
-          Top = 2.047244090000000000
-          Width = 35.314497450000000000
+          Left = 474.000000000000000000
+          Top = 6.047244094488190000
+          Width = 41.196850390000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNotaPerTp
@@ -1969,15 +1978,15 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haCenter
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_bay' +
-              'ar">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_bayar">,Ma' +
+              'sterData1)]')
           ParentFont = False
         end
-        object Memo63: TfrxMemoView
+        object Memo60: TfrxMemoView
           AllowVectorExport = True
-          Left = 504.352941170000000000
-          Top = 2.047244090000000000
-          Width = 101.235294120000000000
+          Left = 516.000000000000000000
+          Top = 6.047244094488190000
+          Width = 93.000000000000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNotaPerTp
@@ -1993,14 +2002,14 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_b' +
-              'ayar">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_bayar">,' +
+              'MasterData1)]')
           ParentFont = False
         end
-        object Memo64: TfrxMemoView
+        object Memo61: TfrxMemoView
           AllowVectorExport = True
-          Left = 606.588235290000000000
-          Top = 2.047244090000000000
+          Left = 610.000000000000000000
+          Top = 6.047244094488190000
           Width = 38.196850390000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
@@ -2017,15 +2026,15 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haCenter
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_nota_sal' +
-              'do_nota">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_nota_saldo_nota' +
+              '">,MasterData1)]')
           ParentFont = False
         end
-        object Memo65: TfrxMemoView
+        object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 648.117647050000000000
-          Top = 2.047244090000000000
-          Width = 89.470588240000000000
+          Left = 648.000000000000000000
+          Top = 6.047244094488190000
+          Width = 93.000000000000000000
           Height = 22.230983330000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetLapHarianSisaNotaPerTp
@@ -2041,19 +2050,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDatasetLapHarianSisaNotaPerKabupaten."jumlah_amount_s' +
-              'aldo_nota">,MasterData1)]')
+              '[SUM(<frxDBDatasetLapHarianSisaNotaPerTp."jumlah_amount_saldo_no' +
+              'ta">,MasterData1)]')
           ParentFont = False
-        end
-        object Line18: TfrxLineView
-          AllowVectorExport = True
-          Left = 1.176470590000000000
-          Top = 0.194768240000000000
-          Width = 740.031496060000000000
-          Height = 0.409448820000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
         end
       end
       object PageHeader1: TfrxPageHeader
@@ -2063,34 +2062,34 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 194.267716540000000000
+        Height = 165.977678090000000000
         Top = 18.897650000000000000
         Width = 740.409927000000000000
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Left = 1.225490190000000000
+          Left = 0.833333330000000000
           Top = 0.269016670000000000
-          Width = 459.621661270000000000
-          Height = 115.735294120000000000
+          Width = 474.523622050000000000
+          Height = 87.500000000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -19
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'REKAP LAPORAN HARIAN SISA NOTA'
-            'PER KABUPATEN')
+            'PER TP')
           ParentFont = False
           WordBreak = True
           VAlign = vaCenter
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.498687670000000000
-          Top = 35.455380570000000000
-          Width = 75.294117650000000000
+          Left = 473.498687670000000000
+          Top = 33.455380570000000000
+          Width = 40.000000000000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2105,7 +2104,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Top = 114.048556430000000000
+          Top = 86.048556430000000000
           Width = 29.102362200000000000
           Height = 79.875328090000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2122,34 +2121,34 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 30.166666670000000000
-          Top = 114.881889760000000000
-          Width = 164.322062680000000000
+          Left = 30.558823530000000000
+          Top = 86.881889760000000000
+          Width = 174.125984250000000000
           Height = 79.041994750000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft]
+          Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'NAMA KECAMATAN')
+            'NAMA KABUPATEN')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
           Left = 203.629921260000000000
-          Top = 142.269016660000000000
-          Width = 32.392002470000000000
+          Top = 114.269016660000000000
+          Width = 40.627296590000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
+          Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Jml')
@@ -2158,8 +2157,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.228346460000000000
-          Top = 142.435683330000000000
+          Left = 244.228346460000000000
+          Top = 114.435683330000000000
           Width = 93.850393700000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2176,16 +2175,16 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 203.629921260000000000
-          Top = 115.602350000000000000
-          Width = 126.878493130000000000
+          Left = 204.022078120000000000
+          Top = 87.210193140000000000
+          Width = 135.311023620000000000
           Height = 26.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftBottom]
+          Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Sisa Nota Awal')
@@ -2194,7 +2193,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 545.283464570000000000
+          Left = 556.283464570000000000
           Top = 5.269016670000000000
           Width = 15.000000000000000000
           Height = 16.666666670000000000
@@ -2211,8 +2210,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 545.251968500000000000
-          Top = 35.102350000000000000
+          Left = 556.251968500000000000
+          Top = 33.637795280000000000
           Width = 15.000000000000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2228,8 +2227,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 545.751968500000000000
-          Top = 92.602349990000000000
+          Left = 557.751968500000000000
+          Top = 63.602349990000000000
           Width = 15.000000000000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2245,9 +2244,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 204.058823530000000000
-          Top = 162.935683330000000000
-          Width = 32.975760390000000000
+          Left = 203.666666670000000000
+          Top = 134.935683330000000000
+          Width = 40.818897640000000000
           Height = 30.833333340000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2262,8 +2261,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.499999990000000000
-          Top = 162.102350000000000000
+          Left = 244.499999990000000000
+          Top = 134.102350000000000000
           Width = 95.439632540000000000
           Height = 31.875328090000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2279,7 +2278,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.166666660000000000
+          Left = 473.166666660000000000
           Top = 5.269016670000000000
           Width = 45.000000000000000000
           Height = 16.666666670000000000
@@ -2296,9 +2295,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.166666670000000000
-          Top = 92.602350000000000000
-          Width = 88.186274500000000000
+          Left = 473.166666670000000000
+          Top = 63.602350000000000000
+          Width = 87.009803910000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2313,9 +2312,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 331.166666670000000000
-          Top = 142.102349990000000000
-          Width = 34.352786790000000000
+          Left = 339.166666670000000000
+          Top = 114.102349990000000000
+          Width = 40.627296590000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2331,8 +2330,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 365.765091870000000000
-          Top = 142.269016660000000000
+          Left = 379.765091870000000000
+          Top = 113.876859800000000000
           Width = 93.850393700000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2349,9 +2348,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 331.086614170000000000
-          Top = 115.435683330000000000
-          Width = 131.389454990000000000
+          Left = 339.166666670000000000
+          Top = 87.435683330000000000
+          Width = 135.311023620000000000
           Height = 26.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2367,9 +2366,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 331.203412080000000000
-          Top = 162.769016660000000000
-          Width = 35.314497450000000000
+          Left = 339.203412080000000000
+          Top = 134.769016660000000000
+          Width = 41.196850390000000000
           Height = 31.041994750000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2384,8 +2383,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 366.762235600000000000
-          Top = 161.935683330000000000
+          Left = 380.370078740000000000
+          Top = 133.935683330000000000
           Width = 95.439632540000000000
           Height = 31.875328090000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2401,8 +2400,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.000000000000000000
-          Top = 142.102349990000000000
+          Left = 474.000000000000000000
+          Top = 114.102349990000000000
           Width = 40.627296590000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2419,9 +2418,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo40: TfrxMemoView
           AllowVectorExport = True
-          Left = 501.598425200000000000
-          Top = 142.269016660000000000
-          Width = 106.007256450000000000
+          Left = 514.598425200000000000
+          Top = 114.269016660000000000
+          Width = 93.850393700000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2437,9 +2436,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.000000000000000000
-          Top = 115.435683330000000000
-          Width = 146.683572640000000000
+          Left = 474.000000000000000000
+          Top = 87.435683330000000000
+          Width = 135.311023620000000000
           Height = 26.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2455,8 +2454,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.036745410000000000
-          Top = 162.769016660000000000
+          Left = 474.036745410000000000
+          Top = 134.769016660000000000
           Width = 41.196850390000000000
           Height = 31.041994750000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2464,7 +2463,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nota')
@@ -2472,8 +2471,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo43: TfrxMemoView
           AllowVectorExport = True
-          Left = 501.203412070000000000
-          Top = 161.543526470000000000
+          Left = 514.203412070000000000
+          Top = 133.935683330000000000
           Width = 95.439632540000000000
           Height = 31.875328090000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2481,7 +2480,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '(RP)')
@@ -2490,7 +2489,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         object Memo44: TfrxMemoView
           AllowVectorExport = True
           Left = 608.333333330000000000
-          Top = 142.102349990000000000
+          Top = 114.102349990000000000
           Width = 37.795275590551200000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2508,7 +2507,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         object Memo45: TfrxMemoView
           AllowVectorExport = True
           Left = 646.931758530000000000
-          Top = 142.269016660000000000
+          Top = 114.269016660000000000
           Width = 93.354330710000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2526,7 +2525,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         object Memo46: TfrxMemoView
           AllowVectorExport = True
           Left = 608.333333330000000000
-          Top = 115.435683330000000000
+          Top = 87.435683330000000000
           Width = 132.283464570000000000
           Height = 26.666666670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2544,7 +2543,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         object Memo47: TfrxMemoView
           AllowVectorExport = True
           Left = 608.370078740000000000
-          Top = 162.769016660000000000
+          Top = 134.769016660000000000
           Width = 38.696850390000000000
           Height = 31.041994750000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2552,7 +2551,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nota')
@@ -2560,8 +2559,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 647.928902260000000000
-          Top = 161.935683330000000000
+          Left = 647.536745400000000000
+          Top = 133.935683330000000000
           Width = 95.439632540000000000
           Height = 31.875328090000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2569,7 +2568,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '(RP)')
@@ -2577,66 +2576,54 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Line2: TfrxLineView
           AllowVectorExport = True
-          Left = 30.000000000000000000
-          Top = 166.102350000000000000
-          Height = 982.677165354331000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line3: TfrxLineView
-          AllowVectorExport = True
-          Left = 236.751119350000000000
-          Top = 141.909834800000000000
-          Width = 0.392156860000000000
-          Height = 1030.299212598430000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line4: TfrxLineView
-          AllowVectorExport = True
-          Left = 330.774509810000000000
-          Top = 142.870619120000000000
-          Width = 0.392156860000000000
-          Height = 1028.787401574800000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line5: TfrxLineView
-          AllowVectorExport = True
-          Left = 366.220472440000000000
-          Top = 142.870619120000000000
-          Height = 1028.787401574800000000
+          Left = 30.784313720000000000
+          Top = 87.769016660000000000
+          Height = 1056.755905511810000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line6: TfrxLineView
           AllowVectorExport = True
-          Left = 460.952755910000000000
-          Top = 161.694148540000000000
-          Height = 1009.133858267720000000
+          Left = 473.952755905512000000
+          Top = 161.007874020000000000
+          Height = 1011.401574800000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Left = 514.015748031496000000
+          Top = 161.007874020000000000
+          Height = 1011.401574800000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 608.503937007874000000
+          Top = 161.007874020000000000
+          Height = 1011.401574800000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line9: TfrxLineView
           AllowVectorExport = True
-          Left = 647.107843140000000000
-          Top = 161.694148530000000000
-          Width = 0.392156860000000000
-          Height = 1009.133858267720000000
+          Left = 647.500000000000000000
+          Top = 161.007874015748000000
+          Height = 1011.401574800000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 550.392156860000000000
-          Top = 5.269016670000000000
-          Width = 135.000000000000000000
+          Left = 560.215686270000000000
+          Top = 5.661173530000000000
+          Width = 179.210526310000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2651,9 +2638,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
-          Left = 550.581133240000000000
-          Top = 35.935683330000000000
-          Width = 142.866141730000000000
+          Left = 561.241607960000000000
+          Top = 33.637795280000000000
+          Width = 177.561704160000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2668,9 +2655,9 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo53: TfrxMemoView
           AllowVectorExport = True
-          Left = 550.581133240000000000
-          Top = 91.769016670000000000
-          Width = 164.042612320000000000
+          Left = 561.581133240000000000
+          Top = 62.769016670000000000
+          Width = 177.830022020000000000
           Height = 16.666666670000000000
           AutoWidth = True
           Font.Charset = DEFAULT_CHARSET
@@ -2684,102 +2671,56 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo54: TfrxMemoView
-          AllowVectorExport = True
-          Left = 461.616334730000000000
-          Top = 63.874080730000000000
-          Width = 78.823529410000000000
-          Height = 16.666666670000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Kabupaten')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo55: TfrxMemoView
-          AllowVectorExport = True
-          Left = 545.369615560000000000
-          Top = 63.521050160000000000
-          Width = 15.000000000000000000
-          Height = 16.666666670000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            ':')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo56: TfrxMemoView
-          AllowVectorExport = True
-          Left = 550.698780300000000000
-          Top = 63.570069760000000000
-          Width = 169.924965260000000000
-          Height = 17.450980400000000000
-          AutoWidth = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[KABUPATEN]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Line10: TfrxLineView
           AllowVectorExport = True
-          Left = 461.117647060000000000
-          Top = 0.533722550000000000
-          Height = 116.409448820000000000
+          Left = 203.529411760000000000
+          Top = 87.376859800000000000
+          Height = 1084.734908140000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line11: TfrxLineView
           AllowVectorExport = True
-          Left = 740.607843140000000000
-          Top = 28.945487260000000000
-          Width = -279.685039370000000000
-          Height = -0.061139420000000000
+          Left = 244.607843140000000000
+          Top = 113.651369610000000000
+          Height = 1058.267716535430000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line12: TfrxLineView
           AllowVectorExport = True
-          Left = 740.000000000000000000
-          Top = 57.180781370000000000
-          Width = -279.685039370000000000
-          Height = -0.061139420000000000
+          Left = 339.215686270000000000
+          Top = 113.259212750000000000
+          Height = 1058.267716535430000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line13: TfrxLineView
           AllowVectorExport = True
-          Left = 740.607843140000000000
-          Top = 86.808232350000000000
-          Width = -279.685039370079000000
-          Height = -0.061139420000000000
+          Left = 380.392156860000000000
+          Top = 114.435683330000000000
+          Height = 1058.267716535430000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line14: TfrxLineView
           AllowVectorExport = True
+          Left = 474.117647060000000000
+          Top = -0.858434310000000000
+          Height = 116.409448820000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line17: TfrxLineView
+          AllowVectorExport = True
           Left = 740.784313730000000000
-          Top = 116.004310780000000000
-          Width = -279.685039370000000000
+          Top = 87.769016670000000000
+          Width = -266.078740157480000000
           Height = -0.061139420000000000
           Color = clBlack
           Frame.Typ = []
@@ -2787,28 +2728,20 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Line15: TfrxLineView
           AllowVectorExport = True
-          Left = 203.529411760000000000
-          Top = 162.670977450000000000
-          Height = 1008.377952755910000000
+          Left = 740.215686270000000000
+          Top = 27.984702940000000000
+          Width = -266.834645670000000000
+          Height = -0.061139420000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line16: TfrxLineView
           AllowVectorExport = True
-          Left = 501.568627450000000000
-          Top = 163.455291180000000000
-          Height = 1008.377952755910000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line17: TfrxLineView
-          AllowVectorExport = True
-          Left = 608.235294120000000000
-          Top = 162.278820590000000000
-          Width = 0.392156860000000000
-          Height = 1009.133858267720000000
+          Left = 740.000000000000000000
+          Top = 57.612153920000000000
+          Width = -266.834645670000000000
+          Height = -0.061139420000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

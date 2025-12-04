@@ -26,7 +26,6 @@ object FDataListPenjualan: TFDataListPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 974
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

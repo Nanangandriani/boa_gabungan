@@ -21,9 +21,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 896
     Height = 441
     Hint = ''
-    ActivePage = TabPenjualan
+    ActivePage = TabPembelian
     Align = alClient
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 890
     ExplicitHeight = 432
@@ -1739,11 +1739,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         '(select trans_no,trans_date,account_code,amount,status_dk,case w' +
         'hen status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,'
       
-        'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd  from t_gene' +
-        'ral_ledger) A left JOIN t_ak_account b '
+        'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  ' +
+        'from t_general_ledger) A left JOIN t_ak_account b '
       
-        'on LEFT(a.account_code,7)=b.code where a.account_code is not nul' +
-        'l '
+        'on LEFT(a.account_code,7)=b.code where a.deleted_at is null and ' +
+        'a.account_code is not null '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
         '.status_dk order by status_dk desc')
@@ -1775,10 +1775,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         '(select trans_no,trans_date,account_code,amount,status_dk,case w' +
         'hen status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,'
       
-        'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd  from t_gene' +
-        'ral_ledger) A INNER JOIN t_ak_account b on LEFT(a.account_code,7' +
-        ')=b.code '
-      'where a.account_code is not null '
+        'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  ' +
+        'from t_general_ledger) A INNER JOIN t_ak_account b on LEFT(a.acc' +
+        'ount_code,7)=b.code '
+      'where a.deleted_at is null and a.account_code is not null '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
         '.status_dk order by status_dk asc')
@@ -1874,11 +1874,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         'account_code,amount,status_dk,'
       
         'case when status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,case when st' +
-        'atus_dk ='#39'K'#39'then amount else '#39'0'#39' end kd  from t_general_ledger) ' +
-        'A'
+        'atus_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  from t_gener' +
+        'al_ledger) A'
       
         ' INNER JOIN t_ak_account b on LEFT(a.account_code,7)=b.code wher' +
-        'e a.account_code is not null '
+        'e a.deleted_at is null and  a.account_code is not null '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
         '.status_dk order by status_dk asc')

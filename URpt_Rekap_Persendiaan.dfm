@@ -77,8 +77,8 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Align = alBottom
     TabOrder = 2
     Visible = False
-    ExplicitTop = 132
-    ExplicitWidth = 345
+    ExplicitTop = 447
+    ExplicitWidth = 734
     object BBatal: TRzBitBtn
       Left = 664
       Top = 1
@@ -139,7 +139,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 269
+      ExplicitLeft = 658
     end
     object BPrint: TRzBitBtn
       Left = 1
@@ -263,7 +263,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 190
+      ExplicitLeft = 579
     end
   end
   object DBGridEh1: TDBGridEh
@@ -417,7 +417,6 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Contexts = <>
     TabOrder = 4
     TabStop = False
-    ExplicitWidth = 345
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -433,7 +432,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Top = 41
     Width = 113
     Height = 21
-    TabOrder = 9
+    TabOrder = 5
     Items.Strings = (
       ''
       'Januari'
@@ -454,7 +453,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Top = 248
     Width = 225
     Height = 17
-    TabOrder = 10
+    TabOrder = 6
     Visible = False
   end
   object CbCategory: TRzComboBox
@@ -463,7 +462,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Width = 230
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 11
+    TabOrder = 7
     Visible = False
     Items.Strings = (
       'BAHAN BAKU'
@@ -478,7 +477,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Top = 169
     Width = 121
     Height = 21
-    TabOrder = 12
+    TabOrder = 8
     Text = 'Edit1'
     Visible = False
   end

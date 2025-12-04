@@ -50,7 +50,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   Ulog, ULaporanHarianSisaNotaPerTP, ULaporanHarianSisaNotaPerKabupaten,
   ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
   UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang,
-  UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank;
+  UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank,
+  URincianUmurPiutang;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -132,6 +133,11 @@ begin
   begin
     FExportFaktur.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
     FExportFaktur.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rincianumurpiutangkares' then
+  begin
+    FRincianUmurPiutang.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FRincianUmurPiutang.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
   end;
   //ShowMessage(vcall);
   if vcall='m_bank_garansi' then

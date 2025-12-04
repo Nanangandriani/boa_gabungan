@@ -347,9 +347,9 @@ object FKartuPiutang: TFKartuPiutang
       WholeRow = False
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'Karesidenan  '
+      Caption = 'TP                   '
       Category = 0
-      Hint = 'Karesidenan  '
+      Hint = 'TP                   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -573,7 +573,7 @@ object FKartuPiutang: TFKartuPiutang
       Category = 0
       Enabled = False
       Hint = 'TP                   '
-      Visible = ivAlways
+      Visible = ivNever
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
         item
@@ -1028,27 +1028,22 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 45992.397717893520000000
+    ReportOptions.LastChange = 45994.635450243050000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       
         'procedure frxDBDKartuPiutangtanggalOnBeforePrint(Sender: TfrxCom' +
         'ponent);'
-      'begin'
-      '//  if (<ffrxDBDKartuPiutang."tgltrans"> = NULL) then'
-      '//  begin'
-      '//    frxDBDKartuPiutangtanggal.Text:='#39#39';'
-      '  //end else begin'
+      'begin                           '
+      '  if (<frxDBDKartuPiutang."keterangan2"> = '#39'Saldo Awal'#39') then'
+      '  begin'
+      '    frxDBDKartuPiutangnofakturpajak.Text:='#39#39';'
+      '  end else begin'
       
-        '  //  frxDBDKartuPiutangtanggal.Text:=<ffrxDBDKartuPiutang."tglt' +
-        'rans");'
-      '//  end;'
-      'end;'
-      ''
-      'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
-      'begin'
-      ''
+        '    frxDBDKartuPiutangnofakturpajak.Text:=<frxDBDKartuPiutang."t' +
+        'rans_no">;'
+      '  end;'
       'end;'
       ''
       'begin'
@@ -1150,7 +1145,7 @@ object FKartuPiutang: TFKartuPiutang
         object frxDBDKartuPiutangtanggal: TfrxMemoView
           AllowVectorExport = True
           Left = 0.559060000000000000
-          Width = 59.716535433070870000
+          Width = 59.716535433070900000
           Height = 18.897637800000000000
           OnBeforePrint = 'frxDBDKartuPiutangtanggalOnBeforePrint'
           StretchMode = smMaxHeight
@@ -1173,11 +1168,10 @@ object FKartuPiutang: TFKartuPiutang
           Left = 61.590600000000000000
           Width = 141.504542700000000000
           Height = 18.897637800000000000
+          OnBeforePrint = 'frxDBDKartuPiutangnofakturpajakOnBeforePrint'
           StretchMode = smMaxHeight
-          DataField = 'trans_no'
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
-          DisplayFormat.FormatStr = '%2.n'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1366,6 +1360,7 @@ object FKartuPiutang: TFKartuPiutang
         Frame.Typ = []
         Top = 306.141930000000000000
         Width = 1182.992890000000000000
+        OnBeforePrint = 'GroupHeader1OnBeforePrint'
         Condition = 'frxDBDKartuPiutang."customer_code"'
         ResetPageNumbers = True
         StartNewPage = True

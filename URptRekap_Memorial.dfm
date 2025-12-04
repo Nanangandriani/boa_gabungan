@@ -398,6 +398,7 @@ object FRekap_memorial: TFRekap_memorial
           Left = 75.590551180000000000
           Width = 226.771653540000000000
           Height = 18.897637795275600000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -412,6 +413,7 @@ object FRekap_memorial: TFRekap_memorial
           Left = 302.362229130000000000
           Width = 75.590551180000000000
           Height = 18.897637795275600000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -427,6 +429,7 @@ object FRekap_memorial: TFRekap_memorial
           Left = 377.952731500000000000
           Width = 75.590551181102400000
           Height = 18.897637795275600000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -444,6 +447,7 @@ object FRekap_memorial: TFRekap_memorial
           Left = 453.543263150000000000
           Width = 143.622047244094000000
           Height = 18.897637795275600000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -463,6 +467,7 @@ object FRekap_memorial: TFRekap_memorial
           Left = 597.055113230000000000
           Width = 143.622047240000000000
           Height = 18.897637795275600000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -527,6 +532,7 @@ object FRekap_memorial: TFRekap_memorial
           Top = 64.251968500000000000
           Width = 226.771653540000000000
           Height = 34.015748031496100000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -720,6 +726,7 @@ object FRekap_memorial: TFRekap_memorial
           Top = 98.267716535433100000
           Width = 226.771653540000000000
           Height = 22.677165350000000000
+          DataSet = FRpt_Buku_Besar.DBBuku_Besar
           DataSetName = 'DBBuku_Besar'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

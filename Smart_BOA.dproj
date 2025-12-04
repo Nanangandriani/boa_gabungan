@@ -98,14 +98,14 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>12297</VerInfo_Locale>
         <VerInfo_MinorVer>37</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.37.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.37.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.37.0.2;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.37.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
         <VerInfo_PreRelease>true</VerInfo_PreRelease>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Build>2</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1044,10 +1044,6 @@
             <Form>FRpt_Kartu_Gudang</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="URpt_Lr.pas">
-            <Form>FRpt_Lr</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="browse_akun_kredit.pas">
             <Form>Fbrowse_akun_kredit</Form>
             <FormType>dfm</FormType>
@@ -1308,6 +1304,22 @@
         </DCCReference>
         <DCCReference Include="UCetakKolektifPenerimaanBank.pas">
             <Form>FCetakKolektifPenerimaanBank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URincianUmurPiutang.pas">
+            <Form>FRincianUmurPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_Lr.pas">
+            <Form>FRpt_Lr</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_Rekap_Persendiaan.pas">
+            <Form>FRpt_Rekap_Persediaan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_by.pas">
+            <Form>FRpt_by</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

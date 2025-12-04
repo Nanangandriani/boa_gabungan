@@ -104,7 +104,8 @@ begin
             close;
             sql.Clear;
             sql.Text:=' insert into t_ak_account_balance(account_code,balance,trans_year,trans_month) '+
-                      ' select account_code2,0,'+QuotedStr(spTahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+' from t_ak_account_sub';
+                      ' select account_code2,0,'+QuotedStr(spTahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+' '+
+                      ' from t_ak_account_sub';
             Execute;
           end;
         with dm.Qtemp3 do

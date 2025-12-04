@@ -1382,9 +1382,9 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         0000000049454E44AE426082}
     end
     object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'Cetak Bukti Pengeluaran'
+      Caption = 'Cetak Pengajuan Kas Bank'
       Category = 0
-      Hint = 'Cetak Bukti Pengeluaran'
+      Hint = 'Cetak Pengajuan Kas Bank'
       Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {

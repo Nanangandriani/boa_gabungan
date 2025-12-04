@@ -824,13 +824,14 @@ begin
       edNamaAkunUangMuka.Text:=Dm.Qtemp2.FieldByName('name_account3').AsString;
     end;
 
-    //Retur
+//    Retur
     if dm.Qtemp3.FieldByName('code_account').AsString<>NULL then
     begin
       KodeHeaderRetur:=Dm.Qtemp3.FieldByName('code_account').AsString;
       edAkunRetur.Text:=Dm.Qtemp3.FieldByName('code_account').AsString;
       edNamaAkunRetur.Text:=Dm.Qtemp3.FieldByName('name_account').AsString;
     end;
+
   end else if edkode.Text<>'' then begin
     //Piutang
     if dm.Qtemp2.FieldByName('code_account').AsString<>NULL then

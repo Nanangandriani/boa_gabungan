@@ -54,7 +54,7 @@ begin
          Memrencana.Post;
 
     end;
-    ShowMessage(statustr);
+    //ShowMessage(statustr);
     if statustr='pphpemb' then
     begin
       with FNew_Pembelian do

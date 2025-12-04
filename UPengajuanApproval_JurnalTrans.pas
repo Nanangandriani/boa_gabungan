@@ -252,7 +252,7 @@ begin
   while not MemKas.Eof do
   begin
     MemKas.Edit;
-    MemKas['approval_status']:=true;
+    MemKas['status_app']:=true;
     MemKas.Post;
     MemKas.Next;
   end;
@@ -280,6 +280,16 @@ begin
           Execute;
         end;
        end;
+      if MemKas['status_app']= false then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''0'' where trans_no='+QuotedStr(MemKas['trans_no']);
+          Execute;
+        end;
+       end;
     MemKas.Next;
   end;
   ShowMessage('Data Berhasil di Approve');
@@ -292,8 +302,10 @@ begin
       close;
       sql.Clear;
       sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
-      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
-      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, left(A.account_code,7) as account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a '+
+      ' inner join t_ak_account b on A.account_code=b.code or left(A.account_code,7)=b.code '+
+      ' INNER JOIN t_ak_module c ON a.module_id=c.id '+
       ' where module_name='+QuotedStr(Cbmodule.Text)+' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',Dtmulai_kas.Date))+''+
       ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',DtSelesai_kas.Date))+''+
       ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
@@ -336,6 +348,16 @@ begin
           Execute;
         end;
        end;
+      if MemPenjualan['approval_status']= false then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''0'' where trans_no='+QuotedStr(MemPenjualan['trans_no']);
+          Execute;
+        end;
+       end;
     MemPenjualan.Next;
   end;
   ShowMessage('Data Berhasil di Approve');
@@ -348,8 +370,10 @@ begin
       close;
       sql.Clear;
       sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
-      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
-      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, left(A.account_code,7) as account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a '+
+      ' inner join t_ak_account b on A.account_code=b.code or left(A.account_code,7)=b.code '+
+      ' INNER JOIN t_ak_module c ON a.module_id=c.id '+
       ' where module_name=''PEMBELIAN'' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtmulai.Date))+''+
       ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.Date))+''+
       ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
@@ -377,8 +401,10 @@ begin
       close;
       sql.Clear;
       sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
-      ' sum(case when status_dk =''K'' then amount else 0 end) kd, a.account_code,B.account_name,c.module_name,a.module_id '+
-      ' from t_general_ledger_real a inner join t_ak_account b on A.account_code=b.code INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, left(A.account_code,7) as account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a '+
+      ' inner join t_ak_account b on A.account_code=b.code or left(A.account_code,7)=b.code'+
+      ' INNER JOIN t_ak_module c ON a.module_id=c.id '+
       ' where module_name=''PENJUALAN'' and trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtmulaipenj.Date))+''+
       ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesaipenj.Date))+''+
       ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
@@ -430,6 +456,16 @@ begin
           close;
           sql.Clear;
           sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''1'' where trans_no='+QuotedStr(MemPembelian['trans_no']);
+          Execute;
+        end;
+       end;
+      if MemPembelian['approval_status']= false then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''0'' where trans_no='+QuotedStr(MemPembelian['trans_no']);
           Execute;
         end;
        end;

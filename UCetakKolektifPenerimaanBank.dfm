@@ -3,8 +3,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Cetak Kolektif Penerimaan Kas dan Bank'
-  ClientHeight = 136
-  ClientWidth = 436
+  ClientHeight = 158
+  ClientWidth = 432
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,44 +16,51 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
   TextHeight = 15
   object RzLabel1: TRzLabel
     Left = 8
-    Top = 11
+    Top = 35
     Width = 26
     Height = 15
     Caption = 'Bank'
   end
   object RzLabel2: TRzLabel
     Left = 8
-    Top = 40
+    Top = 64
     Width = 68
     Height = 15
     Caption = 'No Rekening'
   end
   object RzLabel3: TRzLabel
     Left = 8
-    Top = 72
+    Top = 96
     Width = 40
     Height = 15
     Caption = 'Periode'
   end
   object RzLabel4: TRzLabel
     Left = 199
-    Top = 72
+    Top = 96
     Width = 19
     Height = 15
     Caption = 'S/D'
   end
+  object RzLabel5: TRzLabel
+    Left = 8
+    Top = 8
+    Width = 47
+    Height = 15
+    Caption = 'Transaksi'
+  end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 95
-    Width = 436
+    Top = 117
+    Width = 432
     Height = 41
     Align = alBottom
+    Color = 15987699
     TabOrder = 0
-    ExplicitLeft = 64
-    ExplicitTop = 96
-    ExplicitWidth = 185
+    ExplicitTop = 116
+    ExplicitWidth = 428
     object BBatal: TRzBitBtn
-      Left = 359
+      Left = 355
       Top = 2
       Height = 37
       Align = alRight
@@ -112,12 +119,10 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 790
-      ExplicitTop = 1
-      ExplicitHeight = 30
+      ExplicitLeft = 351
     end
     object BPrint: TRzBitBtn
-      Left = 272
+      Left = 268
       Top = 2
       Width = 87
       Height = 37
@@ -256,11 +261,12 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
+      ExplicitLeft = 264
     end
   end
   object cbBank: TRzComboBox
     Left = 96
-    Top = 8
+    Top = 32
     Width = 329
     Height = 23
     TabOrder = 1
@@ -268,14 +274,14 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
   end
   object cbNoRek: TRzComboBox
     Left = 96
-    Top = 37
+    Top = 61
     Width = 329
     Height = 23
     TabOrder = 2
   end
   object dtTanggalAwal: TRzDateTimePicker
     Left = 96
-    Top = 66
+    Top = 90
     Width = 89
     Height = 23
     Date = 45993.000000000000000000
@@ -285,13 +291,24 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
   end
   object dtTanggalAkhir: TRzDateTimePicker
     Left = 224
-    Top = 66
+    Top = 90
     Width = 89
     Height = 23
     Date = 45993.000000000000000000
     Format = ''
     Time = 0.381220868053787900
     TabOrder = 4
+  end
+  object cbTransaksi: TRzComboBox
+    Left = 96
+    Top = 3
+    Width = 329
+    Height = 23
+    TabOrder = 5
+    OnChange = cbTransaksiChange
+    Items.Strings = (
+      'TERIMA BANK'
+      'TERIMA KAS')
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -302,31 +319,23 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45993.493855787000000000
+    ReportOptions.LastChange = 45994.409253321760000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
       'procedure AccountNameOnAfterData(Sender: TfrxComponent);'
       'begin'
       '  AccountName.Text:=UpperCase(AccountName.Text);'
       'end;'
       ''
-      'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
-      'var'
-      '  TotalGroup: Real;    '
-      'begin'
-      '//terbilang.Text:=Terbilang(CStr(<290000>));'
-      '//TotalGroup := <frxDBDatasetBuktiTerima."paid_amount">;    '
-      '//terbilang.Text := Terbilang(FloatToStr(Tot));    '
-      'end;'
-      '  '
       'procedure GroupHeader2OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '  if <frxDBDatasetBuktiTerima."module_id"> = '#39'4'#39' then '
+      '  if <frxDBDatasetBuktiTerima."module_id"> = '#39'4'#39' then'
       '  begin'
       '    Memo39.Text := '#39#10004#39';'
       '    Memo38.Text := '#39#39';'
       '  end'
-      '  else if <frxDBDatasetBuktiTerima."module_id"> = '#39'3'#39' then '
+      '  else if <frxDBDatasetBuktiTerima."module_id"> = '#39'3'#39' then'
       '  begin'
       '    Memo39.Text := '#39#39';'
       '    Memo38.Text := '#39#10004#39';'
@@ -336,13 +345,19 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       '  begin'
       '    Memo39.Text := '#39#39';'
       '    Memo38.Text := '#39#39';'
-      '  end;  '
+      '  end;'
+      'end;'
+      ''
+      'procedure GroupHeader2OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      '    terbilang.Text:=<frxDBDatasetBuktiTerima."word_amount">;'
       'end;'
       ''
       'begin'
-      '  '
+      ''
       'end.')
-    Left = 16
+    OnGetValue = ReportGetValue
+    Left = 8
     Top = 79
     Datasets = <
       item
@@ -403,7 +418,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           Font.Style = [fsItalic]
           Frame.Typ = []
           Memo.UTF8W = (
-            'terbilang')
+            'test')
           ParentFont = False
         end
         object Memo14: TfrxMemoView
@@ -680,6 +695,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         Height = 181.795275590000000000
         Top = 18.897650000000000000
         Width = 755.906000000000000000
+        OnAfterPrint = 'GroupHeader2OnAfterPrint'
         OnBeforePrint = 'GroupHeader2OnBeforePrint'
         Condition = '<frxDBDatasetBuktiTerima."voucher_no">'
         object Memo25: TfrxMemoView
@@ -695,7 +711,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'nama_pt')
+            '[nama_pt]')
           ParentFont = False
         end
         object Line13: TfrxLineView
@@ -708,9 +724,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 1.052631580000000000
           Top = 15.798804440000000000
-          Width = 755.906000000000000000
+          Width = 771.695473690000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -901,7 +916,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'kota, tanggal')
+            '[kota_tanggal]')
           ParentFont = False
         end
         object Shape3: TfrxShapeView
@@ -1067,6 +1082,23 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           Frame.Typ = []
           Diagonal = True
         end
+        object Memo44: TfrxMemoView
+          AllowVectorExport = True
+          Left = 429.473684210000000000
+          Top = 95.839192110000000000
+          Width = 506.457020000000000000
+          Height = 34.015770000000000000
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsItalic]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDatasetBuktiTerima."word_amount"]')
+          ParentFont = False
+        end
       end
     end
     object Page2: TfrxReportPage
@@ -1124,7 +1156,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           DataField = 'paid_amount'
           DataSet = frxDBDatasetBuktiTerimaDet
           DataSetName = 'frxDBDatasetBuktiTerimaDet'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1153,6 +1185,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       'for_acceptance=for_acceptance'
       'description=description'
       'module_id=module_id'
+      'word_amount=word_amount'
       'code_account_header=code_account_header'
       'account_name=account_name'
       'paid_amount=paid_amount'
@@ -1160,8 +1193,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     DataSet = QBuktiTerima
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 96
-    Top = 79
+    Left = 104
+    Top = 127
   end
   object frxDBDatasetBuktiTerimaDet: TfrxDBDataset
     UserName = 'frxDBDatasetBuktiTerimaDet'
@@ -1182,8 +1215,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     DataSet = QBuktiTerimaDet
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 128
-    Top = 23
+    Left = 232
+    Top = 175
   end
   object QBuktiTerima: TUniQuery
     Connection = dm.Koneksi
@@ -1196,8 +1229,9 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         '( select "voucher_no", "trans_date", "code_cust", "name_cust", "' +
         'account_number_bank",  "account_name_bank", '
       
-        '"for_acceptance", "description", "module_id"  from "public"."t_c' +
-        'ash_bank_acceptance"  a   WHERE deleted_at is null) a  '
+        '"for_acceptance", "description", "module_id",word_amount  from "' +
+        'public"."t_cash_bank_acceptance"  a   WHERE deleted_at is null) ' +
+        'a  '
       
         'LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account' +
         ', "position",  "paid_amount", "description" as desc_akun, '
@@ -1210,34 +1244,43 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       
         'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON a."' +
         'voucher_no"=b."voucher_no"  where  "position"='#39'K'#39'  '
-      'order by position asc')
+      
+        'order by voucher_no ASC, account_name='#39'Piutang Barang Dagang'#39' AS' +
+        'C')
     Active = True
-    Left = 48
-    Top = 24
+    Left = 64
+    Top = 88
   end
   object QBuktiTerimaDet: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT *'
-      'FROM "public"."vbuktipenerimaan" '
-      '')
+      
+        'FROM "public"."vbuktipenerimaan" ORDER BY voucher_no ASC ,name_a' +
+        'ccount='#39'Piutang Barang Dagang'#39' Asc')
     MasterSource = DSBuktiTerima
-    MasterFields = 'voucher_no'
-    DetailFields = 'voucher_no'
+    MasterFields = 'voucher_no;account_name'
+    DetailFields = 'voucher_no;name_account'
     Active = True
     Left = 168
-    Top = 24
+    Top = 152
     ParamData = <
       item
         DataType = ftString
         Name = 'voucher_no'
         ParamType = ptInput
-        Value = 'BM/002/17/X/2025/HLJ/TGR/MDI'
+        Value = 'BM/001/02/X/2025/HLJ'
+      end
+      item
+        DataType = ftString
+        Name = 'account_name'
+        ParamType = ptInput
+        Value = 'Piutang Barang Dagang'
       end>
   end
   object DSBuktiTerima: TDataSource
     DataSet = QBuktiTerima
-    Left = 8
-    Top = 8
+    Left = 344
+    Top = 168
   end
 end

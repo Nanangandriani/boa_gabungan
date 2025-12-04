@@ -56,8 +56,8 @@ object dm: Tdm
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 227
-    Top = 120
+    Left = 243
+    Top = 128
   end
   object Qtemp3: TUniQuery
     Connection = Koneksi

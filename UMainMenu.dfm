@@ -6562,7 +6562,7 @@ object FMainMenu: TFMainMenu
     end
   end
   object RzVersionInfo1: TRzVersionInfo
-    Left = 624
-    Top = 453
+    Left = 504
+    Top = 117
   end
 end
