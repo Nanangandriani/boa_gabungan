@@ -27,7 +27,8 @@ uses
   cxCalendar, frxClass, frxDBSet, Data.DB, MemDS, DBAccess, Uni, dxBarExtItems,
   cxBarEditItem, dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel;
+  DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TFRincianUmurPiutang = class(TForm)
@@ -85,6 +86,7 @@ type
     edKaresidenan: TcxBarEditItem;
     cbUmurPiutang: TdxBarCombo;
     QRincianUmurPiutang: TUniQuery;
+    frxPDFExport1: TfrxPDFExport;
     procedure edKaresidenanPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure FormCreate(Sender: TObject);
@@ -92,6 +94,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure dtTanggal1Change(Sender: TObject);
+    procedure dtTanggal2Change(Sender: TObject);
+    procedure ActSearchClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -121,8 +126,8 @@ begin
     Application.CreateForm(TFRincianUmurPiutang, Result);
 end;
 
-procedure TFRincianUmurPiutang.dxBarLargeButton1Click(Sender: TObject);
-var strReportName,strKaresidenan:String;
+procedure TFRincianUmurPiutang.ActSearchClick(Sender: TObject);
+var strKaresidenan,strSaldoPiutang, strWhere:String;
 begin
   if cbUmurPiutang.Text='' then
   begin
@@ -130,13 +135,125 @@ begin
   end else begin
 
     if edKaresidenan.EditValue<>'' then
-    strKaresidenan:='WHERE karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ' else strKaresidenan:='';
+    strKaresidenan:='AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ' else strKaresidenan:='';
+
+    if cbUmurPiutang.Text='BARU' then
+    begin
+      strSaldoPiutang:='saldo_baru saldo_piutang ';
+      strWhere:='WHERE saldo_baru<>0 ';
+    end;
+    if cbUmurPiutang.Text='1 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_satu_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_satu_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='2 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_dua_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_dua_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='3 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_tiga_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='4 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_empat_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_empat_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='>3 BULAN' then
+    begin
+      strSaldoPiutang:='saldo_tiga_bulan saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_bulan<>0 ';
+    end;
+
 
     with QRincianUmurPiutang do
     begin
       close;
       sql.Clear;
-      sql.Text:='select saldo_baru saldo_piutang,* from rincian_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+')'+strKaresidenan+' order by kabupaten,kecamatan ASC';
+      sql.Text:='select '+strSaldoPiutang+',* from rincian_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+') '+strWhere+strKaresidenan+' order by kabupaten,kecamatan ASC';
+      open;
+    end;
+
+  end;
+end;
+
+procedure TFRincianUmurPiutang.dtTanggal1Change(Sender: TObject);
+begin
+//  if dtTanggal1.Date>dtTanggal2.Date then  dtTanggal2.Date:=dtTanggal1.Date;
+end;
+
+procedure TFRincianUmurPiutang.dtTanggal2Change(Sender: TObject);
+begin
+//  if dtTanggal2.Date<dtTanggal1.Date then  dtTanggal1.Date:=dtTanggal2.Date;
+end;
+
+procedure TFRincianUmurPiutang.dxBarLargeButton1Click(Sender: TObject);
+var strReportName,strKaresidenan,strSaldoPiutang, strWhere,
+    tgl1,bulan1,tahun1,tgl2,bulan2,tahun2,strPeriode: STRING;
+begin
+  if cbUmurPiutang.Text='' then
+  begin
+    MessageDlg('Umur Piutang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else begin
+
+//    tgl1:=FormatDateTime('DD', dtTanggal1.Date);
+//    bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal1.Date)));
+//    tahun1:=FormatDateTime('YYYY', dtTanggal1.Date);
+
+    tgl2:=FormatDateTime('DD', dtTanggal2.Date);
+    bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal2.Date)));
+    tahun2:=FormatDateTime('YYYY', dtTanggal2.Date);
+
+//    if bulan1+' '+tahun1<>bulan2+' '+tahun2 then
+//    begin
+//      strPeriode:= tgl1+' '+bulan1+' '+tahun1+' s/d '+tgl2+' '+bulan2+' '+tahun2;
+//    end else begin
+      strPeriode:= tgl2+' '+bulan2+' '+tahun2;
+//    end;
+
+    if edKaresidenan.EditValue<>'' then
+    strKaresidenan:='AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ' else strKaresidenan:='';
+
+    if cbUmurPiutang.Text='BARU' then
+    begin
+      strSaldoPiutang:='saldo_baru saldo_piutang ';
+      strWhere:='WHERE saldo_baru<>0 ';
+    end;
+    if cbUmurPiutang.Text='1 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_satu_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_satu_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='2 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_dua_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_dua_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='3 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_tiga_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='4 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_empat_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_empat_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='>3 BULAN' then
+    begin
+      strSaldoPiutang:='saldo_tiga_bulan saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_bulan<>0 ';
+    end;
+
+
+    with QRincianUmurPiutang do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select '+strSaldoPiutang+',* from rincian_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+') '+strWhere+strKaresidenan+' order by kabupaten,kecamatan ASC';
       open;
     end;
     if QRincianUmurPiutang.RecordCount=0 then
@@ -151,8 +268,8 @@ begin
       SetMemo(Report,'sbu',FHomeLogin.vNamaPRSH);
       SetMemo(Report,'umur_piutang',cbUmurPiutang.Text);
       if edKaresidenan.EditValue<>'' then
-      SetMemo(Report,'karesidenan',cbUmurPiutang.Text) else  SetMemo(Report,'karesidenan','');
-      SetMemo(Report,'periode','PERIODE '+FormatDateTime('dd',dtTanggal1.Date)+' s/d '+FormatDateTime('dd-mm-yyyy',dtTanggal2.Date));
+      SetMemo(Report,'karesidenan','Karesidenan: '+cbUmurPiutang.Text) else  SetMemo(Report,'karesidenan','Karesidenan:');
+      SetMemo(Report,'periode','PERIODE '+strPeriode);
       Report.ShowReport();
     end;
   end;
@@ -160,7 +277,7 @@ end;
 
 procedure TFRincianUmurPiutang.dxBarLargeButton3Click(Sender: TObject);
 begin
-  dtTanggal1.Date:=NOW();
+//  dtTanggal1.Date:=NOW();
   dtTanggal2.Date:=NOW();
   edKaresidenan.EditValue:='';
   strKodeKaresidenan:='';
@@ -188,11 +305,13 @@ end;
 
 procedure TFRincianUmurPiutang.FormShow(Sender: TObject);
 begin
-  dtTanggal1.Date:=NOW();
+  FillSBUBarCombo(cbSBU);
+//  dtTanggal1.Date:=NOW();
   dtTanggal2.Date:=NOW();
   edKaresidenan.EditValue:='';
   strKodeKaresidenan:='';
   cbUmurPiutang.ItemIndex:=-1;
+  QRincianUmurPiutang.Close;
 end;
 
 initialization

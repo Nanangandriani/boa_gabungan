@@ -35,6 +35,8 @@ type
     procedure BPrintClick(Sender: TObject);
     procedure cbTransaksiChange(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
+    procedure dtTanggalAwalChange(Sender: TObject);
+    procedure dtTanggalAkhirChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -162,6 +164,16 @@ begin
     cbNoRek.Clear;
   end;
 
+end;
+
+procedure TFCetakKolektifPenerimaanBank.dtTanggalAkhirChange(Sender: TObject);
+begin
+  if dtTanggalAkhir.Date<dtTanggalAwal.Date then dtTanggalAwal.Date:=dtTanggalAkhir.Date;
+end;
+
+procedure TFCetakKolektifPenerimaanBank.dtTanggalAwalChange(Sender: TObject);
+begin
+  if dtTanggalAwal.Date>dtTanggalAkhir.Date then dtTanggalAkhir.Date:=dtTanggalAwal.Date;
 end;
 
 procedure TFCetakKolektifPenerimaanBank.FormShow(Sender: TObject);

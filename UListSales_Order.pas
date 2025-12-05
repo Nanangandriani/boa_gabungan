@@ -319,6 +319,7 @@ begin
       end;
     end;
   end;
+  FNew_SalesOrder.RefreshGrid;
   FNew_SalesOrder.edKodeOrder.Enabled:=false;
   FNew_SalesOrder.Show;
   Status := 1;

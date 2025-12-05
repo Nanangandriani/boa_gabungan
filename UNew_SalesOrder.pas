@@ -502,6 +502,10 @@ procedure TFNew_SalesOrder.RefreshGrid;
 var
 URUTAN_KE : Integer;
 begin
+  FNew_SalesOrder.MemDetail.active:=false;
+  FNew_SalesOrder.MemDetail.active:=true;
+  FNew_SalesOrder.MemDetail.EmptyTable;
+
   with Dm.Qtemp do
   begin
     close;
@@ -519,10 +523,6 @@ begin
             ' Order By notrans, code_item desc');
     open;
   end;
-
-  FNew_SalesOrder.MemDetail.active:=false;
-  FNew_SalesOrder.MemDetail.active:=true;
-  FNew_SalesOrder.MemDetail.EmptyTable;
 
   if  Dm.Qtemp.RecordCount=0 then
   begin

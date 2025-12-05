@@ -421,6 +421,7 @@ begin
 
 
   end;
+  FNew_Penjualan.RefreshGrid;
   FNew_Penjualan.Status := 1;
   FNew_Penjualan.ShowModal;
 

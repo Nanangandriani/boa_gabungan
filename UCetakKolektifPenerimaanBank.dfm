@@ -288,6 +288,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     Format = ''
     Time = 0.381220868053787900
     TabOrder = 3
+    OnChange = dtTanggalAwalChange
   end
   object dtTanggalAkhir: TRzDateTimePicker
     Left = 224
@@ -298,6 +299,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     Format = ''
     Time = 0.381220868053787900
     TabOrder = 4
+    OnChange = dtTanggalAkhirChange
   end
   object cbTransaksi: TRzComboBox
     Left = 96
@@ -1269,7 +1271,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         DataType = ftString
         Name = 'voucher_no'
         ParamType = ptInput
-        Value = 'BM/001/02/X/2025/HLJ'
+        Value = 'BM/001/02/X/2025/HLJ/BTN/MDI'
       end
       item
         DataType = ftString

@@ -1354,7 +1354,7 @@ begin
 //  Autonumber;
   if Status=1 then
   begin
-    RefreshGrid;
+//    RefreshGrid;
     btAddDetail.Visible:=False;
     SpeedButton1.Visible:=False;
     spJatuhTempo.Enabled:=False;
@@ -1627,6 +1627,10 @@ procedure TFNew_Penjualan.RefreshGrid;
 var
 URUTAN_KE : Integer;
 begin
+  FNew_Penjualan.MemDetail.active:=false;
+  FNew_Penjualan.MemDetail.active:=true;
+  FNew_Penjualan.MemDetail.EmptyTable;
+
   with Dm.Qtemp do
   begin
     close;
@@ -1644,10 +1648,6 @@ begin
 
     open;
   end;
-
-  FNew_Penjualan.MemDetail.active:=false;
-  FNew_Penjualan.MemDetail.active:=true;
-  FNew_Penjualan.MemDetail.EmptyTable;
 
   if  Dm.Qtemp.RecordCount=0 then
   begin

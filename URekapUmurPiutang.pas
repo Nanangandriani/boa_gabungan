@@ -27,7 +27,8 @@ uses
   cxCalendar, frxClass, frxDBSet, Data.DB, MemDS, DBAccess, Uni, dxBarExtItems,
   cxBarEditItem, dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel;
+  DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TFRekapUmurPiutang = class(TForm)
@@ -87,6 +88,7 @@ type
     frxDBDatasetRekapUmurPiutang: TfrxDBDataset;
     cbSBU: TdxBarCombo;
     dxBarLargeButton3: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -149,7 +151,7 @@ end;
 
 procedure TFRekapUmurPiutang.dxBarLargeButton3Click(Sender: TObject);
 begin
-  dtTanggal1.Date:=NOW;
+//  dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
 //  QRekapUmurPiutang.Close;
 end;
@@ -167,7 +169,7 @@ end;
 procedure TFRekapUmurPiutang.FormShow(Sender: TObject);
 var computername: String;
 begin
-  dtTanggal1.Date:=NOW;
+//  dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
   QRekapUmurPiutang.Close;
 
@@ -177,21 +179,28 @@ end;
 procedure TFRekapUmurPiutang.ReportGetValue(const VarName: string;
   var Value: Variant);
 var
-  tgl1,bulan1,tahun1,tgl2,bulan2,tahun2,strKaresidenan: STRING;
+  tgl1,bulan1,tahun1,tgl2,bulan2,tahun2,strKaresidenan,strPeriode: STRING;
 begin
-  tgl1:=FormatDateTime('DD', dtTanggal1.Date);
-  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal1.Date)));
-  tahun1:=FormatDateTime('YYYY', dtTanggal1.Date);
+//  tgl1:=FormatDateTime('DD', dtTanggal1.Date);
+//  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal1.Date)));
+//  tahun1:=FormatDateTime('YYYY', dtTanggal1.Date);
 
   tgl2:=FormatDateTime('DD', dtTanggal2.Date);
   bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal2.Date)));
   tahun2:=FormatDateTime('YYYY', dtTanggal2.Date);
 
+//  if bulan1+' '+tahun1<>bulan2+' '+tahun2 then
+//  begin
+//    strPeriode:= tgl1+' '+bulan1+' '+tahun1+' s/d '+tgl2+' '+bulan2+' '+tahun2;
+//  end else begin
+    strPeriode:= tgl2+' '+bulan2+' '+tahun2;
+//  end;
+
   if CompareText(VarName, 'prsh') = 0 then
   Value := UpperCase('PT. '+FHomeLogin.vNamaPRSH);
 
   if CompareText(VarName, 'periode') = 0 then
-  Value := UpperCase('PERIODE '+tgl1+' '+bulan1+' '+tahun1+' s/d '+tgl2+' '+bulan2+' '+tahun2);
+  Value := UpperCase('PERIODE '+strPeriode);
 end;
 
 initialization

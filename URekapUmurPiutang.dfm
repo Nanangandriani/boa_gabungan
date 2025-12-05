@@ -564,12 +564,6 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           UserDefine = [udWidth]
           UserWidth = 79
           Visible = True
-          ItemName = 'dtTanggal1'
-        end
-        item
-          UserDefine = [udWidth]
-          UserWidth = 79
-          Visible = True
           ItemName = 'dtTanggal2'
         end
         item
@@ -590,7 +584,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     object dxBarManager1Bar2: TdxBar
       Caption = 'Custom 1'
       CaptionButtons = <>
-      DockedLeft = 353
+      DockedLeft = 364
       DockedTop = 0
       FloatLeft = 791
       FloatTop = 2
@@ -1337,13 +1331,13 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
       Caption = 'Tanggal Awal '
       Category = 0
       Hint = 'Tanggal Awal '
-      Visible = ivAlways
+      Visible = ivNever
       ShowDayText = False
     end
     object dtTanggal2: TdxBarDateCombo
-      Caption = 'Tanggal Akhir'
+      Caption = 'Periode Tanggal'
       Category = 0
-      Hint = 'Tanggal Akhir'
+      Hint = 'Periode Tanggal'
       Visible = ivAlways
       ShowDayText = False
     end
@@ -3941,5 +3935,34 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     DataSetOptions = []
     Left = 448
     Top = 96
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    EmbedFontsIfProtected = False
+    InteractiveFormsFontSubset = 'A-Z,a-z,0-9,#43-#47 '
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    Creator = 'FastReport'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    PDFStandard = psNone
+    PDFVersion = pv17
+    Left = 360
+    Top = 288
   end
 end

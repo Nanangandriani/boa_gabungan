@@ -82,41 +82,85 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'karesidenan'
+        FieldName = 'kabupaten'
         Footer.Alignment = taRightJustify
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
         Footer.Font.Height = -12
         Footer.Font.Name = 'Segoe UI'
         Footer.Font.Style = [fsBold]
-        Footer.Value = 'TOTAL :  '
-        Footer.ValueType = fvtStaticText
         Footers = <>
-        Title.Caption = 'TP'
+        Title.Caption = 'Kabupaten'
         Width = 182
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tot_nota'
+        FieldName = 'kecamatan'
         Footer.DisplayFormat = '#,##0.##'
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
         Footer.Font.Height = -12
         Footer.Font.Name = 'Segoe UI'
         Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Total Nota'
-        Width = 61
+        Title.Caption = 'Kecamatan'
+        Width = 175
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_cust'
+        Footer.DisplayFormat = '#,##0.##'
+        Footer.Font.Charset = DEFAULT_CHARSET
+        Footer.Font.Color = clWindowText
+        Footer.Font.Height = -12
+        Footer.Font.Name = 'Segoe UI'
+        Footer.Font.Style = [fsBold]
+        Footers = <>
+        Title.Caption = 'Nama Pelanggan'
+        Width = 211
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_inv_tax'
+        Footer.DisplayFormat = '#,##0.##'
+        Footer.Font.Charset = DEFAULT_CHARSET
+        Footer.Font.Color = clWindowText
+        Footer.Font.Height = -12
+        Footer.Font.Name = 'Segoe UI'
+        Footer.Font.Style = [fsBold]
+        Footers = <>
+        Title.Caption = 'No Faktur'
+        Width = 195
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = 'dd-mm-yyyy'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_date'
+        Footer.Font.Charset = DEFAULT_CHARSET
+        Footer.Font.Color = clWindowText
+        Footer.Font.Height = -12
+        Footer.Font.Name = 'Segoe UI'
+        Footer.Font.Style = [fsBold]
+        Footer.Value = 'TOTAL'
+        Footer.ValueType = fvtStaticText
+        Footers = <>
+        Title.Caption = 'Tanggal Faktur'
+        Width = 98
       end
       item
         CellButtons = <>
         DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tot_saldo'
+        FieldName = 'saldo_piutang'
         Footer.DisplayFormat = '#,##0.##'
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
@@ -125,345 +169,8 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         Footer.Font.Style = [fsBold]
         Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Total Nominal'
-        Width = 133
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'baru'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|Nota Baru|Jumlah Nota'
-        Width = 67
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_baru'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|Nota Baru|Nominal'
-        Width = 105
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_baru_percent'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|Nota Baru|%'
-        Width = 54
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'satu_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|1 Minggu|Jumlah Nota'
-        Width = 66
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_satu_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|1 Minggu|Nominal'
-        Width = 105
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_satu_minggu_percent'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|1 Minggu|%'
-        Width = 54
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'dua_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|2 Minggu|Jumlah Nota'
-        Width = 62
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_dua_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|2 Minggu|Nominal'
-        Width = 105
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_dua_minggu_percent'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|2 Minggu|%'
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tiga_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|3 Minggu|Jumlah Nota'
-        Width = 59
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_tiga_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|3 Minggu|Nominal'
-        Width = 112
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_tiga_minggu_percent'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|3 Minggu|%'
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'empat_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|4 Minggu|Jumlah Nota'
-        Width = 57
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_empat_minggu'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|4 Minggu|Nominal'
-        Width = 117
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_empat_minggu_percent'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|4 Minggu|%'
-        Width = 51
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tiga_bulan'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|> 3 Bulan|Jumlah Nota'
-        Width = 57
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_tiga_bulan'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|> 3 Bulan|Nominal'
-        Width = 126
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_tiga_bulan_percent'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|> 3 Bulan|%'
-        Width = 48
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'jum_nota_bermasalah'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|Nota Bermasalah|Jumlah Nota'
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.##'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'saldo_nota_bermasalah'
-        Footer.DisplayFormat = '#,##0.##'
-        Footer.Font.Charset = DEFAULT_CHARSET
-        Footer.Font.Color = clWindowText
-        Footer.Font.Height = -12
-        Footer.Font.Name = 'Segoe UI'
-        Footer.Font.Style = [fsBold]
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'Perincian Umur Piutang|Nota Bermasalah|Nominal'
-        Width = 105
+        Title.Caption = 'Saldo Piutang'
+        Width = 153
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -564,12 +271,6 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
           UserDefine = [udWidth]
           UserWidth = 79
           Visible = True
-          ItemName = 'dtTanggal1'
-        end
-        item
-          UserDefine = [udWidth]
-          UserWidth = 79
-          Visible = True
           ItemName = 'dtTanggal2'
         end
         item
@@ -580,6 +281,8 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
           ItemName = 'edKaresidenan'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 176
           Visible = True
           ItemName = 'cbUmurPiutang'
         end
@@ -600,7 +303,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
     object dxBarManager1Bar2: TdxBar
       Caption = 'Custom 1'
       CaptionButtons = <>
-      DockedLeft = 482
+      DockedLeft = 493
       DockedTop = 0
       FloatLeft = 791
       FloatTop = 2
@@ -1152,6 +855,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = ActSearchClick
     end
     object cxBarEditItem3: TcxBarEditItem
       Caption = 'New Item'
@@ -1302,14 +1006,16 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
       Caption = 'Tanggal Awal '
       Category = 0
       Hint = 'Tanggal Awal '
-      Visible = ivAlways
+      Visible = ivNever
+      OnChange = dtTanggal1Change
       ShowDayText = False
     end
     object dtTanggal2: TdxBarDateCombo
-      Caption = 'Tanggal Akhir'
+      Caption = 'Periode Tanggal'
       Category = 0
-      Hint = 'Tanggal Akhir'
+      Hint = 'Periode Tanggal'
       Visible = ivAlways
+      OnChange = dtTanggal2Change
       ShowDayText = False
     end
     object dxBarLargeButton2: TdxBarLargeButton
@@ -1476,6 +1182,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
     end
   end
   object DsRincianUmurPiutang: TDataSource
+    DataSet = QRincianUmurPiutang
     Left = 577
     Top = 280
   end
@@ -1489,14 +1196,14 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45995.499314155090000000
+    ReportOptions.LastChange = 45996.378211238430000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 400
-    Top = 264
+    Left = 448
+    Top = 328
     Datasets = <
       item
         DataSet = frxDBDatasetRincianUmurPiutang
@@ -1669,7 +1376,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line7: TfrxLineView
           AllowVectorExport = True
-          Left = 297.070866140000000000
+          Left = 292.070866140000000000
           Top = 2.118120000000000000
           Height = 30.236222910000000000
           Color = clBlack
@@ -1678,7 +1385,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line24: TfrxLineView
           AllowVectorExport = True
-          Left = 454.299212598425000000
+          Left = 446.299212600000000000
           Top = 2.118120000000000000
           Height = 30.236222910000000000
           Color = clBlack
@@ -1687,7 +1394,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line26: TfrxLineView
           AllowVectorExport = True
-          Left = 588.622047240000000000
+          Left = 591.622047240000000000
           Top = 2.000000000000000000
           Height = 30.236240000000000000
           Color = clBlack
@@ -1696,7 +1403,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line9: TfrxLineView
           AllowVectorExport = True
-          Left = 652.346456690000000000
+          Left = 649.346456690000000000
           Top = 1.000000000000000000
           Height = 30.236240000000000000
           Color = clBlack
@@ -1742,7 +1449,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 299.740260000000000000
+          Left = 293.740260000000000000
           Top = 2.984230000000000000
           Width = 151.181200000000000000
           Height = 46.252010000000000000
@@ -1754,14 +1461,14 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'NAMA OUTLET')
+            'NAMA PELANGGAN')
           ParentFont = False
           VAlign = vaCenter
         end
         object Line3: TfrxLineView
           AllowVectorExport = True
-          Left = 454.118430000000000000
-          Top = 1.779530000000000000
+          Left = 446.118430000000000000
+          Top = 0.779530000000000000
           Height = 52.913420000000000000
           Color = clBlack
           Frame.Typ = []
@@ -1769,7 +1476,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line17: TfrxLineView
           AllowVectorExport = True
-          Left = 297.259837640000000000
+          Left = 292.259837640000000000
           Height = 52.913402910000000000
           Color = clBlack
           Frame.Typ = []
@@ -1779,7 +1486,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
           AllowVectorExport = True
           Left = 456.118430000000000000
           Top = 3.779530000000000000
-          Width = 117.505224210000000000
+          Width = 126.978908420000000000
           Height = 46.252010000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1831,7 +1538,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line1: TfrxLineView
           AllowVectorExport = True
-          Left = 652.346456692913000000
+          Left = 649.346456690000000000
           Height = 52.913420000000000000
           Color = clBlack
           Frame.Typ = []
@@ -1839,7 +1546,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line2: TfrxLineView
           AllowVectorExport = True
-          Left = 588.472440944882000000
+          Left = 591.472440940000000000
           Height = 52.913420000000000000
           Color = clBlack
           Frame.Typ = []
@@ -1847,7 +1554,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 151.181200000000000000
+          Left = 148.181200000000000000
           Top = 3.779530000000000000
           Width = 143.622140000000000000
           Height = 45.354360000000000000
@@ -1903,8 +1610,8 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line44: TfrxLineView
           AllowVectorExport = True
-          Left = 297.070907640000000000
-          Top = 1.338590000000010000
+          Left = 292.070907640000000000
+          Top = 1.338590000000000000
           Height = 34.015752910000000000
           Color = clBlack
           Frame.Typ = []
@@ -1912,7 +1619,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line45: TfrxLineView
           AllowVectorExport = True
-          Left = 454.472440940000000000
+          Left = 446.472440940000000000
           Top = 1.338590000000000000
           Height = 34.015752910000000000
           Color = clBlack
@@ -1921,7 +1628,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line48: TfrxLineView
           AllowVectorExport = True
-          Left = 588.622047240000000000
+          Left = 591.622047240000000000
           Top = 1.220470000000000000
           Height = 34.015770000000000000
           Color = clBlack
@@ -1930,9 +1637,9 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 149.519790000000000000
+          Left = 147.519790000000000000
           Top = 3.220470000000000000
-          Width = 143.622140000000000000
+          Width = 141.516876840000000000
           Height = 26.456710000000000000
           DataSetName = 'frxdbrincianumurpiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1948,7 +1655,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line14: TfrxLineView
           AllowVectorExport = True
-          Left = 652.346456692913000000
+          Left = 649.346456690000000000
           Height = 34.015770000000000000
           Color = clBlack
           Frame.Typ = []
@@ -1975,11 +1682,10 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 653.858690000000000000
+          Left = 648.595532110000000000
           Top = 2.000000000000000000
-          Width = 83.149660000000000000
+          Width = 90.518081050000000000
           Height = 18.897650000000000000
-          DataField = 'saldo_piutang'
           DataSet = frxDBDatasetRincianUmurPiutang
           DataSetName = 'frxDBDatasetRincianUmurPiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
@@ -1992,13 +1698,15 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDatasetRincianUmurPiutang."saldo_piutang"]')
+            
+              '[SUM(<frxDBDatasetRincianUmurPiutang."saldo_piutang">,MasterData' +
+              '1)]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Line19: TfrxLineView
           AllowVectorExport = True
-          Left = 652.346456690000000000
+          Left = 649.346456690000000000
           Height = 22.677180000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2030,7 +1738,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677180000000000000
-        Top = 555.590910000000000000
+        Top = 563.149970000000000000
         Width = 740.409927000000000000
         object Memo19: TfrxMemoView
           AllowVectorExport = True
@@ -2073,8 +1781,8 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line8: TfrxLineView
           AllowVectorExport = True
-          Left = 297.070907640000000000
-          Top = 0.779530000000023000
+          Left = 292.070907640000000000
+          Top = 0.779530000000000000
           Height = 26.456710000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2082,7 +1790,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line10: TfrxLineView
           AllowVectorExport = True
-          Left = 454.472440940000000000
+          Left = 446.472440940000000000
           Height = 26.456661180000000000
           Color = clBlack
           Frame.Typ = []
@@ -2090,7 +1798,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line36: TfrxLineView
           AllowVectorExport = True
-          Left = 588.622047240000000000
+          Left = 591.622047240000000000
           Top = 0.220470000000000000
           Height = 26.456710000000000000
           Color = clBlack
@@ -2107,7 +1815,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 298.582870000000000000
+          Left = 292.582870000000000000
           Top = 2.779530000000000000
           Width = 151.181200000000000000
           Height = 22.677180000000000000
@@ -2127,9 +1835,9 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 453.695668420000000000
+          Left = 446.695668420000000000
           Top = 3.779530000000000000
-          Width = 141.732283464567000000
+          Width = 142.866141732283500000
           Height = 18.897650000000000000
           DataField = 'no_inv_tax'
           DataSet = frxDBDatasetRincianUmurPiutang
@@ -2147,9 +1855,9 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 589.328956320000000000
+          Left = 592.486851060000000000
           Top = 3.000000000000000000
-          Width = 62.577743150000000000
+          Width = 57.314585250000000000
           Height = 18.897650000000000000
           DataField = 'trans_date'
           DataSet = frxDBDatasetRincianUmurPiutang
@@ -2167,7 +1875,7 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Line18: TfrxLineView
           AllowVectorExport = True
-          Left = 652.346456692913000000
+          Left = 649.346456690000000000
           Height = 26.456710000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2204,22 +1912,22 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 28.992969470000000000
         Top = 510.236550000000000000
         Width = 740.409927000000000000
         object Shape6: TfrxShapeView
           AllowVectorExport = True
-          Left = -1.070810000000000000
-          Width = 740.031496062992000000
-          Height = 22.677180000000000000
+          Left = -1.000000000000000000
+          Width = 740.031496060000000000
+          Height = 28.992969470000000000
           Frame.Typ = []
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 654.638220000000000000
+          Left = 646.217167370000000000
           Top = 1.000000000000000000
-          Width = 83.149660000000000000
-          Height = 18.897650000000000000
+          Width = 93.675975790000000000
+          Height = 26.266071050000000000
           DataSetName = 'frxdbrincianumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -2239,10 +1947,10 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 555.590910000000000000
+          Left = 559.590910000000000000
           Top = 2.000000000000000000
-          Width = 94.488250000000000000
-          Height = 15.118120000000000000
+          Width = 88.172460530000000000
+          Height = 26.697067370000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -2253,11 +1961,12 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
           Memo.UTF8W = (
             'TOTAL')
           ParentFont = False
+          VAlign = vaCenter
         end
         object Line20: TfrxLineView
           AllowVectorExport = True
-          Left = 652.346456692913000000
-          Height = 22.677180000000000000
+          Left = 649.322834650000000000
+          Height = 27.212598425196850000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2287,8 +1996,8 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
     DataSet = QRincianUmurPiutang
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 576
-    Top = 144
+    Left = 496
+    Top = 304
   end
   object QRincianUmurPiutang: TUniQuery
     Connection = dm.Koneksi
@@ -2296,8 +2005,36 @@ object FRincianUmurPiutang: TFRincianUmurPiutang
       
         'select saldo_baru saldo_piutang,* from rincian_umur_piutang('#39'202' +
         '5-10-30'#39')')
-    Active = True
-    Left = 456
-    Top = 144
+    Left = 344
+    Top = 344
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    EmbedFontsIfProtected = False
+    InteractiveFormsFontSubset = 'A-Z,a-z,0-9,#43-#47 '
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    Creator = 'FastReport'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    PDFStandard = psNone
+    PDFVersion = pv17
+    Left = 360
+    Top = 288
   end
 end
