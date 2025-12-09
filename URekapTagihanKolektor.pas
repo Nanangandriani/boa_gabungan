@@ -27,7 +27,7 @@ uses
   Data.DB, MemDS, DBAccess, Uni, dxBarExtItems, cxBarEditItem, dxBar, cxClasses,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel,
-  cxCalendar, frxClass, frxDBSet;
+  cxCalendar, frxClass, frxDBSet, frxExportBaseDialog, frxExportPDF;
 
 type
   TFRekapTagihanKolektor = class(TForm)
@@ -86,6 +86,7 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarManager1Bar2: TdxBar;
     cbSBU: TdxBarCombo;
+    frxPDFExport1: TfrxPDFExport;
     procedure edWilayahPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure edAreaPropertiesButtonClick(Sender: TObject;

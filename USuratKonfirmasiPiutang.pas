@@ -28,7 +28,7 @@ uses
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, cxMemo, dxBarExtItems, Vcl.StdCtrls,
-  Vcl.Mask, RzEdit, RzBtnEdt;
+  Vcl.Mask, RzEdit, RzBtnEdt, frxExportBaseDialog, frxExportPDF;
 
 type
   TFSuratKonfirmasiPiutang = class(TForm)
@@ -75,6 +75,7 @@ type
     DataSource1: TDataSource;
     cbSBU: TdxBarCombo;
     dxBarLargeButton2: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormShow(Sender: TObject);
     procedure btPreviewClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);

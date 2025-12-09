@@ -195,7 +195,7 @@ object FTerima_Material: TFTerima_Material
         Left = 0
         Top = 0
         Width = 776
-        Height = 180
+        Height = 184
         Align = alClient
         DataSource = DsTerimaDet
         DynProps = <>
@@ -425,7 +425,7 @@ object FTerima_Material: TFTerima_Material
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 807
+    ExplicitWidth = 809
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -629,7 +629,6 @@ object FTerima_Material: TFTerima_Material
         'e  '
       'left JOIN t_user g on a.created_by=g.user_name  '
       'where a.receive_no='#39'TB/001/11/XI/2025/HLJ'#39' order by e.id asc')
-    Active = True
     Left = 592
     Top = 82
   end

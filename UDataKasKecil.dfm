@@ -446,6 +446,8 @@ object FDataKasKecil: TFDataKasKecil
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1227
+      ExplicitHeight = 208
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -548,8 +550,6 @@ object FDataKasKecil: TFDataKasKecil
     object TabDetailFaktur: TRzTabSheet
       TabVisible = False
       Caption = 'Detail Hutang'
-      ExplicitWidth = 1227
-      ExplicitHeight = 208
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

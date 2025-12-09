@@ -3,8 +3,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Rincian Potongan'
-  ClientHeight = 440
-  ClientWidth = 1246
+  ClientHeight = 439
+  ClientWidth = 1242
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,13 +12,12 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1246
+    Width = 1242
     Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
@@ -99,8 +98,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 81
-    Width = 1246
-    Height = 327
+    Width = 1242
+    Height = 326
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -271,13 +270,13 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 408
-    Width = 1246
+    Top = 407
+    Width = 1242
     Height = 32
     Align = alBottom
     TabOrder = 2
     object BBatal: TRzBitBtn
-      Left = 1174
+      Left = 1170
       Top = 1
       Height = 30
       Align = alRight
@@ -336,10 +335,10 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1170
+      ExplicitLeft = 1166
     end
     object BSave: TRzBitBtn
-      Left = 1099
+      Left = 1095
       Top = 1
       Height = 30
       Align = alRight
@@ -398,7 +397,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1095
+      ExplicitLeft = 1091
     end
   end
   object dsMasterData: TDataSource

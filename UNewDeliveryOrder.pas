@@ -245,6 +245,7 @@ type
     procedure InsertDetailService;
     procedure GetApiBiayaChakra;
     procedure UpdateStatusTele;
+    procedure UpdateVehicleChakra;
     procedure InsertStatus;
     procedure GetApiBiayaKoreksiChakra;
     procedure CekGetApiBiayaKoreksiChakra;
@@ -412,6 +413,65 @@ begin
     end;
   end;
 //  ShowMessage('Proses update status selesai.');
+end;
+
+procedure TFNewDeliveryOrder.UpdateVehicleChakra;
+var
+  key, url, BaseUrl, Vpath, Vtoken, res: string;
+  gNet: TIdHTTP;
+  jsonBody: TStringStream;
+  TotPPH,PPHPercent: Currency;
+begin
+  Application.ProcessMessages; // agar UI tetap responsif
+  try
+    with dm.Qtemp2 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='select SUM(pph_value) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
+                'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+' AND percent_pph<>0),0) percent_pph  from t_delivery_order_cost '+
+                'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+';';
+      Open;
+    end;
+
+    TotPPH:= dm.Qtemp2.FieldValues['pph_value'];
+    PPHPercent:= dm.Qtemp2.FieldValues['percent_pph'];
+
+    // Ambil konfigurasi API
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlchakra''');
+    key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
+    Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
+    Vpath := '/api/update-vehicle';
+    url := BaseUrl + Vpath;
+
+    jsonBody := TStringStream.Create(
+      '{"vehicle_code": "'+strVehicleGroupId+'"}',
+      TEncoding.UTF8
+    );
+
+    Memo1.Text := jsonBody.DataString;
+
+    gNet := TIdHTTP.Create(nil);
+    try
+      gNet.Request.Accept := 'application/json';
+      gNet.Request.ContentType := 'application/json';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      // PUT request
+      res := gNet.Put(url, jsonBody);
+      memo1.Text:=res;
+//      ShowMessage('tes');
+//      Exit;
+      memo1.Lines.Add('Response: ' + res); // tampilkan hasil
+    except
+      on E: EIdHTTPProtocolException do
+        memo1.Lines.Add('Data tidak ditemukan: ' + E.Message);
+      on E: Exception do
+        memo1.Lines.Add('Kesalahan saat update: ' + E.Message);
+    end;
+  finally
+    jsonBody.Free;
+    gNet.Free;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.UpdateStatusDO(status: Integer);
@@ -968,10 +1028,10 @@ begin
   InsertDetailCost;
   InsertDetailService;
   UpdateStatusTele;
+  UpdatevehicleChakra;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
-  Clear;
   Close;
-  FListDeliveryOrder.Refresh;
+//  FListDeliveryOrder.Refresh;
 end;
 
 procedure TFNewDeliveryOrder.spTotalTitikChange(Sender: TObject);
@@ -1253,7 +1313,8 @@ begin
               ' "type_vehicles_code", "type_vehicles_name", "capacity", '+
               ' "driver_name", "helper_name", "number_pib", "no_invoice",'+
               //'  "date_invoice", '+
-              ' "total_cost",pickup_location,delivery_location,vehicle_group_id,vehicle_group_sort_number) '+
+              ' "total_cost",pickup_location,delivery_location,'+
+              'vehicle_group_id,vehicle_group_sort_number) '+
               ' Values( '+
               ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
               ' '+QuotedStr(edKodeVendorTransMuatan.Text)+', '+
@@ -1269,7 +1330,7 @@ begin
               ' '+QuotedStr('0')+', '+
               //' '+QuotedStr('0')+', '+
               ' '+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+','+
-              ' '+QuotedStr(edLokasiMuat.Text)+','+QuotedStr(edLokasiBongkar.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+QuotedStr(strVehicleGroupId)+');';
+              ' '+QuotedStr(edLokasiMuat.Text)+','+QuotedStr(edLokasiBongkar.Text)+','+QuotedStr(strVehicleGroupId)+','+QuotedStr(edKelompokKendaraan.Text)+');';
               //' '+QuotedStr(VarToStr(DBGridSumberPenjualan.Columns[5].Footer.Value))+' );';
     ExecSQL;
   end;
@@ -1356,7 +1417,7 @@ begin
 
 
 
-  with dm.Qtemp do
+  with dm.Qtemp2 do
   begin
     close;
     sql.Clear;
@@ -1366,10 +1427,10 @@ begin
               'and deleted_at is null';
     open;
   end;
-  if dm.Qtemp.RecordCount>0 then
+  if dm.Qtemp2.RecordCount>0 then
   begin
-    edKodeVendorTransMuatan.Text:=dm.Qtemp.FieldValues['supplier_code'];
-    edNamaVendorTransMuatan.Text:=dm.Qtemp.FieldValues['supplier_name'];
+    edKodeVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_code'];
+    edNamaVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_name'];
   end;
 end;
 

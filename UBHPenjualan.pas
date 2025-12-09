@@ -27,7 +27,8 @@ uses
   Data.DB, MemDS, DBAccess, Uni, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, dxBarExtItems, Vcl.StdCtrls, Vcl.Mask,
-  RzEdit, RzBtnEdt, frxClass, frxDBSet;
+  RzEdit, RzBtnEdt, frxClass, frxDBSet, frxExportBaseDialog, frxExportPDF,
+  frxExportXLSX, frxExportXLS, ShellAPI;
 
 type
   TFBHPenjualan = class(TForm)
@@ -111,6 +112,10 @@ type
     QDetailBarang: TUniQuery;
     DSDetailBarang: TDataSource;
     dxBarLargeButton2: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
+    dxBarLargeButton3: TdxBarLargeButton;
+    frxXLSXExport1: TfrxXLSXExport;
+    frxXLSExport1: TfrxXLSExport;
     procedure FormShow(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure QBHPenjualanakn_debet_lainGetText(Sender: TField;
@@ -127,11 +132,13 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vkd_kares, vkd_kab : String ;
+    procedure ExportToExcel;
   end;
 
 function FBHPenjualan: TFBHPenjualan;
@@ -423,6 +430,207 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+end;
+
+procedure TFBHPenjualan.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Report.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
+end;
+
+procedure TFBHPenjualan.dxBarLargeButton3Click(Sender: TObject);
+var strKab: String;
+begin
+  if edKaresidenan.EditValue='' then
+  begin
+    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+    strKab:='';
+    if edKabupaten.EditValue<>'' then
+    strKab:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+
+    with QCetak do
+    begin
+      close;
+      sql.Clear;
+//       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
+//               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
+//               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+
+//               ' FROM t_selling a '+
+//               ' LEFT JOIN ( SELECT t_customer.customer_code, t_customer.customer_name_pkp, '+
+//               ' t_customer.code_region, t_customer.name_region FROM t_customer) d ON a.code_cust::text = d.customer_code::text  '+
+//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+//               ' ON "left"(code_region, 4)=b.code_kab '+
+//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+
+//       if edKaresidenan.EditValue<>'' then
+//       begin
+//        sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+//       end;
+//       if edKabupaten.EditValue<>'' then
+//       begin
+//        sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+//       end;
+//       sql.add(' ORDER BY trans_date, trans_no');
+//       open;
+      Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
+//            'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
+            'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
+            ''+strKab+'order by a.trans_date,trans_no asc';
+
+      Open;
+    end;
+
+
+    if QCetak.RecordCount=0 then
+    begin
+      showmessage('Tidak ada data yang bisa dicetak !');
+      exit;
+    end;
+
+    if QCetak.RecordCount<>0 then
+    begin
+    //       with QCetakdetail do
+    //       begin
+    //           close;
+    //           sql.Clear;
+    //           sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhpenjualan" a  '+
+    //                   ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+    //                   ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+    //                   ' ON "left"(code_region, 4)=b.code_kab '+
+    //                   ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+    //                   ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+    //             if edKaresidenan.EditValue<>'' then
+    //             begin
+    //              sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+    //             end;
+    //             if edKabupaten.EditValue<>'' then
+    //             begin
+    //              sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+    //             end;
+    //           sql.add(' ORDER BY trans_no, code_item');
+    //           open;
+      with QCetakRincianBarang do
+      begin
+        close;
+        sql.Text:='select trans_no,code_item,name_item,amount,name_unit from t_selling_det';
+        open;
+      end;
+
+      with QCetakdetailDebit do
+      begin
+        close;
+        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,db FROM "public"."VTrans_Journal"  where status_dk=''D'' ';
+        open;
+      end;
+
+      with QCetakdetailKredit do
+      begin
+        close;
+        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd FROM "public"."VTrans_Journal"  where status_dk=''K'' ';
+        open;
+      end;
+
+      cLocation := ExtractFilePath(Application.ExeName);
+
+
+      Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualan2'+ '.fr3');
+      SetMemo(Report,'kodeprsh',FHomeLogin.vKodePRSH);
+
+      Report.PrepareReport(True);
+      // Baru export
+      ExportToExcel;
+
+    end;
+  end;
 end;
 
 procedure TFBHPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;

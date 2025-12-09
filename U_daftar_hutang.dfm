@@ -168,7 +168,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
     end
     object BCari: TRzBitBtn
       Left = 552
-      Top = 57
+      Top = 64
       Width = 134
       Height = 39
       Caption = 'Cari'
@@ -654,6 +654,14 @@ object FDaftar_Hutang: TFDaftar_Hutang
           Title.Caption = 'Akun PPH'
           Visible = False
           Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'source_id'
+          Footers = <>
+          Width = 0
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
@@ -666,7 +674,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
         'SELECT  tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfakt' +
         'ur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_' +
         'pph,plan_stat,status,urutan,approval_status,bayar,rencanake,juml' +
-        'ah-bayar as sisa'
+        'ah-bayar as sisa,1 source_id '
       'FROM'
       ''
       
@@ -808,7 +816,79 @@ object FDaftar_Hutang: TFDaftar_Hutang
       'left join'
       
         '(select lpb_no,pay from t_buy_pay)z on y.no_inv=z.lpb_no ORDER B' +
-        'Y y.urutan) zz')
+        'Y y.urutan) zz'
+      ''
+      '-- UNION All */Uang Muka/*'
+      
+        '-- SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,null ' +
+        'tglfaktur,null tgltempo,valas,valas_value,jum_dolar,ppn_rp'
+      
+        '-- ,jumlah,npph,akun_pph,false plan_stat,status,urutan,approval_' +
+        'status,bayar,rencanake,sum(jumlah-bayar) sisa,2 source_id'
+      '-- FROM'
+      
+        '-- (SELECT trans_date as tanggal,supplier_code kodesup,supplier_' +
+        'name nasup,no_trans as no_inv,po_no as nofakturpajak,'#39#39' sj_no, n' +
+        'ull tglfaktur,null tgltempo,'#39#39' valas,0 valas_value,0 jum_dolar,0' +
+        ' ppn_rp,um_value jumlah,0 npph,'#39#39' akun_pph,0 plan_stat,0 status,' +
+        '0 urutan,0 approval_status,um_value bayar, 0 rencanake from'
+      
+        '-- (SELECT a.trans_date,a.supplier_code,b.supplier_name,a.um_val' +
+        'ue,no_trans,po_no FROM t_advance_payment a INNER JOIN t_supplier' +
+        ' b on a.supplier_code=b.supplier_code)a WHERE trans_date BETWEEN' +
+        ' '#39'2024-06-20'#39' and '#39'2024-10-10'#39')x'
+      
+        '-- GROUP BY tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tgl' +
+        'faktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,a' +
+        'kun_pph, plan_stat, status, urutan,approval_status,bayar,rencana' +
+        'ke'
+      ''
+      ''
+      '-- UNION ALL'
+      '-- SELECT  '
+      
+        '-- trans_date,'#39#39' kodesup,description as nasup,'#39#39' no_inv,'#39#39' nofak' +
+        'turpajak,'#39#39' sj_no,null'#9'tglfaktur,null tgltempo,'#39#39' valas,0 valas_' +
+        'value,0 jum_dolar,0 ppn_rp'
+      
+        '-- ,0 saldo ,0 npph,account_code,false plan_stat,0 status,0 urut' +
+        'an,0 approval_status,0 bayar,0 rencanake,0'#9'sisa,3 source_id '
+      '-- FROM'
+      
+        '-- (SELECT id, voucher, account_code, description,ket, saldo, tr' +
+        'ans_date from '
+      
+        '-- (select distinct a.id,a.voucher,a.account_code,a.description,' +
+        'concat(a.description,'#39' '#39',b.to_)as ket,a.saldo,b.trans_date from '
+      
+        '-- (select * from t_credit_trx_real where voucher_kredit is null' +
+        ')a '
+      
+        '-- left join (SELECT a.voucher_no,b,to_ ,b.trans_date FROM t_cas' +
+        'h_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on' +
+        ' a.voucher_no=b.no_voucher) b on a.voucher=b.voucher_no  '
+      '-- where b.trans_date between '#39'2025-03-25'#39' and '#39'2025-03-25'#39' '
+      ''
+      '-- UNION ALL'
+      
+        '-- (SELECT 9 id,voucher_no,code_account,deskripsi,description ke' +
+        't,paid_amount saldo,trans_date tgltrans from v_titipan_bpjs_pene' +
+        'rimaan_kas where trans_date between '#39'2025-03-25'#39' and '#39'2025-03-25' +
+        #39' )'
+      '-- union all'
+      
+        '-- SELECT 0 id,voucher_no,code_account,for_acceptance,descriptio' +
+        'n, paid_amount jumlah, trans_date FROM '
+      
+        '-- (SELECT a.voucher_no,b.code_account,a.for_acceptance,a.descri' +
+        'ption,a.paid_amount,b.trans_date,b."position" FROM t_cash_bank_a' +
+        'cceptance a INNER JOIN t_cash_bank_acceptance_det b on a.voucher' +
+        '_no=b.voucher_no)a where "position"='#39'K'#39' and code_account='#39'2130.0' +
+        '1'#39' or code_account='#39'2130.02'#39' or code_account='#39'2130.03'#39' or code_a' +
+        'ccount='#39'2130.04'#39' or code_account='#39'2130.07'#39') v '
+      '-- order by v.trans_date,v.voucher)yy '
+      ' '
+      'ORDER BY tglfaktur,nofakturpajak,urutan ASC')
     Left = 744
     Top = 40
     object QdaftarHutangtanggal: TDateField
@@ -891,6 +971,10 @@ object FDaftar_Hutang: TFDaftar_Hutang
       FieldName = 'approval_status'
       ReadOnly = True
     end
+    object QdaftarHutangsource_id: TIntegerField
+      FieldName = 'source_id'
+      ReadOnly = True
+    end
   end
   object DSdaftarhutang: TDataSource
     DataSet = Memdaftarhutang
@@ -922,17 +1006,20 @@ object FDaftar_Hutang: TFDaftar_Hutang
         object no_inv: TMTStringDataFieldEh
           FieldName = 'no_inv'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object nofakturpajak: TMTStringDataFieldEh
           FieldName = 'nofakturpajak'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object sj_no: TMTStringDataFieldEh
           FieldName = 'sj_no'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object tglfaktur: TMTDateTimeDataFieldEh
           FieldName = 'tglfaktur'
@@ -1013,9 +1100,228 @@ object FDaftar_Hutang: TFDaftar_Hutang
           FieldName = 'pilih'
           DisplayWidth = 20
         end
+        object source_id: TMTNumericDataFieldEh
+          FieldName = 'source_id'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object QUang_Muka_Pembelian: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,null tgl' +
+        'faktur,null tgltempo,valas,valas_value,jum_dolar,ppn_rp'
+      
+        ',jumlah,npph,akun_pph,false plan_stat,status,urutan,approval_sta' +
+        'tus,bayar,rencanake,sum(jumlah-bayar) sisa,2 source_id'
+      'FROM'
+      
+        '(SELECT trans_date as tanggal,supplier_code::text as kodesup,sup' +
+        'plier_name nasup,no_trans::text as no_inv,po_no as nofakturpajak' +
+        ','#39#39' sj_no, null tglfaktur,null tgltempo,'#39#39' valas,0 valas_value,0' +
+        ' jum_dolar,0 ppn_rp,um_value jumlah,0 npph,'#39#39' akun_pph,0 plan_st' +
+        'at,0 status,0 urutan,0 approval_status,um_value bayar, 0 rencana' +
+        'ke from'
+      
+        '(SELECT a.trans_date,a.supplier_code,b.supplier_name,a.um_value,' +
+        'no_trans,po_no FROM t_advance_payment a INNER JOIN t_supplier b ' +
+        'on a.supplier_code=b.supplier_code)a WHERE trans_date BETWEEN '#39'2' +
+        '025-03-03'#39' and '#39'2025-03-03'#39')x'
+      
+        'GROUP BY tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfak' +
+        'tur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun' +
+        '_pph, plan_stat, status, urutan,approval_status,bayar,rencanake')
+    Left = 656
+    Top = 173
+    object QUang_Muka_Pembeliantanggal: TDateField
+      FieldName = 'tanggal'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembeliankodesup: TStringField
+      FieldName = 'kodesup'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembeliannasup: TStringField
+      FieldName = 'nasup'
+      ReadOnly = True
+      Size = 100
+    end
+    object QUang_Muka_Pembelianno_inv: TStringField
+      FieldName = 'no_inv'
+      ReadOnly = True
+      Size = 50
+    end
+    object QUang_Muka_Pembeliannofakturpajak: TStringField
+      FieldName = 'nofakturpajak'
+      ReadOnly = True
+      Size = 50
+    end
+    object QUang_Muka_Pembeliansj_no: TMemoField
+      FieldName = 'sj_no'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QUang_Muka_Pembeliantglfaktur: TMemoField
+      FieldName = 'tglfaktur'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QUang_Muka_Pembeliantgltempo: TMemoField
+      FieldName = 'tgltempo'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QUang_Muka_Pembelianvalas: TMemoField
+      FieldName = 'valas'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QUang_Muka_Pembelianvalas_value: TIntegerField
+      FieldName = 'valas_value'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianjum_dolar: TIntegerField
+      FieldName = 'jum_dolar'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianppn_rp: TIntegerField
+      FieldName = 'ppn_rp'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianjumlah: TFloatField
+      FieldName = 'jumlah'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembeliannpph: TIntegerField
+      FieldName = 'npph'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianakun_pph: TMemoField
+      FieldName = 'akun_pph'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QUang_Muka_Pembelianplan_stat: TBooleanField
+      FieldName = 'plan_stat'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianstatus: TIntegerField
+      FieldName = 'status'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianurutan: TIntegerField
+      FieldName = 'urutan'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianapproval_status: TIntegerField
+      FieldName = 'approval_status'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianbayar: TFloatField
+      FieldName = 'bayar'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembelianrencanake: TIntegerField
+      FieldName = 'rencanake'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembeliansisa: TFloatField
+      FieldName = 'sisa'
+      ReadOnly = True
+    end
+    object QUang_Muka_Pembeliansource_id: TIntegerField
+      FieldName = 'source_id'
+      ReadOnly = True
+    end
+  end
+  object QHutang_Kredit: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      ' SELECT v.* from '
+      
+        ' (select distinct a.id,a.voucher,a.account_code,a.description,co' +
+        'ncat(a.description,'#39' '#39',b.to_)as ket,a.saldo,b.trans_date from  '
+      
+        ' (select * from t_credit_trx_real where voucher_kredit is null)a' +
+        ' '
+      
+        ' left join (SELECT a.voucher_no,a.to_,a.trans_date from t_cash_b' +
+        'ank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.' +
+        'voucher_no=b.no_voucher) b on a.voucher=b.voucher_no where b.tra' +
+        'ns_date between '#39'2025-06-02'#39' and '#39'2025-06-02'#39' '
+      ' UNION '
+      
+        ' (SELECT 9 id,voucher_no,code_account,deskripsi,description ket,' +
+        'paid_amount saldo,trans_date tgltrans from v_titipan_bpjs_peneri' +
+        'maan_kas where trans_date between '#39'2025-06-02'#39' and '#39'2025-06-02'#39' ' +
+        ')'
+      ' union '
+      
+        ' SELECT 1 id,b.voucher_no,b.code_account,b.for_acceptance,b.desc' +
+        'ription,b.paid_amount jumlah,b.trans_date FROM '
+      
+        ' (SELECT a.id,a.voucher_no,b.code_account,a.for_acceptance,a.des' +
+        'cription,b.paid_amount,b.trans_date FROM t_cash_bank_acceptance ' +
+        'a INNER JOIN t_cash_bank_acceptance_det b on a.voucher_no=b.vouc' +
+        'her_no) b where b.code_account='#39'2141'#39' or  b.code_account='#39'2142'#39' ' +
+        'or b.code_account='#39'2143'#39' or b.code_account='#39'2146'#39' or b.code_acco' +
+        'unt='#39'2147'#39') v order by v.trans_date,v.voucher')
+    Left = 680
+    Top = 229
+  end
+  object QImport: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      '/*Import*/'
+      'select * from '
+      
+        '(select receive_no as noref,receive_date as tglref,'#39'PPN MASUKAN ' +
+        #39' ::character varying as keter,b.supplier_name as nm_sumber,ppn_' +
+        'rp as saldo,ppn_account_code as akun_um from t_item_receive2 a I' +
+        'NNER JOIN  t_supplier b ON a.supplier_code=b.supplier_code '
+      
+        'where ppn_account_code is not null AND ppn_rp <>0  and receive_d' +
+        'ate between '#39'2025-05-01'#39' and '#39'2025-06-03'#39' '
+      'union all  '
+      
+        'select receive_no as noref,receive_date as tglref,'#39'PPH 22 '#39' ::ch' +
+        'aracter varying as keter,b.supplier_name,pph_rp as saldo,pph_acc' +
+        'ount_code as akun_um from t_item_receive2 a INNER JOIN t_supplie' +
+        'r b ON a.supplier_code=b.supplier_code  '
+      
+        'where pph_account_code is not null AND pph_rp<>0  and receive_da' +
+        'te between '#39'2025-05-01'#39' and '#39'2025-06-03'#39' '
+      'union all    '
+      
+        'select receive_no as noref,receive_date as tglref,'#39'BEA MASUK '#39' :' +
+        ':character varying as keter,b.supplier_name,import_duty as saldo' +
+        ', duty_account_code as akun_um from  t_item_receive2 a INNER JOI' +
+        'N t_supplier b ON a.supplier_code=b.supplier_code'
+      
+        'where duty_account_code is not null AND import_duty <>0 and rece' +
+        'ive_date between '#39'2025-05-01'#39' and '#39'2025-06-03'#39')xx  '
+      
+        'left join t_payment_detail_real yy on xx.noref=yy.voucher_no and' +
+        ' xx.akun_um=yy.account_code'
+      'left join t_purchase_invoice f on xx.noref=f.trans_no '
+      
+        'where yy.voucher_no is null and f.approval_status=1 and f.invoic' +
+        'e_status=1 and f.sj_status=1 and f.fk_status=1 and xx.saldo>0  o' +
+        'rder by tglref,noref,akun_um')
+    Left = 720
+    Top = 293
+  end
+  object Qmemorial: TUniQuery
+    Connection = dm.Koneksi
+    Left = 776
+    Top = 365
   end
 end

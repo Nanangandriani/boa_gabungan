@@ -29,7 +29,7 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel, frxCross,
   cxRadioGroup, cxCheckGroup, cxCurrencyEdit, DateUtils, Vcl.Grids, RzGrids,System.StrUtils,
-  Vcl.ExtCtrls, Vcl.DBGrids;
+  Vcl.ExtCtrls, Vcl.DBGrids, frxExportBaseDialog, frxExportPDF;
 
 type
   TFRekapPenjualanPerPelanggan = class(TForm)
@@ -115,6 +115,7 @@ type
     Qreport: TUniQuery;
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure ActSearchClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;

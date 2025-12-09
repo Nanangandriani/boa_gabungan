@@ -26,7 +26,8 @@ uses
   DynVarsEh, cxCalendar, cxButtonEdit, frxClass, frxDBSet, Data.DB, MemDS,
   DBAccess, Uni, dxBar, cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, cxTextEdit;
+  DBAxisGridsEh, DBGridEh, dxRibbon, cxTextEdit, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TFDaftarRekeningKoran = class(TForm)
@@ -88,6 +89,7 @@ type
     QDaftarRekeningKoransaldo_akhir: TFloatField;
     cbSBU: TdxBarCombo;
     dxBarLargeButton1: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure btPreviewClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

@@ -47,7 +47,6 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -298,7 +297,7 @@ end;
 procedure TFRincianPot_Penjualan.AmbilDataKlasifikasi;
 var strWhereGroupIncludePPN,strWhereNonGroupIncludePPN : String;
 begin
-
+  strStatusIncludePPN:=Selectrow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' ');
 
   strWhereGroupIncludePPN:=' AND b.status_tax='+strStatusIncludePPN+' ';
 
@@ -663,13 +662,9 @@ begin
   Close;
 end;
 
-procedure TFRincianPot_Penjualan.FormCreate(Sender: TObject);
-begin
-  strStatusIncludePPN:=Selectrow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' ');
-end;
-
 procedure TFRincianPot_Penjualan.FormShow(Sender: TObject);
 begin
+strStatusIncludePPN:=Selectrow('select value_parameter from t_parameter where key_parameter=''klasifikasi_include_ppn'' ');
 if strStatusIncludePPN='0' then
 begin
   DBGridCustomer.Columns[9].Visible:=False;

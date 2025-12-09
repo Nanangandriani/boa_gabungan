@@ -28,7 +28,8 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, cxSpinEdit, cxDropDownEdit, DateUtils,
   cxDBLookupComboBox, cxCheckComboBox, cxEdit, Vcl.StdCtrls, RzCmboBx, cxLabel,
-  MemTableDataEh, MemTableEh, frxClass, frxDBSet, cxRadioGroup, dxBarExtItems;
+  MemTableDataEh, MemTableEh, frxClass, frxDBSet, cxRadioGroup, dxBarExtItems,
+  frxExportBaseDialog, frxExportPDF;
 
 type
   TFKartuPiutang = class(TForm)
@@ -123,6 +124,7 @@ type
     cxBarEditItem2: TcxBarEditItem;
     dxBarMRUListItem1: TdxBarMRUListItem;
     edTP: TcxBarEditItem;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

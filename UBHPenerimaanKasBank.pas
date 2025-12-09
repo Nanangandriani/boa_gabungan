@@ -26,7 +26,8 @@ uses
   DynVarsEh, cxCalendar, cxButtonEdit, Data.DB, MemDS, DBAccess, Uni, dxBar,
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, frxDesgn;
+  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, frxDesgn,
+  frxExportBaseDialog, frxExportPDF;
 
 type
   TFBHPenerimaanKasBank = class(TForm)
@@ -111,6 +112,7 @@ type
     StringField3: TStringField;
     FloatField1: TFloatField;
     frxDBDHDebit: TfrxDBDataset;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

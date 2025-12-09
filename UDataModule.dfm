@@ -9,7 +9,6 @@ object dm: Tdm
     Database = 'db_sb_hlj'
     Username = 'Devel'
     Server = '172.101.100.125'
-    Connected = True
     LoginPrompt = False
     OnError = KoneksiError
     Left = 157
@@ -65,6 +64,7 @@ object dm: Tdm
     Top = 120
   end
   object UniConnection1: TUniConnection
+    AutoCommit = False
     ProviderName = 'PostgreSQL'
     Port = 5432
     Database = 'db_boa_hps'

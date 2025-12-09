@@ -460,7 +460,7 @@ begin
 
           FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').AsString;
           FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp1.fieldbyname('date_invoice_tax').AsDateTime;
-          FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').AsString;
+          FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
           FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
           FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
           FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('ar_balance').Value;

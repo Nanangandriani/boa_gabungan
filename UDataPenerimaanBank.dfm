@@ -181,7 +181,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Width = 369
       Height = 23
       CharCase = ecUpperCase
-      Enabled = False
       ReadOnly = True
       TabOrder = 0
     end
@@ -473,10 +472,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1117
     Height = 249
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 1113
     ExplicitHeight = 248

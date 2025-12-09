@@ -1249,7 +1249,6 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       
         'order by voucher_no ASC, account_name='#39'Piutang Barang Dagang'#39' AS' +
         'C')
-    Active = True
     Left = 64
     Top = 88
   end
@@ -1263,9 +1262,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     MasterSource = DSBuktiTerima
     MasterFields = 'voucher_no;account_name'
     DetailFields = 'voucher_no;name_account'
-    Active = True
     Left = 168
-    Top = 152
+    Top = 120
     ParamData = <
       item
         DataType = ftString

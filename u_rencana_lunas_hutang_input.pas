@@ -89,7 +89,8 @@ implementation
 {$R *.dfm}
 
 uses U_daftar_hutang, UDataModule, UMainMenu, UMy_Function,
-  u_rencana_lunas_hutang, U_daftar_Nocek, UAkun_Perkiraan_TerimaMat;
+  u_rencana_lunas_hutang, U_daftar_Nocek, UAkun_Perkiraan_TerimaMat,
+  U_daf_pilih_detail_bayar;
 
 var
   RealFRencana_Lunas_Hutang: TFRencana_Lunas_Hutang;
@@ -536,7 +537,7 @@ begin
         EdNo_Cek.Text:=txtnocek.Text;
         dtmulai.date:=dpperiodetmp1.Date;
         DtSelesai.Date:=dpperiodetmp2.Date;
-        show;
+        frmdafdetailbayar.show;
         vcall:='Uang_Muka_Pembelian';
       end;
     end

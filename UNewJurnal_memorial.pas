@@ -326,7 +326,7 @@ begin
       parambyname('parketerangan').Value:=Memket.Text;
       parambyname('parno_bk').Value:=edno_bk_pembulatan.Text;
       parambyname('parno_faktur').Value:=edno_faktur_pembulatan.Text;
-      parambyname('bln').Value:=cbbulan.Text;
+      parambyname('bln').Value:=cbbulan.ItemIndex;
       parambyname('thn').Value:=edth.Text;
       parambyname('idket').AsString:=Edkd_ket.Text;
     //  ShowMessage('0');
@@ -444,9 +444,19 @@ begin
     ' (select a.item_code,b.account_code akun from t_item a INNER JOIN t_ak_account_sub b on a.account_code=b.account_code2) c '+
     ' on b.item_code=c.item_code WHERE periode2='+QuotedStr(FormatDateTime('yyy-mm-dd',DTtgl.date))+''+
     ' GROUP BY periode,periode2,a.category,akun)x)d on d.kd_akun=b.code where a.module_id=''7''';     }
-    sql.Text:='select aas.account_code2 account_code,aas.account_name,aa.account_name header_name,aas.id,'''' keperluan'+
+
+
+    {sql.Text:='select aas.account_code2 account_code,aas.account_name,aa.account_name header_name,aas.id,'''' keperluan'+
     ' from t_ak_account_sub aas INNER JOIN t_ak_account aa on aas.account_code=aa.code '+
-    ' order by aas.account_code2';
+    ' order by aas.account_code2';}
+
+
+      SQL.Text:=' SELECT b.code as account_code,b.account_name,c.header_name as account_name FROM t_ak_account_det a'+
+                ' left join t_ak_account b on a.account_code=b.code  '+
+                ' left join t_ak_header c on b.header_code=c.header_code'+
+                ' where module_id=5 '+
+                ' GROUP BY b.code,b.account_name,c.header_name '+
+                ' ORDER BY b.code,b.account_name,c.header_name';
     Open;
   end;
   Fbrowse_akun_kredit.Show;

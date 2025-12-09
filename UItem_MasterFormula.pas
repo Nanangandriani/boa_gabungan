@@ -214,10 +214,10 @@ end;
 procedure TFItem_MasterFormula.BrefreshClick(Sender: TObject);
 begin
   DBGridEh2.StartLoadingStatus();
-    QMasterTest.Close;
-    MemMasterTest.close;
-    QMasterTest.Open;
-    MemMasterTest.open;
+  QMasterTest.Close;
+  MemMasterTest.close;
+  QMasterTest.Open;
+  MemMasterTest.open;
   DBGridEh2.FinishLoadingStatus();
 end;
 

@@ -26,7 +26,8 @@ uses
   DynVarsEh, cxCalendar, cxButtonEdit, Data.DB, MemDS, DBAccess, Uni, dxBar,
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TFBHReturPenjualan = class(TForm)
@@ -120,6 +121,7 @@ type
     dsCetakdetail: TDataSource;
     cbSBU: TdxBarCombo;
     dxBarLargeButton1: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);

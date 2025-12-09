@@ -27,7 +27,8 @@ uses
   cxCalendar, cxRadioGroup, cxCheckGroup, frxCross, Data.DB, MemDS, DBAccess,
   Uni, frxClass, frxDBSet, dxBarExtItems, cxBarEditItem, dxBar, cxClasses,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
-  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel;
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel,
+  frxExportBaseDialog, frxExportPDF;
 
 type
   TFMonitoringTargetOmset = class(TForm)
@@ -112,6 +113,7 @@ type
     cbVolume: TdxBarCombo;
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanChange(Sender: TObject);

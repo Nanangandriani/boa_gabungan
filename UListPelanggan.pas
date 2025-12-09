@@ -323,7 +323,7 @@ begin
       end;
       if dm.Qtemp.FieldValues['header_code_uang_muka']<>NULL then
       begin
-        KodeHeaderPiutang:=Dm.Qtemp.FieldByName('header_code_uang_muka').AsString;
+        KodeHeaderUangMuka:=Dm.Qtemp.FieldByName('header_code_uang_muka').AsString;
         edAkunUangMuka.Text:=Dm.Qtemp.FieldByName('account_code_uang_muka').AsString;
         edNamaAkunUangMuka.Text:=SelectRow('select account_name from t_ak_account_sub where account_code2='+QuotedSTR(Dm.Qtemp.FieldByName('account_code_uang_muka').AsString));
       end;

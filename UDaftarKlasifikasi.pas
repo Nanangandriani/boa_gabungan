@@ -343,11 +343,11 @@ begin
                 ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+', '+
                 ' '+QuotedStr(MemKlasifikasi['batas1'])+', '+
                 ' '+QuotedStr(MemKlasifikasi['batas2'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc1'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc2'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc3'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc4'])+');';
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc1'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc2'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc3'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc4'],',','.',[]))+');';
       ExecSQL;
       end;
 

@@ -634,41 +634,61 @@ end;
 
 procedure TFNew_Penjualan.SimpanTempDetail;
 begin
-  //Insert ke t_selling_temp Untuk dapetin Detail Penjualan yang Akan di Proses
-  with dm.Qtemp do
-  begin
-    close;
-    sql.clear;
-    sql.Text:=' DELETE FROM  "public"."t_selling_temp" '+
-              ' WHERE "id_master"='+QuotedStr(get_uuid)+';';
-    ExecSQL;
-  end;
 
-  MemDetail.First;
-  while not MemDetail.Eof do
-  begin
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+
     with dm.Qtemp do
     begin
-      close;
-      sql.clear;
-      sql.Text:=' INSERT INTO "public"."t_selling_temp" ("trans_no", "id_master", "cust_code", '+
-                ' "code_item", "name_item", "amount", "code_unit", "name_unit" '+
-                //' "unit_price", "sub_total", '+
-                //' "pot_value_1", "pot_value_2", "pot_value_3", "pot_value_4", '+
-                //' "ppn_value", "grand_tot"'+
-                ' ) '+
-                ' Values( '+
-                ' '+QuotedStr(edNomorTrans.Text)+', '+
-                ' '+QuotedStr(get_uuid)+', '+
-                ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
-                ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
-                ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
-                ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
-                ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
-                ' '+QuotedStr(MemDetail['NM_SATUAN'])+');';
+      Close;
+      SQL.Clear;
+      SQL.Text :=
+        'DELETE FROM "public"."t_selling_temp" ' +
+        'WHERE "id_master" = ' + QuotedStr(get_uuid) + ';';
+
       ExecSQL;
     end;
-    MemDetail.Next;
+
+    MemDetail.First;
+    while not MemDetail.Eof do
+    begin
+      with dm.Qtemp do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text :=
+          'INSERT INTO "public"."t_selling_temp" ( ' +
+          ' "trans_no", "id_master", "cust_code", ' +
+          ' "code_item", "name_item", "amount", ' +
+          ' "code_unit", "name_unit" ' +
+          ') VALUES ( ' +
+          QuotedStr(edNomorTrans.Text) + ', ' +
+          QuotedStr(get_uuid) + ', ' +
+          QuotedStr(edKode_Pelanggan.Text) + ', ' +
+          QuotedStr(MemDetail['KD_ITEM']) + ', ' +
+          QuotedStr(MemDetail['NM_ITEM']) + ', ' +
+          QuotedStr(MemDetail['JUMLAH']) + ', ' +
+          QuotedStr(MemDetail['KD_SATUAN']) + ', ' +
+          QuotedStr(MemDetail['NM_SATUAN']) +
+          ' );';
+
+        ExecSQL;
+      end;
+
+      MemDetail.Next;
+    end;
+
+    dm.Koneksi.Commit;
+
+  except
+    on E: Exception do
+    begin
+      if dm.Koneksi.InTransaction then
+        dm.Koneksi.Rollback;
+
+      ShowMessage('Error saat menyimpan data temp : ' + E.Message);
+    end;
   end;
 end;
 

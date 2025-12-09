@@ -28,7 +28,7 @@ uses
   cxBarEditItem, dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel, frxExportBaseDialog,
-  frxExportPDF;
+  frxExportPDF, frxExportXLSX, frxExportXLS, ShellAPI;
 
 type
   TFRincianUmurPiutang = class(TForm)
@@ -87,6 +87,9 @@ type
     cbUmurPiutang: TdxBarCombo;
     QRincianUmurPiutang: TUniQuery;
     frxPDFExport1: TfrxPDFExport;
+    dxBarLargeButton4: TdxBarLargeButton;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
     procedure edKaresidenanPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure FormCreate(Sender: TObject);
@@ -97,11 +100,13 @@ type
     procedure dtTanggal1Change(Sender: TObject);
     procedure dtTanggal2Change(Sender: TObject);
     procedure ActSearchClick(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     strKodeKaresidenan:String;
+    procedure ExportToExcel;
   end;
 
   function FRincianUmurPiutang: TFRincianUmurPiutang;
@@ -282,6 +287,184 @@ begin
   edKaresidenan.EditValue:='';
   strKodeKaresidenan:='';
   cbUmurPiutang.ItemIndex:=-1;
+end;
+
+procedure TFRincianUmurPiutang.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Report.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
+end;
+
+procedure TFRincianUmurPiutang.dxBarLargeButton4Click(Sender: TObject);
+var strReportName,strKaresidenan,strSaldoPiutang, strWhere,
+    tgl1,bulan1,tahun1,tgl2,bulan2,tahun2,strPeriode: STRING;
+begin
+  if cbUmurPiutang.Text='' then
+  begin
+    MessageDlg('Umur Piutang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else begin
+
+//    tgl1:=FormatDateTime('DD', dtTanggal1.Date);
+//    bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal1.Date)));
+//    tahun1:=FormatDateTime('YYYY', dtTanggal1.Date);
+
+    tgl2:=FormatDateTime('DD', dtTanggal2.Date);
+    bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtTanggal2.Date)));
+    tahun2:=FormatDateTime('YYYY', dtTanggal2.Date);
+
+//    if bulan1+' '+tahun1<>bulan2+' '+tahun2 then
+//    begin
+//      strPeriode:= tgl1+' '+bulan1+' '+tahun1+' s/d '+tgl2+' '+bulan2+' '+tahun2;
+//    end else begin
+      strPeriode:= tgl2+' '+bulan2+' '+tahun2;
+//    end;
+
+    if edKaresidenan.EditValue<>'' then
+    strKaresidenan:='AND karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ' else strKaresidenan:='';
+
+    if cbUmurPiutang.Text='BARU' then
+    begin
+      strSaldoPiutang:='saldo_baru saldo_piutang ';
+      strWhere:='WHERE saldo_baru<>0 ';
+    end;
+    if cbUmurPiutang.Text='1 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_satu_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_satu_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='2 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_dua_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_dua_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='3 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_tiga_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='4 MINGGU' then
+    begin
+      strSaldoPiutang:='saldo_empat_minggu saldo_piutang ';
+      strWhere:='WHERE saldo_empat_minggu<>0 ';
+    end;
+    if cbUmurPiutang.Text='>3 BULAN' then
+    begin
+      strSaldoPiutang:='saldo_tiga_bulan saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_bulan<>0 ';
+    end;
+
+
+    with QRincianUmurPiutang do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select '+strSaldoPiutang+',* from rincian_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+') '+strWhere+strKaresidenan+' order by kabupaten,kecamatan ASC';
+      open;
+    end;
+    if QRincianUmurPiutang.RecordCount=0 then
+    begin
+      MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
+    end else begin
+
+      strReportName:='rpt_rincianumurpiutang';
+
+      cLocation := ExtractFilePath(Application.ExeName);
+      Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+      SetMemo(Report,'sbu',FHomeLogin.vNamaPRSH);
+      SetMemo(Report,'umur_piutang',cbUmurPiutang.Text);
+      if edKaresidenan.EditValue<>'' then
+      SetMemo(Report,'karesidenan','Karesidenan: '+cbUmurPiutang.Text) else  SetMemo(Report,'karesidenan','Karesidenan:');
+      SetMemo(Report,'periode','PERIODE '+strPeriode);
+      Report.PrepareReport(True);
+      // Baru export
+      ExportToExcel;
+    end;
+  end;
 end;
 
 procedure TFRincianUmurPiutang.edKaresidenanPropertiesButtonClick(

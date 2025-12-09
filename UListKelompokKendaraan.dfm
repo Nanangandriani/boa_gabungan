@@ -228,8 +228,8 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
     MasterSource = DsKendaraan
     MasterFields = 'vehicle_group_id'
     DetailFields = 'vehicle_group_id'
-    Left = 462
-    Top = 303
+    Left = 182
+    Top = 263
     ParamData = <
       item
         DataType = ftString

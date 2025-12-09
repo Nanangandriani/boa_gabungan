@@ -142,7 +142,7 @@ var
 implementation
 
 {$R *.dfm} {$R resource.RES}
-uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi;
+uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi, UUbahPassword;
 
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
 var
@@ -413,6 +413,11 @@ begin
   end;
   if dm.Qtemp.RecordCount=1 then
   begin
+    if vCaptionButton='Ubah Password' then
+    begin
+      FUbahPassword.Show;
+      Exit;
+    end else
     if vCaptionButton='Singkronisasi' then
     begin
       FSingkronisasi.Show;
@@ -1001,6 +1006,7 @@ begin
 //  RzStatusVersion.Caption:=GetFileVersion();
 
 //  StatusVersion.Caption:=Application.show;
+  DM.Koneksi.Connected:=False;
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

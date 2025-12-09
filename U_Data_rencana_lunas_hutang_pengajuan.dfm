@@ -652,7 +652,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 738
+            ExplicitLeft = 752
+            ExplicitTop = 6
           end
         end
       end

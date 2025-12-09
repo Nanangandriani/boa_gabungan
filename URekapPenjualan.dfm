@@ -265,6 +265,10 @@ object FRekapPenjualan: TFRekapPenjualan
         item
           Visible = True
           ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'btExport'
         end>
       OneOnRow = False
       Row = 0
@@ -687,6 +691,54 @@ object FRekapPenjualan: TFRekapPenjualan
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton2Click
     end
+    object btExport: TdxBarLargeButton
+      Caption = 'Export Excel'
+      Category = 0
+      Hint = 'Export Excel'
+      Visible = ivNever
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F400000018744558745469746C65005072696E745469746C65733B5072696E74
+        3B393703740000046D49444154785EED96594C5C6514C7E9866CB16A6BA2D1EA
+        83AF361A97C425F14163AC467990560553AA764191616B0B658452E850A16C71
+        2476A50D04A929282D6B456D4A1B9A505310DA52C156CAE27406668159EE0C03
+        E5EF776EBE7EC9F53AB7834BFAD293FC1EBE9973FEE737992F373704C06DE58E
+        404872F54B21AC1672163342FF5B2853E48B1202371767566FBAC464F07F40D9
+        4224804058C28117D06FAEC2F9D112152C44719E4F0F655236ED0824406651F1
+        C667D0355C841F073F559158F9A2E23C9F1ECAA46CDAC177A904963096C6953E
+        85CEDF0D68EBDFA862C39EE714E7F9F4502665D30EDA1548E09E778A9EC0F991
+        AFD07165BB8AB5E54FAB3E1B1C6F84C5F98BA0F3720B9D55D83C03387DB119B4
+        435320C6B012C1D2D1D784EE5F2FC058752628322B0A48E05E2EA0AAC58CBB73
+        CADB60774CC1649EC098C9825193595072B8537176B93D283FD481208B7A4960
+        19ED0A241045022E8F1756870B137627C66D5382A2836714678FE4C5EE7D2741
+        65B57B340140BD24B03C90C02246644ED909787D339874F9547CBEAF0312FB4E
+        E09D4641453BA8CC56972600A89704EEA75D8104223E2B6D83CF3F0BA7C7AFA2
+        6FC08CFEDFCC28AB3C0543C50F884DC8456E592BA8C62C4E4DA8A897666876E7
+        97EDD7F38D277299C0028580BEB8154C42454FFF1FC82E6DC1DEAF3BD1D53B02
+        AA351FE9A12F6A04D5A8794A132AEAA5192ACAA0AC9C92C63C921002DB8A9AE1
+        9D9E85C33DADC0E79F41764933CEF60CA3BBDF04AAE8F737E3F5D5BA79413300
+        2883B228D34C77420864163641620276D7B402C9E7C7B6C2E33877614CE6C6DC
+        1C6237E8B12A260D710905884FDA8D8D5B8CD065EFC7664335320B6B91B1AB06
+        A93B0E2121A302EB74C572EF7BEBF5342B7228931ECF4260EBAE46F982D99C3E
+        0574E1D2F3EBD1C9AC09B7E447556D135E7EEB63BCF6762A856B413DD4CB661A
+        6956E4B04C120817025B0CC7E06102D6299F020F1348CA3E8253E786644C3637
+        DC5E3F2AAB1BF0E69A243CFFCA5A4DA2DF4DC6E19AE33443B322873269AF1048
+        DFD90026A1E2E7DE6BD8945185F6B3576486AE4F61C4E284C3E5C3EC8D39DCAA
+        6667E76067BDC36C8666790E652A05D2F2BE63963318777815B8A569AC4B3988
+        96D3033283A38E7F05CFA14CA540EA8E6F65010B13107081D84FF6E0D84F9765
+        2E5DB3E1D955FA7F04CDF21CCA540884A7E4D6C325F961B64B0A5C920F31EB8D
+        A8FBFEA24CEFD5090A936FB17D5242EEC9494DA8877A698666790E652A04C292
+        B7D7D17F4A120ABC3E3FA2E3CB70A4B54FA67BD022B3D5D0008BD58DAC768716
+        D443BD628EE750A61058C8084DCCAA3DA0CBA9C35FE9EA1962B65FE08DB86205
+        6979F518314D22BDD5A605F550AF6AFED5D5F955379F030BF813E92E46147F71
+        B88FB18CF300E331C6E38C959C277539477175C41E14D4CB3356301E663C24DE
+        0FB8807825E756E18C084E246329975ACE79F003DDDEDAC4AC6F100C1FA6ECAF
+        E1F3913C338C96CBBB93B28F720921B22808C2B8C8238C476FC10A2E1FCA5015
+        096812A04876091789D040F96BFFAE00DC56EE08FC091C368BFD77624AAE0000
+        000049454E44AE426082}
+      OnClick = btExportClick
+    end
   end
   object QRekapPenjualan: TUniQuery
     Connection = dm.Koneksi
@@ -716,8 +768,8 @@ object FRekapPenjualan: TFRekapPenjualan
     MasterSource = dsCetak
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 844
-    Top = 24
+    Left = 956
+    Top = 208
     ParamData = <
       item
         DataType = ftString
@@ -916,7 +968,7 @@ object FRekapPenjualan: TFRekapPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45961.567585393520000000
+    ReportOptions.LastChange = 45999.454155173610000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1070,9 +1122,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 4.779530000000000000
+          Left = 0.537105760000000000
           Top = 115.181200000000000000
-          Width = 30.236240000000000000
+          Width = 36.296846060000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1104,9 +1156,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 234.943345890000000000
+          Left = 233.731224680000000000
           Top = 115.070807560000000000
-          Width = 196.093367340000000000
+          Width = 202.153973400000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1121,9 +1173,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 440.459249330000000000
+          Left = 436.822885690000000000
           Top = 115.070807560000000000
-          Width = 169.236998780000000000
+          Width = 174.691544240000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1164,9 +1216,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 613.628300210000000000
+          Left = 612.416179000000000000
           Top = 115.165430000000000000
-          Width = 118.595618700000000000
+          Width = 119.807739910000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1181,9 +1233,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 737.094930000000000000
+          Left = 734.670687580000000000
           Top = 101.837353330000000000
-          Width = 116.558491180000000000
+          Width = 120.800915420000000000
           Height = 45.564316670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1199,9 +1251,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 968.086713400000000000
+          Left = 964.450349760000000000
           Top = 100.948464440000000000
-          Width = 114.617230850000000000
+          Width = 119.465715700000000000
           Height = 44.453205560000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1217,9 +1269,9 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 860.507850360000000000
+          Left = 858.083607940000000000
           Top = 100.948464440000000000
-          Width = 98.636450930000000000
+          Width = 103.484935770000000000
           Height = 44.453205560000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1282,7 +1334,7 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Left = 37.795300000000000000
           Top = 114.385900000000000000
-          Width = 55.733203520000000000
+          Width = 57.551385340000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1475,8 +1527,8 @@ object FRekapPenjualan: TFRekapPenjualan
         object Memo30: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 965.119241200000000000
-          Width = 117.772042230000000000
+          Left = 964.513180590000000000
+          Width = 118.378102840000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataField = 'grand_tot'
@@ -1497,8 +1549,8 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 1.001752220000000000
-          Width = 30.236240000000000000
+          Left = 0.606060610000000000
+          Width = 35.690785460000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
@@ -1917,5 +1969,60 @@ object FRekapPenjualan: TFRekapPenjualan
     DataSet = QRincianFaktur
     Left = 1233
     Top = 120
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    EmbedFontsIfProtected = False
+    InteractiveFormsFontSubset = 'A-Z,a-z,0-9,#43-#47 '
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    Creator = 'FastReport'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    PDFStandard = psNone
+    PDFVersion = pv17
+    Left = 680
+    Top = 344
+  end
+  object frxXLSExport1: TfrxXLSExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    ExportEMF = True
+    AsText = False
+    Background = True
+    FastExport = True
+    PageBreaks = True
+    EmptyLines = True
+    SuppressPageHeadersFooters = False
+    Left = 736
+    Top = 208
+  end
+  object frxXLSXExport1: TfrxXLSXExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    ChunkSize = 0
+    OpenAfterExport = False
+    PictureType = gpPNG
+    Left = 792
+    Top = 280
   end
 end

@@ -36,8 +36,8 @@ uses UDataModule, UNewDeliveryOrder;
 procedure TFListKelompokKendaraan.DBGridDblClick(Sender: TObject);
 var recNoInv:Integer;
 begin
-  if (dm.Qtemp.RecordCount>0) then
-  begin
+//  if (dm.Qtemp.RecordCount>0) then
+//  begin
     with dm.Qtemp do
     begin
       close;
@@ -71,6 +71,7 @@ begin
         MemDataMuatan.Active:=False;
         MemDataMuatan.Active:=True;
         MemDataMuatan.EmptyTable;
+        spTotalTitik.Value:=dm.Qtemp.RecordCount-1;
         dm.Qtemp.First;
         while not dm.Qtemp.Eof do
         begin
@@ -93,7 +94,7 @@ begin
       MessageDlg('Ada Sales Order Yang Belum Jadi Nota Penjualan..!!',mtInformation,[mbRetry],0);
     end;
     Close;
-  end;
+//  end;
 end;
 
 procedure TFListKelompokKendaraan.Refresh;

@@ -342,6 +342,8 @@ object FExportFaktur: TFExportFaktur
     EmptyDataInfo.Active = True
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     RowDetailPanel.Height = 170
+    SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 2
     Columns = <
       item

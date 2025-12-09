@@ -107,7 +107,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UNewJurnal_memorial;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
+uses UDatamodule, UNewJurnal_memorial, UMainMenu;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
   RealFMemorial: TFlist_jurnal_memorial;
@@ -189,7 +189,10 @@ begin
   open;
 end;
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BuktiMemorial.Fr3');
-//  Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',(MemTableEh1['tgl']));
+
+  if Rpt.FindObject('nama_pt') <> nil then
+  TfrxMemoView(Rpt.FindObject('nama_pt')).Memo.Text := SBU;
+  //  Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',(MemTableEh1['tgl']));
   Rpt.ShowReport();
 end;
 
@@ -202,6 +205,7 @@ procedure TFlist_jurnal_memorial.ActUpdateExecute(Sender: TObject);
 begin
   Status:=1;
   FNewJurnal_memo.Show;
+  FNewJurnal_memo.Enabled:=true;
   with dm.Qtemp do
   begin
     Close;
@@ -242,8 +246,13 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select a.*,b.account_name from t_memorial_journal_detail a  '+
+      {Sql.Text:='select a.*,b.account_name from t_memorial_journal_detail a  '+
       ' left join t_ak_account_sub b on a.account_code2=b.code '+
+      ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id asc'; }
+      Sql.Text:='select a.*,case when b.account_name is null then c.account_name else '+
+      ' b.account_name end account_name from t_memorial_journal_detail a '+
+      ' left join t_ak_account_sub b on a.account_code=b.account_code2 '+
+      ' left join t_ak_account c on a.account_code=c.code '+
       ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id asc';
       Open;
     end;

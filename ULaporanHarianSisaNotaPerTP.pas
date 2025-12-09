@@ -28,7 +28,7 @@ uses
   MemDS, DBAccess, Uni, frxClass, frxDBSet, dxBarExtItems, cxBarEditItem, dxBar,
   cxClasses, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon,
-  Vcl.StdCtrls, RzLabel;
+  Vcl.StdCtrls, RzLabel, frxExportBaseDialog, frxExportPDF;
 
 type
   TFLaporanHarianSisaNotaPerTP = class(TForm)
@@ -114,6 +114,7 @@ type
     dtTanggal2: TdxBarDateCombo;
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

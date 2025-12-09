@@ -20,7 +20,8 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Height = 33
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 409
+    ExplicitTop = 415
+    ExplicitWidth = 593
     object BClose: TRzBitBtn
       Left = 521
       Top = 1
@@ -82,7 +83,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 517
-      ExplicitHeight = 33
     end
     object BSimpan: TRzBitBtn
       Left = 446
@@ -145,7 +145,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 442
-      ExplicitHeight = 33
     end
     object Brefresh: TRzBitBtn
       Left = 296
@@ -208,7 +207,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 292
-      ExplicitHeight = 33
     end
     object BNew: TRzBitBtn
       Left = 221
@@ -271,7 +269,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 217
-      ExplicitHeight = 33
     end
     object BUpdate: TRzBitBtn
       Left = 371
@@ -334,7 +331,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
         E8101717101010101010E8E8E8E8E8E8E8568181DFDFDFDFDFDF}
       NumGlyphs = 2
       ExplicitLeft = 367
-      ExplicitHeight = 33
     end
   end
   object Panel2: TPanel
@@ -345,6 +341,7 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Align = alTop
     TabOrder = 1
     Visible = False
+    ExplicitWidth = 593
     object Label14: TLabel
       Left = 22
       Top = 19
@@ -518,7 +515,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
       
         'select a.*,b.item_name from t_master_test a inner join t_item b ' +
         'on a.item_code=b.item_code')
-    Active = True
     Left = 344
     Top = 88
   end
@@ -528,7 +524,6 @@ object FItem_MasterFormula: TFItem_MasterFormula
     Top = 144
   end
   object MemMasterTest: TMemTableEh
-    Active = True
     Params = <>
     DataDriver = DsdMasterTest
     Left = 448

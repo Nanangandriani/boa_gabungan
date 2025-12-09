@@ -20,10 +20,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1350
     Height = 640
     Hint = ''
-    ActivePage = TabDataMuatan
+    ActivePage = TabDataBiaya
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1346
@@ -51,12 +51,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 0
         Width = 1346
-        Height = 377
+        Height = 353
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19
@@ -308,7 +307,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Left = 20
           Top = 162
           Width = 869
-          Height = 206
+          Height = 183
           Caption = 'Data Penyedia Jasa Transport'
           Color = 15987699
           TabOrder = 5
@@ -327,43 +326,45 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Caption = ':'
           end
           object Label34: TLabel
-            Left = 124
-            Top = 87
+            Left = 555
+            Top = 71
             Width = 3
             Height = 15
             Caption = ':'
+            Visible = False
           end
           object Label35: TLabel
-            Left = 8
-            Top = 87
+            Left = 439
+            Top = 71
             Width = 18
             Height = 15
             Caption = 'PIC'
+            Visible = False
           end
           object Label36: TLabel
             Left = 124
-            Top = 116
+            Top = 87
             Width = 3
             Height = 15
             Caption = ':'
           end
           object Label37: TLabel
             Left = 8
-            Top = 145
+            Top = 116
             Width = 56
             Height = 15
             Caption = 'Kendaraan'
           end
           object Label40: TLabel
             Left = 124
-            Top = 145
+            Top = 116
             Width = 3
             Height = 15
             Caption = ':'
           end
           object Label41: TLabel
             Left = 8
-            Top = 116
+            Top = 87
             Width = 84
             Height = 15
             Caption = 'Jenis Kendaraan'
@@ -386,14 +387,14 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
           object Label56: TLabel
             Left = 8
-            Top = 176
+            Top = 147
             Width = 49
             Height = 15
             Caption = 'Kapasitas'
           end
           object Label57: TLabel
             Left = 124
-            Top = 176
+            Top = 147
             Width = 3
             Height = 15
             Caption = ':'
@@ -497,7 +498,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
           object spKapasitas: TSpinEdit
             Left = 133
-            Top = 171
+            Top = 142
             Width = 69
             Height = 24
             MaxValue = 0
@@ -507,7 +508,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
           object edNoKendMuatan: TRzButtonEdit
             Left = 133
-            Top = 142
+            Top = 113
             Width = 250
             Height = 23
             Text = ''
@@ -538,16 +539,17 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             Visible = False
           end
           object edPICMuatan: TEdit
-            Left = 133
-            Top = 84
+            Left = 564
+            Top = 68
             Width = 250
             Height = 23
             CharCase = ecUpperCase
             TabOrder = 2
+            Visible = False
           end
           object edNamaJenisKendMuatan: TRzEdit
             Left = 133
-            Top = 113
+            Top = 84
             Width = 250
             Height = 23
             Text = ''
@@ -718,9 +720,9 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
       end
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
-        Top = 377
+        Top = 353
         Width = 1346
-        Height = 206
+        Height = 230
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>

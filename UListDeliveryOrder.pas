@@ -441,9 +441,9 @@ begin
   end;
   //end Jasa Transport
   end;
-  FNewDeliveryOrder.edKodeDOMuatan.Enabled:=false;
-  FNewDeliveryOrder.edKodeDOBiaya.Enabled:=false;
-  FNewDeliveryOrder.edKodeDODok.Enabled:=false;
+  FNewDeliveryOrder.edKodeDOMuatan.ReadOnly:=True;
+  FNewDeliveryOrder.edKodeDOBiaya.ReadOnly:=True;
+  FNewDeliveryOrder.edKodeDODok.ReadOnly:=True;
   FNewDeliveryOrder.RzPageControl1.ActivePage:=FNewDeliveryOrder.TabDataMuatan;
   Status := 1;
   FNewDeliveryOrder.ShowModal;

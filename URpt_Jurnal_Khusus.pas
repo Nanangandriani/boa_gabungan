@@ -113,27 +113,22 @@ begin
     else if Pos('T', FormName) = 1 then
       FormName := Copy(FormName, 2, Length(FormName));
     FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
-
     // Setup Save Dialog
     SaveDialog.Title := 'Simpan Export Excel';
     SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
     SaveDialog.FilterIndex := 1;
     SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
-
     SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
     if not DirectoryExists(SavePath) then
       ForceDirectories(SavePath);
     SaveDialog.InitialDir := SavePath;
     SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
-
     if SaveDialog.Execute then
     begin
       // Ambil extension
       FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
-
       // Debug: tampilkan extension yang terdeteksi
       // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
-
       // Buat exporter sesuai FilterIndex (lebih reliable)
       if SaveDialog.FilterIndex = 1 then
       begin
@@ -143,7 +138,6 @@ begin
         TfrxXLSXExport(Exporter).EmptyLines := True;
         TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
         TfrxXLSXExport(Exporter).ChunkSize := 1;
-
         // Pastikan extension .xlsx
         if FileExt <> '.xlsx' then
           Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
@@ -157,7 +151,6 @@ begin
         TfrxXLSExport(Exporter).Wysiwyg := True;
         TfrxXLSExport(Exporter).EmptyLines := True;
         TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
-
         // Pastikan extension .xls
         if FileExt <> '.xls' then
           Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
@@ -169,12 +162,10 @@ begin
         ShowMessage('Format file tidak didukung!');
         Exit;
       end;
-
       try
         // Export
         Exporter.ShowDialog := False;
         Rpt.Export(Exporter);
-
         // Konfirmasi buka file
         if MessageDlg('Export berhasil!' + #13#10 +
                       'File: ' + Exporter.FileName + #13#10#13#10 +
@@ -183,7 +174,6 @@ begin
         begin
           ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
         end;
-
       except
         on E: Exception do
         begin
@@ -191,7 +181,6 @@ begin
         end;
       end;
     end;
-
   finally
     if Assigned(Exporter) then
       Exporter.Free;
@@ -295,14 +284,12 @@ begin
     DtMulai.SetFocus;
     Exit;
   end;
-
   if DtSelesai.EditValue = null then
   begin
     MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong', mtWarning, [mbOk], 0);
     DtSelesai.SetFocus;
     Exit;
   end;
-
   with QRpt_Jurnal_Khusus do
   begin
     Close;
@@ -314,32 +301,25 @@ begin
                 ' ORDER BY trans_no, status_dk ASC';
     Open;
   end;
-
   if QRpt_Jurnal_Khusus.IsEmpty then
   begin
     ShowMessage('Maaf data kosong');
     Exit;
   end;
-
   // Load report
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Report\Rpt_jurnal_khusus.Fr3');
-
   // Set memo SEBELUM PrepareReport
   if Rpt.FindObject('MPeriode') <> nil then
     TfrxMemoView(Rpt.FindObject('MPeriode')).Memo.Text :=
       'Periode  : ' + FormatDateTime('dd MMMM yyyy', DtMulai.EditValue) +
       ' - ' + FormatDateTime('dd MMMM yyyy', DtSelesai.EditValue);
-
   //if Rpt.FindObject('Memo2') <> nil then
   //TfrxMemoView(Rpt.FindObject('Memo2')).Memo.Text := SBU;
-
   // Hubungkan dataset (PENTING!)
   // Ganti 'frxDBDataset1' dengan nama dataset FastReport Anda
   //Rpt.DataSet := frxDBDataset1;
-
   // PREPARE report (sekali saja, DISINI!)
   Rpt.PrepareReport(True);
-
   // Baru export
   ExportToExcel;
 end;

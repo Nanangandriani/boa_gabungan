@@ -671,7 +671,7 @@ end;
 
 procedure TFDataKasKecil.dtTransChange(Sender: TObject);
 begin
-  FDataKasKecil.Autonumber;
+  //FDataKasKecil.Autonumber;
 end;
 
 procedure TFDataKasKecil.edKodeMataUangChange(Sender: TObject);

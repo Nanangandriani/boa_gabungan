@@ -8,7 +8,8 @@ uses
   Vcl.Mask, RzEdit, RzBtnEdt, RzLabel, Vcl.ExtCtrls, RzPanel, RzButton,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
   Data.DB, MemDS, DBAccess, Uni, MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh,
-  DBGridEh, DataDriverEh, frxClass, frxDBSet, RzCmboBx;
+  DBGridEh, DataDriverEh, frxClass, frxDBSet, RzCmboBx, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TFStockOpnameNota = class(TForm)
@@ -36,6 +37,7 @@ type
     cbSBU: TRzComboBox;
     RzBitBtn1: TRzBitBtn;
     RzLabel5: TRzLabel;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormShow(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);

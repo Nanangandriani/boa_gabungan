@@ -2154,7 +2154,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
     MasterSource = dsBukti_Terima
     MasterFields = 'account_name'
     DetailFields = 'name_account'
-    Active = True
     Left = 484
     Top = 216
     ParamData = <

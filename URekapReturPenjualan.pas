@@ -26,7 +26,8 @@ uses
   DynVarsEh, cxCalendar, cxButtonEdit, Data.DB, MemDS, DBAccess, Uni, dxBar,
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet;
+  DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TFRekapReturPenjualan = class(TForm)
@@ -111,6 +112,7 @@ type
     FloatField5: TFloatField;
     cbSBU: TdxBarCombo;
     dxBarLargeButton1: TdxBarLargeButton;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

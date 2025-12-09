@@ -320,6 +320,7 @@ var
   SaveDialog: TSaveDialog;
   j: Integer;
   SelectedTransNo: TStringList;
+  TotPot,TaxBase,OtherTaxBase,Vat,Price: Real;
 begin
   // Query Master Data
   if UpperCase(cbBarangJasa.Text)='BARANG' then
@@ -495,12 +496,6 @@ begin
           begin
             close;
             sql.clear;
-  //          sql.Text:='select ''000000'' kode_brg, a.name_item nama_brg,b.kode_satuan_pajak kd_satuan_pajak,'+
-  //                    ' a.sub_total/a.amount harga_satuan_coretax,a.amount jml_brg,a.tot_piece_value tot_pot,'+
-  //                    ' a.sub_total dpp_coretax,a.dpp_lain_lain dpp_lain_coretax,a.ppn_percent_cortex tarif_ppn,'+
-  //                    ' a.ppn_value_cortex ppn_coretax,''0'' tarif_PPnBM,''0'' PPnBM FROM t_selling_det a '+
-  //                    'LEFT JOIN t_pajak_satuan_link b on b.kode_satuan=a.code_unit '+
-  //                    'WHERE a.trans_no='+QuotedStr(dm.Qtemp.FieldValues['referensi']);
             Sql.Text:='select * from get_selling_coretax_det('+QuotedStr(dm.Qtemp.FieldValues['referensi'])+')';
             open;
           end;
@@ -511,22 +506,39 @@ begin
           while not dm.Qtemp1.Eof do
           begin
             j:=j+1;
+
+//            TotPot:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(dm.Qtemp1.FieldByName('tot_pot').Value, '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//            OtherTaxBase:= StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value, '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//            Vat:= StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(dm.Qtemp1.FieldByName('ppn_coretax').Value, '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//            TaxBase:= StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value, '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//            Price:= StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+
+            TotPot:=dm.Qtemp1.FieldByName('tot_pot').Value;
+            OtherTaxBase:= dm.Qtemp1.FieldByName('dpp_lain_coretax').Value;
+            Vat:= dm.Qtemp1.FieldByName('ppn_coretax').Value;
+            TaxBase:=dm.Qtemp1.FieldByName('dpp_coretax').Value;
+            Price:=dm.Qtemp1.FieldByName('harga_satuan_coretax').Value;
+
             // Tambahkan elemen GoodService
             GoodNode := GoodServiceNode.AddChild('GoodService');
             GoodNode.AddChild('Opt').Text := strKdBarangJasa;
             GoodNode.AddChild('Code').Text := dm.Qtemp1.FieldByName('kode_brg').AsString;
             GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString;
             GoodNode.AddChild('Unit').Text := dm.Qtemp1.FieldByName('kd_satuan_pajak').AsString;
-            GoodNode.AddChild('Price').Text := stringreplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
+//            GoodNode.AddChild('Price').Text := stringreplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            GoodNode.AddChild('Price').Text := FormatFloat('0.00', Price);
             //FormatFloat('0.00', FMainMenu.qexec2.FieldByName('harga_satuan').Value);
             GoodNode.AddChild('Qty').Text := dm.Qtemp1.FieldByName('jml_brg').Value;
-            GoodNode.AddChild('TotalDiscount').Text := dm.Qtemp1.FieldByName('tot_pot').Value;
-            GoodNode.AddChild('TaxBase').Text := stringreplace(dm.Qtemp1.FieldByName('dpp_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            GoodNode.AddChild('TotalDiscount').Text := FormatFloat('0.00', TotPot);
+//            GoodNode.AddChild('TaxBase').Text := stringreplace(dm.Qtemp1.FieldByName('dpp_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            GoodNode.AddChild('TaxBase').Text := FormatFloat('0.00', TaxBase);
             //GoodNode.AddChild('TaxBase').Text := FMainMenu.qexec2.FieldByName('dpp').Value;
-            GoodNode.AddChild('OtherTaxBase').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
+//            GoodNode.AddChild('OtherTaxBase').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            GoodNode.AddChild('OtherTaxBase').Text := FormatFloat('0.00', OtherTaxBase);
             //GoodNode.AddChild('OtherTaxBase').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('dpp_lain').Value);
             GoodNode.AddChild('VATRate').Text := dm.Qtemp1.FieldByName('tarif_ppn').Value;
-            GoodNode.AddChild('VAT').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('ppn_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
+//            GoodNode.AddChild('VAT').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('ppn_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
+            GoodNode.AddChild('VAT').Text := FormatFloat('0.00', Vat);
             //GoodNode.AddChild('VAT').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('ppn').Value);
             GoodNode.AddChild('STLGRate').Text := dm.Qtemp1.FieldByName('tarif_PPnBM').Value;
             GoodNode.AddChild('STLG').Text := dm.Qtemp1.FieldByName('PPnBM').Value;
@@ -590,7 +602,7 @@ begin
                 'a.customer_name_pkp,a.grand_tot,b.karesidenan,b.code_karesidenan from get_selling(NULL) a '+
                 'LEFT JOIN get_customer() b ON b.customer_code=a.code_cust '+
                 'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
-                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') ';
+                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') order by a.trans_date ASC,a.trans_no ASC ';
       open;
     end;
     cbTandai.Checked:=False;

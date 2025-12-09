@@ -157,6 +157,7 @@ end;
 
 procedure TFHomeLogin.FormShow(Sender: TObject);
 begin
+  DM.Koneksi.Connected:=False;
   Clear;
 end;
 

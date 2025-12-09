@@ -109,7 +109,7 @@ object FListKasKecil: TFListKasKecil
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1306
+    ExplicitWidth = 1308
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -1747,7 +1747,6 @@ object FListKasKecil: TFListKasKecil
         'mount,b.description,b.code_account_header,b.code_group_cost,b.na' +
         'me_group_cost FROM t_petty_cash a INNER JOIN t_petty_cash_det b ' +
         'on a.voucher_no=b.voucher_no )a')
-    Active = True
     Left = 544
     Top = 30
   end
