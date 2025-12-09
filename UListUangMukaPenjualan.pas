@@ -175,7 +175,6 @@ begin
     FNew_UangMukaPenjualan.BSave.Enabled:=True;
   end;
 
-
   FNew_UangMukaPenjualan.ShowModal;
 end;
 

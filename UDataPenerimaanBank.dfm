@@ -4,7 +4,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   BorderStyle = bsDialog
   Caption = 'Data Penerimaan Bank'
   ClientHeight = 554
-  ClientWidth = 1117
+  ClientWidth = 1105
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1117
+    Width = 1105
     Height = 177
     Align = alTop
     BevelOuter = bvNone
@@ -314,14 +314,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object Panel2: TPanel
     Left = 0
     Top = 522
-    Width = 1117
+    Width = 1105
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 521
     ExplicitWidth = 1113
     object BBatal: TRzBitBtn
-      Left = 1041
+      Left = 1029
       Top = 1
       Height = 30
       Align = alRight
@@ -383,7 +383,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       ExplicitLeft = 1037
     end
     object BSave: TRzBitBtn
-      Left = 966
+      Left = 954
       Top = 1
       Height = 30
       Align = alRight
@@ -455,7 +455,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Visible = False
     end
     object BCorrection: TRzBitBtn
-      Left = 868
+      Left = 856
       Top = 1
       Width = 98
       Height = 30
@@ -469,23 +469,25 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 273
-    Width = 1117
+    Width = 1105
     Height = 249
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 1113
     ExplicitHeight = 248
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1109
+      ExplicitHeight = 223
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1113
+        Width = 1101
         Height = 224
         Align = alClient
         DataSource = DSDetailAkun
@@ -575,12 +577,11 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1109
-      ExplicitHeight = 223
+      ExplicitWidth = 1113
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1113
+        Width = 1101
         Height = 224
         Align = alClient
         DataSource = dsDetailPiutang
@@ -663,7 +664,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object Panel5: TPanel
     Left = 0
     Top = 177
-    Width = 1117
+    Width = 1105
     Height = 96
     Align = alTop
     BevelOuter = bvNone

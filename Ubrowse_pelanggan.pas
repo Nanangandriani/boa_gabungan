@@ -62,10 +62,11 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UPenyesuaianPenjualan, UKartuPiutang;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
-var strWhere,strKares: String;
+var strWhere,strKares,strKabupaten: String;
 begin
   strKares:='';
   strWhere:='';
+  strKabupaten:='';
   if vcall='daftar_klasifikasi' then
   begin
     strWhere:=' and a.code_type_business='+QuotedStr(FDaftarKlasifikasi.edkd_jenis_usaha.Text)+' AND '+
@@ -78,12 +79,17 @@ begin
   begin
     strKares:= SelectRow('SELECT code_karesidenan FROM get_customer() where customer_code='+QuotedStr(FNew_SalesOrder.edKode_Pelanggan.Text)+'');
     strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
+  end else if (vcall='terima_bank') AND (FDataPenerimaanBank.edNoTrans.Text<>'') then
+  begin
+    strKares:= SelectRow('SELECT code_karesidenan FROM get_customer() where customer_code='+QuotedStr(FDataPenerimaanBank.edKode_Pelanggan.Text)+'');
+    strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
   end else if vcall='kartupiutang' then
   begin
-    strWhere:=' and code_region='+QuotedStr(FKartuPiutang.strKodePelanggan);
+    strWhere:=' and getkares.code='+QuotedStr(FKartuPiutang.vkd_kab);
   end else begin
     strWhere:='';
     strKares:='';
+    strKabupaten:='';
   end;
 
   with Dm.Qtemp do
@@ -354,6 +360,12 @@ begin
   end;
 
   if (vcall='sumber_order') AND (FNew_SalesOrder.edKodeOrder.Text<>'') then
+  begin
+    pnlFilter.Visible:=false;
+    RefreshGrid;
+  end;
+
+  if (vcall='terima_bank') AND (FDataPenerimaanBank.edNoTrans.Text<>'') then
   begin
     pnlFilter.Visible:=false;
     RefreshGrid;

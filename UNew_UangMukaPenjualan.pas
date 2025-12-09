@@ -184,7 +184,7 @@ begin
     sql.clear;
     sql.Text:='Update t_down_payment_sales SET customer_code='+QuotedStr(strKodePelanggan)+', '+
               ' account_code='+QuotedStr(edAkunUangMuka.Text)+', account_name='+QuotedStr(edNamaAkunUangMuka.Text)+','+
-              ' grand_tot='+QuotedStr(FloatToStr(edJumlah.value))+' '+
+              ' grand_tot='+QuotedStr(FloatToStr(edJumlah.Value))+' '+
               ' WHERE no_trans='+QuotedStr(edNoUangMuka.Text)+' AND deleted_at IS NULL';
     ExecSQL;
   end;

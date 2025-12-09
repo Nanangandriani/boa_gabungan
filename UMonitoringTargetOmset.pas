@@ -262,7 +262,7 @@ begin
       sql.Text:='SELECT '+strVolume+'* FROM get_monitoring_target_omset'+
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
                 ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
-                +','+QuotedStr(cbKabupaten.EditValue)+')';
+                +','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
       open;
     end;
     if Qreport.RecordCount=0 then
