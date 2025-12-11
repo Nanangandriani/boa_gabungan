@@ -195,9 +195,10 @@ begin
       close;
       sql.clear;
       sql.add(' select notrans, code_item, name_item, amount, code_unit, name_unit, '+
-              ' sell as selling_price,b.group_id,a.gross_weight,a.tare_weight from "public"."t_sales_order_det" a '+
+              ' sell as selling_price,b.group_id,a.gross_weight,a.tare_weight,a.wh_code,c.wh_name from "public"."t_sales_order_det" a '+
               ' LEFT JOIN (select * from "public"."t_item"  where  deleted_at is null '+
               ' order by created_at Desc) b ON a.code_item=b.item_code '+
+              ' LEFT JOIN t_wh c on c.wh_code=a.wh_code '+
               ' where a.notrans='+QuotedStr(MemMasterData['NO_REFF'])+' and '+
               ' a.deleted_at is null order by a.created_at Desc');
       open;
@@ -221,6 +222,8 @@ begin
       FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];
       FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
       FNew_Penjualan.edPOOrder.Text:=MemMasterData['PO_ORDER'];
+      FNew_Penjualan.strKodeGudang:=Dm.Qtemp2.FieldByName('wh_code').Asstring;
+      FNew_Penjualan.edGudang.Text:=Dm.Qtemp2.FieldByName('wh_name').Asstring;
 
       Dm.Qtemp2.first;
       while not Dm.Qtemp2.Eof do

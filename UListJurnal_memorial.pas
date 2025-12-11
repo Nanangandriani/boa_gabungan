@@ -203,8 +203,8 @@ end;
 
 procedure TFlist_jurnal_memorial.ActUpdateExecute(Sender: TObject);
 begin
-  Status:=1;
   FNewJurnal_memo.Show;
+  Status:=1;
   FNewJurnal_memo.Enabled:=true;
   with dm.Qtemp do
   begin
@@ -212,7 +212,7 @@ begin
     Sql.Clear;
     Sql.Text:='SELECT case when notes_id isnull then a.notes else concat(b.notes,'' '', f_bulan(a.trans_month::integer),'' '',a.trans_year )end'+
     ' keterangan,case when notes_id ISNULL then a.notes else b.notes end ket,b.notes,a.memo_no,a.trans_date, '+
-    ' a.bk_no,a.faktur_no,a.rounding_status,a.post_status,a.koreksi_status,f_bulan(a.trans_month::integer) bln,a.trans_year,a.notes_id FROM   '+
+    ' a.bk_no,a.faktur_no,a.rounding_status,a.post_status,a.koreksi_status,f_bulan(a.trans_month::integer) bln,a.trans_year,a.notes_id, a.memorial_source FROM   '+
     '	t_memorial_journal AS a LEFT JOIN t_memorial_notes AS b ON a.notes_id=b.id '+
     ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id desc';
     Open;
@@ -231,10 +231,12 @@ begin
       FNewJurnal_memo.Memket.Text:=FieldByName('ket').AsString;
       if FieldByName('bk_no').AsString<>'' then
       begin
-        FNewJurnal_memo.Checkpembuatan.Checked:=false;
+        FNewJurnal_memo.Checkpembuatan.Checked:=true;
+        FNewJurnal_memo.Panel_pembulatan.Visible:=true;
         FNewJurnal_memo.CheckpembuatanClick(sender);
         FNewJurnal_memo.edno_bk_pembulatan.Text:=FieldByName('bk_no').AsString;
         FNewJurnal_memo.edno_faktur_pembulatan.Text:=FieldByName('faktur_no').AsString;
+        FNewJurnal_memo.CbJenis.ItemIndex:=FieldByName('memorial_source').value;
       end
       else if FieldByName('bk_no').AsString='' then
       begin

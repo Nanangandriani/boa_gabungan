@@ -334,7 +334,8 @@ uses
   ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
   ULaporanHarianSisaNotaPiutangPerOutlet in 'ULaporanHarianSisaNotaPiutangPerOutlet.pas' {FLaporanHarianSisaNotaPiutangPerOutlet},
   UUbahPassword in 'UUbahPassword.pas' {FUbahPassword},
-  U_daf_pilih_detail_bayar in 'U_daf_pilih_detail_bayar.pas' {frmdafdetailbayar};
+  U_daf_pilih_detail_bayar in 'U_daf_pilih_detail_bayar.pas' {frmdafdetailbayar},
+  UNoteCancel in 'UNoteCancel.pas' {FNoteCancel};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -502,6 +503,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNewKontrakTagihan, FNewKontrakTagihan);
   Application.CreateForm(TFSetJenisKontrakTagihan, FSetJenisKontrakTagihan);
   Application.CreateForm(TFListKontrakTagihan, FListKontrakTagihan);
+  Application.CreateForm(TFNoteCancel, FNoteCancel);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   FMainMenu.DisableMenu;

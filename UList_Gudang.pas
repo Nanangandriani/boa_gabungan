@@ -75,7 +75,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Gudang, UDataModule, UMainMenu;
+uses UNew_Gudang, UDataModule, UMainMenu, UMy_Function;
 
 procedure TFListGudang.refresh;
 begin
@@ -140,7 +140,10 @@ begin
         CbCategory.Text:=QGudang.FieldByName('category').AsString;
         CbSbu.Text:=QGudang.FieldByName('sbu_code').AsString;
         Edkode.Text:=QGudang.FieldByName('code').AsString;
+        Kode_Pelanggan:=QGudang.FieldByName('customer_code').AsString;
+        edNama_Pelanggan.Text:=SelectRow('SELECT customer_name from t_customer where customer_code='+QuotedStr(QGudang.FieldByName('customer_code').AsString)+'');
       end;
+
       Edkd.Enabled:=False;
     end;
 end;

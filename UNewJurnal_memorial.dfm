@@ -209,6 +209,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Width = 23
       Height = 22
       Caption = '...'
+      Visible = False
       OnClick = SpeedButton1Click
     end
     object Label15: TLabel
@@ -231,6 +232,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Width = 75
       Height = 13
       Caption = 'Kelompok Harta'
+      Visible = False
     end
     object edno_bukti_memorial: TEdit
       Left = 122
@@ -247,6 +249,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Height = 21
       EditType = etDate
       TabOrder = 1
+      OnChange = DTtglChange
     end
     object Memket: TRzMemo
       Left = 122
@@ -296,6 +299,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
         Top = 5
         Width = 202
         Height = 21
+        ReadOnly = True
         TabOrder = 0
       end
       object edno_faktur_pembulatan: TEdit
@@ -303,7 +307,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
         Top = 32
         Width = 250
         Height = 21
-        CharCase = ecLowerCase
+        ReadOnly = True
         TabOrder = 1
       end
       object RzBitBtn3: TRzBitBtn
@@ -317,7 +321,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     end
     object Checkpembuatan: TRzCheckBox
       Left = 434
-      Top = 53
+      Top = 54
       Width = 123
       Height = 19
       Caption = 'Memorial Sumber lain'
@@ -393,6 +397,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Height = 21
       Enabled = False
       TabOrder = 9
+      Visible = False
       OnSelect = CbHartaSelect
       Items.Strings = (
         ''
@@ -434,7 +439,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Caption = ':'
     end
     object RzBitBtn2: TRzBitBtn
-      Left = 84
+      Left = 100
       Top = 6
       Width = 77
       Caption = 'Tambah Akun'

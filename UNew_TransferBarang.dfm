@@ -122,6 +122,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Width = 777
     Height = 232
     Align = alBottom
+    AutoFitColWidths = True
     DataSource = DsDetail
     DynProps = <>
     TabOrder = 0
@@ -155,6 +156,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         FieldName = 'kd_stok_lama'
         Footers = <>
         Title.Caption = 'Kode Stok Lama'
+        Visible = False
         Width = 150
       end
       item
@@ -164,6 +166,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         FieldName = 'kd_stok_baru'
         Footers = <>
         Title.Caption = 'Kode Stok Baru'
+        Visible = False
         Width = 150
       end
       item
@@ -202,8 +205,8 @@ object FNew_TransferBarang: TFNew_TransferBarang
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 423
-    ExplicitWidth = 773
+    ExplicitTop = 415
+    ExplicitWidth = 771
     object BBatal: TRzBitBtn
       Left = 701
       Top = 1
@@ -264,7 +267,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 697
+      ExplicitLeft = 695
     end
     object BSimpan: TRzBitBtn
       Left = 626
@@ -326,7 +329,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 622
+      ExplicitLeft = 620
     end
   end
   object Edno: TRzEdit

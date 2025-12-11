@@ -67,7 +67,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         FieldName = 'nosj'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'No. Surat Jalan'
+        Title.Caption = 'No. FPB'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
@@ -121,10 +121,13 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -12
         Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
-        Width = 80
+        Width = 0
       end
       item
-        CellButtons = <>
+        CellButtons = <
+          item
+            OnClick = DBGrid_RencanaColumns6CellButtons0Click
+          end>
         DynProps = <>
         EditButtons = <>
         FieldName = 'nm_akun_pph'
@@ -143,7 +146,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         Title.Font.Height = -11
         Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
@@ -289,6 +292,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Align = alRight
       Caption = 'Hapus'
       TabOrder = 1
+      Visible = False
       OnClick = BHapusClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -762,8 +766,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       OnClick = rbbankClick
     end
     object Bdaftar: TRzBitBtn
-      Left = 676
-      Top = 225
+      Left = 661
+      Top = 93
       Width = 185
       Height = 34
       Caption = 'Daftar Hutang'
@@ -849,6 +853,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Width = 59
       Height = 23
       TabOrder = 12
+      Text = '1'
       Items.Strings = (
         '1'
         '2'

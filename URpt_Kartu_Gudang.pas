@@ -85,6 +85,20 @@ type
     QKartu_Gudangitem_name: TStringField;
     QKartu_Gudangsaldo_awal_periode: TFloatField;
     QKartu_Gudangsatuan: TStringField;
+    QKartuGUdang: TUniQuery;
+    frxDBDKartuGUdang: TfrxDBDataset;
+    Report: TfrxReport;
+    QKartuGUdangnotrans: TMemoField;
+    QKartuGUdangkd_barang: TMemoField;
+    QKartuGUdangtype: TMemoField;
+    QKartuGUdangtgltrans: TMemoField;
+    QKartuGUdangketerangan: TMemoField;
+    QKartuGUdanglevel1_qty_in: TFloatField;
+    QKartuGUdanglevel1_qty_out: TFloatField;
+    QKartuGUdangsaldo_awal: TFloatField;
+    QKartuGUdangurut: TIntegerField;
+    QKartuGUdangsatuan: TMemoField;
+    QKartuGUdangitemproduct_name: TStringField;
     procedure FormShow(Sender: TObject);
     procedure CbBulanChange(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
@@ -123,7 +137,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMainMenu, UCari_Barang, UMasterData;
+uses UDataModule, UMainMenu, UCari_Barang, UMasterData, UMy_Function,
+  UHomeLogin;
 
 //uses , USearch_Supplier_SPB, USearchMaterial, umainmenu;
 var
@@ -443,7 +458,7 @@ procedure TFRpt_Kartu_Gudang.cxkategori_barangPropertiesButtonClick(
 begin
     FMasterData.Caption:='Master Data Kategori';
     FMasterData.vcall:='kartu_gudang';
-    FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By code Asc');
+    FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By group_id Asc');
     FMasterData.ShowModal;
 end;
 
@@ -457,22 +472,165 @@ begin
 end;
 
 procedure TFRpt_Kartu_Gudang.dxBarLargeButton1Click(Sender: TObject);
+var
+  noinv, kode,query,query_po,query_jen,nama_isi_FP, query_lpb, jns_product : string;
+  maxdate:TDateTime;
+  tahun, bulan, tanggal:integer;
+  myDate,VDatePembulatan : TDateTime;
+  vleveljumlah_in, vleveljumlah_out, vleveljumlah_sa, vtransjumlah_in, vtransjumlah_out, vsatuan, vsatuan_trans: string;
 begin
-   with QKartu_Gudang do
+if application.MessageBox('Cetak Kartu Gudang ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+begin
+ if VarIsNull(CbGudang2.EditValue) or VarIsEmpty(CbGudang2.EditValue) then
   begin
-    {close;
-    sql.Clear;
-    sql.Text:='select b.item_code,b.item_name,a.unit,a.wh_code,to_char(a.trans_date,''FMMonth''),'+
-    ' A.trans_date,a.stock_code,sa_first,"in","out",sa_end,trans_code from t_trans_item A INNER JOIN'+
-    ' t_item_stock b on a.item_stock_code=b.item_stock_code'+
-    ' where b.item_code='+QuotedStr(cxkd_barang.EditValue)+' '+
-    ' AND A.wh_code='+QuotedStr(CbGudang2.EditValue)+'and DATE_PART(''MONTH'',a.trans_date) ='+QuotedStr(inttostr(CbBulan2.itemindex));
-    Execute;}
+    ShowMessage('Silakan Pilih Gudang...');
+    exit;
   end;
-  QKartu_Gudang.Open;
-  RptKartu_Gudang.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Kartu_Gudang.Fr3');
-  SetMemo(RptKartu_Gudang,'MBln',':  '+CbBulan.Text+' '+EdTahun.Text);
-  RptKartu_Gudang.ShowReport();
+
+ if VarIsNull(cxkategori_barang.EditValue) or VarIsEmpty(cxkategori_barang.EditValue) then
+  begin
+    ShowMessage('Silakan Pilih Kategori...');
+    exit;
+  end;
+
+  if VarIsNull(cbLevelSatuan.EditValue) or VarIsEmpty(cbLevelSatuan.EditValue) then
+  begin
+    ShowMessage('Silakan Pilih Level Satuan...');
+    exit;
+  end;
+
+  IF cbLevelSatuan.EditValue='SATUAN TERBESAR' then //Terbesar
+  begin
+    vleveljumlah_in :=' SUM(level1_qty_in) AS ';
+		vleveljumlah_out:=' SUM(level1_qty_out) AS';
+		vleveljumlah_sa :=' saldo_awal_lev1 AS ';
+    vtransjumlah_in :=' t.level1_qty_in AS';
+    vtransjumlah_out:=' t.level1_qty_out AS';
+    vsatuan         :=' satuan_lev1 AS ';
+    vsatuan_trans   :=' level1_satuan AS ';
+  end;
+  IF cbLevelSatuan.EditValue='SATUAN TERKECIL' then //Terkecil
+  begin
+    vleveljumlah_in :=' case when SUM(level3_qty_in)=0 then SUM(level2_qty_in) else SUM(level3_qty_in) END  ';
+		vleveljumlah_out:=' case when SUM(level3_qty_out)=0 then SUM(level2_qty_out) else SUM(level3_qty_out) END    ';
+		vleveljumlah_sa :=' case when saldo_awal_lev3=0 then saldo_awal_lev2 else saldo_awal_lev3 END  ';
+    vtransjumlah_in :=' CASE WHEN t.level3_qty_in = 0 THEN t.level2_qty_in ELSE t.level3_qty_in END ';
+    vtransjumlah_out:=' CASE WHEN t.level3_qty_out = 0 THEN t.level2_qty_out ELSE t.level3_qty_out END ';
+    vsatuan         :=' case when satuan_lev3 ='''' THEN satuan_lev2 ELSE satuan_lev3 END ';
+    vsatuan_trans   :=' case when level3_satuan ='''' THEN level2_satuan ELSE level3_satuan END  ';
+  end;
+
+  query :=
+  'SELECT aa.*, i.item_name AS itemProduct_name FROM ( SELECT ' +
+  '        '''' AS notrans, ' +
+  '        kd_barang as kd_barang, ' +
+  '        ''''  AS type, ' +
+  '        to_char(to_date(' + QuotedStr(FormatDateTime('dd-mm-yyyy', tgl_awal.EditValue)) + ', ''DD-MM-YYYY''), ''DD/MM/YYYY'') AS tgltrans, ' +
+  '        ''SALDO AWAL'' AS keterangan, ' +
+  '        0 AS level1_qty_in, ' +
+  '        0 AS level1_qty_out, ' +
+  '        saldo_awal_periode AS saldo_awal, ' +
+  '        0 AS urut, ' +
+  '        satuan ' +
+  '    FROM ( ' +
+  '        SELECT ' +
+  '            m.kd_barang, ' +
+  '            i.item_name, ' +
+  '            COALESCE(m.saldo_awal, 0) + COALESCE(SUM(t.jum_trans_in - jum_trans_out), 0) AS saldo_awal_periode, ' +
+  '            satuan ' +
+  '        FROM ( ' +
+  '            SELECT ' +
+  '                kd_barang, ' +
+  '                '+vleveljumlah_sa+' saldo_awal, ' +
+  '                '+vsatuan+' satuan ' +
+  '            FROM tbl_transaksi_stock_sa ' +
+  '            WHERE kd_gudang = ' + QuotedStr(kd_gudang) +
+  '        ) m ' +
+  '        LEFT JOIN ( ' +
+  '            SELECT ' +
+  '                item_code, ' +
+  '                '+vleveljumlah_in+' jum_trans_in, ' +
+  '                '+vleveljumlah_out+' jum_trans_out ' +
+  '            FROM tbl_transaksi_stock ' +
+  '            WHERE type IN (''IN'', ''OUT'') ' +
+  '                AND tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_stock_wh)) + '::date ' +
+  '                    AND (' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_awal.EditValue)) + '::date - INTERVAL ''1 day'') ' +
+  '                AND kd_gudang = ' + QuotedStr(kd_gudang) +
+  '            GROUP BY item_code ' +
+  '            ORDER BY item_code ' +
+  '        ) t ON m.kd_barang = t.item_code ' +
+  '        LEFT JOIN t_item i ON m.kd_barang = i.item_code ' +
+  '        WHERE i.category_id = ' + vgroup_id +
+  '        GROUP BY m.kd_barang, i.item_name, m.saldo_awal, satuan ' +
+  '        ORDER BY m.kd_barang ' +
+  '    ) sa ' +
+  '    ' +
+  '    UNION ALL ' +
+  '    SELECT ' +
+  '        notrans as notrans, ' +
+  '        t.item_code  AS kd_barang, ' +
+  '        t.type  AS type, ' +
+  '        to_char(tgltrans, ''DD/MM/YYYY'') AS tgltrans, ' +
+  '        CASE ' +
+  '            WHEN t.sumber_table = ''t_item_receive_det'' THEN concat(''Pembelian '', notrans) ' +
+  '            WHEN t.sumber_table = ''t_selling_det'' THEN concat(''Penjualan '', notrans) ' +
+  '            WHEN t.sumber_table = ''t_purchase_return_det'' THEN concat(''Retur Pembelian '', notrans) ' +
+  '            WHEN t.sumber_table = ''t_sales_returns_det'' THEN concat(''Retur Penjualan '', notrans) ' +
+  '         END AS keterangan, ' +
+  '        '+vtransjumlah_in+' level1_qty_in, ' +
+  '        '+vtransjumlah_out+' level1_qty_out, ' +
+  '        0 AS saldo_awal, ' +
+  '        1 AS urut, ' +
+  '        '+vsatuan_trans+' satuan ' +
+  '    FROM tbl_transaksi_stock t ' +
+  '        LEFT JOIN t_purchase_invoice beli ON t.notrans = beli.trans_no ' +
+  '        LEFT JOIN t_selling jual ON t.notrans = jual.trans_no ' +
+  '        LEFT JOIN t_purchase_return retbeli ON t.notrans = retbeli.return_no ' +
+  '        LEFT JOIN t_sales_returns retjual ON t.notrans = retjual.trans_no ' +
+  '        LEFT JOIN t_item i ON t.item_code = i.item_code '+
+  '    WHERE i.category_id = ' + vgroup_id +' and t.kd_gudang = ' + QuotedStr(kd_gudang) +
+  '        AND t.tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_awal.EditValue)) +
+  '            AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_akhir.EditValue)) +
+  '        AND t.type IN (''IN'', ''OUT'') ' +
+  ') aa ' +
+  'LEFT JOIN t_item i ON aa.kd_barang = i.item_code ';
+
+
+  //jns_product:= SelectRow('select id from t_jenis_product where id='+inttostr(cbjenis.ItemIndex)+' OR jenisProduct_name='+QuotedSTR(cbjenis.text)+'');
+  with QKartuGUdang do
+  begin
+    close;
+    sql.clear;
+    sql.add(query);
+    sql.add(' WHERE i.category_id = ' + vgroup_id +'');
+    sql.add(' GROUP BY "notrans", "tgltrans", "kd_barang", "urut", "type", "keterangan", "level1_qty_in", "level1_qty_out", "saldo_awal",  "satuan", "itemproduct_name"');
+    sql.add(' ORDER BY kd_barang,tgltrans,urut,type,notrans asc');
+    open;
+  end;
+
+
+  if QKartuGUdang.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+
+  if QKartuGUdang.RecordCount<>0 then
+  begin
+   Report.LoadFromFile(cLocation +'Report/frx_KartuGudang'+ '.fr3');
+   SetMemo(Report,'nama_pt',UpperCase(FHomeLogin.vNamaPRSH));
+   SetMemo(Report,'satuan','('+UpperCase(cbLevelSatuan.EditValue)+')');
+   SetMemo(Report,'nama_gudang','('+UpperCase(CbGudang2.EditValue)+')');
+   SetMemo(Report,'periode',formatdatetime('dd/mm/yyyy',tgl_awal.EditValue)+'  s/d '+formatdatetime('dd/mm/yyyy',tgl_akhir.EditValue)+'')  ;
+   SetMemo(Report,'jenis_barang','KATEGORI BARANG : '+UpperCase(cxkategori_barang.EditValue));
+   {SetMemo(Report,'lokasi_PT',UpperCase(FMainMenu.vkota));
+   Report.Variables['vlokasi_pt'] := QuotedStr(FMainMenu.vkota); }
+
+
+   Report.ShowReport();
+  end;
+
+end;
 end;
 
 procedure TFRpt_Kartu_Gudang.DxRefreshClick(Sender: TObject);
@@ -532,7 +690,7 @@ begin
             ' LEFT JOIN ( SELECT item_code, '+vleveljumlah_in+' jum_trans_in,  '+
             ' '+vleveljumlah_out+' jum_trans_out  from tbl_transaksi_stock  WHERE type '+
             ' IN (''IN'',''OUT'') and tgltrans '+
-            ' BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date AND ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date - INTERVAL ''1 day'') '+
+            ' BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date AND ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_awal.EditValue))+'::date - INTERVAL ''1 day'') '+
             ' AND kd_gudang = '+QuotedStr(kd_gudang)+' GROUP BY item_code ORDER BY item_code) t  '+
             ' ON m.kd_barang = t.item_code '+
             ' LEFT JOIN t_item i ON m.kd_barang= i.item_code '+
@@ -665,11 +823,9 @@ Load;
 // Pastikan jenis editor adalah DateEdit
 tgl_awal.PropertiesClassName := 'TcxDateEditProperties';
 tgl_akhir.PropertiesClassName := 'TcxDateEditProperties';
-
 // Set format tanggal
 (tgl_awal.Properties as TcxDateEditProperties).DisplayFormat := 'dd/MM/yyyy';
 (tgl_akhir.Properties as TcxDateEditProperties).DisplayFormat := 'dd/MM/yyyy';
-
 // Isi nilai default
 tgl_awal.EditValue := Date;
 tgl_akhir.EditValue := Date;

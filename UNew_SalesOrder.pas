@@ -91,6 +91,9 @@ type
     LabelKendaraan: TLabel;
     Label24: TLabel;
     edKendaraan: TEdit;
+    edGudang: TRzButtonEdit;
+    Label25: TLabel;
+    Label26: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edNama_PelangganButtonClick(Sender: TObject);
@@ -110,6 +113,7 @@ type
     procedure cbKonversiMuatanClick(Sender: TObject);
     procedure edKelompokKendaraanButtonClick(Sender: TObject);
     procedure dtTanggal_KirimChange(Sender: TObject);
+    procedure edGudangButtonClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -117,8 +121,9 @@ type
     { Public declarations }
     vFormSumber, vFormSumber1, kd_kares,kd_kab: string;
     strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
-    Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId: string;
+    Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId,StrKodeGudang: string;
     Year, Month, Day: Word;
+    isCancel: Integer;
     procedure Clear;
     procedure Save;
     procedure Update;
@@ -519,6 +524,7 @@ begin
             ' WHERE deleted_at IS NULL ) a '+
             ' LEFT JOIN t_item b on b.item_code=a.code_item '+
             ' LEFT JOIN t_item_group c on c.group_id=b.group_id '+
+            ' '+
             ' WHERE notrans='+QuotedStr(edKodeOrder.Text)+' '+
             ' Order By notrans, code_item desc');
     open;
@@ -596,7 +602,7 @@ begin
       sql.Text:=' INSERT INTO "public"."t_sales_order_det" ("notrans", "code_item", '+
                 ' "name_item","amount", "code_unit", "name_unit", '+
                 ' gross_weight,tare_weight, '+
-                ' source ) '+
+                ' source,wh_code ) '+
                 ' Values( '+
                 ' '+QuotedStr(edKodeOrder.Text)+', '+
                 ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
@@ -606,7 +612,7 @@ begin
                 ' '+QuotedStr(MemDetail['NM_ SATUAN'])+', '+
                 ' COALESCE(' + VarToStrDef(MemDetail['BERAT_ISI'], '0') + ',0), '+
                 ' COALESCE(' + VarToStrDef(MemDetail['BERAT_KOSONG'], '0') + ',0), '+
-                ' '+QuotedStr(edKodeSumber.Text)+' );';
+                ' '+QuotedStr(edKodeSumber.Text)+','+QuotedStr(StrKodeGudang)+' );';
 
       ExecSQL;
     end;
@@ -752,6 +758,9 @@ begin
     end else if edKelompokKendaraan.Text='' then
     begin
       MessageDlg('Kelompok Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end else if edGudang.Text='' then
+    begin
+      MessageDlg('Gudang Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end
     else if Status = 0 then
     begin
@@ -908,6 +917,8 @@ end;
 
 procedure TFNew_SalesOrder.Clear;
 begin
+  StrKodeGudang:='';
+  edGudang.Text:='';
   strVehicleGroupId:='';
   edKodeOrder.Clear;
   dtTanggal_Kirim.Date:=Now();
@@ -961,6 +972,32 @@ begin
 //  FNew_SalesOrder.Autonumber;
 end;
 
+procedure TFNew_SalesOrder.edGudangButtonClick(Sender: TObject);
+var strWhere,strJoin,strCodeHeadOffice: String;
+begin
+  strCodeHeadOffice:='';
+  strJoin:='';
+  strWhere:='';
+  if edKodeSumber.Text='SO003' then
+  begin
+    strCodeHeadOffice:=SelectRow('select code_head_office from get_customer() where customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ');
+    strJoin:=' LEFT JOIN get_customer() b on b.customer_code=a.customer_code ';
+    if (strCodeHeadOffice='0') OR (strCodeHeadOffice='') OR (strCodeHeadOffice=NULL) then
+    begin
+      strWhere:=' a.customer_code='+QuotedStr(edKode_Pelanggan.Text)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC ';
+    end else begin
+      strWhere:=' b.code_head_office='+QuotedStr(strCodeHeadOffice)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC  ';
+    end;
+  end else begin
+    strWhere:=' category=''BARANG DAGANG'' ';
+  end;
+
+  FMasterData.Caption:='Master Data Gudang';
+  FMasterData.vcall:='salesorder_gudang';
+  FMasterData.update_grid('a.wh_code','a.wh_name','a.category',' t_wh a '+strJoin+' ','WHERE '+strWhere+' ');
+  FMasterData.ShowModal;
+end;
+
 procedure TFNew_SalesOrder.edKelompokKendaraanButtonClick(Sender: TObject);
 begin
   FDaftarKendaraan.vcall:='sales_order';
@@ -990,8 +1027,6 @@ begin
     edNoReff.Text:='-';
     edKode_Pelanggan.ReadOnly:=False;
     edNama_Pelanggan.ReadOnly:=False;
-//    edKode_Pelanggan.Text:='';
-//    edNama_Pelanggan.Text:='';
     dtTanggal_Pesan.Enabled:=True;
   end;
 end;
@@ -1108,6 +1143,8 @@ begin
     dtTanggal_Pesan.Enabled:=True;
   end;
 
+  if isCancel=1 then BSave.Enabled:=False else  BSave.Enabled:=True;
+
 end;
 
 procedure TFNew_SalesOrder.Save;
@@ -1121,7 +1158,6 @@ begin
   else Stradditional_code:=QuotedStr(kd_kares);
 
   if cbKonversiMuatan.Checked=True then strKonversiMuatan:='True' else strKonversiMuatan:='False';
-
 
 //  ShowMessage(kd_kares);
 
@@ -1167,7 +1203,8 @@ begin
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
-            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number) '+
+            'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,'+
+            'type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -1310,7 +1347,8 @@ begin
               ' status='+StrStatus+','+
               ' note='+StrNote+', '+
               ' load_conversion='+strKonversiMuatan+', '+
-              ' vehicle_group_id='+QuotedStr(edKelompokKendaraan.Text)+','+
+              ' vehicle_group_id='+QuotedStr(strVehicleGroupId)+','+
+              ' vehicle_group_sort_number='+QuotedStr(edKelompokKendaraan.Text)+','+
               ' type_vehicles_code='+QuotedStr(edKodeTypeKendaraan.Text)+','+
               ' type_vehicles_name='+QuotedStr(edTypeKendaraan.Text)+','+
               ' vehicles='+QuotedStr(edKendaraan.Text)+','+

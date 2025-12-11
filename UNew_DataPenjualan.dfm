@@ -240,18 +240,19 @@ object FNew_Penjualan: TFNew_Penjualan
       Height = 15
       Caption = ':'
     end
-    object LabelNotaBatal: TRzLabel
-      Left = 376
-      Top = 148
-      Width = 128
-      Height = 30
-      Caption = 'NOTA BATAL'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -21
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
+    object Label25: TLabel
+      Left = 624
+      Top = 144
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label26: TLabel
+      Left = 530
+      Top = 144
+      Width = 42
+      Height = 15
+      Caption = 'Gudang'
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
@@ -436,8 +437,8 @@ object FNew_Penjualan: TFNew_Penjualan
       TabOrder = 12
     end
     object cbUangMuka: TRzCheckBox
-      Left = 148
-      Top = 152
+      Left = 142
+      Top = 154
       Width = 84
       Height = 19
       Caption = 'Uang Muka'
@@ -453,6 +454,15 @@ object FNew_Penjualan: TFNew_Penjualan
       CharCase = ecUpperCase
       ReadOnly = True
       TabOrder = 14
+    end
+    object edGudang: TEdit
+      Left = 638
+      Top = 141
+      Width = 230
+      Height = 23
+      CharCase = ecUpperCase
+      ReadOnly = True
+      TabOrder = 15
     end
   end
   object Panel2: TPanel
@@ -730,22 +740,20 @@ object FNew_Penjualan: TFNew_Penjualan
     Width = 870
     Height = 255
     Hint = ''
-    ActivePage = TabSDetailPel
+    ActivePage = TabUangMuka
     Align = alClient
     BackgroundColor = clBtnFace
     BoldCurrentTab = True
     UseColoredTabs = True
     ParentBackgroundColor = False
     ParentColor = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 866
     ExplicitHeight = 254
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 862
-      ExplicitHeight = 229
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -1006,6 +1014,8 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object TabUangMuka: TRzTabSheet
       Caption = 'Uang Muka'
+      ExplicitWidth = 862
+      ExplicitHeight = 229
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0

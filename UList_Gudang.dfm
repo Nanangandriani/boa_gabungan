@@ -18,6 +18,7 @@ object FListGudang: TFListGudang
     Width = 832
     Height = 315
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DsGudang
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
@@ -76,7 +77,7 @@ object FListGudang: TFListGudang
         EditButtons = <>
         FieldName = 'category'
         Footers = <>
-        Title.Caption = 'Category'
+        Title.Caption = 'Kategori Gudang'
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh

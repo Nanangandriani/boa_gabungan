@@ -46,7 +46,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Kode'
-        Width = 150
+        Width = 95
       end
       item
         CellButtons = <>
@@ -66,6 +66,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Jenis Kendaraan'
+        Width = 251
       end
       item
         CellButtons = <>

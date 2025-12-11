@@ -30,17 +30,22 @@ type
     BSimpan: TRzBitBtn;
     BEdit: TRzBitBtn;
     RzButtonEdit1: TRzButtonEdit;
+    Label39: TLabel;
+    Label38: TLabel;
+    edNama_Pelanggan: TRzButtonEdit;
     procedure BBatalClick(Sender: TObject);
     procedure BEditClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CbCategorySelect(Sender: TObject);
     procedure RzButtonEdit1ButtonClick(Sender: TObject);
+    procedure edNama_PelangganButtonClick(Sender: TObject);
   private
     { Private declarations }
     procedure showsbucode;
     procedure showcategorywh;
   public
+    Kode_Pelanggan : string;
     { Public declarations }
     Procedure CLear;
   end;
@@ -53,7 +58,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_Kategori_Gudang, UMainMenu, UList_Gudang;
+uses UDataModule, UNew_Kategori_Gudang, UMainMenu, UList_Gudang,
+  Ubrowse_pelanggan;
 
 
 procedure TFNew_Gudang.showsbucode;
@@ -113,9 +119,17 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update t_wh set category='+QuotedStr(CbCategory.Text)+', wh_name='+QuotedStr(EdNm.Text)+',code='+QuotedStr(Edkode.Text)+',sbu_code='+QuotedStr(CbSbu.Text)+' where wh_code='+QuotedStr(Edkd.Text)+' and order_no='+QuotedStr(Edno.Text);
+      sql.Text:=' Update t_wh set category='+QuotedStr(CbCategory.Text)+', '+
+                ' wh_name='+QuotedStr(EdNm.Text)+', '+
+                ' code='+QuotedStr(Edkode.Text)+', '+
+                ' sbu_code='+QuotedStr(CbSbu.Text)+', '+
+                ' customer_code='+QuotedStr(Kode_Pelanggan)+', '+
+                ' updated_at=now(), '+
+                ' updated_by='+QuotedStr(Nm)+' '+
+                ' where wh_code='+QuotedStr(Edkd.Text)+' ';
       ExecSQL;
     end;
+    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     BBatalClick(sender);
 end;
 
@@ -139,13 +153,22 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='insert into t_wh(wh_name,code,sbu_code,category,wh_code,created_at,created_by) '+
-                ' values('+QuotedStr(EdNm.Text)+','+QuotedStr(Edkd.Text)+','+QuotedStr(CbSbu.Text)+','+QuotedStr(CbCategory.Text)+','+QuotedStr(Edkode.Text)+',now(),:created_by)';
+      sql.Text:=' insert into t_wh(wh_name,code,sbu_code,category,wh_code,'+
+                ' customer_code,created_at,created_by) '+
+                ' values('+QuotedStr(EdNm.Text)+','+
+                ' '+QuotedStr(Edkd.Text)+','+
+                ' '+QuotedStr(CbSbu.Text)+','+
+                ' '+QuotedStr(CbCategory.Text)+','+
+                ' '+QuotedStr(Edkode.Text)+','+
+                ' '+QuotedStr(Kode_Pelanggan)+','+
+                ' now(),'+
+                ' '+QuotedStr(Nm)+')';
       //parambyname('created_at').AsDateTime:=Now;
-      parambyname('created_by').AsString:='Admin';
+      //parambyname('created_by').AsString:='Admin';
       ExecSQL;
     end;
     FMainMenu.TampilTabForm2;
+    MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
     BBatalClick(sender);
 end;
 
@@ -182,6 +205,7 @@ begin
       end;
       urut:=FloatToStr(DM.Qtemp2['kd']+1);
       edkode.Text:=DM.Qtemp2['category_code']+(Copy('00'+urut,length('00'+urut)-1,2));
+      edkd.Text:=edkode.Text;
     end;
 end;
 
@@ -191,6 +215,15 @@ begin
    Ednm.Clear;
    CbSbu.Clear;
    CbCategory.Clear;
+   Kode_Pelanggan:='';
+   edNama_Pelanggan.Clear;
+end;
+
+procedure TFNew_Gudang.edNama_PelangganButtonClick(Sender: TObject);
+begin
+    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+    Fbrowse_data_pelanggan.vcall:='m_gudang';
+    Fbrowse_data_pelanggan.ShowModal;
 end;
 
 procedure TFNew_Gudang.FormShow(Sender: TObject);

@@ -221,6 +221,7 @@ begin
   if statustr='0' then
   begin
     Edno.Text:=SelectRow('SELECT buat_singkatan('+QuotedStr(EdKelompok.Text)+');');
+    Edkd.Text:=Edno.Text;
   end;
 end;
 

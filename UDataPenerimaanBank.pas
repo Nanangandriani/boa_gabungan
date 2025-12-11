@@ -155,7 +155,7 @@ type
     WAIT_TIME_MS = 1000; // 1 detik
     { Private declarations }
   public
-    Status,KetemuCekPosisiDK,iserror,IntStatusKoreksi : Integer;
+    Status,KetemuCekPosisiDK,iserror,IntStatusKoreksi,isCancel : Integer;
     akun_d, akun_k, kd_ak_pelanggan, vid_modul : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5,kd_kares : String;
     strtgl, strbulan, strtahun: string;
@@ -1031,7 +1031,7 @@ begin
   iserror:=0;
   if CheckJurnalPosting(edNoTrans.Text)>0 then
   begin
-    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
     iserror:=1;
   end;
   if iserror=0 then

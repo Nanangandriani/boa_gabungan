@@ -119,7 +119,9 @@ type
     Label23: TLabel;
     Label24: TLabel;
     edPOOrder: TEdit;
-    LabelNotaBatal: TRzLabel;
+    edGudang: TEdit;
+    Label25: TLabel;
+    Label26: TLabel;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -159,6 +161,7 @@ type
     procedure edNama_PelangganChange(Sender: TObject);
     procedure DBGridEh1Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure edGudangButtonClick(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot,tot_uang_muka,tot_dipotong_uang_muka : real;
@@ -166,7 +169,7 @@ type
     { Public declarations }
     stat_menej_fee_jual, stat_proses : Boolean;
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
-    strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,Str: string;
+    strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,strKodeGudang: string;
     Year, Month, Day: Word;
     status,StatusCekKasifikasi,IntStatusKoreksi,iserror,isCancel: integer;
     procedure Clear;
@@ -358,7 +361,9 @@ try
       edTotPot.Value:=(tot_pot);
       edTotPembulatan.Value:=(tot_dpp-(tot_harga_sblm_pot-tot_pot));
       edTotSebelumPajak.Value:=(tot_dpp);
-      tot_ppn:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',(tot_dpp*(ppn/100))), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+
+      tot_ppn:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('0.00',(tot_dpp*(ppn/100))), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+
       edTotPPN.Value:=tot_ppn;
 
 
@@ -759,14 +764,15 @@ begin
                 ' "amount", "code_unit", "name_unit", "no_reference", "unit_price", "sub_total", '+
                 ' "ppn_percent", "ppn_account", "ppn_value", "pph_account", "pph_name", "pph_percent", '+
                 ' "pph_value", "tot_piece_value", "tot_piece_percent", "menejmen_fee", '+
-                '"menejmen_fee_value", "grand_tot",dpp_lain_lain,ppn_value_cortex,ppn_percent_cortex,gross_weight,tare_weight) '+
+                '"menejmen_fee_value", "grand_tot",dpp_lain_lain,ppn_value_cortex,'+
+                'ppn_percent_cortex,gross_weight,tare_weight,wh_code) '+
                 ' Values( '+
                 ':partrans_no, :parcode_item,:parname_item, :paraccount_code, '+
                 ' :paramount, :parcode_unit, :parname_unit, :parno_reference, :parunit_price, :parsub_total, '+
                 ' :parppn_percent, :parppn_account, :parppn_value, :parpph_account, :parpph_name, :parpph_percent, '+
                 ' :parpph_value, :partot_piece_value, :partot_piece_percent, :parmenejmen_fee,'+
                 ' :parmenejmen_fee_value, :pargrand_tot,:pardpp_lain_lain,:parppn_value_cortex,'+
-                ':parppn_percent_cortex,:pargross_weight,:partare_weight)';
+                ':parppn_percent_cortex,:pargross_weight,:partare_weight,:parwh_code)';
                 parambyname('partrans_no').Value:=edNomorTrans.Text;
                 parambyname('parcode_item').Value:=MemDetail['KD_ITEM'];
                 parambyname('parname_item').Value:=MemDetail['NM_ITEM'];
@@ -794,7 +800,7 @@ begin
                 parambyname('parppn_percent_cortex').Value:=ppncortex;
                 parambyname('pargross_weight').Value:=MemDetail['BERAT_ISI'];
                 parambyname('partare_weight').Value:=MemDetail['BERAT_KOSONG'];
-
+                parambyname('parwh_code').Value:=strKodeGudang;
 
 //              ' '+QuotedStr(edNomorTrans.Text)+', '+
 //              ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
@@ -1000,7 +1006,7 @@ begin
         end }
         else if spJatuhTempo.Value=0 then
         begin
-          MessageDlg('Jumlah Tempo Tidak Boleh Kosong..!!',mtInformation,[mbRetry],0);
+          MessageDlg('Jumlah Tempo Wajib Diisi..!!',mtInformation,[mbRetry],0);
           spJatuhTempo.SetFocus;
         end
         else if (edNoReff.Text='') or (edNoReff.Text='0' )then
@@ -1146,6 +1152,8 @@ end;
 
 procedure TFNew_Penjualan.Clear;
 begin
+  strKodeGudang:='';
+  edGudang.Clear;
   edKode_Trans.Clear;
   edNama_Trans.Clear;
   edNomorFaktur.Clear;
@@ -1173,6 +1181,7 @@ begin
   cbUangMuka.Visible:=False;
   TabUangMuka.TabVisible:=False;
   RzPageControl1.ActivePage := TabSDetailPel;
+
 end;
 
 procedure TFNew_Penjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -1293,6 +1302,32 @@ begin
     DBGridDetail.ReadOnly:=False;
     edPOOrder.ReadOnly:=False;
   end;
+end;
+
+procedure TFNew_Penjualan.edGudangButtonClick(Sender: TObject);
+var strWhere,strJoin,strCodeHeadOffice: String;
+begin
+  strCodeHeadOffice:='';
+  strJoin:='';
+  strWhere:='';
+  if SelectRow('select code_source from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' ')='SO003' then
+  begin
+    strCodeHeadOffice:=SelectRow('select code_head_office from get_customer() where customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ');
+    strJoin:=' LEFT JOIN get_customer() b on b.customer_code=a.customer_code ';
+    if (strCodeHeadOffice='0') OR (strCodeHeadOffice='') OR (strCodeHeadOffice=NULL) then
+    begin
+      strWhere:=' a.customer_code='+QuotedStr(edKode_Pelanggan.Text)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC ';
+    end else begin
+      strWhere:=' b.code_head_office='+QuotedStr(strCodeHeadOffice)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC  ';
+    end;
+  end else begin
+    strWhere:=' category=''BARANG DAGANG'' ';
+  end;
+
+  FMasterData.Caption:='Master Data Gudang';
+  FMasterData.vcall:='penjualan_gudang';
+  FMasterData.update_grid('a.wh_code','a.wh_name','a.category',' t_wh a '+strJoin+' ','WHERE '+strWhere+' ');
+  FMasterData.ShowModal;
 end;
 
 procedure TFNew_Penjualan.edKode_TransButtonClick(Sender: TObject);
@@ -1449,7 +1484,6 @@ begin
     BSave.Enabled := False;
     BCorrection.Visible := False;
     BCorrection.Enabled := False;
-    LabelNotaBatal.Visible:=True;
     Exit;
   end;
 
@@ -1458,20 +1492,17 @@ begin
     BSave.Enabled := True;
     BCorrection.Visible := True;
     BCorrection.Enabled := False;
-    LabelNotaBatal.Visible:=False;
   end
   else if Status = 0 then
   begin
     BSave.Enabled := True;
     BCorrection.Visible := False;
-    LabelNotaBatal.Visible:=False;
   end
   else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (isCancel=0) then
   begin
     BSave.Enabled := False;
     BCorrection.Visible := True;
     BCorrection.Enabled := True;
-    LabelNotaBatal.Visible:=False
   end;
 
   edNomorTrans.ReadOnly:=True;
@@ -1659,10 +1690,12 @@ begin
             'a.trans_no, a.code_item, a.name_item,c.group_id, a.amount, a.code_unit, a.name_unit, '+
             'a.no_reference, a.unit_price, a.sub_total, a.ppn_percent, a.ppn_value, a.pph_account, '+
             'a.pph_name, a.pph_percent, a.pph_value,  a.tot_piece_value,a.tot_piece_percent, '+
-            'a.grand_tot, a.ppn_account,  a.account_code, a.menejmen_fee, a.menejmen_fee_value, a.gross_weight, a.tare_weight  '+
+            'a.grand_tot, a.ppn_account,  a.account_code, a.menejmen_fee, a.menejmen_fee_value, '+
+            'a.gross_weight, a.tare_weight,COALESCE(a.wh_code,'''') wh_code,COALESCE(d.wh_name,'''') wh_name '+
             'FROM  public.t_selling_det  a left join t_selling_piece b on b.trans_no=a.trans_no '+
             'AND b.code_item=a.code_item '+
             'LEFT JOIN t_item c on c.item_code=a.code_item '+
+            'LEFT JOIN t_wh d on d.wh_code=a.wh_code '+
             ') aa  '+
             'WHERE aa.trans_no='+QuotedStr(edNomorTrans.Text)+' Order By aa.trans_no, aa.code_item desc;');
 
@@ -1718,12 +1751,14 @@ begin
       FNew_Penjualan.MemDetail['BERAT_KOSONG']:=Dm.Qtemp.fieldbyname('tare_weight').value else
       FNew_Penjualan.MemDetail['BERAT_KOSONG']:=0;
 
+      FNew_Penjualan.strKodeGudang:=Dm.Qtemp.fieldbyname('wh_code').value;
+      FNew_Penjualan.edGudang.Text:=Dm.Qtemp.fieldbyname('wh_name').value;
+
       FNew_Penjualan.MemDetail.post;
       Dm.Qtemp.next;
     end;
     HitungDetail;
   end;
-
 
   with dm.Qtemp2 do
   begin

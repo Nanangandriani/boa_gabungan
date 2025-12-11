@@ -26,7 +26,8 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxLabel, cxSpinEdit, cxGraphics,
   cxControls, cxLookAndFeels, cxLookAndFeelPainters, dxCore, dxRibbonSkins,
-  dxRibbonCustomizationForm, dxRibbon, dxBar, cxBarEditItem, cxClasses;
+  dxRibbonCustomizationForm, dxRibbon, dxBar, cxBarEditItem, cxClasses,cxTextEdit,
+  dxBarExtItems, Vcl.Samples.Spin;
 
 type
   TFRpt_Rekap_Persediaan = class(TForm)
@@ -42,7 +43,6 @@ type
     Qstokawal: TUniQuery;
     DsMaterial: TDataSource;
     DBRekap_Persediaan: TfrxDBDataset;
-    MemData: TMemTableEh;
     DBGridEh1: TDBGridEh;
     DsPersediaan: TDataSource;
     QInOut: TUniQuery;
@@ -73,18 +73,21 @@ type
     ProgressBar1: TProgressBar;
     CbCategory: TRzComboBox;
     Edit1: TEdit;
-    procedure DBGridEh1CellClick(Column: TColumnEh);
-    procedure DBGridEh1ColEnter(Sender: TObject);
+    dxBarSpinEdit1: TdxBarSpinEdit;
+    Sptahun2: TSpinEdit;
     procedure BBatalClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure Autonumber;
-    Procedure simpansa;
   end;
 
 //var
@@ -94,7 +97,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMainmenu, UDataModule;
+uses UMainmenu, UDataModule, UMy_Function;
 var
   realfrptrp : TFRpt_Rekap_Persediaan;
   var  EditNo,yr,Status,bln,thn: string;
@@ -131,7 +134,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select max(right(LEFT(notrans,6),3)) urut from t_sa_persediaan where to_char(periode,''yyyy'')='+QuotedStr(thn);
+    sql.Text:='select max(right(LEFT(trans_no,6),3)) urut from t_sa_persediaan where trans_year='+QuotedStr(Sptahun2.Text);
     open;
   end;
    if dm.Qtemp.Fields[0].AsString = '' then
@@ -143,153 +146,200 @@ begin
      for i := length(code) to 2 do
       code := '0' + code;
     end;
-  EditNo:='SA/'+CODE+ '/'+yn+'/' + Kd_SBU;
+  EditNo:='SA/'+CODE+ '/'+Sptahun2.Text+'/' + Kd_SBU;
  // Edit1.Text:=EditNo;
+ //ShowMessage(editno);
 end;
 
-
-procedure TFRpt_Rekap_Persediaan.simpansa;
-var tgl,tgl2:string;
-begin
-tgl:=FormatDateTime('yyyy-mm-dd',DtMulai.Date);
-tgl2:=FormatDateTime('yyyy-mm-dd',DtSelesai.Date);
-//MemData.EmptyTable;
- with dm.Qtemp3 do
-  begin
-    close;
-    sql.Clear;
-  //  sql.Text:='select * from t_sa_persediaan where periode='+QuotedStr(tgl)+' and periode2='+QuotedStr(tgl2)+' and category='+QuotedStr(CbCategory.Text)+'';
-    ExecSQL;
-  end;
-    if DM.Qtemp3.RecordCount=0 then
-    begin
-      Autonumber;
-      with DM.Qtemp2 do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='insert into t_sa_persediaan(notrans,periode,periode2,category)values(:notrans,:periode,:periode2,:category)';
-                ParamByName('notrans').AsString:=Edit1.Text;
-                ParamByName('periode').AsString:=tgl;
-                ParamByName('periode2').AsString:=tgl2;
-                ParamByName('category').AsString:=CbCategory.Text;
-                Execute;
-      end;
-      MemData.First;
-      row:=0;
-      ProgressBar1.Min := 0;
-      ProgressBar1.Max := MemData.RecordCount;
-      while not MemData.eof do
-        begin
-        with dm.qtemp do
-          begin
-            close;
-            sql.clear;
-            sql.text:='INSERT INTO t_sa_persediaan_det(notrans,kd_material,qty,harga,qtypk,hargapk,harga_satuan)VALUES'+
-            '(:notrans,:kd_material,:qty,:harga,:qtypk,:hargapk,:harga_satuan)';
-            ParamByName('kd_material').AsString:=MemData['kd_material_stok'];
-            ParamByName('notrans').AsString:=Edit1.Text;
-            ParamByName('qty').AsString:=MemData['saldoakhir'];
-            ParamByName('harga').AsString:=MemData['hargaakhir'];
-            ParamByName('qtypk').AsString:=MemData['keluar'];
-            ParamByName('hargapk').AsString:=MemData['hargakeluar'];
-            ParamByName('harga_satuan').AsString:=MemData['hargarata2'];
-            ExecSQL;
-          end;
-          ProgressBar1.Position:=row;
-          MemData.Next;
-          row:=row+10;
-        end;
-    end;
-    if DM.Qtemp3.RecordCount<>0 then
-    begin
-      Edit1.Text:=DM.Qtemp3['notrans'];
-      with DM.Qtemp2 do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='Update t_sa_persediaan set periode=:periode,periode2=:periode2,category=:category where notrans=:notrans';
-                  ParamByName('notrans').AsString:=Edit1.Text;
-                  ParamByName('periode').AsString:=tgl;
-                  ParamByName('periode2').AsString:=tgl2;
-                  ParamByName('category').AsString:=CbCategory.Text;
-                  Execute;
-      end;
-      with DM.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='delete from t_sa_persediaan_det where notrans=:notrans';
-                  ParamByName('notrans').AsString:=Edit1.Text;
-                  Execute;
-      end;
-        MemData.First;
-        row:=0;
-        ProgressBar1.Min := 0;
-        ProgressBar1.Max := MemData.RecordCount;
-        while not MemData.eof do
-          begin
-          with dm.qtemp do
-            begin
-              close;
-              sql.clear;
-              sql.text:='INSERT INTO t_sa_persediaan_det(notrans,kd_material,qty,harga,qtypk,hargapk,harga_satuan)VALUES'+
-              '(:notrans,:kd_material,:qty,:harga,:qtypk,:hargapk,:harga_satuan)';
-              ParamByName('kd_material').AsString:=MemData['kd_material_stok'];
-              ParamByName('notrans').AsString:=Edit1.Text;
-              ParamByName('qty').AsString:=MemData['saldoakhir'];
-              ParamByName('harga').AsString:=MemData['hargaakhir'];
-              ParamByName('qtypk').AsString:=MemData['keluar'];
-              ParamByName('hargapk').AsString:=MemData['hargakeluar'];
-              ParamByName('harga_satuan').AsString:=MemData['hargarata2'];
-              ExecSQL;
-            end;
-            ProgressBar1.Position:=row;
-            MemData.Next;
-            row:=row+10;
-          end;
-    end;
-end;
 
 procedure TFRpt_Rekap_Persediaan.BBatalClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TFRpt_Rekap_Persediaan.DBGridEh1CellClick(Column: TColumnEh);
+procedure TFRpt_Rekap_Persediaan.dxBarLargeButton1Click(Sender: TObject);
 begin
-  if ((CbCategory.Text<>'PROMOSI') AND (CbCategory.Text<>'PRODUK JADI'))then
-  BEGIN
-    MemData.Edit;
-    MemData['totalstok']:=MemData['stokawal']+MemData['masuk'];
-    MemData['saldoakhir']:=MemData['totalstok']-MemData['keluar'];
-    MemData['hargaawal']:=MemData['stokawal']*MemData['harga'];
-    MemData['hargamasuk']:=MemData['masuk']*MemData['harga'];
-    MemData['hargastok']:=MemData['totalstok']*MemData['harga'];
-    if MemData['hargastok']=0 then MemData['hargarata2']:=0 else
-    MemData['hargarata2']:=MemData['hargastok']/MemData['totalstok'];
-    MemData['hargakeluar']:=MemData['keluar']*MemData['harga'];
-    MemData['hargaakhir']:=MemData['saldoakhir']*MemData['harga'];
-    MemData.Post;
-  END;
+ with Qpersediaan do
+  begin
+    Close;
+    sql.Clear;
+  //  SQL.Text:='select * from "vrekap_persediaan" where trans_year='+QuotedStr(Sptahun2.Text)+' and trans_month='+QuotedStr(inttostr(CbBulan2.ItemIndex)) ;
+    sql.Text:='select * from  f_persediaan('+QuotedStr(Sptahun2.Text)+','+QuotedStr(inttostr(CbBulan2.ItemIndex))+')';
+    open;
+  end;
+ { with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_sa_persediaan where trans_year='+QuotedStr(Sptahun2.Text)+' and trans_month='+QuotedStr(inttostr(CbBulan2.ItemIndex));
+    open;
+  end;
+  if dm.Qtemp1.RecordCount=0 then
+  begin
+    Autonumber;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='insert into t_sa_persediaan(trans_year,trans_month,trans_no,created_by)values(:tr_year,:tr_month,:trans_no,:cr_by)';
+        ParamByName('tr_year').value:=Sptahun2.text;
+        ParamByName('tr_month').value:=inttostr(CbBulan2.ItemIndex);
+        ParamByName('trans_no').value:=EditNo;
+        ParamByName('cr_by').AsString:=Nm;
+      ExecSQL;
+    end;
+    Qpersediaan.First;
+    while not Qpersediaan.eof do
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='insert into t_sa_persediaan_det(item_code,trans_no,qty,price,unit)values(:item_code,:trans_no,:qty,:price,:unit)';
+          ParamByName('item_code').value:=Qpersediaan['item_code'];
+          ParamByName('trans_no').value:=EditNo;
+          ParamByName('qty').value:=Qpersediaan['qty_end'];
+          ParamByName('price').AsString:=Qpersediaan['price_end'];
+          ParamByName('unit').AsString:=qpersediaan['unit'];
+        ExecSQL;
+        Qpersediaan.Next;
+      end;
+    end;
+  end;
+  if dm.Qtemp1.RecordCount=1 then
+  begin
+    EditNo:=dm.Qtemp1['trans_no'];
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='update t_sa_persediaan set trans_year=:tr_year,trans_month=:tr_month,change_by=:cr_by where trans_no=:trans_no';
+        ParamByName('tr_year').value:=Sptahun2.text;
+        ParamByName('tr_month').value:=inttostr(CbBulan2.ItemIndex);
+        ParamByName('trans_no').value:=EditNo;
+        ParamByName('cr_by').AsString:=Nm;
+      ExecSQL;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='delete from t_sa_persediaan_det where trans_no='+QuotedStr(EditNo);
+      ExecSQL;
+    end;
+    Qpersediaan.First;
+    while not Qpersediaan.eof do
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='insert into t_sa_persediaan_det(item_code,trans_no,qty,price,unit)values(:item_code,:trans_no,:qty,:price,:unit)';
+          ParamByName('item_code').value:=Qpersediaan['item_code'];
+          ParamByName('trans_no').value:=EditNo;
+          ParamByName('qty').value:=Qpersediaan['qty_end'];
+          ParamByName('price').AsString:=Qpersediaan['price_end'];
+          ParamByName('unit').AsString:=qpersediaan['unit'];
+        ExecSQL;
+        Qpersediaan.Next;
+      end;
+    end;
+  end;}
+    dm.QPerusahaan.Open;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_persediaan.Fr3');
+    SetMemo(Rpt,'mpt',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'mbln',' '+CbBulan2.Text+' - '+Sptahun2.Text);
+    Rpt.ShowReport();
 end;
 
-procedure TFRpt_Rekap_Persediaan.DBGridEh1ColEnter(Sender: TObject);
+procedure TFRpt_Rekap_Persediaan.DxRefreshClick(Sender: TObject);
 begin
-  if ((CbCategory.Text<>'PROMOSI') AND (CbCategory.Text<>'PRODUK JADI'))then
-  BEGIN
-    MemData.Edit;
-    MemData['totalstok']:=MemData['stokawal']+MemData['masuk'];
-    MemData['saldoakhir']:=MemData['totalstok']-MemData['keluar'];
-    MemData['hargaawal']:=MemData['stokawal']*MemData['harga'];
-    MemData['hargamasuk']:=MemData['masuk']*MemData['harga'];
-    MemData['hargastok']:=MemData['totalstok']*MemData['harga'];
-    if MemData['hargastok']=0 then MemData['hargarata2']:=0 else
-    MemData['hargarata2']:=MemData['hargastok']/MemData['totalstok'];
-    MemData['hargakeluar']:=MemData['keluar']*MemData['harga'];
-    MemData['hargaakhir']:=MemData['saldoakhir']*MemData['harga'];
-    MemData.Post;
-  END;
+  with Qpersediaan do
+  begin
+    Close;
+    sql.Clear;
+  //  SQL.Text:='select * from "vrekap_persediaan" where trans_year='+QuotedStr(Sptahun2.Text)+' and trans_month='+QuotedStr(inttostr(CbBulan2.ItemIndex)) ;
+    sql.Text:='select * from  f_persediaan('+QuotedStr(Sptahun2.Text)+','+QuotedStr(inttostr(CbBulan2.ItemIndex))+')';
+    open;
+  end;
+  with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_sa_persediaan where trans_year='+QuotedStr(Sptahun2.Text)+' and trans_month='+QuotedStr(inttostr(CbBulan2.ItemIndex));
+    open;
+  end;
+  if dm.Qtemp1.RecordCount=0 then
+  begin
+    Autonumber;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='insert into t_sa_persediaan(trans_year,trans_month,trans_no,created_by)values(:tr_year,:tr_month,:trans_no,:cr_by)';
+        ParamByName('tr_year').value:=Sptahun2.text;
+        ParamByName('tr_month').value:=inttostr(CbBulan2.ItemIndex);
+        ParamByName('trans_no').value:=EditNo;
+        ParamByName('cr_by').AsString:=Nm;
+      ExecSQL;
+    end;
+    Qpersediaan.First;
+    while not Qpersediaan.eof do
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='insert into t_sa_persediaan_det(item_code,trans_no,qty,price,unit)values(:item_code,:trans_no,:qty,:price,:unit)';
+          ParamByName('item_code').value:=Qpersediaan['item_code'];
+          ParamByName('trans_no').value:=EditNo;
+          ParamByName('qty').value:=Qpersediaan['qty_end'];
+          ParamByName('price').AsString:=Qpersediaan['price_end'];
+          ParamByName('unit').AsString:=qpersediaan['unit'];
+        ExecSQL;
+        Qpersediaan.Next;
+      end;
+    end;
+  end;
+  if dm.Qtemp1.RecordCount=1 then
+  begin
+    EditNo:=dm.Qtemp1['trans_no'];
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='update t_sa_persediaan set trans_year=:tr_year,trans_month=:tr_month,change_by=:cr_by where trans_no=:trans_no';
+        ParamByName('tr_year').value:=Sptahun2.text;
+        ParamByName('tr_month').value:=inttostr(CbBulan2.ItemIndex);
+        ParamByName('trans_no').value:=EditNo;
+        ParamByName('cr_by').AsString:=Nm;
+      ExecSQL;
+    end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='delete from t_sa_persediaan_det where trans_no='+QuotedStr(EditNo);
+      ExecSQL;
+    end;
+    Qpersediaan.First;
+    while not Qpersediaan.eof do
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='insert into t_sa_persediaan_det(item_code,trans_no,qty,price,unit)values(:item_code,:trans_no,:qty,:price,:unit)';
+          ParamByName('item_code').value:=Qpersediaan['item_code'];
+          ParamByName('trans_no').value:=EditNo;
+          ParamByName('qty').value:=Qpersediaan['qty_end'];
+          ParamByName('price').AsString:=Qpersediaan['price_end'];
+          ParamByName('unit').AsString:=qpersediaan['unit'];
+        ExecSQL;
+        Qpersediaan.Next;
+      end;
+    end;
+  end;
 end;
 
 procedure TFRpt_Rekap_Persediaan.FormClose(Sender: TObject;
@@ -302,11 +352,28 @@ end;
 procedure TFRpt_Rekap_Persediaan.FormCreate(Sender: TObject);
 begin
   realfrptrp:=self;
+ { if SpTahun.Properties is TcxTextEditProperties then
+begin
+  TcxTextEditProperties(cxBarEditItem1.Properties).ImmediatePost := False;
+  TcxTextEditProperties(cxBarEditItem1.Properties).ReadOnly := False;
+  TcxTextEditProperties(cxBarEditItem1.Properties).UseNullString := False;
+end;    }
+
 end;
 
 procedure TFRpt_Rekap_Persediaan.FormDestroy(Sender: TObject);
 begin
   realfrptrp:=nil;
+end;
+
+procedure TFRpt_Rekap_Persediaan.FormShow(Sender: TObject);
+begin
+  SpTahun2.Value:=strtoint(FormatDateTime('yyyy',now));
+end;
+
+procedure TFRpt_Rekap_Persediaan.RzBitBtn1Click(Sender: TObject);
+begin
+  Autonumber;
 end;
 
 initialization

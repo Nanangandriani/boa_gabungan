@@ -56,8 +56,8 @@ object FKet_Memorial: TFKet_Memorial
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 375
-    ExplicitWidth = 805
+    ExplicitTop = 367
+    ExplicitWidth = 803
     object Label2: TLabel
       Left = 64
       Top = 6
@@ -140,7 +140,7 @@ object FKet_Memorial: TFKet_Memorial
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 729
+      ExplicitLeft = 727
     end
     object edket: TMemo
       Left = 74
@@ -211,7 +211,7 @@ object FKet_Memorial: TFKet_Memorial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 654
+      ExplicitLeft = 652
     end
   end
   object Panel1: TPanel
@@ -221,8 +221,8 @@ object FKet_Memorial: TFKet_Memorial
     Height = 33
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 342
-    ExplicitWidth = 805
+    ExplicitTop = 334
+    ExplicitWidth = 803
     object BNew: TRzBitBtn
       Left = 658
       Top = 1
@@ -283,7 +283,7 @@ object FKet_Memorial: TFKet_Memorial
         5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 654
+      ExplicitLeft = 652
     end
     object Bedit: TRzBitBtn
       Left = 733
@@ -345,7 +345,7 @@ object FKet_Memorial: TFKet_Memorial
         10171710101010101009E8E8E8E8E8E8568181DFDFDFDFDFDF56E8E8E8E8E8E8
         E8101717101010101010E8E8E8E8E8E8E8568181DFDFDFDFDFDF}
       NumGlyphs = 2
-      ExplicitLeft = 729
+      ExplicitLeft = 727
     end
   end
   object dsket: TDataSource

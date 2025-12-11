@@ -68,7 +68,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1102
+    ExplicitLeft = 1
+    ExplicitTop = -6
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
@@ -248,14 +249,14 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object Label30: TLabel
       Left = 135
-      Top = 211
+      Top = 212
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label29: TLabel
       Left = 20
-      Top = 211
+      Top = 212
       Width = 61
       Height = 15
       Caption = 'Rencana Ke'
@@ -287,6 +288,21 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 48
       Height = 15
       Caption = 'Daftar TP'
+    end
+    object Label_sumber: TLabel
+      Left = 20
+      Top = 241
+      Width = 68
+      Height = 15
+      Caption = 'Sumber Data'
+      Visible = False
+    end
+    object Label1_sumber: TLabel
+      Left = 135
+      Top = 243
+      Width = 3
+      Height = 15
+      Caption = ':'
     end
     object edNoTrans: TEdit
       Left = 147
@@ -473,14 +489,14 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object CbRencana: TComboBox
       Left = 147
-      Top = 209
+      Top = 210
       Width = 54
       Height = 23
       TabOrder = 21
     end
     object Btn_data1: TRzBitBtn
-      Left = 147
-      Top = 240
+      Left = 341
+      Top = 236
       Width = 150
       Caption = 'Ambil Data Rencana'
       TabOrder = 22
@@ -555,6 +571,15 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Caption = '...'
       TabOrder = 24
       OnClick = Btn_daf_tpClick
+    end
+    object Cb_sumber: TComboBox
+      Left = 147
+      Top = 239
+      Width = 186
+      Height = 23
+      TabOrder = 25
+      Visible = False
+      OnSelect = Cb_debt_sourceSelect
     end
   end
   object Panel2: TPanel
@@ -772,6 +797,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 876
+      ExplicitTop = 3
     end
   end
   object Panel5: TPanel
@@ -848,6 +874,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Width = 141
         Height = 23
         Text = ''
+        Enabled = False
         TabOrder = 0
         OnChange = edKode_supplierChange
         AltBtnNumGlyphs = 1
@@ -859,6 +886,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Top = 54
         Width = 344
         Height = 23
+        Enabled = False
         TabOrder = 1
       end
       object edNMSumberHutang: TRzButtonEdit
@@ -920,6 +948,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Top = 27
         Width = 133
         Height = 23
+        Enabled = False
         TabOrder = 7
         Visible = False
         OnChange = ak_accountChange
@@ -1138,17 +1167,16 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 196
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
-    ExplicitTop = 425
+    ExplicitWidth = 1102
+    ExplicitHeight = 187
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1098
-      ExplicitHeight = 162
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -1241,6 +1269,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
+      ExplicitWidth = 1098
+      ExplicitHeight = 162
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0

@@ -66,10 +66,21 @@ begin
     BEGIN
       close;
       sql.Clear;
-      sql.Text:=' select gl.account_code,ak.account_name,case when status_dk=''D'' then sum(amount) else 0 end db ,'+
+      sql.Text:=' select gl.account_code,case when ak.account_name is null '+
+      ' then c.account_name else ak.account_name end account_name ,'+
+      ' case when status_dk=''D'' then sum(amount) else 0 end db ,'+
+      ' case when status_dk=''K'' then sum(amount) else 0 end kd '+
+      ' from t_general_ledger gl '+
+      ' left join t_ak_account_sub ak on gl.account_code=ak.account_code2 '+
+      ' left join t_ak_account c on gl.account_code=c.code '+
+      ' WHERE amount<>0 and trans_no='+QuotedStr(QSumber_memo['trans_no'])+' '+
+      ' GROUP BY gl.account_code,ak.account_name,c.account_name,status_dk ' ;
+
+      {sql.Text:=' select gl.account_code,ak.account_name,'+
+      ' case when status_dk=''D'' then sum(amount) else 0 end db ,'+
       ' case when status_dk=''K'' then sum(amount) else 0 end kd from t_general_ledger gl inner join t_ak_account_sub ak '+
       ' on gl.account_code=ak.account_code2 WHERE trans_no='+QuotedStr(QSumber_memo['trans_no'])+''+
-      ' GROUP BY gl.account_code,ak.account_name,status_dk ' ;
+      ' GROUP BY gl.account_code,ak.account_name,status_dk ' ;  }
       open;
     END;
   QSumber_memo2.First;

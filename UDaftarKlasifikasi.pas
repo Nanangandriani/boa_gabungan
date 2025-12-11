@@ -535,6 +535,7 @@ begin
     end;
   //cek masterharga jual per jenis pelanggan dan jenis jual b2b b2c
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  Close;
   FMainMenu.TampilTabForm2;
 end;
 

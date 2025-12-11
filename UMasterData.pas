@@ -63,6 +63,11 @@ begin
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
 //Nanang
+  if vcall='salesorder_gudang' then //14-08-2025
+  begin
+    FNew_SalesOrder.StrKodeGudang:=MemMasterData['KD_MASTER'];
+    FNew_SalesOrder.edGudang.Text:=MemMasterData['NM_MASTER'];
+  end;
 
 //Antok
   if vcall='cash_bank_pelaku_biaya_ajuan' then //14-08-2025

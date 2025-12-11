@@ -293,6 +293,20 @@ object FNew_SalesOrder: TFNew_SalesOrder
       Caption = ':'
       Visible = False
     end
+    object Label25: TLabel
+      Left = 623
+      Top = 134
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label26: TLabel
+      Left = 505
+      Top = 134
+      Width = 42
+      Height = 15
+      Caption = 'Gudang'
+    end
     object edKodeOrder: TEdit
       Left = 132
       Top = 16
@@ -618,6 +632,18 @@ object FNew_SalesOrder: TFNew_SalesOrder
       TabOrder = 21
       Visible = False
     end
+    object edGudang: TRzButtonEdit
+      Left = 638
+      Top = 131
+      Width = 229
+      Height = 23
+      Text = ''
+      TabOrder = 22
+      AllowKeyEdit = False
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edGudangButtonClick
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -750,8 +776,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 903
-      ExplicitTop = 3
+      ExplicitLeft = 900
     end
     object Edautocode: TEdit
       Left = 712

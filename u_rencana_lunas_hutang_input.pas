@@ -66,6 +66,8 @@ type
     procedure CbSumberSelect(Sender: TObject);
     procedure rbbankClick(Sender: TObject);
     procedure rbkasClick(Sender: TObject);
+    procedure DBGrid_RencanaColumns6CellButtons0Click(Sender: TObject;
+      var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -583,6 +585,17 @@ begin
 end;
 
 procedure TFRencana_Lunas_Hutang.DBGrid_RencanaColumns10CellButtons0Click(
+  Sender: TObject; var Handled: Boolean);
+begin
+    with  FAkun_Perkiraan_TerimaMat do
+    begin
+      Show;
+      statustr:='rencana_pelunasan_hutang';
+      if QAkun.Active=false then QAkun.Active:=True;
+    end;
+end;
+
+procedure TFRencana_Lunas_Hutang.DBGrid_RencanaColumns6CellButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
     with  FAkun_Perkiraan_TerimaMat do

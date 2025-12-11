@@ -21,7 +21,7 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 173
+    ExplicitTop = 198
     ExplicitWidth = 628
     object BTutup: TRzBitBtn
       Left = 558
@@ -415,7 +415,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitHeight = 201
+    ExplicitWidth = 628
+    ExplicitHeight = 198
     object Label6: TLabel
       Left = 106
       Top = 17

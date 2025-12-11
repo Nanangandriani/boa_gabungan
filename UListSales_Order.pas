@@ -96,7 +96,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin, UMasterData;
+uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin, UMasterData,
+  UNoteCancel;
 
 var
   realfdatalistsalesorder : TFSalesOrder;
@@ -162,6 +163,7 @@ begin
     FNew_SalesOrder.Clear;
     //FNew_SalesOrder.Autonumber;
     FNew_SalesOrder.MemDetail.EmptyTable;
+    FNew_SalesOrder.isCancel:=0;
     Status:=0;
     FNew_SalesOrder.edKodeOrder.Enabled:=true;
     FNew_SalesOrder.BSave.Enabled:=True;
@@ -176,57 +178,27 @@ end;
 
 procedure TFSalesOrder.ActDelExecute(Sender: TObject);
 begin
-   with dm.Qtemp do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from "public"."t_selling"   '+
-                 ' where no_reference='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString)+' '+
-                 ' AND deleted_at is null order by created_at Desc ';
-       open;
-   end;
-   if dm.Qtemp.RecordCount<>0 then
-   begin
-     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Penjualan...!!!');
-     exit;
-   end;
-
-  if MessageDlg('Apakah anda yakin ingin membatalkan pesanan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  with dm.Qtemp do
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_sales_order"  SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "notrans"='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString);
-          ExecSQL;
-        end;
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_sales_order_det"  SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "notrans"='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString);
-          ExecSQL;
-        end;
-        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-        Refresh;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+     close;
+     sql.Clear;
+     sql.Text:=' select * from "public"."t_selling"   '+
+               ' where no_reference='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString)+' '+
+               ' AND deleted_at is null order by created_at Desc ';
+     open;
+  end;
+
+  if dm.Qtemp.RecordCount>0 then
+  begin
+    ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Penjualan...!!!');
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FNoteCancel.vtbl:='t_sales_order';
+      FNoteCancel.vfieldtransno:='notrans';
+      FNoteCancel.edNoTransaksi.Text:=QSalesOrder.FieldByName('notrans').AsString;
+      FNoteCancel.ShowModal;
+    end;
   end;
 end;
 
@@ -278,6 +250,16 @@ begin
 
     with FNew_SalesOrder do
     begin
+
+      if (Dm.Qtemp2.FindField('deleted_at') <> nil) and (not Dm.Qtemp2.FieldByName('deleted_at').IsNull) then
+      begin
+        isCancel := 1;
+//        memAlasanPembatalan.Text:= Dm.Qtemp.FieldByName('cancel_reason').AsString;;
+      end else begin
+        isCancel:=0;
+//        memAlasanPembatalan.Text:='';
+      end;
+
       edKodeOrder.Text:=Dm.Qtemp2.FieldByName('notrans').AsString;
       dtTanggal_Kirim.Date:=Dm.Qtemp2.FieldByName('sent_date').AsDateTime;
       dtTanggal_Pesan.Date:=Dm.Qtemp2.FieldByName('order_date').AsDateTime;
@@ -297,6 +279,12 @@ begin
       strtgl:=Dm.Qtemp2.FieldByName('trans_day').AsString;
       strbulan:=Dm.Qtemp2.FieldByName('trans_month').AsString;
       strtahun:=Dm.Qtemp2.FieldByName('trans_year').AsString;
+
+      if Dm.Qtemp2.FieldByName('wh_code').AsString<>'' then
+      StrKodeGudang:=Dm.Qtemp2.FieldByName('wh_code').AsString else StrKodeGudang:='';
+
+      if Dm.Qtemp2.FieldByName('wh_name').AsString<>'' then
+      edGudang.Text:=Dm.Qtemp2.FieldByName('wh_name').AsString else edGudang.Text:='';
 
       if Dm.Qtemp2.FieldByName('vehicles').AsString<>NULL then
       begin
@@ -329,19 +317,19 @@ procedure TFSalesOrder.DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
   AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
   var Params: TColCellParamsEh; var Processed: Boolean);
 var
-strStatus: Integer;
+  DS: TDataSet;
+  F: TField;
 begin
-strStatus := Column.Field.DataSet.FieldByName('status').AsInteger;
+  if (Column = nil) or (Column.Field = nil) then Exit;
 
- if (QSalesOrder.RecordCount<>0) then
- begin
-    if (strStatus=99) then
-    begin
-//      Params.Font.Style := [fsBold];
-      Params.Font.Color := clRed;
-//      Params.Background := $004080FF;
-    end;
- end;
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
 
 end;
 

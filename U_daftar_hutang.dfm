@@ -536,6 +536,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
       TabOrder = 0
       TitleParams.RowHeight = 40
+      OnGetCellParams = DBGridDafHutangGetCellParams
       Columns = <
         item
           CellButtons = <>
@@ -662,6 +663,46 @@ object FDaftar_Hutang: TFDaftar_Hutang
           FieldName = 'source_id'
           Footers = <>
           Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'urutan'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'bayar'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'rencanake'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'sisa'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'status_bayar'
+          Footers = <>
+          Width = 0
         end>
       object RowDetailData: TRowDetailPanelControlEh
       end
@@ -670,11 +711,19 @@ object FDaftar_Hutang: TFDaftar_Hutang
   object QdaftarHutang: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ''
       
-        'SELECT  tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfakt' +
-        'ur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_' +
-        'pph,plan_stat,status,urutan,approval_status,bayar,rencanake,juml' +
-        'ah-bayar as sisa,1 source_id '
+        'SELECT tanggal,'#9'kodesup,'#9'nasup,'#9'no_inv,'#9'nofakturpajak,'#9'sj_no,'#9'tg' +
+        'lfaktur,'#9'tgltempo,'#9'valas,'#9'valas_value,'#9'jum_dolar,'#9'ppn_rp,'#9'jumlah' +
+        ','#9'npph,'#9'akun_pph,'#9'plan_stat,'#9'status,'#9'urutan,'#9'approval_status,'#9'ba' +
+        'yar,'#9'rencanake,sisa,case when sisa > 0 then 0  else 1 end status' +
+        '_bayar,'#9'source_id'
+      'FROM'
+      
+        '(SELECT  tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfak' +
+        'tur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun' +
+        '_pph,plan_stat,status,urutan,approval_status,bayar,rencanake,jum' +
+        'lah-bayar as sisa,1 source_id '
       'FROM'
       ''
       
@@ -888,7 +937,9 @@ object FDaftar_Hutang: TFDaftar_Hutang
         'ccount='#39'2130.04'#39' or code_account='#39'2130.07'#39') v '
       '-- order by v.trans_date,v.voucher)yy '
       ' '
-      'ORDER BY tglfaktur,nofakturpajak,urutan ASC')
+      
+        'ORDER BY tglfaktur,nofakturpajak,urutan ASC)qqq ORDER BY tglfakt' +
+        'ur,nofakturpajak,urutan ASC')
     Left = 744
     Top = 40
     object QdaftarHutangtanggal: TDateField
@@ -973,6 +1024,26 @@ object FDaftar_Hutang: TFDaftar_Hutang
     end
     object QdaftarHutangsource_id: TIntegerField
       FieldName = 'source_id'
+      ReadOnly = True
+    end
+    object QdaftarHutangurutan: TLargeintField
+      FieldName = 'urutan'
+      ReadOnly = True
+    end
+    object QdaftarHutangbayar: TFloatField
+      FieldName = 'bayar'
+      ReadOnly = True
+    end
+    object QdaftarHutangrencanake: TIntegerField
+      FieldName = 'rencanake'
+      ReadOnly = True
+    end
+    object QdaftarHutangsisa: TFloatField
+      FieldName = 'sisa'
+      ReadOnly = True
+    end
+    object QdaftarHutangstatus_bayar: TIntegerField
+      FieldName = 'status_bayar'
       ReadOnly = True
     end
   end
@@ -1102,6 +1173,46 @@ object FDaftar_Hutang: TFDaftar_Hutang
         end
         object source_id: TMTNumericDataFieldEh
           FieldName = 'source_id'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object urutan: TMTNumericDataFieldEh
+          FieldName = 'urutan'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object bayar: TMTNumericDataFieldEh
+          FieldName = 'bayar'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object rencanake: TMTNumericDataFieldEh
+          FieldName = 'rencanake'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object sisa: TMTNumericDataFieldEh
+          FieldName = 'sisa'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object status_bayar: TMTNumericDataFieldEh
+          FieldName = 'status_bayar'
           NumericDataType = fdtSmallintEh
           AutoIncrement = False
           DisplayWidth = 20

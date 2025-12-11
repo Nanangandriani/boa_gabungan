@@ -68,7 +68,6 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'trans_no'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'No Transaksi'
         Width = 200
@@ -79,7 +78,6 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'trans_date'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Tanggal'
         Width = 100
@@ -90,7 +88,6 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'name_source'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Sumber'
         Width = 150
@@ -101,7 +98,6 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Pelanggan'
         Width = 200
@@ -112,7 +108,6 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'customer_name_pkp'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Nama PKP'
         Width = 224
@@ -123,7 +118,6 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'no_reference'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'No Reference'
         Width = 200
@@ -134,10 +128,19 @@ object FDataListPenjualan: TFDataListPenjualan
         EditButtons = <>
         FieldName = 'payment_term'
         Footers = <>
-        ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Jatuh Tempo (Hari)'
         Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'cancel_reason'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Catatan Batal'
+        Width = 500
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end

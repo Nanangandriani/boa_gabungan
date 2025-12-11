@@ -92,7 +92,7 @@ end;
 procedure TFKet_Memorial.BeditClick(Sender: TObject);
 begin
   status:=1;
-  edket.Text:=Memket['nm_ket'];
+  edket.Text:=Memket['notes'];
   Lblid.Caption:=Memket['id'];
   Panel2.Show;
   Panel1.Hide;
@@ -113,7 +113,7 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='insert into t_ket_memorial(nm_ket)values(:nm_ket)';
+  sql.Text:='insert into t_memorial_notes(notes)values(:nm_ket)';
   ParamByName('nm_ket').AsString:=edket.Text;
   Execute;
 end;
@@ -124,7 +124,7 @@ with dm.Qtemp do
 begin
   close;
   sql.Clear;
-  sql.Text:='update t_ket_memorial set nm_ket=:nm_ket where id=:id';
+  sql.Text:='update t_memorial_notes set notes=:nm_ket where id=:id';
     ParamByName('nm_ket').AsString:=edket.Text;
     ParamByName('id').AsString:=Lblid.Caption;
   Execute;

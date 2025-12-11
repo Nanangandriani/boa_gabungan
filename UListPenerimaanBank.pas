@@ -112,6 +112,7 @@ type
     dxBarLargeButton4: TdxBarLargeButton;
     LaporanKolektif: TdxBar;
     dxBarLargeButton5: TdxBarLargeButton;
+    QPenerimaanBankdeleted_at: TDateTimeField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -124,6 +125,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
+    procedure DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -140,7 +144,7 @@ implementation
 {$R *.dfm}
 
 uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin,
-  UCetakKolektifPenerimaanBank;
+  UCetakKolektifPenerimaanBank, UNoteCancel;
 
 procedure TFListPenerimaanBank.Refresh;
 var mm: Integer;
@@ -162,10 +166,10 @@ begin
        sql.Text:= 'select a.* from "public"."t_cash_bank_acceptance" a  '+
                   'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
                   'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+
 //                  'where EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
 //                  'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' AND '+
-                  'a.deleted_at is null'+ strTransaksi+' order by a.trans_date Desc, a.voucher_no Desc ';
+                  ''+ strTransaksi+' order by a.trans_date Desc, a.voucher_no Desc ';
        open;
    end;
   finally
@@ -187,33 +191,17 @@ end;
 
 procedure TFListPenerimaanBank.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
-
-  if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  if CheckJurnalPosting(QPenerimaanBank.FieldByName('voucher_no').AsString)>0 then
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_cash_bank_acceptance" SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString);
-          ExecSQL;
-        end;
-        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    MessageDlg('Sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Penerimaan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FNoteCancel.vtbl:='t_cash_bank_acceptance';
+      FNoteCancel.vfieldtransno:='voucher_no';
+      FNoteCancel.edNoTransaksi.Text:=QPenerimaanBank.FieldByName('voucher_no').AsString;
+      FNoteCancel.ShowModal;
+    end;
   end;
 end;
 
@@ -250,11 +238,23 @@ begin
   end;
   if Dm.Qtemp.RecordCount<>0 then
   begin
+
+
+
     if dm.Qtemp.FieldValues['payment_code']<>NULL then
     strPaymentCode:=dm.Qtemp.FieldValues['payment_code'];
 
     with FDataPenerimaanBank do
     begin
+      if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+      begin
+        isCancel := 1;
+//        memAlasanPembatalan.Text:= Dm.Qtemp.FieldByName('cancel_reason').AsString;;
+      end else begin
+        isCancel:=0;
+//        memAlasanPembatalan.Text:='';
+      end;
+
       //Master
       with dm.Qtemp3 do
       begin
@@ -499,6 +499,26 @@ begin
   FDataPenerimaanBank.Status := 1;
   FDataPenerimaanBank.Disable;
   FDataPenerimaanBank.Show;
+end;
+
+procedure TFListPenerimaanBank.DBGridOrderAdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
+
 end;
 
 procedure TFListPenerimaanBank.dxBarLargeButton1Click(Sender: TObject);

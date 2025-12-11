@@ -117,6 +117,7 @@ type
     procedure RefreshForm;
     procedure RefreshFormBON;
     procedure Clear;
+    procedure TambahAkunDefault;
   end;
 
 var
@@ -129,6 +130,19 @@ implementation
 uses UMasterData, UCari_DaftarPerk, UDataModule, UMy_Function, UListKasKecil,
   UHomeLogin,udafajuankeluarkasbank,UMainMenu;
 
+//function TFDataKasKecil.GetKodeKasKecil: string;
+//begin
+//  Q1.Close;
+//  Q1.SQL.Text :=
+//    'SELECT account_code FROM t_ak_account '+
+//    'WHERE LOWER(account_name) LIKE ''%kas kecil%'' LIMIT 1';
+//  Q1.Open;
+//
+//  if Q1.IsEmpty then
+//    Result := ''
+//  else
+//    Result := Q1.FieldByName('account_code').AsString;
+//end;
 
 procedure TFDataKasKecil.InsertDetailHutang;
 begin
@@ -460,11 +474,11 @@ begin
         MessageDlg('Data Kepada Tidak Bisa Kosong..!!',mtInformation,[mbRetry],0);
         edKodeKepada.SetFocus;
       end
-      else if edNoTrans.Text='' then
-      begin
-        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-        edNoTrans.SetFocus;
-      end
+//      else if edNoTrans.Text='' then
+//      begin
+//        MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
+//        edNoTrans.SetFocus;
+//      end
       else if (stat_bon=1) and (edJumlah.value=0) then
       begin
         MessageDlg('Pastikan Data Kasbon Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
@@ -744,6 +758,11 @@ begin
       edNamaSumberKas.Text:=fieldbyname('code').AsString;
       edNamaSumberKas.Text:=fieldbyname('name').AsString;
     end;
+end;
+
+procedure TFDataKasKecil.TambahAkunDefault;
+begin
+
 end;
 
 end.

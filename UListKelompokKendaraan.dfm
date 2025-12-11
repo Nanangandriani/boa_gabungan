@@ -36,7 +36,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Kelompok Kendaraan'
-        Width = 298
+        Width = 225
       end
       item
         CellButtons = <>
@@ -56,7 +56,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Type Kendaraan'
-        Width = 336
+        Width = 284
       end
       item
         CellButtons = <>
@@ -73,7 +73,7 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 836
+        Width = 711
         Height = 178
         Align = alClient
         DataSource = DSDetail

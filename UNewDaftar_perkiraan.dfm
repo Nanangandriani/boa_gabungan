@@ -174,7 +174,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = -4
+    ExplicitWidth = 592
     object Label16: TLabel
       Left = 13
       Top = 42
@@ -669,6 +669,6 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
   object Qtemp3: TUniQuery
     Connection = dm.Koneksi
     Left = 296
-    Top = 256
+    Top = 264
   end
 end

@@ -72,7 +72,7 @@ implementation
 {$R *.dfm}
 
 uses UTransfer_Barang, UItem_TransferBarang, UMainmenu, UDataModule,
-  UMy_Function;
+  UMy_Function, UTambah_Barang;
 var
   realfnew_transfergdng : TFNew_TransferBarang;
 // implementasi function
@@ -254,8 +254,11 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:=' select * from t_wh where (category='+QuotedStr(CbKategori.Text)+''+
-                  ' or category=''LAIN-LAIN'') and code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
+        sql.Text:=' select * from t_wh where wh_code<>'+QuotedStr(kd_gdngdari)+' '+
+                  ' ORDER BY wh_name ASC';
+
+//        sql.Text:=' select * from t_wh where (category='+QuotedStr(CbKategori.Text)+''+
+//                  ' or category=''LAIN-LAIN'') and code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
         ExecSQL;
       end;
     end;
@@ -265,9 +268,10 @@ begin
       begin
         Close;
         sql.Clear;
-        sql.Text:=' select * from t_wh where (category='+QuotedStr(CbKategori.Text)+''+
-                  ' or category=''LAIN-LAIN'') AND (sbu_code='+QuotedStr(loksbu)+' OR sbu_code='''')'+
-                  ' and wh_code<>'+QuotedStr(kd_gdngdari)+' ORDER BY wh_name ASC';
+        sql.Text:=' select * from t_wh where (sbu_code='+QuotedStr(loksbu)+' '+
+                  ' OR sbu_code='''')'+
+                  ' and wh_code<>'+QuotedStr(kd_gdngdari)+' '+
+                  ' ORDER BY wh_name ASC';
         ExecSQL;
       end;
     end;
@@ -493,13 +497,13 @@ end;
 procedure TFNew_TransferBarang.DBGridEh1Columns0EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-    if cbKe.Text='' then
+    {if cbKe.Text='' then
     begin
       MessageDlg('Supplier Tidak boleh Kosong ',MtWarning,[MbOk],0);
       cbKe.SetFocus;
       Exit;
-    end;
-  with FItem_TransferBarang do
+    end; }
+  {with FItem_TransferBarang do
   begin
     Show;
     statustr:='tr';
@@ -513,7 +517,12 @@ begin
       ExecSQL;
     end;
     FItem_TransferBarang.Qbarang.Open;
-  end;
+  end;}
+
+
+  vStatusTrans:='transfer_gudang';
+  FTambah_Barang.clear;
+  FTambah_Barang.ShowModal;
 end;
 
 procedure TFNew_TransferBarang.FormClose(Sender: TObject;

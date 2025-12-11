@@ -3,8 +3,8 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
   Top = 0
   BorderStyle = bsSingle
   Caption = 'Form Laporan Rekap Persediaan'
-  ClientHeight = 497
-  ClientWidth = 740
+  ClientHeight = 639
+  ClientWidth = 1002
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,6 +15,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 13
   object Label2: TLabel
     Left = 37
@@ -71,8 +72,8 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
   end
   object Panel1: TPanel
     Left = 0
-    Top = 456
-    Width = 740
+    Top = 598
+    Width = 1002
     Height = 41
     Align = alBottom
     TabOrder = 2
@@ -80,7 +81,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     ExplicitTop = 447
     ExplicitWidth = 734
     object BBatal: TRzBitBtn
-      Left = 664
+      Left = 926
       Top = 1
       Height = 39
       Align = alRight
@@ -204,13 +205,14 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
       NumGlyphs = 2
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 585
+      Left = 847
       Top = 1
       Width = 79
       Height = 39
       Align = alRight
       Caption = 'Print'
       TabOrder = 2
+      OnClick = RzBitBtn1Click
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -269,14 +271,14 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 740
-    Height = 329
+    Width = 1002
+    Height = 471
     Align = alClient
     DataSource = DsPersediaan
+    DrawMemoText = True
     DynProps = <>
     TabOrder = 3
-    OnCellClick = DBGridEh1CellClick
-    OnColEnter = DBGridEh1ColEnter
+    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
@@ -285,6 +287,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         FieldName = 'item_code'
         Footers = <>
         Title.Caption = 'Kode Barang'
+        Visible = False
         Width = 88
       end
       item
@@ -303,8 +306,8 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         EditButtons = <>
         FieldName = 'qty'
         Footers = <>
-        Title.Caption = 'Saldo Awal'
-        Width = 108
+        Title.Caption = 'Saldo Awal|Unit'
+        Width = 110
       end
       item
         CellButtons = <>
@@ -313,95 +316,115 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         EditButtons = <>
         FieldName = 'price'
         Footers = <>
-        Title.Caption = 'Harga Awal'
-        Width = 106
+        Title.Caption = 'Saldo Awal|Rp'
+        Width = 110
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'qtyin'
+        FieldName = 'qty_in'
         Footers = <>
-        Title.Caption = 'Qty Masuk'
+        Title.Caption = 'Debit|Unit'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'pricein'
+        FieldName = 'price_in'
         Footers = <>
-        Title.Caption = 'Harga Masuk'
-        Width = 125
+        Title.Caption = 'Debit|Rp'
+        Width = 110
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'qtyrt'
+        Footers = <>
+        Title.Caption = 'Return/Pot Pembelian|Unit'
+        Width = 110
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pricert'
+        Footers = <>
+        Title.Caption = 'Return/Pot Pembelian|Rp'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'subtotalqty'
+        FieldName = 'qty_total'
         Footers = <>
-        Title.Caption = 'Total Qty'
-        Width = 129
+        Title.Caption = 'Jumlah|Unit'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'subtotalprice'
+        FieldName = 'price_total'
         Footers = <>
-        Title.Caption = 'Total Harga'
-        Width = 106
+        Title.Caption = 'Jumlah|Rp'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'avgprice'
+        FieldName = 'price_age'
         Footers = <>
         Title.Caption = 'Harga Rata2'
-        Width = 89
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'qtyout'
+        FieldName = 'qty_out'
         Footers = <>
-        Title.Caption = 'Qty Keluar'
-        Width = 80
+        Title.Caption = 'Kredit|Unit'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'priceout'
+        FieldName = 'price_out'
         Footers = <>
-        Title.Caption = 'Harga Keluar'
-        Width = 126
+        Title.Caption = 'Kredit|Rp'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'qty_use'
+        FieldName = 'qty_end'
         Footers = <>
-        Title.Caption = 'Saldo Akhir'
-        Width = 155
+        Title.Caption = 'Saldo Akhir|Unit'
+        Width = 110
       end
       item
         CellButtons = <>
         DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'price_use'
+        FieldName = 'price_end'
         Footers = <>
-        Title.Caption = 'Harga Akhir'
+        Title.Caption = 'Saldo Akhir|Rp'
+        Width = 110
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -409,7 +432,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 740
+    Width = 1002
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -417,6 +440,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Contexts = <>
     TabOrder = 4
     TabStop = False
+    ExplicitWidth = 740
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -481,6 +505,16 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     Text = 'Edit1'
     Visible = False
   end
+  object Sptahun2: TSpinEdit
+    Left = 48
+    Top = 76
+    Width = 120
+    Height = 25
+    MaxValue = 9999
+    MinValue = 2000
+    TabOrder = 13
+    Value = 0
+  end
   object Rpt: TfrxReport
     Version = '2022.1.3'
     DotMatrixReport = False
@@ -489,17 +523,20 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45113.395029780090000000
-    ReportOptions.LastChange = 45113.395029780090000000
+    ReportOptions.CreateDate = 44207.557144525500000000
+    ReportOptions.LastChange = 45998.930074155090000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      ''
       'begin'
       ''
       'end.')
     Left = 115
     Top = 157
-    Datasets = <>
+    Datasets = <
+      item
+        DataSet = dbpersediaan
+        DataSetName = 'dbpersediaan'
+      end>
     Variables = <>
     Style = <>
     object Data: TfrxDataPage
@@ -507,25 +544,749 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      Orientation = poLandscape
+      PaperWidth = 330.000000000000000000
+      PaperHeight = 210.000000000000000000
+      PaperSize = 256
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 20.000000000000000000
       BottomMargin = 10.000000000000000000
       Frame.Typ = []
       MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
+      object ReportSummary1: TfrxReportSummary
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 22.677165350000000000
+        Top = 257.008040000000000000
+        Width = 1209.449600000000000000
+        Stretched = True
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Width = 25.821583330000000000
+          Height = 22.677165354330700000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 26.000000000000000000
+          Width = 124.724409450000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 151.181102360000000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo3: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 226.771653540000000000
+          Width = 94.488188980000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<dbpersediaan."price">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 321.259842520000000000
+          Width = 66.141732283464600000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo4: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 387.401574800000000000
+          Width = 79.370078740000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<dbpersediaan."price_in">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Left = 606.614173230000000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 682.314982600000000000
+          Width = 94.488188980000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<dbpersediaan."price_total">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo38: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Top = 0.166666670000000000
+          Width = 64.251968500000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo5: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 842.834645670000000000
+          Top = 0.166666670000000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo36: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1014.047244090000000000
+          Width = 81.637795275590600000
+          Height = 22.677165354330700000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 918.425196850000000000
+          Width = 94.488188980000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = DbPersBahan
+          DataSetName = 'DbPersBahan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<dbpersediaan."price_out">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo47: TfrxMemoView
+          AllowVectorExport = True
+          Left = 466.102660000000000000
+          Top = 0.000056140000000010
+          Width = 64.251968500000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo6: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 530.354628510000000000
+          Top = 0.000056140000000010
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<dbpersediaan."pricert">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo53: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1096.063700000000000000
+          Width = 113.385826770000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<dbpersediaan."price_end">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 92.826827800000000000
         Top = 18.897650000000000000
-        Width = 718.110700000000000000
+        Width = 1209.449600000000000000
+        object MJudul: TfrxMemoView
+          Align = baCenter
+          AllowVectorExport = True
+          Left = 415.921615000000000000
+          Top = 0.435683330000000000
+          Width = 377.606370000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'REKAP PERSEDIAAN')
+          ParentFont = False
+        end
+        object Mbln: TfrxMemoView
+          Align = baCenter
+          AllowVectorExport = True
+          Left = 416.254948330000000000
+          Top = 18.897637800000000000
+          Width = 376.939703340000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Periode :    -   ')
+          ParentFont = False
+          VAlign = vaBottom
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Top = 55.031496060000000000
+          Width = 25.821583330000000000
+          Height = 37.795275590000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No.')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 26.000000000000000000
+          Top = 55.031496060000000000
+          Width = 124.724409450000000000
+          Height = 37.795275590000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nama Barang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 151.181102360000000000
+          Top = 55.031496060000000000
+          Width = 170.078740160000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo Awal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 151.181102360000000000
+          Top = 73.929133860000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Unit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 226.771653540000000000
+          Top = 73.929133860000000000
+          Width = 94.488188980000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rp')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 321.259842520000000000
+          Top = 55.031496060000000000
+          Width = 145.511811020000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Debit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 321.259842520000000000
+          Top = 73.929133860000000000
+          Width = 66.141732280000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Unit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 387.401574800000000000
+          Top = 73.929133860000000000
+          Width = 79.370078740000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rp')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 606.614173230000000000
+          Top = 55.031496060000000000
+          Width = 235.980329610000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Jumlah')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 606.614173230000000000
+          Top = 73.929133860000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Unit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 682.314982600000000000
+          Top = 73.929133860000000000
+          Width = 94.488188980000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rp')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 842.834645670000000000
+          Top = 55.031496060000000000
+          Width = 170.200799610000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kredit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 842.834645670000000000
+          Top = 73.929133860000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Unit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          AllowVectorExport = True
+          Left = 918.425196850000000000
+          Top = 73.929133860000000000
+          Width = 94.488188980000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rp')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Top = 73.929133860000000000
+          Width = 64.251968500000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Hrg Rata2')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object MPT: TfrxMemoView
+          AllowVectorExport = True
+          Top = 22.677150710000000000
+          Width = 250.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ' PT. MENARA LAUT BERSATU')
+          ParentFont = False
+        end
+        object Memo17: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1014.047244090000000000
+          Top = 55.031496060000000000
+          Width = 195.023622050000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo Akhir')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1014.047244090000000000
+          Top = 73.929133860000000000
+          Width = 81.637795280000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Unit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1096.062992130000000000
+          Top = 73.929133860000000000
+          Width = 113.385826770000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rp')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo48: TfrxMemoView
+          AllowVectorExport = True
+          Left = 466.015748030000000000
+          Top = 73.929190000000000000
+          Width = 64.251968500000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Unit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo49: TfrxMemoView
+          AllowVectorExport = True
+          Left = 530.354628510000000000
+          Top = 73.929190000000000000
+          Width = 75.590551180000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Rp')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo52: TfrxMemoView
+          AllowVectorExport = True
+          Left = 466.015748030000000000
+          Top = 55.031540000000000000
+          Width = 139.842519690000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Retur / Pot. Pembelian')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -534,30 +1295,323 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
+        Height = 22.677165350000000000
+        Top = 173.858380000000000000
+        Width = 1209.449600000000000000
+        DataSet = dbpersediaan
+        DataSetName = 'dbpersediaan'
         RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
+        object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
+          Left = 26.000000000000000000
+          Width = 124.724409448819000000
+          Height = 22.677165350000000000
+          DataField = 'item_name'
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[dbpersediaan."item_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 151.181102362205000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          DataField = 'qty'
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[Page#]')
+            '[dbpersediaan."qty"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 226.771653540000000000
+          Width = 94.488188980000000000
+          Height = 22.677165350000000000
+          DataField = 'price'
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."price"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo2: TfrxSysMemoView
+          AllowVectorExport = True
+          Width = 25.700787400000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[LINE#]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo35: TfrxMemoView
+          AllowVectorExport = True
+          Left = 321.259842520000000000
+          Width = 66.141732280000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."qty_in"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo39: TfrxMemoView
+          AllowVectorExport = True
+          Left = 387.401574800000000000
+          Width = 79.370078740000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."price_in"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo41: TfrxMemoView
+          AllowVectorExport = True
+          Left = 682.314982600000000000
+          Width = 94.488188980000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."price_total"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo40: TfrxMemoView
+          AllowVectorExport = True
+          Left = 606.614173230000000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."qty_total"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo46: TfrxMemoView
+          AllowVectorExport = True
+          Left = 778.582677170000000000
+          Width = 64.251968500000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."price_age"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo42: TfrxMemoView
+          AllowVectorExport = True
+          Left = 842.834645670000000000
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."qty_out"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo43: TfrxMemoView
+          AllowVectorExport = True
+          Left = 918.425196850000000000
+          Width = 94.488188980000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."price_out"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo44: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1014.047244090000000000
+          Width = 81.637795280000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."qty_end"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo45: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1096.062992130000000000
+          Width = 113.385826770000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."price_end"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo50: TfrxMemoView
+          AllowVectorExport = True
+          Left = 466.102660000000000000
+          Top = 0.000056139999999996
+          Width = 64.251968500000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."qtyrt"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo51: TfrxMemoView
+          AllowVectorExport = True
+          Left = 530.354628510000000000
+          Top = 0.000056139999999996
+          Width = 75.590551180000000000
+          Height = 22.677165350000000000
+          DataSet = dbpersediaan
+          DataSetName = 'dbpersediaan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[dbpersediaan."pricert"]')
+          ParentFont = False
+          VAlign = vaCenter
         end
       end
     end
@@ -583,407 +1637,10 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
   object DBRekap_Persediaan: TfrxDBDataset
     UserName = 'DBRekap_Persediaan'
     CloseDataSource = False
-    DataSet = MemData
     BCDToCurrency = False
     DataSetOptions = []
     Left = 240
     Top = 158
-  end
-  object MemData: TMemTableEh
-    Active = True
-    Params = <>
-    Left = 208
-    Top = 416
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object harga: TMTNumericDataFieldEh
-          FieldName = 'harga'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object kd_material_stok: TMTStringDataFieldEh
-          FieldName = 'kd_material_stok'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'kd_material_stok'
-          DisplayWidth = 40
-          Required = True
-          Size = 40
-          Transliterate = True
-        end
-        object nm_material: TMTStringDataFieldEh
-          FieldName = 'nm_material'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'nm_material'
-          DisplayWidth = 50
-          Size = 50
-        end
-        object stokawal: TMTNumericDataFieldEh
-          FieldName = 'stokawal'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object hargaawal: TMTNumericDataFieldEh
-          FieldName = 'hargaawal'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object masuk: TMTNumericDataFieldEh
-          FieldName = 'masuk'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object hargamasuk: TMTNumericDataFieldEh
-          FieldName = 'hargamasuk'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object totalstok: TMTNumericDataFieldEh
-          FieldName = 'totalstok'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object hargastok: TMTNumericDataFieldEh
-          FieldName = 'hargastok'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object hargarata2: TMTNumericDataFieldEh
-          FieldName = 'hargarata2'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object keluar: TMTNumericDataFieldEh
-          FieldName = 'keluar'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object hargakeluar: TMTNumericDataFieldEh
-          FieldName = 'hargakeluar'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object saldoakhir: TMTNumericDataFieldEh
-          FieldName = 'saldoakhir'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object hargaakhir: TMTNumericDataFieldEh
-          FieldName = 'hargaakhir'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object qtyrt: TMTNumericDataFieldEh
-          FieldName = 'qtyrt'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-        object hargart: TMTNumericDataFieldEh
-          FieldName = 'hargart'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-      end
-      object RecordsList: TRecordsListEh
-        Data = (
-          (
-            nil
-            'AA'
-            'Amplop'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'TA'
-            'Tepung Tapioka'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'JA'
-            'Tepung Jati'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'WA'
-            'Tepung DW'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'KB'
-            'Karton'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'MG'
-            'Malachite Green'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'PA'
-            'Tepung Putusan'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'LB'
-            'Tepung Lengket'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'OC'
-            'Tepung Onggok'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'Z'
-            'yara - yara'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'DA'
-            'Duplek'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'KA'
-            'Karton'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'C'
-            'Kertas CD'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'MPR'
-            'MPR'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil)
-          (
-            nil
-            'FRG'
-            'FRG'
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil
-            nil))
-      end
-    end
   end
   object DsPersediaan: TDataSource
     DataSet = Qpersediaan
@@ -1096,9 +1753,8 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
     SQL.Strings = (
       'select * from "vrekap_persediaan"')
     DetailFields = 'kd_material_stok'
-    Active = True
     Left = 115
-    Top = 477
+    Top = 341
   end
   object dbpersediaan: TfrxDBDataset
     UserName = 'dbpersediaan'
@@ -1213,7 +1869,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         end
         item
           UserDefine = [udWidth]
-          UserWidth = 113
+          UserWidth = 116
           Visible = True
           ItemName = 'SpTahun'
         end
@@ -1662,6 +2318,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton1Click
     end
     object DxRefresh: TdxBarLargeButton
       Caption = 'Cari'
@@ -1691,6 +2348,7 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object cxBarEditItem1: TcxBarEditItem
       Caption = 'Bulan'
@@ -1704,9 +2362,18 @@ object FRpt_Rekap_Persediaan: TFRpt_Rekap_Persediaan
       Category = 0
       Hint = 'Tahun  '
       Visible = ivAlways
-      PropertiesClassName = 'TcxSpinEditProperties'
-      Properties.MaxValue = 9999.000000000000000000
-      Properties.MinValue = 2000.000000000000000000
+      Width = 98
+      PropertiesClassName = 'TcxTextEditProperties'
+      InternalEditValue = 0
+    end
+    object dxBarSpinEdit1: TdxBarSpinEdit
+      Caption = 'Tahun'
+      Category = 0
+      Hint = 'Tahun'
+      Visible = ivAlways
+      MaxValue = 9999.000000000000000000
+      MinValue = 2000.000000000000000000
+      Value = 2000.000000000000000000
     end
   end
 end

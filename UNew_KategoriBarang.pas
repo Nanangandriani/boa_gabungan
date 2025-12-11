@@ -221,6 +221,7 @@ begin
     EdNm_akun.Text:='';
     EdKategori.Text:=Qkategori['category'];
     Edno.Text:=Qkategori['order_no'];
+    EdKd.Text:=Qkategori['order_no'];
   end;
 end;
 
@@ -250,6 +251,7 @@ begin
   if statustr=0 then
   begin
     Edno.Text:=SelectRow('SELECT buat_singkatan('+QuotedStr(EdKategori.Text)+');');
+    Edkd.Text:=Edno.Text;
   end;
 end;
 

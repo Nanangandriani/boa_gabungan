@@ -21,9 +21,9 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 896
     Height = 441
     Hint = ''
-    ActivePage = TabPembelian
+    ActivePage = TabMemorial
     Align = alClient
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 0
     ExplicitWidth = 890
     ExplicitHeight = 432
@@ -479,8 +479,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
-      ExplicitWidth = 886
-      ExplicitHeight = 407
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 106
@@ -628,7 +626,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 886
         object Label3: TLabel
           Left = 27
           Top = 30
@@ -703,7 +700,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 4
-          ExplicitWidth = 884
           object BTampil_Penj: TRzBitBtn
             Left = 518
             Top = 1
@@ -765,7 +761,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 512
           end
           object Bselect_Penj: TRzBitBtn
             Left = 612
@@ -828,7 +823,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 606
           end
           object BApp_Penj: TRzBitBtn
             Left = 710
@@ -891,7 +885,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 704
           end
           object BPrint_Penj: TRzBitBtn
             Left = 795
@@ -954,7 +947,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 789
           end
         end
       end
@@ -1290,11 +1282,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             FieldName = 'trans_no'
             Footers = <>
             Title.Caption = 'No. Trans'
-            Title.Font.Charset = DEFAULT_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -12
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
             Width = 124
           end
           item
@@ -1304,11 +1291,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             FieldName = 'trans_date'
             Footers = <>
             Title.Caption = 'Tanggal'
-            Title.Font.Charset = DEFAULT_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -12
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
             Width = 116
           end
           item
@@ -1318,11 +1300,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             FieldName = 'ket'
             Footers = <>
             Title.Caption = 'Keterangan'
-            Title.Font.Charset = DEFAULT_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -12
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
             Width = 305
           end
           item
@@ -1333,11 +1310,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             FieldName = 'jumlah'
             Footers = <>
             Title.Caption = 'Saldo'
-            Title.Font.Charset = DEFAULT_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -12
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
             Width = 130
           end
           item
@@ -1348,11 +1320,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             FieldName = 'status_app'
             Footers = <>
             Title.Caption = 'Approved'
-            Title.Font.Charset = DEFAULT_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -12
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
             Width = 80
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -1419,13 +1386,442 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         end
       end
     end
+    object TabMemorial: TRzTabSheet
+      Caption = 'Memorial'
+      ExplicitWidth = 886
+      ExplicitHeight = 407
+      object DBGridEh7: TDBGridEh
+        Left = 0
+        Top = 89
+        Width = 892
+        Height = 327
+        Align = alClient
+        DataSource = DsMemorial
+        DynProps = <>
+        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+        RowDetailPanel.Active = True
+        TabOrder = 0
+        Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_no'
+            Footers = <>
+            Title.Caption = 'No. Trans'
+            Width = 124
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'trans_date'
+            Footers = <>
+            Title.Caption = 'Tanggal'
+            Width = 116
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'ket'
+            Footers = <>
+            Title.Caption = 'Keterangan'
+            Width = 305
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'jumlah'
+            Footers = <>
+            Title.Caption = 'Saldo'
+            Width = 130
+          end
+          item
+            CellButtons = <>
+            Checkboxes = True
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'status_app'
+            Footers = <>
+            Title.Caption = 'Approved'
+            Width = 80
+          end>
+        object RowDetailData: TRowDetailPanelControlEh
+          object DBGridEh8: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 739
+            Height = 118
+            Align = alClient
+            DataSource = DsDetailMemorial
+            DrawMemoText = True
+            DynProps = <>
+            FooterRowCount = 1
+            SumList.Active = True
+            TabOrder = 0
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'account_code'
+                Footers = <>
+                Title.Caption = 'Kode Perkiraan'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'account_name'
+                Footers = <>
+                Title.Caption = 'Nama Perkiraan'
+                Width = 200
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '#,##0.00'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'db'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.Value = '0'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Debit'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '#,##0.00'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'kd'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.Value = '0'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Kredit'
+                Width = 150
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+      object Panel5: TPanel
+        Left = 0
+        Top = 0
+        Width = 892
+        Height = 89
+        Align = alTop
+        Color = clGradientInactiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        ExplicitWidth = 886
+        object Label5: TLabel
+          Left = 40
+          Top = 24
+          Width = 45
+          Height = 15
+          Caption = 'Tanggal '
+        end
+        object Label6: TLabel
+          Left = 239
+          Top = 24
+          Width = 19
+          Height = 15
+          Caption = 'S/D'
+        end
+        object dtAwalMemorial: TRzDateTimeEdit
+          Left = 112
+          Top = 21
+          Width = 121
+          Height = 23
+          EditType = etDate
+          TabOrder = 0
+        end
+        object dtAkhirMemorial: TRzDateTimeEdit
+          Left = 272
+          Top = 21
+          Width = 121
+          Height = 23
+          EditType = etDate
+          TabOrder = 1
+        end
+        object Panel6: TPanel
+          Left = 1
+          Top = 52
+          Width = 890
+          Height = 36
+          Align = alBottom
+          TabOrder = 2
+          ExplicitWidth = 884
+          object btTampilMemorial: TRzBitBtn
+            Left = 518
+            Top = 1
+            Width = 94
+            Height = 34
+            Align = alRight
+            Caption = 'Tampilkan'
+            TabOrder = 0
+            OnClick = btTampilMemorialClick
+            Glyph.Data = {
+              36060000424D3606000000000000360400002800000020000000100000000100
+              08000000000000020000330B0000330B00000001000000000000000000003300
+              00006600000099000000CC000000FF0000000033000033330000663300009933
+              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+              000000990000339900006699000099990000CC990000FF99000000CC000033CC
+              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+              330000333300333333006633330099333300CC333300FF333300006633003366
+              33006666330099663300CC663300FF6633000099330033993300669933009999
+              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+              66006600660099006600CC006600FF0066000033660033336600663366009933
+              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+              660000996600339966006699660099996600CC996600FF99660000CC660033CC
+              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+              990000339900333399006633990099339900CC339900FF339900006699003366
+              99006666990099669900CC669900FF6699000099990033999900669999009999
+              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+              000000808000800000008000800080800000C0C0C00080808000191919004C4C
+              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000E8ACDEE3E8E8
+              E8E8E8E8E8E8E8E8E8E8E8ACDEE3E8E8E8E8E8E8E8E8E8E8E8E8AC807A81E3E8
+              E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8E8CEA37A81E3
+              E8E8E8E8E8E8E8E8E8E8E8ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A81
+              E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA37A
+              81E3E8E8E8E8E8E8E8E8E8E8E3ACE28181E3E8E8E8E8E8E8E8E8E8E8E8D0CEA3
+              7AACAD82828288E3E8E8E8E8E8E3ACE281ACE3818181E2E3E8E8E8E8E8E8D0CE
+              E28288E6B3E6E682EBE8E8E8E8E8E3ACE281E2ACACACAC81E3E8E8E8E8E8E8E3
+              8289B3B3B3D7D7D782E3E8E8E8E8E8E381E3ACACACE3E3E381E3E8E8E8E8E8AD
+              88B3E6B3B3D7D7D7E688E8E8E8E8E8E3E2ACACACACE3E3E3ACE2E8E8E8E8E888
+              89E6E6B3B3B3D7D7E682E8E8E8E8E8E2E3ACACACACACE3E3AC81E8E8E8E8E882
+              E6E6E6E6B3B3B3B3B382E8E8E8E8E881ACACACACACACACACAC81E8E8E8E8E888
+              E6B3E6E6E6B3B3B3E682E8E8E8E8E8E2ACACACACACACACACAC81E8E8E8E8E8AD
+              88D7D7E6E6E6E6B38888E8E8E8E8E8E3E2E3E3ACACACACACE2E2E8E8E8E8E8E3
+              82EBD7B3E6E6E68982E3E8E8E8E8E8E381E3E3ACACACACE381E3E8E8E8E8E8E8
+              AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
+              E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
+            NumGlyphs = 2
+            ExplicitLeft = 512
+          end
+          object btSelectMemo: TRzBitBtn
+            Left = 612
+            Top = 1
+            Width = 98
+            Height = 34
+            Align = alRight
+            Caption = 'Select All'
+            TabOrder = 1
+            OnClick = btSelectMemoClick
+            Glyph.Data = {
+              36060000424D3606000000000000360400002800000020000000100000000100
+              08000000000000020000830E0000830E00000001000000000000000000003300
+              00006600000099000000CC000000FF0000000033000033330000663300009933
+              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+              000000990000339900006699000099990000CC990000FF99000000CC000033CC
+              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+              330000333300333333006633330099333300CC333300FF333300006633003366
+              33006666330099663300CC663300FF6633000099330033993300669933009999
+              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+              66006600660099006600CC006600FF0066000033660033336600663366009933
+              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+              660000996600339966006699660099996600CC996600FF99660000CC660033CC
+              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+              990000339900333399006633990099339900CC339900FF339900006699003366
+              99006666990099669900CC669900FF6699000099990033999900669999009999
+              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+              000000808000800000008000800080800000C0C0C00080808000191919004C4C
+              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E85E5E5E5E5E
+              5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181E85ED7D7D7D7
+              D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85ED7090909
+              0909090909090909D75EE881D78181818181818181818181D781E85ED7095E5E
+              5E5E5E5E5E5E5E09D75EE881D781ACACACACACACACACAC81D781E85ED7090909
+              0909090909090909D75EE881D78181818181818181818181D781E85ED7095E5E
+              5E5E5E5E5E5E5E09D75EE881D781ACACACACACACACACAC81D781E85ED7090909
+              0909090909090909D75EE881D78181818181818181818181D781E85ED7095E5E
+              5E5E5E5E5E5E5E09D75EE881D781ACACACACACACACACAC81D781E85ED7090909
+              0909090909090909D75EE881D78181818181818181818181D781E85ED7095E5E
+              5E5E5E5E5E5E5E09D75EE881D781ACACACACACACACACAC81D781E85ED7090909
+              0909090909090909D75EE881D78181818181818181818181D781E85ED7095E5E
+              5E5E5E5E5E5E5E09D75EE881D781ACACACACACACACACAC81D781E85ED7090909
+              0909090909090909D75EE881D78181818181818181818181D781E85ED7D7D7D7
+              D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
+              5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
+            NumGlyphs = 2
+            ExplicitLeft = 606
+          end
+          object btApprovMemo: TRzBitBtn
+            Left = 710
+            Top = 1
+            Width = 85
+            Height = 34
+            Align = alRight
+            Caption = 'Approved'
+            TabOrder = 2
+            OnClick = btApprovMemoClick
+            Glyph.Data = {
+              36060000424D3606000000000000360400002800000020000000100000000100
+              08000000000000020000330B0000330B00000001000000000000000000003300
+              00006600000099000000CC000000FF0000000033000033330000663300009933
+              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+              000000990000339900006699000099990000CC990000FF99000000CC000033CC
+              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+              330000333300333333006633330099333300CC333300FF333300006633003366
+              33006666330099663300CC663300FF6633000099330033993300669933009999
+              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+              66006600660099006600CC006600FF0066000033660033336600663366009933
+              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+              660000996600339966006699660099996600CC996600FF99660000CC660033CC
+              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+              990000339900333399006633990099339900CC339900FF339900006699003366
+              99006666990099669900CC669900FF6699000099990033999900669999009999
+              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+              000000808000800000008000800080800000C0C0C00080808000191919004C4C
+              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E80909
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8E8091010
+              09E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8E8E8E809101010
+              1009E8E8E8E8E8E8E8E8E8E881ACACACAC81E8E8E8E8E8E8E8E8E80910101010
+              101009E8E8E8E8E8E8E8E881ACACACACACAC81E8E8E8E8E8E8E8E80910100909
+              10101009E8E8E8E8E8E8E881ACAC8181ACACAC81E8E8E8E8E8E8E8091009E8E8
+              0910101009E8E8E8E8E8E881AC81E8E881ACACAC81E8E8E8E8E8E80909E8E8E8
+              E80910101009E8E8E8E8E88181E8E8E8E881ACACAC81E8E8E8E8E8E8E8E8E8E8
+              E8E80910101009E8E8E8E8E8E8E8E8E8E8E881ACACAC81E8E8E8E8E8E8E8E8E8
+              E8E8E80910101009E8E8E8E8E8E8E8E8E8E8E881ACACAC81E8E8E8E8E8E8E8E8
+              E8E8E8E809101009E8E8E8E8E8E8E8E8E8E8E8E881ACAC81E8E8E8E8E8E8E8E8
+              E8E8E8E8E8091009E8E8E8E8E8E8E8E8E8E8E8E8E881AC81E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E80909E8E8E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+            NumGlyphs = 2
+            ExplicitLeft = 704
+          end
+          object btCetakMemorial: TRzBitBtn
+            Left = 795
+            Top = 1
+            Width = 94
+            Height = 34
+            Align = alRight
+            Caption = 'Print'
+            TabOrder = 3
+            OnClick = btCetakMemorialClick
+            Glyph.Data = {
+              36060000424D3606000000000000360400002800000020000000100000000100
+              08000000000000020000730E0000730E00000001000000000000000000003300
+              00006600000099000000CC000000FF0000000033000033330000663300009933
+              0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+              000000990000339900006699000099990000CC990000FF99000000CC000033CC
+              000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+              0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+              330000333300333333006633330099333300CC333300FF333300006633003366
+              33006666330099663300CC663300FF6633000099330033993300669933009999
+              3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+              330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+              66006600660099006600CC006600FF0066000033660033336600663366009933
+              6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+              660000996600339966006699660099996600CC996600FF99660000CC660033CC
+              660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+              6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+              990000339900333399006633990099339900CC339900FF339900006699003366
+              99006666990099669900CC669900FF6699000099990033999900669999009999
+              9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+              990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+              CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+              CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+              CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+              CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+              CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+              FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+              FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+              FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+              FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+              000000808000800000008000800080800000C0C0C00080808000191919004C4C
+              4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+              6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809090909
+              09090909090909E8E8E8E8E88181818181818181818181E8E8E8E85E89898989
+              89898989895E5E09E8E8E8E2ACACACACACACACACACE2E281E8E85E5E5E5E5E5E
+              5E5E5E5E5E5E095E09E8E2E2E2E2E2E2E2E2E2E2E2E281E281E85ED789898989
+              8989898989895E0909E8E2E8ACACACACACACACACACACE28181E85ED789898989
+              181289B490895E5E09E8E2E8ACACACACE281ACE281ACE2E281E85ED7D7D7D7D7
+              D7D7D7D7D7D75E5E5E09E2E8E8E8E8E8E8E8E8E8E8E8E2E2E2815ED789898989
+              8989898989895E5E5E09E2E8ACACACACACACACACACACE2E2E281E85E5E5E5E5E
+              5E5E5E5E5E89895E5E09E8E2E2E2E2E2E2E2E2E2E2ACACE2E281E8E85ED7D7D7
+              D7D7D7D7D75E89895E09E8E8E2E8E8E8E8E8E8E8E8E2ACACE281E8E8E85ED7E3
+              E3E3E3E3D75E5E5E09E8E8E8E8E2E8ACACACACACE8E2E2E281E8E8E8E85ED7D7
+              D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85ED7
+              E3E3E3E3E3D75EE8E8E8E8E8E8E8E2E8ACACACACACE8E2E8E8E8E8E8E8E85ED7
+              D7D7D7D7D7D7D75EE8E8E8E8E8E8E2E8E8E8E8E8E8E8E8E2E8E8E8E8E8E8E85E
+              5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
+              E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+            NumGlyphs = 2
+            ExplicitLeft = 789
+          end
+        end
+      end
+    end
   end
   object MemPembelian: TMemTableEh
     Active = True
     FetchAllOnOpen = True
     Params = <>
-    Left = 16
-    Top = 200
+    Left = 40
+    Top = 264
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object subtot: TMTNumericDataFieldEh
@@ -1572,19 +1968,20 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   end
   object DsPembelian: TDataSource
     DataSet = MemPembelian
-    Left = 80
-    Top = 144
+    Left = 160
+    Top = 264
   end
   object DsPenjualan: TDataSource
     DataSet = MemPenjualan
-    Left = 481
-    Top = 24
+    Left = 289
+    Top = 328
   end
   object MemPenjualan: TMemTableEh
     Active = True
     FetchAllOnOpen = True
     Params = <>
-    Left = 416
+    Left = 184
+    Top = 328
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object subtot: TMTNumericDataFieldEh
@@ -1750,8 +2147,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     MasterSource = DsPembelian
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 17
-    Top = 78
+    Left = 41
+    Top = 206
     ParamData = <
       item
         DataType = ftString
@@ -1762,8 +2159,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   end
   object Ds_DetailPembelian: TDataSource
     DataSet = Qdetail_Pembelian
-    Left = 87
-    Top = 94
+    Left = 159
+    Top = 206
   end
   object QDetail_Penjualan: TUniQuery
     Connection = dm.Koneksi
@@ -1785,8 +2182,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     MasterSource = DsPenjualan
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 417
-    Top = 54
+    Left = 185
+    Top = 382
     ParamData = <
       item
         DataType = ftString
@@ -1797,15 +2194,15 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   end
   object DsDetailPenjualan: TDataSource
     DataSet = QDetail_Penjualan
-    Left = 495
-    Top = 78
+    Left = 287
+    Top = 382
   end
   object MemKas: TMemTableEh
     Active = True
     FetchAllOnOpen = True
     Params = <>
-    Left = 384
-    Top = 256
+    Left = 360
+    Top = 328
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object jumlah: TMTNumericDataFieldEh
@@ -1857,13 +2254,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   end
   object DsKas: TDataSource
     DataSet = MemKas
-    Left = 449
-    Top = 248
+    Left = 425
+    Top = 328
   end
   object DsDetail_kas: TDataSource
     DataSet = QDetail_kas
-    Left = 455
-    Top = 302
+    Left = 439
+    Top = 390
   end
   object QDetail_kas: TUniQuery
     Connection = dm.Koneksi
@@ -1885,8 +2282,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     MasterSource = DsKas
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 385
-    Top = 318
+    Left = 361
+    Top = 390
     ParamData = <
       item
         DataType = ftString
@@ -1894,5 +2291,98 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         ParamType = ptInput
         Value = nil
       end>
+  end
+  object MemMemorial: TMemTableEh
+    Active = True
+    FetchAllOnOpen = True
+    Params = <>
+    Left = 544
+    Top = 328
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object jumlah: TMTNumericDataFieldEh
+          FieldName = 'jumlah'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayLabel = 'ppn'
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object status_app: TMTBooleanDataFieldEh
+          FieldName = 'status_app'
+          DisplayLabel = 'status_app'
+          DisplayWidth = 10
+        end
+        object trans_no: TMTStringDataFieldEh
+          FieldName = 'trans_no'
+          StringDataType = fdtStringEh
+          DisplayLabel = 'trans_no'
+          DisplayWidth = 50
+          Size = 50
+          Transliterate = True
+        end
+        object ket: TMTStringDataFieldEh
+          FieldName = 'ket'
+          StringDataType = fdtStringEh
+          DisplayLabel = 'faktur_no'
+          DisplayWidth = 50
+          Size = 50
+          Transliterate = True
+        end
+        object trans_date: TMTDateTimeDataFieldEh
+          FieldName = 'trans_date'
+          DateTimeDataType = fdtDateEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+        Data = (
+          (
+            nil
+            False
+            nil
+            nil
+            nil))
+      end
+    end
+  end
+  object QDetailMemorial: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select "memo_no", a."account_code", sum("debit") as db, sum("kre' +
+        'dit") as kd,case when b.account_name is null then c.account_name' +
+        ' else  b.account_name end account_name'
+      'from t_memorial_journal_detail a'
+      
+        ' left join t_ak_account_sub b on a.account_code=b.account_code2 ' +
+        ' '
+      ' left join t_ak_account c on a.account_code=c.code '
+      
+        ' GROUP BY "memo_no", a."account_code", b.account_name, c.account' +
+        '_name'
+      ' order by account_code asc')
+    MasterSource = DsMemorial
+    MasterFields = 'memo_no'
+    DetailFields = 'memo_no'
+    Left = 545
+    Top = 390
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'memo_no'
+        Value = nil
+      end>
+  end
+  object DsDetailMemorial: TDataSource
+    DataSet = QDetailMemorial
+    Left = 623
+    Top = 390
+  end
+  object DsMemorial: TDataSource
+    DataSet = MemMemorial
+    Left = 609
+    Top = 328
   end
 end

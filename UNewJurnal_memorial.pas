@@ -3,7 +3,7 @@ unit UNewJurnal_memorial;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.DateUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, RzRadChk, Vcl.StdCtrls,
   RzEdit, MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, Vcl.Mask,
@@ -68,6 +68,7 @@ type
     procedure CbJenisSelect(Sender: TObject);
     procedure CbHartaSelect(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
+    procedure DTtglChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -205,8 +206,11 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,faktur_no,rounding_status,post_status,trans_month,trans_year,notes_id,created_by,order_no,trans_day,other_source) '+
-      'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,:parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic,:order_no,:hr,:os)';
+      sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,'+
+                'faktur_no,rounding_status,post_status,trans_month,trans_year,notes_id,'+
+                'created_by,order_no,trans_day,other_source, memorial_source) '+
+                'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,'+
+                ':parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic,:order_no,:hr, :os, :memorial_source)';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
       parambyname('partgl').Value:= FormatDateTime('yyyy-mm-dd',DTtgl.date);
       parambyname('parketerangan').Value:=Memket.Text;
@@ -227,6 +231,7 @@ begin
       end;
       parambyname('parstatus_post').Value:=0;
       ParamByName('order_no').Value:=Urut;
+      ParamByName('memorial_source').Value:=CbJenis.ItemIndex;
       execsql;
     end;
 
@@ -319,10 +324,15 @@ begin
     begin
       close;
       Sql.Clear;
-      Sql.Text:='update t_memorial_journal set trans_date=:partgl,notes_id=:idket,trans_month=:bln,trans_year=:thn,updated_by=:pic,'+
-                'updated_at=now(),notes=:parketerangan,bk_no=:parno_bk,faktur_no=:parno_faktur where memo_no=:parno_bukti_memo';
+      Sql.Text:='update t_memorial_journal set trans_date=:partgl,notes_id=:idket,'+
+                'trans_month=:bln,trans_year=:thn,updated_by=:pic,'+
+                'updated_at=now(),notes=:parketerangan,bk_no=:parno_bk,'+
+                'faktur_no=:parno_faktur, other_source=:os, memorial_source=:memorial_source,'+
+                ' order_no=:order_no, trans_day=:hr, '+
+                'rounding_status=:parstatus_pembulatan, post_status=:parstatus_post '+
+                'where memo_no=:parno_bukti_memo';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
-      parambyname('partgl').Value:=DTtgl.Text;
+      parambyname('partgl').Value:=FormatDateTime('yyyy-mm-dd',DTtgl.date);
       parambyname('parketerangan').Value:=Memket.Text;
       parambyname('parno_bk').Value:=edno_bk_pembulatan.Text;
       parambyname('parno_faktur').Value:=edno_faktur_pembulatan.Text;
@@ -331,6 +341,19 @@ begin
       parambyname('idket').AsString:=Edkd_ket.Text;
     //  ShowMessage('0');
       parambyname('pic').AsString:=nm;
+      ParamByName('memorial_source').Value:=CbJenis.ItemIndex;
+
+      ParamByName('order_no').Value:=Urut;
+      parambyname('hr').Value:=FormatDateTime('dd',DTtgl.Date);
+      if (edno_bk_pembulatan.Text<>'') and (edno_faktur_pembulatan.Text<>'') then
+      begin
+        parambyname('parstatus_pembulatan').Value:=1;
+      end
+      else
+      begin
+        parambyname('parstatus_pembulatan').Value:=1;
+      end;
+      parambyname('parstatus_post').Value:=0;
       ExecSql;
     end;
     with dm.Qtemp do
@@ -395,6 +418,13 @@ begin
   MemTableEh1.EmptyTable;
   Checkpembuatan.Checked:=false;
   Panel_pembulatan.Visible:=false;
+  CbJenis.ItemIndex:=0;
+end;
+
+procedure TFNewJurnal_memo.DTtglChange(Sender: TObject);
+begin
+cbbulan.ItemIndex := MonthOf(DTtgl.Date);
+edth.Value := YearOf(DTtgl.Date);
 end;
 
 procedure TFNewJurnal_memo.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -454,7 +484,8 @@ begin
       SQL.Text:=' SELECT b.code as account_code,b.account_name,c.header_name as account_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
                 ' left join t_ak_header c on b.header_code=c.header_code'+
-                ' where module_id=5 '+
+                ' LEFT JOIN t_ak_module d on a.module_id=d.id '+
+                ' where d.id=7 and b.code is not null  '+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
     Open;
@@ -472,7 +503,9 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select * from "V_Sumbermemorial" where notr='+inttostr(CbJenis.ItemIndex);
+        sql.Text:=' select * from "V_Sumbermemorial" '+
+                  ' where notr='+inttostr(CbJenis.ItemIndex)+' and '+
+                  ' tgl<='+QuotedStr(FormatDateTime('yyyy-MM-dd',FNewJurnal_memo.DTtgl.date))+'';
         Open
       end;
     END;
@@ -480,6 +513,7 @@ end;
 
 procedure TFNewJurnal_memo.BSaveClick(Sender: TObject);
 begin
+  //ShowMessage(IntToStr(Status));
   if not dm.Koneksi.InTransaction then
     dm.Koneksi.StartTransaction;
   try
@@ -569,9 +603,10 @@ begin
   edno_bk_pembulatan.Text:='';
   edno_faktur_pembulatan.Text:='';
   MemTableEh1.EmptyTable;
-  if CbJenis.ItemIndex=7 then
+  if CbJenis.ItemIndex=7 then //Penyusutan Asset
   begin
-    CbHarta.Enabled:=true;
+    label7.Visible:=true;
+    CbHarta.Visible:=true;
     CbHarta.Clear;
     with dm.Qtemp do
     begin
@@ -594,12 +629,14 @@ begin
   if Checkpembuatan.checked=true then
   begin
     Panel_pembulatan.Visible:=true;
+    CbJenis.ItemIndex:=0;
     CbJenis.Enabled:=true;
     status_sumber:=1;
   end
   else
   begin
     Panel_pembulatan.Visible:=false;
+    CbJenis.ItemIndex:=0;
     cbjenis.Enabled:=false;
     status_sumber:=0;
   end;

@@ -179,6 +179,7 @@ begin
               'INNER JOIN '+
               't_cash_bank_acceptance_receivable c '+
               'ON c.voucher_no = a.voucher_no '+
+              'WHERE a.deleted_at IS NULL '+
               'GROUP BY a.voucher_no, a.trans_date, a.module_id, a.code_cust, '+
               'a.name_cust, a.for_acceptance,a.description, '+
               'a.account_name_bank,a.account_number_bank,b.paid_amount, a.module_id ) AS zz '+
@@ -289,7 +290,7 @@ begin
               't_cash_bank_acceptance_det b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
               'INNER JOIN '+
               't_cash_bank_acceptance_receivable c ON c.voucher_no = a.voucher_no '+
-              ') AS zz '+
+              'WHERE a.deleted_at is NULL) AS zz '+
               'LEFT JOIN get_customer() AS cust ON cust.customer_code = zz.code_cust '+
               'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
 //       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+

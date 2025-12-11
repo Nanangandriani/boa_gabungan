@@ -224,8 +224,8 @@ object FCari_SumberMemorial: TFCari_SumberMemorial
   end
   object DataSource1: TDataSource
     DataSet = QSumber_memo
-    Left = 616
-    Top = 224
+    Left = 592
+    Top = 200
   end
   object QSumber_memo: TUniQuery
     Connection = dm.Koneksi

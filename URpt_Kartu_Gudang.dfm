@@ -133,8 +133,8 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     Align = alBottom
     TabOrder = 3
     OnClick = Panel1Click
-    ExplicitTop = 372
-    ExplicitWidth = 702
+    ExplicitTop = 404
+    ExplicitWidth = 1086
     object BBatal: TRzBitBtn
       Left = 1016
       Top = 1
@@ -195,7 +195,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 626
+      ExplicitLeft = 1010
     end
     object BPrint: TRzBitBtn
       Left = 937
@@ -259,7 +259,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 547
+      ExplicitLeft = 931
     end
     object RzBitBtn1: TRzBitBtn
       Left = 858
@@ -322,7 +322,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 468
+      ExplicitLeft = 852
     end
   end
   object EdKd_supp: TEdit
@@ -383,7 +383,6 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     Contexts = <>
     TabOrder = 8
     TabStop = False
-    ExplicitWidth = 708
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -400,6 +399,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     Width = 1092
     Height = 286
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DsKartu_Gudang
     DynProps = <>
     TabOrder = 9
@@ -424,6 +424,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       end
       item
         CellButtons = <>
+        DisplayFormat = '0.00#,##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'saldo_awal_periode'
@@ -1188,6 +1189,8 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     object QKartu_Gudangsaldo_awal_periode: TFloatField
       FieldName = 'saldo_awal_periode'
       ReadOnly = True
+      DisplayFormat = '0.00#,##'
+      EditFormat = '0.00#,##'
     end
     object QKartu_Gudangsatuan: TStringField
       FieldName = 'satuan'
@@ -1945,6 +1948,1103 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       Hint = 'New Item'
       Visible = ivAlways
       PropertiesClassName = 'TcxLabelProperties'
+    end
+  end
+  object QKartuGUdang: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT aa.*, i.item_name as itemProduct_name from (  SELECT '#39'-'#39' ' +
+        'as notrans, kd_barang, '#39#39' as type,  to_char(to_date('#39'19-11-2025'#39 +
+        ', '#39'DD-MM-YYYY'#39'), '#39'DD/MM/YYYY'#39') AS tgltrans,  '#39'SALDO AWAL'#39' as ket' +
+        'erangan, 0 as level1_qty_in, 0 as level1_qty_out, saldo_awal_per' +
+        'iode as saldo_awal, 0 as urut, satuan from (SELECT m.kd_barang, ' +
+        'i.item_name, COALESCE(m.saldo_awal ,0) +  COALESCE(SUM(t.jum_tra' +
+        'ns_in - jum_trans_out), 0) AS saldo_awal_periode,  satuan  FROM ' +
+        ' (SELECT kd_barang,   saldo_awal_lev1 AS  saldo_awal,    satuan_' +
+        'lev1 AS  satuan from tbl_transaksi_stock_sa where kd_gudang = '#39'G' +
+        'D-BD01'#39')  m  LEFT JOIN ( SELECT item_code,  SUM(level1_qty_in) A' +
+        'S  jum_trans_in,    SUM(level1_qty_out) AS jum_trans_out  from t' +
+        'bl_transaksi_stock  WHERE type  IN ('#39'IN'#39','#39'OUT'#39') and tgltrans  BE' +
+        'TWEEN '#39'2025-09-30'#39'::date AND ('#39'2025-12-10'#39'::date - INTERVAL '#39'1 d' +
+        'ay'#39')  AND kd_gudang = '#39'GD-BD01'#39' GROUP BY item_code ORDER BY item' +
+        '_code) t   ON m.kd_barang = t.item_code  LEFT JOIN t_item i ON m' +
+        '.kd_barang= i.item_code  where i.category_id=1 '
+      ' '
+      
+        ' GROUP BY m.kd_barang,i.item_name,m.saldo_awal,satuan ORDER BY m' +
+        '.kd_barang) sa  UNION ALL  '
+      ''
+      
+        'SELECT notrans, t.item_code as kd_barang, t.type, to_char(tgltra' +
+        'ns, '#39'DD/MM/YYYY'#39') AS tgltrans,  case when t.sumber_table ='#39't_pur' +
+        'chase_invoice_det'#39' then concat('#39'Pembelian '#39',notrans)  when t.sum' +
+        'ber_table ='#39't_selling_det'#39' then concat('#39'Penjualan '#39',notrans)  wh' +
+        'en t.sumber_table ='#39't_purchase_return_det'#39' then concat('#39'Retur Pe' +
+        'mbelian '#39',notrans) when t.sumber_table ='#39't_sales_returns_det'#39' th' +
+        'en concat('#39'Retur Penjualan '#39',notrans) end keterangan,  t.level1_' +
+        'qty_in AS level1_qty_in,  t.level1_qty_out AS level1_qty_out, 0 ' +
+        'as saldo_awal,  1 as urut,  level1_satuan AS  satuan  from tbl_t' +
+        'ransaksi_stock t  '
+      'LEFT JOIN t_purchase_invoice beli on t.notrans=beli.trans_no  '
+      'LEFT JOIN t_selling jual on t.notrans=jual.trans_no   '
+      
+        'LEFT JOIN t_purchase_return retbeli on t.notrans=retbeli.return_' +
+        'no  '
+      
+        'LEFT JOIN t_sales_returns retjual on t.notrans=retjual.trans_no ' +
+        '  '
+      
+        'where t.kd_gudang = '#39'GD-BD01'#39' AND  (t.tgltrans between '#39'2025-11-' +
+        '19'#39' and  '#39'2025-11-19'#39') and  t.type IN ('#39'IN'#39','#39'OUT'#39')  )aa  '
+      ''
+      'LEFT JOIN t_item i ON aa.kd_barang= i.item_code'
+      ' --where jenisproduct_id=1 '
+      
+        ' GROUP BY "notrans", "kd_barang", "type", "tgltrans", "keteranga' +
+        'n", "level1_qty_in", "level1_qty_out", "saldo_awal", "urut", "sa' +
+        'tuan", "itemproduct_name"'
+      ' ORDER BY tgltrans,kd_barang,urut,type,notrans asc')
+    Left = 256
+    Top = 408
+    object QKartuGUdangnotrans: TMemoField
+      FieldName = 'notrans'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuGUdangkd_barang: TMemoField
+      FieldName = 'kd_barang'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuGUdangtype: TMemoField
+      FieldName = 'type'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuGUdangtgltrans: TMemoField
+      FieldName = 'tgltrans'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuGUdangketerangan: TMemoField
+      FieldName = 'keterangan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuGUdanglevel1_qty_in: TFloatField
+      FieldName = 'level1_qty_in'
+      ReadOnly = True
+    end
+    object QKartuGUdanglevel1_qty_out: TFloatField
+      FieldName = 'level1_qty_out'
+      ReadOnly = True
+    end
+    object QKartuGUdangsaldo_awal: TFloatField
+      FieldName = 'saldo_awal'
+      ReadOnly = True
+    end
+    object QKartuGUdangurut: TIntegerField
+      FieldName = 'urut'
+      ReadOnly = True
+    end
+    object QKartuGUdangsatuan: TMemoField
+      FieldName = 'satuan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartuGUdangitemproduct_name: TStringField
+      FieldName = 'itemproduct_name'
+      Size = 255
+    end
+  end
+  object frxDBDKartuGUdang: TfrxDBDataset
+    UserName = 'frxDBDKartuGudang'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'notrans=notrans'
+      'kd_barang=kd_barang'
+      'type=type'
+      'tgltrans=tgltrans'
+      'keterangan=keterangan'
+      'level1_qty_in=level1_qty_in'
+      'level1_qty_out=level1_qty_out'
+      'saldo_awal=saldo_awal'
+      'urut=urut'
+      'satuan=satuan'
+      'itemproduct_name=itemProduct_name')
+    DataSet = QKartuGUdang
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 160
+    Top = 408
+  end
+  object Report: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PreviewOptions.ZoomMode = zmWholePage
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45838.977766886600000000
+    ReportOptions.LastChange = 45842.391858252300000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      
+        'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);      ' +
+        ' '
+      'var'
+      '  RupiahValue: Double;'
+      '  FormattedRupiah: String;  '
+      'begin      '
+      '  if <frxDBDKartuGudang."urut">='#39'0'#39' then'
+      '  begin'
+      '   frxDBDKartuGudangtgltrans.visible:=false;'
+      '   frxDBDKartuGudanglevel1_qty_in.visible:=false;'
+      '   frxDBDKartuGudanglevel1_qty_out.visible:=false;       '
+      '   //lbketerangan.Text:='#39'SALDO AWAL'#39' ;'
+      '     '
+      
+        '   Report.Variables['#39'Vsaldo'#39'] :=<frxDBDKartuGudang."saldo_awal">' +
+        ';'
+      
+        '   saldo.Text:=FormatFloat('#39'#,###,###,###0.####'#39', Report.Variabl' +
+        'es['#39'Vsaldo'#39']) ;                        '
+      
+        '   Report.Variables['#39'Vtotaldebit'#39'] := FormatFloat('#39'#,###,###,###' +
+        '0.####'#39', 0) ;'
+      
+        '   Report.Variables['#39'Vtotalkredit'#39'] := FormatFloat('#39'#,###,###,##' +
+        '#0.####'#39', 0) ;                                                  ' +
+        '                                         '
+      '  end;     '
+      '                                              '
+      
+        '  if (<frxDBDKartuGudang."urut"><>'#39'0'#39') and (<frxDBDKartuGudang."' +
+        'level1_qty_in">>=0) then'
+      '  begin                         '
+      '   frxDBDKartuGudangtgltrans.visible:=true;'
+      '   frxDBDKartuGudanglevel1_qty_in.visible:=true;'
+      '   frxDBDKartuGudanglevel1_qty_out.visible:=true;'
+      '     '
+      
+        '   Report.Variables['#39'Vsaldo'#39'] := Report.Variables['#39'Vsaldo'#39']+<frx' +
+        'DBDKartuGudang."level1_qty_in">;                  '
+      
+        '   saldo.Text:=FormatFloat('#39'#,###,###,###0.####'#39', Report.Variabl' +
+        'es['#39'Vsaldo'#39']);'
+      ''
+      
+        '   Report.Variables['#39'Vtotaldebit'#39'] := FormatFloat('#39'#,###,###,###' +
+        '0.####'#39',Report.Variables['#39'Vtotaldebit'#39']+<frxDBDKartuGudang."leve' +
+        'l1_qty_in">);       '
+      
+        '                                                                ' +
+        '                                    '
+      '  end;'
+      '    '
+      
+        '  if (<frxDBDKartuGudang."urut"><>'#39'0'#39') and (<frxDBDKartuGudang."' +
+        'level1_qty_out">>0) then'
+      '  begin                         '
+      '   frxDBDKartuGudangtgltrans.visible:=true;'
+      '   frxDBDKartuGudanglevel1_qty_in.visible:=true;'
+      '   frxDBDKartuGudanglevel1_qty_out.visible:=true;       '
+      ''
+      
+        '   Report.Variables['#39'Vsaldo'#39'] := Report.Variables['#39'Vsaldo'#39']-<frx' +
+        'DBDKartuGudang."level1_qty_out">;'
+      
+        '   saldo.Text:=FormatFloat('#39'#,###,###,###0.####'#39', Report.Variabl' +
+        'es['#39'Vsaldo'#39']);'
+      ''
+      
+        '   Report.Variables['#39'Vtotalkredit'#39'] := FormatFloat('#39'#,###,###,##' +
+        '#0.####'#39',Report.Variables['#39'Vtotalkredit'#39']+<frxDBDKartuGudang."le' +
+        'vel1_qty_out">);'
+      
+        '                                                                ' +
+        '                                      '
+      '  end;'
+      '                 '
+      'end;'
+      '  '
+      'begin'
+      ''
+      'end.')
+    Left = 80
+    Top = 408
+    Datasets = <
+      item
+        DataSet = frxDBDKartuGUdang
+        DataSetName = 'frxDBDKartuGudang'
+      end>
+    Variables = <
+      item
+        Name = ' New Category1'
+        Value = Null
+      end
+      item
+        Name = 'Vsaldo'
+        Value = Null
+      end
+      item
+        Name = 'Vsaldoakhir'
+        Value = Null
+      end
+      item
+        Name = 'vKodeOutlet'
+        Value = Null
+      end
+      item
+        Name = 'Vtotaldebit'
+        Value = Null
+      end
+      item
+        Name = 'Vtotalkredit'
+        Value = Null
+      end>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      MirrorMode = []
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 222.992270000000000000
+        Top = 102.047310000000000000
+        Width = 718.110700000000000000
+        Condition = 'frxDBDKartuGudang."kd_barang"'
+        StartNewPage = True
+        object Shape4: TfrxShapeView
+          Align = baClient
+          AllowVectorExport = True
+          Width = 718.110700000000000000
+          Height = 222.992270000000000000
+          Frame.Typ = []
+        end
+        object Shape2: TfrxShapeView
+          AllowVectorExport = True
+          Width = 718.110700000000000000
+          Height = 56.692950000000000000
+          Frame.Typ = []
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Top = 71.811070000000000000
+          Width = 102.047310000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'SKU')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Top = 90.708720000000000000
+          Width = 102.047310000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'NAMA BARANG')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Top = 109.606370000000000000
+          Width = 102.047310000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'GUDANG')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Top = 128.504020000000000000
+          Width = 102.047310000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'SATUAN')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Top = 147.401670000000000000
+          Width = 102.047310000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'PERIODE')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385900000000000000
+          Top = 71.811070000000000000
+          Width = 7.559060000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385900000000000000
+          Top = 90.708720000000000000
+          Width = 7.559060000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385900000000000000
+          Top = 109.606370000000000000
+          Width = 7.559060000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385900000000000000
+          Top = 128.504020000000000000
+          Width = 7.559060000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385900000000000000
+          Top = 147.401670000000000000
+          Width = 7.559060000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDKartuGudangkd_barang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 120.944960000000000000
+          Top = 71.811070000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataField = 'kd_barang'
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."kd_barang"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 120.944960000000000000
+          Top = 90.708720000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."itemProduct_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object periode: TfrxMemoView
+          AllowVectorExport = True
+          Left = 120.944960000000000000
+          Top = 147.401670000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'periode')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 75.590600000000000000
+          Top = 4.000000000000000000
+          Width = 638.740570000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold, fsUnderline]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'KARTU GUDANG')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object nama_pt: TfrxMemoView
+          AllowVectorExport = True
+          Width = 71.811070000000000000
+          Height = 52.913420000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'nama_pt')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object satuan: TfrxMemoView
+          AllowVectorExport = True
+          Left = 75.590600000000000000
+          Top = 30.236240000000000000
+          Width = 638.740570000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '(SATUAN)')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 71.590600000000000000
+          Top = 30.236240000000000000
+          Width = 646.299166220000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Line3: TfrxLineView
+          AllowVectorExport = True
+          Left = 71.811070000000000000
+          Height = 56.692950000000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Top = 60.472480000000000000
+          Width = 718.110236220000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Shape1: TfrxShapeView
+          AllowVectorExport = True
+          Top = 177.637910000000000000
+          Width = 718.110700000000000000
+          Height = 45.354330710000000000
+          Frame.Typ = []
+        end
+        object Line4: TfrxLineView
+          AllowVectorExport = True
+          Top = 200.315090000000000000
+          Width = 718.110236220000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Memo14: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 200.315090000000000000
+          Width = 98.267780000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'TANGGAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 102.047310000000000000
+          Top = 200.315090000000000000
+          Width = 173.858380000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NO TRANSAKSI')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          AllowVectorExport = True
+          Left = 275.905690000000000000
+          Top = 200.315090000000000000
+          Width = 170.078850000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'KETERANGAN')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo17: TfrxMemoView
+          AllowVectorExport = True
+          Left = 445.984540000000000000
+          Top = 200.315090000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'DEBET')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 536.693260000000000000
+          Top = 200.315090000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'KREDIT')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401980000000000000
+          Top = 200.315090000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'SALDO')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line5: TfrxLineView
+          AllowVectorExport = True
+          Left = 445.984540000000000000
+          Top = 177.637910000000000000
+          Height = 45.354360000000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 102.047310000000000000
+          Top = 201.094620000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Left = 275.905690000000000000
+          Top = 200.315090000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 536.693260000000000000
+          Top = 200.315090000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Left = 627.401980000000000000
+          Top = 200.315090000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object nama_gudang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 120.944960000000000000
+          Top = 109.606370000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'nama_gudang')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDKartuGudangsatuan: TfrxMemoView
+          AllowVectorExport = True
+          Left = 120.944960000000000000
+          Top = 128.504020000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataField = 'satuan'
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."satuan"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 347.716760000000000000
+        Width = 718.110700000000000000
+        OnBeforePrint = 'MasterData1OnBeforePrint'
+        DataSet = frxDBDKartuGUdang
+        DataSetName = 'frxDBDKartuGudang'
+        RowCount = 0
+        Stretched = True
+        object frxDBDKartuGudangnotrans: TfrxMemoView
+          AllowVectorExport = True
+          Left = 102.047310000000000000
+          Width = 173.858380000000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataField = 'notrans'
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."notrans"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDKartuGudangtgltrans: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Width = 98.267780000000000000
+          Height = 22.677165350000000000
+          DataField = 'tgltrans'
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."tgltrans"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 275.905690000000000000
+          Width = 170.078850000000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."keterangan"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDKartuGudanglevel1_qty_in: TfrxMemoView
+          AllowVectorExport = True
+          Left = 445.984540000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          DataField = 'level1_qty_in'
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          DisplayFormat.FormatStr = '#,###,###,###0.####'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."level1_qty_in"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frxDBDKartuGudanglevel1_qty_out: TfrxMemoView
+          AllowVectorExport = True
+          Left = 536.693260000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          DataField = 'level1_qty_out'
+          DataSet = frxDBDKartuGUdang
+          DataSetName = 'frxDBDKartuGudang'
+          DisplayFormat.FormatStr = '#,###,###,###0.####'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDKartuGudang."level1_qty_out"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object saldo: TfrxMemoView
+          AllowVectorExport = True
+          Left = 627.401980000000000000
+          Width = 86.929126540000000000
+          Height = 22.677165350000000000
+          DisplayFormat.FormatStr = #39'#,###,###,###0.####'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line15: TfrxLineView
+          AllowVectorExport = True
+          Left = 718.551640000000000000
+          Height = 22.677180000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line16: TfrxLineView
+          AllowVectorExport = True
+          Height = 22.677180000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 476.220780000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 642.520100000000000000
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Page : [Page#]')
+        end
+        object Line13: TfrxLineView
+          AllowVectorExport = True
+          Width = 718.110700000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 41.574830000000000000
+        Width = 718.110700000000000000
+      end
+      object GroupFooter1: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 393.071120000000000000
+        Width = 718.110700000000000000
+        object Shape3: TfrxShapeView
+          Align = baClient
+          AllowVectorExport = True
+          Width = 718.110700000000000000
+          Height = 22.677180000000000000
+          Frame.Typ = []
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Width = 442.205010000000000000
+          Height = 22.677165350000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'JUMLAH')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 445.984540000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          DisplayFormat.FormatStr = '#,###,###,###0.####'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDKartuGudang."level1_qty_in">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo2: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 536.693260000000000000
+          Width = 90.708720000000000000
+          Height = 22.677165350000000000
+          DisplayFormat.FormatStr = '#,###,###,###0.####'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDKartuGudang."level1_qty_out">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line10: TfrxLineView
+          AllowVectorExport = True
+          Left = 445.984540000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line11: TfrxLineView
+          AllowVectorExport = True
+          Left = 536.693260000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line12: TfrxLineView
+          AllowVectorExport = True
+          Left = 627.401980000000000000
+          Height = 22.677165350000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+      end
     end
   end
 end

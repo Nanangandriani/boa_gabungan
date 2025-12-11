@@ -70,6 +70,23 @@ type
     DsKas: TDataSource;
     DsDetail_kas: TDataSource;
     QDetail_kas: TUniQuery;
+    TabMemorial: TRzTabSheet;
+    MemMemorial: TMemTableEh;
+    QDetailMemorial: TUniQuery;
+    DsDetailMemorial: TDataSource;
+    DsMemorial: TDataSource;
+    DBGridEh7: TDBGridEh;
+    DBGridEh8: TDBGridEh;
+    Panel5: TPanel;
+    Label5: TLabel;
+    Label6: TLabel;
+    dtAwalMemorial: TRzDateTimeEdit;
+    dtAkhirMemorial: TRzDateTimeEdit;
+    Panel6: TPanel;
+    btTampilMemorial: TRzBitBtn;
+    btSelectMemo: TRzBitBtn;
+    btApprovMemo: TRzBitBtn;
+    btCetakMemorial: TRzBitBtn;
     procedure EdkodewilayahButtonClick(Sender: TObject);
     procedure BTampil_PembClick(Sender: TObject);
     procedure BTampil_PenjClick(Sender: TObject);
@@ -88,6 +105,10 @@ type
     procedure RzBitBtn13Click(Sender: TObject);
     procedure BPrint_PenjClick(Sender: TObject);
     procedure BPrint_PembClick(Sender: TObject);
+    procedure btTampilMemorialClick(Sender: TObject);
+    procedure btSelectMemoClick(Sender: TObject);
+    procedure btApprovMemoClick(Sender: TObject);
+    procedure btCetakMemorialClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -190,6 +211,122 @@ begin
   end;
   Qdetail_Penjualan.Close;
   Qdetail_Penjualan.Open;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.btApprovMemoClick(Sender: TObject);
+begin
+   MemMemorial.First;
+   while not MemMemorial.Eof do
+   begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='delete from t_general_ledger_real where trans_no='+QuotedStr(MemMemorial['trans_no']);
+          Execute;
+        end;
+      if MemMemorial['status_app']= true then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''1'' where trans_no='+QuotedStr(MemMemorial['trans_no']);
+          Execute;
+        end;
+       end;
+      if MemMemorial['status_app']= false then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='update t_general_ledger set approved_at=now(),approved_by='+QuotedStr(Nm)+',approved_status=''0'' where trans_no='+QuotedStr(MemMemorial['trans_no']);
+          Execute;
+        end;
+       end;
+    MemMemorial.Next;
+  end;
+  ShowMessage('Data Berhasil di Approve');
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.btCetakMemorialClick(Sender: TObject);
+begin
+   with FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus do
+   begin
+      close;
+      sql.Clear;
+      sql.Text:='select A.trans_no,a.trans_date,sum(case when status_dk =''D'' then amount else 0 end) db,'+
+      ' sum(case when status_dk =''K'' then amount else 0 end) kd, left(A.account_code,7) as account_code,B.account_name,c.module_name,a.module_id '+
+      ' from t_general_ledger_real a '+
+      ' inner join t_ak_account b on A.account_code=b.code or left(A.account_code,7)=b.code '+
+      ' INNER JOIN t_ak_module c ON a.module_id=c.id '+
+      ' where trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtAwalMemorial.Date))+''+
+      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtAkhirMemorial.Date))+''+
+      ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
+      ' order by a.trans_no,status_dk ASC';
+      Execute;
+   end;
+   FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.Open;
+    if FRpt_Jurnal_Khusus.QRpt_Jurnal_Khusus.FieldByName('trans_no').AsString=''  then
+    begin
+      ShowMessage('Maaf data kosong');
+    end else
+      FRpt_Jurnal_Khusus.Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_jurnal_khusus.Fr3');
+      Tfrxmemoview(FRpt_Jurnal_Khusus.Rpt.FindObject('MPeriode')).Memo.Text:='Periode  : '+FormatDateTime('dd MMMM yyy',DtMulai_kas.Date)+' - '+FormatDateTime('dd MMMM yyy',DtSelesai_kas.Date);
+    //  Tfrxmemoview(Rpt.FindObject('Memo2')).Memo.Text:=''+SBU;
+     // TfrxPictureView(RptPO.FindObject('Picture1')).Picture.loadfromfile('Report\Logo.jpg');
+    //  SetMemo(Rpt,'MPT',' '+SBU+' ');
+      //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
+    FRpt_Jurnal_Khusus.Rpt.ShowReport();
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.btSelectMemoClick(Sender: TObject);
+begin
+  MemMemorial.First;
+  while not MemMemorial.Eof do
+  begin
+    MemMemorial.Edit;
+    MemMemorial['status_app']:=true;
+    MemMemorial.Post;
+    MemMemorial.Next;
+  end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.btTampilMemorialClick(Sender: TObject);
+begin
+  MemMemorial.EmptyTable;
+  MemMemorial.Close;
+  MemMemorial.Open;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
+              ' a.notes,b.approved_status,b.module_id  FROM	(SELECT memo_no,trans_date,'+
+              ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
+              ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
+              ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
+              ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
+              ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
+              ' and status_dk=''D'' GROUP BY a.memo_no, a.trans_date, a.notes, '+
+              ' b.approved_status,b.module_id ORDER BY "a".trans_date DESC ';
+    execute;
+  end;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+    MemMemorial.Insert;
+    MemMemorial['trans_no']:=dm.Qtemp['memo_no'];
+    MemMemorial['ket']:=dm.Qtemp['notes'];
+    MemMemorial['jumlah']:=dm.Qtemp['amount'];
+    MemMemorial['trans_date']:=dm.Qtemp['trans_date'];
+    MemMemorial['status_app']:=dm.Qtemp['approved_status'];
+    MemMemorial.Post;
+    dm.Qtemp.Next;
+  end;
+  QDetailMemorial.Close;
+  QDetailMemorial.Open;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.CbmoduleSelect(Sender: TObject);

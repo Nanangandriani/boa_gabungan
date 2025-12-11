@@ -178,7 +178,7 @@ implementation
 
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
   UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan,
-  UPenyesuaianPenjualan, UMasterData;
+  UPenyesuaianPenjualan, UMasterData, UNoteCancel;
 
 var
   realfdatalistpenjualan : TFDataListPenjualan;
@@ -289,9 +289,11 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT * FROM t_cash_bank_acceptance_receivable WHERE no_invoice='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
+    sql.Text:='SELECT a.* FROM t_cash_bank_acceptance_receivable a '+
+              'left join t_cash_bank_acceptance b on b.voucher_no=a.voucher_no WHERE a.no_invoice='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' AND b.deleted_at is NULL';
     open;
   end;
+
   if dm.Qtemp.RecordCount>0 then
   begin
     MessageDlg('Nota sudah ada  pembayaran..!!',mtInformation,[mbRetry],0);
@@ -302,41 +304,10 @@ begin
 
     if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_selling"  SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(Nm)+'  '+
-                    ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
-          ExecSQL;
-        end;
-//        with dm.Qtemp do
-//        begin
-//          close;
-//          sql.clear;
-//          sql.Text:=' UPDATE "public"."t_selling_det"  SET '+
-//                    ' "deleted_at"=now(), '+
-//                    ' "deleted_by"='+QuotedStr(Nm)+'  '+
-//                    ' WHERE "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString);
-//          ExecSQL;
-//        end;
-        //Kembalikan Stock
-//          reset_stock;
-        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+      FNoteCancel.vtbl:='t_selling';
+      FNoteCancel.vfieldtransno:='trans_no';
+      FNoteCancel.edNoTransaksi.Text:=QPenjualan.FieldByName('trans_no').AsString;
+      FNoteCancel.ShowModal;
     end;
   end;
 end;
@@ -374,8 +345,10 @@ begin
       if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
       begin
         isCancel := 1;
+//        memAlasanPembatalan.Text:= Dm.Qtemp.FieldByName('cancel_reason').AsString;;
       end else begin
         isCancel:=0;
+//        memAlasanPembatalan.Text:='';
       end;
 
       edKode_Trans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;

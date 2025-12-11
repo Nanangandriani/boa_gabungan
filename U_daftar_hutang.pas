@@ -85,6 +85,11 @@ type
     QHutang_Kredit: TUniQuery;
     QImport: TUniQuery;
     Qmemorial: TUniQuery;
+    QdaftarHutangurutan: TLargeintField;
+    QdaftarHutangbayar: TFloatField;
+    QdaftarHutangrencanake: TIntegerField;
+    QdaftarHutangsisa: TFloatField;
+    QdaftarHutangstatus_bayar: TIntegerField;
     procedure BtutupClick(Sender: TObject);
     procedure BCariClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -92,6 +97,8 @@ type
       Params: TColCellParamsEh);
     procedure BProsesClick(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure DBGridDafHutangGetCellParams(Sender: TObject; Column: TColumnEh;
+      AFont: TFont; var Background: TColor; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -160,7 +167,8 @@ begin
                     FRencana_Lunas_Hutang.MemRencana.insert;
                     FRencana_Lunas_Hutang.MemRencana['kd_sup']:=Memdaftarhutang['kodesup'];
                     FRencana_Lunas_Hutang.MemRencana['noinv']:=Memdaftarhutang['no_inv'];
-                    FRencana_Lunas_Hutang.MemRencana['nosj']:=Memdaftarhutang['sj_no'];
+                    //FRencana_Lunas_Hutang.MemRencana['nosj']:=Memdaftarhutang['sj_no'];
+                    FRencana_Lunas_Hutang.MemRencana['nosj']:=Memdaftarhutang['no_inv']; //09-12-2025
                     FRencana_Lunas_Hutang.MemRencana['nofaktur']:=Memdaftarhutang['nofakturpajak'];
                     FRencana_Lunas_Hutang.MemRencana['tglfaktur']:=Memdaftarhutang['tglfaktur'];
                     FRencana_Lunas_Hutang.MemRencana['akun_pph']:=Memdaftarhutang['akun_pph'];
@@ -188,7 +196,9 @@ procedure TFDaftar_Hutang.BCariClick(Sender: TObject);
 var query1,query2,query3,query4,query5:string;
 begin
     query1:='/*Data_Pembelian*/'+
-           'SELECT  tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_pph,plan_stat,status,urutan,approval_status,bayar,rencanake,jumlah-bayar as sisa,1 as source_id '+
+           'SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_pph,plan_stat,status,urutan,approval_status,bayar,rencanake, '+
+           'sisa,case when sisa > 0 then 0 else 1 end status_bayar,source_id  FROM '+
+           '(SELECT  tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_pph,plan_stat,status,urutan,approval_status,bayar,rencanake,jumlah-bayar as sisa,1 as source_id '+
            'FROM '+
            '(SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_pph, '+
            'plan_stat,status,approval_status,urutan,(case when pay ISNULL then 0 else pay end)bayar,(case when plan_to ISNULL then 0 else plan_to  end)rencanake '+
@@ -262,7 +272,7 @@ begin
            ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
            ' WHERE date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')A '+
 
-           ' ';
+           'ORDER BY tglfaktur,nofakturpajak,urutan ASC)qqq';
 
            //'UNION All '+  //Uang Muka Pembelian
            //'SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,null tglfaktur,null tgltempo,valas,valas_value,jum_dolar,ppn_rp '+
@@ -388,6 +398,11 @@ begin
          Memdaftarhutang['jumlah']:=qdaftarhutang.FieldByName('jumlah').Asfloat;
          Memdaftarhutang['source_id']:=qdaftarhutang.FieldByName('source_id').AsInteger;
          Memdaftarhutang['pilih']:=0;
+         Memdaftarhutang['urutan']:=qdaftarhutang.FieldByName('urutan').AsString;
+         Memdaftarhutang['bayar']:=qdaftarhutang.FieldByName('bayar').Asfloat;
+         Memdaftarhutang['rencanake']:=qdaftarhutang.FieldByName('rencanake').AsString;
+         Memdaftarhutang['sisa']:=qdaftarhutang.FieldByName('sisa').Asfloat;
+         Memdaftarhutang['status_bayar']:=qdaftarhutang.FieldByName('status_bayar').AsInteger;;
          Memdaftarhutang.post;
          qdaftarhutang.next;
         end;
@@ -417,7 +432,7 @@ begin
         sql.clear;
         sql.add(query2);
         if length(cbsupp.Text)<>0 then
-          sql.Add('where kodesup='+QuotedStr(cbsupp.Text));
+          sql.Add('where supplier_code='+QuotedStr(cbsupp.Text));
           sql.Add('ORDER BY urutan ASC ');
         open;
       end;
@@ -686,6 +701,29 @@ begin
   FSearch_Supplier.Caption:='Master Data Supplier';
   FSearch_Supplier.vcall:='daftar_hutang';
   FSearch_Supplier.ShowModal;
+end;
+
+procedure TFDaftar_Hutang.DBGridDafHutangGetCellParams(Sender: TObject;
+  Column: TColumnEh; AFont: TFont; var Background: TColor;
+  State: TGridDrawState);
+begin
+   //if Qdaftarhutang.FieldByName('status').Value =0  then
+   if  Memdaftarhutang['status']=0  then
+   begin
+      Background := Clyellow;
+   end;
+
+   //if Qdaftarhutang.FieldByName('rencanake').Value <> 0  then
+   if  Memdaftarhutang['rencanake']<>0  then
+   begin
+      Background := Clmoneygreen;
+   end;
+
+   //if Qdaftarhutang.FieldByName('status_bayar').Value=1  then
+   if  Memdaftarhutang['status_bayar']=1  then
+   begin
+      Background := Clred;
+   end;
 end;
 
 procedure TFDaftar_Hutang.DBGridEh1Columns2GetCellParams(Sender: TObject;

@@ -2,8 +2,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
   Left = 0
   Top = 0
   Caption = 'Penerimaan Bank'
-  ClientHeight = 637
-  ClientWidth = 1243
+  ClientHeight = 636
+  ClientWidth = 1239
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1243
+    Width = 1239
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -45,16 +45,18 @@ object FListPenerimaanBank: TFListPenerimaanBank
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1243
-    Height = 510
+    Width = 1239
+    Height = 509
     Align = alClient
     AllowedOperations = []
     DataSource = DsPenerimaanBank
+    DrawMemoText = True
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 1
+    OnAdvDrawDataCell = DBGridOrderAdvDrawDataCell
     Columns = <
       item
         CellButtons = <>
@@ -1148,6 +1150,9 @@ object FListPenerimaanBank: TFListPenerimaanBank
       FieldName = 'description'
       OnGetText = QPenerimaanBankdescriptionGetText
       BlobType = ftMemo
+    end
+    object QPenerimaanBankdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
     end
   end
   object DsPenerimaanBank: TDataSource

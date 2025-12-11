@@ -144,8 +144,8 @@ end;
 
 procedure TFDaftar_Perkiraan.dxBUpdateClick(Sender: TObject);
 begin
-  FNewdaftar_perkiraan_bank.Show;
   FNewdaftar_perkiraan_bank.Clear;
+  FNewdaftar_perkiraan_bank.Show;
   with MemDaftar_Perk do
   begin
     with FNewdaftar_perkiraan_bank do

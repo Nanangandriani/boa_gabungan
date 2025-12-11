@@ -24,7 +24,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1113
+    ExplicitWidth = 1101
     object LabelPelanggan: TLabel
       Left = 10
       Top = 73
@@ -319,7 +319,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 521
-    ExplicitWidth = 1113
+    ExplicitWidth = 1101
     object BBatal: TRzBitBtn
       Left = 1029
       Top = 1
@@ -380,7 +380,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1037
+      ExplicitLeft = 1025
     end
     object BSave: TRzBitBtn
       Left = 954
@@ -442,7 +442,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 962
+      ExplicitLeft = 950
     end
     object Edautocode: TEdit
       Left = 503
@@ -463,7 +463,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Caption = 'Submit Correction'
       TabOrder = 3
       OnClick = BCorrectionClick
-      ExplicitLeft = 864
+      ExplicitLeft = 852
     end
   end
   object RzPageControl1: TRzPageControl
@@ -477,13 +477,9 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     UseColoredTabs = True
     TabIndex = 1
     TabOrder = 2
-    ExplicitWidth = 1113
-    ExplicitHeight = 248
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1109
-      ExplicitHeight = 223
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -577,7 +573,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1113
+      ExplicitWidth = 1097
+      ExplicitHeight = 223
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -671,7 +668,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
-    ExplicitWidth = 1113
+    ExplicitWidth = 1101
     object gbDataPiutang: TGroupBox
       Left = 501
       Top = 0

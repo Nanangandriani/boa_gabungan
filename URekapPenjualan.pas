@@ -182,7 +182,7 @@ begin
        SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
 //                 'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
                  'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten +'Order by a.trans_date,a.trans_no ASC' ;
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strKaresidenan+strKabupaten +'Order by a.trans_date,a.trans_no ASC' ;
 //       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
 //               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
 //               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+
@@ -288,7 +288,7 @@ begin
        SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
 //                 'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
                  'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
 //       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vrekap_penjualan" a  '+
 //               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
 //               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
@@ -326,7 +326,7 @@ begin
                ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+
-               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+               ' where deleted_at IS NULL AND trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
          begin

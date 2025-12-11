@@ -59,7 +59,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
   UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan,
-  UPenyesuaianPenjualan, UKartuPiutang;
+  UPenyesuaianPenjualan, UKartuPiutang, UNew_Gudang;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares,strKabupaten: String;
@@ -153,6 +153,13 @@ end;
 procedure TFbrowse_data_pelanggan.DBGridCustomerDblClick(Sender: TObject);
 begin
   //showmessage(vcall);
+  //Rudi
+  if vcall='m_gudang' then
+  begin
+    FNew_Gudang.Kode_Pelanggan:=MemMasterData['KD_PELANGGAN'];
+    FNew_Gudang.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+
   if vcall='dpp' then
   begin
      FDataPenagihanPiutang.MemDetail.insert;

@@ -38,6 +38,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
         Width = 1011
         Height = 336
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DsJurnal
         DrawMemoText = True
         DynProps = <>
@@ -219,7 +220,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
         'unding_status,'
       
         ' "a".post_status,"a".koreksi_status,f_bulan(a.trans_month::integ' +
-        'er) bln,"a".trans_year,a.notes_id'
+        'er) bln,"a".trans_year,a.notes_id, a.memorial_source'
       ' FROM'
       
         ' t_memorial_journal AS "a" LEFT JOIN t_memorial_notes  b ON "a".' +
@@ -1099,7 +1100,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44974.697266967600000000
-    ReportOptions.LastChange = 45997.417467118060000000
+    ReportOptions.LastChange = 46000.591272060180000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1416,7 +1417,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           AllowVectorExport = True
           Left = 258.787570000000000000
           Width = 132.283469450000000000
-          Height = 37.795275590551180000
+          Height = 37.795275590551200000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -1433,7 +1434,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           AllowVectorExport = True
           Left = 389.291590000000000000
           Width = 128.503934570000000000
-          Height = 37.795275590551180000
+          Height = 37.795275590551200000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -1473,7 +1474,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
         object Line2: TfrxLineView
           AllowVectorExport = True
           Top = 37.795300000000000000
-          Width = 718.110236220472400000
+          Width = 718.110236220472000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -1558,11 +1559,13 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
         DataSet = DbBukti_memo2
         DataSetName = 'DbBukti_memo2'
         RowCount = 0
+        Stretched = True
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 181.417322830000000000
           Width = 77.480314960000000000
           Height = 22.677165350000000000
+          StretchMode = smMaxHeight
           DataSet = DbBukti_memo2
           DataSetName = 'DbBukti_memo2'
           Font.Charset = DEFAULT_CHARSET
@@ -1623,6 +1626,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           AllowVectorExport = True
           Width = 181.417322830000000000
           Height = 22.677165350000000000
+          StretchMode = smMaxHeight
           DataField = 'account_name'
           DataSet = DbBukti_memo2
           DataSetName = 'DbBukti_memo2'
@@ -1635,6 +1639,7 @@ object Flist_jurnal_memorial: TFlist_jurnal_memorial
           Memo.UTF8W = (
             '[DbBukti_memo2."account_name"]')
           ParentFont = False
+          VAlign = vaCenter
         end
       end
     end

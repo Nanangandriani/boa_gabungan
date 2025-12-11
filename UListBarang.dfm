@@ -52,6 +52,7 @@ object FlistBarang: TFlistBarang
     Width = 895
     Height = 458
     Align = alClient
+    AutoFitColWidths = True
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
