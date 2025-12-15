@@ -63,10 +63,16 @@ begin
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
 //Nanang
-  if vcall='salesorder_gudang' then //14-08-2025
+  if vcall='salesorder_gudang' then
   begin
     FNew_SalesOrder.StrKodeGudang:=MemMasterData['KD_MASTER'];
     FNew_SalesOrder.edGudang.Text:=MemMasterData['NM_MASTER'];
+  end;
+
+  if vcall='piutangbermasalah_kar' then
+  begin
+    FListPiutangBermasalah.StrKaresidananID:=MemMasterData['KD_MASTER'];
+    FListPiutangBermasalah.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
   end;
 
 //Antok
@@ -197,6 +203,11 @@ begin
     FKartuPiutang.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
     FKartuPiutang.strKodePelanggan:='';
     FKartuPiutang.edNama_Pelanggan.EditValue:='';
+  end;
+  if vcall='piutangbermasalah_kab' then
+  begin
+    FListPiutangBermasalah.StrKabupatenID:=MemMasterData['KD_MASTER'];
+    FListPiutangBermasalah.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
   end;
   if vcall='bhpenerimaankas_bank_kab' then
   begin
@@ -820,6 +831,11 @@ begin
   begin
     FNew_MasterBiayaDO.edKodeKecamatan.Text:=MemMasterData['KD_MASTER'];
     FNew_MasterBiayaDO.edNamaKecamatan.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='piutangbermasalah_kec' then
+  begin
+    FListPiutangBermasalah.StrKecamatanID:=MemMasterData['KD_MASTER'];
+    FListPiutangBermasalah.edKecamatan.EditValue:=MemMasterData['NM_MASTER'];
   end;
   if vcall='m_tujuan_awal_prov' then
   begin

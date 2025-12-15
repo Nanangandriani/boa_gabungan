@@ -50,7 +50,6 @@ object FListPenerimaanBank: TFListPenerimaanBank
     Align = alClient
     AllowedOperations = []
     DataSource = DsPenerimaanBank
-    DrawMemoText = True
     DynProps = <>
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]

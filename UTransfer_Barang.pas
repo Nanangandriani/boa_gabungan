@@ -203,12 +203,12 @@ begin
  with QRptTransfer do
  begin
    Filtered:=False;
-   Filter:=' no_transfer='+QuotedStr(DBGridTransfer.Fields[0].AsString);
+   Filter:=' trans_no='+QuotedStr(DBGridTransfer.Fields[0].AsString);
    FilterOptions:=[];
    Filtered:=True;
  end;
  QRptTransfer.Open;
-if QRptTransfer.FieldByName('no_transfer').AsString=''  then
+if QRptTransfer.FieldByName('trans_no').AsString=''  then
 begin
 ShowMessage('Maaf data kosong');
 end else

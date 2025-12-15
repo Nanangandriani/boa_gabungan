@@ -184,7 +184,7 @@ begin
     9:Result:='September';
     10:Result:='Oktober';
     11:Result:='November';
-    12:Result:='Desemeber';
+    12:Result:='Desember';
   end;
 end;
 

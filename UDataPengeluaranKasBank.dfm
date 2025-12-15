@@ -329,6 +329,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 93
       Height = 23
       TabOrder = 8
+      Text = 'IDR'
       Visible = False
       OnChange = edKodeMataUangChange
     end
@@ -673,8 +674,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       ExplicitLeft = 951
     end
     object Edautocode: TEdit
-      Left = 712
-      Top = 4
+      Left = 484
+      Top = 5
       Width = 185
       Height = 23
       CharCase = ecUpperCase
@@ -683,7 +684,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Visible = False
     end
     object BitBtn1: TBitBtn
-      Left = 594
+      Left = 403
       Top = 3
       Width = 75
       Height = 25
@@ -839,6 +840,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
+      ExplicitLeft = -6
+      ExplicitTop = 2
       object Label21: TLabel
         Left = 20
         Top = 33
@@ -1124,10 +1127,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Width = 1108
     Height = 268
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 259
@@ -1135,6 +1138,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object TabDetailAkun: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Detail Akun'
+      ExplicitWidth = 1098
+      ExplicitHeight = 234
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -1167,12 +1172,12 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             EditButtons = <
               item
                 Style = ebsPlusEh
+                Visible = False
                 OnClick = DBGridAkunColumns0EditButtons0Click
               end>
             FieldName = 'kd_akun'
             Footers = <>
-            Title.Caption = 'Kode Akun'
-            Visible = False
+            Title.Caption = 'Kode Akun Detail'
             Width = 100
           end
           item
@@ -1234,8 +1239,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object TabDetailFaktur: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Detail Hutang'
-      ExplicitWidth = 1098
-      ExplicitHeight = 234
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -1530,6 +1533,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
           AutoIncrement = False
           DisplayWidth = 20
           DisplayFormat = '#,##0.00'
+          EditFormat = '#,##0.00'
           currency = False
           Precision = 15
         end
@@ -1538,6 +1542,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
           NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
+          DisplayFormat = '#,##0.00'
           EditFormat = '#,##0.00'
           currency = False
           Precision = 15

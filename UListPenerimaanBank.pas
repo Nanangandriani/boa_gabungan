@@ -195,7 +195,7 @@ begin
   begin
     MessageDlg('Sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
   end else begin
-    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Penerimaan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
       FNoteCancel.vtbl:='t_cash_bank_acceptance';
       FNoteCancel.vfieldtransno:='voucher_no';
@@ -518,7 +518,6 @@ begin
   if F = nil then Exit;
   if not F.IsNull then
     Params.Font.Color := clRed;
-
 end;
 
 procedure TFListPenerimaanBank.dxBarLargeButton1Click(Sender: TObject);

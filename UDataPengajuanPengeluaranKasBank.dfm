@@ -303,6 +303,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object edNoTrans: TEdit
       Left = 147
@@ -387,7 +388,9 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 93
       Height = 23
       TabOrder = 8
+      Text = 'IDR'
       Visible = False
+      OnChange = edKodeMataUangChange
     end
     object edKurs: TRzNumericEdit
       Left = 398
@@ -572,7 +575,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       TabOrder = 24
       OnClick = Btn_daf_tpClick
     end
-    object Cb_sumber: TComboBox
+    object Cb_debt_source: TComboBox
       Left = 147
       Top = 239
       Width = 186
@@ -934,14 +937,14 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         ButtonNumGlyphs = 1
         OnButtonClick = edNMJenisBayarButtonClick
       end
-      object Cb_debt_source: TComboBox
+      object Cb_debt_source_x: TComboBox
         Left = 347
         Top = 115
         Width = 141
         Height = 23
         TabOrder = 6
         Visible = False
-        OnSelect = Cb_debt_sourceSelect
+        OnSelect = Cb_debt_source_xSelect
       end
       object ak_account: TEdit
         Left = 294
@@ -1158,6 +1161,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Height = 23
         TabOrder = 5
         Visible = False
+        OnChange = Ed_kd_bankChange
       end
     end
   end
@@ -1346,9 +1350,32 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
             FieldName = 'keterangan'
             Footers = <>
             Title.Caption = 'Keterangan'
-            Visible = False
             Width = 250
           end>
+        object RowDetailData: TRowDetailPanelControlEh
+        end
+      end
+    end
+    object TabGroup_Biaya: TRzTabSheet
+      Caption = 'Group Biaya'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object DBGrid_GroupBiaya: TDBGridEh
+        Left = 0
+        Top = 0
+        Width = 1104
+        Height = 171
+        Align = alClient
+        DataSource = dsDetailHutang
+        DynProps = <>
+        FooterRowCount = 1
+        HorzScrollBar.ExtraPanel.Visible = True
+        SearchPanel.Enabled = True
+        SumList.Active = True
+        TabOrder = 0
+        TitleParams.MultiTitle = True
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
@@ -1376,7 +1403,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
   object MemDetailAkun: TMemTableEh
     Params = <>
     Left = 584
-    Top = 488
+    Top = 472
     object MemDetailAkunkd_akun: TStringField
       FieldName = 'kd_akun'
       Size = 100
@@ -1473,7 +1500,9 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       FieldName = 'tgl_faktur'
     end
     object MemDetailHutangketerangan: TStringField
+      DisplayWidth = 200
       FieldName = 'keterangan'
+      Size = 200
     end
     object MemDetailHutangno_faktur: TStringField
       FieldName = 'no_faktur'
@@ -1534,7 +1563,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         object keterangan: TMTStringDataFieldEh
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 300
+          Size = 200
         end
       end
       object RecordsList: TRecordsListEh

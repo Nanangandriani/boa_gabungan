@@ -36,7 +36,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     Caption = 'Periode'
   end
   object RzLabel4: TRzLabel
-    Left = 199
+    Left = 195
     Top = 96
     Width = 19
     Height = 15
@@ -291,7 +291,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     OnChange = dtTanggalAwalChange
   end
   object dtTanggalAkhir: TRzDateTimePicker
-    Left = 224
+    Left = 220
     Top = 90
     Width = 89
     Height = 23
@@ -360,7 +360,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       'end.')
     OnGetValue = ReportGetValue
     Left = 8
-    Top = 79
+    Top = 119
     Datasets = <
       item
         DataSet = frxDBDatasetBuktiTerima
@@ -1249,8 +1249,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       
         'order by voucher_no ASC, account_name='#39'Piutang Barang Dagang'#39' AS' +
         'C')
-    Left = 64
-    Top = 88
+    Left = 56
+    Top = 120
   end
   object QBuktiTerimaDet: TUniQuery
     Connection = dm.Koneksi

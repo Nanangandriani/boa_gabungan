@@ -141,6 +141,27 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'status'
         Footers = <>
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'cancel_reason'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Alasan Pembatalan'
+        Width = 500
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = 'dd/mm/yyyy'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'deleted_at'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tanggal Pembatalan'
+        Width = 119
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh

@@ -532,7 +532,6 @@ object FDataKasKecil: TFDataKasKecil
             FieldName = 'kd_akun'
             Footers = <>
             Title.Caption = 'Kode Anak Akun '
-            Visible = False
             Width = 100
           end
           item
@@ -775,6 +774,7 @@ object FDataKasKecil: TFDataKasKecil
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
+    AfterEdit = MemDetailAkunAfterEdit
     Left = 568
     Top = 360
     object MemDetailAkunkd_akun: TStringField
@@ -955,5 +955,12 @@ object FDataKasKecil: TFDataKasKecil
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object QAkun: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from t_ak_account limit 1')
+    Left = 393
+    Top = 311
   end
 end

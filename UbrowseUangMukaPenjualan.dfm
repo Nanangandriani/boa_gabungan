@@ -4,8 +4,8 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Data Uang Muka Penjualan'
-  ClientHeight = 442
-  ClientWidth = 766
+  ClientHeight = 441
+  ClientWidth = 762
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,12 +18,11 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 766
+    Width = 762
     Height = 51
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 762
     object RzLabel1: TRzLabel
       Left = 45
       Top = 14
@@ -70,8 +69,8 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 51
-    Width = 766
-    Height = 391
+    Width = 762
+    Height = 390
     Align = alClient
     DataSource = DSListUangMuka
     DrawMemoText = True

@@ -102,6 +102,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 954
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

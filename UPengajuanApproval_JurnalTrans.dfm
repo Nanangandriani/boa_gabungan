@@ -23,6 +23,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Hint = ''
     ActivePage = TabMemorial
     Align = alClient
+    HotTrackStyle = htsTabBar
     TabIndex = 3
     TabOrder = 0
     ExplicitWidth = 890
@@ -36,9 +37,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Width = 892
         Height = 311
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DsPembelian
         DynProps = <>
         RowDetailPanel.Active = True
+        SearchPanel.Enabled = True
         TabOrder = 0
         Columns = <
           item
@@ -485,9 +488,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Width = 892
         Height = 310
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DsPenjualan
         DynProps = <>
         RowDetailPanel.Active = True
+        SearchPanel.Enabled = True
         TabOrder = 0
         Columns = <
           item
@@ -1270,9 +1275,11 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Width = 892
         Height = 263
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DsKas
         DynProps = <>
         RowDetailPanel.Active = True
+        SearchPanel.Enabled = True
         TabOrder = 1
         Columns = <
           item
@@ -1396,10 +1403,12 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Width = 892
         Height = 327
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DsMemorial
         DynProps = <>
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         RowDetailPanel.Active = True
+        SearchPanel.Enabled = True
         TabOrder = 0
         Columns = <
           item

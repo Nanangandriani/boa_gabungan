@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
   RzButton, Vcl.Mask, RzEdit, Vcl.ComCtrls, RzPanel, DBGridEhGrouping,
   ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh,
-  DBGridEh, Data.DB, MemDS, DBAccess, Uni, MemTableDataEh, MemTableEh;
+  DBGridEh, Data.DB, MemDS, DBAccess, Uni, MemTableDataEh, MemTableEh, RzRadChk;
 
 type
   TFDaftar_Hutang = class(TForm)
@@ -107,6 +107,7 @@ type
      periode1, periode2: TDate;
     { Public declarations }
     procedure ProsesRencanaLunasHutang;
+
   end;
 
 var
@@ -253,7 +254,7 @@ begin
            '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no '+
            ' and (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')a '+
            'left join '+
-           '(select supplier_code,po_no,sum(um_value)as nilai_um from t_po where um_status=true and po_date<=''2024-10-21''  '+
+           '(select supplier_code,po_no,sum(um_value)as nilai_um from t_po where um_status=true and po_date<=''2025-01-01''  '+
            'group  by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_beli on xxx.no_inv=um_beli.trans_no '+
 
            ')zzz ' +
@@ -358,9 +359,18 @@ begin
       begin
         close;
         sql.clear;
-        sql.add(query1);
+        sql.add(query1+ ' ');
+        sql.Add('WHERE 1=1');
         if length(cbsupp.Text)<>0 then
-         sql.Add('where kodesup='+QuotedStr(cbsupp.Text));
+           //sql.Add('where kodesup='+QuotedStr(cbsupp.Text));
+           sql.Add('AND kodesup = ' + QuotedStr(cbsupp.Text));
+
+        if (not VarIsNull(DtMulai.date)) and (not VarIsNull(DtSelesai.date)) then
+        begin
+            SQL.Add('AND tgltempo BETWEEN ' +
+            QuotedStr(FormatDateTime('yyyy-mm-dd', DtMulai.Date)) + ' AND ' +
+            QuotedStr(FormatDateTime('yyyy-mm-dd', DtSelesai.Date)));
+        end;
          sql.Add('ORDER BY tglfaktur,nofakturpajak,urutan ASC ');
         open;
       end;
@@ -703,6 +713,7 @@ begin
   FSearch_Supplier.ShowModal;
 end;
 
+
 procedure TFDaftar_Hutang.DBGridDafHutangGetCellParams(Sender: TObject;
   Column: TColumnEh; AFont: TFont; var Background: TColor;
   State: TGridDrawState);
@@ -744,6 +755,10 @@ begin
    cbsupp.Text:='';
    txtnmsupp.Text:='';
    FDaftar_Hutang.Caption:='Daftar Hutang';
+
 end;
+
+
+
 
 end.

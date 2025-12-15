@@ -256,8 +256,8 @@ begin
       edNama_supplier.Clear;
       edNoRek.Clear;
       edNamaBank.Clear;
-      edKodeMataUang.Clear;
-      edNamaMataUang.Clear;
+      //edKodeMataUang.Clear;
+      //edNamaMataUang.Clear;
       edUntukPengeluaran.Clear;
       edKurs.value:=0.00;
       edJumlah.value:=0.00;
@@ -1025,14 +1025,23 @@ begin
     vpanggil:='keluar_kasbank_show_header';
     with QDaftar_Perk do
     begin
-      close;
+       close;
+       sql.Clear;
+       SQL.Text:=' SELECT b.header_code,b.code,b.account_code2,b.account_name,c.header_name FROM t_ak_account_det a'+
+                 ' left join v_ak_account b on a.account_code=b.account_code2  '+
+                 ' left join t_ak_header c on b.header_code=c.header_code'+
+                 ' GROUP BY b.code,b.account_name,c.header_name,b.header_code,b.account_code2 '+
+                 ' ORDER BY b.code,b.account_name,c.header_name';
+       Open;
+
+      {close;
       sql.Clear;
       SQL.Text:=' SELECT b.header_code,b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
                 ' left join t_ak_header c on b.header_code=c.header_code'+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
-      Execute;
+      Execute;}
     end;
     DBGridDaftar_Perk.Columns[0].Visible:=true
   end;
@@ -1146,6 +1155,7 @@ begin
      sql.Text:='select * from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' ';
      open;
      edNamaMataUang.Text:=fieldbyname('currency_name').AsString;
+     edkurs.Text:=fieldbyname('default_kurs').AsString;
    end;
 end;
 
@@ -1311,6 +1321,7 @@ end;
 procedure TFDataPengeluaranKasBank.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+   Clear;
    //Action:=CaFree;
 end;
 
@@ -1345,6 +1356,8 @@ begin
    MemDetailHutang.Close;
    MemDetailHutang.Open;
    load_group_biaya;
+   edKodeMataUang.Text:='IDR';
+   edKodeMataUangChange(sender);
 end;
 
 procedure TFDataPengeluaranKasBank.RefreshGridDetailAkun;

@@ -291,6 +291,7 @@ begin
         edKodeSumberPengeluaran.Text:=Qdaf_PengajuanKasBank.fieldbyname('ref_no').Asstring;
         ednamabank.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_name').AsString;
         edNoRek.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_norek').AsString;
+        ed_nocek.Text:=Qdaf_PengajuanKasBank.fieldbyname('cheque_no').AsString;
         FDataPengeluaranKasBank.code_trans.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString;
         Ed_id_modul.Text:=Qdaf_PengajuanKasBank.fieldbyname('code_module').AsString;
         Edhari.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_day').AsString;

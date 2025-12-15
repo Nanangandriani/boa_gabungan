@@ -1,4 +1,4 @@
-unit UDataKasKecil;
+﻿unit UDataKasKecil;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, RzButton,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, MemTableEh, Vcl.Mask,
   RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.ComCtrls, RzDTP, Vcl.ExtCtrls, RzCmboBx,
-  RzRadChk, RzPanel, RzRadGrp;
+  RzRadChk, RzPanel, RzRadGrp, MemDS, DBAccess, Uni;
 
 type
   TFDataKasKecil = class(TForm)
@@ -84,6 +84,7 @@ type
     MemDetailHutangno_sj: TStringField;
     MemDetailHutangjum_hutang: TCurrencyField;
     MemDetailHutangjum_hutang_real: TCurrencyField;
+    QAkun: TUniQuery;
     procedure DBGridAkunColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure DBGridAkunColumns4EditButtons0Click(Sender: TObject;
@@ -98,6 +99,7 @@ type
     procedure edKodeMataUangChange(Sender: TObject);
     procedure edKode_supplierChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MemDetailAkunAfterEdit(DataSet: TDataSet);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -117,7 +119,10 @@ type
     procedure RefreshForm;
     procedure RefreshFormBON;
     procedure Clear;
-    procedure TambahAkunDefault;
+    procedure AddDefaultKasKecil;
+    function GetKodeKasKecil: string;
+    function GetHeaderKodeKasKecil: string;
+    procedure balanceRow;
   end;
 
 var
@@ -130,19 +135,42 @@ implementation
 uses UMasterData, UCari_DaftarPerk, UDataModule, UMy_Function, UListKasKecil,
   UHomeLogin,udafajuankeluarkasbank,UMainMenu;
 
-//function TFDataKasKecil.GetKodeKasKecil: string;
-//begin
-//  Q1.Close;
-//  Q1.SQL.Text :=
-//    'SELECT account_code FROM t_ak_account '+
-//    'WHERE LOWER(account_name) LIKE ''%kas kecil%'' LIMIT 1';
-//  Q1.Open;
-//
-//  if Q1.IsEmpty then
-//    Result := ''
-//  else
-//    Result := Q1.FieldByName('account_code').AsString;
-//end;
+function TFDataKasKecil.GetKodeKasKecil: string;
+begin
+  Result := '';
+
+  with QAkun do
+  begin
+    close;
+    sql.Clear;
+    sql.text :='SELECT * FROM t_ak_account '+
+               'WHERE account_name iLIKE ''%kas kecil%'' '+
+               'ORDER BY code LIMIT 1';
+    Open;
+  end;
+
+  if not QAkun.IsEmpty then
+    Result := QAkun.FieldByName('code').AsString;
+end;
+
+function TFDataKasKecil.GetHeaderKodeKasKecil: string;
+begin
+  Result := '';
+
+  with QAkun do
+  begin
+    close;
+    sql.Clear;
+    sql.text :='SELECT * FROM t_ak_account '+
+               'WHERE account_name iLIKE ''%kas kecil%'' '+
+               'ORDER BY code LIMIT 1';
+    Open;
+  end;
+
+  if not QAkun.IsEmpty then
+    Result := QAkun.FieldByName('header_code').AsString;
+end;
+
 
 procedure TFDataKasKecil.InsertDetailHutang;
 begin
@@ -202,6 +230,11 @@ begin
     end;
 end;
 
+
+procedure TFDataKasKecil.MemDetailAkunAfterEdit(DataSet: TDataSet);
+begin
+  balanceRow;
+end;
 
 procedure TFDataKasKecil.Save;
 begin
@@ -758,11 +791,49 @@ begin
       edNamaSumberKas.Text:=fieldbyname('code').AsString;
       edNamaSumberKas.Text:=fieldbyname('name').AsString;
     end;
+    AddDefaultKasKecil;
 end;
 
-procedure TFDataKasKecil.TambahAkunDefault;
+procedure TFDataKasKecil.AddDefaultKasKecil;
+var
+  kode: string;
+  headerkode:string;
 begin
-
+  kode := GetKodeKasKecil;
+  headerkode:= GetHeaderKodeKasKecil;
+  if kode = '' then
+  begin
+    ShowMessage('Akun Kas Kecil tidak ditemukan!');
+    Exit;
+  end;
+  MemDetailAkun.Append;
+  MemDetailAkun.FieldByName('kd_akun').AsString := kode;
+  MemDetailAkun.FieldByName('nm_akun').AsString :='Kas Kecil';
+  MemDetailAkun.FieldByName('debit').AsFloat := 0;
+  MemDetailAkun.FieldByName('kredit').AsFloat := 0;
+  MemDetailAkun.FieldByName('kd_header_akun').AsString := headerkode;
+  MemDetailAkun.Post;
 end;
+
+procedure TFDataKasKecil.balanceRow;
+begin
+  if MemDetailAkun.State in [dsEdit, dsInsert] then
+  begin
+    // Jika debit diisi → kredit ikut otomatis
+    if (MemDetailAkun.FieldByName('debit').AsFloat > 0) then
+    begin
+      MemDetailAkun.FieldByName('kredit').AsFloat :=
+        MemDetailAkun.FieldByName('debit').AsFloat;
+    end;
+
+    // Jika kredit diisi → debit ikut otomatis
+    if (MemDetailAkun.FieldByName('kredit').AsFloat > 0) then
+    begin
+      MemDetailAkun.FieldByName('debet').AsFloat :=
+        MemDetailAkun.FieldByName('kredit').AsFloat;
+    end;
+  end;
+end;
+
 
 end.

@@ -527,7 +527,7 @@ begin
               ' code_currency='+QuotedStr(edKodeMataUang.Text)+','+
               ' name_currency='+QuotedStr(edNamaMataUang.Text)+','+
               ' kurs='+QuotedStr(FloatToStr(edKurs.value))+','+
-              ' paid_amount='+QuotedStr(FloatToStr(edJumlah.value))+','+
+              ' paid_amount='+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+','+
               ' for_acceptance='+QuotedStr(edUntukPengiriman.Text)+','+
               ' description='+QuotedStr(MemKeterangan.Text)+', '+
               ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
@@ -744,7 +744,7 @@ begin
               ' '+QuotedStr(edNoTrans.Text)+', '+
               ' '+QuotedStr(edNoRefSumberPenerimaan.Text)+', '+
               ' '+QuotedStr(edKodePelangganSumber.Text)+', '+
-              ' '+QuotedStr(FloatToStr(edJumlah.Value))+', '+
+              ' '+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+', '+
               ' '+QuotedStr(strDescription)+', '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
               ' '+QuotedStr(edNamaPelangganSumber.Text)+' ) ';
@@ -789,7 +789,7 @@ begin
             ' '+QuotedStr(edKodeMataUang.Text)+', '+
             ' '+QuotedStr(edNamaMataUang.Text)+', '+
             ' '+QuotedStr(FloatToStr(edKurs.value))+', '+
-            ' '+QuotedStr(FloatToStr(edJumlah.value))+', '+
+            ' '+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+', '+
             ' '+QuotedStr(edUntukPengiriman.Text)+', '+
             ' '+QuotedStr(MemKeterangan.Text)+', '+
             ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
@@ -1242,7 +1242,7 @@ begin
     exit;
   end;
 
-  if vtotal_debit <> edJumlah.Value then
+  if FloatToStr(vtotal_debit) <> FloatToStr(edJumlah.Value) then
   begin
     ShowMessage('Nominal Penerimaan Tidak Balance, Pastikan Debit Kredit Dengan Total Penerimaan Anda Sudah Benar...!!!');
     next_proses:=false;

@@ -192,7 +192,7 @@ begin
   begin
     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Penjualan...!!!');
   end else begin
-    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Order ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
       FNoteCancel.vtbl:='t_sales_order';
       FNoteCancel.vfieldtransno:='notrans';

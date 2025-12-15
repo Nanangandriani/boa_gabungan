@@ -59,6 +59,7 @@ object FListReturPenjualan: TFListReturPenjualan
     SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
+    OnAdvDrawDataCell = DBGridListAdvDrawDataCell
     Columns = <
       item
         CellButtons = <>
@@ -115,12 +116,30 @@ object FListReturPenjualan: TFListReturPenjualan
         Footers = <>
         Title.Caption = 'Keterangan'
         Width = 300
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'cancel_reason'
+        Footers = <>
+        Title.Caption = 'Alasan Pembatalan'
+        Width = 500
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = 'dd/mm/yyyy'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'deleted_at'
+        Footers = <>
+        Title.Caption = 'Tanggal Pembatalan'
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 934
+        Width = 1140
         Height = 168
         Align = alClient
         DataSource = DSdetail
@@ -1259,6 +1278,10 @@ object FListReturPenjualan: TFListReturPenjualan
     end
     object QReturJualtrans_date: TDateField
       FieldName = 'trans_date'
+    end
+    object QReturJualcancel_reason: TMemoField
+      FieldName = 'cancel_reason'
+      BlobType = ftMemo
     end
   end
   object DsReturJual: TDataSource

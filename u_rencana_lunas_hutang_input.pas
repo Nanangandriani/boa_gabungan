@@ -111,7 +111,7 @@ begin
     with Dm.Qtemp do
     begin
       close;
-      sql.Text:='SELECT * from t_source_plan where status=''true'' ';
+      sql.Text:='SELECT * from t_source_plan where status=''true'' and source_code=''HUT'' ';
       Open;
     end;
     Dm.Qtemp.First;
@@ -252,7 +252,7 @@ begin
           MemRencana.Next;
         end;
     end;
-    if vcall='Uang_Muka_Pembelian' then
+    {if vcall='Uang_Muka_Pembelian' then
     begin
         MemRencana.First;
         while not MemRencana.Eof do
@@ -308,7 +308,7 @@ begin
           end;
           MemRencana.Next;
         end;
-    end;
+    end;}
 
 end;
 
@@ -343,8 +343,8 @@ procedure TFRencana_Lunas_Hutang.BSimpanClick(Sender: TObject);
 begin
    //Simpan;
    //if MemRencana['source_id']=1 then
-   if vcall='Data_Hutang' then
-   begin
+   //if vcall='Data_Hutang' then
+   //begin
      if application.MessageBox('Data rencana pelunasan hutang akan disimpan?','confirm',mb_yesno or mb_iconquestion)=id_yes then
      begin
         //if not dm.Koneksi.InTransaction then
@@ -357,7 +357,8 @@ begin
             sql.Text:='select * from t_paid_debt_det where '+
                       'periode1='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode1.Date))+' and '+
                       'periode2='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode2.Date))+' and '+
-                      'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
+                      //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
+                      'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code IN (select supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
                       //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+' and supplier_code='+QuotedStr(DBGrid_Rencana.Fields[0].AsString)+' )';
             open;
           end;
@@ -402,10 +403,10 @@ begin
             //end;
          //end;
      end;
-   end;
+   //end;
 
    //if MemRencana['source_id']=2 then
-   vcall:='Uang_Muka_Pembelian';
+   {if vcall='Uang_Muka_Pembelian'then
    begin
      //showmessage('x');
      if application.MessageBox('Data rencana pelunasan hutang akan disimpan?','confirm',mb_yesno or mb_iconquestion)=id_yes then
@@ -466,7 +467,7 @@ begin
          //end;
      end;
      //showmessage('y');
-   end;
+   end;}
 
 end;
 

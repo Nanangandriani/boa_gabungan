@@ -22,8 +22,11 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     Height = 211
     Align = alClient
     DataSource = DSRencana
+    DrawMemoText = True
     DynProps = <>
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 0
     TitleParams.MultiTitle = True
@@ -76,10 +79,9 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'bank_name'
+        FieldName = 'bank_code'
         Footers = <>
         Title.Caption = 'Bank'
         Width = 100
@@ -108,8 +110,19 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
         EditButtons = <>
         FieldName = 'approve_status'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Status Approve'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'bank_code'
+        Footers = <>
+        Title.Caption = 'Bank'
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
@@ -137,7 +150,6 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 955
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -838,10 +850,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Caption = 'Update'
+      Action = ActUpdate
       Category = 0
-      Hint = 'Update'
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1022,11 +1032,11 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     end
     object QRencanaaccount_name: TStringField
       FieldName = 'account_name'
-      Size = 100
+      Size = 255
     end
     object QRencanainv_no: TStringField
       FieldName = 'inv_no'
-      Size = 35
+      Size = 100
     end
     object QRencanasj_no: TStringField
       FieldName = 'sj_no'
@@ -1044,6 +1054,13 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     end
     object QRencanabank_name: TStringField
       FieldName = 'bank_name'
+      Size = 100
+    end
+    object QRencanasource_plan_id: TIntegerField
+      FieldName = 'source_plan_id'
+    end
+    object QRencanabank_code: TStringField
+      FieldName = 'bank_code'
       Size = 100
     end
   end

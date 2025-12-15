@@ -371,7 +371,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_ak_module where id in (3,4,5,6)';
+    sql.Text:='select * from t_ak_module where id in (3,4,5,6,11)';
     Execute;
   end;
   dm.qtemp.first;
@@ -634,7 +634,8 @@ begin
     sql.Clear;
     sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,b.approved_status,b.module_id '+
     ' FROM	(select voucher_no,trans_date,created_at,paid_amount,description,deleted_at from t_cash_bank_acceptance   '+
-    ' UNION  select voucher_no,trans_date,created_at,amount,to_ ,deleted_at from t_cash_bank_expenditure)  AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
+    ' UNION select voucher_no,trans_date,created_at,amount,to_ ,deleted_at from t_cash_bank_expenditure'+
+    ' UNION select voucher_no,trans_date,created_at,amount as paid_amount,description,deleted_at from t_petty_cash)  AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
     ' where "a".deleted_at IS NULL and b.module_id= '+quotedstr(module_id)+' and '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
     ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, a.description,b.approved_status,b.module_id'+

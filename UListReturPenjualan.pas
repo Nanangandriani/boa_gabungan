@@ -122,6 +122,7 @@ type
     dtAkhir: TcxBarEditItem;
     edKaresidenan: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
+    QReturJualcancel_reason: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -138,6 +139,9 @@ type
       AButtonIndex: Integer);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure DBGridListAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -158,7 +162,7 @@ implementation
 {$R *.dfm}
 
 uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function, UMainMenu,
-  UMasterData;
+  UMasterData, UNoteCancel;
 
 var
   realfdatalistreturpenjualan : TFListReturPenjualan;
@@ -192,8 +196,8 @@ begin
 //                  'where EXTRACT(YEAR FROM trans_date)='+edTahun.Text+' AND '+
 //                  'EXTRACT(MONTH FROM trans_date)='+(IntToStr(mm))+' AND '+
                   'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' AND '+
-                  'deleted_at is null order by trans_date DESC, trans_no DESC';
+                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' '+
+                  'order by trans_date DESC, trans_no DESC';
        open;
    end;
    Qdetail.Close;
@@ -225,36 +229,22 @@ begin
   FDataReturPenjualan.MemDetail.EmptyTable;
   FDataReturPenjualan.Status:=0;
   FDataReturPenjualan.edNoTrans.Enabled:=true;
+  FDataReturPenjualan.isCancel:=0;
   FDataReturPenjualan.ShowModal;
 end;
 
 procedure TFListReturPenjualan.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
-  if MessageDlg('Apakah anda yakin ingin Membatalkan Retur ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  if CheckJurnalPosting(QReturJual.FieldByName('trans_no').AsString)>0 then
   begin
-    if not dm.Koneksi.InTransaction then
-     dm.Koneksi.StartTransaction;
-    try
-      with dm.Qtemp do
-      begin
-        close;
-        sql.clear;
-        sql.Text:=' UPDATE "public"."t_selling"  SET '+
-                  ' "deleted_at"=now(), '+
-                  ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                  ' WHERE "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString);
-        ExecSQL;
-      end;
-      MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-      Dm.Koneksi.Commit;
-      Except on E :Exception do
-      begin
-        begin
-          MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-          Dm.koneksi.Rollback ;
-        end;
-      end;
+    MessageDlg('Sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Penerimaan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FNoteCancel.vtbl:='t_sales_returns';
+      FNoteCancel.vfieldtransno:='trans_no';
+      FNoteCancel.edNoTransaksi.Text:=QReturJual.FieldByName('trans_no').AsString;
+      FNoteCancel.ShowModal;
     end;
   end;
 end;
@@ -277,9 +267,9 @@ begin
      close;
      sql.Clear;
      sql.Text:=' select b.no_inv_tax,a.* from "public"."t_sales_returns" a '+
-                'LEFT JOIN get_selling(NULL) b on b.trans_no=a.no_inv '+
+                'LEFT JOIN t_selling b on b.trans_no=a.no_inv '+
                ' WHERE a.trans_no='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
-               ' AND a.deleted_at is null order by a.created_at Desc ';
+               ' order by a.created_at Desc ';
      open;
   end;
   if Dm.Qtemp.RecordCount=0 then
@@ -311,14 +301,43 @@ begin
       edGrandTot.Value:=dm.Qtemp.FieldValues['grand_tot'];
       StrNoINV:=dm.Qtemp.FieldValues['no_inv'];
       IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
+      if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+      begin
+        isCancel := 1;
+      end else begin
+        isCancel := 0;
+      end;
     end;
   end;
+
+
+
 
   FDataReturPenjualan.edNoTrans.Enabled:=false;
   FDataReturPenjualan.RefreshGrid;
   FDataReturPenjualan.Status := 1;
   FDataReturPenjualan.Show;
 
+end;
+
+procedure TFListReturPenjualan.DBGridListAdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
 end;
 
 procedure TFListReturPenjualan.dxBarLargeButton1Click(Sender: TObject);

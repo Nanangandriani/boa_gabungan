@@ -102,7 +102,7 @@ type
     { Public declarations }
     strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV,StrTglFaktur: string;
     Year, Month, Day: Word;
-    Status,iserror,IntStatusKoreksi: Integer;
+    Status,iserror,IntStatusKoreksi,isCancel: Integer;
     grand_tot_selling,grand_tot_returns: real;
     procedure Clear;
     procedure Autonumber;
@@ -735,20 +735,30 @@ end;
 procedure TFDataReturPenjualan.FormShow(Sender: TObject);
 begin
 //  FDataReturPenjualan.Autonumber;
-  if (Status=1) AND (IntStatusKoreksi=2) then
+  if isCancel=1 then
   begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=False;
-  end else if Status=0 then
-  begin
-    BSave.Enabled:=True;
     BCorrection.Visible:=False;
-  end else begin
     BSave.Enabled:=False;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=True;
+  end else
+  begin
+    if (Status=1) AND (IntStatusKoreksi=2) then
+    begin
+      BSave.Enabled:=True;
+      BCorrection.Visible:=True;
+      BCorrection.Enabled:=False;
+    end else if Status=0 then
+    begin
+      BSave.Enabled:=True;
+      BCorrection.Visible:=False;
+    end else begin
+      BSave.Enabled:=False;
+      BCorrection.Visible:=True;
+      BCorrection.Enabled:=True;
+    end;
   end;
+
+
+
 end;
 
 procedure TFDataReturPenjualan.Autonumber;

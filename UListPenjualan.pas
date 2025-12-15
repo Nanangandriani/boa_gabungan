@@ -138,6 +138,10 @@ type
     edKaresidenan: TcxBarEditItem;
     dxBarLargeButton11: TdxBarLargeButton;
     ReportValidasi: TfrxReport;
+    dxBarManager1Bar5: TdxBar;
+    dxBarLargeButton12: TdxBarLargeButton;
+    dxBarLargeButton13: TdxBarLargeButton;
+    dxBarLargeButton14: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -537,7 +541,6 @@ begin
 
 //     ShowMessage(QCetak.FieldValues['po_order']);
      cLocation := ExtractFilePath(Application.ExeName);
-
      //ShowMessage(cLocation);
      Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
      SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
@@ -546,6 +549,7 @@ begin
      SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
      SetMemo(Report,'signature_name',dm.Qtemp2.FieldValues['full_name']);
      SetMemo(Report,'memTanggal',FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
+     SetMemo(Report,'MemTanggalFooter',FHomeLogin.vKotaPRSH+', '+FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
      if (dm.Qtemp.FieldValues['po_order']<>NULL) AND (dm.Qtemp.FieldValues['po_order']<>'') then
      begin
       SetMemo(Report,'memPO',dm.Qtemp.FieldValues['po_order']);

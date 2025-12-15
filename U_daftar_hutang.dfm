@@ -22,7 +22,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 1024
+    ExplicitTop = -4
     object Label3: TLabel
       Left = 475
       Top = 13
@@ -167,7 +167,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       Value = 1.000000000000000000
     end
     object BCari: TRzBitBtn
-      Left = 552
+      Left = 818
       Top = 64
       Width = 134
       Height = 39
@@ -940,8 +940,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
       
         'ORDER BY tglfaktur,nofakturpajak,urutan ASC)qqq ORDER BY tglfakt' +
         'ur,nofakturpajak,urutan ASC')
-    Left = 744
-    Top = 40
+    Left = 840
+    Top = 176
     object QdaftarHutangtanggal: TDateField
       FieldName = 'tanggal'
       ReadOnly = True
@@ -1049,13 +1049,13 @@ object FDaftar_Hutang: TFDaftar_Hutang
   end
   object DSdaftarhutang: TDataSource
     DataSet = Memdaftarhutang
-    Left = 968
-    Top = 56
+    Left = 912
+    Top = 248
   end
   object Memdaftarhutang: TMemTableEh
     Params = <>
     Left = 904
-    Top = 40
+    Top = 176
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object tanggal: TMTDateTimeDataFieldEh
@@ -1141,7 +1141,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
         end
         object npph: TMTNumericDataFieldEh
           FieldName = 'npph'
-          NumericDataType = fdtSmallintEh
+          NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
