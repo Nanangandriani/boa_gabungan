@@ -38,6 +38,7 @@ type
     Label13: TLabel;
     Label14: TLabel;
     RzComboBox1: TRzComboBox;
+    BCorrection: TRzBitBtn;
     procedure BSimpanClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -49,9 +50,11 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure CbDariSelect(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
   public
+     IntStatusKoreksi, iserror, isCancel: integer;
     { Public declarations }
     Procedure Simpan;
     Procedure Edit;
@@ -72,7 +75,7 @@ implementation
 {$R *.dfm}
 
 uses UTransfer_Barang, UItem_TransferBarang, UMainmenu, UDataModule,
-  UMy_Function, UTambah_Barang;
+  UMy_Function, UTambah_Barang, UKoreksi;
 var
   realfnew_transfergdng : TFNew_TransferBarang;
 // implementasi function
@@ -370,7 +373,9 @@ begin
     begin
       Close;
       sql.Clear;
-      sql.Text:='Insert into t_item_transfer(wh_category_code,trans_date,trans_no,wh_code_from,wh_code_to,note,trans_year,sbu_code,created_by,trans_month,trans_day,order_no)'+
+      sql.Text:=' Insert into t_item_transfer(wh_category_code,trans_date,trans_no,'+
+                ' wh_code_from,wh_code_to,note,trans_year,sbu_code,created_by,'+
+                ' trans_month,trans_day,order_no)'+
                 ' values(:parkt,:partgl_transfer,:parno_transfer,:parDari,:parKe,:parket,:partahun,:parkd_sbu,:parpic,:parbln,:partglno,:parnourut)';
                 ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
                 ParamByName('parno_transfer').Value:=Edno.Text;
@@ -417,7 +422,7 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:=' Update t_item_transfer set trans_date=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
+    sql.Text:=' Update t_item_transfer set status_correction=0, trans_date=:partgl_transfer,updated_by=:parpic,Updated_at=:partglup,'+
               ' wh_code_from=:pardari,wh_code_to=:parke,note=:parket,wh_category_code=:parkt,sbu_code=:parkd_sbu where trans_no=:parno_transfer ';
               ParamByName('partgl_transfer').Value:=FormatDateTime('yyy-mm-dd',DtTransfer.Date);
               ParamByName('parno_transfer').Value:=Edno.Text;
@@ -465,6 +470,24 @@ procedure TFNew_TransferBarang.BBatalClick(Sender: TObject);
 begin
   Close;
   FTransfer_Barang.ActRoExecute(sender);
+end;
+
+procedure TFNew_TransferBarang.BCorrectionClick(Sender: TObject);
+begin
+  if CheckJurnalPosting(Edno.Text)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+  if iserror=0 then
+  begin
+    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FTransfer_Barang.Name)); //Mendapatkan nama Menu
+
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=Edno.Text; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
 end;
 
 procedure TFNew_TransferBarang.BSimpanClick(Sender: TObject);
@@ -559,7 +582,36 @@ begin
     Dm.Qtemp.Next;
   end;
   DtTransfer.Date:=now;
+
+
+  if isCancel = 1 then
+  begin
+    BSimpan.Enabled := False;
+    BCorrection.Visible := False;
+    BCorrection.Enabled := False;
+    Exit;
+  end;
+
+  if (Status = 1) and (IntStatusKoreksi = 2) AND (isCancel=0) then
+  begin
+    BSimpan.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+  end
+  else if Status = 0 then
+  begin
+    BSimpan.Enabled := True;
+    BCorrection.Visible := False;
+  end
+  else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (isCancel=0) then
+  begin
+    BSimpan.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+  end;
+
 end;
+
 
 end.
 

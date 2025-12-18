@@ -80,6 +80,7 @@ type
     procedure load_rencanake;
     procedure load_bank;
     procedure load_source_plan;
+    procedure UpdateRencana;
   end;
 
 //var
@@ -195,8 +196,9 @@ end;
 
 procedure TFRencana_Lunas_Hutang.simpan;
 begin
-    if vcall='Data_Hutang' then
-    begin
+    //if vcall='Data_Hutang' then
+    vcall:='Data_Hutang';
+    //begin
         MemRencana.first;
         while not MemRencana.Eof do
         begin
@@ -251,7 +253,7 @@ begin
           end;
           MemRencana.Next;
         end;
-    end;
+    //end;
     {if vcall='Uang_Muka_Pembelian' then
     begin
         MemRencana.First;
@@ -352,15 +354,29 @@ begin
         //try
           with dm.Qtemp do
           begin
-            close;
+              Close;
+              SQL.Clear;
+              SQL.Text :=
+                'SELECT 1 FROM t_paid_debt_det WHERE periode1 = :p1 AND periode2 = :p2 '+
+                'AND plan_to = :plan AND supplier_code = :sup LIMIT 1';
+
+              ParamByName('p1').AsDate := dpperiode1.Date;
+              ParamByName('p2').AsDate := dpperiode2.Date;
+              ParamByName('plan').AsInteger := StrToInt(CBrencanake.Text);
+              ParamByName('sup').AsString :=DBGrid_Rencana.DataSource.DataSet.FieldByName('kd_sup').AsString;
+
+              Open;
+            {close;
             sql.Clear;
             sql.Text:='select * from t_paid_debt_det where '+
                       'periode1='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode1.Date))+' and '+
                       'periode2='+QuotedStr(FormatDateTime('yyyy-mm-dd',dpperiode2.Date))+' and '+
                       //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
-                      'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code IN (select supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
+                      //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code IN (select supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+')';
+                      'plan_to='+QuotedStr(CBrencanake.Text)+'  and supplier_code IN (select distinct supplier_code from t_paid_debt_det)';
+                      //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code='+QuotedStr(DBGrid_Rencana.Fields[0].AsString);
                       //'plan_to='+QuotedStr(CBrencanake.Text)+' and supplier_code=(select distinct supplier_code from t_paid_debt_det where username='+QuotedStr(Nm)+' and supplier_code='+QuotedStr(DBGrid_Rencana.Fields[0].AsString)+' )';
-            open;
+            open;}
           end;
           if (length(txtnocek.Text)=0)and(rbbank.Checked=true) then
           begin
@@ -377,7 +393,7 @@ begin
             MessageDlg('Data tidak dapat diproses ! '+#13+'belum ada data rencana pelunasan hutang dagang!..!!',mtInformation,[mbRetry],0);
           end
           else
-          if dm.Qtemp.RecordCount>0 then
+          {if dm.Qtemp.RecordCount>0 then
           begin
             if MessageDlg('Rencana ke '+QuotedStr(CBrencanake.Text)+' sudah ada, lanjut simpan?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
             begin
@@ -387,6 +403,11 @@ begin
               FList_Rencana_Lunas_Hutang.ActROExecute(sender);
               close;
             end;
+          end}
+          if dm.Qtemp.RecordCount > 0 then
+          begin
+            if MessageDlg('Rencana ke ' + CBrencanake.Text +' sudah ada, lanjut simpan?',mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+            Exit;
           end
           else
           begin
@@ -646,6 +667,58 @@ begin
       dm.QPerusahaan.Active:=true;
       dm.QPerusahaan.Close;
       dm.QPerusahaan.Open;
+end;
+
+
+procedure TFRencana_Lunas_Hutang.UpdateRencana;
+begin
+  MemRencana.First;
+  while not MemRencana.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text :='UPDATE t_paid_debt_det SET bank = :bnk,cek_no = :nck, '+
+                 'cek_date = :tglck,paid_date = :tgllns,amount = :jml, '+
+                 'exchange_rate = :kurs,dolar_amount = :jumdol,npph = :npph,pph_account = :akunpph, '+
+                 'pph_name = :nmpph,approve_status = :appstat '+
+                 'WHERE periode1 = :prd1 AND periode2 = :prd2 '+
+                 'AND plan_to = :rencanake AND supplier_code = :kds AND faktur_no = :nofak';
+
+      { ====== SET VALUE ====== }
+      if rbbank.Checked then
+        ParamByName('bnk').AsString := cbbank.Text
+      else
+        ParamByName('bnk').AsString := '';
+
+      ParamByName('nck').AsString := txtnocek.Text;
+      ParamByName('tglck').AsDate := dptglcek.Date;
+      ParamByName('tgllns').AsDate := dptgllunas.Date;
+
+      ParamByName('jml').AsFloat := MemRencana.FieldByName('jumlah').AsFloat;
+
+      if MemRencana.FieldByName('kurs').IsNull then
+      ParamByName('kurs').AsFloat := 1
+      else
+      ParamByName('kurs').AsFloat :=MemRencana.FieldByName('kurs').AsFloat;
+      ParamByName('jumdol').AsFloat :=MemRencana.FieldByName('jumlah_dolar').AsFloat;
+      ParamByName('npph').AsFloat :=MemRencana.FieldByName('npph').AsFloat;
+      ParamByName('akunpph').AsString :=MemRencana.FieldByName('akun_pph').AsString;
+      ParamByName('nmpph').AsString :=MemRencana.FieldByName('nm_akun_pph').AsString;
+      ParamByName('appstat').AsInteger := 0;
+      { ====== WHERE ====== }
+      ParamByName('prd1').AsDate := dpperiode1.Date;
+      ParamByName('prd2').AsDate := dpperiode2.Date;
+      ParamByName('rencanake').AsInteger := StrToInt(CBrencanake.Text);
+      ParamByName('kds').AsString :=MemRencana.FieldByName('kd_sup').AsString;
+      ParamByName('nofak').AsString :=MemRencana.FieldByName('nofaktur').AsString;
+
+      ExecSQL;
+    end;
+
+    MemRencana.Next;
+  end;
 end;
 
 end.

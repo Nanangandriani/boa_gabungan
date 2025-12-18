@@ -179,7 +179,7 @@ begin
                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
                ' ON "left"(code_region, 4)=b.code_kab '+
                ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at is NULL ');
          if edKaresidenan.EditValue<>'' then
          begin
           sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');

@@ -26,7 +26,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, cxLabel, cxSpinEdit, dxBar, cxBarEditItem, cxClasses, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, ShellAPI, frxExportXLS,
+  frxExportBaseDialog, frxExportXLSX;
 
 type
   TFRekap_memorial = class(TForm)
@@ -44,6 +45,9 @@ type
     spTahun: TcxBarEditItem;
     cbbulan: TComboBox;
     Ds_memorial: TDataSource;
+    dxBarLargeButton2: TdxBarLargeButton;
+    frxXLSXExport1: TfrxXLSXExport;
+    frxXLSExport1: TfrxXLSExport;
     procedure FormShow(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
     procedure RptGetValue(const VarName: string; var Value: Variant);
@@ -53,11 +57,13 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     bln:string;
+    procedure ExportToExcel;
   end;
 
 function FRekap_memorial: TFRekap_memorial;
@@ -76,6 +82,97 @@ begin
     FRekap_memorial:= RealFRekap_memorial
   else
     Application.CreateForm(TFRekap_memorial, Result);
+end;
+
+procedure TFRekap_memorial.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFRekap_memorial.BBatalClick(Sender: TObject);
@@ -120,6 +217,31 @@ end else
   Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+SBU;
   Tfrxmemoview(Rpt.FindObject('Mthn')).Memo.Text:=''+spTahun.EditValue;
   Rpt.ShowReport();
+end;
+
+procedure TFRekap_memorial.dxBarLargeButton2Click(Sender: TObject);
+var tgl,tgl2 :string;
+begin
+with QRpt_Memorial do
+begin
+  close;
+  sql.Clear;
+  sql.Text:='select * from "V_BukuMemorial" where to_char(trans_date,''yyyy-mm'')='+QuotedStr(spTahun.EditValue+'-'+bln)+' ORDER BY id asc,debit desc';
+  open;
+end;
+if QRpt_Memorial.RecordCount=0 then
+begin
+  ShowMessage('Maaf Data tidak ditemukan');
+end else
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BukuMemorial.Fr3');
+
+         if Rpt.FindObject('Mthn') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mthn')).Memo.Text:=''+spTahun.EditValue;
+         if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+SBU;
+      Rpt.PrepareReport(True);
+      ExportToExcel;
+
 end;
 
 procedure TFRekap_memorial.DxRefreshClick(Sender: TObject);

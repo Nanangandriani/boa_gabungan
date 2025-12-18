@@ -155,6 +155,8 @@ type
     procedure RzBitBtn2Click(Sender: TObject);
     procedure EdjenispoSelect(Sender: TObject);
     procedure RzBitBtn3Click(Sender: TObject);
+    procedure DBGridDetailColumns25EditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
 
   private
     { Private declarations }
@@ -200,7 +202,7 @@ implementation
 
 uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier, UListItempo,
   UMainMenu,UMy_Function, UPengajuanAsset, UDetailPengajuanAsset, USettingPO,
-  UListSupplier;
+  UListSupplier,UAkun_Perkiraan_TerimaMat,UCari_DaftarPerk;
 
 var
   realFNew_PO: TFNew_PO;
@@ -431,11 +433,20 @@ procedure TFNew_PO.NoTransUMSelect(Sender: TObject);
 begin
    with dm.Qtemp1 do
    begin
-     close;
-     sql.Clear;
-     sql.Text:='select a.*,d.header_name,d.header_code from t_advance_payment a left join t_ak_account c on a.um_account_code=c.code'+
-     ' left JOIN t_ak_header d on c.header_code=d.header_code group by a.no_trans,d.header_name,d.header_code where a.no_trans='+Quotedstr(NoTransUM.Text);
-     open;
+        //     close;
+        //     sql.Clear;
+        //     sql.Text:=' select a.*,d.header_name,d.header_code from t_advance_payment a left join t_ak_account c on a.um_account_code=c.code'+
+        //               ' left JOIN t_ak_header d on c.header_code=d.header_code where a.no_trans='+Quotedstr(NoTransUM.Text)+' '+
+        //               ' group by a.no_trans,d.header_name,d.header_code ';
+        //     open;
+        close;
+        sql.Clear;
+        sql.Text:='select a.*,d.header_name,c.header_code from t_advance_payment a '+
+                  'left join v_ak_account c on a.um_account_code=c.account_code2 '+
+                  'left JOIN t_ak_header d on c.header_code=d.header_code '+
+                  'where a.no_trans='+Quotedstr(NoTransUM.Text)+' '+
+                  'group by a.no_trans,d.header_name,c.header_code';
+        open;
    end;
    EdUM.Value:=dm.Qtemp1.FieldByName('um_value').Value;
    Edkd_akun.Text:=dm.Qtemp1.FieldByName('um_account_code').AsString;
@@ -990,6 +1001,17 @@ begin
        Flistitempo.DBGridMaterial3.Visible:=false;
        Flistitempo.DBGridMaterial4.Visible:=true;
     end;}
+end;
+
+procedure TFNew_PO.DBGridDetailColumns25EditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+begin
+     with  FCari_DaftarPerk do
+     begin
+      Show;
+      vpanggil:='pph_po';
+      if QDaftar_Perk.Active=false then QDaftar_Perk.Active:=True;
+    end;
 end;
 
 procedure TFNew_PO.DBGridDetailKeyPress(Sender: TObject; var Key: Char);
@@ -2808,6 +2830,7 @@ begin
       dm.koneksi.StartTransaction;
       try
       begin
+         DtPOChange(sender);
          Autonumber;
          if EdStatus.Text='KONTRAK KERJASAMA' then
          begin

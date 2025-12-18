@@ -467,9 +467,9 @@ object FBHPenjualan: TFBHPenjualan
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'TP                   '
+      Caption = 'Karesidenan  '
       Category = 0
-      Hint = 'TP                   '
+      Hint = 'Karesidenan  '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -835,7 +835,7 @@ object FBHPenjualan: TFBHPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 45981.501295567130000000
+    ReportOptions.LastChange = 45981.501295567100000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1545,7 +1545,7 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Subreport2: TfrxSubreport
           AllowVectorExport = True
-          Left = 637.606299210000000000
+          Left = 638.475864430000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           Page = Report.Page3
@@ -2842,8 +2842,8 @@ object FBHPenjualan: TFBHPenjualan
       ''
       'end.')
     OnGetValue = ReportGetValue
-    Left = 504
-    Top = 336
+    Left = 376
+    Top = 176
     Datasets = <
       item
         DataSet = frxDBDataset2
@@ -3272,7 +3272,7 @@ object FBHPenjualan: TFBHPenjualan
           Left = 7.559060000000000000
           Width = 400.630180000000000000
           Height = 18.897650000000000000
-          DataSet = FRekapPenjualan.frxDBDBHPenj_det
+          DataSet = FBHReturPenjualan.frxDBDBHPenj_det
           DataSetName = 'frxDBDBHPenj_det'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

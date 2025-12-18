@@ -514,6 +514,7 @@ begin
       MessageDlg('Maaf Uang Muka Belum Lunas',MtWarning,[MbOk],0);
       Exit;
     end;
+    DtterimaChange(sender);
     Autonumber;
     if messageDlg ('Anda Yakin Simpan Penerimaan No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
 	  begin

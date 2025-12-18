@@ -29,7 +29,8 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, Vcl.StdCtrls, RzLabel, frxCross,
   cxRadioGroup, cxCheckGroup, cxCurrencyEdit, DateUtils, Vcl.Grids, RzGrids,System.StrUtils,
-  Vcl.ExtCtrls, Vcl.DBGrids, frxExportBaseDialog, frxExportPDF;
+  Vcl.ExtCtrls, Vcl.DBGrids, frxExportBaseDialog, frxExportPDF, ShellAPI,
+  frxExportXLSX, frxExportXLS;
 
 type
   TFRekapPenjualanPerPelanggan = class(TForm)
@@ -116,6 +117,9 @@ type
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
     frxPDFExport1: TfrxPDFExport;
+    dxBarLargeButton8: TdxBarLargeButton;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
     procedure ActSearchClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -136,11 +140,13 @@ type
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure dxBarLargeButton7Click(Sender: TObject);
+    procedure dxBarLargeButton8Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     strKaresidenanID,strKabupatenID,strKecamatanID,strKelompokID,strKodeJenisUsaha: String;
+    procedure ExportToExcel;
   end;
 
   function FRekapPenjualanPerPelanggan: TFRekapPenjualanPerPelanggan;
@@ -234,6 +240,97 @@ begin
   begin
     cbKecamatan.EditValue:='';
     strKecamatanID:='';
+  end;
+end;
+
+procedure TFRekapPenjualanPerPelanggan.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Report.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
   end;
 end;
 
@@ -499,6 +596,71 @@ begin
   cbKecamatan.EditValue:='';
   cbKelompok.EditValue:='';
   cbJenisUsaha.ItemIndex:=0;
+end;
+
+procedure TFRekapPenjualanPerPelanggan.dxBarLargeButton8Click(Sender: TObject);
+var
+  strKaresidenan,strKabupaten,strKecamatan,strJenisUsaha,
+  strKelompokBarang,strReportName,strVolume,strPeriode,strTglAwal,strTglAkhir :String;
+  LastDay: TDate;
+begin
+  // Dapatkan tanggal saat ini sebagai referensi
+  LastDay := EndOfAMonth(StrToInt(edTahun2.Text),cbBulan2.ItemIndex+1) ;
+  strTglAwal:=edTahun1.Text+'-'+IntToStr(cbBulan1.ItemIndex+1)+'-01';
+  strTglAkhir:=edTahun2.Text+'-'+IntToStr(cbBulan2.ItemIndex+1)+'-'+(FormatDateTime('dd',LastDay));
+
+  if cbKaresidenan.EditValue='' then
+  begin
+    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else if cbKelompok.EditValue='' then
+  begin
+    MessageDlg('Kelompok barang wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else if cbVolume.Text='' then
+  begin
+    MessageDlg('Volume wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else if cbJenisUsaha.Text='' then
+  begin
+    MessageDlg('Jenis Usaha wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else
+  begin
+    strKaresidenan:=' nama_karesidenan='+QuotedStr(cbKaresidenan.EditValue);
+    if cbKabupaten.EditValue<>'' then
+      strKabupaten:=' AND nama_kabupaten='+QuotedStr(cbKabupaten.EditValue)
+    else strKabupaten:='';
+    if cbKecamatan.EditValue<>'' then
+      strKecamatan:=' AND nama_kecamatan='+QuotedStr(cbKecamatan.EditValue)
+    else strKecamatan:='';
+    if UpperCase(cbJenisUsaha.Text)<>'SEMUA' then
+      strJenisUsaha:=' AND kode_jenis_usaha='+QuotedStr(strKodeJenisUsaha)
+    else strJenisUsaha:='';
+    if cbKelompok.EditValue<>'' then
+      strKelompokBarang:=' AND kelompok_barang='+QuotedStr(cbKelompok.EditValue)
+    else strKelompokBarang:='';
+    if Uppercase(cbVolume.Text)='QTY' then strVolume:='' else strVolume:='tot_value tot_qty,';
+
+    with Qreport do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='SELECT '+strVolume+'* FROM get_rekap_penjualan_percustomer() '+
+                'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
+                strKelompokBarang+' AND (trans_date BETWEEN '+QuotedStr(strTglAwal)+' AND '+QuotedStr(strTglAkhir)+')';
+      Open;
+    end;
+
+    if Qreport.RecordCount=0 then
+    begin
+      MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
+    end else begin
+      if cbPaperSize.Text='NORMAL' then
+      strReportName:='rpt_rekappenjualanpercustomer2' else strReportName:='rpt_rekappenjualanpercustomer';
+
+      cLocation := ExtractFilePath(Application.ExeName);
+      Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+      Report.PrepareReport(True);
+      ExportToExcel
+    end;
+  end;
 end;
 
 procedure TFRekapPenjualanPerPelanggan.edJenisPelangganPropertiesButtonClick(

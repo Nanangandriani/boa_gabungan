@@ -682,7 +682,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45889.588433333330000000
+    ReportOptions.LastChange = 46007.619127106480000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1344,11 +1344,11 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         end
         object SysMemo2: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 702.992179690000000000
+          Left = 685.849322550000000000
           Top = 3.779530000000000000
-          Width = 86.929133860000000000
+          Width = 104.071991000000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1367,7 +1367,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Top = 3.779530000000000000
           Width = 86.929133860000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1386,7 +1386,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Top = 3.779530000000000000
           Width = 86.929133860000000000
           Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1414,6 +1414,8 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haRight
+          Memo.UTF8W = (
+            '0,00')
           ParentFont = False
         end
       end
@@ -1428,6 +1430,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         Top = 230.551330000000000000
         Width = 1084.725110000000000000
         Condition = 'frxDBDBHPenjualan."trans_no"'
+        Stretched = True
         object Subreport1: TfrxSubreport
           AllowVectorExport = True
           Width = 94.488250000000000000
@@ -1600,7 +1603,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Height = 18.897650000000000000
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1621,7 +1624,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Height = 18.897650000000000000
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1642,7 +1645,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Height = 18.897650000000000000
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1663,7 +1666,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Height = 18.897650000000000000
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1673,7 +1676,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDBHPenj_det."jum_ak_kre_lain"]')
+            '0,00')
           ParentFont = False
         end
         object Memo28: TfrxMemoView
@@ -1707,6 +1710,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
         Visible = False
         Width = 1084.725110000000000000
         Condition = 'frxDBDBHPenjualan."trans_no"'
+        Stretched = True
       end
       object GroupFooter2: TfrxGroupFooter
         FillType = ftBrush
@@ -1816,7 +1820,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenj_det."jum_ak_kre_lain">,MasterData2)]')
+            '0,00')
           ParentFont = False
         end
       end

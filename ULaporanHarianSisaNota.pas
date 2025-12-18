@@ -385,13 +385,13 @@ begin
 
 
   if CompareText(VarName, 'SBU') = 0 then
-  Value := 'PT. '+FHomeLogin.vKodePRSH;
+  Value := 'PT. '+UpperCase(FHomeLogin.vKodePRSH);
   if CompareText(VarName, 'TP') = 0 then
-  Value := cbKaresidenan.EditValue;
+  Value := UpperCase(cbKaresidenan.EditValue);
   if CompareText(VarName, 'KABUPATEN') = 0 then
-  Value := cbKabupaten.EditValue ;
+  Value := UpperCase(cbKabupaten.EditValue) ;
   if CompareText(VarName, 'KECAMATAN') = 0 then
-  Value := cbKecamatan.EditValue ;
+  Value := UpperCase(cbKecamatan.EditValue) ;
   if CompareText(VarName, 'TANGGAL') = 0 then
   Value := UpperCase(tgl1+' '+bulan1+' '+tahun1);
 end;

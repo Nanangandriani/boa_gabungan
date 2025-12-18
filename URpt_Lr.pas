@@ -27,7 +27,8 @@ uses
   dxRibbonCustomizationForm, cxCalendar, dxBar, cxBarEditItem, cxClasses,
   dxRibbon, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh,
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, DataDriverEh,
-  MemTableEh, cxLabel, cxSpinEdit;
+  MemTableEh, cxLabel, cxSpinEdit, frxExportXLSX, frxExportBaseDialog,
+  frxExportXLS, ShellAPI;
 
 type
   TFRpt_Lr = class(TForm)
@@ -67,6 +68,9 @@ type
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
     CbBulan2: TComboBox;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure BBatalClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -76,11 +80,13 @@ type
     procedure Bprint2Click(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     bln:string;
+    procedure ExportToExcel;
   end;
 
 //var
@@ -99,6 +105,97 @@ begin
     FRpt_Lr:= RealFRpt_Lr
   else
     Application.CreateForm(TFRpt_Lr, Result);
+end;
+
+procedure TFRpt_Lr.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFRpt_Lr.BBatalClick(Sender: TObject);
@@ -160,6 +257,52 @@ case cbbulan.Itemindex of
   10:bln:='11';
   11:bln:='12';
 end;
+end;
+
+procedure TFRpt_Lr.dxBarLargeButton2Click(Sender: TObject);
+
+var subquery,subquery2,tgl,tgl2,tgl3:string;
+begin
+if cbbulan2.Text<>'' then
+begin
+  with Q_Lr do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from "vlaba_rugi_month" where trans_year='+QuotedStr(SpTahun.EditValue)+' and '+
+      ' trans_month='+QuotedStr(IntToStr(CbBulan2.ItemIndex));
+      Open;
+    end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_lr.fr3');
+
+         if Rpt.FindObject('Mbln') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mbln')).Memo.Text :=UpperCase('Bulan  '+cbbulan.Text+' - '+edth.Text);
+          if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+FHomeLogin.vNamaPRSH;
+          if Rpt.FindObject('Memo11') <> nil then
+    TfrxMemoView(Rpt.FindObject('Memo11')).Memo.Text :=UpperCase(' % ');
+      Rpt.PrepareReport(True);
+      ExportToExcel;
+end;
+
+  if cbbulan2.Text='' then
+  begin
+  with QLr_thn do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from "vlaba_rugi_year" where trans_year='+QuotedStr(SpTahun.EditValue);
+      Open;
+    end;
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_lrthn.fr3');
+
+         if Rpt.FindObject('Mbln') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mbln')).Memo.Text :=UpperCase('Tahun  '+edth.Text);
+          if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+FHomeLogin.vNamaPRSH ;
+      Rpt.PrepareReport(True);
+      ExportToExcel;
+  end;
 end;
 
 procedure TFRpt_Lr.DxRefreshClick(Sender: TObject);

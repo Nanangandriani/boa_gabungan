@@ -521,6 +521,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 23
       Enabled = False
       TabOrder = 24
+      Text = '1'
     end
     object Btn_daf_tp: TRzBitBtn
       Left = 1040
@@ -840,8 +841,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
-      ExplicitLeft = -6
-      ExplicitTop = 2
       object Label21: TLabel
         Left = 20
         Top = 33
@@ -1119,6 +1118,15 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Text = ''
         TabOrder = 8
       end
+      object Ed_kd_bank: TEdit
+        Left = 331
+        Top = 27
+        Width = 16
+        Height = 23
+        TabOrder = 9
+        Visible = False
+        OnChange = Ed_kd_bankChange
+      end
     end
   end
   object RzPageControl1: TRzPageControl
@@ -1127,10 +1135,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Width = 1108
     Height = 268
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 259
@@ -1311,7 +1319,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             FieldName = 'keterangan'
             Footers = <>
             Title.Caption = 'Keterangan'
-            Visible = False
             Width = 250
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -1488,6 +1495,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       FieldName = 'tgl_faktur'
     end
     object MemDetailHutangketerangan: TStringField
+      DisplayWidth = 200
       FieldName = 'keterangan'
     end
     object MemDetailHutangno_faktur: TStringField
@@ -1550,7 +1558,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         object keterangan: TMTStringDataFieldEh
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 200
+          Size = 200
         end
       end
       object RecordsList: TRecordsListEh

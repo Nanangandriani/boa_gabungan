@@ -100,7 +100,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 701
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -849,7 +848,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
       Caption = 'Tanggal Akhir'
       Category = 0
       Hint = 'Tanggal Akhir'
-      Visible = ivNever
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
     end
   end
   object frxDBDataset4: TfrxDBDataset
@@ -1931,7 +1931,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         'count=x.kodesp) xx) xxx ORDER BY nomor ASC')
     MasterFields = 'voucher'
     DetailFields = 'voucher'
-    Active = True
     Left = 368
     Top = 88
   end

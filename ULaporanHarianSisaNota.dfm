@@ -1174,9 +1174,9 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       Visible = ivAlways
     end
     object cbKaresidenan: TcxBarEditItem
-      Caption = 'TP                 '
+      Caption = 'Karesidenan'
       Category = 0
-      Hint = 'TP                 '
+      Hint = 'Karesidenan'
       Visible = ivAlways
       OnChange = cbKaresidenanChange
       PropertiesClassName = 'TcxButtonEditProperties'
@@ -1583,7 +1583,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 45983.433984745370000000
+    ReportOptions.LastChange = 46007.380558842590000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -2171,7 +2171,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 20.787401570000000000
           Top = 76.935683330000000000
-          Width = 48.333333330000000000
+          Width = 83.985507240000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2180,7 +2180,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'TP')
+            'Karesidenan')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2757,7 +2757,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         Condition = 'frxDBDatasetLapHarianSisaNota."code_cust"'
         object Line1: TfrxLineView
           AllowVectorExport = True
-          Width = 1172.409448818898000000
+          Width = 1172.409448818900000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2824,7 +2824,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo53: TfrxMemoView
           AllowVectorExport = True
           Left = 505.916666670000000000
-          Top = 0.079160000000000010
+          Top = 0.079160000000000000
           Width = 141.087270330000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo53OnBeforePrint'
@@ -2959,7 +2959,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo56: TfrxMemoView
           AllowVectorExport = True
           Left = 756.283464570000000000
-          Top = 0.079160000000000010
+          Top = 0.079160000000000000
           Width = 59.338582680000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo56OnBeforePrint'

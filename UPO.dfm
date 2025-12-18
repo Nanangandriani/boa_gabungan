@@ -71,6 +71,7 @@ object FPO: TFPO
     STFilter.Visible = True
     TabOrder = 1
     TitleParams.MultiTitle = True
+    OnGetCellParams = DBGridPOGetCellParams
     Columns = <
       item
         CellButtons = <>
@@ -263,6 +264,13 @@ object FPO: TFPO
         FieldName = 'correction_status'
         Footers = <>
         Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'deleted_at'
+        Footers = <>
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh3: TDBGridEh
@@ -2713,7 +2721,7 @@ object FPO: TFPO
         ' a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a' +
         '.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sb' +
         'u_code,a.correction_status,a.um_status,a.um_value,'
-      'a.um_account_code,a.as_status,um_no'
+      'a.um_account_code,a.as_status,um_no,a.deleted_at'
       'from t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'INNER JOIN t_wh c on a.wh_code=c.wh_code'

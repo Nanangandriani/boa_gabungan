@@ -26,7 +26,8 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, dxRibbon, dxBar, cxBarEditItem, cxClasses,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh;
+  GridsEh, DBAxisGridsEh, DBGridEh, frxExportXLS, frxExportBaseDialog,
+  frxExportXLSX, ShellAPI;
 
 type
   TFRpt_RekapMutasi = class(TForm)
@@ -55,6 +56,9 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     DBGridEh1: TDBGridEh;
     DsRekap_Mutasi: TDataSource;
+    frxXLSXExport1: TfrxXLSXExport;
+    frxXLSExport1: TfrxXLSExport;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure BPrintClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -65,11 +69,13 @@ type
     procedure RptBeforePrint(Sender: TfrxReportComponent);
     procedure DxRefreshClick(Sender: TObject);
     procedure DxPrintClick(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     tgl_mulai,tgl_selesai:string;
+    procedure ExportToExcel;
   end;
 
 Function FRpt_RekapMutasi: TFRpt_RekapMutasi;
@@ -88,6 +94,97 @@ begin
     FRpt_RekapMutasi:= RealFRpt_RekapMutasi
   else
     Application.CreateForm(TFRpt_RekapMutasi, Result);
+end;
+
+procedure TFRpt_RekapMutasi.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFRpt_RekapMutasi.BBatalClick(Sender: TObject);
@@ -175,6 +272,57 @@ end;
         Tfrxmemoview(Rpt.FindObject('memo58')).Memo.Text:='Saldo Pindahan: ';
     end;   }
     Rpt.ShowReport();
+end;
+
+procedure TFRpt_RekapMutasi.dxBarLargeButton1Click(Sender: TObject);
+begin
+    if DtMulai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+    QRekap_Mutasi.Close;
+    tgl_mulai:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
+    tgl_selesai:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
+      WITH QRekap_Mutasi DO
+      BEGIN
+        Close;
+        SQL.Clear;
+        SQL.Text:='select aa.code account_code,aa.account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,'+
+             ' case when sum(kd)>0 then sum(kd) else 0 end kd,          '+
+             ' case when sum(dbpb)>0 then sum(dbpb) else 0 end dbpb,    '+
+             ' case when sum(kdpb)>0 then sum(kdpb) else 0 end kdpb,    '+
+             ' case when sum(dbpj)>0 then sum(dbpj) else 0 end dbpj,    '+
+             ' case when sum(kdpj)>0 then sum(kdpj) else 0 end kdpj,    '+
+             ' case when sum(dbbop)>0 then sum(dbbop) else 0 end dbbop, '+
+             ' case when sum(kdbop)>0 then sum(kdbop) else 0 end kdbop, '+
+             ' case when sum(dbadm)>0 then sum(dbadm) else 0 end dbadm, '+
+             ' case when sum(kdadm)>0 then sum(kdadm) else 0 end kdadm, '+
+             ' case when sum(dbkk)>0 then sum(dbkk) else 0 end dbkk,    '+
+             ' case when sum(kdkk)>0 then sum(kdkk) else 0 end kdkk,    '+
+             ' case when sum(dbtk)>0 then sum(dbtk) else 0 end dbtk,    '+
+             ' case when sum(kdtk)>0 then sum(kdtk) else 0 end kdtk   '+
+             ' from  t_ak_account aa left join '+
+             ' (select * from "VRekap_Mutasi" where trans_date >= '+QuotedStr(tgl_mulai)+' and trans_date <= '+QuotedStr(tgl_selesai)+') a'+
+             ' on aa.code=a.account_code GROUP BY aa.code,aa.account_name,notr';
+        Execute;
+      END;
+        QRekap_Mutasi.Open;
+        Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_rekapmutasi.fr3');
+
+         if Rpt.FindObject('Mtgl') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mtgl')).Memo.Text:='Periode  : '+(FormatDateTime('dd mmmm yyy',DtMulai.EditValue))+' - '+(FormatDateTime('dd MMMM yyy',DtSelesai.EditValue));
+         if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+FHomeLogin.vNamaPRSH;
+      Rpt.PrepareReport(True);
+      ExportToExcel;
 end;
 
 procedure TFRpt_RekapMutasi.DxPrintClick(Sender: TObject);

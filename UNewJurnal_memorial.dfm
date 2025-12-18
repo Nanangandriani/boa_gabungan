@@ -151,6 +151,17 @@ object FNewJurnal_memo: TFNewJurnal_memo
       NumGlyphs = 2
       ExplicitLeft = 648
     end
+    object BCorrection: TRzBitBtn
+      Left = 575
+      Top = 1
+      Width = 79
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 2
+      OnClick = BCorrectionClick
+      ExplicitLeft = 569
+    end
   end
   object RzPanel1: TRzPanel
     Left = 0

@@ -27,7 +27,7 @@ uses
   cxBarEditItem, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
   DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, frxDesgn,
-  frxExportBaseDialog, frxExportPDF;
+  frxExportBaseDialog, frxExportPDF, ShellAPI, frxExportXLSX, frxExportXLS;
 
 type
   TFBHPenerimaanKasBank = class(TForm)
@@ -113,6 +113,9 @@ type
     FloatField1: TFloatField;
     frxDBDHDebit: TfrxDBDataset;
     frxPDFExport1: TfrxPDFExport;
+    dxBarLargeButton3: TdxBarLargeButton;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -132,11 +135,13 @@ type
     procedure btPreviewClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vkd_kares, vkd_kab : String ;
+    procedure ExportToExcel;
   end;
 
 function FBHPenerimaanKasBank: TFBHPenerimaanKasBank;
@@ -160,6 +165,97 @@ begin
     Application.CreateForm(TFBHPenerimaanKasBank, Result);
 end;
 
+procedure TFBHPenerimaanKasBank.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Report.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
+end;
+
 procedure TFBHPenerimaanKasBank.btPreviewClick(Sender: TObject);
 begin
    with QCetak do
@@ -170,22 +266,37 @@ begin
               'FROM ( '+
               'SELECT a.voucher_no,a.trans_date,a.module_id,a.code_cust,a.name_cust, '+
               'a.for_acceptance, a.description,a.account_name_bank,a.account_number_bank, '+
-              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
+              'CASE WHEN a.module_id = ''4'' THEN COALESCE(bb.paid_amount, 0) ELSE 0 END AS jum_kas, '+
               'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
               'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
-              'FROM t_cash_bank_acceptance a INNER JOIN '+
-              '(SELECT voucher_no, position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det GROUP BY voucher_no, position) b '+
-              'ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+              'FROM t_cash_bank_acceptance a '+
+//              'INNER JOIN (SELECT voucher_no, position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det GROUP BY voucher_no, position) b '+
+//              'ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+              'LEFT JOIN ( '+
+              ' SELECT bcd.voucher_no, bcd.position, SUM(bcd.paid_amount) AS paid_amount '+
+              ' FROM t_cash_bank_acceptance_det bcd '+
+              ' LEFT JOIN t_ak_account ac ON ac.code = bcd.code_account '+
+              ' WHERE ac.header_code = ''1102''  '+
+              ' GROUP BY bcd.voucher_no, bcd.position '+
+              ') b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+
+              'LEFT JOIN ( '+
+              'SELECT bcd.voucher_no, bcd.position, SUM(bcd.paid_amount) AS paid_amount '+
+              ' FROM t_cash_bank_acceptance_det bcd  '+
+              'LEFT JOIN t_ak_account ac ON ac.code = bcd.code_account '+
+              'WHERE ac.header_code = ''1101'' '+
+              'GROUP BY bcd.voucher_no, bcd.position '+
+              ') bb ON bb.voucher_no = a.voucher_no AND bb.position = ''D''  '+
               'INNER JOIN '+
               't_cash_bank_acceptance_receivable c '+
               'ON c.voucher_no = a.voucher_no '+
               'WHERE a.deleted_at IS NULL '+
               'GROUP BY a.voucher_no, a.trans_date, a.module_id, a.code_cust, '+
               'a.name_cust, a.for_acceptance,a.description, '+
-              'a.account_name_bank,a.account_number_bank,b.paid_amount, a.module_id ) AS zz '+
+              'a.account_name_bank,a.account_number_bank,b.paid_amount,bb.paid_amount , a.module_id ) AS zz '+
               'LEFT JOIN '+
               'get_customer() AS cust ON cust.customer_code = zz.code_cust '+
-              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime ('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
 
 //       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
 //              'FROM '+
@@ -400,6 +511,109 @@ begin
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+end;
+
+procedure TFBHPenerimaanKasBank.dxBarLargeButton3Click(Sender: TObject);
+begin
+   with QCetak do
+   begin
+       close;
+       sql.Clear;
+       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan,cust.code_kabupaten,cust.kabupaten '+
+              'FROM ( '+
+              'SELECT a.voucher_no,a.trans_date,a.module_id,a.code_cust,a.name_cust, '+
+              'a.for_acceptance, a.description,a.account_name_bank,a.account_number_bank, '+
+              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
+              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
+              'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
+              'FROM t_cash_bank_acceptance a INNER JOIN '+
+              '(SELECT voucher_no, position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det GROUP BY voucher_no, position) b '+
+              'ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+              'INNER JOIN '+
+              't_cash_bank_acceptance_receivable c '+
+              'ON c.voucher_no = a.voucher_no '+
+              'WHERE a.deleted_at IS NULL '+
+              'GROUP BY a.voucher_no, a.trans_date, a.module_id, a.code_cust, '+
+              'a.name_cust, a.for_acceptance,a.description, '+
+              'a.account_name_bank,a.account_number_bank,b.paid_amount, a.module_id ) AS zz '+
+              'LEFT JOIN '+
+              'get_customer() AS cust ON cust.customer_code = zz.code_cust '+
+              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+
+//       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
+//              'FROM '+
+//              '( '+
+//              'SELECT '+
+//              'a.voucher_no,a.trans_date,a.module_id,a.code_cust, '+
+//              'a.name_cust,a.for_acceptance,a.description,a.account_name_bank,a.account_number_bank, '+
+//              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
+//              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
+//              'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
+//              'FROM '+
+//              't_cash_bank_acceptance a '+
+//              'INNER JOIN '+
+//              '(SELECT voucher_no,position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det group by voucher_no,position) b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
+//              'INNER JOIN '+
+//              't_cash_bank_acceptance_receivable c ON c.voucher_no = a.voucher_no '+
+//              ') AS zz '+
+//              'LEFT JOIN get_customer() AS cust ON cust.customer_code = zz.code_cust '+
+//              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+//       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
+//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+//               ' ON "left"(code_region, 4)=b.code_kab '+
+////               ' LEFT JOIN (SELECT voucher_no, '+
+////               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
+////               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
+//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+         if edKaresidenan.EditValue<>'' then
+         begin
+          sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
+         end;
+         if edKabupaten.EditValue<>'' then
+         begin
+          sql.add(' AND cust.karesidenan='+QuotedStr(vkd_kab)+' ');
+         end;
+       sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
+       open;
+   end;
+
+ if QCetak.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end;
+
+ if QCetak.RecordCount<>0 then
+ begin
+  QCetakKredit.Close;
+  QCetakKredit.Open;
+
+  cLocation := ExtractFilePath(Application.ExeName);
+
+  //ShowMessage(cLocation);
+  Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank2'+ '.fr3');
+  SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+  SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
+  if edKaresidenan.EditValue='' then
+  begin
+    SetMemo(Report,'wilayah','Wilayah : Semua Wilayah');
+  end;
+  if edKaresidenan.EditValue<>'' then
+  begin
+    SetMemo(Report,'wilayah','Wilayah :'+edKaresidenan.EditValue);
+  end;
+  if edKabupaten.EditValue<>'' then
+  begin
+    SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
+  end;
+
+  Report.PrepareReport(True);
+  ExportToExcel;
+
+ end;
+
 end;
 
 procedure TFBHPenerimaanKasBank.edKabupatenPropertiesButtonClick(

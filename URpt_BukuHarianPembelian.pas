@@ -308,10 +308,12 @@ begin
     sql.Clear;
     sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
     ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
-    ' b.ppn_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' b.ppn_rp, b.ppn_rp,b.account_pph_code,b.pph_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
     ' concat(e.code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
     ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
-    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um, '+
+    ' case when b.account_pph_code <>'''' then concat(b.account_pph_code,'' ('',j.account_name,'')'') else '''' end ak_pph, '+
+    ' c.group_name,h.supplier_name '+
     ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
     ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
@@ -320,6 +322,8 @@ begin
     ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
+    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
     ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
     ' where d.code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
     Execute;
@@ -333,10 +337,12 @@ begin
     sql.Clear;
     sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
     ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
-    ' b.ppn_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' b.ppn_rp,b.account_pph_code,b.pph_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
     ' concat(e.code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
     ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
-    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um,c.group_name,h.supplier_name '+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um, '+
+    ' case when b.account_pph_code <>'''' then concat(b.account_pph_code,'' ('',j.account_name,'')'') else '''' end ak_pph, '+
+    ' c.group_name,h.supplier_name '+
     ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
     ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
     ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
@@ -345,6 +351,8 @@ begin
     ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
     ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
+    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
     ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
     ' where a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
     Execute;

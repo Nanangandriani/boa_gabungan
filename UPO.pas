@@ -90,6 +90,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure CariClick(Sender: TObject);
+    procedure DBGridPOGetCellParams(Sender: TObject; Column: TColumnEh;
+      AFont: TFont; var Background: TColor; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -640,14 +642,17 @@ end;
 
 procedure TFPO.ActRoExecute(Sender: TObject);
 begin
-    DBGridPO.StartLoadingStatus();
-    DBGridPO.FinishLoadingStatus();
-    QPo.Close;
-    Mempo.Close;
-    Qdetailpo.Close;
     if QPo.Active=False then Qpo.Active:=True;
     if Mempo.Active=False then Mempo.Active:=True;
     if Qdetailpo.Active=False then Qdetailpo.Active:=True;
+    DBGridPO.StartLoadingStatus();
+      QPo.Close;
+      QPo.Open;
+      Qdetailpo.Close;
+      Qdetailpo.Open;
+    DBGridPO.FinishLoadingStatus();
+
+
     //if QRptPO.Active=False then QRptPO.Active:=True;
     //if Qrptdetailpo2.Active=False then Qrptdetailpo2.Active:=True;
 end;
@@ -856,11 +861,11 @@ begin
                'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
                'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
                'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
-               'a.um_account_code,a.as_status,um_no '+
+               'a.um_account_code,a.as_status,um_no,a.deleted_at '+
                'from t_po A '+
                'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
                'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
-               'WHERE a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' Order by a.po_date,A.po_no ASC ';//and a.pic='+Quotedstr(Nm)+' ';
+               'WHERE a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' Order by a.po_date,A.po_no ASC ';
      open;
    end;
    Qpo.Close;
@@ -891,6 +896,20 @@ begin
      nopo.Text:='';
      Edurut.Text:='';
   end;
+end;
+
+procedure TFPO.DBGridPOGetCellParams(Sender: TObject; Column: TColumnEh;
+  AFont: TFont; var Background: TColor; State: TGridDrawState);
+begin
+    if not MemPO.FieldByName('deleted_at').IsNull then
+    begin
+      AFont.Color := clRed;
+    end;
+
+//    if not VarIsNull(MemPo['deleted_at'])  then
+//    begin
+//       Background := Clred;
+//    end;
 end;
 
 procedure TFPO.FormClose(Sender: TObject; var Action: TCloseAction);

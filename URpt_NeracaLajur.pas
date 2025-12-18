@@ -27,7 +27,8 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxBarEditItem, cxClasses, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  cxDropDownEdit, cxSpinEdit, cxLabel,DateUtils, DataDriverEh;
+  cxDropDownEdit, cxSpinEdit, cxLabel,DateUtils, DataDriverEh, ShellAPI,
+  frxExportXLSX, frxExportBaseDialog, frxExportXLS;
 
 type
   TFRpt_NeracaLajur = class(TForm)
@@ -64,6 +65,9 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarLargeButton3: TdxBarLargeButton;
     dxBarLargeButton4: TdxBarLargeButton;
+    dxBarLargeButton5: TdxBarLargeButton;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -74,11 +78,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure dxBarLargeButton5Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure Autonumber;
+    procedure ExportToExcel;
   end;
 
 //var
@@ -102,6 +108,97 @@ begin
     FRpt_NeracaLajur:= RealFrpt_NeracaLajur
   else
     Application.CreateForm(TFRpt_NeracaLajur, Result);
+end;
+
+procedure TFRpt_NeracaLajur.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFRpt_NeracaLajur.Autonumber;
@@ -536,9 +633,13 @@ begin
           begin
             close;
             sql.Clear;
-              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
+              SQL.Text:='update t_ak_account_balance '+
+              ' set '+
+              ' balance=:balance'+
+              //' balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
               ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
               ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            ParamByName('balance').AsFloat :=dm.Qtemp3['dbend'] + dm.Qtemp3['kdend'];
             Execute;
           end;
           dm.Qtemp3.Next;
@@ -624,9 +725,12 @@ begin
           begin
             close;
             sql.Clear;
-              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
+              SQL.Text:='update t_ak_account_balance '+
+              ' set balance=:balance'+
+              //' set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+''+
               ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
               ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+            ParamByName('balance').AsFloat :=dm.Qtemp3['dbend'] + dm.Qtemp3['kdend'];
             Execute;
           end;
           dm.Qtemp3.Next;
@@ -675,6 +779,154 @@ begin
       DBGridEh1.FinishLoadingStatus();
       QNeraca_lajur.Open;
       MemNeraca_lajur.Active:=true;
+end;
+
+procedure TFRpt_NeracaLajur.dxBarLargeButton5Click(Sender: TObject);
+var q:TUniQuery;
+  subquery,subquery2,subquery3:string;
+begin
+  mm:=cbBulan.ItemIndex;
+  yy:=spTahun.EditValue;
+  QNeraca_lajur.Close;
+//  MemNeraca_lajur.Active:=false;
+ DBGridEh1.StartLoadingStatus();
+// MemNeraca_lajur.Active:=true;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select trans_year,trans_month from t_ak_account_balance  where trans_year='+QuotedStr(spTahun.EditValue)+' '+
+    ' and trans_month <'+QuotedStr(inttostr(cbBulan.ItemIndex))+' GROUP BY trans_year,trans_month order by trans_month desc limit 1';
+    Open;
+  end;
+    if dm.Qtemp.RecordCount=0 then
+    begin
+        subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit'+
+            ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
+            ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+            ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+            ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+            ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+            ' )x GROUP BY account_code,account_name,trans_year,trans_month';
+        subquery2:='select * ,case when (balance_status=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,'+
+              ' case when (balance_status=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,'+
+              ' case when (balance_status=2 and dbnr2 >0) then dbnr2 else 0 end dblr, '+
+              ' case when (balance_status=2  and kdnr2>0) then kdnr2 else 0 end kdlr,0 notr from '+
+              ' (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,'+
+              ' case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from'+
+              ' (select balance_status,account_code,account_name,posisi_dk,trans_year,trans_month,debit,kredit,db,kd,dbpy,kdpy, '+
+              ' case when posisi_dk=''D'' then debit-kredit+db-kd else 0 end dbnr, case when posisi_dk=''K'' then kredit-debit+kd-db '+
+              ' else 0 end kdnr from (select aa.posisi_dk,aa.balance_status,sa.*,case when mts.db>0 then mts.db else 0 end db,'+
+              ' case when mts.kd>0 then mts.kd else 0 end kd,case when bm.debit>0 then bm.debit else 0 end dbpy,'+
+              ' case when bm.kredit>0 then bm.kredit else 0 end kdpy'+
+              ' from  ('+subquery+') sa left join '+
+              ' (select account_code,account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,case when sum(kd)>0 then sum(kd) else 0 end kd'+
+              ' from  (select * from "VRekap_Mutasi" where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') a  GROUP BY account_code,account_name,notr) mts '+
+              ' on sa.account_code=mts.account_code'+
+              ' left join (select account_code,sum(debit) debit,sum(kredit) kredit from "V_BukuMemorial" '+
+              ' where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+''+
+              ' group by account_code) bm on sa.account_code=bm.account_code '+
+              ' inner join t_ak_account aa on sa.account_code=aa.code where trans_year <> 0 and trans_month <> 0 )'+
+              ' nr)nr2)nr3 order by account_code asc';
+      with QNeraca_lajur do
+         begin
+           Close;
+           sql.Clear;
+              sql.Text:=subquery2;
+           open;
+         end;
+    end;
+      if dm.Qtemp.RecordCount<>0 then
+      begin
+        subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit,sum(trdb) trdb,sum(trkd) trkd,sum(dbend) dbend,sum(kdend) kdend'+
+            ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+            ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
+            ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+            ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
+            ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
+            ' )x GROUP BY account_code,account_name,trans_year,trans_month ';
+        subquery2:='select * ,case when (balance_status=1 and dbnr2>0) then dbnr2 else 0 end dbnr3,'+
+              ' case when (balance_status=1 and kdnr2>0 ) then kdnr2 else 0 end kdnr3,'+
+              ' case when (balance_status=2 and dbnr2 >0) then dbnr2 else 0 end dblr, '+
+              ' case when (balance_status=2  and kdnr2>0) then kdnr2 else 0 end kdlr,0 notr from '+
+              ' (select *,case when (dbnr-kdnr)+(dbpy-kdpy)>0 then (dbnr-kdnr)+(dbpy-kdpy) else 0 end dbnr2,'+
+              ' case when (kdnr-dbnr)+(kdpy-dbpy)>0 then (kdnr-dbnr)+(kdpy-dbpy) else 0 end kdnr2 from'+
+              ' (select balance_status,account_code,account_name,posisi_dk,trans_year,trans_month,debit,kredit,db,kd,dbpy,kdpy, '+
+              ' case when posisi_dk=''D'' then debit-kredit+db-kd else 0 end dbnr, case when posisi_dk=''K'' then kredit-debit+kd-db '+
+              ' else 0 end kdnr from (select aa.posisi_dk,aa.balance_status,sa.*,case when mts.db>0 then mts.db else 0 end db,'+
+              ' case when mts.kd>0 then mts.kd else 0 end kd,case when bm.debit>0 then bm.debit else 0 end dbpy,'+
+              ' case when bm.kredit>0 then bm.kredit else 0 end kdpy'+
+              ' from  ('+subquery+') sa left join '+
+              ' (select account_code,account_name,notr,case when sum(db)>0 then sum(db) else 0 end db,case when sum(kd)>0 then sum(kd) else 0 end kd'+
+              ' from  (select * from "VRekap_Mutasi" where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') a  GROUP BY account_code,account_name,notr) mts '+
+              ' on sa.account_code=mts.account_code'+
+              ' left join (select account_code,sum(debit) debit,sum(kredit) kredit from "V_BukuMemorial" '+
+              ' where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
+              ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+''+
+              ' group by account_code) bm on sa.account_code=bm.account_code '+
+              ' inner join t_ak_account aa on sa.account_code=aa.code where trans_year <> 0 and trans_month <> 0 )'+
+              ' nr)nr2)nr3 order by account_code asc';
+      with QNeraca_lajur do
+         begin
+           Close;
+           sql.Clear;
+              sql.Text:=subquery2;
+           open;
+         end;
+      end;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select sum(kdlr)-sum(dblr) saldo from ('+subquery2+') xx WHERE balance_status=''2''';
+        open;
+      end;
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select account_code from t_ak_account_master  WHERE master_id=''5''';
+        open;
+      end;
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select balance from t_ak_account_balance WHERE account_code='+QuotedStr(dm.Qtemp1['account_code'])+''+
+        ' and trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+        Open;
+      end;
+      with dm.Qtemp3 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='update t_ak_account_balance set balance=:balance WHERE account_code='+QuotedStr(dm.Qtemp1['account_code'])+''+
+          ' and trans_year='+QuotedStr(spTahun.EditValue)+' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+          ParamByName('balance').Value:=dm.QTemp['saldo']+DM.QTemp2['balance'];
+        ExecSQL;
+      end;
+      DBGridEh1.FinishLoadingStatus();
+   //   QNeraca_lajur.Open;
+      //MemNeraca_lajur.Active:=true;
+      Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_neracalajur.fr3');
+
+         if Rpt.FindObject('Mtgl') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+cbBulan.Text+' - '+QuotedStr(sptahun.editvalue);
+         if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+FHomeLogin.vNamaPRSH;
+      Rpt.PrepareReport(True);
+      ExportToExcel;
 end;
 
 procedure TFRpt_NeracaLajur.DxRefreshClick(Sender: TObject);

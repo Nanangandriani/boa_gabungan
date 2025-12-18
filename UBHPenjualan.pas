@@ -162,15 +162,17 @@ begin
 end;
 
 procedure TFBHPenjualan.btPreviewClick(Sender: TObject);
-var strKab: String;
+var strKab,strKaresidenan: String;
 begin
-  if edKaresidenan.EditValue='' then
-  begin
-    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
-  end else begin
+//  if edKaresidenan.EditValue='' then
+//  begin
+//    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+//  end else begin
     strKab:='';
     if edKabupaten.EditValue<>'' then
     strKab:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+
+    if edKaresidenan.EditValue<>'' then strKaresidenan:='AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue) else strKaresidenan:='';
 
     with QCetak do
     begin
@@ -201,7 +203,7 @@ begin
       Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
 //            'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
             'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at IS NULL AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
+            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at IS NULL '+strKaresidenan+' '+
             ''+strKab+'order by a.trans_date,trans_no asc';
 
       Open;
@@ -288,7 +290,7 @@ begin
 //      Report.PreviewOptions.Zoom := 1.0;
 //    end;
     end;
-  end;
+//  end;
 
 end;
 
@@ -297,11 +299,11 @@ var strKaresidenan,strKabupaten :String;
 begin
   strKaresidenan:='';
   strKabupaten:='';
-  if edKaresidenan.EditValue='' then
-  begin
-    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
-  end else
-  begin
+//  if edKaresidenan.EditValue='' then
+//  begin
+//    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+//  end else
+//  begin
     if edKaresidenan.EditValue<>'' then
     begin
       strKaresidenan:=' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
@@ -331,7 +333,7 @@ begin
     finally
     DBGrid.FinishLoadingStatus();
     end;
-  end;
+//  end;
 end;
 
 procedure TFBHPenjualan.dxBarLargeButton1Click(Sender: TObject);
@@ -698,9 +700,14 @@ begin
   bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
   tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
 
-
-  if CompareText(VarName, 'KARESIDENAN') = 0 then
-  Value := 'TP : '+edKaresidenan.EditValue;
+  if edKaresidenan.EditValue<>'' then
+  begin
+    if CompareText(VarName, 'KARESIDENAN') = 0 then
+    Value := edKaresidenan.EditValue;
+  end else begin
+    if CompareText(VarName, 'KARESIDENAN') = 0 then
+    Value := 'Semua';
+  end;
 
   if edKabupaten.EditValue<>'' then
   begin

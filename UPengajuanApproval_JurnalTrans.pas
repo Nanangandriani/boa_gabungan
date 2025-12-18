@@ -146,6 +146,7 @@ begin
     close;
     sql.clear;
     sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn,status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status approval_status,trans_date from ('+
+    //Pembelian
     ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
     ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
     ' t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
@@ -153,7 +154,20 @@ begin
     ' left join t_ak_account_sub d on a.account_um_code=d.account_code2 '+
     ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
     ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY approved_status,trans_no) g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
-    ' order by a.id desc) a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
+    //Retur Pembelian
+    ' UNION ALL ' +
+    ' select '''' AS status_app,a.return_no,a.faktur_no,''0'' as sj_no, b.supplier_name,'+
+    ' f.price as subtotalrp,f.total_price as grandtotal, f.ppn_rp ppn, c.account_name, '+
+    ' d.account_name as nm_perk,to_char(a.return_date,''dd'') tgl,to_char(a.return_date,''mm'') bln,'+
+    ' g.approved_status,a.return_date from    t_purchase_return a '+
+    ' Left join t_supplier b on a.supplier_code=b.supplier_code  '+
+    ' left join t_ak_account_sub c on a.account_code=c.account_code2  '+
+    ' left join t_ak_account_sub d on a.account_code=d.account_code2  '+
+    ' left join t_purchase_return_det f on a.return_no=f.return_no  '+
+    ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY '+
+    ' approved_status,trans_no) g on a.return_no=g.trans_no'+
+    //' order by a.id desc'+
+    ') a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
     ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status,trans_date';
     Execute;
   end;
@@ -191,7 +205,15 @@ begin
     '	ON "a".trans_no = b.trans_no WHERE "a".deleted_at IS NULL  and  b.deleted_at IS NULL and'+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status ORDER BY "a".created_at DESC ';
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status '+
+    ' UNION ALL '+
+    'SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM public.t_sales_returns AS "a" left JOIN t_general_ledger AS b'+
+    '	ON "a".trans_no = b.trans_no WHERE "a".deleted_at IS NULL  and  b.deleted_at IS NULL and'+
+    ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
+    ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status '+
+    ' ORDER BY created_at DESC ';
     Execute;
   end;
   dm.Qtemp.First;

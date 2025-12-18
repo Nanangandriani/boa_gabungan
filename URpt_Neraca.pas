@@ -26,7 +26,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, dxBar, cxBarEditItem, cxClasses,
   dxRibbon, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh,
-  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, cxLabel, cxMaskEdit, cxSpinEdit,DateUtils;
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, cxLabel, cxMaskEdit, cxSpinEdit,DateUtils, ShellAPI,
+  frxExportXLSX, frxExportBaseDialog, frxExportXLS;
 
 type
   TFRpt_Neraca = class(TForm)
@@ -71,6 +72,9 @@ type
     CbBulan2: TComboBox;
     DBGridEh2: TDBGridEh;
     DSNeracathn: TDataSource;
+    dxBarLargeButton2: TdxBarLargeButton;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
     procedure BBatalClick(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
     procedure cbbulan2Select(Sender: TObject);
@@ -80,11 +84,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
     procedure CbBulan2Change(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     bln,statustr:string;
+    procedure ExportToExcel;
   end;
 
 //var
@@ -105,6 +111,97 @@ begin
     FRpt_Neraca:= RealFRpt_Neraca
   else
     Application.CreateForm(TFRpt_Neraca, Result);
+end;
+
+procedure TFRpt_Neraca.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFRpt_Neraca.BBatalClick(Sender: TObject);
@@ -187,6 +284,55 @@ begin
     10:bln:='11';
     11:bln:='12';
   end;
+end;
+
+procedure TFRpt_Neraca.dxBarLargeButton2Click(Sender: TObject);
+var tgl,tgl2,periode1,periode2:string;
+begin
+    if CbBulan2.Text<>'' then
+    begin
+     QRpt_Neraca.Close;
+      with QRpt_Neraca do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from  "VNeraca_month" where trans_year='+quotedstr(SpTahun.editvalue)+''+
+        ' and bulan='+QuotedStr(IntToStr(CbBulan2.ItemIndex));
+        Open;
+      end;
+      //end;
+      Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Neraca.fr3');
+      //Rpt.ShowReport();
+
+      Rpt.PrepareReport(True);
+      ExportToExcel;
+    end;
+  //  Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
+  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
+ //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
+
+  //end;
+    if CbBulan2.Text='' then
+    begin
+      with QRpt_Neracathn do
+      begin
+         Close;
+         sql.Clear;
+         sql.Text:='select * from  "VNeraca_Year" where trans_year='+quotedstr(SpTahun.editvalue);
+         Open;
+      end;
+        Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Neracathn.fr3');
+
+         if Rpt.FindObject('Mbln') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mbln')).Memo.Text:='TAHUN  '+edthn2.Text;
+         if Rpt.FindObject('Mspt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mspt')).Memo.Text :='SPT TH '+FloatToStr(StrToFloat(edthn2.Text)-1);
+          if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+FHomeLogin.vNamaPRSH ;
+      Rpt.PrepareReport(True);
+      ExportToExcel;
+
+    end;
 end;
 
 procedure TFRpt_Neraca.DxRefreshClick(Sender: TObject);

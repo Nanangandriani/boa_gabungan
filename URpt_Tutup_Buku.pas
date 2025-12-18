@@ -196,9 +196,14 @@ begin
           begin
             close;
             sql.Clear;
-              SQL.Text:='update t_ak_account_balance set balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+
-              ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' and trans_year='+QuotedStr(spTahun.EditValue)+''+
-              ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+              SQL.Text:=' update t_ak_account_balance set '+
+                        //' balance='+QuotedStr(dm.Qtemp3['dbend']+dm.Qtemp3['kdend'])+' '+
+                        ' balance=:balance '+
+                        ' where account_code='+QuotedStr(dm.Qtemp3['account_code2'])+' '+
+                        ' and trans_year='+QuotedStr(spTahun.EditValue)+''+
+                        ' and trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex));
+
+          ParamByName('balance').AsFloat :=dm.Qtemp3['dbend'] + dm.Qtemp3['kdend'];
             Execute;
           end;
           dm.Qtemp3.Next;

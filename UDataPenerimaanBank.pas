@@ -1554,6 +1554,7 @@ begin
     end else begin
       kd_kares:=dm.Qtemp1.FieldValues['code_karesidenan'];
     end;
+//    RefreshGridDetailAkun;
   end;
 end;
 

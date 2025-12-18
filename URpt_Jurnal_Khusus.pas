@@ -97,6 +97,7 @@ begin
   else
     Application.CreateForm(TFRpt_Jurnal_Khusus, Result);
 end;
+
 procedure TFRpt_Jurnal_Khusus.ExportToExcel;
 var
   Exporter: TfrxCustomExportFilter;
@@ -187,6 +188,7 @@ begin
     SaveDialog.Free;
   end;
 end;
+
 procedure TFRpt_Jurnal_Khusus.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -313,14 +315,7 @@ begin
     TfrxMemoView(Rpt.FindObject('MPeriode')).Memo.Text :=
       'Periode  : ' + FormatDateTime('dd MMMM yyyy', DtMulai.EditValue) +
       ' - ' + FormatDateTime('dd MMMM yyyy', DtSelesai.EditValue);
-  //if Rpt.FindObject('Memo2') <> nil then
-  //TfrxMemoView(Rpt.FindObject('Memo2')).Memo.Text := SBU;
-  // Hubungkan dataset (PENTING!)
-  // Ganti 'frxDBDataset1' dengan nama dataset FastReport Anda
-  //Rpt.DataSet := frxDBDataset1;
-  // PREPARE report (sekali saja, DISINI!)
   Rpt.PrepareReport(True);
-  // Baru export
   ExportToExcel;
 end;
 

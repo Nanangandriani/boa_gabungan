@@ -227,6 +227,7 @@ begin
                       MemterimaDet['qtypo']:=QMaterial['qty'];
                       MemterimaDet['qty']:=QMaterial['qty'];
                       MemterimaDet['wh_code']:=QMaterial['wh_code'];
+                      MemterimaDet['kd_akun']:=QMaterial['header_code'];
                       MemterimaDet.Post;
                     end;
                end;
@@ -316,6 +317,8 @@ begin
                       MemterimaDet['qtypo']:=QMaterial2['qty'];
                       MemterimaDet['qty']:=QMaterial2['qty'];
                       MemterimaDet['wh_code']:=QMaterial2['wh_code'];
+                      MemterimaDet['kd_material']:=QMaterial2['item_code'];
+                      MemterimaDet['kd_akun']:=QMaterial2['header_code'];
                       MemterimaDet.Post;
                     end;
                end;
@@ -407,6 +410,8 @@ begin
                   MemterimaDet['qtypo']:=QMaterial['qty'];
                   MemterimaDet['qty']:=QMaterial['qty'];
                   MemterimaDet['wh_code']:=QMaterial['wh_code'];
+                  MemterimaDet['kd_material']:=QMaterial['item_code'];
+                  MemterimaDet['kd_akun']:=QMaterial['header_code'];
                   MemterimaDet.Post;
                end;
             end;
@@ -491,6 +496,8 @@ begin
                   MemterimaDet['qtypo']:=QMaterial2['qty'];
                   MemterimaDet['qty']:=QMaterial2['qty'];
                   MemterimaDet['wh_code']:=QMaterial2['wh_code'];
+                  MemterimaDet['kd_material']:=QMaterial['item_code'];
+                  MemterimaDet['kd_akun']:=QMaterial['header_code'];
                   MemterimaDet.Post;
                end;
             end;
@@ -691,9 +698,11 @@ begin
          EdValas.Text:=QMaterial['valas'];
          EdNilai_Valas.Text:=QMaterial['valas_value'];
          Edjenispo.Text:=QMaterial['type'];
+         //Cb_Ref.Text:=MemterimaDet['ref_no'];
          MemterimaDet['qtypo']:=QMaterial['qty'];
          MemterimaDet['qty']:=QMaterial['qty'];
          MemterimaDet['wh_code']:=QMaterial['wh_code'];
+         MemterimaDet['kd_akun']:=QMaterial['header_code'];
          MemterimaDet.Post;
       end;
 
@@ -750,9 +759,11 @@ begin
          EdValas.Text:=QMaterial['valas'];
          EdNilai_Valas.Text:=QMaterial['valas_value'];
          Edjenispo.Text:=QMaterial['type'];
+         //Cb_Ref.Text:=MemterimaDet['ref_no'];
          MemterimaDet['qtypo']:=QMaterial['qty'];
          MemterimaDet['qty']:=QMaterial['qty'];
          MemterimaDet['wh_code']:=QMaterial['wh_code'];
+         MemterimaDet['kd_akun']:=QMaterial['header_code'];
          MemterimaDet.Post;
       end;
       with Dm.Qtemp do

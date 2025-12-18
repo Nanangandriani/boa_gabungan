@@ -31,7 +31,7 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore;
 
 type
-  TFlist_jurnal_memorial = class(TForm)
+  TFList_jurnal_memorial = class(TForm)
     PgControl: TRzPageControl;
     Tablist: TRzTabSheet;
     DBGridEh1: TDBGridEh;
@@ -101,26 +101,26 @@ type
   end;
 
 //var
-Function  Flist_jurnal_memorial: TFlist_jurnal_memorial;
+Function  FList_jurnal_memorial: TFList_jurnal_memorial;
 
 implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UNewJurnal_memorial, UMainMenu;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
+uses UDatamodule, UNewJurnal_memorial, UMainMenu, UMy_Function;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
   RealFMemorial: TFlist_jurnal_memorial;
 
-function FList_jurnal_memorial: TFlist_jurnal_memorial;
+function FList_jurnal_memorial: TFList_jurnal_memorial;
 begin
   if RealFMemorial <> nil then
     Flist_jurnal_memorial:= RealFMemorial
   else
-    Application.CreateForm(TFlist_jurnal_memorial, Result);
+    Application.CreateForm(TFList_jurnal_memorial, Result);
 end;
 
-procedure TFlist_jurnal_memorial.Refresh;
+procedure TFList_jurnal_memorial.Refresh;
 begin
   DBGridEh1.StartLoadingStatus();
     try
@@ -135,14 +135,15 @@ begin
   end;
 end;
 
-procedure TFlist_jurnal_memorial.ActBaruExecute(Sender: TObject);
+procedure TFList_jurnal_memorial.ActBaruExecute(Sender: TObject);
 begin
   FNewJurnal_memo.Clear;
   Status:=0;
   FNewJurnal_memo.Show;
+  FNewJurnal_memo.isCancel:=0;
 end;
 
-procedure TFlist_jurnal_memorial.ActDelExecute(Sender: TObject);
+procedure TFList_jurnal_memorial.ActDelExecute(Sender: TObject);
 begin
  {if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
   begin
@@ -163,9 +164,42 @@ begin
     Refresh;
     MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
   end;            }
+
+  if CheckJurnalPosting(DBGridEh1.Fields[0].AsString)>0 then
+  begin
+    MessageDlg('Memorial sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+  end else begin
+
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE "public"."t_jurnal_memorial"  SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(Nm)+'  '+
+                    ' WHERE "no_bukti_memo"='+QuotedStr(DBGridEh1.Fields[0].AsString);
+          ExecSQL;
+        end;
+        MessageDlg('Proses Hapus Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+    end;
+  end;
 end;
 
-procedure TFlist_jurnal_memorial.ActPrintExecute(Sender: TObject);
+procedure TFList_jurnal_memorial.ActPrintExecute(Sender: TObject);
 begin
 with QBukti_memo do
 begin
@@ -196,27 +230,43 @@ end;
   Rpt.ShowReport();
 end;
 
-procedure TFlist_jurnal_memorial.ActRoExecute(Sender: TObject);
+procedure TFList_jurnal_memorial.ActRoExecute(Sender: TObject);
 begin
   Refresh;
 end;
 
-procedure TFlist_jurnal_memorial.ActUpdateExecute(Sender: TObject);
+procedure TFList_jurnal_memorial.ActUpdateExecute(Sender: TObject);
 begin
-  FNewJurnal_memo.Show;
   Status:=1;
   FNewJurnal_memo.Enabled:=true;
+
   with dm.Qtemp do
   begin
     Close;
     Sql.Clear;
     Sql.Text:='SELECT case when notes_id isnull then a.notes else concat(b.notes,'' '', f_bulan(a.trans_month::integer),'' '',a.trans_year )end'+
     ' keterangan,case when notes_id ISNULL then a.notes else b.notes end ket,b.notes,a.memo_no,a.trans_date, '+
-    ' a.bk_no,a.faktur_no,a.rounding_status,a.post_status,a.koreksi_status,f_bulan(a.trans_month::integer) bln,a.trans_year,a.notes_id, a.memorial_source FROM   '+
+    ' a.bk_no,a.faktur_no,a.rounding_status,a.post_status,a.koreksi_status,'+
+    ' f_bulan(a.trans_month::integer) bln,a.trans_year,a.notes_id, a.memorial_source, '+
+    ' a.deleted_at, a.status_correction'+
+    ' FROM   '+
     '	t_memorial_journal AS a LEFT JOIN t_memorial_notes AS b ON a.notes_id=b.id '+
     ' where memo_no='+QuotedStr(DBGridEh1.Fields[0].AsString)+' order by a.id desc';
     Open;
   end;
+
+  if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+  begin
+    FNewJurnal_memo.isCancel := 1;
+  end else begin
+    FNewJurnal_memo.isCancel:=0;
+  end;
+
+  FNewJurnal_memo.IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
+
+
+  FNewJurnal_memo.Show;
   if dm.Qtemp.FieldByName('post_status').AsInteger=0 then
   begin
     FNewJurnal_memo.Clear;
@@ -279,7 +329,7 @@ begin
   end;
 end;
 
-procedure TFlist_jurnal_memorial.DBGridEh1AdvDrawDataCell(
+procedure TFList_jurnal_memorial.DBGridEh1AdvDrawDataCell(
   Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
   const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
 var
@@ -292,12 +342,12 @@ begin
   end;
 end;
 
-procedure TFlist_jurnal_memorial.DBGridEh1DblClick(Sender: TObject);
+procedure TFList_jurnal_memorial.DBGridEh1DblClick(Sender: TObject);
 begin
   ActUpdateExecute(sender);
 end;
 
-procedure TFlist_jurnal_memorial.dxBarLargeButton2Click(Sender: TObject);
+procedure TFList_jurnal_memorial.dxBarLargeButton2Click(Sender: TObject);
 begin
 {  with dm.Qtemp do
   begin
@@ -344,7 +394,7 @@ begin
   end;  }
 end;
 
-procedure TFlist_jurnal_memorial.FormClose(Sender: TObject;
+procedure TFList_jurnal_memorial.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Qlist_jurnal.Close;
@@ -353,17 +403,17 @@ begin
   Action:=cafree;
 end;
 
-procedure TFlist_jurnal_memorial.FormCreate(Sender: TObject);
+procedure TFList_jurnal_memorial.FormCreate(Sender: TObject);
 begin
   RealFMemorial:=self;
 end;
 
-procedure TFlist_jurnal_memorial.FormDestroy(Sender: TObject);
+procedure TFList_jurnal_memorial.FormDestroy(Sender: TObject);
 begin
   RealFMemorial:=nil;
 end;
 
-procedure TFlist_jurnal_memorial.FormShow(Sender: TObject);
+procedure TFList_jurnal_memorial.FormShow(Sender: TObject);
 begin
 {  Qlist_jurnal.Close;
   Qlist_jurnal.Open;
@@ -375,7 +425,7 @@ end;
 
 
 initialization
-registerclass(TFlist_jurnal_memorial);
+registerclass(TFList_jurnal_memorial);
 
 
 end.

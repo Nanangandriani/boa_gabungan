@@ -849,12 +849,12 @@ object FRpt_Tutup_Buku: TFRpt_Tutup_Buku
       
         'GROUP BY taa.account_code,taa.account_name,trans_year,trans_mont' +
         'h,taa.posisi_dk')
-    Left = 601
+    Left = 585
     Top = 31
   end
   object DSTutup_Buku: TDataSource
     DataSet = QTutup_Buku
-    Left = 496
+    Left = 488
     Top = 32
   end
   object frxReport1: TfrxReport

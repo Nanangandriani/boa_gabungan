@@ -106,7 +106,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         FieldName = 'bop'
         Footers = <>
         Title.Caption = 'Pengeluaran Biaya|Over Head Pabrik'
-        Width = 120
+        Width = 0
       end
       item
         CellButtons = <>
@@ -585,7 +585,6 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     Contexts = <>
     TabOrder = 3
     TabStop = False
-    ExplicitWidth = 965
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -2054,7 +2053,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       '')
     Active = True
     Left = 560
-    Top = 32
+    Top = 40
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -2085,15 +2084,21 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       ItemLinks = <
         item
           UserDefine = [udWidth]
-          UserWidth = 103
+          UserWidth = 108
           Visible = True
           ItemName = 'dxBarEdit3'
         end
         item
           UserDefine = [udWidth]
-          UserWidth = 104
+          UserWidth = 110
           Visible = True
           ItemName = 'DTPick11'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 110
+          Visible = True
+          ItemName = 'DTPick12'
         end
         item
           BeginGroup = True
@@ -3024,9 +3029,22 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object DTPick11: TcxBarEditItem
-      Caption = 'Pilih Tanggal      '
+      Caption = 'Tanggal Awal :   '
       Category = 0
-      Hint = 'Pilih Tanggal      '
+      Hint = 'Tanggal Awal :   '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+    end
+    object DTPick12: TcxBarEditItem
+      Caption = 'Tanggal Akhir :   '
+      Category = 0
+      Hint = 'Tanggal Akhir :   '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end

@@ -21,10 +21,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 896
     Height = 441
     Hint = ''
-    ActivePage = TabMemorial
+    ActivePage = TabPenjualan
     Align = alClient
     HotTrackStyle = htsTabBar
-    TabIndex = 3
+    TabIndex = 1
     TabOrder = 0
     ExplicitWidth = 890
     ExplicitHeight = 432

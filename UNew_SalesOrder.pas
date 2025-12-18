@@ -1143,7 +1143,7 @@ begin
     dtTanggal_Pesan.Enabled:=True;
   end;
 
-  if isCancel=1 then BSave.Enabled:=False else  BSave.Enabled:=True;
+  if isCancel=1 then BSave.Enabled:=False;;
 
 end;
 

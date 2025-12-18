@@ -174,7 +174,7 @@ begin
           begin
             close;
             sql.clear;
-            sql.add(' select group_name, e."unit_price" as hjual,  '+
+            sql.add(' select group_name,  '+
                     ' sum(e."unit_price"*a.amount) as total_value, sum(a.amount) as total_qty '+
                     ' from t_selling_temp a '+
                     ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
@@ -186,8 +186,7 @@ begin
                     ' ');
             sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' AND '+
                     'a.trans_no='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
-                    ' GROUP BY group_name, e."unit_price", a.amount '+
-                    ' -- Baca qty dalam group kategori ');
+                    ' GROUP BY group_name ');
             open;
             first;
           end;
@@ -215,7 +214,7 @@ begin
           begin
             close;
             sql.clear;
-            sql.add(' select group_name, e."unit_price" as hjual,  '+
+            sql.add(' select group_name,  '+
                     ' sum(e."unit_price"*a.amount) as total_value, sum(a.amount) as total_qty '+
                     ' from t_selling_temp a '+
                     ' LEFT JOIN (SELECT customer_code, code_type from t_customer where deleted_at is null) b '+
@@ -227,8 +226,7 @@ begin
                     ' ');
             sql.add(' where group_name='+QuotedStr(query2.fieldbyname('group_name').value)+' AND '+
                     'a.id_master='+QuotedStr(get_uuid)+' '+
-                    ' GROUP BY group_name, e."unit_price", a.amount '+
-                    ' -- Baca qty dalam group kategori ');
+                    ' GROUP BY group_name ');
             open;
             first;
           end;
@@ -319,6 +317,29 @@ begin
   if Dm.Qtemp3.RecordCount<>0 then  //Pakai Harga Klasifikasi Grouping / Per Pelanggan
   begin
 
+    with Dm.Qtemp2 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT code_type_count as perhitungan, e."unit_price" as hargamaster '+
+              ' FROM t_sales_classification a '+
+              ' LEFT JOIN t_customer_type b on b.code=a.code_type_customer '+
+              ' LEFT JOIN t_item_group c on c.code=a.code_item_category '+
+              ' LEFT JOIN t_sales_classification_det d on d.id_master::VARCHAR=a.id::VARCHAR '+
+              ' LEFT JOIN t_sales_classification_price_master e on '+
+              ' e.code_type_customer=a.code_type_customer and d.code_item=e.code_item  '+
+              ' where a.code_type_customer = '+QuotedSTR(kd_JenisOutlet)+' and '+
+              ' a.code_item_category = '+QuotedSTR(kd_Kategori)+' and '+
+              ' status_payment = '+IntToStr(stat_bayar)+' and '+
+              ' status_promo ='+IntToStr(stat_promo)+' and '+
+              ' status_grouping= 0 and '+
+              ' code_customer_selling_type='+QuotedSTR(type_jual)+'  and '+
+              ' code_sell_type='+QuotedSTR(jenis_jual)+' and '+
+              ' d.code_item='+QuotedSTR(kd_item)+' and '+
+              ' d.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1 '+strWhereNonGroupIncludePPN+' LIMIT 1');
+      open;
+    end;
+
     strWhereGroupIncludePPN:=' AND a.status_tax='+strStatusIncludePPN+' ';
     with Dm.Qtemp3 do
     begin
@@ -337,8 +358,41 @@ begin
               ' code_sell_type= '+QuotedSTR(jenis_jual)+' and '+
               ' b.code_item='+QuotedSTR(kd_item)+' and a.status_grouping=1 and '+
               ' b.code_unit='+QuotedSTR(satuan)+' and a.status_approval=1'+strWhereGroupIncludePPN+' ');
+      if Dm.Qtemp2.FieldByName('perhitungan').value= 'T001' then  //TOTAL VALUE
+      begin
+
+        batastTotalValue:=Dm.Qtemp.fieldbyname('total_value').value;
+//        ShowMessage(IntToStr(batastTotalValue));
+        sql.add(' and b.limit1 <= '+QuotedSTR(IntToStr(batastTotalValue))+' and '+
+                ' b.limit2 >= '+QuotedSTR(IntToStr(batastTotalValue))+'  LIMIT 1 ');
+      end;
+
+      if Dm.Qtemp2.FieldByName('perhitungan').value= 'T002' then  //TOTAL QTY
+      begin
+
+        batasTotalQty:=Dm.Qtemp.fieldbyname('total_qty').value;
+        sql.add(' and b.limit1 <= '+QuotedSTR(IntToStr(batasTotalQty))+' and '+
+                ' b.limit2 >= '+QuotedSTR(IntToStr(batasTotalQty))+'  LIMIT 1 ');
+      end;
+
+      if Dm.Qtemp2.FieldByName('perhitungan').value= 'T003' then  //VALUE PER ITEM
+      begin
+        batasValuePerItem:=Dm.Qtemp1.fieldbyname('value_per_item').value;
+        sql.add(' and b.limit1 <= '+QuotedSTR(IntToStr(batasValuePerItem))+' and '+
+                ' b.limit2 >= '+QuotedSTR(IntToStr(batasValuePerItem))+'  LIMIT 1 ');
+      end;
+
+      if Dm.Qtemp2.FieldByName('perhitungan').value= 'T004' then  //QTY PER ITEM
+      begin
+        batasQtyPerItem:=jumlah_item;
+        sql.add(' and b.limit1 <= '+QuotedSTR(IntToStr(batasQtyPerItem))+' and '+
+                ' b.limit2 >= '+QuotedSTR(IntToStr(batasQtyPerItem))+'  LIMIT 1 ');
+      end;
+
       open;
     end;
+
+
 
     stat_klasifikasi:=Dm.Qtemp3.fieldbyname('stat_klasifikasi').Value;
     hjual:=Dm.Qtemp3.fieldbyname('HARGAJUAL').Value;

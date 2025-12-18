@@ -26,7 +26,8 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, cxDropDownEdit, dxBar, cxBarEditItem,
-  cxClasses, dxRibbon, cxButtonEdit, cxTextEdit;
+  cxClasses, dxRibbon, cxButtonEdit, cxTextEdit, frxExportXLS,
+  frxExportBaseDialog, frxExportXLSX, ShellAPI;
 
 type
   TFRpt_Buku_Besar = class(TForm)
@@ -49,6 +50,10 @@ type
     BRingkasan: TdxBarLargeButton;
     QTotal_Buku_Besar: TUniQuery;
     DbTotal_Buku_besar: TfrxDBDataset;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarLargeButton3: TdxBarLargeButton;
+    frxXLSXExport1: TfrxXLSXExport;
+    frxXLSExport1: TfrxXLSExport;
     procedure Edkd_akun2ButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -66,11 +71,13 @@ type
     procedure BPrint_RincianClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BRingkasanClick(Sender: TObject);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     posisidk,selesihthn:string;
+    procedure ExportToExcel;
   end;
 
 //var
@@ -95,6 +102,97 @@ end;
 procedure TFRpt_Buku_Besar.BBatalClick(Sender: TObject);
 begin
 Close;
+end;
+
+procedure TFRpt_Buku_Besar.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFRpt_Buku_Besar.BCarriClick(Sender: TObject);
@@ -482,6 +580,97 @@ begin
     //  SetMemo(Rpt,'MPT',' '+SBU+' ');
       //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
       Rpt.ShowReport();
+    end else
+    ShowMessage('Maaf data kosong');
+end;
+
+procedure TFRpt_Buku_Besar.dxBarLargeButton3Click(Sender: TObject);
+var tgl,tgl2:string;
+begin
+ if Edakun.editvalue=null then
+    begin
+      MessageDlg('Kode Akun Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      Edakun.SetFocus;
+      Exit;
+    end;
+    if DtMulai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+    with dm.qtemp do
+     begin
+       close;
+       sql.clear;
+       SQL.Text:='SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,trans_no,modul,code,account_code,account_name,sa,db,kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
+         ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
+         ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+' and account_code='+QuotedStr(Edakun.editvalue);
+       ExecSQL;
+     end;
+    if dm.Qtemp.RecordCount<>0 then
+    begin
+    //showmessage('test');
+        with QRpt_Buku_Besar do
+        begin
+          close;
+          sql.Clear;
+         sql.Text:='SELECT xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.modul,xx.account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.created_at,'''' bln,'+
+         ' CASE WHEN yy.posisi_dk::text = ''D''::text THEN sum(xx.sa::numeric + xx.db - xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul)'+
+         ' ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul) '+
+         ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,'+
+         ' trans_no,modul,code account_code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
+         ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
+         ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+''+
+         ' group by module_id, ket, trans_no,modul,code,account_name '+
+         ' UNION  /*Transaksi*/'+
+         '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
+         ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+')xx'+
+         '  JOIN t_ak_account yy ON xx.account_code::text = yy.code::text  where account_code='+QuotedStr(Edakun.editvalue);
+         Open;
+      end;
+    end;
+        if dm.Qtemp.RecordCount=0 then
+    begin
+    //showmessage('test 2');
+        with QRpt_Buku_Besar do
+        begin
+          close;
+          sql.Clear;
+         sql.Text:='SELECT xx.module_id,xx.ket,xx.trans_date,xx.trans_no,xx.modul,xx.code account_code,xx.account_name,xx.sa,xx.db,xx.kd,xx.created_at,'''' bln,'+
+         ' CASE WHEN yy.posisi_dk::text = ''D''::text THEN sum(xx.sa::numeric + xx.db - xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul)'+
+         ' ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul) '+
+         ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+''+
+         ' trans_date,trans_no,modul,code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
+         ' FROM	"VBuku_BesarSA" where trans_year='+QuotedStr(inttostr(strtoint(FormatDateTime('yyyy',DtMulai.EditValue))-1))+''+
+         ' and trans_month <=''12'' group by module_id, ket, trans_no,modul,code,account_name'+
+         ' UNION  /*Transaksi*/'+
+         '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
+         ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+')xx'+
+         '  JOIN t_ak_account yy ON xx.code::text = yy.code::text  where xx.code='+QuotedStr(Edakun.editvalue);
+         Open;
+      end;
+    end;
+      QRpt_Buku_Besar.Open;
+
+    if QRpt_Buku_Besar.RecordCount<>0  then
+    begin
+      Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Besar.Fr3');
+ 
+  if Rpt.FindObject('MPeriod') <> nil then
+    TfrxMemoView(Rpt.FindObject('MPeriod')).Memo.Text :='Periode  : '+FormatDateTime('dd MMMM yyy',DtMulai.EditValue)+' - '+FormatDateTime('dd MMMM yyy',DtSelesai.EditValue);
+      Rpt.PrepareReport(True);
+  if Rpt.FindObject('Mpt') <> nil then
+    TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text :=''+SBU;
+      Rpt.PrepareReport(True);
+
+      ExportToExcel;
     end else
     ShowMessage('Maaf data kosong');
 end;

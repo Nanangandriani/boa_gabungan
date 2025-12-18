@@ -1085,9 +1085,9 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
       Visible = ivAlways
     end
     object cbKaresidenan: TcxBarEditItem
-      Caption = 'TP                    '
+      Caption = 'Karesidenan   '
       Category = 0
-      Hint = 'TP                    '
+      Hint = 'Karesidenan   '
       Visible = ivAlways
       OnChange = cbKaresidenanChange
       PropertiesClassName = 'TcxButtonEditProperties'
@@ -1401,7 +1401,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 45981.449644687500000000
+    ReportOptions.LastChange = 46007.382977615740000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1409,8 +1409,8 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
       ''
       'end.')
     OnGetValue = ReportGetValue
-    Left = 448
-    Top = 336
+    Left = 360
+    Top = 208
     Datasets = <
       item
         DataSet = frxDBDatasetLapHarianSisaNotaPerKabupaten
@@ -1953,7 +1953,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           AllowVectorExport = True
           Left = 461.498687670000000000
           Top = 35.455380570000000000
-          Width = 75.294117650000000000
+          Width = 79.641943740000000000
           Height = 16.666666670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1962,7 +1962,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'TP')
+            'Karesidenan')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2442,7 +2442,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           AllowVectorExport = True
           Left = 30.000000000000000000
           Top = 166.102350000000000000
-          Height = 982.677165354330700000
+          Height = 982.677165354331000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

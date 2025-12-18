@@ -171,6 +171,7 @@ object FNew_TransferBarang: TFNew_TransferBarang
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'qty'
@@ -330,6 +331,17 @@ object FNew_TransferBarang: TFNew_TransferBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 620
+    end
+    object BCorrection: TRzBitBtn
+      Left = 547
+      Top = 1
+      Width = 79
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 2
+      OnClick = BCorrectionClick
+      ExplicitLeft = 569
     end
   end
   object Edno: TRzEdit

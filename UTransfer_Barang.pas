@@ -112,6 +112,7 @@ begin
     Clear;
     status:=0;
     Caption:='New Transfer Barang Antar Gudang';
+    isCancel:=0;
     //autonumber;
   end;
 end;
@@ -127,7 +128,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
-      ' b.wh_name nm_from,c.wh_name nm_to,d.category from t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category, status_correction from t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
       ' INNER JOIN t_wh c on a.wh_code_to=c.wh_code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code order by trans_no desc';
       ExecSQL;
     end;
@@ -144,7 +145,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='select a.*,date_part(''YEAR'',trans_date) thn,date_part(''MONTH'',trans_date) bln,date_part(''DAY'',trans_date) tgl,'+
-      ' b.wh_name nm_from,c.wh_name nm_to,d.category from t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
+      ' b.wh_name nm_from,c.wh_name nm_to,d.category, status_correction from t_item_transfer a INNER JOIN t_wh b on a.wh_code_from=b.wh_code '+
       ' INNER JOIN t_wh c on a.wh_code_to=c.wh_code INNER JOIN t_wh_category d on a.wh_category_code=d.category_code '+
       ' where a.sbu_code='+QuotedStr(loksbu)+' order by a.trans_no desc';
       ExecSQL;
@@ -161,6 +162,16 @@ procedure TFTransfer_Barang.ActUpdateExecute(Sender: TObject);
 begin
   with FNew_TransferBarang do
   begin
+
+  if (QTransfer.FindField('deleted_at') <> nil) and (not QTransfer.FieldByName('deleted_at').IsNull) then
+  begin
+    FNew_TransferBarang.isCancel := 1;
+  end else begin
+    FNew_TransferBarang.isCancel:=0;
+  end;
+
+  FNew_TransferBarang.IntStatusKoreksi:=QTransfer.FieldValues['status_correction'];
+
     Show;
     Clear;
     status:=1;
@@ -174,6 +185,8 @@ begin
     kd_gdngdari:=MemTransfer['wh_code_from'];
     kd_gdngke:=MemTransfer['wh_code_to'];
     kd_ct:=MemTransfer['wh_category_code'];
+
+
   end;
   Qdetail.First;
   while not Qdetail.eof do

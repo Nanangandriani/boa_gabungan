@@ -387,6 +387,14 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         FieldName = 'wh_code'
         Footers = <>
         Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'header_code'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -405,7 +413,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         'pph,'
       
         'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code,c.du' +
-        'e_date'
+        'e_date,e.header_code'
       'from t_item_stock a '
       'inner join t_podetail b on a.item_stock_code=b.item_stock_code'
       'inner join t_po C on b.po_no=c.po_no'
@@ -418,7 +426,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         'b.pph,'
       
         'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code,c.du' +
-        'e_date')
+        'e_date,e.header_code')
     Left = 259
     Top = 104
   end
@@ -434,7 +442,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         'mb_dpp,b.subtotalrp,'
       
         'b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.va' +
-        'las,c.valas_value'
+        'las,c.valas_value,e.header_code'
       'from t_item_stock a  '
       
         'inner join t_item_receive_det b on a.item_stock_code=b.item_stoc' +
@@ -453,7 +461,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         '.grandtotal,b.pemb_dpp,'
       
         'b.subtotalrp,b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,f.' +
-        'wh_code,b.pemb_dpp;')
+        'wh_code,b.pemb_dpp,e.header_code;')
     Left = 355
     Top = 120
   end

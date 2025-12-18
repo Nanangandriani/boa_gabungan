@@ -113,6 +113,8 @@ type
     DSBHKasKecil: TDataSource;
     MemBHKasKecil: TMemTableEh;
     QBHKasKecil: TUniQuery;
+    cxBarEditItem2: TcxBarEditItem;
+    DTPick12: TcxBarEditItem;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
@@ -249,7 +251,7 @@ begin
                 '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
                 'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
                 'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
-                'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+                'where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
                 'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
                 'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
                 'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
@@ -291,6 +293,7 @@ procedure TFLap_Buku_Harian_Kas_Kecil.FormShow(Sender: TObject);
 begin
    DTPick1.Date:=Now();
    DTPick11.EditValue:=date();
+   DTPick12.EditValue:=date();
 end;
 
 procedure TFLap_Buku_Harian_Kas_Kecil.SpeedButton1Click(Sender: TObject);

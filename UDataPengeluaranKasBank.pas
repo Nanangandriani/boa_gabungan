@@ -143,6 +143,7 @@ type
     DSTP: TDataSource;
     QTP_Real: TUniQuery;
     BEdit: TRzBitBtn;
+    Ed_kd_bank: TEdit;
     procedure edNamaJenisTransButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
@@ -175,6 +176,7 @@ type
     procedure BtnDepositoClick(Sender: TObject);
     procedure CbGroup_BiayaChange(Sender: TObject);
     procedure Btn_daf_tpClick(Sender: TObject);
+    procedure Ed_kd_bankChange(Sender: TObject);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang : real;
@@ -227,6 +229,45 @@ begin
      Application.CreateForm(TFDataPengeluaranKasBank,Result);
 end;}
 
+procedure TFDataPengeluaranKasBank.Clear;
+begin
+   MemDetailAkun.EmptyTable;
+  MemDetailHutang.EmptyTable;
+  edNoTrans.Clear;
+  dtTrans.date:=now();
+  dtPeriode1.date:=now();
+  dtPeriode2.date:=now();
+  edKodeJenisTrans.Clear;
+  edNamaJenisTrans.Clear;
+  edNamaBank.Clear;
+  edNoRek.Clear;
+  edKode_supplier.Clear;
+  edNama_supplier.Clear;
+  edNoRek.Clear;
+  edNamaBank.Clear;
+  //edKodeMataUang.Clear;
+  //edNamaMataUang.Clear;
+  edUntukPengeluaran.Clear;
+  edKurs.value:=0.00;
+  edJumlah.value:=0.00;
+  MemKeterangan.Clear;
+  MemDetailAkun.Active:=true;
+  MemDetailHutang.Active:=true;
+  Cbsumberdata.Clear;
+  Cb_jenis_trans.Clear;
+  code_trans.Clear;
+  Ed_id_modul.Clear;
+  Ed_Additional.Clear;
+  Edth.Clear;
+  Edbln.Clear;
+  Edhari.Clear;
+  ak_account.Clear;
+  Ed_voucher_ajuan.Clear;
+  edKodeSumberPengeluaran.Clear;
+  Cb_debt_source.Clear;
+  Ed_kepada.clear;
+end;
+
 procedure TFDataPengeluaranKasBank.refresh_form;
 begin
     with FDataPengeluaranKasBank do
@@ -259,7 +300,7 @@ begin
       //edKodeMataUang.Clear;
       //edNamaMataUang.Clear;
       edUntukPengeluaran.Clear;
-      edKurs.value:=0.00;
+      edKurs.value:=1.00;
       edJumlah.value:=0.00;
       MemKeterangan.Clear;
       MemDetailAkun.Active:=true;
@@ -960,45 +1001,6 @@ begin
      end;
 end;
 
-procedure TFDataPengeluaranKasBank.clear;
-begin
-  MemDetailAkun.EmptyTable;
-  MemDetailHutang.EmptyTable;
-  edNoTrans.Clear;
-  dtTrans.date:=now();
-  dtPeriode1.date:=now();
-  dtPeriode2.date:=now();
-  edKodeJenisTrans.Clear;
-  edNamaJenisTrans.Clear;
-  edNamaBank.Clear;
-  edNoRek.Clear;
-  edKode_supplier.Clear;
-  edNama_supplier.Clear;
-  edNoRek.Clear;
-  edNamaBank.Clear;
-  edKodeMataUang.Clear;
-  edNamaMataUang.Clear;
-  edUntukPengeluaran.Clear;
-  edKurs.value:=0.00;
-  edJumlah.value:=0.00;
-  MemKeterangan.Clear;
-  MemDetailAkun.Active:=true;
-  MemDetailHutang.Active:=true;
-  Cbsumberdata.Clear;
-  Cb_jenis_trans.Clear;
-  code_trans.Clear;
-  Ed_id_modul.Clear;
-  Ed_Additional.Clear;
-  Edth.Clear;
-  Edbln.Clear;
-  Edhari.Clear;
-  ak_account.Clear;
-  Ed_voucher_ajuan.Clear;
-  edKodeSumberPengeluaran.Clear;
-  Cb_debt_source.Clear;
-  Ed_kepada.clear;
-end;
-
 procedure TFDataPengeluaranKasBank.code_transChange(Sender: TObject);
 begin
    FMasterData.vcall:='KL_kasbank_jns_transaksi';
@@ -1155,7 +1157,7 @@ begin
      sql.Text:='select * from t_currency where currency_code='+QuotedStr(edKodeMataUang.Text)+' ';
      open;
      edNamaMataUang.Text:=fieldbyname('currency_name').AsString;
-     edkurs.Text:=fieldbyname('default_kurs').AsString;
+     edkurs.Text:=fieldbyname('default_kurs').Value;
    end;
 end;
 
@@ -1208,7 +1210,8 @@ begin
   if Length(code_trans.Text)<>0 then
   begin
   FMasterData.Caption:='Master Data Bank';
-  FMasterData.vcall:='KL_kasbank_jns_transaksi';
+  //FMasterData.vcall:='KL_kasbank_jns_transaksi';
+  FMasterData.vcall:='KL_kasbank_bank';
   FMasterData.update_grid('rekening_no','bank_name','currency','t_Bank','WHERE	deleted_at IS NULL ORDER BY id desc');
   FMasterData.ShowModal;
   end;
@@ -1217,7 +1220,8 @@ end;
 procedure TFDataPengeluaranKasBank.edNamaJenisTransButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Jenis Transaksi';
-  FMasterData.vcall:='KL_kasbank_jns_transaksi';
+  //FMasterData.vcall:='KL_kasbank_jns_transaksi';
+  FMasterData.vcall:='KL_kasbank_bank';
   FMasterData.update_grid('code_trans','CONCAT(name_module,'+QuotedStr(' - ')+',name_trans)','description','t_master_trans_account','WHERE code_module IN (''5'',''6'') and deleted_at IS NULL ORDER BY name_trans desc');
   FMasterData.ShowModal;
   FDataPengeluaranKasBank.RzPageControl1.ActivePage:=FDataPengeluaranKasBank.TabDetailAkun;
@@ -1280,6 +1284,19 @@ begin
         cbsumberdata.Text:='KAS';
       end;
 
+end;
+
+procedure TFDataPengeluaranKasBank.Ed_kd_bankChange(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='select bank_code,bank_name,rekening_no from t_bank where bank_code='+QuotedStr(ed_kd_Bank.Text)+'';
+     open;
+     edNoRek.Text:=fieldbyname('rekening_no').AsString;
+     edNamaBank.Text:=fieldbyname('bank_name').AsString;
+   end;
 end;
 
 procedure TFDataPengeluaranKasBank.Ed_voucher_ajuanChange(Sender: TObject);
@@ -1359,6 +1376,8 @@ begin
    edKodeMataUang.Text:='IDR';
    edKodeMataUangChange(sender);
 end;
+
+
 
 procedure TFDataPengeluaranKasBank.RefreshGridDetailAkun;
 var
@@ -1620,5 +1639,7 @@ begin
     end;
   end;
 end;
+
+
 
 end.

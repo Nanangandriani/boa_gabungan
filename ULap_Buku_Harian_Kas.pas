@@ -106,7 +106,7 @@ end;
 
 procedure TFLap_Buku_Harian_Kas.datetimepicker1Change(Sender: TObject);
 begin
-   datetimepicker2.EditValue:=datetimepicker1.EditValue;
+   //datetimepicker2.EditValue:=datetimepicker1.EditValue;
 end;
 
 procedure TFLap_Buku_Harian_Kas.dxBarLargeButton3Click(Sender: TObject);
@@ -317,6 +317,7 @@ end;
 procedure TFLap_Buku_Harian_Kas.FormShow(Sender: TObject);
 begin
   Datetimepicker1.EditValue:=Date;
+  Datetimepicker2.EditValue:=Date;
 end;
 
 Initialization

@@ -54,6 +54,7 @@ type
     CbJenis: TComboBox;
     Label7: TLabel;
     CbHarta: TComboBox;
+    BCorrection: TRzBitBtn;
     procedure FormShow(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
@@ -69,9 +70,11 @@ type
     procedure CbHartaSelect(Sender: TObject);
     procedure cbbulanSelect(Sender: TObject);
     procedure DTtglChange(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
   public
+     IntStatusKoreksi, iserror, isCancel: integer;
     { Public declarations }
     procedure Clear;
     procedure Save;
@@ -89,7 +92,7 @@ implementation
 
 uses //browse_akun_kredit,Ubrowse_daftar_penerimaan_pembayaran_piutang,
 UDataModule, UListJurnal_memorial,UCari_ket_memorial, UCari_SumberMemorial, UMainmenu,
-  browse_akun_kredit, UMy_Function;
+  browse_akun_kredit, UMy_Function, UKoreksi, UListKoreksi;
 var
   RealFNew_JurnalMemo: TFNewJurnal_memo;
 
@@ -178,6 +181,7 @@ begin
   strday2:=DTtgl.Date;
   edno_bukti_memorial.Text:=getNourut(strday2,'t_memorial_journal','');
   urut:=StrToInt(order_no);
+
 end;
 
 procedure TFNewJurnal_memo.Save;
@@ -185,7 +189,6 @@ var
 total_debit,total_kredit : Currency;
 begin
 //  Autocode;
-  Autonumber;
   MemTableEh1.First;
   total_debit:=0;
   total_kredit:=0;
@@ -202,15 +205,21 @@ begin
   end
   else
   begin
+  Autonumber;
+
+  ShowMessage(IntToStr(Urut));
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
       sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,'+
-                'faktur_no,rounding_status,post_status,trans_month,trans_year,notes_id,'+
+                'faktur_no,rounding_status,post_status,trans_month,trans_year,'+
+                //' notes_id,'+
                 'created_by,order_no,trans_day,other_source, memorial_source) '+
                 'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,'+
-                ':parstatus_pembulatan,:parstatus_post,:bln,:thn,:id_ket,:pic,:order_no,:hr, :os, :memorial_source)';
+                ':parstatus_pembulatan,:parstatus_post,:bln,:thn,'+
+                //' :id_ket,'+
+                ' :pic,:order_no,:hr, :os, :memorial_source)';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
       parambyname('partgl').Value:= FormatDateTime('yyyy-mm-dd',DTtgl.date);
       parambyname('parketerangan').Value:=Memket.Text;
@@ -219,7 +228,7 @@ begin
       parambyname('hr').Value:=FormatDateTime('dd',DTtgl.Date);
       parambyname('bln').Value:=cbbulan.ItemIndex;
       parambyname('thn').Value:=edth.Text;
-      parambyname('id_ket').asstring:=Edkd_ket.Text;
+      //parambyname('id_ket').asstring:=Edkd_ket.Text;
       ParamByName('pic').AsString:=nm;
       if (edno_bk_pembulatan.Text<>'') and (edno_faktur_pembulatan.Text<>'') then
       begin
@@ -324,12 +333,14 @@ begin
     begin
       close;
       Sql.Clear;
-      Sql.Text:='update t_memorial_journal set trans_date=:partgl,notes_id=:idket,'+
+      Sql.Text:='update t_memorial_journal set trans_date=:partgl,'+
+               // ' notes_id=:idket,'+
                 'trans_month=:bln,trans_year=:thn,updated_by=:pic,'+
                 'updated_at=now(),notes=:parketerangan,bk_no=:parno_bk,'+
                 'faktur_no=:parno_faktur, other_source=:os, memorial_source=:memorial_source,'+
                 ' order_no=:order_no, trans_day=:hr, '+
-                'rounding_status=:parstatus_pembulatan, post_status=:parstatus_post '+
+                'rounding_status=:parstatus_pembulatan, post_status=:parstatus_post, '+
+                ' status_correction=0 '+
                 'where memo_no=:parno_bukti_memo';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
       parambyname('partgl').Value:=FormatDateTime('yyyy-mm-dd',DTtgl.date);
@@ -338,7 +349,7 @@ begin
       parambyname('parno_faktur').Value:=edno_faktur_pembulatan.Text;
       parambyname('bln').Value:=cbbulan.ItemIndex;
       parambyname('thn').Value:=edth.Text;
-      parambyname('idket').AsString:=Edkd_ket.Text;
+      //parambyname('idket').AsString:=Edkd_ket.Text;
     //  ShowMessage('0');
       parambyname('pic').AsString:=nm;
       ParamByName('memorial_source').Value:=CbJenis.ItemIndex;
@@ -408,6 +419,24 @@ begin
   Close;
 end;
 
+procedure TFNewJurnal_memo.BCorrectionClick(Sender: TObject);
+begin
+  if CheckJurnalPosting(edno_bukti_memorial.Text)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+  if iserror=0 then
+  begin
+    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(Flist_jurnal_memorial.Name)); //Mendapatkan nama Menu
+
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=edno_bukti_memorial.Text; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
+end;
+
 procedure TFNewJurnal_memo.Clear;
 begin
   DTtgl.Date:=NOW;
@@ -448,6 +477,34 @@ begin
   edth.Text:=FormatDateTime('yyyy',now());
   MemTableEh1.Close;
   MemTableEh1.Open;
+
+
+  if isCancel = 1 then
+  begin
+    BSave.Enabled := False;
+    BCorrection.Visible := False;
+    BCorrection.Enabled := False;
+    Exit;
+  end;
+
+  if (Status = 1) and (IntStatusKoreksi = 2) AND (isCancel=0) then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+  end
+  else if Status = 0 then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+  end
+  else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (isCancel=0) then
+  begin
+    BSave.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+  end;
+
 end;
 
 procedure TFNewJurnal_memo.RzBitBtn1Click(Sender: TObject);

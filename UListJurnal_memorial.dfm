@@ -1,4 +1,4 @@
-object Flist_jurnal_memorial: TFlist_jurnal_memorial
+object FList_jurnal_memorial: TFList_jurnal_memorial
   Left = 0
   Top = 0
   Caption = 'List Jurnal Memorial'
